@@ -3,6 +3,7 @@ import "./globals.css";
 import "./phone.css";
 import "./mobile-polish.css";
 import "./battle-effects.css";
+import "./stories.css";
 
 export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
 

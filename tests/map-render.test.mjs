@@ -5,7 +5,8 @@ import {mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {initialState,act,settle} from '../lib/game.ts';
+import {initialState,act,settle,testState} from '../lib/game.ts';
+import {recruitments} from '../lib/recruitment.ts';
 await mkdir(new URL('../work/',import.meta.url),{recursive:true});
 const output=new URL('../work/map-render.mjs',import.meta.url);
 await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
@@ -24,6 +25,21 @@ test('every restored expedition location renders with finite character coordinat
   state=settle(state,state.squads[0].run.nextAt).state;
  }
  assert.equal(visited.size,15);
+});
+
+test('all six recruitment maps render every location with the accompanying candidate',()=>{
+ for(const r of recruitments){
+  let state=testState(1000,60,20,10000000);state.owned=state.owned.filter(id=>id!==r.hero);state.wood=state.herbs=state.ore=100000;state.gear=10;
+  state.done[r.rare.sources[0]]=r.rare.every*r.rare.count;
+  state=act(state,{type:'prepareRecruitment',id:r.hero},1000);state=act(state,{type:'start',id:'join-'+r.hero},1000);
+  const visited=new Set();
+  for(let i=0;state.squads[0].run&&i<20000;i++){
+   const squad=state.squads[0],node=squad.run.node;
+   if(!visited.has(node)){const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:state.updatedAt,onAction:()=>{},ready:true,startQuest:'herbs'}));assert.match(html,/class="quest-guest"/);assert.ok(html.includes(r.mission.region));assert.ok(html.includes(r.name));assert.doesNotMatch(html,/NaN|undefined%/);visited.add(node);}
+   state=settle(state,state.squads[0].run.nextAt).state;
+  }
+  assert.equal(visited.size,15,r.hero);assert.ok(state.owned.includes(r.hero));
+ }
 });
 
 test('effects follow current events, expire on resume, and do not alter the save',()=>{

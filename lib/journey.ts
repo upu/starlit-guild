@@ -1,3 +1,5 @@
+import {recruitments,met,prepared,canPrepare,rareProgress,recruitmentHint,recruitmentRun} from './recruitment.ts';
+import {storyProgress,availableStories} from './stories.ts';
 import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,type State,type Squad,type Quest} from './game.ts';
 
 export type Destination='adventure'|'quests'|'recruit'|'build'|'companions'|'party';
@@ -15,13 +17,14 @@ export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
   return {title:'「手助け」で、ふたりを応援しよう',detail:'下の「手助け」や敵・素材をタップすると加勢できます。回数制限はありません。何も押さずに見守っても、報酬を集められます。',action:'冒険を見守る',destination:'adventure'};
  }
  if(canBuild(s))return {title:s.town===0?'酒場を建てられます':'鍛冶場と薬草園を作れます',detail:s.town===0?'最初の冒険で集めた素材を、みんなの帰る場所に。出発時の体力と絆の育ち方が変わります。':'全員の能力が上がり、薬草の収穫と回復も増えます。',action:'建設へ',destination:'build'};
- const recruit=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock<=s.clears);
- if(recruit&&s.gold>=recruit.price)return {title:`${recruit.name}を迎えられます`,detail:`${recruit.job}が旅団を待っています。${recruit.price} Gで新しい仲間を迎え、編成を試しましょう。`,action:'仲間を迎える',destination:'recruit'};
+ const recruit=recruitments.find(r=>!s.owned.includes(r.hero)&&met(s,r));
+ if(recruit&&(prepared(s,recruit.hero)||canPrepare(s,recruit)||!storyProgress(s).read.includes('recruit-'+recruit.hero+'-meeting')))return {title:recruitmentRun(s,recruit.hero)?recruit.name+'との専用クエストを冒険中':prepared(s,recruit.hero)?recruit.name+'と専用クエストへ':canPrepare(s,recruit)?recruit.name+'の支度がそろいました':recruit.name+'の話を聞いてみよう',detail:recruitmentHint(s,recruit)+'。'+recruit.purpose,action:'出会いを見る',destination:'recruit'};
  const freshQuest=quests.find(q=>q.unlock<=s.clears&&!s.done[q.id]);
+ if(recruit){const progressId='recruit-'+recruit.hero+'-progress';if(availableStories(s).some(st=>st.id===progressId)&&!storyProgress(s).read.includes(progressId))return {title:recruit.name+'から、支度の途中の話',detail:'集めているものを届けるうちに、少し違う一面が見えてきました。',action:'話を読む',destination:'recruit'};}
+ if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間で新しい隊を作り、別の素材を並行して探せます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
  if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は、自動周回をオフにすると1周で帰還します。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
- if(recruit)return {title:`${recruit.name}まで、あと ${recruit.price-s.gold} G`,detail:'区間報酬でお金を集めると、新しい仲間を迎えられます。',action:'出会いを見る',destination:'recruit'};
+ if(recruit)return {title:recruit.name+'と冒険する支度をしよう',detail:recruitmentHint(s,recruit)+'。対象の依頼は出会いの画面で確認できます。',action:'素材と出会いを見る',destination:'recruit'};
  if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
- if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間を用意すると、複数の依頼へ同時に出発できます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
  const nextQuest=quests.find(q=>q.unlock>s.clears),nextHero=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock>s.clears);
  if(nextHero&&(!nextQuest||nextHero.unlock<nextQuest.unlock))return {title:`あと ${nextHero.unlock-s.clears} 件で${nextHero.name}と出会えます`,detail:'依頼を最後まで達成すると、新しい出会いに近づきます。自動周回でも進められます。',action:'依頼を見る',destination:'quests'};
  if(nextQuest)return {title:`あと ${nextQuest.unlock-s.clears} 件で新しい依頼`,detail:`次の行き先は${nextQuest.region}。仲間の得意分野に合う依頼で支度を進めましょう。`,action:'依頼を見る',destination:'quests'};
@@ -40,7 +43,11 @@ export type JourneyNotice={title:string;description:string};
 export function journeyNotice(before:State,after:State):JourneyNotice|null{
  if(after.town>before.town)return {title:after.town===1?'星灯りの酒場が完成！':'星灯りの小さな村が完成！',description:after.town===1?'ふたりの焚き火から、みんなの帰る場所へ。出発時HP +10%・絆の成長2倍。':'鍛冶場と薬草園に灯りがともりました。全能力 +8%・薬草の収穫と回復が増えます。'};
  const joined=heroes.find(h=>after.owned.includes(h.id)&&!before.owned.includes(h.id));
- if(joined)return {title:`${joined.name}が旅団に加入！`,description:`${joined.job}。仲間画面で編成に加えられます。`};
+ if(joined)return {title:`${joined.name}が旅団に加入！`,description:'一緒に冒険を終え、新しい仲間になりました。「旅の思い出」で加入の話を読めます。'};
+ const preparedNow=recruitments.find(r=>prepared(after,r.hero)&&!prepared(before,r.hero));
+ if(preparedNow)return {title:preparedNow.name+'の支度が整いました',description:'専用クエスト「'+preparedNow.mission.name+'」が開きました。'};
+ const found=recruitments.find(r=>!prepared(after,r.hero)&&rareProgress(after,r).found>rareProgress(before,r).found);
+ if(found)return {title:found.rare.name+'を見つけました',description:found.name+'との冒険の支度に使えます。「持ちもの」で集めた数を確認できます。'};
  if(before.clears===0&&after.clears>0)return {title:'はじめての依頼、達成！',description:'集めたお金と木材で酒場を建てましょう。自動周回をオンにすると、冒険が続きます。'};
  const unlocked=quests.filter(q=>q.unlock>before.clears&&q.unlock<=after.clears);
  if(unlocked.length)return {title:'新しい依頼が届きました',description:unlocked.map(q=>q.name).join('・')+'。依頼画面で確認できます。'};

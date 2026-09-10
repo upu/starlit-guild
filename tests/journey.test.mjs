@@ -20,7 +20,8 @@ test('first adventure leads from departure through help and secured rewards to b
 test('goals expose available recruitment, new quests and exact building shortages',()=>{
  let s=initialState(1000);s.clears=3;s.town=1;s.gold=200;
  assert.match(nextGoal(s).title,/ミラ/);assert.equal(nextGoal(s).destination,'recruit');
- s=act(s,{type:'recruit',id:'mira'},1000);s.done={herbs:2,cart:1};
+ // An existing save can already own Mira; recruitment completion is exercised separately.
+ s.owned.push('mira');s.gold=100;s.done={herbs:2,cart:1};
  assert.equal(nextGoal(s).destination,'build');assert.ok(buildingNeeds(s).includes('500 G'));assert.equal(canBuild(s),false);
  s.clears=4;assert.equal(nextGoal(s).questId,'slime');
  s.squads[0].run=null;assert.equal(nextGoal(s).destination,'quests');
