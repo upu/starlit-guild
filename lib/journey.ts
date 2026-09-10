@@ -23,7 +23,7 @@ export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
  const freshQuest=quests.find(q=>q.unlock<=s.clears&&!s.done[q.id]);
  if(recruit){const progressId='recruit-'+recruit.hero+'-progress';if(availableStories(s).some(st=>st.id===progressId)&&!storyProgress(s).read.includes(progressId))return {title:recruit.name+'から、支度の途中の話',detail:'集めているものを届けるうちに、少し違う一面が見えてきました。',action:'話を読む',destination:'recruit'};}
  if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間で新しい隊を作り、別の素材を並行して探せます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
- if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は、自動周回をオフにすると1周で帰還します。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
+ if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は「帰還」でいつでも戻れます。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
  if(recruit)return {title:recruit.name+'と冒険する支度をしよう',detail:recruitmentHint(s,recruit)+'。対象の依頼は出会いの画面で確認できます。',action:'素材と出会いを見る',destination:'recruit'};
  if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {hintId:'building-materials-'+s.town,title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
  const nextQuest=quests.find(q=>q.unlock>s.clears),nextHero=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock>s.clears);

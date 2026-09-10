@@ -94,3 +94,22 @@ test('save validation rejects unknown scenes, duplicate reads and inconsistent c
   {departed:['missing'],completed:[],read:[]},
  ]){const s=initialState(1000);s.story=story;assert.throws(()=>roundtrip(s));}
 });
+
+test('a departure read before starting is acknowledged atomically at the actual departure time',()=>{
+ const initial=initialState(1000);
+ // The reader holds a departure intent, not a running expedition or a saved unlock.
+ const waiting=settle(initial,301000).state;
+ assert.equal(waiting.squads[0].run,null);assert.deepEqual(ids(waiting),[]);assert.equal(waiting.clears,0);
+ const departed=act(waiting,{type:'start',id:'herbs',readDeparture:true,value:true},301000);
+ assert.equal(departed.squads[0].run.started,301000);assert.equal(departed.squads[0].run.node,0);
+ assert.deepEqual(departed.story.read,['herbs-departure']);assert.deepEqual(roundtrip(departed).story,departed.story);
+ assert.throws(()=>act(departed,{type:'start',id:'herbs',readDeparture:true},301000));
+ assert.equal(departed.squads[0].run.node,0);
+});
+test('new UI departures repeat while legacy one-round saves retain their setting until departure',()=>{
+ let state=act(initialState(1000),{type:'repeat',value:false},1000);
+ assert.equal(roundtrip(state).squads[0].repeat,false);
+ state=act(state,{type:'start',id:'herbs',value:true},2000);
+ assert.equal(state.squads[0].repeat,true);
+ assert.equal(act(initialState(1000),{type:'start',id:'herbs'},1000).story.read.length,0);
+});

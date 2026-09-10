@@ -14,7 +14,7 @@
 .phone-game .phone-hero-card>*,.phone-game .phone-quest-detail>*{flex-shrink:0}
 .phone-game .phone-hero-card{gap:9px}
 .phone-game .phone-stat-row>span{font-size:13px}
-.phone-game .map-hero>span:last-of-type,.phone-game .target-meter>span,.phone-game .target-meter small{font-size:12px}
+.phone-game .map-hero>.hero-name,.phone-game .target-meter>span,.phone-game .target-meter small{font-size:12px}
 .party-comparison{display:grid;gap:10px;padding:14px;background:#263c31;border:1px solid #5e7254;border-radius:9px}
 .party-comparison>div{display:grid;grid-template-columns:1fr 2fr 40px;align-items:center;gap:8px;font-size:14px;color:#d9ddb9}
 .party-comparison b{font-size:18px;color:#f3dca0;text-align:center}
