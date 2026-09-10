@@ -1,6 +1,6 @@
 'use client';
 import {useState} from 'react';
-import {BookOpen,ChevronRight,Heart} from 'lucide-react';
+import {BookOpen,ChevronRight} from 'lucide-react';
 import {Sprite} from './sprite';
 import {heroes,type State} from '@/lib/game';
 import {availableStories,stories,storyProgress,type Story,type StoryLine} from '@/lib/stories';
@@ -12,8 +12,8 @@ export function StoryLines({lines}:{lines:StoryLine[]}){
 export function StoryReader({story,ready,onRead,onClose}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void}){
  const [page,setPage]=useState(0);
  const pageSize=3,pages=Math.ceil(story.lines.length/pageSize);
- const cast=story.companion?[...new Set(story.lines.flatMap(line=>line.speaker?[line.speaker]:[]))]:['aria','leon'];
- return <div className="story-reader"><div className="story-pair">{cast.map(id=><Sprite key={id} index={heroes.find(h=>h.id===id)!.sprite} size={68}/>)}{!story.companion&&<Heart size={18}/>}<span>{story.companion?'仲間になるまでの物語':'幼なじみの、まだ言えない気持ち'}</span></div><div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>つづきを読む<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>思い出にしまう</button>}</div><button className="quiet full" onClick={onClose}>あとで読む</button><small className="story-hint">冒険はこの間も進みます。閉じても「旅の思い出」から読み返せます。</small></div>;
+ const cast=[...new Set(story.lines.flatMap(line=>line.speaker?[line.speaker]:[]))];
+ return <div className="story-reader"><div className="story-portraits">{cast.map(id=><Sprite key={id} index={heroes.find(h=>h.id===id)!.sprite} size={68}/>)}</div><div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>つづきを読む<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>思い出にしまう</button>}</div><button className="quiet full" onClick={onClose}>あとで読む</button><small className="story-hint">冒険はこの間も進みます。閉じても「旅の思い出」から読み返せます。</small></div>;
 }
 
 export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=>void}){
