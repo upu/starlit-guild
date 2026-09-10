@@ -1,8 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {initialState,act,settle,quests,testState,migrate} from '../lib/game.ts';
+import {initialState,act,settle,quests,testState,migrate} from '../lib/game-v3.ts';
 import {initialState as initialV2,act as actV2} from '../lib/game-v2.ts';
-import {parseBundle} from '../lib/save-format.ts';
+import {parseBundle} from '../lib/save-format-v3.ts';
 const start=(s=initialState(1000),q='herbs')=>act(s,{type:'start',id:q},s.updatedAt);
 const bundle=s=>({format:3,deviceId:crypto.randomUUID(),active:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',profiles:[{id:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',name:'test',test:false,state:s}],serial:1,sound:true,cloudAt:0,legacyImported:false});
 test('fresh adventure waits at camp with two heroes and one discovered quest',()=>{const s=initialState(1000);assert.equal(s.squads[0].run,null);assert.equal(s.owned.length,2);assert.equal(quests.filter(q=>q.unlock<=s.clears).length,1);assert.equal(settle(s,999999).state.clears,0);});

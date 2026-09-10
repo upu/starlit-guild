@@ -1,0 +1,1 @@
+export function Sprite({index,size=72,className=''}:{index:number;size?:number;className?:string}){return <span className={`sprite ${className}`} style={{width:size,height:size,backgroundPosition:`${index%4*100/3}% ${Math.floor(index/4)*50}%`}} aria-hidden="true"/>}
