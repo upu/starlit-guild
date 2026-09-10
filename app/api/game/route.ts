@@ -1,5 +1,5 @@
 import {gameDb} from '@/db/game-store';
-import {act,settle,initialState,migrate,type State,type Action} from '@/lib/game';
+import {act,settle,initialState,migrate,type State,type Action} from '@/lib/game-v2';
 import {player,sameOrigin} from '@/lib/player';
 export const dynamic='force-dynamic';
 async function handle(request:Request,write:boolean){

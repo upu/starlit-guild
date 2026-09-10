@@ -15,6 +15,13 @@
       "when": 1789001153825,
       "tag": "0001_abandoned_enchantress",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789005299083,
+      "tag": "0002_complete_firelord",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {initialState,act,settle,migrate,heroes,quests,memberLimit,squadLimit,stats} from '../lib/game.ts';
+import {initialState,act,settle,migrate,heroes,quests,memberLimit,squadLimit,stats} from '../lib/game-v2.ts';
 import {initialState as oldInitial,act as oldAct} from '../lib/game-v1.ts';
 const now=1800000000000;
 const start=(id='herbs')=>act(initialState(now),{type:'start',id,squad:'party-1'},now);
