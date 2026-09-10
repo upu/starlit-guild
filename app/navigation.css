@@ -75,12 +75,16 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"]{tran
 .story-still .still-expand{position:relative;display:block;padding:0;width:100%;border:0;border-radius:0;background:#102720}
 .still-expand img{display:block;width:100%;height:auto}
 .still-expand>span{position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;min-height:36px;padding:6px 10px;border-radius:6px;background:#102820e6;border:1px solid #cfbb87;color:#f0e0b7;font-size:12px}
-.art-viewer[data-slot="dialog-content"]{width:100%;max-width:none;height:var(--game-height,100dvh);max-height:none;top:var(--game-top,0px);bottom:auto;display:flex;flex-direction:column;gap:8px;padding:16px;padding-top:max(16px,env(safe-area-inset-top));padding-bottom:max(12px,var(--game-safe-bottom));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:#0b1817;border:0;border-radius:0;overflow:hidden}
-.art-viewer [data-slot="dialog-header"]{flex-shrink:0;padding-right:56px}
+.art-viewer[data-slot="dialog-content"]{width:100%;max-width:none;height:var(--game-height,100dvh);max-height:none;top:var(--game-top,0px);bottom:auto;display:flex;flex-direction:column;gap:8px;padding:16px;padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:max(12px,var(--game-safe-bottom));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:#0b1817;border:0;border-radius:0;overflow:hidden}
+.art-viewer [data-slot="dialog-header"]{flex-shrink:0;text-align:center}
 .art-viewer [data-slot="dialog-title"]{font-size:18px;color:#f0dfb5}
 .art-viewer [data-slot="dialog-description"]{font-size:12px;color:#b5c4b4}
 body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner-toaster]{visibility:hidden}
-.art-canvas{position:relative;flex:1;min-height:0;min-width:0;width:100%}
+.art-canvas{position:relative;flex:1;min-height:0;min-width:0;width:100%;display:block;padding:0;border:0;border-radius:0;background:transparent;cursor:zoom-out;touch-action:manipulation}
+.art-viewer .art-canvas:hover:not(:disabled){background:transparent}
+.art-canvas:focus-visible{outline:2px solid #e5ca88;outline-offset:2px}
+.art-return{align-self:center;flex-shrink:0;min-height:44px;padding:8px 24px;border:1px solid #6b7d59;border-radius:24px;background:#284136;color:#efdbac}
+@media(max-width:600px){.art-viewer[data-slot="dialog-content"]{padding-top:calc(16px + max(44px,env(safe-area-inset-top)))}}
 .art-canvas>img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
 .art-viewer [data-slot="dialog-close"],.phone-dialog [data-slot="dialog-close"],.save-dialog [data-slot="dialog-close"]{width:44px;height:44px;min-height:44px;padding:0;background:#284136;color:#efdbac;border:1px solid #6b7d59;border-radius:8px;opacity:1}
 .phone-dialog [data-slot="dialog-header"],.save-dialog [data-slot="dialog-header"]{padding-right:48px;text-align:left;min-height:44px}
@@ -105,13 +109,12 @@ body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner
 
 @media(prefers-reduced-motion:reduce){button[data-slot="switch"]::before,button[data-slot="switch"] [data-slot="switch-thumb"]{transition:none}}
 
-/* Use the available viewport; reserve the home-indicator inset exactly once. */
+/* Let the map and panels fill the space above navigation. */
 .phone-game{height:100dvh;max-height:none;margin-block:0}
 .phone-game .phone-screen{overflow:hidden}
 .phone-game .phone-adventure{height:100%;min-height:0;overflow:hidden}
 .phone-game .phone-adventure .map-shell{min-height:0}
 .phone-game .phone-home{min-height:0}
-.phone-game .phone-navigation{height:calc(54px + env(safe-area-inset-bottom))!important;padding:3px 8px calc(3px + env(safe-area-inset-bottom))!important}
 .phone-brand>div{min-width:0}
 .phone-brand h1{white-space:nowrap}
 .phone-header .save-status{margin-left:0}
@@ -153,7 +156,10 @@ html{background:#132625}
 body{position:fixed;inset:0;height:auto;overflow:hidden;background:#132625}
 .phone-game,.start-screen{position:relative;top:var(--game-top);height:var(--game-height);max-height:none;margin-block:0}
 .game-keyboard-open{--game-safe-bottom:0px}
-.phone-game .phone-navigation{height:calc(52px + var(--game-safe-bottom))!important;padding:2px max(8px,env(safe-area-inset-right)) calc(2px + var(--game-safe-bottom)) max(8px,env(safe-area-inset-left))!important}
+/* Keep the home indicator inside the navigation row, never in an added footer. */
+.phone-game .phone-navigation{height:56px!important;padding:2px max(8px,env(safe-area-inset-right)) 2px max(8px,env(safe-area-inset-left))!important}
+.phone-game .phone-navigation [data-slot="tabs-trigger"]{flex-direction:row;gap:5px!important;padding:0 0 min(12px,var(--game-safe-bottom))!important;font-size:11px}
+.phone-game .phone-navigation [data-slot="tabs-trigger"]>svg,.phone-navigation .memory-nav-icon svg{width:18px!important;height:18px!important}
 .phone-game .phone-header{height:52px;min-height:52px;padding:4px max(8px,env(safe-area-inset-right)) 4px max(8px,env(safe-area-inset-left));gap:6px}
 .phone-game .phone-header .phone-wallet{min-width:0;flex:1;height:44px;min-height:44px;padding:0 3px;border:0;background:transparent;justify-content:space-between;gap:4px}
 .phone-header .phone-wallet>span{gap:3px;font-size:11px}

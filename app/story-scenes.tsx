@@ -8,7 +8,7 @@ import {availableStories,stories,storyProgress,type Story,type StoryLine} from '
 import {storyArt,storyArtAt,type StoryArt} from '@/lib/story-art';
 
 export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;onClose:()=>void}){
- return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" closeLabel="鑑賞を終えて戻る"><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">スチル鑑賞。右上のボタンで元の画面に戻れます。</DialogDescription></DialogHeader><div className="art-canvas">{art&&<img src={art.src} alt={art.alt} width={art.width} height={art.height}/>}</div></DialogContent></Dialog>;
+ return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" showCloseButton={false}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">画像や余白をタップすると元の画面に戻ります。</DialogDescription></DialogHeader><button type="button" className="art-canvas" onClick={onClose} aria-label="鑑賞を終えて戻る">{art&&<img src={art.src} alt={art.alt} width={art.width} height={art.height}/>}</button><button type="button" className="art-return" onClick={onClose}>戻る</button></DialogContent></Dialog>;
 }
 
 export function StoryLines({lines}:{lines:StoryLine[]}){
