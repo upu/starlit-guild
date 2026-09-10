@@ -3,19 +3,21 @@ import {useCallback,useEffect,useRef,useState} from 'react';
 import {toast} from 'sonner';
 import {act,initialState,migrate,settle,testState,type Action,type Rewards} from '@/lib/game';
 import {parseBundle,type SaveBundle,type Profile} from '@/lib/save-format';
+import {journeyNotice} from '@/lib/journey';
 import {setSound,sound,unlockSound} from '@/lib/sound';
 export const SAVE_KEY='starlit-guild-v4';
 const LEASE=SAVE_KEY+'-tab',FIVE_MINUTES=300000;
 type CloudCopy={bundle:SaveBundle;at:number};
 function newProfile(test=false):Profile{return {id:crypto.randomUUID(),name:test?'テスト用の冒険':'新しい冒険',test,state:initialState(Date.now())};}
+function celebrate(before:Parameters<typeof journeyNotice>[0],after:Parameters<typeof journeyNotice>[1]){if(document.visibilityState!=='visible')return;const notice=journeyNotice(before,after);if(notice)toast.success(notice.title,{description:notice.description,duration:4500,id:'journey-moment'});}
 function fresh():SaveBundle{const p=newProfile();return {format:4,deviceId:crypto.randomUUID(),active:p.id,profiles:[p],serial:0,sound:true,cloudAt:0,legacyImported:false};}
 export function useLocalGame(){
  const [bundle,setBundle]=useState<SaveBundle|null>(null),[clock,setClock]=useState(0),[error,setError]=useState(''),[cloudError,setCloudError]=useState(''),[cloudBusy,setCloudBusy]=useState(false),[copies,setCopies]=useState<CloudCopy[]>([]),[otherTab,setOtherTab]=useState(false),[saved,setSaved]=useState(0),[report,setReport]=useState<Rewards|null>(null);
  const current=useRef<SaveBundle|null>(null),tabId=useRef(''),owner=useRef(false),busy=useRef(false),lastAttempt=useRef(0),mounted=useRef(false);
  const publish=useCallback((b:SaveBundle)=>{current.current=b;setBundle({...b});},[]);
  const persist=useCallback(()=>{const b=current.current;if(!b||!owner.current)return;try{b.serial++;localStorage.setItem(SAVE_KEY,JSON.stringify(b));setSaved(Date.now());setError('');}catch{setError('端末に保存できません。空き容量を確認し、セーブ画面からファイルを保管してください。');}},[]);
- const advance=useCallback((now:number)=>{const b=current.current;if(!b||!owner.current)return;const p=b.profiles.find(p=>p.id===b.active)!;const previous=p.state.updatedAt;const result=settle(p.state,now);p.state=result.state;
-  if(result.rewards.offline&&(result.rewards.count||result.rewards.gold||result.rewards.wood))setReport(result.rewards);
+ const advance=useCallback((now:number)=>{const b=current.current;if(!b||!owner.current)return;const p=b.profiles.find(p=>p.id===b.active)!;const before=p.state,previous=before.updatedAt;const result=settle(before,now);p.state=result.state;if(!result.rewards.offline)celebrate(before,p.state);
+  if(result.rewards.offline&&(result.rewards.count||result.rewards.gold||result.rewards.wood||result.rewards.herbs||result.rewards.ore||result.rewards.xp))setReport(result.rewards);
   if(document.visibilityState==='visible'){const recent=p.state.squads.flatMap(s=>s.run?.events||[]).filter(e=>e.at>previous&&now-e.at<350&&!['assist','move','rest'].includes(e.kind));for(const e of recent)sound(e.kind);if(result.rewards.count&&!result.rewards.offline)sound('clear');}
   setClock(now);publish(b);
  },[publish]);
@@ -34,20 +36,20 @@ export function useLocalGame(){
  useEffect(()=>{
   mounted.current=true;tabId.current=crypto.randomUUID();lastAttempt.current=Date.now();
   const lease=()=>{try{return JSON.parse(localStorage.getItem(LEASE)||'null') as {id:string;until:number}|null;}catch{return null;}};
-  const acquire=()=>{const l=lease();owner.current=!l||l.id===tabId.current||l.until<Date.now();if(owner.current)localStorage.setItem(LEASE,JSON.stringify({id:tabId.current,until:Date.now()+6000}));setOtherTab(!owner.current);};
+  const acquire=()=>{const l=lease(),allowed=!l||l.id===tabId.current||l.until<Date.now();if(allowed&&(!owner.current||l?.id!==tabId.current)&&current.current){const raw=localStorage.getItem(SAVE_KEY);if(raw){const latest=parseBundle(JSON.parse(raw));if(latest.serial>=current.current.serial)publish(latest);}}owner.current=allowed;if(owner.current)localStorage.setItem(LEASE,JSON.stringify({id:tabId.current,until:Date.now()+6000}));setOtherTab(!owner.current);};
   const load=()=>{try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem('starlit-guild-v3');const b=raw?parseBundle(JSON.parse(raw)):fresh();publish(b);setSound(b.sound);acquire();advance(Date.now());persist();}catch{setError('端末の記録を読み込めませんでした。保存ファイルから復元してください。元の記録は上書きしていません。');}};
   const init=setTimeout(()=>{load();void refreshCopies();},0);
-  const tick=setInterval(()=>{if(document.visibilityState==='visible')advance(Date.now());},100);
-  const disk=setInterval(persist,1000);
-  const heartbeat=setInterval(()=>{try{acquire();}catch{owner.current=false;setOtherTab(true);}},2000);
-  const cloud=setInterval(()=>{if(Date.now()-lastAttempt.current>=FIVE_MINUTES)void backup();},10000);
-  const visible=()=>{if(document.visibilityState==='visible'){advance(Date.now());if(Date.now()-lastAttempt.current>=FIVE_MINUTES)void backup();}persist();};
+  const tick=setInterval(()=>{if(document.visibilityState==='visible')advance(Date.now());},200);
+  const disk=setInterval(()=>{if(document.visibilityState==='visible')persist();},1000);
+  const heartbeat=setInterval(()=>{try{if(document.visibilityState==='visible')acquire();}catch{owner.current=false;setOtherTab(true);}},2000);
+  const cloud=setInterval(()=>{if(document.visibilityState==='visible'&&Date.now()-lastAttempt.current>=FIVE_MINUTES)void backup();},10000);
+  const visible=()=>{if(document.visibilityState==='visible'){try{acquire();advance(Date.now());if(Date.now()-lastAttempt.current>=FIVE_MINUTES)void backup();}catch{owner.current=false;setOtherTab(true);}}else advance(Date.now());persist();};
   const changed=(e:StorageEvent)=>{if(e.key===LEASE){const l=lease();if(l&&l.id!==tabId.current){owner.current=false;setOtherTab(true);}}if(e.key===SAVE_KEY&&e.newValue&&!owner.current){try{publish(parseBundle(JSON.parse(e.newValue)));}catch{/* Keep the last readable record. */}}};
-  const closing=()=>{advance(Date.now());persist();};
+  const closing=()=>{const l=lease();if(l?.id!==tabId.current)owner.current=false;advance(Date.now());persist();};
   document.addEventListener('visibilitychange',visible);window.addEventListener('pagehide',closing);window.addEventListener('storage',changed);
   return()=>{closing();mounted.current=false;clearTimeout(init);clearInterval(tick);clearInterval(disk);clearInterval(heartbeat);clearInterval(cloud);document.removeEventListener('visibilitychange',visible);window.removeEventListener('pagehide',closing);window.removeEventListener('storage',changed);try{if(lease()?.id===tabId.current)localStorage.removeItem(LEASE);}catch{}}
  },[advance,backup,persist,publish,refreshCopies]);
- const dispatch=useCallback((a:Action)=>{const b=current.current;if(!b||!owner.current)return;unlockSound();try{advance(Date.now());const p=b.profiles.find(p=>p.id===b.active)!;p.state=act(p.state,a,Date.now());publish(b);persist();if(a.type==='build')toast.success('拠点が大きくなりました！');if(a.type==='assist')sound(a.mode==='heal'?'heal':'assist',true);else if(a.type==='start')sound('clear',true);else if(a.type==='recruit')toast.success('新しい仲間が加わりました。');}catch(e){toast.error((e as Error).message);}},[advance,persist,publish]);
+ const dispatch=useCallback((a:Action)=>{const b=current.current;if(!b||!owner.current)return false;unlockSound();try{advance(Date.now());const p=b.profiles.find(p=>p.id===b.active)!;const before=p.state;p.state=act(before,a,Date.now());publish(b);persist();celebrate(before,p.state);if(a.type==='assist')sound(a.mode==='heal'?'heal':'assist',true);else if(['start','build','recruit','gear'].includes(a.type))sound('clear',true);if(a.type==='party')toast.success('編成を保存しました。',{id:'party-saved'});return true;}catch(e){toast.error((e as Error).message);return false;}},[advance,persist,publish]);
  const switchProfile=useCallback((id:string)=>{const b=current.current;if(!b||!owner.current||!b.profiles.some(p=>p.id===id))return;advance(Date.now());b.active=id;setReport(null);advance(Date.now());persist();},[advance,persist]);
  const createProfile=useCallback((test=false)=>{const b=current.current;if(!b||!owner.current)return;if(b.profiles.length>=12){toast.error('記録は12個までです。既存のテスト記録を選んで調整できます。');return;}advance(Date.now());const p=newProfile(test);p.name+=` ${b.profiles.filter(p=>p.test===test).length+1}`;b.profiles.push(p);b.active=p.id;publish(b);setReport(null);persist();toast.success(test?'テスト用の冒険を作りました。':'以前の記録を残して、最初から始めます。');},[advance,persist,publish]);
  const adjust=useCallback((clears:number,lv:number,gold:number)=>{const b=current.current,p=b?.profiles.find(p=>p.id===b.active);if(!b||!p?.test||!owner.current)return;p.state=testState(Date.now(),clears,lv,gold);publish(b);persist();setReport(null);toast.success('テスト用の進行度を変更しました。');},[persist,publish]);

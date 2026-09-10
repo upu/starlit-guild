@@ -1,18 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./phone.css";
+import "./mobile-polish.css";
 
-export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#111b20'};
+export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
 
 export const metadata: Metadata = {
   title: "星灯りの旅団 | STARLIT GUILD",
-  description: "仲間が歩き、戦い、採取する。クリックで応援できる、ログイン不要のファンタジー放置RPG。",
+  description: "仲間を見守り、旅団と帰る場所を育てる。タップで応援できるファンタジー放置RPG。",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {capable:true,title:'星灯りの旅団',statusBarStyle:'black-translucent'},
   other: {
     "codex-preview": "development",
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/icons/lantern.svg",
+    shortcut: "/icons/icon-192.png",
+    apple: "/icons/apple-touch-icon.png",
   },
 };
 
