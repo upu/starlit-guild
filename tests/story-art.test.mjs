@@ -1,0 +1,33 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {storyArt,storyArtAt} from '../lib/story-art.ts';
+import {stories,availableStories} from '../lib/stories.ts';
+import {initialState,act} from '../lib/game.ts';
+
+test('every story illustration exists with its declared dimensions and a valid reveal point',async()=>{
+ for(const [id,art] of Object.entries(storyArt)){
+  const scene=stories.find(st=>st.id===id);
+  assert.ok(scene,id);
+  assert.ok(art.revealAtLine>=0&&art.revealAtLine<scene.lines.length,id);
+  assert.ok(art.alt.trim().length>0,id);
+  assert.match(art.src,/^\/stories\/[a-z-]+\.png$/);
+  const bytes=await readFile(new URL('../public'+art.src,import.meta.url));
+  assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a',id);
+  assert.equal(bytes.readUInt32BE(16),art.width,id);
+  assert.equal(bytes.readUInt32BE(20),art.height,id);
+ }
+});
+
+test('first departure has its illustration, while the fireside waits until they sit together',()=>{
+ const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
+ assert.ok(availableStories(state).some(st=>st.id==='herbs-departure'));
+ assert.ok(storyArtAt('herbs-departure',0));
+ assert.equal(storyArtAt('pilgrim-return',0),undefined);
+ assert.equal(storyArtAt('pilgrim-return',3),undefined);
+ assert.ok(storyArtAt('pilgrim-return',6));
+ assert.ok(storyArtAt('pilgrim-return',9));
+ assert.equal(storyArtAt('pilgrim-return',3),undefined);
+ assert.equal(storyArtAt('camp-seat',0),undefined);
+ assert.equal(storyArtAt('unknown-story',0),undefined);
+});

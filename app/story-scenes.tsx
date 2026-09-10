@@ -1,9 +1,10 @@
 'use client';
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {BookOpen,ChevronRight} from 'lucide-react';
 import {Sprite} from './sprite';
 import {heroes,type State} from '@/lib/game';
 import {availableStories,stories,storyProgress,type Story,type StoryLine} from '@/lib/stories';
+import {storyArtAt} from '@/lib/story-art';
 
 export function StoryLines({lines}:{lines:StoryLine[]}){
  return <div className="story-lines">{lines.map((line,i)=>{const hero=heroes.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={i}><Sprite index={hero.sprite} size={48}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={i}>{line.text}</p>;})}</div>;
@@ -12,8 +13,11 @@ export function StoryLines({lines}:{lines:StoryLine[]}){
 export function StoryReader({story,ready,onRead,onClose}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void}){
  const [page,setPage]=useState(0);
  const pageSize=3,pages=Math.ceil(story.lines.length/pageSize);
+ const art=storyArtAt(story.id,page*pageSize);
+ const illustration=useRef<HTMLElement>(null);
+ useEffect(()=>{if(page>0&&art)illustration.current?.scrollIntoView({block:'start'});},[page,art]);
  const cast=[...new Set(story.lines.flatMap(line=>line.speaker?[line.speaker]:[]))];
- return <div className="story-reader"><div className="story-portraits">{cast.map(id=><Sprite key={id} index={heroes.find(h=>h.id===id)!.sprite} size={68}/>)}</div><div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>つづきを読む<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>思い出にしまう</button>}</div><button className="quiet full" onClick={onClose}>あとで読む</button><small className="story-hint">冒険はこの間も進みます。閉じても「旅の思い出」から読み返せます。</small></div>;
+ return <div className="story-reader">{art?<figure ref={illustration} className="story-still"><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></figure>:<div className="story-portraits">{cast.map(id=><Sprite key={id} index={heroes.find(h=>h.id===id)!.sprite} size={68}/>)}</div>}<div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>つづきを読む<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>思い出にしまう</button>}</div><button className="quiet full" onClick={onClose}>あとで読む</button><small className="story-hint">冒険はこの間も進みます。閉じても「旅の思い出」から読み返せます。</small></div>;
 }
 
 export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=>void}){
