@@ -9,6 +9,7 @@ import {AlertDialog,AlertDialogTrigger,AlertDialogContent,AlertDialogHeader,Aler
 import {Switch} from '@/components/ui/switch';
 import {Toaster} from '@/components/ui/sonner';
 import {SavePanel} from './save-panel';
+import {useGameMusic} from './use-game-music';
 import {MapStage} from './map-stage';
 import {GuildHome} from './guild-home';
 import {Sprite} from './sprite';
@@ -26,6 +27,7 @@ export function PhoneGame({game}:{game:Game}){
  const {s,clock,dispatch}=game;
  const [view,setView]=useState('adventure'),[sheet,setSheet]=useState<Sheet>(null),[selectedSquad,setSquad]=useState('party-1'),[questId,setQuest]=useState('herbs'),[heroIndex,setHeroIndex]=useState(0),[draft,setDraft]=useState<string[]>(s.squads[0].members);
  const sq=s.squads.find(p=>p.id===selectedSquad)||s.squads[0],run=sq.run,ready=game.ready&&!game.otherTab;
+ const music=useGameMusic(view==='camp'||!run?'camp':'journey',ready);
  const unlocked=quests.filter(q=>q.unlock<=s.clears),q=unlocked.find(q=>q.id===questId)||unlocked[0],questIndex=unlocked.indexOf(q);
  const roster=heroes.filter(h=>s.owned.includes(h.id)),hi=Math.min(heroIndex,roster.length-1),hero=roster[hi],other=s.squads.find(p=>p.id!==sq.id&&p.members.includes(hero.id));
  const synergy=activeBonds(sq.members),ps=stats(s,sq),nextRecruit=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock<=s.clears),nextQuest=quests.find(q=>q.unlock>s.clears);
@@ -51,7 +53,7 @@ export function PhoneGame({game}:{game:Game}){
  if(sheet==='gift'){title='ギルドの差し入れ';description='毎朝9時に届く、旅の応援です。';const claimed=s.lastDaily===new Date(clock||0).toISOString().slice(0,10);content=<><Gift className="gift-art"/><p>80 G と薬草 5 個</p><button disabled={!ready||claimed||s.clears<3} onClick={()=>act({type:'daily'})}>{claimed?'受取済み':s.clears<3?'3件達成で解放':'受け取る'}</button></>;}
  if(sheet==='recruit'){title='新しい出会い';description=nextRecruit?'旅をともにする仲間を迎えよう。':'冒険を重ねると、新しい仲間に出会えます。';content=nextRecruit?<><div className="recruit-portrait"><Sprite index={nextRecruit.sprite} size={120}/><h3>{nextRecruit.name}</h3><p>{nextRecruit.job}</p></div><p>{nextRecruit.bio}</p>{s.gold<nextRecruit.price&&<p>あと {nextRecruit.price-s.gold} Gで迎えられます。</p>}<button disabled={!ready||s.gold<nextRecruit.price} onClick={()=>act({type:'recruit',id:nextRecruit.id})}>{nextRecruit.price} G で迎える</button></>:<p>{heroes.find(h=>!s.owned.includes(h.id))?`あと ${Math.max(0,heroes.find(h=>!s.owned.includes(h.id))!.unlock-s.clears)} 件達成すると、新しい仲間と出会えます。`:'すべての仲間が旅団に加わりました。'}</p>;}
  if(sheet==='help'){title='旅の手引き';description='見守るだけでも、手助けしても。';content=<><p>敵や素材をタップすると加勢できます。応援が100になると、全員の必殺技が発動！ 回数制限はありません。</p><p>光る寄り道をタップすると、仲間が優先して調べます。放置でも自動で回収します。</p><p>1周は15地点。3地点ごとに報酬を確保します。隊の設定は、マップの上にあるパーティ名から開けます。</p><p>進行は端末に保存し、開いている間は約5分ごとにクラウドへバックアップします。画面を閉じた後は、次に開いたときに最大12時間分を集計します。</p><button className="outline full" onClick={()=>setSheet('install')}>ホーム画面に追加</button></>;}
- return <main className="phone-game"><Toaster theme="dark" position="top-center"/><header className="phone-header"><div className="phone-brand"><img src="/icons/icon-192.png" alt="" width="38" height="38"/><div><h1>星灯りの旅団</h1><span>{game.profile?.test?'テスト用の冒険':game.profile?.name||'旅の支度中…'}</span></div></div><button className="icon-button" aria-label="旅の記録" onClick={()=>setSheet('journal')}><BookOpen size={19}/></button><SavePanel game={game}/></header>
+ return <main className="phone-game"><Toaster theme="dark" position="top-center"/><header className="phone-header"><div className="phone-brand"><img src="/icons/icon-192.png" alt="" width="38" height="38"/><div><h1>星灯りの旅団</h1><span>{game.profile?.test?'テスト用の冒険':game.profile?.name||'旅の支度中…'}</span></div></div><button className="icon-button" aria-label="旅の記録" onClick={()=>setSheet('journal')}><BookOpen size={19}/></button><SavePanel game={game} music={music}/></header>
  <button className="phone-wallet" onClick={()=>setSheet('bag')} aria-label="持ちものを開く"><span><Coins/>{compact(s.gold)}</span><span><Leaf/>{compact(s.herbs)}</span><span><Gem/>{compact(s.ore)}</span><span><Logs/>{compact(s.wood)}</span></button>
  {(game.error||game.otherTab)&&<div className="phone-notice" role="status"><span>{game.otherTab?'別のタブで冒険中です':game.error}</span>{game.otherTab&&<button onClick={game.takeOver}>ここで続ける</button>}</div>}
  {game.ready&&<button className="journey-goal" onClick={()=>setSheet('goal')} aria-label={goal.title+'。詳しく見る'}><span key={goal.title}><small>{s.clears===0?'はじめての冒険':'次の目標'}</small><b>{goal.title}</b></span><ChevronRight size={18}/></button>}

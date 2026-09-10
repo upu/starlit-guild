@@ -4,7 +4,7 @@ import {toast} from 'sonner';
 import {act,initialState,migrate,settle,testState,type Action,type Rewards} from '@/lib/game';
 import {parseBundle,type SaveBundle,type Profile} from '@/lib/save-format';
 import {journeyNotice} from '@/lib/journey';
-import {setSound,sound,unlockSound} from '@/lib/sound';
+import {setSound,sound,soundEvents,unlockSound} from '@/lib/sound';
 export const SAVE_KEY='starlit-guild-v4';
 const LEASE=SAVE_KEY+'-tab',FIVE_MINUTES=300000;
 type CloudCopy={bundle:SaveBundle;at:number};
@@ -18,7 +18,7 @@ export function useLocalGame(){
  const persist=useCallback(()=>{const b=current.current;if(!b||!owner.current)return;try{b.serial++;localStorage.setItem(SAVE_KEY,JSON.stringify(b));setSaved(Date.now());setError('');}catch{setError('端末に保存できません。空き容量を確認し、セーブ画面からファイルを保管してください。');}},[]);
  const advance=useCallback((now:number)=>{const b=current.current;if(!b||!owner.current)return;const p=b.profiles.find(p=>p.id===b.active)!;const before=p.state,previous=before.updatedAt;const result=settle(before,now);p.state=result.state;if(!result.rewards.offline)celebrate(before,p.state);
   if(result.rewards.offline&&(result.rewards.count||result.rewards.gold||result.rewards.wood||result.rewards.herbs||result.rewards.ore||result.rewards.xp))setReport(result.rewards);
-  if(document.visibilityState==='visible'){const recent=p.state.squads.flatMap(s=>s.run?.events||[]).filter(e=>e.at>previous&&now-e.at<350&&!['assist','move','rest'].includes(e.kind));for(const e of recent)sound(e.kind);if(result.rewards.count&&!result.rewards.offline)sound('clear');}
+  if(document.visibilityState==='visible'){const recent=p.state.squads.flatMap(s=>s.run?.events||[]).filter(e=>e.at>previous&&now-e.at<350&&!['assist','move','rest'].includes(e.kind));soundEvents(recent);if(result.rewards.count&&!result.rewards.offline)sound('clear');}
   setClock(now);publish(b);
  },[publish]);
  const backup=useCallback(async()=>{if(!current.current||!owner.current||busy.current)return;persist();busy.current=true;setCloudBusy(true);lastAttempt.current=Date.now();
@@ -49,7 +49,7 @@ export function useLocalGame(){
   document.addEventListener('visibilitychange',visible);window.addEventListener('pagehide',closing);window.addEventListener('storage',changed);
   return()=>{closing();mounted.current=false;clearTimeout(init);clearInterval(tick);clearInterval(disk);clearInterval(heartbeat);clearInterval(cloud);document.removeEventListener('visibilitychange',visible);window.removeEventListener('pagehide',closing);window.removeEventListener('storage',changed);try{if(lease()?.id===tabId.current)localStorage.removeItem(LEASE);}catch{}}
  },[advance,backup,persist,publish,refreshCopies]);
- const dispatch=useCallback((a:Action)=>{const b=current.current;if(!b||!owner.current)return false;unlockSound();try{advance(Date.now());const p=b.profiles.find(p=>p.id===b.active)!;const before=p.state;p.state=act(before,a,Date.now());publish(b);persist();celebrate(before,p.state);if(a.type==='assist')sound(a.mode==='heal'?'heal':'assist',true);else if(['start','build','recruit','gear'].includes(a.type))sound('clear',true);if(a.type==='party')toast.success('編成を保存しました。',{id:'party-saved'});return true;}catch(e){toast.error((e as Error).message);return false;}},[advance,persist,publish]);
+ const dispatch=useCallback((a:Action)=>{const b=current.current;if(!b||!owner.current)return false;unlockSound();try{advance(Date.now());const p=b.profiles.find(p=>p.id===b.active)!;const before=p.state;p.state=act(before,a,Date.now());publish(b);persist();celebrate(before,p.state);const known=new Set(before.squads.flatMap(s=>s.run?.events.map(e=>e.id)||[]));const added=p.state.squads.flatMap(s=>s.run?.events||[]).filter(e=>!known.has(e.id)&&e.kind!=='assist');if(added.length)soundEvents(added);if(a.type==='assist')sound(a.mode==='heal'?'heal':'assist',true);else if(['start','build','recruit','gear'].includes(a.type))sound('clear',true);if(a.type==='party')toast.success('編成を保存しました。',{id:'party-saved'});return true;}catch(e){toast.error((e as Error).message);return false;}},[advance,persist,publish]);
  const switchProfile=useCallback((id:string)=>{const b=current.current;if(!b||!owner.current||!b.profiles.some(p=>p.id===id))return;advance(Date.now());b.active=id;setReport(null);advance(Date.now());persist();},[advance,persist]);
  const createProfile=useCallback((test=false)=>{const b=current.current;if(!b||!owner.current)return;if(b.profiles.length>=12){toast.error('記録は12個までです。既存のテスト記録を選んで調整できます。');return;}advance(Date.now());const p=newProfile(test);p.name+=` ${b.profiles.filter(p=>p.test===test).length+1}`;b.profiles.push(p);b.active=p.id;publish(b);setReport(null);persist();toast.success(test?'テスト用の冒険を作りました。':'以前の記録を残して、最初から始めます。');},[advance,persist,publish]);
  const adjust=useCallback((clears:number,lv:number,gold:number)=>{const b=current.current,p=b?.profiles.find(p=>p.id===b.active);if(!b||!p?.test||!owner.current)return;p.state=testState(Date.now(),clears,lv,gold);publish(b);persist();setReport(null);toast.success('テスト用の進行度を変更しました。');},[persist,publish]);

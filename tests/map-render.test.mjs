@@ -25,3 +25,29 @@ test('every restored expedition location renders with finite character coordinat
  }
  assert.equal(visited.size,15);
 });
+
+test('effects follow current events, expire on resume, and do not alter the save',()=>{
+ const state=act(initialState(1000),{type:'start',id:'herbs'},1000),squad=state.squads[0],run=squad.run;
+ run.node=1;run.events=[{id:'1-1-2000-hit-1-leon-1',at:2000,kind:'hit',hero:'leon',amount:10,text:'攻撃'}, {id:'1-0-2100-hit-1-aria-2',at:2100,kind:'hit',hero:'aria',amount:4,text:'前の地点'}];
+ run.scene={at:2000,kind:'burst',title:'全員必殺！ 星灯りの大応援',lines:['任せて！']};
+ const before=structuredClone(state);
+ const render=now=>renderToStaticMarkup(createElement(MapStage,{state,squad,now,onAction:()=>{},ready:true,startQuest:'herbs'}));
+ const current=render(2200);
+ assert.equal((current.match(/class="battle-impact /g)||[]).length,1);
+ assert.match(current,/finisher-scene burst/);
+ assert.match(current,/--scene-age:-200ms/);
+ assert.doesNotMatch(render(7000),/class="battle-impact |finisher-scene burst|class="attack-trail/);
+ assert.doesNotMatch(render(1500),/class="battle-impact |finisher-scene burst/);
+ assert.deepEqual(state,before);
+});
+
+test('all discovery kinds render their artwork before and after automatic collection',()=>{
+ const state=act(initialState(1000),{type:'start',id:'herbs'},1000),squad=state.squads[0];
+ for(const kind of ['chest','herb','spirit'])for(const claimed of [false,true]){
+  squad.run.detour={kind,claimed,node:0,hero:'aria',at:1500,finishAt:2000};
+  const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:2100,onAction:()=>{},ready:true,startQuest:'herbs'}));
+  assert.match(html,new RegExp(`/items/${kind}.png`));
+  assert.match(html,/寄り道を優先して調べる/);
+  if(claimed)assert.match(html,/見つけた！/);
+ }
+});
