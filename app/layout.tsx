@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./phone.css";
+
+export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#111b20'};
 
 export const metadata: Metadata = {
   title: "星灯りの旅団 | STARLIT GUILD",
