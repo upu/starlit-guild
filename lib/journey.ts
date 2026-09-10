@@ -3,7 +3,8 @@ import {storyProgress,availableStories} from './stories.ts';
 import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,type State,type Squad,type Quest} from './game.ts';
 
 export type Destination='adventure'|'quests'|'recruit'|'build'|'companions'|'party';
-export type JourneyGoal={title:string;detail:string;action:string;destination:Destination;questId?:string};
+export type JourneyGoal={hintId?:string;title:string;detail:string;action:string;destination:Destination;questId?:string};
+export function journeyHintKey(goal:JourneyGoal){return goal.hintId||[goal.destination,goal.questId||'',goal.title].join(':');}
 export function buildingCost(town:number){return town===0?{gold:120,wood:12,ore:0,herbs:0,clears:1}:{gold:600,wood:60,ore:12,herbs:20,clears:3};}
 export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([['gold','G'],['wood','木材'],['ore','鉱石'],['herbs','薬草']] as const).filter(([key])=>s[key]<cost[key]).map(([key,label])=>key==='gold'?`${cost[key]-s[key]} G`:`${label} ${cost[key]-s[key]}個`);}
 export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town).clears&&!buildingNeeds(s).length;}
@@ -11,10 +12,10 @@ export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town
 export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
  if(s.clears===0){
   if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「出発する」でアリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'冒険へ',destination:'adventure'};
-  if(sq.run.phase==='rest')return {title:'回復で、もう一度出発',detail:'体力がなくなると休憩します。「回復」で立て直せます。見守っていても自動で再挑戦します。',action:'冒険を見守る',destination:'adventure'};
+  if(sq.run.phase==='rest')return {title:'回復で、もう一度出発',detail:'体力がなくなると休憩します。マップをタップすると回復して立て直せます。見守っていても自動で再挑戦します。',action:'冒険を見守る',destination:'adventure'};
   if(sq.run.node>=3)return {title:'最初の報酬を確保！ 次は酒場へ',detail:'3地点ごとの報酬は、途中で帰還しても残ります。15地点を進んで依頼を達成すると、集めた木材とお金で酒場を建てられます。',action:'冒険を見守る',destination:'adventure'};
   if(sq.run.cheer>0||sq.run.scene?.kind==='burst')return {title:'応援が届いた！ あとは見守っても大丈夫',detail:'応援が100になると全員必殺技。光る寄り道も仲間が自動で調べます。3地点進むと最初の区間報酬を持ち帰れます。',action:'冒険を見守る',destination:'adventure'};
-  return {title:'「手助け」で、ふたりを応援しよう',detail:'下の「手助け」や敵・素材をタップすると加勢できます。回数制限はありません。何も押さずに見守っても、報酬を集められます。',action:'冒険を見守る',destination:'adventure'};
+  return {title:'マップをタップして手助けしよう',detail:'マップの空いているところや敵・素材をタップすると手助け、仲間やHP表示をタップすると回復できます。回数制限はありません。何も押さずに見守っても、報酬を集められます。',action:'冒険を見守る',destination:'adventure'};
  }
  if(canBuild(s))return {title:s.town===0?'酒場を建てられます':'鍛冶場と薬草園を作れます',detail:s.town===0?'最初の冒険で集めた素材を、みんなの帰る場所に。出発時の体力と絆の育ち方が変わります。':'全員の能力が上がり、薬草の収穫と回復も増えます。',action:'建設へ',destination:'build'};
  const recruit=recruitments.find(r=>!s.owned.includes(r.hero)&&met(s,r));
@@ -24,10 +25,10 @@ export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
  if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間で新しい隊を作り、別の素材を並行して探せます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
  if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は、自動周回をオフにすると1周で帰還します。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
  if(recruit)return {title:recruit.name+'と冒険する支度をしよう',detail:recruitmentHint(s,recruit)+'。対象の依頼は出会いの画面で確認できます。',action:'素材と出会いを見る',destination:'recruit'};
- if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
+ if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {hintId:'building-materials-'+s.town,title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
  const nextQuest=quests.find(q=>q.unlock>s.clears),nextHero=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock>s.clears);
- if(nextHero&&(!nextQuest||nextHero.unlock<nextQuest.unlock))return {title:`あと ${nextHero.unlock-s.clears} 件で${nextHero.name}と出会えます`,detail:'依頼を最後まで達成すると、新しい出会いに近づきます。自動周回でも進められます。',action:'依頼を見る',destination:'quests'};
- if(nextQuest)return {title:`あと ${nextQuest.unlock-s.clears} 件で新しい依頼`,detail:`次の行き先は${nextQuest.region}。仲間の得意分野に合う依頼で支度を進めましょう。`,action:'依頼を見る',destination:'quests'};
+ if(nextHero&&(!nextQuest||nextHero.unlock<nextQuest.unlock))return {hintId:'next-hero-'+nextHero.id,title:`あと ${nextHero.unlock-s.clears} 件で${nextHero.name}と出会えます`,detail:'依頼を最後まで達成すると、新しい出会いに近づきます。自動周回でも進められます。',action:'依頼を見る',destination:'quests'};
+ if(nextQuest)return {hintId:'next-quest-'+nextQuest.id,title:`あと ${nextQuest.unlock-s.clears} 件で新しい依頼`,detail:`次の行き先は${nextQuest.region}。仲間の得意分野に合う依頼で支度を進めましょう。`,action:'依頼を見る',destination:'quests'};
  return {title:'お気に入りのふたりの絆を育てよう',detail:'相性のよい仲間と区間を進むと、絆が育ち、連携技と会話が変わります。',action:'編成を考える',destination:'companions'};
 }
 

@@ -1,0 +1,146 @@
+/* A switch has a 44px hit area, independent of its 24px visual track. */
+button[data-slot="switch"] {
+ position:relative;display:inline-flex;flex:0 0 84px;width:84px;height:44px;min-height:44px;
+ padding:0;border:0;border-radius:8px;box-shadow:none;gap:0;background:transparent;color:#d5dec7;
+}
+button[data-slot="switch"]:hover:not(:disabled){background:#ffffff08}
+button[data-slot="switch"]::before{content:"";position:absolute;left:2px;top:10px;width:44px;height:24px;border:1px solid #819080;border-radius:20px;background:#33453f;transition:background .15s}
+button[data-slot="switch"][data-state="checked"]::before{background:#d8bd78;border-color:#e6ce93}
+button[data-slot="switch"] [data-slot="switch-thumb"]{position:absolute;left:6px;top:14px;width:16px;height:16px;border-radius:50%;background:#e2e9dd;transform:translateX(0);transition:transform .15s}
+button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"]{transform:translateX(20px);background:#20352b}
+[data-slot="switch-state"]{position:absolute;right:0;width:32px;font-size:12px;font-weight:600;text-align:center}
+[data-slot="switch"][data-state="checked"] .switch-off,[data-slot="switch"][data-state="unchecked"] .switch-on{display:none}
+.phone-header .save-status{margin-left:auto}
+.phone-game .adventure-toolbar{height:auto;min-height:48px;gap:6px;padding:3px 12px;flex-shrink:0}
+.phone-game .adventure-toolbar .squad-selector{flex:1;min-width:0;justify-content:flex-start;min-height:44px;padding:4px 0}
+.squad-selector>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.phone-game .adventure-toolbar .edit-party{min-height:38px;padding:4px 12px;background:#294236;border:1px solid #61765a;border-radius:7px;color:#e7d5a5}
+.phone-game .adventure-toolbar>.icon-button{margin-left:0;width:44px;min-width:44px;height:44px}
+.adventure-destination{display:flex;align-items:center;gap:8px;padding:4px 12px 10px;flex-shrink:0;border-bottom:1px solid #405a49}
+.adventure-destination>div{flex:1;min-width:0}
+.adventure-destination small,.adventure-destination b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adventure-destination small{font-size:11px;color:#b4c6ae;margin-bottom:3px}
+.adventure-destination b{font-size:14px;font-weight:500;color:#f0dca8}
+.adventure-destination>button{min-height:44px;padding:6px 8px;font-size:12px;white-space:nowrap}
+.adventure-return{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:6px 12px;border-top:1px solid #425b48;flex-shrink:0}
+.adventure-return button{min-height:44px;padding:6px 5px;font-size:12px}
+.adventure-return button[aria-pressed="true"]{background:#374b33;color:#ffe3a1;border-color:#d8bc75}
+.phone-game .phone-party,.phone-game .phone-memories{display:flex;flex-direction:column;gap:16px;min-height:0;padding:16px 14px;overflow-y:auto;overscroll-behavior:contain}
+.phone-party>*,.phone-memories>*{flex-shrink:0}
+.phone-party h3,.quest-summary h3{font-size:18px;font-weight:500;color:#efdbac}
+.phone-party small{font-size:12px;line-height:1.7;color:#bacbad}
+.phone-party p{font-size:14px;line-height:1.8;color:#c0cdb6}
+.phone-party .recruit-link{font-size:12px;min-height:44px;padding:7px}
+.squad-list{display:flex;flex-direction:column;gap:8px}
+.phone-game .squad-card{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:12px;background:#213b31;border:1px solid #5a7052;color:#e7d9b6;border-radius:9px}
+.squad-card>span:first-child{min-width:0;flex:1}
+.squad-card b{font-size:14px;font-weight:500;display:block}
+.squad-card small{display:block;font-size:11px}
+.phone-game .squad-card[aria-pressed="true"]{border-color:#d6ba70;background:#344b36;box-shadow:inset 3px 0 #d6ba70}
+.squad-faces{display:flex;flex-shrink:0}
+.squad-faces .sprite{margin-left:-7px;flex-shrink:0}
+.party-editor{display:flex;flex-direction:column;gap:14px;border-top:1px solid #506649;padding-top:16px}
+.party-editor .screen-heading{min-height:30px}
+.party-editor .screen-heading>span{font-size:13px;white-space:nowrap;color:#d6d7b5}
+.party-running{padding:12px;background:#283e31;border:1px solid #72815a;border-radius:8px;display:flex;flex-wrap:wrap;gap:8px}
+.party-running p{width:100%}
+.party-running button{font-size:12px;min-height:44px;flex:1;padding:7px}
+.roster-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.roster-card{border:1px solid #516c51;border-radius:9px;overflow:hidden;background:#20392e;min-width:0}
+.roster-card.picked{border-color:#d8bd78;background:#304834}
+.phone-game .roster-pick{display:flex;flex-direction:column;width:100%;border:0;border-radius:0;padding:10px 5px 8px;gap:2px;background:transparent;color:#ecdbaf;font-weight:400}
+.phone-game .roster-pick:hover:not(:disabled){background:#ffffff08}
+.phone-game .roster-pick:disabled{opacity:.75}
+.roster-pick b{display:flex;align-items:center;gap:4px;font-size:15px;font-weight:500}
+.roster-pick small{font-size:11px}
+.roster-stats{font-size:11px;color:#c7d5bc;white-space:nowrap;margin-top:5px}
+.phone-game .roster-info{min-height:44px;width:100%;border-radius:0;border:0;border-top:1px solid #54654c;font-size:12px;background:#162d2560;color:#e5d1a0;padding:7px}
+.party-save{position:sticky;bottom:-16px;z-index:2;display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#152c27f5;border:1px solid #687451;border-radius:8px;box-shadow:0 -4px 16px #0a171b30}
+.party-save>span{width:100%;font-size:12px;color:#ead29d}
+.party-save button{flex:1;min-height:44px;font-size:13px;padding:7px}
+.phone-memories .screen-heading button{min-height:44px;font-size:12px;padding:8px}
+.phone-navigation .memory-nav-icon{position:relative;display:inline-flex}
+.memory-nav-icon svg{width:21px;height:21px}
+.unread-dot{position:absolute;right:-5px;top:-3px;width:8px;height:8px;border-radius:50%;background:#e7746c;box-shadow:0 0 0 2px #1a322b}
+.phone-game .story-library p{font-size:14px;line-height:1.8;color:#c9d5be}
+.memory-filters{display:flex;gap:8px}
+.memory-filters button{min-height:44px;padding:8px 15px;background:#223b30;border:1px solid #596d4f;color:#c5d3b7;font-size:13px}
+.memory-filters button[aria-pressed="true"]{background:#d7bd78;color:#20352c;border-color:#d7bd78}
+.still-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.still-gallery button{display:block;padding:0;overflow:hidden;border:1px solid #70815b;background:#263d30;color:#eedbb0;text-align:left}
+.still-gallery img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.still-gallery button>span{display:flex;align-items:center;justify-content:space-between;padding:9px;font-size:12px}
+.still-gallery button:only-child{grid-column:1/-1}
+.phone-dialog.story-dialog{max-width:960px!important}
+.story-still .still-expand{position:relative;display:block;padding:0;width:100%;border:0;border-radius:0;background:#102720}
+.still-expand img{display:block;width:100%;height:auto}
+.still-expand>span{position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;min-height:36px;padding:6px 10px;border-radius:6px;background:#102820e6;border:1px solid #cfbb87;color:#f0e0b7;font-size:12px}
+.art-viewer[data-slot="dialog-content"]{width:100vw!important;max-width:100vw!important;height:100dvh;max-height:100dvh;inset:0!important;transform:none!important;translate:none!important;display:flex;flex-direction:column;gap:8px;padding:16px!important;padding-top:max(16px,env(safe-area-inset-top))!important;padding-bottom:max(12px,env(safe-area-inset-bottom))!important;background:#0b1817;border:0;border-radius:0;overflow:hidden}
+.art-viewer [data-slot="dialog-header"]{flex-shrink:0;padding-right:56px}
+.art-viewer [data-slot="dialog-title"]{font-size:18px;color:#f0dfb5}
+.art-viewer [data-slot="dialog-description"]{font-size:12px;color:#b5c4b4}
+body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner-toaster]{visibility:hidden}
+.art-viewer>img{display:block;flex:1;min-height:0;min-width:0;width:100%;height:0;object-fit:contain}
+.art-viewer [data-slot="dialog-close"],.phone-dialog [data-slot="dialog-close"],.save-dialog [data-slot="dialog-close"]{width:44px;height:44px;min-height:44px;padding:0;background:#284136;color:#efdbac;border:1px solid #6b7d59;border-radius:8px;opacity:1}
+.phone-dialog [data-slot="dialog-header"],.save-dialog [data-slot="dialog-header"]{padding-right:48px;text-align:left;min-height:44px}
+.quest-picker{display:flex;flex-direction:column;gap:16px}
+.departure-party{display:flex;flex-direction:column;gap:4px;padding:12px;background:#273f31;border:1px solid #5b7253;border-radius:8px}
+.departure-party>span{font-size:12px}
+.quest-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.quest-options .quest-option{justify-content:space-between;gap:4px;padding:12px 9px;background:#223c30;color:#ecdbb0;border:1px solid #5d7353;text-align:left;min-width:0}
+.quest-option span{min-width:0;display:flex;flex-direction:column;gap:4px}
+.quest-option small{font-size:11px;line-height:1.5;color:#c2d0b6}
+.quest-option b{font-size:13px;font-weight:500}
+.quest-option svg{flex-shrink:0;width:16px}
+.quest-options .quest-option[aria-pressed="true"]{background:#3a5038;border-color:#e2c77f}
+.quest-summary{display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid #758058;border-radius:8px;background:#2c4232}
+.quest-summary small{font-size:12px;line-height:1.8}
+.quest-confirm{position:sticky;bottom:-23px;background:#132625f5;padding:12px 0 8px;display:flex;flex-direction:column;gap:8px}
+.game-confirm[data-slot="alert-dialog-content"]{background:#152a25;color:#e5d7b7;border-color:#8a8a64;max-height:90dvh;overflow-y:auto}
+.game-confirm [data-slot="alert-dialog-description"]{color:#c8d3bf;line-height:1.8}
+.game-confirm [data-slot="alert-dialog-cancel"],.game-confirm button.outline{background:transparent;border:1px solid #849574;color:#e6d5b0}
+.game-confirm button{min-height:44px;height:auto;white-space:normal}
+@media(min-width:700px){.phone-dialog.quest-dialog{max-width:680px!important}.story-dialog .story-reader{gap:20px}.story-dialog .story-line>div{padding:12px 18px}}
+
+@media(prefers-reduced-motion:reduce){button[data-slot="switch"]::before,button[data-slot="switch"] [data-slot="switch-thumb"]{transition:none}}
+
+/* Use the available viewport; reserve the home-indicator inset exactly once. */
+.phone-game{height:100dvh;max-height:none;margin-block:0}
+.phone-game .phone-screen{overflow:hidden}
+.phone-game .phone-adventure{height:100%;min-height:0;overflow:hidden}
+.phone-game .phone-adventure .map-shell{min-height:0}
+.phone-game .phone-home{min-height:0}
+.phone-game .phone-navigation{height:calc(54px + env(safe-area-inset-bottom))!important;padding:3px 8px calc(3px + env(safe-area-inset-bottom))!important}
+.phone-brand>div{min-width:0}
+.phone-brand h1{white-space:nowrap}
+.phone-header .save-status{margin-left:0}
+.phone-game .journey-hint-button{flex-shrink:0;min-height:44px;padding:4px 7px;gap:4px;font-size:12px;font-weight:400;background:#264035;color:#e9d4a0;border-color:#50624b}
+.journey-hint-button>span{position:relative;display:flex}
+.journey-hint-button .unread-dot{right:-2px;top:-4px}
+.phone-game .adventure-toolbar{min-height:44px;padding-block:0}
+.phone-game .adventure-destination{padding-bottom:6px}
+.phone-game .adventure-return{padding-block:3px}
+/* Only interactive map objects intercept a tap; scenery falls through to the map button. */
+.phone-game .map-tap-surface{position:absolute;inset:0;z-index:0;width:100%;height:100%;padding:0;border:0;border-radius:0;background:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.phone-game .map-tap-surface:hover:not(:disabled){background:transparent}
+.phone-game .map-tap-surface:focus-visible{outline-offset:-4px}
+.adventure-map .map-heading,.adventure-map .map-node,.adventure-map .route-line,.adventure-map .quest-guest,.adventure-map .map-caption{pointer-events:none}
+.adventure-map .map-node .target{pointer-events:auto;min-width:72px;min-height:72px}
+.adventure-map .map-node.current{z-index:6}
+.phone-game .hero-heal-target{position:absolute;inset:0 -5px;z-index:1;min-width:64px;min-height:72px;border:0;padding:0;background:transparent;pointer-events:auto}
+.phone-game .hero-heal-target:hover:not(:disabled){background:#a4dbaa18}
+.phone-game .hero-heal-target:disabled{pointer-events:none}
+.phone-game .hero-heal-target:active:not(:disabled){background:#a4dbaa35}
+.phone-game .party-health{min-height:44px;bottom:8px;font-weight:400;touch-action:manipulation}
+.phone-game .party-health:disabled{opacity:1}
+.phone-game .party-health:hover:not(:disabled){background:#284c39}
+.phone-game .cheer-gauge{display:flex;align-items:center;gap:10px;height:32px;padding:5px 12px}
+.phone-game .cheer-gauge>div:first-child{flex-shrink:0;margin:0;font-size:11px}
+.phone-game .cheer-gauge>[data-slot=progress]{flex:1;min-width:0}
+.phone-game .journey-banter{min-height:0;max-height:88px;padding:7px 12px;gap:4px}
+.phone-game .banter-line{font-size:13px;line-height:1.6;gap:7px}
+.phone-game .banter-line>span{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.phone-game .phone-banter{display:flex;min-height:34px}
+@media(max-width:360px){.phone-brand h1{font-size:16px;letter-spacing:0}.phone-brand{gap:6px}.phone-brand>img{width:32px;height:32px}.phone-game .journey-hint-button{flex-direction:column;font-size:10px;gap:0;min-width:44px;padding:2px}.phone-header{padding-inline:8px}}
+@media(max-height:700px){.phone-game .journey-banter{max-height:68px;padding-block:5px}.phone-game .banter-line>span{-webkit-line-clamp:1}}
+@media(max-height:480px){.phone-game .phone-adventure{overflow-y:auto}.phone-game .phone-adventure .map-shell{flex:1 0 220px}.phone-game .phone-home{overflow-y:auto}.phone-game .phone-home .home-map{min-height:220px}}

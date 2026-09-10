@@ -4,6 +4,7 @@ import "./phone.css";
 import "./mobile-polish.css";
 import "./battle-effects.css";
 import "./stories.css";
+import "./navigation.css"; // Adventure, party, and memory navigation.
 
 export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
 

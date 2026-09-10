@@ -67,3 +67,22 @@ test('all discovery kinds render their artwork before and after automatic collec
   if(claimed)assert.match(html,/見つけた！/);
  }
 });
+
+function mapButton(state,className,ready=true){
+ const tree=MapStage({state,squad:state.squads[0],now:state.updatedAt,onAction:action=>{state=act(state,action,state.updatedAt);},ready,startQuest:'herbs'});
+ function find(node){if(!node||typeof node!=='object')return null;if(node.type==='button'&&node.props.className?.split(' ').includes(className))return node;return [node.props?.children].flat(Infinity).map(find).find(Boolean);}
+ const button=find(tree);
+ return {button,click(){assert.ok(button);assert.equal(button.props.disabled,false);button.props.onClick();return state;}};
+}
+test('map and target taps each dispatch a single assist while idle and unavailable maps are guarded',()=>{
+ const idle=initialState(1000);assert.equal(mapButton(idle,'map-tap-surface').button,undefined);
+ const state=act(idle,{type:'start',id:'herbs'},1000);
+ for(const cls of ['map-tap-surface','target']){const after=mapButton(state,cls).click();assert.equal(after.squads[0].run.cheer,5);assert.equal(after.squads[0].run.hits,1);assert.equal(mapButton(state,cls,false).button.props.disabled,true);}
+});
+test('resting map taps recover the party and hero and HP taps heal without striking',()=>{
+ const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
+ state.squads[0].run.hp=0;state.squads[0].run.phase='rest';
+ for(const cls of ['map-tap-surface','target','hero-heal-target','party-health']){const after=mapButton(state,cls).click().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
+ state.squads[0].run.phase='work';state.squads[0].run.hp=10;
+ for(const cls of ['hero-heal-target','party-health']){const before=state.squads[0].run;const after=mapButton(state,cls).click().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);}
+});

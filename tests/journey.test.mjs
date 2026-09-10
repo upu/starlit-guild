@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {initialState,act,settle,quests,testState} from '../lib/game.ts';
-import {nextGoal,canBuild,buildingNeeds,partyPreview,questAdvice,journeyNotice} from '../lib/journey.ts';
+import {nextGoal,journeyHintKey,canBuild,buildingNeeds,partyPreview,questAdvice,journeyNotice} from '../lib/journey.ts';
 
 test('first adventure leads from departure through help and secured rewards to building without changing the save',()=>{
  let s=initialState(1000);const snapshot=structuredClone(s);
@@ -38,4 +38,12 @@ test('offline recovery can point to newly affordable building and recruitment wi
  const result=settle(s,1000+3600000);assert.ok(result.rewards.offline);assert.equal(nextGoal(result.state).destination,'build');
  assert.equal(journeyNotice(result.state,structuredClone(result.state)),null);
  const built=act(result.state,{type:'build'},result.state.updatedAt);assert.equal(nextGoal(built).destination,'recruit');
+});
+
+test('hint identity ignores material counters but changes when construction becomes available',()=>{
+ const state=initialState(1000);state.clears=3;state.town=1;state.owned.push('mira');state.done={herbs:2,cart:1};state.gold=100;
+ const first=nextGoal(state);state.gold=200;state.wood=60;
+ const progress=nextGoal(state);assert.notEqual(first.title,progress.title);assert.equal(journeyHintKey(first),journeyHintKey(progress));
+ state.gold=600;state.ore=12;state.herbs=20;
+ assert.notEqual(journeyHintKey(progress),journeyHintKey(nextGoal(state)));
 });

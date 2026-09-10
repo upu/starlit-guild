@@ -28,6 +28,7 @@ function Switch({
           "pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0 dark:data-[state=checked]:bg-primary-foreground dark:data-[state=unchecked]:bg-foreground"
         )}
       />
+      <span data-slot="switch-state" aria-hidden="true"><span className="switch-on">ON</span><span className="switch-off">OFF</span></span>
     </SwitchPrimitive.Root>
   )
 }

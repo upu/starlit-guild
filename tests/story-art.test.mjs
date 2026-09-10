@@ -10,6 +10,11 @@ test('every story illustration exists with its declared dimensions and a valid r
   const scene=stories.find(st=>st.id===id);
   assert.ok(scene,id);
   assert.ok(art.revealAtLine>=0&&art.revealAtLine<scene.lines.length,id);
+  assert.equal(art.revealAtLine%3,0,`${id}: reveal on a reader page boundary`);
+  for(let pageStart=0;pageStart<scene.lines.length;pageStart+=3){
+   assert.equal(storyArtAt(id,pageStart),pageStart>=art.revealAtLine?art:undefined,`${id}: page starting at ${pageStart}`);
+  }
+  assert.equal(storyArtAt(id,Infinity),art,`${id}: available for the read-story gallery`);
   assert.ok(art.alt.trim().length>0,id);
   assert.match(art.src,/^\/stories\/[a-z-]+\.png$/);
   const bytes=await readFile(new URL('../public'+art.src,import.meta.url));
