@@ -55,3 +55,15 @@ Use case: illustration-story. Create one original standalone wide landscape game
 ## fireside
 
 Use case: illustration-story. Create one original standalone wide landscape game event CG, approximately 1536 x 1024 pixels, for a cozy fantasy idle RPG. Reference input is character design only: the first two characters of the supplied spritesheet are Aria and Leon; ignore all other sprites and do not reproduce or edit the sheet. Convert their chibi designs into naturally proportioned youthful adult fantasy adventurers in polished hand-painted Japanese fantasy storybook/anime illustration. Aria: wavy blonde hair, green eyes, pointed elf ears, green hood with a pale feather and delicate gold trim, green cloak, white tunic, brown leather belts, gloves and boots, recognizable archer bow. Leon: tousled brown hair, brown eyes, red scarf and short red cape, blue tunic, silver shoulder armor, brown leather gloves and boots, sword. Scene: after a mountain pilgrimage, they are seated shoulder-close on the same log beside a small nighttime campfire. Aria has just settled slightly closer. In the small visible gap between them, her gloved hand rests on the log beside his gloved hand, clearly separated and not touching. They both gaze down toward the fire with quiet restrained expressions and relaxed shoulders. Convey the subtle feeling of longstanding childhood friends through the small distance between them, no contrived blush. The green cloak and red scarf are very recognizable. Her bow and his fully sheathed sword are safely put beside the log. Soft stars and deep forest behind. Emerald nighttime shadows, warm golden firelight on faces and hands, tactile painted cloth and wood. Centered medium framing with both faces, the separated hands on the log, and small fire clearly legible at 420 pixels wide; naturally proportioned bodies, carefully drawn hands. Single continuous full-bleed composition with atmospheric background without clutter. No text, captions, lettering, hearts, logos, frame, split panels, watermarks. No embrace, kiss, handholding, touching hands, or explicit romance.
+
+## オリジナルキャラクターの掛け合い（2026-09-10追加）
+
+| 物語 | 画像 | 最初に表示する行（0起点） | 動作 |
+| --- | --- | --- | --- |
+| 試飲役には向かない | merrill-poppy-tasting.png | 3 | 試作品を飲んで顔をしかめるメリルと、慌てるポピー |
+| 返さない宝物 | pumpety-finn-keepsake.png | 6 | 人形がお辞儀をし、プティが鍵を返す |
+| 三分を数える手 | chacha-mira-tea.png | 3 | ミラが砂時計を置き直し、チャチャが座ってカップを持つ |
+
+3枚とも1536×1024。衣装と既存の仲間の外見を引き継ぎ、文字や吹き出しは入れない。生成プロンプトと入力画像は [修正版の制作記録](original-character-art-v2-prompts.json)、画像の一覧は [オリジナルキャラクターのギャラリー](original-character-gallery.md)。
+
+目視確認では人物は各2人で、指定衣装・表情・小道具・場面に対応している。チャチャの絵には予備も含めた3客のカップがあり、大剣は画面端で一部切れるが、物語の動作と鑑賞を妨げないため採用。

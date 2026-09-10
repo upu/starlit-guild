@@ -1,0 +1,33 @@
+{
+  "mode": "built-in image_gen",
+  "calls": 3,
+  "records": [
+    {
+      "name": "merrill",
+      "refs": [
+        "C:/Users/spitz/OneDrive/画像/TW/メリル/a10777_zen_2.jpg",
+        "C:/Users/spitz/OneDrive/画像/TW/メリル/a10777_bust_3.jpg"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: single full-body chibi JRPG party character cutout for a game UI. Generate exactly one character illustration of Merrill using the attached images ONLY as character identity references. Preserve her green bob hair with tiny white flowers, red hair bow, expressive eyes, dryad girl identity, cream and earthy traveling clothes and small skull pendant. Reimagine in a cohesive polished illustrated JRPG chibi style: approximately 3 heads tall, bold clean dark contour, rich colored cel shading with delicate painted highlights, charming expressive face, detailed yet extremely readable silhouette at 84px and 160px. Pose: cheerful cheeky dancing step, a hungry mischievous grin. Her weapon is a small elegant lyre CLEARLY STRAPPED TO ONE FOREARM, with visible fastening and strings, not just a handheld instrument. Add restrained autumn orange leaves and Halloween accents to the outfit, keeping hair and face uncluttered. Full figure head to boots, lyre fully in frame; centered square composition with generous transparent margins. Actual transparent alpha background, no environment, no floor plane, no large shadow, no border. No text, logos, watermark, gore, or violence. Clothing modest and adventure practical. One character only.",
+      "output_hint": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3 as C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3\\exec-c97797b6-c82f-425d-9b5c-79e12b8fb684.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "name": "pumpety",
+      "refs": [
+        "C:/Users/spitz/OneDrive/画像/TW/パンプティ/367059_e13571_totalbody.jpg",
+        "C:/Users/spitz/OneDrive/画像/TW/パンプティ/c30239_pzen_1.jpg"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: single full-body chibi JRPG party character cutout for a game UI. Generate exactly one character illustration of Pumpety using the attached images ONLY as character identity references. Preserve brown twin tails, bright turquoise eyes, a visible tiny fang in her mischievous smile, pumpkin orange and leaf green dress, ribbons, black boots. Dwarf heritage with petite compact sturdy proportions. She is a DOLL MASTER: one hand holds a small marionette crossbar, visible puppet strings lead to exactly one small spooky pumpkin doll hanging beside her. Her other hand poses playfully. Absolutely NO keyboard, keytar, musical instrument or microphone, even though one reference contains one. Reimagine in a cohesive polished illustrated JRPG chibi style: approximately 3 heads tall, bold clean dark contour, rich colored cel shading with delicate painted highlights, charming expressive face, detailed yet extremely readable silhouette at 84px and 160px. Keep an airy clear silhouette between doll and character. Full figure head to boots, strings and doll fully in frame; centered square composition with generous transparent margins. Actual transparent alpha background, no environment, no floor plane, no large shadow, no border. No text, logos, watermark, gore, or violence. Clothing modest and adventure practical. One girl and her one small doll only.",
+      "output_hint": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3 as C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3\\exec-efddc2f6-2626-40e4-b10e-572b1cf288ba.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "name": "chacha",
+      "refs": [
+        "C:/Users/spitz/OneDrive/画像/TW/チャチャ/c27442_pzen_3.jpg",
+        "C:/Users/spitz/OneDrive/画像/TW/チャチャ/a26705_zen_1.jpg"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: single full-body chibi JRPG party character cutout for a game UI. Generate exactly one character illustration of Chacha using the attached images ONLY as hair, face, wings, and outfit color references. Preserve very long orange hair, big red hair ribbon, red and gold fantasy clothing and warm orange eyes, with small white feathered angel wings. User's body and weapon specification OVERRIDES slender proportions in reference: she is notably muscular, stocky and powerfully built, a strong adult girl with obvious rounded shoulder muscles, strong broad arms and powerful thick legs, visible muscles while still charming and cute. Relaxed gentle smile, serene disposition. She effortlessly carries an ENORMOUS broad-bladed greatsword with one hand, angled beside her, and holds a tiny tea cup delicately in the other. The sword should be impressively massive but the complete blade must fit inside the image. Reimagine in a cohesive polished illustrated JRPG chibi style: approximately 3 heads tall, bold clean dark contour, rich colored cel shading with delicate painted highlights, charming expressive face, detailed yet extremely readable silhouette at 84px and 160px. Sleeveless red and gold practical fantasy outfit, boots, no revealing slits. Full figure head to boots, wings and whole greatsword fully in frame; centered square composition with generous transparent margins. Actual transparent alpha background, no environment, no floor plane, no large shadow, no border. No text, logos, watermark, gore, or violence. Not a slender healer. One character only.",
+      "output_hint": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3 as C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3\\exec-208d91a8-559f-46e2-ab76-c3b465f2d8c0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ]
+}

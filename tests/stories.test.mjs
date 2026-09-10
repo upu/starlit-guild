@@ -10,7 +10,7 @@ const start=s=>act(s,{type:'start',id:'herbs'},s.updatedAt);
 const ids=s=>availableStories(s).map(st=>st.id);
 function finish(s){let i=0;while(s.squads[0].run&&i++<10000)s=settle(s,s.squads[0].run.nextAt).state;assert.ok(i<10000);return s;}
 
-test('all nine quests have a departure and an ending; the accepted fireside scene is readable',()=>{
+test('all quests have a departure and an ending; the accepted fireside scene is readable',()=>{
  assert.equal(new Set(stories.map(st=>st.id)).size,stories.length);
  for(const q of quests){assert.equal(stories.filter(st=>st.quest===q.id&&st.chapter==='departure').length,1);assert.equal(stories.filter(st=>st.quest===q.id&&st.chapter==='return').length,1);}
  assert.ok(stories.find(st=>st.id==='pilgrim-return').lines.some(line=>line.text==='今は、どこにも行かないよ。'));
@@ -94,6 +94,7 @@ test('save validation rejects unknown scenes, duplicate reads and inconsistent c
   {departed:['missing'],completed:[],read:[]},
  ]){const s=initialState(1000);s.story=story;assert.throws(()=>roundtrip(s));}
 });
+
 
 test('a departure read before starting is acknowledged atomically at the actual departure time',()=>{
  const initial=initialState(1000);

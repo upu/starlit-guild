@@ -8,6 +8,21 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Record<string, StoryArt> = {
+ 'visit-merrill-poppy': {
+  src: '/stories/merrill-poppy-tasting.png',
+  alt: '薬草園で紫色の試作品を飲み、苦さに顔をしかめるメリルと、飲んだことに気づいて慌てるポピー。メリルは籠手を外し、素手で瓶を持っている。',
+  width: 1536, height: 1024, revealAtLine: 3,
+ },
+ 'visit-pumpety-finn': {
+  src: '/stories/pumpety-finn-keepsake.png',
+  alt: 'かぼちゃの人形にお辞儀をさせ、真鍮の鍵を返すプティ。フィンは胸元で大切な木のボタンを握っている。',
+  width: 1536, height: 1024, revealAtLine: 6,
+ },
+ 'camp-chacha-mira': {
+  src: '/stories/chacha-mira-tea.png',
+  alt: '銀の鎧と青い服のチャチャが大剣を脇に置いてカップを持ち、ミラが砂時計を置き直す酒場のお茶の時間。',
+  width: 1536, height: 1024, revealAtLine: 3,
+ },
  'herbs-departure': {
   src: '/stories/first-map.png',
   alt: '森の拠点で地図を広げるアリアと、その隣で道を確かめるレオン。',

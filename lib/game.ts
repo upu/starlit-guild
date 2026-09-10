@@ -1,4 +1,5 @@
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
+import {chachaHero} from './original-characters.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
 import {availableStories,coupleCombo,storyProgress,together,type StoryProgress} from './stories.ts';
 import {type State as V2State} from './game-v2.ts';
@@ -6,9 +7,12 @@ import {heroes as baseHeroes,quests as baseQuests,bonds,level,type State as Lega
 export {bonds,level};
 export type Kind='採取'|'護衛'|'討伐';
 // price remains legacy profile metadata; recruitment recipes are defined in recruitment.ts.
-export const heroes=baseHeroes.map((h,i)=>({...h,sprite:i,unlock:i<2?0:recruitments.find(r=>r.hero===h.id)!.unlock,price:[0,0,100,220,450,700,950,1300][i]}));
-export const quests=baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q.xp*5,herbs:q.herbs*5,ore:q.ore*5,unlock:[0,2,4,10,15,20,35,45,60][i],enemy:i===8?10:i>=3?9:8}));
-export type Quest=typeof quests[number]&{companion?:string;background?:string;gatherTarget?:string;escortTarget?:string};
+export const heroes=[...baseHeroes.map((h,i)=>({...h,sprite:i,unlock:i<2?0:recruitments.find(r=>r.hero===h.id)!.unlock,price:[0,0,100,220,450,700,950,1300][i]})),chachaHero];
+export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;escortTarget?:string};
+export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q.xp*5,herbs:q.herbs*5,ore:q.ore*5,unlock:[0,2,4,10,15,20,35,45,60][i],enemy:i===8?10:i>=3?9:8})),
+ {id:'midnight-snack',name:'その耳はおやつじゃない',kind:'討伐',region:'かぼちゃ灯りの森',desc:'マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。',tier:1,need:48,seconds:180,gold:420,xp:140,herbs:15,ore:15,unlock:5,enemy:12,enemyName:'メリルのつまみ食い行進',background:'/forest.png'},
+ {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/ruins.png'},
+] satisfies Quest[]).sort((a,b)=>a.unlock-b.unlock);
 export const recruitmentQuests:Quest[]=recruitments.map(r=>({...r.mission,id:'join-'+r.hero,companion:r.hero,unlock:r.unlock,seconds:600,gold:100*r.mission.tier,xp:100*r.mission.tier,herbs:0,ore:0}));
 export const allQuests:Quest[]=[...quests,...recruitmentQuests];
 export type Encounter='battle'|'gather'|'escort';
@@ -28,7 +32,7 @@ export const power=(s:State,sq:Squad,q:Quest)=>stats(s,sq)[['採取','護衛','�
 export const memberLimit=(s:State)=>s.clears>=10?3:2;
 export const squadLimit=(s:State)=>s.owned.length>=6?3:s.owned.length>=4?2:1;
 export function encounter(q:Quest,node:number):Encounter{return q.kind==='採取'?(node%3===1?'battle':'gather'):q.kind==='護衛'?((q.companion?node%3:node)===1?'escort':'battle'):'battle';}
-export function targetName(q:Quest,node:number){const k=encounter(q,node);return k==='gather'?(q.gatherTarget||(q.id==='crystal'?'青晶石':q.id==='blossom'?'千年樹の花':'月しずく草')):k==='escort'?(q.escortTarget||'旅人を目的地へ'):q.enemy===10?'星喰い竜':q.enemy===9?'霧狼':'スライム';}
+export function targetName(q:Quest,node:number){const k=encounter(q,node);return k==='gather'?(q.gatherTarget||(q.id==='crystal'?'青晶石':q.id==='blossom'?'千年樹の花':'月しずく草')):k==='escort'?(q.escortTarget||'旅人を目的地へ'):q.enemyName||(q.enemy===10?'星喰い竜':q.enemy===9?'霧狼':'スライム');}
 export const stepMs=(s:State)=>Math.round(1050*(1-.035*s.camp));
 export function estimate(s:State,sq:Squad,q:Quest){const relevant=Math.max(5,power(s,sq,q));return Math.round(5*(12+q.need*6.9/Math.max(3,2+relevant/Math.max(1,sq.members.length)*.23)*stepMs(s)/1000/Math.max(1,sq.members.length)));}
 function addLog(s:State,text:string,at:number){s.log=[{text,at},...s.log].slice(0,40);}
@@ -51,7 +55,8 @@ export const heroSkills:Record<string,{style:string;name:string;description:stri
  garr:{style:'tank',name:'守護の盾',description:'前線を支え、4回ごとに味方を守る障壁。'},
  luna:{style:'mage',name:'流星の一撃',description:'遠くから魔法を放ち、4回ごとに流星を落とす。'},
  poppy:{style:'gatherer',name:'豊穣の調合',description:'3回ごとの採取量が増え、薬で仲間も回復。'},
- noel:{style:'bard',name:'旅路の歌',description:'後方で歌い、3回ごとに障壁でみんなを支える。'}
+ noel:{style:'bard',name:'旅路の歌',description:'後方で歌い、3回ごとに障壁でみんなを支える。'},
+ chacha:{style:'melee',name:'蒸らし三分、全力一振り',description:'前線で大剣を振り、4回ごとの攻撃は威力2倍。回復魔法より、鍛えた筋肉で押し通す。'}
 };
 export const bondKey=(ids:string[])=>[...ids].sort().join('-');
 export const bondLevel=(s:State,ids:string[])=>Math.min(3,1+Math.floor((s.friendship[bondKey(ids)]||0)/12));
@@ -90,7 +95,7 @@ function step(s:State,sq:Squad){
   const hero=actor.hero,ms=memberStats(s,hero),ix=k==='battle'?2:k==='gather'?0:1;
   const bond=activeBonds(sq.members).reduce((v,b)=>v+b.bonus,0);
   actor.actions++;const special=actor.actions%(hero==='aria'||hero==='poppy'||hero==='noel'?3:hero==='finn'?5:4)===0;
-  const multiplier=special?(hero==='luna'?2.2:hero==='leon'?1.7:hero==='aria'||hero==='finn'?1.65:hero==='poppy'&&k==='gather'?1.75:1):1;
+  const multiplier=special?(hero==='luna'?2.2:hero==='chacha'&&k==='battle'?2:hero==='leon'?1.7:hero==='aria'||hero==='finn'?1.65:hero==='poppy'&&k==='gather'?1.75:1):1;
   const damage=Math.max(1,Math.round((2+ms[ix]*.23+bond*.1)*multiplier));
   r.target=Math.max(0,r.target-damage);r.hits++;actor.nextAt+=actor.period;
   event(r,at,special?'skill':k==='battle'?'hit':'gather',heroes.find(h=>h.id===hero)!.name+'：'+(special?heroSkills[hero].name:k==='battle'?'攻撃':'採取・護衛'),damage,hero);
@@ -98,7 +103,7 @@ function step(s:State,sq:Squad){
   if((hero==='mira'||hero==='poppy'&&special)&&r.hp<r.maxHp){const heal=5+level(s.xp[hero]||0);r.hp=Math.min(r.maxHp,r.hp+heal);event(r,at,'heal',heroSkills[hero].name,heal,hero);}
   if(r.target<=0)return completeNode(s,sq,q,at);
  }
- if(r.enemyAt===at){r.enemyAt+=1450;if(k==='battle'){const hurt=Math.max(1,Math.round(q.need*.24-stats(s,sq)[1]*.05));const blocked=Math.min(r.ward,hurt);r.ward-=blocked;r.hp=Math.max(0,r.hp-hurt+blocked);event(r,at,'hurt',blocked?'障壁で攻撃を軽減':'魔物の攻撃',hurt-blocked);}}
+ if(r.enemyAt===at){r.enemyAt+=1450;if(k==='battle'){const hurt=Math.max(1,Math.round(q.need*.24-stats(s,sq)[1]*.05));const blocked=Math.min(r.ward,hurt);r.ward-=blocked;r.hp=Math.max(0,r.hp-hurt+blocked);event(r,at,'hurt',blocked?'障壁で攻撃を軽減':q.enemy===12?'メリルが踊りながらかじりつく！':q.enemy===13?'プティの人形が糸を引いて飛びかかる！':'魔物の攻撃',hurt-blocked);}}
  if(r.hp<=0){r.phase='rest';r.phaseAt=at;r.nextAt=at+15000;event(r,at,'rest','いったん退いて回復中。応援で立て直そう。');}
  else r.nextAt=nextEvent(r);
  return null;

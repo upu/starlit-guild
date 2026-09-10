@@ -1,0 +1,18 @@
+{
+  "mode": "built-in image_gen background-extraction edits",
+  "calls": 2,
+  "records": [
+    {
+      "name": "pumpety",
+      "path": "C:/Users/spitz/.codex/generated_images/01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3/exec-efddc2f6-2626-40e4-b10e-572b1cf288ba.png",
+      "prompt": "Use case: background-extraction. This is a precise background removal edit of the supplied existing illustration, NOT a new illustration. Remove ONLY the baked grey-and-white checkerboard backdrop. Replace every checkerboard background pixel with actual transparent alpha=0, including background gaps between puppet strings, between the arms and body, beneath the hair, and within the flowing ribbons. Output a real RGBA PNG with a genuine alpha transparency channel. Do not paint or render a checkerboard, white, black, or colored backdrop. Preserve the entire existing character and her pumpkin marionette exactly: same pose, shape, composition, pixel dimensions, hair, face, fang, eyes, strings, doll, clothing, shoes, outlines, colors, lighting and detail. Retain antialiased edges and all delicate puppet strings. No extra elements. No redesign, no crop, no pose change, no new variant. Only remove the checkerboard and make the backdrop truly transparent.",
+      "output_hint": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3 as C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3\\exec-53f22fcc-0cfe-4eb2-9e27-fec1291d92ff.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "name": "chacha",
+      "path": "C:/Users/spitz/.codex/generated_images/01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3/exec-208d91a8-559f-46e2-ab76-c3b465f2d8c0.png",
+      "prompt": "Use case: background-extraction. This is a precise background removal edit of the supplied existing illustration, NOT a new illustration. Remove ONLY the baked grey-and-white checkerboard backdrop. Replace every checkerboard background pixel with actual transparent alpha=0, including background gaps between sword and legs, between wings and hair, and within the hair silhouette. Output a real RGBA PNG with a genuine alpha transparency channel. Do not paint or render a checkerboard, white, black, or colored backdrop. Preserve the entire existing muscular angel girl exactly: same pose, strong body shape, composition, pixel dimensions, orange hair, face, red ribbon, eyes, wings, massive sword, small tea cup, red/gold clothing, boots, outlines, colors, lighting and detail. Retain antialiased edges. No extra elements. No redesign, no crop, no pose change, no new variant. Only remove the checkerboard and make the backdrop truly transparent.",
+      "output_hint": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3 as C:\\Users\\spitz\\.codex\\generated_images\\01a08b3e-dcae-70f0-99ae-fdc9d4c4b4b3\\exec-f09772ff-7244-4dd2-abfc-774776de8947.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ]
+}

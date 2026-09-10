@@ -4,6 +4,12 @@ const n=(text:string):StoryLine=>({text});
 const interlude=(companion:string,title:string,lines:StoryLine[]):Story=>({id:`recruit-${companion}-progress`,title,place:'支度の途中で',chapter:'recruitment',companion,stage:'progress',lines});
 const arc=(companion:string,titles:string[],chapters:StoryLine[][]):Story[]=>chapters.map((lines,i)=>({id:`recruit-${companion}-${['meeting','prepared','joined'][i]}`,title:titles[i],place:['出会い','出発の支度','仲間になる日'][i],chapter:'recruitment',companion,stage:(['meeting','prepared','joined'] as const)[i],lines}));
 export const recruitmentStories:Story[]=[
+ interlude('chacha','茶器だけは持てない',[n('茶芽を届けると、チャチャは大岩を抱えてスクワットをしていた。'),line('chacha','あらぁ、ありがとうございます。そこへ置いていただけますかぁ。'),line('aria','力持ちなのに、茶器は運べないの？'),line('chacha','持てますよぉ。でも、魔物が出たら大剣を振れないでしょう？'),n('岩を下ろす音で、空のカップが一度だけ跳ねた。'),line('leon','なるほど。そっちは俺たちが持つ。')]),
+ ...arc('chacha',['天使の落とし物は大剣','茶葉と重りは別の袋','お茶の席には座れる大きさで'],[
+  [n('道の真ん中に大剣が刺さっていた。隣では、白い翼の少女がお茶を飲んでいる。'),line('chacha','こんにちはぁ。山の茶屋へ行きたいんですけど、道に岩が落ちていて。'),line('leon','天使なら、飛んで越えられないか？'),line('chacha','この剣と茶器を持つと、重くてぇ。鍛えた脚で歩くほうが早いんです。'),n('カップを置くと、両手で大剣を引き抜く。地面が丸く持ち上がった。'),line('aria','……岩、どかせそうだね。'),line('chacha','そうなんですよぉ。茶葉と茶器を運んでもらえれば、あとは筋肉に聞いてみますねぇ。')],
+  [n('茶葉と茶器を包む横で、チャチャが手首に重りを巻いている。'),line('leon','戦いの前に外さないのか？'),line('chacha','軽くすると、うっかり振りすぎてしまうのでぇ。'),line('aria','茶屋は壊さないでね。'),line('chacha','もちろん。お茶を飲むところですもの。'),n('茶屋以外については、誰も確約をもらえなかった。')],
+  [n('山道は開いた。岩は道端へ積まれ、魔物は大剣の一振りで逃げた。チャチャは茶器の包みを両手で受け取る。'),line('chacha','割れていない。よかったぁ。さあ、座ってくださいね。'),line('aria','次の旅も来ない？ 茶器なら、また持つよ。'),line('chacha','いいんですかぁ。では、わたしは大きい荷物と大きい敵を担当しますね。'),line('leon','座れる椅子も用意しておく。'),line('chacha','丈夫だとうれしいです。前のは、腹筋をしていたら……。'),n('レオンは持ち帰るメモに、椅子の補強、と書き足した。')],
+ ]),
  interlude('mira','薬箱の横の小さな包み',[n('花弁が少しずつ集まり、ミラが薬の包みを作っている。'),line('aria','こっちの小さいのは？'),line('mira','あなたたちの分。集めに行く途中で、擦りむくかもしれないでしょう。'),line('aria','ミラの分も入れようね。'),n('ひとつ増えた包みを、ミラは薬箱の取り出しやすい場所にしまった。')]),
  interlude('finn','いちばん安い宝物',[n('集まった鍵片のそばに、擦り切れた木のボタンが置いてある。'),line('mira','それも宝物なの？'),line('finn','昔、あの子がくれた。助けてくれたお礼だって。'),line('mira','大事にしているのね。'),line('finn','……売っても一銭にもならないから、持ってるだけ。'),n('そう言いながら、フィンはボタンを布で包んだ。')]),
  interlude('garr','針を持たない時間',[n('留め具を届けると、ガルはまた誰かの上着を縫っていた。'),line('leon','自分の手袋、穴が空いてるぞ。'),line('garr','あとでいい。まだ頼まれたものがある。'),line('leon','じゃあ、それは俺に頼んでくれ。上手くはないが。'),n('ガルは手袋を外した。両手が何も持たない時間は、久しぶりだった。')]),

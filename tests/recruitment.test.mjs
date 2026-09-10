@@ -11,9 +11,9 @@ const restore=s=>parseBundle(JSON.parse(JSON.stringify(bundle(s)))).profiles[0].
 function supplied(r){const s=initialState(1000);s.clears=Math.max(60,r.unlock);s.owned=heroes.filter(h=>h.id!==r.hero).map(h=>h.id);s.squads[0].members=['aria','leon'];s.xp.aria=s.xp.leon=30*19**2;s.gear=10;s.town=2;for(const key of ['gold','wood','herbs','ore'])s[key]=r.cost[key]+200;s.done[r.rare.sources[0]]=r.rare.every*r.rare.count;return s;}
 function finish(s){let i=0;while(s.squads[0].run&&i++<20000)s=settle(s,s.squads[0].run.nextAt).state;assert.ok(i<20000,'expedition must finish');return s;}
 
-test('six distinct arcs each have an accessible material source and playable mission',()=>{
- assert.equal(recruitments.length,6);assert.equal(recruitmentQuests.length,6);assert.equal(quests.length,9);
- assert.equal(new Set(allQuests.map(q=>q.id)).size,15);
+test('seven distinct arcs each have an accessible material source and playable mission',()=>{
+ assert.equal(recruitments.length,7);assert.equal(recruitmentQuests.length,7);assert.equal(quests.length,11);
+ assert.equal(new Set(allQuests.map(q=>q.id)).size,18);
  for(const r of recruitments){assert.ok(r.rare.sources.some(id=>quests.find(q=>q.id===id).unlock<=r.unlock));assert.ok(allQuests.some(q=>q.companion===r.hero));const s=supplied(r);assert.ok(met(s,r));assert.ok(canPrepare(s,r));}
 });
 
@@ -24,13 +24,13 @@ test('gold alone never buys a hero or skips their materials and encounter',()=>{
  s.clears=60;s.wood=s.herbs=s.ore=10000;
  assert.throws(()=>act(s,{type:'prepareRecruitment',id:'mira'},1000));
  assert.throws(()=>act(s,{type:'start',id:'join-mira'},1000));
- const finn=supplied(recruitments[1]);finn.owned=finn.owned.filter(id=>id!=='mira');
- assert.ok(!met(finn,recruitments[1]));assert.ok(!canPrepare(finn,recruitments[1]));
+ const finn=supplied(recruitments.find(r=>r.hero==='finn'));finn.owned=finn.owned.filter(id=>id!=='mira');
+ assert.ok(!met(finn,recruitments.find(r=>r.hero==='finn')));assert.ok(!canPrepare(finn,recruitments.find(r=>r.hero==='finn')));
  assert.deepEqual(s.owned,['aria','leon']);
 });
 
 test('rare materials have guaranteed thresholds, combine sources, and survive old-save import',()=>{
- const r=recruitments[1],s=initialState(1000);delete s.recruitment;
+ const r=recruitments.find(r=>r.hero==='finn'),s=initialState(1000);delete s.recruitment;
  s.done={cart:r.rare.every-2,slime:1,herbs:100};assert.equal(rareProgress(s,r).held,0);assert.equal(rareProgress(s,r).next,1);
  s.done.slime=2;assert.equal(rareProgress(s,r).held,1);
  s.done.slime=100;assert.equal(rareProgress(s,r).held,r.rare.count);assert.equal(rareProgress(s,r).remaining,0);
@@ -59,7 +59,7 @@ test('insufficient materials reject atomically without partial payment',()=>{
 });
 
 test('preparation reveals an interlude at the halfway milestone without spending items',()=>{
- const r=recruitments[1],s=supplied(r),half=Math.ceil(r.rare.count/2)*r.rare.every;
+ const r=recruitments.find(r=>r.hero==='finn'),s=supplied(r),half=Math.ceil(r.rare.count/2)*r.rare.every;
  s.done[r.rare.sources[0]]=half-1;assert.ok(!availableStories(s).some(st=>st.id==='recruit-finn-progress'));
  s.done[r.rare.sources[0]]=half;const before=structuredClone(s);assert.ok(availableStories(s).some(st=>st.id==='recruit-finn-progress'));
  assert.deepEqual(s,before);assert.ok(!s.owned.includes('finn'));assert.ok(!prepared(s,'finn'));

@@ -1,9 +1,11 @@
 import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
+import {madHalloweenStories} from './mad-halloween-stories.ts';
+import {characterEncounters} from './character-encounters.ts';
 
 export type StoryLine = {speaker?: string; text: string};
-export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number};
+export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'|'encounter'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number; requiresHeroes?:string[]; requiresQuests?:string[]};
 export type StoryProgress = {departed: string[]; completed: string[]; read: string[]};
 const a=(text:string):StoryLine=>({speaker:'aria',text});
 const l=(text:string):StoryLine=>({speaker:'leon',text});
@@ -15,6 +17,8 @@ const pair=(quest:string,title:string,after:string,intro:StoryLine[],outro:Story
 
 // Their affection is mutual. Progress shows trust and small choices, never a forced confession.
 export const stories:Story[]=[
+ ...characterEncounters,
+ ...madHalloweenStories,
  ...recruitmentStories,
  ...pair('herbs','いつもの隣に','半分ずつの甘さ',[
   n('最初の依頼書を、アリアがふたりの間に広げた。'),a('月しずく草だって。匂いなら、すぐ分かるよ。'),l('道は俺が見ておく。'),a('……頼む前から？'),l('何年、一緒にいると思ってるんだ。'),n('アリアは笑って、地図の端を彼のほうへ寄せた。'),
@@ -80,13 +84,16 @@ export function storyProgress(s:State):StoryProgress {
 }
 export function availableStories(s:State):Story[]{
  const p=storyProgress(s);
- return stories.filter(st=>st.chapter==='recruitment'?(() => {const r=recruitments.find(r=>r.hero===st.companion)!;return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);})():st.chapter==='departure'?p.departed.includes(st.quest!):st.chapter==='return'?p.completed.includes(st.quest!):
-  p.completed.length>0&&affection(s)>=(st.bond||1)&&s.town>=(st.town||0)&&(st.id!=='camp-quiet-tea'||s.owned.includes('mira')));
+ return stories.filter(st=>{
+  if(st.requiresHeroes?.some(id=>!s.owned.includes(id))||st.requiresQuests?.some(id=>!(s.done[id]>0)))return false;
+  if(st.chapter==='encounter')return s.town>=(st.town||0);
+  return st.chapter==='recruitment'?(() => {const r=recruitments.find(r=>r.hero===st.companion)!;return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);})():st.chapter==='departure'?p.departed.includes(st.quest!):st.chapter==='return'?p.completed.includes(st.quest!):
+   p.completed.length>0&&affection(s)>=(st.bond||1)&&s.town>=(st.town||0)&&st.lines.every(line=>!line.speaker||s.owned.includes(line.speaker));
+ });
 }
 export function campStories(s:State):Story[]{
  const home=s.owned.filter(id=>!s.squads.some(sq=>sq.run&&sq.members.includes(id)));
- if(!together(home))return [];
- return availableStories(s).filter(st=>st.chapter==='camp'&&(st.id!=='camp-quiet-tea'||home.includes('mira')));
+ return availableStories(s).filter(st=>st.chapter==='encounter'?(st.requiresHeroes||[]).every(id=>home.includes(id)):st.chapter==='camp'&&st.lines.every(line=>!line.speaker||home.includes(line.speaker)));
 }
 export function coupleCombo(s:State,variant:number):string[]{
  const lines=[
@@ -98,6 +105,14 @@ export function coupleCombo(s:State,variant:number):string[]{
 }
 export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const r=sq.run;
+ if(r?.quest==='join-chacha')return [{speaker:'chacha',text:'茶器はお願いしますねぇ。岩のほうは、わたしが持ちますから。'}];
+ if(r?.quest==='midnight-snack'&&sq.members.includes('poppy'))return [{speaker:'merrill',text:'その薬、味見しようか？'},{speaker:'poppy',text:'瓶ごと食べそうな人には、頼まない！'}];
+ if(r?.quest==='puppet-midnight'&&sq.members.includes('finn'))return [{speaker:'pumpety',text:'ポケット、軽くなった？'},{speaker:'finn',text:'うん。代わりに人形のポケットを重くしておいたよ。'}];
+ if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha')&&sq.members.includes('mira'))return [{speaker:'chacha',text:r.phase==='rest'?'お湯が沸くまで、あと十回だけぇ。':'帰ったら、お茶をご一緒に。今日はわたしが淹れますねぇ。'},{speaker:'mira',text:r.phase==='rest'?'今は座るほうの休憩よ。あなたのカップも用意したわ。':'楽しみにしているわ。茶葉を選ぶ時間も残しておきましょう。'}];
+ if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha')&&sq.members.includes('garr'))return [{speaker:'garr',text:'その剣の重さには、まだ慣れないな。'},{speaker:'chacha',text:'では、帰ったら一緒に素振りを。お茶付きですよぉ。'}];
+ if(r&&together(sq.members)&&r.quest==='midnight-snack')return Math.floor((now-r.started)/18000)%2?[{speaker:'merrill',text:'一曲踊ったら、お腹が空いちゃった。'},{speaker:'aria',text:'さっき魔物を食べたばかりでしょ！'}]:[{speaker:'merrill',text:'そこの小動物、ひと口だけ……。'},{speaker:'leon',text:'琴を弾いたまま追いかけるな！'}];
+ if(r&&together(sq.members)&&r.quest==='puppet-midnight')return [{speaker:'pumpety',text:'そっちはプティじゃないよ。お人形でしたぁ！'},{speaker:'aria',text:'本物も笑ってるから、場所は分かった。'}];
+ if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha'))return [{speaker:'chacha',text:r.phase==='rest'?'まず、お茶にしましょうねぇ。筋肉にも休憩が要りますから。':'道がなければ、どかせばいいんですよぉ。せーの。'}];
  if(r?.quest.startsWith('join-')){const hero=r.quest.slice(5);const replies:Record<string,StoryLine[]>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return replies[hero]||[];}
  if(!together(sq.members))return [];
  const v=Math.floor(Math.max(0,now-(r?.started||0))/18000)%2,lv=affection(s);

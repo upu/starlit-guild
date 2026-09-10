@@ -2,7 +2,10 @@ import type {State, Quest} from './game.ts';
 
 export type RecruitmentProgress={prepared:string[]};
 export type Recruitment={hero:string;name:string;unlock:number;requires?:string;request:string;purpose:string;cost:{gold:number;wood:number;herbs:number;ore:number};rare:{id:string;name:string;description:string;sources:string[];every:number;count:number};mission:Pick<Quest,'name'|'kind'|'region'|'desc'|'tier'|'need'|'enemy'>&{background:string;gatherTarget:string;escortTarget:string}};
-export const recruitments:Recruitment[]=[
+export const recruitments:Recruitment[]=([
+ {hero:'chacha',name:'チャチャ',unlock:6,request:'お茶が冷める前に',purpose:'山の茶屋へ茶葉を届ける支度。大剣は本人が持つ。茶器は割れないよう旅団が運ぶ。',cost:{gold:450,wood:60,herbs:100,ore:25},
+  rare:{id:'tea-bud',name:'山霧の茶芽',description:'薬草の群生地や街道の茶畑で分けてもらえる、香りのよい茶芽。',sources:['herbs','cart'],every:3,count:4},
+  mission:{name:'天使は岩を持ち上げる',kind:'護衛',region:'山の茶屋への坂道',desc:'茶器を守ってチャチャと山道へ。岩も魔物も大剣でどかすが、お茶の時間だけは急がない。',tier:1,need:52,enemy:8,background:'/valley.png',gatherTarget:'お茶に使う湧き水',escortTarget:'茶器を割らずに茶屋へ'}},
  {hero:'mira',name:'ミラ',unlock:3,request:'帰り道にも、お茶を',purpose:'夜の往診に使う薬と、山小屋へ運ぶ湯沸かし道具をそろえる。',cost:{gold:180,wood:40,herbs:80,ore:0},
   rare:{id:'moon-petal',name:'夜露の花弁',description:'月しずく草の群生地で少しずつ見つかる、熱を鎮める花弁。',sources:['herbs'],every:4,count:3},
   mission:{name:'夜明けを待つ往診',kind:'護衛',region:'薬灯りの山道',desc:'ひとりで往診を続けるミラと、山小屋の患者へ薬を届ける。帰り道は、彼女にも休んでもらおう。',tier:1,need:45,enemy:8,background:'/forest.png',gatherTarget:'煎じ薬の材料',escortTarget:'ミラと薬を山小屋へ'}},
@@ -21,7 +24,7 @@ export const recruitments:Recruitment[]=[
  {hero:'noel',name:'ノエル',unlock:50,requires:'poppy',request:'歌の中の、空いた席',purpose:'祭りで使う小さな舞台と、旅先で傷んだ楽器を修理する。',cost:{gold:800000,wood:30000,herbs:8000,ore:36000},
   rare:{id:'faded-score',name:'星祭りの古譜',description:'巡礼者や祭りの道に残された、忘れられた歌の譜面。',sources:['royal','pilgrim'],every:24,count:48},
   mission:{name:'まだ名前のない旅の歌',kind:'護衛',region:'灯りをつなぐ祭り道',desc:'古い歌をノエルと祭りへ届ける。旅団の歌に足りないのは、歌い手自身の名前だった。',tier:3,need:210,enemy:9,background:'/valley.png',gatherTarget:'歌の断片',escortTarget:'ノエルと楽器を祭りへ'}},
-];
+] satisfies Recruitment[]).sort((a,b)=>a.unlock-b.unlock);
 export const recruitmentByHero=(id:string)=>recruitments.find(r=>r.hero===id);
 export const recruitmentByQuest=(id:string)=>recruitments.find(r=>'join-'+r.hero===id);
 export const prepared=(s:State,id:string)=>s.owned.includes(id)||!!s.recruitment?.prepared.includes(id);
