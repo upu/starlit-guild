@@ -9,13 +9,13 @@ import "./cinematic.css";
 import "./phaser.css";
 import "./prologue.css";
 
-export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
+export const viewport: Viewport = {width:'device-width',initialScale:1,themeColor:'#102a26'};
 
 export const metadata: Metadata = {
   title: "星灯りの旅団 | STARLIT GUILD",
   description: "仲間を見守り、旅団と帰る場所を育てる。タップで応援できるファンタジー放置RPG。",
   manifest: "/manifest.webmanifest",
-  appleWebApp: {capable:true,title:'星灯りの旅団',statusBarStyle:'black-translucent'},
+  appleWebApp: {capable:true,title:'星灯りの旅団',statusBarStyle:'default'},
   other: {
     "codex-preview": "development",
   },
