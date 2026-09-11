@@ -11,7 +11,7 @@ export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([
 export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town).clears&&!buildingNeeds(s).length;}
 
 export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
- if(inPrologue(s))return sq.run?{title:'タップでふたりを手助け',detail:'道や魔物・薬草をタップすると手助けできます。仲間をタップすると回復。見守っていても街へ進みます。',action:'冒険を見守る',destination:'adventure'}:{title:s.done[TRADE_QUEST]?'街への交易を続けよう':'まずはクエストを選ぼう',detail:s.done[TRADE_QUEST]?'街への交易は、何度でも出かけられます。クエストから選んで出発しましょう。':'巻物の「クエスト」を開き、「街への交易」を選びましょう。物語を読んだら、ふたりで出発します。',action:'クエストを開く',destination:'quests',questId:TRADE_QUEST};
+ if(inPrologue(s))return sq.run?{title:'タップでふたりを手助け',detail:'道や魔物・薬草をタップすると手助けできます。仲間をタップすると回復。見守っていても街へ進みます。',action:'冒険を見守る',destination:'adventure'}:{title:s.done[TRADE_QUEST]?'街への交易を続けよう':'まずはクエストを選ぼう',detail:s.done[TRADE_QUEST]?'次の出発は、画面上部の巻物から。':'画面上部の巻物を開き、「街への交易」を選びましょう。物語を読んだら、ふたりで出発します。',action:'クエストを開く',destination:'quests',questId:TRADE_QUEST};
  if(s.clears===0){
   if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};
   if(sq.run.phase==='rest')return {title:'回復で、もう一度出発',detail:'体力がなくなると休憩します。マップをタップすると回復して立て直せます。見守っていても自動で再挑戦します。',action:'冒険を見守る',destination:'adventure'};

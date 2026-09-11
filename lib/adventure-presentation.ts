@@ -4,7 +4,7 @@ import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
 import {TRADE_QUEST} from './prologue.ts';
 
-export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean};
+export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean};
 export type Point={x:number;y:number};
 export type AdventureIntent='help'|'heal'|'detour';
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
@@ -29,12 +29,12 @@ export function adventureFrame(input:AdventureInput,now=input.now){
   const progress=run?clamp((now-run.phaseAt)/travelMs(id)):1;
   let x=run?target.x-.17*(1-progress):squad.members.length===1?.5:.30+i*.40/Math.max(1,squad.members.length-1);
   let y=run?target.y+.08*(1-progress):.65+(i%2)*.03;
-  const detour=run?.detour;
+  const detour=input.detours===false?null:run?.detour;
   const exploring=!!detour&&detour.hero===id&&detour.node===run?.node&&!detour.claimed&&now>=detour.at&&run?.phase!=='rest';
   if(exploring&&detour){const t=clamp((now-detour.at)/1400);x+=(.54-x)*t;y+=(.82-y)*t;}
   return {id,name:hero.name,sprite:hero.sprite,role,x,y,walking,exploring,attack:exploring?0:attack,hit:lastHit};
  });
- const detour=run?.detour;
+ const detour=input.detours===false?null:run?.detour;
  const discovery=detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
  const cutin=run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
@@ -47,6 +47,7 @@ export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=
  const run=input.squad.run;
  if(!input.ready||input.paused||!run)return null;
  if(intent==='detour'){
+  if(input.detours===false)return null;
   const d=run.detour;
   return d&&d.node===run.node&&!d.claimed&&now>=d.at&&run.phase!=='rest'?{type:'detour',squad:input.squad.id}:null;
  }

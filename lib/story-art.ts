@@ -8,6 +8,11 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Record<string, StoryArt> = {
+ 'village-trade-return': {
+  src: '/stories/village-trade-handover.png',
+  alt: '街の店先で、アリアが布で包んだ薬草を店主に渡し、レオンが村から預かった交易品を台に置く。',
+  width: 1536, height: 1024, revealAtLine: 0,
+ },
  'visit-merrill-poppy': {
   src: '/stories/merrill-poppy-tasting.png',
   alt: '薬草園で紫色の試作品を飲み、苦さに顔をしかめるメリルと、飲んだことに気づいて慌てるポピー。メリルは籠手を外し、素手で瓶を持っている。',

@@ -9,7 +9,7 @@ import {initialState,initialPrologueState,act,settle,testState} from '../lib/gam
 import {stories} from '../lib/stories.ts';
 import {madHalloweenStories} from '../lib/mad-halloween-stories.ts';
 import {characterEncounters} from '../lib/character-encounters.ts';
-import {storyArt} from '../lib/story-art.ts';
+import {storyArt,storyArtAt} from '../lib/story-art.ts';
 import {recruitments} from '../lib/recruitment.ts';
 import {adventureFrame,adventureAssets,adventureAction} from '../lib/adventure-presentation.ts';
 const frameFor=(state,now=state.updatedAt)=>adventureFrame({squad:state.squads[0],now,ready:true,paused:false,startQuest:'herbs'});
@@ -19,20 +19,33 @@ await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bun
 const {MapStage}=await import(output.href);
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
 await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
-const {StoryReader,StoryLines,StoryLibrary}=await import(storyOutput.href);
+const {StoryReader,StoryLines,StoryLibrary,Banter}=await import(storyOutput.href);
 const phoneOutput=new URL('../work/phone-render.mjs',import.meta.url);
 await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
 const {PhoneGame}=await import(phoneOutput.href);
 
+test('dialogue and banter show close-up portraits and the trade still appears from the first page',()=>{
+ const story=stories.find(st=>st.id==='village-trade-return');
+ const first=renderToStaticMarkup(createElement(StoryReader,{story,ready:true,onRead:()=>true,onClose:()=>{}}));
+ for(const id of ['aria','leon'])assert.ok(first.includes('/portraits/'+id+'.png'));
+ const lines=[{speaker:'aria',text:'お疲れさま。'},{speaker:'leon',text:'無事に着いたな。'},{text:'ふたりは顔を見合わせた。'}],before=structuredClone(lines);
+ const chat=renderToStaticMarkup(createElement(Banter,{lines,onRead:()=>{}}));
+ assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/leon.png'));assert.ok(!chat.includes('/portraits/aria.png'));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
+ for(let line=0;line<story.lines.length;line+=3)assert.equal(storyArtAt(story.id,line)?.src,'/stories/village-trade-handover.png');
+ assert.ok(first.includes('/stories/village-trade-handover.png'));
+});
+
 test('prologue screen guides to quests, hides advanced navigation and uses one book entrance',()=>{
  const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:1000,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
  const fresh=initialPrologueState(1000),html=render(fresh);
- assert.match(html,/まずは巻物の「クエスト」を開きましょう/);
- assert.match(html,/aria-label="クエストを開く"/);
+ assert.match(html,/ここから/);
+ assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエスト<|>クエストを選ぶ<|何度でも/);
  assert.match(html,/aria-label="旅の手帳：思い出・ヒント・設定"/);
  assert.doesNotMatch(html,/はじまりの隊|団長の応援|>編成<|>帰還<|>パーティ<|>拠点<|>思い出<|>出発する</);
  const running=render(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000));
- assert.match(running,/手助けする/);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);
+ assert.match(running,/探索マップ/);assert.doesNotMatch(running,/phaser-assist-controls|>手助けする<|>回復<|>寄り道</);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);
+ const cleared=settle(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000),3601000).state;
+ const after=render(act(cleared,{type:'readStory',id:'village-trade-return'},3601000));assert.doesNotMatch(after,/quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
  const legacy=render(initialState(1000));assert.match(legacy,/>パーティ</);assert.match(legacy,/>拠点</);
  assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
 });
@@ -120,27 +133,26 @@ test('all discovery kinds render their artwork before and after automatic collec
   const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:2100,onAction:()=>{},ready:true,startQuest:'herbs'}));
   assert.ok(adventureAssets(frameFor(state,2100)).includes(`/items/${kind}.png`));
   assert.equal(frameFor(state,2100).discovery.kind,kind);
-  assert.match(html,/寄り道|発見済み/);
-  if(claimed)assert.match(html,/発見済み/);
+  assert.doesNotMatch(html,/phaser-assist-controls|>寄り道<|>発見済み</);
  }
 });
 
-function mapButton(state,label,ready=true){
- const tree=MapStage({state,squad:state.squads[0],now:state.updatedAt,onAction:action=>{state=act(state,action,state.updatedAt);},ready,startQuest:'herbs'});
- function find(node){if(!node||typeof node!=='object')return null;if(node.type==='button'&&renderToStaticMarkup(node).includes(label))return node;return [node.props?.children].flat(Infinity).map(find).find(Boolean);}
- const button=find(tree);
- return {button,click(){assert.ok(button);assert.equal(button.props.disabled,false);button.props.onClick();return state;}};
+function mapKey(state,key,ready=true,paused=false){
+ const tree=MapStage({state,squad:state.squads[0],now:state.updatedAt,onAction:action=>{state=act(state,action,state.updatedAt);},ready,paused,startQuest:'herbs'});
+ const map=tree.props.children.flat().find(node=>node?.props?.className==='adventure-map phaser-map');
+ return {map,press(){map.props.onKeyDown({key,target:map,currentTarget:map,preventDefault(){}});return state;}};
 }
-test('accessible help dispatches one assist and idle/unavailable adventures are guarded',()=>{
- const idle=initialState(1000);assert.equal(mapButton(idle,'手助けする').button,undefined);
+test('keyboard map assistance works without separate buttons and respects input guards',()=>{
+ const idle=initialState(1000);assert.equal(mapKey(idle,'Enter').map.props.tabIndex,undefined);assert.deepEqual(mapKey(idle,'Enter').press(),idle);
  const state=act(idle,{type:'start',id:'herbs'},1000);
- const after=mapButton(state,'手助けする').click();assert.equal(after.squads[0].run.cheer,5);assert.equal(after.squads[0].run.hits,1);assert.equal(mapButton(state,'手助けする',false).button.props.disabled,true);
+ const after=mapKey(state,'Enter').press();assert.equal(after.squads[0].run.cheer,5);assert.equal(after.squads[0].run.hits,1);
+ for(const [ready,paused] of [[false,false],[true,true]]){assert.equal(mapKey(state,'Enter',ready,paused).map.props.tabIndex,undefined);assert.deepEqual(mapKey(state,'Enter',ready,paused).press(),state);}
  assert.equal(adventureAction({squad:state.squads[0],ready:false,paused:false,now:1000,startQuest:'herbs'},'help'),null);
 });
-test('resting map taps recover the party and hero and HP taps heal without striking',()=>{
+test('resting keyboard assistance heals and H heals without striking',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
  state.squads[0].run.hp=0;state.squads[0].run.phase='rest';
- for(const label of ['回復を手伝う','パーティを回復']){const after=mapButton(state,label).click().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
+ for(const key of ['Enter',' ','h']){const after=mapKey(state,key).press().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
  state.squads[0].run.phase='work';state.squads[0].run.hp=10;
- const before=state.squads[0].run;const after=mapButton(state,'パーティを回復').click().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);
+ const before=state.squads[0].run;const after=mapKey(state,'H').press().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);
 });

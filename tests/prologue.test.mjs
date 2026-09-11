@@ -5,10 +5,27 @@ import {inPrologue,TRADE_QUEST,tradeEndingPending} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {nextGoal,journeyNotice} from '../lib/journey.ts';
 import {parseBundle} from '../lib/save-format.ts';
-import {adventureFrame} from '../lib/adventure-presentation.ts';
+import {adventureFrame,adventureAction} from '../lib/adventure-presentation.ts';
 
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'序章',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}
 const depart=s=>act(s,{type:'start',id:TRADE_QUEST,readDeparture:true,value:true},s.updatedAt);
+
+test('prologue has no discoveries; older pending detours resume without loot or save loss',()=>{
+ let s=depart(initialPrologueState(1000));
+ const pending=structuredClone(s),run=pending.squads[0].run;
+ run.detour={node:0,kind:'spirit',hero:'aria',at:1900,finishAt:7200,claimed:false};run.actors[0].nextAt=7400;
+ const input={squad:pending.squads[0],now:2000,ready:true,paused:false,startQuest:TRADE_QUEST,detours:false};
+ assert.equal(adventureFrame(input).discovery,null);assert.ok(adventureFrame(input).members.every(m=>!m.exploring));
+ assert.equal(adventureAction(input,'detour'),null);assert.throws(()=>act(pending,{type:'detour'},2000));
+ const restored=settle(roundtrip(pending),1000).state;
+ assert.equal(restored.squads[0].run.detour,null);assert.equal(restored.gold,pending.gold);assert.equal(restored.discoveries,0);assert.equal(restored.squads[0].run.actors[0].nextAt,run.actors[0].arrivesAt);
+ assert.ok(pending.squads[0].run.detour,'input save remains unchanged');
+ const baseline=settle(s,3601000).state,arrival=settle(restored,3601000).state;
+ assert.equal(arrival.gold,baseline.gold);assert.equal(arrival.herbs,baseline.herbs);assert.equal(arrival.wood,baseline.wood);assert.equal(arrival.discoveries,0);
+ while(s.squads[0].run){assert.equal(s.squads[0].run.detour,null);s=settle(s,s.squads[0].run.nextAt).state;}
+ assert.equal(s.discoveries,0);assert.ok(!s.log.some(l=>/精霊|隠し宝箱|光る薬草/.test(l.text)));
+ const legacy=act(initialState(1000),{type:'start',id:'herbs'},1000);assert.ok(legacy.squads[0].run.detour);
+});
 
 test('new profiles begin with the two villagers and only the repeatable trade quest',()=>{
  const s=initialPrologueState(1000),snapshot=structuredClone(s);

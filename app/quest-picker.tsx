@@ -1,9 +1,9 @@
 'use client';
 import {useRef} from 'react';
-import {Coins,Leaf,Gem,Check} from 'lucide-react';
-import {availableQuests,heroes,power,estimate,type State,type Squad} from '@/lib/game';
-import {inPrologue,TRADE_QUEST} from '@/lib/prologue';
-import {questAdvice} from '@/lib/journey';
+import {Check} from 'lucide-react';
+import {availableQuests,heroes,type State,type Squad} from '@/lib/game';
+import {inPrologue} from '@/lib/prologue';
+
 import {originalCharacters} from '@/lib/original-characters';
 import {Sprite} from './sprite';
 import {questScenery} from '@/lib/scenery';
@@ -16,13 +16,13 @@ export function QuestPicker({state:s,squad:sq,selected,onSelect,onConfirm,ready}
   <p className="departure-party">{!inPrologue(s)&&<b>{sq.name}</b>}<span>{sq.members.map(id=>heroes.find(h=>h.id===id)!.name).join('・')}</span></p>
   <div className="quest-options" aria-label="クエストの一覧">{unlocked.map(item=><button className="quest-option" key={item.id} aria-pressed={q.id===item.id} onClick={()=>{onSelect(item.id);summary.current?.scrollIntoView({block:'start'});}}>
    <img src={questScenery(item)} alt="" width={1672} height={941} loading="lazy"/>
-   <span><small>{item.region} · {item.availability==='once'?'一度きり':'何度でも'}</small><b>{item.name}</b><small>{Math.max(1,Math.round(estimate(s,sq,item)/60))}分ほど · {item.gold} G</small></span>{q.id===item.id&&<Check size={19}/>}
+   <span><small>{item.region}{item.availability==='once'?' · 一度きり':''}</small><b>{item.name}</b></span>{q.id===item.id&&<Check size={19}/>}
   </button>)}</div>
   <article ref={summary} className="quest-summary">
    <div className="quest-landscape"><img key={q.id} src={questScenery(q)} alt={q.region} width={1672} height={941}/><span>{q.region}</span></div>
    <h3>{q.name}</h3>{opponent&&<div className="quest-opponent"><Sprite index={opponent.sprite} size={112}/><div><small>{opponent.faction}</small><b>{opponent.name}</b><p>{opponent.bio}</p></div></div>}
-   <p>{q.desc}</p><div className="quest-rewards"><span><Coins size={16}/>{q.gold} G</span><span>EXP {q.xp}</span><span><Leaf size={16}/>{q.herbs}</span><span><Gem size={16}/>{q.ore}</span></div><p>{q.kind}の力 {power(s,sq,q)} / 目安 {q.need}</p><small>{inPrologue(s)?'ふたりで進みます。見守るだけでも、タップで手助けしても大丈夫。':questAdvice(s,sq,q)}</small><small>全15地点。3地点ごとに報酬を確保します。</small>
+   <p>{q.desc}</p>
   </article>
-  <div className="quest-confirm"><button className="full" disabled={!ready} onClick={onConfirm}>{sq.run&&sq.run.quest!==q.id?'帰還して行き先を変える':sq.run?'このクエストを見守る':q.id===TRADE_QUEST&&!s.story?.departed.includes(TRADE_QUEST)?'このクエストを選ぶ・物語へ':'このクエストに出発する'}</button>{sq.run&&sq.run.quest!==q.id&&<small>次の画面で帰還を確認します。出発は自分で選べます。</small>}</div>
+  <div className="quest-confirm"><button className="full" disabled={!ready} onClick={onConfirm}>{sq.run&&sq.run.quest!==q.id?'帰還して行き先を変える':sq.run?'このクエストを見守る':'出発'}</button>{sq.run&&sq.run.quest!==q.id&&<small>次の画面で帰還を確認します。出発は自分で選べます。</small>}</div>
  </div>;
 }

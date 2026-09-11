@@ -2,7 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {BookOpen,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
-import {Sprite} from './sprite';
+import {Portrait} from './portrait';
 import {heroes,type State} from '@/lib/game';
 import {originalCharacters} from '@/lib/original-characters';
 const characters=[...heroes,...originalCharacters.filter(c=>!heroes.some(h=>h.id===c.id))];
@@ -14,7 +14,7 @@ export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;on
 }
 
 export function StoryLines({lines}:{lines:StoryLine[]}){
- return <div className="story-lines">{lines.map((line,i)=>{const hero=characters.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={i}><Sprite index={hero.sprite} size={48}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={i}>{line.text}</p>;})}</div>;
+ return <div className="story-lines">{lines.map((line,i)=>{const hero=characters.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={i}><Portrait index={hero.sprite} size={72}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={i}>{line.text}</p>;})}</div>;
 }
 
 export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void;departure?:boolean}){
@@ -24,7 +24,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
  const illustration=useRef<HTMLElement>(null);
  useEffect(()=>{if(page>0&&art)illustration.current?.scrollIntoView({block:'start'});},[page,art]);
  const cast=[...new Set(story.lines.flatMap(line=>line.speaker?[line.speaker]:[]))];
- return <div className="story-reader">{art?<figure ref={illustration} className="story-still"><button className="still-expand" onClick={()=>setViewArt(true)} aria-label={'スチルを鑑賞：'+story.title}><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></button></figure>:<div className="story-portraits">{cast.map(id=><Sprite key={id} index={characters.find(h=>h.id===id)!.sprite} size={68}/>)}</div>}<div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>つづきを読む<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>{departure?'冒険を始める':'思い出にしまう'}</button>}</div>{departure&&<small className="story-hint">読み終えたら出発します。まだ冒険は始まっていません。</small>}<ArtViewer art={viewArt&&art?art:null} title={story.title} onClose={()=>setViewArt(false)}/></div>;
+ return <div className="story-reader">{art?<figure ref={illustration} className="story-still"><button className="still-expand" onClick={()=>setViewArt(true)} aria-label={'スチルを鑑賞：'+story.title}><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></button></figure>:<div className="story-portraits">{cast.map(id=><Portrait key={id} index={characters.find(h=>h.id===id)!.sprite} size={88}/>)}</div>}<div key={page}><StoryLines lines={story.lines.slice(page*pageSize,(page+1)*pageSize)}/></div><div className="story-controls"><button className="outline" disabled={page===0} onClick={()=>setPage(page-1)}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=>setPage(page+1)}>次へ<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>{departure?'冒険を始める':'閉じる'}</button>}</div><ArtViewer art={viewArt&&art?art:null} title={story.title} onClose={()=>setViewArt(false)}/></div>;
 }
 
 export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=>void}){
@@ -37,6 +37,7 @@ export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=
 }
 
 export function Banter({lines,onRead}:{lines:StoryLine[];onRead:()=>void}){
- const speaker=characters.find(h=>h.id===lines[0]?.speaker);
- return <button className="journey-banter" onClick={onRead} aria-label="道中の掛け合いを読む">{speaker&&<span className="banter-portrait"><Sprite index={speaker.sprite} size={64}/></span>}<span className="banter-copy" key={lines.map(line=>line.text).join('|')}>{lines.map((line,i)=><span className="banter-line" key={i}><b>{characters.find(h=>h.id===line.speaker)?.name}</b><span>{line.text}</span></span>)}</span><ChevronRight className="banter-chevron" size={18}/></button>;
+ const lastSpeaker=[...lines].reverse().find(line=>line.speaker)?.speaker;
+ const speaker=characters.find(h=>h.id===lastSpeaker);
+ return <button className="journey-banter" onClick={onRead} aria-label="道中の掛け合いを読む">{speaker&&<span className="banter-portrait"><Portrait index={speaker.sprite} size={72}/></span>}<span className="banter-copy" key={lines.map(line=>line.text).join('|')}>{lines.map((line,i)=><span className="banter-line" key={i}><b>{characters.find(h=>h.id===line.speaker)?.name}</b><span>{line.text}</span></span>)}</span><ChevronRight className="banter-chevron" size={18}/></button>;
 }

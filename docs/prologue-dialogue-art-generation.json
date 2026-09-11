@@ -1,0 +1,12 @@
+{
+  "method": "built-in image_gen",
+  "references": [
+    "public/stories/first-map.png",
+    "public/sprites.png"
+  ],
+  "assets": {
+    "aria": "public/portraits/aria.png",
+    "leon": "public/portraits/leon.png",
+    "trade": "public/stories/village-trade-handover.png"
+  }
+}
