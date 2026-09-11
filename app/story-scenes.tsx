@@ -37,5 +37,6 @@ export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=
 }
 
 export function Banter({lines,onRead}:{lines:StoryLine[];onRead:()=>void}){
- return <button className="journey-banter" onClick={onRead} aria-label="道中の掛け合いを読む">{lines.map((line,i)=><span className="banter-line" key={i}><b>{characters.find(h=>h.id===line.speaker)?.name}</b><span>{line.text}</span></span>)}</button>;
+ const speaker=characters.find(h=>h.id===lines[0]?.speaker);
+ return <button className="journey-banter" onClick={onRead} aria-label="道中の掛け合いを読む">{speaker&&<span className="banter-portrait"><Sprite index={speaker.sprite} size={64}/></span>}<span className="banter-copy" key={lines.map(line=>line.text).join('|')}>{lines.map((line,i)=><span className="banter-line" key={i}><b>{characters.find(h=>h.id===line.speaker)?.name}</b><span>{line.text}</span></span>)}</span><ChevronRight className="banter-chevron" size={18}/></button>;
 }

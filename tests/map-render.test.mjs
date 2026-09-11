@@ -11,6 +11,8 @@ import {madHalloweenStories} from '../lib/mad-halloween-stories.ts';
 import {characterEncounters} from '../lib/character-encounters.ts';
 import {storyArt} from '../lib/story-art.ts';
 import {recruitments} from '../lib/recruitment.ts';
+import {adventureFrame,adventureAssets,adventureAction} from '../lib/adventure-presentation.ts';
+const frameFor=(state,now=state.updatedAt)=>adventureFrame({squad:state.squads[0],now,ready:true,paused:false,startQuest:'herbs'});
 await mkdir(new URL('../work/',import.meta.url),{recursive:true});
 const output=new URL('../work/map-render.mjs',import.meta.url);
 await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
@@ -45,7 +47,7 @@ test('original characters render as named speakers, portraits and battle targets
  for(const [id,asset] of [['midnight-snack','merrill'],['puppet-midnight','pumpety']]){
   let state=testState(1000,60,20,100000);state=act(state,{type:'start',id},1000);
   const html=renderToStaticMarkup(createElement(MapStage,{state,squad:state.squads[0],now:1000,onAction:()=>{},ready:true,startQuest:id}));
-  assert.ok(html.includes('/characters/'+asset+'.png'));assert.doesNotMatch(html,/undefined|NaN/);
+  assert.ok(adventureAssets(frameFor(state)).includes('/characters/'+asset+'.png'));assert.doesNotMatch(html,/undefined|NaN/);
  }
 });
 test('every restored expedition location renders with finite character coordinates',()=>{
@@ -57,6 +59,7 @@ test('every restored expedition location renders with finite character coordinat
    const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:state.updatedAt,onAction:()=>{},ready:true,startQuest:'herbs'}));
    assert.match(html,new RegExp(`地点 ${node+1}/15`));
    assert.doesNotMatch(html,/NaN|undefined%/);
+   for(const member of frameFor(state).members){assert.ok(Number.isFinite(member.x)&&Number.isFinite(member.y));assert.ok(member.x>=0&&member.x<=1&&member.y>=0&&member.y<=1);}
    visited.add(node);
   }
   state=settle(state,state.squads[0].run.nextAt).state;
@@ -72,7 +75,7 @@ test('all recruitment maps render every location with the accompanying candidate
   const visited=new Set();
   for(let i=0;state.squads[0].run&&i<20000;i++){
    const squad=state.squads[0],node=squad.run.node;
-   if(!visited.has(node)){const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:state.updatedAt,onAction:()=>{},ready:true,startQuest:'herbs'}));assert.match(html,/class="quest-guest"/);assert.ok(html.includes(r.mission.region));assert.ok(html.includes(r.name));assert.doesNotMatch(html,/NaN|undefined%/);visited.add(node);}
+   if(!visited.has(node)){const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:state.updatedAt,onAction:()=>{},ready:true,startQuest:'herbs'}));assert.match(html,/が同行中/);assert.ok(html.includes(r.mission.region));assert.ok(html.includes(r.name));assert.doesNotMatch(html,/NaN|undefined%/);visited.add(node);}
    state=settle(state,state.squads[0].run.nextAt).state;
   }
   assert.equal(visited.size,15,r.hero);assert.ok(state.owned.includes(r.hero));
@@ -86,11 +89,11 @@ test('effects follow current events, expire on resume, and do not alter the save
  const before=structuredClone(state);
  const render=now=>renderToStaticMarkup(createElement(MapStage,{state,squad,now,onAction:()=>{},ready:true,startQuest:'herbs'}));
  const current=render(2200);
- assert.equal((current.match(/class="battle-impact /g)||[]).length,1);
+ assert.equal(frameFor(state,2200).events.length,1);
  assert.match(current,/finisher-scene burst/);
  assert.match(current,/--scene-age:-200ms/);
- assert.doesNotMatch(render(7000),/class="battle-impact |finisher-scene burst|class="attack-trail/);
- assert.doesNotMatch(render(1500),/class="battle-impact |finisher-scene burst/);
+ assert.doesNotMatch(render(7000),/finisher-scene burst/);assert.equal(frameFor(state,7000).events.length,0);
+ assert.doesNotMatch(render(1500),/finisher-scene burst/);assert.equal(frameFor(state,1500).events.length,0);
  assert.deepEqual(state,before);
 });
 
@@ -99,27 +102,29 @@ test('all discovery kinds render their artwork before and after automatic collec
  for(const kind of ['chest','herb','spirit'])for(const claimed of [false,true]){
   squad.run.detour={kind,claimed,node:0,hero:'aria',at:1500,finishAt:2000};
   const html=renderToStaticMarkup(createElement(MapStage,{state,squad,now:2100,onAction:()=>{},ready:true,startQuest:'herbs'}));
-  assert.match(html,new RegExp(`/items/${kind}.png`));
-  assert.match(html,/寄り道を優先して調べる/);
-  if(claimed)assert.match(html,/見つけた！/);
+  assert.ok(adventureAssets(frameFor(state,2100)).includes(`/items/${kind}.png`));
+  assert.equal(frameFor(state,2100).discovery.kind,kind);
+  assert.match(html,/寄り道|発見済み/);
+  if(claimed)assert.match(html,/発見済み/);
  }
 });
 
-function mapButton(state,className,ready=true){
+function mapButton(state,label,ready=true){
  const tree=MapStage({state,squad:state.squads[0],now:state.updatedAt,onAction:action=>{state=act(state,action,state.updatedAt);},ready,startQuest:'herbs'});
- function find(node){if(!node||typeof node!=='object')return null;if(node.type==='button'&&node.props.className?.split(' ').includes(className))return node;return [node.props?.children].flat(Infinity).map(find).find(Boolean);}
+ function find(node){if(!node||typeof node!=='object')return null;if(node.type==='button'&&renderToStaticMarkup(node).includes(label))return node;return [node.props?.children].flat(Infinity).map(find).find(Boolean);}
  const button=find(tree);
  return {button,click(){assert.ok(button);assert.equal(button.props.disabled,false);button.props.onClick();return state;}};
 }
-test('map and target taps each dispatch a single assist while idle and unavailable maps are guarded',()=>{
- const idle=initialState(1000);assert.equal(mapButton(idle,'map-tap-surface').button,undefined);
+test('accessible help dispatches one assist and idle/unavailable adventures are guarded',()=>{
+ const idle=initialState(1000);assert.equal(mapButton(idle,'手助けする').button,undefined);
  const state=act(idle,{type:'start',id:'herbs'},1000);
- for(const cls of ['map-tap-surface','target']){const after=mapButton(state,cls).click();assert.equal(after.squads[0].run.cheer,5);assert.equal(after.squads[0].run.hits,1);assert.equal(mapButton(state,cls,false).button.props.disabled,true);}
+ const after=mapButton(state,'手助けする').click();assert.equal(after.squads[0].run.cheer,5);assert.equal(after.squads[0].run.hits,1);assert.equal(mapButton(state,'手助けする',false).button.props.disabled,true);
+ assert.equal(adventureAction({squad:state.squads[0],ready:false,paused:false,now:1000,startQuest:'herbs'},'help'),null);
 });
 test('resting map taps recover the party and hero and HP taps heal without striking',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
  state.squads[0].run.hp=0;state.squads[0].run.phase='rest';
- for(const cls of ['map-tap-surface','target','hero-heal-target','party-health']){const after=mapButton(state,cls).click().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
+ for(const label of ['回復を手伝う','パーティを回復']){const after=mapButton(state,label).click().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
  state.squads[0].run.phase='work';state.squads[0].run.hp=10;
- for(const cls of ['hero-heal-target','party-health']){const before=state.squads[0].run;const after=mapButton(state,cls).click().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);}
+ const before=state.squads[0].run;const after=mapButton(state,'パーティを回復').click().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);
 });

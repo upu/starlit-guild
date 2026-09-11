@@ -39,7 +39,8 @@ next-env.d.ts
 /dist/
 /.wrangler/
 /.sites-runtime/
-/.agents/
+/.agents/*
+!/.agents/skills/
 /.codex/
 /outputs/
 /work/

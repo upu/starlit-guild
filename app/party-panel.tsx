@@ -18,7 +18,16 @@ export function PartyPanel({state:s,squad:sq,draft,ready,onChoose,onCreate,onTog
   <section className="party-editor" aria-label={sq.name+'の編成'}>
    <div className="screen-heading"><h3>{sq.name}</h3><span>{draft.length} / {limit}人</span></div>
    {sq.run?<div className="party-running"><p>冒険中です。編成の変更は帰還してから行えます。</p><button disabled={!ready} onClick={onReturn}>帰還して編成する</button><button className="outline" onClick={onAdventure}>この隊の冒険を見る</button></div>:<p>仲間を選んで編成します。人物紹介は「詳しく」から。</p>}
-   <div className="roster-grid">{heroes.filter(h=>s.owned.includes(h.id)).map(h=>{const other=s.squads.find(p=>p.id!==sq.id&&p.members.includes(h.id)),selected=draft.includes(h.id),full=!selected&&draft.length>=limit;return <article key={h.id} className={selected?'roster-card picked':'roster-card'}><button className="roster-pick" aria-label={h.name+(selected?'を編成から外す':'を編成に加える')} aria-pressed={selected} disabled={!ready||!!sq.run||!!other||full} onClick={()=>onToggle(h.id)}><Sprite index={h.sprite} size={62}/><b>{h.name}{selected&&<Check size={15}/>}</b><small>Lv.{level(s.xp[h.id]||0)}</small><small>{other?other.name:selected?'編成中':full?'定員です':'待機中'}</small><span className="roster-stats">採 {memberStats(s,h.id)[0]} · 護 {memberStats(s,h.id)[1]} · 討 {memberStats(s,h.id)[2]}</span></button><button className="quiet roster-info" aria-label={h.name+'の詳しい紹介'} onClick={()=>onInspect(h.id)}><Info size={14}/>詳しく</button></article>;})}</div>
+   <div className="roster-grid">{heroes.filter(h=>s.owned.includes(h.id)).map(h=>{
+    const other=s.squads.find(p=>p.id!==sq.id&&p.members.includes(h.id)),selected=draft.includes(h.id),full=!selected&&draft.length>=limit;
+    return <article key={h.id} className={selected?'roster-card picked':'roster-card'}>
+     <button className="roster-pick" aria-label={h.name+(selected?'を編成から外す':'を編成に加える')} aria-pressed={selected} disabled={!ready||!!sq.run||!!other||full} onClick={()=>onToggle(h.id)}>
+      <span className="roster-art"><Sprite index={h.sprite} size={168}/><span className="roster-level">Lv.{level(s.xp[h.id]||0)}</span></span>
+      <span className="roster-job">{h.job}</span><b>{h.name}{selected&&<Check size={15}/>}</b>
+      <small>{other?other.name:selected?'編成中':full?'定員です':'待機中'}</small><span className="roster-stats">採 {memberStats(s,h.id)[0]} · 護 {memberStats(s,h.id)[1]} · 討 {memberStats(s,h.id)[2]}</span>
+     </button><button className="quiet roster-info" aria-label={h.name+'の詳しい紹介'} onClick={()=>onInspect(h.id)}><Info size={14}/>詳しく</button>
+    </article>;
+   })}</div>
    {!sq.run&&<div className="party-save"><span role="status">{dirty?'編成はまだ保存されていません':'保存済みの編成'}{draft.length===0&&' · 1人以上選んでください'}</span><button disabled={!ready||!dirty||!draft.length} onClick={onSave}>編成を保存</button>{dirty&&<button className="outline" onClick={onDiscard}>元に戻す</button>}</div>}
    <button className="quiet full" onClick={onPreview}>選んだ編成の効果を見る</button>
 

@@ -1,0 +1,17 @@
+.phone-game .phaser-map{background-size:cover;background-position:center;min-height:220px}
+.phaser-canvas{position:absolute;inset:0;z-index:0;overflow:hidden;touch-action:none}
+.phaser-canvas canvas{display:block!important;width:100%!important;height:100%!important;touch-action:none}
+.phaser-canvas[data-status="error"]{visibility:hidden}
+.phaser-loading{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px;background:#102e2799;backdrop-filter:blur(4px);font-size:14px;color:#fff0cb;text-align:center}
+.phaser-loading button{min-height:44px}
+.phone-game .phaser-map .map-heading{pointer-events:none;z-index:4;right:20px}
+.phone-game .phaser-map .idle-map-note{z-index:5}
+.phone-game .phaser-assist-controls{display:flex;align-items:stretch;gap:8px;padding:7px 14px;background:#17342c;border-top:1px solid #b5a56b70;flex-shrink:0}
+.phone-game .phaser-assist-controls>button{min-height:44px;flex:1;font-size:14px;padding:6px 10px;gap:6px}
+.phaser-assist-controls>button>span{display:flex;align-items:center;gap:6px}
+.phaser-assist-controls small{font-size:12px;white-space:nowrap}
+.phone-game .phaser-map .map-journey{bottom:10px}
+@media(min-width:760px){.phone-game .phaser-assist-controls{padding:8px 24px;justify-content:center}.phone-game .phaser-assist-controls>button{max-width:240px}}
+@media(max-width:380px){.phone-game .phaser-assist-controls{gap:5px;padding-inline:8px}.phone-game .phaser-assist-controls>button{font-size:12px;padding-inline:5px}.phaser-assist-controls>button>span{flex-direction:column;gap:0}.phone-game .phaser-map .map-heading h2{font-size:24px}}
+@media(max-height:650px){.phone-game .phone-adventure{overflow-y:auto}.phone-game .phone-adventure .map-shell{flex:1 0 350px}.phone-game .phaser-map{min-height:250px}}
+@media(max-height:500px){.phone-game .phone-adventure .map-shell{flex:1 0 370px}.phone-game .phaser-map{min-height:280px}}
