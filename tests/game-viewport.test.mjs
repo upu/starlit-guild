@@ -8,8 +8,8 @@ const cinematicCss=readFileSync(new URL('../app/cinematic.css',import.meta.url),
 const layoutSource=readFileSync(new URL('../app/layout.tsx',import.meta.url),'utf8');
 const manifest=JSON.parse(readFileSync(new URL('../public/manifest.webmanifest',import.meta.url),'utf8'));
 
-test('normal view keeps the bottom safe area inside the game frame',()=>{
- assert.equal(gameViewportHeight(844,810,false),844);
+test('normal view leaves sizing to CSS dynamic viewport units',()=>{
+ assert.equal(gameViewportHeight(844,810,false),undefined);
 });
 
 test('software keyboard uses the reduced visual viewport',()=>{
@@ -32,4 +32,11 @@ test('browser-owned bottom area uses the navigation color',()=>{
  assert.equal(manifest.theme_color,'#102a26');
  assert.match(layoutSource,/themeColor:'#102a26'/);
  assert.match(navigationCss,/html\{background:var\(--game-nav-color\)\}/);
+});
+
+test('installed iOS layout avoids the viewport-fit cover height bug',()=>{
+ assert.doesNotMatch(layoutSource,/viewportFit/);
+ assert.match(layoutSource,/statusBarStyle:'default'/);
+ assert.doesNotMatch(navigationCss,/@media\(display-mode:standalone\).*--game-height:100vh/);
+ assert.doesNotMatch(navigationCss,/body\{position:fixed/);
 });

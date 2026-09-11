@@ -149,11 +149,10 @@ body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner
 @media(max-height:700px){.phone-game .journey-banter{max-height:68px;padding-block:5px}.phone-game .banter-line>span{-webkit-line-clamp:1}}
 @media(max-height:480px){.phone-game .phone-adventure{overflow-y:auto}.phone-game .phone-adventure .map-shell{flex:1 0 220px}.phone-game .phone-home{overflow-y:auto}.phone-game .phone-home .home-map{min-height:220px}}
 
-/* A measured frame avoids installed Safari's shortened dynamic viewport. */
+/* CSS owns the normal frame; JS only narrows it for an open keyboard. */
 :root{--game-height:100dvh;--game-top:0px;--game-safe-bottom:env(safe-area-inset-bottom,0px);--game-nav-height:calc(56px + var(--game-safe-bottom));--game-nav-color:#102a26}
-@media(display-mode:standalone){:root{--game-height:100vh}}
 html{background:var(--game-nav-color)}
-body{position:fixed;inset:0;height:auto;overflow:hidden;background:var(--game-nav-color)}
+body{overflow:hidden;background:var(--game-nav-color)}
 .phone-game,.start-screen{position:relative;top:var(--game-top);height:var(--game-height);max-height:none;margin-block:0}
 .game-keyboard-open{--game-safe-bottom:0px}
 /* Anchor navigation to the viewport like YAMORU, independent of the game frame. */

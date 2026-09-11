@@ -2,12 +2,12 @@
 import {useEffect} from 'react';
 
 export function gameViewportHeight(innerHeight:number,visualHeight:number|undefined,keyboard:boolean){
- return keyboard?visualHeight??innerHeight:innerHeight;
+ return keyboard?visualHeight??innerHeight:undefined;
 }
 
-// Some iOS browsers and in-app views report visualViewport.height without the
-// bottom safe area. Keep the normal game frame at the full window height and
-// use the visual viewport only while the software keyboard is open.
+// Let CSS dynamic viewport units size the normal frame. Installed WebKit apps
+// can report an innerHeight that is shorter by the safe area; only override the
+// frame while the software keyboard is actually open.
 export function useGameViewport(){
  useEffect(()=>{
   const root=document.documentElement,viewport=window.visualViewport;
@@ -17,8 +17,8 @@ export function useGameViewport(){
    const editable=document.activeElement?.matches('input,textarea,[contenteditable="true"]');
    const keyboard=!!editable&&!!viewport&&viewport.height<window.innerHeight-100;
    const height=gameViewportHeight(window.innerHeight,viewport?.height,keyboard);
-   root.style.setProperty('--game-height',`${Math.round(height)}px`);
-   root.style.setProperty('--game-top',`${keyboard?viewport?.offsetTop||0:0}px`);
+   if(height===undefined){root.style.removeProperty('--game-height');root.style.removeProperty('--game-top');}
+   else{root.style.setProperty('--game-height',`${Math.round(height)}px`);root.style.setProperty('--game-top',`${viewport?.offsetTop||0}px`);}
    root.classList.toggle('game-keyboard-open',keyboard);
   };
   const schedule=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(update);};
