@@ -132,6 +132,7 @@
 @keyframes dialogue-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 @keyframes panel-reveal{from{opacity:.45}to{opacity:1}}
 @media(min-width:760px){
+ :root{--game-nav-height:calc(64px + var(--game-safe-bottom))}
  .phone-game .phone-header{height:62px;min-height:62px;padding-inline:24px}
  .phone-game .phone-header .phone-wallet{max-width:510px}
  .phone-game .phone-adventure{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto minmax(0,1fr) auto}
@@ -145,7 +146,7 @@
  .phone-game .idle-map-note{left:50%;right:auto;transform:translateX(-50%);width:min(540px,90%);bottom:24px}
  .phone-game .journey-banter{padding:12px 28px;min-height:94px}
  .phone-game .banter-line>span{-webkit-line-clamp:2}
- .phone-game .phone-navigation{height:64px!important;gap:12px!important;padding-inline:24px!important}
+ .phone-game .phone-navigation{height:var(--game-nav-height)!important;gap:12px!important;padding-inline:24px!important}
  .phone-game .phone-navigation [data-slot="tabs-trigger"]{font-size:14px;gap:8px!important}
  .phone-game .phone-party,.phone-game .phone-memories{padding:28px clamp(24px,5vw,64px)}
  .phone-game .roster-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}

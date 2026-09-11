@@ -1,6 +1,7 @@
 'use client';
 import './start-screen.css';
 import {SceneAtmosphere} from './scene-atmosphere';
+import {APP_VERSION} from './app-version';
 
 export function StartScreen({ready,error,onStart}:{ready:boolean;error:string;onStart:()=>void}){
  return <main className="start-screen">
@@ -10,6 +11,6 @@ export function StartScreen({ready,error,onStart}:{ready:boolean;error:string;on
   </picture>
   <SceneAtmosphere tone="night"/>
   <h1 className="start-title"><img className="start-logo" src="/title/starlit-guild-logo.webp" alt="星灯りの旅団 — STARLIT GUILD" width={1536} height={1024} fetchPriority="high"/></h1>
-  <div className="start-entry"><button type="button" disabled={!ready&&!error} aria-label={error?'記録を確認する':ready?'冒険を始める':'旅の支度中'} onClick={onStart}>{error?'記録を確認する':ready?'- START -':'- LOADING -'}</button>{error&&<p role="alert">{error}</p>}</div>
+  <div className="start-entry"><button type="button" disabled={!ready&&!error} aria-label={error?'記録を確認する':ready?'冒険を始める':'旅の支度中'} onClick={onStart}>{error?'記録を確認する':ready?'- START -':'- LOADING -'}</button>{error&&<p role="alert">{error}</p>}<span className="start-version">v{APP_VERSION}</span></div>
  </main>;
 }

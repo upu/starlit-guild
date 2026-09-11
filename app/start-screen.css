@@ -13,6 +13,7 @@ main.start-screen .start-entry>button:focus-visible{outline:1px solid #fff0cb;ou
 main.start-screen .start-entry>button:active:not(:disabled){color:#dfc88f}
 main.start-screen .start-entry>button:disabled{opacity:.6}
 main.start-screen .start-entry>p{display:block;max-width:36em;font-size:14px;text-shadow:0 2px 6px #020e18}
+main.start-screen .start-version{font-size:12px;line-height:1;letter-spacing:.12em;color:#d9dec7b8;text-shadow:0 1px 5px #020e18}
 main.start-screen .scene-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;contain:paint}
 main.start-screen>.scene-atmosphere{z-index:0}
 main.start-screen .scene-atmosphere>i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff2b5;box-shadow:0 0 10px 2px #fee9a46b;opacity:0;animation:title-mote-drift var(--drift-duration) ease-in-out var(--drift-delay) infinite}

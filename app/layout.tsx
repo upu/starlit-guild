@@ -9,7 +9,7 @@ import "./cinematic.css";
 import "./phaser.css";
 import "./prologue.css";
 
-export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
+export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#102a26'};
 
 export const metadata: Metadata = {
   title: "星灯りの旅団 | STARLIT GUILD",

@@ -4,6 +4,9 @@ import {readFileSync} from 'node:fs';
 import {gameViewportHeight} from '../app/use-game-viewport.ts';
 
 const navigationCss=readFileSync(new URL('../app/navigation.css',import.meta.url),'utf8');
+const cinematicCss=readFileSync(new URL('../app/cinematic.css',import.meta.url),'utf8');
+const layoutSource=readFileSync(new URL('../app/layout.tsx',import.meta.url),'utf8');
+const manifest=JSON.parse(readFileSync(new URL('../public/manifest.webmanifest',import.meta.url),'utf8'));
 
 test('normal view keeps the bottom safe area inside the game frame',()=>{
  assert.equal(gameViewportHeight(844,810,false),844);
@@ -17,7 +20,16 @@ test('keyboard fallback uses the window height without Visual Viewport API',()=>
  assert.equal(gameViewportHeight(844,undefined,true),844);
 });
 
-test('bottom safe area is painted inside the navigation background',()=>{
+test('bottom navigation is fixed to the viewport and reserves its layout space',()=>{
  assert.match(navigationCss,/--game-nav-height:calc\(56px \+ var\(--game-safe-bottom\)\)/);
- assert.match(navigationCss,/\.phone-game \.phone-navigation\{height:var\(--game-nav-height\)!important;[^}]*padding:[^}]*calc\(2px \+ var\(--game-safe-bottom\)\)/);
+ assert.match(navigationCss,/\.phone-game \.phone-tabs\{padding-bottom:var\(--game-nav-height\)\}/);
+ assert.match(navigationCss,/\.phone-game \.phone-navigation\{[^}]*position:fixed;[^}]*bottom:0;[^}]*height:var\(--game-nav-height\)!important;[^}]*padding:[^}]*calc\(2px \+ var\(--game-safe-bottom\)\)/);
+ assert.match(cinematicCss,/@media\(min-width:760px\)\{\s*:root\{--game-nav-height:calc\(64px \+ var\(--game-safe-bottom\)\)\}/);
+});
+
+test('browser-owned bottom area uses the navigation color',()=>{
+ assert.equal(manifest.background_color,'#102a26');
+ assert.equal(manifest.theme_color,'#102a26');
+ assert.match(layoutSource,/themeColor:'#102a26'/);
+ assert.match(navigationCss,/html\{background:var\(--game-nav-color\)\}/);
 });
