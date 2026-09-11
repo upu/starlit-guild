@@ -1,0 +1,29 @@
+/* Artwork sets the scale; motion stays on decorative layers, away from tap targets. */
+main.start-screen{width:min(100%,1440px);background:#081922;padding-top:calc(env(safe-area-inset-top) + clamp(24px,5vh,56px));padding-bottom:calc(var(--game-safe-bottom) + clamp(32px,7vh,72px))}
+main.start-screen .start-art{position:absolute;inset:0;z-index:-3;width:100%;height:100%;animation:title-opening-pan 26s ease-in-out infinite alternate}
+main.start-screen .start-art>img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+main.start-screen::before{z-index:-1;background:linear-gradient(180deg,#05121d55 0%,transparent 38%,transparent 64%,#04131db3 100%)}
+main.start-screen .start-title,main.start-screen .start-entry{position:relative;z-index:2;animation:title-scene-reveal .8s ease-out both}
+main.start-screen .start-title{margin:0;display:flex;justify-content:center;min-height:0}
+main.start-screen .start-logo{display:block;width:min(100%,620px);height:auto;max-height:36vh;object-fit:contain;filter:drop-shadow(0 3px 12px #031018a6)}
+main.start-screen .start-entry{animation-delay:.16s}
+main.start-screen .start-entry>button{min-height:60px;width:min(100%,300px);padding:12px 20px;border:0;border-radius:0;background:transparent;box-shadow:none;color:#fff2cf;font-family:Georgia,'Times New Roman',serif;font-size:clamp(23px,4vw,30px);font-weight:400;letter-spacing:.22em;text-indent:.22em;text-shadow:0 2px 8px #020e18,0 0 22px #f5dfa561;touch-action:manipulation;transition:color .2s,text-shadow .2s}
+main.start-screen .start-entry>button:hover:not(:disabled){background:transparent;box-shadow:none;transform:none;color:#fffaf0;text-shadow:0 2px 8px #020e18,0 0 24px #ffe7a8}
+main.start-screen .start-entry>button:focus-visible{outline:1px solid #fff0cb;outline-offset:5px}
+main.start-screen .start-entry>button:active:not(:disabled){color:#dfc88f}
+main.start-screen .start-entry>button:disabled{opacity:.6}
+main.start-screen .start-entry>p{display:block;max-width:36em;font-size:14px;text-shadow:0 2px 6px #020e18}
+main.start-screen .scene-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;contain:paint}
+main.start-screen>.scene-atmosphere{z-index:0}
+main.start-screen .scene-atmosphere>i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff2b5;box-shadow:0 0 10px 2px #fee9a46b;opacity:0;animation:title-mote-drift var(--drift-duration) ease-in-out var(--drift-delay) infinite}
+main.start-screen .scene-atmosphere>i:nth-child(3n){width:2px;height:2px;background:#d7f9e6}
+main.start-screen .scene-light{position:absolute;inset:-15%;background:radial-gradient(ellipse at 75% 5%,#ffe6a136,transparent 55%);animation:title-light-breathe 12s ease-in-out infinite alternate}
+main.start-screen .atmosphere-night>i{background:#c8d5ff;box-shadow:0 0 12px #a8bdff}
+main.start-screen .atmosphere-night .scene-light{background:radial-gradient(ellipse at 75% 5%,#aea9ff28,transparent 55%)}
+main.start-screen .atmosphere-hearth>i{background:#ffcc7d;box-shadow:0 0 10px #ffac69}
+@keyframes title-opening-pan{from{transform:scale(1.025) translateX(-.5%)}to{transform:scale(1.09) translateX(.5%)}}
+@keyframes title-mote-drift{0%{opacity:0;transform:translate3d(0,24px,0)}25%,65%{opacity:.7}100%{opacity:0;transform:translate3d(24px,-65px,0)}}
+@keyframes title-light-breathe{from{opacity:.45;transform:translateX(-2%)}to{opacity:1;transform:translateX(2%)}}
+@keyframes title-scene-reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-height:500px){main.start-screen{padding-top:calc(env(safe-area-inset-top) + 18px);padding-bottom:calc(var(--game-safe-bottom) + 18px)}main.start-screen .start-logo{max-height:40vh;width:min(60vw,420px)}main.start-screen .start-entry>button{min-height:48px}}
+@media(prefers-reduced-motion:reduce){main.start-screen *{animation:none!important;transition:none!important}main.start-screen .scene-atmosphere>i{display:none}}

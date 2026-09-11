@@ -1,9 +1,15 @@
 'use client';
-import {ArrowRight} from 'lucide-react';
+import './start-screen.css';
+import {SceneAtmosphere} from './scene-atmosphere';
 
 export function StartScreen({ready,error,onStart}:{ready:boolean;error:string;onStart:()=>void}){
  return <main className="start-screen">
-  <div className="start-title"><p>STARLIT GUILD</p><h1>星灯りの旅団</h1><span>小さな旅を、ふたりから。</span></div>
-  <div className="start-entry"><button disabled={!ready&&!error} onClick={onStart}>{error?'記録を確認する':ready?'冒険へ':'旅の支度中…'}<ArrowRight size={18}/></button>{error?<p role="alert">{error}</p>:<p>あなたの旅の続きが、ここに。</p>}</div>
+  <picture className="start-art">
+   <source media="(orientation: portrait)" srcSet="/title/starlight-towers-portrait.webp" width={1024} height={1536}/>
+   <img src="/title/starlight-towers.webp" alt="星空の下、森と街道に星灯りの塔が点々と灯る風景" width={1536} height={1024} fetchPriority="high"/>
+  </picture>
+  <SceneAtmosphere tone="night"/>
+  <h1 className="start-title"><img className="start-logo" src="/title/starlit-guild-logo.webp" alt="星灯りの旅団 — STARLIT GUILD" width={1536} height={1024} fetchPriority="high"/></h1>
+  <div className="start-entry"><button type="button" disabled={!ready&&!error} aria-label={error?'記録を確認する':ready?'冒険を始める':'旅の支度中'} onClick={onStart}>{error?'記録を確認する':ready?'- START -':'- LOADING -'}</button>{error&&<p role="alert">{error}</p>}</div>
  </main>;
 }

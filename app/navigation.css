@@ -177,13 +177,9 @@ body{position:fixed;inset:0;height:auto;overflow:hidden;background:#132625}
 .phone-game .adventure-map .target-meter{width:54px;background:transparent;border:0;padding:0;top:95%}
 .phone-game .adventure-map .target-meter>[data-slot=progress]{height:4px;margin:0;box-shadow:0 0 0 1px #132625b0}
 .phone-dialog,.save-dialog{max-height:calc(var(--game-height,100dvh) - 24px - env(safe-area-inset-top) - var(--game-safe-bottom))}
-.start-screen{width:min(100%,520px);margin-inline:auto;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate;overflow:hidden;color:#fff0ce;background:#132625 url('/stories/first-map.png') 42% center/auto 62% no-repeat;padding:calc(env(safe-area-inset-top) + 64px) max(28px,env(safe-area-inset-right)) calc(var(--game-safe-bottom) + 40px) max(28px,env(safe-area-inset-left));text-align:center}
+.start-screen{width:min(100%,520px);margin-inline:auto;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate;overflow:hidden;color:#fff0ce;background:#081922;padding:calc(env(safe-area-inset-top) + 64px) max(28px,env(safe-area-inset-right)) calc(var(--game-safe-bottom) + 40px) max(28px,env(safe-area-inset-left));text-align:center}
 .start-screen::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(#0c282cdd,transparent 47%,#10292524 65%,#102925f5)}
-.start-title>p{font-size:12px;letter-spacing:.34em;color:#e4cb8e}
-.start-title>h1{font-size:clamp(30px,8vw,42px);font-weight:500;letter-spacing:.1em;line-height:1.6;text-shadow:0 3px 15px #09231d}
-.start-title>span{font-size:13px;letter-spacing:.1em;color:#e0dfc8}
 .start-entry{display:flex;align-items:center;flex-direction:column;gap:14px}
-.start-entry>button{width:min(100%,260px);min-height:52px;font-size:16px;letter-spacing:.12em;background:#e5ca88;border:1px solid #ffe5ab;box-shadow:0 6px 28px #11282090}
 .start-entry>p{font-size:12px;line-height:1.8;color:#e1dec5}
 @media(max-width:350px){.phone-game .phone-header{gap:4px;padding-inline:4px}.phone-header .phone-wallet>span{font-size:10px;gap:2px}.phone-header .phone-wallet svg{width:11px}.phone-game .adventure-toolbar .return-button{padding-inline:7px}}
-@media(max-height:500px){.start-screen{padding-top:calc(env(safe-area-inset-top) + 20px);padding-bottom:calc(var(--game-safe-bottom) + 18px)}.start-title>h1{font-size:28px}.start-title>span,.start-entry>p{display:none}}
+@media(max-height:500px){.start-screen{padding-top:calc(env(safe-area-inset-top) + 20px);padding-bottom:calc(var(--game-safe-bottom) + 18px)}}
