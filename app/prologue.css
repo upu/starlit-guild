@@ -1,0 +1,17 @@
+.phone-game .handbook-button{position:relative;flex:0 0 44px;width:44px;min-height:44px;padding:8px;color:#f0d99a;background:#294337;border:1px solid #71835b;border-radius:8px}
+.handbook-button .unread-dot{right:4px;top:4px}
+.handbook-menu{display:flex;flex-direction:column;gap:12px}
+.handbook-menu>button{width:100%;min-height:52px;justify-content:flex-start;gap:12px;font-size:16px}
+.handbook-menu>button>span{flex:1;text-align:left}
+.phone-game .quest-entry{gap:6px;padding:6px 10px;font-size:14px;color:#f1dcaa}
+.phone-game .quest-entry-guided{background:#465138;border-color:#e9c675;box-shadow:0 0 0 2px #d7bd7430}
+.prologue-game .adventure-destination{padding-top:8px}
+.prologue-game .adventure-destination b{white-space:normal;line-height:1.6}
+.prologue-guidance{flex-shrink:0;padding:12px 16px;font-size:14px;line-height:1.7;color:#f4e5bd;background:#213a30;border-top:1px solid #52684b}
+.phone-game .phone-navigation{grid-template-columns:repeat(3,minmax(0,1fr))}
+.prologue-game .phone-navigation{grid-template-columns:minmax(0,1fr)}
+.prologue-game .phone-navigation [data-slot="tabs-trigger"]{flex:1;font-size:14px}
+.prologue-game .idle-map-note{max-width:calc(100% - 24px);flex-wrap:wrap;justify-content:center;text-align:center}
+.prologue-game .idle-map-note>span{font-size:14px}
+.prologue-game .idle-map-note>button{min-height:44px;font-size:14px}
+@media(max-height:600px){.prologue-guidance{padding:6px 12px}.prologue-game .adventure-destination{padding-block:4px}}

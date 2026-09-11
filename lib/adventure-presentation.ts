@@ -2,6 +2,7 @@ import {allQuests,heroes,heroSkills,travelMs,encounter,targetName,type Squad,typ
 import {originalArt} from './original-characters.ts';
 import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
+import {TRADE_QUEST} from './prologue.ts';
 
 export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean};
 export type Point={x:number;y:number};
@@ -36,7 +37,8 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const detour=run?.detour;
  const discovery=detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
  const cutin=run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;
- const target=run?{x:.80,y:.61,sprite:kind==='gather'?11:kind==='escort'?7:quest.enemy,name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle'}:null;
+ const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
+ const target=run?{x:.80,y:.61,sprite:targetSprite,asset:quest.id===TRADE_QUEST&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind}:null;
  return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,hp:run?clamp(run.hp/run.maxHp):1,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
@@ -56,7 +58,7 @@ export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=
 export function adventureAssets(frame:AdventureFrame){
  const assets=new Set(['/sprites.png',frame.background,'/items/chest.png','/items/herb.png','/items/spirit.png']);
  for(const m of frame.members){assets.add(spriteAsset(m.sprite));if(heroSheets[m.id]?.ready)assets.add(heroSheets[m.id].asset);}
- if(frame.target)assets.add(spriteAsset(frame.target.sprite));
+ if(frame.target)assets.add(frame.target.asset);
  if(frame.quest.companion){const guest=heroes.find(h=>h.id===frame.quest.companion);if(guest)assets.add(spriteAsset(guest.sprite));}
  return [...assets];
 }

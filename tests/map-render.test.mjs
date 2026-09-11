@@ -5,7 +5,7 @@ import {mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {initialState,act,settle,testState} from '../lib/game.ts';
+import {initialState,initialPrologueState,act,settle,testState} from '../lib/game.ts';
 import {stories} from '../lib/stories.ts';
 import {madHalloweenStories} from '../lib/mad-halloween-stories.ts';
 import {characterEncounters} from '../lib/character-encounters.ts';
@@ -20,6 +20,22 @@ const {MapStage}=await import(output.href);
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
 await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
 const {StoryReader,StoryLines,StoryLibrary}=await import(storyOutput.href);
+const phoneOutput=new URL('../work/phone-render.mjs',import.meta.url);
+await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
+const {PhoneGame}=await import(phoneOutput.href);
+
+test('prologue screen guides to quests, hides advanced navigation and uses one book entrance',()=>{
+ const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:1000,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
+ const fresh=initialPrologueState(1000),html=render(fresh);
+ assert.match(html,/まずは巻物の「クエスト」を開きましょう/);
+ assert.match(html,/aria-label="クエストを開く"/);
+ assert.match(html,/aria-label="旅の手帳：思い出・ヒント・設定"/);
+ assert.doesNotMatch(html,/はじまりの隊|団長の応援|>編成<|>帰還<|>パーティ<|>拠点<|>思い出<|>出発する</);
+ const running=render(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000));
+ assert.match(running,/手助けする/);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);
+ const legacy=render(initialState(1000));assert.match(legacy,/>パーティ</);assert.match(legacy,/>拠点</);
+ assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
+});
 
 test('guest stills reveal during their scene and enter the gallery only after reading',()=>{
  for(const scene of characterEncounters.filter(st=>storyArt[st.id])){

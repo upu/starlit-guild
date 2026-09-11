@@ -188,7 +188,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
     }
    });
    if(frame.target){
-    const target=frame.target,asset=spriteAsset(target.sprite);
+    const target=frame.target,asset=target.asset;
     if(!this.opponent)this.opponent=this.makeFigure(target.sprite,target.name);
     this.opponent.image.setTexture(asset,asset==='/sprites.png'?String(target.sprite):undefined);
     const enemySize=size*1.08,pulse=reduced?1:1+Math.sin(now/420)*.015;

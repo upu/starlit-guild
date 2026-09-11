@@ -7,6 +7,7 @@ import "./stories.css";
 import "./navigation.css"; // Adventure, party, and memory navigation.
 import "./cinematic.css";
 import "./phaser.css";
+import "./prologue.css";
 
 export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',themeColor:'#132625'};
 

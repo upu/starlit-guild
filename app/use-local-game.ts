@@ -1,14 +1,14 @@
 'use client';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {toast} from 'sonner';
-import {act,initialState,migrate,settle,testState,type Action,type Rewards,type State} from '@/lib/game';
+import {act,initialPrologueState,migrate,settle,testState,type Action,type Rewards,type State} from '@/lib/game';
 import {parseBundle,type SaveBundle,type Profile} from '@/lib/save-format';
 import {journeyNotice} from '@/lib/journey';
 import {setSound,sound,soundEvents,unlockSound} from '@/lib/sound';
 export const SAVE_KEY='starlit-guild-v4';
 const LEASE=SAVE_KEY+'-tab',FIVE_MINUTES=300000;
 type CloudCopy={bundle:SaveBundle;at:number};
-function newProfile(test=false):Profile{return {id:crypto.randomUUID(),name:test?'テスト用の冒険':'新しい冒険',test,state:initialState(Date.now())};}
+function newProfile(test=false):Profile{return {id:crypto.randomUUID(),name:test?'テスト用の冒険':'新しい冒険',test,state:initialPrologueState(Date.now())};}
 function celebrate(before:Parameters<typeof journeyNotice>[0],after:Parameters<typeof journeyNotice>[1]){if(document.visibilityState!=='visible')return;const notice=journeyNotice(before,after);if(notice)toast.success(notice.title,{description:notice.description,duration:4500,id:'journey-moment'});}
 function fresh():SaveBundle{const p=newProfile();return {format:4,deviceId:crypto.randomUUID(),active:p.id,profiles:[p],serial:0,sound:true,cloudAt:0,legacyImported:false};}
 export function useLocalGame(){
@@ -61,5 +61,5 @@ export function useLocalGame(){
  const toggleSound=useCallback((value:boolean)=>{const b=current.current;if(!b||!owner.current)return;b.sound=value;setSound(value);if(value){unlockSound();sound('gather',true);}publish(b);persist();},[persist,publish]);
  const takeOver=useCallback(()=>{try{const raw=localStorage.getItem(SAVE_KEY);if(raw)publish(parseBundle(JSON.parse(raw)));localStorage.setItem(LEASE,JSON.stringify({id:tabId.current,until:Date.now()+6000}));owner.current=true;setOtherTab(false);advance(Date.now());persist();}catch{setError('端末の記録を確認してください。');}},[advance,persist,publish]);
  const profile=bundle?.profiles.find(p=>p.id===bundle.active);
- return {s:profile?.state||initialState(0),profile,bundle,clock,ready:!!bundle,otherTab,takeOver,error,cloudError,cloudBusy,copies,refreshCopies,backup,saved,report,setReport,dispatch,switchProfile,createProfile,adjust,restoreCopy,importFile,download,toggleSound};
+ return {s:profile?.state||initialPrologueState(0),profile,bundle,clock,ready:!!bundle,otherTab,takeOver,error,cloudError,cloudBusy,copies,refreshCopies,backup,saved,report,setReport,dispatch,switchProfile,createProfile,adjust,restoreCopy,importFile,download,toggleSound};
 }

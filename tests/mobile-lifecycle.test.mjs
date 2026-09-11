@@ -21,7 +21,7 @@ function harness(){
 }
 
 test('hidden game stops periodic writes, simulation and cloud requests',()=>{
- const h=harness();h.hook.dispatch({type:'start',id:'herbs'});h.setNow(2000);h.visibility('hidden');
+ const h=harness();h.hook.dispatch({type:'start',id:'village-trade'});h.setNow(2000);h.visibility('hidden');
  const writes=h.writes(),requests=h.requests(),save=h.data.get(h.key);
  h.setNow(400000);h.timers.forEach(t=>t.fn());
  assert.equal(h.writes(),writes);assert.equal(h.requests(),requests);assert.equal(h.data.get(h.key),save);
@@ -34,10 +34,10 @@ test('resuming after another tab expires reloads its latest save before writing'
 test('a still active other tab prevents writes both on resume and pagehide',()=>{
  const h=harness();h.visibility('hidden');h.data.set(h.key+'-tab',JSON.stringify({id:'another-tab',until:999999}));
  const saved=h.data.get(h.key),writes=h.writes();h.setNow(5000);h.visibility('visible');h.pagehide();
- assert.equal(h.writes(),writes);assert.equal(h.data.get(h.key),saved);assert.equal(h.hook.dispatch({type:'start',id:'herbs'}),false);
+ assert.equal(h.writes(),writes);assert.equal(h.data.get(h.key),saved);assert.equal(h.hook.dispatch({type:'start',id:'village-trade'}),false);
 });
 test('returning from a screen lock settles earned progress once',()=>{
- const h=harness();h.hook.dispatch({type:'start',id:'herbs'});h.visibility('hidden');h.setNow(3601000);h.visibility('visible');
+ const h=harness();h.hook.dispatch({type:'start',id:'village-trade'});h.visibility('hidden');h.setNow(3601000);h.visibility('visible');
  const first=h.read();assert.ok(first.profiles[0].state.clears>0);h.visibility('visible');
  const second=h.read();assert.equal(second.profiles[0].state.gold,first.profiles[0].state.gold);assert.equal(second.profiles[0].state.clears,first.profiles[0].state.clears);
 });

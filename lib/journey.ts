@@ -1,4 +1,5 @@
 import {recruitments,met,prepared,canPrepare,rareProgress,recruitmentHint,recruitmentRun} from './recruitment.ts';
+import {inPrologue,TRADE_QUEST} from './prologue.ts';
 import {storyProgress,availableStories} from './stories.ts';
 import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,type State,type Squad,type Quest} from './game.ts';
 
@@ -10,8 +11,9 @@ export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([
 export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town).clears&&!buildingNeeds(s).length;}
 
 export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
+ if(inPrologue(s))return sq.run?{title:'タップでふたりを手助け',detail:'道や魔物・薬草をタップすると手助けできます。仲間をタップすると回復。見守っていても街へ進みます。',action:'冒険を見守る',destination:'adventure'}:{title:s.done[TRADE_QUEST]?'街への交易を続けよう':'まずはクエストを選ぼう',detail:s.done[TRADE_QUEST]?'街への交易は、何度でも出かけられます。クエストから選んで出発しましょう。':'巻物の「クエスト」を開き、「街への交易」を選びましょう。物語を読んだら、ふたりで出発します。',action:'クエストを開く',destination:'quests',questId:TRADE_QUEST};
  if(s.clears===0){
-  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「出発する」でアリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'冒険へ',destination:'adventure'};
+  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};
   if(sq.run.phase==='rest')return {title:'回復で、もう一度出発',detail:'体力がなくなると休憩します。マップをタップすると回復して立て直せます。見守っていても自動で再挑戦します。',action:'冒険を見守る',destination:'adventure'};
   if(sq.run.node>=3)return {title:'最初の報酬を確保！ 次は酒場へ',detail:'3地点ごとの報酬は、途中で帰還しても残ります。15地点を進んで依頼を達成すると、集めた木材とお金で酒場を建てられます。',action:'冒険を見守る',destination:'adventure'};
   if(sq.run.cheer>0||sq.run.scene?.kind==='burst')return {title:'応援が届いた！ あとは見守っても大丈夫',detail:'応援が100になると全員必殺技。光る寄り道も仲間が自動で調べます。3地点進むと最初の区間報酬を持ち帰れます。',action:'冒険を見守る',destination:'adventure'};
@@ -20,7 +22,7 @@ export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
  if(canBuild(s))return {title:s.town===0?'酒場を建てられます':'鍛冶場と薬草園を作れます',detail:s.town===0?'最初の冒険で集めた素材を、みんなの帰る場所に。出発時の体力と絆の育ち方が変わります。':'全員の能力が上がり、薬草の収穫と回復も増えます。',action:'建設へ',destination:'build'};
  const recruit=recruitments.find(r=>!s.owned.includes(r.hero)&&met(s,r));
  if(recruit&&(prepared(s,recruit.hero)||canPrepare(s,recruit)||!storyProgress(s).read.includes('recruit-'+recruit.hero+'-meeting')))return {title:recruitmentRun(s,recruit.hero)?recruit.name+'との専用クエストを冒険中':prepared(s,recruit.hero)?recruit.name+'と専用クエストへ':canPrepare(s,recruit)?recruit.name+'の支度がそろいました':recruit.name+'の話を聞いてみよう',detail:recruitmentHint(s,recruit)+'。'+recruit.purpose,action:'出会いを見る',destination:'recruit'};
- const freshQuest=quests.find(q=>q.unlock<=s.clears&&!s.done[q.id]);
+ const freshQuest=quests.find(q=>q.id!==TRADE_QUEST&&q.unlock<=s.clears&&!s.done[q.id]);
  if(recruit){const progressId='recruit-'+recruit.hero+'-progress';if(availableStories(s).some(st=>st.id===progressId)&&!storyProgress(s).read.includes(progressId))return {title:recruit.name+'から、支度の途中の話',detail:'集めているものを届けるうちに、少し違う一面が見えてきました。',action:'話を読む',destination:'recruit'};}
  if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間で新しい隊を作り、別の素材を並行して探せます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
  if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は「帰還」でいつでも戻れます。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
@@ -42,6 +44,7 @@ export function questAdvice(s:State,sq:Squad,q:Quest){
 }
 export type JourneyNotice={title:string;description:string};
 export function journeyNotice(before:State,after:State):JourneyNotice|null{
+ if(inPrologue(after))return after.clears>before.clears?{title:'街に到着しました',description:'預かった荷物を、取引先へ届けましょう。'}:null;
  if(after.town>before.town)return {title:after.town===1?'星灯りの酒場が完成！':'星灯りの小さな村が完成！',description:after.town===1?'ふたりの焚き火から、みんなの帰る場所へ。出発時HP +10%・絆の成長2倍。':'鍛冶場と薬草園に灯りがともりました。全能力 +8%・薬草の収穫と回復が増えます。'};
  const joined=heroes.find(h=>after.owned.includes(h.id)&&!before.owned.includes(h.id));
  if(joined)return {title:`${joined.name}が旅団に加入！`,description:'一緒に冒険を終え、新しい仲間になりました。「旅の思い出」で加入の話を読めます。'};
