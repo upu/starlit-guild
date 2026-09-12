@@ -91,8 +91,15 @@ export function availableStories(s:State):Story[]{
   if(inPrologue(s)&&!isPrologueQuest(st.quest||''))return false;
   if(st.requiresHeroes?.some(id=>!s.owned.includes(id))||st.requiresQuests?.some(id=>!(s.done[id]>0)))return false;
   if(st.chapter==='encounter')return s.town>=(st.town||0);
-  return st.chapter==='recruitment'?(() => {const r=recruitments.find(r=>r.hero===st.companion)!;return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);})():st.chapter==='departure'?p.departed.includes(st.quest!):st.chapter==='return'?p.completed.includes(st.quest!):
-   p.completed.length>0&&affection(s)>=(st.bond||1)&&s.town>=(st.town||0)&&st.lines.every(line=>!line.speaker||s.owned.includes(line.speaker));
+  if(st.chapter==='recruitment'){
+   const r=recruitments.find(r=>r.hero===st.companion);if(!r)throw Error(`物語「${st.id}」の加入情報が見つかりません。`);
+   return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);
+  }
+  if(st.chapter==='departure'||st.chapter==='return'){
+   if(!st.quest)throw Error(`物語「${st.id}」の依頼情報が見つかりません。`);
+   return st.chapter==='departure'?p.departed.includes(st.quest):p.completed.includes(st.quest);
+  }
+  return p.completed.length>0&&affection(s)>=(st.bond||1)&&s.town>=(st.town||0)&&st.lines.every(line=>!line.speaker||s.owned.includes(line.speaker));
  });
 }
 export function campStories(s:State):Story[]{

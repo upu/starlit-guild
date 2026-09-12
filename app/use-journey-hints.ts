@@ -9,7 +9,7 @@ function subscribe(notify:()=>void){
  window.addEventListener('storage',notify);window.addEventListener(changed,notify);
  return ()=>{window.removeEventListener('storage',notify);window.removeEventListener(changed,notify);};
 }
-function read(key:string){if(fallback.has(key))return fallback.get(key)!;try{return localStorage.getItem(key)||'[]';}catch{return '[]';}}
+function read(key:string){if(fallback.has(key))return fallback.get(key)??'[]';try{return localStorage.getItem(key)||'[]';}catch{return '[]';}}
 export function parseHintEntries(raw:string):string[]{try{const value=parseJson(raw);return Array.isArray(value)?value.filter((v):v is string=>typeof v==='string'):[];}catch{return [];}}
 const serverSnapshot=()=>'[]';
 

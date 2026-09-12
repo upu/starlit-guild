@@ -29,10 +29,14 @@ function Finisher({scene,members,now}:{scene:Scene;members:string[];now:number})
  return <div className={`finisher-scene ${scene.kind}`} style={{'--scene-age':`${String(-age)}ms`} as CSSProperties}>
   {scene.kind==='burst'&&<div className="starlight-wave" aria-hidden="true"><i/><i/><i/></div>}
   <div className="finisher-banner" role="status">
-   <div className="finisher-portraits" aria-hidden="true">{members.map((id,i)=><div key={id} style={{'--entry':`${String(i*90)}ms`} as CSSProperties}><Sprite index={heroes.find(h=>h.id===id)!.sprite} size={78}/></div>)}</div>
+   <div className="finisher-portraits" aria-hidden="true">{members.map((id,i)=><FinisherPortrait key={id} id={id} index={i}/>)}</div>
    <strong>{scene.title}</strong><div className="finisher-lines">{scene.lines.map((line,i)=><span key={i}>{line}</span>)}</div>
   </div>
  </div>;
+}
+function FinisherPortrait({id,index}:{id:string;index:number}){
+ const hero=heroes.find(h=>h.id===id);if(!hero)return null;
+ return <div style={{'--entry':`${String(index*90)}ms`} as CSSProperties}><Sprite index={hero.sprite} size={78}/></div>;
 }
 
 export function AttackTrail({event,now,style,from,to}:{event:GameEvent;now:number;style:string;from:number[];to:number[]}){

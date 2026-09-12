@@ -12,9 +12,12 @@ export type Run={actors:Actor[];enemyAt:number;quest:string;round:number;node:nu
 export type Squad={id:string;name:string;members:string[];repeat:boolean;run:Run|null};
 export type State={version:3;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
 export type Rewards={count:number;gold:number;xp:number;herbs:number;ore:number;offline:boolean;capped:boolean};
+function heroById(id:string){const hero=heroes.find(h=>h.id===id);if(!hero)throw Error(`仲間「${id}」が見つかりません。`);return hero;}
+function questById(id:string){const quest=quests.find(q=>q.id===id);if(!quest)throw Error(`依頼「${id}」が見つかりません。`);return quest;}
+function activeRun(sq:Squad){if(!sq.run)throw Error(`隊「${sq.id}」は冒険中ではありません。`);return sq.run;}
 export function initialState(now:number):State{return {version:3,gold:60,herbs:0,ore:0,owned:['aria','leon'],xp:{},gear:0,camp:0,clears:0,done:{},claimed:[],lastDaily:'',updatedAt:now,squads:[{id:'party-1',name:'はじまりの隊',members:['aria','leon'],repeat:true,run:null}],log:[{at:now,text:'アリアとレオン、ふたりの旅が始まった。'}],receipts:[]};}
 export const activeBonds=(members:string[])=>bonds.filter(b=>b.ids.every(id=>members.includes(id)));
-export function memberStats(s:State,id:string){const h=heroes.find(h=>h.id===id)!;return h.stats.map(v=>Math.round(v*(1+.1*(level(s.xp[id]||0)-1))*(1+.08*s.gear)));}
+export function memberStats(s:State,id:string){const h=heroById(id);return h.stats.map(v=>Math.round(v*(1+.1*(level(s.xp[id]||0)-1))*(1+.08*s.gear)));}
 export function stats(s:State,sq:Squad){return [0,1,2].map(i=>sq.members.reduce((v,id)=>v+memberStats(s,id)[i],0)+activeBonds(sq.members).reduce((v,b)=>v+b.bonus,0));}
 export const power=(s:State,sq:Squad,q:Quest)=>stats(s,sq)[['採取','護衛','討伐'].indexOf(q.kind)];
 export const memberLimit=(s:State)=>s.clears>=10?3:2;
@@ -33,11 +36,11 @@ function schedule(s:State,sq:Squad,r:Run,at:number){
 }
 function makeRun(s:State,sq:Squad,q:Quest,at:number,round=1):Run{const maxHp=80+stats(s,sq)[1]*2;const r:Run={actors:[],enemyAt:at+3700,quest:q.id,round,node:0,phase:'move',phaseAt:at,nextAt:at+2200,started:at,hp:maxHp,maxHp,target:0,targetMax:0,hits:0,energy:3,energyAt:at,events:[]};configureTarget(r,q);schedule(s,sq,r,at);return r;}
 function reward(s:State,sq:Squad,q:Quest,at:number){const gold=Math.floor(q.gold*(sq.members.includes('finn')?1.1:1)*(sq.members.includes('noel')?1.1:1));s.gold+=gold;s.herbs+=q.herbs;s.ore+=q.ore;s.clears++;s.done[q.id]=(s.done[q.id]||0)+1;for(const id of sq.members)s.xp[id]=(s.xp[id]||0)+q.xp;return {gold,xp:q.xp,herbs:q.herbs,ore:q.ore,at};}
-function completeNode(s:State,sq:Squad,q:Quest,at:number){const r=sq.run!;event(r,at,'clear',`${targetName(q,r.node)}をクリア！`);if(r.node<2){r.node++;r.phase='move';r.phaseAt=at;r.nextAt=at+4000;r.hp=Math.min(r.maxHp,r.hp+r.maxHp*.15);configureTarget(r,q);schedule(s,sq,r,at);return null;}
+function completeNode(s:State,sq:Squad,q:Quest,at:number){const r=activeRun(sq);event(r,at,'clear',`${targetName(q,r.node)}をクリア！`);if(r.node<2){r.node++;r.phase='move';r.phaseAt=at;r.nextAt=at+4000;r.hp=Math.min(r.maxHp,r.hp+r.maxHp*.15);configureTarget(r,q);schedule(s,sq,r,at);return null;}
  const gain=reward(s,sq,q,at);if(sq.repeat){const events=r.events;sq.run=makeRun(s,sq,q,at,r.round+1);sq.run.events=events;}else sq.run=null;return gain;
 }
 function step(s:State,sq:Squad){
- const r=sq.run!,q=quests.find(q=>q.id===r.quest)!,at=r.nextAt;
+ const r=activeRun(sq),q=questById(r.quest),at=r.nextAt;
  if(r.phase==='rest'){r.hp=r.maxHp;configureTarget(r,q);r.phase='move';r.phaseAt=at;schedule(s,sq,r,at);event(r,at,'heal','ひと休みして、もう一度。');return null;}
  const k=encounter(q,r.node);
  if(r.phase==='move'){r.phase='work';event(r,at,'move',targetName(q,r.node)+'を発見！');}
@@ -47,7 +50,7 @@ function step(s:State,sq:Squad){
   const bond=activeBonds(sq.members).reduce((v,b)=>v+b.bonus,0);
   const damage=Math.max(1,Math.round(2+ms[ix]*.23+bond*.1));
   r.target=Math.max(0,r.target-damage);r.hits++;actor.nextAt+=actor.period;
-  event(r,at,k==='battle'?'hit':'gather',heroes.find(h=>h.id===hero)!.name+(k==='battle'?'の攻撃':'が作業中'),damage,hero);
+  event(r,at,k==='battle'?'hit':'gather',heroById(hero).name+(k==='battle'?'の攻撃':'が作業中'),damage,hero);
   if(hero==='mira'&&r.hp<r.maxHp){const heal=5+level(s.xp.mira||0);r.hp=Math.min(r.maxHp,r.hp+heal);event(r,at,'heal','ミラの癒やし',heal,hero);}
   if(r.target<=0)return completeNode(s,sq,q,at);
  }
@@ -64,7 +67,7 @@ export function migrate(raw:State|V2State|LegacyState,now:number):State{
  if(raw.version===3)return raw;
  const old=settleV2(migrateV2(raw,now),now).state;
  const s:State={...old,version:3,squads:old.squads.map(sq=>({...sq,run:null}))};
- for(let i=0;i<old.squads.length;i++){const run=old.squads[i].run;if(run){const q=quests.find(q=>q.id===run.quest)!;s.squads[i].run=makeRun(s,s.squads[i],q,now,run.round);}}
+ for(let i=0;i<old.squads.length;i++){const run=old.squads[i].run;if(run){const q=questById(run.quest);s.squads[i].run=makeRun(s,s.squads[i],q,now,run.round);}}
  addLog(s,'これまでの記録を引き継ぎました。',now);return s;
 }
 export function testState(now:number,clears:number,lv:number,gold:number):State{
@@ -81,8 +84,8 @@ export function act(input:State,a:Action,now:number){const s=structuredClone(inp
  case 'repeat':if(typeof a.value!=='boolean')throw Error('設定を確認してください。');sq.repeat=a.value;break;
  case 'newSquad':{if(s.squads.length>=squadLimit(s))throw Error('仲間が4人で2隊、6人で3隊を編成できます。');const id=s.owned.find(id=>s.squads.every(p=>!p.members.includes(id)));if(!id)throw Error('待機中の仲間を1人用意してください。');const n=s.squads.length+1;s.squads.push({id:`party-${String(n)}`,name:n===2?'木漏れ日の隊':'星渡りの隊',members:[id],repeat:true,run:null});break;}
  case 'assist':{const r=sq.run;if(!r)throw Error('冒険中に応援できます。');r.hits++;
- if(a.mode==='heal'){const heal=Math.max(3,Math.ceil(r.maxHp*.025));r.hp=Math.min(r.maxHp,r.hp+heal);if(r.phase==='rest'){r.phase='move';r.phaseAt=now;configureTarget(r,quests.find(q=>q.id===r.quest)!);schedule(s,sq,r,now);}event(r,now,'heal','団長の応援で回復！',heal);}
- else {if(r.phase==='rest')throw Error('回復で立て直しましょう。');const q=quests.find(q=>q.id===r.quest)!;const hit=Math.max(2,Math.round(2+s.gear+stats(s,sq)[q.kind==='採取'?0:q.kind==='護衛'?1:2]*.035));r.target=Math.max(0,r.target-hit);event(r,now,'assist','団長の手助け！',hit);if(r.target<=0){const gain=completeNode(s,sq,q,now);if(gain)addLog(s,sq.name+'が「'+q.name+'」を達成！ +'+String(gain.gold)+' G',now);}}
+ if(a.mode==='heal'){const heal=Math.max(3,Math.ceil(r.maxHp*.025));r.hp=Math.min(r.maxHp,r.hp+heal);if(r.phase==='rest'){r.phase='move';r.phaseAt=now;configureTarget(r,questById(r.quest));schedule(s,sq,r,now);}event(r,now,'heal','団長の応援で回復！',heal);}
+ else {if(r.phase==='rest')throw Error('回復で立て直しましょう。');const q=questById(r.quest);const hit=Math.max(2,Math.round(2+s.gear+stats(s,sq)[q.kind==='採取'?0:q.kind==='護衛'?1:2]*.035));r.target=Math.max(0,r.target-hit);event(r,now,'assist','団長の手助け！',hit);if(r.target<=0){const gain=completeNode(s,sq,q,now);if(gain)addLog(s,sq.name+'が「'+q.name+'」を達成！ +'+String(gain.gold)+' G',now);}}
  break;}
  case 'recruit':{const h=heroes.find(h=>h.id===a.id);if(!h||s.owned.includes(h.id)||s.clears<h.unlock||s.gold<h.price)throw Error('加入条件かお金を確認してください。');s.gold-=h.price;s.owned.push(h.id);addLog(s,`${h.name}が仲間になりました。`,now);break;}
  case 'gear':{const cost=100*(s.gear+1),ore=5*(s.gear+1);if(s.clears<3||s.gear>=15||s.gold<cost||s.ore<ore)throw Error('お金か鉱石が足りません。');s.gold-=cost;s.ore-=ore;s.gear++;break;}

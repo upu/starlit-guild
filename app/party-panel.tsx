@@ -13,7 +13,7 @@ export function PartyPanel({state:s,squad:sq,draft,ready,onChoose,onCreate,onTog
  const free=s.owned.some(id=>s.squads.every(p=>!p.members.includes(id)));
  return <>
   <div className="screen-heading"><h2>パーティ</h2><button className="outline recruit-link" onClick={onRecruit}><UserPlus size={17}/>新しい出会い</button></div>
-  <div className="squad-list" aria-label="隊の一覧">{s.squads.map(p=>{const run=p.run;return <button key={p.id} className="squad-card" aria-pressed={p.id===sq.id} onClick={()=> { onChoose(p.id); }}><span><b>{p.name}</b><small>{run?`${allQuests.find(q=>q.id===run.quest)?.name??'不明な依頼'} · ${String(run.node+1)}/15`:'拠点で待機中'}</small></span><span className="squad-faces">{p.members.map(id=><Sprite key={id} index={heroes.find(h=>h.id===id)!.sprite} size={36}/>)}</span></button>;})}</div>
+  <div className="squad-list" aria-label="隊の一覧">{s.squads.map(p=>{const run=p.run;return <button key={p.id} className="squad-card" aria-pressed={p.id===sq.id} onClick={()=> { onChoose(p.id); }}><span><b>{p.name}</b><small>{run?`${allQuests.find(q=>q.id===run.quest)?.name??'不明な依頼'} · ${String(run.node+1)}/15`:'拠点で待機中'}</small></span><span className="squad-faces">{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={36}/>]:[];})}</span></button>;})}</div>
   {s.squads.length<squadLimit(s)?<><button className="outline full" disabled={!ready||!free} onClick={onCreate}><Plus size={17}/>新しい隊を作る</button>{!free&&<small>新しい隊には、待機中の仲間が1人必要です。</small>}</>:<small>{s.squads.length}隊 / 最大{squadLimit(s)}隊。仲間4人で2隊、6人で3隊を編成できます。</small>}
   <section className="party-editor" aria-label={sq.name+'の編成'}>
    <div className="screen-heading"><h3>{sq.name}</h3><span>{draft.length} / {limit}人</span></div>
