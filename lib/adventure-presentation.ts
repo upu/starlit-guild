@@ -15,8 +15,8 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const {squad}=input,run=squad.run;
  const quest=allQuests.find(q=>q.id===(run?.quest||input.startQuest))||allQuests[0];
  const kind=run?encounter(quest,run.node):null;
- const key=run?`${squad.id}:${run.started}:${quest.id}:${run.round}:${run.node}`:`${squad.id}:idle:${quest.id}`;
- const events=run?run.events.filter(e=>e.id.startsWith(`${run.round}-${run.node}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];
+ const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
+ const events=run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];
  const members=squad.members.map((id,i)=>{
   const hero=heroes.find(h=>h.id===id)!,role=heroSkills[id].style;
   const actor=run?.actors.find(a=>a.hero===id);

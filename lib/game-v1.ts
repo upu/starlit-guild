@@ -45,7 +45,7 @@ export function settle(input:State,now:number){
   if(s.repeat){s.active={quest:q.id,started:at,duration:duration(s,q)};}else{s.active=null;}
  }
  if(elapsed>12*3600*1000 && s.active)s.active.started+=elapsed-12*3600*1000;
- if(count)log(s,`${count}件の依頼を達成。${gold} G・経験値 ${xp}・薬草 ${herbs}・鉱石 ${ore} を獲得。`,now);
+ if(count)log(s,`${String(count)}件の依頼を達成。${String(gold)} G・経験値 ${String(xp)}・薬草 ${String(herbs)}・鉱石 ${String(ore)} を獲得。`,now);
  s.updatedAt=Math.max(now,s.updatedAt);return {state:s,rewards:{count,gold,xp,herbs,ore,offline:elapsed>90000,capped:elapsed>12*3600*1000}};
 }
 export const achievements=[{id:'first',name:'旅立ちの一歩',desc:'クエストを1回達成',need:1,gold:100},{id:'ten',name:'頼れる旅団',desc:'クエストを10回達成',need:10,gold:350},{id:'forty',name:'星を追う者',desc:'クエストを40回達成',need:40,gold:800},{id:'hundred',name:'百の冒険',desc:'クエストを100回達成',need:100,gold:2000}];
@@ -57,9 +57,9 @@ export function act(input:State,a:Action,now:number){const s=structuredClone(inp
  case 'party':{if(s.active)throw Error('編成は帰還してから変更できます。');if(!Array.isArray(a.party)||a.party.length!==3||new Set(a.party).size!==3||!a.party.every(id=>s.owned.includes(id)))throw Error('仲間を3人選んでください。');s.party=a.party;break;}
  case 'repeat':if(typeof a.value!=='boolean')throw Error('設定を確認してください。');s.repeat=a.value;break;
  case 'recruit':{const h=heroes.find(h=>h.id===a.id);if(!h||s.owned.includes(h.id)||s.gold<h.price)throw Error('仲間の加入費用が足りません。');s.gold-=h.price;s.owned.push(h.id);log(s,`${h.name}が旅団に加わりました。新しい冒険の予感！`,now);break;}
- case 'gear':{const cost=120*(s.gear+1),ore=8*(s.gear+1);if(s.gear>=15||s.gold<cost||s.ore<ore)throw Error('強化に必要なお金か鉱石が足りません。');s.gold-=cost;s.ore-=ore;s.gear++;log(s,`旅団の装備が Lv.${s.gear} に。全能力が上がりました。`,now);break;}
- case 'camp':{const cost=150*(s.camp+1),herbs=12*(s.camp+1);if(s.camp>=10||s.gold<cost||s.herbs<herbs)throw Error('改築に必要なお金か薬草が足りません。');s.gold-=cost;s.herbs-=herbs;s.camp++;log(s,`野営地が Lv.${s.camp} に。次の周回から冒険が速くなります。`,now);break;}
- case 'claim':{const m=achievements.find(m=>m.id===a.id);if(!m||s.claimed.includes(m.id)||s.clears<m.need)throw Error('この実績はまだ受け取れません。');s.claimed.push(m.id);s.gold+=m.gold;log(s,`実績「${m.name}」達成！ ${m.gold} G を獲得。`,now);break;}
+ case 'gear':{const cost=120*(s.gear+1),ore=8*(s.gear+1);if(s.gear>=15||s.gold<cost||s.ore<ore)throw Error('強化に必要なお金か鉱石が足りません。');s.gold-=cost;s.ore-=ore;s.gear++;log(s,`旅団の装備が Lv.${String(s.gear)} に。全能力が上がりました。`,now);break;}
+ case 'camp':{const cost=150*(s.camp+1),herbs=12*(s.camp+1);if(s.camp>=10||s.gold<cost||s.herbs<herbs)throw Error('改築に必要なお金か薬草が足りません。');s.gold-=cost;s.herbs-=herbs;s.camp++;log(s,`野営地が Lv.${String(s.camp)} に。次の周回から冒険が速くなります。`,now);break;}
+ case 'claim':{const m=achievements.find(m=>m.id===a.id);if(!m||s.claimed.includes(m.id)||s.clears<m.need)throw Error('この実績はまだ受け取れません。');s.claimed.push(m.id);s.gold+=m.gold;log(s,`実績「${m.name}」達成！ ${String(m.gold)} G を獲得。`,now);break;}
  case 'daily':{const date=new Date(now).toISOString().slice(0,10);if(s.lastDaily===date)throw Error('今日の差し入れは受取済みです。');s.lastDaily=date;s.gold+=80;s.herbs+=5;log(s,'ギルドからの差し入れ。80 G と薬草5個を獲得。',now);break;}
  default:throw Error('操作を確認してください。');
  }return s;}
