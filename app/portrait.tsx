@@ -1,9 +1,12 @@
 import {originalArt} from '@/lib/original-characters';
 
 const faces:Record<number,string>={0:'/portraits/aria.png',1:'/portraits/leon.png'};
+const dialogueCells:Partial<Record<number,number>>={0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,12:8,13:9,14:10};
 // Existing characters retain their own artwork, framed around the face in the UI.
 const centers:Partial<Record<number,[number,number]>>={2:[.51,.30],3:[.61,.30],4:[.41,.29],5:[.53,.40],6:[.56,.29],7:[.57,.28],12:[.52,.20],13:[.53,.25],14:[.52,.20]};
 export function Portrait({index,size=56}:{index:number;size?:number}){
+ const cell=dialogueCells[index];
+ if(cell!==undefined)return <span className="face-portrait" aria-hidden="true" style={{width:size,height:size,backgroundImage:'image-set(url(/portraits/dialogue-atlas.png) 1x, url(/portraits/dialogue-atlas@2x.png) 2x)',backgroundSize:'400% 300%',backgroundPosition:`${String(cell%4/3*100)}% ${String(Math.floor(cell/4)/2*100)}%`}}/>;
  const face=faces[index],original=originalArt(index);
  const [cx,cy]=centers[index]||[.5,.3],crop=original?.42:.54;
  const cols=original?1:4,rows=original?1:3;

@@ -121,9 +121,13 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
   return ()=>{clearTimeout(timer);document.removeEventListener('visibilitychange',schedule);};
  },[exchange,paused,line,hasNext]);
  if(!line)return null;
- const speaker=characters.find(h=>h.id===line.speaker);
  return <button ref={dialogue} className="journey-banter journey-banter-history" onScroll={event=>{const el=event.currentTarget;followLatest.current=el.scrollHeight-el.scrollTop-el.clientHeight<8;}} onClick={()=> { onRead(exchange.lines); }} aria-label="道中の掛け合いを読む">
-  {speaker&&<span className="banter-portrait"><Portrait index={speaker.sprite} size={72}/></span>}
-  <span className="banter-copy">{exchange.history.map((entry,i)=><span className="banter-line" key={exchange.turn-exchange.history.length+1+i}><b>{characters.find(h=>h.id===entry.speaker)?.name}</b><span>{entry.text}</span></span>)}</span><ChevronRight className="banter-chevron" size={18}/>
+  <span className="banter-copy">{exchange.history.map((entry,i)=>{
+   const speaker=characters.find(h=>h.id===entry.speaker);
+   return <span className="banter-line" key={exchange.turn-exchange.history.length+1+i}>
+    {speaker&&<Portrait index={speaker.sprite} size={64}/>}
+    <span className="banter-message">{speaker&&<b>{speaker.name}</b>}{entry.text}</span>
+   </span>;
+  })}</span>
  </button>;
 }

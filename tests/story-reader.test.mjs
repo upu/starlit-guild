@@ -102,6 +102,18 @@ test('banter stops after the idle exchange even with fresh arrays on every clock
  h.find('button').props.onClick();assert.deepEqual(opened,lines);assert.deepEqual(lines,before);
 });
 
+test('each banter line keeps its own speaker portrait, including history and narration',()=>{
+ const lines=[{speaker:'aria',text:'先に行くね。'},{speaker:'leon',text:'足元に気をつけて。'},{text:'風が吹いた。'}];
+ const h=harness('Banter',{lines,onRead:()=>{}});
+ h.tick();h.tick();
+ const rows=h.find('banter-copy').props.children;
+ assert.equal(rows.length,3);
+ assert.equal(rows[0].props.children[0].props.index,0);
+ assert.equal(rows[1].props.children[0].props.index,1);
+ assert.equal(rows[2].props.children[0],undefined);
+ for(const line of lines)assert.ok(h.text().includes(line.text));
+});
+
 test('banter resumes for new content, finishes the exchange, and stops again',()=>{
  const idle=[{speaker:'aria',text:'準備はできたよ。'}],next=[{speaker:'leon',text:'出発しよう。'},{speaker:'aria',text:'うん、行こう！'}];
  const props={lines:idle,onRead:()=>{}},h=harness('Banter',props);
