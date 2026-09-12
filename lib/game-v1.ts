@@ -30,10 +30,12 @@ export const bonds = [
 ];
 export type State={version:1;gold:number;herbs:number;ore:number;owned:string[];party:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;active:null|{quest:string;started:number;duration:number};repeat:boolean;updatedAt:number;log:{text:string;at:number}[]};
 export const level=(xp:number)=>Math.min(50,1+Math.floor(Math.sqrt(xp/30)));
+function heroById(id:string){const hero=heroes.find(h=>h.id===id);if(!hero)throw Error(`仲間「${id}」が見つかりません。`);return hero;}
+function questById(id:string){const quest=quests.find(q=>q.id===id);if(!quest)throw Error(`依頼「${id}」が見つかりません。`);return quest;}
 export function initialState(now:number):State{return {version:1,gold:120,herbs:0,ore:0,owned:['aria','leon','mira','finn'],party:['aria','leon','mira'],xp:{},gear:0,camp:0,clears:0,done:{},claimed:[],lastDaily:'',active:null,repeat:true,updatedAt:now,log:[{text:'星灯りの旅団、結成。まずは森の依頼から始めよう。',at:now}]};}
 export const guildRank=(s:State)=>s.clears>=40?3:s.clears>=10?2:1;
 export const activeBonds=(s:State)=>bonds.filter(b=>b.ids.every(id=>s.party.includes(id)));
-export function stats(s:State){return [0,1,2].map(i=>Math.floor(s.party.reduce((n,id)=>{const h=heroes.find(h=>h.id===id)!;return n+h.stats[i]*(1+.1*(level(s.xp[id]||0)-1))},0)*(1+.08*s.gear)+activeBonds(s).reduce((a,b)=>a+b.bonus,0)));}
+export function stats(s:State){return [0,1,2].map(i=>Math.floor(s.party.reduce((n,id)=>{const h=heroById(id);return n+h.stats[i]*(1+.1*(level(s.xp[id]||0)-1))},0)*(1+.08*s.gear)+activeBonds(s).reduce((a,b)=>a+b.bonus,0)));}
 export const power=(s:State,q:Quest)=>stats(s)[['採取','護衛','討伐'].indexOf(q.kind)];
 export const duration=(s:State,q:Quest)=>Math.round(q.seconds*1000*(1-.04*s.camp));
 export const rewardGold=(s:State,q:Quest)=>Math.floor(q.gold*(s.party.includes('finn')?1.1:1)*(s.party.includes('noel')?1.1:1));
@@ -41,7 +43,7 @@ function log(s:State,text:string,at:number){s.log=[{text,at},...s.log].slice(0,3
 export function settle(input:State,now:number){
  const s=structuredClone(input); const elapsed=Math.max(0,now-s.updatedAt); const end=s.updatedAt+Math.min(elapsed,12*3600*1000);let count=0,gold=0,xp=0,herbs=0,ore=0;
  while(s.active && s.active.started+s.active.duration<=end){
-  const q=quests.find(q=>q.id===s.active!.quest)!;const at=s.active.started+s.active.duration;const g=rewardGold(s,q);s.gold+=g;s.herbs+=q.herbs;s.ore+=q.ore;s.clears++;s.done[q.id]=(s.done[q.id]||0)+1;s.party.forEach(id=>s.xp[id]=(s.xp[id]||0)+q.xp);count++;gold+=g;xp+=q.xp;herbs+=q.herbs;ore+=q.ore;
+  const active=s.active,q=questById(active.quest),at=active.started+active.duration;const g=rewardGold(s,q);s.gold+=g;s.herbs+=q.herbs;s.ore+=q.ore;s.clears++;s.done[q.id]=(s.done[q.id]||0)+1;s.party.forEach(id=>s.xp[id]=(s.xp[id]||0)+q.xp);count++;gold+=g;xp+=q.xp;herbs+=q.herbs;ore+=q.ore;
   if(s.repeat){s.active={quest:q.id,started:at,duration:duration(s,q)};}else{s.active=null;}
  }
  if(elapsed>12*3600*1000 && s.active)s.active.started+=elapsed-12*3600*1000;
@@ -52,7 +54,7 @@ export const achievements=[{id:'first',name:'旅立ちの一歩',desc:'クエス
 export type Action={type:'start'|'stop'|'party'|'recruit'|'gear'|'camp'|'claim'|'daily'|'repeat'|'sync';id?:string;party?:string[];value?:boolean};
 export function act(input:State,a:Action,now:number){const s=structuredClone(input);switch(a.type){
  case 'sync':break;
- case 'start':{if(s.active)throw Error('帰還してから次のクエストを選んでください。');const q=quests.find(q=>q.id===a.id);if(!q||q.tier>guildRank(s)||power(s,q)<q.need||s.party.length!==3)throw Error('3人の編成・旅団ランク・推奨能力を確認してください。');s.active={quest:q.id,started:now,duration:duration(s,q)};log(s,`${q.name}へ出発！ ${s.party.map(id=>heroes.find(h=>h.id===id)!.name).join('、')}`,now);break;}
+ case 'start':{if(s.active)throw Error('帰還してから次のクエストを選んでください。');const q=quests.find(q=>q.id===a.id);if(!q||q.tier>guildRank(s)||power(s,q)<q.need||s.party.length!==3)throw Error('3人の編成・旅団ランク・推奨能力を確認してください。');s.active={quest:q.id,started:now,duration:duration(s,q)};log(s,`${q.name}へ出発！ ${s.party.map(id=>heroById(id).name).join('、')}`,now);break;}
  case 'stop':s.active=null;log(s,'旅団が帰還しました。途中の依頼の報酬はありません。',now);break;
  case 'party':{if(s.active)throw Error('編成は帰還してから変更できます。');if(!Array.isArray(a.party)||a.party.length!==3||new Set(a.party).size!==3||!a.party.every(id=>s.owned.includes(id)))throw Error('仲間を3人選んでください。');s.party=a.party;break;}
  case 'repeat':if(typeof a.value!=='boolean')throw Error('設定を確認してください。');s.repeat=a.value;break;

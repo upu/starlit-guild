@@ -13,7 +13,7 @@ export function QuestPicker({state:s,squad:sq,selected,onSelect,onConfirm,ready}
  const opponent=originalCharacters.find(c=>c.sprite===q.enemy);
  const summary=useRef<HTMLElement>(null);
  return <div className="quest-picker">
-  <p className="departure-party">{!inPrologue(s)&&<b>{sq.name}</b>}<span>{sq.members.map(id=>heroes.find(h=>h.id===id)!.name).join('・')}</span></p>
+  <p className="departure-party">{!inPrologue(s)&&<b>{sq.name}</b>}<span>{sq.members.map(id=>heroes.find(h=>h.id===id)?.name??'不明な仲間').join('・')}</span></p>
   <div className="quest-options" aria-label="クエストの一覧">{unlocked.map(item=><button className="quest-option" key={item.id} aria-pressed={q.id===item.id} onClick={()=>{onSelect(item.id);summary.current?.scrollIntoView({block:'start'});}}>
    <img src={questScenery(item)} alt="" width={1672} height={941} loading="lazy"/>
    <span><small>{prologueStages.find(stage=>stage.quest===item.id)?.label||item.region}{item.availability==='once'?' · 一度きり':''}</small><b>{item.name}</b></span>{q.id===item.id&&<Check size={19}/>}

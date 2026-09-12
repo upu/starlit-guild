@@ -9,6 +9,7 @@ export function parseMusic(value:string|null):MusicPreferences{
  try{const parsed=parseJson(value||'null'),p=isRecord(parsed)?parsed:{};return {enabled:typeof p.enabled==='boolean'?p.enabled:true,volume:typeof p.volume==='number'&&Number.isFinite(p.volume)?Math.max(0,Math.min(100,p.volume)):25};}catch{return {...defaultMusic};}
 }
 type Voice={source:AudioBufferSourceNode;gain:GainNode;scene:MusicScene};
+function requiredMaster(master:GainNode|null){if(!master)throw Error('audio');return master;}
 
 /** Two cached loops, one current voice and at most one fading voice. */
 export class GameMusic{
@@ -57,7 +58,7 @@ export class GameMusic{
    const buffer=await pending;
    if(!this.canFinish(revision))return;
    const source=context.createBufferSource(),gain=context.createGain(),now=context.currentTime;
-   source.buffer=buffer;source.loop=true;source.connect(gain);gain.connect(this.master!);
+   source.buffer=buffer;source.loop=true;source.connect(gain);gain.connect(requiredMaster(this.master));
    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(1,now+.65);
    const voice={source,gain,scene};
    source.onended=()=>{source.disconnect();gain.disconnect();if(this.fading===voice)this.fading=null;};

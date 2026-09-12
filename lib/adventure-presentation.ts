@@ -18,7 +18,9 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
  const events=run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];
  const members=squad.members.map((id,i)=>{
-  const hero=heroes.find(h=>h.id===id)!,role=heroSkills[id].style;
+  const hero=heroes.find(h=>h.id===id),skill=heroSkills[id];
+  if(!hero)throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
+  const role=skill.style;
   const actor=run?.actors.find(a=>a.hero===id);
   const lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst'].includes(e.kind)).at(-1);
   const age=lastHit?now-lastHit.at:Infinity;

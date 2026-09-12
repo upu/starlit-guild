@@ -24,5 +24,7 @@ export function stageUnlocked(s:State,id:string){
 }
 export function nextStage(s:State){
  const unlocked=prologueStages.filter(({quest})=>stageUnlocked(s,quest));
- return unlocked.find(({quest})=>!s.done[quest])||unlocked.at(-1)!;
+ const stage=unlocked.find(({quest})=>!s.done[quest])||unlocked.at(-1);
+ if(!stage)throw Error('プロローグの進行状態を読み込めません。');
+ return stage;
 }
