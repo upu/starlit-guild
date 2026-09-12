@@ -32,7 +32,7 @@ test('dialogue and banter show close-up portraits and the trade still appears fr
  assert.ok(first.includes(story.lines[0].text));assert.ok(!first.includes(story.lines[1].text));
  const lines=[{speaker:'aria',text:'お疲れさま。'},{speaker:'leon',text:'無事に着いたな。'},{text:'ふたりは顔を見合わせた。'}],before=structuredClone(lines);
  const chat=renderToStaticMarkup(createElement(Banter,{lines,onRead:()=>{}}));
- assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/aria.png'));assert.ok(!chat.includes('/portraits/leon.png'));assert.ok(!chat.includes(lines[1].text));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
+ assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/dialogue-atlas.png'));assert.match(chat,/background-position:0% 0%/);assert.equal((chat.match(/face-portrait/g)||[]).length,1);assert.ok(!chat.includes(lines[1].text));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
  for(let line=0;line<story.lines.length;line+=3)assert.equal(storyArtAt(story.id,line)?.src,'/stories/village-trade-handover.png');
  assert.ok(first.includes('/stories/village-trade-handover.png'));
 });
@@ -92,7 +92,7 @@ test('original characters render as named speakers, portraits and battle targets
   assert.doesNotMatch(html,/undefined|NaN/);
   const lines=renderToStaticMarkup(createElement(StoryLines,{lines:story.lines}));
   for(const [id,name] of [['merrill','メリル'],['pumpety','パンプティ'],['chacha','チャチャ']])if(story.lines.some(l=>l.speaker===id)){
-   assert.ok(lines.includes(name));assert.ok(lines.includes('/characters/'+id+'.png'));
+   assert.ok(lines.includes(name));assert.ok(lines.includes('/portraits/dialogue-atlas.png'));
   }
  }
  for(const [id,asset] of [['midnight-snack','merrill'],['puppet-midnight','pumpety']]){
