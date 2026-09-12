@@ -24,7 +24,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
  const gesture=useRef<{x:number;y:number;scrollTop:number;moved:boolean}|null>(null),finishing=useRef(false);
  useEffect(()=>{if(dialogue.current)dialogue.current.scrollTop=dialogue.current.scrollHeight;},[page]);
  const pages=story.lines.length,art=storyArtAt(story.id,page);
- const last=page+1>=pages,advanceLabel=last?(departure?'タップで冒険を始める':'タップで閉じる'):'タップで会話を進める';
+ const last=page+1>=pages,advanceLabel=last?(departure?'冒険を始める':'閉じる'):'会話を進める';
  function advance(){
   if(viewArt||finishing.current)return;
   if(!last){setPage(page+1);return;}
@@ -41,7 +41,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
    onClick={()=>{const start=gesture.current;gesture.current=null;if(start&&(start.moved||Math.abs((dialogue.current?.scrollTop||0)-start.scrollTop)>4))return;if(window.getSelection()?.isCollapsed===false)return;advance();}}
    onKeyDown={event=>{if((event.key==='Enter'||event.key===' ')&&!event.repeat){event.preventDefault();advance();}}}>
    <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(0,page+1)}/></div>
-   <div className="story-tap-hint" aria-hidden="true"><span>{page+1} / {pages}</span><span>{advanceLabel}</span></div>
+   <div className="story-tap-hint" aria-hidden="true"><span>{page+1} / {pages}</span><span className={last?"story-end-action":"story-continue"}>{last?advanceLabel:"▼"}</span></div>
   </div>
   <ArtViewer art={viewArt&&art?art:null} title={story.title} onClose={()=> { setViewArt(false); }}/>
  </div>;

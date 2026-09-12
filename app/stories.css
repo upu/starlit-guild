@@ -7,14 +7,27 @@
 .quest-opponent{display:flex;align-items:center;gap:12px;margin:16px 0;padding:12px;border:1px solid #8c6747;border-radius:8px;background:#2b2631}.quest-opponent>.sprite{flex-shrink:0}.quest-opponent>div{min-width:0}.quest-opponent b{display:block;font-size:18px;color:#efd8a5}.quest-opponent small{font-size:14px;color:#e8b27c}.quest-opponent p{font-size:14px;line-height:1.7}@media(max-width:420px){.quest-opponent{align-items:flex-start}.quest-opponent>.sprite{width:80px!important;height:80px!important}}
 
 .dialogue-page{min-height:112px}.story-album{display:flex;flex-direction:column;gap:16px}.story-album h3{font-size:18px;color:#e4cb91}.album-entry{gap:12px}.album-entry>span{flex:1}
-.phone-dialog:has(> .story-reader){top:auto;bottom:calc(16px + env(safe-area-inset-bottom));translate:-50% 0;transform:none;display:flex;flex-direction:column;max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:hidden}
+/* Anchor story dialogs without the centered DialogContent translation/zoom.
+   Keep the header and continuation cue inside the visible frame; only history scrolls. */
+.phone-dialog:has(> .story-reader){
+ --story-safe-top:env(safe-area-inset-top,0px);
+ --story-safe-bottom:var(--game-safe-bottom,env(safe-area-inset-bottom,0px));
+ --story-dialog-height:calc(var(--game-height,100dvh) - 32px - var(--story-safe-top) - var(--story-safe-bottom));
+ top:auto;bottom:calc(100dvh - var(--game-height,100dvh) - var(--game-top,0px) + 16px + var(--story-safe-bottom));
+ left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));
+ width:auto!important;margin:0 auto;translate:none;transform:none;animation:none;
+ display:flex;flex-direction:column;min-height:0;max-height:var(--story-dialog-height);overflow:hidden;
+}
 .phone-dialog:has(> .story-reader)>[data-slot="dialog-header"]{flex:none}
 .phone-dialog>.story-reader{min-height:0;flex:0 1 auto;overflow:hidden;gap:12px}
 .story-conversation{display:flex;flex-direction:column;min-height:0;flex:0 1 auto;overflow:hidden;cursor:pointer;touch-action:pan-y}
 .story-conversation:focus-visible{outline:2px solid #b5ccaf;outline-offset:-2px}
-.story-tap-hint{display:flex;justify-content:space-between;gap:12px;flex:none;padding:12px 4px 0;font-size:14px;color:#d8c18c}
-.dialogue-history{min-height:0;flex:0 1 auto;overflow-y:auto;overflow-anchor:none;scrollbar-gutter:stable;padding-right:4px}
-.phone-dialog:has(> .story-reader-art){height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-width:1120px!important;padding:12px!important;gap:10px!important}
+.story-tap-hint{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:none;padding:12px 4px 0;font-size:14px;color:#d8c18c}
+.story-continue{flex:none;font-size:12px;line-height:1}
+.story-end-action{text-align:right}
+.story-conversation[aria-disabled="true"] .story-end-action{opacity:.5}
+.dialogue-history{min-height:0;flex:0 1 auto;overflow-y:auto;overscroll-behavior:contain;overflow-anchor:none;scrollbar-gutter:stable;padding-right:4px}
+.phone-dialog:has(> .story-reader-art){height:var(--story-dialog-height);max-width:1120px!important;padding:12px!important;gap:10px!important}
 .phone-dialog>.story-reader-art{flex:1;gap:14px}
 .story-reader-art>.story-still,.story-reader-art>.story-conversation{flex:1 1 0;min-height:0}
 .story-reader-art .dialogue-history{flex:1}
