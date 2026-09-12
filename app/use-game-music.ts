@@ -12,7 +12,7 @@ export function useGameMusic(scene:MusicScene,ready:boolean){
   const applyStored=()=>{let p=defaultMusic;try{p=parseMusic(localStorage.getItem(MUSIC_KEY));}catch{/* Use defaults when preference storage is unavailable. */}current.current={...current.current,preferences:p};setPreferences(p);configure();};
   const gesture=(event:Event)=>{if(event instanceof KeyboardEvent&&!['Enter',' '].includes(event.key))return;music.unlock();};
   const storage=(event:StorageEvent)=>{if(event.key===MUSIC_KEY)applyStored();};
-  const hidden=()=>music.configure(current.current.scene,false,current.current.preferences);
+  const hidden=()=> { music.configure(current.current.scene,false,current.current.preferences); };
   applyStored();
   window.addEventListener('pointerdown',gesture);window.addEventListener('keydown',gesture);window.addEventListener('storage',storage);window.addEventListener('pagehide',hidden);document.addEventListener('visibilitychange',configure);
   return()=>{window.removeEventListener('pointerdown',gesture);window.removeEventListener('keydown',gesture);window.removeEventListener('storage',storage);window.removeEventListener('pagehide',hidden);document.removeEventListener('visibilitychange',configure);music.dispose();engine.current=null;};
@@ -23,5 +23,5 @@ export function useGameMusic(scene:MusicScene,ready:boolean){
   try{localStorage.setItem(MUSIC_KEY,JSON.stringify(p));}catch{/* Playback works without preference storage. */}
   engine.current?.configure(scene,ready&&document.visibilityState==='visible',p);engine.current?.unlock();
  }
- return {preferences,error,scene,setEnabled:(enabled:boolean)=>update({...preferences,enabled}),setVolume:(volume:number)=>update({...preferences,volume})};
+ return {preferences,error,scene,setEnabled:(enabled:boolean)=> { update({...preferences,enabled}); },setVolume:(volume:number)=> { update({...preferences,volume}); }};
 }

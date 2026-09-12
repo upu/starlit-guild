@@ -1,7 +1,7 @@
 import type {AdventureFrame} from './adventure-presentation.ts';
 
 // Each sheet: walk 0–3, attack 4–7, idle 8–9, hurt 10–11.
-export const heroSheets:Record<string,{asset:string;columns:number;rows:number;ready:boolean}>={
+export const heroSheets:Partial<Record<string,{asset:string;columns:number;rows:number;ready:boolean}>>={
  aria:{asset:'/animations/aria-v1.png',columns:4,rows:3,ready:true},
  leon:{asset:'/animations/leon-v1.png',columns:4,rows:3,ready:true},
 };

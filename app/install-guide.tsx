@@ -7,7 +7,7 @@ export function useInstallPrompt(){
  const [prompt,setPrompt]=useState<InstallPrompt|null>(null),[installed,setInstalled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
  useEffect(()=>{
   const media=window.matchMedia('(display-mode: standalone)');
-  const check=()=>setInstalled(media.matches||!!(navigator as Navigator&{standalone?:boolean}).standalone);
+  const check=()=> { setInstalled(media.matches||!!(navigator as Navigator&{standalone?:boolean}).standalone); };
   const available=(event:Event)=>{event.preventDefault();setPrompt(event as InstallPrompt);};
   const done=()=>{setInstalled(true);setPrompt(null);};
   check();media.addEventListener('change',check);window.addEventListener('beforeinstallprompt',available);window.addEventListener('appinstalled',done);

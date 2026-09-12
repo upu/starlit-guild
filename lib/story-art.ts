@@ -7,7 +7,7 @@ export type StoryArt = {
 };
 
 // Reveal illustrations with the scene, rather than previewing later events.
-export const storyArt: Record<string, StoryArt> = {
+export const storyArt: Partial<Record<string, StoryArt>> = {
  'village-trade-return': {
   src: '/stories/village-trade-handover.png',
   alt: '街の店先で、アリアが布で包んだ薬草を店主に渡し、レオンが村から預かった交易品を台に置く。',

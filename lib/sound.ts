@@ -52,12 +52,12 @@ export function sound(kind:string,manual=false,hero?:string){
   if(kind==='burst'){whoosh(now+.24,800,.35,.16);tone(110,now+.3,.38,.12,'triangle',45);}return;
  }
  if(kind==='heal'||role==='heal'){
-  [523,659,880].forEach((n,i)=>tone(n,now+i*.065,.3,.06));return;
+  [523,659,880].forEach((n,i)=> { tone(n,now+i*.065,.3,.06); });return;
  }
  if(kind==='hurt'){whoosh(now,250,.14,.12);tone(100,now,.18,.11,'triangle',38);return;}
  if(kind==='gather'||role==='gather'){tone(1175,now,.13,volume);tone(1568,now+.05,.17,volume*.45);return;}
  if(kind==='skill'&&(role==='shield'||role==='song')){
-  [330,495,660].forEach((n,i)=>tone(n,now+i*.035,.32,.06,role==='shield'?'triangle':'sine'));return;
+  [330,495,660].forEach((n,i)=> { tone(n,now+i*.035,.32,.06,role==='shield'?'triangle':'sine'); });return;
  }
  if(role==='magic'||role==='song'){
   tone(330,now,.2,volume,'sine',880);tone(1320,now+.12,.28,volume*.6);if(kind==='skill')tone(110,now+.15,.28,.09,'triangle',55);return;

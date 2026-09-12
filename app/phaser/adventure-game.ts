@@ -61,7 +61,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
     const action=adventureAction(input,intent);
     if(action)bridge.act(action);
    });
-   this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.clearEffects());
+   this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=> { this.clearEffects(); });
    created=true;
    bridge.status('ready');
    // Render once even when an open menu has suspended the animation loop.
@@ -77,7 +77,9 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
    };
   }
   private registerSheets(){
-   for(const {asset,columns,rows} of Object.values(heroSheets)){
+   for(const sheet of Object.values(heroSheets)){
+    if(!sheet)continue;
+    const {asset,columns,rows}=sheet;
     if(!this.textures.exists(asset))continue;
     const texture=this.textures.get(asset);
     if(texture.has('0'))continue;
@@ -128,7 +130,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
    const size=event.kind==='burst'?38:event.kind==='skill'?27:17;
    const ring=this.add.circle(x,y,size).setStrokeStyle(2,color,.95).setDepth(48);
    this.transient(ring,{scale:2.2,alpha:0},550-age);
-   const ranged=actor&&['ranged','mage','bard','healer'].includes(actor.role)&&!support&&frame.target?.battle;
+   const ranged=['ranged','mage','bard','healer'].includes(actor.role)&&!support&&frame.target?.battle;
    if(ranged){
     const bolt=this.add.circle(actor.x*width,actor.y*height-40,actor.role==='mage'?7:3,color).setDepth(46);
     this.transient(bolt,{x,y,alpha:.1},Math.max(100,350-age));
@@ -256,13 +258,13 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
   if(paused)game.loop.sleep();else game.loop.wake();
  }
  const contextLost=()=>{if(!disposed)bridge.status('error');};
- game.canvas?.addEventListener('webglcontextlost',contextLost);
+ game.canvas.addEventListener('webglcontextlost',contextLost);
  return {
   resize(w,h){if(!disposed&&w>0&&h>0&&(game.scale.width!==w||game.scale.height!==h)){game.scale.resize(w,h);if(created&&!paused)game.scale.updateBounds();}},
   setPaused(value){if(paused===value)return;paused=value;syncPause();},
   destroy(){
    if(disposed)return;disposed=true;motion.removeEventListener('change',onMotion);
-   game.canvas?.removeEventListener('webglcontextlost',contextLost);
+   game.canvas.removeEventListener('webglcontextlost',contextLost);
    // Phaser schedules destruction on its next frame, including while a menu has slept it.
    game.destroy(true,false);if(game.isRunning)game.loop.wake();
   },

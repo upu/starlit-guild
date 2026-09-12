@@ -75,7 +75,7 @@ export const stories:Story[]=[
  {id:'camp-tomorrow',title:'ふたりで出かける日',place:'朝の支度',chapter:'camp',bond:3,town:1,lines:[a('明日、依頼がなくても出かけない？'),l('何か採るのか？'),a('何も。歩くだけ。……ふたりで。'),n('レオンは地図に伸ばしかけた手を止めた。'),l('分かった。朝、ここで待ってる。'),a('遅れても置いていかないでね。'),l('置いていったこと、ないだろ。'),n('アリアはうれしそうに、知ってる、と答えた。')]},
 ];
 
-export const characterNotes:Record<string,{habit:string}>={
+export const characterNotes:Partial<Record<string,{habit:string}>>={
  aria:{habit:'気になるものを見つけると、考えるより先に足が動く。道を間違えても、つい強がってしまう。'},
  leon:{habit:'誰かの荷物や足元を、いつの間にか気にしている。自分の望みを聞かれると、言葉を選びすぎる。'},
 };
@@ -120,7 +120,7 @@ export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  if(r&&together(sq.members)&&r.quest==='midnight-snack')return Math.floor((now-r.started)/18000)%2?[{speaker:'merrill',text:'一曲踊ったら、お腹が空いちゃった。'},{speaker:'aria',text:'さっき魔物を食べたばかりでしょ！'}]:[{speaker:'merrill',text:'そこの小動物、ひと口だけ……。'},{speaker:'leon',text:'琴を弾いたまま追いかけるな！'}];
  if(r&&together(sq.members)&&r.quest==='puppet-midnight')return [{speaker:'pumpety',text:'そっちはプティじゃないよ。お人形でしたぁ！'},{speaker:'aria',text:'本物も笑ってるから、場所は分かった。'}];
  if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha'))return [{speaker:'chacha',text:r.phase==='rest'?'まず、お茶にしましょうねぇ。筋肉にも休憩が要りますから。':'道がなければ、どかせばいいんですよぉ。せーの。'}];
- if(r?.quest.startsWith('join-')){const hero=r.quest.slice(5);const replies:Record<string,StoryLine[]>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return replies[hero]||[];}
+ if(r?.quest.startsWith('join-')){const hero=r.quest.slice(5);const replies:Partial<Record<string,StoryLine[]>>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return replies[hero]||[];}
  if(!together(sq.members))return [];
  const v=Math.floor(Math.max(0,now-(r?.started||0))/18000)%2,lv=affection(s);
  if(!r)return [a('準備できた？'),l('ああ。お前を待ってた。')];

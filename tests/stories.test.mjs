@@ -32,7 +32,7 @@ test('reading and replaying are idempotent and never award gold or change clocks
  const before=start(initialState(1000));let s=act(before,{type:'readStory',id:'herbs-departure'},1000);
  s=act(s,{type:'readStory',id:'herbs-departure'},1000);
  assert.deepEqual(s.story.read,['herbs-departure']);
- const {story:ignored,...rest}=s,{story:old,...expected}=before;assert.deepEqual(rest,expected);
+ const rest={...s},expected={...before};delete rest.story;delete expected.story;assert.deepEqual(rest,expected);
  assert.throws(()=>act(s,{type:'readStory',id:'dragon-return'},1000));
  assert.throws(()=>act(s,{type:'readStory',id:'not-a-scene'},1000));
 });
