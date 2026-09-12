@@ -1,5 +1,5 @@
 'use client';
-import {useState,type ReactNode} from 'react';
+import {useState,type Dispatch,type MouseEvent,type ReactNode,type SetStateAction} from 'react';
 import {Coins,Leaf,Gem,Logs,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
@@ -19,14 +19,88 @@ import {availableStories,characterNotes,journeyBanter,stories,storyProgress,toge
 import {Sprite} from './sprite';
 import {InstallGuide,useInstallPrompt} from './install-guide';
 import {nextGoal,partyPreview,questAdvice,type JourneyGoal} from '@/lib/journey';
-import type {Action,State} from '@/lib/game';
+import type {Action,State,Squad} from '@/lib/game';
 import type {useLocalGame} from './use-local-game';
 import {inPrologue,TRADE_QUEST,isPrologueQuest,stageEndingPending,restingQuest} from '@/lib/prologue';
 import {heroes,availableQuests,allQuests,heroSkills,memberStats,activeBonds,bondLevel} from '@/lib/game';
 type Game=ReturnType<typeof useLocalGame>;
 type Sheet='book'|'quests'|'party'|'bag'|'journal'|'build'|'upgrade'|'gift'|'recruit'|'help'|'goal'|'preview'|'advice'|'install'|'stories'|'album'|'story'|'banter'|'personality'|null;
+type ReturnIntent={squad:string;destination:'adventure'|'companions';quest?:string};
+type SheetView={title:string;description:string;content:ReactNode};
 const fmt=(n:number)=>Math.floor(n).toLocaleString('ja-JP');
 const compact=(n:number)=>n<10000?fmt(n):(n/10000).toFixed(n<100000?1:0)+'万';
+function startAction(action:Action){return action.type==='start'?{...action,value:!isPrologueQuest(action.id||'')}:action;}
+function departureStory(state:State,action:Action){
+ const actionId=action.id;if(action.type!=='start'||!actionId)return null;
+ const target=state.squads.find(p=>p.id===action.squad)||state.squads[0];
+ if(target.run||!together(target.members)||storyProgress(state).departed.includes(actionId))return null;
+ return stories.find(st=>st.id===actionId+'-departure')??null;
+}
+type SheetModel={
+ sheet:Sheet;reading:Story|null;ready:boolean;pendingDeparture:Action|null;activeQuest:(typeof allQuests)[number]|undefined;
+ banterSnapshot:StoryLine[];hero:(typeof heroes)[number];state:State;goal:ReturnType<typeof nextGoal>;prologue:boolean;
+ installStatus:ReturnType<typeof useInstallPrompt>;game:Game;music:ReturnType<typeof useGameMusic>;unread:number;hints:ReturnType<typeof useJourneyHints>;
+ setSheet:(sheet:Sheet)=>void;openStory:(story:Story)=>void;finishStory:()=>boolean;closeStory:()=>void;navigate:(view:string)=>void;followGoal:(goal:JourneyGoal)=>void;
+ quest:(typeof allQuests)[number];squad:Squad;run:Squad['run'];preview:ReturnType<typeof partyPreview>;draft:string[];act:(action:Action,onSuccess?:(state:State)=>void)=>boolean;
+ chooseSquad:(id:string)=>void;candidateQuest:string;setCandidateQuest:(id:string)=>void;selectQuest:()=>void;clock:number;openQuests:(id?:string)=>void;
+ setSquad:(id:string)=>void;setView:(view:string)=>void;
+};
+type PhoneFrameModel=SheetModel&{
+ view:string;returnIntent:ReturnIntent|null;leaveAction:((state:State)=>void)|null;ending:Story|null;banter:StoryLine[];quote:string;
+ roster:(typeof heroes)[number][];setBanterSnapshot:Dispatch<SetStateAction<StoryLine[]>>;setHeroIndex:Dispatch<SetStateAction<number>>;
+ createSquad:()=>void;requestReturn:(destination:'adventure'|'companions',quest?:string)=>void;confirmReturn:()=>void;
+ openRecruit:()=>void;
+ setReturnIntent:Dispatch<SetStateAction<ReturnIntent|null>>;setLeaveAction:Dispatch<SetStateAction<((state:State)=>void)|null>>;setDraft:Dispatch<SetStateAction<string[]>>;
+};
+function storySheet(m:SheetModel):SheetView|null{
+ if(m.sheet==='book')return {title:'旅の手帳',description:'旅の記録と、手助けのヒント。',content:<div className="handbook-menu"><button className="outline" onClick={()=>{m.hints.markRead();m.setSheet('goal');}}><Lightbulb size={20}/><span>ヒント</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { m.setSheet('stories'); }}><BookOpen size={20}/><span>思い出{m.unread>0&&` · 未読 ${String(m.unread)}`}</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { m.setSheet('album'); }}><Images size={20}/><span>アルバム</span><ChevronRight size={16}/></button><SavePanel game={m.game} music={m.music}/></div>};
+ if(m.sheet==='album')return {title:'アルバム',description:'旅で出会った景色を眺める',content:<StoryAlbum state={m.state} onBack={()=> { m.setSheet('book'); }}/>};
+ if(m.sheet==='stories')return {title:'旅の思い出',description:'出会いも、冒険も、帰ってきた日のことも。',content:<><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button><StoryLibrary state={m.state} onOpen={m.openStory}/></>};
+ if(m.sheet==='story'&&m.reading)return {title:m.reading.title,description:m.reading.place,content:<StoryReader key={m.reading.id} story={m.reading} ready={m.ready} onRead={m.finishStory} departure={!!m.pendingDeparture} onClose={m.closeStory}/>};
+ if(m.sheet==='banter')return {title:m.activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中',description:m.activeQuest?.name||'次の冒険を待ちながら',content:<ConversationReader lines={m.banterSnapshot} onClose={()=> { m.setSheet(null); }}/>};
+ return null;
+}
+function heroSheet(m:SheetModel):SheetView|null{
+ if(m.sheet!=='personality')return null;
+ const notes=characterNotes[m.hero.id];
+ return {title:m.hero.name+'のこと',description:m.hero.job,content:<><Sprite index={m.hero.sprite} size={88}/><p>{m.hero.bio}</p>{notes&&<p>{notes.habit}</p>}<div className="phone-stat-row">{['採取','護衛','討伐'].map((name,i)=><span key={name}>{name}<b>{memberStats(m.state,m.hero.id)[i]}</b></span>)}</div><h3>{heroSkills[m.hero.id].name}</h3><p>{heroSkills[m.hero.id].description}</p><button className="outline" onClick={()=> { m.navigate('memories'); }}>旅の思い出を読む</button></>};
+}
+function journeySheet(m:SheetModel):SheetView|null{
+ if(m.sheet==='goal')return {title:m.goal.title,description:m.prologue?'ふたりの次の一歩':'旅団の次の一歩',content:<><p>{m.goal.detail}</p>{(!m.prologue||m.goal.destination!=='quests')&&<button className="full" onClick={()=> { m.followGoal(m.goal); }}>{m.goal.action}</button>}{m.state.clears===0&&!m.prologue&&<ol className="journey-steps"><li>ふたりの隊を出発させる</li><li>タップで応援。見守るだけでも大丈夫</li><li>3地点ごとに報酬、15地点で依頼達成</li><li>木材とお金で、帰る場所を作る</li></ol>}<button className="outline full" onClick={()=> { m.setSheet('help'); }}>旅の手引き・操作方法</button></>};
+ if(m.sheet==='install')return {title:'ホーム画面に追加',description:'ランタンから、いつもの冒険へ。',content:<InstallGuide onDownload={m.game.download} status={m.installStatus}/>};
+ if(m.sheet==='advice')return {title:'この依頼の支度',description:m.quest.name,content:<><p>{questAdvice(m.state,m.squad,m.quest)}</p><p>休憩が多いときは回復役や障壁を持つ仲間も頼りになります。編成の変更は帰還後に行えます。</p><button onClick={()=>{m.navigate('companions');m.setSheet(null);}}>仲間の編成へ</button>{m.run&&<button className="outline" onClick={()=> { m.setSheet('party'); }}>隊を選ぶ</button>}</>};
+ return null;
+}
+function previewSheet(m:SheetModel):SheetView|null{
+ if(m.sheet!=='preview')return null;
+ const p=m.preview;
+ return {title:'編成の効果を比べる',description:'現在の編成 → 選んでいる編成',content:<><div className="party-comparison">{['採取','護衛','討伐'].map((name,i)=><div key={name}><span>{name}</span><b>{p.before[i]} → {p.after[i]}</b><small>{p.after[i]-p.before[i]>0?'+':''}{p.after[i]-p.before[i]}</small></div>)}</div>{m.draft.length?<><p>「{m.quest.name}」の所要時間の目安<br/>{Math.max(1,Math.round(p.secondsBefore/60))}分 → {Math.max(1,Math.round(p.secondsAfter/60))}分</p><small>手助け・休憩・特技によって実際の時間は変わります。</small><p>{p.healing?'回復役が仲間を支えます。':'回復は団長の手助けでも支えられます。'}{p.guarding&&'障壁で仲間を守れます。'}{p.exploring&&'寄り道が得意な仲間がいます。'}</p>{p.bonds.length?p.bonds.map(b=><p className="phone-bond" key={b.name}><Heart size={14}/>{b.name} · 連携 Lv.{bondLevel(m.state,b.ids)}</p>):<p>この編成にはペアの連携がありません。仲間の得意分野で力を合わせます。</p>}<p>{questAdvice(m.state,{...m.squad,members:m.draft},m.quest)}</p></>:<p>仲間を1人以上選んでください。</p>}<button disabled={!m.ready||!!m.run||!m.draft.length} onClick={()=>{m.act({type:'party',squad:m.squad.id,members:m.draft});m.setSheet(null);}}>この編成を保存</button>{m.run&&<p>冒険中の隊は帰還してから編成できます。</p>}</>};
+}
+function collectionSheet(m:SheetModel):SheetView|null{
+ const s=m.state;
+ if(m.sheet==='party')return {title:'冒険を見守る隊',description:'隊を選ぶと、その隊の冒険と行き先を表示します。',content:<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===m.squad.id} className={p.id===m.squad.id?'selected':''} onClick={()=> { m.chooseSquad(p.id); }} key={p.id}><span>{p.name}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { m.navigate('companions'); }}>隊を作る・編成する</button></>};
+ if(m.sheet==='quests')return {title:'クエスト',description:m.prologue?'行き先を選びましょう。':'出かけたいクエストを選びましょう。',content:<QuestPicker state={s} squad={m.squad} selected={m.candidateQuest} onSelect={m.setCandidateQuest} onConfirm={m.selectQuest} ready={m.ready}/>};
+ if(m.sheet==='bag')return {title:'持ちもの',description:'区間報酬と寄り道で集めた、旅の蓄えです。',content:<><div className="inventory-grid">{[[Coins,s.gold,'お金'],[Leaf,s.herbs,'薬草'],[Gem,s.ore,'鉱石'],[Logs,s.wood,'木材']].map(([Icon,value,label])=>{const I=Icon as typeof Coins;return <div key={String(label)}><I/><span>{String(label)}</span><b>{fmt(value as number)}</b></div>})}</div><RareInventory state={s}/></>};
+ if(m.sheet==='journal')return {title:'旅団の足あと',description:`${String(s.clears)}件達成 · 寄り道で${String(s.discoveries)}回の発見`,content:<><button className="memory-link" onClick={()=> { m.setSheet('stories'); }}><Heart size={18}/>旅の思い出{m.unread>0&&<span>未読 {m.unread}</span>}</button><div className="phone-journal">{s.log.map((entry,i)=><article key={`${String(entry.at)}-${String(i)}`}><time>{new Date(entry.at).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}</time><p>{entry.text}</p></article>)}</div></>};
+ return null;
+}
+function guildSheet(m:SheetModel):SheetView|null{
+ const s=m.state;
+ if(m.sheet==='build')return {title:'拠点を育てる',description:'木材を使って、仲間たちの帰る場所を作ります。',content:<div className="building-details"><GuildHome state={s} now={m.clock} ready={m.ready} onAction={m.act} onStory={m.openStory}/></div>};
+ if(m.sheet==='gift'){const claimed=s.lastDaily===new Date(m.clock||0).toISOString().slice(0,10);return {title:'ギルドの差し入れ',description:'毎朝9時に届く、旅の応援です。',content:<><Gift className="gift-art"/><p>80 G と薬草 5 個</p><button disabled={!m.ready||claimed||s.clears<3} onClick={()=>m.act({type:'daily'})}>{claimed?'受取済み':s.clears<3?'3件達成で解放':'受け取る'}</button></>};}
+ if(m.sheet==='recruit')return {title:'仲間になるまで',description:'旅を重ねてつながる、新しい出会い。',content:<RecruitmentBoard state={s} squad={m.squad} ready={m.ready} onAction={m.act} onStory={m.openStory} onGather={id=> { m.openQuests(id); }} onWatch={id=>{m.setSquad(id);m.setView('adventure');m.setSheet(null);}}/>};
+ return null;
+}
+function upgradeSheet(m:SheetModel):SheetView|null{
+ const s=m.state;if(m.sheet!=='upgrade')return null;
+ const content=s.clears<3?<p>3件の依頼を達成すると、装備を強化できます。</p>:<div className="phone-upgrades"><article><Hammer/><h3>みんなの装備 Lv.{s.gear}</h3><p>1段階ごとに全能力 +8%</p><button disabled={!m.ready||s.gear>=15||s.gold<100*(s.gear+1)||s.ore<5*(s.gear+1)} onClick={()=>m.act({type:'gear'})}>{s.gear>=15?'最大レベル':`${String(100*(s.gear+1))} G · 鉱石 ${String(5*(s.gear+1))} で強化`}</button></article>{s.clears>=10&&<article><Flame/><h3>野営地 Lv.{s.camp}</h3><p>1段階ごとに行動間隔 −3.5%</p><button disabled={!m.ready||s.camp>=10||s.gold<150*(s.camp+1)||s.herbs<12*(s.camp+1)} onClick={()=>m.act({type:'camp'})}>{s.camp>=10?'最大レベル':`${String(150*(s.camp+1))} G · 薬草 ${String(12*(s.camp+1))} で改築`}</button></article>}</div>;
+ return {title:'冒険の支度',description:'全員に効果があります。',content};
+}
+function helpSheet(m:SheetModel):SheetView|null{
+ if(m.sheet!=='help')return null;
+ return {title:'旅の手引き',description:'見守るだけでも、手助けしても。',content:<><p>マップの空いているところや敵・素材をタップすると手助け、仲間やHP表示をタップするとパーティを回復できます。HPは隊全体で共有し、先頭の仲間の足元に表示します。休憩中はマップのどこでも回復できます。{!m.prologue&&'応援が100になると、全員の必殺技が発動！ '}タップでの手助けに回数制限はありません。</p>{!m.prologue&&<p>光る寄り道をタップすると、仲間が優先して調べます。放置でも自動で回収します。</p>}<p>1周は15地点。3地点ごとに報酬を確保します。行き先は巻物の「クエスト」から選べます。{!m.prologue&&'帰還は隊の名前の横、編成は「パーティ」から操作できます。'}</p><p>進行は端末に保存し、開いている間は約5分ごとにクラウドへバックアップします。画面を閉じた後は、次に開いたときに最大12時間分を集計します。</p><button className="outline full" onClick={()=> { m.setSheet('install'); }}>ホーム画面に追加</button></>};
+}
+function resolveSheet(m:SheetModel){return storySheet(m)??heroSheet(m)??journeySheet(m)??previewSheet(m)??collectionSheet(m)??guildSheet(m)??upgradeSheet(m)??helpSheet(m)??{title:'',description:'',content:null};}
 export function PhoneGame({game}:{game:Game}){
  const installStatus=useInstallPrompt();
  const {s,clock,dispatch}=game;
@@ -51,7 +125,15 @@ export function PhoneGame({game}:{game:Game}){
  const hints=useJourneyHints(game.profile?.id,goal);
  const banter=journeyBanter(s,sq,clock),memories=availableStories(s),unread=memories.filter(st=>!storyProgress(s).read.includes(st.id)).length;
  function openStory(st:Story){setReading(st);setSheet('story');}
- function act(action:Action,onSuccess?:(state:State)=>void){if(action.type==='start')action={...action,value:!isPrologueQuest(action.id||'')};const target=s.squads.find(p=>p.id===action.squad)||s.squads[0],actionId=action.id;const first=action.type==='start'&&!target.run&&together(target.members)&&!storyProgress(s).departed.includes(actionId||'');if(first&&actionId){const st=stories.find(st=>st.id===actionId+'-departure');if(st){setPendingDeparture(action);openStory(st);return true;}}const ok=dispatch(action,onSuccess);if(ok&&action.type==='build'){setSheet(null);setView('camp');}if(ok&&action.type==='prepareRecruitment'&&actionId){const st=stories.find(st=>st.id==='recruit-'+actionId+'-prepared');if(st)openStory(st);}if(ok&&action.type==='start'&&actionId?.startsWith('join-')){setSquad(action.squad||sq.id);setView('adventure');setSheet(null);}return ok;}
+ function act(input:Action,onSuccess?:(state:State)=>void){
+  const action=startAction(input),departure=departureStory(s,action);
+  if(departure){setPendingDeparture(action);openStory(departure);return true;}
+  const ok=dispatch(action,onSuccess);if(!ok)return false;
+  if(action.type==='build'){setSheet(null);setView('camp');}
+  if(action.type==='prepareRecruitment'&&action.id){const storyId=action.id;const story=stories.find(st=>st.id==='recruit-'+storyId+'-prepared');if(story)openStory(story);}
+  if(action.type==='start'&&action.id?.startsWith('join-')){setSquad(action.squad||sq.id);setView('adventure');setSheet(null);}
+  return true;
+ }
  function openQuests(id=q.id){leaveEditor(()=>{setCandidateQuest(id);setView('adventure');setSheet('quests');});}
  function followGoal(g:JourneyGoal){if(g.destination==='quests'){game.setReport(null);openQuests(g.questId||q.id);return;}leaveEditor(current=>{game.setReport(null);setSheet(null);if(g.questId)setQuest(g.questId);if(g.destination==='build'){setView('camp');setSheet('build');}else if(g.destination==='recruit'){setSheet('recruit');}else if(g.destination==='party'||g.destination==='companions'){const selected=current.squads.find(p=>p.id===sq.id);if(!selected)return;setDraft(selected.members);setView('companions');}else setView(g.destination);});}
  function leaveEditor(next:(state:State)=>void){if(view==='companions'&&dirty)setLeaveAction(()=>next);else next(s);}
@@ -63,43 +145,68 @@ export function PhoneGame({game}:{game:Game}){
  function selectQuest(){const id=unlocked.find(item=>item.id===candidateQuest)?.id||q.id;if(run&&run.quest!==id){requestReturn('adventure',id);return;}setQuest(id);setSheet(null);setView('adventure');if(!run)act({type:'start',id,squad:sq.id});}
  function finishStory(){if(!reading)return false;const ok=pendingDeparture?dispatch({...pendingDeparture,readDeparture:true}):dispatch({type:'readStory',id:reading.id});if(ok)setPendingDeparture(null);return ok;}
  function closeStory(){setPendingDeparture(null);setSheet(reading?.chapter==='recruitment'?'recruit':null);}
- let title='',description='',content:ReactNode=null;
- if(sheet==='book'){title='旅の手帳';description='旅の記録と、手助けのヒント。';content=<div className="handbook-menu"><button className="outline" onClick={()=>{hints.markRead();setSheet('goal');}}><Lightbulb size={20}/><span>ヒント</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { setSheet('stories'); }}><BookOpen size={20}/><span>思い出{unread>0&&` · 未読 ${String(unread)}`}</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { setSheet('album'); }}><Images size={20}/><span>アルバム</span><ChevronRight size={16}/></button><SavePanel game={game} music={music}/></div>;}
- if(sheet==='album'){title='アルバム';description='旅で出会った景色を眺める';content=<StoryAlbum state={s} onBack={()=> { setSheet('book'); }}/>;}
- if(sheet==='stories'){title='旅の思い出';description='出会いも、冒険も、帰ってきた日のことも。';content=<><button className="outline" onClick={()=> { setSheet('journal'); }}>旅の記録</button><StoryLibrary state={s} onOpen={openStory}/></>;}
- if(sheet==='story'&&reading){title=reading.title;description=reading.place;content=<StoryReader key={reading.id} story={reading} ready={ready} onRead={finishStory} departure={!!pendingDeparture} onClose={closeStory}/>;}
- if(sheet==='banter'){title=activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中';description=activeQuest?.name||'次の冒険を待ちながら';content=<ConversationReader lines={banterSnapshot} onClose={()=> { setSheet(null); }}/>;}
- if(sheet==='personality'){title=hero.name+'のこと';description=hero.job;const notes=characterNotes[hero.id];content=<><Sprite index={hero.sprite} size={88}/><p>{hero.bio}</p>{notes&&<p>{notes.habit}</p>}<div className="phone-stat-row">{['採取','護衛','討伐'].map((name,i)=><span key={name}>{name}<b>{memberStats(s,hero.id)[i]}</b></span>)}</div><h3>{heroSkills[hero.id].name}</h3><p>{heroSkills[hero.id].description}</p><button className="outline" onClick={()=> { navigate('memories'); }}>旅の思い出を読む</button></>; }
- if(sheet==='goal'){title=goal.title;description=prologue?'ふたりの次の一歩':'旅団の次の一歩';content=<><p>{goal.detail}</p>{(!prologue||goal.destination!=='quests')&&<button className="full" onClick={()=> { followGoal(goal); }}>{goal.action}</button>}{s.clears===0&&!prologue&&<ol className="journey-steps"><li>ふたりの隊を出発させる</li><li>タップで応援。見守るだけでも大丈夫</li><li>3地点ごとに報酬、15地点で依頼達成</li><li>木材とお金で、帰る場所を作る</li></ol>}<button className="outline full" onClick={()=> { setSheet('help'); }}>旅の手引き・操作方法</button></>;}
- if(sheet==='install'){title='ホーム画面に追加';description='ランタンから、いつもの冒険へ。';content=<InstallGuide onDownload={game.download} status={installStatus}/>;}
- if(sheet==='advice'){title='この依頼の支度';description=q.name;content=<><p>{questAdvice(s,sq,q)}</p><p>休憩が多いときは回復役や障壁を持つ仲間も頼りになります。編成の変更は帰還後に行えます。</p><button onClick={()=>{navigate('companions');setSheet(null);}}>仲間の編成へ</button>{run&&<button className="outline" onClick={()=> { setSheet('party'); }}>隊を選ぶ</button>}</>;}
- if(sheet==='preview'){title='編成の効果を比べる';description='現在の編成 → 選んでいる編成';content=<><div className="party-comparison">{['採取','護衛','討伐'].map((name,i)=><div key={name}><span>{name}</span><b>{preview.before[i]} → {preview.after[i]}</b><small>{preview.after[i]-preview.before[i]>0?'+':''}{preview.after[i]-preview.before[i]}</small></div>)}</div>{draft.length?<><p>「{q.name}」の所要時間の目安<br/>{Math.max(1,Math.round(preview.secondsBefore/60))}分 → {Math.max(1,Math.round(preview.secondsAfter/60))}分</p><small>手助け・休憩・特技によって実際の時間は変わります。</small><p>{preview.healing?'回復役が仲間を支えます。':'回復は団長の手助けでも支えられます。'}{preview.guarding&&'障壁で仲間を守れます。'}{preview.exploring&&'寄り道が得意な仲間がいます。'}</p>{preview.bonds.length?preview.bonds.map(b=><p className="phone-bond" key={b.name}><Heart size={14}/>{b.name} · 連携 Lv.{bondLevel(s,b.ids)}</p>):<p>この編成にはペアの連携がありません。仲間の得意分野で力を合わせます。</p>}<p>{questAdvice(s,{...sq,members:draft},q)}</p></>:<p>仲間を1人以上選んでください。</p>}<button disabled={!ready||!!run||!draft.length} onClick={()=>{act({type:'party',squad:sq.id,members:draft});setSheet(null);}}>この編成を保存</button>{run&&<p>冒険中の隊は帰還してから編成できます。</p>}</>;}
-
- if(sheet==='party'){title='冒険を見守る隊';description='隊を選ぶと、その隊の冒険と行き先を表示します。';content=<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===sq.id} className={p.id===sq.id?'selected':''} onClick={()=> { chooseSquad(p.id); }} key={p.id}><span>{p.name}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { navigate('companions'); }}>隊を作る・編成する</button></>;}
- if(sheet==='quests'){title='クエスト';description=prologue?'行き先を選びましょう。':'出かけたいクエストを選びましょう。';content=<QuestPicker state={s} squad={sq} selected={candidateQuest} onSelect={setCandidateQuest} onConfirm={selectQuest} ready={ready}/>;}
- if(sheet==='bag'){title='持ちもの';description='区間報酬と寄り道で集めた、旅の蓄えです。';content=<><div className="inventory-grid">{[[Coins,s.gold,'お金'],[Leaf,s.herbs,'薬草'],[Gem,s.ore,'鉱石'],[Logs,s.wood,'木材']].map(([Icon,value,label])=>{const I=Icon as typeof Coins;return <div key={String(label)}><I/><span>{String(label)}</span><b>{fmt(value as number)}</b></div>})}</div><RareInventory state={s}/></>;}
- if(sheet==='journal'){title='旅団の足あと';description=`${String(s.clears)}件達成 · 寄り道で${String(s.discoveries)}回の発見`;content=<><button className="memory-link" onClick={()=> { setSheet('stories'); }}><Heart size={18}/>旅の思い出{unread>0&&<span>未読 {unread}</span>}</button><div className="phone-journal">{s.log.map((entry,i)=><article key={`${String(entry.at)}-${String(i)}`}><time>{new Date(entry.at).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}</time><p>{entry.text}</p></article>)}</div></>;}
- if(sheet==='build'){title='拠点を育てる';description='木材を使って、仲間たちの帰る場所を作ります。';content=<div className="building-details"><GuildHome state={s} now={clock} ready={ready} onAction={act} onStory={openStory}/></div>;}
- if(sheet==='upgrade'){title='冒険の支度';description='全員に効果があります。';content=s.clears<3?<p>3件の依頼を達成すると、装備を強化できます。</p>:<div className="phone-upgrades"><article><Hammer/><h3>みんなの装備 Lv.{s.gear}</h3><p>1段階ごとに全能力 +8%</p><button disabled={!ready||s.gear>=15||s.gold<100*(s.gear+1)||s.ore<5*(s.gear+1)} onClick={()=>act({type:'gear'})}>{s.gear>=15?'最大レベル':`${String(100*(s.gear+1))} G · 鉱石 ${String(5*(s.gear+1))} で強化`}</button></article>{s.clears>=10&&<article><Flame/><h3>野営地 Lv.{s.camp}</h3><p>1段階ごとに行動間隔 −3.5%</p><button disabled={!ready||s.camp>=10||s.gold<150*(s.camp+1)||s.herbs<12*(s.camp+1)} onClick={()=>act({type:'camp'})}>{s.camp>=10?'最大レベル':`${String(150*(s.camp+1))} G · 薬草 ${String(12*(s.camp+1))} で改築`}</button></article>}</div>;}
- if(sheet==='gift'){title='ギルドの差し入れ';description='毎朝9時に届く、旅の応援です。';const claimed=s.lastDaily===new Date(clock||0).toISOString().slice(0,10);content=<><Gift className="gift-art"/><p>80 G と薬草 5 個</p><button disabled={!ready||claimed||s.clears<3} onClick={()=>act({type:'daily'})}>{claimed?'受取済み':s.clears<3?'3件達成で解放':'受け取る'}</button></>;}
- if(sheet==='recruit'){title='仲間になるまで';description='旅を重ねてつながる、新しい出会い。';content=<RecruitmentBoard state={s} squad={sq} ready={ready} onAction={act} onStory={openStory} onGather={id=> { openQuests(id); }} onWatch={id=>{setSquad(id);setView('adventure');setSheet(null);}}/>;}
- if(sheet==='help'){title='旅の手引き';description='見守るだけでも、手助けしても。';content=<><p>マップの空いているところや敵・素材をタップすると手助け、仲間やHP表示をタップするとパーティを回復できます。HPは隊全体で共有し、先頭の仲間の足元に表示します。休憩中はマップのどこでも回復できます。{!prologue&&'応援が100になると、全員の必殺技が発動！ '}タップでの手助けに回数制限はありません。</p>{!prologue&&<p>光る寄り道をタップすると、仲間が優先して調べます。放置でも自動で回収します。</p>}<p>1周は15地点。3地点ごとに報酬を確保します。行き先は巻物の「クエスト」から選べます。{!prologue&&'帰還は隊の名前の横、編成は「パーティ」から操作できます。'}</p><p>進行は端末に保存し、開いている間は約5分ごとにクラウドへバックアップします。画面を閉じた後は、次に開いたときに最大12時間分を集計します。</p><button className="outline full" onClick={()=> { setSheet('install'); }}>ホーム画面に追加</button></>;}
- return <main className={'phone-game'+(prologue?' prologue-game':'')}><Toaster theme="dark" position="top-center"/><header className="phone-header"><button className="phone-wallet" onClick={()=> { setSheet('bag'); }} aria-label="持ちものを開く"><span><Coins/>{compact(s.gold)}</span><span><Leaf/>{compact(s.herbs)}</span><span><Gem/>{compact(s.ore)}</span><span><Logs/>{compact(s.wood)}</span></button><button className="handbook-button" onClick={()=> { setSheet('book'); }} aria-label="旅の手帳：ヒント・思い出・アルバム・設定"><BookOpen size={23}/>{(game.error||hints.unread||(!prologue&&unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header>
- {(game.error||game.otherTab)&&<div className="phone-notice" role="status"><span>{game.otherTab?'別のタブで冒険中です':game.error}</span>{game.otherTab&&<button onClick={game.takeOver}>ここで続ける</button>}</div>}
-
-
- <Tabs className="phone-tabs" value={view} onValueChange={navigate}>
- <div className="phone-screen">
- <TabsContent value="adventure" className="phone-adventure">{!prologue&&<div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+sq.name}><Users size={16}/><span>{sq.name}</span><ChevronRight size={14}/></button>{run&&<button className="outline return-button" disabled={!ready} onClick={()=> { requestReturn('adventure'); }}><House size={15}/>帰還</button>}<button className="outline edit-party" onClick={()=> { navigate('companions'); }}>編成</button></div>}<div className="adventure-destination"><div>{(!prologue||run)&&<b>{activeQuest?.name||q.name}</b>}</div><div className="quest-control"><button className={'outline quest-entry'+(prologue&&!run&&!s.done[TRADE_QUEST]?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={prologue&&!run&&!s.done[TRADE_QUEST]?'quest-tutorial':undefined} onClick={()=> { openQuests(); }}><img src="/ui/quest-scroll.png" width={52} height={52} alt=""/></button>{prologue&&!run&&!s.done[TRADE_QUEST]&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div><MapStage state={s} squad={sq} now={clock} ready={ready} onAction={act} startQuest={q.id} paused={!!sheet||!!returnIntent||!!leaveAction||!!game.report||!!ending}/>{banter.length?<Banter key={(game.profile?.id||'')+':'+sq.id+':'+(run?.quest||'idle')} lines={banter} paused={!!sheet||!!ending||!!game.report||!ready} onRead={lines=>{setBanterSnapshot(lines);setSheet('banter');}}/>:<div className="phone-banter"><p>{quote}</p></div>}</TabsContent>
-
- <TabsContent value="companions" className="phone-party"><PartyPanel state={s} squad={sq} draft={draft} ready={ready} onChoose={chooseSquad} onCreate={createSquad} onToggle={id=> { setDraft(d=>d.includes(id)?d.filter(member=>member!==id):[...d,id]); }} onInspect={id=>{setHeroIndex(roster.findIndex(h=>h.id===id));setSheet('personality');}} onSave={()=>act({type:'party',squad:sq.id,members:draft})} onDiscard={()=> { setDraft(sq.members); }} onReturn={()=> { requestReturn('companions'); }} onRecruit={()=> { leaveEditor(()=> { setSheet('recruit'); }); }} onPreview={()=> { setSheet('preview'); }} onAdventure={()=> { navigate('adventure'); }}/></TabsContent>
- <TabsContent value="camp" className="phone-home"><div className="screen-heading"><h2>帰る場所</h2><span className="home-level">{['野営地','酒場','小さな村'][s.town]}</span></div><GuildHome state={s} now={clock} ready={ready} onAction={act} onStory={openStory}/><div className="home-menu"><button onClick={()=> { setSheet('build'); }}><House/><span>建設</span></button><button onClick={()=> { setSheet('upgrade'); }}><Hammer/><span>強化</span></button><button onClick={()=> { setSheet('gift'); }}><Gift/><span>差し入れ</span></button></div></TabsContent>
- <TabsContent value="memories" className="phone-memories"><div className="screen-heading"><h2>旅の思い出</h2><button className="outline" onClick={()=> { setSheet('journal'); }}>旅の記録</button></div><StoryLibrary state={s} onOpen={openStory}/></TabsContent>
- </div><TabsList className="phone-navigation"><TabsTrigger value="adventure"><Compass/><span>冒険</span></TabsTrigger>{!prologue&&<><TabsTrigger value="companions"><Users/><span>パーティ</span></TabsTrigger><TabsTrigger value="camp"><Flame/><span>拠点</span></TabsTrigger></>}</TabsList></Tabs>
- <Dialog open={!!sheet&&!ending} onOpenChange={open=>{if(!open&&sheet!=='story')setSheet(null);}}><DialogContent showCloseButton={sheet!=='story'} onInteractOutside={event=>{if(sheet==='story')event.preventDefault();}} onEscapeKeyDown={event=>{if(sheet==='story')event.preventDefault();}} className={"phone-dialog"+(sheet==='story'?' story-dialog':'')+(sheet==='quests'?' quest-dialog':'')}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>{content}</DialogContent></Dialog>
- {ending&&<QuestCompletion key={(game.profile?.id??'unassigned')+':'+ending.id} story={ending} questName={allQuests.find(q=>q.id===ending.quest)?.name??'不明な依頼'} ready={ready} onRead={()=>dispatch({type:'readStory',id:ending.id})} onClose={()=>{game.setReport(null);setSheet(null);}}/>}
- <AlertDialog open={!!returnIntent} onOpenChange={open=>{if(!open)setReturnIntent(null)}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>{returnIntent?.destination==='companions'?'帰還して編成しますか？':returnIntent?.quest?'帰還して行き先を変えますか？':'帰還しますか？'}</AlertDialogTitle><AlertDialogDescription>{s.squads.find(p=>p.id===returnIntent?.squad)?.name}の確保済みの区間報酬は残ります。途中の依頼は最初からになります。{returnIntent?.quest&&'帰還後に行き先を選び直します。自動では出発しません。'}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>冒険を続ける</AlertDialogCancel><AlertDialogAction disabled={!ready} onClick={e=>{e.preventDefault();confirmReturn();}}>{returnIntent?.destination==='companions'?'帰還して編成する':'帰還する'}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
- <AlertDialog open={!!leaveAction} onOpenChange={open=>{if(!open)setLeaveAction(null)}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>編成の変更を保存しますか？</AlertDialogTitle><AlertDialogDescription>選んだ仲間の変更がまだ保存されていません。</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>編成に戻る</AlertDialogCancel><button className="outline" onClick={()=>{const next=leaveAction;setDraft(sq.members);setLeaveAction(null);next?.(s);}}>変更を破棄して続ける</button><AlertDialogAction disabled={!ready||!draft.length||!!run} onClick={e=>{e.preventDefault();act({type:'party',squad:sq.id,members:draft},current=>{const next=leaveAction;setLeaveAction(null);next?.(current);});}}>保存して続ける</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>
- <Dialog open={!!game.report&&!sheet&&!ending} onOpenChange={open=>{if(!open)game.setReport(null)}}><DialogContent className="phone-dialog"><DialogHeader><DialogTitle>{prologue?'留守の間の交易':'おかえりなさい、団長。'}</DialogTitle><DialogDescription>留守の間の冒険で集めたものです。</DialogDescription></DialogHeader>{game.report&&<><p>{game.report.count}件の依頼を達成</p><div className="offline-loot"><span>{fmt(game.report.gold)} G</span><span>薬草 {game.report.herbs}</span><span>鉱石 {game.report.ore}</span><span>木材 {game.report.wood}</span></div><span>仲間の経験値 +{game.report.xp}</span>{game.report.capped&&<small>最大12時間分を集計しました。</small>}{!prologue&&<div className="return-goal"><small>次の楽しみ</small><h3>{goal.title}</h3><p>{goal.detail}</p><button className="full" onClick={()=> { followGoal(goal); }}>{goal.action}</button></div>}<button className="outline full" onClick={()=> { game.setReport(null); }}>冒険を見守る</button></>}</DialogContent></Dialog>
- </main>;
+ const sheetModel:SheetModel={sheet,reading,ready,pendingDeparture,activeQuest,banterSnapshot,hero,state:s,goal,prologue,installStatus,game,music,unread,hints,setSheet,openStory,finishStory,closeStory,navigate,followGoal,quest:q,squad:sq,run,preview,draft,act,chooseSquad,candidateQuest,setCandidateQuest,selectQuest,clock,openQuests,setSquad,setView};
+ const frame:PhoneFrameModel={...sheetModel,view,returnIntent,leaveAction,ending,banter,quote,roster,setBanterSnapshot,setHeroIndex,createSquad,requestReturn,confirmReturn,openRecruit:()=> { leaveEditor(()=> { setSheet('recruit'); }); },setReturnIntent,setLeaveAction,setDraft};
+ return <PhoneFrame model={frame}/>;
+}
+function PhoneHeader({model:m}:{model:PhoneFrameModel}){
+ const s=m.state;
+ return <><header className="phone-header"><button className="phone-wallet" onClick={()=> { m.setSheet('bag'); }} aria-label="持ちものを開く"><span><Coins/>{compact(s.gold)}</span><span><Leaf/>{compact(s.herbs)}</span><span><Gem/>{compact(s.ore)}</span><span><Logs/>{compact(s.wood)}</span></button><button className="handbook-button" onClick={()=> { m.setSheet('book'); }} aria-label="旅の手帳：ヒント・思い出・アルバム・設定"><BookOpen size={23}/>{(m.game.error||m.hints.unread||(!m.prologue&&m.unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header><GameNotice game={m.game}/></>;
+}
+function GameNotice({game}:{game:Game}){
+ if(!game.error&&!game.otherTab)return null;
+ return <div className="phone-notice" role="status"><span>{game.otherTab?'別のタブで冒険中です':game.error}</span>{game.otherTab&&<button onClick={game.takeOver}>ここで続ける</button>}</div>;
+}
+function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
+ if(m.prologue)return null;
+ return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+m.squad.name}><Users size={16}/><span>{m.squad.name}</span><ChevronRight size={14}/></button>{m.run&&<button className="outline return-button" disabled={!m.ready} onClick={()=> { m.requestReturn('adventure'); }}><House size={15}/>帰還</button>}<button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
+}
+function AdventureDestination({model:m}:{model:PhoneFrameModel}){
+ const guided=m.prologue&&!m.run&&!m.state.done[TRADE_QUEST];
+ return <div className="adventure-destination"><div>{(!m.prologue||m.run)&&<b>{m.activeQuest?.name||m.quest.name}</b>}</div><div className="quest-control"><button className={'outline quest-entry'+(guided?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guided?'quest-tutorial':undefined} onClick={()=> { m.openQuests(); }}><img src="/ui/quest-scroll.png" width={52} height={52} alt=""/></button>{guided&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div>;
+}
+function AdventureBanter({model:m}:{model:PhoneFrameModel}){
+ if(!m.banter.length)return <div className="phone-banter"><p>{m.quote}</p></div>;
+ return <Banter key={(m.game.profile?.id||'')+':'+m.squad.id+':'+(m.run?.quest||'idle')} lines={m.banter} paused={!!m.sheet||!!m.ending||!!m.game.report||!m.ready} onRead={lines=>{m.setBanterSnapshot(lines);m.setSheet('banter');}}/>;
+}
+function AdventureTab({model:m}:{model:PhoneFrameModel}){
+ return <TabsContent value="adventure" className="phone-adventure"><AdventureToolbar model={m}/><AdventureDestination model={m}/><MapStage state={m.state} squad={m.squad} now={m.clock} ready={m.ready} onAction={m.act} startQuest={m.quest.id} paused={!!m.sheet||!!m.returnIntent||!!m.leaveAction||!!m.game.report||!!m.ending}/><AdventureBanter model={m}/></TabsContent>;
+}
+function CompanionsTab({model:m}:{model:PhoneFrameModel}){
+ const toggle=(id:string)=> { m.setDraft(d=>d.includes(id)?d.filter(member=>member!==id):[...d,id]); };
+ const inspect=(id:string)=>{m.setHeroIndex(m.roster.findIndex(h=>h.id===id));m.setSheet('personality');};
+ return <TabsContent value="companions" className="phone-party"><PartyPanel state={m.state} squad={m.squad} draft={m.draft} ready={m.ready} onChoose={m.chooseSquad} onCreate={m.createSquad} onToggle={toggle} onInspect={inspect} onSave={()=>m.act({type:'party',squad:m.squad.id,members:m.draft})} onDiscard={()=> { m.setDraft(m.squad.members); }} onReturn={()=> { m.requestReturn('companions'); }} onRecruit={m.openRecruit} onPreview={()=> { m.setSheet('preview'); }} onAdventure={()=> { m.navigate('adventure'); }}/></TabsContent>;
+}
+function CampTab({model:m}:{model:PhoneFrameModel}){
+ const s=m.state;
+ return <TabsContent value="camp" className="phone-home"><div className="screen-heading"><h2>帰る場所</h2><span className="home-level">{['野営地','酒場','小さな村'][s.town]}</span></div><GuildHome state={s} now={m.clock} ready={m.ready} onAction={m.act} onStory={m.openStory}/><div className="home-menu"><button onClick={()=> { m.setSheet('build'); }}><House/><span>建設</span></button><button onClick={()=> { m.setSheet('upgrade'); }}><Hammer/><span>強化</span></button><button onClick={()=> { m.setSheet('gift'); }}><Gift/><span>差し入れ</span></button></div></TabsContent>;
+}
+function GameTabs({model:m}:{model:PhoneFrameModel}){
+ return <Tabs className="phone-tabs" value={m.view} onValueChange={m.navigate}><div className="phone-screen"><AdventureTab model={m}/><CompanionsTab model={m}/><CampTab model={m}/><TabsContent value="memories" className="phone-memories"><div className="screen-heading"><h2>旅の思い出</h2><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button></div><StoryLibrary state={m.state} onOpen={m.openStory}/></TabsContent></div><TabsList className="phone-navigation"><TabsTrigger value="adventure"><Compass/><span>冒険</span></TabsTrigger>{!m.prologue&&<><TabsTrigger value="companions"><Users/><span>パーティ</span></TabsTrigger><TabsTrigger value="camp"><Flame/><span>拠点</span></TabsTrigger></>}</TabsList></Tabs>;
+}
+function SheetDialog({model:m}:{model:PhoneFrameModel}){
+ const {title,description,content}=resolveSheet(m);
+ return <Dialog open={!!m.sheet&&!m.ending} onOpenChange={open=>{if(!open&&m.sheet!=='story')m.setSheet(null);}}><DialogContent showCloseButton={m.sheet!=='story'} onInteractOutside={event=>{if(m.sheet==='story')event.preventDefault();}} onEscapeKeyDown={event=>{if(m.sheet==='story')event.preventDefault();}} className={'phone-dialog'+(m.sheet==='story'?' story-dialog':'')+(m.sheet==='quests'?' quest-dialog':'')}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>{content}</DialogContent></Dialog>;
+}
+function EndingDialog({model:m}:{model:PhoneFrameModel}){
+ if(!m.ending)return null;
+ const ending=m.ending;
+ return <QuestCompletion key={(m.game.profile?.id??'unassigned')+':'+ending.id} story={ending} questName={allQuests.find(q=>q.id===ending.quest)?.name??'不明な依頼'} ready={m.ready} onRead={()=>m.game.dispatch({type:'readStory',id:ending.id})} onClose={()=>{m.game.setReport(null);m.setSheet(null);}}/>;
+}
+function ReturnDialog({model:m}:{model:PhoneFrameModel}){
+ const intent=m.returnIntent;
+ const title=intent?.destination==='companions'?'帰還して編成しますか？':intent?.quest?'帰還して行き先を変えますか？':'帰還しますか？';
+ return <AlertDialog open={!!intent} onOpenChange={open=>{if(!open)m.setReturnIntent(null);}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>{title}</AlertDialogTitle><AlertDialogDescription>{m.state.squads.find(p=>p.id===intent?.squad)?.name}の確保済みの区間報酬は残ります。途中の依頼は最初からになります。{intent?.quest&&'帰還後に行き先を選び直します。自動では出発しません。'}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>冒険を続ける</AlertDialogCancel><AlertDialogAction disabled={!m.ready} onClick={e=>{e.preventDefault();m.confirmReturn();}}>{intent?.destination==='companions'?'帰還して編成する':'帰還する'}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
+}
+function LeaveDialog({model:m}:{model:PhoneFrameModel}){
+ const discard=()=>{const next=m.leaveAction;m.setDraft(m.squad.members);m.setLeaveAction(null);next?.(m.state);};
+ const save=(event:MouseEvent)=>{event.preventDefault();m.act({type:'party',squad:m.squad.id,members:m.draft},current=>{const next=m.leaveAction;m.setLeaveAction(null);next?.(current);});};
+ return <AlertDialog open={!!m.leaveAction} onOpenChange={open=>{if(!open)m.setLeaveAction(null);}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>編成の変更を保存しますか？</AlertDialogTitle><AlertDialogDescription>選んだ仲間の変更がまだ保存されていません。</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>編成に戻る</AlertDialogCancel><button className="outline" onClick={discard}>変更を破棄して続ける</button><AlertDialogAction disabled={!m.ready||!m.draft.length||!!m.run} onClick={save}>保存して続ける</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
+}
+function ReportDialog({model:m}:{model:PhoneFrameModel}){
+ const report=m.game.report;
+ return <Dialog open={!!report&&!m.sheet&&!m.ending} onOpenChange={open=>{if(!open)m.game.setReport(null);}}><DialogContent className="phone-dialog"><DialogHeader><DialogTitle>{m.prologue?'留守の間の交易':'おかえりなさい、団長。'}</DialogTitle><DialogDescription>留守の間の冒険で集めたものです。</DialogDescription></DialogHeader>{report&&<><p>{report.count}件の依頼を達成</p><div className="offline-loot"><span>{fmt(report.gold)} G</span><span>薬草 {report.herbs}</span><span>鉱石 {report.ore}</span><span>木材 {report.wood}</span></div><span>仲間の経験値 +{report.xp}</span>{report.capped&&<small>最大12時間分を集計しました。</small>}{!m.prologue&&<div className="return-goal"><small>次の楽しみ</small><h3>{m.goal.title}</h3><p>{m.goal.detail}</p><button className="full" onClick={()=> { m.followGoal(m.goal); }}>{m.goal.action}</button></div>}<button className="outline full" onClick={()=> { m.game.setReport(null); }}>冒険を見守る</button></>}</DialogContent></Dialog>;
+}
+function PhoneFrame({model:m}:{model:PhoneFrameModel}){
+ return <main className={'phone-game'+(m.prologue?' prologue-game':'')}><Toaster theme="dark" position="top-center"/><PhoneHeader model={m}/><GameTabs model={m}/><SheetDialog model={m}/><EndingDialog model={m}/><ReturnDialog model={m}/><LeaveDialog model={m}/><ReportDialog model={m}/></main>;
 }
