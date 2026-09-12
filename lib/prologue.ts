@@ -3,10 +3,14 @@ import type {State,Squad} from './game.ts';
 export const TRADE_QUEST='village-trade';
 export const RETURN_QUEST='evening-trade-road';
 export const TOWN_QUEST='town-deliveries';
+export const TOWER_QUEST='tower-road';
+export const NIGHT_QUEST='moss-night-road';
 export const prologueStages=[
  {quest:TRADE_QUEST,label:'1-1 交易路（昼）',title:'いつもの待ち合わせ',arrival:'街に到着しました',detail:'預かった荷物を、取引先へ届けましょう。'},
  {quest:RETURN_QUEST,label:'1-2 交易路（夕）',title:'いつもより少し騒がしい道',arrival:'分かれ道に到着しました',detail:'帰り道で気づいたことを、ふたりで話しましょう。'},
  {quest:TOWN_QUEST,label:'1-3 街の仕事',title:'不便の理由',arrival:'街の配達を終えました',detail:'受け取りの控えを持って、取引先へ戻りましょう。'},
+ {quest:TOWER_QUEST,label:'1-4 塔への道',title:'少し見に行こう',arrival:'丘の塔に到着しました',detail:'管理人に声をかけ、塔のそばを見せてもらいましょう。'},
+ {quest:NIGHT_QUEST,label:'1-5 帰り道（夜）',title:'分かれ道までの灯り',arrival:'村々への分かれ道に到着しました',detail:'持ち帰った小さな灯りを、ふたりで覗いてみましょう。'},
 ];
 export const isPrologueQuest=(id:string)=>prologueStages.some(stage=>stage.quest===id);
 // Absent in existing saves: those adventures keep their unlocked features.

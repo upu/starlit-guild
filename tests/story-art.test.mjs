@@ -10,9 +10,8 @@ test('every story illustration exists with its declared dimensions and a valid r
   const scene=stories.find(st=>st.id===id);
   assert.ok(scene,id);
   assert.ok(art.revealAtLine>=0&&art.revealAtLine<scene.lines.length,id);
-  assert.equal(art.revealAtLine%3,0,`${id}: reveal on a reader page boundary`);
-  for(let pageStart=0;pageStart<scene.lines.length;pageStart+=3){
-   assert.equal(storyArtAt(id,pageStart),pageStart>=art.revealAtLine?art:undefined,`${id}: page starting at ${pageStart}`);
+  for(let line=0;line<scene.lines.length;line++){
+   assert.equal(storyArtAt(id,line),line>=art.revealAtLine?art:undefined,`${id}: line ${line}`);
   }
   assert.equal(storyArtAt(id,Infinity),art,`${id}: available for the read-story gallery`);
   assert.ok(art.alt.trim().length>0,id);
@@ -22,6 +21,14 @@ test('every story illustration exists with its declared dimensions and a valid r
   assert.equal(bytes.readUInt32BE(16),art.width,id);
   assert.equal(bytes.readUInt32BE(20),art.height,id);
  }
+});
+
+test('the moss illustration waits until the caretaker has allowed the sample and the container glows',()=>{
+ const scene=stories.find(st=>st.id==='tower-road-return'),art=storyArt[scene.id];
+ const permission=scene.lines.findIndex(line=>line.text.includes('ひとつまみで足りる'));
+ const glow=scene.lines.findIndex(line=>line.text.includes('入れ物の中で柔らかく光った'));
+ assert.ok(permission>=0&&permission<glow);assert.equal(art.revealAtLine,glow);
+ assert.equal(storyArtAt(scene.id,glow-1),undefined);assert.equal(storyArtAt(scene.id,glow),art);
 });
 
 test('first departure has its illustration, while the fireside waits until they sit together',()=>{

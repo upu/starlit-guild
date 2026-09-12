@@ -1,6 +1,6 @@
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
 import {chachaHero} from './original-characters.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
 import {availableStories,coupleCombo,storyProgress,together,type StoryProgress} from './stories.ts';
 import {type State as V2State} from './game-v2.ts';
@@ -10,11 +10,13 @@ export type Kind='採取'|'護衛'|'討伐';
 // price remains legacy profile metadata; recruitment recipes are defined in recruitment.ts.
 function recruitmentUnlock(id:string){const recruitment=recruitmentByHero(id);if(!recruitment)throw Error(`仲間「${id}」の加入条件が見つかりません。`);return recruitment.unlock;}
 export const heroes=[...baseHeroes.map((h,i)=>({...h,sprite:i,unlock:i<2?0:recruitmentUnlock(h.id),price:[0,0,100,220,450,700,950,1300][i]})),chachaHero];
-export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;escortTarget?:string;availability?:'repeatable'|'once'};
+export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;escortTarget?:string;escortAsset?:string;availability?:'repeatable'|'once'};
 export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q.xp*5,herbs:q.herbs*5,ore:q.ore*5,unlock:[0,2,4,10,15,20,35,45,60][i],enemy:i===8?10:i>=3?9:8})),
  {id:TRADE_QUEST,name:'街への交易',kind:'護衛',region:'街へ続く交易路',desc:'それぞれの村から預かった品を、街の取引先へ。道中で頼まれた薬草も採りながら、アリアとレオンで荷物を届けよう。',tier:1,need:12,seconds:180,gold:120,xp:60,herbs:10,ore:0,unlock:0,enemy:8,background:'/forest.png',gatherTarget:'取引先に頼まれた薬草',escortTarget:'村から預かった荷物',availability:'repeatable'},
  {id:RETURN_QUEST,name:'夕暮れの帰り道',kind:'護衛',region:'村へ戻る交易路',desc:'買い物を終えたら、村への分かれ道まで一緒に。帰りの品を運びながら、夕方の街道を進もう。',tier:1,need:13,seconds:180,gold:100,xp:65,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'道に出てきたスライム',background:'/stages/evening-trade-road.png',escortTarget:'村へ持ち帰る品',availability:'repeatable'},
  {id:TOWN_QUEST,name:'街の配達仕事',kind:'護衛',region:'街の倉庫と商店',desc:'後日の交易を終えると、取引先から小さな配達を頼まれた。荷札と受け取りの控えを確かめ、倉庫から商店へ品を届けよう。',tier:1,need:12,seconds:180,gold:130,xp:65,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/town-deliveries.png',escortTarget:'商店へ届ける荷物',availability:'repeatable'},
+ {id:TOWER_QUEST,name:'丘の塔へ寄り道',kind:'採取',region:'畑と林を抜ける丘の道',desc:'街での仕事を済ませたら、気になっていた塔へ。道端の薬草を採りながら、小さな林と湿った坂道をふたりで進もう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:10,ore:0,unlock:0,enemy:8,enemyName:'林から出てきたスライム',background:'/stages/tower-road.png',gatherTarget:'道端の薬草',availability:'repeatable'},
+ {id:NIGHT_QUEST,name:'苔灯と帰る夜道',kind:'護衛',region:'村々へ続く夜の交易路',desc:'塔で分けてもらった苔を小さな灯りにして、村々への分かれ道へ。普段のランタンも携え、足元を確かめながら帰ろう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'夜道に出てきたスライム',background:'/stages/moss-night-road.png',escortTarget:'苔灯で足元を照らす',escortAsset:'/items/moss-lamp.png',availability:'repeatable'},
  {id:'midnight-snack',name:'その耳はおやつじゃない',kind:'討伐',region:'かぼちゃ灯りの森',desc:'マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。',tier:1,need:48,seconds:180,gold:420,xp:140,herbs:15,ore:15,unlock:5,enemy:12,enemyName:'メリルのつまみ食い行進',background:'/forest.png'},
  {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/ruins.png'},
 ] satisfies Quest[]).sort((a,b)=>a.unlock-b.unlock);
@@ -50,6 +52,7 @@ function standardEncounter(q:Quest,node:number):Encounter{
 }
 export function encounter(q:Quest,node:number):Encounter{
  if(q.id===TOWN_QUEST)return 'escort';
+ if(q.id===NIGHT_QUEST)return (['escort','battle','escort'] as const)[node%3];
  if(q.id===RETURN_QUEST)return (['escort','battle','battle'] as const)[node%3];
  if(q.id===TRADE_QUEST)return (['escort','gather','battle'] as const)[node%3];
  return standardEncounter(q,node);
@@ -132,8 +135,15 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(q.id===TOWN_QUEST)return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
+function quietStageWork(q:Quest,kind:Encounter){return q.id===TOWN_QUEST||[TOWER_QUEST,NIGHT_QUEST].includes(q.id)&&kind!=='battle';}
+function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
+function stageWorkText(q:Quest,kind:Encounter,special:boolean){
+ if(q.id===TOWER_QUEST&&kind==='gather')return special?'葉を見分けて丁寧に採る':'道端の薬草を採る';
+ if(q.id===NIGHT_QUEST&&kind==='escort')return special?'灯りを寄せて道を確かめる':'苔灯で足元を照らす';
+ return null;
+}
 function actorEventText(q:Quest,kind:Encounter,hero:string,special:boolean){
+ const work=stageWorkText(q,kind,special);if(work)return work;
  if(q.id===TOWN_QUEST)return special?'息を合わせて荷運び':'荷札の確認・配達';if(special)return heroSkills[hero].name;return kind==='battle'?'攻撃':'採取・護衛';
 }
 function addActorWard(r:Run,hero:string,special:boolean,at:number){
