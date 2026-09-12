@@ -17,14 +17,14 @@ export function PhaserAdventure({input,onAction}:{input:AdventureInput;onAction:
   if(!host.current)return;
   const active=rendererSession(host.current,{
    read:()=>{const {input,receivedAt}=latest.current;return {...input,now:input.now+Math.max(0,performance.now()-receivedAt)};},
-   act:action=>latest.current.onAction(action),status:setStatus,
+   act:action=> { latest.current.onAction(action); },status:setStatus,
   },async()=>{
    const [{default:Phaser},{createAdventureGame}]=await Promise.all([import('phaser'),import('./phaser/adventure-game')]);
    return (parent,bridge)=>createAdventureGame(parent,bridge,Phaser);
   });
   session.current=active;
   const resize=()=>{if(host.current)active.resize(host.current.clientWidth,host.current.clientHeight);};
-  const visibility=()=>active.setPaused(document.hidden||latest.current.input.paused||!latest.current.input.ready);
+  const visibility=()=> { active.setPaused(document.hidden||latest.current.input.paused||!latest.current.input.ready); };
   const observer=new ResizeObserver(resize);observer.observe(host.current);resize();visibility();
   document.addEventListener('visibilitychange',visibility);
   return()=>{observer.disconnect();document.removeEventListener('visibilitychange',visibility);active.destroy();session.current=null;};
