@@ -52,6 +52,12 @@ test('Halloween quests gate entry, save active runs and complete without recruit
  }
 });
 
+test('Halloween pair banter stays ahead of Chacha generic expedition banter',()=>{
+ const s=initialState(1000);s.owned.push('chacha');s.clears=10;s.squads[0].members=['aria','leon','chacha'];
+ const started=act(s,{type:'start',id:'midnight-snack'},1000),speakers=journeyBanter(started,started.squads[0],1000).map(line=>line.speaker);
+ assert.ok(speakers.includes('merrill'));assert.ok(!speakers.includes('chacha'));
+});
+
 test('nine heroes and all seven prepared arcs roundtrip, while old rosters stay unchanged',()=>{
  const old=initialState(1000);assert.deepEqual(restore(old).owned,['aria','leon']);
  const full=initialState(1000);full.owned=heroes.map(h=>h.id);full.recruitment.prepared=recruitments.map(r=>r.hero);

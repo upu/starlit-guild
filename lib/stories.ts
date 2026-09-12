@@ -85,22 +85,29 @@ export const affection=(s:State)=>Math.min(3,1+Math.floor((s.friendship['aria-le
 export function storyProgress(s:State):StoryProgress {
  return s.story||{departed:Object.keys(s.done).filter(id=>s.done[id]>0&&stories.some(st=>st.quest===id)),completed:Object.keys(s.done).filter(id=>s.done[id]>0&&stories.some(st=>st.quest===id)),read:[]};
 }
+function requirementsMet(s:State,story:Story){return !story.requiresHeroes?.some(id=>!s.owned.includes(id))&&!story.requiresQuests?.some(id=>!(s.done[id]>0));}
+function recruitmentStoryAvailable(s:State,story:Story){
+ const recruitment=recruitments.find(item=>item.hero===story.companion);if(!recruitment)throw Error(`物語「${story.id}」の加入情報が見つかりません。`);
+ if(story.stage==='joined')return s.owned.includes(recruitment.hero);
+ if(story.stage==='prepared')return prepared(s,recruitment.hero);
+ if(story.stage==='progress')return met(s,recruitment)&&(prepared(s,recruitment.hero)||rareProgress(s,recruitment).found>=Math.ceil(recruitment.rare.count/2));
+ return met(s,recruitment);
+}
+function questStoryAvailable(progress:StoryProgress,story:Story){
+ if(!story.quest)throw Error(`物語「${story.id}」の依頼情報が見つかりません。`);
+ return story.chapter==='departure'?progress.departed.includes(story.quest):progress.completed.includes(story.quest);
+}
+function storyAvailable(s:State,progress:StoryProgress,story:Story){
+ if(inPrologue(s)&&!isPrologueQuest(story.quest||''))return false;
+ if(!requirementsMet(s,story))return false;
+ if(story.chapter==='encounter')return s.town>=(story.town||0);
+ if(story.chapter==='recruitment')return recruitmentStoryAvailable(s,story);
+ if(story.chapter==='departure'||story.chapter==='return')return questStoryAvailable(progress,story);
+ return progress.completed.length>0&&affection(s)>=(story.bond||1)&&s.town>=(story.town||0)&&story.lines.every(line=>!line.speaker||s.owned.includes(line.speaker));
+}
 export function availableStories(s:State):Story[]{
  const p=storyProgress(s);
- return stories.filter(st=>{
-  if(inPrologue(s)&&!isPrologueQuest(st.quest||''))return false;
-  if(st.requiresHeroes?.some(id=>!s.owned.includes(id))||st.requiresQuests?.some(id=>!(s.done[id]>0)))return false;
-  if(st.chapter==='encounter')return s.town>=(st.town||0);
-  if(st.chapter==='recruitment'){
-   const r=recruitments.find(r=>r.hero===st.companion);if(!r)throw Error(`物語「${st.id}」の加入情報が見つかりません。`);
-   return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);
-  }
-  if(st.chapter==='departure'||st.chapter==='return'){
-   if(!st.quest)throw Error(`物語「${st.id}」の依頼情報が見つかりません。`);
-   return st.chapter==='departure'?p.departed.includes(st.quest):p.completed.includes(st.quest);
-  }
-  return p.completed.length>0&&affection(s)>=(st.bond||1)&&s.town>=(st.town||0)&&st.lines.every(line=>!line.speaker||s.owned.includes(line.speaker));
- });
+ return stories.filter(story=>storyAvailable(s,p,story));
 }
 export function campStories(s:State):Story[]{
  const home=s.owned.filter(id=>!s.squads.some(sq=>sq.run&&sq.members.includes(id)));
@@ -114,29 +121,79 @@ export function coupleCombo(s:State,variant:number):string[]{
  ];
  return lines[affection(s)-1][variant%2];
 }
+function returnBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [a('荷物、私のほうへ寄せて。少し休もう。'),l('ああ。次の分かれ道までは一緒だ。')];
+ return run.node%3===0?[a('帰りの包み、今度は軽いね。'),l('控えは内側にしまった。あとは村で渡せば終わりだ。')]:[a('また道の真ん中にいる。こんな時間なのに。'),l('荷物は端へ寄せよう。一匹ずつなら通れる。')];
+}
+function townBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [l('箱はここに置こう。手、痛くないか？'),a('平気。でも一息ついたら、持つ側を替えよう。')];
+ if(run.node%3===0)return [a('この荷札、奥の倉庫じゃなくて店先だって。'),l('本当だ。先に確かめておいてよかった。')];
+ return run.node%3===1?[l('次は角の店だ。荷車が通るから、少し待とう。'),a('今日はみんな、同じ時間に運んでるね。')]:[a('受け取りの控え、もらったよ。次の包みは？'),l('これで一区切りだ。荷札と順番を揃えよう。')];
+}
+function tradeBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')];
+ return run.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
+}
+function routeBanter(sq:Squad):StoryLine[]|null{
+ const run=sq.run;if(!run)return null;
+ if(run.quest===RETURN_QUEST)return returnBanter(run);
+ if(run.quest===TOWN_QUEST)return townBanter(run);
+ if(run.quest===TRADE_QUEST)return tradeBanter(run);
+ return null;
+}
+function guestQuestBanter(sq:Squad):StoryLine[]|null{
+ const run=sq.run;if(!run)return null;
+ if(run.quest==='join-chacha')return [{speaker:'chacha',text:'茶器はお願いしますねぇ。岩のほうは、わたしが持ちますから。'}];
+ if(run.quest==='midnight-snack'&&sq.members.includes('poppy'))return [{speaker:'merrill',text:'その薬、味見しようか？'},{speaker:'poppy',text:'瓶ごと食べそうな人には、頼まない！'}];
+ if(run.quest==='puppet-midnight'&&sq.members.includes('finn'))return [{speaker:'pumpety',text:'ポケット、軽くなった？'},{speaker:'finn',text:'うん。代わりに人形のポケットを重くしておいたよ。'}];
+ return null;
+}
+function chachaBanter(sq:Squad):StoryLine[]|null{
+ const run=sq.run;if(!run||run.quest.startsWith('join-')||!sq.members.includes('chacha'))return null;
+ if(sq.members.includes('mira'))return [{speaker:'chacha',text:run.phase==='rest'?'お湯が沸くまで、あと十回だけぇ。':'帰ったら、お茶をご一緒に。今日はわたしが淹れますねぇ。'},{speaker:'mira',text:run.phase==='rest'?'今は座るほうの休憩よ。あなたのカップも用意したわ。':'楽しみにしているわ。茶葉を選ぶ時間も残しておきましょう。'}];
+ if(sq.members.includes('garr'))return [{speaker:'garr',text:'その剣の重さには、まだ慣れないな。'},{speaker:'chacha',text:'では、帰ったら一緒に素振りを。お茶付きですよぉ。'}];
+ return null;
+}
+function genericChachaBanter(sq:Squad):StoryLine[]|null{
+ const run=sq.run;if(!run||run.quest.startsWith('join-')||!sq.members.includes('chacha'))return null;
+ return [{speaker:'chacha',text:run.phase==='rest'?'まず、お茶にしましょうねぇ。筋肉にも休憩が要りますから。':'道がなければ、どかせばいいんですよぉ。せーの。'}];
+}
+function halloweenPairBanter(sq:Squad,now:number):StoryLine[]|null{
+ const run=sq.run;if(!run||!together(sq.members))return null;
+ if(run.quest==='midnight-snack')return Math.floor((now-run.started)/18000)%2?[{speaker:'merrill',text:'一曲踊ったら、お腹が空いちゃった。'},{speaker:'aria',text:'さっき魔物を食べたばかりでしょ！'}]:[{speaker:'merrill',text:'そこの小動物、ひと口だけ……。'},{speaker:'leon',text:'琴を弾いたまま追いかけるな！'}];
+ if(run.quest==='puppet-midnight')return [{speaker:'pumpety',text:'そっちはプティじゃないよ。お人形でしたぁ！'},{speaker:'aria',text:'本物も笑ってるから、場所は分かった。'}];
+ return null;
+}
+function recruitmentBanter(sq:Squad):StoryLine[]{
+ const hero=sq.run?.quest.slice(5);const replies:Partial<Record<string,StoryLine[]>>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return hero?replies[hero]||[]:[];
+}
+function affectionBanter(level:number,variant:number):StoryLine[]{
+ if(level===3)return variant?[a('明日も晴れるかな。'),l('雨でも、約束は覚えてる。')]:[l('疲れてないか？'),a('もう少し歩きたい。レオンと。')];
+ if(level===2)return variant?[a('帰ったら、隣の席取っておいて。'),l('……いつも空けてる。')]:[l('髪に葉っぱ、ついてるぞ。'),a('取って。……そんなにじっと見ないでよ。')];
+ return variant?[a('こっちが近道！ たぶん！'),l('その「たぶん」は何回目だ？')]:[l('少し歩くのが速くないか？'),a('レオンなら追いついてくれるでしょ。')];
+}
+function journeySituationBanter(run:NonNullable<Squad['run']>,level:number,variant:number,now:number):StoryLine[]|null{
+ if(run.phase==='rest'||run.hp<run.maxHp*.3)return level>=2?[a('大丈夫、もう少しなら。'),l('俺が休みたいんだ。……隣、空けてくれ。')]:[l('少し休もう。水、飲めるか？'),a('うん。レオンも、ちゃんと飲んでね。')];
+ if(run.detour&&!run.detour.claimed&&now>=run.detour.at)return variant?[l('また寄り道か？'),a('きれいなものだったら、半分あげる。')]:[a('ねえ、あそこ光ってる！'),l('分かった。……ひとりで走るなよ。')];
+ return null;
+}
+function coupleBanter(s:State,sq:Squad,now:number):StoryLine[]{
+ const run=sq.run,variant=Math.floor(Math.max(0,now-(run?.started||0))/18000)%2,level=affection(s);
+ if(!run)return [a('準備できた？'),l('ああ。アリアを待ってた。')];
+ const situation=journeySituationBanter(run,level,variant,now);if(situation)return situation;
+ if(['pilgrim','wolf','royal'].includes(run.quest))return level>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。')]:[a('霧で、先が見えないね。'),l('声の届くところにいてくれ。')];
+ if(run.quest==='cart')return [a('帰りのパン、覚えてる？'),l('胡桃のやつだろ。忘れないよ。')];
+ if(['crystal','dragon'].includes(run.quest))return [l('灯り、こっちに寄せるぞ。'),a('うん。……このくらい近いと、よく見える。')];
+ return affectionBanter(level,variant);
+}
 export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const r=sq.run;
- if(r?.quest===RETURN_QUEST)return r.phase==='rest'?[a('荷物、私のほうへ寄せて。少し休もう。'),l('ああ。次の分かれ道までは一緒だ。')]:r.node%3===0?[a('帰りの包み、今度は軽いね。'),l('控えは内側にしまった。あとは村で渡せば終わりだ。')]:[a('また道の真ん中にいる。こんな時間なのに。'),l('荷物は端へ寄せよう。一匹ずつなら通れる。')];
- if(r?.quest===TOWN_QUEST)return r.phase==='rest'?[l('箱はここに置こう。手、痛くないか？'),a('平気。でも一息ついたら、持つ側を替えよう。')]:r.node%3===0?[a('この荷札、奥の倉庫じゃなくて店先だって。'),l('本当だ。先に確かめておいてよかった。')]:r.node%3===1?[l('次は角の店だ。荷車が通るから、少し待とう。'),a('今日はみんな、同じ時間に運んでるね。')]:[a('受け取りの控え、もらったよ。次の包みは？'),l('これで一区切りだ。荷札と順番を揃えよう。')];
- if(r?.quest===TRADE_QUEST)return r.phase==='rest'?[l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')]:r.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
- if(r?.quest==='join-chacha')return [{speaker:'chacha',text:'茶器はお願いしますねぇ。岩のほうは、わたしが持ちますから。'}];
- if(r?.quest==='midnight-snack'&&sq.members.includes('poppy'))return [{speaker:'merrill',text:'その薬、味見しようか？'},{speaker:'poppy',text:'瓶ごと食べそうな人には、頼まない！'}];
- if(r?.quest==='puppet-midnight'&&sq.members.includes('finn'))return [{speaker:'pumpety',text:'ポケット、軽くなった？'},{speaker:'finn',text:'うん。代わりに人形のポケットを重くしておいたよ。'}];
- if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha')&&sq.members.includes('mira'))return [{speaker:'chacha',text:r.phase==='rest'?'お湯が沸くまで、あと十回だけぇ。':'帰ったら、お茶をご一緒に。今日はわたしが淹れますねぇ。'},{speaker:'mira',text:r.phase==='rest'?'今は座るほうの休憩よ。あなたのカップも用意したわ。':'楽しみにしているわ。茶葉を選ぶ時間も残しておきましょう。'}];
- if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha')&&sq.members.includes('garr'))return [{speaker:'garr',text:'その剣の重さには、まだ慣れないな。'},{speaker:'chacha',text:'では、帰ったら一緒に素振りを。お茶付きですよぉ。'}];
- if(r&&together(sq.members)&&r.quest==='midnight-snack')return Math.floor((now-r.started)/18000)%2?[{speaker:'merrill',text:'一曲踊ったら、お腹が空いちゃった。'},{speaker:'aria',text:'さっき魔物を食べたばかりでしょ！'}]:[{speaker:'merrill',text:'そこの小動物、ひと口だけ……。'},{speaker:'leon',text:'琴を弾いたまま追いかけるな！'}];
- if(r&&together(sq.members)&&r.quest==='puppet-midnight')return [{speaker:'pumpety',text:'そっちはプティじゃないよ。お人形でしたぁ！'},{speaker:'aria',text:'本物も笑ってるから、場所は分かった。'}];
- if(r&&!r.quest.startsWith('join-')&&sq.members.includes('chacha'))return [{speaker:'chacha',text:r.phase==='rest'?'まず、お茶にしましょうねぇ。筋肉にも休憩が要りますから。':'道がなければ、どかせばいいんですよぉ。せーの。'}];
- if(r?.quest.startsWith('join-')){const hero=r.quest.slice(5);const replies:Partial<Record<string,StoryLine[]>>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return replies[hero]||[];}
+ const route=routeBanter(sq);if(route)return route;
+ const guest=guestQuestBanter(sq);if(guest)return guest;
+ const chacha=chachaBanter(sq);if(chacha)return chacha;
+ const halloween=halloweenPairBanter(sq,now);if(halloween)return halloween;
+ const genericChacha=genericChachaBanter(sq);if(genericChacha)return genericChacha;
+ if(r?.quest.startsWith('join-'))return recruitmentBanter(sq);
  if(!together(sq.members))return [];
- const v=Math.floor(Math.max(0,now-(r?.started||0))/18000)%2,lv=affection(s);
- if(!r)return [a('準備できた？'),l('ああ。アリアを待ってた。')];
- if(r.phase==='rest'||r.hp<r.maxHp*.3)return lv>=2?[a('大丈夫、もう少しなら。'),l('俺が休みたいんだ。……隣、空けてくれ。')]:[l('少し休もう。水、飲めるか？'),a('うん。レオンも、ちゃんと飲んでね。')];
- if(r.detour&&!r.detour.claimed&&now>=r.detour.at)return v?[l('また寄り道か？'),a('きれいなものだったら、半分あげる。')]:[a('ねえ、あそこ光ってる！'),l('分かった。……ひとりで走るなよ。')];
- if(['pilgrim','wolf','royal'].includes(r.quest))return lv>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。')]:[a('霧で、先が見えないね。'),l('声の届くところにいてくれ。')];
- if(r.quest==='cart')return [a('帰りのパン、覚えてる？'),l('胡桃のやつだろ。忘れないよ。')];
- if(['crystal','dragon'].includes(r.quest))return [l('灯り、こっちに寄せるぞ。'),a('うん。……このくらい近いと、よく見える。')];
- if(lv===3)return v?[a('明日も晴れるかな。'),l('雨でも、約束は覚えてる。')]:[l('疲れてないか？'),a('もう少し歩きたい。レオンと。')];
- if(lv===2)return v?[a('帰ったら、隣の席取っておいて。'),l('……いつも空けてる。')]:[l('髪に葉っぱ、ついてるぞ。'),a('取って。……そんなにじっと見ないでよ。')];
- return v?[a('こっちが近道！ たぶん！'),l('その「たぶん」は何回目だ？')]:[l('少し歩くのが速くないか？'),a('レオンなら追いついてくれるでしょ。')];
+ return coupleBanter(s,sq,now);
 }

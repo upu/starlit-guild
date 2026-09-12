@@ -13,13 +13,30 @@ const storyQuest=z.string().refine(v=>quests.some(q=>q.id===v));
 const storyIds=z.array(z.string().refine(v=>stories.some(st=>st.id===v))).max(stories.length).refine(v=>new Set(v).size===v.length);
 const storyQuests=z.array(storyQuest).max(quests.length).refine(v=>new Set(v).size===v.length);
 const storySchema=z.object({departed:storyQuests,completed:storyQuests,read:storyIds}).refine(v=>v.completed.every(q=>v.departed.includes(q)));
-const stateSchema=z.object({version:z.literal(4),prologue:z.boolean().optional(),recruitment:z.object({prepared:z.array(z.string().refine(id=>recruitments.some(r=>r.hero===id))).max(recruitments.length).refine(ids=>new Set(ids).size===ids.length)}).optional(),story:storySchema.optional(),wood:n,town:count.max(2),friendship:keyedNumbers,discoveries:count,gold:n,herbs:n,ore:n,owned:uniqueHeroes,xp:keyedNumbers,gear:count.max(15),camp:count.max(10),clears:count,done:keyedNumbers,claimed:z.array(z.string().max(100)).max(100),lastDaily:z.string().max(10),updatedAt:n,squads:z.array(z.object({id:z.string().regex(/^party-[1-3]$/),name:z.string().min(1).max(40),members:uniqueHeroes,repeat:z.boolean(),run:run.nullable(),lastQuest:z.string().refine(id=>quests.some(q=>q.id===id)).optional()})).min(1).max(3),log:z.array(z.object({text:z.string().max(500),at:n})).max(40),receipts:z.array(z.string().max(100)).max(64)}).superRefine((s,ctx)=>{
-const members=s.squads.flatMap(q=>q.members);
- const missions=s.squads.flatMap(sq=>sq.run?.quest.startsWith('join-')?[sq.run.quest]:[]);
+type ParsedState=z.infer<typeof stateBase>;
+type ParsedSquad=ParsedState['squads'][number];
+function validActors(squad:ParsedSquad){
+ const run=squad.run;if(!run)return true;
+ if(run.actors.length!==squad.members.length)return false;
+ if(new Set(run.actors.map(actor=>actor.hero)).size!==squad.members.length)return false;
+ return run.actors.every(actor=>squad.members.includes(actor.hero)&&(run.phase==='rest'||actor.nextAt>=run.nextAt));
+}
+function validTimeline(squad:ParsedSquad,updatedAt:number){
+ const run=squad.run;if(!run)return true;
+ if(run.node>=run.nodes||run.nextAt<updatedAt)return false;
+ if(run.phase!=='rest'&&run.comboAt<run.nextAt)return false;
+ if(run.phase!=='rest'&&run.detour&&!run.detour.claimed&&run.detour.finishAt<run.nextAt)return false;
+ if(run.phase!=='rest'&&run.enemyAt<run.nextAt)return false;
+ return validActors(squad);
+}
+function validateState(s:ParsedState,ctx:z.RefinementCtx){
+ const members=s.squads.flatMap(squad=>squad.members),missions=s.squads.flatMap(squad=>squad.run?.quest.startsWith('join-')?[squad.run.quest]:[]);
  if(new Set(missions).size!==missions.length||missions.some(id=>!s.recruitment?.prepared.includes(id.slice(5))||s.owned.includes(id.slice(5))))ctx.addIssue({code:'custom',message:'Invalid recruitment expedition'});
- if(new Set(members).size!==members.length||members.some(v=>!s.owned.includes(v))||new Set(s.squads.map(q=>q.id)).size!==s.squads.length)ctx.addIssue({code:'custom',message:'Invalid party'});
- for(const sq of s.squads){const r=sq.run;if(r&&(r.node>=r.nodes||r.nextAt<s.updatedAt||r.phase!=='rest'&&(r.comboAt<r.nextAt||!!r.detour&&!r.detour.claimed&&r.detour.finishAt<r.nextAt)||r.actors.length!==sq.members.length||new Set(r.actors.map(a=>a.hero)).size!==sq.members.length||r.actors.some(a=>!sq.members.includes(a.hero)||r.phase!=='rest'&&a.nextAt<r.nextAt)||r.enemyAt<r.nextAt&&r.phase!=='rest'))ctx.addIssue({code:'custom',message:'Invalid timeline'});}
-});
+ if(new Set(members).size!==members.length||members.some(member=>!s.owned.includes(member))||new Set(s.squads.map(squad=>squad.id)).size!==s.squads.length)ctx.addIssue({code:'custom',message:'Invalid party'});
+ if(s.squads.some(squad=>!validTimeline(squad,s.updatedAt)))ctx.addIssue({code:'custom',message:'Invalid timeline'});
+}
+const stateBase=z.object({version:z.literal(4),prologue:z.boolean().optional(),recruitment:z.object({prepared:z.array(z.string().refine(id=>recruitments.some(r=>r.hero===id))).max(recruitments.length).refine(ids=>new Set(ids).size===ids.length)}).optional(),story:storySchema.optional(),wood:n,town:count.max(2),friendship:keyedNumbers,discoveries:count,gold:n,herbs:n,ore:n,owned:uniqueHeroes,xp:keyedNumbers,gear:count.max(15),camp:count.max(10),clears:count,done:keyedNumbers,claimed:z.array(z.string().max(100)).max(100),lastDaily:z.string().max(10),updatedAt:n,squads:z.array(z.object({id:z.string().regex(/^party-[1-3]$/),name:z.string().min(1).max(40),members:uniqueHeroes,repeat:z.boolean(),run:run.nullable(),lastQuest:z.string().refine(id=>quests.some(q=>q.id===id)).optional()})).min(1).max(3),log:z.array(z.object({text:z.string().max(500),at:n})).max(40),receipts:z.array(z.string().max(100)).max(64)});
+const stateSchema=stateBase.superRefine(validateState);
 export type Profile={id:string;name:string;test:boolean;state:State};
 export type SaveBundle={format:4;deviceId:string;active:string;profiles:Profile[];serial:number;sound:boolean;cloudAt:number;legacyImported:boolean};
 export const bundleSchema=z.object({format:z.literal(4),deviceId:id,active:id,profiles:z.array(z.object({id,name:z.string().min(1).max(50),test:z.boolean(),state:stateSchema})).min(1).max(12),serial:count,sound:z.boolean(),cloudAt:n,legacyImported:z.boolean()}).refine(b=>new Set(b.profiles.map(p=>p.id)).size===b.profiles.length&&b.profiles.some(p=>p.id===b.active));

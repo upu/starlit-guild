@@ -9,6 +9,37 @@ export type Point={x:number;y:number};
 export type AdventureIntent='help'|'heal'|'detour';
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
 export const spriteAsset=(index:number)=>originalArt(index)||'/sprites.png';
+type ActiveRun=NonNullable<Squad['run']>;
+function recentEvents(run:ActiveRun|null,now:number){return run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];}
+function memberTarget(role:string,index:number){const front=['melee','tank','rogue'].includes(role);return {x:Math.min(.57,.20+index*.09+(front?.18:0)),y:.61+(index%2)*.09};}
+function memberPosition(squad:Squad,run:ActiveRun|null,target:Point,id:string,index:number,now:number){
+ const progress=run?clamp((now-run.phaseAt)/travelMs(id)):1;
+ const x=run?target.x-.17*(1-progress):squad.members.length===1?.5:.30+index*.40/Math.max(1,squad.members.length-1);
+ const y=run?target.y+.08*(1-progress):.65+(index%2)*.03;
+ return {x,y};
+}
+function explorationPosition(input:AdventureInput,run:ActiveRun|null,id:string,now:number,position:Point){
+ const detour=input.detours===false?null:run?.detour;
+ if(!run||!detour||detour.hero!==id||detour.node!==run.node||detour.claimed||now<detour.at||run.phase==='rest')return {...position,exploring:false};
+ const t=clamp((now-detour.at)/1400);return {x:position.x+(.54-position.x)*t,y:position.y+(.82-position.y)*t,exploring:true};
+}
+function adventureMember(input:AdventureInput,run:ActiveRun|null,events:GameEvent[],now:number,id:string,index:number){
+ const hero=heroes.find(h=>h.id===id),skill=heroSkills[id];if(!hero)throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
+ const actor=run?.actors.find(a=>a.hero===id),lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst'].includes(e.kind)).at(-1);
+ const age=lastHit?now-lastHit.at:Infinity,attack=age<650?Math.sin(age/650*Math.PI):0,target=memberTarget(skill.style,index);
+ const position=explorationPosition(input,run,id,now,memberPosition(input.squad,run,target,id,index,now));
+ return {id,name:hero.name,sprite:hero.sprite,role:skill.style,x:position.x,y:position.y,walking:!!run&&run.phase!=='rest'&&now<(actor?.arrivesAt||0),exploring:position.exploring,attack:position.exploring?0:attack,hit:lastHit};
+}
+function frameDiscovery(input:AdventureInput,run:ActiveRun|null,now:number){
+ const detour=input.detours===false?null:run?.detour;
+ return detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
+}
+function frameCutin(run:ActiveRun|null,now:number){return run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;}
+function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
+ if(!run)return null;
+ const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
+ return {x:.80,y:.61,sprite:targetSprite,asset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+}
 
 // Presentation is a read-only projection. Only lib/game advances time or awards loot.
 export function adventureFrame(input:AdventureInput,now=input.now){
@@ -16,31 +47,8 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const quest=allQuests.find(q=>q.id===(run?.quest||input.startQuest))||allQuests[0];
  const kind=run?encounter(quest,run.node):null;
  const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
- const events=run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];
- const members=squad.members.map((id,i)=>{
-  const hero=heroes.find(h=>h.id===id),skill=heroSkills[id];
-  if(!hero)throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
-  const role=skill.style;
-  const actor=run?.actors.find(a=>a.hero===id);
-  const lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst'].includes(e.kind)).at(-1);
-  const age=lastHit?now-lastHit.at:Infinity;
-  const attack=age<650?Math.sin(age/650*Math.PI):0;
-  const front=['melee','tank','rogue'].includes(role);
-  const target={x:Math.min(.57,.20+i*.09+(front?.18:0)),y:.61+(i%2)*.09};
-  const walking=!!run&&run.phase!=='rest'&&now<(actor?.arrivesAt||0);
-  const progress=run?clamp((now-run.phaseAt)/travelMs(id)):1;
-  let x=run?target.x-.17*(1-progress):squad.members.length===1?.5:.30+i*.40/Math.max(1,squad.members.length-1);
-  let y=run?target.y+.08*(1-progress):.65+(i%2)*.03;
-  const detour=input.detours===false?null:run?.detour;
-  let exploring=false;
-  if(run&&detour&&detour.hero===id&&detour.node===run.node&&!detour.claimed&&now>=detour.at&&run.phase!=='rest'){exploring=true;const t=clamp((now-detour.at)/1400);x+=(.54-x)*t;y+=(.82-y)*t;}
-  return {id,name:hero.name,sprite:hero.sprite,role,x,y,walking,exploring,attack:exploring?0:attack,hit:lastHit};
- });
- const detour=input.detours===false?null:run?.detour;
- const discovery=detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
- const cutin=run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;
- const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- const target=run?{x:.80,y:.61,sprite:targetSprite,asset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind}:null;
+ const events=recentEvents(run,now),members=squad.members.map((id,index)=>adventureMember(input,run,events,now,id,index));
+ const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),target=frameTarget(quest,run,kind);
  return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,hp:run?clamp(run.hp/run.maxHp):1,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
@@ -48,14 +56,15 @@ export type AdventureFrame=ReturnType<typeof adventureFrame>;
 export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=input.now):Action|null{
  const run=input.squad.run;
  if(!input.ready||input.paused||!run)return null;
- if(intent==='detour'){
-  if(input.detours===false)return null;
-  const d=run.detour;
-  return d&&d.node===run.node&&!d.claimed&&now>=d.at&&run.phase!=='rest'?{type:'detour',squad:input.squad.id}:null;
- }
+ if(intent==='detour')return detourAction(input,run,now);
  const mode=intent==='heal'||run.phase==='rest'?'heal':'strike';
  if(mode==='heal'&&run.hp>=run.maxHp&&run.phase!=='rest')return null;
  return {type:'assist',squad:input.squad.id,mode};
+}
+function detourAction(input:AdventureInput,run:ActiveRun,now:number):Action|null{
+ if(input.detours===false)return null;
+ const detour=run.detour;if(!detour||detour.node!==run.node||detour.claimed||now<detour.at||run.phase==='rest')return null;
+ return {type:'detour',squad:input.squad.id};
 }
 
 export function adventureAssets(frame:AdventureFrame){

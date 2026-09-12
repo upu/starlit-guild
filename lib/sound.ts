@@ -39,34 +39,46 @@ export function soundEvents(events:GameEvent[]){
  const event=events.reduce<GameEvent|undefined>((best,e)=>(priorities[e.kind]||0)>(best?priorities[best.kind]||0:0)?e:best,undefined);
  if(event)sound(event.kind,false,event.hero);
 }
+function reserveCue(kind:string,manual:boolean,now:number){
+ const accent=['burst','combo','discovery','clear'].includes(kind);
+ if(accent&&now-lastAccent<.5)return null;
+ if(!accent&&(now<quietUntil||now-last<(manual?.07:.12)))return null;
+ if(accent){lastAccent=now;quietUntil=now+(kind==='burst'?.85:.4);}
+ last=now;return accent;
+}
+function accentNotes(kind:string){
+ if(kind==='burst')return [262,392,523,659,784,1047];
+ if(kind==='combo')return [392,494,587,784];
+ if(kind==='discovery')return [784,988,1319];
+ return [523,659,784,1047];
+}
+function playAccent(kind:string,now:number){
+ accentNotes(kind).forEach((note,index)=>{tone(note,now+index*.085,.38,.085,'sine');tone(note*2,now+index*.085,.25,.022,'triangle');});
+ if(kind==='burst'){whoosh(now+.24,800,.35,.16);tone(110,now+.3,.38,.12,'triangle',45);}
+}
+function playMagic(kind:string,now:number,volume:number){
+ tone(330,now,.2,volume,'sine',880);tone(1320,now+.12,.28,volume*.6);if(kind==='skill')tone(110,now+.15,.28,.09,'triangle',55);
+}
+function playBow(kind:string,now:number){
+ whoosh(now,2600,.16,.11);tone(700,now,.07,.07,'triangle',180);tone(180,now+.14,.09,.055,'triangle',70);
+ if(kind==='skill'){whoosh(now+.13,3000,.16,.1);tone(210,now+.27,.08,.05,'triangle',70);}
+}
+const healingCue=(kind:string,role:string)=>kind==='heal'||role==='heal';
+const gatheringCue=(kind:string,role:string)=>kind==='gather'||role==='gather';
+const guardingCue=(kind:string,role:string)=>kind==='skill'&&(role==='shield'||role==='song');
+const magicCue=(role:string)=>role==='magic'||role==='song';
+function playRoleCue(kind:string,role:string,now:number,volume:number){
+ if(healingCue(kind,role)){[523,659,880].forEach((note,index)=> { tone(note,now+index*.065,.3,.06); });return;}
+ if(kind==='hurt'){whoosh(now,250,.14,.12);tone(100,now,.18,.11,'triangle',38);return;}
+ if(gatheringCue(kind,role)){tone(1175,now,.13,volume);tone(1568,now+.05,.17,volume*.45);return;}
+ if(guardingCue(kind,role)){[330,495,660].forEach((note,index)=> { tone(note,now+index*.035,.32,.06,role==='shield'?'triangle':'sine'); });return;}
+ if(magicCue(role)){playMagic(kind,now,volume);return;}
+ if(role==='bow'){playBow(kind,now);return;}
+ whoosh(now,role==='rogue'?3200:1700,kind==='skill'?.23:.13,volume*1.3);tone(kind==='skill'?210:150,now+.025,.14,volume,'triangle',45);if(kind==='skill')tone(880,now+.045,.15,.04,'sine',440);
+}
 export function sound(kind:string,manual=false,hero?:string){
  if(!enabled||!context||!master||context.state!=='running')return;
- const now=context.currentTime,accent=['burst','combo','discovery','clear'].includes(kind);
- if(accent){if(now-lastAccent<.5)return;lastAccent=now;quietUntil=now+(kind==='burst'?.85:.4);}
- else if(now<quietUntil||now-last<(manual?.07:.12))return;
- last=now;
- const volume=manual?.12:.085,role=hero?roles[hero]:'sword';
- if(accent){
-  const notes=kind==='burst'?[262,392,523,659,784,1047]:kind==='combo'?[392,494,587,784]:kind==='discovery'?[784,988,1319]:[523,659,784,1047];
-  notes.forEach((n,i)=>{tone(n,now+i*.085,.38,.085,'sine');tone(n*2,now+i*.085,.25,.022,'triangle');});
-  if(kind==='burst'){whoosh(now+.24,800,.35,.16);tone(110,now+.3,.38,.12,'triangle',45);}return;
- }
- if(kind==='heal'||role==='heal'){
-  [523,659,880].forEach((n,i)=> { tone(n,now+i*.065,.3,.06); });return;
- }
- if(kind==='hurt'){whoosh(now,250,.14,.12);tone(100,now,.18,.11,'triangle',38);return;}
- if(kind==='gather'||role==='gather'){tone(1175,now,.13,volume);tone(1568,now+.05,.17,volume*.45);return;}
- if(kind==='skill'&&(role==='shield'||role==='song')){
-  [330,495,660].forEach((n,i)=> { tone(n,now+i*.035,.32,.06,role==='shield'?'triangle':'sine'); });return;
- }
- if(role==='magic'||role==='song'){
-  tone(330,now,.2,volume,'sine',880);tone(1320,now+.12,.28,volume*.6);if(kind==='skill')tone(110,now+.15,.28,.09,'triangle',55);return;
- }
- if(role==='bow'){
-  whoosh(now,2600,.16,.11);tone(700,now,.07,.07,'triangle',180);tone(180,now+.14,.09,.055,'triangle',70);
-  if(kind==='skill'){whoosh(now+.13,3000,.16,.1);tone(210,now+.27,.08,.05,'triangle',70);}return;
- }
- whoosh(now,role==='rogue'?3200:1700,kind==='skill'?.23:.13,volume*1.3);
- tone(kind==='skill'?210:150,now+.025,.14,volume,'triangle',45);
- if(kind==='skill')tone(880,now+.045,.15,.04,'sine',440);
+ const now=context.currentTime,accent=reserveCue(kind,manual,now);if(accent===null)return;
+ if(accent){playAccent(kind,now);return;}
+ playRoleCue(kind,hero?roles[hero]:'sword',now,manual?.12:.085);
 }
