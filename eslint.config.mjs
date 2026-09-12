@@ -67,6 +67,7 @@ const eslintConfig = defineConfig([
     ".open-next/**",
     ".wrangler/**",
     ".worktrees/**",
+    "work/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
