@@ -20,7 +20,7 @@ function harness(overrides={},{withArt=false,selection=null}={}){
  };
  const jsx=(type,props,key)=>({type,props,key});
  const modules={
-  react,'react/jsx-runtime':{jsx,jsxs:jsx},'lucide-react':{BookOpen:'icon',ChevronRight:'icon'},
+  react,'react/jsx-runtime':{jsx,jsxs:jsx},'next/image':{default:'img'},'lucide-react':{BookOpen:'icon',ChevronRight:'icon'},
   './portrait':{Portrait:'portrait'},'@/lib/game':{heroes:[],allQuests:[]},
   '@/lib/original-characters':{originalCharacters:[]},'@/lib/prologue':{prologueStages:[]},
   '@/lib/stories':{},'@/lib/story-art':{storyArtAt:()=>withArt?fixtureArt:null},

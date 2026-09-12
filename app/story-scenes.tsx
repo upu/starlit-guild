@@ -1,5 +1,6 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
+import Image from 'next/image';
 import {BookOpen,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {Portrait} from './portrait';
@@ -11,7 +12,7 @@ import {storyArtAt,type StoryArt} from '@/lib/story-art';
 const characters=[...heroes,...originalCharacters.filter(c=>!heroes.some(h=>h.id===c.id))];
 
 export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;onClose:()=>void}){
- return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" showCloseButton={false}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">画像や余白をタップすると元の画面に戻ります。</DialogDescription></DialogHeader><button type="button" className="art-canvas" onClick={onClose} aria-label="鑑賞を終えて戻る">{art&&<img src={art.src} alt={art.alt} width={art.width} height={art.height}/>}</button><button type="button" className="art-return" onClick={onClose}>戻る</button></DialogContent></Dialog>;
+ return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" showCloseButton={false}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">画像や余白をタップすると元の画面に戻ります。</DialogDescription></DialogHeader><button type="button" className="art-canvas" onClick={onClose} aria-label="鑑賞を終えて戻る">{art&&<Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/>}</button><button type="button" className="art-return" onClick={onClose}>戻る</button></DialogContent></Dialog>;
 }
 
 export function StoryLines({lines,startIndex=0}:{lines:StoryLine[];startIndex?:number}){
@@ -33,7 +34,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
   if(onRead())onClose();else finishing.current=false;
  }
  return <div className={'story-reader'+(art?' story-reader-art':'')}>
-  {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></button></figure>}
+  {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/></button></figure>}
   <div className="story-conversation" role="button" tabIndex={0} aria-label={advanceLabel} aria-disabled={last&&!ready}
    onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY,scrollTop:dialogue.current?.scrollTop||0,moved:false};}}
    onPointerMove={event=>{const start=gesture.current;if(start&&(Math.abs(event.clientX-start.x)>8||Math.abs(event.clientY-start.y)>8))start.moved=true;}}
@@ -70,7 +71,7 @@ export function StoryAlbum({state:s,onBack}:{state:State;onBack:()=>void}){
  // Preserve reveal rules; only mount gallery images inside the album.
  const gallery=availableStories(s).flatMap(st=>{const art=storyArtAt(st.id,read.includes(st.id)?Infinity:0);return art?[{story:st,art}]:[];});
  return <section className="story-album"><button className="outline" onClick={onBack}>旅の手帳へ戻る</button>
-  {gallery.length?<div className="still-gallery">{gallery.map(({story:st,art})=><button key={st.id} onClick={()=> { setViewing(st); }} aria-label={st.title+'の絵を大きく見る'}><img src={art.src} alt={art.alt} width={art.width} height={art.height} loading="lazy"/><span>{st.title}</span></button>)}</div>:<p>物語で出会った絵が、ここに残ります。</p>}
+  {gallery.length?<div className="still-gallery">{gallery.map(({story:st,art})=><button key={st.id} onClick={()=> { setViewing(st); }} aria-label={st.title+'の絵を大きく見る'}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="lazy" unoptimized/><span>{st.title}</span></button>)}</div>:<p>物語で出会った絵が、ここに残ります。</p>}
   <ArtViewer art={viewing?storyArtAt(viewing.id,Infinity)||null:null} title={viewing?.title||'アルバム'} onClose={()=> { setViewing(null); }}/>
  </section>;
 }
