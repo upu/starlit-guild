@@ -38,7 +38,7 @@ function frameCutin(run:ActiveRun|null,now:number){return run?.scene&&now>=run.s
 function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  if(!run)return null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- return {x:.80,y:.61,sprite:targetSprite,asset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+ return {x:.80,y:.61,sprite:targetSprite,asset:kind==='escort'&&quest.escortAsset?quest.escortAsset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
 }
 
 // Presentation is a read-only projection. Only lib/game advances time or awards loot.

@@ -2,7 +2,7 @@ import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
 import {madHalloweenStories} from './mad-halloween-stories.ts';
-import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,isPrologueQuest} from './prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 
@@ -134,8 +134,22 @@ function tradeBanter(run:NonNullable<Squad['run']>):StoryLine[]{
  if(run.phase==='rest')return [l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')];
  return run.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
 }
+function towerBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [a('この石なら乾いてる。座ろう、レオン。'),l('助かる。水を飲んでから行こう。')];
+ if(run.node<5)return [a('畑の向こうまで来ると、街の声が遠いね。'),l('あの林の先から登りになる。今のうちに紐を締めておこう。')];
+ if(run.node<10)return [a('木陰の薬草、葉がきれい。少し採っていこう。'),l('入れ物を出す。俺は道のほうを見てるよ。')];
+ return [l('坂の端はぬかるんでるな。真ん中を通ろう。'),a('あの石のところは乾いてるよ。塔も近くに見えてきた。')];
+}
+function nightBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [l('灯りを置くぞ。少し休もう。'),a('うん。入れ物は、こっちの平らなところに。')];
+ if(run.node<5)return [a('小石の影まで見える。苔だけで、こんなに照らせるんだね。'),l('入れ物が揺れないように持っていこう。')];
+ if(run.node<10)return [l('草が動いた。灯りはここへ置いて、少し離れよう。'),a('うん。通り道を確かめてからね。')];
+ return [a('そろそろ分かれ道だね。苔灯、持つの替わろうか？'),l('ああ。包みは俺が持つから、両手を空けて。')];
+}
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ if(run.quest===TOWER_QUEST)return towerBanter(run);
+ if(run.quest===NIGHT_QUEST)return nightBanter(run);
  if(run.quest===RETURN_QUEST)return returnBanter(run);
  if(run.quest===TOWN_QUEST)return townBanter(run);
  if(run.quest===TRADE_QUEST)return tradeBanter(run);

@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialPrologueState,initialState,act,settle,availableQuests,allQuests,encounter} from '../lib/game.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {parseBundle} from '../lib/save-format.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
@@ -14,7 +14,7 @@ const finish=s=>settle(s,s.updatedAt+13*3600000).state;
 const read=(s,id)=>act(s,{type:'readStory',id:id+'-return'},s.updatedAt);
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'段階確認',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}
 
-test('1-1 → 1-2 → 1-3 requires each ending, stops offline and roundtrips without extra rewards',()=>{
+test('1-1 through 1-5 requires each ending, stops offline and roundtrips without extra rewards',()=>{
  let s=initialPrologueState(1000);
  for(const [i,stage] of prologueStages.entries()){
   assert.equal(nextGoal(s).questId,stage.quest);
@@ -31,16 +31,17 @@ test('1-1 → 1-2 → 1-3 requires each ending, stops offline and roundtrips wit
   assert.deepEqual(read(s,stage.quest),s);assert.equal(stageEndingPending(s),undefined);
  }
  assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);assert.equal(s.prologue,true);
- assert.equal(availableStories(s).length,6);
+ assert.equal(availableStories(s).length,10);
+ assert.equal(nextGoal(s).questId,NIGHT_QUEST);assert.match(nextGoal(s).detail,/森で苔/);
  assert.throws(()=>start(s,'herbs'));assert.throws(()=>act(s,{type:'build'},s.updatedAt));
  const replay=finish(start(s,RETURN_QUEST));assert.equal(replay.done[RETURN_QUEST],2);
  assert.equal(stageEndingPending(replay),undefined);assert.deepEqual(replay.story,s.story);
 });
 
 test('interruption and reload preserve progress without unlocking later stages',()=>{
- for(const id of [RETURN_QUEST,TOWN_QUEST]){
-  let s=read(finish(start(initialPrologueState(1000),TRADE_QUEST)),TRADE_QUEST);
-  if(id===TOWN_QUEST)s=read(finish(start(s,RETURN_QUEST)),RETURN_QUEST);
+ for(const id of [RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST]){
+  let s=initialPrologueState(1000);
+  for(const stage of prologueStages.slice(0,prologueStages.findIndex(stage=>stage.quest===id)))s=read(finish(start(s,stage.quest)),stage.quest);
   s=start(s,id);while(s.squads[0].run.node<3)s=settle(s,s.squads[0].run.nextAt).state;
   const saved=roundtrip(s),resumed=finish(saved);assert.equal(resumed.done[id],1);
   const stopped=roundtrip(act(saved,{type:'stop'},saved.updatedAt));
@@ -62,10 +63,51 @@ test('existing prologue trades unlock the return route; established saves retain
  assert.ok(act(restored,{type:'party',members:['aria']},1000));
 });
 
+test('a saved 1-3 ending unlocks 1-4 only after reading, without changing old resources or history',()=>{
+ let s=initialPrologueState(1000);
+ for(const id of [TRADE_QUEST,RETURN_QUEST])s=read(finish(start(s,id)),id);
+ s=roundtrip(finish(start(s,TOWN_QUEST)));
+ assert.ok(!availableQuests(s).some(q=>q.id===TOWER_QUEST));
+ assert.throws(()=>start(s,TOWER_QUEST),/まだ/);
+ const snapshot=structuredClone(s);s=roundtrip(read(s,TOWN_QUEST));
+ for(const key of ['gold','xp','done','herbs','ore','wood','owned','clears'])assert.deepEqual(s[key],snapshot[key]);
+ assert.equal(nextGoal(s).questId,TOWER_QUEST);
+ assert.ok(!availableQuests(s).some(q=>q.id===NIGHT_QUEST));
+ assert.equal(start(s,TOWER_QUEST).squads[0].run.quest,TOWER_QUEST);
+});
+
+test('tower gathering and night lamp work keep small battles, appropriate assets and noncombat poses',()=>{
+ let s=initialPrologueState(1000);
+ for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST])s=read(finish(start(s,id)),id);
+ for(const id of [TOWER_QUEST,NIGHT_QUEST]){
+  const q=allQuests.find(q=>q.id===id),kinds=Array.from({length:15},(_,node)=>encounter(q,node));
+  assert.equal(kinds.filter(k=>k==='battle').length,5);assert.equal(q.enemy,8);
+  assert.equal(kinds.filter(k=>k===(id===TOWER_QUEST?'gather':'escort')).length,10);
+  s=start(s,id);let damaged=false,worked=false;
+  while(s.squads[0].run){
+   const run=s.squads[0].run,frame=adventureFrame({squad:s.squads[0],now:s.updatedAt,ready:true,paused:false,startQuest:id});
+   assert.equal(frame.background,q.background);assert.ok(existsSync(new URL('../public'+frame.background,import.meta.url)));
+   assert.deepEqual(frame.members.map(m=>m.id),['aria','leon']);assert.equal(run.detour,null);
+   assert.ok(journeyBanter(s,s.squads[0],s.updatedAt).every(line=>['aria','leon'].includes(line.speaker)));
+   if(run.hp<run.maxHp)damaged=true;
+   if(frame.target.kind!=='battle'){
+    if(id===NIGHT_QUEST){assert.equal(frame.target.asset,'/items/moss-lamp.png');assert.ok(existsSync(new URL('../public'+frame.target.asset,import.meta.url)));}
+    for(const member of frame.members){
+     if(member.hit){worked=true;assert.equal(member.hit.kind,'gather');}
+     assert.ok(![4,5,6,7].includes(Number(heroAnimation(member,frame,s.updatedAt).frame)));
+    }
+   }
+   s=settle(s,run.nextAt).state;
+  }
+  assert.ok(worked);assert.ok(damaged,'the moss lamp does not ward off monsters');
+  s=read(s,id);
+ }
+});
+
 test('idle scenery follows the last actual departure across completion, replay, interruption and reload',()=>{
  let s=initialPrologueState(1000);
  assert.equal(restingQuest(s,s.squads[0]),TRADE_QUEST);
- for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TRADE_QUEST]){
+ for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,TRADE_QUEST]){
   s=roundtrip(start(s,id));assert.equal(s.squads[0].lastQuest,id);
   s=roundtrip(read(finish(s),id));assert.equal(restingQuest(s,s.squads[0]),id);
  }
