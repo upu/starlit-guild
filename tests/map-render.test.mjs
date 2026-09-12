@@ -41,7 +41,7 @@ test('prologue screen guides to quests, hides advanced navigation and uses one b
  const fresh=initialPrologueState(1000),html=render(fresh);
  assert.match(html,/ここから/);
  assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエスト<|>クエストを選ぶ<|何度でも/);
- assert.match(html,/aria-label="旅の手帳：思い出・ヒント・設定"/);
+ assert.match(html,/aria-label="旅の手帳：ヒント・思い出・アルバム・設定"/);
  assert.doesNotMatch(html,/はじまりの隊|団長の応援|>編成<|>帰還<|>パーティ<|>拠点<|>思い出<|>出発する</);
  const running=render(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000));
  assert.match(running,/探索マップ/);assert.doesNotMatch(running,/phaser-assist-controls|>手助けする<|>回復<|>寄り道</);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);

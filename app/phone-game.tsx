@@ -1,6 +1,6 @@
 'use client';
 import {useState,type ReactNode} from 'react';
-import {Coins,Leaf,Gem,Logs,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb} from 'lucide-react';
+import {Coins,Leaf,Gem,Logs,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {AlertDialog,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogCancel,AlertDialogAction} from '@/components/ui/alert-dialog';
@@ -14,7 +14,7 @@ import {useJourneyHints} from './use-journey-hints';
 import {MapStage} from './map-stage';
 import {GuildHome} from './guild-home';
 import {RecruitmentBoard,RareInventory} from './recruitment-board';
-import {Banter,StoryLibrary,ConversationReader,StoryReader} from './story-scenes';
+import {Banter,StoryLibrary,StoryAlbum,ConversationReader,StoryReader} from './story-scenes';
 import {availableStories,characterNotes,journeyBanter,stories,storyProgress,together,type Story,type StoryLine} from '@/lib/stories';
 import {Sprite} from './sprite';
 import {InstallGuide,useInstallPrompt} from './install-guide';
@@ -24,7 +24,7 @@ import type {useLocalGame} from './use-local-game';
 import {inPrologue,TRADE_QUEST,isPrologueQuest,stageEndingPending,restingQuest} from '@/lib/prologue';
 import {heroes,availableQuests,allQuests,heroSkills,memberStats,activeBonds,bondLevel} from '@/lib/game';
 type Game=ReturnType<typeof useLocalGame>;
-type Sheet='book'|'quests'|'party'|'bag'|'journal'|'build'|'upgrade'|'gift'|'recruit'|'help'|'goal'|'preview'|'advice'|'install'|'stories'|'story'|'banter'|'personality'|null;
+type Sheet='book'|'quests'|'party'|'bag'|'journal'|'build'|'upgrade'|'gift'|'recruit'|'help'|'goal'|'preview'|'advice'|'install'|'stories'|'album'|'story'|'banter'|'personality'|null;
 const fmt=(n:number)=>Math.floor(n).toLocaleString('ja-JP');
 const compact=(n:number)=>n<10000?fmt(n):(n/10000).toFixed(n<100000?1:0)+'万';
 export function PhoneGame({game}:{game:Game}){
@@ -64,7 +64,8 @@ export function PhoneGame({game}:{game:Game}){
  function finishStory(){if(!reading)return false;const ok=pendingDeparture?dispatch({...pendingDeparture,readDeparture:true}):dispatch({type:'readStory',id:reading.id});if(ok)setPendingDeparture(null);return ok;}
  function closeStory(){setPendingDeparture(null);setSheet(reading?.chapter==='recruitment'?'recruit':null);}
  let title='',description='',content:ReactNode=null;
- if(sheet==='book'){title='旅の手帳';description='旅の記録と、手助けのヒント。';content=<div className="handbook-menu">{(!prologue||!!s.done[TRADE_QUEST])&&<button className="outline" onClick={()=> { setSheet('stories'); }}><BookOpen size={20}/><span>思い出{unread>0&&` · 未読 ${unread}`}</span><ChevronRight size={16}/></button>}<button className="outline" onClick={()=>{hints.markRead();setSheet('goal');}}><Lightbulb size={20}/><span>ヒント</span><ChevronRight size={16}/></button><SavePanel game={game} music={music}/></div>;}
+ if(sheet==='book'){title='旅の手帳';description='旅の記録と、手助けのヒント。';content=<div className="handbook-menu"><button className="outline" onClick={()=>{hints.markRead();setSheet('goal');}}><Lightbulb size={20}/><span>ヒント</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { setSheet('stories'); }}><BookOpen size={20}/><span>思い出{unread>0&&` · 未読 ${unread}`}</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { setSheet('album'); }}><Images size={20}/><span>アルバム</span><ChevronRight size={16}/></button><SavePanel game={game} music={music}/></div>;}
+ if(sheet==='album'){title='アルバム';description='旅で出会った景色を眺める';content=<StoryAlbum state={s} onBack={()=> { setSheet('book'); }}/>;}
  if(sheet==='stories'){title='旅の思い出';description='出会いも、冒険も、帰ってきた日のことも。';content=<><button className="outline" onClick={()=> { setSheet('journal'); }}>旅の記録</button><StoryLibrary state={s} onOpen={openStory}/></>;}
  if(sheet==='story'&&reading){title=reading.title;description=reading.place;content=<StoryReader key={reading.id} story={reading} ready={ready} onRead={finishStory} departure={!!pendingDeparture} onClose={closeStory}/>;}
  if(sheet==='banter'){title=activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中';description=activeQuest?.name||'次の冒険を待ちながら';content=<ConversationReader lines={banterSnapshot} onClose={()=> { setSheet(null); }}/>;}
@@ -83,7 +84,7 @@ export function PhoneGame({game}:{game:Game}){
  if(sheet==='gift'){title='ギルドの差し入れ';description='毎朝9時に届く、旅の応援です。';const claimed=s.lastDaily===new Date(clock||0).toISOString().slice(0,10);content=<><Gift className="gift-art"/><p>80 G と薬草 5 個</p><button disabled={!ready||claimed||s.clears<3} onClick={()=>act({type:'daily'})}>{claimed?'受取済み':s.clears<3?'3件達成で解放':'受け取る'}</button></>;}
  if(sheet==='recruit'){title='仲間になるまで';description='旅を重ねてつながる、新しい出会い。';content=<RecruitmentBoard state={s} squad={sq} ready={ready} onAction={act} onStory={openStory} onGather={id=> { openQuests(id); }} onWatch={id=>{setSquad(id);setView('adventure');setSheet(null);}}/>;}
  if(sheet==='help'){title='旅の手引き';description='見守るだけでも、手助けしても。';content=<><p>マップの空いているところや敵・素材をタップすると手助け、仲間やHP表示をタップするとパーティを回復できます。HPは隊全体で共有し、先頭の仲間の足元に表示します。休憩中はマップのどこでも回復できます。{!prologue&&'応援が100になると、全員の必殺技が発動！ '}タップでの手助けに回数制限はありません。</p>{!prologue&&<p>光る寄り道をタップすると、仲間が優先して調べます。放置でも自動で回収します。</p>}<p>1周は15地点。3地点ごとに報酬を確保します。行き先は巻物の「クエスト」から選べます。{!prologue&&'帰還は隊の名前の横、編成は「パーティ」から操作できます。'}</p><p>進行は端末に保存し、開いている間は約5分ごとにクラウドへバックアップします。画面を閉じた後は、次に開いたときに最大12時間分を集計します。</p><button className="outline full" onClick={()=> { setSheet('install'); }}>ホーム画面に追加</button></>;}
- return <main className={'phone-game'+(prologue?' prologue-game':'')}><Toaster theme="dark" position="top-center"/><header className="phone-header"><button className="phone-wallet" onClick={()=> { setSheet('bag'); }} aria-label="持ちものを開く"><span><Coins/>{compact(s.gold)}</span><span><Leaf/>{compact(s.herbs)}</span><span><Gem/>{compact(s.ore)}</span><span><Logs/>{compact(s.wood)}</span></button><button className="handbook-button" onClick={()=> { setSheet('book'); }} aria-label="旅の手帳：思い出・ヒント・設定"><BookOpen size={23}/>{(game.error||hints.unread||(!prologue&&unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header>
+ return <main className={'phone-game'+(prologue?' prologue-game':'')}><Toaster theme="dark" position="top-center"/><header className="phone-header"><button className="phone-wallet" onClick={()=> { setSheet('bag'); }} aria-label="持ちものを開く"><span><Coins/>{compact(s.gold)}</span><span><Leaf/>{compact(s.herbs)}</span><span><Gem/>{compact(s.ore)}</span><span><Logs/>{compact(s.wood)}</span></button><button className="handbook-button" onClick={()=> { setSheet('book'); }} aria-label="旅の手帳：ヒント・思い出・アルバム・設定"><BookOpen size={23}/>{(game.error||hints.unread||(!prologue&&unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header>
  {(game.error||game.otherTab)&&<div className="phone-notice" role="status"><span>{game.otherTab?'別のタブで冒険中です':game.error}</span>{game.otherTab&&<button onClick={game.takeOver}>ここで続ける</button>}</div>}
 
 

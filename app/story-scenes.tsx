@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {BookOpen,ChevronRight,Images} from 'lucide-react';
+import {BookOpen,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {Portrait} from './portrait';
 import {heroes,allQuests,type State} from '@/lib/game';
@@ -53,7 +53,7 @@ export function StoryAlbum({state:s,onBack}:{state:State;onBack:()=>void}){
  const [viewing,setViewing]=useState<Story|null>(null),read=storyProgress(s).read;
  // Preserve reveal rules; only mount gallery images inside the album.
  const gallery=availableStories(s).flatMap(st=>{const art=storyArtAt(st.id,read.includes(st.id)?Infinity:0);return art?[{story:st,art}]:[];});
- return <section className="story-album"><button className="outline" onClick={onBack}>思い出へ戻る</button><h3>アルバム</h3>
+ return <section className="story-album"><button className="outline" onClick={onBack}>旅の手帳へ戻る</button>
   {gallery.length?<div className="still-gallery">{gallery.map(({story:st,art})=><button key={st.id} onClick={()=> { setViewing(st); }} aria-label={st.title+'の絵を大きく見る'}><img src={art.src} alt={art.alt} width={art.width} height={art.height} loading="lazy"/><span>{st.title}</span></button>)}</div>:<p>物語で出会った絵が、ここに残ります。</p>}
   <ArtViewer art={viewing?storyArtAt(viewing.id,Infinity)||null:null} title={viewing?.title||'アルバム'} onClose={()=> { setViewing(null); }}/>
  </section>;
@@ -61,11 +61,9 @@ export function StoryAlbum({state:s,onBack}:{state:State;onBack:()=>void}){
 
 export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=>void}){
  const available=availableStories(s),read=storyProgress(s).read;
- const [album,setAlbum]=useState(false),[onlyUnread,setOnlyUnread]=useState(false);
+ const [onlyUnread,setOnlyUnread]=useState(false);
  const itemsToShow=available.filter(st=>!onlyUnread||!read.includes(st.id));
- if(album)return <StoryAlbum state={s} onBack={()=> { setAlbum(false); }}/>;
  return <div className="story-library">
-  <button className="story-entry album-entry" onClick={()=> { setAlbum(true); }}><Images size={22}/><span><b>アルバム</b><small>旅で出会った景色を眺める</small></span><ChevronRight size={18}/></button>
   <div className="memory-filters" aria-label="物語の表示"><button aria-pressed={!onlyUnread} onClick={()=> { setOnlyUnread(false); }}>すべて</button><button aria-pressed={onlyUnread} onClick={()=> { setOnlyUnread(true); }}>未読 {available.filter(st=>!read.includes(st.id)).length}</button></div>
   {available.length===0?<div className="story-empty"><BookOpen/><p>最初の思い出は、ふたりで「街への交易」へ出発すると開きます。</p></div>:itemsToShow.length===0&&<p>すべての思い出を読み終えました。</p>}
   {memoryGroups(itemsToShow).map(group=><section key={group.id}><h3>{group.title}</h3>{group.items.map(st=><button key={st.id} className="story-entry" onClick={()=> { onOpen(st); }}><span><small>{st.chapter==='departure'?'出発前':st.chapter==='return'?'達成後':st.place}{!read.includes(st.id)&&' · 未読'}</small><b>{st.title}</b></span><ChevronRight size={18}/></button>)}</section>)}

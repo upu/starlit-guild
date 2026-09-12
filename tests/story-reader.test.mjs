@@ -56,13 +56,14 @@ test('banter keeps a complete exchange while the route changes and pauses under 
  assert.ok(!h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));assert.ok(h.text().includes(next[0].text));assert.ok(h.text().includes(later[0].text));
 });
 
-test('memories interleave departure and ending by stage; album is a separate view with a return path',()=>{
+test('memories interleave departure and ending by stage; album stays separate and returns to the handbook',()=>{
  let state=game.initialPrologueState(1000);
  for(const stage of prologue.prologueStages){state=game.act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);state=game.settle(state,state.updatedAt+3600000).state;state=game.act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);}
  const h=harness('StoryLibrary',{state,onOpen:()=>{}});
  const ordered=h.exports.memoryGroups(stories.availableStories(state)).flatMap(group=>group.items.map(st=>st.id));
  assert.deepEqual(Array.from(ordered),prologue.prologueStages.flatMap(stage=>[stage.quest+'-departure',stage.quest+'-return']));
  assert.equal(h.find('img'),undefined);assert.equal(h.find('StoryAlbum'),undefined);
- h.click('アルバム旅で出会った景色を眺める');assert.ok(h.find('StoryAlbum'));
- h.find('StoryAlbum').props.onBack();h.render();assert.equal(h.find('StoryAlbum'),undefined);
+ assert.ok(!h.text().includes('アルバム'));
+ let returned=false;const album=harness('StoryAlbum',{state,onBack:()=>{returned=true;}});
+ assert.ok(album.find('img'));album.click('旅の手帳へ戻る');assert.ok(returned);
 });
