@@ -7,7 +7,13 @@
 .quest-opponent{display:flex;align-items:center;gap:12px;margin:16px 0;padding:12px;border:1px solid #8c6747;border-radius:8px;background:#2b2631}.quest-opponent>.sprite{flex-shrink:0}.quest-opponent>div{min-width:0}.quest-opponent b{display:block;font-size:18px;color:#efd8a5}.quest-opponent small{font-size:14px;color:#e8b27c}.quest-opponent p{font-size:14px;line-height:1.7}@media(max-width:420px){.quest-opponent{align-items:flex-start}.quest-opponent>.sprite{width:80px!important;height:80px!important}}
 
 .dialogue-page{min-height:112px}.story-album{display:flex;flex-direction:column;gap:16px}.story-album h3{font-size:18px;color:#e4cb91}.album-entry{gap:12px}.album-entry>span{flex:1}
-.dialogue-history{height:46dvh;min-height:0;flex:none;overflow-y:auto;overflow-anchor:none;scrollbar-gutter:stable;padding-right:4px}
+.phone-dialog:has(> .story-reader){top:auto;bottom:calc(16px + env(safe-area-inset-bottom));translate:-50% 0;transform:none;display:flex;flex-direction:column;max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:hidden}
+.phone-dialog:has(> .story-reader)>[data-slot="dialog-header"]{flex:none}
+.phone-dialog>.story-reader{min-height:0;flex:0 1 auto;overflow:hidden;gap:12px}
+.dialogue-history{min-height:0;flex:0 1 auto;overflow-y:auto;overflow-anchor:none;scrollbar-gutter:stable;padding-right:4px}
+.story-reader>.story-controls{flex:none}
+.story-reader>.story-still{height:min(22dvh,180px);flex:none}
+.story-reader>.story-still .still-expand,.story-reader>.story-still .still-expand img{height:100%;min-height:0;object-fit:contain}
 .phone-game .journey-banter.journey-banter-history{max-height:220px;overflow-y:auto;overflow-anchor:none;align-items:flex-start}
 .journey-banter-history .banter-copy{gap:8px;animation:none}
 .phone-game .journey-banter-history .banter-line>span{display:block;overflow:visible;-webkit-line-clamp:unset}

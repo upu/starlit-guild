@@ -25,7 +25,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
  const pages=story.lines.length,art=storyArtAt(story.id,page);
  return <div className="story-reader">
   {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></button></figure>}
-  <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(Math.max(0,page-2),page+1)} startIndex={Math.max(0,page-2)}/></div>
+  <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(0,page+1)}/></div>
   <div className="story-controls"><button className="outline" disabled={page===0} onClick={()=> { setPage(page-1); }}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=> { setPage(page+1); }}>次へ<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>{departure?'冒険を始める':'閉じる'}</button>}</div>
   <ArtViewer art={viewArt&&art?art:null} title={story.title} onClose={()=> { setViewArt(false); }}/>
  </div>;
@@ -74,7 +74,8 @@ export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=
 export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(lines:StoryLine[])=>void;paused?:boolean}){
  const [exchange,setExchange]=useState({lines,index:0,history:lines.slice(0,1),turn:0});
  const dialogue=useRef<HTMLButtonElement>(null);
- useEffect(()=>{if(dialogue.current)dialogue.current.scrollTop=dialogue.current.scrollHeight;},[exchange]);
+ const followLatest=useRef(true);
+ useEffect(()=>{if(dialogue.current&&followLatest.current)dialogue.current.scrollTop=dialogue.current.scrollHeight;},[exchange]);
  const latest=useRef(lines);
  useEffect(()=>{latest.current=lines;},[lines]);
  const line=exchange.lines.at(exchange.index);
@@ -87,7 +88,8 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
    timer=setTimeout(()=>{
     setExchange(current=>{
      const continuing=current.index+1<current.lines.length,index=continuing?current.index+1:0,nextLines=continuing?current.lines:latest.current,nextLine=nextLines.at(index);
-     return {lines:nextLines,index,history:[...current.history,...(nextLine?[nextLine]:[])].slice(-3),turn:current.turn+1};
+     // Bound the long-running idle log without removing visible short exchanges.
+     return {lines:nextLines,index,history:[...current.history,...(nextLine?[nextLine]:[])].slice(-100),turn:current.turn+1};
     });
    },Math.max(3500,line.text.length*100));
   };
@@ -96,7 +98,7 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
  },[exchange,paused,line]);
  if(!line)return null;
  const speaker=characters.find(h=>h.id===line.speaker);
- return <button ref={dialogue} className="journey-banter journey-banter-history" onClick={()=> { onRead(exchange.lines); }} aria-label="道中の掛け合いを読む">
+ return <button ref={dialogue} className="journey-banter journey-banter-history" onScroll={event=>{const el=event.currentTarget;followLatest.current=el.scrollHeight-el.scrollTop-el.clientHeight<8;}} onClick={()=> { onRead(exchange.lines); }} aria-label="道中の掛け合いを読む">
   {speaker&&<span className="banter-portrait"><Portrait index={speaker.sprite} size={72}/></span>}
   <span className="banter-copy">{exchange.history.map((entry,i)=><span className="banter-line" key={exchange.turn-exchange.history.length+1+i}><b>{characters.find(h=>h.id===entry.speaker)?.name}</b><span>{entry.text}</span></span>)}</span><ChevronRight className="banter-chevron" size={18}/>
  </button>;

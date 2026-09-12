@@ -30,17 +30,17 @@ function harness(name,initialProps){
  return {render,find,click,text:()=>text(tree),exports,tick(){const [id,fn]=timers.entries().next().value||[];assert.ok(fn,'scheduled dialogue');timers.delete(id);fn();render();},timerCount:()=>timers.size,visibility(hidden){document.hidden=hidden;for(const fn of listeners)fn();}};
 }
 
-test('story reader adds one line and retains the latest three, reveals art at its action, and only finishes on the final line',()=>{
+test('story reader retains all revealed lines for scrolling, reveals art at its action, and only finishes on the final line',()=>{
  const story=stories.stories.find(st=>st.id==='pilgrim-return');let read=0,closed=0;
  const h=harness('StoryReader',{story,ready:true,onRead:()=>{read++;return true;},onClose:()=>closed++});
  for(let i=0;i<story.lines.length;i++){
-  assert.deepEqual(h.find('StoryLines').props.lines,story.lines.slice(Math.max(0,i-2),i+1));
+  assert.deepEqual(h.find('StoryLines').props.lines,story.lines.slice(0,i+1));
   assert.equal(h.find('ArtViewer').props.art,null);
   const hasFigure=!!h.find('figure');assert.equal(hasFigure,!!art.storyArtAt(story.id,i));
   assert.equal(read,0);assert.equal(closed,0);
   if(i+1<story.lines.length)h.click('次へ');
  }
- h.click('前へ');assert.deepEqual(h.find('StoryLines').props.lines,story.lines.slice(-4,-1));assert.equal(read,0);h.click('次へ');h.click('閉じる');assert.equal(read,1);assert.equal(closed,1);
+ h.click('前へ');assert.deepEqual(h.find('StoryLines').props.lines,story.lines.slice(0,-1));assert.equal(read,0);h.click('次へ');h.click('閉じる');assert.equal(read,1);assert.equal(closed,1);
 });
 
 test('banter keeps a complete exchange while the route changes and pauses under dialogs or hidden tabs',()=>{
@@ -53,7 +53,10 @@ test('banter keeps a complete exchange while the route changes and pauses under 
  h.render({...props,lines:next,paused:false});h.visibility(true);assert.equal(h.timerCount(),0);
  h.visibility(false);h.tick();assert.ok(h.text().includes(next[0].text));assert.ok(h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));
  const later=[{speaker:'aria',text:'さらに次の発言'}];h.render({...props,lines:later});h.tick();
- assert.ok(!h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));assert.ok(h.text().includes(next[0].text));assert.ok(h.text().includes(later[0].text));
+ assert.ok(h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));assert.ok(h.text().includes(next[0].text));assert.ok(h.text().includes(later[0].text));
+ const viewport={scrollHeight:900,clientHeight:220,scrollTop:100};h.find('button').props.ref.current=viewport;
+ h.find('button').props.onScroll({currentTarget:viewport});h.tick();assert.equal(viewport.scrollTop,100,'reading history is not interrupted');
+ viewport.scrollTop=680;h.find('button').props.onScroll({currentTarget:viewport});viewport.scrollHeight=1000;h.tick();assert.equal(viewport.scrollTop,1000,'following resumes from the bottom');
 });
 
 test('memories interleave departure and ending by stage; album stays separate and returns to the handbook',()=>{
