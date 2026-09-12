@@ -14,15 +14,16 @@ import {storyArt,storyArtAt} from '../lib/story-art.ts';
 import {recruitments} from '../lib/recruitment.ts';
 import {adventureFrame,adventureAssets,adventureAction} from '../lib/adventure-presentation.ts';
 const frameFor=(state,now=state.updatedAt)=>adventureFrame({squad:state.squads[0],now,ready:true,paused:false,startQuest:'herbs'});
+const imageAlias={'next/image':fileURLToPath(new URL('../node_modules/vinext/dist/shims/image.js',import.meta.url))};
 await mkdir(new URL('../work/',import.meta.url),{recursive:true});
 const output=new URL('../work/map-render.mjs',import.meta.url);
-await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
+await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
 const {MapStage}=await import(output.href);
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
-await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
+await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
 const {StoryReader,StoryLines,StoryLibrary,StoryAlbum,Banter}=await import(storyOutput.href);
 const phoneOutput=new URL('../work/phone-render.mjs',import.meta.url);
-await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
+await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
 const {PhoneGame}=await import(phoneOutput.href);
 
 test('dialogue and banter show close-up portraits and the trade still appears from the first page',()=>{

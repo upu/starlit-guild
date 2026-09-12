@@ -19,7 +19,7 @@ function harness(name,initialProps){
   useRef(initial){const i=cursor++;return slots[i]??=( {current:initial} );},
   useEffect(fn,deps){const i=cursor++,old=slots[i];if(!old||deps.some((v,j)=>!Object.is(v,old.deps[j]))){effects.push(()=>{old?.cleanup?.();slots[i]={deps,cleanup:fn()};});}},
  };
- const modules={react,'react/jsx-runtime':jsxRuntime,'lucide-react':{BookOpen:'icon',ChevronRight:'arrow',Images:'icon'},'./portrait':{Portrait:'portrait'},'@/lib/game':game,'@/lib/stories':stories,'@/lib/prologue':prologue,'@/lib/story-art':art,'@/lib/original-characters':originals,'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(key=>[key,key]))};
+ const modules={react,'react/jsx-runtime':jsxRuntime,'next/image':{default:'img'},'lucide-react':{BookOpen:'icon',ChevronRight:'arrow',Images:'icon'},'./portrait':{Portrait:'portrait'},'@/lib/game':game,'@/lib/stories':stories,'@/lib/prologue':prologue,'@/lib/story-art':art,'@/lib/original-characters':originals,'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(key=>[key,key]))};
  vm.runInNewContext(code,{exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];},document,window:{getSelection:()=>null},setTimeout:fn=>{const id=++serial;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id)});
  function render(next=props){props=next;cursor=0;effects=[];tree=exports[name](props);for(const effect of effects)effect();return tree;}
  function nodes(node){if(!node||typeof node!=='object')return [];return [node,...[node.props?.children].flat(Infinity).flatMap(child=>nodes(child))];}

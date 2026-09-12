@@ -1,4 +1,5 @@
 import {useState,type CSSProperties} from 'react';
+import Image from 'next/image';
 import {heroes,heroSkills,activeBonds,type GameEvent,type Run,type Scene} from '@/lib/game';
 import {Sprite} from './sprite';
 
@@ -57,5 +58,5 @@ export function AttackTrail({event,now,style,from,to}:{event:GameEvent;now:numbe
 
 export function DiscoveryArt({kind,claimed,now,finishAt}:{kind:string;claimed:boolean;now:number;finishAt:number}){
  const [age]=useState(claimed?Math.max(0,now-finishAt):0);
- return <img className="detour-art" src={`/items/${kind}.png`} width={76} height={76} alt="" draggable={false} style={{'--claim-age':`${String(-age)}ms`} as CSSProperties}/>;
+ return <Image className="detour-art" src={`/items/${kind}.png`} width={76} height={76} alt="" loading="eager" unoptimized draggable={false} style={{'--claim-age':`${String(-age)}ms`} as CSSProperties}/>;
 }

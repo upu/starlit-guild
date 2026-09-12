@@ -1,5 +1,6 @@
 'use client';
 import {useState,type Dispatch,type MouseEvent,type ReactNode,type SetStateAction} from 'react';
+import Image from 'next/image';
 import {Coins,Leaf,Gem,Logs,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
@@ -163,7 +164,7 @@ function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
 }
 function AdventureDestination({model:m}:{model:PhoneFrameModel}){
  const guided=m.prologue&&!m.run&&!m.state.done[TRADE_QUEST];
- return <div className="adventure-destination"><div>{(!m.prologue||m.run)&&<b>{m.activeQuest?.name||m.quest.name}</b>}</div><div className="quest-control"><button className={'outline quest-entry'+(guided?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guided?'quest-tutorial':undefined} onClick={()=> { m.openQuests(); }}><img src="/ui/quest-scroll.png" width={52} height={52} alt=""/></button>{guided&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div>;
+ return <div className="adventure-destination"><div>{(!m.prologue||m.run)&&<b>{m.activeQuest?.name||m.quest.name}</b>}</div><div className="quest-control"><button className={'outline quest-entry'+(guided?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guided?'quest-tutorial':undefined} onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={52} height={52} alt="" loading="eager" unoptimized/></button>{guided&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div>;
 }
 function AdventureBanter({model:m}:{model:PhoneFrameModel}){
  if(!m.banter.length)return <div className="phone-banter"><p>{m.quote}</p></div>;
