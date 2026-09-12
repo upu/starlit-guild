@@ -7,6 +7,7 @@ import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {initialState,initialPrologueState,act,settle,testState} from '../lib/game.ts';
 import {stories} from '../lib/stories.ts';
+import {prologueStages} from '../lib/prologue.ts';
 import {madHalloweenStories} from '../lib/mad-halloween-stories.ts';
 import {characterEncounters} from '../lib/character-encounters.ts';
 import {storyArt,storyArtAt} from '../lib/story-art.ts';
@@ -48,6 +49,23 @@ test('prologue screen guides to quests, hides advanced navigation and uses one b
  const after=render(act(cleared,{type:'readStory',id:'village-trade-return'},3601000));assert.doesNotMatch(after,/quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
  const legacy=render(initialState(1000));assert.match(legacy,/>パーティ</);assert.match(legacy,/>拠点</);
  assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
+});
+
+test('stage progress selects the next scenery and new stages keep the two-person adventure screen',()=>{
+ const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:s.updatedAt,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
+ let state=initialPrologueState(1000);
+ for(const stage of prologueStages){
+  const idle=render(state);assert.ok(idle.includes(stage.label));assert.doesNotMatch(idle,/undefined|>パーティ<|>拠点</);
+  state=act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);
+  const running=render(state);assert.ok(running.includes(stage.label));
+  if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+stage.quest+'.png'));
+  if(stage.quest==='evening-trade-road'){
+   const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
+   assert.match(render(battle),/魔物と戦闘中/);assert.doesNotMatch(render(battle),/いたずらを阻止中/);
+  }
+  state=settle(state,state.updatedAt+3600000).state;
+  state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
+ }
 });
 
 test('guest stills reveal during their scene and enter the gallery only after reading',()=>{

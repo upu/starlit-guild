@@ -2,7 +2,7 @@ import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
 import {madHalloweenStories} from './mad-halloween-stories.ts';
-import {inPrologue,TRADE_QUEST} from './prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 
@@ -88,7 +88,7 @@ export function storyProgress(s:State):StoryProgress {
 export function availableStories(s:State):Story[]{
  const p=storyProgress(s);
  return stories.filter(st=>{
-  if(inPrologue(s)&&st.quest!==TRADE_QUEST)return false;
+  if(inPrologue(s)&&!isPrologueQuest(st.quest||''))return false;
   if(st.requiresHeroes?.some(id=>!s.owned.includes(id))||st.requiresQuests?.some(id=>!(s.done[id]>0)))return false;
   if(st.chapter==='encounter')return s.town>=(st.town||0);
   return st.chapter==='recruitment'?(() => {const r=recruitments.find(r=>r.hero===st.companion)!;return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);})():st.chapter==='departure'?p.departed.includes(st.quest!):st.chapter==='return'?p.completed.includes(st.quest!):
@@ -109,6 +109,8 @@ export function coupleCombo(s:State,variant:number):string[]{
 }
 export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const r=sq.run;
+ if(r?.quest===RETURN_QUEST)return r.phase==='rest'?[a('荷物、私のほうへ寄せて。少し休もう。'),l('ああ。次の分かれ道までは一緒だ。')]:r.node%3===0?[a('帰りの包み、今度は軽いね。'),l('控えは内側にしまった。あとは村で渡せば終わりだ。')]:[a('また道の真ん中にいる。こんな時間なのに。'),l('荷物は端へ寄せよう。一匹ずつなら通れる。')];
+ if(r?.quest===TOWN_QUEST)return r.phase==='rest'?[l('箱はここに置こう。手、痛くないか？'),a('平気。でも一息ついたら、持つ側を替えよう。')]:r.node%3===0?[a('この荷札、奥の倉庫じゃなくて店先だって。'),l('本当だ。先に確かめておいてよかった。')]:r.node%3===1?[l('次は角の店だ。荷車が通るから、少し待とう。'),a('今日はみんな、同じ時間に運んでるね。')]:[a('受け取りの控え、もらったよ。次の包みは？'),l('これで一区切りだ。荷札と順番を揃えよう。')];
  if(r?.quest===TRADE_QUEST)return r.phase==='rest'?[l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')]:r.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
  if(r?.quest==='join-chacha')return [{speaker:'chacha',text:'茶器はお願いしますねぇ。岩のほうは、わたしが持ちますから。'}];
  if(r?.quest==='midnight-snack'&&sq.members.includes('poppy'))return [{speaker:'merrill',text:'その薬、味見しようか？'},{speaker:'poppy',text:'瓶ごと食べそうな人には、頼まない！'}];
