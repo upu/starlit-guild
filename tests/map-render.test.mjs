@@ -20,7 +20,7 @@ await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bun
 const {MapStage}=await import(output.href);
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
 await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
-const {StoryReader,StoryLines,StoryLibrary,Banter}=await import(storyOutput.href);
+const {StoryReader,StoryLines,StoryLibrary,StoryAlbum,Banter}=await import(storyOutput.href);
 const phoneOutput=new URL('../work/phone-render.mjs',import.meta.url);
 await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
 const {PhoneGame}=await import(phoneOutput.href);
@@ -28,10 +28,10 @@ const {PhoneGame}=await import(phoneOutput.href);
 test('dialogue and banter show close-up portraits and the trade still appears from the first page',()=>{
  const story=stories.find(st=>st.id==='village-trade-return');
  const first=renderToStaticMarkup(createElement(StoryReader,{story,ready:true,onRead:()=>true,onClose:()=>{}}));
- for(const id of ['aria','leon'])assert.ok(first.includes('/portraits/'+id+'.png'));
+ assert.ok(first.includes(story.lines[0].text));assert.ok(!first.includes(story.lines[1].text));
  const lines=[{speaker:'aria',text:'お疲れさま。'},{speaker:'leon',text:'無事に着いたな。'},{text:'ふたりは顔を見合わせた。'}],before=structuredClone(lines);
  const chat=renderToStaticMarkup(createElement(Banter,{lines,onRead:()=>{}}));
- assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/leon.png'));assert.ok(!chat.includes('/portraits/aria.png'));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
+ assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/aria.png'));assert.ok(!chat.includes('/portraits/leon.png'));assert.ok(!chat.includes(lines[1].text));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
  for(let line=0;line<story.lines.length;line+=3)assert.equal(storyArtAt(story.id,line)?.src,'/stories/village-trade-handover.png');
  assert.ok(first.includes('/stories/village-trade-handover.png'));
 });
@@ -51,13 +51,13 @@ test('prologue screen guides to quests, hides advanced navigation and uses one b
  assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
 });
 
-test('stage progress selects the next scenery and new stages keep the two-person adventure screen',()=>{
+test('stage progress retains the completed scenery until the next departure',()=>{
  const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:s.updatedAt,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
- let state=initialPrologueState(1000);
+ let state=initialPrologueState(1000),background='/forest.png';
  for(const stage of prologueStages){
-  const idle=render(state);assert.ok(idle.includes(stage.label));assert.doesNotMatch(idle,/undefined|>パーティ<|>拠点</);
+  const idle=render(state);assert.ok(idle.includes(background));assert.doesNotMatch(idle,/第一部 ·|undefined|>パーティ<|>拠点</);
   state=act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);
-  const running=render(state);assert.ok(running.includes(stage.label));
+  const running=render(state);assert.match(running,/探索マップ/);
   if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+stage.quest+'.png'));
   if(stage.quest==='evening-trade-road'){
    const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
@@ -65,6 +65,8 @@ test('stage progress selects the next scenery and new stages keep the two-person
   }
   state=settle(state,state.updatedAt+3600000).state;
   state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
+  background=stage.quest==='village-trade'?'/forest.png':'/stages/'+stage.quest+'.png';
+  assert.ok(render(state).includes(background));
  }
 });
 
@@ -78,7 +80,8 @@ test('guest stills reveal during their scene and enter the gallery only after re
   assert.ok(!before.includes(storyArt[scene.id].src),'later action is not a gallery spoiler');
   const firstPage=renderToStaticMarkup(createElement(StoryReader,{story:scene,ready:true,onRead:()=>true,onClose:()=>{}}));
   assert.ok(!firstPage.includes(storyArt[scene.id].src));
-  state.story.read.push(scene.id);assert.ok(library().includes(storyArt[scene.id].src));
+  state.story.read.push(scene.id);assert.ok(!library().includes(storyArt[scene.id].src));
+  const album=renderToStaticMarkup(createElement(StoryAlbum,{state,onBack:()=>{}}));assert.ok(album.includes(storyArt[scene.id].src));
  }
 });
 

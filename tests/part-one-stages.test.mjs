@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialPrologueState,initialState,act,settle,availableQuests,allQuests,encounter} from '../lib/game.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,prologueStages,stageEndingPending} from '../lib/prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {parseBundle} from '../lib/save-format.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
@@ -60,6 +60,27 @@ test('existing prologue trades unlock the return route; established saves retain
  assert.ok(availableQuests(restored).some(q=>q.id==='dragon'));
  assert.ok(!availableQuests(restored).some(q=>q.id===TOWN_QUEST));
  assert.ok(act(restored,{type:'party',members:['aria']},1000));
+});
+
+test('idle scenery follows the last actual departure across completion, replay, interruption and reload',()=>{
+ let s=initialPrologueState(1000);
+ assert.equal(restingQuest(s,s.squads[0]),TRADE_QUEST);
+ for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TRADE_QUEST]){
+  s=roundtrip(start(s,id));assert.equal(s.squads[0].lastQuest,id);
+  s=roundtrip(read(finish(s),id));assert.equal(restingQuest(s,s.squads[0]),id);
+ }
+ s=start(s,RETURN_QUEST);s=roundtrip(act(s,{type:'stop'},s.updatedAt));
+ assert.equal(restingQuest(s,s.squads[0]),RETURN_QUEST);
+ const old=read(finish(start(initialPrologueState(1000),TRADE_QUEST)),TRADE_QUEST);
+ delete old.squads[0].lastQuest;
+ const restored=roundtrip(old);assert.deepEqual(restored,old);
+ assert.equal(restingQuest(restored,restored.squads[0]),TRADE_QUEST);
+ const invalid=structuredClone(s);invalid.squads[0].lastQuest='unknown-quest';assert.throws(()=>roundtrip(invalid));
+ const oldReplay=start(s,TRADE_QUEST);delete oldReplay.squads[0].lastQuest;
+ for(const resumed of [finish(roundtrip(oldReplay)),act(roundtrip(oldReplay),{type:'stop'},oldReplay.updatedAt)]){
+  assert.equal(restingQuest(resumed,resumed.squads[0]),TRADE_QUEST);
+  assert.equal(roundtrip(resumed).squads[0].lastQuest,TRADE_QUEST);
+ }
 });
 
 test('evening has more small encounters; town work has cargo, no battles or damage, and suitable scenery',()=>{

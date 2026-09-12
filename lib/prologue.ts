@@ -1,4 +1,4 @@
-import type {State} from './game.ts';
+import type {State,Squad} from './game.ts';
 
 export const TRADE_QUEST='village-trade';
 export const RETURN_QUEST='evening-trade-road';
@@ -11,6 +11,10 @@ export const prologueStages=[
 export const isPrologueQuest=(id:string)=>prologueStages.some(stage=>stage.quest===id);
 // Absent in existing saves: those adventures keep their unlocked features.
 export const inPrologue=(s:State)=>s.prologue===true;
+// Old saves lack lastQuest. Use their last recorded stage without jumping to an unlocked one.
+export function restingQuest(s:State,sq:Squad){
+ return sq.run?.quest||sq.lastQuest||[...(s.story?.completed||Object.keys(s.done))].reverse().find(isPrologueQuest)||TRADE_QUEST;
+}
 export const stageEndingPending=(s:State)=>prologueStages.find(({quest})=>!!s.done[quest]&&!!s.story?.completed.includes(quest)&&!s.story.read.includes(quest+'-return'))?.quest;
 export const tradeEndingPending=(s:State)=>stageEndingPending(s)===TRADE_QUEST;
 // Use recorded completions and readings; do not migrate or reset existing saves.
