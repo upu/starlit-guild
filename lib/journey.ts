@@ -7,7 +7,7 @@ export type Destination='adventure'|'quests'|'recruit'|'build'|'companions'|'par
 export type JourneyGoal={hintId?:string;title:string;detail:string;action:string;destination:Destination;questId?:string};
 export function journeyHintKey(goal:JourneyGoal){return goal.hintId||[goal.destination,goal.questId||'',goal.title].join(':');}
 export function buildingCost(town:number){return town===0?{gold:120,wood:12,ore:0,herbs:0,clears:1}:{gold:600,wood:60,ore:12,herbs:20,clears:3};}
-export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([['gold','G'],['wood','木材'],['ore','鉱石'],['herbs','薬草']] as const).filter(([key])=>s[key]<cost[key]).map(([key,label])=>key==='gold'?`${cost[key]-s[key]} G`:`${label} ${cost[key]-s[key]}個`);}
+export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([['gold','G'],['wood','木材'],['ore','鉱石'],['herbs','薬草']] as const).filter(([key])=>s[key]<cost[key]).map(([key,label])=>key==='gold'?`${String(cost[key]-s[key])} G`:`${label} ${String(cost[key]-s[key])}個`);}
 export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town).clears&&!buildingNeeds(s).length;}
 
 export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
@@ -32,10 +32,10 @@ export function nextGoal(s:State,sq:Squad=s.squads[0]):JourneyGoal{
  if(squadLimit(s)>s.squads.length)return {title:'もうひとつの隊を作れます',detail:'待機中の仲間で新しい隊を作り、別の素材を並行して探せます。同じ仲間は1つの隊に所属します。',action:'隊を編成する',destination:'party'};
  if(freshQuest)return {title:`新しい冒険「${freshQuest.name}」`,detail:`${freshQuest.region}へ出かけましょう。冒険中の隊は「帰還」でいつでも戻れます。`,action:'依頼を見る',destination:'quests',questId:freshQuest.id};
  if(recruit)return {title:recruit.name+'と冒険する支度をしよう',detail:recruitmentHint(s,recruit)+'。対象の依頼は出会いの画面で確認できます。',action:'素材と出会いを見る',destination:'recruit'};
- if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {hintId:'building-materials-'+s.town,title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
+ if(s.town<2&&s.clears>=buildingCost(s.town).clears)return {hintId:'building-materials-'+String(s.town),title:`${s.town===0?'酒場':'小さな村'}まで、あと${buildingNeeds(s).join('・')}`,detail:'木材は区間報酬と寄り道から。鉱石は護衛や討伐の依頼でも集まります。建設画面で必要な材料を確認できます。',action:'建設を見る',destination:'build'};
  const nextQuest=quests.find(q=>q.unlock>s.clears),nextHero=heroes.find(h=>!s.owned.includes(h.id)&&h.unlock>s.clears);
- if(nextHero&&(!nextQuest||nextHero.unlock<nextQuest.unlock))return {hintId:'next-hero-'+nextHero.id,title:`あと ${nextHero.unlock-s.clears} 件で${nextHero.name}と出会えます`,detail:'依頼を最後まで達成すると、新しい出会いに近づきます。自動周回でも進められます。',action:'依頼を見る',destination:'quests'};
- if(nextQuest)return {hintId:'next-quest-'+nextQuest.id,title:`あと ${nextQuest.unlock-s.clears} 件で新しい依頼`,detail:`次の行き先は${nextQuest.region}。仲間の得意分野に合う依頼で支度を進めましょう。`,action:'依頼を見る',destination:'quests'};
+ if(nextHero&&(!nextQuest||nextHero.unlock<nextQuest.unlock))return {hintId:'next-hero-'+nextHero.id,title:`あと ${String(nextHero.unlock-s.clears)} 件で${nextHero.name}と出会えます`,detail:'依頼を最後まで達成すると、新しい出会いに近づきます。自動周回でも進められます。',action:'依頼を見る',destination:'quests'};
+ if(nextQuest)return {hintId:'next-quest-'+nextQuest.id,title:`あと ${String(nextQuest.unlock-s.clears)} 件で新しい依頼`,detail:`次の行き先は${nextQuest.region}。仲間の得意分野に合う依頼で支度を進めましょう。`,action:'依頼を見る',destination:'quests'};
  return {title:'お気に入りのふたりの絆を育てよう',detail:'相性のよい仲間と区間を進むと、絆が育ち、連携技と会話が変わります。',action:'編成を考える',destination:'companions'};
 }
 
@@ -45,7 +45,7 @@ export function partyPreview(s:State,sq:Squad,members:string[],q:Quest){
 export function questAdvice(s:State,sq:Squad,q:Quest){
  if(power(s,sq,q)>=q.need)return 'この隊が得意な依頼です。見守りながら報酬を集めましょう。';
  const strong=[...heroes].filter(h=>s.owned.includes(h.id)&&!sq.members.includes(h.id)&&!s.squads.some(p=>p.id!==sq.id&&p.members.includes(h.id))).sort((a,b)=>b.stats[['採取','護衛','討伐'].indexOf(q.kind)]-a.stats[['採取','護衛','討伐'].indexOf(q.kind)]).at(0);
- return `${q.kind}の力が目安より${q.need-power(s,sq,q)}低めです。${strong?`${strong.name}を含む編成を比べるか、`:''}${s.clears>=3?'装備を強化するか、':''}手助け・回復で支えましょう。条件を満たさなくても出発できます。`;
+ return `${q.kind}の力が目安より${String(q.need-power(s,sq,q))}低めです。${strong?`${strong.name}を含む編成を比べるか、`:''}${s.clears>=3?'装備を強化するか、':''}手助け・回復で支えましょう。条件を満たさなくても出発できます。`;
 }
 export type JourneyNotice={title:string;description:string};
 export function journeyNotice(before:State,after:State):JourneyNotice|null{
@@ -64,10 +64,10 @@ export function journeyNotice(before:State,after:State):JourneyNotice|null{
  const unlocked=quests.filter(q=>q.unlock>before.clears&&q.unlock<=after.clears);
  if(unlocked.length)return {title:'新しい依頼が届きました',description:unlocked.map(q=>q.name).join('・')+'。依頼画面で確認できます。'};
  const grown=heroes.filter(h=>level(after.xp[h.id]||0)>level(before.xp[h.id]||0));
- if(grown.length)return {title:'仲間がレベルアップ！',description:grown.map(h=>`${h.name} Lv.${level(after.xp[h.id]||0)}`).join('・')+'。全能力が上がりました。'};
- if(after.gear>before.gear)return {title:`みんなの装備 Lv.${after.gear}`,description:'全員の採取・護衛・討伐の力が上がりました。'};
- if(after.camp>before.camp)return {title:`野営地 Lv.${after.camp}`,description:'次に移動を始める地点から、仲間の行動間隔が短くなります。'};
+ if(grown.length)return {title:'仲間がレベルアップ！',description:grown.map(h=>`${h.name} Lv.${String(level(after.xp[h.id]||0))}`).join('・')+'。全能力が上がりました。'};
+ if(after.gear>before.gear)return {title:`みんなの装備 Lv.${String(after.gear)}`,description:'全員の採取・護衛・討伐の力が上がりました。'};
+ if(after.camp>before.camp)return {title:`野営地 Lv.${String(after.camp)}`,description:'次に移動を始める地点から、仲間の行動間隔が短くなります。'};
  const xpBefore=Object.values(before.xp).reduce((n,v)=>n+v,0),xpAfter=Object.values(after.xp).reduce((n,v)=>n+v,0);
- if(after.gold>before.gold&&xpAfter>xpBefore)return {title:after.clears>before.clears?'依頼達成！':'区間報酬を確保',description:`+${after.gold-before.gold} G · 薬草 +${after.herbs-before.herbs} · 鉱石 +${after.ore-before.ore} · 木材 +${after.wood-before.wood}`};
+ if(after.gold>before.gold&&xpAfter>xpBefore)return {title:after.clears>before.clears?'依頼達成！':'区間報酬を確保',description:`+${String(after.gold-before.gold)} G · 薬草 +${String(after.herbs-before.herbs)} · 鉱石 +${String(after.ore-before.ore)} · 木材 +${String(after.wood-before.wood)}`};
  return null;
 }

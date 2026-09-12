@@ -45,11 +45,11 @@ export const canPrepare=(s:State,r:Recruitment)=>met(s,r)&&!prepared(s,r.hero)&&
 export const recruitmentRun=(s:State,id:string)=>s.squads.find(sq=>sq.run?.quest==='join-'+id);
 export function recruitmentHint(s:State,r:Recruitment){
  if(s.owned.includes(r.hero))return '旅団の仲間になりました';
- if(r.requires&&!s.owned.includes(r.requires))return `${recruitmentByHero(r.requires)?.name}が仲間になると、出会いがつながります`;
- if(s.clears<r.unlock)return `あと ${r.unlock-s.clears} 件の依頼で出会えます`;
+ if(r.requires&&!s.owned.includes(r.requires))return `${String(recruitmentByHero(r.requires)?.name)}が仲間になると、出会いがつながります`;
+ if(s.clears<r.unlock)return `あと ${String(r.unlock-s.clears)} 件の依頼で出会えます`;
  if(recruitmentRun(s,r.hero))return '専用クエストを冒険中';
  if(prepared(s,r.hero))return '支度はできました。専用クエストへ出発できます';
  if(canPrepare(s,r))return '支度がそろいました。専用クエストを開けます';
  const rare=rareProgress(s,r);
- return rare.remaining?`${r.rare.name}を集めよう。対象の依頼をあと ${rare.remaining} 回`:'希少素材はそろいました。残りの資材を集めよう';
+ return rare.remaining?`${r.rare.name}を集めよう。対象の依頼をあと ${String(rare.remaining)} 回`:'希少素材はそろいました。残りの資材を集めよう';
 }

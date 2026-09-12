@@ -42,7 +42,7 @@ export function targetName(q:Quest,node:number){const k=encounter(q,node);if(q.i
 export const stepMs=(s:State)=>Math.round(1050*(1-.035*s.camp));
 export function estimate(s:State,sq:Squad,q:Quest){const relevant=Math.max(5,power(s,sq,q));return Math.round(5*(12+q.need*6.9/Math.max(3,2+relevant/Math.max(1,sq.members.length)*.23)*stepMs(s)/1000/Math.max(1,sq.members.length)));}
 function addLog(s:State,text:string,at:number){s.log=[{text,at},...s.log].slice(0,40);}
-function event(r:Run,at:number,kind:GameEvent['kind'],text:string,amount?:number,hero?:string){r.events=[...r.events,{id:`${r.round}-${r.node}-${at}-${kind}-${r.hits}-${hero||"leader"}-${++r.serial}`,at,kind,text,amount,hero}].slice(-12);}
+function event(r:Run,at:number,kind:GameEvent['kind'],text:string,amount?:number,hero?:string){r.events=[...r.events,{id:`${String(r.round)}-${String(r.node)}-${String(at)}-${kind}-${String(r.hits)}-${hero||"leader"}-${String(++r.serial)}`,at,kind,text,amount,hero}].slice(-12);}
 function configureTarget(r:Run,q:Quest){r.targetMax=Math.round(q.need*1.12*(encounter(q,r.node)==='escort'?1.8:2.3));r.target=r.targetMax;r.hits=0;}
 export function travelMs(id:string){return 2200+(heroes.findIndex(h=>h.id===id)%4)*310;}
 function schedule(s:State,sq:Squad,r:Run,at:number){
@@ -67,22 +67,22 @@ export const heroSkills:Record<string,{style:string;name:string;description:stri
 export const bondKey=(ids:string[])=>[...ids].sort().join('-');
 export const bondLevel=(s:State,ids:string[])=>Math.min(3,1+Math.floor((s.friendship[bondKey(ids)]||0)/12));
 function discover(s:State,sq:Squad,at:number){const r=sq.run!,d=r.detour;if(inPrologue(s)||!d||d.claimed)return;d.claimed=true;s.discoveries++;const q=allQuests.find(q=>q.id===r.quest)!;const wood=q.tier+1;s.wood+=wood;
- let amount=wood;let text='';if(d.kind==='chest'){amount=Math.ceil(q.gold*.035);s.gold+=amount;text='隠し宝箱！ +'+amount+' G';}else if(d.kind==='herb'){amount=2*q.tier;s.herbs+=amount;text='光る薬草を発見！ 薬草 +'+amount;}else{amount=Math.ceil(r.maxHp*.12);r.hp=Math.min(r.maxHp,r.hp+amount);r.ward+=Math.ceil(r.maxHp*.08);text='迷子の精霊がお礼に回復と加護をくれた。';}
- event(r,at,'discovery',text+' · 木材 +'+wood,undefined,d.hero);addLog(s,heroes.find(h=>h.id===d.hero)!.name+'：'+text,at);
+ let amount=wood;let text='';if(d.kind==='chest'){amount=Math.ceil(q.gold*.035);s.gold+=amount;text='隠し宝箱！ +'+String(amount)+' G';}else if(d.kind==='herb'){amount=2*q.tier;s.herbs+=amount;text='光る薬草を発見！ 薬草 +'+String(amount);}else{amount=Math.ceil(r.maxHp*.12);r.hp=Math.min(r.maxHp,r.hp+amount);r.ward+=Math.ceil(r.maxHp*.08);text='迷子の精霊がお礼に回復と加護をくれた。';}
+ event(r,at,'discovery',text+' · 木材 +'+String(wood),undefined,d.hero);addLog(s,heroes.find(h=>h.id===d.hero)!.name+'：'+text,at);
 }
 function reward(s:State,sq:Squad,q:Quest,at:number,finished:boolean){const gold=Math.floor(q.gold/5*(sq.members.includes('finn')?1.1:1)*(sq.members.includes('noel')?1.1:1));const herbs=q.herbs/5+(s.town>=2?2:0),ore=q.ore/5,xp=q.xp/5,wood=q.tier+2;s.gold+=gold;s.herbs+=herbs;s.ore+=ore;s.wood+=wood;if(finished){s.story??=storyProgress(s);if(!q.companion&&together(sq.members)&&!s.story.completed.includes(q.id)){if(!s.story.departed.includes(q.id))s.story.departed.push(q.id);s.story.completed.push(q.id);}s.clears++;s.done[q.id]=(s.done[q.id]||0)+1;if(q.companion&&!s.owned.includes(q.companion)){s.owned.push(q.companion);s.xp[q.companion]??=0;addLog(s,heroes.find(h=>h.id===q.companion)!.name+'が、自分の意志で旅団の仲間になった。',at);}}for(const id of sq.members)s.xp[id]=(s.xp[id]||0)+xp;
  for(const bond of activeBonds(sq.members)){const key=bondKey(bond.ids);s.friendship[key]=(s.friendship[key]||0)+(s.town>=1?2:1);}
  return {gold,xp,herbs,ore,wood,at,finished};}
 function completeNode(s:State,sq:Squad,q:Quest,at:number){const r=sq.run!;discover(s,sq,at);event(r,at,'clear',targetName(q,r.node)+'をクリア！');const finished=r.node===r.nodes-1;
  const gain=(r.node+1)%3===0||finished?reward(s,sq,q,at,finished):null;
- if(gain)event(r,at,'clear','区間の報酬を確保！ +'+gain.gold+' G · 木材 +'+gain.wood);
+ if(gain)event(r,at,'clear','区間の報酬を確保！ +'+String(gain.gold)+' G · 木材 +'+String(gain.wood));
  if(!finished){r.node++;r.phase='move';r.phaseAt=at;r.hp=Math.min(r.maxHp,r.hp+r.maxHp*(s.town>=2?.2:.15));configureTarget(r,q);schedule(s,sq,r,at);return gain;}
  sq.lastQuest??=q.id;
  if(sq.repeat&&!q.companion&&q.availability!=='once'&&!isPrologueQuest(q.id)){const {events,cheer,scene}=r;sq.run=makeRun(s,sq,q,at,r.round+1);sq.run.events=events;sq.run.cheer=cheer;sq.run.scene=scene;}else sq.run=null;return gain;
 }
 function combination(s:State,sq:Squad,at:number){const r=sq.run!,bs=activeBonds(sq.members);r.comboAt=at+14500;if(!bs.length)return;const b=bs[(r.node+r.round)%bs.length],lv=bondLevel(s,b.ids),q=allQuests.find(q=>q.id===r.quest)!,k=encounter(q,r.node);
  const lines=lv===1?b.lines:lv===2?[heroes.find(h=>h.id===b.ids[0])!.name+'「いつもの合図で、いくよ！」',heroes.find(h=>h.id===b.ids[1])!.name+'「息はぴったりだ！」']:[heroes.find(h=>h.id===b.ids[0])!.name+'「この先も、一緒に！」',heroes.find(h=>h.id===b.ids[1])!.name+'「どんな冒険だって！」'];
- r.scene={title:b.name+' · 連携 Lv.'+lv,lines:together(b.ids)?coupleCombo(s,r.node+r.round):lines,at,kind:'combo'};
+ r.scene={title:b.name+' · 連携 Lv.'+String(lv),lines:together(b.ids)?coupleCombo(s,r.node+r.round):lines,at,kind:'combo'};
  const damage=Math.round(r.targetMax*(.12+.035*lv));r.target=Math.max(0,r.target-damage);
  if(b.ids.includes('mira')){r.hp=Math.min(r.maxHp,r.hp+r.maxHp*.15);r.ward+=Math.ceil(r.maxHp*.08);}
  event(r,at,'combo',b.name+'！ '+(k==='battle'?'連携攻撃':'息の合った作業'),damage,b.ids[0]);
@@ -122,7 +122,7 @@ function clearPrologueDetour(s:State,sq:Squad){
  r.detour=null;if(r.phase!=='rest')r.nextAt=nextEvent(r);
 }
 export function settle(input:State,now:number){const s=structuredClone(input);const elapsed=Math.max(0,now-s.updatedAt);const end=s.updatedAt+Math.min(elapsed,43200000);const rewards:Rewards={count:0,gold:0,xp:0,herbs:0,ore:0,wood:0,offline:elapsed>90000,capped:elapsed>43200000};
- for(const sq of s.squads){clearPrologueDetour(s,sq);let count=0;while(sq.run&&sq.run.nextAt<=end){const gain=step(s,sq);if(gain){if(gain.finished){count++;rewards.count++;}rewards.gold+=gain.gold;rewards.xp+=gain.xp;rewards.herbs+=gain.herbs;rewards.ore+=gain.ore;rewards.wood+=gain.wood;}}if(count)addLog(s,`${sq.name}が ${count} 件の依頼を達成。報酬を受け取りました。`,end);
+ for(const sq of s.squads){clearPrologueDetour(s,sq);let count=0;while(sq.run&&sq.run.nextAt<=end){const gain=step(s,sq);if(gain){if(gain.finished){count++;rewards.count++;}rewards.gold+=gain.gold;rewards.xp+=gain.xp;rewards.herbs+=gain.herbs;rewards.ore+=gain.ore;rewards.wood+=gain.wood;}}if(count)addLog(s,`${sq.name}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`,end);
  if(sq.run){if(rewards.capped){const shift=elapsed-43200000;sq.run.nextAt+=shift;sq.run.phaseAt+=shift;sq.run.started+=shift;sq.run.energyAt+=shift;sq.run.enemyAt+=shift;sq.run.comboAt+=shift;if(sq.run.detour){sq.run.detour.at+=shift;sq.run.detour.finishAt+=shift;}sq.run.scene=null;for(const a of sq.run.actors){a.nextAt+=shift;a.arrivesAt+=shift;}sq.run.events=[];}}}
  s.updatedAt=Math.max(now,s.updatedAt);rewards.gold=s.gold-input.gold;rewards.herbs=s.herbs-input.herbs;rewards.ore=s.ore-input.ore;rewards.wood=s.wood-input.wood;return {state:s,rewards};}
 export function migrate(raw:State|V3State|V2State|LegacyState,now:number):State{
@@ -143,11 +143,11 @@ export function act(input:State,a:Action,now:number){const s=structuredClone(inp
  case 'stop':if(sq.run)sq.lastQuest??=sq.run.quest;sq.run=null;addLog(s,`${sq.name}が帰還。達成済みの報酬は持ち帰りました。`,now);break;
  case 'party':{if(inPrologue(s))throw Error('今はアリアとレオンで交易に向かいます。');if(sq.run)throw Error('帰還してから編成を変更できます。');const ids=a.members;if(!Array.isArray(ids)||ids.length<1||ids.length>Math.max(memberLimit(s),sq.members.length)||new Set(ids).size!==ids.length||!ids.every(id=>s.owned.includes(id)))throw Error('編成する仲間を確認してください。');if(s.squads.some(p=>p.id!==sq.id&&p.members.some(id=>ids.includes(id))))throw Error('他の隊の仲間は、その隊の編成から外してください。');sq.members=ids;break;}
  case 'repeat':if(typeof a.value!=='boolean')throw Error('設定を確認してください。');sq.repeat=a.value;break;
- case 'newSquad':{if(inPrologue(s))throw Error('今はふたりで冒険を進めましょう。');if(s.squads.length>=squadLimit(s))throw Error('仲間が4人で2隊、6人で3隊を編成できます。');const id=s.owned.find(id=>s.squads.every(p=>!p.members.includes(id)));if(!id)throw Error('待機中の仲間を1人用意してください。');const n=s.squads.length+1;s.squads.push({id:`party-${n}`,name:n===2?'木漏れ日の隊':'星渡りの隊',members:[id],repeat:true,run:null});break;}
+ case 'newSquad':{if(inPrologue(s))throw Error('今はふたりで冒険を進めましょう。');if(s.squads.length>=squadLimit(s))throw Error('仲間が4人で2隊、6人で3隊を編成できます。');const id=s.owned.find(id=>s.squads.every(p=>!p.members.includes(id)));if(!id)throw Error('待機中の仲間を1人用意してください。');const n=s.squads.length+1;s.squads.push({id:`party-${String(n)}`,name:n===2?'木漏れ日の隊':'星渡りの隊',members:[id],repeat:true,run:null});break;}
  case 'assist':{const r=sq.run;if(!r)throw Error('冒険中に応援できます。');r.hits++;
  if(a.mode==='heal'){const heal=Math.max(3,Math.ceil(r.maxHp*.025));r.hp=Math.min(r.maxHp,r.hp+heal);if(r.phase==='rest'){r.phase='move';r.phaseAt=now;configureTarget(r,allQuests.find(q=>q.id===r.quest)!);schedule(s,sq,r,now);}event(r,now,'heal',inPrologue(s)?'手助けで回復！':'団長の応援で回復！',heal);}
  else {if(r.phase==='rest')throw Error('回復で立て直しましょう。');const q=allQuests.find(q=>q.id===r.quest)!;const hit=Math.max(2,Math.round(2+s.gear+stats(s,sq)[q.kind==='採取'?0:q.kind==='護衛'?1:2]*.035));r.target=Math.max(0,r.target-hit);event(r,now,'assist',inPrologue(s)?'手助け！':'団長の手助け！',hit);}
- if(!inPrologue(s))cheer(s,sq,now);if(r.target<=0){const q=allQuests.find(q=>q.id===r.quest)!;const gain=completeNode(s,sq,q,now);if(gain)addLog(s,sq.name+'が区間の報酬を確保！ +'+gain.gold+' G',now);}break;}
+ if(!inPrologue(s))cheer(s,sq,now);if(r.target<=0){const q=allQuests.find(q=>q.id===r.quest)!;const gain=completeNode(s,sq,q,now);if(gain)addLog(s,sq.name+'が区間の報酬を確保！ +'+String(gain.gold)+' G',now);}break;}
  case 'detour':{if(inPrologue(s))throw Error('寄り道はまだできません。');const r=sq.run,d=r?.detour;if(!r||!d||d.claimed||now<d.at||r.phase==='rest')throw Error('寄り道を見つけたら指示できます。');d.finishAt=Math.min(d.finishAt,now+700);const helper=r.actors.find(a=>a.hero===d.hero)!;helper.nextAt=Math.min(helper.nextAt,d.finishAt+500);r.nextAt=nextEvent(r);break;}
  case 'build':{if(inPrologue(s))throw Error('拠点はまだ作れません。');const cost=s.town===0?{gold:120,wood:12,ore:0,herbs:0,clears:1}:{gold:600,wood:60,ore:12,herbs:20,clears:3};if(s.town>=2||s.clears<cost.clears||s.gold<cost.gold||s.wood<cost.wood||s.ore<cost.ore||s.herbs<cost.herbs)throw Error('建設に必要な材料か達成数が足りません。');s.gold-=cost.gold;s.wood-=cost.wood;s.ore-=cost.ore;s.herbs-=cost.herbs;s.town++;addLog(s,s.town===1?'酒場が完成！ 仲間たちの帰る場所ができた。':'鍛冶場と薬草園が完成！ 拠点に暮らしが広がった。',now);break;}
  case 'recruit':throw Error('仲間は専用クエストの達成で加入します。「新しい出会い」から支度しましょう。');
