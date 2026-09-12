@@ -15,7 +15,7 @@ const serverSnapshot=()=>'[]';
 
 // Hint acknowledgements belong to this device and adventure, separate from game saves.
 export function useJourneyHints(profileId:string|undefined,goal:JourneyGoal){
- const key='starlit-journey-hints-v1:'+profileId;
+ const key=profileId?'starlit-journey-hints-v1:'+profileId:'starlit-journey-hints-v1:unassigned';
  const snapshot=useCallback(()=>read(key),[key]);
  const raw=useSyncExternalStore(subscribe,snapshot,serverSnapshot);
  const hint=journeyHintKey(goal);

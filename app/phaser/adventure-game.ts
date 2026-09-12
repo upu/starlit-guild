@@ -123,7 +123,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
    const x=dest.x*width,y=dest.y*height-spriteSize(width,height)*.45,color=eventColor(event);
    if(event.amount){
     const positive=event.kind==='heal'||event.kind==='gather'||event.kind==='assist'&&!frame.target?.battle;
-    const text=this.add.text(x+(this.seen.size%3-1)*15,y-18,(positive?'+':'−')+event.amount,{fontFamily:font,fontSize:event.kind==='burst'?'30px':'23px',fontStyle:'bold',color:'#'+color.toString(16).padStart(6,'0'),stroke:'#123229',strokeThickness:5}).setOrigin(.5).setDepth(55);
+    const text=this.add.text(x+(this.seen.size%3-1)*15,y-18,(positive?'+':'−')+String(event.amount),{fontFamily:font,fontSize:event.kind==='burst'?'30px':'23px',fontStyle:'bold',color:'#'+color.toString(16).padStart(6,'0'),stroke:'#123229',strokeThickness:5}).setOrigin(.5).setDepth(55);
     this.transient(text,{y:y-(reduced?18:58),alpha:0},1000-age);
    }
    if(reduced||age>650)return;
@@ -227,7 +227,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
     if(['hit','skill','heal','hurt','burst','combo','assist','gather'].includes(event.kind))this.eventEffect(event,frame,now);
    }
    if(frame.cutin){
-    const key=input.squad.id+':'+frame.cutin.kind+':'+frame.cutin.at;
+    const key=input.squad.id+':'+frame.cutin.kind+':'+String(frame.cutin.at);
     if(key!==this.cutinKey){
      this.cutinKey=key;
      if(!reduced){

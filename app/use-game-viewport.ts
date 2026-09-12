@@ -18,7 +18,7 @@ export function useGameViewport(){
    const keyboard=!!editable&&!!viewport&&viewport.height<window.innerHeight-100;
    const height=gameViewportHeight(window.innerHeight,viewport?.height,keyboard);
    if(height===undefined){root.style.removeProperty('--game-height');root.style.removeProperty('--game-top');}
-   else{root.style.setProperty('--game-height',`${Math.round(height)}px`);root.style.setProperty('--game-top',`${viewport?.offsetTop||0}px`);}
+   else{root.style.setProperty('--game-height',`${String(Math.round(height))}px`);root.style.setProperty('--game-top',`${String(viewport?.offsetTop||0)}px`);}
    root.classList.toggle('game-keyboard-open',keyboard);
   };
   const schedule=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(update);};

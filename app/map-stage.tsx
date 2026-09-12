@@ -14,7 +14,7 @@ export function MapStage({state,squad,now,onAction,ready,startQuest,paused=false
  return <div className="map-shell">
   <div className="adventure-map phaser-map" data-phase={frame.phase} style={{backgroundImage:`url(${frame.background})`}} role={run?'group':undefined} tabIndex={run&&ready&&!paused?0:undefined} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();perform('help');}else if(e.key.toLowerCase()==='h'){e.preventDefault();perform('heal');}}} aria-label={run?`${q.name}の探索マップ。タップで手助け、仲間をタップで回復。キーボードでは Enter で手助け、H で回復。`:`${q.region}のキャンプ`}>
    <PhaserAdventure input={input} onAction={onAction}/>
-   <div className="map-heading"><span className="eyebrow">{run?'EXPLORING':'A NEW ADVENTURE'}</span><h2>{q.region}</h2><span>{run?`${run.round} 周目 · 地点 ${run.node+1}/${run.nodes} · ${activity}`:state.clears===0?'ふたりの小さな冒険が、ここから始まる。':'支度ができたら、次の冒険へ。'}</span></div>
+   <div className="map-heading"><span className="eyebrow">{run?'EXPLORING':'A NEW ADVENTURE'}</span><h2>{q.region}</h2><span>{run?`${String(run.round)} 周目 · 地点 ${String(run.node+1)}/${String(run.nodes)} · ${activity}`:state.clears===0?'ふたりの小さな冒険が、ここから始まる。':'支度ができたら、次の冒険へ。'}</span></div>
    {run&&<>
     <BurstScene run={run} members={squad.members} now={now}/>
     <div className="map-journey" aria-hidden="true"><span>旅の道のり</span><div>{Array.from({length:run.nodes},(_,i)=><i key={i} className={i<run.node?'complete':i===run.node?'current':''}/>)}</div></div>
