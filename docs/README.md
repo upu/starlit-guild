@@ -26,10 +26,15 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 
 - [世界観と物語](world-and-story.md) — 合意した核、地理、塔と苔などの共通設定
 - [第一部プロット](story-part-1.md) — 第一部の出来事と因果
-- [キャラクター設定](characters.md) — 人物の性格、口調、関係性
+- [キャラクター一覧・設定](characters/README.md) — キャラ別ファイル、名前・別名・ID、設定の区分
+- [関係性と掛け合い](relationships/README.md) — 組み合わせごとの関係性と既存シーン
+- [アリアとレオン](relationships/aria-leon.md) — ふたりの関係性、出身、性格と成長
+- [マッドハロウィン](factions/mad-halloween.md) — 組織の方針、所属、未設定事項
 - [物語・会話の制作指針](story-writing.md) — 場面の書き方、アリアとレオンの温度、表示方針
 - [スチル制作記録](story-art.md) — 物語スチルの場面と生成記録
 - [スチル一覧](story-art-gallery.md) — 採用済みスチルの確認
+
+人物を追加するときは [共通書式](characters/_template.md) を使う。シナリオ制作では、一覧 → 登場人物 → 関係性・組織 → 対象プロット・既存シーンの順に必要な資料をたどる。旧 [characters.md](characters.md) は過去のリンク向けの案内として残す。
 
 ## 描画・音・アート
 
