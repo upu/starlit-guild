@@ -87,6 +87,10 @@ export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=
  </div>;
 }
 
+function sameBanter(left:StoryLine[],right:StoryLine[]){
+ return left.length===right.length&&left.every((entry,i)=>entry.speaker===right[i].speaker&&entry.text===right[i].text);
+}
+
 export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(lines:StoryLine[])=>void;paused?:boolean}){
  const [exchange,setExchange]=useState({lines,index:0,history:lines.slice(0,1),turn:0});
  const dialogue=useRef<HTMLButtonElement>(null);
@@ -95,8 +99,10 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
  const latest=useRef(lines);
  useEffect(()=>{latest.current=lines;},[lines]);
  const line=exchange.lines.at(exchange.index);
+ // Compare content, not the new array journeyBanter returns on every clock tick.
+ const hasNext=exchange.index+1<exchange.lines.length||(lines.length>0&&!sameBanter(exchange.lines,lines));
  useEffect(()=>{
-  if(paused||!line)return;
+  if(paused||!hasNext)return;
   let timer:ReturnType<typeof setTimeout>;
   const schedule=()=>{
    clearTimeout(timer);
@@ -104,14 +110,15 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
    timer=setTimeout(()=>{
     setExchange(current=>{
      const continuing=current.index+1<current.lines.length,index=continuing?current.index+1:0,nextLines=continuing?current.lines:latest.current,nextLine=nextLines.at(index);
-     // Bound the long-running idle log without removing visible short exchanges.
-     return {lines:nextLines,index,history:[...current.history,...(nextLine?[nextLine]:[])].slice(-100),turn:current.turn+1};
+     if(!nextLine||(!continuing&&sameBanter(current.lines,nextLines)))return current;
+     // Keep completed exchanges visible, but only append when there is new dialogue.
+     return {lines:nextLines,index,history:[...current.history,nextLine].slice(-100),turn:current.turn+1};
     });
-   },Math.max(3500,line.text.length*100));
+   },Math.max(3500,(line?.text.length||0)*100));
   };
   schedule();document.addEventListener('visibilitychange',schedule);
   return ()=>{clearTimeout(timer);document.removeEventListener('visibilitychange',schedule);};
- },[exchange,paused,line]);
+ },[exchange,paused,line,hasNext]);
  if(!line)return null;
  const speaker=characters.find(h=>h.id===line.speaker);
  return <button ref={dialogue} className="journey-banter journey-banter-history" onScroll={event=>{const el=event.currentTarget;followLatest.current=el.scrollHeight-el.scrollTop-el.clientHeight<8;}} onClick={()=> { onRead(exchange.lines); }} aria-label="道中の掛け合いを読む">
