@@ -8,5 +8,5 @@ export function Portrait({index,size=56}:{index:number;size?:number}){
  const [cx,cy]=centers[index]||[.5,.3],crop=original?.42:.54;
  const cols=original?1:4,rows=original?1:3;
  const x=((original?0:index%4)+cx-crop/2)/cols,y=((original?0:Math.floor(index/4))+Math.max(0,cy-crop/2))/rows;
- return <span className="face-portrait" aria-hidden="true" style={{width:size,height:size,backgroundImage:`url(${face||original||'/sprites.png'})`,backgroundSize:face?'cover':`${cols/crop*100}% ${rows/crop*100}%`,backgroundPosition:face?'center':`${x/(1-crop/cols)*100}% ${y/(1-crop/rows)*100}%`}}/>;
+ return <span className="face-portrait" aria-hidden="true" style={{width:size,height:size,backgroundImage:`url(${face||original||'/sprites.png'})`,backgroundSize:face?'cover':`${String(cols/crop*100)}% ${String(rows/crop*100)}%`,backgroundPosition:face?'center':`${String(x/(1-crop/cols)*100)}% ${String(y/(1-crop/rows)*100)}%`}}/>;
 }
