@@ -10,11 +10,14 @@ Node.js 22.13.0 以上。
 npm run dev
 npm run build
 npm run lint
+npm run lint:fix
 node --test tests/*.test.mjs
 npx tsc --noEmit
 ```
 
 `npm run dev` はローカル開発、`npm run build` は公開用ビルド。テストは新旧シミュレーション、移行、セーブ形式などを含む。
+
+LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限を使う。既存コードを段階的に直す期間は検出結果をwarningとして表示し、warningが0件になった時点でerrorへ引き上げる。`lint:fix`の適用後は差分とテストを確認する。
 
 ## 実装の分担
 
