@@ -7,6 +7,7 @@ import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {initialState,initialPrologueState,act,settle,testState} from '../lib/game.ts';
 import {stories} from '../lib/stories.ts';
+import {prologueStages} from '../lib/prologue.ts';
 import {madHalloweenStories} from '../lib/mad-halloween-stories.ts';
 import {characterEncounters} from '../lib/character-encounters.ts';
 import {storyArt,storyArtAt} from '../lib/story-art.ts';
@@ -19,7 +20,7 @@ await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bun
 const {MapStage}=await import(output.href);
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
 await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
-const {StoryReader,StoryLines,StoryLibrary,Banter}=await import(storyOutput.href);
+const {StoryReader,StoryLines,StoryLibrary,StoryAlbum,Banter}=await import(storyOutput.href);
 const phoneOutput=new URL('../work/phone-render.mjs',import.meta.url);
 await build({entryPoints:['app/phone-game.tsx'],outfile:fileURLToPath(phoneOutput),bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
 const {PhoneGame}=await import(phoneOutput.href);
@@ -27,10 +28,10 @@ const {PhoneGame}=await import(phoneOutput.href);
 test('dialogue and banter show close-up portraits and the trade still appears from the first page',()=>{
  const story=stories.find(st=>st.id==='village-trade-return');
  const first=renderToStaticMarkup(createElement(StoryReader,{story,ready:true,onRead:()=>true,onClose:()=>{}}));
- for(const id of ['aria','leon'])assert.ok(first.includes('/portraits/'+id+'.png'));
+ assert.ok(first.includes(story.lines[0].text));assert.ok(!first.includes(story.lines[1].text));
  const lines=[{speaker:'aria',text:'お疲れさま。'},{speaker:'leon',text:'無事に着いたな。'},{text:'ふたりは顔を見合わせた。'}],before=structuredClone(lines);
  const chat=renderToStaticMarkup(createElement(Banter,{lines,onRead:()=>{}}));
- assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/leon.png'));assert.ok(!chat.includes('/portraits/aria.png'));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
+ assert.match(chat,/face-portrait/);assert.ok(chat.includes('/portraits/aria.png'));assert.ok(!chat.includes('/portraits/leon.png'));assert.ok(!chat.includes(lines[1].text));assert.doesNotMatch(chat,/class="sprite/);assert.deepEqual(lines,before);
  for(let line=0;line<story.lines.length;line+=3)assert.equal(storyArtAt(story.id,line)?.src,'/stories/village-trade-handover.png');
  assert.ok(first.includes('/stories/village-trade-handover.png'));
 });
@@ -40,7 +41,7 @@ test('prologue screen guides to quests, hides advanced navigation and uses one b
  const fresh=initialPrologueState(1000),html=render(fresh);
  assert.match(html,/ここから/);
  assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエスト<|>クエストを選ぶ<|何度でも/);
- assert.match(html,/aria-label="旅の手帳：思い出・ヒント・設定"/);
+ assert.match(html,/aria-label="旅の手帳：ヒント・思い出・アルバム・設定"/);
  assert.doesNotMatch(html,/はじまりの隊|団長の応援|>編成<|>帰還<|>パーティ<|>拠点<|>思い出<|>出発する</);
  const running=render(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000));
  assert.match(running,/探索マップ/);assert.doesNotMatch(running,/phaser-assist-controls|>手助けする<|>回復<|>寄り道</);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);
@@ -48,6 +49,25 @@ test('prologue screen guides to quests, hides advanced navigation and uses one b
  const after=render(act(cleared,{type:'readStory',id:'village-trade-return'},3601000));assert.doesNotMatch(after,/quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
  const legacy=render(initialState(1000));assert.match(legacy,/>パーティ</);assert.match(legacy,/>拠点</);
  assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
+});
+
+test('stage progress retains the completed scenery until the next departure',()=>{
+ const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:s.updatedAt,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
+ let state=initialPrologueState(1000),background='/forest.png';
+ for(const stage of prologueStages){
+  const idle=render(state);assert.ok(idle.includes(background));assert.doesNotMatch(idle,/第一部 ·|undefined|>パーティ<|>拠点</);
+  state=act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);
+  const running=render(state);assert.match(running,/探索マップ/);
+  if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+stage.quest+'.png'));
+  if(stage.quest==='evening-trade-road'){
+   const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
+   assert.match(render(battle),/魔物と戦闘中/);assert.doesNotMatch(render(battle),/いたずらを阻止中/);
+  }
+  state=settle(state,state.updatedAt+3600000).state;
+  state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
+  background=stage.quest==='village-trade'?'/forest.png':'/stages/'+stage.quest+'.png';
+  assert.ok(render(state).includes(background));
+ }
 });
 
 test('guest stills reveal during their scene and enter the gallery only after reading',()=>{
@@ -60,7 +80,8 @@ test('guest stills reveal during their scene and enter the gallery only after re
   assert.ok(!before.includes(storyArt[scene.id].src),'later action is not a gallery spoiler');
   const firstPage=renderToStaticMarkup(createElement(StoryReader,{story:scene,ready:true,onRead:()=>true,onClose:()=>{}}));
   assert.ok(!firstPage.includes(storyArt[scene.id].src));
-  state.story.read.push(scene.id);assert.ok(library().includes(storyArt[scene.id].src));
+  state.story.read.push(scene.id);assert.ok(!library().includes(storyArt[scene.id].src));
+  const album=renderToStaticMarkup(createElement(StoryAlbum,{state,onBack:()=>{}}));assert.ok(album.includes(storyArt[scene.id].src));
  }
 });
 

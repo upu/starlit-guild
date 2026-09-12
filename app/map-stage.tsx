@@ -10,7 +10,7 @@ import {heroes,type State,type Squad,type Action} from '@/lib/game';
 export function MapStage({state,squad,now,onAction,ready,startQuest,paused=false}:{state:State;squad:Squad;now:number;onAction:(a:Action)=>void;ready:boolean;startQuest:string;paused?:boolean}){
  const input={squad,now,ready,startQuest,paused,detours:!inPrologue(state)},frame=adventureFrame(input),run=squad.run,q=frame.quest;
  function perform(intent:AdventureIntent){const action=adventureAction(input,intent);if(action)onAction(action);}
- const activity=frame.phase==='move'?'次の地点へ移動中':frame.phase==='rest'?'木陰で休憩中':frame.target?.battle?(q.enemyName?'いたずらを阻止中':'魔物と戦闘中'):frame.target?.kind==='gather'?'素材を採取中':q.escortTarget?'荷物を運搬中':'旅人を護衛中';
+ const activity=frame.phase==='move'?'次の地点へ移動中':frame.phase==='rest'?'ひと休み中':frame.target?.battle?([12,13].includes(q.enemy)?'いたずらを阻止中':'魔物と戦闘中'):frame.target?.kind==='gather'?'素材を採取中':q.escortTarget?'荷物を運搬中':'旅人を護衛中';
  return <div className="map-shell">
   <div className="adventure-map phaser-map" data-phase={frame.phase} style={{backgroundImage:`url(${frame.background})`}} role={run?'group':undefined} tabIndex={run&&ready&&!paused?0:undefined} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();perform('help');}else if(e.key.toLowerCase()==='h'){e.preventDefault();perform('heal');}}} aria-label={run?`${q.name}の探索マップ。タップで手助け、仲間をタップで回復。キーボードでは Enter で手助け、H で回復。`:`${q.region}のキャンプ`}>
    <PhaserAdventure input={input} onAction={onAction}/>
