@@ -70,8 +70,8 @@ test('banter keeps a complete exchange while the route changes and pauses under 
  const later=[{speaker:'aria',text:'さらに次の発言'}];h.render({...props,lines:later});h.tick();
  assert.ok(h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));assert.ok(h.text().includes(next[0].text));assert.ok(h.text().includes(later[0].text));
  const viewport={scrollHeight:900,clientHeight:220,scrollTop:100};h.find('button').props.ref.current=viewport;
- h.find('button').props.onScroll({currentTarget:viewport});h.tick();assert.equal(viewport.scrollTop,100,'reading history is not interrupted');
- viewport.scrollTop=680;h.find('button').props.onScroll({currentTarget:viewport});viewport.scrollHeight=1000;h.tick();assert.equal(viewport.scrollTop,1000,'following resumes from the bottom');
+ h.find('button').props.onScroll({currentTarget:viewport});h.render({...props,lines:[{speaker:'leon',text:'歩幅を合わせよう。'}]});h.tick();assert.equal(viewport.scrollTop,100,'reading history is not interrupted');
+ viewport.scrollTop=680;h.find('button').props.onScroll({currentTarget:viewport});viewport.scrollHeight=1000;h.render({...props,lines:[{speaker:'aria',text:'うん、一緒に行こう。'}]});h.tick();assert.equal(viewport.scrollTop,1000,'following resumes from the bottom');
 });
 
 test('memories interleave departure and ending by stage; album stays separate and returns to the handbook',()=>{
@@ -84,4 +84,60 @@ test('memories interleave departure and ending by stage; album stays separate an
  assert.ok(!h.text().includes('アルバム'));
  let returned=false;const album=harness('StoryAlbum',{state,onBack:()=>{returned=true;}});
  assert.ok(album.find('img'));album.click('旅の手帳へ戻る');assert.ok(returned);
+});
+
+test('banter stops after the idle exchange even with fresh arrays on every clock tick',()=>{
+ const lines=[{speaker:'aria',text:'準備できた？'},{speaker:'leon',text:'ああ。アリアを待ってた。'}],before=structuredClone(lines);
+ let opened;const props={lines,onRead:value=>{opened=value;}};
+ const h=harness('Banter',props);assert.equal(h.timerCount(),1);
+ for(let i=0;i<10;i++)h.render({...props,lines:structuredClone(lines)});
+ h.tick();const completed=h.text();assert.equal(h.timerCount(),0);
+ for(let i=0;i<10000;i++){
+  h.render({...props,lines:structuredClone(lines)});
+  assert.equal(h.timerCount(),0);assert.equal(h.text(),completed);
+ }
+ for(const entry of lines)assert.equal(h.text().split(entry.text).length-1,1);
+ h.visibility(true);h.visibility(false);assert.equal(h.timerCount(),0);
+ h.render({...props,paused:true});h.render({...props,paused:false});assert.equal(h.timerCount(),0);
+ h.find('button').props.onClick();assert.deepEqual(opened,lines);assert.deepEqual(lines,before);
+});
+
+test('banter resumes for new content, finishes the exchange, and stops again',()=>{
+ const idle=[{speaker:'aria',text:'準備はできたよ。'}],next=[{speaker:'leon',text:'出発しよう。'},{speaker:'aria',text:'うん、行こう！'}];
+ const props={lines:idle,onRead:()=>{}},h=harness('Banter',props);
+ assert.equal(h.timerCount(),0);
+ h.render({...props,lines:next});assert.equal(h.timerCount(),1);
+ h.tick();assert.ok(h.text().includes(next[0].text));assert.ok(!h.text().includes(next[1].text));
+ h.tick();assert.ok(h.text().includes(next[1].text));assert.equal(h.timerCount(),0);
+ // Returning to an earlier exchange after different dialogue is still allowed.
+ h.render(props);h.tick();assert.equal(h.timerCount(),0);
+ assert.equal(h.text().split(idle[0].text).length-1,2);
+});
+
+test('banter waits for initial dialogue and keeps history when no new lines arrive',()=>{
+ const props={lines:[],onRead:()=>{}},h=harness('Banter',props);
+ assert.equal(h.find('button'),undefined);assert.equal(h.timerCount(),0);
+ const lines=[{speaker:'aria',text:'お待たせ。'},{speaker:'leon',text:'行こうか。'}];
+ h.render({...props,lines});h.tick();h.render(props);h.tick();
+ assert.ok(h.text().includes(lines[0].text));assert.ok(h.text().includes(lines[1].text));assert.equal(h.timerCount(),0);
+ h.render({...props,lines:structuredClone(lines)});assert.equal(h.timerCount(),0);
+});
+
+test('banter compares speakers as well as text and bounds genuine new history',()=>{
+ const text='分かった。',props={lines:[{speaker:'aria',text}],onRead:()=>{}},h=harness('Banter',props);
+ h.render({...props,lines:[{speaker:'leon',text}]});h.tick();assert.equal(h.text().split(text).length-1,2);assert.equal(h.timerCount(),0);
+ for(let i=0;i<105;i++){h.render({...props,lines:[{speaker:'aria',text:`発言-${i}`} ]});h.tick();assert.equal(h.timerCount(),0);}
+ const entries=h.find('banter-copy').props.children;
+ assert.equal(entries.length,100);assert.ok(h.text().includes('発言-104'));assert.ok(!h.text().includes('発言-0'));
+});
+
+test('banter uses the latest pending exchange without replaying one that was withdrawn',()=>{
+ const lines=[{speaker:'aria',text:'待機中。'}],props={lines,onRead:()=>{}},h=harness('Banter',props);
+ h.render({...props,lines:[{speaker:'leon',text:'一時的な会話。'}]});assert.equal(h.timerCount(),1);
+ h.render({...props,lines:structuredClone(lines)});assert.equal(h.timerCount(),0);
+ const next=[{speaker:'leon',text:'新しい道へ。'}];
+ h.render({...props,lines:next,paused:true});assert.equal(h.timerCount(),0);
+ h.visibility(true);h.render({...props,lines:next});assert.equal(h.timerCount(),0);
+ h.visibility(false);assert.equal(h.timerCount(),1);h.tick();assert.equal(h.timerCount(),0);
+ assert.ok(h.text().includes(next[0].text));assert.ok(!h.text().includes('一時的な会話。'));
 });
