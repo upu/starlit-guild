@@ -11,9 +11,24 @@ import {errorMessage,isRecord,parseJson} from '@/lib/external-input';
 export const SAVE_KEY='starlit-guild-v4';
 const LEASE=SAVE_KEY+'-tab',FIVE_MINUTES=300000;
 type CloudCopy={bundle:SaveBundle;at:number};
+type BackupRead=ReturnType<typeof parseBackupReadResponse>;
 function newProfile(test=false):Profile{return {id:crypto.randomUUID(),name:test?'テスト用の冒険':'新しい冒険',test,state:initialPrologueState(Date.now())};}
 function celebrate(before:Parameters<typeof journeyNotice>[0],after:Parameters<typeof journeyNotice>[1]){if(document.visibilityState!=='visible')return;const notice=journeyNotice(before,after);if(notice)toast.success(notice.title,{description:notice.description,duration:4500,id:'journey-moment'});}
 function fresh():SaveBundle{const p=newProfile();return {format:4,deviceId:crypto.randomUUID(),active:p.id,profiles:[p],serial:0,sound:true,cloudAt:0,legacyImported:false};}
+function readableCloudCopies(data:BackupRead){
+ const copies:CloudCopy[]=[];
+ for(const copy of data.backups){try{copies.push({bundle:parseBundle(copy.bundle),at:copy.at});}catch{/* An incompatible backup stays on the server. */}}
+ return copies;
+}
+function importLegacyCopy(data:BackupRead,bundle:SaveBundle){
+ if(!data.legacy||bundle.profiles.length>=12)return true;
+ try{
+  if(!isStoredGameState(data.legacy))throw Error('Invalid legacy save');
+  bundle.profiles.push({id:crypto.randomUUID(),name:'以前の冒険',test:false,state:migrate(data.legacy,Date.now())});
+  toast.info('以前の冒険は「セーブ」に残しました。今は最初から遊べます。');
+  return true;
+ }catch{return false;}
+}
 export function useLocalGame(){
  const [bundle,setBundle]=useState<SaveBundle|null>(null),[clock,setClock]=useState(0),[error,setError]=useState(''),[cloudError,setCloudError]=useState(''),[cloudBusy,setCloudBusy]=useState(false),[copies,setCopies]=useState<CloudCopy[]>([]),[otherTab,setOtherTab]=useState(false),[saved,setSaved]=useState(0),[report,setReport]=useState<Rewards|null>(null);
  const current=useRef<SaveBundle|null>(null),tabId=useRef(''),owner=useRef(false),busy=useRef(false),lastAttempt=useRef(0),mounted=useRef(false);
@@ -31,8 +46,8 @@ export function useLocalGame(){
  },[persist,publish]);
  const refreshCopies=useCallback(async()=>{
   try{const res=await fetch('/api/backup',{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!res.ok)throw Error('クラウドに接続できません。端末の記録でそのまま遊べます。');const raw:unknown=await res.json(),data=parseBackupReadResponse(raw);if(!mounted.current)return;
-   const list:CloudCopy[]=[];for(const copy of data.backups){try{list.push({bundle:parseBundle(copy.bundle),at:copy.at});}catch{/* An incompatible backup stays on the server. */}}setCopies(list);setCloudError('');
-   const b=current.current;if(b&&owner.current&&!b.legacyImported){if(data.legacy&&b.profiles.length<12){try{if(!isStoredGameState(data.legacy))throw Error('Invalid legacy save');b.profiles.push({id:crypto.randomUUID(),name:'以前の冒険',test:false,state:migrate(data.legacy,Date.now())});toast.info('以前の冒険は「セーブ」に残しました。今は最初から遊べます。');}catch{setCloudError('以前の記録はクラウドに残っていますが、この版では読み込めませんでした。');return;}}
+   setCopies(readableCloudCopies(data));setCloudError('');
+   const b=current.current;if(b&&owner.current&&!b.legacyImported){if(!importLegacyCopy(data,b)){setCloudError('以前の記録はクラウドに残っていますが、この版では読み込めませんでした。');return;}
     b.legacyImported=true;publish(b);persist();}
   }catch(error){if(mounted.current)setCloudError(errorMessage(error,'クラウドに接続できません。端末の記録でそのまま遊べます。'));}
  },[persist,publish]);

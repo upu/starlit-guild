@@ -10,7 +10,7 @@ function Impact({event:e,now,point,location,battle}:{event:GameEvent;now:number;
   const [age]=useState(Math.max(0,now-e.at));
   const role=e.hero?heroSkills[e.hero].style:'melee';
   const support=e.kind==='heal'||e.kind==='hurt'||e.kind==='skill'&&!e.amount;
-  const style=e.kind==='hurt'?'hurt':e.kind==='heal'?'healer':!battle&&!support?'gatherer':role;
+  const style=impactStyle(e.kind,battle,support,role);
   const pos=support?location:point;
   return <div className={`battle-impact fx-${style} ${e.kind==='skill'||e.kind==='burst'?'empowered':''}`} style={{left:`${String(pos[0])}%`,top:`${String(pos[1])}%`,'--age':`${String(-age)}ms`} as CSSProperties}>
    <i className="impact-ring"/><i className="impact-cut"/><i className="impact-cut second"/>
@@ -33,6 +33,12 @@ function Finisher({scene,members,now}:{scene:Scene;members:string[];now:number})
    <strong>{scene.title}</strong><div className="finisher-lines">{scene.lines.map((line,i)=><span key={i}>{line}</span>)}</div>
   </div>
  </div>;
+}
+function impactStyle(kind:GameEvent['kind'],battle:boolean,support:boolean,role:string){
+ if(kind==='hurt')return 'hurt';
+ if(kind==='heal')return 'healer';
+ if(!battle&&!support)return 'gatherer';
+ return role;
 }
 function FinisherPortrait({id,index}:{id:string;index:number}){
  const hero=heroes.find(h=>h.id===id);if(!hero)return null;
