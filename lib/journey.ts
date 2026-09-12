@@ -39,7 +39,7 @@ export function partyPreview(s:State,sq:Squad,members:string[],q:Quest){
 }
 export function questAdvice(s:State,sq:Squad,q:Quest){
  if(power(s,sq,q)>=q.need)return 'この隊が得意な依頼です。見守りながら報酬を集めましょう。';
- const strong=[...heroes].filter(h=>s.owned.includes(h.id)&&!sq.members.includes(h.id)&&!s.squads.some(p=>p.id!==sq.id&&p.members.includes(h.id))).sort((a,b)=>b.stats[['採取','護衛','討伐'].indexOf(q.kind)]-a.stats[['採取','護衛','討伐'].indexOf(q.kind)])[0];
+ const strong=[...heroes].filter(h=>s.owned.includes(h.id)&&!sq.members.includes(h.id)&&!s.squads.some(p=>p.id!==sq.id&&p.members.includes(h.id))).sort((a,b)=>b.stats[['採取','護衛','討伐'].indexOf(q.kind)]-a.stats[['採取','護衛','討伐'].indexOf(q.kind)]).at(0);
  return `${q.kind}の力が目安より${q.need-power(s,sq,q)}低めです。${strong?`${strong.name}を含む編成を比べるか、`:''}${s.clears>=3?'装備を強化するか、':''}手助け・回復で支えましょう。条件を満たさなくても出発できます。`;
 }
 export type JourneyNotice={title:string;description:string};

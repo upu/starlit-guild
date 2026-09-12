@@ -8,7 +8,7 @@ export function BattleEffects({run,now,point,location,battle}:{run:Run;now:numbe
 }
 function Impact({event:e,now,point,location,battle}:{event:GameEvent;now:number;point:number[];location:number[];battle:boolean}){
   const [age]=useState(Math.max(0,now-e.at));
-  const role=e.hero?heroSkills[e.hero]?.style:'melee';
+  const role=e.hero?heroSkills[e.hero].style:'melee';
   const support=e.kind==='heal'||e.kind==='hurt'||e.kind==='skill'&&!e.amount;
   const style=e.kind==='hurt'?'hurt':e.kind==='heal'?'healer':!battle&&!support?'gatherer':role;
   const pos=support?location:point;

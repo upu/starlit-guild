@@ -6,6 +6,9 @@ import ts from 'typescript';
 import * as game from '../lib/game.ts';
 import * as format from '../lib/save-format.ts';
 import * as journey from '../lib/journey.ts';
+import * as backupApi from '../lib/backup-api.ts';
+import * as apiInput from '../lib/api-input.ts';
+import * as externalInput from '../lib/external-input.ts';
 
 const code=ts.transpileModule(readFileSync(new URL('../app/use-local-game.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 function harness(){
@@ -13,7 +16,7 @@ function harness(){
  const exports={};
  const storage={getItem:key=>data.get(key)??null,setItem:(key,value)=>{writes++;data.set(key,value);},removeItem:key=>data.delete(key)};
  const doc={visibilityState:'visible',addEventListener:(k,v)=>docEvents.set(k,v),removeEventListener:k=>docEvents.delete(k)};
- const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v}),useCallback:fn=>fn,useEffect:fn=>effects.push(fn)},sonner:{toast:{success:()=>{},error:()=>{},info:()=>{}}},'@/lib/game':game,'@/lib/save-format':format,'@/lib/journey':journey,'@/lib/sound':{setSound:()=>{},sound:()=>{},soundEvents:()=>{},unlockSound:()=>{}}};
+ const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v}),useCallback:fn=>fn,useEffect:fn=>effects.push(fn)},sonner:{toast:{success:()=>{},error:()=>{},info:()=>{}}},'@/lib/game':game,'@/lib/save-format':format,'@/lib/journey':journey,'@/lib/backup-api':backupApi,'@/lib/api-input':apiInput,'@/lib/external-input':externalInput,'@/lib/sound':{setSound:()=>{},sound:()=>{},soundEvents:()=>{},unlockSound:()=>{}}};
  const context={exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];},structuredClone,crypto,AbortSignal,Date:class extends Date{static now(){return now;}},localStorage:storage,document:doc,window:{addEventListener:(k,v)=>winEvents.set(k,v),removeEventListener:k=>winEvents.delete(k)},setTimeout:fn=>{initializers.push(fn);return initializers.length;},clearTimeout:()=>{},setInterval:(fn,ms)=>{timers.push({fn,ms});return timers.length;},clearInterval:()=>{},fetch:()=>{requests++;return new Promise(()=>{});}};
  vm.runInNewContext(code,context);const hook=exports.useLocalGame();effects.forEach(fn=>fn());initializers.forEach(fn=>fn());
  const key=exports.SAVE_KEY;

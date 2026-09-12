@@ -30,8 +30,8 @@ export function adventureFrame(input:AdventureInput,now=input.now){
   let x=run?target.x-.17*(1-progress):squad.members.length===1?.5:.30+i*.40/Math.max(1,squad.members.length-1);
   let y=run?target.y+.08*(1-progress):.65+(i%2)*.03;
   const detour=input.detours===false?null:run?.detour;
-  const exploring=!!detour&&detour.hero===id&&detour.node===run?.node&&!detour.claimed&&now>=detour.at&&run?.phase!=='rest';
-  if(exploring&&detour){const t=clamp((now-detour.at)/1400);x+=(.54-x)*t;y+=(.82-y)*t;}
+  let exploring=false;
+  if(run&&detour&&detour.hero===id&&detour.node===run.node&&!detour.claimed&&now>=detour.at&&run.phase!=='rest'){exploring=true;const t=clamp((now-detour.at)/1400);x+=(.54-x)*t;y+=(.82-y)*t;}
   return {id,name:hero.name,sprite:hero.sprite,role,x,y,walking,exploring,attack:exploring?0:attack,hit:lastHit};
  });
  const detour=input.detours===false?null:run?.detour;
@@ -58,7 +58,7 @@ export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=
 
 export function adventureAssets(frame:AdventureFrame){
  const assets=new Set(['/sprites.png',frame.background,'/items/chest.png','/items/herb.png','/items/spirit.png']);
- for(const m of frame.members){assets.add(spriteAsset(m.sprite));if(heroSheets[m.id]?.ready)assets.add(heroSheets[m.id].asset);}
+ for(const m of frame.members){assets.add(spriteAsset(m.sprite));const sheet=heroSheets[m.id];if(sheet?.ready)assets.add(sheet.asset);}
  if(frame.target)assets.add(frame.target.asset);
  if(frame.quest.companion){const guest=heroes.find(h=>h.id===frame.quest.companion);if(guest)assets.add(spriteAsset(guest.sprite));}
  return [...assets];
@@ -80,6 +80,6 @@ export function eventColor(event:GameEvent){
  if(event.kind==='heal')return 0x9ff0c2;
  if(event.kind==='hurt')return 0xf1a18c;
  if(event.kind==='burst'||event.kind==='combo')return 0xffdf83;
- const role=event.hero?heroSkills[event.hero]?.style:'';
+ const role=event.hero?heroSkills[event.hero].style:'';
  return role==='mage'?0xc4b1ff:role==='ranged'?0xc9f9ac:role==='bard'?0xf1b6db:0xffe9b3;
 }

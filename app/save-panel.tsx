@@ -10,6 +10,7 @@ import {toast} from 'sonner';
 import {MusicSettings} from './music-settings';
 import type {useGameMusic} from './use-game-music';
 import type {useLocalGame} from './use-local-game';
+import {errorMessage} from '@/lib/external-input';
 type Game=ReturnType<typeof useLocalGame>;
 export function SavePanel({game,music}:{game:Game;music:ReturnType<typeof useGameMusic>}){
  const [open,setOpen]=useState(false),[showCloud,setShowCloud]=useState(false);const file=useRef<HTMLInputElement>(null);
@@ -20,7 +21,7 @@ export function SavePanel({game,music}:{game:Game;music:ReturnType<typeof useGam
  </TabsContent><TabsContent value="files"><section className="save-section"><h3>ファイルにも保管</h3><p>ブラウザーのデータを消す前や、別の端末へ移すときに。読み込みは別の記録として追加します。</p><div className="save-buttons"><button className="outline" onClick={game.download}><Download size={15}/>この記録を保存</button><button className="outline" disabled={game.otherTab} onClick={()=>file.current?.click()}><Upload size={15}/>ファイルを読み込む</button></div><small>保存する記録：{profile?.name}。ファイルには、この記録の進行が入ります。</small></section>
  </TabsContent><TabsContent value="settings"><MusicSettings music={music} disabled={game.otherTab}/><label className="switch-row"><span><Volume2 size={15}/> 効果音</span><Switch checked={bundle.sound} onCheckedChange={game.toggleSound} disabled={game.otherTab} aria-label="効果音"/></label><small>{bundle.sound?'手助けや報酬の効果音が鳴ります。':'効果音はオフです。'}</small><TestControls game={game} onAdjust={()=> { setOpen(false); }}/></TabsContent></Tabs>}
  {!bundle&&<button onClick={()=>file.current?.click()}><Upload size={15}/>保存ファイルから復元</button>}
- <input type="file" accept="application/json,.json" hidden ref={file} onChange={e=>{const f=e.target.files?.[0];if(f)void game.importFile(f).then(()=> { setOpen(false); }).catch(e=>toast.error((e as Error).message));e.target.value=''}}/>
+ <input type="file" accept="application/json,.json" hidden ref={file} onChange={e=>{const f=e.target.files?.[0];if(f)void game.importFile(f).then(()=> { setOpen(false); }).catch((error:unknown)=>toast.error(errorMessage(error,'保存ファイルを読み込めませんでした。')));e.target.value=''}}/>
  </DialogContent></Dialog>
 }
 export function TestControls({game,onAdjust}:{game:Game;onAdjust:()=>void}){

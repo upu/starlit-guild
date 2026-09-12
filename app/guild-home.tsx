@@ -10,7 +10,7 @@ export function GuildHome({state:s,now,ready,onAction,onStory}:{state:State;now:
  const home=heroes.filter(h=>s.owned.includes(h.id)&&!s.squads.some(sq=>sq.run&&sq.members.includes(h.id)));
  const cost=buildingCost(s.town),needs=buildingNeeds(s);
  const homeBonds=activeBonds(home.map(h=>h.id));
- const conversations=campStories(s),conversation=conversations[Math.floor(now/30000)%Math.max(1,conversations.length)];
+ const conversations=campStories(s),conversation=conversations.at(Math.floor(now/30000)%Math.max(1,conversations.length));
  const welcome=s.town===0?'焚き火を囲んで、次の冒険の相談。':s.town===1?'酒場の灯りが、みんなの帰りを待っています。':'鍛冶場から槌の音、薬草園からやさしい香り。';
  const homeQuote=homeBonds.length?(()=>{const b=homeBonds[Math.floor(now/12000)%homeBonds.length];return bondLevel(s,b.ids)>=2?`${heroes.find(h=>h.id===b.ids[0])!.name}「次の旅も、いつもの相棒とね。」`:b.lines[Math.floor(now/6000)%b.lines.length];})():welcome;
  const canBuild=ready&&s.clears>=cost.clears&&s.gold>=cost.gold&&s.wood>=cost.wood&&s.ore>=cost.ore&&s.herbs>=cost.herbs;
