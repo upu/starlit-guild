@@ -1,6 +1,8 @@
 # STARLIT-GUILD
 
+- コード、資料、素材、設定などGit管理対象を変更する実装依頼では、[starlit-implement](.agents/skills/starlit-implement/SKILL.md) を使う。ユーザーが毎回Git手順を説明しなくても、GitHubを正本として `main` 同期、作業ブランチ、検証、push、PR作成まで進め、PRのマージ前だけ明示承認を待つ。
 - 「反映して」「確定して公開」「GitHubとサイトへ同期」などの依頼では、[starlit-publish](.agents/skills/starlit-publish/SKILL.md) を使う。`$starlit-publish` だけでも呼び出せる。
+- 実装と公開を同時に依頼された場合は、先に `starlit-implement` のPRフローを進める。PRのマージ承認・マージ・後片付けが完了してから、依頼済みの範囲で `starlit-publish` によりSitesへ反映する。
 - 反映の標準の宛先は既存の GitHub `origin` と `.openai/hosting.json` の Sites。公開依頼では両方を対象とする。ユーザーが宛先やローカルのみを指定した場合はその範囲を優先する。通常の編集・相談だけで公開しない。
 - 世界観・人物設定・プロットの資料更新と、ゲーム内の会話・クエストの実装を区別して報告する。
 - 各タスクは同じフォルダーを使う場合がある。公開前に別タスクの作業状況と未確定差分を確認し、作業中のファイルや無関係な変更を失わせない。
