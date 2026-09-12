@@ -10,11 +10,17 @@
 .phone-dialog:has(> .story-reader){top:auto;bottom:calc(16px + env(safe-area-inset-bottom));translate:-50% 0;transform:none;display:flex;flex-direction:column;max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:hidden}
 .phone-dialog:has(> .story-reader)>[data-slot="dialog-header"]{flex:none}
 .phone-dialog>.story-reader{min-height:0;flex:0 1 auto;overflow:hidden;gap:12px}
+.story-conversation{display:flex;flex-direction:column;min-height:0;flex:0 1 auto;overflow:hidden;cursor:pointer;touch-action:pan-y}
+.story-conversation:focus-visible{outline:2px solid #b5ccaf;outline-offset:-2px}
+.story-tap-hint{display:flex;justify-content:space-between;gap:12px;flex:none;padding:12px 4px 0;font-size:14px;color:#d8c18c}
 .dialogue-history{min-height:0;flex:0 1 auto;overflow-y:auto;overflow-anchor:none;scrollbar-gutter:stable;padding-right:4px}
-.story-reader>.story-controls{flex:none}
-.story-reader>.story-still{height:min(22dvh,180px);flex:none}
+.phone-dialog:has(> .story-reader-art){height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));max-width:1120px!important;padding:12px!important;gap:10px!important}
+.phone-dialog>.story-reader-art{flex:1;gap:14px}
+.story-reader-art>.story-still,.story-reader-art>.story-conversation{flex:1 1 0;min-height:0}
+.story-reader-art .dialogue-history{flex:1}
 .story-reader>.story-still .still-expand,.story-reader>.story-still .still-expand img{height:100%;min-height:0;object-fit:contain}
-.phone-game .journey-banter.journey-banter-history{max-height:220px;overflow-y:auto;overflow-anchor:none;align-items:flex-start}
+.phone-game .journey-banter.journey-banter-history{height:112px;min-height:0;max-height:112px;flex:0 0 112px;overflow-y:auto;overflow-anchor:none;align-items:flex-start}
+@media(max-height:700px){.phone-game .journey-banter.journey-banter-history{height:96px;max-height:96px;flex-basis:96px}}
 .journey-banter-history .banter-copy{gap:8px;animation:none}
 .phone-game .journey-banter-history .banter-line>span{display:block;overflow:visible;-webkit-line-clamp:unset}
 .journey-banter-history .banter-line:last-child,.dialogue-history .story-lines> :last-child{animation:dialogue-in .3s ease-out both}

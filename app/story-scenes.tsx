@@ -21,12 +21,28 @@ export function StoryLines({lines,startIndex=0}:{lines:StoryLine[];startIndex?:n
 export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void;departure?:boolean}){
  const [page,setPage]=useState(0),[viewArt,setViewArt]=useState(false);
  const dialogue=useRef<HTMLDivElement>(null);
+ const gesture=useRef<{x:number;y:number;scrollTop:number;moved:boolean}|null>(null),finishing=useRef(false);
  useEffect(()=>{if(dialogue.current)dialogue.current.scrollTop=dialogue.current.scrollHeight;},[page]);
  const pages=story.lines.length,art=storyArtAt(story.id,page);
- return <div className="story-reader">
+ const last=page+1>=pages,advanceLabel=last?(departure?'タップで冒険を始める':'タップで閉じる'):'タップで会話を進める';
+ function advance(){
+  if(viewArt||finishing.current)return;
+  if(!last){setPage(page+1);return;}
+  if(!ready)return;
+  finishing.current=true;
+  if(onRead())onClose();else finishing.current=false;
+ }
+ return <div className={'story-reader'+(art?' story-reader-art':'')}>
   {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><img src={art.src} alt={art.alt} width={art.width} height={art.height} decoding="async"/></button></figure>}
-  <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(0,page+1)}/></div>
-  <div className="story-controls"><button className="outline" disabled={page===0} onClick={()=> { setPage(page-1); }}>前へ</button><span>{page+1} / {pages}</span>{page+1<pages?<button onClick={()=> { setPage(page+1); }}>次へ<ChevronRight size={16}/></button>:<button disabled={!ready} onClick={()=>{if(onRead())onClose();}}>{departure?'冒険を始める':'閉じる'}</button>}</div>
+  <div className="story-conversation" role="button" tabIndex={0} aria-label={advanceLabel} aria-disabled={last&&!ready}
+   onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY,scrollTop:dialogue.current?.scrollTop||0,moved:false};}}
+   onPointerMove={event=>{const start=gesture.current;if(start&&(Math.abs(event.clientX-start.x)>8||Math.abs(event.clientY-start.y)>8))start.moved=true;}}
+   onPointerCancel={()=>{if(gesture.current)gesture.current.moved=true;}}
+   onClick={()=>{const start=gesture.current;gesture.current=null;if(start&&(start.moved||Math.abs((dialogue.current?.scrollTop||0)-start.scrollTop)>4))return;if(window.getSelection()?.isCollapsed===false)return;advance();}}
+   onKeyDown={event=>{if((event.key==='Enter'||event.key===' ')&&!event.repeat){event.preventDefault();advance();}}}>
+   <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(0,page+1)}/></div>
+   <div className="story-tap-hint" aria-hidden="true"><span>{page+1} / {pages}</span><span>{advanceLabel}</span></div>
+  </div>
   <ArtViewer art={viewArt&&art?art:null} title={story.title} onClose={()=> { setViewArt(false); }}/>
  </div>;
 }

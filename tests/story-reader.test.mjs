@@ -20,10 +20,10 @@ function harness(name,initialProps){
   useEffect(fn,deps){const i=cursor++,old=slots[i];if(!old||deps.some((v,j)=>!Object.is(v,old.deps[j]))){effects.push(()=>{old?.cleanup?.();slots[i]={deps,cleanup:fn()};});}},
  };
  const modules={react,'react/jsx-runtime':jsxRuntime,'lucide-react':{BookOpen:'icon',ChevronRight:'arrow',Images:'icon'},'./portrait':{Portrait:'portrait'},'@/lib/game':game,'@/lib/stories':stories,'@/lib/prologue':prologue,'@/lib/story-art':art,'@/lib/original-characters':originals,'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(key=>[key,key]))};
- vm.runInNewContext(code,{exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];},document,setTimeout:fn=>{const id=++serial;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id)});
+ vm.runInNewContext(code,{exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];},document,window:{getSelection:()=>null},setTimeout:fn=>{const id=++serial;timers.set(id,fn);return id;},clearTimeout:id=>timers.delete(id)});
  function render(next=props){props=next;cursor=0;effects=[];tree=exports[name](props);for(const effect of effects)effect();return tree;}
  function nodes(node){if(!node||typeof node!=='object')return [];return [node,...[node.props?.children].flat(Infinity).flatMap(child=>nodes(child))];}
- const find=type=>nodes(tree).find(n=>n.type===type||n.type?.name===type);
+ const find=type=>nodes(tree).find(n=>n.type===type||n.type?.name===type||n.props?.className===type);
  const text=node=>typeof node==='string'?node:!node||typeof node!=='object'?'':[node.props?.children].flat(Infinity).map(text).join('');
  function click(label){const button=nodes(tree).find(n=>n.type==='button'&&text(n)===label);assert.ok(button,label);assert.ok(!button.props.disabled);button.props.onClick();render();}
  render();
@@ -38,9 +38,24 @@ test('story reader retains all revealed lines for scrolling, reveals art at its 
   assert.equal(h.find('ArtViewer').props.art,null);
   const hasFigure=!!h.find('figure');assert.equal(hasFigure,!!art.storyArtAt(story.id,i));
   assert.equal(read,0);assert.equal(closed,0);
-  if(i+1<story.lines.length)h.click('次へ');
+  if(i+1<story.lines.length){h.find('story-conversation').props.onClick();h.render();}
  }
- h.click('前へ');assert.deepEqual(h.find('StoryLines').props.lines,story.lines.slice(0,-1));assert.equal(read,0);h.click('次へ');h.click('閉じる');assert.equal(read,1);assert.equal(closed,1);
+ assert.ok(!h.text().includes('前へ'));assert.ok(!h.text().includes('次へ'));
+ h.find('story-conversation').props.onClick();h.render();assert.equal(read,1);assert.equal(closed,1);
+ h.find('story-conversation').props.onClick();assert.equal(read,1,'finishing is not dispatched twice');
+});
+
+test('dialogue taps advance while drags and scrolls do not; keyboard and final readiness work',()=>{
+ const story=stories.stories.find(st=>st.id==='village-trade-departure');let read=0,closed=0;
+ const props={story,ready:false,departure:true,onRead:()=>{read++;return true;},onClose:()=>closed++};
+ const h=harness('StoryReader',props),viewport={scrollTop:0,scrollHeight:300};h.find('dialogue-page dialogue-history').props.ref.current=viewport;
+ h.find('story-conversation').props.onPointerDown({clientX:30,clientY:80});h.find('story-conversation').props.onPointerMove({clientX:30,clientY:40});h.find('story-conversation').props.onClick();h.render();
+ assert.equal(h.find('StoryLines').props.lines.length,1,'drag does not advance');
+ h.find('story-conversation').props.onPointerDown({clientX:30,clientY:80});viewport.scrollTop=40;h.find('story-conversation').props.onClick();h.render();assert.equal(h.find('StoryLines').props.lines.length,1,'scroll does not advance');
+ h.find('story-conversation').props.onPointerDown({clientX:30,clientY:80});h.find('story-conversation').props.onClick();h.render();assert.equal(h.find('StoryLines').props.lines.length,2);
+ for(let i=2;i<story.lines.length;i++){h.find('story-conversation').props.onKeyDown({key:'Enter',repeat:false,preventDefault(){}});h.render();}
+ h.find('story-conversation').props.onClick();assert.equal(read,0);assert.equal(closed,0);
+ h.render({...props,ready:true});h.find('story-conversation').props.onKeyDown({key:' ',repeat:false,preventDefault(){}});assert.equal(read,1);assert.equal(closed,1);
 });
 
 test('banter keeps a complete exchange while the route changes and pauses under dialogs or hidden tabs',()=>{
