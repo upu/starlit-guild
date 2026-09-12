@@ -27,22 +27,23 @@ test('every quest uses existing assets and no sprites outside the atlas or origi
 
 test('canvas hit priority dispatches exactly one action and healing never hits the target',()=>{
  let state=act(initialState(1000),{type:'start',id:'herbs'},1000);
- state.squads[0].run.hp=10;state.squads[0].run.detour=null;
+ state.squads[0].run.health.aria.hp=10;state.squads[0].run.detour=null;
  const source=input(state),frame=adventureFrame(source,4000),hero=frame.members[0];
  for(const [w,h] of [[320,280],[430,600],[1100,680]]){
   const intent=adventureHit(frame,{x:hero.x*w,y:hero.y*h-15},w,h);
-  assert.equal(intent,'heal');
+  assert.equal(intent,'heal:aria');
   const action=adventureAction(source,intent),after=act(state,action,1000);
-  assert.ok(after.squads[0].run.hp>state.squads[0].run.hp);
+  assert.ok(after.squads[0].run.health.aria.hp>state.squads[0].run.health.aria.hp);
+  assert.equal(after.squads[0].run.health.leon.hp,state.squads[0].run.health.leon.hp);
   assert.equal(after.squads[0].run.target,state.squads[0].run.target);
   assert.equal(after.squads[0].run.cheer,5);
   assert.equal(adventureHit(frame,{x:frame.target.x*w,y:frame.target.y*h-10},w,h),'help');
  }
  assert.equal(adventureAction(input(initialState(1000)),'help'),null);
  for(const extra of [{ready:false},{paused:true}])for(const intent of ['help','heal','detour'])assert.equal(adventureAction(input(state,extra),intent),null);
- state.squads[0].run.hp=state.squads[0].run.maxHp;
+ for(const health of Object.values(state.squads[0].run.health))health.hp=health.maxHp;
  assert.equal(adventureAction(input(state),'heal'),null);
- state.squads[0].run.hp=0;state.squads[0].run.phase='rest';
+ for(const health of Object.values(state.squads[0].run.health))health.hp=0;state.squads[0].run.phase='rest';
  assert.equal(adventureAction(input(state),'help').mode,'heal');
 });
 

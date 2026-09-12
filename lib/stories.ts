@@ -187,7 +187,7 @@ function affectionBanter(level:number,variant:number):StoryLine[]{
  return variant?[a('こっちが近道！ たぶん！'),l('その「たぶん」は何回目だ？')]:[l('少し歩くのが速くないか？'),a('レオンなら追いついてくれるでしょ。')];
 }
 function journeySituationBanter(run:NonNullable<Squad['run']>,level:number,variant:number,now:number):StoryLine[]|null{
- if(run.phase==='rest'||run.hp<run.maxHp*.3)return level>=2?[a('大丈夫、もう少しなら。'),l('俺が休みたいんだ。……隣、空けてくれ。')]:[l('少し休もう。水、飲めるか？'),a('うん。レオンも、ちゃんと飲んでね。')];
+ if(run.phase==='rest'||Object.values(run.health).some(health=>health.hp<health.maxHp*.3))return level>=2?[a('大丈夫、もう少しなら。'),l('俺が休みたいんだ。……隣、空けてくれ。')]:[l('少し休もう。水、飲めるか？'),a('うん。レオンも、ちゃんと飲んでね。')];
  if(run.detour&&!run.detour.claimed&&now>=run.detour.at)return variant?[l('また寄り道か？'),a('きれいなものだったら、半分あげる。')]:[a('ねえ、あそこ光ってる！'),l('分かった。……ひとりで走るなよ。')];
  return null;
 }

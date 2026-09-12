@@ -173,8 +173,8 @@ test('keyboard map assistance works without separate buttons and respects input 
 });
 test('resting keyboard assistance heals and H heals without striking',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
- state.squads[0].run.hp=0;state.squads[0].run.phase='rest';
- for(const key of ['Enter',' ','h']){const after=mapKey(state,key).press().squads[0].run;assert.ok(after.hp>0);assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
- state.squads[0].run.phase='work';state.squads[0].run.hp=10;
- const before=state.squads[0].run;const after=mapKey(state,'H').press().squads[0].run;assert.ok(after.hp>before.hp);assert.equal(after.target,before.target);
+ for(const health of Object.values(state.squads[0].run.health))health.hp=0;state.squads[0].run.phase='rest';
+ for(const key of ['Enter',' ','h']){const after=mapKey(state,key).press().squads[0].run;assert.ok(Object.values(after.health).some(health=>health.hp>0));assert.equal(after.phase,'move');assert.equal(after.cheer,5);}
+ state.squads[0].run.phase='work';state.squads[0].run.health.aria.hp=10;state.squads[0].run.health.leon.hp=state.squads[0].run.health.leon.maxHp;
+ const before=state.squads[0].run;const after=mapKey(state,'H').press().squads[0].run;assert.ok(after.health.aria.hp>before.health.aria.hp);assert.equal(after.target,before.target);
 });

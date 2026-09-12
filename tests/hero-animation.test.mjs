@@ -35,8 +35,8 @@ test('idle blink is brief and reduced motion keeps eyes open',()=>{
  assert.equal(pose(input,7200).frame,'8');
  assert.equal(pose(input,7100,'aria',true).frame,'8');
 });
-function event(run,at,kind,hero){
- run.events.push({id:`${run.round}-${run.node}-${at}-${kind}-0-${hero||'leader'}-1`,at,kind,hero,text:''});
+function event(run,at,kind,hero,target){
+ run.events.push({id:`${run.round}-${run.node}-${at}-${kind}-0-${hero||'leader'}-${target||'none'}-1`,at,kind,hero,target,text:''});
 }
 
 test('walking cycles use actual limb frames and settle into breathing when arrival completes',()=>{
@@ -57,8 +57,8 @@ test('attack poses follow each hero event through recovery and never replay expi
  }
 });
 
-test('hurt takes priority over attacking and addressed damage affects only its hero',()=>{
- const {input,run}=scene();event(run,5000,'hit','aria');event(run,5020,'hurt','aria');
+test('hurt takes priority over attacking and addressed damage affects only its target',()=>{
+ const {input,run}=scene();event(run,5000,'hit','aria');event(run,5020,'hurt',undefined,'aria');
  assert.equal(pose(input,5020).frame,'10');
  assert.equal(pose(input,5180).frame,'11');
  assert.equal(pose(input,5340).frame,'6');
