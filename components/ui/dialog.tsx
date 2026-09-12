@@ -67,7 +67,7 @@ function DialogContent({
         // Center with insets/margins, not translate. Story dialogs override the
         // insets to anchor above the safe area; no centering offset can remain.
         className={cn(
-          fullScreen ? "fixed inset-0 z-50 outline-none" : "fixed inset-0 z-50 m-auto grid h-fit w-full max-w-[calc(100%-2rem)] gap-4 rounded-lg border bg-background p-6 shadow-lg duration-200 outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 sm:max-w-lg",
+          fullScreen ? "fixed inset-0 z-50 outline-none" : "fixed inset-0 z-50 m-auto grid h-fit w-full max-w-[calc(100%-2rem)] gap-4 rounded-lg border bg-background p-6 shadow-lg outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 sm:max-w-lg",
           className
         )}
         {...props}
