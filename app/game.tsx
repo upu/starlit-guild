@@ -7,5 +7,5 @@ import {useGameViewport} from './use-game-viewport';
 export default function Game(){
  const game=useLocalGame(),[entered,setEntered]=useState(false);
  useGameViewport();
- return entered?<PhoneGame key={game.profile?.id||'loading'} game={game}/>:<StartScreen ready={game.ready} error={game.error} onStart={()=>setEntered(true)}/>;
+ return entered?<PhoneGame key={game.profile?.id||'loading'} game={game}/>:<StartScreen ready={game.ready} error={game.error} onStart={()=> { setEntered(true); }}/>;
 }

@@ -61,7 +61,7 @@ export function createAdventureGame(parent:HTMLElement,bridge:AdventureBridge,en
     const action=adventureAction(input,intent);
     if(action)bridge.act(action);
    });
-   this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=>this.clearEffects());
+   this.events.once(Phaser.Scenes.Events.SHUTDOWN,()=> { this.clearEffects(); });
    created=true;
    bridge.status('ready');
    // Render once even when an open menu has suspended the animation loop.
