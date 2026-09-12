@@ -26,7 +26,7 @@ npx tsc --noEmit
 
 GitHub ActionsはPR本文の選択と、PRの `package.json` / `package-lock.json` を `main` と比較する。`game-change` は `main` のパッチ版ちょうど +1、`no-game-change` は同値でなければ失敗する。先行PRのマージで `main` のバージョンが変わった場合は、最新の `main` を取り込んでから判定とパッチ版を更新する。
 
-LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限を使う。既存コードを段階的に直す期間は検出結果をwarningとして表示し、warningが0件になった時点でerrorへ引き上げる。`lint:fix`の適用後は差分とテストを確認する。
+LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗し、Pull Requestと`main`へのpushでもGitHub Actionsが`npm run lint`を実行する。`lint:fix`の適用後は差分とテストを確認する。
 
 ## 実装の分担
 

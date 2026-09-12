@@ -8,31 +8,13 @@ import tseslint from "typescript-eslint";
 
 const tsconfigRootDir = fileURLToPath(new URL(".", import.meta.url));
 
-const warnOnly = (configs) =>
-  configs.map((config) => ({
-    ...config,
-    ...(config.rules
-      ? {
-          rules: Object.fromEntries(
-            Object.entries(config.rules).map(([name, setting]) => {
-              if (setting === "off" || setting === 0) return [name, setting];
-              if (Array.isArray(setting) && (setting[0] === "off" || setting[0] === 0)) {
-                return [name, setting];
-              }
-              return [name, Array.isArray(setting) ? ["warn", ...setting.slice(1)] : "warn"];
-            }),
-          ),
-        }
-      : {}),
-  }));
-
 const commonTypeScriptRules = {
-  complexity: ["warn", 15],
-  "max-lines": ["warn", { max: 400, skipBlankLines: true, skipComments: true }],
-  "sonarjs/cognitive-complexity": ["warn", 10],
-  "max-depth": ["warn", 3],
+  complexity: ["error", 15],
+  "max-lines": ["error", { max: 400, skipBlankLines: true, skipComments: true }],
+  "sonarjs/cognitive-complexity": ["error", 10],
+  "max-depth": ["error", 3],
   "max-lines-per-function": [
-    "warn",
+    "error",
     { max: 60, skipBlankLines: true, skipComments: true },
   ],
 };
@@ -43,9 +25,8 @@ const eslintConfig = defineConfig([
   {
     files: ["**/*.{ts,tsx}"],
     plugins: { sonarjs },
-    // Keep the YAMORU rule set visible without blocking delivery while the
-    // existing warnings are paid down. Promote these severities after zero.
-    extends: warnOnly(tseslint.configs.strictTypeChecked),
+    // Keep the YAMORU-equivalent strict rule set as the blocking quality gate.
+    extends: tseslint.configs.strictTypeChecked,
     languageOptions: {
       parserOptions: {
         projectService: true,
