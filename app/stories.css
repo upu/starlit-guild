@@ -32,11 +32,12 @@
 .story-reader-art>.story-still,.story-reader-art>.story-conversation{flex:1 1 0;min-height:0}
 .story-reader-art .dialogue-history{flex:1}
 .story-reader>.story-still .still-expand,.story-reader>.story-still .still-expand img{height:100%;min-height:0;object-fit:contain}
-.phone-game .journey-banter.journey-banter-history{--chat-line-height:1.4rem;--chat-face-size:calc(2 * var(--chat-line-height));--chat-height:calc(4 * var(--chat-line-height) + 21px);height:var(--chat-height);min-height:0;max-height:var(--chat-height);flex:0 0 var(--chat-height);overflow-y:auto;overflow-anchor:none;align-items:flex-start;padding:6px 10px;gap:0;scrollbar-width:thin}
-.journey-banter-history .banter-copy{width:100%;gap:8px;animation:none}
-.phone-game .journey-banter-history .banter-line{align-items:flex-start;min-height:var(--chat-face-size);gap:8px;font-size:.875rem;line-height:var(--chat-line-height)}
+.phone-game .journey-banter.journey-banter-history{--chat-line-height:1.5rem;--chat-face-size:4rem;--chat-height:calc(2 * var(--chat-face-size) + 11px);height:var(--chat-height);min-height:0;max-height:var(--chat-height);flex:0 0 var(--chat-height);overflow-y:auto;overflow-anchor:none;align-items:flex-start;padding:4px 6px;gap:0;scrollbar-width:thin}
+.journey-banter-history .banter-copy{width:100%;gap:2px;animation:none}
+.phone-game .journey-banter-history .banter-line{align-items:center;min-height:var(--chat-face-size);gap:6px;font-size:1rem;line-height:var(--chat-line-height)}
 .phone-game .journey-banter-history .banter-line>.face-portrait{width:var(--chat-face-size)!important;height:var(--chat-face-size)!important;border-radius:16%;align-self:flex-start}
 .phone-game .journey-banter-history .banter-message{display:block;flex:1;min-width:0;overflow:visible;-webkit-line-clamp:unset;white-space:normal;overflow-wrap:anywhere}
-.phone-game .journey-banter-history .banter-message b{font-size:inherit;margin-right:8px;font-weight:600}
+.phone-game .journey-banter-history .banter-message b{display:block;font-size:.875rem;line-height:1.25rem;font-weight:600}
+@media(min-width:900px){.phone-game .journey-banter.journey-banter-history{--chat-face-size:4.5rem}}
 .journey-banter-history .banter-line:last-child,.dialogue-history .story-lines> :last-child{animation:dialogue-in .3s ease-out both}
 @media(prefers-reduced-motion:reduce){.journey-banter-history .banter-line:last-child,.dialogue-history .story-lines> :last-child{animation:none}}

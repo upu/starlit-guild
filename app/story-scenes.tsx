@@ -125,7 +125,7 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
   <span className="banter-copy">{exchange.history.map((entry,i)=>{
    const speaker=characters.find(h=>h.id===entry.speaker);
    return <span className="banter-line" key={exchange.turn-exchange.history.length+1+i}>
-    {speaker&&<Portrait index={speaker.sprite} size={44}/>}
+    {speaker&&<Portrait index={speaker.sprite} size={64}/>}
     <span className="banter-message">{speaker&&<b>{speaker.name}</b>}{entry.text}</span>
    </span>;
   })}</span>
