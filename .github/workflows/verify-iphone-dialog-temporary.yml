@@ -1,0 +1,84 @@
+name: Verify iPhone dialog (temporary task branch)
+
+on:
+  push:
+    branches:
+      - codex/fix-iphone-opening-dialog
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    if: github.repository == 'upu/starlit-guild' && github.ref == 'refs/heads/codex/fix-iphone-opening-dialog'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      head: ${{ steps.version.outputs.head }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/fix-iphone-opening-dialog
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Bump the patch once, including the existing lockfile
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = e9c4602e58cdaea3e7e88da0f12f4671bc3dc10b
+          version=$(node -p "require('./package.json').version")
+          if [ "$version" = '0.1.6' ]; then
+            npm run version:patch
+            git add package.json package-lock.json
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: bump game patch to 0.1.7'
+            git push origin HEAD:refs/heads/codex/fix-iphone-opening-dialog
+          else
+            test "$version" = '0.1.7'
+          fi
+          echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  verify:
+    needs: version
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.version.outputs.head }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm run install:ci
+      - name: Build production assets
+        run: npm run build
+      - name: Install isolated browser test tools
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium webkit
+      - name: Chromium production-CSS layout regression
+        run: python tests/dialog-layout.browser.py --engine chromium
+      - name: WebKit production-CSS layout regression
+        if: ${{ !cancelled() }}
+        run: python tests/dialog-layout.browser.py --engine webkit
+      - name: Unit tests
+        if: ${{ !cancelled() }}
+        run: node --test tests/*.test.mjs
+      - name: Type check
+        if: ${{ !cancelled() }}
+        run: npx tsc --noEmit
+      - name: Lint
+        if: ${{ !cancelled() }}
+        run: npm run lint
+      - name: Version check
+        if: ${{ !cancelled() }}
+        env:
+          PR_BODY: '- [x] `game-change`'
+        run: npm run version:check-pr -- --base-ref e9c4602e58cdaea3e7e88da0f12f4671bc3dc10b
