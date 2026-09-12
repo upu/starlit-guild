@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-13",
+  "tool": "built-in image_gen",
+  "purpose": "Redraw for legibility at 64–72 CSS pixels; retain approved layout and character identity.",
+  "reference": {
+    "path": "public/portraits/dialogue-atlas.png",
+    "revision": "f8883ade31b9b7bb427ebaf7bd528f7b161ffb4a"
+  },
+  "prompt": "Use case: style-transfer. Edit the supplied game portrait atlas into a NEW radically simplified SMALL-SIZE UI portrait atlas. The input is ONLY an identity and cell-order reference, NOT the desired rendering style. Preserve exactly the 4 columns x 3 rows of equal square cells and character order. This is a functional 64px face-icon design task, NOT a detailed illustration. Make the difference from the reference unmistakable: flat bold cartoon/anime sticker-like HEADS, very few shapes, massive clear faces, thick consistent dark outlines. Design as if drawing directly at 64x64 pixels per icon. Each outer contour is equivalent to 2px at final 64px, eyes are broad readable flat shapes, mouth is a simple clear stroke or flat open shape, no fine eyelashes or tiny eye highlights. A maximum of 6-8 major colors per character, one optional flat shadow shape per color. No gradients, texture, gloss, fine hair strands, decorative filigree, complex iris detail, sparkles, hatch shading, or glows. Hair is only 3-5 broad shapes and at most two simple interior strokes. Skin is flat with at most ONE large shadow; no cheek shine or blush hatching. Face from brows to chin must occupy most of the cell, not a small face under a large hat. No torso, chest, hands, equipment or scenery. Only the bottom 5% may contain a simple scarf/collar color cue. Hats and outer hair may touch or crop at cell edges; eyes, mouth and chin must be completely inside. Keep one or two unmistakable identity accessories, drawn as simple large symbols. Dark flat teal background in every cell. Full-bleed equal square cells with no gutters, dividing lines, drawn borders, labels, text or watermark. \nEXACT ORDER left-to-right:\nRow 1: Aria — blonde female elf with green hood, ONE white feather, green eyes, prominent pointed ears, lively warm smile; Leon — young brown spiky-haired man, brown eyes, RED scarf cue, calm friendly smile; Mira — lavender-haired girl, violet eyes, WHITE hood with ONE simple gold edge, kind smile; Finn — blonde boy with BLACK hood, green eyes, mischievous grin.\nRow 2: Garr — CLOSED SILVER KNIGHT HELMET with chunky black visor slits, one BLUE crest/plume, no invented exposed face; Luna — deep purple-haired girl, purple eyes, PURPLE witch hat with ONE large simple gold star, thoughtful mild expression; Poppy — green-haired girl with ponytail and TWO bold bronze goggles on head, green eyes, enthusiastic smile; Noel — pink wavy hair, ROSE beret with ONE white feather, golden-brown eyes, warm cheerful expression.\nRow 3: Merrill — light green BOB, white headband, ONE RED bow and TWO simple white daisy symbols, green eyes and playful wink/open smile; Pumpety — light orange TWIN TAILS with two TEAL butterfly silhouettes, teal-green eyes, ONE visible little fang in open playful smile; Chacha — long saturated ORANGE hair, ONE RED bow, brown eyes, gentle relaxed smile, a small simple WHITE wing cue if it fits; last cell plain empty dark teal.\nAll faces must have consistent large facial-feature scale and the same very simple graphic style. Preserve recognizable youth and personalities, not generic baby faces. Prioritize instantly distinguishable faces at ACTUAL 64px display over beauty at large size. Flat hand-drawn cartoon appearance, not pixel art. Output a clean single atlas in a 4:3 aspect ratio.",
+  "generatedDimensions": [
+    1448,
+    1086
+  ],
+  "exports": [
+    {
+      "path": "public/portraits/dialogue-atlas.png",
+      "width": 288,
+      "height": 216,
+      "cell": 72,
+      "density": "1x"
+    },
+    {
+      "path": "public/portraits/dialogue-atlas@2x.png",
+      "width": 576,
+      "height": 432,
+      "cell": 144,
+      "density": "2x"
+    }
+  ],
+  "exportMethod": "Sharp resize with Lanczos3, PNG; creative redraw performed by image_gen before deterministic export.",
+  "qa": "Compared all 11 old and new portraits at 64px per cell in outputs/portrait-qa/compare-64.png (local, ignored)."
+}
