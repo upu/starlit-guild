@@ -1,5 +1,18 @@
 # 演出素材（2026-09-10）
 
+## 第一部のステージ背景（2026-09-12）
+
+内蔵 imagegen で各1回生成し、1536×1024 PNGを採用。`public/stages/evening-trade-road.png` は1-2の夕方の交易路、`public/stages/town-deliveries.png` は1-3の倉庫と商店の通り。`Quest.background` を通じてクエスト一覧・冒険マップに表示する。
+
+共通指示：STARLIT-GUILDの温かな日本風ファンタジーRPG向け、painterly anime environment、crisp polished warm soft light、landscape 1536×1024。人物・敵・文字・UIを描かず、下半分は仲間のスプライトを置ける広い前景にする。
+
+- 夕方の交易路：quiet rural dirt trade road at sunset, low trees and grassy verge, fork in distance, golden orange sky, no tower or glowing moss。採用画像の遠景には街並みと尖塔状の屋根があるが、物語の塔としては扱わない。
+- 街の仕事：modest medieval fantasy town market warehouse lane in daytime, timber and cream plaster stores, crates and cloth parcels at sides, cart near store, sunlit cobblestone street, no visible tower。
+
+目視で前景の余白・人物やUIの不在を確認。キャラクター立ち絵・会話スチルは既存素材を維持する。
+
+## 発見アイテム
+
 画像は内蔵 imagegen で各1回生成。透明PNGを320×320へ縮小し、アルファを保って配信する。保存先は `public/items/chest.png`、`public/items/herb.png`、`public/items/spirit.png`。3枚合計約516 KiB。既存のキャラ・背景素材は変更しない。
 
 ## 共通プロンプト

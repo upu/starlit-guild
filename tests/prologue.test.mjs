@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {initialState,initialPrologueState,act,settle,availableQuests,allQuests,encounter} from '../lib/game.ts';
-import {inPrologue,TRADE_QUEST,tradeEndingPending} from '../lib/prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,tradeEndingPending} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {nextGoal,journeyNotice} from '../lib/journey.ts';
 import {parseBundle} from '../lib/save-format.ts';
@@ -54,7 +54,7 @@ test('departure reading is atomic; offline arrival stops once and preserves its 
  const again=settle(depart(roundtrip(read)),read.updatedAt+3600000).state;
  assert.equal(again.done[TRADE_QUEST],2);assert.equal(again.squads[0].run,null);
  assert.equal(tradeEndingPending(again),false);assert.deepEqual(again.story.read,read.story.read);
- assert.deepEqual(availableQuests(again).map(q=>q.id),[TRADE_QUEST]);
+ assert.deepEqual(availableQuests(again).map(q=>q.id),[TRADE_QUEST,RETURN_QUEST]);
  assert.deepEqual(availableStories(again).map(st=>st.id),[TRADE_QUEST+'-departure',TRADE_QUEST+'-return']);
 });
 

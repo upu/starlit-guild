@@ -2,7 +2,7 @@ import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
 import {madHalloweenStories} from './mad-halloween-stories.ts';
-import {inPrologue,TRADE_QUEST} from './prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 
@@ -26,7 +26,7 @@ export const stories:Story[]=[
  ...pair('herbs','いつもの隣に','半分ずつの甘さ',[
   n('最初の依頼書を、アリアがふたりの間に広げた。'),a('月しずく草だって。匂いなら、すぐ分かるよ。'),l('道は俺が見ておく。'),a('……頼む前から？'),l('何年、一緒にいると思ってるんだ。'),n('アリアは笑って、地図の端を彼のほうへ寄せた。'),
  ],[
-  n('薬師から、お礼に小さな包みをふたつもらった。'),a('蜂蜜のお菓子！ レオン、好きだったよね。'),l('お前もだろ。ほら、大きいほう。'),a('そうやって、いつも譲る。'),l('……じゃあ、半分ずつにするか。'),n('アリアはうなずいた。分けるあいだ、肩が触れていた。'),
+  n('薬師から、お礼に小さな包みをふたつもらった。'),a('蜂蜜のお菓子！ レオン、好きだったよね。'),l('アリアもだろ。ほら、大きいほう。'),a('そうやって、いつも譲る。'),l('……じゃあ、半分ずつにするか。'),n('アリアはうなずいた。分けるあいだ、肩が触れていた。'),
  ]),
  ...pair('cart','つまみ食いは厳禁','取っておいたパン',[
   n('荷馬車から、焼きたてのパンの匂いがする。'),a('ひとつくらい減っても……。'),l('依頼書に、つまみ食い厳禁って書いてある。'),a('読んだよ。レオンならそう言うと思って。'),l('帰りに買おう。胡桃のやつ、まだ好きだろ。'),a('……うん。覚えてたんだ。'),
@@ -41,15 +41,15 @@ export const stories:Story[]=[
  ...pair('crystal','青い灯りの届く距離','おそろいとは言わない',[
   n('洞窟の入り口で、ランタンの灯りを確かめる。'),l('暗いところは、俺の後ろを歩いてくれ。'),a('隣じゃだめ？ 石を探すのは私の役目。'),l('……足元が見えるなら。'),n('レオンはランタンを、ふたりの真ん中に持ち直した。'),
  ],[
-  n('採掘を終え、持ち帰ってよいと言われた小さな欠片を選ぶ。'),a('これとこれ、同じ色。ひとつあげる。'),l('きれいなほう、お前が持てよ。'),a('同じだってば。ふたつで見つけたんだから。'),n('レオンは欠片を、落とさないよう内ポケットにしまった。'),
+  n('採掘を終え、持ち帰ってよいと言われた小さな欠片を選ぶ。'),a('これとこれ、同じ色。ひとつあげる。'),l('きれいなほう、アリアが持てよ。'),a('同じだってば。ふたつで見つけたんだから。'),n('レオンは欠片を、落とさないよう内ポケットにしまった。'),
  ]),
  ...pair('pilgrim','差し出す手','今は、どこにも',[
   n('巡礼者たちが待つ山道に、細い崖道が続いている。'),l('ここ、滑るぞ。手を。'),a('子どもじゃないんだけど。'),l('分かってる。'),n('それでも差し出された手に、アリアは自分の手を重ねた。'),
  ],[
-  n('帰り着いた焚き火の前で、アリアが口を開いた。'),a('……今日、手、離さなかったね。'),l('あの崖で離せるわけないだろ。'),a('崖、渡り終わってからも。'),l('……お前、すぐどっか行くから。'),a('ふうん。'),n('アリアは隣に腰を下ろす。いつもより、少しだけ近い。'),a('今は、どこにも行かないよ。'),l('……そうか。'),n('しばらく、ふたりとも焚き火を見ていた。'),
+  n('帰り着いた焚き火の前で、アリアが口を開いた。'),a('……今日、手、離さなかったね。'),l('あの崖で離せるわけないだろ。'),a('崖、渡り終わってからも。'),l('……アリア、すぐどっか行くから。'),a('ふうん。'),n('アリアは隣に腰を下ろす。いつもより、少しだけ近い。'),a('今は、どこにも行かないよ。'),l('……そうか。'),n('しばらく、ふたりとも焚き火を見ていた。'),
  ]),
  ...pair('wolf','霧の向こうの声','心配してもいい',[
-  a('この霧じゃ、顔も見えなくなるね。'),l('離れたら、名前を呼べ。'),a('レオンは？'),l('お前が呼ぶ前に見つける。'),a('……そういうこと、さらっと言う。'),n('最後のひと言は、霧にまぎれるくらい小さかった。'),
+  a('この霧じゃ、顔も見えなくなるね。'),l('離れたら、名前を呼べ。'),a('レオンは？'),l('アリアが呼ぶ前に見つける。'),a('……そういうこと、さらっと言う。'),n('最後のひと言は、霧にまぎれるくらい小さかった。'),
  ],[
   a('さっき、私の名前、すごい声で呼んだね。'),l('姿が見えなくなったから。'),a('すぐそこにいたのに。'),l('……心配くらい、させてくれ。'),n('アリアは言いかけた冗談を飲み込んだ。'),a('うん。私にも、させてね。'),
  ]),
@@ -64,11 +64,11 @@ export const stories:Story[]=[
   n('王女を送り届けると、遠くから祭りの音が聞こえた。'),l('まだ灯りがついてる。約束、覚えてるか。'),a('……仕事のついでじゃなかったの？'),l('もう仕事は終わった。'),n('アリアが、半歩近づいた。'),a('じゃあ、今日は私の行きたいところに付き合って。'),l('いつもそうだろ。'),a('今日は、いつもより。'),
  ]),
  ...pair('dragon','その先の予定','明日の話をしよう',[
-  n('古塔へ向かう支度が、ひとつずつ整っていく。'),a('帰ったら、何食べたい？'),l('今、それを決めるのか。'),a('決めておけば、帰る楽しみが増えるでしょ。'),l('……お前が前に作った、あのスープ。'),a('うん。じゃあ、絶対帰ろうね。'),
+  n('古塔へ向かう支度が、ひとつずつ整っていく。'),a('帰ったら、何食べたい？'),l('今、それを決めるのか。'),a('決めておけば、帰る楽しみが増えるでしょ。'),l('……アリアが前に作った、あのスープ。'),a('うん。じゃあ、絶対帰ろうね。'),
  ],[
-  n('取り戻した星の灯りが、帰り道を照らしていた。'),l('明日は休みにしよう。'),a('レオンがそんなこと言うなんて。'),l('お前と、ゆっくり飯を食うくらいは。'),a('……スープ、作りすぎちゃうかも。'),l('明後日も食べればいい。'),n('アリアは買い物のメモを開き、じゃがいもの数を書き足した。隣からのぞき込むレオンに、メモを少し傾ける。'),
+  n('取り戻した星の灯りが、帰り道を照らしていた。'),l('明日は休みにしよう。'),a('レオンがそんなこと言うなんて。'),l('アリアと、ゆっくり飯を食うくらいは。'),a('……スープ、作りすぎちゃうかも。'),l('明後日も食べればいい。'),n('アリアは買い物のメモを開き、じゃがいもの数を書き足した。隣からのぞき込むレオンに、メモを少し傾ける。'),
  ]),
- {id:'camp-seat',title:'空けてある場所',place:'焚き火のそば',chapter:'camp',bond:1,lines:[n('アリアが戻ると、焚き火の隣に荷物ひとつ分の空間があった。'),a('ここ、誰か来るの？'),l('……お前が来るだろ。'),a('そっか。'),n('座る前に、彼女は少しだけ髪を直した。')]},
+ {id:'camp-seat',title:'空けてある場所',place:'焚き火のそば',chapter:'camp',bond:1,lines:[n('アリアが戻ると、焚き火の隣に荷物ひとつ分の空間があった。'),a('ここ、誰か来るの？'),l('……アリアが来るだろ。'),a('そっか。'),n('座る前に、彼女は少しだけ髪を直した。')]},
  {id:'camp-cup',title:'冷めないうちに',place:'酒場の片隅',chapter:'camp',bond:2,town:1,lines:[n('レオンの向かいには、まだ湯気の立つカップがある。'),a('待ってた？'),l('お茶が余っただけだ。'),a('私の好きな蜂蜜まで入ってる。'),l('……冷めるぞ。'),n('アリアは向かいの椅子を引きかけて、隣の椅子に座り直した。')]},
  {id:'camp-thread',title:'ほどけないように',place:'酒場の支度部屋',chapter:'camp',bond:2,town:1,lines:[n('結び直した髪紐を、アリアが鏡に映している。'),a('これ、まだ似合う？ 昔、レオンがくれたやつ。'),l('……まだ持ってたのか。'),a('質問に答えてよ。'),l('似合う。'),n('予想より早い返事に、アリアの手が止まった。'),a('……ありがと。')]},
  {id:'camp-quiet-tea',title:'ふたつのカップ',place:'酒場の夜',chapter:'camp',bond:2,town:1,lines:[n('ミラがふたつのカップを置く。いつもより小さなテーブルに。'),{speaker:'mira',text:'今夜は、こちらでどうぞ。'},a('向こうの席も空いてるよ？'),{speaker:'mira',text:'こっちのほうが、暖かいから。'},n('ミラはそれだけ言って、奥へ戻っていった。'),l('……座るか。'),a('うん。')]},
@@ -88,7 +88,7 @@ export function storyProgress(s:State):StoryProgress {
 export function availableStories(s:State):Story[]{
  const p=storyProgress(s);
  return stories.filter(st=>{
-  if(inPrologue(s)&&st.quest!==TRADE_QUEST)return false;
+  if(inPrologue(s)&&!isPrologueQuest(st.quest||''))return false;
   if(st.requiresHeroes?.some(id=>!s.owned.includes(id))||st.requiresQuests?.some(id=>!(s.done[id]>0)))return false;
   if(st.chapter==='encounter')return s.town>=(st.town||0);
   return st.chapter==='recruitment'?(() => {const r=recruitments.find(r=>r.hero===st.companion)!;return st.stage==='joined'?s.owned.includes(r.hero):st.stage==='prepared'?prepared(s,r.hero):st.stage==='progress'?met(s,r)&&(prepared(s,r.hero)||rareProgress(s,r).found>=Math.ceil(r.rare.count/2)):met(s,r);})():st.chapter==='departure'?p.departed.includes(st.quest!):st.chapter==='return'?p.completed.includes(st.quest!):
@@ -101,7 +101,7 @@ export function campStories(s:State):Story[]{
 }
 export function coupleCombo(s:State,variant:number):string[]{
  const lines=[
-  [['アリア「いつもの合図でね！」','レオン「ああ。お前の動きは分かってる。」'],['レオン「足元、気をつけろよ。」','アリア「見ててくれるんでしょ？」']],
+  [['アリア「いつもの合図でね！」','レオン「ああ。アリアの動きは分かってる。」'],['レオン「足元、気をつけろよ。」','アリア「見ててくれるんでしょ？」']],
   [['アリア「私が前に出たら、お願い。」','レオン「任せろ。ちゃんと見てる。」'],['レオン「無茶はするなよ。」','アリア「レオンがいると、ついね。」']],
   [['アリア「終わったら、一緒に帰ろうね。」','レオン「そのために、ここにいる。」'],['レオン「合図、いるか？」','アリア「いらない。もう分かるから。」']],
  ];
@@ -109,6 +109,8 @@ export function coupleCombo(s:State,variant:number):string[]{
 }
 export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const r=sq.run;
+ if(r?.quest===RETURN_QUEST)return r.phase==='rest'?[a('荷物、私のほうへ寄せて。少し休もう。'),l('ああ。次の分かれ道までは一緒だ。')]:r.node%3===0?[a('帰りの包み、今度は軽いね。'),l('控えは内側にしまった。あとは村で渡せば終わりだ。')]:[a('また道の真ん中にいる。こんな時間なのに。'),l('荷物は端へ寄せよう。一匹ずつなら通れる。')];
+ if(r?.quest===TOWN_QUEST)return r.phase==='rest'?[l('箱はここに置こう。手、痛くないか？'),a('平気。でも一息ついたら、持つ側を替えよう。')]:r.node%3===0?[a('この荷札、奥の倉庫じゃなくて店先だって。'),l('本当だ。先に確かめておいてよかった。')]:r.node%3===1?[l('次は角の店だ。荷車が通るから、少し待とう。'),a('今日はみんな、同じ時間に運んでるね。')]:[a('受け取りの控え、もらったよ。次の包みは？'),l('これで一区切りだ。荷札と順番を揃えよう。')];
  if(r?.quest===TRADE_QUEST)return r.phase==='rest'?[l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')]:r.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
  if(r?.quest==='join-chacha')return [{speaker:'chacha',text:'茶器はお願いしますねぇ。岩のほうは、わたしが持ちますから。'}];
  if(r?.quest==='midnight-snack'&&sq.members.includes('poppy'))return [{speaker:'merrill',text:'その薬、味見しようか？'},{speaker:'poppy',text:'瓶ごと食べそうな人には、頼まない！'}];
@@ -121,7 +123,7 @@ export function journeyBanter(s:State,sq:Squad,now:number):StoryLine[]{
  if(r?.quest.startsWith('join-')){const hero=r.quest.slice(5);const replies:Partial<Record<string,StoryLine[]>>={mira:[{speaker:'mira',text:'次の小屋まで、もう少し。みんなの歩幅で行きましょう。'}],finn:[{speaker:'finn',text:'この先だ。箱は小さいから、足元もよく見てね。'}],garr:[{speaker:'garr',text:'板を確かめながら、一人ずつ。俺はここにいる。'}],luna:[{speaker:'luna',text:'あの光、見える？ 同じ場所から、一緒に見て。'}],poppy:[{speaker:'poppy',text:'その芽は残しておいて。まだ、元気になる途中だから。'}],noel:[{speaker:'noel',text:'この道の音も、歌に残しておきたいな。'}]};return replies[hero]||[];}
  if(!together(sq.members))return [];
  const v=Math.floor(Math.max(0,now-(r?.started||0))/18000)%2,lv=affection(s);
- if(!r)return [a('準備できた？'),l('ああ。お前を待ってた。')];
+ if(!r)return [a('準備できた？'),l('ああ。アリアを待ってた。')];
  if(r.phase==='rest'||r.hp<r.maxHp*.3)return lv>=2?[a('大丈夫、もう少しなら。'),l('俺が休みたいんだ。……隣、空けてくれ。')]:[l('少し休もう。水、飲めるか？'),a('うん。レオンも、ちゃんと飲んでね。')];
  if(r.detour&&!r.detour.claimed&&now>=r.detour.at)return v?[l('また寄り道か？'),a('きれいなものだったら、半分あげる。')]:[a('ねえ、あそこ光ってる！'),l('分かった。……ひとりで走るなよ。')];
  if(['pilgrim','wolf','royal'].includes(r.quest))return lv>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。')]:[a('霧で、先が見えないね。'),l('声の届くところにいてくれ。')];
