@@ -15,7 +15,7 @@ export function rendererSession(parent:HTMLElement,bridge:AdventureBridge,load:(
   renderer=factory(parent,currentBridge);
   if(size.width>0&&size.height>0)renderer.resize(size.width,size.height);
   renderer.setPaused(paused);
- }).catch(error=>{renderer?.destroy();renderer=undefined;if(!disposed){console.error('Adventure renderer failed',error);bridge.status('error');}});
+ }).catch((error:unknown)=>{renderer?.destroy();renderer=undefined;if(!disposed){console.error('Adventure renderer failed',error);bridge.status('error');}});
  return {
   started,
   resize(width:number,height:number){if(disposed||width<=0||height<=0)return;size={width,height};renderer?.resize(width,height);},

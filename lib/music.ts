@@ -1,10 +1,12 @@
+import {isRecord,parseJson} from './external-input.ts';
+
 export type MusicScene='camp'|'journey';
 export const musicTitles:Record<MusicScene,string>={camp:'星灯りの焚き火',journey:'木漏れ日の小径'};
 export type MusicPreferences={enabled:boolean;volume:number};
 export const MUSIC_KEY='starlit-guild-music-v1';
 export const defaultMusic:MusicPreferences={enabled:true,volume:25};
 export function parseMusic(value:string|null):MusicPreferences{
- try{const p=JSON.parse(value||'null');return {enabled:typeof p?.enabled==='boolean'?p.enabled:true,volume:typeof p?.volume==='number'&&Number.isFinite(p.volume)?Math.max(0,Math.min(100,p.volume)):25};}catch{return {...defaultMusic};}
+ try{const parsed=parseJson(value||'null'),p=isRecord(parsed)?parsed:{};return {enabled:typeof p.enabled==='boolean'?p.enabled:true,volume:typeof p.volume==='number'&&Number.isFinite(p.volume)?Math.max(0,Math.min(100,p.volume)):25};}catch{return {...defaultMusic};}
 }
 type Voice={source:AudioBufferSourceNode;gain:GainNode;scene:MusicScene};
 
@@ -23,6 +25,8 @@ export class GameMusic{
  private preferences:MusicPreferences={...defaultMusic};
  private report:(message:string)=>void;
  constructor(report:(message:string)=>void=()=>{}){this.report=report;}
+ private currentRevision(revision:number){return revision===this.revision&&!this.disposed;}
+ private canFinish(revision:number){return this.currentRevision(revision)&&this.active;}
 
  configure(scene:MusicScene,active:boolean,preferences:MusicPreferences){
   this.scene=scene;this.active=active;this.preferences=preferences;
@@ -42,7 +46,7 @@ export class GameMusic{
    const context=this.context;
    // Resume synchronously from the user's gesture, before requesting the audio file.
    await context.resume();
-   if(revision!==this.revision||this.disposed)return;
+   if(!this.currentRevision(revision))return;
    if(this.voice?.scene===scene)return;
    let pending=this.buffers.get(scene);
    if(!pending){
@@ -51,7 +55,7 @@ export class GameMusic{
     void pending.catch(()=>{if(this.buffers.get(scene)===pending)this.buffers.delete(scene);});
    }
    const buffer=await pending;
-   if(revision!==this.revision||this.disposed||!this.active)return;
+   if(!this.canFinish(revision))return;
    const source=context.createBufferSource(),gain=context.createGain(),now=context.currentTime;
    source.buffer=buffer;source.loop=true;source.connect(gain);gain.connect(this.master!);
    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(1,now+.65);
@@ -62,7 +66,7 @@ export class GameMusic{
    if(this.fading){this.fading.gain.gain.cancelScheduledValues(now);this.fading.gain.gain.setTargetAtTime(0,now,.12);this.fading.source.stop(now+.65);}
    this.voice=voice;this.report('');
   }catch{
-   if(revision===this.revision&&!this.disposed)this.report('BGMを再生できませんでした。画面をタップすると再試行します。');
+   if(this.currentRevision(revision))this.report('BGMを再生できませんでした。画面をタップすると再試行します。');
   }
  }
  dispose(){this.disposed=true;this.revision++;this.stop(this.voice);this.stop(this.fading);this.voice=this.fading=null;this.buffers.clear();if(this.context)void this.context.close().catch(()=>{});}
