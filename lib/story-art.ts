@@ -8,6 +8,11 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'tower-road-return': {
+  src: '/stories/tower-moss-discovery.png',
+  alt: '塔の足元で、アリアが木べらで分けた光る苔を、レオンの持つ浅い木の入れ物へ寄せる。小さな苔灯が二人の手元を淡く照らす。',
+  width: 1536, height: 1024, revealAtLine: 16,
+ },
  'village-trade-return': {
   src: '/stories/village-trade-handover.png',
   alt: '街の店先で、アリアが布で包んだ薬草を店主に渡し、レオンが村から預かった交易品を台に置く。',

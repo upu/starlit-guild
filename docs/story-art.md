@@ -2,6 +2,25 @@
 
 ゲーム内には読み込まない制作資料。スチル本体は `public/stories/`、場面・表示ページ・代替テキストは `lib/story-art.ts` に保存する。
 
+## 第一部1-4・1-5（2026-09-13）
+
+組み込み `image_gen` で専用背景2枚、苔灯の対象物1枚、発見場面1枚を生成。原寸PNGをゲームの参照先へ保存した。背景は既存の夕方の交易路、人物は `village-trade-handover.png` の外見・衣装を参照する。生成時のモデル識別子はツールから返されていない。
+
+| 保存先 | 用途・表示条件 |
+| --- | --- |
+| `public/stages/tower-road.png` | 1-4の一覧・冒険背景。畑、林、湿った坂道、遠景の小さな塔。初稿の夕焼けを昼の青空へ修正して採用 |
+| `public/stages/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
+| `public/items/moss-lamp.png` | 1-5の足元確認地点に表示する木の入れ物と淡く光る苔。透明背景。魔物除けや防御効果はない |
+| `public/stories/tower-moss-discovery.png` | `tower-road-return` の0始まり16行目、採取の許可を得て木の入れ物の中で苔が光る場面から表示。読了後はアルバムでも鑑賞可能 |
+
+現在の会話は一行送りのため、新しい絵の表示条件は3行ごとのページ境界に縛らない。下記の過去の制作記録にある3行表示は当時の方式。絵は光る苔を手に取る以前には見せない。
+
+4枚を画像で確認。背景の昼夜、二人の髪・目・耳・衣装、木べらと入れ物、文字や透かしがないことを確認した。苔は羽状の小葉を持つ描写で、1-5の葉の並びへの見覚えと揃える。画像の確認とゲーム画面でのブラウザ操作検証は区別する。
+
+発見場面の生成プロンプト：
+
+> Create a finished 1536x1024 landscape anime fantasy story illustration. Preserve Aria and Leon's exact recognizable character designs from reference: Aria young adult female elf, long blonde hair green eyes, pointed ears, forest green gold embroidered feathered ranger hat and cape, cream blouse, brown leather gloves/bracers, bow/quiver; Leon young adult human male, tousled brown hair brown eyes, red scarf cape, blue tunic steel shoulder armor and brown gloves. NEW scene at the shady outside base of a modest local stone beacon tower, late afternoon. They have permission from caretaker (off frame) to take just a little moss. Leon holds a SMALL shallow plain wooden container at chest height with just a little softly glowing pale mint-green featherlike moss. Aria still holds a small wooden spatula near the container, looking delighted and curious at the moss. Leon looks at the gently lit seam of his glove with a quietly surprised smile. Their shoulders comfortably near, affection through relaxed gestures, no romance icons. Small moss patch on damp exterior stones behind, no big shining crystals, no magical beams, no explanation of tower mechanism, no text, no watermark, no other characters. Main hands and container fully in frame. Intimate useful discovery, painterly atmospheric detail matching reference.
+
 ## シナリオに合わせた追加8枚（2026-09-10）
 
 組み込みの image_gen を使用し、各場面を独立した1枚絵として生成。既存の `public/stories/first-map.png` を絵柄とアリア・レオンの参照、`public/sprites.png` を仲間の人物デザインの参照とする。原寸の PNG を保存し、既存2枚と合わせて全10枚。生成プロンプトの原文と出力寸法は [追加スチルの生成記録](story-art-generation.json) に保存する。
