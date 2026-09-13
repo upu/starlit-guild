@@ -4,10 +4,11 @@
 .phone-game .phaser-map{min-height:0}
 .phone-game .adventure-actions{position:relative;z-index:6}
 .phone-game.prologue-game .phone-navigation{grid-template-columns:repeat(2,minmax(0,1fr))}
-.phone-game .adventure-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;min-height:60px;padding:6px 12px;background:#1c372e;border-top:1px solid #8f805550}
+.phone-game .adventure-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;min-height:72px;padding:6px 12px;background:#1c372e;border-top:1px solid #8f805550}
 .phone-game .adventure-actions>button,.phone-game .adventure-actions .shop-entry{display:flex;align-items:center;justify-content:center;gap:5px;min-height:46px;padding:6px 10px;font-size:14px;border-radius:8px}
-.phone-game .adventure-actions .quest-entry{width:auto;min-width:100px;background:#294638;border:1px solid #6b7c56}
-.adventure-actions .quest-entry img{width:30px;height:30px}
+.phone-game .adventure-actions .quest-entry{background:#294638;border:1px solid #6b7c56}
+.phone-game .adventure-actions .quest-entry,.phone-game .adventure-actions .shop-entry{flex-direction:column;gap:2px;width:68px;min-width:68px;min-height:58px;padding:4px 6px;font-size:12px;line-height:16px;flex-shrink:0}
+.adventure-actions .quest-entry img{width:32px;height:32px}
 .phone-game .adventure-actions .departure-button,.phone-game .adventure-actions .return-button{margin-left:auto;min-width:84px}
 .phone-game .adventure-actions .departure-button{background:#dfc27c;color:#20352a;border:1px solid #f6dea1;font-size:16px}
 .phone-game .adventure-actions .shop-entry{background:#294638;border-color:#6b7c56;color:#e8dbb3}
@@ -69,4 +70,4 @@
 .shop-purchase>small{font-size:14px}
 .shop-purchase>button{min-height:44px;font-size:16px;padding:8px 14px}
 @media(max-width:360px){.phone-game .adventure-actions{padding-inline:8px;gap:6px}.phone-game .adventure-actions>button{padding-inline:8px}.phone-characters{padding:12px}.character-heading{gap:14px}.character-heading>.face-portrait{width:112px!important;height:112px!important}.character-heading h2{font-size:24px}}
-@media(max-height:600px){.phone-game .phone-header{height:48px;min-height:48px}.phone-game .adventure-actions{min-height:54px;padding-block:4px}}
+@media(max-height:600px){.phone-game .phone-header{height:48px;min-height:48px}.phone-game .adventure-actions{min-height:66px;padding-block:4px}}

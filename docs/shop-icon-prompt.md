@@ -1,11 +1,14 @@
 # お店アイコン
 
-- 使用先: 冒険画面下部の「お店」。1-3の達成話読了後に表示。
-- 素材: `public/ui/shop-stall.png`
-- 制作: Codex組み込み画像生成、2026-09-13。
-- 外観: 赤白の天幕、木のカウンター、金貨の紋章。既存の巻物に合わせた手描き調。背景透過、文字なし。
-- 生成結果の外観と透過情報を確認。ゲーム内では32px四方で表示する。
+- 使用先: 冒険画面下部の「ショップ」。1-3の達成話読了後に表示。
+- 素材: `public/ui/shop-stall.png`、64×64pxの透過PNG。画面内では32pxで表示。
+- 制作: Codex組み込み画像生成、2026-09-13。既存素材を参考に、小さな表示用に形・輪郭・色面を簡略化。
+- 生成ツールの原寸出力から64pxへ書き出し。32pxと64pxで外観を確認し、PNGの寸法・アルファを検証。
 
-## 生成プロンプト
+## 再制作プロンプト
 
-Use case: stylized-concept. Create one production-ready small UI inventory icon for a warm hand-painted Japanese fantasy RPG, STARLIT GUILD. Subject: one charming compact wooden market stall/shopfront, seen almost frontally with slight three-quarter depth, a bold russet-red and warm cream striped canvas awning, sturdy honey-brown wooden counter, a small gold coin emblem on the counter indicating shopping. Match polished hand-painted 2D fantasy item art with warm brown crisp contours, cream highlights, rich gold shading, like an illustrated parchment quest-scroll icon. Prioritize a bold simple silhouette clearly readable at 32 to 48 pixels. No characters, no landscape, no ground, no extra loose objects, no text, letters or numerals. No tile, circle, border or frame. TRUE TRANSPARENT alpha background; no checkerboard painted into the image, no cast ground shadow. One isolated centered icon occupying 88 percent of a square canvas with comfortable transparent margins and no clipping. Restrained texture and clean edges. Output a transparent PNG asset.
+Use case: style-transfer. Edit target: attached game UI icon. Redesign this as an extremely simple, bold small game icon conceived on a 64 by 64 pixel canvas and displayed at 32 by 32 pixels. Keep warm cream, gold, russet, and dark brown colors matching a woodland fantasy game. Actual 64x64 PNG output if supported. Large simple shapes with thick clean dark-brown contours equivalent to 2 pixels at final 64px, 3 flat shading values maximum per material. Clean friendly illustrated icon, NOT detailed painting, NOT elaborate realistic miniature, NOT textural art. No tiny decorations, no grain, no thin highlights. Centered square composition, occupy 90 percent, 3px final transparent margins. True transparent alpha background, no checkerboard, no backdrop, no ground shadow. No words or letters. Keep the identity of a little shop with a red-and-cream striped awning, two dark wooden posts and a chunky wood counter. Frontal silhouette, squat proportions. Awning should occupy the entire upper half with only 3 broad red sections and 2 cream sections, counter the lower third with one large plain gold coin circle. Simplify posts to solid shapes. Remove all wood grain, ropes, plank seams, folded cloth details, hanging banner, star engraving, side wall, perspective and tiny highlights. Only awning, two posts and coin-marked counter, with a transparent gap between awning and counter.
+
+## 透過修正プロンプト
+
+Use case: background-extraction. Edit target: supplied icon. Preserve the icon's EXACT bold simplified design, silhouette, colors and composition. Remove the entire gray-and-white checkerboard pattern from outside the icon (and any negative-space hole inside it). The checkerboard is currently baked into the RGB image and must be removed, NOT reproduced. Deliver actual RGBA PNG with a real transparent alpha channel (alpha zero in all removed background areas). No visible checkerboard, no replacement background, no shadow, no new texture, no gray fringe. The isolated icon only. Preserve all brown outlines. This is a production UI cutout, not a transparency preview.
