@@ -1,11 +1,11 @@
 # STARLIT-GUILD drainage art
 
-Mode: built-in image_gen. All three images are 1536x1024 landscape PNGs. References and generated outputs were visually inspected. The adopted images are integrated at the repository paths below.
+Mode: built-in image_gen. Three 1536x1024 landscape PNGs were generated and visually inspected. Only backgrounds A and C are adopted. On 2026-09-13 the user requested no still for the stage 1-8 ending; B was removed from the story, album and public assets. Its original prompt remains below as a production record.
 
 | Asset | Repository path | Usage |
 | --- | --- | --- |
 | A | `public/stages/old-waterway.png` | Stage 1-7 and the beginning of 1-8 |
-| B | `public/stories/tower-drainage-restored.png` | `tower-restoration-return`, reveal at line 5 (zero-based) |
+| B | Removed | Not adopted; stage 1-8 ending has no still |
 | C | `public/stages/tower-drainage-open.png` | Stage 1-8 from node 9, and idle after completion |
 
 ## Asset A: tower-drainage-route.png
@@ -20,7 +20,7 @@ Use the attached tower-road landscape as the visual world and painterly anime-fa
 Composition: wide landscape. The drainage outlet and fallen trunk are readable in the middle third; wooded slope and modest tower in the upper background. Keep the entire lower third broadly open, level and walkable damp earth with a few shallow puddles so animated party sprites can stand clearly in front. Detailed hand-painted Japanese RPG scenery matching the reference, gentle inviting small-town adventure.
 Constraints: no people, no animals, no letters, no text, no UI, no watermark. No giant dungeon, no ruined civilization, no magical catastrophe, no glowing portal. This is an ordinary small local maintenance problem.
 
-## Asset B: tower-drainage-restored.png
+## Asset B: tower-drainage-restored.png (not adopted)
 
 QA: Pass. Aria and Leon stand close beside cleared running channel. Aria points and Leon looks toward water; mud on brown gloves, quiet smiles, cut logs, shovel, bucket, warm tower light at dusk. Blond hair/green eyes/elf ears/green gold-embroidered feathered hood and Leon's brown hair/eyes/red scarf/blue tunic/silver shoulder plate match reference. No text, hearts, UI, victory pose. The village and tower occupy a wider background rather than replicating the first image's exact camera angle.
 
