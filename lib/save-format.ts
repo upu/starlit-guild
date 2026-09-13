@@ -1,6 +1,6 @@
 import {z} from 'zod';
 import {parseBundle as parseV3} from './save-format-v3.ts';
-import {heroes,allQuests as quests,migrate,type State} from './game.ts';
+import {heroes,allQuests as quests,migrate,encounter,type State} from './game.ts';
 import {stories} from './stories.ts';
 import {recruitments} from './recruitment.ts';
 import {isRecord} from './external-input.ts';
@@ -8,9 +8,11 @@ import {equipmentById,validInventory} from './equipment.ts';
 const n=z.number().finite().min(0).max(1e15),count=n.int(),id=z.string().uuid();
 const hero=z.string().refine(v=>heroes.some(h=>h.id===v));
 const uniqueHeroes=z.array(hero).min(1).max(heroes.length).refine(v=>new Set(v).size===v.length);
-const event=z.object({id:z.string().max(180),at:n,kind:z.enum(['hit','gather','hurt','heal','clear','move','rest','assist','skill','combo','burst','discovery']),text:z.string().max(300),amount:n.optional(),hero:hero.optional(),target:hero.optional()});
+const enemyId=z.enum(['enemy-1','enemy-2','enemy-3']);
+const event=z.object({id:z.string().max(180),at:n,kind:z.enum(['hit','gather','hurt','heal','clear','move','rest','assist','skill','combo','burst','discovery']),text:z.string().max(300),amount:n.optional(),hero:hero.optional(),target:hero.optional(),enemy:enemyId.optional()});
+const enemy=z.object({id:enemyId,hp:count,maxHp:count.min(1),resistance:n.max(300),attack:n,period:count.min(200).max(5000),nextAt:n});
 const health=z.record(hero,z.object({hp:n,maxHp:n.min(1)}));
-const run=z.object({serial:count,nodes:count.min(3).max(15),cheer:n.max(100),ward:n,comboAt:n,detour:z.object({node:count.max(14),kind:z.enum(['chest','herb','spirit']),hero,at:n,finishAt:n,claimed:z.boolean()}).nullable(),scene:z.object({title:z.string().max(100),lines:z.array(z.string().max(200)).max(8),at:n,kind:z.enum(['combo','burst'])}).nullable(),quest:z.string().refine(v=>quests.some(q=>q.id===v)),round:count.min(1),node:count.max(14),phase:z.enum(['move','work','rest']),phaseAt:n,nextAt:n,started:n,health,target:n,targetMax:n.min(1),hits:count,energy:n,energyAt:n,events:z.array(event).max(12),enemyAt:n,actors:z.array(z.object({hero,actions:count,arrivesAt:n,nextAt:n,period:n.min(200).max(5000)})).min(1).max(8)});
+const run=z.object({serial:count,nodes:count.min(3).max(15),cheer:n.max(100),ward:n,comboAt:n,detour:z.object({node:count.max(14),kind:z.enum(['chest','herb','spirit']),hero,at:n,finishAt:n,claimed:z.boolean()}).nullable(),scene:z.object({title:z.string().max(100),lines:z.array(z.string().max(200)).max(8),at:n,kind:z.enum(['combo','burst'])}).nullable(),quest:z.string().refine(v=>quests.some(q=>q.id===v)),round:count.min(1),node:count.max(14),phase:z.enum(['move','work','rest']),phaseAt:n,nextAt:n,started:n,health,target:n,targetMax:n.min(1),hits:count,energy:n,energyAt:n,events:z.array(event).max(12),enemyAt:n,enemies:z.array(enemy).max(3).optional(),actors:z.array(z.object({hero,actions:count,arrivesAt:n,nextAt:n,period:n.min(200).max(5000)})).min(1).max(8)});
 const keyedNumbers=z.record(z.string().regex(/^[a-z][a-z0-9_-]{0,40}$/),n);
 const storyQuest=z.string().refine(v=>quests.some(q=>q.id===v));
 const storyIds=z.array(z.string().refine(v=>stories.some(st=>st.id===v))).max(stories.length).refine(v=>new Set(v).size===v.length);
@@ -34,7 +36,17 @@ function validTimeline(squad:ParsedSquad,updatedAt:number){
  if(run.phase!=='rest'&&run.comboAt<run.nextAt)return false;
  if(run.phase!=='rest'&&run.detour&&!run.detour.claimed&&run.detour.finishAt<run.nextAt)return false;
  if(run.phase!=='rest'&&run.enemyAt<run.nextAt)return false;
- return validActors(squad);
+ return validActors(squad)&&validEnemies(run);
+}
+type ParsedRun=z.infer<typeof run>;
+function validEnemies(run:ParsedRun){
+ const enemies=run.enemies;if(!enemies)return true; // Existing battles keep their exact progress until the next node.
+ const quest=quests.find(q=>q.id===run.quest);if(!quest)return false;
+ if(encounter(quest,run.node)!=='battle')return enemies.length===0;
+ if(!enemies.length||new Set(enemies.map(enemy=>enemy.id)).size!==enemies.length||enemies.some(enemy=>enemy.hp>enemy.maxHp))return false;
+ if(run.target!==enemies.reduce((sum,enemy)=>sum+enemy.hp,0)||run.targetMax!==enemies.reduce((sum,enemy)=>sum+enemy.maxHp,0))return false;
+ const living=enemies.filter(enemy=>enemy.hp>0);if(!living.length)return false;
+ return run.enemyAt===Math.min(...living.map(enemy=>enemy.nextAt))&&(run.phase==='rest'||living.every(enemy=>enemy.nextAt>=run.nextAt));
 }
 function validateState(s:ParsedState,ctx:z.RefinementCtx){
  if(s.inventory&&!validInventory(s.inventory,s.owned))ctx.addIssue({code:'custom',message:'Invalid equipment ownership'});

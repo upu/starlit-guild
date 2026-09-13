@@ -42,7 +42,16 @@ function frameCutin(run:ActiveRun|null,now:number){return run?.scene&&now>=run.s
 function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  if(!run)return null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- return {x:.80,y:.61,sprite:targetSprite,asset:kind==='escort'&&quest.escortAsset?quest.escortAsset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+ return {id:'legacy-target',x:.80,y:.61,scale:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:kind==='escort'&&quest.escortAsset?quest.escortAsset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+}
+function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
+ const base=frameTarget(quest,run,kind);if(!base)return [];
+ const enemies=run?.enemies;if(!enemies?.length)return [base];
+ const positions=enemies.length===2?[{x:.77,y:.49},{x:.82,y:.76}]:[{x:.73,y:.43},{x:.86,y:.63},{x:.72,y:.83}];
+ return enemies.map((enemy,index)=>{
+  const multiple=enemies.length>1,name=multiple?(quest.enemy===9?'霧狼':'スライム')+' '+String.fromCharCode(65+index):base.name;
+  return {...base,...(multiple?positions[index]:{}),id:enemy.id,name,scale:multiple?.65:1.08,hp:enemy.hp,maxHp:enemy.maxHp,down:enemy.hp<=0,value:clamp(enemy.hp/enemy.maxHp)};
+ });
 }
 
 // Presentation is a read-only projection. Only lib/game advances time or awards loot.
@@ -52,9 +61,9 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const kind=run?encounter(quest,run.node):null;
  const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
  const events=recentEvents(run,now),members=squad.members.map((id,index)=>adventureMember(input,run,events,now,id,index));
- const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),target=frameTarget(quest,run,kind);
+ const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),targets=frameTargets(quest,run,kind),target=targets.find(target=>!target.down)??targets.at(0)??null;
  const drained=quest.id===RESTORATION_QUEST&&(run?run.node>=9:input.restorationComplete);
- return {key,quest,background:drained?'/stages/tower-drainage-open.png':questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,ward:run?.ward||0};
+ return {key,quest,background:drained?'/stages/tower-drainage-open.png':questScenery(quest),phase:run?.phase||'idle',members,target,targets,discovery,events,cutin,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
 export function memberHealthLabel(member:Pick<AdventureFrame['members'][number],'name'|'down'>){return member.down?`${member.name} · 戦闘不能`:member.name;}
