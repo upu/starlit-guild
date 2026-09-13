@@ -14,7 +14,7 @@ import {useGameMusic} from './use-game-music';
 import {useJourneyHints} from './use-journey-hints';
 import {MapStage} from './map-stage';
 import {GuildHome} from './guild-home';
-import {RecruitmentBoard,RareInventory} from './recruitment-board';
+import {RecruitmentBoard} from './recruitment-board';
 import {Banter,StoryLibrary,StoryAlbum,ConversationReader,StoryReader} from './story-scenes';
 import {availableStories,characterNotes,journeyBanter,stories,storyProgress,together,type Story,type StoryLine} from '@/lib/stories';
 import {Sprite} from './sprite';
@@ -84,7 +84,7 @@ function collectionSheet(m:SheetModel):SheetView|null{
  const s=m.state;
  if(m.sheet==='party')return {title:'冒険を見守る隊',description:'隊を選ぶと、その隊の冒険と行き先を表示します。',content:<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===m.squad.id} className={p.id===m.squad.id?'selected':''} onClick={()=> { m.chooseSquad(p.id); }} key={p.id}><span>{p.name}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { m.navigate('companions'); }}>隊を作る・編成する</button></>};
  if(m.sheet==='quests')return {title:'クエスト',description:m.prologue?'行き先を選びましょう。':'出かけたいクエストを選びましょう。',content:<QuestPicker state={s} squad={m.squad} selected={m.candidateQuest} onSelect={m.setCandidateQuest} onConfirm={m.selectQuest} ready={m.ready}/>};
- if(m.sheet==='bag')return {title:'持ちもの',description:'区間報酬と寄り道で集めた、旅の蓄えです。',content:<><div className="inventory-grid">{[[Coins,s.gold,'お金'],[Leaf,s.herbs,'薬草'],[Gem,s.ore,'鉱石'],[Logs,s.wood,'木材']].map(([Icon,value,label])=>{const I=Icon as typeof Coins;return <div key={String(label)}><I/><span>{String(label)}</span><b>{fmt(value as number)}</b></div>})}</div><RareInventory state={s}/></>};
+ if(m.sheet==='bag')return {title:'持ちもの',description:'区間報酬と寄り道で集めた、旅の蓄えです。',content:<div className="inventory-grid">{[[Coins,s.gold,'お金'],[Leaf,s.herbs,'薬草'],[Gem,s.ore,'鉱石'],[Logs,s.wood,'木材']].map(([Icon,value,label])=>{const I=Icon as typeof Coins;return <div key={String(label)}><I/><span>{String(label)}</span><b>{fmt(value as number)}</b></div>})}</div>};
  if(m.sheet==='journal')return {title:'旅団の足あと',description:`${String(s.clears)}件達成 · 寄り道で${String(s.discoveries)}回の発見`,content:<><button className="memory-link" onClick={()=> { m.setSheet('stories'); }}><Heart size={18}/>旅の思い出{m.unread>0&&<span>未読 {m.unread}</span>}</button><div className="phone-journal">{s.log.map((entry,i)=><article key={`${String(entry.at)}-${String(i)}`}><time>{new Date(entry.at).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}</time><p>{entry.text}</p></article>)}</div></>};
  return null;
 }
