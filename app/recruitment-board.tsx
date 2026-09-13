@@ -1,15 +1,12 @@
 'use client';
 import {useState} from 'react';
-import {BookOpen,Check,ChevronRight,Gem} from 'lucide-react';
+import {BookOpen,Check,ChevronRight} from 'lucide-react';
 import {Progress} from '@/components/ui/progress';
 import {heroes,quests,allQuests,power,estimate,type State,type Squad,type Action} from '@/lib/game';
 import {recruitments,met,prepared,rareProgress,canPrepare,recruitmentNeeds,recruitmentRun,recruitmentHint} from '@/lib/recruitment';
 import {availableStories,type Story} from '@/lib/stories';
 import {Sprite} from './sprite';
 
-export function RareInventory({state:s}:{state:State}){
- return <section className="rare-inventory"><h3><Gem size={18}/>出会いをつなぐ希少素材</h3><p>対象の依頼を最後まで達成すると探索が進みます。留守中の冒険も数えます。</p>{recruitments.filter(r=>met(s,r)||rareProgress(s,r).found>0).map(r=>{const p=rareProgress(s,r);return <article key={r.hero}><b>{r.rare.name}<span>{s.owned.includes(r.hero)?'仲間に加入済み':p.spent?'支度に使用済み':`${String(p.held)} / ${String(r.rare.count)}`}</span></b><p>{r.rare.description}</p><small>{r.rare.sources.map(id=>quests.find(q=>q.id===id)?.name??'不明な依頼').join('・')}：合計 {r.rare.every} 回で1個</small>{!p.spent&&p.next>0&&<small>次の1個まで、あと {p.next} 回</small>}</article>;})}</section>;
-}
 function recruitmentDetails(selected:string){
  const r=recruitments.find(r=>r.hero===selected)??recruitments.at(0);if(!r)throw Error('加入情報が見つかりません。');
  const h=heroes.find(h=>h.id===r.hero);if(!h)throw Error(`仲間「${r.hero}」が見つかりません。`);
