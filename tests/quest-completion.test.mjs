@@ -11,7 +11,7 @@ import {tradeEndingPending,TRADE_QUEST} from '../lib/prologue.ts';
 const code=ts.transpileModule(readFileSync(new URL('../app/quest-completion.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
 function harness(state,ready=true){
  let reading=false,reads=0,closes=0;
- const exports={},modules={react:{useState:()=>[reading,value=>{reading=value;}]},'react/jsx-runtime':jsxRuntime,'lucide-react':{BadgeCheck:'badge',ChevronRight:'arrow'},'./story-scenes':{StoryReader:'story-reader'},'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(name=>[name,name]))};
+ const exports={},modules={react:{useState:()=>[reading,value=>{reading=value;}]},'react/jsx-runtime':jsxRuntime,'lucide-react':{BadgeCheck:'badge',ChevronRight:'arrow'},'./story-scenes':{StoryReader:'story-reader'},'./use-story-advance':{useStoryAdvance:()=>({readerRef:{current:null},onPointerDownOutside:()=>{}})},'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(name=>[name,name]))};
  vm.runInNewContext(code,{exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];}});
  const props={story:stories.find(st=>st.id===TRADE_QUEST+'-return'),questName:'街への交易',ready,onRead(){reads++;if(!ready)return false;state=act(state,{type:'readStory',id:props.story.id},state.updatedAt);return true;},onClose(){closes++;}};
  function find(node,type){if(!node||typeof node!=='object')return;if(node.type===type)return node;return [node.props?.children].flat(Infinity).map(child=>find(child,type)).find(Boolean);}

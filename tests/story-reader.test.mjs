@@ -17,6 +17,7 @@ function harness(name,initialProps){
  const react={
   useState(initial){const i=cursor++;if(!(i in slots))slots[i]=typeof initial==='function'?initial():initial;return [slots[i],value=>{slots[i]=typeof value==='function'?value(slots[i]):value;}];},
   useRef(initial){const i=cursor++;return slots[i]??=( {current:initial} );},
+  useImperativeHandle(ref,create){if(ref)ref.current=create();},
   useEffect(fn,deps){const i=cursor++,old=slots[i];if(!old||deps.some((v,j)=>!Object.is(v,old.deps[j]))){effects.push(()=>{old?.cleanup?.();slots[i]={deps,cleanup:fn()};});}},
  };
  const modules={react,'react/jsx-runtime':jsxRuntime,'next/image':{default:'img'},'lucide-react':{BookOpen:'icon',ChevronRight:'arrow',Images:'icon'},'./portrait':{Portrait:'portrait'},'@/lib/game':game,'@/lib/stories':stories,'@/lib/prologue':prologue,'@/lib/story-art':art,'@/lib/original-characters':originals,'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(key=>[key,key]))};
