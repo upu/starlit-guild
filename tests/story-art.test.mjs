@@ -40,7 +40,7 @@ test('forest comparison art waits for Aria to lift both samples toward her face'
 
 test('the first-act climax waits for the beacon to light after the moss removal',()=>{
  const scene=stories.find(st=>st.id==='tower-moss-removal-return'),art=storyArt[scene.id];
- const glow=scene.lines.findIndex(line=>line.text.includes('金色の光が満ちた'));
+ const glow=scene.lines.findIndex(line=>line.text.includes('淡い紫の光がともった'));
  assert.ok(glow>0);assert.equal(art.revealAtLine,glow);
  assert.equal(storyArtAt(scene.id,glow-1),undefined);assert.equal(storyArtAt(scene.id,glow),art);
  assert.equal(storyArtAt('tower-restoration-return',Infinity),undefined);

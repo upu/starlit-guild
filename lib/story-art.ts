@@ -10,7 +10,7 @@ export type StoryArt = {
 export const storyArt: Partial<Record<string, StoryArt>> = {
  'tower-moss-removal-return': {
   src: '/stories/tower-light-restored.png',
-  alt: '青い夕空の下、灯りを取り戻した丘の石塔を並んで見上げるアリアとレオン。金色の光が坂道へ届き、足元には作業を終えた籠と木べらが置かれている。',
+  alt: '夕暮れの丘で、アリアとレオンが低い石に寄り添って座り、正面の塔を見上げる後ろ姿。塔の窓には淡い紫の光がともり、広がる風景を絵筆の跡を残して描いている。',
   width: 1536, height: 1024, revealAtLine: 6,
  },
  'forest-wetland-return': {
