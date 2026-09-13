@@ -1,0 +1,31 @@
+{
+  "useCase": "illustration-story",
+  "mode": "built-in image_gen",
+  "generatedImage": "public/stories/tower-light-restored.png",
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "bytes": 3160427,
+  "referenceImages": [
+    "public/stories/tower-moss-discovery.png",
+    "public/stages/tower-road.png"
+  ],
+  "prompt": "Use case: illustration-story\nAsset type: ONE finished climactic landscape story still for the Japanese fantasy RPG STARLIT-GUILD, 1536x1024 pixels.\nPrimary request: The nearby road beacon tower regains its light after Aria and Leon finish clearing overgrown moss and repairing drainage. This is the earned, intimate climax of their first small adventure together.\nInput images: Image 1 (tower-moss-discovery.png) is a REFERENCE ONLY for the exact identities, clothes and painterly anime style of Aria and Leon. Image 2 (tower-road.png) is a REFERENCE ONLY for the modest cylindrical stone beacon tower with a short roofed glass lantern, rural winding road and local hillside setting. Create a new composition, do not edit either image.\nScene/backdrop: Blue twilight has just fallen over the local hillside and little winding road. A modest cylindrical stone beacon, with the same masonry proportions, crenellated lantern platform and roofed glass lantern as reference 2, now shines with a warm luminous starlight inside its lantern. The complete tower is clearly visible upper/center in the composition, large enough to be the visual centerpiece, but still a small local beacon rather than a grand fortress. Light softly radiates from the lantern and gently reaches the winding road, with a distant hint of the riverside village. A freshly cleared narrow drainage channel and tidier patches near the tower quietly suggest their labor.\nSubject: Exactly two young adult adventurers in the foreground, Aria and Leon, in waist-up to three-quarter side/back profiles turned to look up at the tower while their faces remain recognizable and readable. Aria is a blonde elf with green eyes, long golden hair and clearly pointed ears, forest-green hooded cape with ornate gold leaf edging, white feather fastened to the hood, cream blouse, leather work gloves. Leon has tousled brown hair, brown eyes, a red scarf and cape, blue tunic, layered steel shoulder armor and leather gloves, matching reference 1. They stand with shoulders comfortably close, looking up with joyful, relieved small smiles and bright eyes; her head lifted in wonder and his softened smile. Their clothes and gloves show slight mud from honest work. A wooden spatula and a basket of removed ordinary moss are set down beside them at the lower edge. Do not make the moss itself the main glow.\nStyle/medium: High-quality detailed painterly anime illustration with natural anatomy, richly textured stone, flowing fabric and luminous eyes, visually continuous with reference 1.\nComposition/framing: Landscape 3:2; tower fully in frame with roof tip visible and generous blue evening sky above, tower as the dominant upper/central focal point, characters in lower foreground with faces visible in profile, winding road carrying warm light into the background. Preserve emotionally legible faces and clear tower silhouette when viewed small.\nLighting/mood: A moving, earned moment of shared accomplishment; warm golden lantern light on faces and cape edges against soft cool blue twilight. Dramatic and beautiful yet local, quiet, believable. Gentle atmospheric rays only.\nText: none.\nConstraints: Only Aria and Leon. No embrace, no confession, no giant castle, no apocalyptic beam, no huge magical column, no crystal, no combat, no other main characters, no oversized tower, no text, no captions, no logo, no watermark.",
+  "visualQA": {
+    "result": "accepted",
+    "inspected": true,
+    "notes": [
+      "Aria retains blonde hair, pointed ears, green gold-trimmed hood and white feather.",
+      "Leon retains brown hair, red scarf/cape and steel shoulder armor.",
+      "Both recognizable faces show joyful relief while looking up close together.",
+      "Complete modest beacon and roof tip remain in frame; warm light reaches the winding road against blue twilight.",
+      "Basket of removed moss, wooden spatula, mud and flowing drainage convey completed work.",
+      "No embrace, combat, giant light column, third character, text, logo or watermark.",
+      "Tower is upper right rather than centered; it still functions as the scene focal point."
+    ]
+  },
+  "sceneId": "tower-moss-removal-return",
+  "revealAtLine": 6,
+  "sha256": "ab35f4c2c5654af416a4a515be58ecc97f7d14a1e8fc2a8d0f7e2de021f777e3"
+}

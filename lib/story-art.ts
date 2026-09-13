@@ -8,6 +8,11 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'tower-moss-removal-return': {
+  src: '/stories/tower-light-restored.png',
+  alt: '青い夕空の下、灯りを取り戻した丘の石塔を並んで見上げるアリアとレオン。金色の光が坂道へ届き、足元には作業を終えた籠と木べらが置かれている。',
+  width: 1536, height: 1024, revealAtLine: 6,
+ },
  'forest-wetland-return': {
   src: '/stories/forest-moss-aria-oil.png',
   alt: '森の木陰で、二つの苔の入れ物を顔の近くへ持ち上げて見比べるアリア。正面寄りの胸上を油彩調で描き、緑の瞳と考え込む表情を捉える。',

@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialPrologueState,initialState,act,settle,availableQuests,allQuests,encounter} from '../lib/game.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {parseBundle} from '../lib/save-format.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
@@ -14,7 +14,7 @@ const finish=s=>settle(s,s.updatedAt+13*3600000).state;
 const read=(s,id)=>act(s,{type:'readStory',id:id+'-return'},s.updatedAt);
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'段階確認',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}
 
-test('1-1 through 1-8 requires each ending, stops offline and roundtrips without extra rewards',()=>{
+test('1-1 through 1-9 requires each ending, stops offline and roundtrips without extra rewards',()=>{
  let s=initialPrologueState(1000);
  for(const [i,stage] of prologueStages.entries()){
   assert.equal(nextGoal(s).questId,stage.quest);
@@ -31,8 +31,8 @@ test('1-1 through 1-8 requires each ending, stops offline and roundtrips without
   assert.deepEqual(read(s,stage.quest),s);assert.equal(stageEndingPending(s),undefined);
  }
  assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);assert.equal(s.prologue,true);
- assert.equal(availableStories(s).length,16);
- assert.equal(nextGoal(s).questId,RESTORATION_QUEST);assert.match(nextGoal(s).detail,/灯りの戻った帰り道/);
+ assert.equal(availableStories(s).length,18);
+ assert.equal(nextGoal(s).questId,MOSS_QUEST);assert.match(nextGoal(s).title,/第一部 完/);
  assert.throws(()=>start(s,'herbs'));assert.throws(()=>act(s,{type:'build'},s.updatedAt));
  const replay=finish(start(s,RETURN_QUEST));assert.equal(replay.done[RETURN_QUEST],2);
  assert.equal(stageEndingPending(replay),undefined);assert.deepEqual(replay.story,s.story);
@@ -116,10 +116,10 @@ test('wetland observation causes no damage, weapon work or moss harvest rewards'
  assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);
 });
 
-test('saved 1-6 and 1-7 endings gate the next stage without changing resources or old history',()=>{
+test('saved 1-6 through 1-8 endings gate the next stage without changing resources or old history',()=>{
  let s=initialPrologueState(1000);
  for(const stage of prologueStages.slice(0,5))s=read(finish(start(s,stage.quest)),stage.quest);
- for(const [previous,next] of [[WETLAND_QUEST,WATERWAY_QUEST],[WATERWAY_QUEST,RESTORATION_QUEST]]){
+ for(const [previous,next] of [[WETLAND_QUEST,WATERWAY_QUEST],[WATERWAY_QUEST,RESTORATION_QUEST],[RESTORATION_QUEST,MOSS_QUEST]]){
   s=roundtrip(finish(start(s,previous)));assert.throws(()=>start(s,next),/まだ/);
   assert.ok(!availableQuests(s).some(q=>q.id===next));
   const before=structuredClone(s);s=roundtrip(read(s,previous));
@@ -132,7 +132,7 @@ test('saved 1-6 and 1-7 endings gate the next stage without changing resources o
 test('waterway exploration and restoration follow fieldwork order with small battles and matching scenery',()=>{
  let s=initialPrologueState(1000);
  for(const stage of prologueStages.slice(0,6))s=read(finish(start(s,stage.quest)),stage.quest);
- for(const id of [WATERWAY_QUEST,RESTORATION_QUEST]){
+ for(const id of [WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST]){
   const q=allQuests.find(q=>q.id===id),herbs=s.herbs,nodes=new Map();let worked=false,battled=false;
   s=start(s,id);
   while(s.squads[0].run){
@@ -153,15 +153,21 @@ test('waterway exploration and restoration follow fieldwork order with small bat
    s=settle(s,run.nextAt).state;
   }
   assert.equal(nodes.size,15);assert.ok(worked);assert.ok(battled);assert.equal(s.herbs,herbs);
-  assert.equal([...nodes.values()].filter(n=>n.kind==='battle').length,id===WATERWAY_QUEST?5:3);
+  assert.equal([...nodes.values()].filter(n=>n.kind==='battle').length,id===WATERWAY_QUEST?5:id===RESTORATION_QUEST?3:2);
   if(id===RESTORATION_QUEST){
    assert.match(nodes.get(5).name,/水の行き先/);assert.match(nodes.get(8).name,/排水の合図/);
-   assert.match(nodes.get(9).name,/流れ出した水/);assert.match(nodes.get(11).name,/奥の苔/);
+   assert.match(nodes.get(9).name,/流れ出した水/);assert.match(nodes.get(11).name,/補修用の石/);
+   assert.ok([...nodes.values()].every(n=>!n.name.includes('苔')));
    assert.equal(nodes.get(14).kind,'escort');assert.match(nodes.get(14).name,/下流まで水/);
    const input={squad:s.squads[0],now:s.updatedAt,ready:true,paused:false,startQuest:id,restorationComplete:!!s.done[id]};
    assert.equal(adventureFrame(input).background,'/stages/tower-drainage-open.png');
    const replay=start(read(s,id),id);
    assert.equal(adventureFrame({...input,squad:replay.squads[0]}).background,q.background,'replay begins before drainage');
+  }
+  if(id===MOSS_QUEST){
+   assert.match(nodes.get(7).name,/奥の苔/);assert.match(nodes.get(10).name,/最後の石/);
+   assert.equal(nodes.get(14).kind,'escort');assert.match(nodes.get(14).name,/点検口を閉じる/);
+   assert.ok([...nodes.values()].slice(7).every(n=>n.kind!=='battle'));
   }
   s=roundtrip(read(s,id));const snapshot=structuredClone(s);assert.deepEqual(read(s,id),snapshot);
  }

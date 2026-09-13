@@ -38,6 +38,15 @@ test('forest comparison art waits for Aria to lift both samples toward her face'
  assert.equal(storyArtAt(scene.id,comparison),art);
 });
 
+test('the first-act climax waits for the beacon to light after the moss removal',()=>{
+ const scene=stories.find(st=>st.id==='tower-moss-removal-return'),art=storyArt[scene.id];
+ const glow=scene.lines.findIndex(line=>line.text.includes('金色の光が満ちた'));
+ assert.ok(glow>0);assert.equal(art.revealAtLine,glow);
+ assert.equal(storyArtAt(scene.id,glow-1),undefined);assert.equal(storyArtAt(scene.id,glow),art);
+ assert.equal(storyArtAt('tower-restoration-return',Infinity),undefined);
+ assert.equal(scene.lines.at(-1).text,'第一部 完');
+});
+
 test('first departure has its illustration, while the fireside waits until they sit together',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
  assert.ok(availableStories(state).some(st=>st.id==='herbs-departure'));
