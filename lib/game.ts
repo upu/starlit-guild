@@ -1,6 +1,6 @@
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
 import {chachaHero} from './original-characters.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
 import {waterwayWork} from './waterway-work.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
 import {availableStories,coupleCombo,storyProgress,together,type StoryProgress} from './stories.ts';
@@ -22,7 +22,8 @@ export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q
  {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/ruins.png'},
  {id:WETLAND_QUEST,name:'森の苔を探して',kind:'採取',region:'木陰に水の残る森の湿地',desc:'約束した午後、持ち帰った苔を携えて森へ。アリアが見覚えのある湿った木陰を探し、少しだけ分けてもらって見比べよう。',tier:1,need:14,seconds:180,gold:100,xp:75,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/forest-wetland.png',gatherTarget:'湿地の草葉と苔',availability:'repeatable'},
  {id:WATERWAY_QUEST,name:'古い水路をたどって',kind:'採取',region:'塔の裏手の湿った斜面',desc:'森での記録を管理人へ持っていこう。塔のそばで苔を見比べ、古い管理図と湿った地面を手がかりに、水路の出口を探そう。',tier:1,need:15,seconds:180,gold:100,xp:80,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'斜面のスライム',background:'/stages/old-waterway.png',gatherTarget:'水路の道筋',availability:'repeatable'},
- {id:RESTORATION_QUEST,name:'いつもの道を戻す仕事',kind:'護衛',region:'塔の排水路と足元の石組み',desc:'管理人や街の作業者と力を合わせて復旧へ。魔物を追い払い、足場と水の行き先を確かめ、手の届く苔を取り除こう。',tier:1,need:15,seconds:180,gold:150,xp:85,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'水路脇のスライム',background:'/stages/old-waterway.png',gatherTarget:'石の隙間の苔',escortTarget:'復旧作業を手伝う',availability:'repeatable'},
+ {id:RESTORATION_QUEST,name:'水の通り道を戻す仕事',kind:'護衛',region:'塔の古い排水路',desc:'街の作業者と水路の修理へ。周囲の魔物を追い払い、道具を運び、水が下流へ流れることを確かめよう。',tier:1,need:15,seconds:180,gold:150,xp:85,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'水路脇のスライム',background:'/stages/old-waterway.png',gatherTarget:'水路に残った枝と小石',escortTarget:'水路の修理を手伝う',availability:'repeatable'},
+ {id:MOSS_QUEST,name:'もう一度、あの灯りを',kind:'採取',region:'水の引いた塔の足元',desc:'水路は直った。次は石組みの奥に増えすぎた苔を取り除こう。管理人と点検口を開け、ふたりで剥がした苔を籠へ集めて、塔から離れた場所へ運び出そう。',tier:1,need:15,seconds:180,gold:150,xp:90,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'石陰のスライム',background:'/stages/tower-drainage-open.png',gatherTarget:'石組みを覆う苔',escortTarget:'苔の撤去を手伝う',availability:'repeatable'},
 ] satisfies Quest[]).sort((a,b)=>a.unlock-b.unlock);
 export const recruitmentQuests:Quest[]=recruitments.map(r=>({...r.mission,id:'join-'+r.hero,companion:r.hero,unlock:r.unlock,seconds:600,gold:100*r.mission.tier,xp:100*r.mission.tier,herbs:0,ore:0,availability:'once'}));
 export const allQuests:Quest[]=[...quests,...recruitmentQuests];
@@ -153,11 +154,11 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST].includes(q.id)&&kind!=='battle';}
+function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST].includes(q.id)&&kind!=='battle';}
 function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
 function stageWorkText(q:Quest,kind:Encounter,special:boolean){
  if(kind==='battle')return null;
- if(q.id===RESTORATION_QUEST)return kind==='gather'?'手の届く範囲を丁寧に取り除く':'声を掛け合って作業を進める';
+ if([RESTORATION_QUEST,MOSS_QUEST].includes(q.id))return kind==='gather'?'手の届く範囲を丁寧に取り除く':'声を掛け合って作業を進める';
  const texts:Partial<Record<string,[string,string]>>={
   [WATERWAY_QUEST]:['草を分けて水路の道筋を確かめる','地図と苔の続く先を照らし合わせる'],
   [WETLAND_QUEST]:['草葉を分けて苔を探す','葉の形と湿り気を丁寧に確かめる'],
