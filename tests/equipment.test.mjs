@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {initialPrologueState,initialState,act,settle,memberStats} from '../lib/game.ts';
 import {shopItems,inventoryOf,availableCopies,equipmentById} from '../lib/equipment.ts';
 import {storyItems} from '../lib/story-items.ts';
-import {prologueStages,TRADE_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST} from '../lib/prologue.ts';
+import {prologueStages,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST} from '../lib/prologue.ts';
 import {parseBundle} from '../lib/save-format.ts';
 
 function progress(count){const s=initialPrologueState(1000);s.gold=2000;for(const stage of prologueStages.slice(0,count)){s.done[stage.quest]=1;s.story.departed.push(stage.quest);s.story.completed.push(stage.quest);s.story.read.push(stage.quest+'-return');}return s;}
@@ -56,7 +56,7 @@ test('equipped saves settle identically in one offline step and repeated live st
  const {log:liveLog,...liveState}=frames,{log:offlineLog,...offlineState}=bulk;assert.deepEqual(liveState,offlineState);assert.deepEqual(liveLog.map(entry=>entry.text),offlineLog.map(entry=>entry.text));assert.deepEqual(parseBundle(bundle(bulk)).profiles[0].state,bulk);
 });
 test('story inventory follows handovers and discoveries without spoilers or duplicate replay rewards',()=>{
- assert.deepEqual(storyItems(progress(0)).map(item=>item.id),['aria-trade','leon-trade']);assert.deepEqual(storyItems(progress(1)).map(item=>item.id),['village-purchases']);assert.deepEqual(storyItems(progress(2)),[]);
+ assert.deepEqual(storyItems(progress(0)).map(item=>item.id),['aria-trade','leon-trade']);assert.deepEqual(storyItems(progress(1)).map(item=>item.id),['shopping-list']);assert.deepEqual(storyItems(action(progress(1),{type:'start',id:RETURN_QUEST,readDeparture:true})).map(item=>item.id),['village-purchases']);assert.deepEqual(storyItems(progress(2)),[]);
  const pending=progress(4);pending.story.read=pending.story.read.filter(id=>id!==TOWER_QUEST+'-return');assert.equal(storyItems(pending).length,0);
  const first=progress(4);assert.equal(storyItems(first)[0].id,'moss-lamp');assert.doesNotMatch(storyItems(first)[0].description,/弱ま|魔力|吸/);
  assert.match(storyItems(progress(5))[0].description,/弱まり/);assert.equal(storyItems(progress(6)).length,2);
