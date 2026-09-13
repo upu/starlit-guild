@@ -27,7 +27,7 @@ import {nextGoal,partyPreview,questAdvice,type JourneyGoal} from '@/lib/journey'
 import type {Action,State,Squad} from '@/lib/game';
 import type {useLocalGame} from './use-local-game';
 import {inPrologue,TRADE_QUEST,isPrologueQuest,stageEndingPending,restingQuest} from '@/lib/prologue';
-import {heroes,availableQuests,allQuests,heroSkills,memberStats,activeBonds,bondLevel} from '@/lib/game';
+import {heroes,availableQuests,allQuests,heroSkills,memberStats,activeBonds,bondLevel,squadName} from '@/lib/game';
 type Game=ReturnType<typeof useLocalGame>;
 type Sheet='book'|'quests'|'party'|'bag'|'shop'|'journal'|'build'|'upgrade'|'gift'|'recruit'|'help'|'goal'|'preview'|'advice'|'install'|'stories'|'album'|'story'|'banter'|'personality'|null;
 type ReturnIntent={squad:string;destination:'adventure'|'companions';quest?:string};
@@ -86,7 +86,7 @@ function previewSheet(m:SheetModel):SheetView|null{
 }
 function collectionSheet(m:SheetModel):SheetView|null{
  const s=m.state;
- if(m.sheet==='party')return {title:'冒険を見守る隊',description:'隊を選ぶと、その隊の冒険と行き先を表示します。',content:<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===m.squad.id} className={p.id===m.squad.id?'selected':''} onClick={()=> { m.chooseSquad(p.id); }} key={p.id}><span>{p.name}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { m.navigate('companions'); }}>隊を作る・編成する</button></>};
+ if(m.sheet==='party')return {title:'冒険を見守る隊',description:'隊を選ぶと、その隊の冒険と行き先を表示します。',content:<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===m.squad.id} className={p.id===m.squad.id?'selected':''} onClick={()=> { m.chooseSquad(p.id); }} key={p.id}><span>{squadName(p)}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { m.navigate('companions'); }}>隊を作る・編成する</button></>};
  if(m.sheet==='quests')return {title:'クエスト',description:'行き先を選び、もう一度タップで決定。',content:<QuestPicker state={s} squad={m.squad} selected={m.candidateQuest} onSelect={m.setCandidateQuest} onConfirm={m.selectQuest} ready={m.ready}/>};
  if(m.sheet==='bag')return {title:'持ちもの',description:'旅の道具と、預かっている品。',content:<InventoryPanel state={s}/>};
  if(m.sheet==='shop')return {title:'お店',description:'旅の支度を整えよう。',content:<ShopPanel state={s} ready={m.ready} onAction={m.act}/>};
@@ -175,7 +175,7 @@ function GameNotice({game}:{game:Game}){
 }
 function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
  if(m.prologue)return null;
- return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+m.squad.name}><Users size={16}/><span>{m.squad.name}</span><ChevronRight size={14}/></button><button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
+ return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+squadName(m.squad)}><Users size={16}/><span>{squadName(m.squad)}</span><ChevronRight size={14}/></button><button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
 }
 function AdventureDestination({model:m}:{model:PhoneFrameModel}){
  return <div className="adventure-actions" aria-label="冒険の操作"><button className="outline quest-entry" aria-label="クエストを開く" onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={32} height={32} alt="" loading="eager" unoptimized/><span>クエスト</span></button>{shopTier(m.state)>0&&<button className="outline shop-entry" onClick={()=>{m.setSheet('shop');}}><Store size={22}/><span>お店</span></button>}{m.run?<button className="outline return-button" disabled={!m.ready} onClick={()=>{m.requestReturn('adventure');}}><House size={18}/>帰還</button>:m.destinationChosen&&<button className="departure-button" disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>}</div>;
@@ -190,7 +190,7 @@ function AdventureTab({model:m}:{model:PhoneFrameModel}){
 function CompanionsTab({model:m}:{model:PhoneFrameModel}){
  const toggle=(id:string)=> { m.setDraft(d=>d.includes(id)?d.filter(member=>member!==id):[...d,id]); };
  const inspect=(id:string)=>{m.setHeroIndex(m.roster.findIndex(h=>h.id===id));m.setSheet('personality');};
- return <TabsContent value="companions" className="phone-characters"><CharacterPanel state={m.state} ready={m.ready} onAction={m.act}/>{!m.prologue&&<details className="legacy-party"><summary>パーティ編成</summary><PartyPanel state={m.state} squad={m.squad} draft={m.draft} ready={m.ready} onChoose={m.chooseSquad} onCreate={m.createSquad} onToggle={toggle} onInspect={inspect} onSave={()=>m.act({type:'party',squad:m.squad.id,members:m.draft})} onDiscard={()=> { m.setDraft(m.squad.members); }} onReturn={()=> { m.requestReturn('companions'); }} onRecruit={m.openRecruit} onPreview={()=> { m.setSheet('preview'); }} onAdventure={()=> { m.navigate('adventure'); }}/></details>}</TabsContent>;
+ return <TabsContent value="companions" className="phone-characters"><CharacterPanel state={m.state} ready={m.ready} onAction={m.act}/>{!m.prologue&&<details className="legacy-party"><summary>パーティ編成</summary><PartyPanel key={m.squad.id} state={m.state} squad={m.squad} draft={m.draft} ready={m.ready} onChoose={m.chooseSquad} onCreate={m.createSquad} onToggle={toggle} onInspect={inspect} onSave={()=>m.act({type:'party',squad:m.squad.id,members:m.draft})} onDiscard={()=> { m.setDraft(m.squad.members); }} onRename={name=>m.act({type:'nameSquad',squad:m.squad.id,name})} onReturn={()=> { m.requestReturn('companions'); }} onRecruit={m.openRecruit} onPreview={()=> { m.setSheet('preview'); }} onAdventure={()=> { m.navigate('adventure'); }}/></details>}</TabsContent>;
 }
 function CampTab({model:m}:{model:PhoneFrameModel}){
  const s=m.state;
@@ -212,7 +212,8 @@ function EndingDialog({model:m}:{model:PhoneFrameModel}){
 function ReturnDialog({model:m}:{model:PhoneFrameModel}){
  const intent=m.returnIntent;
  const title=intent?.destination==='companions'?'帰還して編成しますか？':intent?.quest?'帰還して行き先を変えますか？':'帰還しますか？';
- return <AlertDialog open={!!intent} onOpenChange={open=>{if(!open)m.setReturnIntent(null);}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>{title}</AlertDialogTitle><AlertDialogDescription>{m.state.squads.find(p=>p.id===intent?.squad)?.name}の確保済みの区間報酬は残ります。途中の依頼は最初からになります。{intent?.quest&&'帰還後に行き先を選び直します。自動では出発しません。'}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>冒険を続ける</AlertDialogCancel><AlertDialogAction disabled={!m.ready} onClick={e=>{e.preventDefault();m.confirmReturn();}}>{intent?.destination==='companions'?'帰還して編成する':'帰還する'}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
+ const target=m.state.squads.find(p=>p.id===intent?.squad);
+ return <AlertDialog open={!!intent} onOpenChange={open=>{if(!open)m.setReturnIntent(null);}}><AlertDialogContent className="game-confirm"><AlertDialogHeader><AlertDialogTitle>{title}</AlertDialogTitle><AlertDialogDescription>{target&&squadName(target)}の確保済みの区間報酬は残ります。途中の依頼は最初からになります。{intent?.quest&&'帰還後に行き先を選び直します。自動では出発しません。'}</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>冒険を続ける</AlertDialogCancel><AlertDialogAction disabled={!m.ready} onClick={e=>{e.preventDefault();m.confirmReturn();}}>{intent?.destination==='companions'?'帰還して編成する':'帰還する'}</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>;
 }
 function LeaveDialog({model:m}:{model:PhoneFrameModel}){
  const discard=()=>{const next=m.leaveAction;m.setDraft(m.squad.members);m.setLeaveAction(null);next?.(m.state);};
