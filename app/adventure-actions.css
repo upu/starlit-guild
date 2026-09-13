@@ -23,11 +23,13 @@
  min-width:58px;
  gap:0;
  padding:0 4px;
- border:0;
- background:transparent;
+ border:0!important;
+ border-radius:0;
+ outline:0;
+ background:transparent!important;
  font-size:11px;
  line-height:12px;
- box-shadow:none;
+ box-shadow:none!important;
 }
 
 .phone-game .adventure-actions .quest-entry{
@@ -41,6 +43,15 @@
 .shop-entry img{
  width:30px;
  height:30px;
+ flex:0 0 30px;
+}
+
+.phone-game .adventure-actions .quest-entry span,
+.phone-game .adventure-actions .shop-entry span{
+ position:relative;
+ z-index:1;
+ margin-top:-4px;
+ line-height:12px;
 }
 
 .phone-game .adventure-actions .departure-button,
@@ -50,7 +61,7 @@
 }
 
 .phone-game .adventure-actions .shop-entry-new{
- box-shadow:0 0 12px #e4be6330;
+ box-shadow:none!important;
 }
 
 @media(max-width:360px){
