@@ -2,7 +2,7 @@ import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
 import {madHalloweenStories} from './mad-halloween-stories.ts';
-import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,isPrologueQuest} from './prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 
@@ -146,8 +146,15 @@ function nightBanter(run:NonNullable<Squad['run']>):StoryLine[]{
  if(run.node<10)return [l('草が動いた。灯りはここへ置いて、少し離れよう。'),a('うん。通り道を確かめてからね。')];
  return [a('そろそろ分かれ道だね。苔灯、持つの替わろうか？'),l('ああ。包みは俺が持つから、両手を空けて。')];
 }
+function wetlandBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [a('布、ここに敷くね。少し座ろう。'),l('ああ。入れ物は平らなところに置いておこう。')];
+ if(run.node<5)return [a('この先の木陰、薬草を採るときによく通るんだ。'),l('じゃあ、踏まないほうがいい場所も教えてくれ。')];
+ if(run.node<10)return [l('石の横に水が残ってるな。'),a('うん。根の脇も見てみよう。葉の下に隠れてることがあるから。')];
+ return [a('あの木の根、ちょっと見せて。草を分けるから。'),l('入れ物を出しておく。見つけても、まず生えてるところで比べよう。')];
+}
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ if(run.quest===WETLAND_QUEST)return wetlandBanter(run);
  if(run.quest===TOWER_QUEST)return towerBanter(run);
  if(run.quest===NIGHT_QUEST)return nightBanter(run);
  if(run.quest===RETURN_QUEST)return returnBanter(run);

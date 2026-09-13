@@ -14,7 +14,7 @@ function prologueGoal(s:State,sq:Squad):JourneyGoal{
  if(sq.run)return {title:'タップでふたりを手助け',detail:'道や荷物・魔物をタップすると手助けできます。仲間をタップすると回復。見守っていても進みます。',action:'冒険を見守る',destination:'adventure'};
  if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、ふたりの話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
  const stage=nextStage(s),complete=!!s.done[stage.quest];
- return {title:complete?'ふたりの旅を振り返ろう':stage.label+' · '+stage.title,detail:complete?'ここまでの道をもう一度歩いたり、手帳で思い出を読み返せます。森で苔を見比べるお話は、この先へ続きます。':'画面上部の巻物から次のクエストを選びましょう。',action:'クエストを開く',destination:'quests',questId:stage.quest};
+ return {title:complete?'ふたりの旅を振り返ろう':stage.label+' · '+stage.title,detail:complete?'ここまでの道をもう一度歩いたり、手帳で思い出を読み返せます。管理人を訪ねるお話は、この先へ続きます。':'画面上部の巻物から次のクエストを選びましょう。',action:'クエストを開く',destination:'quests',questId:stage.quest};
 }
 function firstGoal(sq:Squad):JourneyGoal{
  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};
