@@ -2,9 +2,14 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialState,act,settle,testState,allQuests} from '../lib/game.ts';
-import {adventureFrame,adventureAssets,adventureAction,adventureHit} from '../lib/adventure-presentation.ts';
+import {adventureFrame,adventureAssets,adventureAction,adventureHit,memberHealthLabel} from '../lib/adventure-presentation.ts';
 import {rendererSession} from '../app/phaser/renderer-session.ts';
 const input=(state,extra={})=>({squad:state.squads[0],startQuest:'herbs',now:state.updatedAt,ready:true,paused:false,...extra});
+
+test('character health labels leave exact HP values to the bar',()=>{
+ assert.equal(memberHealthLabel({name:'アリア',down:false}),'アリア');
+ assert.equal(memberHealthLabel({name:'レオン',down:true}),'レオン · 戦闘不能');
+});
 
 test('rendering many frames interpolates independently without advancing or modifying the save',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000),before=structuredClone(state);

@@ -56,6 +56,7 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
+export function memberHealthLabel(member:Pick<AdventureFrame['members'][number],'name'|'down'>){return member.down?`${member.name} · 戦闘不能`:member.name;}
 
 export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=input.now):Action|null{
  const run=input.squad.run;
