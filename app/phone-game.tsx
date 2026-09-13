@@ -17,6 +17,7 @@ import {GuildHome} from './guild-home';
 import {RecruitmentBoard} from './recruitment-board';
 import {Banter,StoryLibrary,StoryAlbum,ConversationReader,StoryReader} from './story-scenes';
 import {useStoryAdvance,type StoryAdvance} from './use-story-advance';
+import {StoryHeading} from './story-heading';
 import {availableStories,characterNotes,journeyBanter,stories,storyProgress,together,type Story,type StoryLine} from '@/lib/stories';
 import {Sprite} from './sprite';
 import {InstallGuide,useInstallPrompt} from './install-guide';
@@ -200,7 +201,7 @@ function GameTabs({model:m}:{model:PhoneFrameModel}){
 function SheetDialog({model:m}:{model:PhoneFrameModel}){
  const {readerRef,onPointerDownOutside}=useStoryAdvance(),conversation=m.sheet==='story'||m.sheet==='banter';
  const {title,description,content}=resolveSheet(m,readerRef);
- return <Dialog open={!!m.sheet&&!m.ending} onOpenChange={open=>{if(!open&&m.sheet!=='story')m.setSheet(null);}}><DialogContent showCloseButton={m.sheet!=='story'} onPointerDownOutside={conversation?onPointerDownOutside:undefined} onInteractOutside={event=>{if(conversation)event.preventDefault();}} onEscapeKeyDown={event=>{if(m.sheet==='story')event.preventDefault();}} className={'phone-dialog'+(m.sheet==='story'?' story-dialog':'')+(m.sheet==='quests'?' quest-dialog':'')}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>{content}</DialogContent></Dialog>;
+ return <Dialog open={!!m.sheet&&!m.ending} onOpenChange={open=>{if(!open&&m.sheet!=='story')m.setSheet(null);}}><DialogContent showCloseButton={m.sheet!=='story'} onPointerDownOutside={conversation?onPointerDownOutside:undefined} onInteractOutside={event=>{if(conversation)event.preventDefault();}} onEscapeKeyDown={event=>{if(m.sheet==='story')event.preventDefault();}} className={'phone-dialog'+(conversation?' story-dialog':'')+(m.sheet==='quests'?' quest-dialog':'')}>{conversation?<StoryHeading title={title} description={description} readerRef={readerRef}/>:<DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>}{content}</DialogContent></Dialog>;
 }
 function EndingDialog({model:m}:{model:PhoneFrameModel}){
  if(!m.ending)return null;

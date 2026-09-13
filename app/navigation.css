@@ -71,7 +71,6 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"]{tran
 .still-gallery img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
 .still-gallery button>span{display:flex;align-items:center;justify-content:space-between;padding:9px;font-size:12px}
 .still-gallery button:only-child{grid-column:1/-1}
-.phone-dialog.story-dialog{max-width:960px!important}
 .story-still .still-expand{position:relative;display:block;padding:0;width:100%;border:0;border-radius:0;background:#102720}
 .still-expand img{display:block;width:100%;height:auto}
 .still-expand>span{position:absolute;right:10px;bottom:10px;display:flex;align-items:center;gap:6px;min-height:36px;padding:6px 10px;border-radius:6px;background:#102820e6;border:1px solid #cfbb87;color:#f0e0b7;font-size:12px}
@@ -104,7 +103,7 @@ body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner
 .game-confirm [data-slot="alert-dialog-description"]{color:#c8d3bf;line-height:1.8}
 .game-confirm [data-slot="alert-dialog-cancel"],.game-confirm button.outline{background:transparent;border:1px solid #849574;color:#e6d5b0}
 .game-confirm button{min-height:44px;height:auto;white-space:normal}
-@media(min-width:700px){.phone-dialog.quest-dialog{max-width:680px!important}.story-dialog .story-reader{gap:20px}.story-dialog .story-line>div{padding:12px 18px}}
+@media(min-width:700px){.phone-dialog.quest-dialog{max-width:680px!important}.story-dialog .story-line>div{padding:12px 18px}}
 
 @media(prefers-reduced-motion:reduce){button[data-slot="switch"]::before,button[data-slot="switch"] [data-slot="switch-thumb"]{transition:none}}
 
