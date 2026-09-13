@@ -18,7 +18,7 @@ export class AdventurePainter{
  private meters!:Phaser.GameObjects.Graphics;
  private ambient!:Phaser.GameObjects.Graphics;
  private figures=new Map<string,Figure>();
- private opponent:Figure|null=null;
+ private opponents=new Map<string,Figure>();
  private guest:Figure|null=null;
  private discovery!:Phaser.GameObjects.Image;
  private discoveryLabel!:Phaser.GameObjects.Text;
@@ -110,7 +110,7 @@ export class AdventurePainter{
   const width=this.scene.scale.width,height=this.scene.scale.height,age=now-event.at;
   const actor=frame.members.find(m=>m.id===event.hero)||frame.members[0];
   const support=event.kind==='heal'||event.kind==='hurt'||event.kind==='skill'&&!event.amount;
-  const dest=frame.members.find(m=>m.id===event.target)||(support?actor:frame.target);if(!dest)return;
+  const dest=frame.members.find(m=>m.id===event.target)||(support?actor:frame.targets.find(target=>target.id===event.enemy)||frame.target);if(!dest)return;
   const x=dest.x*width,y=dest.y*height-spriteSize(width,height)*.45,color=eventColor(event);
   this.amountEffect(event,frame,x,y,color,age);this.strikeEffect(event,frame,actor,support,x,y,color,age);this.moteEffects(support,x,y,color,age);
  }
@@ -152,21 +152,23 @@ export class AdventurePainter{
   this.meters.clear();for(let index=0;index<frame.members.length;index++)this.paintMember(input,frame,frame.members[index],index,now,size);
  }
  private paintTarget(frame:AdventureFrame,now:number,size:number){
-  const target=frame.target;if(!target){this.removeOpponent();return;}
-  if(!this.opponent)this.opponent=this.makeFigure(target.sprite,target.name);
+  const living=frame.targets.filter(target=>!target.down);
+  for(const [id,figure] of this.opponents)if(!living.some(target=>target.id===id)){this.removeFigure(figure);this.opponents.delete(id);}
+  for(const target of living)this.paintOpponent(frame,target,now,size);
+ }
+ private paintOpponent(frame:AdventureFrame,target:AdventureFrame['targets'][number],now:number,size:number){
+  let opponent=this.opponents.get(target.id);if(!opponent){opponent=this.makeFigure(target.sprite,target.name);this.opponents.set(target.id,opponent);}
   const width=this.scene.scale.width,height=this.scene.scale.height,asset=target.asset;
-  this.opponent.image.setTexture(asset,asset==='/sprites.png'?String(target.sprite):undefined);
-  const enemySize=size*1.08,pulse=this.runtime.reduced?1:1+Math.sin(now/420)*.015;
-  const hurt=frame.events.some(e=>['hit','assist','burst','skill'].includes(e.kind)&&now-e.at<140),striking=frame.events.find(e=>e.kind==='hurt'&&now-e.at<320);
+  opponent.image.setTexture(asset,asset==='/sprites.png'?String(target.sprite):undefined);
+  const enemySize=size*target.scale,pulse=this.runtime.reduced?1:1+Math.sin(now/420)*.015,events=frame.events.filter(event=>!event.enemy||event.enemy===target.id);
+  const hurt=events.some(e=>['hit','assist','burst','skill','combo'].includes(e.kind)&&now-e.at<140),striking=events.find(e=>e.kind==='hurt'&&now-e.at<320);
   const offset=striking&&!this.runtime.reduced?-Math.sin((now-striking.at)/320*Math.PI)*12:0;
-  this.opponent.image.setPosition(target.x*width+offset,target.y*height).setDisplaySize(enemySize*pulse,enemySize/pulse).setFlipX(target.battle).setDepth(16);
-  this.tintOpponent(hurt);
-  this.opponent.shadow.setPosition(target.x*width,target.y*height+3).setDisplaySize(enemySize*.6,enemySize*.12);
-  this.opponent.label.setText(target.name).setFontSize(width<500?11:13).setWordWrapWidth(Math.min(180,width*.32),true).setPosition(target.x*width,target.y*height+enemySize*.13+10);
+  opponent.image.setPosition(target.x*width+offset,target.y*height).setDisplaySize(enemySize*pulse,enemySize/pulse).setFlipX(target.battle).setDepth(10+target.y*10);
+  if(hurt&&!this.runtime.reduced)opponent.image.setTint(0xffedb1);else opponent.image.clearTint();
+  opponent.shadow.setPosition(target.x*width,target.y*height+3).setDisplaySize(enemySize*.6,enemySize*.12);
+  opponent.label.setText(target.name).setFontSize(width<500?12:13).setWordWrapWidth(Math.min(180,width*.27),true).setPosition(target.x*width,target.y*height+enemySize*.13+10);
   const bar=Math.min(92,enemySize*.8),y=target.y*height+enemySize*.12;this.meters.fillStyle(0x17352e,.9).fillRoundedRect(target.x*width-bar/2,y,bar,5,2);this.meters.fillStyle(target.battle?0xf1b38e:0xe9d89a).fillRoundedRect(target.x*width-bar/2,y,bar*target.value,5,2);
  }
- private tintOpponent(hurt:boolean){if(hurt&&!this.runtime.reduced)this.opponent?.image.setTint(0xffedb1);else this.opponent?.image.clearTint();}
- private removeOpponent(){if(!this.opponent)return;this.removeFigure(this.opponent);this.opponent=null;}
  private paintGuest(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,size:number){
   const guest=frame.quest.companion&&input.squad.run?heroes.find(h=>h.id===frame.quest.companion):null;
   if(!guest){if(this.guest){this.removeFigure(this.guest);this.guest=null;}return;}

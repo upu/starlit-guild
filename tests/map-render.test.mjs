@@ -85,6 +85,8 @@ test('stage progress retains the completed scenery until the next departure',()=
    const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
    assert.match(render(battle),/魔物と戦闘中/);assert.doesNotMatch(render(battle),/いたずらを阻止中/);
   }
+  // Render progression with sufficient training; difficulty has its own simulations.
+  if(prologueStages.indexOf(stage)>=6)for(const hero of state.owned)state.xp[hero]=30*19**2;
   state=settle(state,state.updatedAt+3600000).state;
   state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
   background=stage.quest==='village-trade'?'/forest.png':'/stages/'+(['tower-restoration','tower-moss-removal'].includes(stage.quest)?'tower-drainage-open':stage.quest)+'.png';

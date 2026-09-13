@@ -51,7 +51,8 @@ test('departure reading is atomic; offline arrival stops once and preserves its 
  const read=act(arrival,{type:'readStory',id:TRADE_QUEST+'-return'},arrival.updatedAt);
  assert.equal(tradeEndingPending(roundtrip(read)),false);
  assert.equal(read.gold,arrival.gold);assert.equal(inPrologue(read),true);
- const again=settle(depart(roundtrip(read)),read.updatedAt+3600000).state;
+ const once=act(roundtrip(read),{type:'start',id:TRADE_QUEST,readDeparture:true,value:false},read.updatedAt);
+ const again=settle(once,read.updatedAt+3600000).state;
  assert.equal(again.done[TRADE_QUEST],2);assert.equal(again.squads[0].run,null);
  assert.equal(tradeEndingPending(again),false);assert.deepEqual(again.story.read,read.story.read);
  assert.deepEqual(availableQuests(again).map(q=>q.id),[TRADE_QUEST,RETURN_QUEST]);

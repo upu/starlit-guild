@@ -77,6 +77,8 @@ test('banter keeps a complete exchange while the route changes and pauses under 
 
 test('memories interleave departure and ending by stage; album stays separate and returns to the handbook',()=>{
  let state=game.initialPrologueState(1000);
+ // The library test needs cleared stories, independently of combat training requirements.
+ for(const hero of state.owned)state.xp[hero]=30*19**2;
  for(const stage of prologue.prologueStages){state=game.act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);state=game.settle(state,state.updatedAt+3600000).state;state=game.act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);}
  const h=harness('StoryLibrary',{state,onOpen:()=>{}});
  const ordered=h.exports.memoryGroups(stories.availableStories(state)).flatMap(group=>group.items.map(st=>st.id));

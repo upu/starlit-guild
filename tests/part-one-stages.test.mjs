@@ -9,7 +9,12 @@ import {adventureFrame} from '../lib/adventure-presentation.ts';
 import {heroAnimation} from '../lib/hero-animation.ts';
 import {nextGoal,journeyNotice} from '../lib/journey.ts';
 
-const start=(s,id)=>act(s,{type:'start',id,readDeparture:true,value:true},s.updatedAt);
+// These tests cover story gates and scenery. Late battles use a trained fixture;
+// untrained progression and actual farming are covered in combat.test.mjs.
+function start(s,id){
+ const prepared=structuredClone(s);if(prologueStages.findIndex(stage=>stage.quest===id)>=6)for(const hero of prepared.owned)prepared.xp[hero]=Math.max(prepared.xp[hero]||0,30*19**2);
+ return act(prepared,{type:'start',id,readDeparture:true,value:false},prepared.updatedAt);
+}
 const finish=s=>settle(s,s.updatedAt+13*3600000).state;
 const read=(s,id)=>act(s,{type:'readStory',id:id+'-return'},s.updatedAt);
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'段階確認',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}

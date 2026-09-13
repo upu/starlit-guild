@@ -1,7 +1,8 @@
 import {recruitments,met,prepared,canPrepare,rareProgress,recruitmentHint,recruitmentRun} from './recruitment.ts';
 import {inPrologue,isPrologueQuest,nextStage,stageEndingPending,prologueStages} from './prologue.ts';
 import {storyProgress,availableStories} from './stories.ts';
-import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,type State,type Squad,type Quest} from './game.ts';
+import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,encounter,type State,type Squad,type Quest} from './game.ts';
+import {combatRank,penetration} from './combat.ts';
 
 export type Destination='adventure'|'quests'|'recruit'|'build'|'companions'|'party';
 export type JourneyGoal={hintId?:string;title:string;detail:string;action:string;destination:Destination;questId?:string};
@@ -11,6 +12,7 @@ export function buildingNeeds(s:State){const cost=buildingCost(s.town);return ([
 export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town).clears&&!buildingNeeds(s).length;}
 
 function prologueGoal(s:State,sq:Squad):JourneyGoal{
+ if(sq.run?.phase==='rest')return {title:'手前の道で力をつけよう',detail:'苦戦するときは、読み終えたクエストの自動周回でレベル上げ。お店の武器・防具も助けになります。タップで攻撃や回復を手伝うこともできます。',action:'クエストを開く',destination:'quests'};
  if(sq.run)return {title:'タップでふたりを手助け',detail:'道や荷物・魔物をタップすると手助けできます。仲間をタップすると回復。見守っていても進みます。',action:'冒険を見守る',destination:'adventure'};
  if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、ふたりの話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
  const stage=nextStage(s),complete=!!s.done[stage.quest];
@@ -71,13 +73,15 @@ export function partyPreview(s:State,sq:Squad,members:string[],q:Quest){
  const draft={...sq,members};return {before:stats(s,sq),after:stats(s,draft),secondsBefore:estimate(s,sq,q),secondsAfter:estimate(s,draft,q),bonds:activeBonds(members),healing:members.includes('mira')||members.includes('poppy'),guarding:members.includes('garr')||members.includes('noel'),exploring:members.some(id=>['aria','finn','poppy'].includes(id))};
 }
 export function questAdvice(s:State,sq:Squad,q:Quest){
+ const gap=combatRank(q)-sq.members.reduce((sum,id)=>sum+penetration(s,id),0)/Math.max(1,sq.members.length);
+ if(gap>=4&&Array.from({length:15},(_,node)=>encounter(q,node)).includes('battle'))return '魔物に攻撃が通りにくい強さです。育成が目安より遅れています。手前の依頼でレベルを上げ、武器を見直すとダメージが通りやすくなります。';
  if(power(s,sq,q)>=q.need)return 'この隊が得意な依頼です。見守りながら報酬を集めましょう。';
  const strong=[...heroes].filter(h=>s.owned.includes(h.id)&&!sq.members.includes(h.id)&&!s.squads.some(p=>p.id!==sq.id&&p.members.includes(h.id))).sort((a,b)=>b.stats[['採取','護衛','討伐'].indexOf(q.kind)]-a.stats[['採取','護衛','討伐'].indexOf(q.kind)]).at(0);
  return `${q.kind}の力が目安より${String(q.need-power(s,sq,q))}低めです。${strong?`${strong.name}を含む編成を比べるか、`:''}${s.clears>=3?'装備を強化するか、':''}手助け・回復で支えましょう。条件を満たさなくても出発できます。`;
 }
 export type JourneyNotice={title:string;description:string};
 function prologueNotice(before:State,after:State):JourneyNotice|null{
- const stage=prologueStages.find(({quest})=>(after.done[quest]||0)>(before.done[quest]||0));return stage?{title:stage.arrival,description:stage.detail}:null;
+ const stage=prologueStages.find(({quest})=>!before.done[quest]&&(after.done[quest]||0)>0);return stage?{title:stage.arrival,description:stage.detail}:null;
 }
 function recruitmentNotice(before:State,after:State):JourneyNotice|null{
  const joined=heroes.find(hero=>after.owned.includes(hero.id)&&!before.owned.includes(hero.id));
