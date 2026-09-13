@@ -1,4 +1,11 @@
 .phone-game .phone-header{justify-content:flex-end;min-height:52px;height:52px;padding:4px max(12px,env(safe-area-inset-right)) 4px max(12px,env(safe-area-inset-left));gap:8px}
+.phone-game .phone-tabs{position:relative}
+.phone-game .phone-header.phone-header-overlay{position:absolute;top:8px;right:max(8px,env(safe-area-inset-right));z-index:20;width:max-content;height:44px;min-height:44px;padding:0;gap:6px;border:0}
+.phone-header-overlay .handbook-button{box-shadow:0 2px 8px #081d2160}
+.phone-game.prologue-game .phone-adventure .map-heading{right:116px}
+.phone-game .adventure-toolbar{height:60px;padding-right:112px}
+.phone-game .adventure-toolbar .squad-selector{min-width:0;flex:1}
+.adventure-toolbar .squad-selector>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .phone-game .phone-adventure{display:flex;flex-direction:column;overflow:hidden}
 .phone-game .phone-adventure .map-shell{flex:1;min-height:0}
 .phone-game .phaser-map{min-height:0}
