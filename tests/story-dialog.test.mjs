@@ -16,6 +16,7 @@ function harness(overrides={},{withArt=false,selection=null}={}){
  const react={
   useState(initial){const i=cursor++;if(!(i in slots))slots[i]=initial;return [slots[i],value=>{slots[i]=value;}];},
   useRef(initial){return slots[cursor++]??={current:initial};},
+  useImperativeHandle(ref,create){if(ref)ref.current=create();},
   useEffect(fn,deps){const i=cursor++,old=slots[i];if(!old||deps.some((value,j)=>!Object.is(value,old[j]))){slots[i]=deps;effects.push(fn);}},
  };
  const jsx=(type,props,key)=>({type,props,key});
@@ -115,14 +116,24 @@ test('Enter and Space still advance without auto-repeating or consuming arrow ke
 });
 
 test('art viewing pauses progression and returning preserves the continuation cue',()=>{
- const h=harness({}, {withArt:true});
+ const advanceRef={current:null},h=harness({advanceRef}, {withArt:true});
  assert.ok(h.find('story-reader story-reader-art'));
  h.find('still-expand').props.onClick();h.render();
  assert.deepEqual(h.find('ArtViewer').props.art,fixtureArt);
  h.click();assert.equal(h.find('StoryLines').props.lines.length,1);
+ advanceRef.current.advance();h.render();assert.equal(h.find('StoryLines').props.lines.length,1);
  h.find('ArtViewer').props.onClose();h.render();h.click();
  assert.equal(h.find('StoryLines').props.lines.length,2);
  assert.equal(h.find('story-continue').props.children,'▼');
+});
+
+test('outside advancement shares final readiness and completion guards with dialogue clicks',()=>{
+ const advanceRef={current:null},h=harness({advanceRef,ready:false});
+ const outside=()=>{advanceRef.current.advance();h.render();};
+ outside();assert.equal(h.find('StoryLines').props.lines.length,2);
+ h.click();outside();assert.deepEqual(h.counts(),{read:0,closed:0});
+ h.render({...h.props,ready:true});outside();outside();h.click();
+ assert.deepEqual(h.counts(),{read:1,closed:1});
 });
 
 test('story dialog CSS removes centered transforms and bounds art and history to the same viewport',()=>{

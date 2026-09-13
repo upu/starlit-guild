@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useImperativeHandle,useRef,useState,type Ref} from 'react';
 import Image from 'next/image';
 import {BookOpen,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
@@ -9,6 +9,7 @@ import {originalCharacters} from '@/lib/original-characters';
 import {prologueStages} from '@/lib/prologue';
 import {availableStories,stories,storyProgress,type Story,type StoryLine} from '@/lib/stories';
 import {storyArtAt,type StoryArt} from '@/lib/story-art';
+import type {StoryAdvance} from './use-story-advance';
 const characters=[...heroes,...originalCharacters.filter(c=>!heroes.some(h=>h.id===c.id))];
 
 export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;onClose:()=>void}){
@@ -19,7 +20,7 @@ export function StoryLines({lines,startIndex=0}:{lines:StoryLine[];startIndex?:n
  return <div className="story-lines">{lines.map((line,i)=>{const hero=characters.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={startIndex+i}><Portrait index={hero.sprite} size={72}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={startIndex+i}>{line.text}</p>;})}</div>;
 }
 
-export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void;departure?:boolean}){
+export function StoryReader({story,ready,onRead,onClose,departure=false,advanceRef}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void;departure?:boolean;advanceRef?:Ref<StoryAdvance>}){
  const [page,setPage]=useState(0),[viewArt,setViewArt]=useState(false);
  const dialogue=useRef<HTMLDivElement>(null);
  const gesture=useRef<{x:number;y:number;scrollTop:number;moved:boolean}|null>(null),finishing=useRef(false);
@@ -33,6 +34,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
   finishing.current=true;
   if(onRead())onClose();else finishing.current=false;
  }
+ useImperativeHandle(advanceRef,()=>({advance}));
  return <div className={'story-reader'+(art?' story-reader-art':'')}>
   {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/></button></figure>}
   <div className="story-conversation" role="button" tabIndex={0} aria-label={advanceLabel} aria-disabled={last&&!ready}
@@ -48,8 +50,8 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
  </div>;
 }
 
-export function ConversationReader({lines,onClose}:{lines:StoryLine[];onClose:()=>void}){
- return <StoryReader story={{id:'journey-conversation',title:'道中の会話',place:'道中',chapter:'departure',lines}} ready onRead={()=>true} onClose={onClose}/>;
+export function ConversationReader({lines,onClose,advanceRef}:{lines:StoryLine[];onClose:()=>void;advanceRef?:Ref<StoryAdvance>}){
+ return <StoryReader story={{id:'journey-conversation',title:'道中の会話',place:'道中',chapter:'departure',lines}} ready onRead={()=>true} onClose={onClose} advanceRef={advanceRef}/>;
 }
 
 export function memoryGroups(items:Story[]){

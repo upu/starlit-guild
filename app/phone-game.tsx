@@ -1,5 +1,5 @@
 'use client';
-import {useState,type Dispatch,type MouseEvent,type ReactNode,type SetStateAction} from 'react';
+import {useState,type Dispatch,type MouseEvent,type ReactNode,type Ref,type SetStateAction} from 'react';
 import Image from 'next/image';
 import {Coins,Leaf,Gem,Logs,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
@@ -16,6 +16,7 @@ import {MapStage} from './map-stage';
 import {GuildHome} from './guild-home';
 import {RecruitmentBoard} from './recruitment-board';
 import {Banter,StoryLibrary,StoryAlbum,ConversationReader,StoryReader} from './story-scenes';
+import {useStoryAdvance,type StoryAdvance} from './use-story-advance';
 import {availableStories,characterNotes,journeyBanter,stories,storyProgress,together,type Story,type StoryLine} from '@/lib/stories';
 import {Sprite} from './sprite';
 import {InstallGuide,useInstallPrompt} from './install-guide';
@@ -56,12 +57,12 @@ type PhoneFrameModel=SheetModel&{
  openRecruit:()=>void;
  setReturnIntent:Dispatch<SetStateAction<ReturnIntent|null>>;setLeaveAction:Dispatch<SetStateAction<((state:State)=>void)|null>>;setDraft:Dispatch<SetStateAction<string[]>>;
 };
-function storySheet(m:SheetModel):SheetView|null{
+function storySheet(m:SheetModel,advanceRef:Ref<StoryAdvance>):SheetView|null{
  if(m.sheet==='book')return {title:'旅の手帳',description:'旅の記録と、手助けのヒント。',content:<div className="handbook-menu"><button className="outline" onClick={()=>{m.hints.markRead();m.setSheet('goal');}}><Lightbulb size={20}/><span>ヒント</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { m.setSheet('stories'); }}><BookOpen size={20}/><span>思い出{m.unread>0&&` · 未読 ${String(m.unread)}`}</span><ChevronRight size={16}/></button><button className="outline" onClick={()=> { m.setSheet('album'); }}><Images size={20}/><span>アルバム</span><ChevronRight size={16}/></button><SavePanel game={m.game} music={m.music}/></div>};
  if(m.sheet==='album')return {title:'アルバム',description:'旅で出会った景色を眺める',content:<StoryAlbum state={m.state} onBack={()=> { m.setSheet('book'); }}/>};
  if(m.sheet==='stories')return {title:'旅の思い出',description:'出会いも、冒険も、帰ってきた日のことも。',content:<><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button><StoryLibrary state={m.state} onOpen={m.openStory}/></>};
- if(m.sheet==='story'&&m.reading)return {title:m.reading.title,description:m.reading.place,content:<StoryReader key={m.reading.id} story={m.reading} ready={m.ready} onRead={m.finishStory} departure={!!m.pendingDeparture} onClose={m.closeStory}/>};
- if(m.sheet==='banter')return {title:m.activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中',description:m.activeQuest?.name||'次の冒険を待ちながら',content:<ConversationReader lines={m.banterSnapshot} onClose={()=> { m.setSheet(null); }}/>};
+ if(m.sheet==='story'&&m.reading)return {title:m.reading.title,description:m.reading.place,content:<StoryReader key={m.reading.id} story={m.reading} ready={m.ready} onRead={m.finishStory} departure={!!m.pendingDeparture} onClose={m.closeStory} advanceRef={advanceRef}/>};
+ if(m.sheet==='banter')return {title:m.activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中',description:m.activeQuest?.name||'次の冒険を待ちながら',content:<ConversationReader advanceRef={advanceRef} lines={m.banterSnapshot} onClose={()=> { m.setSheet(null); }}/>};
  return null;
 }
 function heroSheet(m:SheetModel):SheetView|null{
@@ -104,7 +105,7 @@ function helpSheet(m:SheetModel):SheetView|null{
  if(m.sheet!=='help')return null;
  return {title:'旅の手引き',description:'見守るだけでも、手助けしても。',content:<><p>マップの空いているところや敵・素材をタップすると手助け、仲間やHP表示をタップするとパーティを回復できます。HPは隊全体で共有し、先頭の仲間の足元に表示します。休憩中はマップのどこでも回復できます。{!m.prologue&&'応援が100になると、全員の必殺技が発動！ '}タップでの手助けに回数制限はありません。</p>{!m.prologue&&<p>光る寄り道をタップすると、仲間が優先して調べます。放置でも自動で回収します。</p>}<p>1周は15地点。3地点ごとに報酬を確保します。行き先は巻物の「クエスト」から選べます。{!m.prologue&&'帰還は隊の名前の横、編成は「パーティ」から操作できます。'}</p><p>進行は端末に保存し、開いている間は約5分ごとにクラウドへバックアップします。画面を閉じた後は、次に開いたときに最大12時間分を集計します。</p><button className="outline full" onClick={()=> { m.setSheet('install'); }}>ホーム画面に追加</button></>};
 }
-function resolveSheet(m:SheetModel){return storySheet(m)??heroSheet(m)??journeySheet(m)??previewSheet(m)??collectionSheet(m)??guildSheet(m)??upgradeSheet(m)??helpSheet(m)??{title:'',description:'',content:null};}
+function resolveSheet(m:SheetModel,advanceRef:Ref<StoryAdvance>){return storySheet(m,advanceRef)??heroSheet(m)??journeySheet(m)??previewSheet(m)??collectionSheet(m)??guildSheet(m)??upgradeSheet(m)??helpSheet(m)??{title:'',description:'',content:null};}
 export function PhoneGame({game}:{game:Game}){
  const installStatus=useInstallPrompt();
  const {s,clock,dispatch}=game;
@@ -189,8 +190,9 @@ function GameTabs({model:m}:{model:PhoneFrameModel}){
  return <Tabs className="phone-tabs" value={m.view} onValueChange={m.navigate}><div className="phone-screen"><AdventureTab model={m}/><CompanionsTab model={m}/><CampTab model={m}/><TabsContent value="memories" className="phone-memories"><div className="screen-heading"><h2>旅の思い出</h2><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button></div><StoryLibrary state={m.state} onOpen={m.openStory}/></TabsContent></div><TabsList className="phone-navigation"><TabsTrigger value="adventure"><Compass/><span>冒険</span></TabsTrigger>{!m.prologue&&<><TabsTrigger value="companions"><Users/><span>パーティ</span></TabsTrigger><TabsTrigger value="camp"><Flame/><span>拠点</span></TabsTrigger></>}</TabsList></Tabs>;
 }
 function SheetDialog({model:m}:{model:PhoneFrameModel}){
- const {title,description,content}=resolveSheet(m);
- return <Dialog open={!!m.sheet&&!m.ending} onOpenChange={open=>{if(!open&&m.sheet!=='story')m.setSheet(null);}}><DialogContent showCloseButton={m.sheet!=='story'} onInteractOutside={event=>{if(m.sheet==='story')event.preventDefault();}} onEscapeKeyDown={event=>{if(m.sheet==='story')event.preventDefault();}} className={'phone-dialog'+(m.sheet==='story'?' story-dialog':'')+(m.sheet==='quests'?' quest-dialog':'')}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>{content}</DialogContent></Dialog>;
+ const {readerRef,onPointerDownOutside}=useStoryAdvance(),conversation=m.sheet==='story'||m.sheet==='banter';
+ const {title,description,content}=resolveSheet(m,readerRef);
+ return <Dialog open={!!m.sheet&&!m.ending} onOpenChange={open=>{if(!open&&m.sheet!=='story')m.setSheet(null);}}><DialogContent showCloseButton={m.sheet!=='story'} onPointerDownOutside={conversation?onPointerDownOutside:undefined} onInteractOutside={event=>{if(conversation)event.preventDefault();}} onEscapeKeyDown={event=>{if(m.sheet==='story')event.preventDefault();}} className={'phone-dialog'+(m.sheet==='story'?' story-dialog':'')+(m.sheet==='quests'?' quest-dialog':'')}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription>{description}</DialogDescription></DialogHeader>{content}</DialogContent></Dialog>;
 }
 function EndingDialog({model:m}:{model:PhoneFrameModel}){
  if(!m.ending)return null;
