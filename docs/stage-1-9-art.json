@@ -1,14 +1,14 @@
 {
   "useCase": "illustration-story",
   "mode": "built-in image_gen",
-  "revision": 2,
+  "revision": 3,
   "generatedImage": "public/stories/tower-light-restored.png",
   "dimensions": {
     "width": 1536,
     "height": 1024
   },
-  "bytes": 2982930,
-  "sha256": "4f6f937e955a23d6df33190d508d60886d08caf3037e9246ff6c78d1cec43182",
+  "bytes": 2747635,
+  "sha256": "1403f34398b8c7a6bb23e1523cb327d6d477d30161024cc8826196da3f29aaa4",
   "referenceImages": [
     "git:29da13d:public/stories/tower-light-restored.png",
     "public/stages/tower-road.png"
@@ -26,10 +26,33 @@
       "identity": "Aria retains blonde hair, green gold-trimmed hooded cloak and white feather; Leon retains brown hair, red cape and steel shoulder.",
       "light": "Tower upper chamber has a small faint lavender tint. No strong bright white core, outward rays, halo or strong bloom visible. Path and surrounding hills remain in cool twilight.",
       "style": "Visible broken paint marks and soft atmospheric color in clouds, hills and foliage; scenic hand-painted treatment rather than character portrait emphasis.",
-      "restrictions": "No visible faces or profiles, no embrace, no combat, no giant beam, no extra character, no text or watermark."
+      "restrictions": "No visible faces or profiles, no embrace, no combat, no giant beam, no extra character, no text or watermark.",
+      "hoodConnection": "Clearly continuous green cloth now runs from rear hood through neck into broad shoulder/back cloak. The previous full blonde hair curtain dividing hood and cloak is removed. Natural folds reinforce the fabric connection.",
+      "hair": "Blonde hair now falls mainly at the outer left side from the hood opening; no hair crosses the central rear hood base. White feather and gold trim preserved."
     },
     "limitation": "The tower glow is intentionally extremely faint at full-scene scale; recognition relies on the subtle lavender patch in its upper window."
   },
   "sceneId": "tower-moss-removal-return",
-  "revealAtLine": 6
+  "revealAtLine": 6,
+  "hoodCorrection": {
+    "useCase": "precise-object-edit",
+    "mode": "built-in image_gen",
+    "revision": "hood-connection-correction",
+    "editTarget": "git:af95891:public/stories/tower-light-restored.png",
+    "dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bytes": 2747635,
+    "sha256": "1403F34398B8C7A6BB23E1523CB327D6D477D30161024CC8826196DA3F29AAA4",
+    "prompt": "Use case: precise-object-edit\nAsset type: Correct a small garment construction error in this exact finished 1536x1024 fantasy story painting.\nEdit target: The supplied landscape image. This is a strictly localized edit, not a scene regeneration.\nChange ONLY the green hood, cloak neck transition and adjacent blonde hair of Aria, the small seated figure to the left of the red-cloaked man, at the lower center.\nProblem to correct: Her hood currently looks like an independent green hat perched on top of hair, because a full curtain of blonde hair interrupts the join between its lower back edge and her cloak.\nRequired correction: Make this one anatomically believable HOODED CLOAK made from a single connected garment. The green hood is sewn continuously onto the green cloak. Paint an uninterrupted broad green cloth connection running from the back of her head down the nape, over both shoulders and into her upper back. Show continuous fabric folds and a subtle believable hood-to-cloak seam. The lower rear edge of the hood MUST merge into the neck/shoulder cloth, not form a floating separate hat rim. Remove the blonde hair curtain crossing the BACK BASE of the hood. Instead, blonde hair emerges only through the FRONT and SIDE face opening of the hood (hidden or mostly hidden from this rear camera angle) and drapes naturally down the outer left side and a small amount at the other side, leaving the central back-of-head-to-back green cloth connection clearly visible. Long blonde identity, white feather on the hood and delicate gold trim remain. Hood remains worn on head.\nInvariant preservation: Keep exact seated pose, complete rear view with NO face or profile, shoulder-to-shoulder closeness, body and head size, Aria position, Leon completely unchanged, stone seat, basket, road, hills, village, sky, tower and its extremely faint violet window unchanged. Preserve the loose visible painterly brush texture and original color grading. No rays, no brighter tower glow, no new light. Do not move, crop, zoom, rescale or redesign any part of the scene. No added text or watermark. Output the same full 1536x1024 composition with only this small clothing/hair correction.",
+    "visualQA": {
+      "result": "accepted after parent visual inspection",
+      "inspected": true,
+      "hoodConnection": "Clearly continuous green cloth now runs from rear hood through neck into broad shoulder/back cloak. The previous full blonde hair curtain dividing hood and cloak is removed. Natural folds reinforce the fabric connection.",
+      "hair": "Blonde hair now falls mainly at the outer left side from the hood opening; no hair crosses the central rear hood base. White feather and gold trim preserved.",
+      "invariantPreservation": "Both figures remain small, seated shoulder-to-shoulder and fully rear-facing with no faces or profiles. Leon's red cloak and armor, tower placement, stone ledge, basket, landscape, twilight palette and faint violet tower window remain visually consistent. No rays or bright tower spill introduced. Full 1536x1024 composition retained.",
+      "limitation": "Built-in image editing slightly re-renders brush detail across the image; the scenery and composition are visually preserved, not guaranteed pixel-identical outside the garment."
+    }
+  }
 }
