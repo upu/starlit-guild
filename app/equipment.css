@@ -2,6 +2,10 @@
 .phone-game .phone-tabs{position:relative}
 .phone-game .phone-header.phone-header-overlay{position:absolute;top:8px;right:max(8px,env(safe-area-inset-right));z-index:20;width:max-content;height:44px;min-height:44px;padding:0;gap:6px;border:0}
 .phone-header-overlay .handbook-button{box-shadow:0 2px 8px #081d2160}
+.phone-game .handbook-button{display:flex;align-items:center;justify-content:center;padding:5px}
+.handbook-button>img,.phone-navigation [data-slot=tabs-trigger]>img{width:32px;height:32px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 2px #081d2160)}
+.phone-game .phone-navigation{height:calc(68px + env(safe-area-inset-bottom))!important}
+.phone-game .phone-navigation [data-slot=tabs-trigger]{font-size:12px;line-height:16px}
 .phone-game.prologue-game .phone-adventure .map-heading{right:116px}
 .phone-game .adventure-toolbar{height:60px;padding-right:112px}
 .phone-game .adventure-toolbar .squad-selector{min-width:0;flex:1}
@@ -78,3 +82,5 @@
 .shop-purchase>button{min-height:44px;font-size:16px;padding:8px 14px}
 @media(max-width:360px){.phone-game .adventure-actions{padding-inline:8px;gap:6px}.phone-game .adventure-actions>button{padding-inline:8px}.phone-characters{padding:12px}.character-heading{gap:14px}.character-heading>.face-portrait{width:112px!important;height:112px!important}.character-heading h2{font-size:24px}}
 @media(max-height:600px){.phone-game .phone-header{height:48px;min-height:48px}.phone-game .adventure-actions{min-height:66px;padding-block:4px}}
+@media(max-height:700px){.phone-game .phone-navigation{height:calc(56px + env(safe-area-inset-bottom))!important}.phone-navigation [data-slot=tabs-trigger]>img{width:24px;height:24px}.phone-game .phone-navigation [data-slot=tabs-trigger]{line-height:14px}}
+@media(max-height:530px){.phone-game .phone-navigation{height:calc(48px + env(safe-area-inset-bottom))!important}.phone-navigation [data-slot=tabs-trigger]>img{width:20px;height:20px}.phone-game .phone-navigation [data-slot=tabs-trigger]{padding:1px 0!important;font-size:11px}}

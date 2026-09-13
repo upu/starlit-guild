@@ -1,7 +1,7 @@
 'use client';
 import {useState,type Dispatch,type MouseEvent,type ReactNode,type Ref,type SetStateAction} from 'react';
 import Image from 'next/image';
-import {Backpack,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
+import {Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {AlertDialog,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogCancel,AlertDialogAction} from '@/components/ui/alert-dialog';
@@ -167,7 +167,7 @@ export function PhoneGame({game}:{game:Game}){
  return <PhoneFrame model={frame}/>;
 }
 function PhoneHeader({model:m}:{model:PhoneFrameModel}){
- return <header className={'phone-header'+(m.view==='adventure'?' phone-header-overlay':'')}><button className="handbook-button bag-button" onClick={()=> { m.setSheet('bag'); }} aria-label="持ちものを開く"><Backpack size={23}/></button><button className="handbook-button" onClick={()=> { m.setSheet('book'); }} aria-label="旅の手帳：ヒント・思い出・アルバム・設定"><BookOpen size={23}/>{(m.game.error||m.hints.unread||(!m.prologue&&m.unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header>;
+ return <header className={'phone-header'+(m.view==='adventure'?' phone-header-overlay':'')}><button className="handbook-button bag-button" onClick={()=> { m.setSheet('bag'); }} aria-label="持ちものを開く"><Image src="/ui/bag-satchel.png" width={32} height={32} alt="" unoptimized/></button><button className="handbook-button" onClick={()=> { m.setSheet('book'); }} aria-label="旅の手帳：ヒント・思い出・アルバム・設定"><Image src="/ui/travel-handbook.png" width={32} height={32} alt="" unoptimized/>{(m.game.error||m.hints.unread||(!m.prologue&&m.unread>0))&&<i className="unread-dot" aria-hidden="true"/>}</button></header>;
 }
 function GameNotice({game}:{game:Game}){
  if(!game.error&&!game.otherTab)return null;
@@ -197,7 +197,7 @@ function CampTab({model:m}:{model:PhoneFrameModel}){
  return <TabsContent value="camp" className="phone-home"><div className="screen-heading"><h2>帰る場所</h2><span className="home-level">{['野営地','酒場','小さな村'][s.town]}</span></div><GuildHome state={s} now={m.clock} ready={m.ready} onAction={m.act} onStory={m.openStory}/><div className="home-menu"><button onClick={()=> { m.setSheet('build'); }}><House/><span>建設</span></button><button onClick={()=> { m.setSheet('upgrade'); }}><Hammer/><span>強化</span></button><button onClick={()=> { m.setSheet('gift'); }}><Gift/><span>差し入れ</span></button></div></TabsContent>;
 }
 function GameTabs({model:m}:{model:PhoneFrameModel}){
- return <Tabs className="phone-tabs" value={m.view} onValueChange={m.navigate}><PhoneHeader model={m}/><div className="phone-screen"><AdventureTab model={m}/><CompanionsTab model={m}/><CampTab model={m}/><TabsContent value="memories" className="phone-memories"><div className="screen-heading"><h2>旅の思い出</h2><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button></div><StoryLibrary state={m.state} onOpen={m.openStory}/></TabsContent></div><TabsList className="phone-navigation"><TabsTrigger value="adventure"><Compass/><span>冒険</span></TabsTrigger><TabsTrigger value="companions"><Users/><span>キャラクター</span></TabsTrigger>{!m.prologue&&<TabsTrigger value="camp"><Flame/><span>拠点</span></TabsTrigger>}</TabsList></Tabs>;
+ return <Tabs className="phone-tabs" value={m.view} onValueChange={m.navigate}><PhoneHeader model={m}/><div className="phone-screen"><AdventureTab model={m}/><CompanionsTab model={m}/><CampTab model={m}/><TabsContent value="memories" className="phone-memories"><div className="screen-heading"><h2>旅の思い出</h2><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button></div><StoryLibrary state={m.state} onOpen={m.openStory}/></TabsContent></div><TabsList className="phone-navigation"><TabsTrigger value="adventure"><Image src="/ui/adventure-compass.png" width={32} height={32} alt="" unoptimized/><span>冒険</span></TabsTrigger><TabsTrigger value="companions"><Image src="/ui/characters-silhouette.png" width={32} height={32} alt="" unoptimized/><span>キャラクター</span></TabsTrigger>{!m.prologue&&<TabsTrigger value="camp"><Flame/><span>拠点</span></TabsTrigger>}</TabsList></Tabs>;
 }
 function SheetDialog({model:m}:{model:PhoneFrameModel}){
  const {readerRef,onPointerDownOutside}=useStoryAdvance(),conversation=m.sheet==='story'||m.sheet==='banter';
