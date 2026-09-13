@@ -19,6 +19,26 @@ await mkdir(new URL('../work/',import.meta.url),{recursive:true});
 const output=new URL('../work/map-render.mjs',import.meta.url);
 await build({entryPoints:['app/map-stage.tsx'],outfile:fileURLToPath(output),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
 const {MapStage}=await import(output.href);
+const equipmentOutput=new URL('../work/equipment-render.mjs',import.meta.url);
+await build({entryPoints:['app/equipment-panels.tsx'],outfile:fileURLToPath(equipmentOutput),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
+const {CharacterPanel,InventoryPanel,ShopPanel}=await import(equipmentOutput.href);
+
+test('characters and shared bag expose starting equipment and trade cargo without requiring departure',()=>{
+ const s=initialPrologueState(1000),before=structuredClone(s),character=renderToStaticMarkup(createElement(CharacterPanel,{state:s,ready:true,onAction:()=>true}));
+ assert.match(character,/アリア/);assert.match(character,/レオン/);assert.match(character,/最大HP 60/);assert.match(character,/風の二連矢/);assert.match(character,/使い慣れた弓/);assert.match(character,/旅の服/);assert.match(character,/付け替える/);assert.doesNotMatch(character,/パーティ編成/);
+ const bag=renderToStaticMarkup(createElement(InventoryPanel,{state:s}));
+ for(const name of ['お金','薬草','鉱石','木材','アリアの村の交易品','レオンの村の交易品','アリアが装備中'])assert.ok(bag.includes(name),name);
+ assert.doesNotMatch(bag,/苔灯|森の苔の標本/);assert.deepEqual(s,before);
+});
+
+test('shop renders only unlocked goods, prices and affordability and the bag labels bought equipment',()=>{
+ let s=initialPrologueState(1000);for(const {quest} of prologueStages.slice(0,3)){s.done[quest]=1;s.story.departed.push(quest);s.story.completed.push(quest);s.story.read.push(quest+'-return');}
+ s.gold=500;s=act(s,{type:'start',id:'tower-road',readDeparture:true},1000);s=act(s,{type:'buy',id:'ash-bow'},1000);
+ const shop=renderToStaticMarkup(createElement(ShopPanel,{state:s,ready:true,onAction:()=>true}));
+ assert.match(shop,/400 G/);assert.match(shop,/トネリコの弓/);assert.match(shop,/100 Gで購入/);assert.match(shop,/アリア用/);assert.doesNotMatch(shop,/補強した弓|丈夫な作業着/);
+ const poor=renderToStaticMarkup(createElement(ShopPanel,{state:{...s,gold:0},ready:true,onAction:()=>true}));assert.equal((poor.match(/disabled=""/g)||[]).length,4);assert.match(poor,/あと 100 G/);
+ const bag=renderToStaticMarkup(createElement(InventoryPanel,{state:s}));assert.match(bag,/トネリコの弓/);assert.match(bag,/バッグ内 1/);
+});
 const storyOutput=new URL('../work/story-render.mjs',import.meta.url);
 await build({entryPoints:['app/story-scenes.tsx'],outfile:fileURLToPath(storyOutput),bundle:true,platform:'node',format:'esm',packages:'external',alias:imageAlias,jsx:'automatic'});
 const {StoryReader,StoryLines,StoryLibrary,StoryAlbum,Banter}=await import(storyOutput.href);
@@ -37,18 +57,19 @@ test('dialogue and banter show close-up portraits and the trade still appears fr
  assert.ok(first.includes('/stories/village-trade-handover.png'));
 });
 
-test('prologue screen guides to quests, hides advanced navigation and uses one book entrance',()=>{
+test('prologue offers immediate departure, character navigation and a bag with actions below chat',()=>{
  const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:1000,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
  const fresh=initialPrologueState(1000),html=render(fresh);
- assert.match(html,/ここから/);
- assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエスト<|>クエストを選ぶ<|何度でも/);
+ assert.match(html,/>出発</);assert.match(html,/>キャラクター</);assert.match(html,/aria-label="持ちものを開く"/);assert.doesNotMatch(html,/phone-wallet|quest-tutorial|>お店</);
+ assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエストを選ぶ<|何度でも/);
+ assert.ok(html.indexOf('journey-banter')<html.indexOf('adventure-actions'));assert.ok(html.indexOf('adventure-actions')<html.indexOf('phone-navigation'));
  assert.match(html,/aria-label="旅の手帳：ヒント・思い出・アルバム・設定"/);
  assert.doesNotMatch(html,/はじまりの隊|団長の応援|>編成<|>帰還<|>パーティ<|>拠点<|>思い出<|>出発する</);
  const running=render(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000));
- assert.match(running,/探索マップ/);assert.doesNotMatch(running,/phaser-assist-controls|>手助けする<|>回復<|>寄り道</);assert.doesNotMatch(running,/団長の応援|>編成<|>帰還<|>パーティ<|>拠点</);
+ assert.match(running,/探索マップ/);assert.doesNotMatch(running,/phaser-assist-controls|>手助けする<|>回復<|>寄り道</);assert.match(running,/>帰還</);assert.doesNotMatch(running,/団長の応援|>編成<|>パーティ<|>拠点</);
  const cleared=settle(act(fresh,{type:'start',id:'village-trade',readDeparture:true},1000),3601000).state;
  const after=render(act(cleared,{type:'readStory',id:'village-trade-return'},3601000));assert.doesNotMatch(after,/quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
- const legacy=render(initialState(1000));assert.match(legacy,/>パーティ</);assert.match(legacy,/>拠点</);
+ const legacy=render(initialState(1000));assert.match(legacy,/>キャラクター</);assert.match(legacy,/>拠点</);
  assert.doesNotMatch(legacy,/>思い出<|行き先を選ぶ|行き先を変える/);
 });
 

@@ -1,5 +1,6 @@
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
 import {chachaHero} from './original-characters.ts';
+import {equipmentBonus,buyEquipment,changeEquipment,type Inventory,type EquipmentSlot} from './equipment.ts';
 import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
 import {waterwayWork} from './waterway-work.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
@@ -36,7 +37,7 @@ export type Scene={title:string;lines:string[];at:number;kind:'combo'|'burst'};
 export type MemberHealth={hp:number;maxHp:number};
 export type Run={serial:number;nodes:number;cheer:number;ward:number;comboAt:number;detour:Detour|null;scene:Scene|null;actors:Actor[];enemyAt:number;quest:string;round:number;node:number;phase:'move'|'work'|'rest';phaseAt:number;nextAt:number;started:number;health:Record<string,MemberHealth>;target:number;targetMax:number;hits:number;energy:number;energyAt:number;events:GameEvent[]};
 export type Squad={id:string;name:string;members:string[];repeat:boolean;run:Run|null;lastQuest?:string};
-export type State={version:4;prologue?:boolean;recruitment?:RecruitmentProgress;story?:StoryProgress;wood:number;town:number;friendship:Record<string,number>;discoveries:number;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
+export type State={version:4;prologue?:boolean;inventory?:Inventory;recruitment?:RecruitmentProgress;story?:StoryProgress;wood:number;town:number;friendship:Record<string,number>;discoveries:number;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
 type LegacySharedRun=Omit<Run,'health'>&{hp:number;maxHp:number};
 type LegacySharedHealthState=Omit<State,'squads'>&{squads:(Omit<Squad,'run'>&{run:LegacySharedRun|null})[]};
 export type Rewards={count:number;gold:number;xp:number;herbs:number;ore:number;wood:number;offline:boolean;capped:boolean};
@@ -48,9 +49,9 @@ function actorByHero(r:Run,id:string){const actor=r.actors.find(a=>a.hero===id);
 export function initialState(now:number):State{return {version:4,recruitment:{prepared:[]},story:{departed:[],completed:[],read:[]},wood:0,town:0,friendship:{},discoveries:0,gold:60,herbs:0,ore:0,owned:['aria','leon'],xp:{},gear:0,camp:0,clears:0,done:{},claimed:[],lastDaily:'',updatedAt:now,squads:[{id:'party-1',name:'はじまりの隊',members:['aria','leon'],repeat:true,run:null}],log:[{at:now,text:'アリアとレオン、ふたりの旅が始まった。'}],receipts:[]};}
 export function initialPrologueState(now:number):State{return {...initialState(now),prologue:true};}
 export const activeBonds=(members:string[])=>bonds.filter(b=>b.ids.every(id=>members.includes(id)));
-export function memberStats(s:State,id:string){const h=heroById(id);return h.stats.map(v=>Math.round(v*(1+.1*(level(s.xp[id]||0)-1))*(1+.08*s.gear+(s.town>=2?.08:0))));}
+export function memberStats(s:State,id:string){const h=heroById(id),bonus=equipmentBonus(s,id);return h.stats.map((v,i)=>Math.round(v*(1+.1*(level(s.xp[id]||0)-1))*(1+.08*s.gear+(s.town>=2?.08:0)))+bonus[i]);}
 export function stats(s:State,sq:Squad){return [0,1,2].map(i=>sq.members.reduce((v,id)=>v+memberStats(s,id)[i],0)+activeBonds(sq.members).reduce((v,b)=>v+b.bonus,0));}
-function memberMaxHp(s:State,id:string){return Math.round((40+memberStats(s,id)[1]*2)*(s.town>=1?1.1:1));}
+export function memberMaxHp(s:State,id:string){return Math.round((40+memberStats(s,id)[1]*2)*(s.town>=1?1.1:1));}
 function memberHealth(r:Run,id:string){if(!Object.hasOwn(r.health,id))throw Error(`仲間「${id}」のHPが見つかりません。`);return r.health[id];}
 function healthRatio(health:MemberHealth){return health.hp/health.maxHp;}
 function totalMaxHp(r:Run){return Object.values(r.health).reduce((sum,health)=>sum+health.maxHp,0);}
@@ -248,7 +249,7 @@ export function testState(now:number,clears:number,lv:number,gold:number):State{
  s.owned=heroes.filter(h=>h.unlock<=s.clears).map(h=>h.id);for(const id of s.owned)s.xp[id]=30*(Math.min(50,Math.max(1,Math.floor(lv)))-1)**2;
  s.log=[{at:now,text:'テスト用の冒険。普段の記録には影響しません。'}];return s;
 }
-export type Action={type:'start'|'stop'|'party'|'recruit'|'gear'|'camp'|'daily'|'repeat'|'assist'|'newSquad'|'sync'|'detour'|'build'|'readStory'|'prepareRecruitment';squad?:string;id?:string;members?:string[];value?:boolean;mode?:'strike'|'heal';readDeparture?:boolean};
+export type Action={type:'start'|'stop'|'party'|'recruit'|'gear'|'camp'|'daily'|'repeat'|'assist'|'newSquad'|'sync'|'detour'|'build'|'readStory'|'prepareRecruitment'|'buy'|'equip';squad?:string;id?:string;hero?:string;slot?:EquipmentSlot;members?:string[];value?:boolean;mode?:'strike'|'heal';readDeparture?:boolean};
 type ActionHandler=(s:State,sq:Squad,a:Action,now:number)=>void;
 function hiddenQuest(s:State,q:Quest){return s.clears<q.unlock||inPrologue(s)&&!isPrologueQuest(q.id)||!stageUnlocked(s,q.id);}
 function validateCompanionQuest(s:State,q:Quest){
@@ -306,7 +307,13 @@ function gearAction(s:State){const cost=100*(s.gear+1),ore=5*(s.gear+1);if(s.cle
 function campAction(s:State){const cost=150*(s.camp+1),herbs=12*(s.camp+1);if(s.clears<10||s.camp>=10||s.gold<cost||s.herbs<herbs)throw Error('お金か薬草が足りません。');s.gold-=cost;s.herbs-=herbs;s.camp++;}
 function dailyAction(s:State,_sq:Squad,_a:Action,now:number){const day=new Date(now).toISOString().slice(0,10);if(s.clears<3||s.lastDaily===day)throw Error('今日の差し入れは受取済みです。');s.lastDaily=day;s.gold+=80;s.herbs+=5;}
 function syncAction(){/* Cloning the current state completes synchronization. */}
-const actionHandlers:Record<Action['type'],ActionHandler>={sync:syncAction,start:startAction,readStory:readStoryAction,stop:stopAction,party:partyAction,repeat:repeatAction,newSquad:newSquadAction,assist:assistAction,detour:detourAction,build:buildAction,recruit:recruitAction,prepareRecruitment:prepareRecruitmentAction,gear:gearAction,camp:campAction,daily:dailyAction};
+function buyAction(s:State,_sq:Squad,a:Action,now:number){const item=buyEquipment(s,a.id||'');addLog(s,`${item.name}を購入。バッグに入れた。`,now);}
+function equipAction(s:State,_sq:Squad,a:Action){
+ const hero=a.hero;if(!hero||!a.slot)throw Error('装備するキャラクターと場所を確認してください。');
+ changeEquipment(s,hero,a.slot,a.id);
+ for(const squad of s.squads){const health=squad.run?.health[hero];if(!health)continue;const ratio=health.hp/health.maxHp;health.maxHp=memberMaxHp(s,hero);health.hp=health.maxHp*ratio;}
+}
+const actionHandlers:Record<Action['type'],ActionHandler>={sync:syncAction,start:startAction,readStory:readStoryAction,stop:stopAction,party:partyAction,repeat:repeatAction,newSquad:newSquadAction,assist:assistAction,detour:detourAction,build:buildAction,recruit:recruitAction,prepareRecruitment:prepareRecruitmentAction,gear:gearAction,camp:campAction,daily:dailyAction,buy:buyAction,equip:equipAction};
 export function act(input:State,a:Action,now:number){
  const s=structuredClone(input),sq=s.squads.find(p=>p.id===a.squad)||s.squads[0];if(a.squad&&!s.squads.some(p=>p.id===a.squad))throw Error('パーティが見つかりません。');
  const handlers=actionHandlers as Partial<Record<string,ActionHandler>>,handler=Object.prototype.hasOwnProperty.call(handlers,a.type)?handlers[a.type]:undefined;

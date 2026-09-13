@@ -4,6 +4,7 @@ import {heroes,allQuests as quests,migrate,type State} from './game.ts';
 import {stories} from './stories.ts';
 import {recruitments} from './recruitment.ts';
 import {isRecord} from './external-input.ts';
+import {equipmentById,validInventory} from './equipment.ts';
 const n=z.number().finite().min(0).max(1e15),count=n.int(),id=z.string().uuid();
 const hero=z.string().refine(v=>heroes.some(h=>h.id===v));
 const uniqueHeroes=z.array(hero).min(1).max(heroes.length).refine(v=>new Set(v).size===v.length);
@@ -15,6 +16,8 @@ const storyQuest=z.string().refine(v=>quests.some(q=>q.id===v));
 const storyIds=z.array(z.string().refine(v=>stories.some(st=>st.id===v))).max(stories.length).refine(v=>new Set(v).size===v.length);
 const storyQuests=z.array(storyQuest).max(quests.length).refine(v=>new Set(v).size===v.length);
 const storySchema=z.object({departed:storyQuests,completed:storyQuests,read:storyIds}).refine(v=>v.completed.every(q=>v.departed.includes(q)));
+const equipmentId=z.string().refine(id=>!!equipmentById(id));
+const inventorySchema=z.object({items:z.record(equipmentId,count.max(9999)),equipped:z.record(hero,z.object({weapon:equipmentId.optional(),armor:equipmentId.optional()}).strict())});
 type ParsedState=z.infer<typeof stateBase>;
 type ParsedSquad=ParsedState['squads'][number];
 function validActors(squad:ParsedSquad){
@@ -34,12 +37,13 @@ function validTimeline(squad:ParsedSquad,updatedAt:number){
  return validActors(squad);
 }
 function validateState(s:ParsedState,ctx:z.RefinementCtx){
+ if(s.inventory&&!validInventory(s.inventory,s.owned))ctx.addIssue({code:'custom',message:'Invalid equipment ownership'});
  const members=s.squads.flatMap(squad=>squad.members),missions=s.squads.flatMap(squad=>squad.run?.quest.startsWith('join-')?[squad.run.quest]:[]);
  if(new Set(missions).size!==missions.length||missions.some(id=>!s.recruitment?.prepared.includes(id.slice(5))||s.owned.includes(id.slice(5))))ctx.addIssue({code:'custom',message:'Invalid recruitment expedition'});
  if(new Set(members).size!==members.length||members.some(member=>!s.owned.includes(member))||new Set(s.squads.map(squad=>squad.id)).size!==s.squads.length)ctx.addIssue({code:'custom',message:'Invalid party'});
  if(s.squads.some(squad=>!validTimeline(squad,s.updatedAt)))ctx.addIssue({code:'custom',message:'Invalid timeline'});
 }
-const stateBase=z.object({version:z.literal(4),prologue:z.boolean().optional(),recruitment:z.object({prepared:z.array(z.string().refine(id=>recruitments.some(r=>r.hero===id))).max(recruitments.length).refine(ids=>new Set(ids).size===ids.length)}).optional(),story:storySchema.optional(),wood:n,town:count.max(2),friendship:keyedNumbers,discoveries:count,gold:n,herbs:n,ore:n,owned:uniqueHeroes,xp:keyedNumbers,gear:count.max(15),camp:count.max(10),clears:count,done:keyedNumbers,claimed:z.array(z.string().max(100)).max(100),lastDaily:z.string().max(10),updatedAt:n,squads:z.array(z.object({id:z.string().regex(/^party-[1-3]$/),name:z.string().min(1).max(40),members:uniqueHeroes,repeat:z.boolean(),run:run.nullable(),lastQuest:z.string().refine(id=>quests.some(q=>q.id===id)).optional()})).min(1).max(3),log:z.array(z.object({text:z.string().max(500),at:n})).max(40),receipts:z.array(z.string().max(100)).max(64)});
+const stateBase=z.object({version:z.literal(4),prologue:z.boolean().optional(),inventory:inventorySchema.optional(),recruitment:z.object({prepared:z.array(z.string().refine(id=>recruitments.some(r=>r.hero===id))).max(recruitments.length).refine(ids=>new Set(ids).size===ids.length)}).optional(),story:storySchema.optional(),wood:n,town:count.max(2),friendship:keyedNumbers,discoveries:count,gold:n,herbs:n,ore:n,owned:uniqueHeroes,xp:keyedNumbers,gear:count.max(15),camp:count.max(10),clears:count,done:keyedNumbers,claimed:z.array(z.string().max(100)).max(100),lastDaily:z.string().max(10),updatedAt:n,squads:z.array(z.object({id:z.string().regex(/^party-[1-3]$/),name:z.string().min(1).max(40),members:uniqueHeroes,repeat:z.boolean(),run:run.nullable(),lastQuest:z.string().refine(id=>quests.some(q=>q.id===id)).optional()})).min(1).max(3),log:z.array(z.object({text:z.string().max(500),at:n})).max(40),receipts:z.array(z.string().max(100)).max(64)});
 const stateSchema=stateBase.superRefine(validateState);
 export type Profile={id:string;name:string;test:boolean;state:State};
 export type SaveBundle={format:4;deviceId:string;active:string;profiles:Profile[];serial:number;sound:boolean;cloudAt:number;legacyImported:boolean};

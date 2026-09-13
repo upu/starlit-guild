@@ -6,36 +6,22 @@ import ts from 'typescript';
 
 const phone=readFileSync(new URL('../app/phone-game.tsx',import.meta.url),'utf8');
 const recruitment=readFileSync(new URL('../app/recruitment-board.tsx',import.meta.url),'utf8');
-const source=ts.createSourceFile('phone-game.tsx',phone,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
-const collection=source.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='collectionSheet');
-const formatter=source.statements.find(node=>ts.isVariableStatement(node)&&node.declarationList.declarations.some(declaration=>declaration.name.getText(source)==='fmt'));
-assert.ok(collection&&formatter,'The inventory sheet and shared number formatter must exist.');
-
-// Execute the actual sheet factory without mounting the game or accessing a save.
-// The lightweight JSX factory exposes its element tree; this is not a browser test.
-const compiled=ts.transpileModule(`${formatter.getText(source)}\n${collection.getText(source)}`,{
- fileName:'inventory.tsx',
- compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None,jsx:ts.JsxEmit.React,jsxFactory:'element',jsxFragmentFactory:'fragment'},
+const panels=readFileSync(new URL('../app/equipment-panels.tsx',import.meta.url),'utf8');
+const source=ts.createSourceFile('equipment-panels.tsx',panels,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+const resources=source.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text==='ResourcesGrid');
+const formatter=source.statements.find(node=>ts.isVariableStatement(node)&&node.declarationList.declarations.some(declaration=>declaration.name.getText(source)==='amount'));
+assert.ok(resources&&formatter);
+const compiled=ts.transpileModule(`${formatter.getText(source)}\n${resources.getText(source)}`,{
+ fileName:'inventory.tsx',compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.React,jsxFactory:'element'},
 }).outputText;
-const collectionSheet=runInNewContext(`${compiled}\ncollectionSheet;`,{
- element:(type,props,...children)=>({type,props,children:children.flat(Infinity)}),
- fragment:'fragment',Coins:'coins',Leaf:'leaf',Gem:'gem',Logs:'logs',
-});
-
+const exports={};
+runInNewContext(compiled,{exports,element:(type,props,...children)=>({type,props,children:children.flat(Infinity)}),Coins:'coins',Leaf:'leaf',Gem:'gem',Logs:'logs'});
 function balances(state){
- const sheet=collectionSheet({sheet:'bag',state});
- assert.equal(sheet.title,'持ちもの');
- assert.equal(sheet.content.type,'div');
- assert.equal(sheet.content.props.className,'inventory-grid');
- assert.equal(sheet.content.children.length,4);
- return Array.from(sheet.content.children,cell=>({
-  icon:cell.children[0].type,
-  label:cell.children[1].children.join(''),
-  amount:cell.children[2].children.join(''),
- }));
+ const content=exports.ResourcesGrid({state});
+ assert.equal(content.type,'div');assert.equal(content.props.className,'inventory-grid');assert.equal(content.children.length,4);
+ return Array.from(content.children,cell=>({icon:cell.children[0].type,label:cell.children[1].children.join(''),amount:cell.children[2].children.join('')}));
 }
-
- test('chapter-one inventory shows only normal resources with the existing formatting',()=>{
+ test('bag keeps all normal resources with the existing formatting',()=>{
  const state=Object.freeze({prologue:true,gold:12345.9,herbs:8.7,ore:3,wood:0});
  assert.deepEqual(balances(state),[
   {icon:'coins',label:'お金',amount:'12,345'},
