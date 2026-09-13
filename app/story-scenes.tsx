@@ -36,7 +36,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false,advanceR
  }
  useImperativeHandle(advanceRef,()=>({advance}));
  return <div className={'story-reader'+(art?' story-reader-art':'')}>
-  {art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/></button></figure>}
+  <div className="story-art-space">{art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/></button></figure>}</div>
   <div className="story-conversation" role="button" tabIndex={0} aria-label={advanceLabel} aria-disabled={last&&!ready}
    onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY,scrollTop:dialogue.current?.scrollTop||0,moved:false};}}
    onPointerMove={event=>{const start=gesture.current;if(start&&(Math.abs(event.clientX-start.x)>8||Math.abs(event.clientY-start.y)>8))start.moved=true;}}

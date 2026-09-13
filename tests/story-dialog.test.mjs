@@ -136,14 +136,30 @@ test('outside advancement shares final readiness and completion guards with dial
  assert.deepEqual(h.counts(),{read:1,closed:1});
 });
 
-test('story dialog CSS removes centered transforms and bounds art and history to the same viewport',()=>{
+test('story dialog reserves the lower half from the first line, independently of artwork and history length',()=>{
  const css=readFileSync(new URL('../app/stories.css',import.meta.url),'utf8');
  const dialog=css.match(/\.phone-dialog:has\(> \.story-reader\)\{([^}]+)\}/)[1];
  for(const declaration of ['top:auto','width:auto!important','margin:0 auto','translate:none','transform:none','animation:none','max-height:var(--story-dialog-height)','overflow:hidden'])assert.ok(dialog.includes(declaration),declaration);
  assert.ok(dialog.includes('env(safe-area-inset-left,0px)'));
  assert.ok(dialog.includes('env(safe-area-inset-right,0px)'));
  assert.ok(dialog.includes('var(--game-height,100dvh)'));
- assert.match(css,/\.phone-dialog:has\(> \.story-reader-art\)\{height:var\(--story-dialog-height\)/);
+ assert.ok(dialog.includes('height:var(--story-dialog-height)'));
+ assert.ok(dialog.includes('--story-conversation-height:calc(var(--story-dialog-height) / 2)'));
+ assert.ok(dialog.includes('background:transparent!important'));
+ assert.match(css,/\.phone-dialog>\.story-reader\{[^}]*grid-template-rows:minmax\(0,1fr\) var\(--story-conversation-height\)/);
+ assert.doesNotMatch(css,/\.phone-dialog:has\(> \.story-reader-art\)/);
  assert.match(css,/\.dialogue-history\{[^}]*min-height:0;[^}]*overflow-y:auto;overscroll-behavior:contain/);
  assert.match(css,/\.story-tap-hint\{[^}]*flex:none/);
+});
+
+test('the upper artwork slot stays present before and after an illustration appears',()=>{
+ for(const withArt of [false,true]){
+  const h=harness({}, {withArt});
+  for(let page=0;page<story.lines.length;page++){
+   assert.ok(h.find('story-art-space'));
+   assert.equal(!!h.find('figure'),withArt);
+   assert.equal(h.find('story-conversation').props.children[0].props.className,'dialogue-page dialogue-history');
+   h.click();
+  }
+ }
 });

@@ -33,15 +33,16 @@ def fixture(kind, frame_height, frame_top=0, safe_top=0, safe_bottom=0):
     story = kind in ('opening', 'history', 'ending', 'art', 'banter')
     classes = full_classes if kind == 'viewer' else normal_classes
     classes += ' art-viewer' if kind == 'viewer' else ' save-dialog' if kind == 'save' else ' phone-dialog'
-    if story and kind != 'banter':
+    if story:
         classes += ' story-dialog'
     header = '<div data-slot="dialog-header" class="flex flex-col gap-2 text-center sm:text-left"><h2 data-slot="dialog-title" class="text-lg leading-none font-semibold">会話の表示確認</h2><p data-slot="dialog-description" class="text-sm text-muted-foreground">道が合わさるところ</p></div>'
     if story:
+        header = '<div data-slot="dialog-header" class="story-heading"><button type="button"><span data-slot="dialog-title">会話の表示確認</span><span data-slot="dialog-description">道が合わさるところ</span></button></div>'
         count = 1 if kind == 'opening' else 40
         lines = ''.join('<div class="story-line"><span class="face-portrait" style="width:72px;height:72px" aria-hidden="true"></span><div><b>話し手</b><p>長い会話も、画面の幅に合わせて折り返して読めることを確認します。</p></div></div>' for _ in range(count))
         cue = '冒険を始める' if kind == 'ending' else '▼'
         art = '<figure class="story-still"><button class="still-expand" aria-label="絵を見る"><img alt="表示確認用" width="800" height="600" src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'%3E%3C/svg%3E"></button></figure>' if kind == 'art' else ''
-        body = f'<div class="story-reader{" story-reader-art" if art else ""}">{art}<div class="story-conversation" role="button" tabindex="0"><div class="dialogue-page dialogue-history"><div class="story-lines">{lines}</div></div><div class="story-tap-hint"><span>1 / {count}</span><span>{cue}</span></div></div></div>'
+        body = f'<div class="story-reader{" story-reader-art" if art else ""}"><div class="story-art-space">{art}</div><div class="story-conversation" role="button" tabindex="0"><div class="dialogue-page dialogue-history"><div class="story-lines">{lines}</div></div><div class="story-tap-hint"><span>1 / {count}</span><span>{cue}</span></div></div></div>'
     elif kind == 'viewer':
         body = '<button class="art-canvas" aria-label="戻る"></button><button class="art-return">戻る</button>'
     else:
@@ -55,7 +56,7 @@ def measure(page):
       const dialog=document.querySelector('[role="dialog"]');
       const history=document.querySelector('.dialogue-history');
       const style=getComputedStyle(dialog);
-      return {dialog:rect(dialog),header:rect(document.querySelector('[data-slot="dialog-header"]')),cue:rect(document.querySelector('.story-tap-hint')),history:rect(history),art:rect(document.querySelector('.story-still')),transform:style.transform,translate:style.translate,overflow:dialog.scrollHeight-dialog.clientHeight,historyOverflow:history?history.scrollHeight-history.clientHeight:0,horizontalOverflow:history?history.scrollWidth-history.clientWidth:0,documentOverflow:document.documentElement.scrollWidth-innerWidth};
+      return {dialog:rect(dialog),header:rect(document.querySelector('[data-slot="dialog-header"]')),conversation:rect(document.querySelector('.story-conversation')),artSpace:rect(document.querySelector('.story-art-space')),cue:rect(document.querySelector('.story-tap-hint')),history:rect(history),art:rect(document.querySelector('.story-still')),transform:style.transform,translate:style.translate,overflow:dialog.scrollHeight-dialog.clientHeight,historyOverflow:history?history.scrollHeight-history.clientHeight:0,horizontalOverflow:history?history.scrollWidth-history.clientWidth:0,documentOverflow:document.documentElement.scrollWidth-innerWidth};
     }''')
 
 
@@ -76,6 +77,11 @@ def check(page, kind, width, height, frame_height, frame_top=0, safe_top=0, safe
         assert r['bottom'] <= frame_top + frame_height - safe_bottom - 16 + 1, label
         assert result['overflow'] <= 1 and result['horizontalOverflow'] <= 1, label
         cue, history = result['cue'], result['history']
+        conversation = result['conversation']
+        assert abs(conversation['height'] - r['height'] / 2) <= 1, label
+        assert abs(conversation['top'] - (r['top'] + r['height'] / 2)) <= 1, label
+        assert header['bottom'] <= result['artSpace']['top'] + 1, label
+        assert result['artSpace']['bottom'] <= conversation['top'], label
         assert cue['left'] >= r['left'] and cue['right'] <= r['right'], label
         assert cue['top'] >= header['bottom'] and cue['bottom'] <= r['bottom'], label
         assert history['height'] > 0 and history['bottom'] <= cue['top'] + 1, label
@@ -85,6 +91,7 @@ def check(page, kind, width, height, frame_height, frame_top=0, safe_top=0, safe
             assert page.locator('.dialogue-history').evaluate('(el) => el.scrollTop > 0'), label
         if kind == 'art':
             assert result['art']['height'] > 0, label
+            assert result['art']['bottom'] <= conversation['top'], label
     elif kind == 'viewer':
         assert abs(r['height'] - frame_height) <= 1 and abs(r['width'] - width) <= 1, label
     else:
