@@ -1,6 +1,6 @@
 import type Phaser from 'phaser';
 import {heroes,type GameEvent} from '@/lib/game';
-import {adventureFrame,adventureAssets,adventureAction,adventureHit,eventColor,spriteAsset,spriteSize,type AdventureFrame} from '@/lib/adventure-presentation';
+import {adventureFrame,adventureAssets,adventureAction,adventureHit,eventColor,memberHealthLabel,spriteAsset,spriteSize,type AdventureFrame} from '@/lib/adventure-presentation';
 import type {AdventureBridge} from './renderer-session';
 import {heroSheets,heroAnimation} from '@/lib/hero-animation';
 
@@ -134,7 +134,7 @@ export class AdventurePainter{
   if(!input.squad.run)return;
   const width=this.scene.scale.width,height=this.scene.scale.height,barWidth=Math.min(76,size*.78),barY=member.y*height+size*.12;
   this.meters.fillStyle(0x09271f,.85).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth,5,2);
-  this.meters.fillStyle(member.health<.3?0xf2aa89:0xa8deb0,1).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth*member.health,5,2);figure.label.setY(barY+9).setText(member.down?member.name+' · 戦闘不能':member.name+' · HP '+String(Math.ceil(member.hp))+'/'+String(member.maxHp));
+  this.meters.fillStyle(member.health<.3?0xf2aa89:0xa8deb0,1).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth*member.health,5,2);figure.label.setY(barY+9).setText(memberHealthLabel(member));
   if(frame.ward)this.meters.lineStyle(2,0xb2def5,.65).strokeEllipse(member.x*width,member.y*height-size*.35,size*.82,size*1.02);
  }
  private paintMember(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,member:Member,index:number,now:number,size:number){
