@@ -39,7 +39,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false}:{story:
    onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY,scrollTop:dialogue.current?.scrollTop||0,moved:false};}}
    onPointerMove={event=>{const start=gesture.current;if(start&&(Math.abs(event.clientX-start.x)>8||Math.abs(event.clientY-start.y)>8))start.moved=true;}}
    onPointerCancel={()=>{if(gesture.current)gesture.current.moved=true;}}
-   onClick={()=>{const start=gesture.current;gesture.current=null;if(start&&(start.moved||Math.abs((dialogue.current?.scrollTop||0)-start.scrollTop)>4))return;if(window.getSelection()?.isCollapsed===false)return;advance();}}
+   onClick={()=>{const start=gesture.current;gesture.current=null;if(start&&(start.moved||Math.abs((dialogue.current?.scrollTop||0)-start.scrollTop)>4))return;advance();}}
    onKeyDown={event=>{if((event.key==='Enter'||event.key===' ')&&!event.repeat){event.preventDefault();advance();}}}>
    <div ref={dialogue} className="dialogue-page dialogue-history"><StoryLines lines={story.lines.slice(0,page+1)}/></div>
    <div className="story-tap-hint" aria-hidden="true"><span>{page+1} / {pages}</span><span className={last?"story-end-action":"story-continue"}>{last?advanceLabel:"▼"}</span></div>

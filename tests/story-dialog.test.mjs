@@ -83,7 +83,7 @@ test('final readiness and unsuccessful completion do not accidentally close the 
  h.click();h.click();assert.equal(attempts,2);assert.equal(h.counts().closed,1);
 });
 
-test('dragging, scrolling, cancelled pointers, and text selection do not advance a line',()=>{
+test('dragging, scrolling, and cancelled pointers do not advance a line',()=>{
  const h=harness(),viewport={scrollTop:0,scrollHeight:600};
  h.find('dialogue-page dialogue-history').props.ref.current=viewport;
  const control=()=>h.find('story-conversation').props;
@@ -94,8 +94,15 @@ test('dragging, scrolling, cancelled pointers, and text selection do not advance
  down();control().onPointerCancel();h.click();assert.equal(h.find('StoryLines').props.lines.length,1);
  down();h.click();assert.equal(h.find('StoryLines').props.lines.length,2);
  assert.equal(viewport.scrollTop,600,'new dialogue follows the latest line');
- const selected=harness({}, {selection:{isCollapsed:false}});selected.click();
- assert.equal(selected.find('StoryLines').props.lines.length,1);
+});
+
+test('repeated dialogue clicks advance even when the document has a text selection',()=>{
+ const h=harness({}, {selection:{isCollapsed:false}});
+ for(let page=1;page<story.lines.length;page++){
+  h.find('story-conversation').props.onPointerDown({clientX:30,clientY:100});
+  h.click();assert.equal(h.find('StoryLines').props.lines.length,page+1);
+ }
+ h.click();h.click();assert.deepEqual(h.counts(),{read:1,closed:1});
 });
 
 test('Enter and Space still advance without auto-repeating or consuming arrow keys',()=>{
