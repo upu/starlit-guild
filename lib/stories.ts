@@ -6,6 +6,7 @@ import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,W
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 import {idleBanter} from './idle-banter.ts';
+import {waterwayBanter} from './waterway-banter.ts';
 
 export type StoryLine = {speaker?: string; text: string};
 export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'|'encounter'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number; requiresHeroes?:string[]; requiresQuests?:string[]};
@@ -155,6 +156,7 @@ function wetlandBanter(run:NonNullable<Squad['run']>):StoryLine[]{
 }
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ const waterway=waterwayBanter(run);if(waterway)return waterway;
  if(run.quest===WETLAND_QUEST)return wetlandBanter(run);
  if(run.quest===TOWER_QUEST)return towerBanter(run);
  if(run.quest===NIGHT_QUEST)return nightBanter(run);

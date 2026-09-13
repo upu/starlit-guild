@@ -38,6 +38,13 @@ test('forest comparison art waits for Aria to lift both samples toward her face'
  assert.equal(storyArtAt(scene.id,comparison),art);
 });
 
+test('restoration art waits until the pair watches the flowing water and the tower begins to glow',()=>{
+ const scene=stories.find(st=>st.id==='tower-restoration-return'),art=storyArt[scene.id];
+ const flowing=scene.lines.findIndex(line=>line.text.includes('アリアが流れ始めた水を指さし'));
+ assert.equal(art.revealAtLine,flowing);assert.equal(storyArtAt(scene.id,flowing-1),undefined);
+ assert.equal(storyArtAt(scene.id,flowing),art);
+});
+
 test('first departure has its illustration, while the fireside waits until they sit together',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
  assert.ok(availableStories(state).some(st=>st.id==='herbs-departure'));

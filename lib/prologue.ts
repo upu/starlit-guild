@@ -6,6 +6,8 @@ export const TOWN_QUEST='town-deliveries';
 export const TOWER_QUEST='tower-road';
 export const NIGHT_QUEST='moss-night-road';
 export const WETLAND_QUEST='forest-wetland';
+export const WATERWAY_QUEST='old-waterway';
+export const RESTORATION_QUEST='tower-restoration';
 export const prologueStages=[
  {quest:TRADE_QUEST,label:'1-1 交易路（昼）',title:'いつもの待ち合わせ',arrival:'街に到着しました',detail:'預かった荷物を、取引先へ届けましょう。'},
  {quest:RETURN_QUEST,label:'1-2 交易路（夕）',title:'いつもより少し騒がしい道',arrival:'分かれ道に到着しました',detail:'帰り道で気づいたことを、ふたりで話しましょう。'},
@@ -13,6 +15,8 @@ export const prologueStages=[
  {quest:TOWER_QUEST,label:'1-4 塔への道',title:'少し見に行こう',arrival:'丘の塔に到着しました',detail:'管理人に声をかけ、塔のそばを見せてもらいましょう。'},
  {quest:NIGHT_QUEST,label:'1-5 帰り道（夜）',title:'分かれ道までの灯り',arrival:'村々への分かれ道に到着しました',detail:'持ち帰った小さな灯りを、ふたりで覗いてみましょう。'},
  {quest:WETLAND_QUEST,label:'1-6 森の湿地',title:'同じかもしれない',arrival:'森の苔を見つけました',detail:'持ち帰った苔と並べて、形と湿り気を確かめましょう。'},
+ {quest:WATERWAY_QUEST,label:'1-7 古い水路',title:'地図の端に残る線',arrival:'古い水路の出口を見つけました',detail:'水の行き先と、石の隙間に続く苔を確かめましょう。'},
+ {quest:RESTORATION_QUEST,label:'1-8 塔の復旧',title:'いつもの道を戻す仕事',arrival:'水路の復旧作業を終えました',detail:'管理人と、排水路と塔の灯りを見直しましょう。'},
 ];
 export const isPrologueQuest=(id:string)=>prologueStages.some(stage=>stage.quest===id);
 // Absent in existing saves: those adventures keep their unlocked features.

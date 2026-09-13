@@ -1,4 +1,5 @@
 import type {Story,StoryLine} from './stories.ts';
+import {waterwayStories} from './waterway-stories.ts';
 import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST} from './prologue.ts';
 const a=(text:string):StoryLine=>({speaker:'aria',text});
 const l=(text:string):StoryLine=>({speaker:'leon',text});
@@ -169,4 +170,5 @@ export const prologueStories:Story[]=[
   a('役に立ったね。一本だけだけど。'),l('残りは持ち帰るよ。'),
   n('アリアが紐を結び、レオンは紙を畳んだ。二人は苔の残る木の根を避けて立ち上がり、それぞれの入れ物を抱えた。'),
  ]},
+ ...waterwayStories,
 ];

@@ -59,14 +59,14 @@ test('stage progress retains the completed scenery until the next departure',()=
   const idle=render(state);assert.ok(idle.includes(background));assert.doesNotMatch(idle,/第一部 ·|undefined|>パーティ<|>拠点</);
   state=act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);
   const running=render(state);assert.match(running,/探索マップ/);
-  if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+stage.quest+'.png'));
+  if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+(stage.quest==='tower-restoration'?'old-waterway':stage.quest)+'.png'));
   if(stage.quest==='evening-trade-road'){
    const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
    assert.match(render(battle),/魔物と戦闘中/);assert.doesNotMatch(render(battle),/いたずらを阻止中/);
   }
   state=settle(state,state.updatedAt+3600000).state;
   state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
-  background=stage.quest==='village-trade'?'/forest.png':'/stages/'+stage.quest+'.png';
+  background=stage.quest==='village-trade'?'/forest.png':'/stages/'+(stage.quest==='tower-restoration'?'tower-drainage-open':stage.quest)+'.png';
   assert.ok(render(state).includes(background));
  }
 });

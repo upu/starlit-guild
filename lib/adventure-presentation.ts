@@ -2,9 +2,9 @@ import {allQuests,heroes,heroSkills,travelMs,encounter,targetName,type Squad,typ
 import {originalArt} from './original-characters.ts';
 import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
-import {isPrologueQuest} from './prologue.ts';
+import {isPrologueQuest,RESTORATION_QUEST} from './prologue.ts';
 
-export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean};
+export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean;restorationComplete?:boolean};
 export type Point={x:number;y:number};
 export type AdventureIntent='help'|'heal'|'detour'|`heal:${string}`;
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
@@ -53,7 +53,8 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
  const events=recentEvents(run,now),members=squad.members.map((id,index)=>adventureMember(input,run,events,now,id,index));
  const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),target=frameTarget(quest,run,kind);
- return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,ward:run?.ward||0};
+ const drained=quest.id===RESTORATION_QUEST&&(run?run.node>=9:input.restorationComplete);
+ return {key,quest,background:drained?'/stages/tower-drainage-open.png':questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
 export function memberHealthLabel(member:Pick<AdventureFrame['members'][number],'name'|'down'>){return member.down?`${member.name} · 戦闘不能`:member.name;}
