@@ -24,6 +24,6 @@ export function QuestPicker({state:s,squad:sq,selected,onSelect,onConfirm,ready}
    <h3>{q.name}</h3>{opponent&&<div className="quest-opponent"><Sprite index={opponent.sprite} size={112}/><div><small>{opponent.faction}</small><b>{opponent.name}</b><p>{opponent.bio}</p></div></div>}
    <p>{q.desc}</p>
   </article>
-  <div className="quest-confirm"><button className="full" disabled={!ready} onClick={onConfirm}>{sq.run&&sq.run.quest!==q.id?'帰還して行き先を変える':sq.run?'このクエストを見守る':'出発'}</button>{sq.run&&sq.run.quest!==q.id&&<small>次の画面で帰還を確認します。出発は自分で選べます。</small>}</div>
+  <div className="quest-confirm"><button className="full" disabled={!ready} onClick={onConfirm}>{sq.run&&sq.run.quest!==q.id?'帰還して行き先を変える':sq.run?'このクエストを見守る':'この行先にする'}</button>{sq.run&&sq.run.quest!==q.id&&<small>次の画面で帰還を確認します。</small>}{!sq.run&&<small>待機画面で支度を整えてから出発できます。</small>}</div>
  </div>;
 }

@@ -9,8 +9,8 @@ export type StoryArt = {
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
  'forest-wetland-return': {
-  src: '/stories/forest-moss-comparison.png',
-  alt: '森の木陰で、アリアとレオンが平らな石に二つの入れ物を並べ、光の弱まった塔の苔と森の苔の葉先を見比べる。',
+  src: '/stories/forest-moss-closeup.png',
+  alt: 'アリアとレオンの肩越しから、二つの木の入れ物と苔の葉先を近くに見る。二人は顔を寄せ、木べらで指した細かな葉の形を見比べている。',
   width: 1536, height: 1024, revealAtLine: 5,
  },
  'tower-road-return': {

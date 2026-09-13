@@ -5,6 +5,7 @@ import {madHalloweenStories} from './mad-halloween-stories.ts';
 import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
+import {idleBanter} from './idle-banter.ts';
 
 export type StoryLine = {speaker?: string; text: string};
 export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'|'encounter'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number; requiresHeroes?:string[]; requiresQuests?:string[]};
@@ -200,7 +201,7 @@ function journeySituationBanter(run:NonNullable<Squad['run']>,level:number,varia
 }
 function coupleBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const run=sq.run,variant=Math.floor(Math.max(0,now-(run?.started||0))/18000)%2,level=affection(s);
- if(!run)return [a('準備できた？'),l('ああ。アリアを待ってた。')];
+ if(!run)return idleBanter(now);
  const situation=journeySituationBanter(run,level,variant,now);if(situation)return situation;
  if(['pilgrim','wolf','royal'].includes(run.quest))return level>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。')]:[a('霧で、先が見えないね。'),l('声の届くところにいてくれ。')];
  if(run.quest==='cart')return [a('帰りのパン、覚えてる？'),l('胡桃のやつだろ。忘れないよ。')];

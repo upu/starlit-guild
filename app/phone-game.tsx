@@ -37,6 +37,9 @@ function departureStory(state:State,action:Action){
  if(target.run||!together(target.members)||storyProgress(state).departed.includes(actionId))return null;
  return stories.find(st=>st.id===actionId+'-departure')??null;
 }
+function hasDestination(state:State,squad:Squad,choice?:string){
+ return !!choice||!!squad.lastQuest||!inPrologue(state)||!!state.done[restingQuest(state,squad)];
+}
 type SheetModel={
  sheet:Sheet;reading:Story|null;ready:boolean;pendingDeparture:Action|null;activeQuest:(typeof allQuests)[number]|undefined;
  banterSnapshot:StoryLine[];hero:(typeof heroes)[number];state:State;goal:ReturnType<typeof nextGoal>;prologue:boolean;
@@ -47,7 +50,7 @@ type SheetModel={
  setSquad:(id:string)=>void;setView:(view:string)=>void;
 };
 type PhoneFrameModel=SheetModel&{
- view:string;returnIntent:ReturnIntent|null;leaveAction:((state:State)=>void)|null;ending:Story|null;banter:StoryLine[];quote:string;
+ view:string;returnIntent:ReturnIntent|null;leaveAction:((state:State)=>void)|null;ending:Story|null;banter:StoryLine[];quote:string;destinationChosen:boolean;
  roster:(typeof heroes)[number][];setBanterSnapshot:Dispatch<SetStateAction<StoryLine[]>>;setHeroIndex:Dispatch<SetStateAction<number>>;
  createSquad:()=>void;requestReturn:(destination:'adventure'|'companions',quest?:string)=>void;confirmReturn:()=>void;
  openRecruit:()=>void;
@@ -110,7 +113,7 @@ export function PhoneGame({game}:{game:Game}){
  const [reading,setReading]=useState<Story|null>(null),[banterSnapshot,setBanterSnapshot]=useState<StoryLine[]>([]);
  const [view,setView]=useState('adventure'),[sheet,setSheet]=useState<Sheet>(null),[selectedSquad,setSquad]=useState('party-1'),[questChoices,setQuestChoices]=useState<Record<string,string>>({}),[heroIndex,setHeroIndex]=useState(0),[draft,setDraft]=useState<string[]>(s.squads[0].members);
  const sq=s.squads.find(p=>p.id===selectedSquad)||s.squads[0],run=sq.run,ready=game.ready&&!game.otherTab;
- const questId=run?.quest||(prologue?restingQuest(s,sq):questChoices[sq.id]||'herbs');
+ const questId=run?.quest||questChoices[sq.id]||(prologue?restingQuest(s,sq):'herbs');
  function setQuest(id:string){setQuestChoices(current=>({...current,[sq.id]:id}));}
  const music=useGameMusic(view==='camp'||!run?'camp':'journey',ready);
  const unlocked=availableQuests(s),q=unlocked.find(q=>q.id===questId)||unlocked[0];
@@ -143,11 +146,11 @@ export function PhoneGame({game}:{game:Game}){
  function createSquad(){leaveEditor(()=>{act({type:'newSquad'},current=>{const created=current.squads[current.squads.length-1];setSquad(created.id);setDraft(created.members);setView('companions');setSheet(null);});});}
  function requestReturn(destination:'adventure'|'companions',quest?:string){setReturnIntent({squad:sq.id,destination,quest});}
  function confirmReturn(){if(!returnIntent)return;const target=s.squads.find(p=>p.id===returnIntent.squad);if(!target)return;if(act({type:'stop',squad:target.id})){setSquad(target.id);setDraft(target.members);if(returnIntent.quest)setQuest(returnIntent.quest);setView(returnIntent.destination);setSheet(null);setReturnIntent(null);}}
- function selectQuest(){const id=unlocked.find(item=>item.id===candidateQuest)?.id||q.id;if(run&&run.quest!==id){requestReturn('adventure',id);return;}setQuest(id);setSheet(null);setView('adventure');if(!run)act({type:'start',id,squad:sq.id});}
+ function selectQuest(){if(!ready)return;const id=unlocked.find(item=>item.id===candidateQuest)?.id||q.id;if(run&&run.quest!==id){requestReturn('adventure',id);return;}setQuest(id);setSheet(null);setView('adventure');}
  function finishStory(){if(!reading)return false;const ok=pendingDeparture?dispatch({...pendingDeparture,readDeparture:true}):dispatch({type:'readStory',id:reading.id});if(ok)setPendingDeparture(null);return ok;}
  function closeStory(){setPendingDeparture(null);setSheet(reading?.chapter==='recruitment'?'recruit':null);}
  const sheetModel:SheetModel={sheet,reading,ready,pendingDeparture,activeQuest,banterSnapshot,hero,state:s,goal,prologue,installStatus,game,music,unread,hints,setSheet,openStory,finishStory,closeStory,navigate,followGoal,quest:q,squad:sq,run,preview,draft,act,chooseSquad,candidateQuest,setCandidateQuest,selectQuest,clock,openQuests,setSquad,setView};
- const frame:PhoneFrameModel={...sheetModel,view,returnIntent,leaveAction,ending,banter,quote,roster,setBanterSnapshot,setHeroIndex,createSquad,requestReturn,confirmReturn,openRecruit:()=> { leaveEditor(()=> { setSheet('recruit'); }); },setReturnIntent,setLeaveAction,setDraft};
+ const frame:PhoneFrameModel={...sheetModel,view,returnIntent,leaveAction,ending,banter,quote,destinationChosen:hasDestination(s,sq,questChoices[sq.id]),roster,setBanterSnapshot,setHeroIndex,createSquad,requestReturn,confirmReturn,openRecruit:()=> { leaveEditor(()=> { setSheet('recruit'); }); },setReturnIntent,setLeaveAction,setDraft};
  return <PhoneFrame model={frame}/>;
 }
 function PhoneHeader({model:m}:{model:PhoneFrameModel}){
@@ -163,8 +166,8 @@ function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
  return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+m.squad.name}><Users size={16}/><span>{m.squad.name}</span><ChevronRight size={14}/></button>{m.run&&<button className="outline return-button" disabled={!m.ready} onClick={()=> { m.requestReturn('adventure'); }}><House size={15}/>帰還</button>}<button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
 }
 function AdventureDestination({model:m}:{model:PhoneFrameModel}){
- const guided=m.prologue&&!m.run&&!m.state.done[TRADE_QUEST];
- return <div className="adventure-destination"><div>{(!m.prologue||m.run)&&<b>{m.activeQuest?.name||m.quest.name}</b>}</div><div className="quest-control"><button className={'outline quest-entry'+(guided?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guided?'quest-tutorial':undefined} onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={52} height={52} alt="" loading="eager" unoptimized/></button>{guided&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div>;
+ const guided=m.prologue&&!m.run&&!m.destinationChosen;
+ return <div className="adventure-destination"><div>{(m.destinationChosen||m.run)&&<b>{m.activeQuest?.name||m.quest.name}</b>}</div><div className="quest-control">{!m.run&&m.destinationChosen&&<button className="departure-button" disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>}<button className={'outline quest-entry'+(guided?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guided?'quest-tutorial':undefined} onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={52} height={52} alt="" loading="eager" unoptimized/></button>{guided&&<div className="quest-tutorial" id="quest-tutorial" role="status">ここから<br/><b>クエストを選ぼう</b></div>}</div></div>;
 }
 function AdventureBanter({model:m}:{model:PhoneFrameModel}){
  if(!m.banter.length)return <div className="phone-banter"><p>{m.quote}</p></div>;
