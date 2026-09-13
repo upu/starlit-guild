@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {BookOpen,Check,ChevronRight} from 'lucide-react';
 import {Progress} from '@/components/ui/progress';
-import {heroes,quests,allQuests,power,estimate,type State,type Squad,type Action} from '@/lib/game';
+import {heroes,quests,allQuests,power,estimate,squadName,type State,type Squad,type Action} from '@/lib/game';
 import {recruitments,met,prepared,rareProgress,canPrepare,recruitmentNeeds,recruitmentRun,recruitmentHint} from '@/lib/recruitment';
 import {availableStories,type Story} from '@/lib/stories';
 import {Sprite} from './sprite';
@@ -25,7 +25,7 @@ function Preparation({state:s,recruitment:r,ready,onAction,onGather}:Omit<Recrui
 }
 function RecruitmentMission({state:s,recruitment:r,ready,onAction,onWatch,squad}:Omit<RecruitmentProps,'onGather'>){
  const {quest}=recruitmentDetails(r.hero),running=recruitmentRun(s,r.hero),idle=s.squads.filter(sq=>!sq.run),chosen=idle.find(sq=>sq.id===squad.id)??idle.at(0);
- return <article className="recruitment-mission"><small>仲間になるための専用クエスト</small><h3>{quest.name}</h3><p>{quest.desc}</p><p>全15地点 · {quest.kind}の力の目安 {quest.need} · 達成すると{r.name}が加入</p>{running?<button className="full" onClick={()=> { onWatch(running.id); }}>{running.name}の冒険を見守る</button>:chosen?<><p>{chosen.name}：{quest.kind}の力 {power(s,chosen,quest)} · 約{Math.max(1,Math.round(estimate(s,chosen,quest)/60))}分</p>{power(s,chosen,quest)<quest.need&&<p>少し苦戦するかもしれません。装備や編成を整えるか、手助け・回復で支えましょう。</p>}<button className="full" disabled={!ready} onClick={()=>onAction({type:'start',id:quest.id,squad:chosen.id})}>{chosen.name}で出発</button></>:<p>いまはすべての隊が冒険中です。隊を帰還させるか、自動周回をオフにして帰りを待ちましょう。</p>}<small>達成後は自動で帰還します。仲間の編成は「仲間」から。</small></article>;
+ return <article className="recruitment-mission"><small>仲間になるための専用クエスト</small><h3>{quest.name}</h3><p>{quest.desc}</p><p>全15地点 · {quest.kind}の力の目安 {quest.need} · 達成すると{r.name}が加入</p>{running?<button className="full" onClick={()=> { onWatch(running.id); }}>{squadName(running)}の冒険を見守る</button>:chosen?<><p>{squadName(chosen)}：{quest.kind}の力 {power(s,chosen,quest)} · 約{Math.max(1,Math.round(estimate(s,chosen,quest)/60))}分</p>{power(s,chosen,quest)<quest.need&&<p>少し苦戦するかもしれません。装備や編成を整えるか、手助け・回復で支えましょう。</p>}<button className="full" disabled={!ready} onClick={()=>onAction({type:'start',id:quest.id,squad:chosen.id})}>{squadName(chosen)}で出発</button></>:<p>いまはすべての隊が冒険中です。隊を帰還させるか、自動周回をオフにして帰りを待ちましょう。</p>}<small>達成後は自動で帰還します。仲間の編成は「仲間」から。</small></article>;
 }
 export function RecruitmentBoard({state:s,squad,ready,onAction,onStory,onGather,onWatch}:{state:State;squad:Squad;ready:boolean;onAction:(a:Action)=>boolean;onStory:(st:Story)=>void;onGather:(id:string)=>void;onWatch:(id:string)=>void}){
  const [selected,setSelected]=useState(()=>recruitments.find(r=>!s.owned.includes(r.hero))?.hero||'mira');
