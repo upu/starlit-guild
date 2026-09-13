@@ -11,17 +11,51 @@ import * as apiInput from '../lib/api-input.ts';
 import * as externalInput from '../lib/external-input.ts';
 
 const code=ts.transpileModule(readFileSync(new URL('../app/use-local-game.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-function harness(){
+function harness(testToolsEnabled,initialBundle){
  let now=1000,writes=0,requests=0;const data=new Map(),timers=[],initializers=[],effects=[],docEvents=new Map(),winEvents=new Map();
  const exports={};
  const storage={getItem:key=>data.get(key)??null,setItem:(key,value)=>{writes++;data.set(key,value);},removeItem:key=>data.delete(key)};
  const doc={visibilityState:'visible',addEventListener:(k,v)=>docEvents.set(k,v),removeEventListener:k=>docEvents.delete(k)};
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v}),useCallback:fn=>fn,useEffect:fn=>effects.push(fn)},sonner:{toast:{success:()=>{},error:()=>{},info:()=>{}}},'@/lib/game':game,'@/lib/save-format':format,'@/lib/journey':journey,'@/lib/backup-api':backupApi,'@/lib/api-input':apiInput,'@/lib/external-input':externalInput,'@/lib/sound':{setSound:()=>{},sound:()=>{},soundEvents:()=>{},unlockSound:()=>{}}};
  const context={exports,require:id=>{if(!(id in modules))throw Error(id);return modules[id];},structuredClone,crypto,AbortSignal,Date:class extends Date{static now(){return now;}},localStorage:storage,document:doc,window:{addEventListener:(k,v)=>winEvents.set(k,v),removeEventListener:k=>winEvents.delete(k)},setTimeout:fn=>{initializers.push(fn);return initializers.length;},clearTimeout:()=>{},setInterval:(fn,ms)=>{timers.push({fn,ms});return timers.length;},clearInterval:()=>{},fetch:()=>{requests++;return new Promise(()=>{});}};
- vm.runInNewContext(code,context);const hook=exports.useLocalGame();effects.forEach(fn=>fn());initializers.forEach(fn=>fn());
+ vm.runInNewContext(code,context);
+ if(initialBundle)data.set(exports.SAVE_KEY,JSON.stringify(initialBundle));
+ const hook=exports.useLocalGame(testToolsEnabled);effects.forEach(fn=>fn());initializers.forEach(fn=>fn());
  const key=exports.SAVE_KEY;
  return {hook,key,data,timers,read:()=>JSON.parse(data.get(key)),writes:()=>writes,requests:()=>requests,setNow:value=>{now=value;},visibility:value=>{doc.visibilityState=value;docEvents.get('visibilitychange')();},pagehide:()=>winEvents.get('pagehide')()};
 }
+
+test('test tools default off and cannot create a test profile through the hook',()=>{
+ for(const enabled of [undefined,false]){
+  const h=harness(enabled),before=h.data.get(h.key),writes=h.writes();
+  h.hook.createProfile(true);
+  assert.equal(h.data.get(h.key),before);assert.equal(h.writes(),writes);
+  h.hook.createProfile();assert.equal(h.read().profiles.length,2);
+  assert.ok(h.read().profiles.every(p=>!p.test));
+ }
+});
+test('enabled test tools adjust only the test profile and preserve the ordinary adventure',()=>{
+ const h=harness(true),ordinary=h.read().profiles[0];
+ h.hook.adjust(20,8,5000);assert.deepEqual(h.read().profiles[0],ordinary);
+ h.hook.createProfile(true);h.hook.adjust(20,8,5000);
+ const b=h.read(),p=b.profiles.find(p=>p.id===b.active);
+ assert.equal(p.test,true);assert.equal(p.state.gold,5000);assert.equal(p.state.clears,20);
+ assert.deepEqual(b.profiles[0],ordinary);
+});
+test('disabling tools preserves saved and restored test profiles without permitting adjustments',async()=>{
+ const enabled=harness(true);enabled.hook.createProfile(true);enabled.hook.adjust(20,8,5000);
+ const initial=enabled.read(),h=harness(false,initial),before=h.data.get(h.key);
+ h.hook.adjust(60,20,20000);h.hook.createProfile(true);
+ assert.equal(h.data.get(h.key),before);
+ assert.deepEqual(h.read().profiles,initial.profiles);
+ h.hook.restoreCopy(initial.profiles[1]);
+ const restored=h.data.get(h.key);h.hook.adjust(60,20,20000);
+ assert.equal(h.data.get(h.key),restored);
+ await h.hook.importFile({size:100,text:async()=>JSON.stringify(initial)});
+ const imported=h.data.get(h.key);h.hook.adjust(60,20,20000);
+ assert.equal(h.data.get(h.key),imported);
+ assert.equal(h.read().profiles.length,4);
+});
 
 test('hidden game stops periodic writes, simulation and cloud requests',()=>{
  const h=harness();h.hook.dispatch({type:'start',id:'village-trade'});h.setNow(2000);h.visibility('hidden');
