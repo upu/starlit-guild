@@ -24,13 +24,16 @@ export const recruitmentQuests:Quest[]=recruitments.map(r=>({...r.mission,id:'jo
 export const allQuests:Quest[]=[...quests,...recruitmentQuests];
 export const availableQuests=(s:State)=>quests.filter(q=>q.unlock<=s.clears&&(!inPrologue(s)||isPrologueQuest(q.id))&&stageUnlocked(s,q.id)&&(q.availability!=='once'||!s.done[q.id]));
 export type Encounter='battle'|'gather'|'escort';
-export type GameEvent={id:string;at:number;kind:'hit'|'gather'|'hurt'|'heal'|'clear'|'move'|'rest'|'assist'|'skill'|'combo'|'burst'|'discovery';text:string;amount?:number;hero?:string};
+export type GameEvent={id:string;at:number;kind:'hit'|'gather'|'hurt'|'heal'|'clear'|'move'|'rest'|'assist'|'skill'|'combo'|'burst'|'discovery';text:string;amount?:number;hero?:string;target?:string};
 export type Actor={actions:number;hero:string;arrivesAt:number;nextAt:number;period:number};
 export type Detour={node:number;kind:'chest'|'herb'|'spirit';hero:string;at:number;finishAt:number;claimed:boolean};
 export type Scene={title:string;lines:string[];at:number;kind:'combo'|'burst'};
-export type Run={serial:number;nodes:number;cheer:number;ward:number;comboAt:number;detour:Detour|null;scene:Scene|null;actors:Actor[];enemyAt:number;quest:string;round:number;node:number;phase:'move'|'work'|'rest';phaseAt:number;nextAt:number;started:number;hp:number;maxHp:number;target:number;targetMax:number;hits:number;energy:number;energyAt:number;events:GameEvent[]};
+export type MemberHealth={hp:number;maxHp:number};
+export type Run={serial:number;nodes:number;cheer:number;ward:number;comboAt:number;detour:Detour|null;scene:Scene|null;actors:Actor[];enemyAt:number;quest:string;round:number;node:number;phase:'move'|'work'|'rest';phaseAt:number;nextAt:number;started:number;health:Record<string,MemberHealth>;target:number;targetMax:number;hits:number;energy:number;energyAt:number;events:GameEvent[]};
 export type Squad={id:string;name:string;members:string[];repeat:boolean;run:Run|null;lastQuest?:string};
 export type State={version:4;prologue?:boolean;recruitment?:RecruitmentProgress;story?:StoryProgress;wood:number;town:number;friendship:Record<string,number>;discoveries:number;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
+type LegacySharedRun=Omit<Run,'health'>&{hp:number;maxHp:number};
+type LegacySharedHealthState=Omit<State,'squads'>&{squads:(Omit<Squad,'run'>&{run:LegacySharedRun|null})[]};
 export type Rewards={count:number;gold:number;xp:number;herbs:number;ore:number;wood:number;offline:boolean;capped:boolean};
 function heroById(id:string){const hero=heroes.find(h=>h.id===id);if(!hero)throw Error(`仲間「${id}」が見つかりません。`);return hero;}
 function questById(id:string){const quest=allQuests.find(q=>q.id===id);if(!quest)throw Error(`依頼「${id}」が見つかりません。`);return quest;}
@@ -42,6 +45,13 @@ export function initialPrologueState(now:number):State{return {...initialState(n
 export const activeBonds=(members:string[])=>bonds.filter(b=>b.ids.every(id=>members.includes(id)));
 export function memberStats(s:State,id:string){const h=heroById(id);return h.stats.map(v=>Math.round(v*(1+.1*(level(s.xp[id]||0)-1))*(1+.08*s.gear+(s.town>=2?.08:0))));}
 export function stats(s:State,sq:Squad){return [0,1,2].map(i=>sq.members.reduce((v,id)=>v+memberStats(s,id)[i],0)+activeBonds(sq.members).reduce((v,b)=>v+b.bonus,0));}
+function memberMaxHp(s:State,id:string){return Math.round((40+memberStats(s,id)[1]*2)*(s.town>=1?1.1:1));}
+function memberHealth(r:Run,id:string){if(!Object.hasOwn(r.health,id))throw Error(`仲間「${id}」のHPが見つかりません。`);return r.health[id];}
+function healthRatio(health:MemberHealth){return health.hp/health.maxHp;}
+function totalMaxHp(r:Run){return Object.values(r.health).reduce((sum,health)=>sum+health.maxHp,0);}
+function lowestHealth(r:Run,members:string[]){return members.filter(id=>memberHealth(r,id).hp<memberHealth(r,id).maxHp).sort((a,b)=>healthRatio(memberHealth(r,a))-healthRatio(memberHealth(r,b)))[0];}
+function healMember(r:Run,id:string,amount:number){const health=memberHealth(r,id),restored=Math.min(amount,health.maxHp-health.hp);health.hp+=restored;return restored;}
+function healAll(r:Run,ratio:number){for(const health of Object.values(r.health))health.hp=Math.min(health.maxHp,health.hp+health.maxHp*ratio);}
 export const power=(s:State,sq:Squad,q:Quest)=>stats(s,sq)[['採取','護衛','討伐'].indexOf(q.kind)];
 export const memberLimit=(s:State)=>s.clears>=10?3:2;
 export const squadLimit=(s:State)=>s.owned.length>=6?3:s.owned.length>=4?2:1;
@@ -66,7 +76,7 @@ export function targetName(q:Quest,node:number){
 export const stepMs=(s:State)=>Math.round(1050*(1-.035*s.camp));
 export function estimate(s:State,sq:Squad,q:Quest){const relevant=Math.max(5,power(s,sq,q));return Math.round(5*(12+q.need*6.9/Math.max(3,2+relevant/Math.max(1,sq.members.length)*.23)*stepMs(s)/1000/Math.max(1,sq.members.length)));}
 function addLog(s:State,text:string,at:number){s.log=[{text,at},...s.log].slice(0,40);}
-function event(r:Run,at:number,kind:GameEvent['kind'],text:string,amount?:number,hero?:string){r.events=[...r.events,{id:`${String(r.round)}-${String(r.node)}-${String(at)}-${kind}-${String(r.hits)}-${hero||"leader"}-${String(++r.serial)}`,at,kind,text,amount,hero}].slice(-12);}
+function event(r:Run,at:number,kind:GameEvent['kind'],text:string,amount?:number,hero?:string,target?:string){r.events=[...r.events,{id:`${String(r.round)}-${String(r.node)}-${String(at)}-${kind}-${String(r.hits)}-${hero||"leader"}-${target||"none"}-${String(++r.serial)}`,at,kind,text,amount,hero,target}].slice(-12);}
 function configureTarget(r:Run,q:Quest){r.targetMax=Math.round(q.need*1.12*(encounter(q,r.node)==='escort'?1.8:2.3));r.target=r.targetMax;r.hits=0;}
 export function travelMs(id:string){return 2200+(heroes.findIndex(h=>h.id===id)%4)*310;}
 function schedule(s:State,sq:Squad,r:Run,at:number){
@@ -75,7 +85,7 @@ function schedule(s:State,sq:Squad,r:Run,at:number){
  const prior=r.detour;r.detour=!inPrologue(s)&&prior?.node===r.node&&prior.claimed?prior:null;if(!inPrologue(s)&&r.node%3===0&&!r.detour){const explorer=['finn','aria','poppy'].find(id=>sq.members.includes(id))||firstMember(sq);const kind=(['chest','herb','spirit'] as const)[(r.round+Math.floor(r.node/3)+allQuests.findIndex(q=>q.id===r.quest))%3];r.detour={node:r.node,kind,hero:explorer,at:at+900,finishAt:at+(['finn','aria','poppy'].includes(explorer)?6200:8500),claimed:false};actorByHero(r,explorer).nextAt=r.detour.finishAt+200;}
  r.nextAt=nextEvent(r);
 }
-function makeRun(s:State,sq:Squad,q:Quest,at:number,round=1):Run{const maxHp=Math.round((80+stats(s,sq)[1]*2)*(s.town>=1?1.1:1));const r:Run={serial:0,nodes:15,cheer:0,ward:0,comboAt:at+14500,detour:null,scene:null,actors:[],enemyAt:at+3700,quest:q.id,round,node:0,phase:'move',phaseAt:at,nextAt:at+2200,started:at,hp:maxHp,maxHp,target:0,targetMax:0,hits:0,energy:3,energyAt:at,events:[]};configureTarget(r,q);schedule(s,sq,r,at);return r;}
+function makeRun(s:State,sq:Squad,q:Quest,at:number,round=1):Run{const health=Object.fromEntries(sq.members.map(id=>{const maxHp=memberMaxHp(s,id);return [id,{hp:maxHp,maxHp}];}));const r:Run={serial:0,nodes:15,cheer:0,ward:0,comboAt:at+14500,detour:null,scene:null,actors:[],enemyAt:at+3700,quest:q.id,round,node:0,phase:'move',phaseAt:at,nextAt:at+2200,started:at,health,target:0,targetMax:0,hits:0,energy:3,energyAt:at,events:[]};configureTarget(r,q);schedule(s,sq,r,at);return r;}
 function nextEvent(r:Run){return Math.min(...r.actors.map(a=>a.nextAt),r.enemyAt,r.comboAt,r.detour&&!r.detour.claimed?r.detour.finishAt:Infinity);}
 export const heroSkills:Record<string,{style:string;name:string;description:string}>={
  aria:{style:'ranged',name:'風の二連矢',description:'離れて矢を放ち、3回ごとに二連射。寄り道も得意。'},
@@ -91,7 +101,7 @@ export const heroSkills:Record<string,{style:string;name:string;description:stri
 export const bondKey=(ids:string[])=>[...ids].sort().join('-');
 export const bondLevel=(s:State,ids:string[])=>Math.min(3,1+Math.floor((s.friendship[bondKey(ids)]||0)/12));
 function discover(s:State,sq:Squad,at:number){const r=activeRun(sq),d=r.detour;if(inPrologue(s)||!d||d.claimed)return;d.claimed=true;s.discoveries++;const q=questById(r.quest);const wood=q.tier+1;s.wood+=wood;
- let amount=wood;let text='';if(d.kind==='chest'){amount=Math.ceil(q.gold*.035);s.gold+=amount;text='隠し宝箱！ +'+String(amount)+' G';}else if(d.kind==='herb'){amount=2*q.tier;s.herbs+=amount;text='光る薬草を発見！ 薬草 +'+String(amount);}else{amount=Math.ceil(r.maxHp*.12);r.hp=Math.min(r.maxHp,r.hp+amount);r.ward+=Math.ceil(r.maxHp*.08);text='迷子の精霊がお礼に回復と加護をくれた。';}
+ let amount=wood;let text='';if(d.kind==='chest'){amount=Math.ceil(q.gold*.035);s.gold+=amount;text='隠し宝箱！ +'+String(amount)+' G';}else if(d.kind==='herb'){amount=2*q.tier;s.herbs+=amount;text='光る薬草を発見！ 薬草 +'+String(amount);}else{healAll(r,.12);r.ward+=Math.ceil(totalMaxHp(r)*.08);text='迷子の精霊がお礼にみんなのHPと加護をくれた。';}
  event(r,at,'discovery',text+' · 木材 +'+String(wood),undefined,d.hero);addLog(s,heroById(d.hero).name+'：'+text,at);
 }
 function recordPairStory(s:State,sq:Squad,q:Quest){
@@ -114,7 +124,7 @@ function reward(s:State,sq:Squad,q:Quest,at:number,finished:boolean){
 function completeNode(s:State,sq:Squad,q:Quest,at:number){const r=activeRun(sq);discover(s,sq,at);event(r,at,'clear',targetName(q,r.node)+'をクリア！');const finished=r.node===r.nodes-1;
  const gain=(r.node+1)%3===0||finished?reward(s,sq,q,at,finished):null;
  if(gain)event(r,at,'clear','区間の報酬を確保！ +'+String(gain.gold)+' G · 木材 +'+String(gain.wood));
- if(!finished){r.node++;r.phase='move';r.phaseAt=at;r.hp=Math.min(r.maxHp,r.hp+r.maxHp*(s.town>=2?.2:.15));configureTarget(r,q);schedule(s,sq,r,at);return gain;}
+ if(!finished){r.node++;r.phase='move';r.phaseAt=at;healAll(r,s.town>=2?.2:.15);configureTarget(r,q);schedule(s,sq,r,at);return gain;}
  sq.lastQuest??=q.id;
  if(sq.repeat&&!q.companion&&q.availability!=='once'&&!isPrologueQuest(q.id)){const {events,cheer,scene}=r;sq.run=makeRun(s,sq,q,at,r.round+1);sq.run.events=events;sq.run.cheer=cheer;sq.run.scene=scene;}else sq.run=null;return gain;
 }
@@ -122,13 +132,13 @@ function combination(s:State,sq:Squad,at:number){const r=activeRun(sq),bs=active
  const lines=lv===1?b.lines:lv===2?[first+'「いつもの合図で、いくよ！」',second+'「息はぴったりだ！」']:[first+'「この先も、一緒に！」',second+'「どんな冒険だって！」'];
  r.scene={title:b.name+' · 連携 Lv.'+String(lv),lines:together(b.ids)?coupleCombo(s,r.node+r.round):lines,at,kind:'combo'};
  const damage=Math.round(r.targetMax*(.12+.035*lv));r.target=Math.max(0,r.target-damage);
- if(b.ids.includes('mira')){r.hp=Math.min(r.maxHp,r.hp+r.maxHp*.15);r.ward+=Math.ceil(r.maxHp*.08);}
+ if(b.ids.includes('mira')){healAll(r,.15);r.ward+=Math.ceil(totalMaxHp(r)*.08);}
  event(r,at,'combo',b.name+'！ '+(k==='battle'?'連携攻撃':'息の合った作業'),damage,b.ids[0]);
 }
-function cheer(s:State,sq:Squad,at:number){const r=activeRun(sq);r.cheer+=5;if(r.cheer<100)return;r.cheer-=100;const q=questById(r.quest),k=encounter(q,r.node);r.scene={title:'全員必殺！ 星灯りの大応援',lines:['団長「みんな、今だ！」','仲間たち「任せて！」'],at,kind:'burst'};r.hp=Math.min(r.maxHp,r.hp+r.maxHp*.15);
+function cheer(s:State,sq:Squad,at:number){const r=activeRun(sq);r.cheer+=5;if(r.cheer<100)return;r.cheer-=100;const q=questById(r.quest),k=encounter(q,r.node);r.scene={title:'全員必殺！ 星灯りの大応援',lines:['団長「みんな、今だ！」','仲間たち「任せて！」'],at,kind:'burst'};healAll(r,.15);
  for(const hero of sq.members){const amount=Math.ceil(r.targetMax*.24+memberStats(s,hero)[k==='battle'?2:k==='gather'?0:1]*.4);r.target=Math.max(0,r.target-amount);event(r,at,'burst',heroById(hero).name+'の必殺技！',amount,hero);}
 }
-function recoverRun(s:State,sq:Squad,r:Run,q:Quest,at:number){r.hp=r.maxHp;configureTarget(r,q);r.phase='move';r.phaseAt=at;schedule(s,sq,r,at);event(r,at,'heal','ひと休みして、もう一度。');}
+function recoverRun(s:State,sq:Squad,r:Run,q:Quest,at:number){for(const health of Object.values(r.health))health.hp=health.maxHp;configureTarget(r,q);r.phase='move';r.phaseAt=at;schedule(s,sq,r,at);event(r,at,'heal','みんなでひと休みして、もう一度。');}
 function statIndex(kind:Encounter){return kind==='battle'?2:kind==='gather'?0:1;}
 function specialInterval(hero:string){if(hero==='aria'||hero==='poppy'||hero==='noel')return 3;if(hero==='finn')return 5;return 4;}
 function specialMultiplier(hero:string,kind:Encounter){
@@ -147,16 +157,17 @@ function actorEventText(q:Quest,kind:Encounter,hero:string,special:boolean){
  if(q.id===TOWN_QUEST)return special?'息を合わせて荷運び':'荷札の確認・配達';if(special)return heroSkills[hero].name;return kind==='battle'?'攻撃':'採取・護衛';
 }
 function addActorWard(r:Run,hero:string,special:boolean,at:number){
- if(!special||hero!=='garr'&&hero!=='noel')return;r.ward+=Math.ceil(r.maxHp*(hero==='garr'?.12:.06));event(r,at,'skill',heroSkills[hero].name+'！ 障壁を展開',undefined,hero);
+ if(!special||hero!=='garr'&&hero!=='noel')return;r.ward+=Math.ceil(totalMaxHp(r)*(hero==='garr'?.12:.06));event(r,at,'skill',heroSkills[hero].name+'！ 障壁を展開',undefined,hero);
 }
-function healFromActor(s:State,r:Run,hero:string,special:boolean,at:number){
- if(hero!=='mira'&&!(hero==='poppy'&&special)||r.hp>=r.maxHp)return;const heal=5+level(s.xp[hero]||0);r.hp=Math.min(r.maxHp,r.hp+heal);event(r,at,'heal',heroSkills[hero].name,heal,hero);
+function healFromActor(s:State,sq:Squad,r:Run,hero:string,special:boolean,at:number){
+ const target=lowestHealth(r,sq.members);if(hero!=='mira'&&!(hero==='poppy'&&special)||!target)return;const heal=5+level(s.xp[hero]||0),restored=healMember(r,target,heal);event(r,at,'heal',heroSkills[hero].name,restored,hero,target);
 }
 function actorTurn(s:State,sq:Squad,r:Run,q:Quest,kind:Encounter,actor:Actor,at:number){
+ if(memberHealth(r,actor.hero).hp<=0){actor.nextAt+=actor.period;return;}
  const hero=actor.hero,member=memberStats(s,hero),bond=activeBonds(sq.members).reduce((value,item)=>value+item.bonus,0);actor.actions++;
  const special=actor.actions%specialInterval(hero)===0,multiplier=special?specialMultiplier(hero,kind):1;
  const damage=Math.max(1,Math.round((2+member[statIndex(kind)]*.23+bond*.1)*multiplier));r.target=Math.max(0,r.target-damage);r.hits++;actor.nextAt+=actor.period;
- event(r,at,actorEventKind(q,kind,special),heroById(hero).name+'：'+actorEventText(q,kind,hero,special),damage,hero);addActorWard(r,hero,special,at);healFromActor(s,r,hero,special,at);
+ event(r,at,actorEventKind(q,kind,special),heroById(hero).name+'：'+actorEventText(q,kind,hero,special),damage,hero);addActorWard(r,hero,special,at);healFromActor(s,sq,r,hero,special,at);
 }
 type StepResult={completed:boolean;gain:ReturnType<typeof reward>|null};
 function runActorTurns(s:State,sq:Squad,r:Run,q:Quest,kind:Encounter,at:number):StepResult{
@@ -167,9 +178,9 @@ function runActorTurns(s:State,sq:Squad,r:Run,q:Quest,kind:Encounter,at:number):
 function enemyText(q:Quest,blocked:number){if(blocked)return '障壁で攻撃を軽減';if(q.enemy===12)return 'メリルが踊りながらかじりつく！';if(q.enemy===13)return 'プティの人形が糸を引いて飛びかかる！';return '魔物の攻撃';}
 function enemyTurn(s:State,sq:Squad,r:Run,q:Quest,kind:Encounter,at:number){
  if(r.enemyAt!==at)return;r.enemyAt+=1450;if(kind!=='battle')return;
- const hurt=Math.max(1,Math.round(q.need*.24-stats(s,sq)[1]*.05)),blocked=Math.min(r.ward,hurt);r.ward-=blocked;r.hp=Math.max(0,r.hp-hurt+blocked);event(r,at,'hurt',enemyText(q,blocked),hurt-blocked);
+ const living=sq.members.filter(id=>memberHealth(r,id).hp>0);if(!living.length)return;const target=living[Math.floor((at-r.started)/1450)%living.length],hurt=Math.max(1,Math.round(q.need*.24-stats(s,sq)[1]*.05)),blocked=Math.min(r.ward,hurt),damage=Math.min(memberHealth(r,target).hp,hurt-blocked);r.ward-=blocked;memberHealth(r,target).hp-=damage;event(r,at,'hurt',heroById(target).name+'：'+enemyText(q,blocked),damage,undefined,target);
 }
-function finishStep(r:Run,at:number){if(r.hp>0){r.nextAt=nextEvent(r);return;}r.phase='rest';r.phaseAt=at;r.nextAt=at+15000;event(r,at,'rest','いったん退いて回復中。応援で立て直そう。');}
+function finishStep(r:Run,at:number){if(Object.values(r.health).some(health=>health.hp>0)){r.nextAt=nextEvent(r);return;}r.phase='rest';r.phaseAt=at;r.nextAt=at+15000;event(r,at,'rest','全員が力尽き、いったん退いて回復中。応援で立て直そう。');}
 function step(s:State,sq:Squad){
  const r=activeRun(sq),q=questById(r.quest),at=r.nextAt;if(r.phase==='rest'){recoverRun(s,sq,r,q,at);return null;}
  const kind=encounter(q,r.node);if(r.detour&&!r.detour.claimed&&r.detour.finishAt===at)discover(s,sq,at);
@@ -202,10 +213,20 @@ export function settle(input:State,now:number){
  for(const sq of s.squads)settleSquad(s,sq,end,rewards);applyOfflineCap(s,elapsed,rewards.capped);s.updatedAt=Math.max(now,s.updatedAt);
  rewards.gold=s.gold-input.gold;rewards.herbs=s.herbs-input.herbs;rewards.ore=s.ore-input.ore;rewards.wood=s.wood-input.wood;return {state:s,rewards};
 }
-export function migrate(raw:State|V3State|V2State|LegacyState,now:number):State{
- if(raw.version===4)return raw;
- const old=migrateV3(raw,now);const s:State={...structuredClone(old),version:4,wood:0,town:0,friendship:{},discoveries:0,squads:old.squads.map(sq=>({...sq,run:sq.run?{...structuredClone(sq.run),serial:0,nodes:3,cheer:0,ward:0,comboAt:Math.max(old.updatedAt,sq.run.nextAt)+14500,detour:null,scene:null,actors:sq.run.actors.map(a=>({...a,actions:0}))}:null}))};
- addLog(s,'寄り道と連携技が登場！ 次の周回から15地点の長い冒険になります。',now);return s;
+function upgradeSharedHealth(input:State|LegacySharedHealthState):State{
+ if(input.squads.every(sq=>!sq.run||'health' in sq.run))return input as State;
+ const s=structuredClone(input) as unknown as State;
+ for(const sq of s.squads){
+  const run=sq.run as Run|LegacySharedRun|null;if(!run||'health' in run)continue;
+  const ratio=Math.max(0,Math.min(1,run.hp/run.maxHp)),health=Object.fromEntries(sq.members.map(id=>{const maxHp=memberMaxHp(s,id);return [id,{hp:Math.round(maxHp*ratio),maxHp}];}));
+  const upgraded={...run,health} as Run&{hp?:number;maxHp?:number};delete upgraded.hp;delete upgraded.maxHp;sq.run=upgraded;
+ }
+ return s;
+}
+export function migrate(raw:State|LegacySharedHealthState|V3State|V2State|LegacyState,now:number):State{
+ if(raw.version===4)return upgradeSharedHealth(raw);
+ const old=migrateV3(raw,now);const s={...structuredClone(old),version:4,wood:0,town:0,friendship:{},discoveries:0,squads:old.squads.map(sq=>({...sq,run:sq.run?{...structuredClone(sq.run),serial:0,nodes:3,cheer:0,ward:0,comboAt:Math.max(old.updatedAt,sq.run.nextAt)+14500,detour:null,scene:null,actors:sq.run.actors.map(a=>({...a,actions:0}))}:null}))} as unknown as LegacySharedHealthState;
+ addLog(s as unknown as State,'寄り道と連携技が登場！ 次の周回から15地点の長い冒険になります。',now);return upgradeSharedHealth(s);
 }
 export function testState(now:number,clears:number,lv:number,gold:number):State{
  const s=clears===0?initialPrologueState(now):initialState(now);s.clears=Math.min(1000,Math.max(0,Math.floor(clears)));s.gold=Math.min(10000000,Math.max(0,Math.floor(gold)));s.herbs=s.ore=s.clears*15;s.wood=s.clears*15;s.town=s.clears>=20?2:s.clears>=3?1:0;
@@ -241,8 +262,9 @@ function newSquadAction(s:State){
  if(inPrologue(s))throw Error('今はふたりで冒険を進めましょう。');if(s.squads.length>=squadLimit(s))throw Error('仲間が4人で2隊、6人で3隊を編成できます。');
  const id=s.owned.find(hero=>s.squads.every(p=>!p.members.includes(hero)));if(!id)throw Error('待機中の仲間を1人用意してください。');const n=s.squads.length+1;s.squads.push({id:`party-${String(n)}`,name:n===2?'木漏れ日の隊':'星渡りの隊',members:[id],repeat:true,run:null});
 }
-function healAssist(s:State,sq:Squad,r:Run,now:number){
- const heal=Math.max(3,Math.ceil(r.maxHp*.025));r.hp=Math.min(r.maxHp,r.hp+heal);if(r.phase==='rest'){r.phase='move';r.phaseAt=now;configureTarget(r,questById(r.quest));schedule(s,sq,r,now);}event(r,now,'heal',inPrologue(s)?'手助けで回復！':'団長の応援で回復！',heal);
+function healAssist(s:State,sq:Squad,r:Run,now:number,targetId?:string){
+ if(targetId&&!sq.members.includes(targetId))throw Error('回復する仲間を確認してください。');const target=targetId||lowestHealth(r,sq.members);if(!target)return;const health=memberHealth(r,target);if(health.hp>=health.maxHp)return;
+ const heal=Math.max(3,Math.ceil(health.maxHp*.05)),restored=healMember(r,target,heal);if(r.phase==='rest'){r.phase='move';r.phaseAt=now;configureTarget(r,questById(r.quest));schedule(s,sq,r,now);}event(r,now,'heal',(inPrologue(s)?'手助けで':'団長の応援で')+heroById(target).name+'を回復！',restored,undefined,target);
 }
 function strikeAssist(s:State,sq:Squad,r:Run,now:number){
  if(r.phase==='rest')throw Error('回復で立て直しましょう。');const q=questById(r.quest),index=q.kind==='採取'?0:q.kind==='護衛'?1:2;const hit=Math.max(2,Math.round(2+s.gear+stats(s,sq)[index]*.035));r.target=Math.max(0,r.target-hit);event(r,now,'assist',inPrologue(s)?'手助け！':'団長の手助け！',hit);
@@ -250,7 +272,7 @@ function strikeAssist(s:State,sq:Squad,r:Run,now:number){
 function finishAssist(s:State,sq:Squad,r:Run,now:number){
  if(!inPrologue(s))cheer(s,sq,now);if(r.target>0)return;const gain=completeNode(s,sq,questById(r.quest),now);if(gain)addLog(s,sq.name+'が区間の報酬を確保！ +'+String(gain.gold)+' G',now);
 }
-function assistAction(s:State,sq:Squad,a:Action,now:number){const r=sq.run;if(!r)throw Error('冒険中に応援できます。');r.hits++;if(a.mode==='heal')healAssist(s,sq,r,now);else strikeAssist(s,sq,r,now);finishAssist(s,sq,r,now);}
+function assistAction(s:State,sq:Squad,a:Action,now:number){const r=sq.run;if(!r)throw Error('冒険中に応援できます。');r.hits++;if(a.mode==='heal')healAssist(s,sq,r,now,a.id);else strikeAssist(s,sq,r,now);finishAssist(s,sq,r,now);}
 function detourAction(s:State,sq:Squad,_a:Action,now:number){
  if(inPrologue(s))throw Error('寄り道はまだできません。');const r=sq.run,d=r?.detour;if(!r||!d||d.claimed||now<d.at||r.phase==='rest')throw Error('寄り道を見つけたら指示できます。');
  d.finishAt=Math.min(d.finishAt,now+700);const helper=actorByHero(r,d.hero);helper.nextAt=Math.min(helper.nextAt,d.finishAt+500);r.nextAt=nextEvent(r);

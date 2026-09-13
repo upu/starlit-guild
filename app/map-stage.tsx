@@ -22,7 +22,7 @@ function keyboardAction(e:KeyboardEvent<HTMLDivElement>,perform:(intent:Adventur
 }
 function JourneyOverlay({squad,now,frame}:{squad:Squad;now:number;frame:ReturnType<typeof adventureFrame>}){
  const run=squad.run;if(!run)return null;
- return <><BurstScene run={run} members={squad.members} now={now}/><div className="map-journey" aria-hidden="true"><span>旅の道のり</span><div>{Array.from({length:run.nodes},(_,i)=><i key={i} className={i<run.node?'complete':i===run.node?'current':''}/>)}</div></div><div className="sr-only"><span>{frame.members.map(m=>m.name).join('、')}が冒険中。</span>{frame.quest.companion&&<span>{heroes.find(h=>h.id===frame.quest.companion)?.name}が同行中。</span>}<span>{frame.target?.name}</span></div></>;
+ return <><BurstScene run={run} members={squad.members} now={now}/><div className="map-journey" aria-hidden="true"><span>旅の道のり</span><div>{Array.from({length:run.nodes},(_,i)=><i key={i} className={i<run.node?'complete':i===run.node?'current':''}/>)}</div></div><div className="sr-only"><span>{frame.members.map(m=>`${m.name} HP ${String(Math.ceil(m.hp))}/${String(m.maxHp)}`).join('、')}。</span>{frame.quest.companion&&<span>{heroes.find(h=>h.id===frame.quest.companion)?.name}が同行中。</span>}<span>{frame.target?.name}</span></div></>;
 }
 function CheerGauge({state,run}:{state:State;run:Squad['run']}){
  if(inPrologue(state))return null;

@@ -89,7 +89,7 @@ test('tower gathering and night lamp work keep small battles, appropriate assets
    assert.equal(frame.background,q.background);assert.ok(existsSync(new URL('../public'+frame.background,import.meta.url)));
    assert.deepEqual(frame.members.map(m=>m.id),['aria','leon']);assert.equal(run.detour,null);
    assert.ok(journeyBanter(s,s.squads[0],s.updatedAt).every(line=>['aria','leon'].includes(line.speaker)));
-   if(run.hp<run.maxHp)damaged=true;
+   if(Object.values(run.health).some(health=>health.hp<health.maxHp))damaged=true;
    if(frame.target.kind!=='battle'){
     if(id===NIGHT_QUEST){assert.equal(frame.target.asset,'/items/moss-lamp.png');assert.ok(existsSync(new URL('../public'+frame.target.asset,import.meta.url)));}
     for(const member of frame.members){
@@ -139,7 +139,7 @@ test('evening has more small encounters; town work has cargo, no battles or dama
    assert.ok(journeyBanter(s,s.squads[0],s.updatedAt).every(line=>['aria','leon'].includes(line.speaker)));
    assert.equal(run.detour,null);
    if(id===TOWN_QUEST){
-    assert.equal(run.hp,run.maxHp);assert.ok(run.events.every(event=>event.kind!=='hurt'&&!/二連矢|斬撃|攻撃/.test(event.text)));
+    assert.ok(Object.values(run.health).every(health=>health.hp===health.maxHp));assert.ok(run.events.every(event=>event.kind!=='hurt'&&!/二連矢|斬撃|攻撃/.test(event.text)));
     const current=adventureFrame({squad:s.squads[0],now:s.updatedAt,ready:true,paused:false,startQuest:id});
     for(const member of current.members)assert.ok(![4,5,6,7].includes(Number(heroAnimation(member,current,s.updatedAt).frame)),'delivery work never uses weapon attack poses');
    }

@@ -11,7 +11,7 @@ export function heroAnimation(member:AdventureFrame['members'][number],frame:Adv
  if(!sheet)return null;
  const pose=(index:number)=>({asset:sheet.asset,frame:String(index)});
  if(reduced||frame.phase==='rest')return pose(8);
- const hurt=frame.events.filter(e=>e.kind==='hurt'&&(!e.hero||e.hero===member.id)&&now>=e.at&&now-e.at<320).at(-1);
+ const hurt=frame.events.filter(e=>e.kind==='hurt'&&(e.target===member.id||!e.target&&(!e.hero||e.hero===member.id))&&now>=e.at&&now-e.at<320).at(-1);
  if(hurt)return pose(10+Math.min(1,Math.floor((now-hurt.at)/160)));
  const hit=member.hit,age=hit?now-hit.at:Infinity;
  if(!member.exploring&&hit&&hit.kind!=='gather'&&age>=0&&age<650)return pose(4+Math.min(3,Math.floor(age/162.5)));

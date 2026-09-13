@@ -110,7 +110,7 @@ export class AdventurePainter{
   const width=this.scene.scale.width,height=this.scene.scale.height,age=now-event.at;
   const actor=frame.members.find(m=>m.id===event.hero)||frame.members[0];
   const support=event.kind==='heal'||event.kind==='hurt'||event.kind==='skill'&&!event.amount;
-  const dest=support?actor:frame.target;if(!dest)return;
+  const dest=frame.members.find(m=>m.id===event.target)||(support?actor:frame.target);if(!dest)return;
   const x=dest.x*width,y=dest.y*height-spriteSize(width,height)*.45,color=eventColor(event);
   this.amountEffect(event,frame,x,y,color,age);this.strikeEffect(event,frame,actor,support,x,y,color,age);this.moteEffects(support,x,y,color,age);
  }
@@ -130,22 +130,22 @@ export class AdventurePainter{
   const lunge=memberLunge(member,size,this.runtime.reduced,front,attacking),angle=memberAngle(member,now,index,this.runtime.reduced,animated,front);
   return {x:member.x*this.scene.scale.width+lunge,y:member.y*this.scene.scale.height+bob,angle};
  }
- private paintMemberHealth(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,member:Member,figure:Figure,size:number,index:number){
-  if(!input.squad.run||index!==0)return;
+ private paintMemberHealth(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,member:Member,figure:Figure,size:number){
+  if(!input.squad.run)return;
   const width=this.scene.scale.width,height=this.scene.scale.height,barWidth=Math.min(76,size*.78),barY=member.y*height+size*.12;
   this.meters.fillStyle(0x09271f,.85).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth,5,2);
-  this.meters.fillStyle(frame.hp<.3?0xf2aa89:0xa8deb0,1).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth*frame.hp,5,2);figure.label.setY(barY+9);
+  this.meters.fillStyle(member.health<.3?0xf2aa89:0xa8deb0,1).fillRoundedRect(member.x*width-barWidth/2,barY,barWidth*member.health,5,2);figure.label.setY(barY+9).setText(member.down?member.name+' · 戦闘不能':member.name+' · HP '+String(Math.ceil(member.hp))+'/'+String(member.maxHp));
   if(frame.ward)this.meters.lineStyle(2,0xb2def5,.65).strokeEllipse(member.x*width,member.y*height-size*.35,size*.82,size*1.02);
  }
  private paintMember(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,member:Member,index:number,now:number,size:number){
   let figure=this.figures.get(member.id);if(!figure){figure=this.makeFigure(member.sprite,member.name);this.figures.set(member.id,figure);}
   const pose=heroSheets[member.id]?.ready?heroAnimation(member,frame,now,this.runtime.reduced):null;if(pose)figure.image.setTexture(pose.asset,pose.frame);
   const artSize=pose?size*1.12:size,motion=this.memberMotion(member,now,size,index,pose);
-  figure.image.setPosition(motion.x,motion.y).setDisplaySize(artSize,artSize).setAngle(motion.angle).setDepth(10+member.y*10).setAlpha(frame.phase==='rest'?.65:1);
+  figure.image.setPosition(motion.x,motion.y).setDisplaySize(artSize,artSize).setAngle(motion.angle).setDepth(10+member.y*10).setAlpha(frame.phase==='rest'||member.down ? .55 : 1);
   figure.shadow.setPosition(member.x*this.scene.scale.width,member.y*this.scene.scale.height+3).setDisplaySize(size*.55,size*.10);
   figure.label.setPosition(member.x*this.scene.scale.width,member.y*this.scene.scale.height+size*.13).setText(member.exploring?'寄り道中':member.name);
-  const hurt=frame.events.some(e=>e.kind==='hurt'&&now-e.at<130);if(hurt&&!this.runtime.reduced)figure.image.setTint(0xffb2a2);else figure.image.clearTint();
-  this.paintMemberHealth(input,frame,member,figure,size,index);
+  const hurt=frame.events.some(e=>e.kind==='hurt'&&e.target===member.id&&now-e.at<130);if(hurt&&!this.runtime.reduced)figure.image.setTint(0xffb2a2);else figure.image.clearTint();
+  this.paintMemberHealth(input,frame,member,figure,size);
  }
  private paintMembers(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,now:number,size:number){
   for(const [id,figure] of this.figures)if(!frame.members.some(m=>m.id===id)){this.removeFigure(figure);this.figures.delete(id);}

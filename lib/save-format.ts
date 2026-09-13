@@ -3,11 +3,13 @@ import {parseBundle as parseV3} from './save-format-v3.ts';
 import {heroes,allQuests as quests,migrate,type State} from './game.ts';
 import {stories} from './stories.ts';
 import {recruitments} from './recruitment.ts';
+import {isRecord} from './external-input.ts';
 const n=z.number().finite().min(0).max(1e15),count=n.int(),id=z.string().uuid();
 const hero=z.string().refine(v=>heroes.some(h=>h.id===v));
 const uniqueHeroes=z.array(hero).min(1).max(heroes.length).refine(v=>new Set(v).size===v.length);
-const event=z.object({id:z.string().max(180),at:n,kind:z.enum(['hit','gather','hurt','heal','clear','move','rest','assist','skill','combo','burst','discovery']),text:z.string().max(300),amount:n.optional(),hero:hero.optional()});
-const run=z.object({serial:count,nodes:count.min(3).max(15),cheer:n.max(100),ward:n,comboAt:n,detour:z.object({node:count.max(14),kind:z.enum(['chest','herb','spirit']),hero,at:n,finishAt:n,claimed:z.boolean()}).nullable(),scene:z.object({title:z.string().max(100),lines:z.array(z.string().max(200)).max(8),at:n,kind:z.enum(['combo','burst'])}).nullable(),quest:z.string().refine(v=>quests.some(q=>q.id===v)),round:count.min(1),node:count.max(14),phase:z.enum(['move','work','rest']),phaseAt:n,nextAt:n,started:n,hp:n,maxHp:n.min(1),target:n,targetMax:n.min(1),hits:count,energy:n,energyAt:n,events:z.array(event).max(12),enemyAt:n,actors:z.array(z.object({hero,actions:count,arrivesAt:n,nextAt:n,period:n.min(200).max(5000)})).min(1).max(8)});
+const event=z.object({id:z.string().max(180),at:n,kind:z.enum(['hit','gather','hurt','heal','clear','move','rest','assist','skill','combo','burst','discovery']),text:z.string().max(300),amount:n.optional(),hero:hero.optional(),target:hero.optional()});
+const health=z.record(hero,z.object({hp:n,maxHp:n.min(1)}));
+const run=z.object({serial:count,nodes:count.min(3).max(15),cheer:n.max(100),ward:n,comboAt:n,detour:z.object({node:count.max(14),kind:z.enum(['chest','herb','spirit']),hero,at:n,finishAt:n,claimed:z.boolean()}).nullable(),scene:z.object({title:z.string().max(100),lines:z.array(z.string().max(200)).max(8),at:n,kind:z.enum(['combo','burst'])}).nullable(),quest:z.string().refine(v=>quests.some(q=>q.id===v)),round:count.min(1),node:count.max(14),phase:z.enum(['move','work','rest']),phaseAt:n,nextAt:n,started:n,health,target:n,targetMax:n.min(1),hits:count,energy:n,energyAt:n,events:z.array(event).max(12),enemyAt:n,actors:z.array(z.object({hero,actions:count,arrivesAt:n,nextAt:n,period:n.min(200).max(5000)})).min(1).max(8)});
 const keyedNumbers=z.record(z.string().regex(/^[a-z][a-z0-9_-]{0,40}$/),n);
 const storyQuest=z.string().refine(v=>quests.some(q=>q.id===v));
 const storyIds=z.array(z.string().refine(v=>stories.some(st=>st.id===v))).max(stories.length).refine(v=>new Set(v).size===v.length);
@@ -19,6 +21,8 @@ function validActors(squad:ParsedSquad){
  const run=squad.run;if(!run)return true;
  if(run.actors.length!==squad.members.length)return false;
  if(new Set(run.actors.map(actor=>actor.hero)).size!==squad.members.length)return false;
+ const healthIds=Object.keys(run.health);if(healthIds.length!==squad.members.length||healthIds.some(id=>!squad.members.includes(id)))return false;
+ if(Object.values(run.health).some(value=>value.hp>value.maxHp))return false;
  return run.actors.every(actor=>squad.members.includes(actor.hero)&&(run.phase==='rest'||actor.nextAt>=run.nextAt));
 }
 function validTimeline(squad:ParsedSquad,updatedAt:number){
@@ -40,4 +44,9 @@ const stateSchema=stateBase.superRefine(validateState);
 export type Profile={id:string;name:string;test:boolean;state:State};
 export type SaveBundle={format:4;deviceId:string;active:string;profiles:Profile[];serial:number;sound:boolean;cloudAt:number;legacyImported:boolean};
 export const bundleSchema=z.object({format:z.literal(4),deviceId:id,active:id,profiles:z.array(z.object({id,name:z.string().min(1).max(50),test:z.boolean(),state:stateSchema})).min(1).max(12),serial:count,sound:z.boolean(),cloudAt:n,legacyImported:z.boolean()}).refine(b=>new Set(b.profiles.map(p=>p.id)).size===b.profiles.length&&b.profiles.some(p=>p.id===b.active));
-export function parseBundle(raw:unknown):SaveBundle {if(raw&&typeof raw==='object'&&'format' in raw&&raw.format===3){const old=parseV3(raw);return {...old,format:4,profiles:old.profiles.map(p=>({...p,state:migrate(p.state,p.state.updatedAt)}))};}const result=bundleSchema.safeParse(raw);if(!result.success)throw Error('冒険の記録を読み取れません。STARLIT GUILD のセーブファイルを選んでください。');return result.data;}
+function upgradeCurrentBundle(raw:unknown):unknown{
+ if(!isRecord(raw)||raw.format!==4||!Array.isArray(raw.profiles))return raw;
+ const profiles:unknown[]=raw.profiles;
+ return {...raw,profiles:profiles.map((profile:unknown):unknown=>{if(!isRecord(profile)||!isRecord(profile.state))return profile;const state=profile.state;if(state.version!==4||typeof state.updatedAt!=='number')return profile;try{return {...profile,state:migrate(state as Parameters<typeof migrate>[0],state.updatedAt)};}catch{return profile;}})};
+}
+export function parseBundle(raw:unknown):SaveBundle {if(raw&&typeof raw==='object'&&'format' in raw&&raw.format===3){const old=parseV3(raw);return {...old,format:4,profiles:old.profiles.map(p=>({...p,state:migrate(p.state,p.state.updatedAt)}))};}const result=bundleSchema.safeParse(upgradeCurrentBundle(raw));if(!result.success)throw Error('冒険の記録を読み取れません。STARLIT GUILD のセーブファイルを選んでください。');return result.data;}

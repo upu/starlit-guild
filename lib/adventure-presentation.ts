@@ -6,7 +6,7 @@ import {isPrologueQuest} from './prologue.ts';
 
 export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean};
 export type Point={x:number;y:number};
-export type AdventureIntent='help'|'heal'|'detour';
+export type AdventureIntent='help'|'heal'|'detour'|`heal:${string}`;
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
 export const spriteAsset=(index:number)=>originalArt(index)||'/sprites.png';
 type ActiveRun=NonNullable<Squad['run']>;
@@ -23,12 +23,16 @@ function explorationPosition(input:AdventureInput,run:ActiveRun|null,id:string,n
  if(!run||!detour||detour.hero!==id||detour.node!==run.node||detour.claimed||now<detour.at||run.phase==='rest')return {...position,exploring:false};
  const t=clamp((now-detour.at)/1400);return {x:position.x+(.54-position.x)*t,y:position.y+(.82-position.y)*t,exploring:true};
 }
+function memberVitals(run:ActiveRun|null,id:string){
+ if(!run)return {hp:0,maxHp:1,health:1,down:false};
+ const health=run.health[id];return {hp:health.hp,maxHp:health.maxHp,health:clamp(health.hp/health.maxHp),down:health.hp<=0};
+}
 function adventureMember(input:AdventureInput,run:ActiveRun|null,events:GameEvent[],now:number,id:string,index:number){
  const hero=heroes.find(h=>h.id===id),skill=heroSkills[id];if(!hero)throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
  const actor=run?.actors.find(a=>a.hero===id),lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst'].includes(e.kind)).at(-1);
  const age=lastHit?now-lastHit.at:Infinity,attack=age<650?Math.sin(age/650*Math.PI):0,target=memberTarget(skill.style,index);
- const position=explorationPosition(input,run,id,now,memberPosition(input.squad,run,target,id,index,now));
- return {id,name:hero.name,sprite:hero.sprite,role:skill.style,x:position.x,y:position.y,walking:!!run&&run.phase!=='rest'&&now<(actor?.arrivesAt||0),exploring:position.exploring,attack:position.exploring?0:attack,hit:lastHit};
+ const position=explorationPosition(input,run,id,now,memberPosition(input.squad,run,target,id,index,now)),vitals=memberVitals(run,id);
+ return {id,name:hero.name,sprite:hero.sprite,role:skill.style,x:position.x,y:position.y,walking:!!run&&run.phase!=='rest'&&!vitals.down&&now<(actor?.arrivesAt||0),exploring:position.exploring,attack:position.exploring||vitals.down?0:attack,hit:lastHit,...vitals};
 }
 function frameDiscovery(input:AdventureInput,run:ActiveRun|null,now:number){
  const detour=input.detours===false?null:run?.detour;
@@ -49,7 +53,7 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const key=run?`${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`:`${squad.id}:idle:${quest.id}`;
  const events=recentEvents(run,now),members=squad.members.map((id,index)=>adventureMember(input,run,events,now,id,index));
  const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),target=frameTarget(quest,run,kind);
- return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,hp:run?clamp(run.hp/run.maxHp):1,ward:run?.ward||0};
+ return {key,quest,background:questScenery(quest),phase:run?.phase||'idle',members,target,discovery,events,cutin,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
 
@@ -57,9 +61,10 @@ export function adventureAction(input:AdventureInput,intent:AdventureIntent,now=
  const run=input.squad.run;
  if(!input.ready||input.paused||!run)return null;
  if(intent==='detour')return detourAction(input,run,now);
- const mode=intent==='heal'||run.phase==='rest'?'heal':'strike';
- if(mode==='heal'&&run.hp>=run.maxHp&&run.phase!=='rest')return null;
- return {type:'assist',squad:input.squad.id,mode};
+ const healing=intent==='heal'||intent.startsWith('heal:')||run.phase==='rest';if(!healing)return {type:'assist',squad:input.squad.id,mode:'strike'};
+ const requested=intent.startsWith('heal:')?intent.slice(5):undefined,target=requested||[...input.squad.members].sort((a,b)=>run.health[a].hp/run.health[a].maxHp-run.health[b].hp/run.health[b].maxHp).find(id=>run.health[id].hp<run.health[id].maxHp);
+ if(!target||!input.squad.members.includes(target)||run.health[target].hp>=run.health[target].maxHp)return null;
+ return {type:'assist',squad:input.squad.id,mode:'heal',id:target};
 }
 function detourAction(input:AdventureInput,run:ActiveRun,now:number):Action|null{
  if(input.detours===false)return null;
@@ -83,7 +88,7 @@ export function adventureHit(frame:AdventureFrame,point:Point,width:number,heigh
  // Match canvas visual bounds. Discoveries and companions win over the scenery.
  const contains=(x:number,y:number,w:number,h:number)=>Math.abs(point.x-x*width)<w/2&&point.y>y*height-h*.9&&point.y<y*height+h*.22;
  if(frame.discovery&&contains(frame.discovery.x,frame.discovery.y,64,64))return 'detour';
- for(const member of [...frame.members].reverse())if(contains(member.x,member.y,size*.8,size))return 'heal';
+ for(const member of [...frame.members].reverse())if(contains(member.x,member.y,size*.8,size))return `heal:${member.id}`;
  return 'help';
 }
 
