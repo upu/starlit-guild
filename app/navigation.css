@@ -92,7 +92,7 @@ body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner
 .departure-party{display:flex;flex-direction:column;gap:4px;padding:12px;background:#273f31;border:1px solid #5b7253;border-radius:8px}
 .departure-party>span{font-size:12px}
 .quest-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.quest-options .quest-option{justify-content:space-between;gap:4px;padding:12px 9px;background:#223c30;color:#ecdbb0;border:1px solid #5d7353;text-align:left;min-width:0}
+.quest-options .quest-option{justify-content:space-between;gap:4px;padding:12px 9px;background:#223c30;color:#ecdbb0;border:1px solid #5d7353;text-align:left;min-width:0;touch-action:manipulation}
 .quest-option span{min-width:0;display:flex;flex-direction:column;gap:4px}
 .quest-option small{font-size:11px;line-height:1.5;color:#c2d0b6}
 .quest-option b{font-size:13px;font-weight:500}
@@ -100,7 +100,6 @@ body:has(.story-dialog) [data-sonner-toaster],body:has(.art-viewer) [data-sonner
 .quest-options .quest-option[aria-pressed="true"]{background:#3a5038;border-color:#e2c77f}
 .quest-summary{display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid #758058;border-radius:8px;background:#2c4232}
 .quest-summary small{font-size:12px;line-height:1.8}
-.quest-confirm{position:sticky;bottom:-23px;background:#132625f5;padding:12px 0 8px;display:flex;flex-direction:column;gap:8px}
 .game-confirm[data-slot="alert-dialog-content"]{background:#152a25;color:#e5d7b7;border-color:#8a8a64;max-height:90dvh;overflow-y:auto}
 .game-confirm [data-slot="alert-dialog-description"]{color:#c8d3bf;line-height:1.8}
 .game-confirm [data-slot="alert-dialog-cancel"],.game-confirm button.outline{background:transparent;border:1px solid #849574;color:#e6d5b0}
