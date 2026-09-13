@@ -31,7 +31,7 @@ function CheerGauge({state,run}:{state:State;run:Squad['run']}){
 }
 
 export function MapStage({state,squad,now,onAction,ready,startQuest,paused=false}:{state:State;squad:Squad;now:number;onAction:(a:Action)=>void;ready:boolean;startQuest:string;paused?:boolean}){
- const input={squad,now,ready,startQuest,paused,detours:!inPrologue(state)},frame=adventureFrame(input),run=squad.run,q=frame.quest;
+ const input={squad,now,ready,startQuest,paused,detours:!inPrologue(state),restorationComplete:!!state.done['tower-restoration']},frame=adventureFrame(input),run=squad.run,q=frame.quest;
  function perform(intent:AdventureIntent){const action=adventureAction(input,intent);if(action)onAction(action);}
  const activity=activityLabel(frame);
  return <div className="map-shell">

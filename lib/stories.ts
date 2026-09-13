@@ -6,6 +6,7 @@ import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,W
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 import {idleBanter} from './idle-banter.ts';
+import {waterwayBanter} from './waterway-banter.ts';
 
 export type StoryLine = {speaker?: string; text: string};
 export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'|'encounter'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number; requiresHeroes?:string[]; requiresQuests?:string[]};
@@ -133,7 +134,7 @@ function townBanter(run:NonNullable<Squad['run']>):StoryLine[]{
 }
 function tradeBanter(run:NonNullable<Squad['run']>):StoryLine[]{
  if(run.phase==='rest')return [l('荷を下ろそう。木陰なら涼しい。'),a('うん。水、レオンの分も出すね。')];
- return run.node%3===1?[a('あ、頼まれた薬草。あの木の下にもある。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
+ return run.node%3===1?[a('あ、頼まれた薬草。任せて！ あの葉なら、すぐ見分けられるから。'),l('包みはここに置くぞ。採れたら入れてくれ。')]:[l('薬草の包み、荷物の上に置いたか？'),a('うん。潰れないように、紐も掛け直したよ。')];
 }
 function towerBanter(run:NonNullable<Squad['run']>):StoryLine[]{
  if(run.phase==='rest')return [a('この石なら乾いてる。座ろう、レオン。'),l('助かる。水を飲んでから行こう。')];
@@ -155,6 +156,7 @@ function wetlandBanter(run:NonNullable<Squad['run']>):StoryLine[]{
 }
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ const waterway=waterwayBanter(run);if(waterway)return waterway;
  if(run.quest===WETLAND_QUEST)return wetlandBanter(run);
  if(run.quest===TOWER_QUEST)return towerBanter(run);
  if(run.quest===NIGHT_QUEST)return nightBanter(run);

@@ -12,8 +12,8 @@ function supplied(r){const s=initialState(1000);s.clears=Math.max(60,r.unlock);s
 function finish(s){let i=0;while(s.squads[0].run&&i++<20000)s=settle(s,s.squads[0].run.nextAt).state;assert.ok(i<20000,'expedition must finish');return s;}
 
 test('seven distinct arcs each have an accessible material source and playable mission',()=>{
- assert.equal(recruitments.length,7);assert.equal(recruitmentQuests.length,7);assert.equal(quests.length,17);
- assert.equal(new Set(allQuests.map(q=>q.id)).size,24);
+ assert.equal(recruitments.length,7);assert.equal(recruitmentQuests.length,7);assert.equal(quests.length,19);
+ assert.equal(new Set(allQuests.map(q=>q.id)).size,26);
  for(const r of recruitments){assert.ok(r.rare.sources.some(id=>quests.find(q=>q.id===id).unlock<=r.unlock));assert.ok(allQuests.some(q=>q.companion===r.hero));const s=supplied(r);assert.ok(met(s,r));assert.ok(canPrepare(s,r));}
 });
 
