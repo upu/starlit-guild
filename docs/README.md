@@ -47,6 +47,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [オリジナルキャラクター一覧](original-character-gallery.md) — 採用画像の確認
 - [プロローグ会話画像](prologue-dialogue-art.md) — プロローグ用会話画像
 - [クエストアイコン](quest-icon-prompt.md) — クエストアイコン制作メモ
+- [お店アイコン](shop-icon-prompt.md) — 露店アイコン制作メモ
 
 JSONの生成プロンプト類は、対応する制作記録から必要に応じて参照する。
 

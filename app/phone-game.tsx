@@ -1,13 +1,13 @@
 'use client';
 import {useState,type Dispatch,type MouseEvent,type ReactNode,type Ref,type SetStateAction} from 'react';
 import Image from 'next/image';
-import {Backpack,Store,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
+import {Backpack,Compass,Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
 import {Tabs,TabsList,TabsTrigger,TabsContent} from '@/components/ui/tabs';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {AlertDialog,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogCancel,AlertDialogAction} from '@/components/ui/alert-dialog';
 import {PartyPanel} from './party-panel';
 import {CharacterPanel,InventoryPanel,ShopPanel} from './equipment-panels';
-import {shopTier} from '@/lib/equipment';
+import {ShopEntry} from './shop-entry';
 import {QuestPicker} from './quest-picker';
 import {QuestCompletion} from './quest-completion';
 import {Toaster} from '@/components/ui/sonner';
@@ -178,7 +178,7 @@ function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
  return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+squadName(m.squad)}><Users size={16}/><span>{squadName(m.squad)}</span><ChevronRight size={14}/></button><button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
 }
 function AdventureDestination({model:m}:{model:PhoneFrameModel}){
- return <div className="adventure-actions" aria-label="冒険の操作"><button className="outline quest-entry" aria-label="クエストを開く" onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={32} height={32} alt="" loading="eager" unoptimized/><span>クエスト</span></button>{shopTier(m.state)>0&&<button className="outline shop-entry" onClick={()=>{m.setSheet('shop');}}><Store size={22}/><span>お店</span></button>}{m.run?<button className="outline return-button" disabled={!m.ready} onClick={()=>{m.requestReturn('adventure');}}><House size={18}/>帰還</button>:m.destinationChosen&&<button className="departure-button" disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>}</div>;
+ return <div className="adventure-actions" aria-label="冒険の操作"><button className="outline quest-entry" aria-label="クエストを開く" onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={32} height={32} alt="" loading="eager" unoptimized/><span>クエスト</span></button><ShopEntry state={m.state} profileId={m.game.profile?.id} obscured={!!m.sheet||!!m.ending||!!m.game.report} onOpen={()=>{m.setSheet('shop');}}/>{m.run?<button className="outline return-button" disabled={!m.ready} onClick={()=>{m.requestReturn('adventure');}}><House size={18}/>帰還</button>:m.destinationChosen&&<button className="departure-button" disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>}</div>;
 }
 function AdventureBanter({model:m}:{model:PhoneFrameModel}){
  if(!m.banter.length)return <div className="phone-banter"><p>{m.quote}</p></div>;
