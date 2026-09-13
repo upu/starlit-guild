@@ -8,6 +8,11 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'forest-wetland-return': {
+  src: '/stories/forest-moss-aria-oil.png',
+  alt: '森の木陰で、二つの苔の入れ物を顔の近くへ持ち上げて見比べるアリア。正面寄りの胸上を油彩調で描き、緑の瞳と考え込む表情を捉える。',
+  width: 1536, height: 1024, revealAtLine: 5,
+ },
  'tower-road-return': {
   src: '/stories/tower-moss-discovery.png',
   alt: '塔の足元で、アリアが木べらで分けた光る苔を、レオンの持つ浅い木の入れ物へ寄せる。小さな苔灯が二人の手元を淡く照らす。',

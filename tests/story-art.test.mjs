@@ -31,6 +31,13 @@ test('the moss illustration waits until the caretaker has allowed the sample and
  assert.equal(storyArtAt(scene.id,glow-1),undefined);assert.equal(storyArtAt(scene.id,glow),art);
 });
 
+test('forest comparison art waits for Aria to lift both samples toward her face',()=>{
+ const scene=stories.find(st=>st.id==='forest-wetland-return'),art=storyArt[scene.id];
+ const comparison=scene.lines.findIndex(line=>line.text.includes('顔の近くまで持ち上げた'));
+ assert.equal(art.revealAtLine,comparison);assert.equal(storyArtAt(scene.id,comparison-1),undefined);
+ assert.equal(storyArtAt(scene.id,comparison),art);
+});
+
 test('first departure has its illustration, while the fireside waits until they sit together',()=>{
  const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
  assert.ok(availableStories(state).some(st=>st.id==='herbs-departure'));

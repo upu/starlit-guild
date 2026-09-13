@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialPrologueState,initialState,act,settle,availableQuests,allQuests,encounter} from '../lib/game.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,prologueStages,stageEndingPending,restingQuest} from '../lib/prologue.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
 import {parseBundle} from '../lib/save-format.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
@@ -14,7 +14,7 @@ const finish=s=>settle(s,s.updatedAt+13*3600000).state;
 const read=(s,id)=>act(s,{type:'readStory',id:id+'-return'},s.updatedAt);
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'段階確認',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}
 
-test('1-1 through 1-5 requires each ending, stops offline and roundtrips without extra rewards',()=>{
+test('1-1 through 1-6 requires each ending, stops offline and roundtrips without extra rewards',()=>{
  let s=initialPrologueState(1000);
  for(const [i,stage] of prologueStages.entries()){
   assert.equal(nextGoal(s).questId,stage.quest);
@@ -31,15 +31,15 @@ test('1-1 through 1-5 requires each ending, stops offline and roundtrips without
   assert.deepEqual(read(s,stage.quest),s);assert.equal(stageEndingPending(s),undefined);
  }
  assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);assert.equal(s.prologue,true);
- assert.equal(availableStories(s).length,10);
- assert.equal(nextGoal(s).questId,NIGHT_QUEST);assert.match(nextGoal(s).detail,/森で苔/);
+ assert.equal(availableStories(s).length,12);
+ assert.equal(nextGoal(s).questId,WETLAND_QUEST);assert.match(nextGoal(s).detail,/管理人を訪ねる/);
  assert.throws(()=>start(s,'herbs'));assert.throws(()=>act(s,{type:'build'},s.updatedAt));
  const replay=finish(start(s,RETURN_QUEST));assert.equal(replay.done[RETURN_QUEST],2);
  assert.equal(stageEndingPending(replay),undefined);assert.deepEqual(replay.story,s.story);
 });
 
 test('interruption and reload preserve progress without unlocking later stages',()=>{
- for(const id of [RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST]){
+ for(const id of [RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST]){
   let s=initialPrologueState(1000);
   for(const stage of prologueStages.slice(0,prologueStages.findIndex(stage=>stage.quest===id)))s=read(finish(start(s,stage.quest)),stage.quest);
   s=start(s,id);while(s.squads[0].run.node<3)s=settle(s,s.squads[0].run.nextAt).state;
@@ -76,6 +76,46 @@ test('a saved 1-3 ending unlocks 1-4 only after reading, without changing old re
  assert.equal(start(s,TOWER_QUEST).squads[0].run.quest,TOWER_QUEST);
 });
 
+test('a saved 1-5 ending opens the wetland only after reading and preserves resources',()=>{
+ let s=initialPrologueState(1000);
+ for(const stage of prologueStages.slice(0,4))s=read(finish(start(s,stage.quest)),stage.quest);
+ s=roundtrip(finish(start(s,NIGHT_QUEST)));
+ assert.throws(()=>start(s,WETLAND_QUEST),/まだ/);
+ assert.ok(!availableQuests(s).some(q=>q.id===WETLAND_QUEST));
+ const before=structuredClone(s);s=roundtrip(read(s,NIGHT_QUEST));
+ for(const key of ['gold','xp','done','herbs','ore','wood','owned','clears'])assert.deepEqual(s[key],before[key]);
+ assert.equal(nextGoal(s).questId,WETLAND_QUEST);
+ assert.equal(restingQuest(s,s.squads[0]),NIGHT_QUEST);
+ assert.equal(start(s,WETLAND_QUEST).squads[0].run.quest,WETLAND_QUEST);
+});
+
+test('wetland observation causes no damage, weapon work or moss harvest rewards',()=>{
+ let s=initialPrologueState(1000);
+ for(const stage of prologueStages.slice(0,5))s=read(finish(start(s,stage.quest)),stage.quest);
+ const herbs=s.herbs,q=allQuests.find(q=>q.id===WETLAND_QUEST);
+ s=start(s,WETLAND_QUEST);let worked=false;const nodes=new Set();
+ while(s.squads[0].run){
+  const run=s.squads[0].run,frame=adventureFrame({squad:s.squads[0],now:s.updatedAt,ready:true,paused:false,startQuest:WETLAND_QUEST});
+  nodes.add(run.node);assert.equal(run.detour,null);
+  assert.equal(frame.background,q.background);assert.ok(existsSync(new URL('../public'+frame.background,import.meta.url)));
+  assert.equal(frame.target.kind,'gather');assert.match(frame.target.name,/木陰|葉|群落/);
+  assert.ok(Object.values(run.health).every(health=>health.hp===health.maxHp));
+  assert.ok(run.events.every(event=>event.kind!=='hurt'&&!/二連矢|斬撃|攻撃/.test(event.text)));
+  assert.ok(journeyBanter(s,s.squads[0],s.updatedAt).every(line=>['aria','leon'].includes(line.speaker)));
+  for(const member of frame.members){
+   if(member.hit){worked=true;assert.equal(member.hit.kind,'gather');}
+   assert.ok(![4,5,6,7].includes(Number(heroAnimation(member,frame,s.updatedAt).frame)));
+  }
+  s=settle(s,run.nextAt).state;
+ }
+ assert.equal(nodes.size,15);assert.ok(worked);assert.equal(s.herbs,herbs);
+ s=roundtrip(read(s,WETLAND_QUEST));const before=structuredClone(s);
+ assert.deepEqual(read(s,WETLAND_QUEST),before);
+ s=finish(start(s,WETLAND_QUEST));assert.equal(s.done[WETLAND_QUEST],2);
+ assert.equal(stageEndingPending(s),undefined);assert.equal(s.prologue,true);
+ assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);
+});
+
 test('tower gathering and night lamp work keep small battles, appropriate assets and noncombat poses',()=>{
  let s=initialPrologueState(1000);
  for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST])s=read(finish(start(s,id)),id);
@@ -107,7 +147,7 @@ test('tower gathering and night lamp work keep small battles, appropriate assets
 test('idle scenery follows the last actual departure across completion, replay, interruption and reload',()=>{
  let s=initialPrologueState(1000);
  assert.equal(restingQuest(s,s.squads[0]),TRADE_QUEST);
- for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,TRADE_QUEST]){
+ for(const id of [TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,TRADE_QUEST]){
   s=roundtrip(start(s,id));assert.equal(s.squads[0].lastQuest,id);
   s=roundtrip(read(finish(s),id));assert.equal(restingQuest(s,s.squads[0]),id);
  }

@@ -1,6 +1,6 @@
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
 import {chachaHero} from './original-characters.ts';
-import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
+import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
 import {availableStories,coupleCombo,storyProgress,together,type StoryProgress} from './stories.ts';
 import {type State as V2State} from './game-v2.ts';
@@ -19,6 +19,7 @@ export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q
  {id:NIGHT_QUEST,name:'苔灯と帰る夜道',kind:'護衛',region:'村々へ続く夜の交易路',desc:'塔で分けてもらった苔を小さな灯りにして、村々への分かれ道へ。普段のランタンも携え、足元を確かめながら帰ろう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'夜道に出てきたスライム',background:'/stages/moss-night-road.png',escortTarget:'苔灯で足元を照らす',escortAsset:'/items/moss-lamp.png',availability:'repeatable'},
  {id:'midnight-snack',name:'その耳はおやつじゃない',kind:'討伐',region:'かぼちゃ灯りの森',desc:'マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。',tier:1,need:48,seconds:180,gold:420,xp:140,herbs:15,ore:15,unlock:5,enemy:12,enemyName:'メリルのつまみ食い行進',background:'/forest.png'},
  {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/ruins.png'},
+ {id:WETLAND_QUEST,name:'森の苔を探して',kind:'採取',region:'木陰に水の残る森の湿地',desc:'約束した午後、持ち帰った苔を携えて森へ。アリアが見覚えのある湿った木陰を探し、少しだけ分けてもらって見比べよう。',tier:1,need:14,seconds:180,gold:100,xp:75,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/forest-wetland.png',gatherTarget:'湿地の草葉と苔',availability:'repeatable'},
 ] satisfies Quest[]).sort((a,b)=>a.unlock-b.unlock);
 export const recruitmentQuests:Quest[]=recruitments.map(r=>({...r.mission,id:'join-'+r.hero,companion:r.hero,unlock:r.unlock,seconds:600,gold:100*r.mission.tier,xp:100*r.mission.tier,herbs:0,ore:0,availability:'once'}));
 export const allQuests:Quest[]=[...quests,...recruitmentQuests];
@@ -61,6 +62,7 @@ function standardEncounter(q:Quest,node:number):Encounter{
  return 'battle';
 }
 export function encounter(q:Quest,node:number):Encounter{
+ if(q.id===WETLAND_QUEST)return 'gather';
  if(q.id===TOWN_QUEST)return 'escort';
  if(q.id===NIGHT_QUEST)return (['escort','battle','escort'] as const)[node%3];
  if(q.id===RETURN_QUEST)return (['escort','battle','battle'] as const)[node%3];
@@ -70,6 +72,7 @@ export function encounter(q:Quest,node:number):Encounter{
 function gatherTargetName(q:Quest){if(q.gatherTarget)return q.gatherTarget;if(q.id==='crystal')return '青晶石';if(q.id==='blossom')return '千年樹の花';return '月しずく草';}
 function enemyTargetName(q:Quest){if(q.enemyName)return q.enemyName;if(q.enemy===10)return '星喰い竜';if(q.enemy===9)return '霧狼';return 'スライム';}
 export function targetName(q:Quest,node:number){
+ if(q.id===WETLAND_QUEST)return ['湿った木陰を探す','苔の葉を見分ける','群落の周りを確かめる'][node%3];
  if(q.id===TOWN_QUEST)return ['倉庫で荷札を確かめる','商店へ荷物を運ぶ','品を渡して控えを受け取る'][node%3];
  const kind=encounter(q,node);if(kind==='gather')return gatherTargetName(q);if(kind==='escort')return q.escortTarget||'旅人を目的地へ';return enemyTargetName(q);
 }
@@ -145,11 +148,13 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function quietStageWork(q:Quest,kind:Encounter){return q.id===TOWN_QUEST||[TOWER_QUEST,NIGHT_QUEST].includes(q.id)&&kind!=='battle';}
+function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST].includes(q.id)&&kind!=='battle';}
 function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
 function stageWorkText(q:Quest,kind:Encounter,special:boolean){
- if(q.id===TOWER_QUEST&&kind==='gather')return special?'葉を見分けて丁寧に採る':'道端の薬草を採る';
- if(q.id===NIGHT_QUEST&&kind==='escort')return special?'灯りを寄せて道を確かめる':'苔灯で足元を照らす';
+ if(kind==='battle')return null;
+ if(q.id===WETLAND_QUEST)return special?'葉の形と湿り気を丁寧に確かめる':'草葉を分けて苔を探す';
+ if(q.id===TOWER_QUEST)return special?'葉を見分けて丁寧に採る':'道端の薬草を採る';
+ if(q.id===NIGHT_QUEST)return special?'灯りを寄せて道を確かめる':'苔灯で足元を照らす';
  return null;
 }
 function actorEventText(q:Quest,kind:Encounter,hero:string,special:boolean){

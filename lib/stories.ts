@@ -2,9 +2,10 @@ import type {State, Squad} from './game.ts';
 import {recruitments,met,prepared,rareProgress} from './recruitment.ts';
 import {recruitmentStories} from './recruitment-stories.ts';
 import {madHalloweenStories} from './mad-halloween-stories.ts';
-import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,isPrologueQuest} from './prologue.ts';
+import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,isPrologueQuest} from './prologue.ts';
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
+import {idleBanter} from './idle-banter.ts';
 
 export type StoryLine = {speaker?: string; text: string};
 export type Story = {id: string; title: string; place: string; lines: StoryLine[]; quest?: string; chapter: 'departure'|'return'|'camp'|'recruitment'|'encounter'; companion?:string; stage?:'meeting'|'progress'|'prepared'|'joined'; bond?: number; town?: number; requiresHeroes?:string[]; requiresQuests?:string[]};
@@ -146,8 +147,15 @@ function nightBanter(run:NonNullable<Squad['run']>):StoryLine[]{
  if(run.node<10)return [l('草が動いた。灯りはここへ置いて、少し離れよう。'),a('うん。通り道を確かめてからね。')];
  return [a('そろそろ分かれ道だね。苔灯、持つの替わろうか？'),l('ああ。包みは俺が持つから、両手を空けて。')];
 }
+function wetlandBanter(run:NonNullable<Squad['run']>):StoryLine[]{
+ if(run.phase==='rest')return [a('布、ここに敷くね。少し座ろう。'),l('ああ。入れ物は平らなところに置いておこう。')];
+ if(run.node<5)return [a('この先の木陰、薬草を採るときによく通るんだ。'),l('じゃあ、踏まないほうがいい場所も教えてくれ。')];
+ if(run.node<10)return [l('石の横に水が残ってるな。'),a('うん。根の脇も見てみよう。葉の下に隠れてることがあるから。')];
+ return [a('あの木の根、ちょっと見せて。草を分けるから。'),l('入れ物を出しておく。見つけても、まず生えてるところで比べよう。')];
+}
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ if(run.quest===WETLAND_QUEST)return wetlandBanter(run);
  if(run.quest===TOWER_QUEST)return towerBanter(run);
  if(run.quest===NIGHT_QUEST)return nightBanter(run);
  if(run.quest===RETURN_QUEST)return returnBanter(run);
@@ -193,7 +201,7 @@ function journeySituationBanter(run:NonNullable<Squad['run']>,level:number,varia
 }
 function coupleBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const run=sq.run,variant=Math.floor(Math.max(0,now-(run?.started||0))/18000)%2,level=affection(s);
- if(!run)return [a('準備できた？'),l('ああ。アリアを待ってた。')];
+ if(!run)return idleBanter(now);
  const situation=journeySituationBanter(run,level,variant,now);if(situation)return situation;
  if(['pilgrim','wolf','royal'].includes(run.quest))return level>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。')]:[a('霧で、先が見えないね。'),l('声の届くところにいてくれ。')];
  if(run.quest==='cart')return [a('帰りのパン、覚えてる？'),l('胡桃のやつだろ。忘れないよ。')];

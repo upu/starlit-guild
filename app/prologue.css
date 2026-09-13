@@ -4,6 +4,8 @@
 .handbook-menu>button{width:100%;min-height:52px;justify-content:flex-start;gap:12px;font-size:16px}
 .handbook-menu>button>span{flex:1;text-align:left}
 .phone-game .adventure-destination>.quest-control{position:relative;flex:0 0 auto;z-index:20}
+.phone-game .quest-control{display:flex;align-items:center;gap:8px}
+.phone-game .departure-button{min-height:44px;min-width:68px;padding:8px 16px;white-space:nowrap}
 .phone-game .quest-entry{width:60px;min-height:60px;padding:3px;background:transparent;border-color:transparent;border-radius:12px}
 .quest-entry img{display:block;width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 2px 3px #081d21aa)}
 .phone-game .quest-entry-guided{background:#d7bd7410;border-color:#e9c675;box-shadow:0 0 16px #d7bd7440}
