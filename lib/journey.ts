@@ -85,7 +85,7 @@ function recruitmentNotice(before:State,after:State):JourneyNotice|null{
  const preparedNow=recruitments.find(item=>prepared(after,item.hero)&&!prepared(before,item.hero));
  if(preparedNow)return {title:preparedNow.name+'の支度が整いました',description:'専用クエスト「'+preparedNow.mission.name+'」が開きました。'};
  const found=recruitments.find(item=>!prepared(after,item.hero)&&rareProgress(after,item).found>rareProgress(before,item).found);
- return found?{title:found.rare.name+'を見つけました',description:found.name+'との冒険の支度に使えます。「持ちもの」で集めた数を確認できます。'}:null;
+ return found?{title:found.rare.name+'を見つけました',description:found.name+'との冒険の支度に使えます。'}:null;
 }
 function progressionNotice(before:State,after:State):JourneyNotice|null{
  if(before.clears===0&&after.clears>0)return {title:'はじめての依頼、達成！',description:'集めたお金と木材で酒場を建てましょう。自動周回をオンにすると、冒険が続きます。'};
