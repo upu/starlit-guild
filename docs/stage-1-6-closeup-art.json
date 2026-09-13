@@ -1,11 +1,15 @@
 {
   "date": "2026-09-13",
   "tool": "built-in image_gen",
-  "path": "public/stories/forest-moss-closeup.png",
+  "selection": "C改（ユーザー採用）",
+  "path": "public/stories/forest-moss-aria-oil.png",
   "width": 1536,
   "height": 1024,
-  "reference": "a9810f4:public/stories/forest-moss-comparison.png",
-  "prompt": "Recompose this event CG radically for a Japanese fantasy RPG, 1536x1024. The reference is the OLD COMPOSITION to replace; keep only Aria and Leon character identity and painterly anime technique. NEW CAMERA: extremely close overhead / near top-down macro study, peering down BETWEEN two adventurers bent very low over TWO shallow wooden dishes of dull forest moss on a flat stone. The moss and the TWO dishes dominate the central 60 percent, delicate feathery small paired leaf branches clearly discernible and comparable. Camera sees just cropped portions of their heads at opposite upper-left and lower-right edges: Aria blonde strands, green hood and pointed ear entering from upper-left; Leon tousled brown hair and red scarf at lower-right. Their faces are mostly out of frame, at most a sliver of side eye/profile, NOT two complete portrait faces looking toward camera. One small wooden spatula in Aria's brown gloved hand points beside a tiny forked leaf tip in one dish; Leon's brown gloved fingertips steady the rim of the other separate dish. Convey two people bringing their eyes very close to carefully compare tiny moss leaves. Short depth of field, tactile miniature leaf detail, wood grain, moist dark soil, dappled cool forest daylight. Moss is ordinary dark green and NOT glowing. Background only a close flat stone and a little fern, no expansive scenery. This must NOT look like the repeated frontal waist-up duo portraits of the reference. Strong asymmetrical diagonal framing, cropping intentional; leave NO full torsos or full faces. No text, labels, hearts, borders, third person, tower, magic light, extra dishes, or watermark. Preserve the two bowls separate and natural gloved hands.",
-  "reason": "正面に二人の顔を並べる構図を繰り返さず、苔を近くでよく見比べる様子へ変更するユーザー指示。",
-  "review": "二人の頭部は画面端に切れ、二つの器と苔、木べら、手元が主体。非発光、文字なし、別々の器を確認。"
+  "sha256": "50f4235da0f9bd53a8e1da912d46e83125dbe9d54b9c486aaf1794a0deb85e8f",
+  "reference": "work/illustration-options/c-oil.png（油彩調の比較案C、配信対象外）",
+  "characterReference": "public/stories/tower-moss-discovery.png",
+  "prompt": "Use case: identity-preserve. Edit target: the supplied oil-painted Aria illustration. Create one refined variant, landscape 1536x1024.\nPrimary requested change: Aria's shoulders look too broad. Make her shoulder span visibly narrower, about 25 percent narrower, giving her a slender delicate natural adult frame. Bring shoulder joints inward and slope shoulders softly down; bring upper arms and elbows inward accordingly. Reduce the cape's horizontal spread so its silhouette does not recreate broad shoulders. Maintain anatomically coherent hands and arms. Do not merely squeeze the whole picture: keep face dimensions unchanged.\nInvariants: Preserve this same recognizable blonde green-eyed adult elf woman, her face and attentive inquisitive expression, feathered green/gold hood, cream tunic, leather gloves, her frontal chest-up framing, two distinct small wooden dishes held in separate hands at chin height, both moss samples clearly visible and compared side by side. Keep her face the main focal point. Keep the same opaque oil painting medium, visible rich brushstrokes, warm light on face/hair and cool green forest/stone surroundings. Preserve image quality and depth. No other characters, no text, no watermark.",
+  "source": "exec-81afd842-ce12-4442-9822-b9535509b04e.png",
+  "reason": "アリアの正面寄りの胸上で二つの苔を持ち上げて比較する。油彩調Cから肩幅とマントの広がりを抑えたC改をユーザーが採用。",
+  "review": "顔と表情が主役。金髪・緑の瞳・尖った耳・緑と金のフードを継承し、両手の器は顎の高さ。肩幅とマントを狭めた油彩調。文字なし。表示は入れ物を持ち上げる0起点5行目から。"
 }
