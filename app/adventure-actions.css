@@ -1,6 +1,7 @@
 .phone-game .phone-navigation{height:var(--game-nav-height)!important}
 
 .phone-game .adventure-actions{
+ box-sizing:border-box;
  height:48px;
  min-height:48px;
  padding:2px 12px;
@@ -9,8 +10,10 @@
 
 .phone-game .adventure-actions>button,
 .phone-game .adventure-actions .shop-entry{
+ box-sizing:border-box;
  height:44px;
  min-height:44px;
+ max-height:44px;
  padding:0 8px;
 }
 
@@ -25,6 +28,13 @@
  font-size:11px;
  line-height:12px;
  box-shadow:none;
+}
+
+.phone-game .adventure-actions .quest-entry{
+ height:44px;
+ min-height:44px;
+ max-height:44px;
+ align-self:center;
 }
 
 .adventure-actions .quest-entry img,
