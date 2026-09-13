@@ -8,6 +8,7 @@ import "./navigation.css"; // Adventure, party, and memory navigation.
 import "./cinematic.css";
 import "./phaser.css";
 import "./prologue.css";
+import "./equipment.css";
 
 export const viewport: Viewport = {width:'device-width',initialScale:1,themeColor:'#102a26'};
 

@@ -8,6 +8,7 @@ import * as game from '../lib/game.ts';
 import * as story from '../lib/stories.ts';
 import * as prologue from '../lib/prologue.ts';
 import * as journey from '../lib/journey.ts';
+import * as equipment from '../lib/equipment.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
 
 const pickerExports={};
@@ -19,7 +20,7 @@ function harness(initialState){
  const api={s:initialState,clock:initialState.updatedAt,ready:true,otherTab:false,failAction:null,profile:{id:'flow-test'},dispatch(action,onSuccess){if(api.failAction===action.type)return false;api.s=game.act(api.s,action,api.clock);onSuccess?.(api.s);return true;}};
  const modules={
   react:{useState(initial){const i=cursor++;if(!(i in slots))slots[i]=typeof initial==='function'?initial():initial;return [slots[i],value=>{slots[i]=typeof value==='function'?value(slots[i]):value;}];}},
-  'react/jsx-runtime':jsxRuntime,'@/lib/game':game,'@/lib/stories':story,'@/lib/prologue':prologue,'@/lib/journey':journey,
+  'react/jsx-runtime':jsxRuntime,'@/lib/game':game,'@/lib/stories':story,'@/lib/prologue':prologue,'@/lib/journey':journey,'@/lib/equipment':equipment,
   './install-guide':{useInstallPrompt:()=>({})},'./use-game-music':{useGameMusic:()=>({})},'./use-journey-hints':{useJourneyHints:()=>({})},
  };
  vm.runInNewContext(code,{exports,require:id=>modules[id]||new Proxy({},{get:(_,name)=>String(name)})});
@@ -91,14 +92,13 @@ test('picker controls respect inactive tabs and a failed return leaves the picke
  assert.deepEqual(h.api.s,s);assert.equal(h.model.sheet,'quests');assert.equal(h.model.returnIntent,null);
 });
 
-test('fresh profiles choose first; selection respects the inactive-tab gate and is not saved as a departure',()=>{
- const s=game.initialPrologueState(1000),h=harness(s);assert.equal(h.departButton(),undefined);
- h.api.otherTab=true;h.render();h.model.selectQuest();h.render();assert.equal(h.departButton(),undefined);
- h.api.otherTab=false;h.render();h.model.selectQuest();h.render();assert.ok(h.departButton());
- assert.deepEqual(h.api.s,s);assert.equal(harness(h.api.s).departButton(),undefined);
+test('fresh profiles can depart immediately without opening a menu or changing their save',()=>{
+ const s=game.initialPrologueState(1000),h=harness(s);assert.ok(h.departButton());assert.deepEqual(h.api.s,s);
  h.api.otherTab=true;h.render();assert.equal(h.departButton().props.disabled,true);
+ h.api.otherTab=false;h.render();h.departButton().props.onClick();h.render();
+ assert.equal(h.model.sheet,'story');assert.equal(h.model.reading.id,prologue.TRADE_QUEST+'-departure');assert.deepEqual(h.api.s,s);
+ h.model.finishStory();h.model.closeStory();h.render();assert.equal(h.model.run.quest,prologue.TRADE_QUEST);
 });
-
 test('idle dialogue has six complete, distinct exchanges and never changes the save',()=>{
  const s=game.initialPrologueState(1000),before=structuredClone(s),exchanges=[];
  for(let i=0;i<6;i++){
