@@ -1,7 +1,7 @@
 import type {Quest,Run,State} from './game.ts';
 import {level} from './game-v1.ts';
 import {equippedItems} from './equipment.ts';
-import {PICNIC_QUEST,MOON_HERB_QUEST} from './chapter-two.ts';
+import {PICNIC_QUEST,MOON_HERB_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST,GOLEM_QUEST} from './chapter-two.ts';
 import {prologueStages} from './prologue.ts';
 
 export type Enemy={id:string;hp:number;maxHp:number;resistance:number;attack:number;period:number;nextAt:number};
@@ -11,7 +11,8 @@ const firstChapterRanks=[0,1,2,6,10,12,17,21,25];
 // Difficulty belongs to a quest, never its repeat count or the save's total clears.
 export function combatRank(q:Quest){
  if(q.id===PICNIC_QUEST)return 0;
- if(q.id===MOON_HERB_QUEST)return 25;
+ if([MOON_HERB_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST].includes(q.id))return 25;
+ if(q.id===GOLEM_QUEST)return 27;
  const stage=prologueStages.findIndex(stage=>stage.quest===q.id);
  return stage>=0?firstChapterRanks[stage]:Math.max(4,4+Math.round((q.need-30)/5));
 }

@@ -15,11 +15,11 @@ export function canBuild(s:State){return s.town<2&&s.clears>=buildingCost(s.town
 
 function prologueGoal(s:State,sq:Squad):JourneyGoal{
  if(sq.run?.phase==='rest')return {title:'手前の道で力をつけよう',detail:'苦戦するときは、読み終えたクエストの自動周回でレベル上げ。お店の武器・防具も助けになります。タップで攻撃や回復を手伝うこともできます。',action:'クエストを開く',destination:'quests'};
- if(sq.run)return {title:'タップでふたりを手助け',detail:'道や荷物・魔物をタップすると手助けできます。仲間をタップすると回復。見守っていても進みます。',action:'冒険を見守る',destination:'adventure'};
- if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、ふたりの話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
+ if(sq.run)return {title:'タップで仲間を手助け',detail:'道や荷物・魔物をタップすると手助けできます。仲間をタップすると回復。見守っていても進みます。',action:'冒険を見守る',destination:'adventure'};
+ if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
  if(techniquesUnlocked(s)&&!s.techniques?.learned.length&&!s.done[MOON_HERB_QUEST])return {hintId:'techniques-unlocked',title:'技の習得・セットができるようになりました',detail:'キャラクター画面で、必要レベルとコインを確かめて技を習得できます。セットすると自動で働きます。習得せず次のクエストへ進むこともできます。',action:'技を見に行く',destination:'companions',questId:nextStage(s).quest};
  const stage=nextStage(s),complete=!!s.done[stage.quest];
- return {title:complete?'第二部 2-2までの冒険を終えました':stage.label+' · '+stage.title,detail:complete?'続きの冒険は準備中です。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
+ return {title:complete?'第二部 2-6までの冒険を終えました':stage.label+' · '+stage.title,detail:complete?'続きの冒険は準備中です。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
 }
 function firstGoal(sq:Squad):JourneyGoal{
  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};
@@ -110,6 +110,7 @@ function rewardNotice(before:State,after:State):JourneyNotice|null{
  return {title:after.clears>before.clears?'依頼達成！':'区間報酬を確保',description:`+${String(after.gold-before.gold)} G · 薬草 +${String(after.herbs-before.herbs)} · 鉱石 +${String(after.ore-before.ore)} · 木材 +${String(after.wood-before.wood)}`};
 }
 export function journeyNotice(before:State,after:State):JourneyNotice|null{
+ if(!before.owned.includes('mira')&&after.owned.includes('mira')&&after.story?.read.includes('medicine-packing-return'))return {title:'ミラが仲間になりました',description:'次の山道から三人で冒険します。ミラは傷ついた仲間を自動で回復します。'};
  const technique=techniqueNotice(before,after);
  if(inPrologue(after))return prologueNotice(before,after)??technique;
  if(technique)return technique;

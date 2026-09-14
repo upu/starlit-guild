@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {initialPrologueState,initialState,act,settle,availableQuests,allQuests,encounter,targetName} from '../lib/game.ts';
 import {prologueStages,stageEndingPending} from '../lib/prologue.ts';
-import {PICNIC_QUEST,MOON_HERB_QUEST} from '../lib/chapter-two.ts';
+import {PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST,GOLEM_QUEST} from '../lib/chapter-two.ts';
 import {chapterTwoStories} from '../lib/chapter-two-stories.ts';
 import {techniquesUnlocked,equippedTechnique,knowsTechnique,techniqueMultiplier,techniqueDamage} from '../lib/techniques.ts';
 import {parseBundle} from '../lib/save-format.ts';
@@ -22,6 +22,52 @@ const start=(s,id)=>act(s,{type:'start',id,readDeparture:true,value:true},s.upda
 const finish=s=>settle(s,s.updatedAt+13*3600000).state;
 const read=(s,id)=>act(s,{type:'readStory',id:id+'-return'},s.updatedAt);
 function unlocked(){return read(finish(start(firstChapter(),PICNIC_QUEST)),PICNIC_QUEST);}
+function deliveryReady(){return read(finish(start(unlocked(),MOON_HERB_QUEST)),MOON_HERB_QUEST);}
+
+test('2-3 joins Mira after rest once; new party, old progression and replay survive saves',()=>{
+ const before=deliveryReady(),packed=roundtrip(finish(start(before,DELIVERY_PREP_QUEST)));
+ assert.deepEqual(packed.owned,['aria','leon']);assert.throws(()=>start(packed,MOUNTAIN_QUEST));
+ const joined=roundtrip(read(packed,DELIVERY_PREP_QUEST));assert.deepEqual(joined.owned,['aria','leon','mira']);
+ assert.deepEqual(joined.squads[0].members,joined.owned);assert.equal(joined.gold,packed.gold);
+ assert.equal(joined.xp.mira,Math.min(joined.xp.aria,joined.xp.leon));assert.deepEqual(read(joined,DELIVERY_PREP_QUEST),joined);
+ const old=structuredClone(packed);delete old.prologue;old.owned.push('mira');old.xp.mira=123456;
+ const reread=roundtrip(read(old,DELIVERY_PREP_QUEST));assert.equal(reread.xp.mira,123456);assert.deepEqual(reread.squads,old.squads);
+ assert.match(journeyNotice(packed,joined).title,/ミラが仲間/);
+ const early=roundtrip(start(joined,PICNIC_QUEST));assert.deepEqual(early.squads[0].members,['aria','leon']);
+ const stopped=act(early,{type:'stop'},early.updatedAt);assert.deepEqual(start(stopped,MOUNTAIN_QUEST).squads[0].members,['aria','leon','mira']);
+ assert.deepEqual(read(stopped,DELIVERY_PREP_QUEST),stopped,'rereading a memory must not change the selected party');
+});
+
+test('2-3 to 2-6 stop at each first ending, persist offline, heal as three and keep theft narrative',()=>{
+ let s=deliveryReady();
+ for(const id of [DELIVERY_PREP_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST,GOLEM_QUEST]){
+  const away=roundtrip(start(s,id));
+  assert.equal(away.squads[0].members.length,id===DELIVERY_PREP_QUEST?2:3);
+  let live=structuredClone(away),healed=false;
+  for(let count=0;live.squads[0].run&&count<10000;count++){
+   live=settle(live,live.squads[0].run.nextAt).state;
+   healed||=!!live.squads[0].run?.events.some(e=>e.kind==='heal'&&e.hero==='mira'&&e.amount>0);
+  }
+  assert.equal(live.squads[0].run,null);if(id===MOUNTAIN_QUEST)assert.ok(healed);
+  const offline=roundtrip(finish(away));assert.equal(offline.done[id],1);assert.equal(offline.squads[0].run,null);
+  for(const key of ['gold','herbs','ore','owned','xp','done','story'])assert.deepEqual(live[key],offline[key]);
+  const inventory=offline.inventory,herbs=offline.herbs;s=roundtrip(read(offline,id));assert.deepEqual(s.inventory,inventory);assert.equal(s.herbs,herbs);
+ }
+ assert.match(nextGoal(s).title,/2-6まで/);assert.match(nextGoal(s).detail,/準備中/);
+ const repeated=settle(start(s,GOLEM_QUEST),s.updatedAt+3600000).state;assert.ok(repeated.done[GOLEM_QUEST]>1);
+ assert.deepEqual(repeated.owned,s.owned);assert.deepEqual(repeated.story,s.story);
+});
+
+test('delivery stages use distinct work, enemy art and reveal the hidden voice only as voice',()=>{
+ const prep=allQuests.find(q=>q.id===DELIVERY_PREP_QUEST);assert.ok(Array.from({length:15},(_,i)=>encounter(prep,i)).every(k=>k==='escort'));
+ let s=read(finish(start(deliveryReady(),DELIVERY_PREP_QUEST)),DELIVERY_PREP_QUEST);
+ s=read(finish(start(s,MOUNTAIN_QUEST)),MOUNTAIN_QUEST);s=read(finish(start(s,SIGNPOST_QUEST)),SIGNPOST_QUEST);
+ const away=start(s,GOLEM_QUEST),frame=adventureFrame({squad:away.squads[0],startQuest:GOLEM_QUEST,now:away.updatedAt,ready:true,paused:false});
+ assert.equal(frame.target.asset,'/enemies/cargo-golem.png');assert.ok(frame.target.scale>1.08);assert.ok(existsSync('public'+frame.target.asset));
+ const st=chapterTwoStories.find(st=>st.id===GOLEM_QUEST+'-departure');const index=st.lines.findIndex(l=>l.text.includes('ゴーレムが姿を現した'));
+ assert.equal(storyArtAt(st.id,index-1),undefined);assert.ok(existsSync('public'+storyArtAt(st.id,index).src));
+ for(const st of chapterTwoStories.filter(st=>[SIGNPOST_QUEST,GOLEM_QUEST].includes(st.quest)))assert.ok(st.lines.every(l=>l.speaker!=='pumpety'));
+});
 function roundtrip(state){const id=crypto.randomUUID();return parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:'第二章確認',test:true,state}],serial:1,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;}
 
 test('old first-chapter save opens 2-1 without replacement; endings gate 2-2 and stop offline',()=>{
@@ -34,8 +80,8 @@ test('old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
  assert.match(journeyNotice(arrived,opened).title,/技の習得/);assert.equal(nextGoal(opened).questId,MOON_HERB_QUEST);
  const end=roundtrip(finish(roundtrip(start(opened,MOON_HERB_QUEST))));assert.equal(end.done[MOON_HERB_QUEST],1);assert.equal(end.squads[0].run,null);
  assert.deepEqual(end.owned,['aria','leon']);assert.equal(end.town,0);assert.equal(end.prologue,true);assert.equal(end.techniques,undefined);
- const done=read(end,MOON_HERB_QUEST);assert.match(nextGoal(done).title,/2-2まで/);assert.match(nextGoal(done).detail,/準備中/);
- assert.deepEqual(availableQuests(done).slice(-2).map(q=>q.id),[PICNIC_QUEST,MOON_HERB_QUEST]);
+ const done=read(end,MOON_HERB_QUEST);assert.equal(nextGoal(done).questId,DELIVERY_PREP_QUEST);
+ assert.deepEqual(availableQuests(done).slice(-3).map(q=>q.id),[PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST]);
  assert.equal(availableStories(done).filter(s=>s.quest===MOON_HERB_QUEST).length,2);
  assert.throws(()=>act(done,{type:'prepareRecruitment',id:'mira'},done.updatedAt));
  const replay=settle(start(done,PICNIC_QUEST),done.updatedAt+600000).state;assert.ok(replay.done[PICNIC_QUEST]>1);assert.ok(replay.squads[0].run);

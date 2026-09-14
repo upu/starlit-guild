@@ -1,3 +1,4 @@
+import {deliveryStories} from './chapter-two-delivery-stories.ts';
 import type {Story,StoryLine} from './stories.ts';
 import {PICNIC_QUEST,MOON_HERB_QUEST} from './chapter-two.ts';
 const a=(text:string):StoryLine=>({speaker:'aria',text});
@@ -5,6 +6,7 @@ const l=(text:string):StoryLine=>({speaker:'leon',text});
 const m=(text:string):StoryLine=>({speaker:'mira',text});
 const n=(text:string):StoryLine=>({text});
 export const chapterTwoStories:Story[]=[
+ ...deliveryStories,
  {id:PICNIC_QUEST+'-departure',quest:PICNIC_QUEST,title:'約束の休日',place:'第二部 2-1 · 昼の坂道',chapter:'departure',lines:[
   n('仕事のない日、アリアとレオンは坂道の入口で落ち合った。レオンの腕には、パン屋の包みが二つ載っている。'),
   a('二人で食べるんだよね？　それ、もう一つあるけど'),l('念のためだ。'),a('お昼のパンにも？'),l('坂を上ったら腹が減るだろ。'),

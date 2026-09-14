@@ -1,0 +1,51 @@
+{
+  "tool": "built-in image_gen",
+  "records": [
+    {
+      "asset": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-e4a60112-811e-4a7c-b7c5-1560fe644ab4.png",
+      "role": "FINAL adopted story still: dark pumpkin openings",
+      "prompt": "Use case: precise-object-edit. Image 1 is edit target, image 2 is Pumpety identity/costume reference ONLY, ignore all text in sheet. Keep composition, sunlit forest mountain road, painterly oil style, Halloween ornaments, small wooden puppet, huge practical cargo golem, matching bowed begging poses and strings. Make ONLY these corrections:\n1. Pumpety, pumpkin-headed controller behind dolls, is noticeably more diminutive and shorter: scale her whole figure to approximately 65 percent of its current height with feet on same ground spot. Compact childlike dwarf-blooded proportions, not adult long legs. Keep black bodice, green sleeves, yellow skirt, boots and controller pose.\n2. She continues WEARING enclosing carved pumpkin helmet; faint tiny patches of real skin and a partial teal eye can just be glimpsed deep through carved openings. Extremely subtle, mostly dark recesses, helmet is never removed and her whole face is NEVER exposed. No exposed hair.\n3. Rebuild BOTH golem hands for absolutely unambiguous FIVE DIGITS EACH: exactly ONE thumb on inner side plus FOUR fingers on the forward edge. Simplify chunky carved stone articulation to avoid knuckles resembling extra fingers. Spread all four forward fingers slightly apart, clearly separated and countable, with one discrete fingertip each. Palms face upwards in begging gesture. Ten total digits across two hands, never six per hand. Keep full large hands visible, no overlap between fingers and no extra stone lumps resembling fingers. Four forward fingers should have subtly graduated lengths, thumb angled away. Keep all other features unchanged.\nLandscape 1536x1024. No text or UI.",
+      "references": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-ee7c1807-8fb7-44e5-b2e9-3d6bcfefb50d.png",
+        "C:/Users/spitz/.codex/worktrees/e85a/STARLIT-GUILD/docs/characters/pumpety-reference-sheet.webp"
+      ]
+    },
+    {
+      "asset": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-b45a5798-1845-40ec-b277-98c9492ece05.png",
+      "role": "discarded eye-glimpse variant: user requested no visible face",
+      "prompt": "Precise localized image edit. Target ONLY the REAR MIDDLE pumpkin-headed controller located around pixel x=612,y=543 in this 1536x1024 image. Her pumpkin helmet occupies roughly x=579..650,y=510..578. She wears yellow skirt, stands far behind, holds raised puppet strings. Add a tiny real teal human eye and warm skin sliver recessed THROUGH the RIGHT triangular eye hole OF THIS REAR MIDDLE PUMPKIN HELMET. Make the little human eye clearly discernible, while helmet stays worn and hides rest of face. Match painterly style.\nDO NOT CHANGE THE FOREGROUND SMALL WOODEN PUPPET AT x=437,y=548. Its round black wooden doll eyes MUST stay black circles, never give it human eyes or skin! This foreground wooden puppet is NOT Pumpety. Only rear-middle round orange pumpkin helmet is edit area. Keep rear controller's current small size, costume and body unchanged. Keep all other image content unchanged including golem's correct hands with one thumb plus four fingers EACH, scenery, dolls, scale, strings and Halloween decorations. Landscape 1536x1024.",
+      "references": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-e4a60112-811e-4a7c-b7c5-1560fe644ab4.png"
+      ]
+    },
+    {
+      "asset": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-0a983dde-47aa-4817-9064-1d76333a6096.png",
+      "role": "FINAL golem cutout",
+      "prompt": "Use case: background-extraction. Extract ONLY huge Halloween cargo golem from this corrected story illustration as a full-body transparent combat cutout, portrait 1024x1536. Preserve its exact corrected hand design: EACH hand has ONE side thumb and FOUR distinctly separated long forward fingers. Exactly FIVE digits per hand, TEN total. Copy the corrected spread fingers from reference, keep palm-up begging pose, do not curl or overlap fingers, do not add knuckles resembling extra fingertips. Hands are important and should be large and very legible. Preserve giant timber/stone cargo-carrying construction, wooden face, moss, crates/barrel, green chest bow, pumpkin medallion and charms, green/yellow bat cloth. Reconstruct cropped top of cargo if needed to fit all topmost rack plus feet inside canvas with margins. Painterly oil fantasy RPG style unchanged. Remove Pumpety, small puppet, strings, scenery, floor and ground shadows. Genuinely transparent alpha background, no backdrop or checkerboard. One isolated golem only. No text, no UI.",
+      "references": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-e4a60112-811e-4a7c-b7c5-1560fe644ab4.png"
+      ]
+    },
+    {
+      "asset": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-f61a4303-06a2-4097-96c5-296cf6866585.png",
+      "role": "FINAL puppet cutout unchanged",
+      "prompt": "Use case: background-extraction. From the supplied revised story illustration extract ONLY the small wooden Halloween puppet in the left foreground as one full-body independent combat sprite, portrait 1024x1536. Preserve exact design: wooden carved orange-tinted face with round black eyes and small jack-o-lantern grin, sandy carved hair, green pointed witch/theatrical hat with yellow trim and small pumpkin charm, cream ruff, black/forest-green/golden-yellow patchwork costume, green cape, orange pumpkin ornaments, wooden ball joints, brown boots with green bows. Preserve same slight bow and both empty open palms extended forward. Maintain expressive painterly oil brushwork and warm surface light. Remove giant golem and controller completely, all scenery, strings, ground and ground shadow. Genuinely transparent alpha background, no painted backdrop. Center entire puppet with margins; hat tip and both boots fully within image. No other figure, no text, no UI.",
+      "references": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-ee7c1807-8fb7-44e5-b2e9-3d6bcfefb50d.png"
+      ]
+    }
+  ],
+  "discarded": [
+    {
+      "asset": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-33e3275e-d767-40d8-9a61-67634800fbca.png",
+      "reason": "Incorrectly modified foreground puppet eyes, rejected"
+    }
+  ],
+  "finalSelection": {
+    "still": "public/stories/begging-dolls.png",
+    "source": "exec-e4a60112-811e-4a7c-b7c5-1560fe644ab4.png",
+    "golem": "public/enemies/cargo-golem.png",
+    "puppet": "public/enemies/mountain-puppet.png",
+    "note": "User withdrew eye glimpse. Adopt the earlier small-controller and corrected-hands image with dark pumpkin holes. Full image visually verified; no face or eye visible."
+  }
+}

@@ -3,6 +3,7 @@ import {originalArt} from './original-characters.ts';
 import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
 import {isPrologueQuest,RESTORATION_QUEST} from './prologue.ts';
+import {chapterTwoEnemyAsset,GOLEM_QUEST} from './chapter-two.ts';
 
 export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean;restorationComplete?:boolean};
 export type Point={x:number;y:number};
@@ -39,10 +40,16 @@ function frameDiscovery(input:AdventureInput,run:ActiveRun|null,now:number){
  return detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
 }
 function frameCutin(run:ActiveRun|null,now:number){return run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;}
+function targetAsset(quest:(typeof allQuests)[number],run:ActiveRun,kind:ReturnType<typeof encounter>|null,sprite:number){
+ const enemyArt=kind==='battle'?chapterTwoEnemyAsset(quest.id,run.node):null;
+ if(enemyArt)return enemyArt;
+ if(kind==='escort')return quest.escortAsset||(isPrologueQuest(quest.id)?'/items/chest.png':spriteAsset(sprite));
+ return spriteAsset(sprite);
+}
 function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  if(!run)return null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- return {id:'legacy-target',x:.80,y:.61,scale:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:kind==='escort'&&quest.escortAsset?quest.escortAsset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+ return {id:'legacy-target',x:.80,y:.61,scale:quest.id===GOLEM_QUEST&&run.node%3!==1?1.6:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:targetAsset(quest,run,kind,targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
 }
 function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  const base=frameTarget(quest,run,kind);if(!base)return [];
@@ -50,7 +57,7 @@ function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:R
  const positions=enemies.length===2?[{x:.77,y:.49},{x:.82,y:.76}]:[{x:.73,y:.43},{x:.86,y:.63},{x:.72,y:.83}];
  return enemies.map((enemy,index)=>{
   const multiple=enemies.length>1,name=multiple?(quest.enemy===9?'霧狼':'スライム')+' '+String.fromCharCode(65+index):base.name;
-  return {...base,...(multiple?positions[index]:{}),id:enemy.id,name,scale:multiple?.65:1.08,hp:enemy.hp,maxHp:enemy.maxHp,down:enemy.hp<=0,value:clamp(enemy.hp/enemy.maxHp)};
+  return {...base,...(multiple?positions[index]:{}),id:enemy.id,name,scale:multiple?.65:base.scale,hp:enemy.hp,maxHp:enemy.maxHp,down:enemy.hp<=0,value:clamp(enemy.hp/enemy.maxHp)};
  });
 }
 

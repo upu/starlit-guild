@@ -1,3 +1,4 @@
+import * as chapterTwo from '../lib/chapter-two.ts';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -12,7 +13,7 @@ import * as equipment from '../lib/equipment.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
 
 const pickerExports={};
-vm.runInNewContext(ts.transpileModule(readFileSync(new URL('../app/quest-picker.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText,{exports:pickerExports,require:id=>({'react/jsx-runtime':jsxRuntime,'@/lib/game':game,'@/lib/prologue':prologue,'@/lib/original-characters':{originalCharacters:[]},'@/lib/scenery':{questScenery:()=>''}}[id]||new Proxy({},{get:(_,name)=>String(name)}))});
+vm.runInNewContext(ts.transpileModule(readFileSync(new URL('../app/quest-picker.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText,{exports:pickerExports,require:id=>({'react/jsx-runtime':jsxRuntime,'@/lib/chapter-two':chapterTwo,'@/lib/game':game,'@/lib/prologue':prologue,'@/lib/original-characters':{originalCharacters:[]},'@/lib/scenery':{questScenery:()=>''}}[id]||new Proxy({},{get:(_,name)=>String(name)}))});
 const source=readFileSync(new URL('../app/phone-game.tsx',import.meta.url),'utf8')+'\nexport {AdventureDestination,collectionSheet};';
 const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
 function harness(initialState){

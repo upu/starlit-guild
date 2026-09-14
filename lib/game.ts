@@ -3,7 +3,7 @@ import {chachaHero} from './original-characters.ts';
 import {equipmentBonus,buyEquipment,changeEquipment,type Inventory,type EquipmentSlot} from './equipment.ts';
 import {createEnemies,damageEnemy,penetration,reducedDamage,syncEnemyTotals,type Enemy} from './combat.ts';
 import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
-import {chapterTwoQuests,chapterTwoWork,PICNIC_QUEST,MOON_HERB_QUEST} from './chapter-two.ts';
+import {chapterTwoQuests,chapterTwoWork,PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,trioQuest} from './chapter-two.ts';
 import {learnTechnique,setTechnique,techniqueMultiplier,techniqueText,techniqueDamage,techniqueHerbs,equippedTechnique,type Techniques,type TechniqueSlot} from './techniques.ts';
 import {waterwayWork} from './waterway-work.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
@@ -188,12 +188,14 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST].includes(q.id)&&kind!=='battle';}
+function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST,DELIVERY_PREP_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST,SIGNPOST_QUEST].includes(q.id)&&kind!=='battle';}
 function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
 function stageWorkText(q:Quest,kind:Encounter,special:boolean){
  if(kind==='battle')return null;
  if([RESTORATION_QUEST,MOSS_QUEST].includes(q.id))return kind==='gather'?'手の届く範囲を丁寧に取り除く':'声を掛け合って作業を進める';
  const texts:Partial<Record<string,[string,string]>>={
+  [DELIVERY_PREP_QUEST]:['瓶と布を確かめて荷造り','荷札と包みを照らし合わせる'],
+  [SIGNPOST_QUEST]:['踏み跡と道筋を確かめる','道標を元の道へ戻す'],
   [MOON_HERB_QUEST]:['葉の裏を見比べて採る','採った場所ごとに包みを分ける'],
   [WATERWAY_QUEST]:['草を分けて水路の道筋を確かめる','地図と苔の続く先を照らし合わせる'],
   [WETLAND_QUEST]:['草葉を分けて苔を探す','葉の形と湿り気を丁寧に確かめる'],
@@ -319,9 +321,17 @@ function startQuest(s:State,sq:Squad,a:Action){
 function recordDeparture(s:State,sq:Squad,q:Quest){s.story??=storyProgress(s);if(!q.companion&&together(sq.members)&&!s.story.departed.includes(q.id))s.story.departed.push(q.id);}
 function readDepartureStory(s:State,q:Quest){const story=availableStories(s).find(item=>item.quest===q.id&&item.chapter==='departure');if(story&&!s.story?.read.includes(story.id))s.story?.read.push(story.id);}
 function startAction(s:State,sq:Squad,a:Action,now:number){
- const q=startQuest(s,sq,a);recordDeparture(s,sq,q);if(typeof a.value==='boolean')sq.repeat=a.value;sq.run=makeRun(s,sq,q,now);sq.lastQuest=q.id;if(a.readDeparture)readDepartureStory(s,q);addLog(s,`${squadName(sq)}が「${q.name}」に出発。`,now);
+ const q=startQuest(s,sq,a);if(inPrologue(s))sq.members=trioQuest(q.id)?['aria','leon','mira']:['aria','leon'];recordDeparture(s,sq,q);if(typeof a.value==='boolean')sq.repeat=a.value;sq.run=makeRun(s,sq,q,now);sq.lastQuest=q.id;if(a.readDeparture)readDepartureStory(s,q);addLog(s,`${squadName(sq)}が「${q.name}」に出発。`,now);
 }
-function readStoryAction(s:State,_sq:Squad,a:Action){const id=a.id;if(!id||!availableStories(s).some(story=>story.id===id))throw Error('この思い出は、まだ開かれていません。');s.story??=storyProgress(s);if(!s.story.read.includes(id))s.story.read.push(id);}
+function readStoryAction(s:State,_sq:Squad,a:Action){const id=a.id;if(!id||!availableStories(s).some(story=>story.id===id))throw Error('この思い出は、まだ開かれていません。');if(id===DELIVERY_PREP_QUEST+'-return'&&s.squads.some(p=>p.run?.quest==='join-mira'))throw Error('ミラとの専用クエストから帰還してから、この物語を読み終えましょう。');s.story??=storyProgress(s);if(s.story.read.includes(id))return;s.story.read.push(id);
+ if(id===DELIVERY_PREP_QUEST+'-return')joinStoryMira(s);
+}
+function joinStoryMira(s:State){
+ if(!s.owned.includes('mira')){s.owned.push('mira');if(!Object.hasOwn(s.xp,'mira'))s.xp.mira=Math.min(s.xp.aria||0,s.xp.leon||0);}
+ if(!inPrologue(s))return;
+ const party=s.squads.find(p=>p.lastQuest===DELIVERY_PREP_QUEST)||s.squads[0];
+ if(!party.run&&!party.members.includes('mira'))party.members.push('mira');
+}
 function stopAction(s:State,sq:Squad,_a:Action,now:number){if(sq.run)sq.lastQuest??=sq.run.quest;sq.run=null;addLog(s,`${squadName(sq)}が帰還。達成済みの報酬は持ち帰りました。`,now);}
 function validPartyMembers(s:State,sq:Squad,ids:unknown):ids is string[]{return Array.isArray(ids)&&ids.length>=1&&ids.length<=Math.max(memberLimit(s),sq.members.length)&&new Set(ids).size===ids.length&&ids.every(id=>typeof id==='string'&&s.owned.includes(id));}
 function partyAction(s:State,sq:Squad,a:Action){

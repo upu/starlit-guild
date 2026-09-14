@@ -12,6 +12,7 @@ function memberBob(member:Member,now:number,index:number,reduced:boolean,animate
 function memberLunge(member:Member,size:number,reduced:boolean,front:boolean,attacking:boolean){return !reduced&&front&&attacking?member.attack*size*.18:0;}
 function memberAngle(member:Member,now:number,index:number,reduced:boolean,animated:boolean,front:boolean){if(reduced||animated)return 0;if(member.walking)return Math.sin(now/100+index)*3;return front?member.attack*-7:0;}
 
+const enemyAspect=(asset:string)=>asset.startsWith('/enemies/')?2/3:1;
 export class AdventurePainter{
  private background!:Phaser.GameObjects.Image;
  private shade!:Phaser.GameObjects.Graphics;
@@ -163,7 +164,7 @@ export class AdventurePainter{
   const enemySize=size*target.scale,pulse=this.runtime.reduced?1:1+Math.sin(now/420)*.015,events=frame.events.filter(event=>!event.enemy||event.enemy===target.id);
   const hurt=events.some(e=>['hit','assist','burst','skill','combo'].includes(e.kind)&&now-e.at<140),striking=events.find(e=>e.kind==='hurt'&&now-e.at<320);
   const offset=striking&&!this.runtime.reduced?-Math.sin((now-striking.at)/320*Math.PI)*12:0;
-  opponent.image.setPosition(target.x*width+offset,target.y*height).setDisplaySize(enemySize*pulse,enemySize/pulse).setFlipX(target.battle).setDepth(10+target.y*10);
+  opponent.image.setPosition(target.x*width+offset,target.y*height).setDisplaySize(enemySize*pulse*enemyAspect(asset),enemySize/pulse).setFlipX(target.battle).setDepth(10+target.y*10);
   if(hurt&&!this.runtime.reduced)opponent.image.setTint(0xffedb1);else opponent.image.clearTint();
   opponent.shadow.setPosition(target.x*width,target.y*height+3).setDisplaySize(enemySize*.6,enemySize*.12);
   opponent.label.setText(target.name).setFontSize(width<500?12:13).setWordWrapWidth(Math.min(180,width*.27),true).setPosition(target.x*width,target.y*height+enemySize*.13+10);

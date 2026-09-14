@@ -8,6 +8,11 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'begging-golem-departure': {
+  src: '/stories/begging-dolls.png',
+  alt: '山道でハロウィン風に飾った大小の人形がお辞儀して両手を差し出し、その少し後ろで小柄なプティがパンプキンヘッドをかぶって操る。',
+  width: 1536, height: 1024, revealAtLine: 3,
+ },
  'moonlit-herbs-return': {
   src: '/stories/mira-collapse.png',
   alt: '膝が折れて倒れたミラの上体をレオンが支え、アリアが荷物をどけてそばへ駆け寄る。机には作りかけの薬が残っている。',

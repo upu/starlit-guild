@@ -66,7 +66,7 @@ function storySheet(m:SheetModel,advanceRef:Ref<StoryAdvance>):SheetView|null{
  if(m.sheet==='album')return {title:'アルバム',description:'旅で出会った景色を眺める',content:<StoryAlbum state={m.state} onBack={()=> { m.setSheet('book'); }}/>};
  if(m.sheet==='stories')return {title:'旅の思い出',description:'出会いも、冒険も、帰ってきた日のことも。',content:<><button className="outline" onClick={()=> { m.setSheet('journal'); }}>旅の記録</button><StoryLibrary state={m.state} onOpen={m.openStory}/></>};
  if(m.sheet==='story'&&m.reading)return {title:m.reading.title,description:m.reading.place,content:<StoryReader key={m.reading.id} story={m.reading} ready={m.ready} onRead={m.finishStory} departure={!!m.pendingDeparture} onClose={m.closeStory} advanceRef={advanceRef}/>};
- if(m.sheet==='banter')return {title:m.activeQuest?.companion?'仲間になるまでの道中':'ふたりの道中',description:m.activeQuest?.name||'次の冒険を待ちながら',content:<ConversationReader advanceRef={advanceRef} lines={m.banterSnapshot} onClose={()=> { m.setSheet(null); }}/>};
+ if(m.sheet==='banter')return {title:m.activeQuest?.companion?'仲間になるまでの道中':'仲間との道中',description:m.activeQuest?.name||'次の冒険を待ちながら',content:<ConversationReader advanceRef={advanceRef} lines={m.banterSnapshot} onClose={()=> { m.setSheet(null); }}/>};
  return null;
 }
 function heroSheet(m:SheetModel):SheetView|null{
@@ -76,7 +76,7 @@ function heroSheet(m:SheetModel):SheetView|null{
  return {title:m.hero.name+'のこと',description:m.hero.job,content:<><Sprite index={m.hero.sprite} size={88}/><p>{m.hero.bio}</p>{notes&&<p>{notes.habit}</p>}<div className="phone-stat-row">{['採取','護衛','討伐'].map((name,i)=><span key={name}>{name}<b>{memberStats(m.state,m.hero.id)[i]}</b></span>)}</div><h3>{skill.name}</h3><p>{skill.description}</p><button className="outline" onClick={()=> { m.navigate('memories'); }}>旅の思い出を読む</button></>};
 }
 function journeySheet(m:SheetModel):SheetView|null{
- if(m.sheet==='goal')return {title:m.goal.title,description:m.prologue?'ふたりの次の一歩':'旅団の次の一歩',content:<><p>{m.goal.detail}</p>{(!m.prologue||m.goal.destination!=='quests')&&<button className="full" onClick={()=> { m.followGoal(m.goal); }}>{m.goal.action}</button>}{m.state.clears===0&&!m.prologue&&<ol className="journey-steps"><li>ふたりの隊を出発させる</li><li>タップで応援。見守るだけでも大丈夫</li><li>3地点ごとに報酬、15地点で依頼達成</li><li>木材とお金で、帰る場所を作る</li></ol>}<button className="outline full" onClick={()=> { m.setSheet('help'); }}>旅の手引き・操作方法</button></>};
+ if(m.sheet==='goal')return {title:m.goal.title,description:m.prologue?'冒険の次の一歩':'旅団の次の一歩',content:<><p>{m.goal.detail}</p>{(!m.prologue||m.goal.destination!=='quests')&&<button className="full" onClick={()=> { m.followGoal(m.goal); }}>{m.goal.action}</button>}{m.state.clears===0&&!m.prologue&&<ol className="journey-steps"><li>ふたりの隊を出発させる</li><li>タップで応援。見守るだけでも大丈夫</li><li>3地点ごとに報酬、15地点で依頼達成</li><li>木材とお金で、帰る場所を作る</li></ol>}<button className="outline full" onClick={()=> { m.setSheet('help'); }}>旅の手引き・操作方法</button></>};
  if(m.sheet==='install')return {title:'ホーム画面に追加',description:'ランタンから、いつもの冒険へ。',content:<InstallGuide onDownload={m.game.download} status={m.installStatus}/>};
  if(m.sheet==='advice')return {title:'この依頼の支度',description:m.quest.name,content:<><p>{questAdvice(m.state,m.squad,m.quest)}</p><p>休憩が多いときは回復役や障壁を持つ仲間も頼りになります。編成の変更は帰還後に行えます。</p><button onClick={()=>{m.navigate('companions');m.setSheet(null);}}>仲間の編成へ</button>{m.run&&<button className="outline" onClick={()=> { m.setSheet('party'); }}>隊を選ぶ</button>}</>};
  return null;
