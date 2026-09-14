@@ -57,10 +57,11 @@ test('dialogue and banter show close-up portraits and the trade still appears fr
  assert.ok(first.includes('/stories/village-trade-handover.png'));
 });
 
-test('prologue offers immediate departure, character navigation and a bag with actions below chat',()=>{
+test('prologue guides the first quest choice before departure and keeps actions below chat',()=>{
  const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:1000,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
  const fresh=initialPrologueState(1000),html=render(fresh);
- assert.match(html,/>出発</);assert.match(html,/>キャラクター</);assert.match(html,/aria-label="持ちものを開く"/);assert.doesNotMatch(html,/phone-wallet|quest-tutorial|>お店</);
+ assert.doesNotMatch(html,/>出発</);assert.match(html,/>キャラクター</);assert.match(html,/aria-label="持ちものを開く"/);assert.doesNotMatch(html,/phone-wallet|>お店</);
+ assert.match(html,/id="first-quest-guide"/);assert.match(html,/まず「クエスト」で/);assert.match(html,/行き先を選ぼう/);assert.match(html,/aria-describedby="first-quest-guide"/);assert.doesNotMatch(html,/first-departure-guide/);
  assert.equal((html.match(/aria-label="クエストを開く"/g)||[]).length,1);assert.match(html,/quest-scroll.png/);assert.doesNotMatch(html,/idle-map-note|>クエストを選ぶ<|何度でも/);
  assert.ok(html.indexOf('journey-banter')<html.indexOf('adventure-actions'));assert.ok(html.indexOf('adventure-actions')<html.indexOf('phone-navigation'));
  assert.match(html,/aria-label="旅の手帳：ヒント・思い出・アルバム・設定"/);

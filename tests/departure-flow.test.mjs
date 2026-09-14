@@ -26,9 +26,12 @@ function harness(initialState){
  vm.runInNewContext(code,{exports,require:id=>modules[id]||new Proxy({},{get:(_,name)=>String(name)})});
  function render(){cursor=0;model=exports.PhoneGame({game:api}).props.model;return model;}
  function nodes(node){return !node||typeof node!=='object'?[]:[node,...[node.props?.children].flat(Infinity).flatMap(nodes)];}
+ function text(node){return typeof node==='string'?node:!node||typeof node!=='object'?'':[node.props?.children].flat(Infinity).map(text).join('');}
  function departButton(){return nodes(exports.AdventureDestination({model})).find(node=>node.type==='button'&&node.props.children==='出発');}
+ function guide(){return nodes(exports.AdventureDestination({model})).find(node=>node.props?.role==='status');}
+ function guideText(){return text(guide());}
  function questButton(id){const props=exports.collectionSheet(model).content.props;return nodes(pickerExports.QuestPicker(props)).find(node=>node.type==='button'&&node.key===id);}
- render();return {render,api,departButton,questButton,get model(){return model;},background(){return adventureFrame({squad:model.squad,startQuest:model.quest.id,now:api.clock,ready:true,paused:!!model.sheet}).background;}};
+ render();return {render,api,departButton,guide,guideText,questButton,get model(){return model;},background(){return adventureFrame({squad:model.squad,startQuest:model.quest.id,now:api.clock,ready:true,paused:!!model.sheet}).background;}};
 }
 function afterTrade(){
  let s=game.act(game.initialPrologueState(1000),{type:'start',id:prologue.TRADE_QUEST,readDeparture:true},1000);
@@ -92,8 +95,10 @@ test('picker controls respect inactive tabs and a failed return leaves the picke
  assert.deepEqual(h.api.s,s);assert.equal(h.model.sheet,'quests');assert.equal(h.model.returnIntent,null);
 });
 
-test('fresh profiles can depart immediately without opening a menu or changing their save',()=>{
- const s=game.initialPrologueState(1000),h=harness(s);assert.ok(h.departButton());assert.deepEqual(h.api.s,s);
+test('fresh profiles are guided from choosing a quest to departing without changing their save early',()=>{
+ const s=game.initialPrologueState(1000),h=harness(s);assert.equal(h.departButton(),undefined);assert.match(h.guideText(),/クエスト.*行き先を選ぼう/);assert.deepEqual(h.api.s,s);
+ h.model.openQuests();h.render();assert.equal(h.guide(),undefined);h.questButton(prologue.TRADE_QUEST).props.onClick();h.render();
+ assert.ok(h.departButton());assert.match(h.guideText(),/出発.*冒険開始/);assert.deepEqual(h.api.s,s);
  h.api.otherTab=true;h.render();assert.equal(h.departButton().props.disabled,true);
  h.api.otherTab=false;h.render();h.departButton().props.onClick();h.render();
  assert.equal(h.model.sheet,'story');assert.equal(h.model.reading.id,prologue.TRADE_QUEST+'-departure');assert.deepEqual(h.api.s,s);

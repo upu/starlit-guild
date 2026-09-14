@@ -42,7 +42,7 @@ function departureStory(state:State,action:Action){
  return stories.find(st=>st.id===actionId+'-departure')??null;
 }
 function hasDestination(state:State,squad:Squad,choice?:string){
- return !!choice||!!squad.lastQuest||!inPrologue(state)||!state.done[TRADE_QUEST]||!!state.done[restingQuest(state,squad)];
+ return !!choice||!!squad.lastQuest||!inPrologue(state)||!!state.done[restingQuest(state,squad)];
 }
 type SheetModel={
  sheet:Sheet;reading:Story|null;ready:boolean;pendingDeparture:Action|null;activeQuest:(typeof allQuests)[number]|undefined;
@@ -177,8 +177,24 @@ function AdventureToolbar({model:m}:{model:PhoneFrameModel}){
  if(m.prologue)return null;
  return <div className="adventure-toolbar"><button className="squad-selector" onClick={()=> { m.setSheet('party'); }} aria-label={'冒険する隊を選ぶ：'+squadName(m.squad)}><Users size={16}/><span>{squadName(m.squad)}</span><ChevronRight size={14}/></button><button className="outline edit-party" onClick={()=> { m.navigate('companions'); }}>編成</button></div>;
 }
+type FirstDepartureGuide='quest'|'departure'|null;
+function firstDepartureGuide(m:PhoneFrameModel):FirstDepartureGuide{
+ if(m.sheet||m.ending||m.game.report||!m.prologue||m.run||storyProgress(m.state).departed.length||m.state.done[TRADE_QUEST])return null;
+ return m.destinationChosen?'departure':'quest';
+}
+function firstDepartureBubble(guide:FirstDepartureGuide){
+ if(guide==='quest')return <div className="quest-tutorial quest-tutorial-quest" id="first-quest-guide" role="status">まず「クエスト」で<br/><b>行き先を選ぼう</b></div>;
+ if(guide==='departure')return <div className="quest-tutorial quest-tutorial-departure" id="first-departure-guide" role="status">行き先を選んだら<br/><b>「出発」で冒険開始！</b></div>;
+ return null;
+}
+function adventurePrimaryAction(m:PhoneFrameModel,guide:FirstDepartureGuide){
+ if(m.run)return <button className="outline return-button" disabled={!m.ready} onClick={()=>{m.requestReturn('adventure');}}><House size={18}/>帰還</button>;
+ if(!m.destinationChosen)return null;
+ return <button className={'departure-button'+(guide==='departure'?' departure-button-guided':'')} aria-describedby={guide==='departure'?'first-departure-guide':undefined} disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>;
+}
 function AdventureDestination({model:m}:{model:PhoneFrameModel}){
- return <div className="adventure-actions" aria-label="冒険の操作"><button className="outline quest-entry" aria-label="クエストを開く" onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={32} height={32} alt="" loading="eager" unoptimized/><span>クエスト</span></button><ShopEntry state={m.state} profileId={m.game.profile?.id} obscured={!!m.sheet||!!m.ending||!!m.game.report} onOpen={()=>{m.setSheet('shop');}}/>{m.run?<button className="outline return-button" disabled={!m.ready} onClick={()=>{m.requestReturn('adventure');}}><House size={18}/>帰還</button>:m.destinationChosen&&<button className="departure-button" disabled={!m.ready||!!m.ending||!!m.sheet} onClick={()=>{m.act({type:'start',id:m.quest.id,squad:m.squad.id});}}>出発</button>}</div>;
+ const guide=firstDepartureGuide(m),obscured=!!m.sheet||!!m.ending||!!m.game.report;
+ return <div className="adventure-actions" aria-label="冒険の操作"><button className={'outline quest-entry'+(guide==='quest'?' quest-entry-guided':'')} aria-label="クエストを開く" aria-describedby={guide==='quest'?'first-quest-guide':undefined} onClick={()=> { m.openQuests(); }}><Image src="/ui/quest-scroll.png" width={32} height={32} alt="" loading="eager" unoptimized/><span>クエスト</span></button><ShopEntry state={m.state} profileId={m.game.profile?.id} obscured={obscured} onOpen={()=>{m.setSheet('shop');}}/>{adventurePrimaryAction(m,guide)}{firstDepartureBubble(guide)}</div>;
 }
 function AdventureBanter({model:m}:{model:PhoneFrameModel}){
  if(!m.banter.length)return <div className="phone-banter"><p>{m.quote}</p></div>;

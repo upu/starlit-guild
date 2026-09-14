@@ -1,6 +1,8 @@
 .phone-game .phone-navigation{height:var(--game-nav-height)!important}
 
 .phone-game .adventure-actions{
+ position:relative;
+ z-index:20;
  box-sizing:border-box;
  height:48px;
  min-height:48px;
