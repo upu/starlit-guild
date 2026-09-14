@@ -1,7 +1,9 @@
 import {recruitments,met,prepared,canPrepare,rareProgress,recruitmentHint,recruitmentRun} from './recruitment.ts';
-import {inPrologue,isPrologueQuest,nextStage,stageEndingPending,prologueStages} from './prologue.ts';
+import {inPrologue,isPrologueQuest,nextStage,stageEndingPending,storyStages} from './prologue.ts';
 import {storyProgress,availableStories} from './stories.ts';
 import {heroes,quests,level,stats,power,activeBonds,estimate,squadLimit,encounter,type State,type Squad,type Quest} from './game.ts';
+import {MOON_HERB_QUEST} from './chapter-two.ts';
+import {techniquesUnlocked,learnableTechniques} from './techniques.ts';
 import {combatRank,penetration} from './combat.ts';
 
 export type Destination='adventure'|'quests'|'recruit'|'build'|'companions'|'party';
@@ -15,8 +17,9 @@ function prologueGoal(s:State,sq:Squad):JourneyGoal{
  if(sq.run?.phase==='rest')return {title:'手前の道で力をつけよう',detail:'苦戦するときは、読み終えたクエストの自動周回でレベル上げ。お店の武器・防具も助けになります。タップで攻撃や回復を手伝うこともできます。',action:'クエストを開く',destination:'quests'};
  if(sq.run)return {title:'タップでふたりを手助け',detail:'道や荷物・魔物をタップすると手助けできます。仲間をタップすると回復。見守っていても進みます。',action:'冒険を見守る',destination:'adventure'};
  if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、ふたりの話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
+ if(techniquesUnlocked(s)&&!s.techniques?.learned.length&&!s.done[MOON_HERB_QUEST])return {hintId:'techniques-unlocked',title:'技の習得・セットができるようになりました',detail:'キャラクター画面で、必要レベルとコインを確かめて技を習得できます。セットすると自動で働きます。習得せず次のクエストへ進むこともできます。',action:'技を見に行く',destination:'companions',questId:nextStage(s).quest};
  const stage=nextStage(s),complete=!!s.done[stage.quest];
- return {title:complete?'第一部 完 · ふたりの旅を振り返ろう':stage.label+' · '+stage.title,detail:complete?'塔の灯りが、いつもの道に戻りました。ここまでの道をもう一度歩いたり、手帳で思い出や絵を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
+ return {title:complete?'第二部 2-2までの冒険を終えました':stage.label+' · '+stage.title,detail:complete?'続きの冒険は準備中です。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
 }
 function firstGoal(sq:Squad):JourneyGoal{
  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};
@@ -81,7 +84,7 @@ export function questAdvice(s:State,sq:Squad,q:Quest){
 }
 export type JourneyNotice={title:string;description:string};
 function prologueNotice(before:State,after:State):JourneyNotice|null{
- const stage=prologueStages.find(({quest})=>!before.done[quest]&&(after.done[quest]||0)>0);return stage?{title:stage.arrival,description:stage.detail}:null;
+ const stage=storyStages.find(({quest})=>!before.done[quest]&&(after.done[quest]||0)>0);return stage?{title:stage.arrival,description:stage.detail}:null;
 }
 function recruitmentNotice(before:State,after:State):JourneyNotice|null{
  const joined=heroes.find(hero=>after.owned.includes(hero.id)&&!before.owned.includes(hero.id));
@@ -107,7 +110,14 @@ function rewardNotice(before:State,after:State):JourneyNotice|null{
  return {title:after.clears>before.clears?'依頼達成！':'区間報酬を確保',description:`+${String(after.gold-before.gold)} G · 薬草 +${String(after.herbs-before.herbs)} · 鉱石 +${String(after.ore-before.ore)} · 木材 +${String(after.wood-before.wood)}`};
 }
 export function journeyNotice(before:State,after:State):JourneyNotice|null{
- if(inPrologue(after))return prologueNotice(before,after);
+ const technique=techniqueNotice(before,after);
+ if(inPrologue(after))return prologueNotice(before,after)??technique;
+ if(technique)return technique;
  if(after.town>before.town)return {title:after.town===1?'星灯りの酒場が完成！':'星灯りの小さな村が完成！',description:after.town===1?'ふたりの焚き火から、みんなの帰る場所へ。出発時HP +10%・絆の成長2倍。':'鍛冶場と薬草園に灯りがともりました。全能力 +8%・薬草の収穫と回復が増えます。'};
  return recruitmentNotice(before,after)??progressionNotice(before,after)??rewardNotice(before,after);
+}
+function techniqueNotice(before:State,after:State):JourneyNotice|null{
+ if(!techniquesUnlocked(before)&&techniquesUnlocked(after))return {title:'技の習得・セットができるようになりました',description:'キャラクター画面で習得できます。習得したらセットして、次の冒険で試してみましょう。'};
+ const previous=learnableTechniques(before).map(t=>t.id),added=learnableTechniques(after).filter(t=>!previous.includes(t.id));
+ return added.length?{title:'習得できる技があります',description:added.map(t=>t.name).join('・')+'。キャラクター画面で必要なコインと効果を確認できます。'}:null;
 }

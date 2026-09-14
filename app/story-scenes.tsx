@@ -6,7 +6,7 @@ import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@
 import {Portrait} from './portrait';
 import {heroes,allQuests,type State} from '@/lib/game';
 import {originalCharacters} from '@/lib/original-characters';
-import {prologueStages} from '@/lib/prologue';
+import {storyStages} from '@/lib/prologue';
 import {availableStories,stories,storyProgress,type Story,type StoryLine} from '@/lib/stories';
 import {storyArtAt,type StoryArt} from '@/lib/story-art';
 import type {StoryAdvance} from './use-story-advance';
@@ -55,10 +55,10 @@ export function ConversationReader({lines,onClose,advanceRef}:{lines:StoryLine[]
 }
 
 export function memoryGroups(items:Story[]){
- const questIds=[...prologueStages.map(stage=>stage.quest),...new Set(items.filter(st=>st.chapter==='departure'||st.chapter==='return').flatMap(st=>st.quest?[st.quest]:[]))];
+ const questIds=[...storyStages.map(stage=>stage.quest),...new Set(items.filter(st=>st.chapter==='departure'||st.chapter==='return').flatMap(st=>st.quest?[st.quest]:[]))];
  const journey=[...new Set(questIds)].flatMap(id=>{
   const entries=items.filter(st=>st.quest===id&&(st.chapter==='departure'||st.chapter==='return')).sort((a,b)=>Number(a.chapter==='return')-Number(b.chapter==='return'));
-  const stage=prologueStages.find(stage=>stage.quest===id),quest=allQuests.find(q=>q.id===id);
+  const stage=storyStages.find(stage=>stage.quest===id),quest=allQuests.find(q=>q.id===id);
   return entries.length?[{id,title:(stage?stage.label.split(' ')[0]+' · ':'')+(quest?.name||entries[0].title),items:entries}]:[];
  });
  const other=(['camp','encounter','recruitment'] as const).flatMap(chapter=>{
