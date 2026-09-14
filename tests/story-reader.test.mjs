@@ -31,6 +31,21 @@ function harness(name,initialProps){
  return {render,find,click,text:()=>text(tree),exports,tick(){const [id,fn]=timers.entries().next().value||[];assert.ok(fn,'scheduled dialogue');timers.delete(id);fn();render();},timerCount:()=>timers.size,visibility(hidden){document.hidden=hidden;for(const fn of listeners)fn();}};
 }
 
+test('story and banter portraits keep the expression of each individual line',()=>{
+ const lines=[{speaker:'aria',text:'見つけた！',expression:'surprised'},{speaker:'aria',text:'よかった。',expression:'smile'}];
+ const story=harness('StoryLines',{lines});
+ const rows=story.find('story-lines').props.children;
+ assert.deepEqual(rows.map(row=>row.props.children[0].props.expression),['surprised','smile']);
+ const banter=harness('Banter',{lines,onRead(){}});
+ banter.tick();
+ const history=banter.find('banter-copy').props.children;
+ assert.deepEqual(Array.from(history,row=>row.props.children[0].props.expression),['surprised','smile']);
+ // Equal words from a different scene can carry a different emotion.
+ const next=[{...lines[1],expression:'worried'}];
+ banter.render({lines:next,onRead(){}});banter.tick();
+ assert.equal(banter.find('banter-copy').props.children.at(-1).props.children[0].props.expression,'worried');
+});
+
 test('story reader retains all revealed lines for scrolling, reveals art at its action, and only finishes on the final line',()=>{
  const story=stories.stories.find(st=>st.id==='pilgrim-return');let read=0,closed=0;
  const h=harness('StoryReader',{story,ready:true,onRead:()=>{read++;return true;},onClose:()=>closed++});

@@ -49,6 +49,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [オリジナルキャラクター画像](original-character-art.md) — 追加キャラクターの画像制作記録
 - [オリジナルキャラクター一覧](original-character-gallery.md) — 採用画像の確認
 - [第一章の会話画像](prologue-dialogue-art.md) — 第一章と共通会話で使う顔アイコン、受け渡しスチル
+- [会話の表情](dialogue-expressions.md) — 4人の参照シートに合わせた顔画像と台詞ごとの表情、生成プロンプト
 - [クエストアイコン](quest-icon-prompt.md) — クエストアイコン制作メモ
 - [お店アイコン](shop-icon-prompt.md) — 露店アイコン制作メモ
 - [バッグ・手帳・冒険・キャラクターのアイコン](navigation-icon-prompts.md) — 共通の色調と小サイズ向け画像の制作記録
