@@ -19,7 +19,7 @@ export function chapterTwoBanter(run:Run){
  if(run.quest===PICNIC_QUEST)return [
   [{speaker:'aria',text:'今日は荷札も控えもないね。'},{speaker:'leon',text:'パンの包みなら、二つある。'}],
   [{speaker:'aria',text:'ね、あの木陰は？　街も見えるよ。'},{speaker:'leon',text:'座るところが乾いてるか、見てみよう。'}],
-  [{speaker:'leon',text:'ここなら布を広げられそうだ。'},{speaker:'aria',text:'うん。レオンも隣に座ってね。'}],
+  [{speaker:'leon',text:'ここなら布を広げられそうだ。'},{speaker:'aria',text:'うん。隣に座らせてね。'}],
  ][Math.min(2,Math.floor(run.node/5))];
  if(run.quest!==MOON_HERB_QUEST)return null;
  return [
