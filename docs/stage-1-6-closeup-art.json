@@ -10,5 +10,14 @@
   "storyId": "forest-wetland-return",
   "revealAtLine": 5,
   "processing": "none; original PNG copied byte-for-byte",
-  "review": "木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げて見比べる。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋。文字なし。"
+  "review": "木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げて見比べる。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋。文字なし。",
+  "delivery": {
+    "path": "public/stories/forest-moss-aria.webp",
+    "format": "WebP lossless",
+    "encoder": "sharp 0.34.5, lossless=true, effort=6",
+    "sha256": "a1edc3515f30703fccd9ec3d374ae3d537052da2e77d67c4dcc4ff6be946a2c0",
+    "sourceBytes": 3064032,
+    "deliveryBytes": 1873356,
+    "decodedRgbaPixelsEqual": true
+  }
 }
