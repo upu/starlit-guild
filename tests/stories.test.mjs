@@ -8,6 +8,19 @@ const bundle=state=>{const id=crypto.randomUUID();return {format:4,deviceId:cryp
 const roundtrip=s=>parseBundle(JSON.parse(JSON.stringify(bundle(s)))).profiles[0].state;
 const start=s=>act(s,{type:'start',id:'herbs'},s.updatedAt);
 const ids=s=>availableStories(s).map(st=>st.id);
+test('idle trio conversations include Mira only while she is in the party and preserve the save',()=>{
+ const state=initialState(1000),squad=state.squads[0];
+ const dialogue=()=>Array.from({length:8},(_,i)=>journeyBanter(state,squad,i*30000)).flat();
+ assert.ok(dialogue().every(line=>line.speaker!=='mira'));
+ squad.members.push('mira');
+ const before=structuredClone(state),trio=dialogue();
+ assert.equal(journeyBanter(state,squad,0)[0].speaker,'mira');
+ assert.ok(trio.some(line=>line.speaker==='mira'));
+ assert.ok(trio.every(line=>!line.speaker||squad.members.includes(line.speaker)));
+ assert.deepEqual(state,before);
+ squad.members=squad.members.filter(id=>id!=='mira');
+ assert.ok(dialogue().every(line=>line.speaker!=='mira'));
+});
 function finish(s){let i=0;while(s.squads[0].run&&i++<10000)s=settle(s,s.squads[0].run.nextAt).state;assert.ok(i<10000);return s;}
 
 test('all quests have a departure and an ending; the accepted fireside scene is readable',()=>{

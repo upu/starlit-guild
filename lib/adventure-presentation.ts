@@ -3,12 +3,15 @@ import {originalArt} from './original-characters.ts';
 import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
 import {isPrologueQuest,RESTORATION_QUEST} from './prologue.ts';
+import {chapterTwoEnemyAsset,GOLEM_QUEST} from './chapter-two.ts';
 
 export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean;restorationComplete?:boolean};
 export type Point={x:number;y:number};
 export type AdventureIntent='help'|'heal'|'detour'|`heal:${string}`;
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
-export const spriteAsset=(index:number)=>originalArt(index)||'/sprites.png';
+// Mira's map figure follows her character reference; dialogue portraits stay independent.
+export const spriteAsset=(index:number)=>index===2?'/animations/mira-v1.png':originalArt(index)||'/sprites.png';
+export const spriteFrame=(index:number)=>index===2?'8':spriteAsset(index)==='/sprites.png'?String(index):undefined;
 type ActiveRun=NonNullable<Squad['run']>;
 function recentEvents(run:ActiveRun|null,now:number){return run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];}
 function memberTarget(role:string,index:number){const front=['melee','tank','rogue'].includes(role);return {x:Math.min(.57,.20+index*.09+(front?.18:0)),y:.61+(index%2)*.09};}
@@ -29,7 +32,7 @@ function memberVitals(run:ActiveRun|null,id:string){
 }
 function adventureMember(input:AdventureInput,run:ActiveRun|null,events:GameEvent[],now:number,id:string,index:number){
  const hero=heroes.find(h=>h.id===id),skill=heroSkills[id];if(!hero)throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
- const actor=run?.actors.find(a=>a.hero===id),lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst'].includes(e.kind)).at(-1);
+ const actor=run?.actors.find(a=>a.hero===id),lastHit=events.filter(e=>e.hero===id&&['hit','gather','skill','burst','heal'].includes(e.kind)).at(-1);
  const age=lastHit?now-lastHit.at:Infinity,attack=age<650?Math.sin(age/650*Math.PI):0,target=memberTarget(skill.style,index);
  const position=explorationPosition(input,run,id,now,memberPosition(input.squad,run,target,id,index,now)),vitals=memberVitals(run,id);
  return {id,name:hero.name,sprite:hero.sprite,role:skill.style,x:position.x,y:position.y,walking:!!run&&run.phase!=='rest'&&!vitals.down&&now<(actor?.arrivesAt||0),exploring:position.exploring,attack:position.exploring||vitals.down?0:attack,hit:lastHit,...vitals};
@@ -39,10 +42,16 @@ function frameDiscovery(input:AdventureInput,run:ActiveRun|null,now:number){
  return detour&&detour.node===run?.node&&now>=detour.at&&(!detour.claimed||now-detour.finishAt<1000)?{...detour,x:.72,y:.84}:null;
 }
 function frameCutin(run:ActiveRun|null,now:number){return run?.scene&&now>=run.scene.at&&now-run.scene.at<(run.scene.kind==='burst'?1900:2600)?run.scene:null;}
+function targetAsset(quest:(typeof allQuests)[number],run:ActiveRun,kind:ReturnType<typeof encounter>|null,sprite:number){
+ const enemyArt=kind==='battle'?chapterTwoEnemyAsset(quest.id,run.node):null;
+ if(enemyArt)return enemyArt;
+ if(kind==='escort')return quest.escortAsset||(isPrologueQuest(quest.id)?'/items/chest.png':spriteAsset(sprite));
+ return spriteAsset(sprite);
+}
 function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  if(!run)return null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- return {id:'legacy-target',x:.80,y:.61,scale:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:kind==='escort'&&quest.escortAsset?quest.escortAsset:isPrologueQuest(quest.id)&&kind==='escort'?'/items/chest.png':spriteAsset(targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+ return {id:'legacy-target',x:.80,y:.61,scale:quest.id===GOLEM_QUEST&&run.node%3!==1?1.6:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:targetAsset(quest,run,kind,targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
 }
 function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  const base=frameTarget(quest,run,kind);if(!base)return [];
@@ -50,7 +59,7 @@ function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:R
  const positions=enemies.length===2?[{x:.77,y:.49},{x:.82,y:.76}]:[{x:.73,y:.43},{x:.86,y:.63},{x:.72,y:.83}];
  return enemies.map((enemy,index)=>{
   const multiple=enemies.length>1,name=multiple?(quest.enemy===9?'霧狼':'スライム')+' '+String.fromCharCode(65+index):base.name;
-  return {...base,...(multiple?positions[index]:{}),id:enemy.id,name,scale:multiple?.65:1.08,hp:enemy.hp,maxHp:enemy.maxHp,down:enemy.hp<=0,value:clamp(enemy.hp/enemy.maxHp)};
+  return {...base,...(multiple?positions[index]:{}),id:enemy.id,name,scale:multiple?.65:base.scale,hp:enemy.hp,maxHp:enemy.maxHp,down:enemy.hp<=0,value:clamp(enemy.hp/enemy.maxHp)};
  });
 }
 

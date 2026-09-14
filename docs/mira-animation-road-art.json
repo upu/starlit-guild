@@ -1,0 +1,45 @@
+{
+  "tool": "built-in image_gen",
+  "records": [
+    {
+      "role": "mira_anim",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-3ec6090d-f569-4bf5-85c5-c93b8e52c68e.png",
+      "prompt": "Create a production 4-column by 3-row animation spritesheet, exactly 12 equal square cells, entire canvas 2048x1536 (4:3). Genuinely transparent alpha outside characters. NO grid lines, NO labels, no text. Image1 and image2 are existing Aria and Leon sheets: match their chibi proportions (roughly THREE heads tall), crisp clean painted anime RPG rendering, equal-cell alignment and frame arrangement. Image3 is Mira identity/costume reference only; ignore its text.\nEvery one of 12 cells depicts ONLY the SAME Mira, three-quarter facing RIGHT. Mira: gentle mature healer with long pale lavender hair, soft grey-lavender eyes, uncovered head with side braids and white flower/crescent hair ornament. White lightweight robe with detached voluminous sleeves and exposed shoulders, short layered white dress, asymmetrical white/light-lavender robe tails, fine gold floral/moon edging, dark brown medical pouch and vial belt. White/lavender ankle boots. Slender staff with pale crystal inside gold crescent, white flowers and lavender ribbons. Keep exact identity/costume all frames.\nRow1 WALK four genuinely different sequential steps: left foot forward/right back; passing legs/right knee lifted; right foot forward/left back; passing legs/left knee lifted. Subtle opposite arm and robe/hair sway. Staff upright.\nRow2 ATTACK/CAST four distinct phases: gather and raise moon staff; aim staff diagonally forward RIGHT and cast with open free hand; follow through leaning slightly forward with staff extended RIGHT; recover to staff upright.\nRow3: cell1 calm idle eyes open; cell2 same idle briefly eyes CLOSED blinking; cell3 recoil hurt eyes shut torso leaning back; cell4 hurt recovery steadying herself with staff.\nEvery cell uses SAME body scale and anchor/baseline: feet resting around 92 percent cell height, head around 15 percent. Center body around 48 percent cell width. Staff tip and every robe/hair/foot ALWAYS within own cell, no cross-cell spill; leave transparent safety margin. Staff can angle compactly for cast. OPAQUE smooth filled color regions inside face, hair and costume, NO grain, no dithering, no stippling, no transparency holes in white cloth. Clean continuous outlines and cel-painted shading, polished like existing animation sheets. Transparent OUTSIDE silhouettes only. No environment, no ground shadow, no extra effect cloud. Exactly twelve Mira figures; never sixteen.",
+      "reference_paths": [
+        "C:/Users/spitz/.codex/worktrees/e85a/STARLIT-GUILD/public/animations/aria-v1.png",
+        "C:/Users/spitz/.codex/worktrees/e85a/STARLIT-GUILD/public/animations/leon-v1.png",
+        "C:/Users/spitz/.codex/worktrees/e85a/STARLIT-GUILD/docs/characters/mira-reference-sheet.webp"
+      ]
+    },
+    {
+      "role": "mira_anim_repair",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-8ba85454-4511-4557-84ca-0a60b6411e5f.png",
+      "prompt": "Edit this exact 4x3 Mira animation sheet to repair broken transparency. Preserve all TWELVE poses, exact grid placement, baseline, character scale, identity, color palette, staff, white/lavender robe and all motion differences. Remove ALL red/magenta/yellow/white/grey speckled residue around silhouettes and between frames. Outside each clean continuous character silhouette must be COMPLETELY TRANSPARENT alpha=0, with no residual RGB pixels visibly showing. All character interiors including WHITE FABRIC must be SOLID FULLY OPAQUE alpha=255 with smooth continuous painted colors, NO holes, no stippled/dithered alpha, no grain, no scattered dots. Only a very narrow smooth antialiased outline edge may use intermediate alpha, never broad ghostly fringe. Preserve light robe as opaque white cloth; do not confuse pale cloth with background. Staff is opaque with clean edge, no glow residue. Visually crisp cel-painted fantasy RPG animation sprite quality, clean uninterrupted outlines, uniform smooth shadows. Do not use texture noise anywhere. No backdrop, ground or shadow. Keep exactly four columns, three rows and twelve characters in equal cells, NO repositioning or resizing or extra poses, no text/grid. Output clean transparent RGBA PNG, same 4:3 aspect as original. This is alpha/artifact repair, not redesign.",
+      "reference_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-3ec6090d-f569-4bf5-85c5-c93b8e52c68e.png"
+      ]
+    },
+    {
+      "role": "mira_anim_redraw",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-c8ddf079-691c-4587-a4cf-a4ef0a4c245d.png",
+      "prompt": "Redraw this 4x3 character animation sheet as CLEAN CEL-PAINTED GAME SPRITES with genuinely transparent background. Keep exactly same 12 Mira poses, row order, four equal columns and three rows, same character placement/baseline and 3-head chibi proportions. Keep lavender long hair, crescent/white flower ornament, uncovered head, white and lavender open-shoulder robe, medical pouch, moon/crystal staff, mature gentle face.\nCritical style change: replace ALL tiny textured/grainy details with smooth solid opaque anime color shapes and simple clean shading. Use continuous dark lavender/brown 2px character outline. No broken outlines, no rough brush texture, no dithering, no transparent holes, no colored fringe pixels. WHITE cloth is SOLID OPAQUE WHITE, lavender hair SOLID OPAQUE LAVENDER. Simplify gold embroidery and locks of hair to broad legible shapes. NOTHING should be visible outside the crisp outlined silhouettes: pure alpha zero transparent, no magenta, red, yellow, white ghosting, no particles or light effects. No soft translucent haze. Professional clean cutout stickers with solid interiors and smooth precision contour. Preserve the original poses faithfully and staff within each cell. Do not reuse damaged fringe from input. Repaint the art cleanly. No background/checkerboard/grid/text. 4:3 PNG animation sheet.",
+      "reference_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-8ba85454-4511-4557-84ca-0a60b6411e5f.png"
+      ]
+    },
+    {
+      "role": "mountain_road",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0a0a9-e430-7c41-900f-a7de812b51a4/exec-3f2525af-f97d-4f44-b503-8e31c471612f.png",
+      "prompt": "Use case: illustration-story. Create ONE portrait fantasy RPG battle background, 1024x1536, matching supplied image's lush painterly Japanese fantasy world style and scenic architectural detail, but NEW grounded composition in gentle DAYLIGHT. No characters.\nCritical gameplay geometry: BROAD CONTINUOUS WALKABLE DIRT AND FLAT STONE MOUNTAIN ROAD covers ENTIRE image WIDTH from 40 percent image height to bottom. View looks slightly down at this broad nearly-flat horizontal combat clearing, giving room for sprites standing anywhere from x20% to x86% and y43% to y83%. All these positions MUST contain solid road ground, NOT sky, chasm, cliff, buildings, railing, deep ravine, water or air. Ground plane is unmistakably tangible under all combat positions. Wide flat compacted tan earth with embedded weathered flagstones and small sparse pebbles, quiet low-detail center for character readability, mild perspective. Road expands beyond both left and right frame edges throughout lower 60 percent. No stairs, no fence across stage, no central obstacle.\nONLY UPPER 35 percent contains distant forested blue mountains, tiny faraway town/tower, pale sky and soft clouds. Grassy sloping mountainside and a few shrubs frame far upper edges but do not intrude into playable lower road. A modest timber stack/workyard detail can be tiny and distant at upper edge, not a main subject. Peaceful mountain route suitable both mountain entrance and near an old workyard. Natural warm daylight and soft restrained shadows, beautiful painted atmosphere, no sunset. Entire full-bleed background opaque. No people, creatures, text, UI, symbols or border.",
+      "reference_paths": [
+        "C:/Users/spitz/.codex/worktrees/e85a/STARLIT-GUILD/public/valley.png"
+      ]
+    }
+  ],
+  "adopted": {
+    "backgroundSource": "exec-3f2525af-f97d-4f44-b503-8e31c471612f.png",
+    "animation": "public/animations/mira-v1.png",
+    "animationSource": "exec-c8ddf079-691c-4587-a4cf-a4ef0a4c245d.png",
+    "background": "public/stages/mountain-road.png"
+  }
+}

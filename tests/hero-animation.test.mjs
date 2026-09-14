@@ -2,11 +2,12 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {initialState,act} from '../lib/game.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
-import {heroAnimation} from '../lib/hero-animation.ts';
+import {heroAnimation,heroSheets} from '../lib/hero-animation.ts';
 import {readFileSync} from 'node:fs';
 
 function scene(now=5000){
- const state=act(initialState(1000),{type:'start',id:'herbs'},1000);
+ const initial=initialState(1000);initial.owned.push('mira');initial.squads[0].members.push('mira');
+ const state=act(initial,{type:'start',id:'herbs'},1000);
  const run=state.squads[0].run;
  run.phase='work';run.events=[];run.detour=null;
  for(const actor of run.actors)actor.arrivesAt=2000;
@@ -46,8 +47,26 @@ test('walking cycles use actual limb frames and settle into breathing when arriv
  assert.ok(Number(pose(input,5600).frame)>=8);
 });
 
+test('Mira pose rectangles fit the native RGBA sheet and retain walk feet beyond equal row cuts',()=>{
+ const png=readFileSync(new URL('../public/animations/mira-v1.png',import.meta.url)),width=png.readUInt32BE(16),height=png.readUInt32BE(20);
+ assert.equal(png[25],6);assert.equal(heroSheets.mira.frames.length,12);
+ for(const [x,y,w,h] of heroSheets.mira.frames){assert.ok(x>=0&&y>=0&&x+w<=width&&y+h<=height);assert.ok(w<=420&&h<=378);}
+ assert.ok(heroSheets.mira.frames[0][1]+heroSheets.mira.frames[0][3]>height/3);
+});
+
+test('Mira walks with her own sheet and casts for healing as well as attacks',()=>{
+ const {input,run}=scene();
+ run.actors.find(actor=>actor.hero==='mira').arrivesAt=5600;
+ assert.deepEqual([5000,5150,5300,5450].map(t=>Number(pose(input,t,'mira').frame)).sort(),[0,1,2,3]);
+ assert.equal(pose(input,5600,'mira').asset,'/animations/mira-v1.png');
+ event(run,5700,'heal','mira','leon');
+ assert.deepEqual([5700,5863,6025,6188].map(t=>pose(input,t,'mira').frame),['4','5','6','7']);
+ assert.equal(pose(input,5800,'mira',true).frame,'8');
+ assert.ok(Number(pose(input,6350,'mira').frame)>=8);
+});
+
 test('attack poses follow each hero event through recovery and never replay expired or foreign-node hits',()=>{
- for(const id of ['aria','leon']){
+ for(const id of ['aria','leon','mira']){
   const {input,run}=scene();event(run,5000,'hit',id);
   assert.deepEqual([5000,5163,5325,5488].map(t=>pose(input,t,id).frame),['4','5','6','7']);
   assert.ok(Number(pose(input,5650,id).frame)>=8);

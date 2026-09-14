@@ -1,4 +1,5 @@
 'use client';
+import {trioQuest} from '@/lib/chapter-two';
 import Image from 'next/image';
 import {Check} from 'lucide-react';
 import {availableQuests,heroes,squadName,type State,type Squad} from '@/lib/game';
@@ -12,7 +13,7 @@ export function QuestPicker({state:s,squad:sq,selected,onSelect,onConfirm,ready}
  const unlocked=availableQuests(s),q=unlocked.find(q=>q.id===selected)||unlocked[0];
  const opponent=originalCharacters.find(c=>c.sprite===q.enemy);
  return <div className="quest-picker">
-  <p className="departure-party">{!inPrologue(s)&&<b>{squadName(sq)}</b>}<span>{sq.members.map(id=>heroes.find(h=>h.id===id)?.name??'不明な仲間').join('・')}</span></p>
+  <p className="departure-party">{!inPrologue(s)&&<b>{squadName(sq)}</b>}<span>{(inPrologue(s)?trioQuest(q.id)?['aria','leon','mira']:['aria','leon']:sq.members).map(id=>heroes.find(h=>h.id===id)?.name??'不明な仲間').join('・')}</span></p>
   <div className="quest-options" aria-label="クエストの一覧">{unlocked.map(item=><button className="quest-option" key={item.id} disabled={!ready} aria-pressed={q.id===item.id} onClick={()=>{if(!ready)return;if(q.id===item.id)onConfirm(item.id);else onSelect(item.id);}}>
    <Image src={questScenery(item)} alt="" width={1672} height={941} loading="lazy" unoptimized/>
    <span><small>{storyStages.find(stage=>stage.quest===item.id)?.label||item.region}{item.availability==='once'?' · 一度きり':''}</small><b>{item.name}</b></span>{q.id===item.id&&<Check size={19}/>}
