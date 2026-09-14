@@ -9,7 +9,8 @@ export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boole
 export type Point={x:number;y:number};
 export type AdventureIntent='help'|'heal'|'detour'|`heal:${string}`;
 const clamp=(value:number,min=0,max=1)=>Math.max(min,Math.min(max,value));
-export const spriteAsset=(index:number)=>originalArt(index)||'/sprites.png';
+// Mira's map figure follows her character reference; dialogue portraits stay independent.
+export const spriteAsset=(index:number)=>index===2?'/characters/mira-map.png':originalArt(index)||'/sprites.png';
 type ActiveRun=NonNullable<Squad['run']>;
 function recentEvents(run:ActiveRun|null,now:number){return run?run.events.filter(e=>e.id.startsWith(`${String(run.round)}-${String(run.node)}-`)&&now>=e.at&&now-e.at<1000).slice(-8):[];}
 function memberTarget(role:string,index:number){const front=['melee','tank','rogue'].includes(role);return {x:Math.min(.57,.20+index*.09+(front?.18:0)),y:.61+(index%2)*.09};}
