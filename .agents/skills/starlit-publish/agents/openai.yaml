@@ -1,4 +1,4 @@
 interface:
   display_name: "STARLIT-GUILD を反映"
-  short_description: "合意済みの修正を確認・確定し、GitHubと限定公開サイトへ反映"
-  default_prompt: "$starlit-publish で今回の修正を確定し、GitHubと現在の限定公開サイトへ反映してください。"
+  short_description: "指定なしはプレビューへ反映。本番は明示指定と配備直前の最終承認後"
+  default_prompt: "$starlit-publish で今回の修正を確定し、GitHubとプレビューサイトへ反映してください。"

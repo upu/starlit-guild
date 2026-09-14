@@ -1,0 +1,35 @@
+{
+  "mode": "test",
+  "site": {
+    "projectId": "COPY_FROM_GET_SITE",
+    "url": "COPY_RETURNED_URL",
+    "accessMode": "COPY_FROM_GET_SITE"
+  },
+  "environment": {
+    "projectId": "COPY_FROM_GET_ENVIRONMENT_VARIABLES",
+    "revision": null,
+    "testTools": null
+  },
+  "previewVerification": {
+    "projectId": "COPY_VERIFIED_PREVIEW_ID",
+    "sourceCommit": "COPY_FULL_SOURCE_SHA",
+    "checkedAt": null,
+    "testMode": {
+      "status": "pending",
+      "deploymentId": null,
+      "environmentRevision": null,
+      "testTools": true
+    },
+    "normalMode": {
+      "status": "pending",
+      "deploymentId": null,
+      "environmentRevision": null,
+      "testTools": false
+    },
+    "chapterOne": "pending",
+    "saveRestore": "pending",
+    "changedAreas": "pending",
+    "realDevice": "not-run",
+    "realDeviceOmissionReason": ""
+  }
+}

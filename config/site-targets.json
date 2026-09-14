@@ -1,0 +1,10 @@
+{
+  "preview": {
+    "projectId": "appgprj_6aa748f9f1ac8191b393754f3124df53",
+    "url": "https://starlit-guild-preview.poppinpudding.chatgpt.site"
+  },
+  "production": {
+    "projectId": "appgprj_6aa1eb8cdf288191ab04b2a0e3b9d3ee",
+    "url": "https://starlit-guild.poppinpudding.chatgpt.site"
+  }
+}
