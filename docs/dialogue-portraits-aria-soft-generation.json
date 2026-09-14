@@ -1,5 +1,4 @@
 {
-  "date": "2026-09-13",
   "tool": "built-in image_gen",
   "purpose": "Increase Aria's accepted feminine softness by two steps: rounder supple cheeks/chin, gentler eyes, smaller quiet smile; keep youthful adult age and all other portraits unchanged.",
   "references": [
@@ -18,15 +17,5 @@
     }
   ],
   "assembly": "Resize generated Aria square with Sharp Lanczos3, replace only the first cell in each atlas.",
-  "qa": "64px old/new Aria comparison; decoded RGBA pixels outside Aria are identical, including the approved Leon in both resolutions.",
-  "previousRevisions": [
-    {
-      "portraitBaseRevision": "cb3658c5106b8054d32ff8e5b64836dc1dcf8bfe",
-      "references": [
-        "outputs/portrait-age-qa/pair-source.png (local generated master exec-4ea29fb2-8c1a-4c12-8d76-68e78c3fa279, Aria is the left half)",
-        "public/portraits/aria.png"
-      ],
-      "prompt": "Use case: identity-preserve / style-transfer. Create ONE square small-game-UI portrait of Aria only. Input 1 left half is the current simplified Aria icon to adjust; ignore Leon in its right half entirely and do NOT draw him. Input 2 is the authoritative Aria identity, youthful-adult femininity and gentle softness reference. Retain the approved simple 64px-readable rendering style of input 1: strong clear contours, large clean flat color regions, very few hair separation lines, no intricate details. The specific requested correction: Aria now looks too angular / boyish. Add gentle feminine softness, a hint of delicacy and softly rounded, supple cheeks — WITHOUT making her a baby or younger than the young adult story portrait. Keep her bright friendly personality, not sadness or a helpless expression. \nMake the jaw and chin softly rounded with an oval feminine contour instead of the sharp V/diamond in input 1. A little subtle soft cheek fullness, not a wide chibi face. Make the nose smaller and more delicate with one short understated mark instead of a prominent angular bridge. Soften the eyebrows and upper eyelids, relaxed outer eye corners, tender expressive GREEN eyes with restrained feminine lashes: one clean upper-lid silhouette, no eyelash clutter. Eyes may be a little softer and fuller than input 1 but must NOT become oversized round child eyes. Mouth is a smaller gentle slightly-open warm smile, no huge triangular shouting mouth. A single very subtle broad warm-pink cheek tint is allowed; no hatching, shiny makeup or tiny blush lines. Youthful adult neck and balanced forehead-to-chin proportions. The feeling is gentle, soft, slightly airy young woman with a warm smile; keep some liveliness.\nIdentity invariants: blonde elf woman, large pointed ears, GREEN hood with simple gold edge and ONE white feather/gold flower accent, long blonde hair in a few broad locks, green eyes, same dark teal background. No torso, hands, props or jewelry additions. Closely cropped head filling the square and only a tiny green neckline; all eyes, lips and chin visible, outer hood/hair may crop at edges. \nDo not return to detailed painterly rendering. Flat simplified anime cartoon finish with bold outline equivalent to about 1.5px at 64px final display, one shadow tone per major color, simple eyes with one highlight, minimal interior lines. No gradients, hair strand texture, filigree, photorealism, over-rendered irises, or heavy shadows. No text, frame, watermark or extra characters. Keep the same youthful-adult apparent age as input 2, while recovering her feminine soft facial expression within the simple icon style."
-    }
-  ]
+  "qa": "64px Aria comparison; decoded RGBA pixels outside Aria are identical, including Leon in both resolutions."
 }
