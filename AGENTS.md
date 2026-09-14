@@ -1,9 +1,9 @@
 # STARLIT-GUILD
 
-- コード、資料、素材、設定などGit管理対象を変更する実装依頼では、[starlit-implement](.agents/skills/starlit-implement/SKILL.md) を使う。ユーザーが毎回Git手順を説明しなくても、GitHubを正本として `main` 同期、作業ブランチ、検証、push、PR作成まで進め、PRのマージ前だけ明示承認を待つ。
+- コード、資料、素材、設定などGit管理対象を変更する実装依頼では、[starlit-implement](.agents/skills/starlit-implement/SKILL.md) を使う。GitHubを正本として `main` 同期、作業ブランチ、検証、push、PR作成まで進め、PRのマージ前に明示承認を待つ。指定なしなら、承認後のマージ・後片付け・プレビュー反映まで含める。
 - 「反映して」「確定して公開」「GitHubとサイトへ同期」などの依頼では、[starlit-publish](.agents/skills/starlit-publish/SKILL.md) を使う。`$starlit-publish` だけでも呼び出せる。
-- 実装と公開を同時に依頼された場合は、先に `starlit-implement` のPRフローを進める。PRのマージ承認・マージ・後片付けが完了してから、依頼済みの範囲で `starlit-publish` によりSitesへ反映する。
-- 公開先は `config/site-targets.json` の `preview` / `production` で区別する。宛先未指定の「反映して」と単独の `$starlit-publish` はプレビューまで。本番は「本番へ公開」など明示された場合だけ、同じGitHubソースのプレビュー確認後に更新する。`.openai/hosting.json` は既存本番の識別子を維持し、公開用の独立した作業場所でだけ宛先を切り替える。詳細は [サイトの確認と公開](docs/site-release.md)。ユーザーの宛先・ローカルのみの指定を優先し、通常の編集・相談だけで公開しない。
+- 実装では先に `starlit-implement` のPRフローを進め、マージ・後片付け後に `starlit-publish` でSitesへ反映する。本番配備は、スキル実行時に本番向けと明示され、かつプレビュー確認と配備準備を終えた後の「本番への配備でよいですか？」への最終承認を得た場合だけ行う。開始時の指定・PRマージ承認・過去の本番承認を最終承認へ流用しない。
+- 公開先は `config/site-targets.json` の `preview` / `production` で区別する。宛先未指定の `starlit-implement`、宛先未指定の「反映して」、単独の `$starlit-publish` はプレビューまで。`.openai/hosting.json` は既存本番の識別子を維持し、公開用の独立した作業場所でだけ宛先を切り替える。詳細は [サイトの確認と公開](docs/site-release.md)。ユーザーの宛先・ローカルのみ・PR作成まで・配備しない指定を優先し、調査・相談・レビューだけでは配備しない。
 - 世界観・人物設定・プロットの資料更新と、ゲーム内の会話・クエストの実装を区別して報告する。
 - PRではゲーム本体への影響を分類する。動作・表示・音・遊べる内容・セーブ仕様が変わる場合は `game-change` として `npm run version:patch` でパッチ版を1つ上げる。リファクタリング、テスト、開発設定、設定資料、シナリオ検討だけなら `no-game-change` として据え置く。PRテンプレートではどちらか一方だけを選ぶ。
 - 各タスクは同じフォルダーを使う場合がある。公開前に別タスクの作業状況と未確定差分を確認し、作業中のファイルや無関係な変更を失わせない。
