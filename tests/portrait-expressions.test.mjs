@@ -21,13 +21,13 @@ test('four reference characters use their own eight-cell atlas; other characters
   for(const expression of portraits.portraitExpressions){
    const portrait=exports.Portrait({index,expression,size:72});
    assert.equal(portrait.props.style.backgroundImage,`url(/portraits/${name}-expressions.webp)`);
-   assert.equal(portrait.props.style.backgroundSize,'400% 200%');
+   assert.equal(portrait.props.style.backgroundSize,'625% 312.5%');
    positions.add(portrait.props.style.backgroundPosition);
   }
   assert.equal(positions.size,8);
   const meta=await sharp(readFileSync(new URL(`../public/portraits/${name}-expressions.webp`,import.meta.url))).metadata();
   assert.equal(meta.width,1024);assert.equal(meta.height,512);
-  assert.equal(exports.Portrait({index}).props.style.backgroundPosition,'0% 0%');
+  assert.equal(exports.Portrait({index}).props.style.backgroundPosition,portraits.expressionPortrait(index,'neutral').position);
  }
  for(const index of [3,4,5,6,7,12,14]){
   assert.equal(portraits.expressionPortrait(index,'smile'),null);
@@ -50,5 +50,5 @@ test('expressions are authored for narrative context, narration has none, and un
  const pumpety=stories.find(s=>s.id==='puppet-midnight-departure');
  assert.equal(pumpety.lines.find(l=>l.text.startsWith('もう名前で')).expression,'mischievous');
  assert.ok(idleBanter(0).every(l=>l.expression==='smile'));
- assert.equal(portraits.expressionPortrait(0).position,'0% 0%');
+ assert.equal(portraits.expressionPortrait(0).position,portraits.expressionPortrait(0,'neutral').position);
 });
