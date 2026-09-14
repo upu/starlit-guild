@@ -1,10 +1,10 @@
 # アリア・レオンの動作画像
 
-2026-09-11。既存の `public/sprites.png` を参照し、built-in `image_gen` で各1枚を新規生成。CLI/APIは使用していない。
+既存の `public/sprites.png` を参照し、組み込み `image_gen` で各1枚を生成。CLI/APIは使用していない。
 
 ## 現在の状態
 
-生成原本は `outputs/hero-animation/aria-generated.png` と `outputs/hero-animation/leon-generated.png` に保存。どちらも1448×1086、RGBで市松模様が焼き込まれていた。ユーザーの画像加工許可を受けて `scripts/prepare-hero-animation.mjs` で透過・整列し、以下のRGBA PNGを採用した。再生成やCLI画像生成は行っていない。
+生成原本は `outputs/hero-animation/aria-generated.png` と `outputs/hero-animation/leon-generated.png` に保存。どちらも1448×1086、RGBで市松模様が焼き込まれているため、`scripts/prepare-hero-animation.mjs` で透過・整列し、以下のRGBA PNGを採用する。
 
 - `public/animations/aria-v1.png`
 - `public/animations/leon-v1.png`

@@ -1,6 +1,6 @@
-# 演出素材（2026-09-10）
+# 演出素材
 
-## 第一部のステージ背景（2026-09-12）
+## 第一部のステージ背景
 
 内蔵 imagegen で各1回生成し、1536×1024 PNGを採用。`public/stages/evening-trade-road.png` は1-2の夕方の交易路、`public/stages/town-deliveries.png` は1-3の倉庫と商店の通り。`Quest.background` を通じてクエスト一覧・冒険マップに表示する。
 
@@ -42,4 +42,4 @@ Subject: friendly lost forest spirit, cute mint and aqua luminous small floating
 - 動きを減らす設定では着弾粒子・軌跡・全画面の光を省略し、静止したカットインとアイテムを表示する。
 - 既存の15地点描画、セーブ移行、オフライン精算、複数タブ復帰に加え、演出の期限・前地点除外・3種アイテムの描画・音の重複抑制と消音を自動検証する。
 - 画像は目視で確認。ブラウザーでのアニメーション目視、実機の音の聞こえ方・音量・性能は未検証。
-- BGMは後続の追加でオリジナル曲2曲を作成。`public/music/camp.wav` と `public/music/journey.wav` に保存。外部の音楽生成サービスは使用せず、`scripts/compose-bgm.mjs` に楽譜と合成方法を保持する。キャラ音声は未追加。
+- BGMはオリジナル曲2曲を `public/music/camp.wav` と `public/music/journey.wav` に保存する。外部の音楽生成サービスは使用せず、`scripts/compose-bgm.mjs` に楽譜と合成方法を保持する。キャラ音声は未追加。

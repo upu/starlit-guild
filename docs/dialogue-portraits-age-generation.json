@@ -1,5 +1,4 @@
 {
-  "date": "2026-09-13",
   "tool": "built-in image_gen",
   "purpose": "Keep the accepted simple rendering and UI sizes while matching Aria and Leon to the youthful-adult faces in their story stills.",
   "references": [
@@ -21,5 +20,5 @@
     }
   ],
   "assembly": "Resize the generated 2:1 portrait strip to 144x72 / 288x144 using Sharp Lanczos3; replace only the first two atlas cells.",
-  "qa": "Compared old/new pair at 64px per person; decoded RGBA pixels for every cell outside Aria/Leon are identical to the base in both exports."
+  "qa": "Aria and Leon are legible at 64px per person; decoded RGBA pixels for every other atlas cell are identical to the base in both exports."
 }
