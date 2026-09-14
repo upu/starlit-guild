@@ -37,7 +37,7 @@ test('1-1 through 1-9 requires each ending, stops offline and roundtrips without
  }
  assert.deepEqual(s.owned,['aria','leon']);assert.equal(s.town,0);assert.equal(s.prologue,true);
  assert.equal(availableStories(s).length,18);
- assert.equal(nextGoal(s).questId,MOSS_QUEST);assert.match(nextGoal(s).title,/第一部 完/);
+ assert.equal(nextGoal(s).questId,'hilltop-picnic');assert.match(nextGoal(s).title,/2-1/);
  assert.throws(()=>start(s,'herbs'));assert.throws(()=>act(s,{type:'build'},s.updatedAt));
  const replay=finish(start(s,RETURN_QUEST));assert.equal(replay.done[RETURN_QUEST],2);
  assert.equal(stageEndingPending(replay),undefined);assert.deepEqual(replay.story,s.story);

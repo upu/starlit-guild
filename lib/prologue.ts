@@ -1,3 +1,4 @@
+import {chapterTwoStages} from './chapter-two.ts';
 import type {State,Squad} from './game.ts';
 
 export const TRADE_QUEST='village-trade';
@@ -20,22 +21,23 @@ export const prologueStages=[
  {quest:RESTORATION_QUEST,label:'1-8 水路の修理',title:'水の通り道を戻す仕事',arrival:'水路の修理を終えました',detail:'水の流れと、石組みに残る苔を確かめましょう。'},
  {quest:MOSS_QUEST,label:'1-9 増えすぎた苔',title:'もう一度、あの灯りを',arrival:'苔の撤去を終えました',detail:'道具を置いて、ふたりで塔を見上げましょう。'},
 ];
-export const isPrologueQuest=(id:string)=>prologueStages.some(stage=>stage.quest===id);
+export const storyStages=[...prologueStages,...chapterTwoStages];
+export const isPrologueQuest=(id:string)=>storyStages.some(stage=>stage.quest===id);
 // Absent in existing saves: those adventures keep their unlocked features.
 export const inPrologue=(s:State)=>s.prologue===true;
 // Old saves lack lastQuest. Use their last recorded stage without jumping to an unlocked one.
 export function restingQuest(s:State,sq:Squad){
  return sq.run?.quest||sq.lastQuest||[...(s.story?.completed||Object.keys(s.done))].reverse().find(isPrologueQuest)||TRADE_QUEST;
 }
-export const stageEndingPending=(s:State)=>prologueStages.find(({quest})=>!!s.done[quest]&&!!s.story?.completed.includes(quest)&&!s.story.read.includes(quest+'-return'))?.quest;
+export const stageEndingPending=(s:State)=>storyStages.find(({quest})=>!!s.done[quest]&&!!s.story?.completed.includes(quest)&&!s.story.read.includes(quest+'-return'))?.quest;
 export const tradeEndingPending=(s:State)=>stageEndingPending(s)===TRADE_QUEST;
 // Use recorded completions and readings; do not migrate or reset existing saves.
 export function stageUnlocked(s:State,id:string){
- const index=prologueStages.findIndex(stage=>stage.quest===id);
- return index<=0||prologueStages.slice(0,index).every(({quest})=>s.done[quest]>0&&s.story?.read.includes(quest+'-return'));
+ const index=storyStages.findIndex(stage=>stage.quest===id);
+ return index<=0||storyStages.slice(0,index).every(({quest})=>s.done[quest]>0&&s.story?.read.includes(quest+'-return'));
 }
 export function nextStage(s:State){
- const unlocked=prologueStages.filter(({quest})=>stageUnlocked(s,quest));
+ const unlocked=storyStages.filter(({quest})=>stageUnlocked(s,quest));
  const stage=unlocked.find(({quest})=>!s.done[quest])||unlocked.at(-1);
  if(!stage)throw Error('プロローグの進行状態を読み込めません。');
  return stage;

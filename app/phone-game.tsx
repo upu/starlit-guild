@@ -1,4 +1,5 @@
 'use client';
+import {equippedTechnique,techniqueById} from '@/lib/techniques';
 import {useState,type Dispatch,type MouseEvent,type ReactNode,type Ref,type SetStateAction} from 'react';
 import Image from 'next/image';
 import {Users,Flame,BookOpen,ChevronRight,Heart,Hammer,Gift,House,Lightbulb,Images} from 'lucide-react';
@@ -71,7 +72,8 @@ function storySheet(m:SheetModel,advanceRef:Ref<StoryAdvance>):SheetView|null{
 function heroSheet(m:SheetModel):SheetView|null{
  if(m.sheet!=='personality')return null;
  const notes=characterNotes[m.hero.id];
- return {title:m.hero.name+'のこと',description:m.hero.job,content:<><Sprite index={m.hero.sprite} size={88}/><p>{m.hero.bio}</p>{notes&&<p>{notes.habit}</p>}<div className="phone-stat-row">{['採取','護衛','討伐'].map((name,i)=><span key={name}>{name}<b>{memberStats(m.state,m.hero.id)[i]}</b></span>)}</div><h3>{heroSkills[m.hero.id].name}</h3><p>{heroSkills[m.hero.id].description}</p><button className="outline" onClick={()=> { m.navigate('memories'); }}>旅の思い出を読む</button></>};
+ const skill=['aria','leon'].includes(m.hero.id)?techniqueById(equippedTechnique(m.state,m.hero.id,'active')||'')??{name:'通常行動',description:'自動で使う技はセットされていません。'}:heroSkills[m.hero.id];
+ return {title:m.hero.name+'のこと',description:m.hero.job,content:<><Sprite index={m.hero.sprite} size={88}/><p>{m.hero.bio}</p>{notes&&<p>{notes.habit}</p>}<div className="phone-stat-row">{['採取','護衛','討伐'].map((name,i)=><span key={name}>{name}<b>{memberStats(m.state,m.hero.id)[i]}</b></span>)}</div><h3>{skill.name}</h3><p>{skill.description}</p><button className="outline" onClick={()=> { m.navigate('memories'); }}>旅の思い出を読む</button></>};
 }
 function journeySheet(m:SheetModel):SheetView|null{
  if(m.sheet==='goal')return {title:m.goal.title,description:m.prologue?'ふたりの次の一歩':'旅団の次の一歩',content:<><p>{m.goal.detail}</p>{(!m.prologue||m.goal.destination!=='quests')&&<button className="full" onClick={()=> { m.followGoal(m.goal); }}>{m.goal.action}</button>}{m.state.clears===0&&!m.prologue&&<ol className="journey-steps"><li>ふたりの隊を出発させる</li><li>タップで応援。見守るだけでも大丈夫</li><li>3地点ごとに報酬、15地点で依頼達成</li><li>木材とお金で、帰る場所を作る</li></ol>}<button className="outline full" onClick={()=> { m.setSheet('help'); }}>旅の手引き・操作方法</button></>};

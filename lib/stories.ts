@@ -6,6 +6,8 @@ import {inPrologue,TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,W
 import {prologueStories} from './prologue-stories.ts';
 import {characterEncounters} from './character-encounters.ts';
 import {idleBanter} from './idle-banter.ts';
+import {chapterTwoStories} from './chapter-two-stories.ts';
+import {chapterTwoBanter} from './chapter-two.ts';
 import {waterwayBanter} from './waterway-banter.ts';
 import type {PortraitExpression} from './portrait-expressions.ts';
 
@@ -23,6 +25,7 @@ const pair=(quest:string,title:string,after:string,intro:StoryLine[],outro:Story
 // Their affection is mutual. Progress shows trust and small choices, never a forced confession.
 export const stories:Story[]=[
  ...prologueStories,
+ ...chapterTwoStories,
  ...characterEncounters,
  ...madHalloweenStories,
  ...recruitmentStories,
@@ -157,6 +160,7 @@ function wetlandBanter(run:NonNullable<Squad['run']>):StoryLine[]{
 }
 function routeBanter(sq:Squad):StoryLine[]|null{
  const run=sq.run;if(!run)return null;
+ const chapterTwo=chapterTwoBanter(run);if(chapterTwo)return chapterTwo;
  const waterway=waterwayBanter(run);if(waterway)return waterway;
  if(run.quest===WETLAND_QUEST)return wetlandBanter(run);
  if(run.quest===TOWER_QUEST)return towerBanter(run);

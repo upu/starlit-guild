@@ -5,6 +5,8 @@ import {Coins,Leaf,Gem,Logs,Shield,Swords,Package} from 'lucide-react';
 import {heroes,memberStats,memberMaxHp,heroSkills,level,type State,type Action} from '@/lib/game';
 import {equipment,equipmentById,inventoryOf,equippedBy,availableCopies,canEquip,shopItems,shopTier,type Equipment,type EquipmentSlot} from '@/lib/equipment';
 import {storyItems} from '@/lib/story-items';
+import {techniquesUnlocked} from '@/lib/techniques';
+import {TechniquePanel} from './technique-panel';
 import {Portrait} from './portrait';
 
 type Props={state:State;ready:boolean;onAction:(action:Action)=>boolean};
@@ -45,5 +47,5 @@ function EquipmentSlotPanel({hero,slot,...props}:Props&{hero:string;slot:Equipme
 export function CharacterPanel(props:Props){
  const [selected,setSelected]=useState('aria'),roster=heroes.filter(hero=>props.state.owned.includes(hero.id)),hero=roster.find(hero=>hero.id===selected)??roster[0];
  const hp=props.state.squads.find(squad=>squad.members.includes(hero.id))?.run?.health[hero.id];
- return <div className="character-panel"><div className="character-picker" aria-label="キャラクターを選ぶ">{roster.map(member=><button key={member.id} aria-pressed={hero.id===member.id} onClick={()=>{setSelected(member.id);}}><Portrait index={member.sprite} size={64}/><span>{member.name}</span></button>)}</div><div className="character-heading"><Portrait index={hero.sprite} size={144}/><div><h2>{hero.name}</h2><p>{hero.job}</p><span>Lv. {level(props.state.xp[hero.id]??0)}</span><p>{hp?`HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`:`最大HP ${String(memberMaxHp(props.state,hero.id))}`}</p></div></div><p>{hero.bio}</p><StatRow values={memberStats(props.state,hero.id)}/><section className="character-skill"><h3>{heroSkills[hero.id].name}</h3><p>{heroSkills[hero.id].description}</p></section><EquipmentSlotPanel {...props} hero={hero.id} slot="weapon"/><EquipmentSlotPanel {...props} hero={hero.id} slot="armor"/></div>;
+ return <div className="character-panel"><div className="character-picker" aria-label="キャラクターを選ぶ">{roster.map(member=><button key={member.id} aria-pressed={hero.id===member.id} onClick={()=>{setSelected(member.id);}}><Portrait index={member.sprite} size={64}/><span>{member.name}</span></button>)}</div><div className="character-heading"><Portrait index={hero.sprite} size={144}/><div><h2>{hero.name}</h2><p>{hero.job}</p><span>Lv. {level(props.state.xp[hero.id]??0)}</span><p>{hp?`HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`:`最大HP ${String(memberMaxHp(props.state,hero.id))}`}</p></div></div><p>{hero.bio}</p><StatRow values={memberStats(props.state,hero.id)}/>{(!techniquesUnlocked(props.state)||!['aria','leon'].includes(hero.id))&&<section className="character-skill"><h3>{heroSkills[hero.id].name}</h3><p>{heroSkills[hero.id].description}</p></section>}<TechniquePanel key={hero.id} {...props} hero={hero.id}/><EquipmentSlotPanel {...props} hero={hero.id} slot="weapon"/><EquipmentSlotPanel {...props} hero={hero.id} slot="armor"/></div>;
 }
