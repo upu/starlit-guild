@@ -1,5 +1,4 @@
 {
-  "date": "2026-09-13",
   "tool": "built-in image_gen",
   "assets": [
     {
@@ -9,16 +8,7 @@
       "prompt": "Create a new original landscape background for STARLIT GUILD stage 1-6, 1536x1024 PNG. Polished hand-painted Japanese fantasy storybook/anime environment, lush woodland wetland in early afternoon. Ferns, scattered SMALL patches of ordinary dark green non-glowing moss on damp stones and roots, shallow pools along the edges, dappled soft sunlight through leafy canopy, a firm walkable earthy strip across the lower middle left-to-right for overlaid small game characters. Quiet, intimate nearby forest, inviting natural green and soft earth colors, detailed but readable on a phone. Single full-bleed scene. No characters, monsters, buildings, tower, ruins, lanterns, magic, luminous moss, text, letters, UI, borders, logos or watermark. Clear broad ground space across lower-middle for gameplay sprites, not a wall of plants.",
       "reference": null,
       "usage": "forest-wetlandのクエスト一覧と冒険マップ"
-    },
-    {
-      "path": "public/stories/forest-moss-comparison.png",
-      "status": "不採用の初稿。a9810f4のGit履歴に保存。採用版はstage-1-6-closeup-art.jsonを参照。",
-      "width": 1536,
-      "height": 1024,
-      "prompt": "Create a NEW original landscape event illustration, 1536x1024 PNG, for STARLIT GUILD stage 1-6. Input image is CHARACTER DESIGN AND PAINTING STYLE REFERENCE ONLY, not the scene to edit. Preserve the two youthful adult adventurers' identities, faces, hair, eyes and outfits: Aria is blonde green-eyed pointed-eared elf, green gold-trim hood and cape, feather, white tunic, brown gloves; Leon is tousled brown-haired brown-eyed human, red scarf, blue tunic, silver shoulder armor, brown gloves. NEW SCENE: early afternoon in a nearby quiet damp forest, with ferns and tree roots. The two crouch side by side at a flat stone, comfortably familiar childhood friends focused on their small discovery. TWO separate shallow wooden dishes sit together on the stone, each with a SMALL pinch of ordinary dull dark-green featherlike moss with paired tiny branching tips. Both moss samples look very similar, clearly NOT glowing. Aria points near the paired leaf tips with a small wooden spatula without crushing them; Leon has just drawn his dish next to hers and attentively looks down at it. Close medium framing, show expressive faces, their hands and BOTH separate dishes clearly legible on a phone. Soft natural dappled daylight, no magical light. Match reference anime painted detail and warm natural expressions. Not a romance pose. No other people, tower, stone building, torch, lantern, text, label, UI, hearts, captions, borders, split panels or watermark. Do not reproduce the old tower scene or glowing moss. Natural hands, no duplicate limbs.",
-      "reference": "public/stories/tower-moss-discovery.png",
-      "usage": "forest-wetland-return、二つの入れ物を並べる行（0起点5）"
     }
   ],
-  "review": "背景の通行スペース、人物の髪・目・衣装、二つの木の入れ物、発光しない苔、文字と第三者の不在を目視確認。標本を並べる動作と画像の表示位置をテスト。"
+  "review": "背景の通行スペース、発光しない苔、文字・人物・塔の不在を目視確認。保存先と表示をテスト。"
 }
