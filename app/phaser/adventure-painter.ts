@@ -1,6 +1,6 @@
 import type Phaser from 'phaser';
 import {heroes,type GameEvent} from '@/lib/game';
-import {adventureFrame,adventureAssets,adventureAction,adventureHit,eventColor,memberHealthLabel,spriteAsset,spriteSize,type AdventureFrame} from '@/lib/adventure-presentation';
+import {adventureFrame,adventureAssets,adventureAction,adventureHit,eventColor,memberHealthLabel,spriteAsset,spriteFrame,spriteSize,type AdventureFrame} from '@/lib/adventure-presentation';
 import type {AdventureBridge} from './renderer-session';
 import {heroSheets,heroAnimation} from '@/lib/hero-animation';
 
@@ -13,6 +13,14 @@ function memberLunge(member:Member,size:number,reduced:boolean,front:boolean,att
 function memberAngle(member:Member,now:number,index:number,reduced:boolean,animated:boolean,front:boolean){if(reduced||animated)return 0;if(member.walking)return Math.sin(now/100+index)*3;return front?member.attack*-7:0;}
 
 const enemyAspect=(asset:string)=>asset.startsWith('/enemies/')?2/3:1;
+function registerHeroFrames(texture:Phaser.Textures.Texture,sheet:NonNullable<(typeof heroSheets)[string]>){
+ if(sheet.frames){
+  sheet.frames.forEach(([x,y,w,h],index)=>texture.add(String(index),0,x,y,w,h)?.setTrim(420,420,(420-w)/2,378-h,w,h));
+  return;
+ }
+ const source=texture.getSourceImage() as HTMLImageElement,w=source.width/sheet.columns,h=source.height/sheet.rows;
+ for(let i=0;i<sheet.columns*sheet.rows;i++)texture.add(String(i),0,Math.round(i%sheet.columns*w),Math.round(Math.floor(i/sheet.columns)*h),Math.floor(w),Math.floor(h));
+}
 export class AdventurePainter{
  private background!:Phaser.GameObjects.Image;
  private shade!:Phaser.GameObjects.Graphics;
@@ -55,15 +63,14 @@ export class AdventurePainter{
  }
  private makeFigure(index:number,name:string):Figure{
   const asset=spriteAsset(index);
-  return {image:this.scene.add.image(0,0,asset,asset==='/sprites.png'?String(index):undefined).setOrigin(.5,.9),shadow:this.scene.add.ellipse(0,0,60,12,0x092821,.28).setDepth(4),label:this.scene.add.text(0,0,name,{fontFamily:font,fontSize:'12px',color:'#fff1cf',stroke:'#132e27',strokeThickness:4}).setOrigin(.5,0).setDepth(31)};
+  return {image:this.scene.add.image(0,0,asset,spriteFrame(index)).setOrigin(.5,.9),shadow:this.scene.add.ellipse(0,0,60,12,0x092821,.28).setDepth(4),label:this.scene.add.text(0,0,name,{fontFamily:font,fontSize:'12px',color:'#fff1cf',stroke:'#132e27',strokeThickness:4}).setOrigin(.5,0).setDepth(31)};
  }
  private registerSheets(){
   for(const sheet of Object.values(heroSheets)){
    if(!sheet)continue;
-   const {asset,columns,rows}=sheet;if(!this.scene.textures.exists(asset))continue;
+   const {asset}=sheet;if(!this.scene.textures.exists(asset))continue;
    const texture=this.scene.textures.get(asset);if(texture.has('0'))continue;
-   const source=texture.getSourceImage() as HTMLImageElement,w=source.width/columns,h=source.height/rows;
-   for(let i=0;i<columns*rows;i++)texture.add(String(i),0,Math.round(i%columns*w),Math.round(Math.floor(i/columns)*h),Math.floor(w),Math.floor(h));
+   registerHeroFrames(texture,sheet);
   }
  }
  private removeFigure(figure:Figure){figure.image.destroy();figure.shadow.destroy();figure.label.destroy();}
@@ -175,7 +182,7 @@ export class AdventurePainter{
   if(!guest){if(this.guest){this.removeFigure(this.guest);this.guest=null;}return;}
   if(!this.guest)this.guest=this.makeFigure(guest.sprite,guest.name);
   const width=this.scene.scale.width,height=this.scene.scale.height,asset=spriteAsset(guest.sprite);
-  this.guest.image.setTexture(asset,asset==='/sprites.png'?String(guest.sprite):undefined).setPosition(width*.12,height*.82).setDisplaySize(size*.65,size*.65).setDepth(19);
+  this.guest.image.setTexture(asset,spriteFrame(guest.sprite)).setPosition(width*.12,height*.82).setDisplaySize(size*.65,size*.65).setDepth(19);
   this.guest.shadow.setPosition(width*.12,height*.82).setDisplaySize(size*.4,size*.07);this.guest.label.setText(guest.name+' · 同行中').setPosition(width*.12,height*.82+size*.1);
  }
  private paintDiscovery(frame:AdventureFrame,now:number){

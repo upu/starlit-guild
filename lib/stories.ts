@@ -208,7 +208,7 @@ function journeySituationBanter(run:NonNullable<Squad['run']>,level:number,varia
 }
 function coupleBanter(s:State,sq:Squad,now:number):StoryLine[]{
  const run=sq.run,variant=Math.floor(Math.max(0,now-(run?.started||0))/18000)%2,level=affection(s);
- if(!run)return idleBanter(now);
+ if(!run)return idleBanter(now,sq.members);
  const situation=journeySituationBanter(run,level,variant,now);if(situation)return situation;
  if(['pilgrim','wolf','royal'].includes(run.quest))return level>=2?[l('滑るぞ。つかまってろ。'),a('……もう平らな道だけど。','shy')]:[a('霧で、先が見えないね。','worried'),l('声の届くところにいてくれ。')];
  if(run.quest==='cart')return [a('帰りのパン、覚えてる？'),l('胡桃のやつだろ。忘れないよ。')];
