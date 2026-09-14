@@ -20,7 +20,7 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
  },
  'forest-wetland-return': {
   src: '/stories/forest-moss-aria-oil.png',
-  alt: '森の木陰で、二つの苔の入れ物を顔の近くへ持ち上げて見比べるアリア。正面寄りの胸上を油彩調で描き、緑の瞳と考え込む表情を捉える。',
+  alt: '木漏れ日が差す苔むした石壁の前で、二つの苔の入れ物を顔の近くへ持ち上げて見比べるアリア。金髪と緑の瞳、羽飾りのある緑のフードを繊細に描いている。',
   width: 1536, height: 1024, revealAtLine: 5,
  },
  'tower-road-return': {

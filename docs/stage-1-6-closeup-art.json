@@ -1,11 +1,14 @@
 {
-  "tool": "built-in image_gen",
+  "source": "user-provided image",
   "selection": "adopted",
+  "adoptedDate": "2026-09-15",
+  "sourceFilename": "codex-clipboard-c1bcab1b-7e7b-44ea-883b-96d427bd26cd.png",
   "path": "public/stories/forest-moss-aria-oil.png",
   "width": 1536,
   "height": 1024,
-  "sha256": "50f4235da0f9bd53a8e1da912d46e83125dbe9d54b9c486aaf1794a0deb85e8f",
-  "characterReference": "public/stories/tower-moss-discovery.png",
-  "prompt": "Use case: illustration-story. Create one landscape 1536x1024 oil-painted story still for STARLIT-GUILD. Show Aria, a recognizable youthful adult blonde green-eyed elf woman, in a front-facing chest-up composition. Preserve her pointed ears, feathered green-and-gold hood, cream tunic and leather gloves. Give her a slender natural frame with softly sloping narrow shoulders, upper arms held inward and a cape that does not widen her silhouette. She holds two distinct small wooden dishes separately near chin height, one in each hand, and compares the clearly visible moss samples with an attentive inquisitive expression. Keep her face as the main focal point. Use opaque oil paint, rich visible brushstrokes, warm light on her face and hair, and cool green forest and stone surroundings. Maintain anatomically coherent hands and arms. No other characters, text or watermark.",
-  "review": "顔と表情が主役。金髪・緑の瞳・尖った耳・緑と金のフードを継承し、両手の器は顎の高さ。肩幅とマントを狭めた油彩調。文字なし。表示は入れ物を持ち上げる0起点5行目から。"
+  "sha256": "0f4b5f185e52a75332317ef75ce2c8cfa7c2b7c49f46740e597e6967385d0637",
+  "storyId": "forest-wetland-return",
+  "revealAtLine": 5,
+  "processing": "none; original PNG copied byte-for-byte",
+  "review": "木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げて見比べる。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋。文字なし。"
 }
