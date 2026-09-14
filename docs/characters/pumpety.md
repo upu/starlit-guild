@@ -39,6 +39,14 @@
 
 ## 外見・関連資料・実装
 
+### リファレンスシート
+
+![パンプティ（プティ）のリファレンスシート](pumpety-reference-sheet.webp)
+
+GPT Imageで作成した外見・衣装・人形の制作参考。茶色のツインテール、青緑の目と八重歯、黒・緑・黄色を基調にした衣装、蝶とカボチャの意匠、操り人形を主な方向性として扱う。
+
+シート内に自動生成された年齢・身長・職業・台詞などの文字情報は、確定設定として扱わない。人物設定の正本は本ファイルと関連資料を優先する。
+
 [プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[仲間と来客の会話](../../lib/character-encounters.ts)、[スチルの対応](../../lib/story-art.ts) を参照する。
 
 初遭遇・クエストの会話は [マッドハロウィンの物語](../../lib/mad-halloween-stories.ts) を確認する。
