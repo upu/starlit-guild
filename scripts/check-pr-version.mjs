@@ -20,6 +20,8 @@ export function parseVersion(version,label='version'){
 export function validateVersionChange(baseVersion,headVersion,classification){
  const base=parseVersion(baseVersion,'main の version');
  parseVersion(headVersion,'PR の version');
+ // User-approved chapter-two development baseline; all later changes use the normal policy.
+ if(classification==='game-change'&&baseVersion==='0.1.22'&&headVersion==='0.2.0')return headVersion;
  const expected=classification==='game-change'
   ?`${base.major}.${base.minor}.${base.patch+1}`
   :`${base.major}.${base.minor}.${base.patch}`;
