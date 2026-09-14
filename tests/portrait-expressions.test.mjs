@@ -21,7 +21,7 @@ test('four reference characters use their own eight-cell atlas; other characters
   for(const expression of portraits.portraitExpressions){
    const portrait=exports.Portrait({index,expression,size:72});
    assert.equal(portrait.props.style.backgroundImage,`url(/portraits/${name}-expressions.webp)`);
-   assert.equal(portrait.props.style.backgroundSize,'625% 312.5%');
+   assert.equal(portrait.props.style.backgroundSize,'400% 200%');
    positions.add(portrait.props.style.backgroundPosition);
   }
   assert.equal(positions.size,8);
