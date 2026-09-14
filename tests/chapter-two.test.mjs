@@ -41,18 +41,17 @@ test('old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
  const replay=settle(start(done,PICNIC_QUEST),done.updatedAt+600000).state;assert.ok(replay.done[PICNIC_QUEST]>1);assert.ok(replay.squads[0].run);
 });
 
-test('picnic has only quiet scenery work, no damage, weapon poses, or herb rewards',()=>{
- const q=allQuests.find(q=>q.id===PICNIC_QUEST);assert.ok(Array.from({length:15},(_,i)=>encounter(q,i)).every(k=>k==='gather'));
- let s=start(firstChapter(),PICNIC_QUEST);const before=s.herbs;
+test('picnic uses ordinary weak single slimes and combat poses without gathering rewards',()=>{
+ const q=allQuests.find(q=>q.id===PICNIC_QUEST);assert.ok(Array.from({length:15},(_,i)=>encounter(q,i)).every(k=>k==='battle'));
+ let s=start(firstChapter(),PICNIC_QUEST);const before=s.herbs;let attacked=false;
  while(s.squads[0].run){
   s=settle(s,s.squads[0].run.nextAt).state;const run=s.squads[0].run;if(!run)break;
-  assert.ok(run.events.every(e=>!['hit','hurt','skill','burst'].includes(e.kind)));
-  assert.ok(Object.values(run.health).every(h=>h.hp===h.maxHp));
+  assert.ok(run.events.every(e=>e.kind!=='gather'));assert.equal(run.enemies.length,1);assert.equal(run.enemies[0].resistance,0);
   const frame=adventureFrame({squad:s.squads[0],startQuest:PICNIC_QUEST,now:s.updatedAt,ready:true,paused:false,detours:false});
-  assert.match(frame.target.name,/景色|木陰|腰/);
-  for(const member of frame.members)assert.ok(![4,5,6,7].includes(Number(heroAnimation(member,frame,s.updatedAt)?.frame)));
+  assert.equal(frame.target.name,'丘のスライム');assert.equal(frame.target.asset,'/sprites.png');assert.equal(frame.target.sprite,8);assert.equal(frame.target.battle,true);
+  for(const member of frame.members)attacked||=[4,5,6,7].includes(Number(heroAnimation(member,frame,s.updatedAt)?.frame));
  }
- assert.equal(s.herbs,before);
+ assert.equal(attacked,true);assert.equal(s.herbs,before);
  assert.equal(storyArtAt(PICNIC_QUEST+'-return',Infinity),undefined);
 });
 
@@ -63,6 +62,21 @@ test('herb quest combines observation and combat; Mira does not walk with the pa
  const st=chapterTwoStories.find(st=>st.id===MOON_HERB_QUEST+'-return');
  const index=st.lines.findIndex(line=>line.text.includes('膝が折れた'));assert.equal(storyArtAt(st.id,index-1),undefined);
  const art=storyArtAt(st.id,index);assert.ok(art);assert.ok(existsSync('public'+art.src));assert.equal(index,6);
+});
+
+test('an in-progress picnic from the local gathering version loads without losing progress or resources',()=>{
+ const old=start(firstChapter(),PICNIC_QUEST),run=old.squads[0].run;
+ run.enemies=[];run.target=11;run.targetMax=31;run.node=4;
+ const saved=structuredClone(old),loaded=roundtrip(old);
+ assert.deepEqual(old,saved);assert.equal(loaded.gold,old.gold);assert.deepEqual(loaded.story,old.story);
+ assert.equal(loaded.squads[0].run.target,11);assert.equal(loaded.squads[0].run.node,4);
+ assert.deepEqual(loaded.squads[0].run.health,run.health);assert.equal(loaded.squads[0].run.nextAt,run.nextAt);
+ assert.equal(loaded.squads[0].run.enemies,undefined);assert.deepEqual(roundtrip(loaded),loaded);
+ const frame=adventureFrame({squad:loaded.squads[0],startQuest:PICNIC_QUEST,now:loaded.updatedAt,ready:true,paused:false});
+ assert.equal(frame.target.sprite,8);assert.equal(frame.target.battle,true);
+ let next=loaded;while(next.squads[0].run.node===4)next=settle(next,next.squads[0].run.nextAt).state;
+ assert.equal(next.squads[0].run.enemies.length,1);assert.equal(next.squads[0].run.enemies[0].resistance,0);
+ assert.doesNotThrow(()=>roundtrip(next));
 });
 
 test('coins, levels, hero and slot are checked; learning is distinct from free equipment changes',()=>{

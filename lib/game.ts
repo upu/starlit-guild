@@ -15,7 +15,7 @@ export type Kind='採取'|'護衛'|'討伐';
 // price remains legacy profile metadata; recruitment recipes are defined in recruitment.ts.
 function recruitmentUnlock(id:string){const recruitment=recruitmentByHero(id);if(!recruitment)throw Error(`仲間「${id}」の加入条件が見つかりません。`);return recruitment.unlock;}
 export const heroes=[...baseHeroes.map((h,i)=>({...h,sprite:i,unlock:i<2?0:recruitmentUnlock(h.id),price:[0,0,100,220,450,700,950,1300][i]})),chachaHero];
-export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;gatherAsset?:string;escortTarget?:string;escortAsset?:string;availability?:'repeatable'|'once'};
+export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;escortTarget?:string;escortAsset?:string;availability?:'repeatable'|'once'};
 export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q.xp*5,herbs:q.herbs*5,ore:q.ore*5,unlock:[0,2,4,10,15,20,35,45,60][i],enemy:i===8?10:i>=3?9:8})),
  {id:TRADE_QUEST,name:'街への交易',kind:'護衛',region:'街へ続く交易路',desc:'それぞれの村から預かった品を、街の取引先へ。道中で頼まれた薬草も採りながら、アリアとレオンで荷物を届けよう。',tier:1,need:12,seconds:180,gold:120,xp:60,herbs:10,ore:0,unlock:0,enemy:8,background:'/forest.png',gatherTarget:'取引先に頼まれた薬草',escortTarget:'村から預かった荷物',availability:'repeatable'},
  {id:RETURN_QUEST,name:'夕暮れの帰り道',kind:'護衛',region:'村へ戻る交易路',desc:'買い物を終えたら、村への分かれ道まで一緒に。帰りの品を運びながら、夕方の街道を進もう。',tier:1,need:13,seconds:180,gold:100,xp:65,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'道に出てきたスライム',background:'/stages/evening-trade-road.png',escortTarget:'村へ持ち帰る品',availability:'repeatable'},
@@ -188,13 +188,12 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST,PICNIC_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST].includes(q.id)&&kind!=='battle';}
+function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST].includes(q.id)&&kind!=='battle';}
 function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
 function stageWorkText(q:Quest,kind:Encounter,special:boolean){
  if(kind==='battle')return null;
  if([RESTORATION_QUEST,MOSS_QUEST].includes(q.id))return kind==='gather'?'手の届く範囲を丁寧に取り除く':'声を掛け合って作業を進める';
  const texts:Partial<Record<string,[string,string]>>={
-  [PICNIC_QUEST]:['景色と木陰を確かめる','座れそうな場所を探す'],
   [MOON_HERB_QUEST]:['葉の裏を見比べて採る','採った場所ごとに包みを分ける'],
   [WATERWAY_QUEST]:['草を分けて水路の道筋を確かめる','地図と苔の続く先を照らし合わせる'],
   [WETLAND_QUEST]:['草葉を分けて苔を探す','葉の形と湿り気を丁寧に確かめる'],
@@ -288,8 +287,15 @@ function upgradeSharedHealth(input:State|LegacySharedHealthState):State{
  }
  return s;
 }
+function upgradePicnicRun(input:State):State{
+ if(!input.squads.some(sq=>sq.run?.quest===PICNIC_QUEST&&sq.run.enemies?.length===0))return input;
+ const s=structuredClone(input);
+ // Old local picnic saves used gathering targets. Preserve their current progress as a legacy target.
+ for(const sq of s.squads)if(sq.run?.quest===PICNIC_QUEST&&sq.run.enemies?.length===0)delete sq.run.enemies;
+ return s;
+}
 export function migrate(raw:State|LegacySharedHealthState|V3State|V2State|LegacyState,now:number):State{
- if(raw.version===4)return upgradeSharedHealth(raw);
+ if(raw.version===4)return upgradePicnicRun(upgradeSharedHealth(raw));
  const old=migrateV3(raw,now);const s={...structuredClone(old),version:4,wood:0,town:0,friendship:{},discoveries:0,squads:old.squads.map(sq=>({...sq,run:sq.run?{...structuredClone(sq.run),serial:0,nodes:3,cheer:0,ward:0,comboAt:Math.max(old.updatedAt,sq.run.nextAt)+14500,detour:null,scene:null,actors:sq.run.actors.map(a=>({...a,actions:0}))}:null}))} as unknown as LegacySharedHealthState;
  addLog(s as unknown as State,'寄り道と連携技が登場！ 次の周回から15地点の長い冒険になります。',now);return upgradeSharedHealth(s);
 }

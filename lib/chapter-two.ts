@@ -7,11 +7,11 @@ export const chapterTwoStages=[
  {quest:MOON_HERB_QUEST,label:'2-2 月をためる草',title:'葉の裏の月明かり',arrival:'薬草を採り終えました',detail:'場所ごとに分けた包みを、ミラへ届けましょう。'},
 ];
 export const chapterTwoQuests:Quest[]=[
- {id:PICNIC_QUEST,name:'お昼を持って、あの坂へ',kind:'採取',region:'昼の丘へ続く坂道',desc:'約束していた休日。パンを持って坂を上り、景色のよい場所でお昼にしよう。',tier:1,need:12,seconds:120,gold:160,xp:90,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/tower-road.png',gatherTarget:'お昼に向いた場所',gatherAsset:'/ui/adventure-compass.png',availability:'repeatable'},
+ {id:PICNIC_QUEST,name:'お昼を持って、あの坂へ',kind:'討伐',region:'昼の丘へ続く坂道',desc:'約束していた休日。パンを持って坂を上ろう。道に出てきたスライムを追い払い、景色のよい場所でお昼にしよう。',tier:1,need:12,seconds:120,gold:160,xp:90,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'丘のスライム',background:'/stages/tower-road.png',availability:'repeatable'},
  {id:MOON_HERB_QUEST,name:'月をためる草',kind:'採取',region:'月光の差し込む林',desc:'治癒師ミラから頼まれた薬草を探そう。葉の裏を見比べ、月の光を蓄えたものを場所ごとに包んで持ち帰る。',tier:1,need:28,seconds:180,gold:180,xp:100,herbs:15,ore:0,unlock:0,enemy:8,enemyName:'林のスライム',background:'/forest.png',gatherTarget:'月の光を蓄えた薬草',availability:'repeatable'},
 ];
 export function chapterTwoWork(id:string,node:number){
- if(id===PICNIC_QUEST)return {kind:'gather' as const,name:['坂から景色を眺める','風の通る木陰を探す','腰を下ろせる場所を確かめる'][node%3]};
+ if(id===PICNIC_QUEST)return {kind:'battle' as const,name:'丘のスライム'};
  if(id===MOON_HERB_QUEST)return node%3===2?{kind:'battle' as const,name:'林のスライム'}:{kind:'gather' as const,name:node%3===0?'林の切れ目で葉の裏を見比べる':'光を蓄えた葉を包みに分ける'};
  return null;
 }
