@@ -1,5 +1,5 @@
 import type {Story,StoryLine} from './stories.ts';
-const say=(speaker:string,text:string):StoryLine=>({speaker,text});
+const say=(speaker:string,text:string,expression?:StoryLine['expression']):StoryLine=>({speaker,text,...(expression?{expression}:{})});
 const n=(text:string):StoryLine=>({text});
 
 // Visitors are not recruits. Each scene names the companions and prior encounters it needs.
@@ -25,29 +25,29 @@ export const characterEncounters:Story[]=[
  {id:'visit-pumpety-finn',title:'返さない宝物',place:'古い舞台の片隅',chapter:'encounter',town:1,requiresHeroes:['finn'],requiresQuests:['puppet-midnight'],lines:[
   n('フィンが小箱を開けると、かぼちゃの人形が跳ねた。人形の腕には、見覚えのある真鍮の鍵がぶら下がっている。'),
   say('finn','あれ。さっきまで僕のポケットにあったんだけど。'),
-  say('pumpety','お人形が拾ったんだって。褒めてあげて？'),
+  say('pumpety','お人形が拾ったんだって。褒めてあげて？','mischievous'),
   n('フィンは笑いながら、胸元の古い木のボタンを確かめた。プティの目が、一瞬だけその手を追う。'),
-  say('pumpety','そっちのほうが宝物？ ずいぶん地味だね。'),
+  say('pumpety','そっちのほうが宝物？ ずいぶん地味だね。','mischievous'),
   say('finn','うん。売っても一銭にもならない。……これは、遊びに使わないで。'),
   n('プティが指を曲げると、人形が机の上でぺこりと頭を下げた。彼女自身も少し目をそらし、真鍮の鍵を返す。'),
-  say('pumpety','分かった。それは舞台に上げない。代わりに、その空っぽの財布は？'),
+  say('pumpety','分かった。それは舞台に上げない。代わりに、その空っぽの財布は？','worried'),
   say('finn','ああ、それなら今、プティの背中に。'),
   n('振り返ったプティの髪飾りに、財布が吊り下がっていた。中から人形用の小さな紙の帽子が落ちる。'),
-  say('pumpety','……やるじゃん。次は負けないから。'),
+  say('pumpety','……やるじゃん。次は負けないから。','mischievous'),
   say('finn','その前に、出口の鍵まで持っていかないでね。'),
  ]},
  {id:'camp-chacha-mira',title:'三分を数える手',place:'酒場のお茶の席',chapter:'encounter',town:1,requiresHeroes:['chacha','mira'],lines:[
   n('茶葉を蒸らすあいだ、チャチャは椅子の横でゆっくり膝を曲げていた。ミラは湯気の向こうで砂時計を見ている。'),
   say('chacha','二十八、二十九、三十。はい、お茶ですねぇ。'),
-  say('mira','まだ砂が残っているわ。今日は数えるのが早かったみたい。'),
+  say('mira','まだ砂が残っているわ。今日は数えるのが早かったみたい。','serious'),
   n('ミラが砂時計をふたりの間へ置き直す。チャチャは座って、カップの取っ手にそっと指を添えた。大剣は長椅子の端に預けてある。'),
   say('chacha','では、腕のほうをもう少し……。'),
-  say('mira','その腕も休ませてあげて。せっかくだから、香りの話をしましょう。'),
+  say('mira','その腕も休ませてあげて。せっかくだから、香りの話をしましょう。','smile'),
   say('chacha','あらぁ。わたし、いつも飲む前に動いてばかり。'),
-  say('mira','今日は、ちゃんと座って待ってくれているわ。'),
+  say('mira','今日は、ちゃんと座って待ってくれているわ。','smile'),
   n('最後の砂が落ちた。ひと口飲んだチャチャが、目を細める。'),
   say('chacha','おいしい。待つほうの三分も、いいですねぇ。'),
-  say('mira','次はあなたの好きな茶葉で淹れて。私も、座って待つから。'),
+  say('mira','次はあなたの好きな茶葉で淹れて。私も、座って待つから。','smile'),
   n('チャチャはうなずき、砂時計を剣の柄ではなく、茶缶の隣に置いた。'),
  ]},
  {id:'camp-chacha-garr',title:'重さより、持ちやすさ',place:'鍛冶場の作業台',chapter:'encounter',town:2,requiresHeroes:['chacha','garr'],lines:[

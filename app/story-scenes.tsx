@@ -17,7 +17,7 @@ export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;on
 }
 
 export function StoryLines({lines,startIndex=0}:{lines:StoryLine[];startIndex?:number}){
- return <div className="story-lines">{lines.map((line,i)=>{const hero=characters.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={startIndex+i}><Portrait index={hero.sprite} size={72}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={startIndex+i}>{line.text}</p>;})}</div>;
+ return <div className="story-lines">{lines.map((line,i)=>{const hero=characters.find(h=>h.id===line.speaker);return hero?<div className={`story-line story-${hero.id}`} key={startIndex+i}><Portrait index={hero.sprite} size={72} expression={line.expression}/><div><b>{hero.name}</b><p>{line.text}</p></div></div>:<p className="story-narration" key={startIndex+i}>{line.text}</p>;})}</div>;
 }
 
 export function StoryReader({story,ready,onRead,onClose,departure=false,advanceRef}:{story:Story;ready:boolean;onRead:()=>boolean;onClose:()=>void;departure?:boolean;advanceRef?:Ref<StoryAdvance>}){
@@ -91,7 +91,7 @@ export function StoryLibrary({state:s,onOpen}:{state:State;onOpen:(story:Story)=
 }
 
 function sameBanter(left:StoryLine[],right:StoryLine[]){
- return left.length===right.length&&left.every((entry,i)=>entry.speaker===right[i].speaker&&entry.text===right[i].text);
+ return left.length===right.length&&left.every((entry,i)=>entry.speaker===right[i].speaker&&entry.text===right[i].text&&entry.expression===right[i].expression);
 }
 
 export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(lines:StoryLine[])=>void;paused?:boolean}){
@@ -127,7 +127,7 @@ export function Banter({lines,onRead,paused=false}:{lines:StoryLine[];onRead:(li
   <span className="banter-copy">{exchange.history.map((entry,i)=>{
    const speaker=characters.find(h=>h.id===entry.speaker);
    return <span className="banter-line" key={exchange.turn-exchange.history.length+1+i}>
-    {speaker&&<Portrait index={speaker.sprite} size={64}/>}
+    {speaker&&<Portrait index={speaker.sprite} size={64} expression={entry.expression}/>}
     <span className="banter-message">{speaker&&<b>{speaker.name}</b>}{entry.text}</span>
    </span>;
   })}</span>
