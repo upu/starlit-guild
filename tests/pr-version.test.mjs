@@ -20,6 +20,18 @@ test('non-game changes keep the version unchanged',()=>{
  assert.throws(()=>validateVersionChange('0.1.2','0.1.3','no-game-change'),/期待値: 0\.1\.2/);
 });
 
+test('only the approved chapter-two transition bypasses the patch increment',()=>{
+ assert.equal(validateVersionChange('0.1.22','0.2.0','game-change'),'0.2.0');
+ assert.equal(validateVersionChange('0.1.22','0.1.23','game-change'),'0.1.23');
+ assert.throws(()=>validateVersionChange('0.1.22','0.2.0','no-game-change'),/期待値: 0\.1\.22/);
+ assert.throws(()=>validateVersionChange('0.1.21','0.2.0','game-change'),/期待値: 0\.1\.22/);
+ assert.throws(()=>validateVersionChange('0.1.23','0.2.0','game-change'),/期待値: 0\.1\.24/);
+ assert.throws(()=>validateVersionChange('0.1.22','0.2.1','game-change'),/期待値: 0\.1\.23/);
+ assert.equal(validateVersionChange('0.2.0','0.2.1','game-change'),'0.2.1');
+ assert.equal(validateVersionChange('0.2.0','0.2.0','no-game-change'),'0.2.0');
+ assert.throws(()=>validateVersionChange('0.2.0','0.3.0','game-change'),/期待値: 0\.2\.1/);
+});
+
 test('versions and lockfile copies stay valid and synchronized',()=>{
  assert.deepEqual(parseVersion('12.3.45'),{major:12,minor:3,patch:45});
  assert.throws(()=>parseVersion('1.2'),/x\.y\.z/);
