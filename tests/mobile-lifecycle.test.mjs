@@ -57,6 +57,24 @@ test('disabling tools preserves saved and restored test profiles without permitt
  assert.equal(h.read().profiles.length,4);
 });
 
+test('deleting records preserves at least one and switches away from a deleted active record',()=>{
+ const h=harness(),first=h.read().active;
+ h.hook.createProfile();const second=h.read().active;
+ assert.equal(h.hook.deleteProfile(first),true);
+ assert.equal(h.read().active,second);assert.equal(h.read().profiles.length,1);
+ const saved=h.data.get(h.key);
+ assert.equal(h.hook.deleteProfile(second),false);assert.equal(h.data.get(h.key),saved);
+});
+
+test('deleting a record from a full device makes room for a file import',async()=>{
+ const h=harness();for(let i=1;i<12;i++)h.hook.createProfile();
+ const full=h.read(),deleted=full.active;
+ await assert.rejects(h.hook.importFile({size:100,text:async()=>JSON.stringify(full)}),/不要な記録を削除/);
+ assert.equal(h.hook.deleteProfile(deleted),true);assert.equal(h.read().profiles.length,11);assert.notEqual(h.read().active,deleted);
+ await h.hook.importFile({size:100,text:async()=>JSON.stringify(full)});
+ const restored=h.read();assert.equal(restored.profiles.length,12);assert.notEqual(restored.active,deleted);assert.match(restored.profiles.find(p=>p.id===restored.active).name,/（復元）$/);
+});
+
 test('hidden game stops periodic writes, simulation and cloud requests',()=>{
  const h=harness();h.hook.dispatch({type:'start',id:'village-trade'});h.setNow(2000);h.visibility('hidden');
  const writes=h.writes(),requests=h.requests(),save=h.data.get(h.key);
