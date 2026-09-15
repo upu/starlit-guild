@@ -24,7 +24,7 @@ export type Quest = typeof quests[number];
 export const bonds = [
  {ids:['aria','leon'],name:'幼なじみの約束',bonus:10,lines:['アリア「こっちが近道！ たぶん！」','レオン「その『たぶん』は何回目だ？」']},
  {ids:['mira','finn'],name:'お目付け役と悪戯っ子',bonus:10,lines:['フィン「この宝箱、ちょっと開けても…」','ミラ「帰ったらお説教とお茶ね。」']},
- {ids:['garr','mira'],name:'やさしい守り手',bonus:14,lines:['ガル「みんなの荷物は、俺が持とう。」','ミラ「じゃあ私は、みんなの元気を守るわ。」']},
+ {ids:['garr','mira'],name:'やさしい守り手',bonus:14,lines:['ガル「みんなの荷物は、俺が持とう。」','ミラ「貴方はみんなの荷物を、私はみんなの元気を。」']},
  {ids:['luna','noel'],name:'星と詩の物語',bonus:16,lines:['ルナ「星の声、聞こえる？」','ノエル「ああ。次の歌が生まれそうだ。」']},
  {ids:['aria','poppy'],name:'森のおすそわけ',bonus:14,lines:['ポピー「これ、飲めば空を飛べるかも！」','アリア「かも、で飲ませないでよ！」']},
 ];

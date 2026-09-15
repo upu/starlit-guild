@@ -66,7 +66,7 @@ function trioBanter(run:Run){
  ]:run.quest===MOUNTAIN_QUEST?[
   {speaker:'aria',text:'この先、段差があるよ。右側なら歩きやすそう。'},
   {speaker:'leon',text:'荷物は内側へ。俺が外を見る。'},
-  {speaker:'mira',text:'手当ては私が。二人は、前を見ていてね。'},
+  {speaker:'mira',text:'私は治療を、二人は前を。'},
  ]:run.quest===SIGNPOST_QUEST?[
   {speaker:'aria',text:'草が踏まれてる。元の道は、こっちだね。'},
   {speaker:'mira',text:'あの木の向こうを、前の往診でも通ったわ。'},
@@ -111,7 +111,7 @@ function finaleBanter(run:Run){
  ]:[
   {speaker:'leon',text:'小さいほうは止まった。大きいのを押し戻すぞ。'},
   {speaker:'aria',text:'任せて！　荷物から離れたほうを狙うね。'},
-  {speaker:'mira',text:'手当ては私が。二人は、前を見ていてね。'},
+  {speaker:'mira',text:'私は治療を、二人は前を。'},
  ];
  return null;
 }
