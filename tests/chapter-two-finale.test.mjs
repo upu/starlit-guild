@@ -71,4 +71,3 @@ test('finale stills reveal at the delivery and first sip, and the antagonist sta
  assert.ok(blockade.every(st=>st.lines.filter(line=>line.speaker).every(line=>!line.text.includes('プティ'))));
  assert.equal(finaleStories.at(-1).lines.at(-1).text,'第二部 完');
 });
-
