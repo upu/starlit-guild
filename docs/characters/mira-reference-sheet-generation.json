@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not returned",
+  "target": "docs/characters/mira-reference-sheet.webp",
+  "reference": "public/stories/medicine-delivered.png",
+  "scope": "Facial fatigue and expression reference only; preserve costume and character identity."
+}
