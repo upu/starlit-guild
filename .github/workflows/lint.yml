@@ -27,3 +27,9 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+
+      - name: Check generated story videos
+        run: npm run videos:check
+
+      - name: Test story video pipeline
+        run: node --test tests/story-videos.test.mjs

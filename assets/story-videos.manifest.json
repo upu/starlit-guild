@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "medicine-delivered.mp4": {
+      "sourceHash": "b7e7fd3f49c1977ec0ad173c26847c7128c2d6ff11e2902a690cebddb5f87c54",
+      "profileHash": "3f341957e239cc4d1c2ec01e04cb01f523b4de07f1f9a4d121bf4cc98516a244",
+      "outputHash": "8810c5b165a9fcc0f559ccbd5e9e580c39bdab352de63b097534481284a8444d",
+      "sourceSize": 2103033,
+      "outputSize": 523858,
+      "media": {
+        "width": 672,
+        "height": 448,
+        "fps": 24,
+        "duration": 6.041667,
+        "codec": "h264",
+        "pixelFormat": "yuv420p",
+        "audio": false,
+        "streamCount": 1,
+        "sar": "1:1",
+        "transfer": "bt709"
+      }
+    }
+  }
+}
