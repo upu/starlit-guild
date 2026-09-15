@@ -40,13 +40,19 @@ try {
  await page.goto(url);await page.locator('.story-conversation').waitFor();assert.equal(requests,0);
  await reveal(page);await page.waitForFunction(()=>document.querySelector('video')?.currentTime>0.2);
  assert.equal(await page.locator('video').count(),1);
- assert.equal(await page.locator('video').evaluate(v=>v.muted&&v.loop&&v.playsInline),true);
+ assert.equal(await page.locator('video').evaluate(v=>v.muted&&!v.loop&&v.playsInline),true);
  const cue=await page.locator('.story-tap-hint').textContent();
  await page.getByRole('button',{name:'動画を一時停止',exact:true}).click();
  assert.equal(await page.locator('video').evaluate(v=>v.paused),true);
  assert.equal(await page.locator('.story-tap-hint').textContent(),cue);
  await page.getByRole('button',{name:'動画を再生',exact:true}).click();
  await page.waitForFunction(()=>!document.querySelector('video').paused);
+ await page.locator('video').evaluate(v=>{v.currentTime=v.duration-0.2;});
+ await page.getByRole('button',{name:'動画をもう一度再生',exact:true}).waitFor();
+ assert.equal(await page.locator('video').evaluate(v=>v.ended&&v.paused&&v.currentTime===v.duration),true);
+ assert.equal(await page.locator('.story-tap-hint').textContent(),cue);
+ await page.getByRole('button',{name:'動画をもう一度再生',exact:true}).click();
+ await page.waitForFunction(()=>{const v=document.querySelector('video');return !v.paused&&v.currentTime<2;});
  await page.locator('.still-expand').click();await page.locator('.art-viewer video').waitFor();
  assert.equal(await page.locator('video').count(),1,'backing story video is stopped');
  await page.locator('.art-viewer video').evaluate(v=>{window.closedVideo=v;});
@@ -72,5 +78,5 @@ try {
   const before=await p.locator('.story-tap-hint').textContent();await p.locator('.story-conversation').click();assert.notEqual(await p.locator('.story-tap-hint').textContent(),before);
   await c.close();
  }
- console.log('PASS: reveal, playback, pause/resume, expanded view, mobile controls, visibility, reduced motion, network/autoplay fallback');
+ console.log('PASS: reveal, single playback, final frame, replay, pause/resume, expanded view, mobile controls, visibility, reduced motion, network/autoplay fallback');
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve));}
