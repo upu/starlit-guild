@@ -1,5 +1,6 @@
 export type StoryArt = {
  src: string;
+ videoSrc?: string;
  alt: string;
  width: number;
  height: number;
@@ -10,6 +11,7 @@ export type StoryArt = {
 export const storyArt: Partial<Record<string, StoryArt>> = {
  'waiting-households-return': {
   src: '/stories/medicine-delivered.png',
+  videoSrc: '/stories/videos/medicine-delivered.mp4',
   alt: '少年と母親の側から正面に見るミラ。目元に寝不足の疲れをにじませながら「あーん」と促し、薬をすくった匙を少年の口元へ運ぶ。',
   width: 1536, height: 1024, revealAtLine: 4,
  },

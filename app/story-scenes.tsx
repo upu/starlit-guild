@@ -4,6 +4,7 @@ import Image from 'next/image';
 import {BookOpen,ChevronRight} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {Portrait} from './portrait';
+import {StoryArtwork} from './story-artwork';
 import {heroes,allQuests,type State} from '@/lib/game';
 import {originalCharacters} from '@/lib/original-characters';
 import {storyStages} from '@/lib/prologue';
@@ -13,7 +14,7 @@ import type {StoryAdvance} from './use-story-advance';
 const characters=[...heroes,...originalCharacters.filter(c=>!heroes.some(h=>h.id===c.id))];
 
 export function ArtViewer({art,title,onClose}:{art:StoryArt|null;title:string;onClose:()=>void}){
- return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" showCloseButton={false}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">画像や余白をタップすると元の画面に戻ります。</DialogDescription></DialogHeader><button type="button" className="art-canvas" onClick={onClose} aria-label="鑑賞を終えて戻る">{art&&<Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/>}</button><button type="button" className="art-return" onClick={onClose}>戻る</button></DialogContent></Dialog>;
+ return <Dialog open={!!art} onOpenChange={open=>{if(!open)onClose();}}><DialogContent fullScreen className="art-viewer" showCloseButton={false}><DialogHeader><DialogTitle>{title}</DialogTitle><DialogDescription className="sr-only">画像や余白をタップすると元の画面に戻ります。</DialogDescription></DialogHeader>{art&&<StoryArtwork key={art.src} art={art} onClick={onClose} label="鑑賞を終えて戻る" buttonClass="art-canvas"/>}<button type="button" className="art-return" onClick={onClose}>戻る</button></DialogContent></Dialog>;
 }
 
 export function StoryLines({lines,startIndex=0}:{lines:StoryLine[];startIndex?:number}){
@@ -36,7 +37,7 @@ export function StoryReader({story,ready,onRead,onClose,departure=false,advanceR
  }
  useImperativeHandle(advanceRef,()=>({advance}));
  return <div className={'story-reader'+(art?' story-reader-art':'')}>
-  <div className="story-art-space">{art&&<figure className="story-still"><button className="still-expand" onClick={()=> { setViewArt(true); }} aria-label={'絵を大きく見る：'+story.title}><Image src={art.src} alt={art.alt} width={art.width} height={art.height} loading="eager" unoptimized/></button></figure>}</div>
+  <div className="story-art-space">{art&&<figure className="story-still"><StoryArtwork key={art.src} art={art} active={!viewArt} onClick={()=> { setViewArt(true); }} label={'絵を大きく見る：'+story.title} buttonClass="still-expand"/></figure>}</div>
   <div className="story-conversation" role="button" tabIndex={0} aria-label={advanceLabel} aria-disabled={last&&!ready}
    onPointerDown={event=>{gesture.current={x:event.clientX,y:event.clientY,scrollTop:dialogue.current?.scrollTop||0,moved:false};}}
    onPointerMove={event=>{const start=gesture.current;if(start&&(Math.abs(event.clientX-start.x)>8||Math.abs(event.clientY-start.y)>8))start.moved=true;}}
