@@ -19,7 +19,7 @@ function prologueGoal(s:State,sq:Squad):JourneyGoal{
  if(stageEndingPending(s))return {title:'達成後のひと幕',detail:'クエストクリアの表示から、話の続きを読みましょう。',action:'物語へ',destination:'adventure'};
  if(techniquesUnlocked(s)&&!s.techniques?.learned.length&&!s.done[MOON_HERB_QUEST])return {hintId:'techniques-unlocked',title:'技の習得・セットができるようになりました',detail:'キャラクター画面で、必要レベルとコインを確かめて技を習得できます。セットすると自動で働きます。習得せず次のクエストへ進むこともできます。',action:'技を見に行く',destination:'companions',questId:nextStage(s).quest};
  const stage=nextStage(s),complete=!!s.done[stage.quest];
- return {title:complete?'第二部 2-6までの冒険を終えました':stage.label+' · '+stage.title,detail:complete?'続きの冒険は準備中です。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
+ return {title:complete?'第二部の冒険を終えました':stage.label+' · '+stage.title,detail:complete?'薬の配達を終え、三人で街へ戻りました。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。':'画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。',action:'クエストを開く',destination:'quests',questId:stage.quest};
 }
 function firstGoal(sq:Squad):JourneyGoal{
  if(!sq.run)return {title:'ふたりの冒険を始めよう',detail:'「クエスト」から依頼を選ぶと、アリアとレオンが歩き始めます。操作しなくても冒険は進みます。まずは最初の依頼を1件達成しましょう。',action:'クエストを開く',destination:'quests'};

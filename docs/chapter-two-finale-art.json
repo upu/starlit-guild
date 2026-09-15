@@ -1,0 +1,23 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not returned",
+  "references": [
+    "docs/characters/aria-reference-sheet.webp",
+    "docs/characters/leon-reference-sheet.webp",
+    "docs/characters/mira-reference-sheet.webp"
+  ],
+  "assets": [
+    {
+      "path": "public/stories/medicine-delivered.png",
+      "scene": "waiting-households-return",
+      "revealAtLine": 4,
+      "prompt": "Use case: illustration-story. Create one landscape 1536x1024 polished hand-painted anime JRPG story still for STARLIT GUILD, no text, no panel divisions. The three supplied reference sheets are identity and costume references only, not layouts: Aria blonde elf green cloak, Leon brown hair red scarf blue leather armor, Mira lavender hair white pale lavender light healer robes moon ornament and waist medicine pouches. Preserve their detailed recognizable designs. Scene: a modest timber and plaster home in a mountain village, warm late afternoon window light. Mira sits beside a sick child sitting up modestly covered in a bed, and gently hands a wrapped medicine bottle and a small separate amber medicinal honey jar to the child and the caregiving parent beside the bed. The child is tired but attentive, not instantly healed. Aria and Leon stand close by, relieved to see the delivery arrive, with a nearly emptied cloth-lined medicine box on a stool. Mira's expression is gentle, quietly tired, focused on the child. Intimate eye-level three-quarter composition, clear hands and delivery objects, nuanced faces, watercolor and painterly textures, soft rich natural colors. No healing spell, glow, hospital machinery, text, labels, logo or watermark. This is a new scene using the references, not a reference sheet."
+    },
+    {
+      "path": "public/stories/three-cups-of-tea.png",
+      "scene": "medicine-road-home-return",
+      "revealAtLine": 11,
+      "prompt": "Use case: illustration-story. Create a single landscape 1536x1024 finely hand-painted anime JRPG story still for STARLIT GUILD. Reference images are identity and costume guides only: Aria blonde green-eyed elf, floral feather hair accessory green embroidered cloak; Leon brown tousled hair, red scarf blue tunic leather/metal armor; Mira lavender hair, moon and flower ornament, white pale lavender light healer robe, waist medicine pouches. Preserve those identities and clothing. A quiet daytime tea break at a small wooden table inside Mira's rustic town workroom after completing a mountain medicine delivery. All three are seated at the SAME table, exactly three ceramic tea cups total: one in front of Aria, one in front of Leon, and Mira holding her own cup with both hands taking her FIRST SIP, eyes relaxed yet showing mild tiredness. Aria sitting near Leon smiles with satisfaction at Mira finally drinking; Leon holds a relaxed attentive smile. Simple teapot at center, empty medicine bottles and folded delivery notes set aside on a separate shelf, not being worked on. Warm window light, coherent believable hands and seating, intimate medium-wide eye level scene, painterly watercolor textures and refined detailed faces, gentle everyday camaraderie, no dramatic magic. No text, logo, watermark, split panels, speech bubbles, extra people or extra cups. New story scene, not a character sheet."
+    }
+  ]
+}

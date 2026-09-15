@@ -8,6 +8,16 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'waiting-households-return': {
+  src: '/stories/medicine-delivered.png',
+  alt: '寝台の子どもと家の人へミラが薬と蜜を差し出し、アリアとレオンが空いた薬箱のそばで見届ける。',
+  width: 1536, height: 1024, revealAtLine: 4,
+ },
+ 'medicine-road-home-return': {
+  src: '/stories/three-cups-of-tea.png',
+  alt: '同じ机に座るアリアとレオンの隣で、ミラがカップを両手で受け取り、お茶を一口飲む。',
+  width: 1536, height: 1024, revealAtLine: 11,
+ },
  'begging-golem-departure': {
   src: '/stories/begging-dolls.png',
   alt: '山道でハロウィン風に飾った大小の人形がお辞儀して両手を差し出し、その少し後ろで小柄なプティがパンプキンヘッドをかぶって操る。',

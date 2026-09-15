@@ -3,7 +3,7 @@ import {originalArt} from './original-characters.ts';
 import {questScenery} from './scenery.ts';
 import {heroSheets} from './hero-animation.ts';
 import {isPrologueQuest,RESTORATION_QUEST} from './prologue.ts';
-import {chapterTwoEnemyAsset,GOLEM_QUEST} from './chapter-two.ts';
+import {chapterTwoEnemyAsset,chapterTwoGolem} from './chapter-two.ts';
 
 export type AdventureInput={squad:Squad;startQuest:string;now:number;ready:boolean;paused:boolean;detours?:boolean;restorationComplete?:boolean};
 export type Point={x:number;y:number};
@@ -51,7 +51,7 @@ function targetAsset(quest:(typeof allQuests)[number],run:ActiveRun,kind:ReturnT
 function frameTarget(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  if(!run)return null;
  const targetSprite=kind==='gather'?11:kind==='escort'?7:quest.enemy;
- return {id:'legacy-target',x:.80,y:.61,scale:quest.id===GOLEM_QUEST&&run.node%3!==1?1.6:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:targetAsset(quest,run,kind,targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
+ return {id:'legacy-target',x:.80,y:.61,scale:chapterTwoGolem(quest.id,run.node)?1.6:1.08,down:false,hp:run.target,maxHp:run.targetMax,sprite:targetSprite,asset:targetAsset(quest,run,kind,targetSprite),name:targetName(quest,run.node),value:clamp((kind==='battle'?run.target:run.targetMax-run.target)/run.targetMax),battle:kind==='battle',kind};
 }
 function frameTargets(quest:(typeof allQuests)[number],run:ActiveRun|null,kind:ReturnType<typeof encounter>|null){
  const base=frameTarget(quest,run,kind);if(!base)return [];
