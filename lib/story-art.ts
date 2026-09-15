@@ -1,5 +1,6 @@
 export type StoryArt = {
  src: string;
+ videoSrc?: string;
  alt: string;
  width: number;
  height: number;
@@ -8,6 +9,17 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+ 'waiting-households-return': {
+  src: '/stories/medicine-delivered.png',
+  videoSrc: '/stories/videos/medicine-delivered.mp4',
+  alt: '少年と母親の側から正面に見るミラ。目元に寝不足の疲れをにじませながら「あーん」と促し、薬をすくった匙を少年の口元へ運ぶ。',
+  width: 1536, height: 1024, revealAtLine: 4,
+ },
+ 'medicine-road-home-return': {
+  src: '/stories/three-cups-of-tea.png',
+  alt: 'コミカルにデフォルメされた三人のお茶。仕事のメモへ手を伸ばして気まずそうなミラ、得意げに紙を押さえるアリア、笑うレオン。',
+  width: 1536, height: 1024, revealAtLine: 11,
+ },
  'begging-golem-departure': {
   src: '/stories/begging-dolls.png',
   alt: '山道でハロウィン風に飾った大小の人形がお辞儀して両手を差し出し、その少し後ろで小柄なプティがパンプキンヘッドをかぶって操る。',

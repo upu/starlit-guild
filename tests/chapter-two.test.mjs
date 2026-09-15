@@ -53,7 +53,7 @@ test('2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
   for(const key of ['gold','herbs','ore','owned','xp','done','story'])assert.deepEqual(live[key],offline[key]);
   const inventory=offline.inventory,herbs=offline.herbs;s=roundtrip(read(offline,id));assert.deepEqual(s.inventory,inventory);assert.equal(s.herbs,herbs);
  }
- assert.match(nextGoal(s).title,/2-6まで/);assert.match(nextGoal(s).detail,/準備中/);
+ assert.match(nextGoal(s).title,/2-7/);assert.equal(nextGoal(s).questId,'sweet-blockade');
  const repeated=settle(start(s,GOLEM_QUEST),s.updatedAt+3600000).state;assert.ok(repeated.done[GOLEM_QUEST]>1);
  assert.deepEqual(repeated.owned,s.owned);assert.deepEqual(repeated.story,s.story);
 });

@@ -1,0 +1,8 @@
+{
+  "id": "story-video-v1",
+  "crf": 26,
+  "preset": "slow",
+  "maxWidth": 1280,
+  "maxHeight": 720,
+  "maxFps": 24
+}

@@ -1,5 +1,17 @@
 # シナリオスチル一覧
 
+## 薬を待つ家々
+
+![薬と蜜の配達](../public/stories/medicine-delivered.png)
+
+第二部2-8。ミラが子どもの口元へ薬の匙を運ぶ行から表示。
+
+## 三人分のお茶
+
+![三人のお茶](../public/stories/three-cups-of-tea.png)
+
+第二部2-9。ミラがカップを受け取り一口飲む行から表示。
+
 ## 灯りの戻る丘
 
 ![塔の再点灯](../public/stories/tower-light-restored.png)

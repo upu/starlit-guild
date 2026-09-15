@@ -45,5 +45,8 @@ next-env.d.ts
 !/.agents/skills/
 /.codex/
 /outputs/
+/assets/.story-videos.lock
+/assets/story-videos.manifest.json.*.tmp
+/public/stories/videos/.video-*.mp4
 /work/
 *.tsbuildinfo

@@ -3,7 +3,7 @@ import {chachaHero} from './original-characters.ts';
 import {equipmentBonus,buyEquipment,changeEquipment,type Inventory,type EquipmentSlot} from './equipment.ts';
 import {createEnemies,damageEnemy,penetration,reducedDamage,syncEnemyTotals,type Enemy} from './combat.ts';
 import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
-import {chapterTwoQuests,chapterTwoWork,PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,trioQuest} from './chapter-two.ts';
+import {chapterTwoQuests,chapterTwoWork,PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST,trioQuest} from './chapter-two.ts';
 import {learnTechnique,setTechnique,techniqueMultiplier,techniqueText,techniqueDamage,techniqueHerbs,equippedTechnique,type Techniques,type TechniqueSlot} from './techniques.ts';
 import {waterwayWork} from './waterway-work.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
@@ -188,12 +188,14 @@ function specialMultiplier(hero:string,kind:Encounter){
  if(hero==='luna')return 2.2;if(hero==='chacha'&&kind==='battle')return 2;if(hero==='leon')return 1.7;
  if(hero==='aria'||hero==='finn')return 1.65;if(hero==='poppy'&&kind==='gather')return 1.75;return 1;
 }
-function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST,DELIVERY_PREP_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST,SIGNPOST_QUEST].includes(q.id)&&kind!=='battle';}
+function quietStageWork(q:Quest,kind:Encounter){return [TOWN_QUEST,WETLAND_QUEST,DELIVERY_PREP_QUEST,HOUSE_CALLS_QUEST].includes(q.id)||[TOWER_QUEST,NIGHT_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,MOON_HERB_QUEST,SIGNPOST_QUEST,MEDICINE_RETURN_QUEST].includes(q.id)&&kind!=='battle';}
 function actorEventKind(q:Quest,kind:Encounter,special:boolean):GameEvent['kind']{if(quietStageWork(q,kind))return 'gather';if(special)return 'skill';return kind==='battle'?'hit':'gather';}
 function stageWorkText(q:Quest,kind:Encounter,special:boolean){
  if(kind==='battle')return null;
  if([RESTORATION_QUEST,MOSS_QUEST].includes(q.id))return kind==='gather'?'手の届く範囲を丁寧に取り除く':'声を掛け合って作業を進める';
  const texts:Partial<Record<string,[string,string]>>={
+  [HOUSE_CALLS_QUEST]:['往診の包みと水を運ぶ','控えと空き瓶を確かめる'],
+  [MEDICINE_RETURN_QUEST]:['空き瓶を守って道を歩く','道標と荷車の往来を確かめる'],
   [DELIVERY_PREP_QUEST]:['瓶と布を確かめて荷造り','荷札と包みを照らし合わせる'],
   [SIGNPOST_QUEST]:['踏み跡と道筋を確かめる','道標を元の道へ戻す'],
   [MOON_HERB_QUEST]:['葉の裏を見比べて採る','採った場所ごとに包みを分ける'],

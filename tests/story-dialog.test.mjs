@@ -22,7 +22,7 @@ function harness(overrides={},{withArt=false,selection=null}={}){
  const jsx=(type,props,key)=>({type,props,key});
  const modules={
   react,'react/jsx-runtime':{jsx,jsxs:jsx},'next/image':{default:'img'},'lucide-react':{BookOpen:'icon',ChevronRight:'icon'},
-  './portrait':{Portrait:'portrait'},'@/lib/game':{heroes:[],allQuests:[]},
+  './portrait':{Portrait:'portrait'},'./story-artwork':{StoryArtwork:'StoryArtwork'},'@/lib/game':{heroes:[],allQuests:[]},
   '@/lib/original-characters':{originalCharacters:[]},'@/lib/prologue':{prologueStages:[]},
   '@/lib/stories':{},'@/lib/story-art':{storyArtAt:()=>withArt?fixtureArt:null},
   '@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogHeader','DialogTitle','DialogDescription'].map(name=>[name,name])),
@@ -118,7 +118,7 @@ test('Enter and Space still advance without auto-repeating or consuming arrow ke
 test('art viewing pauses progression and returning preserves the continuation cue',()=>{
  const advanceRef={current:null},h=harness({advanceRef}, {withArt:true});
  assert.ok(h.find('story-reader story-reader-art'));
- h.find('still-expand').props.onClick();h.render();
+ h.find('StoryArtwork').props.onClick();h.render();
  assert.deepEqual(h.find('ArtViewer').props.art,fixtureArt);
  h.click();assert.equal(h.find('StoryLines').props.lines.length,1);
  advanceRef.current.advance();h.render();assert.equal(h.find('StoryLines').props.lines.length,1);

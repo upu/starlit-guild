@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not returned",
+  "target": "docs/characters/mira-reference-sheet.webp",
+  "referenceMaster": "6901e07:docs/characters/mira-reference-sheet.webp",
+  "encoding": "Lossless WebP at native generated resolution.",
+  "prompt": "Use case: identity-preserve. Edit a detailed anime character reference sheet. Image 1 is the ORIGINAL MASTER: preserve its complete layout, precise linework, dense costume embroidery, fine hair strands, pouch clasps, chains, jewelry, staff, boots, all text, swatches, flowers and panel boundaries. Image 2 is ONLY the approved facial expression guide: tired gentle Mira with heavy upper eyelids, soft gray-violet under-eye shadows, pale skin and caring warmth, including the enlarged eye detail. Apply that approved eye/face design to image 1 in all face views, expression panels and eye detail, preserving distinct surprise, joy, serious and smile expressions. Restore image 1's exact rich fine details everywhere else. Do not redraw clothing into simplified broad smooth shapes; retain thin gold filigree, tiny stitches, individual braids, flower petals and delicate iris details. White/lavender off-shoulder robe, original anatomy and accessories unchanged. Final should be a crisp detailed high-resolution 3072x2048 landscape production reference sheet, maintaining original 3:2 composition. No invented new props or lettering. Facial fatigue should match image 2, not exaggerated illness or old age."
+}

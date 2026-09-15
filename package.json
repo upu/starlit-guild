@@ -1,11 +1,15 @@
 {
   "name": "site-creator-vinext-starter",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
+    "videos:optimize": "node scripts/optimize-story-videos.mjs",
+    "videos:check": "node scripts/optimize-story-videos.mjs --check",
+    "predev": "npm run videos:optimize",
+    "prebuild": "npm run videos:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --port 5173",
     "build": "vinext build",
