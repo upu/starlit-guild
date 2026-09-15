@@ -10,12 +10,12 @@ export type StoryArt = {
 export const storyArt: Partial<Record<string, StoryArt>> = {
  'waiting-households-return': {
   src: '/stories/medicine-delivered.png',
-  alt: '寝台の子どもと家の人へミラが薬と蜜を差し出し、アリアとレオンが空いた薬箱のそばで見届ける。',
+  alt: '少年と母親の側から正面に見るミラ。重いまぶたと目の下に寝不足の疲れをにじませながら、優しく薬と蜜を差し出す。',
   width: 1536, height: 1024, revealAtLine: 4,
  },
  'medicine-road-home-return': {
   src: '/stories/three-cups-of-tea.png',
-  alt: '同じ机に座るアリアとレオンの隣で、ミラがカップを両手で受け取り、お茶を一口飲む。',
+  alt: 'ミラはお茶を飲みながら空いた手を往診のメモへ伸ばし、アリアがそっと紙を遠ざける。カップを持ったレオンが二人を見て笑う。',
   width: 1536, height: 1024, revealAtLine: 11,
  },
  'begging-golem-departure': {
