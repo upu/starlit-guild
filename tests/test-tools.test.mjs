@@ -50,7 +50,7 @@ test('save panel hides test creation and adjustment when disabled, including exi
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
   'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'@/lib/external-input':{},
  };
- for(const name of ['dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
+ for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
  const {SavePanel,TestControls}=load('../app/save-panel.tsx',modules);
  for(const enabled of [false,true]){
   const profile={id:'test',test:true,name:'test',state:{clears:0}},calls=[];
@@ -62,4 +62,25 @@ test('save panel hides test creation and adjustment when disabled, including exi
   assert.equal(TestControls({game,onAdjust:()=>{}})!==null,enabled);
   assert.equal(TestControls({game:{...game,profile:{...profile,test:false}},onAdjust:()=>{}}),null);
  }
+});
+
+test('save panel offers deletion for every record and disables it for the last record',()=>{
+ const ui=new Proxy({},{get:(_target,name)=>name}),calls=[];
+ const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
+  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'@/lib/external-input':{},
+ };
+ for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
+ const {SavePanel}=load('../app/save-panel.tsx',modules);
+ const profiles=[
+  {id:'first',test:false,name:'最初の冒険',state:{clears:3}},
+  {id:'second',test:false,name:'読み込んだ冒険',state:{clears:8}},
+ ];
+ const makeGame=list=>({testToolsEnabled:false,bundle:{active:list[0].id,profiles:list},profile:list[0],otherTab:false,copies:[],deleteProfile:id=>{calls.push(id);return true;}});
+ const tree=elements(SavePanel({game:makeGame(profiles),music:{}}));
+ const deletes=tree.filter(e=>e.type==='button'&&String(e.props['aria-label']||'').endsWith('を削除'));
+ assert.equal(deletes.length,2);assert.ok(deletes.every(button=>button.props.disabled===false));
+ const actions=tree.filter(e=>e.type==='AlertDialogAction'&&e.props.children==='削除する');
+ actions[1].props.onClick();assert.deepEqual(calls,['second']);
+ const only=elements(SavePanel({game:makeGame(profiles.slice(0,1)),music:{}})).find(e=>e.type==='button'&&String(e.props['aria-label']||'').endsWith('を削除'));
+ assert.equal(only.props.disabled,true);
 });
