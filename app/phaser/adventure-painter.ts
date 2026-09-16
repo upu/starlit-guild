@@ -3,6 +3,7 @@ import {heroes,type GameEvent} from '@/lib/game';
 import {adventureFrame,adventureAssets,adventureAction,adventureHit,eventColor,memberHealthLabel,spriteAsset,spriteFrame,spriteSize,type AdventureFrame} from '@/lib/adventure-presentation';
 import type {AdventureBridge} from './renderer-session';
 import {heroSheets,heroAnimation} from '@/lib/hero-animation';
+import {enemyTexture} from './enemy-texture';
 
 type Figure={image:Phaser.GameObjects.Image;shadow:Phaser.GameObjects.Ellipse;label:Phaser.GameObjects.Text};
 type RuntimeState={disposed:boolean;paused:boolean;created:boolean;reduced:boolean};
@@ -169,7 +170,7 @@ export class AdventurePainter{
  private paintOpponent(frame:AdventureFrame,target:AdventureFrame['targets'][number],now:number,size:number){
   let opponent=this.opponents.get(target.id);if(!opponent){opponent=this.makeFigure(target.sprite,target.name);this.opponents.set(target.id,opponent);}
   const width=this.scene.scale.width,height=this.scene.scale.height,asset=target.asset;
-  opponent.image.setTexture(asset,asset==='/sprites.png'?String(target.sprite):undefined);
+  opponent.image.setTexture(enemyTexture(this.scene.textures,asset,size*target.scale),asset==='/sprites.png'?String(target.sprite):undefined);
   const enemySize=size*target.scale,pulse=this.runtime.reduced?1:1+Math.sin(now/420)*.015,events=frame.events.filter(event=>!event.enemy||event.enemy===target.id);
   const hurt=events.some(e=>['hit','assist','burst','skill','combo'].includes(e.kind)&&now-e.at<140),striking=events.find(e=>e.kind==='hurt'&&now-e.at<320);
   const offset=striking&&!this.runtime.reduced?-Math.sin((now-striking.at)/320*Math.PI)*12:0,windup=enemyWindup(target.cue,this.runtime.reduced,now);
