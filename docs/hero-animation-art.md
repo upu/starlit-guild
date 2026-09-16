@@ -4,7 +4,7 @@
 
 ミラは `docs/characters/mira-reference-sheet.webp` を人物の正本、既存の二人の動作画像を画風の参考に、組み込み `image_gen` で制作。採用した `public/animations/mira-v1.png` は1448×1086のRGBA PNGで、歩行4コマ、攻撃・回復の詠唱4コマ、待機・瞬き2コマ、被弾2コマを収録する。細かな塗りの揺れが縮小時に粗く見えたため、輪郭と色面を整理した修正版を採用した。
 
-2-4と2-6は、足元が谷の遠景に重なっていた背景を `public/stages/mountain-road.png`（1024×1536）へ変更。待機位置と戦闘位置の下に、地面が連続する山道を描いた。画像の生成・修正は組み込みツールを使い、原本の画素はプログラムで加工していない。
+2-4と2-6は、足元が谷の遠景に重なっていた背景を `assets/source/scenery/mountain-road.png`（1024×1536）へ変更。待機位置と戦闘位置の下に、地面が連続する山道を描いた。画像の生成・修正は組み込みツールを使い、原本の画素はプログラムで加工していない。
 
 最終プロンプト・参照・採用原本は [ミラと山道の生成記録](mira-animation-road-art.json)。
 
@@ -62,3 +62,5 @@ ROW 2 (middle): four sword-attack frames facing right: prepare ready guard with 
 ROW 3 (bottom): column 1 neutral relaxed idle with sword lowered; column 2 subtle breathing idle, slight chest/shoulder/scarf change; column 3 recoil/hurt with torso leaning back and bent knees; column 4 recover from hurt returning upright. Feet remain near same baseline.
 Constraints: exactly one Leon per cell, exactly 12 frames in strict 4x3 grid; no other characters, no words, letters, numbers, borders, labels, logos, watermarks, ground shadows, glow, trails, motion blur, impact effects, particles, scenery or weapons detached outside a cell. Preserve actual transparent alpha. Genuine new limb poses, not repeated rotated/scaled versions.
 ```
+
+クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。

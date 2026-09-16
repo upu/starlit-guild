@@ -42,6 +42,7 @@ function departureStory(state:State,action:Action){
  if(target.run||!together(target.members)||storyProgress(state).departed.includes(actionId))return null;
  return stories.find(st=>st.id===actionId+'-departure')??null;
 }
+function selectedDestination(state:State,squad:Squad,choice?:string){return squad.run?.quest||choice||squad.lastQuest||(inPrologue(state)?restingQuest(state,squad):'herbs');}
 function hasDestination(state:State,squad:Squad,choice?:string){
  return !!choice||!!squad.lastQuest||!inPrologue(state)||!!state.done[restingQuest(state,squad)];
 }
@@ -52,7 +53,7 @@ type SheetModel={
  setSheet:(sheet:Sheet)=>void;openStory:(story:Story)=>void;finishStory:()=>boolean;closeStory:()=>void;navigate:(view:string)=>void;followGoal:(goal:JourneyGoal)=>void;
  quest:(typeof allQuests)[number];squad:Squad;run:Squad['run'];preview:ReturnType<typeof partyPreview>;draft:string[];act:(action:Action,onSuccess?:(state:State)=>void)=>boolean;
  chooseSquad:(id:string)=>void;candidateQuest:string;setCandidateQuest:(id:string)=>void;selectQuest:(id?:string)=>void;clock:number;openQuests:(id?:string)=>void;
- setSquad:(id:string)=>void;setView:(view:string)=>void;
+ readStory:(id:string)=>boolean;setSquad:(id:string)=>void;setView:(view:string)=>void;
 };
 type PhoneFrameModel=SheetModel&{
  view:string;returnIntent:ReturnIntent|null;leaveAction:((state:State)=>void)|null;ending:Story|null;banter:StoryLine[];quote:string;destinationChosen:boolean;
@@ -89,7 +90,7 @@ function previewSheet(m:SheetModel):SheetView|null{
 function collectionSheet(m:SheetModel):SheetView|null{
  const s=m.state;
  if(m.sheet==='party')return {title:'冒険を見守る隊',description:'隊を選ぶと、その隊の冒険と行き先を表示します。',content:<><div className="phone-squads">{s.squads.map(p=><button aria-pressed={p.id===m.squad.id} className={p.id===m.squad.id?'selected':''} onClick={()=> { m.chooseSquad(p.id); }} key={p.id}><span>{squadName(p)}<small>{p.run?allQuests.find(q=>q.id===p.run?.quest)?.name:'拠点で待機中'}</small></span><span>{p.members.flatMap(id=>{const hero=heroes.find(h=>h.id===id);return hero?[<Sprite key={id} index={hero.sprite} size={38}/>]:[];})}</span></button>)}</div><button className="outline" onClick={()=> { m.navigate('companions'); }}>隊を作る・編成する</button></>};
- if(m.sheet==='quests')return {title:'クエスト',description:'行き先を選び、もう一度タップで決定。',content:<QuestPicker state={s} squad={m.squad} selected={m.candidateQuest} onSelect={m.setCandidateQuest} onConfirm={m.selectQuest} ready={m.ready}/>};
+ if(m.sheet==='quests')return {title:'クエスト',description:'行き先を選び、もう一度タップで決定。',content:<QuestPicker state={s} squad={m.squad} selected={m.candidateQuest} onSelect={m.setCandidateQuest} onConfirm={m.selectQuest} ready={m.ready} onAutoNextChange={value=>{m.game.dispatch({type:'autoNextQuest',value});}}/>};
  if(m.sheet==='bag')return {title:'持ちもの',description:'旅の道具と、預かっている品。',content:<InventoryPanel state={s}/>};
  if(m.sheet==='shop')return {title:'ショップ',description:'旅の支度を整えよう。',content:<ShopPanel state={s} ready={m.ready} onAction={m.act}/>};
  if(m.sheet==='journal')return {title:'旅団の足あと',description:`${String(s.clears)}件達成 · 寄り道で${String(s.discoveries)}回の発見`,content:<><button className="memory-link" onClick={()=> { m.setSheet('stories'); }}><Heart size={18}/>旅の思い出{m.unread>0&&<span>未読 {m.unread}</span>}</button><div className="phone-journal">{s.log.map((entry,i)=><article key={`${String(entry.at)}-${String(i)}`}><time>{new Date(entry.at).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})}</time><p>{entry.text}</p></article>)}</div></>};
@@ -120,7 +121,7 @@ export function PhoneGame({game}:{game:Game}){
  const [reading,setReading]=useState<Story|null>(null),[banterSnapshot,setBanterSnapshot]=useState<StoryLine[]>([]);
  const [view,setView]=useState('adventure'),[sheet,setSheet]=useState<Sheet>(null),[selectedSquad,setSquad]=useState('party-1'),[questChoices,setQuestChoices]=useState<Record<string,string>>({}),[heroIndex,setHeroIndex]=useState(0),[draft,setDraft]=useState<string[]>(s.squads[0].members);
  const sq=s.squads.find(p=>p.id===selectedSquad)||s.squads[0],run=sq.run,ready=game.ready&&!game.otherTab;
- const questId=run?.quest||questChoices[sq.id]||(prologue?restingQuest(s,sq):'herbs');
+ const questId=selectedDestination(s,sq,questChoices[sq.id]);
  function setQuest(id:string){setQuestChoices(current=>({...current,[sq.id]:id}));}
  const music=useGameMusic(view==='camp'||!run?'camp':'journey',ready);
  const unlocked=availableQuests(s),q=unlocked.find(q=>q.id===questId)||unlocked[0];
@@ -162,9 +163,10 @@ export function PhoneGame({game}:{game:Game}){
   }
   choose();
  }
- function finishStory(){if(!reading)return false;const ok=pendingDeparture?dispatch({...pendingDeparture,readDeparture:true}):dispatch({type:'readStory',id:reading.id});if(ok)setPendingDeparture(null);return ok;}
+ function readStory(id:string){return dispatch({type:'readStory',id},current=>{const next=current.squads.find(p=>p.id===sq.id)?.lastQuest;if(next&&next!==sq.lastQuest)setQuest(next);});}
+ function finishStory(){if(!reading)return false;const ok=pendingDeparture?dispatch({...pendingDeparture,readDeparture:true}):readStory(reading.id);if(ok)setPendingDeparture(null);return ok;}
  function closeStory(){setPendingDeparture(null);setSheet(reading?.chapter==='recruitment'?'recruit':null);}
- const sheetModel:SheetModel={sheet,reading,ready,pendingDeparture,activeQuest,banterSnapshot,hero,state:s,goal,prologue,installStatus,game,music,unread,hints,setSheet,openStory,finishStory,closeStory,navigate,followGoal,quest:q,squad:sq,run,preview,draft,act,chooseSquad,candidateQuest,setCandidateQuest,selectQuest,clock,openQuests,setSquad,setView};
+ const sheetModel:SheetModel={readStory,sheet,reading,ready,pendingDeparture,activeQuest,banterSnapshot,hero,state:s,goal,prologue,installStatus,game,music,unread,hints,setSheet,openStory,finishStory,closeStory,navigate,followGoal,quest:q,squad:sq,run,preview,draft,act,chooseSquad,candidateQuest,setCandidateQuest,selectQuest,clock,openQuests,setSquad,setView};
  const frame:PhoneFrameModel={...sheetModel,view,returnIntent,leaveAction,ending,banter,quote,destinationChosen:hasDestination(s,sq,questChoices[sq.id]),roster,setBanterSnapshot,setHeroIndex,createSquad,requestReturn,confirmReturn,openRecruit:()=> { leaveEditor(()=> { setSheet('recruit'); }); },setReturnIntent,setLeaveAction,setDraft};
  return <PhoneFrame model={frame}/>;
 }
@@ -225,7 +227,7 @@ function SheetDialog({model:m}:{model:PhoneFrameModel}){
 function EndingDialog({model:m}:{model:PhoneFrameModel}){
  if(!m.ending)return null;
  const ending=m.ending;
- return <QuestCompletion key={(m.game.profile?.id??'unassigned')+':'+ending.id} story={ending} questName={allQuests.find(q=>q.id===ending.quest)?.name??'不明な依頼'} ready={m.ready} onRead={()=>m.game.dispatch({type:'readStory',id:ending.id})} onClose={()=>{m.game.setReport(null);m.setSheet(null);}}/>;
+ return <QuestCompletion key={(m.game.profile?.id??'unassigned')+':'+ending.id} story={ending} questName={allQuests.find(q=>q.id===ending.quest)?.name??'不明な依頼'} ready={m.ready} onRead={()=>m.readStory(ending.id)} onClose={()=>{m.game.setReport(null);m.setSheet(null);}}/>;
 }
 function ReturnDialog({model:m}:{model:PhoneFrameModel}){
  const intent=m.returnIntent;

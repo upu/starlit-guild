@@ -76,12 +76,12 @@ test('prologue guides the first quest choice before departure and keeps actions 
 
 test('stage progress retains the completed scenery until the next departure',()=>{
  const render=s=>renderToStaticMarkup(createElement(PhoneGame,{game:{s,clock:s.updatedAt,ready:true,otherTab:false,profile:{id:'test'},dispatch:()=>true}}));
- let state=initialPrologueState(1000),background='/forest.png';
+ let state=initialPrologueState(1000),background='/scenery/forest-background.webp';
  for(const stage of prologueStages){
   const idle=render(state);assert.ok(idle.includes(background));assert.doesNotMatch(idle,/第一部 ·|undefined|>パーティ<|>拠点</);
   state=act(state,{type:'start',id:stage.quest,readDeparture:true},state.updatedAt);
   const running=render(state);assert.match(running,/探索マップ/);
-  if(stage.quest!=='village-trade')assert.ok(running.includes('/stages/'+(stage.quest==='tower-restoration'?'old-waterway':stage.quest==='tower-moss-removal'?'tower-drainage-open':stage.quest)+'.png'));
+  if(stage.quest!=='village-trade')assert.ok(running.includes('/scenery/'+(stage.quest==='tower-restoration'?'old-waterway':stage.quest==='tower-moss-removal'?'tower-drainage-open':stage.quest)+'-background.webp'));
   if(stage.quest==='evening-trade-road'){
    const battle=structuredClone(state);battle.squads[0].run.node=1;battle.squads[0].run.phase='work';
    assert.match(render(battle),/魔物と戦闘中/);assert.doesNotMatch(render(battle),/いたずらを阻止中/);
@@ -90,7 +90,7 @@ test('stage progress retains the completed scenery until the next departure',()=
   if(prologueStages.indexOf(stage)>=6)for(const hero of state.owned)state.xp[hero]=30*19**2;
   state=settle(state,state.updatedAt+3600000).state;
   state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
-  background=stage.quest==='village-trade'?'/forest.png':'/stages/'+(['tower-restoration','tower-moss-removal'].includes(stage.quest)?'tower-drainage-open':stage.quest)+'.png';
+  background=stage.quest==='village-trade'?'/scenery/forest-background.webp':'/scenery/'+(['tower-restoration','tower-moss-removal'].includes(stage.quest)?'tower-drainage-open':stage.quest)+'-background.webp';
   assert.ok(render(state).includes(background));
  }
 });

@@ -187,3 +187,18 @@ body{overflow:hidden;background:var(--game-nav-color)}
 .start-entry>p{font-size:12px;line-height:1.8;color:#e1dec5}
 @media(max-width:350px){.phone-game .phone-header{gap:4px;padding-inline:4px}.phone-header .phone-wallet>span{font-size:10px;gap:2px}.phone-header .phone-wallet svg{width:11px}.phone-game .adventure-toolbar .return-button{padding-inline:7px}}
 @media(max-height:500px){.start-screen{padding-top:calc(env(safe-area-inset-top) + 20px);padding-bottom:calc(var(--game-safe-bottom) + 18px)}}
+.quest-chapters{display:flex;gap:8px;flex-wrap:wrap}
+.quest-chapters button{flex:1;min-height:42px;white-space:nowrap;background:#223c30;border:1px solid #758058;color:#ecdbb0;padding:8px 10px}
+.quest-chapters button[aria-pressed="true"]{background:#465b3e;border-color:#e2c77f}
+.quest-chapters button:disabled{opacity:.5}
+.quest-progression-setting{padding:10px 12px;border:1px solid #758058;border-radius:8px;color:#ecdbb0}
+.quest-progression-setting .switch-row{gap:12px;margin:0;align-items:center}
+.quest-progression-setting .switch-row>span{font-size:12px;line-height:1.6;flex:1}
+.quest-progression-setting small{display:block;font-size:11px;line-height:1.6;margin-top:6px;color:#c2d0b6}
+.quest-summary{width:100%;text-align:left;align-items:stretch;color:#ecdbb0;white-space:normal;touch-action:pan-y;overflow:hidden;font:inherit;font-size:13px;line-height:1.8}
+.quest-summary-title{font-size:18px;color:#efdbac}
+.quest-summary .quest-landscape{display:block;flex-shrink:0}
+.quest-summary .quest-opponent>span{display:flex;flex-direction:column}
+.quest-confirm-hint{align-self:flex-end;color:#f3d995;font-size:12px}
+.quest-option .quest-progress{color:#ffe29e;font-size:10px}
+.quest-summary:focus-visible,.quest-chapters button:focus-visible{outline:2px solid #ffe29e;outline-offset:3px}

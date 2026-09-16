@@ -4,8 +4,8 @@ Mode: built-in image_gen. The two adopted 1536x1024 landscape backgrounds were v
 
 | Asset | Repository path | Usage |
 | --- | --- | --- |
-| A | `public/stages/old-waterway.png` | Stage 1-7 and the beginning of 1-8 |
-| C | `public/stages/tower-drainage-open.png` | Stage 1-8 from node 9, and idle after completion |
+| A | `assets/source/scenery/old-waterway.png` | Stage 1-7 and the beginning of 1-8 |
+| C | `assets/source/scenery/tower-drainage-open.png` | Stage 1-8 from node 9, and idle after completion |
 
 ## Asset A: tower-drainage-route.png
 
@@ -32,3 +32,5 @@ Primary request: show the same location after ordinary drainage restoration. Rem
 Lighting: calm soft dusk, gentle blue and muted gold sky, tower lamp softly beginning to warm, not dark night.
 Invariants: preserve the exact same camera position, tower identity/size/location, landscape layout, stone arch and stonework identity, trees, distant hills, fence, broad open damp-earth lower third, painterly Japanese fantasy RPG style and landscape dimensions. Make a recognizable before/after pair. Keep the open lower third suitable for animated party sprites. Do not add a bridge, buildings, flood or major construction.
 Constraints: no people, no animals, no text, no letters, no UI, no watermark, no glowing portal, no magic spectacle. Only the small local job is complete.
+
+クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。

@@ -31,8 +31,8 @@
 
 ## 第一部1-7・1-8
 
-- `public/stages/old-waterway.png`：古い水路の一覧・冒険背景。半ば塞がれた排水口と湿った斜面を描く。
-- `public/stages/tower-drainage-open.png`：1-8の10地点目以後と達成後の待機背景。流れの戻った水路と脇へ積んだ丸太を描く。再出発では作業前の背景から始める。
+- `assets/source/scenery/old-waterway.png`：古い水路の一覧・冒険背景。半ば塞がれた排水口と湿った斜面を描く。
+- `assets/source/scenery/tower-drainage-open.png`：1-8の10地点目以後と達成後の待機背景。流れの戻った水路と脇へ積んだ丸太を描く。再出発では作業前の背景から始める。
 - 1-8終幕には一枚絵を置かず、水路が戻った状態を背景と会話で見せる。
 - 採用背景は1536×1024。組み込みimage_genを使用し、既存の塔の風景を参照した。プロンプト原文と目視確認は [制作記録](stage-1-7-1-8-art.md) を参照。
 
@@ -40,7 +40,7 @@
 
 森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](stage-1-6-closeup-art.json) に保存した。
 
-- `public/stages/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
+- `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。
 
 採用画像は、木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げた構図。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋を繊細に描く。原本は `public/stories/forest-moss-aria-oil.png` に保持し、ゲームと資料一覧では可逆WebPを参照する。WebPは1,873,356 bytesで、原本PNGの3,064,032 bytesから約39%削減。両画像をRGBAへ復号した全画素の一致を確認した。
@@ -53,8 +53,8 @@
 
 | 保存先 | 用途・表示条件 |
 | --- | --- |
-| `public/stages/tower-road.png` | 1-4の一覧・冒険背景。昼の青空、畑、林、普通の土の道、遠景の小さな塔。水たまりや泥を強調しない |
-| `public/stages/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
+| `assets/source/scenery/tower-road.png` | 1-4の一覧・冒険背景。昼の青空、畑、林、普通の土の道、遠景の小さな塔。水たまりや泥を強調しない |
+| `assets/source/scenery/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
 | `public/items/moss-lamp.png` | 1-5の足元確認地点に表示する木の入れ物と淡く光る苔。透明背景。魔物除けや防御効果はない |
 | `public/stories/tower-moss-discovery.png` | `tower-road-return` の0始まり20行目、苔について尋ね、灯りとして試したい理由を伝え、採取の許可を得た後、木の入れ物の中で苔が光る場面から表示。読了後はアルバムでも鑑賞可能 |
 
@@ -134,3 +134,5 @@ Use case: illustration-story. Create one original standalone wide landscape game
 ```text
 Create one landscape 1536x1024 illustration-story still for STARLIT GUILD, using these three sheets ONLY as character appearance references, not layouts or text. Painterly anime fantasy RPG scene, delicate textured painting and soft afternoon window light, muted natural colors. Interior of a modest healer's workroom with wooden desk, paper-wrapped herbs and unfinished medicine parcels. Exact narrative instant: Mira (lavender hair, white/lavender moon-motif healer robes, herb pouch) has actually fainted from exhaustion while standing up; her knees have buckled, eyes closed and body limp, and Leon (brown hair, blue tunic, leather armor, red scarf) kneels urgently catching and supporting her upper torso and shoulders before she falls. Aria (long blonde hair, elf ears, green eyes, white flower hair ornament, forest green cloak) has rushed to their side and is crouching close, one hand moving a bag off the floor, looking anxiously at Mira and calling her name. All three fully clothed, non-romantic rescue scene, physically credible arms and weight support. Mira central; all faces and support gesture clearly readable in the middle portion of landscape. Background only herbs, parcels, wooden furniture, no extra people, no modern medical equipment, no glow magic, no blood, no comic panels, no letters or typography, no border. Retain distinctive reference costumes and faces.
 ```
+
+クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。
