@@ -1,6 +1,13 @@
 import { z } from "zod";
 import { parseBundle as parseV3 } from "./save-format-v3.ts";
-import { heroes, allQuests as quests, migrate, encounter, type State } from "./game.ts";
+import {
+  heroes,
+  allQuests as quests,
+  migrate,
+  encounter,
+  initialPrologueState,
+  type State,
+} from "./game.ts";
 import { stories } from "./stories.ts";
 import { recruitments } from "./recruitment.ts";
 import { isRecord } from "./external-input.ts";
@@ -295,6 +302,30 @@ export const bundleSchema = z
       new Set(b.profiles.map((p) => p.id)).size === b.profiles.length &&
       b.profiles.some((p) => p.id === b.active),
   );
+// The legacy mode is gone. Its records are dropped so the story records in the
+// same file still load, instead of the whole bundle failing validation.
+function storyProfile(profile: unknown) {
+  return isRecord(profile) && isRecord(profile.state) && profile.state.prologue === true;
+}
+function freshProfile() {
+  return {
+    id: crypto.randomUUID(),
+    name: "新しい冒険",
+    test: false,
+    state: initialPrologueState(Date.now()),
+  };
+}
+function dropLegacyProfiles(raw: unknown): unknown {
+  if (!isRecord(raw) || !Array.isArray(raw.profiles)) return raw;
+  const profiles: unknown[] = raw.profiles;
+  const kept = profiles.filter(storyProfile);
+  if (kept.length === profiles.length) return raw;
+  if (!kept.length) kept.push(freshProfile());
+  const active = kept.some((p) => isRecord(p) && p.id === raw.active)
+    ? raw.active
+    : (kept[0] as { id: string }).id;
+  return { ...raw, profiles: kept, active };
+}
 function upgradeCurrentBundle(raw: unknown): unknown {
   if (!isRecord(raw) || raw.format !== 4 || !Array.isArray(raw.profiles)) return raw;
   const profiles: unknown[] = raw.profiles;
@@ -317,14 +348,15 @@ function upgradeCurrentBundle(raw: unknown): unknown {
 }
 export function parseBundle(raw: unknown): SaveBundle {
   if (raw && typeof raw === "object" && "format" in raw && raw.format === 3) {
+    // Every v3 record predates the story mode, so this re-enters the drop below.
     const old = parseV3(raw);
-    return {
+    return parseBundle({
       ...old,
       format: 4,
       profiles: old.profiles.map((p) => ({ ...p, state: migrate(p.state, p.state.updatedAt) })),
-    };
+    });
   }
-  const result = bundleSchema.safeParse(upgradeCurrentBundle(raw));
+  const result = bundleSchema.safeParse(upgradeCurrentBundle(dropLegacyProfiles(raw)));
   if (!result.success)
     throw Error("冒険の記録を読み取れません。STARLIT GUILD のセーブファイルを選んでください。");
   return result.data;
