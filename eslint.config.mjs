@@ -44,7 +44,6 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "coverage/**",
     "dist/**",
-    "examples/**",
     ".open-next/**",
     ".wrangler/**",
     ".worktrees/**",
