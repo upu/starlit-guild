@@ -12,9 +12,11 @@ const firstChapterRanks=[0,1,2,6,10,12,17,21,25];
 // Difficulty belongs to a quest, never its repeat count or the save's total clears.
 export function combatRank(q:Quest){
  if(q.id===PICNIC_QUEST)return 0;
- if([MOON_HERB_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST].includes(q.id))return 25;
- if(q.id===GOLEM_QUEST)return 27;
- if(q.id===BLOCKADE_QUEST)return 29;
+ if(q.id===MOON_HERB_QUEST)return 21;
+ if(q.id===MOUNTAIN_QUEST)return 22;
+ if(q.id===SIGNPOST_QUEST)return 23;
+ if(q.id===GOLEM_QUEST)return 24;
+ if(q.id===BLOCKADE_QUEST)return 25;
  if(q.id===MEDICINE_RETURN_QUEST)return 20;
  const stage=prologueStages.findIndex(stage=>stage.quest===q.id);
  return stage>=0?firstChapterRanks[stage]:Math.max(4,4+Math.round((q.need-30)/5));

@@ -27,15 +27,15 @@ export const chapterTwoStages=[
  {quest:MEDICINE_RETURN_QUEST,label:'2-9 帰りの薬箱',title:'軽くなった荷物',arrival:'街へ戻りました',detail:'空き瓶と控えを返し、三人でお茶にしましょう。'},
 ];
 export const chapterTwoQuests:Quest[]=[
- {id:PICNIC_QUEST,name:'お昼を持って、あの坂へ',kind:'討伐',region:'昼の丘へ続く坂道',desc:'約束していた休日。パンを持って坂を上ろう。道に出てきたスライムを追い払い、景色のよい場所でお昼にしよう。',tier:1,need:12,seconds:120,gold:160,xp:90,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'丘のスライム',background:'/scenery/tower-road-background.webp',availability:'repeatable'},
- {id:MOON_HERB_QUEST,name:'月をためる草',kind:'採取',region:'月光の差し込む林',desc:'治癒師ミラから頼まれた薬草を探そう。葉の裏を見比べ、月の光を蓄えたものを場所ごとに包んで持ち帰る。',tier:1,need:28,seconds:180,gold:180,xp:100,herbs:15,ore:0,unlock:0,enemy:8,enemyName:'林のスライム',background:'/scenery/forest-background.webp',gatherTarget:'月の光を蓄えた薬草',availability:'repeatable'},
- {id:DELIVERY_PREP_QUEST,name:'配達の支度',kind:'護衛',region:'街の店先と仕事場',desc:'注文済みの薬瓶・包み布・蜜を受け取り、配達先ごとに荷造りしよう。ミラが休んでいる間の支度を二人で引き受ける。',tier:1,need:28,seconds:180,gold:180,xp:110,herbs:0,ore:0,unlock:0,enemy:7,enemyName:'配達の包み',escortTarget:'配達の包み',background:'/scenery/town-deliveries-background.webp',availability:'repeatable'},
- {id:MOUNTAIN_QUEST,name:'山道の入口',kind:'討伐',region:'山向こうへ続く道',desc:'大小の山賊の目撃場所を確かめ、三人で山道へ。アリアが先を見て、レオンが荷物を守り、ミラが手当てを支える。',tier:1,need:32,seconds:200,gold:200,xp:140,herbs:0,ore:0,unlock:0,enemy:9,enemyName:'山道の霧狼',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
- {id:SIGNPOST_QUEST,name:'くるくる道標',kind:'護衛',region:'道標のある分かれ道',desc:'地図と違う方角を向いた道標を確かめよう。小さな人形を追い払い、草の踏み跡と景色から本来の道へ戻る。',tier:1,need:32,seconds:200,gold:220,xp:150,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'道標をさらう人形',escortTarget:'道標',background:'/scenery/forest-background.webp',availability:'repeatable'},
- {id:GOLEM_QUEST,name:'もう一人の山賊',kind:'討伐',region:'古い作業場の手前',desc:'巨大な人形も両手を差し出してお菓子を要求してきた。大きな手と足元の人形を押し戻し、配達の荷物を守ろう。',tier:1,need:35,seconds:220,gold:240,xp:170,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'おねだりする運搬用ゴーレム',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
- {id:BLOCKADE_QUEST,name:'お菓子の通せんぼ',kind:'討伐',region:'街道脇の古い作業場',desc:'奪われた蜜と荷物が作業場にある。小さな人形の妨害を止め、ゴーレムを押し戻して、配達の道を取り戻そう。',tier:1,need:38,seconds:240,gold:280,xp:200,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'通せんぼする人形',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
- {id:HOUSE_CALLS_QUEST,name:'薬を待つ家々',kind:'護衛',region:'山向こうの集落',desc:'待っている家々へ薬を届けよう。ミラの往診に合わせ、湯や水の用意、包みの仕分け、空き瓶の回収を手伝う。',tier:1,need:28,seconds:180,gold:240,xp:170,herbs:0,ore:0,unlock:0,enemy:8,escortTarget:'往診の手伝い',background:'/scenery/town-deliveries-background.webp',availability:'repeatable'},
- {id:MEDICINE_RETURN_QUEST,name:'帰りの薬箱',kind:'護衛',region:'通行の戻った山道',desc:'一晩休んだら、空き瓶と控えを持って街へ戻ろう。道標と荷車の往来を確かめ、小さな魔物を追い払いながら帰る。',tier:1,need:30,seconds:180,gold:220,xp:160,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'山道のスライム',escortTarget:'空き瓶と控え',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
+ {id:PICNIC_QUEST,name:'お昼を持って、あの坂へ',kind:'討伐',region:'昼の丘へ続く坂道',desc:'約束していた休日。パンを持って坂を上ろう。道に出てきたスライムを追い払い、景色のよい場所でお昼にしよう。',tier:1,need:12,seconds:120,gold:160,xp:135,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'丘のスライム',background:'/scenery/tower-road-background.webp',availability:'repeatable'},
+ {id:MOON_HERB_QUEST,name:'月をためる草',kind:'採取',region:'月光の差し込む林',desc:'治癒師ミラから頼まれた薬草を探そう。葉の裏を見比べ、月の光を蓄えたものを場所ごとに包んで持ち帰る。',tier:1,need:28,seconds:180,gold:180,xp:150,herbs:15,ore:0,unlock:0,enemy:8,enemyName:'林のスライム',background:'/scenery/forest-background.webp',gatherTarget:'月の光を蓄えた薬草',availability:'repeatable'},
+ {id:DELIVERY_PREP_QUEST,name:'配達の支度',kind:'護衛',region:'街の店先と仕事場',desc:'注文済みの薬瓶・包み布・蜜を受け取り、配達先ごとに荷造りしよう。ミラが休んでいる間の支度を二人で引き受ける。',tier:1,need:28,seconds:180,gold:180,xp:165,herbs:0,ore:0,unlock:0,enemy:7,enemyName:'配達の包み',escortTarget:'配達の包み',background:'/scenery/town-deliveries-background.webp',availability:'repeatable'},
+ {id:MOUNTAIN_QUEST,name:'山道の入口',kind:'討伐',region:'山向こうへ続く道',desc:'大小の山賊の目撃場所を確かめ、三人で山道へ。アリアが先を見て、レオンが荷物を守り、ミラが手当てを支える。',tier:1,need:32,seconds:200,gold:200,xp:210,herbs:0,ore:0,unlock:0,enemy:9,enemyName:'山道の霧狼',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
+ {id:SIGNPOST_QUEST,name:'くるくる道標',kind:'護衛',region:'道標のある分かれ道',desc:'地図と違う方角を向いた道標を確かめよう。小さな人形を追い払い、草の踏み跡と景色から本来の道へ戻る。',tier:1,need:32,seconds:200,gold:220,xp:225,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'道標をさらう人形',escortTarget:'道標',background:'/scenery/forest-background.webp',availability:'repeatable'},
+ {id:GOLEM_QUEST,name:'もう一人の山賊',kind:'討伐',region:'古い作業場の手前',desc:'巨大な人形も両手を差し出してお菓子を要求してきた。大きな手と足元の人形を押し戻し、配達の荷物を守ろう。',tier:1,need:35,seconds:220,gold:240,xp:255,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'おねだりする運搬用ゴーレム',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
+ {id:BLOCKADE_QUEST,name:'お菓子の通せんぼ',kind:'討伐',region:'街道脇の古い作業場',desc:'奪われた蜜と荷物が作業場にある。小さな人形の妨害を止め、ゴーレムを押し戻して、配達の道を取り戻そう。',tier:1,need:38,seconds:240,gold:280,xp:300,herbs:0,ore:0,unlock:0,enemy:10,enemyName:'通せんぼする人形',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
+ {id:HOUSE_CALLS_QUEST,name:'薬を待つ家々',kind:'護衛',region:'山向こうの集落',desc:'待っている家々へ薬を届けよう。ミラの往診に合わせ、湯や水の用意、包みの仕分け、空き瓶の回収を手伝う。',tier:1,need:28,seconds:180,gold:240,xp:255,herbs:0,ore:0,unlock:0,enemy:8,escortTarget:'往診の手伝い',background:'/scenery/town-deliveries-background.webp',availability:'repeatable'},
+ {id:MEDICINE_RETURN_QUEST,name:'帰りの薬箱',kind:'護衛',region:'通行の戻った山道',desc:'一晩休んだら、空き瓶と控えを持って街へ戻ろう。道標と荷車の往来を確かめ、小さな魔物を追い払いながら帰る。',tier:1,need:30,seconds:180,gold:220,xp:240,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'山道のスライム',escortTarget:'空き瓶と控え',background:'/scenery/mountain-road-background.webp',availability:'repeatable'},
 ];
 type ChapterWork={kind:'battle'|'escort'|'gather';name:string};
 const workPatterns:Partial<Record<string,ChapterWork[]>>={
@@ -51,6 +51,10 @@ const workPatterns:Partial<Record<string,ChapterWork[]>>={
 export function chapterTwoWork(id:string,node:number){
  if(id===BLOCKADE_QUEST)return {kind:'battle' as const,name:node<9?'荷物を囲む小さな人形':'通せんぼする運搬用ゴーレム'};
  const pattern=workPatterns[id];return pattern?pattern[node%pattern.length]:null;
+}
+// Non-hostile jobs need sustained work, without pretending that a parcel attacks.
+export function chapterTwoWorkload(id:string){
+ return [MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST].includes(id)?2.4:1;
 }
 function packingBanter(run:Run){
  if(run.quest===DELIVERY_PREP_QUEST)return [

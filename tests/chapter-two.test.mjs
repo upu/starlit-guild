@@ -48,7 +48,7 @@ test('2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
    live=settle(live,live.squads[0].run.nextAt).state;
    healed||=!!live.squads[0].run?.events.some(e=>e.kind==='heal'&&e.hero==='mira'&&e.amount>0);
   }
-  assert.equal(live.squads[0].run,null);if(id===MOUNTAIN_QUEST)assert.ok(healed);
+  assert.equal(live.squads[0].run,null);if(id===GOLEM_QUEST)assert.ok(healed);
   const offline=roundtrip(finish(away));assert.equal(offline.done[id],1);assert.equal(offline.squads[0].run,null);
   for(const key of ['gold','herbs','ore','owned','xp','done','story'])assert.deepEqual(live[key],offline[key]);
   const inventory=offline.inventory,herbs=offline.herbs;s=roundtrip(read(offline,id));assert.deepEqual(s.inventory,inventory);assert.equal(s.herbs,herbs);

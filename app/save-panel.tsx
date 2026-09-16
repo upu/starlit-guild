@@ -13,6 +13,7 @@ import {MusicSettings} from './music-settings';
 import type {useGameMusic} from './use-game-music';
 import type {useLocalGame} from './use-local-game';
 import {errorMessage} from '@/lib/external-input';
+import {chapterTwoPresets} from '@/lib/chapter-two-presets';
 type Game=ReturnType<typeof useLocalGame>;
 export function SavePanel({game,music}:{game:Game;music:ReturnType<typeof useGameMusic>}){
  const [open,setOpen]=useState(false),[showCloud,setShowCloud]=useState(false);const file=useRef<HTMLInputElement>(null);
@@ -39,7 +40,7 @@ function DeleteProfileButton({profile,disabled,onDelete}:{profile:NonNullable<Ga
 }
 function TestProfileButton({game,onCreate}:{game:Game;onCreate:()=>void}){
  if(!game.testToolsEnabled)return null;
- return <button className="outline" disabled={game.otherTab} onClick={()=>{game.createProfile(true);onCreate()}}><FlaskConical size={15}/>テスト用を作る</button>;
+ return <div className="chapter-test-start"><button className="outline" disabled={game.otherTab} onClick={()=>{game.createProfile(true);onCreate()}}><FlaskConical size={15}/>テスト用を作る</button><p>第2章から試す</p><small>今の冒険を残して、別のテスト記録を作ります。どちらも2-1の出発前から始まります。</small>{chapterTwoPresets.map(preset=><button key={preset.id} className="outline" disabled={game.otherTab||!game.bundle||game.bundle.profiles.length>=12} onClick={()=>{game.createProfile(true,preset.id);onCreate();}}><b>{preset.name}</b><small>{preset.description}</small></button>)}</div>;
 }
 export function TestControls({game,onAdjust}:{game:Game;onAdjust:()=>void}){
  const [clears,setClears]=useState(15),[lv,setLv]=useState(5),[gold,setGold]=useState(3000);

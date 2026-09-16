@@ -6,7 +6,7 @@ import {questNodes,puppetBattleName} from './puppet-battles.ts';
 import {enemyText,groupEnemyTurns} from './enemy-turns.ts';
 import {createEnemies,damageEnemy,penetration,reducedDamage,syncEnemyTotals,type Enemy} from './combat.ts';
 import {TRADE_QUEST,RETURN_QUEST,TOWN_QUEST,TOWER_QUEST,NIGHT_QUEST,WETLAND_QUEST,WATERWAY_QUEST,RESTORATION_QUEST,MOSS_QUEST,inPrologue,isPrologueQuest,stageUnlocked,stageEndingPending} from './prologue.ts';
-import {chapterTwoQuests,chapterTwoWork,PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST,trioQuest} from './chapter-two.ts';
+import {chapterTwoQuests,chapterTwoWork,chapterTwoWorkload,PICNIC_QUEST,MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST,trioQuest} from './chapter-two.ts';
 import {learnTechnique,setTechnique,techniqueMultiplier,techniqueText,techniqueHerbs,equippedTechnique,type Techniques,type TechniqueSlot} from './techniques.ts';
 import {waterwayWork} from './waterway-work.ts';
 import {migrate as migrateV3,type State as V3State} from './game-v3.ts';
@@ -109,14 +109,14 @@ function estimateNode(s:State,sq:Squad,q:Quest,node:number){
   const hit=enemies.length?reducedDamage(base*multiplier,enemies[0].resistance,penetration(s,id)):base*multiplier;
   return sum+hit/period;
  },0);
- const work=enemies.length?enemies.reduce((sum,enemy)=>sum+enemy.hp,0):q.need*1.12*(kind==='escort'?1.8:2.3);
+ const work=enemies.length?enemies.reduce((sum,enemy)=>sum+enemy.hp,0):q.need*1.12*(kind==='escort'?1.8:2.3)*chapterTwoWorkload(q.id);
  return 2.5+work/Math.max(.1,dps);
 }
 function addLog(s:State,text:string,at:number){s.log=[{text,at},...s.log].slice(0,40);}
 function event(r:Run,at:number,kind:GameEvent['kind'],text:string,amount?:number,hero?:string,target?:string,enemy?:string){r.events=[...r.events,{id:`${String(r.round)}-${String(r.node)}-${String(at)}-${kind}-${String(r.hits)}-${hero||"leader"}-${target||"none"}-${String(++r.serial)}`,at,kind,text,amount,hero,target,enemy}].slice(-12);}
 function configureTarget(r:Run,q:Quest){
  r.enemies=encounter(q,r.node)==='battle'?createEnemies(q,r.node,r.phaseAt,r.nodes!==15):[];
- r.targetMax=Math.round(q.need*1.12*(encounter(q,r.node)==='escort'?1.8:2.3));r.target=r.targetMax;r.hits=0;syncEnemyTotals(r);
+ r.targetMax=Math.round(q.need*1.12*(encounter(q,r.node)==='escort'?1.8:2.3)*chapterTwoWorkload(q.id));r.target=r.targetMax;r.hits=0;syncEnemyTotals(r);
 }
 export function travelMs(id:string){return 2200+(heroes.findIndex(h=>h.id===id)%4)*310;}
 function schedule(s:State,sq:Squad,r:Run,at:number){
@@ -130,7 +130,7 @@ function nextEvent(r:Run){return Math.min(...r.actors.map(a=>a.nextAt),r.enemyAt
 export const heroSkills:Record<string,{style:string;name:string;description:string}>={
  aria:{style:'ranged',name:'風の二連矢',description:'離れて矢を放ち、3回ごとに二連射。寄り道も得意。'},
  leon:{style:'melee',name:'暁の踏み込み',description:'前線へ飛び込み、4回ごとに強力な斬撃。'},
- mira:{style:'healer',name:'月明かりの癒やし',description:'後方から支援し、仲間の体力を回復。'},
+ mira:{style:'healer',name:'月明かりの癒やし',description:'4回の行動ごとに、最も弱った仲間を回復。'},
  finn:{style:'rogue',name:'影縫い',description:'素早く斬り込み、5回ごとに強撃。宝探しが得意。'},
  garr:{style:'tank',name:'守護の盾',description:'前線を支え、4回ごとに味方を守る障壁。'},
  luna:{style:'mage',name:'流星の一撃',description:'遠くから魔法を放ち、4回ごとに流星を落とす。'},
@@ -219,7 +219,7 @@ function addActorWard(r:Run,hero:string,special:boolean,at:number){
  if(!special||hero!=='garr'&&hero!=='noel')return;r.ward+=Math.ceil(totalMaxHp(r)*(hero==='garr'?.12:.06));event(r,at,'skill',heroSkills[hero].name+'！ 障壁を展開',undefined,hero);
 }
 function healFromActor(s:State,sq:Squad,r:Run,hero:string,special:boolean,at:number){
- const target=lowestHealth(r,sq.members);if(hero!=='mira'&&!(hero==='poppy'&&special)||!target)return;const heal=5+level(s.xp[hero]||0),restored=healMember(r,target,heal);event(r,at,'heal',heroSkills[hero].name,restored,hero,target);
+ const target=lowestHealth(r,sq.members);if(!special||!['mira','poppy'].includes(hero)||!target)return;const heal=5+level(s.xp[hero]||0),restored=healMember(r,target,heal);event(r,at,'heal',heroSkills[hero].name,restored,hero,target);
 }
 function actorTurn(s:State,sq:Squad,r:Run,q:Quest,kind:Encounter,actor:Actor,at:number){
  if(memberHealth(r,actor.hero).hp<=0){actor.nextAt+=actor.period;return;}
