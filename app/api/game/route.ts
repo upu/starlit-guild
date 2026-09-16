@@ -1,5 +1,5 @@
 import { gameDb } from "@/db/game-store";
-import { act, settle, initialState, migrate, type Action } from "@/lib/game-v2";
+import { act, settle, migrate, type Action } from "@/lib/game-v2";
 import { player, sameOrigin } from "@/lib/player";
 import { isStoredGameState, parseGameRequest } from "@/lib/api-input";
 import { errorMessage, parseJson } from "@/lib/external-input";
@@ -89,10 +89,9 @@ async function saveGame(
   setCookie(identity.cookie);
   const db = gameDb(),
     uid = identity.id;
-  await db
-    .prepare("INSERT OR IGNORE INTO game_saves (user_id, data, revision) VALUES (?, ?, 0)")
-    .bind(uid, JSON.stringify(initialState(Date.now())))
-    .run();
+  // The legacy adventure is no longer created. Records that already exist keep working.
+  const existing = await db.prepare("SELECT 1 FROM game_saves WHERE user_id = ?").bind(uid).first();
+  if (!existing) return json({ error: "以前の冒険の記録はありません。" }, 404);
   for (let attempt = 0; attempt < 6; attempt++) {
     const response = await saveAttempt(db, uid, identity.mode, body, json);
     if (response) return response;

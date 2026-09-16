@@ -1406,7 +1406,12 @@ export function testState(now: number, stages: number, lv: number, gold: number)
   completeStoryStages(s, count);
   s.clears = count;
   s.gold = Math.min(10000000, Math.max(0, Math.floor(gold)));
-  s.herbs = s.ore = s.wood = count * 15;
+  // Carry the materials those stages actually reward. Wood belongs to the legacy camp only.
+  for (const { quest } of storyStages.slice(0, count)) {
+    const q = questById(quest);
+    s.herbs += q.herbs;
+    s.ore += q.ore;
+  }
   for (const id of s.owned) s.xp[id] = 30 * (Math.min(50, Math.max(1, Math.floor(lv))) - 1) ** 2;
   s.squads[0].lastQuest = nextStage(s).quest;
   s.log = [{ at: now, text: "テスト用の冒険。普段の記録には影響しません。" }];
