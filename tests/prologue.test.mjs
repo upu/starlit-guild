@@ -180,7 +180,7 @@ test("trade carries cargo and gathers herbs without showing an unintroduced esco
   );
 });
 
-test("many trades never open the base, other quests or recruitment; older saves keep their progress", () => {
+test("many trades never open the base, other quests or recruitment; legacy records no longer load", () => {
   const s = initialPrologueState(1000);
   s.clears = 60;
   s.gold = 100000;
@@ -197,17 +197,18 @@ test("many trades never open the base, other quests or recruitment; older saves 
   ])
     assert.throws(() => act(s, action, 1000));
   assert.equal(nextGoal(s).destination, "quests");
+  // The legacy mode is not maintained: its records are dropped instead of loading.
   const legacy = initialState(1000);
   legacy.clears = 60;
   legacy.gold = 12345;
   legacy.done.herbs = 60;
   const restored = roundtrip(legacy);
-  assert.deepEqual(restored, legacy);
-  assert.equal(inPrologue(restored), false);
-  assert.ok(availableQuests(restored).some((q) => q.id === "dragon"));
-  assert.equal(
-    act(restored, { type: "party", members: ["aria"] }, 1000).squads[0].members.length,
-    1,
+  assert.equal(inPrologue(restored), true);
+  assert.equal(restored.clears, 0);
+  assert.deepEqual(restored.done, {});
+  assert.deepEqual(
+    availableQuests(restored).map((q) => q.id),
+    [TRADE_QUEST],
   );
 });
 

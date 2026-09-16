@@ -59,7 +59,7 @@ function deliveryReady() {
   return read(finish(start(unlocked(), MOON_HERB_QUEST)), MOON_HERB_QUEST);
 }
 
-test("2-3 joins Mira after rest once; new party, old progression and replay survive saves", () => {
+test("2-3 joins Mira after rest once; the new party and replay survive saves", () => {
   const before = deliveryReady(),
     packed = roundtrip(finish(start(before, DELIVERY_PREP_QUEST)));
   assert.deepEqual(packed.owned, ["aria", "leon"]);
@@ -70,13 +70,6 @@ test("2-3 joins Mira after rest once; new party, old progression and replay surv
   assert.equal(joined.gold, packed.gold);
   assert.equal(joined.xp.mira, Math.min(joined.xp.aria, joined.xp.leon));
   assert.deepEqual(read(joined, DELIVERY_PREP_QUEST), joined);
-  const old = structuredClone(packed);
-  delete old.prologue;
-  old.owned.push("mira");
-  old.xp.mira = 123456;
-  const reread = roundtrip(read(old, DELIVERY_PREP_QUEST));
-  assert.equal(reread.xp.mira, 123456);
-  assert.deepEqual(reread.squads, old.squads);
   assert.match(journeyNotice(packed, joined).title, /ミラが仲間/);
   const early = roundtrip(start(joined, PICNIC_QUEST));
   assert.deepEqual(early.squads[0].members, ["aria", "leon"]);
@@ -412,5 +405,6 @@ test("only equipped techniques affect actions and rewards; offline and live simu
   invalid.techniques.equipped.aria.passive = "aria-herbs";
   invalid.techniques.learned.push("aria-herbs");
   assert.throws(() => roundtrip(invalid));
-  assert.deepEqual(roundtrip(initialState(1000)), initialState(1000));
+  // A record without techniques still loads; the legacy mode is dropped instead.
+  assert.equal(roundtrip(initialState(1000)).prologue, true);
 });
