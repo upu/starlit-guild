@@ -61,7 +61,7 @@ GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更
 
 バージョンを上げたPRは [`CHANGELOG.md`](../CHANGELOG.md) へその版の1行を足す。PRタイトルと番号をそのまま転記し、版の順に並べる。`no-game-change` でバージョンが変わらないPRは記載しない。
 
-`scripts/check-pr-version.mjs` は、`main` と版が変わるPRで `CHANGELOG.md` に差分がなければ失敗する。不具合の個別履歴や検討の経緯はここへ積まず、IssueとGit履歴へ残す。
+`scripts/check-pr-version.mjs` は、`main` と版が変わるPRで、その版の番号が `CHANGELOG.md` に現れなければ失敗する。ファイルを触っただけでは通らない。不具合の個別履歴や検討の経緯はここへ積まず、IssueとGit履歴へ残す。
 
 ### コード品質
 

@@ -79,13 +79,25 @@ test("without the marker a minor bump is rejected under the normal policy", () =
 });
 
 test("a version bump has to bring a changelog line with it", () => {
-  assert.equal(validateChangelogUpdate("0.2.13", "0.2.13", []), false);
-  assert.equal(validateChangelogUpdate("0.2.13", "0.2.14", [CHANGELOG_PATH, "lib/game.ts"]), true);
-  assert.equal(validateChangelogUpdate("0.2.13", "0.3.0", [CHANGELOG_PATH]), true);
+  const listed = "| 0.2.14 | 2026-09-16 | 何かの変更（#94） |";
+  assert.equal(validateChangelogUpdate("0.2.13", "0.2.13", ""), false);
+  assert.equal(validateChangelogUpdate("0.2.13", "0.2.14", listed), true);
+  assert.equal(validateChangelogUpdate("0.2.13", "0.3.0", "## 0.3.0 第三章の開発"), true);
   assert.throws(
-    () => validateChangelogUpdate("0.2.13", "0.2.14", ["lib/game.ts", "package.json"]),
+    () => validateChangelogUpdate("0.2.13", "0.2.14", ""),
     /CHANGELOG\.md へ 0\.2\.14 の行を追加/,
   );
+  // Touching the file for an unrelated edit is not the same as recording the new version.
+  assert.throws(
+    () => validateChangelogUpdate("0.2.13", "0.2.14", "| 0.2.13 | 直した古い行 |"),
+    /CHANGELOG\.md へ 0\.2\.14 の行を追加/,
+  );
+  // A longer number that merely starts with the bumped one does not count.
+  assert.throws(
+    () => validateChangelogUpdate("0.2.0", "0.2.1", "| 0.2.13 | 別の版 |"),
+    /CHANGELOG\.md へ 0\.2\.1 の行を追加/,
+  );
+  assert.equal(CHANGELOG_PATH, "CHANGELOG.md");
 });
 
 test("versions and lockfile copies stay valid and synchronized", () => {

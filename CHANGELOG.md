@@ -6,7 +6,7 @@
 - バージョンを据え置くPR（`no-game-change`）は記載しない。変更の経緯はGit履歴とIssueを正本とする。
 - 判定と番号の規則は [開発と運用](docs/development.md#prごとのゲームバージョン) を参照する。
 
-`0.1.4` より前の版は、このリポジトリのGit履歴に含まれないため記録していない。
+`main` の履歴は `ffc849e`（`0.1.4` 時点）で作り直されている。`0.1.3` 以前のコミットは `main` からたどれないため、PRのhead参照から版を上げたコミットを特定して記載した。`0.1.2` 以前はPRを経由しない `main` への直接コミットのため、PR番号ではなくコミットを示す。
 
 ## 0.2.x（第二章の開発）
 
@@ -27,7 +27,7 @@
 | 0.2.1 | 2026-09-14 | 初回クエストの出発導線を案内（[#56](https://github.com/upu/starlit-guild/pull/56)） |
 | 0.2.0 | 2026-09-14 | docs: plan chapter two and start v0.2.0 development（[#53](https://github.com/upu/starlit-guild/pull/53)） |
 
-## 0.1.x（第一章の開発と公開）
+## 0.1.x（最初の実装と第一章の開発・公開）
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
@@ -49,4 +49,8 @@
 | 0.1.7 | 2026-09-13 | fix: iPhoneで開幕の会話ウィンドウが画面外にずれる問題を修正（[#33](https://github.com/upu/starlit-guild/pull/33)） |
 | 0.1.6 | 2026-09-13 | 小さく見分けやすい顔アイコンとセリフごとのチャット表示（[#32](https://github.com/upu/starlit-guild/pull/32)） |
 | 0.1.5 | 2026-09-13 | 第一部1-4・1-5：塔への寄り道と苔灯の帰り道を実装（[#31](https://github.com/upu/starlit-guild/pull/31)） |
-| 0.1.4 | 2026-09-13 | refactor: reduce game library complexity（[#27](https://github.com/upu/starlit-guild/pull/27)） |
+| 0.1.4 | 2026-09-13 | fix: 冒険待機中に同じ会話が繰り返し追加される不具合を修正（[#25](https://github.com/upu/starlit-guild/pull/25)） |
+| 0.1.3 | 2026-09-12 | fix: bound story dialogs to mobile viewport and simplify continuation cues（[#23](https://github.com/upu/starlit-guild/pull/23)） |
+| 0.1.2 | 2026-09-11 | fix: avoid installed iOS viewport inset bug（`3fd8921`） |
+| 0.1.1 | 2026-09-11 | fix: pin mobile navigation to viewport（`8f1cf84`） |
+| 0.1.0 | 2026-09-10 | Build Starlit Guild idle RPG with durable player saves（`8511871`・最初のコミット） |

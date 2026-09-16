@@ -59,10 +59,12 @@ export function validateVersionChange(baseVersion, headVersion, classification, 
   return expected;
 }
 
-// A version bump is what the changelog records, so the two move together.
-export function validateChangelogUpdate(baseVersion, headVersion, changedFiles) {
+// A version bump is what the changelog records, so the new number has to appear there,
+// not merely somewhere in the file's diff.
+export function validateChangelogUpdate(baseVersion, headVersion, changelog) {
   if (baseVersion === headVersion) return false;
-  if (!changedFiles.includes(CHANGELOG_PATH))
+  const escaped = headVersion.replace(/\./g, "\\.");
+  if (!new RegExp(`(^|[^\\d.])${escaped}([^\\d.]|$)`).test(String(changelog ?? "")))
     throw Error(
       `バージョンを上げるPRでは ${CHANGELOG_PATH} へ ${headVersion} の行を追加してください。`,
     );
@@ -83,10 +85,8 @@ function readJson(path) {
 function readBasePackage(baseRef) {
   return JSON.parse(execFileSync("git", ["show", `${baseRef}:package.json`], { encoding: "utf8" }));
 }
-function readChangedFiles(baseRef) {
-  return execFileSync("git", ["diff", "--name-only", baseRef], { encoding: "utf8" })
-    .split("\n")
-    .filter(Boolean);
+function readChangelog() {
+  return readFileSync(new URL(`../${CHANGELOG_PATH}`, import.meta.url), "utf8");
 }
 
 function main() {
@@ -100,7 +100,7 @@ function main() {
   const basePackage = readBasePackage(baseRef);
   validatePackageLock(packageInfo.version, lock);
   validateVersionChange(basePackage.version, packageInfo.version, classification, minorRelease);
-  validateChangelogUpdate(basePackage.version, packageInfo.version, readChangedFiles(baseRef));
+  validateChangelogUpdate(basePackage.version, packageInfo.version, readChangelog());
   const kind = minorRelease ? `${classification} + minor-release` : classification;
   console.log(
     `PR version check passed: ${kind} (${basePackage.version} -> ${packageInfo.version})`,
