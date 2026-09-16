@@ -159,6 +159,10 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
   },
 };
 
+export function storyThumbnail(art: StoryArt): string {
+  return art.src.replace("/stories/", "/stories/thumbnails/").replace(/\.(png|webp)$/, ".webp");
+}
+
 export function storyArtAt(storyId: string, lineIndex: number): StoryArt | undefined {
   const art = storyArt[storyId];
   return art && lineIndex >= art.revealAtLine ? art : undefined;

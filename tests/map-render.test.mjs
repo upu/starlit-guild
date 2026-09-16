@@ -10,7 +10,7 @@ import { stories } from "../lib/stories.ts";
 import { prologueStages } from "../lib/prologue.ts";
 import { madHalloweenStories } from "../lib/mad-halloween-stories.ts";
 import { characterEncounters } from "../lib/character-encounters.ts";
-import { storyArt, storyArtAt } from "../lib/story-art.ts";
+import { storyArt, storyArtAt, storyThumbnail } from "../lib/story-art.ts";
 import { recruitments } from "../lib/recruitment.ts";
 import { adventureFrame, adventureAssets, adventureAction } from "../lib/adventure-presentation.ts";
 const frameFor = (state, now = state.updatedAt) =>
@@ -293,7 +293,8 @@ test("guest stills reveal during their scene and enter the gallery only after re
     state.story.read.push(scene.id);
     assert.ok(!library().includes(storyArt[scene.id].src));
     const album = renderToStaticMarkup(createElement(StoryAlbum, { state, onBack: () => {} }));
-    assert.ok(album.includes(storyArt[scene.id].src));
+    assert.ok(album.includes(storyThumbnail(storyArt[scene.id])));
+    assert.ok(!album.includes(storyArt[scene.id].src), "album does not load full-size artwork");
   }
 });
 
