@@ -93,7 +93,13 @@ export function chapterTwoBanter(run:Run){
   [{speaker:'leon',text:'草むらが動いた。包みを踏まれないように寄せよう。'},{speaker:'aria',text:'うん。追い払ったら、葉が潰れてないか確かめよう。'}],
  ][run.node%3];
 }
+function puppetBanter(run:Run){return [
+  {speaker:'aria',text:run.node===2?'あの手の合図で、また動く！　人形から止めるね。':'小さいほう、動きが速いね。荷物から離して止めるよ。'},
+  {speaker:'leon',text:run.node===0?'ああ。回り込むほうも見ておく。':'大きいのが腕を広げた。二人とも、俺の後ろへ。'},
+  {speaker:'mira',text:'私は治療を、二人は前を。'},
+ ];}
 function finaleBanter(run:Run){
+ if(run.quest===BLOCKADE_QUEST&&run.nodes===3)return puppetBanter(run);
  if(run.quest===HOUSE_CALLS_QUEST)return [
   {speaker:'aria',text:'次の包み、ここへ置くね。水も替えてきたよ。'},
   {speaker:'mira',text:'ありがとう。診察が済んだら、お薬を確かめるわ。'},

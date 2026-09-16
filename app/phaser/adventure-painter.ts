@@ -12,6 +12,8 @@ function memberBob(member:Member,now:number,index:number,reduced:boolean,animate
 function memberLunge(member:Member,size:number,reduced:boolean,front:boolean,attacking:boolean){return !reduced&&front&&attacking?member.attack*size*.18:0;}
 function memberAngle(member:Member,now:number,index:number,reduced:boolean,animated:boolean,front:boolean){if(reduced||animated)return 0;if(member.walking)return Math.sin(now/100+index)*3;return front?member.attack*-7:0;}
 
+const enemyLabelColor=(cue:string)=>cue?'#ffe58c':'#fff1cf';
+const enemyWindup=(cue:string,reduced:boolean,now:number)=>cue&&!reduced?Math.sin(now/140)*4:0;
 const enemyAspect=(asset:string)=>asset.startsWith('/enemies/')?2/3:1;
 function registerHeroFrames(texture:Phaser.Textures.Texture,sheet:NonNullable<(typeof heroSheets)[string]>){
  if(sheet.frames){
@@ -170,11 +172,11 @@ export class AdventurePainter{
   opponent.image.setTexture(asset,asset==='/sprites.png'?String(target.sprite):undefined);
   const enemySize=size*target.scale,pulse=this.runtime.reduced?1:1+Math.sin(now/420)*.015,events=frame.events.filter(event=>!event.enemy||event.enemy===target.id);
   const hurt=events.some(e=>['hit','assist','burst','skill','combo'].includes(e.kind)&&now-e.at<140),striking=events.find(e=>e.kind==='hurt'&&now-e.at<320);
-  const offset=striking&&!this.runtime.reduced?-Math.sin((now-striking.at)/320*Math.PI)*12:0;
-  opponent.image.setPosition(target.x*width+offset,target.y*height).setDisplaySize(enemySize*pulse*enemyAspect(asset),enemySize/pulse).setFlipX(target.battle).setDepth(10+target.y*10);
+  const offset=striking&&!this.runtime.reduced?-Math.sin((now-striking.at)/320*Math.PI)*12:0,windup=enemyWindup(target.cue,this.runtime.reduced,now);
+  opponent.image.setPosition(target.x*width+offset,target.y*height-Math.abs(windup)).setAngle(windup).setDisplaySize(enemySize*pulse*enemyAspect(asset),enemySize/pulse).setFlipX(target.battle).setDepth(10+target.y*10);
   if(hurt&&!this.runtime.reduced)opponent.image.setTint(0xffedb1);else opponent.image.clearTint();
   opponent.shadow.setPosition(target.x*width,target.y*height+3).setDisplaySize(enemySize*.6,enemySize*.12);
-  opponent.label.setText(target.name).setFontSize(width<500?12:13).setWordWrapWidth(Math.min(180,width*.27),true).setPosition(target.x*width,target.y*height+enemySize*.13+10);
+  opponent.label.setText(target.cue||target.name).setColor(enemyLabelColor(target.cue)).setFontSize(width<500?12:13).setWordWrapWidth(Math.min(180,width*.27),true).setPosition(Math.min(width-Math.min(180,width*.27)/2-6,target.x*width),target.y*height+enemySize*.13+10);
   const bar=Math.min(92,enemySize*.8),y=target.y*height+enemySize*.12;this.meters.fillStyle(0x17352e,.9).fillRoundedRect(target.x*width-bar/2,y,bar,5,2);this.meters.fillStyle(target.battle?0xf1b38e:0xe9d89a).fillRoundedRect(target.x*width-bar/2,y,bar*target.value,5,2);
  }
  private paintGuest(input:ReturnType<AdventureBridge['read']>,frame:AdventureFrame,size:number){

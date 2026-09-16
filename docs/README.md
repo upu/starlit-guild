@@ -44,6 +44,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [Phaser冒険画面](phaser-adventure.md) — 冒険描画の構成と検証範囲
 - [動作画像の制作記録](hero-animation-art.md) — アリア・レオン・ミラのアニメーション素材
 - [動画素材の管理](story-videos.md) — 元動画から配信用MP4を自動生成する手順と設定
+- [覆面の操り手の戦闘画像](puppet-battle-art.md) — 2-7の戦闘用画像と制作条件
 - [演出素材](presentation-assets.md) — 攻撃・発見などの演出素材
 - [音楽と効果音](audio.md) — BGM・効果音の現行仕様と実装
 - [タイトル画像](title-art.md) — タイトルアートの制作記録
