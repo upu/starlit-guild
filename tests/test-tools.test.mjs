@@ -199,6 +199,13 @@ test("test records always follow the story stages and never create a legacy adve
   assert.ok(every.owned.includes("mira"), "2-3を読了するとミラが加入する");
   assert.deepEqual(every.owned, ["aria", "leon", "mira"], "旧加入の仲間は配られない");
   assert.equal(every.town, 0, "拠点は物語モードにない");
+  const earned = storyStages.reduce(
+    (total, { quest }) => total + game.allQuests.find((q) => q.id === quest).herbs,
+    0,
+  );
+  assert.equal(every.herbs, earned, "素材は実際のステージ報酬だけを配る");
+  assert.equal(every.ore, 0);
+  assert.equal(every.wood, 0, "木材は従来の拠点だけの資源");
 
   // Counts beyond the story stop at the last stage instead of falling back to the legacy mode.
   const beyond = testState(1000, 1000, 20, 20000);
