@@ -42,7 +42,7 @@ export function chapterCombatState(index,lv,equipped=false){
 export function chapterComparisons(){
  return [6,7,8].flatMap(index=>[5,8,10,12,15].flatMap(lv=>[false,true].map(equipped=>({...simulateCombat(chapterCombatState(index,lv,equipped),prologueStages[index].quest).record,equipped}))));
 }
-export function trainedChapter(){
+export function trainedChapter(includeState=false){
  let state=initialPrologueState(1000),trainingSeconds=0;const records=[];
  for(const [index,stage] of prologueStages.entries()){
   if(index===3)for(const [hero,weapon] of [['aria','ash-bow'],['leon','steel-sword']]){
@@ -60,7 +60,7 @@ export function trainedChapter(){
   records.push(result.record);if(!result.record.cleared)break;
   state=act(result.state,{type:'readStory',id:stage.quest+'-return'},result.state.updatedAt);
  }
- return {records,trainingSeconds,totalSeconds:Math.round((state.updatedAt-1000)/1000)};
+ return {records,trainingSeconds,totalSeconds:Math.round((state.updatedAt-1000)/1000),...(includeState?{state}:{})};
 }
 export function tappedCombat(input,quest,tapsPerSecond=8){
  let state=act(input,{type:'start',id:quest,value:false,readDeparture:true},input.updatedAt),taps=0;

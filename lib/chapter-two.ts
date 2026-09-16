@@ -52,6 +52,10 @@ export function chapterTwoWork(id:string,node:number){
  if(id===BLOCKADE_QUEST)return {kind:'battle' as const,name:node<9?'荷物を囲む小さな人形':'通せんぼする運搬用ゴーレム'};
  const pattern=workPatterns[id];return pattern?pattern[node%pattern.length]:null;
 }
+// Non-hostile jobs need sustained work, without pretending that a parcel attacks.
+export function chapterTwoWorkload(id:string){
+ return [MOON_HERB_QUEST,DELIVERY_PREP_QUEST,SIGNPOST_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST].includes(id)?2.4:1;
+}
 function packingBanter(run:Run){
  if(run.quest===DELIVERY_PREP_QUEST)return [
   {speaker:'aria',text:'瓶と蜜は別々。荷札も合ってるよ。'},

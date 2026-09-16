@@ -1,3 +1,4 @@
+import * as chapterPresets from '../lib/chapter-two-presets.ts';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -48,7 +49,7 @@ function elements(node){
 test('save panel hides test creation and adjustment when disabled, including existing test profiles',()=>{
  const ui=new Proxy({},{get:(_target,name)=>name});
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
-  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/external-input':{},
+  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/chapter-two-presets':chapterPresets,'@/lib/external-input':{},
  };
  for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
  const {SavePanel,TestControls}=load('../app/save-panel.tsx',modules);
@@ -67,7 +68,7 @@ test('save panel hides test creation and adjustment when disabled, including exi
 test('save panel offers deletion for every record and disables it for the last record',()=>{
  const ui=new Proxy({},{get:(_target,name)=>name}),calls=[];
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
-  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/external-input':{},
+  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/chapter-two-presets':chapterPresets,'@/lib/external-input':{},
  };
  for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
  const {SavePanel}=load('../app/save-panel.tsx',modules);
