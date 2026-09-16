@@ -34,7 +34,7 @@
 
 ## 公開用チェックアウト
 
-GitHubの `.openai/hosting.json` は本番のまま保持する。Sitesのmanifestは一つのSiteだけを識別するため、プレビュー配信時には **manifestの `project_id` だけを変更した配信用コミット** を作る。
+GitHubの `.openai/hosting.json` は本番のまま保持する。このリポジトリの配信手順はmanifestの `project_id` を使うため、環境変数は宛先選択に使い、実際の配信用manifestを生成する。独立した配信用チェックアウトで `SITE_TARGET` に `preview` または `production` を設定し、`prepare-site-manifest.mjs` で **manifestの `project_id` だけを変更した配信用コミット** を作る。スクリプトは `SOURCE_COMMIT` の完全なSHAとソースに一致する作業ファイルを要求し、IDを [宛先一覧](../config/site-targets.json) から選ぶ。
 
 - `sourceCommit`: 確認対象となるGitHubのマージ済みソースSHA。両環境で共通。
 - `deliveryCommit`: 対象Siteに実際にpushし、ビルド・梱包・保存する完全なSHA。サイト設定の差により `sourceCommit` と異なり得る。
@@ -45,7 +45,7 @@ GitHubの `.openai/hosting.json` は本番のまま保持する。Sitesのmanife
 1. GitHubをfetchして同期済み `main` のSHAを固定する。公開中の別タスク、共有チェックアウトの差分、対象Siteの既存バージョン・公開状態を確認する。公開処理を重ねない。
 2. 宛先ごとの独立した配信用チェックアウトを用意する。共有の開発チェックアウトでmanifestを切り替えない。新規フォルダーの作成と既存の再利用を区別し、作業が残るものは使わない。
 3. 対象Siteの専用Git remoteを、同じIDについて返された資格情報・URLから取得する。初回でremoteが空なら `sourceCommit` から始める。既存のSiteではremoteの最新HEADを親にして配信用ブランチを作り、空の作業状態で `git restore --source=<sourceCommit> --staged --worktree -- .` により追跡ファイルを元ソースと一致させる。GitHubのソースオブジェクトは事前にfetchしておく。これにより次のSitesへのpushもfast-forwardになる。
-4. 配信用manifestの `project_id` だけを宛先一覧の値へ置換し、配信用コミットを作る。その他のソース差分、無関係な未追跡ファイル、資格情報、セーブを含めない。コミット本文に `Source-Commit: <完全なSHA>` と `Site-Target: preview|production` を残す。初回本番など差分がない場合は既存コミットを再利用してよい。
+4. 配信用チェックアウトで `SITE_TARGET=preview|production` と `SOURCE_COMMIT=<完全なSHA>` を環境変数に設定し、`node scripts/prepare-site-manifest.mjs` を実行する。`SOURCE_COMMIT` は手順1で固定した値を使う。スクリプトが選んだ `project_id` だけを含む配信用コミットを作る。その他のソース差分、無関係な未追跡ファイル、資格情報、セーブを含めない。コミット本文に `Source-Commit: <完全なSHA>` と `Site-Target: preview|production` を残す。初回本番など差分がない場合は既存コミットを再利用してよい。
 5. 最新のSites情報から下記の観測JSONを作り、公開前検査を実行する。プレビュー確認後にGitHubが進んでも、検査済みの `sourceCommit` を無言で置き換えない。新しいSHAを選ぶ場合は確認をやり直す。
 6. 配信用チェックアウトの実行プロファイルを設定し、必要な依存関係を用意してビルド・梱包する。manifestが変わったら以前の別環境の成果物を再利用しない。build後も差分検査を行う。本番向けなら、この準備を済ませて [本番配備の最終確認](#本番配備の最終確認) を取る。プレビューまたは最終承認済みの本番だけ、配信用コミットを対象Siteのremote branchへpushし、同じコミットの成果物を保存・デプロイする。force pushしない。
 7. `succeeded`、返されたURL、配信用SHAを確認して記録する。Sitesの環境変数変更は保存済みの同じバージョンを再デプロイして反映する。更新したrevisionと実際の画面の両方を確認する。

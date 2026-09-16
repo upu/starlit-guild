@@ -124,7 +124,7 @@ Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リ
 
 公開作業では、作業中の別タスクや未確定差分を確認し、無関係な変更を失わせない。セーブデータやローカル作業ファイルはGitへ含めない。
 
-このリポジトリでエージェントが公開作業を行う場合は、[`AGENTS.md`](../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` の指示を優先する。
+エージェント共通の公開ルールは [エージェント共通ルール](agent-rules.md) を参照する。Codex の操作手順は [`AGENTS.md`](../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` に置く。
 
 ## データベース
 

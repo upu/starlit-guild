@@ -5,6 +5,8 @@ description: STARLIT-GUILDを実装し、GitHub同期、検証、PR、承認後�
 
 # STARLIT-GUILD の実装とプレビュー反映
 
+共通ルールは [エージェント共通ルール](../../../docs/agent-rules.md)。このスキルは Codex の GitHub・PR 操作手順を定める。他のエージェントは共通ルールと自分の実行環境に合う手段を使う。
+
 実装依頼では、GitHubの `origin/main` を正本としてPR作成まで自律的に進める。最新のPR状態と検証結果を提示してマージ承認を得た後は、後片付けとプレビュー反映まで続ける。本番配備の最終承認は、PRのマージ承認と別に扱う。
 
 ## 反映先
@@ -19,7 +21,7 @@ description: STARLIT-GUILDを実装し、GitHub同期、検証、PR、承認後�
 1. `git status`、現在のブランチ、worktree一覧、`origin` を確認する。別タスクの変更、未追跡ファイル、進行中の作業ブランチを失わせたり混ぜたりしない。
 2. `git fetch origin --prune` でGitHubの状態を取得する。追跡ブランチの表示だけで最新と判断しない。
 3. ローカルの `main` をチェックアウトしているworktreeを特定し、クリーンであることを確認してから `git pull --ff-only origin main` で同期する。未確定差分、競合、非fast-forwardで安全に同期できない場合は、reset、stash、強制操作をせず、そこで状況を報告する。
-4. 同期済みの `main` から、目的が分かる `codex/<短い名前>` の作業ブランチを作る。Codexの一時worktreeがdetached HEADなら、そのworktreeで同期済み `main` と同じコミットからブランチを作る。既存の同一タスク用ブランチを続行するときも、GitHubとの差分と用途を確認する。
+4. 同期済みの `main` から、目的が分かる作業ブランチを作る。共通の推奨形式は `<agent>/<短い名前>` で、Codex は `codex/<短い名前>` を使う。Codexの一時worktreeがdetached HEADなら、そのworktreeで同期済み `main` と同じコミットからブランチを作る。既存の同一タスク用ブランチを続行するときも、GitHubとの差分と用途を確認する。
 
 ## 実装からPRまで
 
