@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { initialState, act, settle, testState } from "../lib/game.ts";
+import { initialState, act, settle, legacyTestState } from "../lib/game.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { initialState as initialV3 } from "../lib/game-v3.ts";
 const root = "http://localhost:5173";
@@ -29,7 +29,7 @@ const test = {
   id: crypto.randomUUID(),
   name: "Test isolated API test",
   test: true,
-  state: testState(Date.now(), 60, 20, 20000),
+  state: legacyTestState(Date.now(), 60, 20, 20000),
 };
 normal.state = act(normal.state, { type: "start", id: "herbs" }, normal.state.updatedAt);
 let save = {

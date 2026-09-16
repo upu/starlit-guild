@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import { initialState, act, settle, testState, allQuests } from "../lib/game.ts";
+import { initialState, act, settle, legacyTestState, allQuests } from "../lib/game.ts";
 import {
   adventureFrame,
   adventureAssets,
@@ -37,7 +37,7 @@ test("rendering many frames interpolates independently without advancing or modi
 
 test("every quest uses existing assets and no sprites outside the atlas or original art", () => {
   for (const quest of allQuests) {
-    const state = testState(1000, 60, 20, 100000);
+    const state = legacyTestState(1000, 60, 20, 100000);
     const source = input(state, { startQuest: quest.id });
     const frame = adventureFrame(source);
     assert.equal(frame.quest.id, quest.id);
@@ -105,7 +105,7 @@ test("detours reject future, stale, collected and resting actions; a live discov
 });
 
 test("switching squads cannot dispatch to a previously viewed expedition", () => {
-  const state = testState(1000, 60, 20, 100000),
+  const state = legacyTestState(1000, 60, 20, 100000),
     first = state.squads[0];
   state.squads.push({ id: "other", name: "別の隊", members: ["mira"], repeat: true, run: null });
   let next = act(state, { type: "start", id: "herbs", squad: first.id }, 1000);

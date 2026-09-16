@@ -47,6 +47,7 @@ import type { useGameMusic } from "./use-game-music";
 import type { useLocalGame } from "./use-local-game";
 import { errorMessage } from "@/lib/external-input";
 import { chapterTwoPresets } from "@/lib/chapter-two-presets";
+import { prologueStages, storyStages } from "@/lib/prologue";
 type Game = ReturnType<typeof useLocalGame>;
 export function SavePanel({ game, music }: { game: Game; music: ReturnType<typeof useGameMusic> }) {
   const [open, setOpen] = useState(false),
@@ -391,7 +392,7 @@ function TestProfileButton({ game, onCreate }: { game: Game; onCreate: () => voi
   );
 }
 export function TestControls({ game, onAdjust }: { game: Game; onAdjust: () => void }) {
-  const [clears, setClears] = useState(15),
+  const [clears, setClears] = useState(prologueStages.length),
     [lv, setLv] = useState(5),
     [gold, setGold] = useState(3000);
   if (!game.testToolsEnabled || !game.profile?.test) return null;
@@ -420,28 +421,28 @@ export function TestControls({ game, onAdjust }: { game: Game; onAdjust: () => v
           className="outline"
           disabled={game.otherTab}
           onClick={() => {
-            adjust(20, 8, 5000);
+            adjust(prologueStages.length, 8, 5000);
           }}
         >
-          中盤
+          第1章クリア
         </button>
         <button
           className="outline"
           disabled={game.otherTab}
           onClick={() => {
-            adjust(60, 20, 20000);
+            adjust(storyStages.length, 20, 20000);
           }}
         >
-          全解放
+          全ステージ
         </button>
       </div>
       <div className="test-fields">
         <label>
-          達成数
+          達成ステージ
           <Input
             type="number"
             min={0}
-            max={1000}
+            max={storyStages.length}
             value={clears}
             onChange={(e) => {
               setClears(Number(e.target.value));
