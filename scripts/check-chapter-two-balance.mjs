@@ -32,8 +32,8 @@ export function isolated(quest,lv){
  }
  return s;
 }
-export function chapterRoute(preset='standard'){
- let state=chapterTwoPresetState(preset,1000),trainingSeconds=0;const records=[];
+export function chapterRoute(preset='standard',input){
+ let state=input?structuredClone(input):chapterTwoPresetState(preset,1000),trainingSeconds=0;const records=[],start=state.updatedAt;
  for(const stage of chapterTwoStages){
   let result=measure(state,stage.quest);
   for(let attempt=0;!result.record.cleared&&attempt<24;attempt++){
@@ -47,7 +47,7 @@ export function chapterRoute(preset='standard'){
   records.push(result.record);state=result.state;if(!result.record.cleared)break;
   state=act(state,{type:'readStory',id:stage.quest+'-return'},state.updatedAt);
  }
- return {records,trainingSeconds,totalSeconds:Math.round((state.updatedAt-1000)/1000),state};
+ return {records,trainingSeconds,totalSeconds:Math.round((state.updatedAt-start)/1000),state};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  console.table([10,15,20,25,30].flatMap(lv=>['mountain-entrance','spinning-signpost','begging-golem','sweet-blockade'].map(q=>measure(isolated(q,lv),q).record)));
