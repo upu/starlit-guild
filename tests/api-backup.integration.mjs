@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
-import { initialState, act, settle, legacyTestState } from "../lib/game.ts";
+import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
 import { parseBundle } from "../lib/save-format.ts";
-import { initialState as initialV3 } from "../lib/game-v3.ts";
-const root = "http://localhost:5173";
+import { storyStages } from "../lib/prologue.ts";
+import { TRADE_QUEST } from "../lib/prologue.ts";
+const root = process.env.TEST_ROOT || "http://localhost:5173";
 async function get(cookie = "") {
   const r = await fetch(root + "/api/backup", { headers: { cookie } });
   assert.equal(r.status, 200);
@@ -23,15 +24,19 @@ const normal = {
   id: crypto.randomUUID(),
   name: "Normal isolated API test",
   test: false,
-  state: initialState(Date.now()),
+  state: initialPrologueState(Date.now()),
 };
 const test = {
   id: crypto.randomUUID(),
   name: "Test isolated API test",
   test: true,
-  state: legacyTestState(Date.now(), 60, 20, 20000),
+  state: testState(Date.now(), storyStages.length, 20, 20000),
 };
-normal.state = act(normal.state, { type: "start", id: "herbs" }, normal.state.updatedAt);
+normal.state = act(
+  normal.state,
+  { type: "start", id: TRADE_QUEST, readDeparture: true },
+  normal.state.updatedAt,
+);
 let save = {
   format: 4,
   deviceId: crypto.randomUUID(),
@@ -77,41 +82,22 @@ save.profiles[0].state = settle(
 assert.equal((await post(a.cookie, save)).status, 200);
 const latest = (await get(a.cookie)).data.backups[0].bundle;
 assert.ok(latest.profiles[0].state.clears > 0);
-assert.equal(latest.profiles[1].state.clears, 60);
+assert.equal(latest.profiles[1].state.clears, storyStages.length);
 const secondDevice = structuredClone(save);
 secondDevice.deviceId = crypto.randomUUID();
 secondDevice.serial = 1;
 assert.equal((await post(a.cookie, secondDevice)).status, 200);
 assert.equal((await get(a.cookie)).data.backups.length, 2);
-const before = (await get(a.cookie)).data.legacy;
-await post(a.cookie, { ...save, serial: 4 });
-assert.deepEqual((await get(a.cookie)).data.legacy, before);
-const oldCopy = {
-  ...save,
-  format: 3,
-  serial: 100000,
-  profiles: save.profiles.map((p) => ({ ...p, state: initialV3(Date.now()) })),
-};
-assert.equal((await post(a.cookie, oldCopy)).status, 409);
+// Only v4 is accepted now: an old-format upload is rejected outright.
+assert.equal((await post(a.cookie, { ...save, format: 3, serial: 100000 })).status, 400);
 assert.ok((await get(a.cookie)).data.backups.every((copy) => copy.bundle.format === 4));
-oldCopy.deviceId = crypto.randomUUID();
-assert.equal((await post(a.cookie, oldCopy)).status, 200);
-const legacyCopy = (await get(a.cookie)).data.backups.find((copy) => copy.bundle.format === 3);
-assert.ok(legacyCopy);
-assert.equal(parseBundle(legacyCopy.bundle).format, 4);
 const page = await fetch(root);
 assert.equal(page.status, 200);
 const html = await page.text();
 assert.ok(html.includes("星灯りの旅団"));
-for (const asset of [
-  "cave.png",
-  "ruins.png",
-  "sprites.png",
-  "camp-0.png",
-  "camp-1.png",
-  "camp-2.png",
-])
+// Pre-existing: cave.png and ruins.png moved to scenery WebP and no longer exist.
+for (const asset of ["sprites.png", "camp-0.png", "camp-1.png", "camp-2.png", "favicon.svg"])
   assert.equal((await fetch(root + "/" + asset)).status, 200);
 console.log(
-  "PASS: anonymous backup, isolation, local snapshot roundtrip, stale/repeated writes, independent device copies, malformed input, cross-origin rejection, old save preservation, SSR and assets",
+  "PASS: anonymous backup, isolation, local snapshot roundtrip, stale/repeated writes, independent device copies, malformed input, cross-origin rejection, old format rejection, SSR and assets",
 );
