@@ -1,19 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import * as game from "../lib/game.ts";
-import * as old from "../lib/game-v3.ts";
 import { parseBundle } from "../lib/save-format.ts";
 const start = (g = game, s = g.initialState(1000), quest = "herbs") =>
   g.act(s, { type: "start", id: quest }, s.updatedAt);
-function finish(g, s) {
-  let n = 0;
-  while (s.squads[0].run && n++ < 200000) s = g.settle(s, s.squads[0].run.nextAt).state;
-  assert.ok(n < 200000);
-  return s;
-}
-function single(g) {
-  return start(g, g.act(g.initialState(1000), { type: "repeat", value: false }, 1000));
-}
 function bundle(state, format = 4) {
   const id = crypto.randomUUID();
   return {
@@ -27,22 +17,6 @@ function bundle(state, format = 4) {
     legacyImported: true,
   };
 }
-test("a full first quest is about five times longer without slowing actor clocks", () => {
-  const a = single(old),
-    b = single(game);
-  assert.equal(b.squads[0].run.nodes, 15);
-  assert.deepEqual(
-    b.squads[0].run.actors.map((a) => a.period),
-    a.squads[0].run.actors.map((a) => a.period),
-  );
-  const x = finish(old, a),
-    y = finish(game, b),
-    ratio = (y.updatedAt - 1000) / (x.updatedAt - 1000);
-  assert.ok(ratio > 4.5 && ratio < 6, `ratio=${ratio}`);
-  assert.equal(y.clears, 1);
-  assert.ok(y.gold >= 60 + 32 * 5);
-  assert.ok(y.wood >= 15);
-});
 test("checkpoint rewards survive return without marking an unfinished quest complete", () => {
   let s = start();
   while (s.squads[0].run.node < 3) s = game.settle(s, s.squads[0].run.nextAt).state;

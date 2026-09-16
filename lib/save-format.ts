@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { parseBundle as parseV3 } from "./save-format-v3.ts";
 import {
   heroes,
   allQuests as quests,
@@ -338,7 +337,7 @@ function upgradeCurrentBundle(raw: unknown): unknown {
       try {
         return {
           ...profile,
-          state: migrate(state as Parameters<typeof migrate>[0], state.updatedAt),
+          state: migrate(state as Parameters<typeof migrate>[0]),
         };
       } catch {
         return profile;
@@ -347,15 +346,6 @@ function upgradeCurrentBundle(raw: unknown): unknown {
   };
 }
 export function parseBundle(raw: unknown): SaveBundle {
-  if (raw && typeof raw === "object" && "format" in raw && raw.format === 3) {
-    // Every v3 record predates the story mode, so this re-enters the drop below.
-    const old = parseV3(raw);
-    return parseBundle({
-      ...old,
-      format: 4,
-      profiles: old.profiles.map((p) => ({ ...p, state: migrate(p.state, p.state.updatedAt) })),
-    });
-  }
   const result = bundleSchema.safeParse(upgradeCurrentBundle(dropLegacyProfiles(raw)));
   if (!result.success)
     throw Error("冒険の記録を読み取れません。STARLIT GUILD のセーブファイルを選んでください。");

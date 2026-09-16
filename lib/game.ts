@@ -64,7 +64,6 @@ import {
   type TechniqueSlot,
 } from "./techniques.ts";
 import { waterwayWork } from "./waterway-work.ts";
-import { migrate as migrateV3, type State as V3State } from "./game-v3.ts";
 import {
   availableStories,
   coupleCombo,
@@ -72,14 +71,7 @@ import {
   together,
   type StoryProgress,
 } from "./stories.ts";
-import { type State as V2State } from "./game-v2.ts";
-import {
-  heroes as baseHeroes,
-  quests as baseQuests,
-  bonds,
-  level,
-  type State as LegacyState,
-} from "./game-v1.ts";
+import { heroes as baseHeroes, quests as baseQuests, bonds, level } from "./roster.ts";
 export { bonds, level };
 export type Kind = "採取" | "護衛" | "討伐";
 // price remains legacy profile metadata; recruitment recipes are defined in recruitment.ts.
@@ -1334,42 +1326,9 @@ function upgradePicnicRun(input: State): State {
     if (sq.run?.quest === PICNIC_QUEST && sq.run.enemies?.length === 0) delete sq.run.enemies;
   return s;
 }
-export function migrate(
-  raw: State | LegacySharedHealthState | V3State | V2State | LegacyState,
-  now: number,
-): State {
-  if (raw.version === 4) return upgradePicnicRun(upgradeSharedHealth(raw));
-  const old = migrateV3(raw, now);
-  const s = {
-    ...structuredClone(old),
-    version: 4,
-    wood: 0,
-    town: 0,
-    friendship: {},
-    discoveries: 0,
-    squads: old.squads.map((sq) => ({
-      ...sq,
-      run: sq.run
-        ? {
-            ...structuredClone(sq.run),
-            serial: 0,
-            nodes: 3,
-            cheer: 0,
-            ward: 0,
-            comboAt: Math.max(old.updatedAt, sq.run.nextAt) + 14500,
-            detour: null,
-            scene: null,
-            actors: sq.run.actors.map((a) => ({ ...a, actions: 0 })),
-          }
-        : null,
-    })),
-  } as unknown as LegacySharedHealthState;
-  addLog(
-    s as unknown as State,
-    "寄り道と連携技が登場！ 次の周回から15地点の長い冒険になります。",
-    now,
-  );
-  return upgradeSharedHealth(s);
+// Only v4 records load now; the v1-v3 migration chain went with the legacy mode.
+export function migrate(raw: State | LegacySharedHealthState): State {
+  return upgradePicnicRun(upgradeSharedHealth(raw));
 }
 function addOnce(list: string[], value: string) {
   if (!list.includes(value)) list.push(value);

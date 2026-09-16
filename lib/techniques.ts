@@ -1,5 +1,5 @@
 import type { State, Encounter } from "./game.ts";
-import { level } from "./game-v1.ts";
+import { level } from "./roster.ts";
 import { PICNIC_QUEST } from "./chapter-two.ts";
 
 export type TechniqueSlot = "active" | "passive";
