@@ -40,9 +40,19 @@ const server=createServer((req,res)=>{
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
+async function checkThumb(switchControl){
+ const bounds=await switchControl.evaluate(async element=>{
+  await Promise.all(element.getAnimations({subtree:true}).map(animation=>animation.finished));
+  const root=element.getBoundingClientRect(),track=getComputedStyle(element,'::before');
+  const thumb=element.querySelector('[data-slot="switch-thumb"]').getBoundingClientRect();
+  const x=root.left+parseFloat(track.left),y=root.top+parseFloat(track.top);
+  return {track:{x,y,right:x+parseFloat(track.width),bottom:y+parseFloat(track.height)},thumb:{x:thumb.x,y:thumb.y,right:thumb.right,bottom:thumb.bottom}};
+ });
+ assert.ok(bounds.thumb.x>=bounds.track.x&&bounds.thumb.right<=bounds.track.right&&bounds.thumb.y>=bounds.track.y&&bounds.thumb.bottom<=bounds.track.bottom,JSON.stringify(bounds));
+}
 try{
  const results=[];
- for(const width of [360,390,768]){
+ for(const width of [360,390,768,1364]){
   const context=await browser.newContext({viewport:{width,height:844},hasTouch:true});
   const page=await context.newPage(),errors=[],requests=[];
   page.on('pageerror',error=>errors.push(error.message));page.on('request',req=>requests.push(new URL(req.url()).pathname));
@@ -51,12 +61,14 @@ try{
   assert.equal(await page.locator('.quest-option').count(),6);
   assert.equal(await page.getByRole('button',{name:'第二章',exact:true}).getAttribute('aria-pressed'),'true');
   const preference=page.getByRole('switch',{name:'クリア後、次のステージを行先にする'});
-  assert.equal(await preference.getAttribute('aria-checked'),'false');await preference.click();
+  assert.equal(await preference.getAttribute('aria-checked'),'false');await checkThumb(preference);await preference.click();await checkThumb(preference);
   await page.screenshot({path:path.join(dir,`chapter-two-${width}.png`)});
   await page.getByRole('button',{name:'第一章',exact:true}).click();assert.equal(await page.locator('.quest-option').count(),9);
   await page.screenshot({path:path.join(dir,`chapter-one-${width}.png`)});
   const detail=page.locator('.quest-summary');await detail.scrollIntoViewIfNeeded();
   await page.screenshot({path:path.join(dir,`detail-${width}.png`)});
+  await detail.hover();
+  assert.equal(await detail.evaluate(element=>getComputedStyle(element).backgroundColor),'rgb(44, 66, 50)');
   const detailBox=await detail.boundingBox();
   await page.mouse.move(detailBox.x+30,detailBox.y+100);await page.mouse.down();await page.mouse.move(detailBox.x+30,detailBox.y+150,{steps:6});await page.mouse.up();
   assert.equal(await page.locator('output').innerText(),'');
@@ -65,7 +77,7 @@ try{
   await page.getByRole('button',{name:'選び直す'}).click();
   await page.getByRole('button',{name:'セーブ・設定'}).click();await page.getByRole('tab',{name:'設定',exact:true}).click();
   const savedPreference=page.getByRole('dialog').getByRole('switch',{name:'クリア後、次のステージを行先にする'});
-  assert.equal(await savedPreference.getAttribute('aria-checked'),'true');await savedPreference.click();await page.keyboard.press('Escape');
+  assert.equal(await savedPreference.getAttribute('aria-checked'),'true');await checkThumb(savedPreference);await savedPreference.click();await checkThumb(savedPreference);await page.keyboard.press('Escape');
   assert.equal(await preference.getAttribute('aria-checked'),'false');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   const sceneryRequests=[...new Set(requests.filter(p=>p.startsWith('/scenery/')))];

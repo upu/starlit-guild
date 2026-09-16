@@ -6,6 +6,7 @@ button[data-slot="switch"] {
 button[data-slot="switch"]:hover:not(:disabled){background:#ffffff08}
 button[data-slot="switch"]::before{content:"";position:absolute;left:2px;top:10px;width:44px;height:24px;border:1px solid #819080;border-radius:20px;background:#33453f;transition:background .15s}
 button[data-slot="switch"][data-state="checked"]::before{background:#d8bd78;border-color:#e6ce93}
+/* This custom track owns thumb movement; the shared Switch adds no translation. */
 button[data-slot="switch"] [data-slot="switch-thumb"]{position:absolute;left:6px;top:14px;width:16px;height:16px;border-radius:50%;background:#e2e9dd;transform:translateX(0);transition:transform .15s}
 button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"]{transform:translateX(20px);background:#20352b}
 [data-slot="switch-state"]{position:absolute;right:0;width:32px;font-size:12px;font-weight:600;text-align:center}
@@ -199,6 +200,7 @@ body{overflow:hidden;background:var(--game-nav-color)}
 .quest-summary-title{font-size:18px;color:#efdbac}
 .quest-summary .quest-landscape{display:block;flex-shrink:0}
 .quest-summary .quest-opponent>span{display:flex;flex-direction:column}
-.quest-confirm-hint{align-self:flex-end;color:#f3d995;font-size:12px}
 .quest-option .quest-progress{color:#ffe29e;font-size:10px}
 .quest-summary:focus-visible,.quest-chapters button:focus-visible{outline:2px solid #ffe29e;outline-offset:3px}
+
+button.quest-summary:hover:not(:disabled),button.quest-summary:active:not(:disabled){background:#2c4232;color:#ecdbb0}

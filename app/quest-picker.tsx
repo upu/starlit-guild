@@ -48,6 +48,6 @@ function QuestSummary({quest:q,ready,onConfirm}:{quest:Quest;ready:boolean;onCon
   onClick={event=>{if(!ready||event.detail>0&&pointer.current.moved||window.getSelection()?.toString())return;onConfirm(q.id);}}>
   <span className="quest-landscape"><Image key={q.id} src={questScenery(q,'detail')} alt={q.region} width={800} height={450} loading="eager" unoptimized/><span>{q.region}</span></span>
   <span className="quest-summary-title">{q.name}</span>{opponent&&<span className="quest-opponent"><Sprite index={opponent.sprite} size={112}/><span><small>{opponent.faction}</small><b>{opponent.name}</b><span>{opponent.bio}</span></span></span>}
-  <span className="quest-description">{q.desc}</span><span className="quest-confirm-hint">タップして行先に決定</span>
+  <span className="quest-description">{q.desc}</span>
  </button>;
 }
