@@ -48,7 +48,9 @@ GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更
 
 ### コード品質
 
-LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗し、Pull Requestと`main`へのpushでもGitHub Actionsが`npm run lint`を実行する。`lint:fix`の適用後は差分とテストを確認する。
+LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
+
+Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run lint`、`npx tsc --noEmit`、生成素材の検査（`images:check` / `videos:check`）、`node --test tests/*.test.mjs` の全ユニットテストを実行する。PRのバージョン判定は `pr-version.yml` が `tests/pr-version.test.mjs` と `scripts/check-pr-version.mjs` で検証する。ブラウザーテストとビルド後のHTTP検証はCIに含めず、手動で実行する。
 
 ## 実装の分担
 

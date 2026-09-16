@@ -28,14 +28,14 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Type check
+        run: npx tsc --noEmit
+
       - name: Check generated story videos
         run: npm run videos:check
-
-      - name: Test story video pipeline
-        run: node --test tests/story-videos.test.mjs
 
       - name: Check generated scenery images
         run: npm run images:check
 
-      - name: Test quest navigation and image pipeline
-        run: node --test tests/quest-navigation.test.mjs tests/quest-picker.test.mjs tests/scenery-images.test.mjs
+      - name: Run unit tests
+        run: node --test tests/*.test.mjs
