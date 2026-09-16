@@ -1,7 +1,7 @@
 import { isRecord } from "./external-input.ts";
 
 export type BackupWriteResponse = { at?: number; error?: string };
-export type BackupReadResponse = { backups: { bundle: unknown; at: number }[]; legacy: unknown };
+export type BackupReadResponse = { backups: { bundle: unknown; at: number }[] };
 
 export function parseBackupWriteResponse(value: unknown): BackupWriteResponse {
   if (!isRecord(value)) throw Error("バックアップの応答を読み取れませんでした。");
@@ -19,5 +19,5 @@ export function parseBackupReadResponse(value: unknown): BackupReadResponse {
       throw Error("バックアップの応答を読み取れませんでした。");
     return { bundle: copy.bundle, at: copy.at };
   });
-  return { backups, legacy: value.legacy ?? null };
+  return { backups };
 }

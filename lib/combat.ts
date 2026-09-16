@@ -1,5 +1,5 @@
 import type { Quest, Run, State } from "./game.ts";
-import { level } from "./game-v1.ts";
+import { level } from "./roster.ts";
 import { equippedItems } from "./equipment.ts";
 import {
   PICNIC_QUEST,

@@ -80,7 +80,7 @@
 
 ## 根拠と実装の参照先
 
-- [基本プロフィールと既存ペア](../../lib/game-v1.ts)：`heroes` / `bonds`。ファイル名は旧版だが、プロフィールは現在のゲームからも参照される。
+- [基本プロフィールと既存ペア](../../lib/roster.ts)：`heroes` / `bonds`。現在のゲームが参照する人物データ。
 - [現在の物語・掛け合い](../../lib/stories.ts)：`stories` / `characterNotes` / `journeyBanter` / `coupleCombo`。
 - [拠点の暮らし](../../app/guild-home.tsx)：仲間ごとの活動。
 - [現在のゲーム](../../lib/game.ts)：加入条件、絆、編成。数値はここを参照し、人物設定資料へ複製しない。
