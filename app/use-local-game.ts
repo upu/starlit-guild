@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import {
   act,
   initialPrologueState,
-  migrate,
   settle,
   testState,
   type Action,
@@ -15,7 +14,6 @@ import { parseBundle, type SaveBundle, type Profile } from "@/lib/save-format";
 import { journeyNotice } from "@/lib/journey";
 import { setSound, sound, soundEvents, unlockSound } from "@/lib/sound";
 import { parseBackupReadResponse, parseBackupWriteResponse } from "@/lib/backup-api";
-import { isStoredGameState } from "@/lib/api-input";
 import { errorMessage, isRecord, parseJson } from "@/lib/external-input";
 import {
   chapterTwoPresets,
@@ -83,22 +81,6 @@ function readableCloudCopies(data: BackupRead) {
     }
   }
   return copies;
-}
-function importLegacyCopy(data: BackupRead, bundle: SaveBundle) {
-  if (!data.legacy || bundle.profiles.length >= 12) return true;
-  try {
-    if (!isStoredGameState(data.legacy)) throw Error("Invalid legacy save");
-    bundle.profiles.push({
-      id: crypto.randomUUID(),
-      name: "以前の冒険",
-      test: false,
-      state: migrate(data.legacy, Date.now()),
-    });
-    toast.info("以前の冒険は「セーブ」に残しました。今は最初から遊べます。");
-    return true;
-  } catch {
-    return false;
-  }
 }
 export function useLocalGame(testToolsEnabled = false) {
   const [bundle, setBundle] = useState<SaveBundle | null>(null),
@@ -215,23 +197,13 @@ export function useLocalGame(testToolsEnabled = false) {
       if (!mounted.current) return;
       setCopies(readableCloudCopies(data));
       setCloudError("");
-      const b = current.current;
-      if (b && owner.current && !b.legacyImported) {
-        if (!importLegacyCopy(data, b)) {
-          setCloudError("以前の記録はクラウドに残っていますが、この版では読み込めませんでした。");
-          return;
-        }
-        b.legacyImported = true;
-        publish(b);
-        persist();
-      }
     } catch (error) {
       if (mounted.current)
         setCloudError(
           errorMessage(error, "クラウドに接続できません。端末の記録でそのまま遊べます。"),
         );
     }
-  }, [persist, publish]);
+  }, []);
   useEffect(() => {
     mounted.current = true;
     tabId.current = crypto.randomUUID();

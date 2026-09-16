@@ -187,20 +187,6 @@ test("party names follow members by default and can be customized after the prol
   assert.equal(game.squadName(s.squads[0]), "レオン");
   assert.equal(s.squads[0].customName, undefined);
 });
-test("v3 files preserve active quest and resources then start longer next round", () => {
-  const prior = start(old);
-  const snapshot = structuredClone(prior);
-  const upgraded = parseBundle(bundle(prior, 3));
-  const s = upgraded.profiles[0].state;
-  assert.equal(upgraded.format, 4);
-  assert.equal(s.version, 4);
-  assert.equal(s.squads[0].run.nodes, 3);
-  assert.equal(s.squads[0].run.target, prior.squads[0].run.target);
-  assert.deepEqual(prior, snapshot);
-  const later = game.settle(s, 40000).state;
-  assert.equal(later.squads[0].run.nodes, 15);
-  assert.doesNotThrow(() => parseBundle(bundle(later)));
-});
 test("offline and small updates produce the same rewards, detours, friendship and timelines", () => {
   const s = start(),
     bulk = game.settle(s, 601000).state;
@@ -230,17 +216,33 @@ test("offline cap and every transition remain exportable, including rest", () =>
   assert.doesNotThrow(() => parseBundle(bundle(result.state)));
   assert.equal(result.rewards.wood, result.state.wood - s.wood);
 });
-test("malformed new timelines, character HP and out of range progression are rejected", () => {
-  for (const mutate of [
-    (s) => (s.town = 3),
-    (s) => (s.squads[0].run.node = 15),
-    (s) => (s.squads[0].run.cheer = 200),
-    (s) => (s.squads[0].run.comboAt = 0),
-    (s) => delete s.squads[0].run.health.aria,
-    (s) => (s.squads[0].run.health.aria.hp = s.squads[0].run.health.aria.maxHp + 1),
-  ]) {
-    const s = start();
-    mutate(s);
-    assert.throws(() => parseBundle(bundle(s)));
-  }
+
+test("saves keep story records and drop the legacy ones instead of failing to load", () => {
+  const story = game.initialPrologueState(1000),
+    legacy = game.initialState(1000);
+  legacy.clears = 60;
+  const id = crypto.randomUUID(),
+    storyId = crypto.randomUUID();
+  const mixed = {
+    ...bundle(legacy),
+    active: id,
+    profiles: [
+      { id, name: "以前の冒険", test: false, state: legacy },
+      { id: storyId, name: "物語の冒険", test: false, state: story },
+    ],
+  };
+  const parsed = parseBundle(JSON.parse(JSON.stringify(mixed)));
+  assert.deepEqual(
+    parsed.profiles.map((p) => p.id),
+    [storyId],
+    "従来記録だけを落とし、物語モードの記録は残す",
+  );
+  assert.equal(parsed.active, storyId, "選択中だった従来記録の代わりに残った記録を選ぶ");
+
+  // A file with nothing but legacy records still opens, as a new story record.
+  const onlyLegacy = parseBundle(JSON.parse(JSON.stringify(bundle(legacy))));
+  assert.equal(onlyLegacy.profiles.length, 1);
+  assert.equal(onlyLegacy.profiles[0].state.prologue, true);
+  assert.equal(onlyLegacy.profiles[0].state.clears, 0);
+  assert.equal(onlyLegacy.active, onlyLegacy.profiles[0].id);
 });

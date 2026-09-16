@@ -125,7 +125,7 @@ test("interruption and reload preserve progress without unlocking later stages",
   }
 });
 
-test("existing prologue trades unlock the return route; established saves retain their features", () => {
+test("existing prologue trades unlock the return route; legacy records no longer load", () => {
   const old = read(finish(start(initialPrologueState(1000), TRADE_QUEST)), TRADE_QUEST);
   old.done[TRADE_QUEST] = 30;
   old.clears = 30;
@@ -134,14 +134,13 @@ test("existing prologue trades unlock the return route; established saves retain
   assert.deepEqual(saved, old);
   assert.equal(nextGoal(saved).questId, RETURN_QUEST);
   assert.equal(start(saved, RETURN_QUEST).gold, 9876);
+  // The legacy mode is not maintained: its records are dropped instead of loading.
   const legacy = initialState(1000);
   legacy.clears = 60;
   legacy.done.herbs = 60;
   const restored = roundtrip(legacy);
-  assert.deepEqual(restored, legacy);
-  assert.ok(availableQuests(restored).some((q) => q.id === "dragon"));
-  assert.ok(!availableQuests(restored).some((q) => q.id === TOWN_QUEST));
-  assert.ok(act(restored, { type: "party", members: ["aria"] }, 1000));
+  assert.equal(restored.clears, 0);
+  assert.ok(availableQuests(restored).every((q) => q.id !== "dragon"));
 });
 
 test("a saved 1-3 ending unlocks 1-4 only after reading, without changing old resources or history", () => {

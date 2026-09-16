@@ -28,13 +28,14 @@ import {
   tappedCombat,
 } from "../scripts/check-combat-balance.mjs";
 
+// Saves only keep story records, so the schema checks below use one.
 function bundle(state) {
   const id = crypto.randomUUID();
   return {
     format: 4,
     deviceId: crypto.randomUUID(),
     active: id,
-    profiles: [{ id, name: "combat test", test: true, state }],
+    profiles: [{ id, name: "combat test", test: true, state: { ...state, prologue: true } }],
     serial: 1,
     sound: false,
     cloudAt: 0,
@@ -140,7 +141,7 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
   damageEnemy(r, 3, 99);
   r.nextAt = Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
   const parsed = parseBundle(bundle(source)).profiles[0].state;
-  assert.deepEqual(parsed, source);
+  assert.deepEqual(parsed, { ...source, prologue: true });
   const end = source.updatedAt + 60000,
     bulk = settle(parsed, end).state;
   let live = parsed;
