@@ -1,0 +1,21 @@
+# Vendored or generated code: keep the upstream source intact.
+components/ui/
+hooks/use-mobile.ts
+vendor/
+drizzle/
+package-lock.json
+
+# Build output, tool state, and binary assets.
+node_modules/
+dist/
+.next/
+.vinext/
+.wrangler/
+.sites-runtime/
+work/
+public/
+assets/
+
+# Prose and hand-formatted records stay as written.
+*.md
+docs/

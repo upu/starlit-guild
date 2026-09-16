@@ -1,68 +1,114 @@
-import {test} from 'node:test';
-import assert from 'node:assert/strict';
-import {act,settle,availableQuests,level,allQuests,estimate} from '../lib/game.ts';
-import {chapterTwoPresetState} from '../lib/chapter-two-presets.ts';
-import {parseBundle} from '../lib/save-format.ts';
-import {measure,isolated,chapterRoute} from '../scripts/check-chapter-two-balance.mjs';
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { act, settle, availableQuests, level, allQuests, estimate } from "../lib/game.ts";
+import { chapterTwoPresetState } from "../lib/chapter-two-presets.ts";
+import { parseBundle } from "../lib/save-format.ts";
+import { measure, isolated, chapterRoute } from "../scripts/check-chapter-two-balance.mjs";
 
-test('chapter presets keep the story entry, locked recruitment and independent saved state',()=>{
- for(const preset of ['standard','strong']){
-  const state=chapterTwoPresetState(preset,1000),id=crypto.randomUUID();
-  assert.deepEqual(state.owned,['aria','leon']);assert.equal(state.prologue,true);
-  assert.equal(state.squads[0].lastQuest,'hilltop-picnic');
-  assert.ok(availableQuests(state).some(q=>q.id==='hilltop-picnic'));
-  assert.ok(!availableQuests(state).some(q=>q.id==='mountain-entrance'));
-  assert.equal(level(state.xp.aria),preset==='standard'?10:30);
-  const restored=parseBundle(JSON.parse(JSON.stringify({format:4,deviceId:id,active:id,profiles:[{id,name:preset,test:true,state}],serial:0,sound:false,cloudAt:0,legacyImported:true}))).profiles[0].state;
-  assert.deepEqual(restored,state);
- }
- const first=chapterTwoPresetState('standard',1000);first.xp.aria=999;
- assert.notEqual(chapterTwoPresetState('standard',1000).xp.aria,999);
-});
-test('Mira leaves a window of damage between heals and healing survives live/offline settling',()=>{
- let state=act(isolated('begging-golem',15),{type:'start',id:'begging-golem',readDeparture:true,value:false},1000);
- const run=state.squads[0].run;run.health.aria.hp=Math.floor(run.health.aria.maxHp/2);
- const initial=structuredClone(state),times=[];const seen=new Set();
- while(state.squads[0].run&&state.updatedAt<25000){
-  state=settle(state,state.squads[0].run.nextAt).state;
-  for(const e of state.squads[0].run?.events||[]){
-   if(e.hero!=='mira'||e.kind!=='heal'||seen.has(e.id))continue;
-   seen.add(e.id);times.push(e.at);
-   assert.equal(state.squads[0].run.actors.find(a=>a.hero==='mira').actions%4,0);
+test("chapter presets keep the story entry, locked recruitment and independent saved state", () => {
+  for (const preset of ["standard", "strong"]) {
+    const state = chapterTwoPresetState(preset, 1000),
+      id = crypto.randomUUID();
+    assert.deepEqual(state.owned, ["aria", "leon"]);
+    assert.equal(state.prologue, true);
+    assert.equal(state.squads[0].lastQuest, "hilltop-picnic");
+    assert.ok(availableQuests(state).some((q) => q.id === "hilltop-picnic"));
+    assert.ok(!availableQuests(state).some((q) => q.id === "mountain-entrance"));
+    assert.equal(level(state.xp.aria), preset === "standard" ? 10 : 30);
+    const restored = parseBundle(
+      JSON.parse(
+        JSON.stringify({
+          format: 4,
+          deviceId: id,
+          active: id,
+          profiles: [{ id, name: preset, test: true, state }],
+          serial: 0,
+          sound: false,
+          cloudAt: 0,
+          legacyImported: true,
+        }),
+      ),
+    ).profiles[0].state;
+    assert.deepEqual(restored, state);
   }
- }
- assert.ok(times.length>1);assert.ok(times[0]>=run.actors.find(a=>a.hero==='mira').nextAt+3*run.actors.find(a=>a.hero==='mira').period);
- for(let i=1;i<times.length;i++)assert.ok(times[i]-times[i-1]>=4000);
- const offline=settle(initial,state.updatedAt).state;
- assert.deepEqual({...offline,log:[]},{...state,log:[]});
+  const first = chapterTwoPresetState("standard", 1000);
+  first.xp.aria = 999;
+  assert.notEqual(chapterTwoPresetState("standard", 1000).xp.aria, 999);
 });
-test('boss difficulty rewards growth and defensive technique choice',()=>{
- assert.equal(measure(isolated('sweet-blockade',15),'sweet-blockade').record.cleared,false);
- const challenge=measure(isolated('sweet-blockade',19),'sweet-blockade').record;
- assert.ok(challenge.cleared);assert.ok(challenge.minHp<40);assert.ok(challenge.heals>0);assert.ok(challenge.commands>=2);
- let guard=isolated('sweet-blockade',15);
- guard=act(guard,{type:'learnTechnique',id:'leon-guard'},1000);
- guard=act(guard,{type:'setTechnique',hero:'leon',techniqueSlot:'active',id:'leon-guard'},1000);
- assert.ok(measure(guard,'sweet-blockade').record.cleared);
- const strong=measure(isolated('sweet-blockade',30),'sweet-blockade').record;
- assert.ok(strong.cleared&&strong.rests===0&&strong.minHp>=60);
+test("Mira leaves a window of damage between heals and healing survives live/offline settling", () => {
+  let state = act(
+    isolated("begging-golem", 15),
+    { type: "start", id: "begging-golem", readDeparture: true, value: false },
+    1000,
+  );
+  const run = state.squads[0].run;
+  run.health.aria.hp = Math.floor(run.health.aria.maxHp / 2);
+  const initial = structuredClone(state),
+    times = [];
+  const seen = new Set();
+  while (state.squads[0].run && state.updatedAt < 25000) {
+    state = settle(state, state.squads[0].run.nextAt).state;
+    for (const e of state.squads[0].run?.events || []) {
+      if (e.hero !== "mira" || e.kind !== "heal" || seen.has(e.id)) continue;
+      seen.add(e.id);
+      times.push(e.at);
+      assert.equal(state.squads[0].run.actors.find((a) => a.hero === "mira").actions % 4, 0);
+    }
+  }
+  assert.ok(times.length > 1);
+  assert.ok(
+    times[0] >=
+      run.actors.find((a) => a.hero === "mira").nextAt +
+        3 * run.actors.find((a) => a.hero === "mira").period,
+  );
+  for (let i = 1; i < times.length; i++) assert.ok(times[i] - times[i - 1] >= 4000);
+  const offline = settle(initial, state.updatedAt).state;
+  assert.deepEqual({ ...offline, log: [] }, { ...state, log: [] });
 });
-test('non-hostile work takes sustained effort and preserves a partially completed target',()=>{
- let state=chapterTwoPresetState('standard',1000);
- for(const q of ['hilltop-picnic','moonlit-herbs']){const r=measure(state,q);state=act(r.state,{type:'readStory',id:q+'-return'},r.state.updatedAt);}
- const before=structuredClone(state),result=measure(state,'medicine-packing').record;
- assert.ok(result.cleared&&result.seconds>=90&&result.hurt===0);
- const q=allQuests.find(q=>q.id==='medicine-packing');assert.ok(estimate(before,before.squads[0],q)>=90);
- const active=act(before,{type:'start',id:q.id,readDeparture:true},before.updatedAt);
- active.squads[0].run.targetMax=56;active.squads[0].run.target=31;
- const same=settle(active,active.updatedAt).state;
- assert.equal(same.squads[0].run.target,31);assert.equal(same.squads[0].run.targetMax,56);
+test("boss difficulty rewards growth and defensive technique choice", () => {
+  assert.equal(measure(isolated("sweet-blockade", 15), "sweet-blockade").record.cleared, false);
+  const challenge = measure(isolated("sweet-blockade", 19), "sweet-blockade").record;
+  assert.ok(challenge.cleared);
+  assert.ok(challenge.minHp < 40);
+  assert.ok(challenge.heals > 0);
+  assert.ok(challenge.commands >= 2);
+  let guard = isolated("sweet-blockade", 15);
+  guard = act(guard, { type: "learnTechnique", id: "leon-guard" }, 1000);
+  guard = act(
+    guard,
+    { type: "setTechnique", hero: "leon", techniqueSlot: "active", id: "leon-guard" },
+    1000,
+  );
+  assert.ok(measure(guard, "sweet-blockade").record.cleared);
+  const strong = measure(isolated("sweet-blockade", 30), "sweet-blockade").record;
+  assert.ok(strong.cleared && strong.rests === 0 && strong.minHp >= 60);
 });
-test('standard reaches the end through earned growth; strong needs no farming',()=>{
- const standard=chapterRoute(),strong=chapterRoute('strong');
- assert.equal(standard.records.length,9);assert.ok(standard.records.every(r=>r.cleared));
- assert.ok(standard.trainingSeconds>=1800&&standard.trainingSeconds<=3600);
- assert.ok(standard.totalSeconds>standard.trainingSeconds);
- assert.equal(strong.records.length,9);assert.ok(strong.records.every(r=>r.cleared&&r.rests===0));
- assert.equal(strong.trainingSeconds,0);
+test("non-hostile work takes sustained effort and preserves a partially completed target", () => {
+  let state = chapterTwoPresetState("standard", 1000);
+  for (const q of ["hilltop-picnic", "moonlit-herbs"]) {
+    const r = measure(state, q);
+    state = act(r.state, { type: "readStory", id: q + "-return" }, r.state.updatedAt);
+  }
+  const before = structuredClone(state),
+    result = measure(state, "medicine-packing").record;
+  assert.ok(result.cleared && result.seconds >= 90 && result.hurt === 0);
+  const q = allQuests.find((q) => q.id === "medicine-packing");
+  assert.ok(estimate(before, before.squads[0], q) >= 90);
+  const active = act(before, { type: "start", id: q.id, readDeparture: true }, before.updatedAt);
+  active.squads[0].run.targetMax = 56;
+  active.squads[0].run.target = 31;
+  const same = settle(active, active.updatedAt).state;
+  assert.equal(same.squads[0].run.target, 31);
+  assert.equal(same.squads[0].run.targetMax, 56);
+});
+test("standard reaches the end through earned growth; strong needs no farming", () => {
+  const standard = chapterRoute(),
+    strong = chapterRoute("strong");
+  assert.equal(standard.records.length, 9);
+  assert.ok(standard.records.every((r) => r.cleared));
+  assert.ok(standard.trainingSeconds >= 1800 && standard.trainingSeconds <= 3600);
+  assert.ok(standard.totalSeconds > standard.trainingSeconds);
+  assert.equal(strong.records.length, 9);
+  assert.ok(strong.records.every((r) => r.cleared && r.rests === 0));
+  assert.equal(strong.trainingSeconds, 0);
 });

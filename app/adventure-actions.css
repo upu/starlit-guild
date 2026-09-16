@@ -1,83 +1,96 @@
-.phone-game .phone-navigation{height:var(--game-nav-height)!important}
-
-.phone-game .adventure-actions{
- position:relative;
- z-index:20;
- box-sizing:border-box;
- height:48px;
- min-height:48px;
- padding:2px 12px;
- gap:8px;
+.phone-game .phone-navigation {
+  height: var(--game-nav-height) !important;
 }
 
-.phone-game .adventure-actions>button,
-.phone-game .adventure-actions .shop-entry{
- box-sizing:border-box;
- height:44px;
- min-height:44px;
- max-height:44px;
- padding:0 8px;
+.phone-game .adventure-actions {
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+  height: 48px;
+  min-height: 48px;
+  padding: 2px 12px;
+  gap: 8px;
+}
+
+.phone-game .adventure-actions > button,
+.phone-game .adventure-actions .shop-entry {
+  box-sizing: border-box;
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  padding: 0 8px;
 }
 
 .phone-game .adventure-actions .quest-entry,
-.phone-game .adventure-actions .shop-entry{
- width:58px;
- min-width:58px;
- gap:0;
- padding:0 4px;
- border:0!important;
- border-radius:0;
- outline:0;
- background:transparent!important;
- font-size:11px;
- line-height:12px;
- box-shadow:none!important;
+.phone-game .adventure-actions .shop-entry {
+  width: 58px;
+  min-width: 58px;
+  gap: 0;
+  padding: 0 4px;
+  border: 0 !important;
+  border-radius: 0;
+  outline: 0;
+  background: transparent !important;
+  font-size: 11px;
+  line-height: 12px;
+  box-shadow: none !important;
 }
 
-.phone-game .adventure-actions .quest-entry{
- height:44px;
- min-height:44px;
- max-height:44px;
- align-self:center;
+.phone-game .adventure-actions .quest-entry {
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  align-self: center;
 }
 
 .adventure-actions .quest-entry img,
-.shop-entry img{
- width:30px;
- height:30px;
- flex:0 0 30px;
+.shop-entry img {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
 }
 
 .phone-game .adventure-actions .quest-entry span,
-.phone-game .adventure-actions .shop-entry span{
- position:relative;
- z-index:1;
- margin-top:-4px;
- line-height:12px;
+.phone-game .adventure-actions .shop-entry span {
+  position: relative;
+  z-index: 1;
+  margin-top: -4px;
+  line-height: 12px;
 }
 
 .phone-game .adventure-actions .departure-button,
-.phone-game .adventure-actions .return-button{
- height:44px;
- min-height:44px;
+.phone-game .adventure-actions .return-button {
+  height: 44px;
+  min-height: 44px;
 }
 
-.phone-game .adventure-actions .shop-entry-new{
- box-shadow:none!important;
+.phone-game .adventure-actions .shop-entry-new {
+  box-shadow: none !important;
 }
 
-@media(max-width:360px){
- .phone-game .adventure-actions{padding-inline:8px;gap:6px}
+@media (max-width: 360px) {
+  .phone-game .adventure-actions {
+    padding-inline: 8px;
+    gap: 6px;
+  }
 }
 
-@media(max-height:700px){
- .phone-game .phone-navigation{height:var(--game-nav-height)!important}
+@media (max-height: 700px) {
+  .phone-game .phone-navigation {
+    height: var(--game-nav-height) !important;
+  }
 }
 
-@media(max-height:600px){
- .phone-game .adventure-actions{height:48px;min-height:48px;padding-block:2px}
+@media (max-height: 600px) {
+  .phone-game .adventure-actions {
+    height: 48px;
+    min-height: 48px;
+    padding-block: 2px;
+  }
 }
 
-@media(max-height:530px){
- .phone-game .phone-navigation{height:var(--game-nav-height)!important}
+@media (max-height: 530px) {
+  .phone-game .phone-navigation {
+    height: var(--game-nav-height) !important;
+  }
 }

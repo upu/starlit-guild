@@ -3,11 +3,11 @@ import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
 import { sites } from "./build/sites-vite-plugin";
 
-const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
-  "00000000-0000-4000-8000-000000000000";
+const SITE_CREATOR_PLACEHOLDER_DATABASE_ID = "00000000-0000-4000-8000-000000000000";
 
-const bindingName=(value:unknown)=>typeof value==="string"?value:null;
-const d1=bindingName(hostingConfig.d1),r2=bindingName(hostingConfig.r2);
+const bindingName = (value: unknown) => (typeof value === "string" ? value : null);
+const d1 = bindingName(hostingConfig.d1),
+  r2 = bindingName(hostingConfig.r2);
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";

@@ -1,86 +1,541 @@
-.phone-game .phone-header{justify-content:flex-end;min-height:52px;height:52px;padding:4px max(12px,env(safe-area-inset-right)) 4px max(12px,env(safe-area-inset-left));gap:8px}
-.phone-game .phone-tabs{position:relative}
-.phone-game .phone-header.phone-header-overlay{position:absolute;top:8px;right:max(8px,env(safe-area-inset-right));z-index:20;width:max-content;height:44px;min-height:44px;padding:0;gap:6px;border:0}
-.phone-header-overlay .handbook-button{box-shadow:0 2px 8px #081d2160}
-.phone-game .handbook-button{display:flex;align-items:center;justify-content:center;padding:5px}
-.handbook-button>img,.phone-navigation [data-slot=tabs-trigger]>img{width:32px;height:32px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 2px #081d2160)}
-.phone-game .phone-navigation{height:calc(68px + env(safe-area-inset-bottom))!important}
-.phone-game .phone-navigation [data-slot=tabs-trigger]{font-size:12px;line-height:16px}
-.phone-game.prologue-game .phone-adventure .map-heading{right:116px}
-.phone-game .adventure-toolbar{height:60px;padding-right:112px}
-.phone-game .adventure-toolbar .squad-selector{min-width:0;flex:1}
-.adventure-toolbar .squad-selector>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.phone-game .phone-adventure{display:flex;flex-direction:column;overflow:hidden}
-.phone-game .phone-adventure .map-shell{flex:1;min-height:0}
-.phone-game .phaser-map{min-height:0}
-.phone-game .adventure-actions{position:relative;z-index:6}
-.phone-game.prologue-game .phone-navigation{grid-template-columns:repeat(2,minmax(0,1fr))}
-.phone-game .adventure-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;min-height:72px;padding:6px 12px;background:#1c372e;border-top:1px solid #8f805550}
-.phone-game .adventure-actions>button,.phone-game .adventure-actions .shop-entry{display:flex;align-items:center;justify-content:center;gap:5px;min-height:46px;padding:6px 10px;font-size:14px;border-radius:8px}
-.phone-game .adventure-actions .quest-entry{background:#294638;border:1px solid #6b7c56}
-.phone-game .adventure-actions .quest-entry,.phone-game .adventure-actions .shop-entry{flex-direction:column;gap:2px;width:68px;min-width:68px;min-height:58px;padding:4px 6px;font-size:12px;line-height:16px;flex-shrink:0}
-.adventure-actions .quest-entry img{width:32px;height:32px}
-.phone-game .adventure-actions .departure-button,.phone-game .adventure-actions .return-button{margin-left:auto;min-width:84px}
-.phone-game .adventure-actions .departure-button{background:#dfc27c;color:#20352a;border:1px solid #f6dea1;font-size:16px}
-.phone-game .adventure-actions .shop-entry{background:#294638;border-color:#6b7c56;color:#e8dbb3}
-.shop-entry-anchor{position:relative;flex-shrink:0}
-.shop-entry img{width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 2px 2px #081d2160)}
-.phone-game .adventure-actions .shop-entry-new{border-color:#edcc7a;box-shadow:0 0 12px #e4be6330}
-.shop-unlock-tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 32px);padding:10px 16px;border:1px solid #bc9d61;border-radius:10px;background:#f1e4c4;color:#2c3e30;box-shadow:0 4px 14px #081b2270;pointer-events:none;text-align:center;font-size:14px;line-height:1.6}
-.shop-unlock-tip:after{content:'';position:absolute;bottom:-7px;left:calc(50% - 6px);width:12px;height:12px;transform:rotate(45deg);background:#f1e4c4;border-right:1px solid #bc9d61;border-bottom:1px solid #bc9d61}
-.shop-unlock-tip b,.shop-unlock-tip span{display:block;white-space:nowrap}
-.phone-characters{overflow-y:auto!important;overscroll-behavior:contain;padding:16px}
-.character-panel{display:flex;flex-direction:column;gap:18px;color:#e7dec6}
-.character-panel p,.bag-content p,.shop-panel p{font-size:16px;line-height:1.75;margin:0;color:#cbd4bc}
-.character-picker{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;flex-shrink:0}
-.character-picker>button{display:flex;flex-direction:column;flex-shrink:0;gap:6px;min-width:92px;padding:8px;background:#203b30;border:1px solid #647451;color:#d9dfc3;font-size:14px}
-.character-picker>button[aria-pressed=true]{border-color:#edce87;background:#3b5037;box-shadow:inset 0 -3px #dabc74}
-.character-heading{display:flex;align-items:center;gap:22px;padding:12px 0;background:radial-gradient(ellipse at 20% 50%,#9d975327,transparent 68%)}
-.character-heading>.face-portrait{flex-shrink:0}
-.character-heading h2{font-size:28px;color:#f0d597;margin:0 0 8px}
-.character-heading span{display:block;font-size:16px;color:#dcc790;margin-top:10px}
-.character-stats{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid #9a8c5860;padding:12px 0}
-.character-stats>span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
-.character-stats b{font-size:26px;color:#eed59a;font-weight:500}
-.character-skill{padding:4px 0 12px}
-.character-panel h3,.bag-section>h3{font-size:18px;color:#e8cd91;margin:0 0 8px}
-.character-equipment{border:1px solid #70815a;border-radius:9px;padding:14px;background:#203c30}
-.character-equipment h3{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.character-equipment h3>span{font-size:16px;color:#f0e5c6;font-weight:400}
-.character-equipment summary,.legacy-party>summary{cursor:pointer;min-height:44px;align-content:center;font-size:16px;color:#dbc58a}
-.equipment-choices{display:flex;flex-direction:column;gap:8px;padding-top:8px}
-.phone-game .equipment-choice{width:100%;justify-content:space-between;gap:10px;text-align:left;padding:12px;background:#2b4737;border-color:#71845c;color:#ecdfbd;white-space:normal}
-.equipment-choice>span{display:flex;flex-direction:column;gap:8px}
-.equipment-choice b{font-size:16px;font-weight:500}
-.equipment-choice small{font-size:14px;max-width:95px}
-.equipment-choice:disabled{opacity:.65}
-.equipment-comparison,.equipment-bonuses{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:14px;line-height:1.6;color:#c4d6ad}
-.legacy-party{margin-top:20px;border-top:1px solid #78855b;padding-top:8px}
-.bag-content{display:flex;flex-direction:column;gap:24px}
-.bag-content .inventory-grid{gap:8px}
-.bag-content .inventory-grid>div{padding:12px}
-.bag-items{display:flex;flex-direction:column;gap:10px}
-.bag-items>article{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #6b805440}
-.bag-items>article>svg{width:28px;height:28px;flex-shrink:0;color:#cdb479;margin-top:2px}
-.bag-items>article>img{flex-shrink:0;object-fit:contain;align-self:flex-start}
-.bag-items>article>div{flex:1;min-width:0}
-.bag-items h4{display:flex;justify-content:space-between;gap:8px;font-size:16px;color:#efe0b6;margin:0 0 6px}
-.bag-items h4>span{font-weight:400;white-space:nowrap}
-.bag-items small{display:block;font-size:14px;color:#c8ccae;margin-top:6px;line-height:1.7}
-.shop-panel{display:flex;flex-direction:column;gap:14px}
-.shop-wallet{display:flex;align-items:center;gap:8px;padding:12px;border:1px solid #8f8154;background:#263f30;border-radius:8px;font-size:16px;color:#efdc9e;position:sticky;top:0;z-index:1}
-.shop-wallet b{margin-left:auto;font-size:22px;font-weight:500}
-.phone-dialog .purchase-notice{font-size:14px;min-height:44px}
-.shop-items{display:flex;flex-direction:column;gap:14px}
-.shop-item{display:flex;flex-direction:column;gap:9px;background:#243d30;border:1px solid #687b52;border-radius:9px;padding:16px}
-.shop-item-heading{display:flex;align-items:center;gap:10px;color:#ead398}
-.shop-item-heading h3{font-size:18px;margin:0}
-.shop-item-heading svg{flex-shrink:0;width:24px;height:24px}
-.equipment-wearers,.shop-item>small{font-size:14px;color:#c4ceb1}
-.shop-purchase{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px}
-.shop-purchase>small{font-size:14px}
-.shop-purchase>button{min-height:44px;font-size:16px;padding:8px 14px}
-@media(max-width:360px){.phone-game .adventure-actions{padding-inline:8px;gap:6px}.phone-game .adventure-actions>button{padding-inline:8px}.phone-characters{padding:12px}.character-heading{gap:14px}.character-heading>.face-portrait{width:112px!important;height:112px!important}.character-heading h2{font-size:24px}}
-@media(max-height:600px){.phone-game .phone-header{height:48px;min-height:48px}.phone-game .adventure-actions{min-height:66px;padding-block:4px}}
-@media(max-height:700px){.phone-game .phone-navigation{height:calc(56px + env(safe-area-inset-bottom))!important}.phone-navigation [data-slot=tabs-trigger]>img{width:24px;height:24px}.phone-game .phone-navigation [data-slot=tabs-trigger]{line-height:14px}}
-@media(max-height:530px){.phone-game .phone-navigation{height:calc(48px + env(safe-area-inset-bottom))!important}.phone-navigation [data-slot=tabs-trigger]>img{width:20px;height:20px}.phone-game .phone-navigation [data-slot=tabs-trigger]{padding:1px 0!important;font-size:11px}}
+.phone-game .phone-header {
+  justify-content: flex-end;
+  min-height: 52px;
+  height: 52px;
+  padding: 4px max(12px, env(safe-area-inset-right)) 4px max(12px, env(safe-area-inset-left));
+  gap: 8px;
+}
+.phone-game .phone-tabs {
+  position: relative;
+}
+.phone-game .phone-header.phone-header-overlay {
+  position: absolute;
+  top: 8px;
+  right: max(8px, env(safe-area-inset-right));
+  z-index: 20;
+  width: max-content;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  gap: 6px;
+  border: 0;
+}
+.phone-header-overlay .handbook-button {
+  box-shadow: 0 2px 8px #081d2160;
+}
+.phone-game .handbook-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.handbook-button > img,
+.phone-navigation [data-slot="tabs-trigger"] > img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px #081d2160);
+}
+.phone-game .phone-navigation {
+  height: calc(68px + env(safe-area-inset-bottom)) !important;
+}
+.phone-game .phone-navigation [data-slot="tabs-trigger"] {
+  font-size: 12px;
+  line-height: 16px;
+}
+.phone-game.prologue-game .phone-adventure .map-heading {
+  right: 116px;
+}
+.phone-game .adventure-toolbar {
+  height: 60px;
+  padding-right: 112px;
+}
+.phone-game .adventure-toolbar .squad-selector {
+  min-width: 0;
+  flex: 1;
+}
+.adventure-toolbar .squad-selector > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.phone-game .phone-adventure {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.phone-game .phone-adventure .map-shell {
+  flex: 1;
+  min-height: 0;
+}
+.phone-game .phaser-map {
+  min-height: 0;
+}
+.phone-game .adventure-actions {
+  position: relative;
+  z-index: 6;
+}
+.phone-game.prologue-game .phone-navigation {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.phone-game .adventure-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-height: 72px;
+  padding: 6px 12px;
+  background: #1c372e;
+  border-top: 1px solid #8f805550;
+}
+.phone-game .adventure-actions > button,
+.phone-game .adventure-actions .shop-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 46px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+.phone-game .adventure-actions .quest-entry {
+  background: #294638;
+  border: 1px solid #6b7c56;
+}
+.phone-game .adventure-actions .quest-entry,
+.phone-game .adventure-actions .shop-entry {
+  flex-direction: column;
+  gap: 2px;
+  width: 68px;
+  min-width: 68px;
+  min-height: 58px;
+  padding: 4px 6px;
+  font-size: 12px;
+  line-height: 16px;
+  flex-shrink: 0;
+}
+.adventure-actions .quest-entry img {
+  width: 32px;
+  height: 32px;
+}
+.phone-game .adventure-actions .departure-button,
+.phone-game .adventure-actions .return-button {
+  margin-left: auto;
+  min-width: 84px;
+}
+.phone-game .adventure-actions .departure-button {
+  background: #dfc27c;
+  color: #20352a;
+  border: 1px solid #f6dea1;
+  font-size: 16px;
+}
+.phone-game .adventure-actions .shop-entry {
+  background: #294638;
+  border-color: #6b7c56;
+  color: #e8dbb3;
+}
+.shop-entry-anchor {
+  position: relative;
+  flex-shrink: 0;
+}
+.shop-entry img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px #081d2160);
+}
+.phone-game .adventure-actions .shop-entry-new {
+  border-color: #edcc7a;
+  box-shadow: 0 0 12px #e4be6330;
+}
+.shop-unlock-tip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 10px 16px;
+  border: 1px solid #bc9d61;
+  border-radius: 10px;
+  background: #f1e4c4;
+  color: #2c3e30;
+  box-shadow: 0 4px 14px #081b2270;
+  pointer-events: none;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.shop-unlock-tip:after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  background: #f1e4c4;
+  border-right: 1px solid #bc9d61;
+  border-bottom: 1px solid #bc9d61;
+}
+.shop-unlock-tip b,
+.shop-unlock-tip span {
+  display: block;
+  white-space: nowrap;
+}
+.phone-characters {
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  padding: 16px;
+}
+.character-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: #e7dec6;
+}
+.character-panel p,
+.bag-content p,
+.shop-panel p {
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0;
+  color: #cbd4bc;
+}
+.character-picker {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  flex-shrink: 0;
+}
+.character-picker > button {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 6px;
+  min-width: 92px;
+  padding: 8px;
+  background: #203b30;
+  border: 1px solid #647451;
+  color: #d9dfc3;
+  font-size: 14px;
+}
+.character-picker > button[aria-pressed="true"] {
+  border-color: #edce87;
+  background: #3b5037;
+  box-shadow: inset 0 -3px #dabc74;
+}
+.character-heading {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 12px 0;
+  background: radial-gradient(ellipse at 20% 50%, #9d975327, transparent 68%);
+}
+.character-heading > .face-portrait {
+  flex-shrink: 0;
+}
+.character-heading h2 {
+  font-size: 28px;
+  color: #f0d597;
+  margin: 0 0 8px;
+}
+.character-heading span {
+  display: block;
+  font-size: 16px;
+  color: #dcc790;
+  margin-top: 10px;
+}
+.character-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-block: 1px solid #9a8c5860;
+  padding: 12px 0;
+}
+.character-stats > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+.character-stats b {
+  font-size: 26px;
+  color: #eed59a;
+  font-weight: 500;
+}
+.character-skill {
+  padding: 4px 0 12px;
+}
+.character-panel h3,
+.bag-section > h3 {
+  font-size: 18px;
+  color: #e8cd91;
+  margin: 0 0 8px;
+}
+.character-equipment {
+  border: 1px solid #70815a;
+  border-radius: 9px;
+  padding: 14px;
+  background: #203c30;
+}
+.character-equipment h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.character-equipment h3 > span {
+  font-size: 16px;
+  color: #f0e5c6;
+  font-weight: 400;
+}
+.character-equipment summary,
+.legacy-party > summary {
+  cursor: pointer;
+  min-height: 44px;
+  align-content: center;
+  font-size: 16px;
+  color: #dbc58a;
+}
+.equipment-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+.phone-game .equipment-choice {
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  padding: 12px;
+  background: #2b4737;
+  border-color: #71845c;
+  color: #ecdfbd;
+  white-space: normal;
+}
+.equipment-choice > span {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.equipment-choice b {
+  font-size: 16px;
+  font-weight: 500;
+}
+.equipment-choice small {
+  font-size: 14px;
+  max-width: 95px;
+}
+.equipment-choice:disabled {
+  opacity: 0.65;
+}
+.equipment-comparison,
+.equipment-bonuses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #c4d6ad;
+}
+.legacy-party {
+  margin-top: 20px;
+  border-top: 1px solid #78855b;
+  padding-top: 8px;
+}
+.bag-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.bag-content .inventory-grid {
+  gap: 8px;
+}
+.bag-content .inventory-grid > div {
+  padding: 12px;
+}
+.bag-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bag-items > article {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #6b805440;
+}
+.bag-items > article > svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: #cdb479;
+  margin-top: 2px;
+}
+.bag-items > article > img {
+  flex-shrink: 0;
+  object-fit: contain;
+  align-self: flex-start;
+}
+.bag-items > article > div {
+  flex: 1;
+  min-width: 0;
+}
+.bag-items h4 {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 16px;
+  color: #efe0b6;
+  margin: 0 0 6px;
+}
+.bag-items h4 > span {
+  font-weight: 400;
+  white-space: nowrap;
+}
+.bag-items small {
+  display: block;
+  font-size: 14px;
+  color: #c8ccae;
+  margin-top: 6px;
+  line-height: 1.7;
+}
+.shop-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.shop-wallet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #8f8154;
+  background: #263f30;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #efdc9e;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.shop-wallet b {
+  margin-left: auto;
+  font-size: 22px;
+  font-weight: 500;
+}
+.phone-dialog .purchase-notice {
+  font-size: 14px;
+  min-height: 44px;
+}
+.shop-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.shop-item {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background: #243d30;
+  border: 1px solid #687b52;
+  border-radius: 9px;
+  padding: 16px;
+}
+.shop-item-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ead398;
+}
+.shop-item-heading h3 {
+  font-size: 18px;
+  margin: 0;
+}
+.shop-item-heading svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+.equipment-wearers,
+.shop-item > small {
+  font-size: 14px;
+  color: #c4ceb1;
+}
+.shop-purchase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.shop-purchase > small {
+  font-size: 14px;
+}
+.shop-purchase > button {
+  min-height: 44px;
+  font-size: 16px;
+  padding: 8px 14px;
+}
+@media (max-width: 360px) {
+  .phone-game .adventure-actions {
+    padding-inline: 8px;
+    gap: 6px;
+  }
+  .phone-game .adventure-actions > button {
+    padding-inline: 8px;
+  }
+  .phone-characters {
+    padding: 12px;
+  }
+  .character-heading {
+    gap: 14px;
+  }
+  .character-heading > .face-portrait {
+    width: 112px !important;
+    height: 112px !important;
+  }
+  .character-heading h2 {
+    font-size: 24px;
+  }
+}
+@media (max-height: 600px) {
+  .phone-game .phone-header {
+    height: 48px;
+    min-height: 48px;
+  }
+  .phone-game .adventure-actions {
+    min-height: 66px;
+    padding-block: 4px;
+  }
+}
+@media (max-height: 700px) {
+  .phone-game .phone-navigation {
+    height: calc(56px + env(safe-area-inset-bottom)) !important;
+  }
+  .phone-navigation [data-slot="tabs-trigger"] > img {
+    width: 24px;
+    height: 24px;
+  }
+  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
+    line-height: 14px;
+  }
+}
+@media (max-height: 530px) {
+  .phone-game .phone-navigation {
+    height: calc(48px + env(safe-area-inset-bottom)) !important;
+  }
+  .phone-navigation [data-slot="tabs-trigger"] > img {
+    width: 20px;
+    height: 20px;
+  }
+  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
+    padding: 1px 0 !important;
+    font-size: 11px;
+  }
+}

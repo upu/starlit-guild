@@ -11,6 +11,8 @@ npm run dev
 npm run build
 npm run lint
 npm run lint:fix
+npm run format
+npm run format:check
 npm run images:optimize
 npm run images:check
 npm run videos:optimize
@@ -48,9 +50,11 @@ GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更
 
 ### コード品質
 
+整形はPrettier（`.prettierrc.json`、印字幅100）で行い、`npm run format` で全体を整える。`components/ui` と `hooks/use-mobile.ts` はshadcnから取り込んだままの形を保つため対象外で、`docs/`、`public/`、`assets/`、`drizzle/` も整形しない（`.prettierignore`）。コードを圧縮した1行書きには戻さず、関数長・ファイル長の上限が実際の行数で働くようにする。整形導入時に上限を超えていたファイルは `eslint.config.mjs` の一時的な除外一覧にあり、分割が済んだものから一覧を外す。
+
 LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
 
-Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run lint`、`npx tsc --noEmit`、生成素材の検査（`images:check` / `videos:check`）、`node --test tests/*.test.mjs` の全ユニットテストを実行する。PRのバージョン判定は `pr-version.yml` が `tests/pr-version.test.mjs` と `scripts/check-pr-version.mjs` で検証する。ブラウザーテストとビルド後のHTTP検証はCIに含めず、手動で実行する。
+Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run format:check`、`npm run lint`、`npx tsc --noEmit`、生成素材の検査（`images:check` / `videos:check`）、`node --test tests/*.test.mjs` の全ユニットテストを実行する。PRのバージョン判定は `pr-version.yml` が `tests/pr-version.test.mjs` と `scripts/check-pr-version.mjs` で検証する。ブラウザーテストとビルド後のHTTP検証はCIに含めず、手動で実行する。
 
 ## 実装の分担
 
