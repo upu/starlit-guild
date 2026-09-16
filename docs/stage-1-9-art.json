@@ -1,7 +1,7 @@
 {
   "useCase": "illustration-story",
   "mode": "built-in image_gen",
-  "generatedImage": "public/stories/tower-light-restored.png",
+  "originalGeneratedImagePath": "public/stories/tower-light-restored.png",
   "dimensions": {
     "width": 1536,
     "height": 1024
@@ -27,5 +27,19 @@
     "limitation": "The tower glow is intentionally extremely faint at full-scene scale."
   },
   "sceneId": "tower-moss-removal-return",
-  "revealAtLine": 6
+  "revealAtLine": 6,
+  "adoptedImage": {
+    "path": "public/stories/tower-light-restored.png",
+    "source": "user-provided hood-down image on 2026-09-17, then edited with built-in image_gen",
+    "sourceSha256": "d782ef9852e5e2e7387b5e744e42bf3fefb60cdcdba8bfe9a72ac27f1329aca7",
+    "change": "Keep Aria's hood lowered, her long hair and flower ornament visible, and change the tower window from warm orange to faint lavender-purple.",
+    "editPrompt": "Use case: precise-object-edit. Asset type: STARLIT-GUILD chapter 1-9 story still, 1536x1024 landscape. Image 1 is the exact edit target. Change ONLY the tiny light inside the tower's small upper glass window near x=1054, y=167: replace its orange/yellow glow with a very faint, muted pale lavender-purple light, visible only inside the window. The light is just returning, so no bright white core, halo, rays, bloom, spill on the tower exterior or path. Pixel-level preservation elsewhere is preferred: retain the exact scenic composition, brushwork, sky, village lights, warm horizon, stonework, flowers, basket, and both seated characters. Aria on the left must remain hood down, with long loose blonde hair and white flower hair ornament visible. Leon on the right remains unchanged. Do not recolor the village or sky, move any objects, alter character designs, add text, or alter the frame.",
+    "dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bytes": 2719459,
+    "sha256": "363c218a8144c05a7c5185eea9c439d55f80affee9528553ab35c3d380251bda",
+    "visualQA": "Two companions remain seated facing the tower. Aria's hair and flower ornament are visible with the hood down. The tower window has a small muted lavender light; no text or watermark is visible."
+  }
 }
