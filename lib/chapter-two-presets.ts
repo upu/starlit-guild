@@ -1,4 +1,4 @@
-import { initialPrologueState, act, type State } from "./game.ts";
+import { initialPrologueState, completeStoryStages, act, type State } from "./game.ts";
 import { prologueStages } from "./prologue.ts";
 
 export const chapterTwoPresets = [
@@ -24,15 +24,7 @@ export function chapterTwoPresetState(preset: ChapterTwoPreset, now: number): St
   let state = initialPrologueState(now);
   state.gold = 1000;
   state.clears = prologueStages.length;
-  const story = (state.story = { departed: [], completed: [], read: [] } as NonNullable<
-    State["story"]
-  >);
-  for (const { quest } of prologueStages) {
-    state.done[quest] = 1;
-    story.departed.push(quest);
-    story.completed.push(quest);
-    story.read.push(quest + "-departure", quest + "-return");
-  }
+  completeStoryStages(state, prologueStages.length);
   for (const [hero, weapon] of [
     ["aria", "ash-bow"],
     ["leon", "steel-sword"],

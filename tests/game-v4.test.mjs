@@ -68,7 +68,7 @@ test("20 assists trigger one all-party burst and carry the gauge across nodes", 
   assert.equal(new Set(r.events.map((e) => e.id)).size, r.events.length);
 });
 test("each character has independent HP and enemy attacks name its target", () => {
-  const s = start(game, game.testState(1000, 4, 1, 200), "slime"),
+  const s = start(game, game.legacyTestState(1000, 4, 1, 200), "slime"),
     before = structuredClone(s.squads[0].run.health),
     at = s.squads[0].run.enemyAt;
   assert.deepEqual(Object.keys(before), ["aria", "leon"]);
@@ -155,7 +155,7 @@ test("higher friendship unlocks stronger linked attacks and new dialogue", () =>
 });
 test("building consumes materials once, upgrades real stats, and respects unlocks", () => {
   assert.throws(() => game.act(game.initialState(1000), { type: "build" }, 1000));
-  let s = game.testState(1000, 3, 1, 1000);
+  let s = game.legacyTestState(1000, 3, 1, 1000);
   s.town = 0;
   const before = game.stats(s, s.squads[0]);
   s = game.act(s, { type: "build" }, 1000);
@@ -220,7 +220,7 @@ test("offline and small updates produce the same rewards, detours, friendship an
     assert.deepEqual(frames[key], bulk[key], key);
 });
 test("offline cap and every transition remain exportable, including rest", () => {
-  let s = start(game, game.testState(1000, 60, 1, 20000), "dragon");
+  let s = start(game, game.legacyTestState(1000, 60, 1, 20000), "dragon");
   for (let i = 0; i < 500; i++) {
     s = game.settle(s, s.squads[0].run.nextAt).state;
     assert.doesNotThrow(() => parseBundle(bundle(s)));

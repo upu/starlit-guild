@@ -1,5 +1,12 @@
 import { pathToFileURL } from "node:url";
-import { act, settle, initialPrologueState, testState, level, allQuests } from "../lib/game.ts";
+import {
+  act,
+  settle,
+  initialPrologueState,
+  legacyTestState,
+  level,
+  allQuests,
+} from "../lib/game.ts";
 import { prologueStages } from "../lib/prologue.ts";
 import { combatRank } from "../lib/combat.ts";
 
@@ -66,7 +73,7 @@ export function combatScenarios() {
     ["dragon", 1, 0],
     ["dragon", 35, 5],
   ]) {
-    const input = testState(1000, 60, lv, 10000);
+    const input = legacyTestState(1000, 60, lv, 10000);
     input.gear = gear;
     records.push({ ...simulateCombat(input, quest).record, gear });
   }

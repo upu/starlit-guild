@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialState, act, settle, quests, testState } from "../lib/game.ts";
+import { initialState, act, settle, quests, legacyTestState } from "../lib/game.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import {
   stories,
@@ -176,7 +176,7 @@ test("banter responds to rest, detours and region; friendship changes pair-speci
   const low = coupleCombo(initialState(0), 0),
     high = coupleCombo({ ...s, friendship: { "aria-leon": 24 } }, 0);
   assert.notDeepEqual(low, high);
-  s = testState(1000, 60, 10, 10000);
+  s = legacyTestState(1000, 60, 10, 10000);
   s = act(s, { type: "start", id: "pilgrim" }, 1000);
   s.squads[0].run.detour.claimed = true;
   assert.match(JSON.stringify(journeyBanter(s, s.squads[0], 4000)), /霧/);

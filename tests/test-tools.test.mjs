@@ -1,4 +1,6 @@
 import * as chapterPresets from "../lib/chapter-two-presets.ts";
+import * as prologue from "../lib/prologue.ts";
+import * as game from "../lib/game.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -92,6 +94,7 @@ test("save panel hides test creation and adjustment when disabled, including exi
     "./music-settings": ui,
     "./quest-progression-setting": ui,
     "@/lib/chapter-two-presets": chapterPresets,
+    "@/lib/prologue": prologue,
     "@/lib/external-input": {},
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
@@ -136,6 +139,7 @@ test("save panel offers deletion for every record and disables it for the last r
     "./music-settings": ui,
     "./quest-progression-setting": ui,
     "@/lib/chapter-two-presets": chapterPresets,
+    "@/lib/prologue": prologue,
     "@/lib/external-input": {},
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
@@ -172,4 +176,33 @@ test("save panel offers deletion for every record and disables it for the last r
     (e) => e.type === "button" && String(e.props["aria-label"] || "").endsWith("を削除"),
   );
   assert.equal(only.props.disabled, true);
+});
+
+test("test records always follow the story stages and never create a legacy adventure", () => {
+  const { testState } = game;
+  const { storyStages, prologueStages, inPrologue, stageUnlocked, nextStage } = prologue;
+  const fresh = testState(1000, 0, 1, 60);
+  assert.equal(inPrologue(fresh), true);
+  assert.deepEqual(fresh.story.read, []);
+  assert.equal(nextStage(fresh).quest, storyStages[0].quest);
+
+  const firstChapter = testState(1000, prologueStages.length, 8, 5000);
+  assert.equal(inPrologue(firstChapter), true);
+  assert.equal(firstChapter.clears, prologueStages.length);
+  assert.equal(stageUnlocked(firstChapter, storyStages[prologueStages.length].quest), true);
+  assert.equal(nextStage(firstChapter).quest, storyStages[prologueStages.length].quest);
+  assert.ok(!firstChapter.owned.includes("mira"));
+
+  const every = testState(1000, storyStages.length, 20, 20000);
+  assert.equal(inPrologue(every), true);
+  assert.equal(every.story.read.length, storyStages.length * 2);
+  assert.ok(every.owned.includes("mira"), "2-3を読了するとミラが加入する");
+  assert.deepEqual(every.owned, ["aria", "leon", "mira"], "旧加入の仲間は配られない");
+  assert.equal(every.town, 0, "拠点は物語モードにない");
+
+  // Counts beyond the story stop at the last stage instead of falling back to the legacy mode.
+  const beyond = testState(1000, 1000, 20, 20000);
+  assert.equal(inPrologue(beyond), true);
+  assert.equal(beyond.clears, storyStages.length);
+  assert.deepEqual(beyond.story.read, every.story.read);
 });

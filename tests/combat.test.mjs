@@ -5,7 +5,7 @@ import {
   settle,
   initialState,
   initialPrologueState,
-  testState,
+  legacyTestState,
   allQuests,
   estimate,
 } from "../lib/game.ts";
@@ -42,7 +42,11 @@ function bundle(state) {
   };
 }
 function group() {
-  let state = act(testState(1000, 4, 1, 1000), { type: "start", id: "slime", value: false }, 1000);
+  let state = act(
+    legacyTestState(1000, 4, 1, 1000),
+    { type: "start", id: "slime", value: false },
+    1000,
+  );
   for (let i = 0; state.squads[0].run.enemies.length !== 3 && i < 1000; i++)
     state = settle(state, state.squads[0].run.nextAt).state;
   assert.equal(state.squads[0].run.enemies.length, 3);
@@ -62,7 +66,7 @@ test("resistance scales damage by the growth gap, respects rounding and never dr
 });
 
 test("levels, equipped weapons and gear overcome resistance without a new saved currency", () => {
-  const s = testState(1000, 60, 5, 1000);
+  const s = legacyTestState(1000, 60, 5, 1000);
   assert.equal(penetration(s, "aria"), 4);
   const bought = act(s, { type: "buy", id: "ash-bow" }, 1000);
   assert.equal(penetration(bought, "aria"), 4);
@@ -112,7 +116,7 @@ test("opponents have independent attack clocks and defeated opponents stop attac
 
 test("normal, special, combo, assist and burst attacks all respect the same resistance", () => {
   let state = act(
-    testState(1000, 60, 1, 1000),
+    legacyTestState(1000, 60, 1, 1000),
     { type: "start", id: "dragon", value: false },
     1000,
   );
@@ -147,7 +151,11 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
 });
 
 test("legacy active battles keep exact progress and switch to groups at the next node", () => {
-  let state = act(testState(1000, 4, 8, 1000), { type: "start", id: "slime", value: false }, 1000);
+  let state = act(
+    legacyTestState(1000, 4, 8, 1000),
+    { type: "start", id: "slime", value: false },
+    1000,
+  );
   const r = state.squads[0].run;
   delete r.enemies;
   r.target = 17;
@@ -255,9 +263,9 @@ test("the first chapter needs training after its introduction, with the same gro
     assert.equal(strong.rests, 0);
   }
   assert.ok(Math.max(...records.map((r) => r.maxEnemyHp)) < 200);
-  const s = testState(1000, 60, 1, 1000),
+  const s = legacyTestState(1000, 60, 1, 1000),
     q = allQuests.find((q) => q.id === "wolf"),
-    grown = testState(1000, 60, 18, 1000);
+    grown = legacyTestState(1000, 60, 18, 1000);
   grown.gear = 3;
   assert.ok(estimate(grown, grown.squads[0], q) < estimate(s, s.squads[0], q));
   assert.equal(combatRank(q), 18);
@@ -319,7 +327,7 @@ test("only read first-chapter stages farm automatically, earn XP offline and can
 
 test("offline cap shifts stored enemy clocks by exactly the unprocessed time", () => {
   const source = act(
-    testState(1000, 60, 1, 1000),
+    legacyTestState(1000, 60, 1, 1000),
     { type: "start", id: "dragon", value: false },
     1000,
   );

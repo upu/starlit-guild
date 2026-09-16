@@ -38,6 +38,8 @@ import {
   isPrologueQuest,
   stageUnlocked,
   stageEndingPending,
+  storyStages,
+  nextStage,
 } from "./prologue.ts";
 import {
   chapterTwoQuests,
@@ -1369,15 +1371,44 @@ export function migrate(
   );
   return upgradeSharedHealth(s);
 }
-export function testState(now: number, clears: number, lv: number, gold: number): State {
-  const s = clears === 0 ? initialPrologueState(now) : initialState(now);
+function addOnce(list: string[], value: string) {
+  if (!list.includes(value)) list.push(value);
+}
+// Mark the first stages as departed, completed, and read, with the joins they carry.
+export function completeStoryStages(s: State, count: number) {
+  const story = (s.story ??= storyProgress(s));
+  for (const { quest } of storyStages.slice(0, Math.max(0, count))) {
+    s.done[quest] = 1;
+    addOnce(story.departed, quest);
+    addOnce(story.completed, quest);
+    addOnce(story.read, quest + "-departure");
+    addOnce(story.read, quest + "-return");
+    if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+  }
+}
+// Builds an achievement-count record for the regression tests that still cover the legacy mode.
+// The app never creates one: that mode is kept readable but is no longer maintained.
+export function legacyTestState(now: number, clears: number, lv: number, gold: number): State {
+  const s = initialState(now);
   s.clears = Math.min(1000, Math.max(0, Math.floor(clears)));
   s.gold = Math.min(10000000, Math.max(0, Math.floor(gold)));
-  s.herbs = s.ore = s.clears * 15;
-  s.wood = s.clears * 15;
+  s.herbs = s.ore = s.wood = s.clears * 15;
   s.town = s.clears >= 20 ? 2 : s.clears >= 3 ? 1 : 0;
   s.owned = heroes.filter((h) => h.unlock <= s.clears).map((h) => h.id);
   for (const id of s.owned) s.xp[id] = 30 * (Math.min(50, Math.max(1, Math.floor(lv))) - 1) ** 2;
+  s.log = [{ at: now, text: "テスト用の冒険。普段の記録には影響しません。" }];
+  return s;
+}
+// Test records follow the story stages. The legacy achievement-count mode is no longer created.
+export function testState(now: number, stages: number, lv: number, gold: number): State {
+  const s = initialPrologueState(now);
+  const count = Math.min(storyStages.length, Math.max(0, Math.floor(stages)));
+  completeStoryStages(s, count);
+  s.clears = count;
+  s.gold = Math.min(10000000, Math.max(0, Math.floor(gold)));
+  s.herbs = s.ore = s.wood = count * 15;
+  for (const id of s.owned) s.xp[id] = 30 * (Math.min(50, Math.max(1, Math.floor(lv))) - 1) ** 2;
+  s.squads[0].lastQuest = nextStage(s).quest;
   s.log = [{ at: now, text: "テスト用の冒険。普段の記録には影響しません。" }];
   return s;
 }

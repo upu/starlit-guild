@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialState, act, settle, quests, testState } from "../lib/game.ts";
+import { initialState, act, settle, quests, legacyTestState } from "../lib/game.ts";
 import {
   nextGoal,
   journeyHintKey,
@@ -61,7 +61,7 @@ test("goals expose available recruitment, new quests and exact building shortage
   assert.equal(nextGoal(s).destination, "quests");
 });
 test("party preview includes real bonuses, support roles and does not mutate saved squads", () => {
-  const s = testState(1000, 10, 2, 1000),
+  const s = legacyTestState(1000, 10, 2, 1000),
     sq = s.squads[0],
     before = structuredClone(s);
   const p = partyPreview(s, sq, ["mira", "finn"], quests[0]);

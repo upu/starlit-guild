@@ -5,7 +5,7 @@ import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { initialState, initialPrologueState, act, settle, testState } from "../lib/game.ts";
+import { initialState, initialPrologueState, act, settle, legacyTestState } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
 import { prologueStages } from "../lib/prologue.ts";
 import { madHalloweenStories } from "../lib/mad-halloween-stories.ts";
@@ -271,7 +271,7 @@ test("stage progress retains the completed scenery until the next departure", ()
 
 test("guest stills reveal during their scene and enter the gallery only after reading", () => {
   for (const scene of characterEncounters.filter((st) => storyArt[st.id])) {
-    const state = testState(1000, 60, 20, 100000);
+    const state = legacyTestState(1000, 60, 20, 100000);
     state.town = 2;
     for (const quest of scene.requiresQuests || []) state.done[quest] = 1;
     state.story = { departed: [], completed: [], read: [] };
@@ -328,7 +328,7 @@ test("original characters render as named speakers, portraits and battle targets
     ["midnight-snack", "merrill"],
     ["puppet-midnight", "pumpety"],
   ]) {
-    let state = testState(1000, 60, 20, 100000);
+    let state = legacyTestState(1000, 60, 20, 100000);
     state = act(state, { type: "start", id }, 1000);
     const html = renderToStaticMarkup(
       createElement(MapStage, {
@@ -376,7 +376,7 @@ test("every restored expedition location renders with finite character coordinat
 
 test("all recruitment maps render every location with the accompanying candidate", () => {
   for (const r of recruitments) {
-    let state = testState(1000, 60, 20, 10000000);
+    let state = legacyTestState(1000, 60, 20, 10000000);
     state.owned = state.owned.filter((id) => id !== r.hero);
     state.wood = state.herbs = state.ore = 100000;
     state.gear = 10;
