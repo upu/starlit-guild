@@ -49,7 +49,7 @@ const eslintConfig = defineConfig([
   {
     // Files that exceeded the size limits once Prettier expanded the former
     // one-line style. The limits stay active for new files; split these as
-    // tracked in the follow-up issue and remove entries here as they pass.
+    // tracked in issue #86 and remove entries here as they pass.
     files: [
       "app/api/backup/route.ts",
       "app/guild-home.tsx",
