@@ -1,17 +1,138 @@
-import {test} from 'node:test';
-import assert from 'node:assert/strict';
-import {initialState,act,settle,migrate,quests,memberLimit,squadLimit,stats} from '../lib/game-v2.ts';
-import {initialState as oldInitial,act as oldAct} from '../lib/game-v1.ts';
-const now=1800000000000;
-const start=(id='herbs')=>act(initialState(now),{type:'start',id,squad:'party-1'},now);
-test('new game starts with two heroes and just one discovered quest',()=>{const s=initialState(now);assert.equal(s.owned.length,2);assert.equal(s.squads.length,1);assert.equal(s.squads[0].members.length,2);assert.equal(quests.filter(q=>q.unlock<=s.clears).length,1);assert.equal(memberLimit(s),2);assert.throws(()=>act(s,{type:'start',id:'dragon'},now));});
-test('heroes move, perform gathering and combat, and earn rewards from encounters',()=>{let s=start();assert.equal(s.squads[0].run.phase,'move');s=settle(s,now+4000).state;assert.equal(s.squads[0].run.phase,'work');const max=s.squads[0].run.target;s=settle(s,now+5400).state;assert(s.squads[0].run.target<max);assert(s.squads[0].run.events.some(e=>e.kind==='gather'));s=settle(s,now+26000).state;assert(s.squads[0].run.events.some(e=>e.kind==='hit'));const done=settle(s,now+120000);assert(done.state.clears>0);assert(done.state.gold>60);assert(done.state.xp.aria>0);});
-test('no hard power gate; weak party can still depart and receive help',()=>{let s=initialState(now);s.clears=100;s=act(s,{type:'party',members:['aria']},now);assert(stats(s,s.squads[0])[2]<quests[8].need);s=act(s,{type:'start',id:'dragon'},now);s=settle(s,now+4000).state;const target=s.squads[0].run.target;s=act(s,{type:'assist',mode:'strike'},now+4000);assert(s.squads[0].run.target<target);assert.equal(s.squads[0].run.energy,2);});
-test('assist accelerates a real objective and energy is server bounded',()=>{let s=settle(start(),now+4000).state;const before=s.squads[0].run.target;for(let i=0;i<3;i++)s=act(s,{type:'assist',mode:'strike'},now+4000);assert(s.squads[0].run.target<before*.5);assert.throws(()=>act(s,{type:'assist',mode:'strike'},now+4000));s=settle(s,now+8000).state;assert.equal(s.squads[0].run.energy,1);});
-test('healing restores health and can cancel a rest',()=>{let s=start();s.squads[0].run.hp=0;s.squads[0].run.phase='rest';s=act(s,{type:'assist',mode:'heal'},now);assert(s.squads[0].run.hp>0);assert.equal(s.squads[0].run.phase,'move');});
-test('multiple squads run independently and cannot share a hero',()=>{let s=initialState(now);s.clears=12;s.gold=1000;for(const id of ['mira','finn'])s=act(s,{type:'recruit',id},now);assert.equal(squadLimit(s),2);s=act(s,{type:'newSquad'},now);s=act(s,{type:'party',squad:'party-2',members:['mira','finn']},now);assert.throws(()=>act(s,{type:'party',squad:'party-1',members:['aria','mira']},now));s=act(s,{type:'start',squad:'party-1',id:'herbs'},now);s=act(s,{type:'start',squad:'party-2',id:'cart'},now);s=settle(s,now+180000).state;assert(s.done.herbs>0&&s.done.cart>0);assert(s.squads.every(p=>p.run));assert.throws(()=>act(s,{type:'party',squad:'party-2',members:['mira']},s.updatedAt));});
-test('offline cap and serialization do not award the same time twice',()=>{const s=start();const a=settle(s,now+86400000),b=settle(s,now+43200000);assert.equal(a.state.gold,b.state.gold);assert.equal(a.rewards.capped,true);const restored=settle(JSON.parse(JSON.stringify(a.state)),now+86400000);assert.equal(restored.rewards.count,0);assert.equal(restored.state.gold,a.state.gold);});
-test('simulation yields the same result whether time is polled or skipped',()=>{const s=start();const all=settle(s,now+600000).state;let chunks=s;for(let i=1;i<=30;i++)chunks=settle(chunks,now+i*20000).state;assert.equal(chunks.gold,all.gold);assert.equal(chunks.clears,all.clears);assert.deepEqual(chunks.squads,all.squads);});
-test('single run returns and explicit return loses no completed rewards',()=>{let s=act(start(),{type:'repeat',value:false},now);s=settle(s,now+600000).state;assert.equal(s.clears,1);assert.equal(s.squads[0].run,null);assert.equal(s.gold,92);});
-test('legacy save retains resources, progression, roster and previous three-member squad',()=>{let old=oldInitial(now);old.gold=777;old.ore=34;old=oldAct(old,{type:'start',id:'herbs'},now);const s=migrate(old,now+60000);assert.equal(s.version,2);assert.equal(s.gold,809);assert.equal(s.ore,34);assert.equal(s.clears,1);assert.equal(s.owned.length,4);assert.equal(s.squads[0].members.length,3);assert.equal(s.squads[0].run.quest,'herbs');assert.deepEqual(migrate(s,now+60000),s);});
-test('recruit and daily reward are progression gated and cannot be duplicated',()=>{let s=initialState(now);s.gold=5000;assert.throws(()=>act(s,{type:'recruit',id:'mira'},now));assert.throws(()=>act(s,{type:'daily'},now));s.clears=3;s=act(s,{type:'daily'},now);assert.throws(()=>act(s,{type:'daily'},now));s=act(s,{type:'recruit',id:'mira'},now);assert.throws(()=>act(s,{type:'recruit',id:'mira'},now));});
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import {
+  initialState,
+  act,
+  settle,
+  migrate,
+  quests,
+  memberLimit,
+  squadLimit,
+  stats,
+} from "../lib/game-v2.ts";
+import { initialState as oldInitial, act as oldAct } from "../lib/game-v1.ts";
+const now = 1800000000000;
+const start = (id = "herbs") =>
+  act(initialState(now), { type: "start", id, squad: "party-1" }, now);
+test("new game starts with two heroes and just one discovered quest", () => {
+  const s = initialState(now);
+  assert.equal(s.owned.length, 2);
+  assert.equal(s.squads.length, 1);
+  assert.equal(s.squads[0].members.length, 2);
+  assert.equal(quests.filter((q) => q.unlock <= s.clears).length, 1);
+  assert.equal(memberLimit(s), 2);
+  assert.throws(() => act(s, { type: "start", id: "dragon" }, now));
+});
+test("heroes move, perform gathering and combat, and earn rewards from encounters", () => {
+  let s = start();
+  assert.equal(s.squads[0].run.phase, "move");
+  s = settle(s, now + 4000).state;
+  assert.equal(s.squads[0].run.phase, "work");
+  const max = s.squads[0].run.target;
+  s = settle(s, now + 5400).state;
+  assert(s.squads[0].run.target < max);
+  assert(s.squads[0].run.events.some((e) => e.kind === "gather"));
+  s = settle(s, now + 26000).state;
+  assert(s.squads[0].run.events.some((e) => e.kind === "hit"));
+  const done = settle(s, now + 120000);
+  assert(done.state.clears > 0);
+  assert(done.state.gold > 60);
+  assert(done.state.xp.aria > 0);
+});
+test("no hard power gate; weak party can still depart and receive help", () => {
+  let s = initialState(now);
+  s.clears = 100;
+  s = act(s, { type: "party", members: ["aria"] }, now);
+  assert(stats(s, s.squads[0])[2] < quests[8].need);
+  s = act(s, { type: "start", id: "dragon" }, now);
+  s = settle(s, now + 4000).state;
+  const target = s.squads[0].run.target;
+  s = act(s, { type: "assist", mode: "strike" }, now + 4000);
+  assert(s.squads[0].run.target < target);
+  assert.equal(s.squads[0].run.energy, 2);
+});
+test("assist accelerates a real objective and energy is server bounded", () => {
+  let s = settle(start(), now + 4000).state;
+  const before = s.squads[0].run.target;
+  for (let i = 0; i < 3; i++) s = act(s, { type: "assist", mode: "strike" }, now + 4000);
+  assert(s.squads[0].run.target < before * 0.5);
+  assert.throws(() => act(s, { type: "assist", mode: "strike" }, now + 4000));
+  s = settle(s, now + 8000).state;
+  assert.equal(s.squads[0].run.energy, 1);
+});
+test("healing restores health and can cancel a rest", () => {
+  let s = start();
+  s.squads[0].run.hp = 0;
+  s.squads[0].run.phase = "rest";
+  s = act(s, { type: "assist", mode: "heal" }, now);
+  assert(s.squads[0].run.hp > 0);
+  assert.equal(s.squads[0].run.phase, "move");
+});
+test("multiple squads run independently and cannot share a hero", () => {
+  let s = initialState(now);
+  s.clears = 12;
+  s.gold = 1000;
+  for (const id of ["mira", "finn"]) s = act(s, { type: "recruit", id }, now);
+  assert.equal(squadLimit(s), 2);
+  s = act(s, { type: "newSquad" }, now);
+  s = act(s, { type: "party", squad: "party-2", members: ["mira", "finn"] }, now);
+  assert.throws(() => act(s, { type: "party", squad: "party-1", members: ["aria", "mira"] }, now));
+  s = act(s, { type: "start", squad: "party-1", id: "herbs" }, now);
+  s = act(s, { type: "start", squad: "party-2", id: "cart" }, now);
+  s = settle(s, now + 180000).state;
+  assert(s.done.herbs > 0 && s.done.cart > 0);
+  assert(s.squads.every((p) => p.run));
+  assert.throws(() => act(s, { type: "party", squad: "party-2", members: ["mira"] }, s.updatedAt));
+});
+test("offline cap and serialization do not award the same time twice", () => {
+  const s = start();
+  const a = settle(s, now + 86400000),
+    b = settle(s, now + 43200000);
+  assert.equal(a.state.gold, b.state.gold);
+  assert.equal(a.rewards.capped, true);
+  const restored = settle(JSON.parse(JSON.stringify(a.state)), now + 86400000);
+  assert.equal(restored.rewards.count, 0);
+  assert.equal(restored.state.gold, a.state.gold);
+});
+test("simulation yields the same result whether time is polled or skipped", () => {
+  const s = start();
+  const all = settle(s, now + 600000).state;
+  let chunks = s;
+  for (let i = 1; i <= 30; i++) chunks = settle(chunks, now + i * 20000).state;
+  assert.equal(chunks.gold, all.gold);
+  assert.equal(chunks.clears, all.clears);
+  assert.deepEqual(chunks.squads, all.squads);
+});
+test("single run returns and explicit return loses no completed rewards", () => {
+  let s = act(start(), { type: "repeat", value: false }, now);
+  s = settle(s, now + 600000).state;
+  assert.equal(s.clears, 1);
+  assert.equal(s.squads[0].run, null);
+  assert.equal(s.gold, 92);
+});
+test("legacy save retains resources, progression, roster and previous three-member squad", () => {
+  let old = oldInitial(now);
+  old.gold = 777;
+  old.ore = 34;
+  old = oldAct(old, { type: "start", id: "herbs" }, now);
+  const s = migrate(old, now + 60000);
+  assert.equal(s.version, 2);
+  assert.equal(s.gold, 809);
+  assert.equal(s.ore, 34);
+  assert.equal(s.clears, 1);
+  assert.equal(s.owned.length, 4);
+  assert.equal(s.squads[0].members.length, 3);
+  assert.equal(s.squads[0].run.quest, "herbs");
+  assert.deepEqual(migrate(s, now + 60000), s);
+});
+test("recruit and daily reward are progression gated and cannot be duplicated", () => {
+  let s = initialState(now);
+  s.gold = 5000;
+  assert.throws(() => act(s, { type: "recruit", id: "mira" }, now));
+  assert.throws(() => act(s, { type: "daily" }, now));
+  s.clears = 3;
+  s = act(s, { type: "daily" }, now);
+  assert.throws(() => act(s, { type: "daily" }, now));
+  s = act(s, { type: "recruit", id: "mira" }, now);
+  assert.throws(() => act(s, { type: "recruit", id: "mira" }, now));
+});
