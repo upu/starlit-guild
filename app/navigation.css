@@ -6,6 +6,7 @@ button[data-slot="switch"] {
 button[data-slot="switch"]:hover:not(:disabled){background:#ffffff08}
 button[data-slot="switch"]::before{content:"";position:absolute;left:2px;top:10px;width:44px;height:24px;border:1px solid #819080;border-radius:20px;background:#33453f;transition:background .15s}
 button[data-slot="switch"][data-state="checked"]::before{background:#d8bd78;border-color:#e6ce93}
+/* This custom track owns thumb movement; the shared Switch adds no translation. */
 button[data-slot="switch"] [data-slot="switch-thumb"]{position:absolute;left:6px;top:14px;width:16px;height:16px;border-radius:50%;background:#e2e9dd;transform:translateX(0);transition:transform .15s}
 button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"]{transform:translateX(20px);background:#20352b}
 [data-slot="switch-state"]{position:absolute;right:0;width:32px;font-size:12px;font-weight:600;text-align:center}
@@ -187,3 +188,19 @@ body{overflow:hidden;background:var(--game-nav-color)}
 .start-entry>p{font-size:12px;line-height:1.8;color:#e1dec5}
 @media(max-width:350px){.phone-game .phone-header{gap:4px;padding-inline:4px}.phone-header .phone-wallet>span{font-size:10px;gap:2px}.phone-header .phone-wallet svg{width:11px}.phone-game .adventure-toolbar .return-button{padding-inline:7px}}
 @media(max-height:500px){.start-screen{padding-top:calc(env(safe-area-inset-top) + 20px);padding-bottom:calc(var(--game-safe-bottom) + 18px)}}
+.quest-chapters{display:flex;gap:8px;flex-wrap:wrap}
+.quest-chapters button{flex:1;min-height:42px;white-space:nowrap;background:#223c30;border:1px solid #758058;color:#ecdbb0;padding:8px 10px}
+.quest-chapters button[aria-pressed="true"]{background:#465b3e;border-color:#e2c77f}
+.quest-chapters button:disabled{opacity:.5}
+.quest-progression-setting{padding:10px 12px;border:1px solid #758058;border-radius:8px;color:#ecdbb0}
+.quest-progression-setting .switch-row{gap:12px;margin:0;align-items:center}
+.quest-progression-setting .switch-row>span{font-size:12px;line-height:1.6;flex:1}
+.quest-progression-setting small{display:block;font-size:11px;line-height:1.6;margin-top:6px;color:#c2d0b6}
+.quest-summary{width:100%;text-align:left;align-items:stretch;color:#ecdbb0;white-space:normal;touch-action:pan-y;overflow:hidden;font:inherit;font-size:13px;line-height:1.8}
+.quest-summary-title{font-size:18px;color:#efdbac}
+.quest-summary .quest-landscape{display:block;flex-shrink:0}
+.quest-summary .quest-opponent>span{display:flex;flex-direction:column}
+.quest-option .quest-progress{color:#ffe29e;font-size:10px}
+.quest-summary:focus-visible,.quest-chapters button:focus-visible{outline:2px solid #ffe29e;outline-offset:3px}
+
+button.quest-summary:hover:not(:disabled),button.quest-summary:active:not(:disabled){background:#2c4232;color:#ecdbb0}

@@ -1,0 +1,5 @@
+{
+  "thumbnail": { "width": 320, "height": 320, "fit": "cover", "quality": 74 },
+  "detail": { "width": 800, "height": 450, "fit": "cover", "quality": 80 },
+  "background": { "width": 1672, "height": 1672, "fit": "inside", "quality": 84 }
+}

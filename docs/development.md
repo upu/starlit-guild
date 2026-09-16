@@ -11,6 +11,8 @@ npm run dev
 npm run build
 npm run lint
 npm run lint:fix
+npm run images:optimize
+npm run images:check
 npm run videos:optimize
 npm run videos:check
 node --test tests/*.test.mjs
@@ -19,7 +21,7 @@ npx tsc --noEmit
 
 `npm run dev` はローカル開発、`npm run build` は公開用ビルド。テストは新旧シミュレーション、移行、セーブ形式などを含む。
 
-dev / buildの開始時に、[元動画から配信用MP4を生成](story-videos.md)する。変更のない動画はスキップする。
+dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[元動画から配信用MP4を生成](story-videos.md)する。変更のない動画はスキップする。
 
 ## テスト機能の環境設定
 

@@ -48,13 +48,13 @@ function elements(node){
 test('save panel hides test creation and adjustment when disabled, including existing test profiles',()=>{
  const ui=new Proxy({},{get:(_target,name)=>name});
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
-  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'@/lib/external-input':{},
+  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/external-input':{},
  };
  for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
  const {SavePanel,TestControls}=load('../app/save-panel.tsx',modules);
  for(const enabled of [false,true]){
   const profile={id:'test',test:true,name:'test',state:{clears:0}},calls=[];
-  const game={testToolsEnabled:enabled,bundle:{active:'test',profiles:[profile]},profile,createProfile:v=>calls.push(v)};
+  const game={s:profile.state,testToolsEnabled:enabled,bundle:{active:'test',profiles:[profile]},profile,createProfile:v=>calls.push(v)};
   const tree=elements(SavePanel({game}));
   const buttons=tree.filter(e=>e.type==='button'&&elements(e.props.children).some(c=>c.type==='FlaskConical'));
   assert.equal(buttons.length,enabled?1:0);
@@ -67,7 +67,7 @@ test('save panel hides test creation and adjustment when disabled, including exi
 test('save panel offers deletion for every record and disables it for the last record',()=>{
  const ui=new Proxy({},{get:(_target,name)=>name}),calls=[];
  const modules={react:{useState:v=>[v,()=>{}],useRef:v=>({current:v})},'react/jsx-runtime':jsx,
-  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'@/lib/external-input':{},
+  'lucide-react':ui,sonner:{toast:{}},'./music-settings':ui,'./quest-progression-setting':ui,'@/lib/external-input':{},
  };
  for(const name of ['dialog','alert-dialog','select','tabs','input','switch'])modules[`@/components/ui/${name}`]=ui;
  const {SavePanel}=load('../app/save-panel.tsx',modules);
@@ -75,7 +75,7 @@ test('save panel offers deletion for every record and disables it for the last r
   {id:'first',test:false,name:'最初の冒険',state:{clears:3}},
   {id:'second',test:false,name:'読み込んだ冒険',state:{clears:8}},
  ];
- const makeGame=list=>({testToolsEnabled:false,bundle:{active:list[0].id,profiles:list},profile:list[0],otherTab:false,copies:[],deleteProfile:id=>{calls.push(id);return true;}});
+ const makeGame=list=>({s:list[0].state,testToolsEnabled:false,bundle:{active:list[0].id,profiles:list},profile:list[0],otherTab:false,copies:[],deleteProfile:id=>{calls.push(id);return true;}});
  const tree=elements(SavePanel({game:makeGame(profiles),music:{}}));
  const deletes=tree.filter(e=>e.type==='button'&&String(e.props['aria-label']||'').endsWith('を削除'));
  assert.equal(deletes.length,2);assert.ok(deletes.every(button=>button.props.disabled===false));
