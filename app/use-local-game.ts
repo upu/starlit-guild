@@ -241,7 +241,8 @@ export function useLocalGame(testToolsEnabled = false) {
     };
     const load = () => {
       try {
-        const raw = localStorage.getItem(SAVE_KEY) || localStorage.getItem("starlit-guild-v3");
+        // Only v4 is read: a browser holding just a v3 key starts a new story record.
+        const raw = localStorage.getItem(SAVE_KEY);
         const b = raw ? parseBundle(parseJson(raw)) : fresh();
         publish(b);
         setSound(b.sound);

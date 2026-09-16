@@ -37,6 +37,8 @@ Sitesの実行時環境変数に `ENABLE_TEST_TOOLS=true` を設定したサイ�
 
 `npm run build` 後に `node tests/test-tools.integration.mjs` で、同じ成果物の実行時設定を切り替えるHTTP検証を行える。ローカルの一時Workerだけを使い、Sitesやユーザーのセーブには接続しない。
 
+`node tests/api-backup.integration.mjs` はバックアップAPIのHTTP検証を行う。`npm start` でWorkerを起動し、その前にローカルD1へ `drizzle/*.sql` を適用しておく（起動中に適用するとテーブルが見えないことがある）。既定の接続先は `http://localhost:5173` で、`TEST_ROOT` で変えられる。どちらの統合テストも `tests/*.test.mjs` に含まれないため、CIでは実行していない。
+
 ## PRごとのゲームバージョン
 
 ゲームの表示バージョンは `package.json` の `x.y.z` を正本とし、スタート画面にも同じ値を表示する。PRではテンプレートのバージョン判定を必ずどちらか一方だけ選ぶ。
