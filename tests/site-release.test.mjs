@@ -185,7 +185,10 @@ test("delivery commit permits manifest adaptation but rejects uncommitted or unr
         stdio: ["ignore", "pipe", "pipe"],
       }),
     );
-    assert.deepEqual(JSON.parse(readFileSync(join(cwd, ".openai/hosting.json"), "utf8")), canonical);
+    assert.deepEqual(
+      JSON.parse(readFileSync(join(cwd, ".openai/hosting.json"), "utf8")),
+      canonical,
+    );
     writeFileSync(join(cwd, "game.txt"), "unrelated change");
     assert.throws(() =>
       execFileSync(process.execPath, [preparer], {
