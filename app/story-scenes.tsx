@@ -21,7 +21,7 @@ import {
   type Story,
   type StoryLine,
 } from "@/lib/stories";
-import { storyArtAt, type StoryArt } from "@/lib/story-art";
+import { storyArtAt, storyThumbnail, type StoryArt } from "@/lib/story-art";
 import type { StoryAdvance } from "./use-story-advance";
 const characters = [
   ...heroes,
@@ -309,10 +309,10 @@ export function StoryAlbum({ state: s, onBack }: { state: State; onBack: () => v
               aria-label={st.title + "の絵を大きく見る"}
             >
               <Image
-                src={art.src}
+                src={storyThumbnail(art)}
                 alt={art.alt}
-                width={art.width}
-                height={art.height}
+                width={320}
+                height={320}
                 loading="lazy"
                 unoptimized
               />
