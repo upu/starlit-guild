@@ -31,8 +31,8 @@
 
 ## 第一部1-7・1-8
 
-- `public/stages/old-waterway.png`：古い水路の一覧・冒険背景。半ば塞がれた排水口と湿った斜面を描く。
-- `public/stages/tower-drainage-open.png`：1-8の10地点目以後と達成後の待機背景。流れの戻った水路と脇へ積んだ丸太を描く。再出発では作業前の背景から始める。
+- `assets/source/scenery/old-waterway.png`：古い水路の一覧・冒険背景。半ば塞がれた排水口と湿った斜面を描く。
+- `assets/source/scenery/tower-drainage-open.png`：1-8の10地点目以後と達成後の待機背景。流れの戻った水路と脇へ積んだ丸太を描く。再出発では作業前の背景から始める。
 - 1-8終幕には一枚絵を置かず、水路が戻った状態を背景と会話で見せる。
 - 採用背景は1536×1024。組み込みimage_genを使用し、既存の塔の風景を参照した。プロンプト原文と目視確認は [制作記録](stage-1-7-1-8-art.md) を参照。
 
@@ -40,7 +40,7 @@
 
 森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](stage-1-6-closeup-art.json) に保存した。
 
-- `public/stages/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
+- `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。
 
 採用画像は、木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げた構図。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋を繊細に描く。原本は `public/stories/forest-moss-aria-oil.png` に保持し、ゲームと資料一覧では可逆WebPを参照する。WebPは1,873,356 bytesで、原本PNGの3,064,032 bytesから約39%削減。両画像をRGBAへ復号した全画素の一致を確認した。
@@ -53,8 +53,8 @@
 
 | 保存先 | 用途・表示条件 |
 | --- | --- |
-| `public/stages/tower-road.png` | 1-4の一覧・冒険背景。昼の青空、畑、林、普通の土の道、遠景の小さな塔。水たまりや泥を強調しない |
-| `public/stages/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
+| `assets/source/scenery/tower-road.png` | 1-4の一覧・冒険背景。昼の青空、畑、林、普通の土の道、遠景の小さな塔。水たまりや泥を強調しない |
+| `assets/source/scenery/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
 | `public/items/moss-lamp.png` | 1-5の足元確認地点に表示する木の入れ物と淡く光る苔。透明背景。魔物除けや防御効果はない |
 | `public/stories/tower-moss-discovery.png` | `tower-road-return` の0始まり20行目、苔について尋ね、灯りとして試したい理由を伝え、採取の許可を得た後、木の入れ物の中で苔が光る場面から表示。読了後はアルバムでも鑑賞可能 |
 
@@ -62,7 +62,27 @@
 
 4枚を画像で確認。背景の昼夜、二人の髪・目・耳・衣装、木べらと入れ物、文字や透かしがないことを確認した。苔は羽状の小葉を持つ描写で、1-5の葉の並びへの見覚えと揃える。画像の確認とゲーム画面でのブラウザ操作検証は区別する。
 
-発見場面の生成プロンプト：
+### 発見場面のアップへの改訂（2026-09-16）
+
+組み込み `image_gen` で既存の `tower-moss-discovery.png` を編集し、同じ保存先へ差し替えた。出力は1536×1024のPNG。人物の外見と絵柄は [アリアの設定画](characters/aria-reference-sheet.webp) と [レオンの設定画](characters/leon-reference-sheet.webp) を直接参照した。二人の顔と苔灯に寄り、アリアの頭のフードを下ろして白い花飾りと編み込みを見せる。顔、衣装、木べら、容器を支える手、淡い苔の光を画像で確認した。会話と表示条件は既存のまま。
+
+さらに色合いを設定画へ寄せ、夕日の橙色と強い陰影を抑えた。淡いベージュの金髪、明るい肌、落ち着いた緑・くすんだ赤・青灰色の衣装、柔らかな陰影を優先し、アップの構図と手元の動作を維持。組み込み `image_gen` による1536×1024 PNGを同じ保存先へ差し替え、設定画と目視で比較した。
+
+最終的に、苔がほんのり光る場面として照明を再調整した。設定画に寄せた人物の色とアップの構図を保ち、塔の外側の日陰で周囲の明るさを抑え、苔の淡い薄緑の光を器の縁・近くの手袋・木べらへ控えめに映した。葉の形と二人の表情が読めること、光線や粒子などの強い魔法演出がないことを目視確認。組み込み `image_gen` による1536×1024 PNGを同じ保存先へ差し替えた。
+
+淡い発光の最終プロンプト（入力1＝色合い再調整版）：
+
+> Use case: lighting-weather. Edit this STARLIT GUILD story still, preserving the exact close-up composition, character identities, facial expressions, poses, hair and costumes, delicate anime drawing style, subdued reference-sheet palette, wooden container, spatula and all hands. User correction: this scene depicts moss GLOWING FAINTLY; make its quiet emitted light perceptible. Change lighting only and shade the immediate background appropriately. They are beside the shaded exterior base of a stone tower in late afternoon, NOT at night. Reduce the overly bright ambient daylight around the characters to gentle cool gray-blue open shade; suppress bright sky and bright backlighting so pale moss luminescence reads naturally. Keep faces clearly readable and softly colored, preserve Aria's ash-beige blonde hair, ivory skin and sage-green cloak and Leon's muted brick-red scarf and slate-blue clothing. The little featherlike moss emits a SUBTLE soft pale mint-green light from within its leaves. The moss should look alive and weakly bioluminescent, never neon, white-hot or dazzling. Very restrained tiny halo immediately around leaves, a soft mint reflection on the inner wood rim, nearby glove seams and underside/tip of the wooden spatula. The light reaches only the immediate hand-held area, not the whole faces or background. Retain leaf detail, do not overexpose the moss. The feeling is two people leaning close to notice a modest surprising glow. Avoid big bloom, glowing particles, sparkles, magical beams, dramatic chiaroscuro, green face wash, orange sunset grade, heavy dark shadows, new objects, text or watermarks. Single 1536x1024 landscape illustration.
+
+色合い再調整のプロンプト（制作履歴。入力1＝アップ改訂版、入力2＝アリア設定画、入力3＝レオン設定画）：
+
+> Use case: style-transfer. Revise image 1, a landscape 1536x1024 story illustration. Keep its exact close-up two-person framing, poses, expressions, wooden spatula and moss container, and setting beside a stone tower. USER CORRECTION: much closer to the colors and rendering of reference sheets 2 (Aria) and 3 (Leon). The last result was still far too orange, saturated, high contrast and heavily painted. Treat sheets 2 and 3 as the PRIMARY art direction, and image 1 ONLY as composition/action reference. Repaint with the sheets' pale luminous skin, light ash-beige blonde Aria hair, muted sage/forest green cape, subdued antique-gold detail, ivory blouse, taupe-brown leather; Leon has neutral ash-brown hair, muted dusty brick-red scarf, desaturated slate-blue tunic and cool soft silver armor. Delicate fine light-brown linework, smooth translucent pastel shading, soft detailed anime faces closely matching the sheets' portrait panels. Remove orange sunset color grading, hard golden rim light, deep brown cast shadows, heavy textured brushwork, overly dark outlines, glossy metallic contrast. Use diffuse neutral daylight at the shaded tower, with light gray stone and airy muted sage foliage, a lightly rendered subdued background. Keep local colors distinct: do not apply a single beige wash or merely reduce global saturation. Aria's skin is porcelain ivory with subtle pink cheeks, her eyes clear soft green. Her white flower hair ornament and braided half-up long hair remain, head uncovered. Leon's face should share the reference's soft youthful delicate features, brown eyes. Keep the small featherlike moss faintly mint luminous with only delicate local reflected light. Both faces and entire wooden container, gloves and spatula must remain visible. Preserve comfortable friendly proximity and discovery action. No text, panels, watermark, added characters, hearts, magical beams. Final image should look painted by the same artist using the same palette and soft rendering as the two reference sheets.
+
+アップ改訂時のプロンプト（制作履歴。入力1＝旧スチル、入力2＝アリア設定画、入力3＝レオン設定画）：
+
+> Use case: style-transfer. Edit image 1 (the existing STARLIT GUILD chapter 1-4 moss discovery story still). Images 2 and 3 are authoritative Aria and Leon character design AND drawing-style references. Create a finished landscape 1536x1024 single illustration. Move camera closer: tight two-person upper-body composition, both faces about 30 percent larger than image 1, little surrounding scenery, faces and the wooden moss container dominate the frame. Keep both complete faces, all interacting hands, the entire small shallow wooden container and Aria's wooden spatula visible. Aria on left with delighted curiosity, Leon right with quiet surprised smile, looking down at softly luminous pale mint featherlike moss he holds in both gloved hands. Maintain same modest discovery at shady stone tower exterior in late afternoon, softly blurred stone wall with small moss patch behind. Match image 2 exactly for Aria's face, soft light blonde hair, braided half-up hairstyle, white flower and feather hair ornament, long elf ears, green eyes, dark green gold-embroidered cape and cream blouse with brown leather bodice and gloves. Her head is uncovered: REMOVE old hat/raised hood, hood rests behind shoulders; white flowers are in her hair as on reference. Match image 3 for Leon's gentle face proportions, layered brown hair, brown eyes, red scarf, blue gold-trimmed tunic, leather harness, steel shoulder armor and brown gloves. Match the delicate clean anime linework, soft restrained colors and gentle shading of the reference sheets, less saturated orange and less heavy painterly texture than old image. Preserve story action and natural friendly proximity. No additional people, no text, no panels, no watermark, no hearts, no magical beams or crystals. This is a story illustration, not a reference sheet.
+
+初版の生成プロンプト（制作履歴）：
 
 > Create a finished 1536x1024 landscape anime fantasy story illustration. Preserve Aria and Leon's exact recognizable character designs from reference: Aria young adult female elf, long blonde hair green eyes, pointed ears, forest green gold embroidered feathered ranger hat and cape, cream blouse, brown leather gloves/bracers, bow/quiver; Leon young adult human male, tousled brown hair brown eyes, red scarf cape, blue tunic steel shoulder armor and brown gloves. NEW scene at the shady outside base of a modest local stone beacon tower, late afternoon. They have permission from caretaker (off frame) to take just a little moss. Leon holds a SMALL shallow plain wooden container at chest height with just a little softly glowing pale mint-green featherlike moss. Aria still holds a small wooden spatula near the container, looking delighted and curious at the moss. Leon looks at the gently lit seam of his glove with a quietly surprised smile. Their shoulders comfortably near, affection through relaxed gestures, no romance icons. Small moss patch on damp exterior stones behind, no big shining crystals, no magical beams, no explanation of tower mechanism, no text, no watermark, no other characters. Main hands and container fully in frame. Intimate useful discovery, painterly atmospheric detail matching reference.
 
@@ -134,3 +154,5 @@ Use case: illustration-story. Create one original standalone wide landscape game
 ```text
 Create one landscape 1536x1024 illustration-story still for STARLIT GUILD, using these three sheets ONLY as character appearance references, not layouts or text. Painterly anime fantasy RPG scene, delicate textured painting and soft afternoon window light, muted natural colors. Interior of a modest healer's workroom with wooden desk, paper-wrapped herbs and unfinished medicine parcels. Exact narrative instant: Mira (lavender hair, white/lavender moon-motif healer robes, herb pouch) has actually fainted from exhaustion while standing up; her knees have buckled, eyes closed and body limp, and Leon (brown hair, blue tunic, leather armor, red scarf) kneels urgently catching and supporting her upper torso and shoulders before she falls. Aria (long blonde hair, elf ears, green eyes, white flower hair ornament, forest green cloak) has rushed to their side and is crouching close, one hand moving a bag off the floor, looking anxiously at Mira and calling her name. All three fully clothed, non-romantic rescue scene, physically credible arms and weight support. Mira central; all faces and support gesture clearly readable in the middle portion of landscape. Background only herbs, parcels, wooden furniture, no extra people, no modern medical equipment, no glow magic, no blood, no comic panels, no letters or typography, no border. Retain distinctive reference costumes and faces.
 ```
+
+クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。

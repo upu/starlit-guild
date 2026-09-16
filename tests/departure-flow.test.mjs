@@ -1,3 +1,4 @@
+import * as navigation from '../lib/quest-navigation.ts';
 import * as chapterTwo from '../lib/chapter-two.ts';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
@@ -13,7 +14,7 @@ import * as equipment from '../lib/equipment.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
 
 const pickerExports={};
-vm.runInNewContext(ts.transpileModule(readFileSync(new URL('../app/quest-picker.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText,{exports:pickerExports,require:id=>({'react/jsx-runtime':jsxRuntime,'@/lib/chapter-two':chapterTwo,'@/lib/game':game,'@/lib/prologue':prologue,'@/lib/original-characters':{originalCharacters:[]},'@/lib/scenery':{questScenery:()=>''}}[id]||new Proxy({},{get:(_,name)=>String(name)}))});
+vm.runInNewContext(ts.transpileModule(readFileSync(new URL('../app/quest-picker.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText,{exports:pickerExports,require:id=>({react:{useState:value=>[typeof value==='function'?value():value,()=>{}]},'@/lib/quest-navigation':navigation,'react/jsx-runtime':jsxRuntime,'@/lib/chapter-two':chapterTwo,'@/lib/game':game,'@/lib/prologue':prologue,'@/lib/original-characters':{originalCharacters:[]},'@/lib/scenery':{questScenery:()=>''}}[id]||new Proxy({},{get:(_,name)=>String(name)}))});
 const source=readFileSync(new URL('../app/phone-game.tsx',import.meta.url),'utf8')+'\nexport {AdventureDestination,collectionSheet};';
 const code=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
 function harness(initialState){
@@ -41,17 +42,17 @@ function afterTrade(){
 
 test('choosing a destination previews it without departing; the separate button opens its story on that background',()=>{
  const s=afterTrade(),before=structuredClone(s),h=harness(s);
- assert.equal(h.background(),'/forest.png');
+ assert.equal(h.background(),'/scenery/forest-background.webp');
  h.model.openQuests();h.render();h.model.setCandidateQuest(prologue.RETURN_QUEST);h.render();
  // Browsing a candidate does not commit the destination.
- assert.equal(h.background(),'/forest.png');
+ assert.equal(h.background(),'/scenery/forest-background.webp');
  h.model.selectQuest();h.render();
  assert.equal(h.model.sheet,null);assert.equal(h.model.pendingDeparture,null);assert.equal(h.model.run,null);
- assert.equal(h.background(),'/stages/evening-trade-road.png');assert.deepEqual(h.api.s,before);
+ assert.equal(h.background(),'/scenery/evening-trade-road-background.webp');assert.deepEqual(h.api.s,before);
  const depart=h.departButton();assert.ok(depart);assert.equal(depart.props.disabled,false);depart.props.onClick();h.render();
  assert.equal(h.model.reading.id,prologue.RETURN_QUEST+'-departure');assert.equal(h.model.sheet,'story');
- assert.equal(h.background(),'/stages/evening-trade-road.png');assert.equal(h.api.s.squads[0].run,null);
- h.model.closeStory();h.render();assert.deepEqual(h.api.s,before);assert.equal(h.background(),'/stages/evening-trade-road.png');
+ assert.equal(h.background(),'/scenery/evening-trade-road-background.webp');assert.equal(h.api.s.squads[0].run,null);
+ h.model.closeStory();h.render();assert.deepEqual(h.api.s,before);assert.equal(h.background(),'/scenery/evening-trade-road-background.webp');
  h.departButton().props.onClick();h.render();assert.equal(h.model.finishStory(),true);h.model.closeStory();h.render();
  assert.equal(h.api.s.squads[0].run.quest,prologue.RETURN_QUEST);
  assert.ok(h.api.s.story.read.includes(prologue.RETURN_QUEST+'-departure'));assert.equal(h.departButton(),undefined);
@@ -65,7 +66,7 @@ test('changing a running destination returns without warning and opens an unseen
  h.questButton(prologue.RETURN_QUEST).props.onClick();h.render();
  assert.equal(h.model.returnIntent,null);assert.equal(h.model.sheet,'story');
  assert.equal(h.model.run,null);assert.equal(h.model.pendingDeparture.id,prologue.RETURN_QUEST);
- assert.equal(h.background(),'/stages/evening-trade-road.png');assert.equal(h.api.s.gold,s.gold);
+ assert.equal(h.background(),'/scenery/evening-trade-road-background.webp');assert.equal(h.api.s.gold,s.gold);
  h.model.finishStory();h.model.closeStory();h.render();
  assert.equal(h.model.sheet,null);assert.equal(h.model.run.quest,prologue.RETURN_QUEST);
  assert.equal(h.model.squad.repeat,false);
@@ -113,4 +114,14 @@ test('idle dialogue has six complete, distinct exchanges and never changes the s
   assert.deepEqual(story.journeyBanter(s,s.squads[0],i*30000+29999),lines);exchanges.push(JSON.stringify(lines));
  }
  assert.equal(new Set(exchanges).size,6);assert.equal(JSON.stringify(story.journeyBanter(s,s.squads[0],180000)),exchanges[0]);assert.deepEqual(s,before);
+});
+
+test('reading the first ending replaces a previous UI choice with the saved next destination without departing',()=>{
+ let s=game.act(game.initialPrologueState(1000),{type:'autoNextQuest',value:true},1000);
+ s=game.settle(game.act(s,{type:'start',id:prologue.TRADE_QUEST,readDeparture:true},1000),3601000).state;
+ const h=harness(s);h.model.selectQuest(prologue.TRADE_QUEST);h.render();
+ h.api.failAction='readStory';assert.equal(h.model.readStory(prologue.TRADE_QUEST+'-return'),false);h.render();assert.equal(h.model.quest.id,prologue.TRADE_QUEST);
+ h.api.failAction=null;assert.equal(h.model.readStory(prologue.TRADE_QUEST+'-return'),true);h.render();
+ assert.equal(h.model.quest.id,prologue.RETURN_QUEST);assert.equal(h.api.s.squads[0].lastQuest,prologue.RETURN_QUEST);assert.equal(h.model.run,null);
+ assert.equal(harness(h.api.s).model.quest.id,prologue.RETURN_QUEST);
 });

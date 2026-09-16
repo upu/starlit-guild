@@ -146,7 +146,7 @@ test('waterway exploration and restoration follow fieldwork order with small bat
    assert.deepEqual(frame.members.map(m=>m.id),['aria','leon']);assert.equal(q.enemy,8);
    assert.ok(existsSync(new URL('../public'+frame.background,import.meta.url)));
    const drained=id===RESTORATION_QUEST&&run.node>=9;
-   assert.equal(frame.background,drained?'/stages/tower-drainage-open.png':q.background);
+   assert.equal(frame.background,drained?'/scenery/tower-drainage-open-background.webp':q.background);
    assert.ok(journeyBanter(s,s.squads[0],s.updatedAt).every(line=>['aria','leon'].includes(line.speaker)));
    if(frame.target.kind==='battle')battled=true;
    else{
@@ -165,7 +165,7 @@ test('waterway exploration and restoration follow fieldwork order with small bat
    assert.ok([...nodes.values()].every(n=>!n.name.includes('苔')));
    assert.equal(nodes.get(14).kind,'escort');assert.match(nodes.get(14).name,/下流まで水/);
    const input={squad:s.squads[0],now:s.updatedAt,ready:true,paused:false,startQuest:id,restorationComplete:!!s.done[id]};
-   assert.equal(adventureFrame(input).background,'/stages/tower-drainage-open.png');
+   assert.equal(adventureFrame(input).background,'/scenery/tower-drainage-open-background.webp');
    const replay=start(read(s,id),id);
    assert.equal(adventureFrame({...input,squad:replay.squads[0]}).background,q.background,'replay begins before drainage');
   }

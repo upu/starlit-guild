@@ -1,3 +1,4 @@
+import {advanceQuestDestination} from './quest-navigation.ts';
 import {recruitments,recruitmentByHero,canPrepare,prepared,type RecruitmentProgress} from './recruitment.ts';
 import {chachaHero} from './original-characters.ts';
 import {equipmentBonus,buyEquipment,changeEquipment,type Inventory,type EquipmentSlot} from './equipment.ts';
@@ -19,17 +20,17 @@ function recruitmentUnlock(id:string){const recruitment=recruitmentByHero(id);if
 export const heroes=[...baseHeroes.map((h,i)=>({...h,sprite:i,unlock:i<2?0:recruitmentUnlock(h.id),price:[0,0,100,220,450,700,950,1300][i]})),chachaHero];
 export type Quest=typeof baseQuests[number]&{unlock:number;enemy:number;enemyName?:string;companion?:string;background?:string;gatherTarget?:string;escortTarget?:string;escortAsset?:string;availability?:'repeatable'|'once'};
 export const quests:Quest[]=([...baseQuests.map((q,i)=>({...q,gold:q.gold*5,xp:q.xp*5,herbs:q.herbs*5,ore:q.ore*5,unlock:[0,2,4,10,15,20,35,45,60][i],enemy:i===8?10:i>=3?9:8})),
- {id:TRADE_QUEST,name:'街への交易',kind:'護衛',region:'街へ続く交易路',desc:'それぞれの村から預かった品を、街の取引先へ。道中で頼まれた薬草も採りながら、アリアとレオンで荷物を届けよう。',tier:1,need:12,seconds:180,gold:120,xp:60,herbs:10,ore:0,unlock:0,enemy:8,background:'/forest.png',gatherTarget:'取引先に頼まれた薬草',escortTarget:'村から預かった荷物',availability:'repeatable'},
- {id:RETURN_QUEST,name:'夕暮れの帰り道',kind:'護衛',region:'村へ戻る交易路',desc:'買い物を終えたら、村への分かれ道まで一緒に。帰りの品を運びながら、夕方の街道を進もう。',tier:1,need:13,seconds:180,gold:100,xp:65,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'道に出てきたスライム',background:'/stages/evening-trade-road.png',escortTarget:'村へ持ち帰る品',availability:'repeatable'},
- {id:TOWN_QUEST,name:'街の配達仕事',kind:'護衛',region:'街の倉庫と商店',desc:'後日の交易を終えると、取引先から小さな配達を頼まれた。荷札と受け取りの控えを確かめ、倉庫から商店へ品を届けよう。',tier:1,need:12,seconds:180,gold:130,xp:65,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/town-deliveries.png',escortTarget:'商店へ届ける荷物',availability:'repeatable'},
- {id:TOWER_QUEST,name:'丘の塔へ寄り道',kind:'採取',region:'畑と林を抜ける丘の道',desc:'街での仕事を済ませたら、気になっていた塔へ。道端の薬草を採りながら、小さな林と湿った坂道をふたりで進もう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:10,ore:0,unlock:0,enemy:8,enemyName:'林から出てきたスライム',background:'/stages/tower-road.png',gatherTarget:'道端の薬草',availability:'repeatable'},
- {id:NIGHT_QUEST,name:'苔灯と帰る夜道',kind:'護衛',region:'村々へ続く夜の交易路',desc:'塔で分けてもらった苔を小さな灯りにして、村々への分かれ道へ。普段のランタンも携え、足元を確かめながら帰ろう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'夜道に出てきたスライム',background:'/stages/moss-night-road.png',escortTarget:'苔灯で足元を照らす',escortAsset:'/items/moss-lamp.png',availability:'repeatable'},
- {id:'midnight-snack',name:'その耳はおやつじゃない',kind:'討伐',region:'かぼちゃ灯りの森',desc:'マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。',tier:1,need:48,seconds:180,gold:420,xp:140,herbs:15,ore:15,unlock:5,enemy:12,enemyName:'メリルのつまみ食い行進',background:'/forest.png'},
- {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/ruins.png'},
- {id:WETLAND_QUEST,name:'森の苔を探して',kind:'採取',region:'木陰に水の残る森の湿地',desc:'約束した午後、持ち帰った苔を携えて森へ。アリアが見覚えのある湿った木陰を探し、少しだけ分けてもらって見比べよう。',tier:1,need:14,seconds:180,gold:100,xp:75,herbs:0,ore:0,unlock:0,enemy:8,background:'/stages/forest-wetland.png',gatherTarget:'湿地の草葉と苔',availability:'repeatable'},
- {id:WATERWAY_QUEST,name:'古い水路をたどって',kind:'採取',region:'塔の裏手の湿った斜面',desc:'森での記録を管理人へ持っていこう。塔のそばで苔を見比べ、古い管理図と湿った地面を手がかりに、水路の出口を探そう。',tier:1,need:15,seconds:180,gold:100,xp:80,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'斜面のスライム',background:'/stages/old-waterway.png',gatherTarget:'水路の道筋',availability:'repeatable'},
- {id:RESTORATION_QUEST,name:'水の通り道を戻す仕事',kind:'護衛',region:'塔の古い排水路',desc:'街の作業者と水路の修理へ。周囲の魔物を追い払い、道具を運び、水が下流へ流れることを確かめよう。',tier:1,need:15,seconds:180,gold:150,xp:85,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'水路脇のスライム',background:'/stages/old-waterway.png',gatherTarget:'水路に残った枝と小石',escortTarget:'水路の修理を手伝う',availability:'repeatable'},
- {id:MOSS_QUEST,name:'もう一度、あの灯りを',kind:'採取',region:'水の引いた塔の足元',desc:'水路は直った。次は石組みの奥に増えすぎた苔を取り除こう。管理人と点検口を開け、ふたりで剥がした苔を籠へ集めて、塔から離れた場所へ運び出そう。',tier:1,need:15,seconds:180,gold:150,xp:90,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'石陰のスライム',background:'/stages/tower-drainage-open.png',gatherTarget:'石組みを覆う苔',escortTarget:'苔の撤去を手伝う',availability:'repeatable'},
+ {id:TRADE_QUEST,name:'街への交易',kind:'護衛',region:'街へ続く交易路',desc:'それぞれの村から預かった品を、街の取引先へ。道中で頼まれた薬草も採りながら、アリアとレオンで荷物を届けよう。',tier:1,need:12,seconds:180,gold:120,xp:60,herbs:10,ore:0,unlock:0,enemy:8,background:'/scenery/forest-background.webp',gatherTarget:'取引先に頼まれた薬草',escortTarget:'村から預かった荷物',availability:'repeatable'},
+ {id:RETURN_QUEST,name:'夕暮れの帰り道',kind:'護衛',region:'村へ戻る交易路',desc:'買い物を終えたら、村への分かれ道まで一緒に。帰りの品を運びながら、夕方の街道を進もう。',tier:1,need:13,seconds:180,gold:100,xp:65,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'道に出てきたスライム',background:'/scenery/evening-trade-road-background.webp',escortTarget:'村へ持ち帰る品',availability:'repeatable'},
+ {id:TOWN_QUEST,name:'街の配達仕事',kind:'護衛',region:'街の倉庫と商店',desc:'後日の交易を終えると、取引先から小さな配達を頼まれた。荷札と受け取りの控えを確かめ、倉庫から商店へ品を届けよう。',tier:1,need:12,seconds:180,gold:130,xp:65,herbs:0,ore:0,unlock:0,enemy:8,background:'/scenery/town-deliveries-background.webp',escortTarget:'商店へ届ける荷物',availability:'repeatable'},
+ {id:TOWER_QUEST,name:'丘の塔へ寄り道',kind:'採取',region:'畑と林を抜ける丘の道',desc:'街での仕事を済ませたら、気になっていた塔へ。道端の薬草を採りながら、小さな林と湿った坂道をふたりで進もう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:10,ore:0,unlock:0,enemy:8,enemyName:'林から出てきたスライム',background:'/scenery/tower-road-background.webp',gatherTarget:'道端の薬草',availability:'repeatable'},
+ {id:NIGHT_QUEST,name:'苔灯と帰る夜道',kind:'護衛',region:'村々へ続く夜の交易路',desc:'塔で分けてもらった苔を小さな灯りにして、村々への分かれ道へ。普段のランタンも携え、足元を確かめながら帰ろう。',tier:1,need:14,seconds:180,gold:100,xp:70,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'夜道に出てきたスライム',background:'/scenery/moss-night-road-background.webp',escortTarget:'苔灯で足元を照らす',escortAsset:'/items/moss-lamp.png',availability:'repeatable'},
+ {id:'midnight-snack',name:'その耳はおやつじゃない',kind:'討伐',region:'かぼちゃ灯りの森',desc:'マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。',tier:1,need:48,seconds:180,gold:420,xp:140,herbs:15,ore:15,unlock:5,enemy:12,enemyName:'メリルのつまみ食い行進',background:'/scenery/forest-background.webp'},
+ {id:'puppet-midnight',name:'消灯、人形たちの時間',kind:'討伐',region:'マッドハロウィンの古い舞台',desc:'夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。',tier:2,need:82,seconds:240,gold:850,xp:280,herbs:10,ore:45,unlock:12,enemy:13,enemyName:'プティといたずら人形',background:'/scenery/ruins-background.webp'},
+ {id:WETLAND_QUEST,name:'森の苔を探して',kind:'採取',region:'木陰に水の残る森の湿地',desc:'約束した午後、持ち帰った苔を携えて森へ。アリアが見覚えのある湿った木陰を探し、少しだけ分けてもらって見比べよう。',tier:1,need:14,seconds:180,gold:100,xp:75,herbs:0,ore:0,unlock:0,enemy:8,background:'/scenery/forest-wetland-background.webp',gatherTarget:'湿地の草葉と苔',availability:'repeatable'},
+ {id:WATERWAY_QUEST,name:'古い水路をたどって',kind:'採取',region:'塔の裏手の湿った斜面',desc:'森での記録を管理人へ持っていこう。塔のそばで苔を見比べ、古い管理図と湿った地面を手がかりに、水路の出口を探そう。',tier:1,need:15,seconds:180,gold:100,xp:80,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'斜面のスライム',background:'/scenery/old-waterway-background.webp',gatherTarget:'水路の道筋',availability:'repeatable'},
+ {id:RESTORATION_QUEST,name:'水の通り道を戻す仕事',kind:'護衛',region:'塔の古い排水路',desc:'街の作業者と水路の修理へ。周囲の魔物を追い払い、道具を運び、水が下流へ流れることを確かめよう。',tier:1,need:15,seconds:180,gold:150,xp:85,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'水路脇のスライム',background:'/scenery/old-waterway-background.webp',gatherTarget:'水路に残った枝と小石',escortTarget:'水路の修理を手伝う',availability:'repeatable'},
+ {id:MOSS_QUEST,name:'もう一度、あの灯りを',kind:'採取',region:'水の引いた塔の足元',desc:'水路は直った。次は石組みの奥に増えすぎた苔を取り除こう。管理人と点検口を開け、ふたりで剥がした苔を籠へ集めて、塔から離れた場所へ運び出そう。',tier:1,need:15,seconds:180,gold:150,xp:90,herbs:0,ore:0,unlock:0,enemy:8,enemyName:'石陰のスライム',background:'/scenery/tower-drainage-open-background.webp',gatherTarget:'石組みを覆う苔',escortTarget:'苔の撤去を手伝う',availability:'repeatable'},
  ...chapterTwoQuests,
 ] satisfies Quest[]).sort((a,b)=>a.unlock-b.unlock);
 export const recruitmentQuests:Quest[]=recruitments.map(r=>({...r.mission,id:'join-'+r.hero,companion:r.hero,unlock:r.unlock,seconds:600,gold:100*r.mission.tier,xp:100*r.mission.tier,herbs:0,ore:0,availability:'once'}));
@@ -45,7 +46,7 @@ export type Scene={title:string;lines:string[];at:number;kind:'combo'|'burst'};
 export type MemberHealth={hp:number;maxHp:number};
 export type Run={serial:number;nodes:number;cheer:number;ward:number;comboAt:number;detour:Detour|null;scene:Scene|null;actors:Actor[];enemyAt:number;enemies?:Enemy[];quest:string;round:number;node:number;phase:'move'|'work'|'rest';phaseAt:number;nextAt:number;started:number;health:Record<string,MemberHealth>;target:number;targetMax:number;hits:number;energy:number;energyAt:number;events:GameEvent[]};
 export type Squad={id:string;name:string;customName?:string;members:string[];repeat:boolean;run:Run|null;lastQuest?:string};
-export type State={version:4;prologue?:boolean;techniques?:Techniques;inventory?:Inventory;recruitment?:RecruitmentProgress;story?:StoryProgress;wood:number;town:number;friendship:Record<string,number>;discoveries:number;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
+export type State={version:4;autoNextQuest?:boolean;prologue?:boolean;techniques?:Techniques;inventory?:Inventory;recruitment?:RecruitmentProgress;story?:StoryProgress;wood:number;town:number;friendship:Record<string,number>;discoveries:number;gold:number;herbs:number;ore:number;owned:string[];xp:Record<string,number>;gear:number;camp:number;clears:number;done:Record<string,number>;claimed:string[];lastDaily:string;updatedAt:number;squads:Squad[];log:{text:string;at:number}[];receipts:string[]};
 type LegacySharedRun=Omit<Run,'health'>&{hp:number;maxHp:number};
 type LegacySharedHealthState=Omit<State,'squads'>&{squads:(Omit<Squad,'run'>&{run:LegacySharedRun|null})[]};
 export type Rewards={count:number;gold:number;xp:number;herbs:number;ore:number;wood:number;offline:boolean;capped:boolean};
@@ -301,7 +302,7 @@ export function testState(now:number,clears:number,lv:number,gold:number):State{
  s.owned=heroes.filter(h=>h.unlock<=s.clears).map(h=>h.id);for(const id of s.owned)s.xp[id]=30*(Math.min(50,Math.max(1,Math.floor(lv)))-1)**2;
  s.log=[{at:now,text:'テスト用の冒険。普段の記録には影響しません。'}];return s;
 }
-export type Action={type:'start'|'stop'|'party'|'nameSquad'|'recruit'|'gear'|'camp'|'daily'|'repeat'|'assist'|'newSquad'|'sync'|'detour'|'build'|'readStory'|'prepareRecruitment'|'buy'|'equip'|'learnTechnique'|'setTechnique';squad?:string;id?:string;name?:string;hero?:string;slot?:EquipmentSlot;techniqueSlot?:TechniqueSlot;members?:string[];value?:boolean;mode?:'strike'|'heal';readDeparture?:boolean};
+export type Action={type:'start'|'stop'|'party'|'nameSquad'|'recruit'|'gear'|'camp'|'daily'|'repeat'|'assist'|'newSquad'|'sync'|'detour'|'build'|'readStory'|'prepareRecruitment'|'buy'|'equip'|'learnTechnique'|'setTechnique'|'autoNextQuest';squad?:string;id?:string;name?:string;hero?:string;slot?:EquipmentSlot;techniqueSlot?:TechniqueSlot;members?:string[];value?:boolean;mode?:'strike'|'heal';readDeparture?:boolean};
 type ActionHandler=(s:State,sq:Squad,a:Action,now:number)=>void;
 function hiddenQuest(s:State,q:Quest){return s.clears<q.unlock||inPrologue(s)&&!isPrologueQuest(q.id)||!stageUnlocked(s,q.id);}
 function validateCompanionQuest(s:State,q:Quest){
@@ -320,6 +321,7 @@ function startAction(s:State,sq:Squad,a:Action,now:number){
 }
 function readStoryAction(s:State,_sq:Squad,a:Action){const id=a.id;if(!id||!availableStories(s).some(story=>story.id===id))throw Error('この思い出は、まだ開かれていません。');if(id===DELIVERY_PREP_QUEST+'-return'&&s.squads.some(p=>p.run?.quest==='join-mira'))throw Error('ミラとの専用クエストから帰還してから、この物語を読み終えましょう。');s.story??=storyProgress(s);if(s.story.read.includes(id))return;s.story.read.push(id);
  if(id===DELIVERY_PREP_QUEST+'-return')joinStoryMira(s);
+ advanceQuestDestination(s,id);
 }
 function joinStoryMira(s:State){
  if(!s.owned.includes('mira')){s.owned.push('mira');if(!Object.hasOwn(s.xp,'mira'))s.xp.mira=Math.min(s.xp.aria||0,s.xp.leon||0);}
@@ -337,6 +339,7 @@ function nameSquadAction(s:State,sq:Squad,a:Action){
  if(inPrologue(s))throw Error('パーティ編成ができるようになると、隊に名前を付けられます。');if(typeof a.name!=='string')throw Error('隊の名前を確認してください。');
  const name=a.name.trim().replace(/\s+/g,' ');if(name.length>20)throw Error('隊の名前は20文字以内にしてください。');if(name)sq.customName=name;else delete sq.customName;
 }
+function autoNextQuestAction(s:State,_sq:Squad,a:Action){if(typeof a.value!=='boolean')throw Error('設定を確認してください。');s.autoNextQuest=a.value;}
 function repeatAction(_s:State,sq:Squad,a:Action){if(typeof a.value!=='boolean')throw Error('設定を確認してください。');sq.repeat=a.value;}
 function newSquadAction(s:State){
  if(inPrologue(s))throw Error('今はふたりで冒険を進めましょう。');if(s.squads.length>=squadLimit(s))throw Error('仲間が4人で2隊、6人で3隊を編成できます。');
@@ -379,7 +382,7 @@ function equipAction(s:State,_sq:Squad,a:Action){
 }
 function learnTechniqueAction(s:State,_sq:Squad,a:Action){learnTechnique(s,a.id||'');}
 function setTechniqueAction(s:State,_sq:Squad,a:Action){if(!a.hero||!a.techniqueSlot)throw Error('セットする仲間と枠を確認してください。');setTechnique(s,a.hero,a.techniqueSlot,a.id);}
-const actionHandlers:Record<Action['type'],ActionHandler>={learnTechnique:learnTechniqueAction,setTechnique:setTechniqueAction,sync:syncAction,start:startAction,readStory:readStoryAction,stop:stopAction,party:partyAction,nameSquad:nameSquadAction,repeat:repeatAction,newSquad:newSquadAction,assist:assistAction,detour:detourAction,build:buildAction,recruit:recruitAction,prepareRecruitment:prepareRecruitmentAction,gear:gearAction,camp:campAction,daily:dailyAction,buy:buyAction,equip:equipAction};
+const actionHandlers:Record<Action['type'],ActionHandler>={autoNextQuest:autoNextQuestAction,learnTechnique:learnTechniqueAction,setTechnique:setTechniqueAction,sync:syncAction,start:startAction,readStory:readStoryAction,stop:stopAction,party:partyAction,nameSquad:nameSquadAction,repeat:repeatAction,newSquad:newSquadAction,assist:assistAction,detour:detourAction,build:buildAction,recruit:recruitAction,prepareRecruitment:prepareRecruitmentAction,gear:gearAction,camp:campAction,daily:dailyAction,buy:buyAction,equip:equipAction};
 export function act(input:State,a:Action,now:number){
  const s=structuredClone(input),sq=s.squads.find(p=>p.id===a.squad)||s.squads[0];if(a.squad&&!s.squads.some(p=>p.id===a.squad))throw Error('パーティが見つかりません。');
  const handlers=actionHandlers as Partial<Record<string,ActionHandler>>,handler=Object.prototype.hasOwnProperty.call(handlers,a.type)?handlers[a.type]:undefined;

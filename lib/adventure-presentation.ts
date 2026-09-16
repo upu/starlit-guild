@@ -81,7 +81,7 @@ export function adventureFrame(input:AdventureInput,now=input.now){
  const events=recentEvents(run,now),members=squad.members.map((id,index)=>adventureMember(input,run,events,now,id,index));
  const discovery=frameDiscovery(input,run,now),cutin=frameCutin(run,now),targets=frameTargets(quest,run,kind,now),target=targets.find(target=>!target.down)??targets.at(0)??null;
  const drained=quest.id===RESTORATION_QUEST&&(run?run.node>=9:input.restorationComplete);
- return {key,quest,background:drained?'/stages/tower-drainage-open.png':questScenery(quest),phase:run?.phase||'idle',members,target,targets,discovery,events,cutin,ward:run?.ward||0};
+ return {key,quest,background:drained?'/scenery/tower-drainage-open-background.webp':questScenery(quest),phase:run?.phase||'idle',members,target,targets,discovery,events,cutin,ward:run?.ward||0};
 }
 export type AdventureFrame=ReturnType<typeof adventureFrame>;
 export function memberHealthLabel(member:Pick<AdventureFrame['members'][number],'name'|'down'>){return member.down?`${member.name} · 戦闘不能`:member.name;}

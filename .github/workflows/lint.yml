@@ -33,3 +33,9 @@ jobs:
 
       - name: Test story video pipeline
         run: node --test tests/story-videos.test.mjs
+
+      - name: Check generated scenery images
+        run: npm run images:check
+
+      - name: Test quest navigation and image pipeline
+        run: node --test tests/quest-navigation.test.mjs tests/quest-picker.test.mjs tests/scenery-images.test.mjs

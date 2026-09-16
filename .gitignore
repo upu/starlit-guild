@@ -50,3 +50,7 @@ next-env.d.ts
 /public/stories/videos/.video-*.mp4
 /work/
 *.tsbuildinfo
+
+/assets/.scenery.lock
+/assets/scenery.manifest.json.*.tmp
+/public/scenery/*.tmp
