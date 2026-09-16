@@ -63,7 +63,7 @@ test('delivery stages use distinct work, enemy art and reveal the hidden voice o
  let s=read(finish(start(deliveryReady(),DELIVERY_PREP_QUEST)),DELIVERY_PREP_QUEST);
  s=read(finish(start(s,MOUNTAIN_QUEST)),MOUNTAIN_QUEST);s=read(finish(start(s,SIGNPOST_QUEST)),SIGNPOST_QUEST);
  const away=start(s,GOLEM_QUEST),frame=adventureFrame({squad:away.squads[0],startQuest:GOLEM_QUEST,now:away.updatedAt,ready:true,paused:false});
- assert.equal(frame.target.asset,'/enemies/cargo-golem.png');assert.ok(frame.target.scale>1.08);assert.ok(existsSync('public'+frame.target.asset));
+ assert.equal(frame.target.asset,'/enemies/mountain-puppet.png');assert.ok(frame.target.scale<1.08);assert.ok(existsSync('public'+frame.target.asset));
  const st=chapterTwoStories.find(st=>st.id===GOLEM_QUEST+'-departure');const index=st.lines.findIndex(l=>l.text.includes('ゴーレムが姿を現した'));
  assert.equal(storyArtAt(st.id,index-1),undefined);assert.ok(existsSync('public'+storyArtAt(st.id,index).src));
  for(const st of chapterTwoStories.filter(st=>[SIGNPOST_QUEST,GOLEM_QUEST].includes(st.quest)))assert.ok(st.lines.every(l=>l.speaker!=='pumpety'));

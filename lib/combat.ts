@@ -3,8 +3,9 @@ import {level} from './game-v1.ts';
 import {equippedItems} from './equipment.ts';
 import {PICNIC_QUEST,MOON_HERB_QUEST,MOUNTAIN_QUEST,SIGNPOST_QUEST,GOLEM_QUEST,BLOCKADE_QUEST,MEDICINE_RETURN_QUEST} from './chapter-two.ts';
 import {prologueStages} from './prologue.ts';
+import {puppetFormation,puppetStats,withdrawPuppeteer,type PuppetRole} from './puppet-battles.ts';
 
-export type Enemy={id:string;hp:number;maxHp:number;resistance:number;attack:number;period:number;nextAt:number};
+export type Enemy={id:string;hp:number;maxHp:number;resistance:number;attack:number;period:number;nextAt:number;role?:PuppetRole};
 export const RESISTANCE_RATE=1.15;
 const firstChapterRanks=[0,1,2,6,10,12,17,21,25];
 
@@ -30,7 +31,9 @@ export function enemyCount(q:Quest,node:number){
  const maximum=Math.min(3,combatRank(q)+1);
  return 1+Math.floor(node/3)%maximum;
 }
-export function createEnemies(q:Quest,node:number,at:number):Enemy[]{
+export function createEnemies(q:Quest,node:number,at:number,modern=true):Enemy[]{
+ const formation=modern?puppetFormation(q.id,node):null;
+ if(formation)return formation.map((role,index)=>{const stats=puppetStats(role,combatRank(q));return {id:`enemy-${String(index+1)}`,role,...stats,hp:stats.maxHp,resistance:combatRank(q),nextAt:at+2800+stats.period};});
  const rank=combatRank(q),count=enemyCount(q,node),hp=Math.round((36+rank*3)*(1+.12*(count-1))/count);
  return Array.from({length:count},(_,index)=>({id:`enemy-${String(index+1)}`,hp,maxHp:hp,resistance:rank,attack:(4+rank*.45)/count,period:1450+index*250,nextAt:at+3700+index*450}));
 }
@@ -45,6 +48,6 @@ export function syncEnemyTotals(r:Run){
 export function damageEnemy(r:Run,base:number,power:number){
  const enemy=focusedEnemy(r);
  if(!enemy){const amount=Math.max(1,Math.round(base));r.target=Math.max(0,r.target-amount);return {amount,enemy:undefined};}
- const amount=Math.min(enemy.hp,reducedDamage(base,enemy.resistance,power));enemy.hp-=amount;syncEnemyTotals(r);
+ const amount=Math.min(enemy.hp,reducedDamage(base,enemy.resistance,power));enemy.hp-=amount;withdrawPuppeteer(r.enemies||[]);syncEnemyTotals(r);
  return {amount,enemy:enemy.id};
 }

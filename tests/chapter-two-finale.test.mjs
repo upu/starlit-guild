@@ -9,6 +9,7 @@ import {parseBundle} from '../lib/save-format.ts';
 import {nextGoal} from '../lib/journey.ts';
 import {storyArtAt} from '../lib/story-art.ts';
 import {availableStories,journeyBanter} from '../lib/stories.ts';
+import {createEnemies} from '../lib/combat.ts';
 import {adventureFrame} from '../lib/adventure-presentation.ts';
 const stages=[BLOCKADE_QUEST,HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST];
 const start=(s,id)=>act(s,{type:'start',id,readDeparture:true,value:true},s.updatedAt);
@@ -35,7 +36,7 @@ test('2-6 save continues through 2-9 with first-ending gates, offline parity and
    live=settle(live,run.nextAt).state;
   }
   assert.equal(live.squads[0].run,null);assert.equal(live.done[id],1);
-  assert.equal(battleCount,id===BLOCKADE_QUEST?15:id===HOUSE_CALLS_QUEST?0:3);
+  assert.equal(battleCount,id===BLOCKADE_QUEST?3:id===HOUSE_CALLS_QUEST?0:3);
   const offline=roundtrip(settle(resumed,resumed.updatedAt+13*3600000).state);
   for(const key of ['gold','herbs','ore','owned','xp','done','story'])assert.deepEqual(offline[key],live[key]);
   assert.equal(stageEndingPending(offline),id);assert.ok(availableStories(offline).some(st=>st.id===id+'-return'));
@@ -49,12 +50,16 @@ test('2-6 save continues through 2-9 with first-ending gates, offline parity and
   assert.ok(repeated.done[id]>1);assert.deepEqual(repeated.story,s.story);assert.deepEqual(repeated.owned,s.owned);
  }
 });
-test('2-7 advances from small puppets to the large golem, while delivery and return have their own banter',()=>{
+test('2-7 advances through mixed puppets to their masked commander, with distinct delivery banter',()=>{
  const away=start(ready(),BLOCKADE_QUEST);
- for(let node=0;node<15;node++){
-  away.squads[0].run.node=node;const target=frame(away).target;
-  assert.equal(target.asset,node<9?'/enemies/mountain-puppet.png':'/enemies/cargo-golem.png');
-  assert.equal(target.scale,node<9?1.08:1.6);assert.ok(existsSync('public'+target.asset));
+ for(let node=0;node<3;node++){
+  const run=away.squads[0].run;run.node=node;run.enemies=createEnemies(allQuests.find(q=>q.id===BLOCKADE_QUEST),node,run.phaseAt);
+  const targets=frame(away).targets;
+  assert.equal(targets.length,node===2?3:2);
+  assert.equal(targets[0].asset,'/enemies/mountain-puppet.png');
+  assert.equal(targets[1].asset,node===0?'/enemies/mountain-puppet.png':'/enemies/cargo-golem.png');
+  if(node===2)assert.equal(targets[2].asset,'/enemies/masked-pumpety.png');
+  for(const target of targets)assert.ok(existsSync('public'+target.asset));
  }
  for(const id of [HOUSE_CALLS_QUEST,MEDICINE_RETURN_QUEST]){
   away.squads[0].run.quest=id;const banter=journeyBanter(away,away.squads[0],away.updatedAt);
