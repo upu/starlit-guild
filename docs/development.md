@@ -44,9 +44,24 @@ Sitesの実行時環境変数に `ENABLE_TEST_TOOLS=true` を設定したサイ�
 - ゲーム本体の動作・表示・音・遊べる内容・セーブ仕様が変わる場合は `game-change` とし、`npm run version:patch` で `z` を1つ上げる。実装済みの会話やシナリオ、実際に表示・再生される素材の変更も含む。
 - リファクタリング、テスト、開発設定、設定資料、シナリオ検討など、プレイヤーが触れるゲーム本体が変わらない場合は `no-game-change` とし、バージョンを変えない。
 
-GitHub ActionsはPR本文の選択と、PRの `package.json` / `package-lock.json` を `main` と比較する。`game-change` は `main` のパッチ版ちょうど +1、`no-game-change` は同値でなければ失敗する。先行PRのマージで `main` のバージョンが変わった場合は、最新の `main` を取り込んでから判定とパッチ版を確認する。章の区切りなどでマイナー版以上を変える場合は、その変更を行うPRで検証規則も合わせて更新する。
+GitHub ActionsはPR本文の選択と、PRの `package.json` / `package-lock.json` を `main` と比較する。`game-change` は `main` のパッチ版ちょうど +1、`no-game-change` は同値でなければ失敗する。先行PRのマージで `main` のバージョンが変わった場合は、最新の `main` を取り込んでから判定とパッチ版を確認する。
 
 GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更ではSitesへ配信しない。
+
+### マイナー版を上げる契機
+
+`x.y` は開発中の章を表す。前の章を本番へ公開し終え、次の章の開発を始めるPRで `y` を1つ上げ、`z` を0へ戻す。第一章の公開後に `0.1.22` から `0.2.0` へ上げた前例と同じ扱いで、`0.2.x` は第二章の開発期間を指す。
+
+- 契機は「前の章の本番公開の完了」と「次の章の開発開始」が揃ったときだけ。章の実装完了やプレビュー反映だけでは上げない。
+- そのPRはテンプレートの `minor-release` を選ぶ。`game-change` / `no-game-change` の判定はそれとは別に、そのPR自体の内容で選ぶ。版だけを進める資料・計画のPRは `no-game-change` + `minor-release` になる。
+- 版を上げる操作は `npm run version:minor`。`minor-release` を選ばずにマイナー版を変えるとCIが失敗する。
+- メジャー版を上げる規則は未設定。必要になったPRで、この節と `scripts/check-pr-version.mjs` を合わせて更新する。
+
+### 変更履歴
+
+バージョンを上げたPRは [`CHANGELOG.md`](../CHANGELOG.md) へその版の1行を足す。PRタイトルと番号をそのまま転記し、版の順に並べる。`no-game-change` でバージョンが変わらないPRは記載しない。
+
+`scripts/check-pr-version.mjs` は、`main` と版が変わるPRで `CHANGELOG.md` に差分がなければ失敗する。不具合の個別履歴や検討の経緯はここへ積まず、IssueとGit履歴へ残す。
 
 ### コード品質
 

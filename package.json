@@ -19,6 +19,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
     "version:check-pr": "node scripts/check-pr-version.mjs",
     "db:generate": "drizzle-kit generate",
     "images:optimize": "node scripts/optimize-scenery.mjs",
