@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.2.14 | 2026-09-16 | 従来記録を読み込まないようにする（#88 の第一段）（[#92](https://github.com/upu/starlit-guild/pull/92)） |
 | 0.2.13 | 2026-09-16 | アルバムを正方形3列と軽量サムネイルに変更（[#90](https://github.com/upu/starlit-guild/pull/90)） |
 | 0.2.12 | 2026-09-16 | 従来モードを維持しない方針を定め、新規に作られる経路を閉じる（[#89](https://github.com/upu/starlit-guild/pull/89)） |
 | 0.2.11 | 2026-09-16 | 第2章の回復・育成バランスとプレビュー用開始データを調整（[#69](https://github.com/upu/starlit-guild/pull/69)） |
