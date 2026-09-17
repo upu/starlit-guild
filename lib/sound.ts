@@ -11,11 +11,6 @@ const roles: Record<string, string> = {
   aria: "bow",
   leon: "sword",
   mira: "heal",
-  finn: "rogue",
-  garr: "shield",
-  luna: "magic",
-  poppy: "gather",
-  noel: "song",
 };
 const priorities: Record<string, number> = {
   combo: 8,

@@ -1,5 +1,4 @@
 import { advanceQuestDestination } from "./quest-navigation.ts";
-import { chachaHero } from "./original-characters.ts";
 import {
   equipmentBonus,
   buyEquipment,
@@ -63,11 +62,23 @@ import {
   together,
   type StoryProgress,
 } from "./stories.ts";
-import { heroes as baseHeroes, quests as baseQuests, bonds, level } from "./roster.ts";
+import { heroes as baseHeroes, bonds, level, type Kind } from "./roster.ts";
 export { bonds, level };
-export type Kind = "採取" | "護衛" | "討伐";
-export const heroes = [...baseHeroes.map((h, i) => ({ ...h, sprite: i })), chachaHero];
-export type Quest = (typeof baseQuests)[number] & {
+export type { Kind };
+export const heroes = baseHeroes.map((h, i) => ({ ...h, sprite: i }));
+export type Quest = {
+  id: string;
+  name: string;
+  kind: Kind;
+  region: string;
+  desc: string;
+  tier: number;
+  need: number;
+  seconds: number;
+  gold: number;
+  xp: number;
+  herbs: number;
+  ore: number;
   unlock: number;
   enemy: number;
   enemyName?: string;
@@ -79,15 +90,6 @@ export type Quest = (typeof baseQuests)[number] & {
 };
 export const quests: Quest[] = (
   [
-    ...baseQuests.map((q, i) => ({
-      ...q,
-      gold: q.gold * 5,
-      xp: q.xp * 5,
-      herbs: q.herbs * 5,
-      ore: q.ore * 5,
-      unlock: [0, 2, 4, 10, 15, 20, 35, 45, 60][i],
-      enemy: i === 8 ? 10 : i >= 3 ? 9 : 8,
-    })),
     {
       id: TRADE_QUEST,
       name: "街への交易",
@@ -187,42 +189,6 @@ export const quests: Quest[] = (
       escortTarget: "苔灯で足元を照らす",
       escortAsset: "/items/moss-lamp.png",
       availability: "repeatable",
-    },
-    {
-      id: "midnight-snack",
-      name: "その耳はおやつじゃない",
-      kind: "討伐",
-      region: "かぼちゃ灯りの森",
-      desc: "マッドハロウィンのメリルが、森じゅうを試食中。魔物を食べるのはともかく、旅人や小動物まで献立に入れるのは止めなくては。腕の琴の音が近づいてくる。",
-      tier: 1,
-      need: 48,
-      seconds: 180,
-      gold: 420,
-      xp: 140,
-      herbs: 15,
-      ore: 15,
-      unlock: 5,
-      enemy: 12,
-      enemyName: "メリルのつまみ食い行進",
-      background: "/scenery/forest-background.webp",
-    },
-    {
-      id: "puppet-midnight",
-      name: "消灯、人形たちの時間",
-      kind: "討伐",
-      region: "マッドハロウィンの古い舞台",
-      desc: "夜目のきくプティが灯りを消し、人形で道標をすり替えた。八重歯の笑顔に釣られず、ドールマスターの糸を追っていたずらを止めよう。",
-      tier: 2,
-      need: 82,
-      seconds: 240,
-      gold: 850,
-      xp: 280,
-      herbs: 10,
-      ore: 45,
-      unlock: 12,
-      enemy: 13,
-      enemyName: "プティといたずら人形",
-      background: "/scenery/ruins-background.webp",
     },
     {
       id: WETLAND_QUEST,
@@ -575,7 +541,7 @@ function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
     const base = 2 + memberStats(s, id)[statIndex(kind)] * 0.23 + bond * 0.1,
       multiplier =
         techniqueMultiplier(s, id, kind, false, 1) +
-        (techniqueMultiplier(s, id, kind, true, specialMultiplier(id, kind)) -
+        (techniqueMultiplier(s, id, kind, true, specialMultiplier(id)) -
           techniqueMultiplier(s, id, kind, false, 1)) /
           specialInterval(id),
       period = (stepMs(s) * (0.8 + (heroes.findIndex((h) => h.id === id) % 4) * 0.13)) / 1000;
@@ -697,32 +663,6 @@ export const heroSkills: Record<string, { style: string; name: string; descripti
     name: "月明かりの癒やし",
     description: "4回の行動ごとに、最も弱った仲間を回復。",
   },
-  finn: {
-    style: "rogue",
-    name: "影縫い",
-    description: "素早く斬り込み、5回ごとに強撃。宝探しが得意。",
-  },
-  garr: { style: "tank", name: "守護の盾", description: "前線を支え、4回ごとに味方を守る障壁。" },
-  luna: {
-    style: "mage",
-    name: "流星の一撃",
-    description: "遠くから魔法を放ち、4回ごとに流星を落とす。",
-  },
-  poppy: {
-    style: "gatherer",
-    name: "豊穣の調合",
-    description: "3回ごとの採取量が増え、薬で仲間も回復。",
-  },
-  noel: {
-    style: "bard",
-    name: "旅路の歌",
-    description: "後方で歌い、3回ごとに障壁でみんなを支える。",
-  },
-  chacha: {
-    style: "melee",
-    name: "蒸らし三分、全力一振り",
-    description: "前線で大剣を振り、4回ごとの攻撃は威力2倍。回復魔法より、鍛えた筋肉で押し通す。",
-  },
 };
 export const bondKey = (ids: string[]) => [...ids].sort().join("-");
 export const bondLevel = (s: State, ids: string[]) =>
@@ -751,8 +691,7 @@ function reward(s: State, sq: Squad, q: Quest, at: number, finished: boolean) {
   const r = activeRun(sq),
     portions = r.nodes === questNodes(q.id) ? Math.ceil(r.nodes / 3) : 5,
     part = Math.floor(r.node / 3);
-  const totalGold =
-      q.gold * (sq.members.includes("finn") ? 1.1 : 1) * (sq.members.includes("noel") ? 1.1 : 1),
+  const totalGold = q.gold,
     gold =
       portions === 5
         ? Math.floor(totalGold / 5)
@@ -864,16 +803,11 @@ function statIndex(kind: Encounter) {
   return kind === "battle" ? 2 : kind === "gather" ? 0 : 1;
 }
 function specialInterval(hero: string) {
-  if (hero === "aria" || hero === "poppy" || hero === "noel") return 3;
-  if (hero === "finn") return 5;
-  return 4;
+  return hero === "aria" ? 3 : 4;
 }
-function specialMultiplier(hero: string, kind: Encounter) {
-  if (hero === "luna") return 2.2;
-  if (hero === "chacha" && kind === "battle") return 2;
+function specialMultiplier(hero: string) {
   if (hero === "leon") return 1.7;
-  if (hero === "aria" || hero === "finn") return 1.65;
-  if (hero === "poppy" && kind === "gather") return 1.75;
+  if (hero === "aria") return 1.65;
   return 1;
 }
 function quietStageWork(q: Quest, kind: Encounter) {
@@ -921,14 +855,9 @@ function actorEventText(q: Quest, kind: Encounter, hero: string, special: boolea
   if (special) return heroSkills[hero].name;
   return kind === "battle" ? "攻撃" : "採取・護衛";
 }
-function addActorWard(r: Run, hero: string, special: boolean, at: number) {
-  if (!special || (hero !== "garr" && hero !== "noel")) return;
-  r.ward += Math.ceil(totalMaxHp(r) * (hero === "garr" ? 0.12 : 0.06));
-  event(r, at, "skill", heroSkills[hero].name + "！ 障壁を展開", undefined, hero);
-}
 function healFromActor(s: State, sq: Squad, r: Run, hero: string, special: boolean, at: number) {
   const target = lowestHealth(r, sq.members);
-  if (!special || !["mira", "poppy"].includes(hero) || !target) return;
+  if (!special || hero !== "mira" || !target) return;
   const heal = 5 + level(s.xp[hero] || 0),
     restored = healMember(r, target, heal);
   event(r, at, "heal", heroSkills[hero].name, restored, hero, target);
@@ -951,7 +880,7 @@ function actorTurn(
     bond = activeBonds(sq.members).reduce((value, item) => value + item.bonus, 0);
   actor.actions++;
   const special = actor.actions % specialInterval(hero) === 0,
-    multiplier = techniqueMultiplier(s, hero, kind, special, specialMultiplier(hero, kind));
+    multiplier = techniqueMultiplier(s, hero, kind, special, specialMultiplier(hero));
   const hit = damageEnemy(
     r,
     (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
@@ -973,7 +902,6 @@ function actorTurn(
     undefined,
     hit.enemy,
   );
-  addActorWard(r, hero, special, at);
   healFromActor(s, sq, r, hero, special, at);
 }
 type StepResult = { completed: boolean; gain: ReturnType<typeof reward> | null };

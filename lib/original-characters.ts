@@ -18,28 +18,6 @@ export const originalCharacters = [
     faction: "マッドハロウィン",
     bio: "愛称はプティ。八重歯とツインテールが目印。ドワーフの血を引き、暗闇でもよく見える。人形にいたずらをさせて、本人は無実の顔。",
   },
-  {
-    id: "chacha",
-    name: "チャチャ",
-    sprite: 14,
-    art: "/characters/chacha.png",
-    job: "茶と筋肉の天使",
-    faction: "星灯りの旅団",
-    bio: "お茶の蒸らし時間に筋トレをする、おっとりした天使の少女。柔らかな物腰と、見た目以上の力持ち。肉弾戦に向かない種族のはずが、大剣でだいたい解決する。",
-  },
 ];
-export const chachaHero = {
-  id: "chacha",
-  name: "チャチャ",
-  job: "茶と筋肉の天使",
-  mark: "茶",
-  color: "#e8a271",
-  stats: [9, 24, 42],
-  price: 0,
-  trait: "おっとり豪腕",
-  bio: originalCharacters[2].bio,
-  sprite: 14,
-  unlock: 6,
-};
 export const originalArt = (sprite: number) =>
   originalCharacters.find((c) => c.sprite === sprite)?.art;

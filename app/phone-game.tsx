@@ -395,7 +395,7 @@ function collectionSheet(m: SheetModel): SheetView | null {
   if (m.sheet === "journal")
     return {
       title: "旅団の足あと",
-      description: `${String(s.clears)}件達成 · 寄り道で${String(s.discoveries)}回の発見`,
+      description: `${String(s.clears)}件達成`,
       content: (
         <>
           <button

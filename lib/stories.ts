@@ -202,86 +202,6 @@ function routeBanter(sq: Squad): StoryLine[] | null {
   if (run.quest === TRADE_QUEST) return tradeBanter(run);
   return null;
 }
-function guestQuestBanter(sq: Squad): StoryLine[] | null {
-  const run = sq.run;
-  if (!run) return null;
-  if (run.quest === "midnight-snack" && sq.members.includes("poppy"))
-    return [
-      { speaker: "merrill", text: "その薬、味見しようか？" },
-      { speaker: "poppy", text: "瓶ごと食べそうな人には、頼まない！" },
-    ];
-  if (run.quest === "puppet-midnight" && sq.members.includes("finn"))
-    return [
-      { speaker: "pumpety", text: "ポケット、軽くなった？", expression: "mischievous" },
-      { speaker: "finn", text: "うん。代わりに人形のポケットを重くしておいたよ。" },
-    ];
-  return null;
-}
-function chachaBanter(sq: Squad): StoryLine[] | null {
-  const run = sq.run;
-  if (!run || !sq.members.includes("chacha")) return null;
-  if (sq.members.includes("mira"))
-    return [
-      {
-        speaker: "chacha",
-        text:
-          run.phase === "rest"
-            ? "お湯が沸くまで、あと十回だけぇ。"
-            : "帰ったら、お茶をご一緒に。今日はわたしが淹れますねぇ。",
-      },
-      {
-        speaker: "mira",
-        expression: run.phase === "rest" ? "serious" : "smile",
-        text:
-          run.phase === "rest"
-            ? "今は座るほうの休憩よ。あなたのカップも用意したわ。"
-            : "楽しみにしているわ。茶葉を選ぶ時間も残しておきましょう。",
-      },
-    ];
-  if (sq.members.includes("garr"))
-    return [
-      { speaker: "garr", text: "その剣の重さには、まだ慣れないな。" },
-      { speaker: "chacha", text: "では、帰ったら一緒に素振りを。お茶付きですよぉ。" },
-    ];
-  return null;
-}
-function genericChachaBanter(sq: Squad): StoryLine[] | null {
-  const run = sq.run;
-  if (!run || !sq.members.includes("chacha")) return null;
-  return [
-    {
-      speaker: "chacha",
-      text:
-        run.phase === "rest"
-          ? "まず、お茶にしましょうねぇ。筋肉にも休憩が要りますから。"
-          : "道がなければ、どかせばいいんですよぉ。せーの。",
-    },
-  ];
-}
-function halloweenPairBanter(sq: Squad, now: number): StoryLine[] | null {
-  const run = sq.run;
-  if (!run || !together(sq.members)) return null;
-  if (run.quest === "midnight-snack")
-    return Math.floor((now - run.started) / 18000) % 2
-      ? [
-          { speaker: "merrill", text: "一曲踊ったら、お腹が空いちゃった。" },
-          { speaker: "aria", text: "さっき魔物を食べたばかりでしょ！", expression: "surprised" },
-        ]
-      : [
-          { speaker: "merrill", text: "そこの小動物、ひと口だけ……。" },
-          { speaker: "leon", text: "琴を弾いたまま追いかけるな！", expression: "serious" },
-        ];
-  if (run.quest === "puppet-midnight")
-    return [
-      {
-        speaker: "pumpety",
-        text: "そっちはプティじゃないよ。お人形でしたぁ！",
-        expression: "mischievous",
-      },
-      { speaker: "aria", text: "本物も笑ってるから、場所は分かった。", expression: "smile" },
-    ];
-  return null;
-}
 function affectionBanter(level: number, variant: number): StoryLine[] {
   if (level === 3)
     return variant
@@ -312,26 +232,11 @@ function coupleBanter(s: State, sq: Squad, now: number): StoryLine[] {
   if (!run) return idleBanter(now, sq.members);
   const situation = journeySituationBanter(run, level);
   if (situation) return situation;
-  if (["pilgrim", "wolf", "royal"].includes(run.quest))
-    return level >= 2
-      ? [l("滑るぞ。つかまってろ。"), a("……もう平らな道だけど。", "shy")]
-      : [a("霧で、先が見えないね。", "worried"), l("声の届くところにいてくれ。")];
-  if (run.quest === "cart") return [a("帰りのパン、覚えてる？"), l("胡桃のやつだろ。忘れないよ。")];
-  if (["crystal", "dragon"].includes(run.quest))
-    return [l("灯り、こっちに寄せるぞ。"), a("うん。……このくらい近いと、よく見える。")];
   return affectionBanter(level, variant);
 }
 export function journeyBanter(s: State, sq: Squad, now: number): StoryLine[] {
   const route = routeBanter(sq);
   if (route) return route;
-  const guest = guestQuestBanter(sq);
-  if (guest) return guest;
-  const chacha = chachaBanter(sq);
-  if (chacha) return chacha;
-  const halloween = halloweenPairBanter(sq, now);
-  if (halloween) return halloween;
-  const genericChacha = genericChachaBanter(sq);
-  if (genericChacha) return genericChacha;
   if (!together(sq.members)) return [];
   return coupleBanter(s, sq, now);
 }
