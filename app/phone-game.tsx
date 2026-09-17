@@ -985,7 +985,6 @@ function ReportDialog({ model: m }: { model: PhoneFrameModel }) {
               <span>{fmt(report.gold)} G</span>
               <span>薬草 {report.herbs}</span>
               <span>鉱石 {report.ore}</span>
-              <span>木材 {report.wood}</span>
             </div>
             <span>仲間の経験値 +{report.xp}</span>
             {report.capped && <small>最大12時間分を集計しました。</small>}

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Coins, Leaf, Gem, Logs, Shield, Swords, Package } from "lucide-react";
+import { Coins, Leaf, Gem, Shield, Swords, Package } from "lucide-react";
 import {
   heroes,
   memberStats,
@@ -55,7 +55,6 @@ export function ResourcesGrid({ state: s }: { state: State }) {
         [Coins, s.gold, "お金"],
         [Leaf, s.herbs, "薬草"],
         [Gem, s.ore, "鉱石"],
-        [Logs, s.wood, "木材"],
       ].map(([Icon, value, label]) => {
         const I = Icon as typeof Coins;
         return (

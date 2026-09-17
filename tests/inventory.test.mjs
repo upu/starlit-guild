@@ -39,13 +39,12 @@ runInNewContext(compiled, {
   Coins: "coins",
   Leaf: "leaf",
   Gem: "gem",
-  Logs: "logs",
 });
 function balances(state) {
   const content = exports.ResourcesGrid({ state });
   assert.equal(content.type, "div");
   assert.equal(content.props.className, "inventory-grid");
-  assert.equal(content.children.length, 4);
+  assert.equal(content.children.length, 3);
   return Array.from(content.children, (cell) => ({
     icon: cell.children[0].type,
     label: cell.children[1].children.join(""),
@@ -53,19 +52,18 @@ function balances(state) {
   }));
 }
 test("bag keeps all normal resources with the existing formatting", () => {
-  const state = Object.freeze({ prologue: true, gold: 12345.9, herbs: 8.7, ore: 3, wood: 0 });
+  const state = Object.freeze({ prologue: true, gold: 12345.9, herbs: 8.7, ore: 3 });
   assert.deepEqual(balances(state), [
     { icon: "coins", label: "お金", amount: "12,345" },
     { icon: "leaf", label: "薬草", amount: "8" },
     { icon: "gem", label: "鉱石", amount: "3" },
-    { icon: "logs", label: "木材", amount: "0" },
   ]);
 });
 
-test("empty inventory keeps all four resource counters visible", () => {
+test("empty inventory keeps every resource counter visible", () => {
   assert.deepEqual(
-    balances({ prologue: true, gold: 0, herbs: 0, ore: 0, wood: 0 }).map((item) => item.amount),
-    ["0", "0", "0", "0"],
+    balances({ prologue: true, gold: 0, herbs: 0, ore: 0 }).map((item) => item.amount),
+    ["0", "0", "0"],
   );
 });
 
@@ -75,7 +73,6 @@ test("reading balances never changes the save", () => {
     gold: 180,
     herbs: 80,
     ore: 5,
-    wood: 40,
     owned: ["aria", "leon", "mira"],
     done: { "village-trade": 12 },
   };

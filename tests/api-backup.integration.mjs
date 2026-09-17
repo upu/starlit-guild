@@ -95,8 +95,8 @@ const page = await fetch(root);
 assert.equal(page.status, 200);
 const html = await page.text();
 assert.ok(html.includes("星灯りの旅団"));
-// Pre-existing: cave.png and ruins.png moved to scenery WebP and no longer exist.
-for (const asset of ["sprites.png", "camp-0.png", "camp-1.png", "camp-2.png", "favicon.svg"])
+// The legacy-mode artwork is gone; check the assets the story mode still serves.
+for (const asset of ["sprites.png", "scenery/tower-road-background.webp", "favicon.svg"])
   assert.equal((await fetch(root + "/" + asset)).status, 200);
 console.log(
   "PASS: anonymous backup, isolation, local snapshot roundtrip, stale/repeated writes, independent device copies, malformed input, cross-origin rejection, old format rejection, SSR and assets",

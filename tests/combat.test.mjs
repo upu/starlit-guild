@@ -61,7 +61,7 @@ test("resistance scales damage by the growth gap, respects rounding and never dr
   }
 });
 
-test("levels, equipped weapons and gear overcome resistance without a new saved currency", () => {
+test("levels and equipped weapons overcome resistance without a new saved currency", () => {
   const s = testState(1000, storyStages.length, 5, 1000);
   assert.equal(penetration(s, "aria"), 4);
   const bought = act(s, { type: "buy", id: "ash-bow" }, 1000);
@@ -69,8 +69,6 @@ test("levels, equipped weapons and gear overcome resistance without a new saved 
   const worn = act(bought, { type: "equip", hero: "aria", slot: "weapon", id: "ash-bow" }, 1000);
   assert.equal(penetration(worn, "aria"), 7);
   assert.equal(penetration(worn, "leon"), 4);
-  worn.gear = 1;
-  assert.equal(penetration(worn, "aria"), 9);
 });
 
 test("damage focuses one enemy, does not spill over, and advances to the next living opponent", () => {

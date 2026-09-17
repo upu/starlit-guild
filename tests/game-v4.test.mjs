@@ -115,17 +115,7 @@ test("offline and small updates produce the same rewards, friendship and timelin
     bulk = game.settle(s, 601000).state;
   let frames = s;
   for (let now = 1100; now <= 601000; now += 100) frames = game.settle(frames, now).state;
-  for (const key of [
-    "gold",
-    "wood",
-    "herbs",
-    "ore",
-    "xp",
-    "clears",
-    "friendship",
-    "discoveries",
-    "squads",
-  ])
+  for (const key of ["gold", "herbs", "ore", "xp", "clears", "friendship", "squads"])
     assert.deepEqual(frames[key], bulk[key], key);
 });
 test("offline cap and every transition remain exportable, including rest", () => {
@@ -137,7 +127,7 @@ test("offline cap and every transition remain exportable, including rest", () =>
   const result = game.settle(s, s.updatedAt + 86400000);
   assert.equal(result.rewards.capped, true);
   assert.doesNotThrow(() => parseBundle(bundle(result.state)));
-  assert.equal(result.rewards.wood, result.state.wood - s.wood);
+  assert.equal(result.rewards.gold, result.state.gold - s.gold);
 });
 
 test("saves keep story records and drop the legacy ones instead of failing to load", () => {

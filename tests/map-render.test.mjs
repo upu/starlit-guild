@@ -65,13 +65,12 @@ test("characters and shared bag expose starting equipment and trade cargo withou
     "お金",
     "薬草",
     "鉱石",
-    "木材",
     "アリアの村の交易品",
     "レオンの村の交易品",
     "アリアが装備中",
   ])
     assert.ok(bag.includes(name), name);
-  assert.doesNotMatch(bag, /苔灯|森の苔の標本/);
+  assert.doesNotMatch(bag, /苔灯|森の苔の標本|木材/);
   assert.deepEqual(s, before);
 });
 

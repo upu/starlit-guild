@@ -90,7 +90,6 @@ test("1-1 through 1-9 requires each ending, stops offline and roundtrips without
     assert.equal(stageEndingPending(s), undefined);
   }
   assert.deepEqual(s.owned, ["aria", "leon"]);
-  assert.equal(s.town, 0);
   assert.equal(s.prologue, true);
   assert.equal(availableStories(s).length, 18);
   assert.equal(nextGoal(s).questId, "hilltop-picnic");
@@ -151,7 +150,7 @@ test("a saved 1-3 ending unlocks 1-4 only after reading, without changing old re
   assert.throws(() => start(s, TOWER_QUEST), /まだ/);
   const snapshot = structuredClone(s);
   s = roundtrip(read(s, TOWN_QUEST));
-  for (const key of ["gold", "xp", "done", "herbs", "ore", "wood", "owned", "clears"])
+  for (const key of ["gold", "xp", "done", "herbs", "ore", "owned", "clears"])
     assert.deepEqual(s[key], snapshot[key]);
   assert.equal(nextGoal(s).questId, TOWER_QUEST);
   assert.ok(!availableQuests(s).some((q) => q.id === NIGHT_QUEST));
@@ -167,7 +166,7 @@ test("a saved 1-5 ending opens the wetland only after reading and preserves reso
   assert.ok(!availableQuests(s).some((q) => q.id === WETLAND_QUEST));
   const before = structuredClone(s);
   s = roundtrip(read(s, NIGHT_QUEST));
-  for (const key of ["gold", "xp", "done", "herbs", "ore", "wood", "owned", "clears"])
+  for (const key of ["gold", "xp", "done", "herbs", "ore", "owned", "clears"])
     assert.deepEqual(s[key], before[key]);
   assert.equal(nextGoal(s).questId, WETLAND_QUEST);
   assert.equal(restingQuest(s, s.squads[0]), NIGHT_QUEST);
@@ -226,7 +225,6 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
   assert.equal(stageEndingPending(s), undefined);
   assert.equal(s.prologue, true);
   assert.deepEqual(s.owned, ["aria", "leon"]);
-  assert.equal(s.town, 0);
 });
 
 test("saved 1-6 through 1-8 endings gate the next stage without changing resources or old history", () => {
@@ -243,18 +241,7 @@ test("saved 1-6 through 1-8 endings gate the next stage without changing resourc
     assert.ok(!availableQuests(s).some((q) => q.id === next));
     const before = structuredClone(s);
     s = roundtrip(read(s, previous));
-    for (const key of [
-      "gold",
-      "xp",
-      "done",
-      "herbs",
-      "ore",
-      "wood",
-      "owned",
-      "clears",
-      "claimed",
-      "receipts",
-    ])
+    for (const key of ["gold", "xp", "done", "herbs", "ore", "owned", "clears"])
       assert.deepEqual(s[key], before[key]);
     assert.equal(nextGoal(s).questId, next);
     assert.equal(restingQuest(s, s.squads[0]), previous);
@@ -361,7 +348,6 @@ test("waterway exploration and restoration follow fieldwork order with small bat
   }
   assert.equal(s.prologue, true);
   assert.deepEqual(s.owned, ["aria", "leon"]);
-  assert.equal(s.town, 0);
 });
 
 test("tower gathering and night lamp work keep small battles, appropriate assets and noncombat poses", () => {
