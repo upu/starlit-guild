@@ -1149,9 +1149,29 @@ function upgradePicnicRun(input: State): State {
     if (sq.run?.quest === PICNIC_QUEST && sq.run.enemies?.length === 0) delete sq.run.enemies;
   return s;
 }
+type LegacyDetourRun = Run & { detour: { hero: string; claimed: boolean } | null };
+const pendingDetour = (run: Run | null) => (run as LegacyDetourRun | null)?.detour;
+function forgetDetour(r: Run, updatedAt: number) {
+  const detour = pendingDetour(r);
+  if (!detour) return;
+  if (!detour.claimed) {
+    const actor = r.actors.find((a) => a.hero === detour.hero);
+    if (actor) actor.nextAt = Math.min(actor.nextAt, Math.max(updatedAt, actor.arrivesAt));
+  }
+  delete (r as Partial<LegacyDetourRun>).detour;
+  if (r.phase !== "rest") r.nextAt = nextEvent(r);
+}
+// Story saves written before detours were dropped can still hold a pending one, with its explorer
+// waiting on the discovery clock. Bring that companion back and forget the discovery, without loot.
+function upgradePendingDetour(input: State): State {
+  if (!input.squads.some((sq) => pendingDetour(sq.run))) return input;
+  const s = structuredClone(input);
+  for (const sq of s.squads) if (sq.run) forgetDetour(sq.run, s.updatedAt);
+  return s;
+}
 // Only v4 records load now; the v1-v3 migration chain went with the legacy mode.
 export function migrate(raw: State | LegacySharedHealthState): State {
-  return upgradePicnicRun(upgradeSharedHealth(raw));
+  return upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw)));
 }
 function addOnce(list: string[], value: string) {
   if (!list.includes(value)) list.push(value);

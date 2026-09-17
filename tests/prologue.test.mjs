@@ -41,6 +41,39 @@ function roundtrip(state) {
 const depart = (s) =>
   act(s, { type: "start", id: TRADE_QUEST, readDeparture: true, value: true }, s.updatedAt);
 
+// The detour system is gone, but a story save written before it was removed can still carry one.
+test("a pending detour in an older story save is forgotten and frees its explorer", () => {
+  const pending = depart(initialPrologueState(1000)),
+    run = pending.squads[0].run;
+  const explorer = run.actors[0];
+  run.detour = {
+    node: run.node,
+    kind: "spirit",
+    hero: explorer.hero,
+    at: 1900,
+    finishAt: 7200,
+    claimed: false,
+  };
+  explorer.nextAt = run.detour.finishAt;
+  run.nextAt = Math.min(run.nextAt, run.detour.finishAt);
+  const before = structuredClone(pending),
+    restored = roundtrip(pending);
+  assert.deepEqual(pending, before, "input save remains unchanged");
+  assert.equal(restored.squads[0].run.detour, undefined, "the discovery is dropped");
+  assert.equal(restored.gold, pending.gold, "no loot is awarded");
+  assert.equal(restored.discoveries, 0);
+  const freed = restored.squads[0].run.actors[0];
+  assert.equal(freed.hero, explorer.hero);
+  assert.equal(freed.nextAt, explorer.arrivesAt, "the explorer acts again from its arrival");
+  assert.ok(restored.squads[0].run.nextAt <= freed.nextAt);
+  // The freed timeline reaches the same place as a save that never held a discovery.
+  const clean = settle(depart(initialPrologueState(1000)), 3601000).state,
+    resumed = settle(restored, 3601000).state;
+  assert.equal(resumed.gold, clean.gold);
+  assert.equal(resumed.herbs, clean.herbs);
+  assert.equal(resumed.discoveries, 0);
+});
+
 test("new profiles begin with the two villagers and only the repeatable trade quest", () => {
   const s = initialPrologueState(1000),
     snapshot = structuredClone(s);
