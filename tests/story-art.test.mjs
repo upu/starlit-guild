@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { storyArt, storyArtAt } from "../lib/story-art.ts";
 import { stories, availableStories } from "../lib/stories.ts";
-import { initialState, act } from "../lib/game.ts";
+import { initialPrologueState, act } from "../lib/game.ts";
+import { nextStage } from "../lib/prologue.ts";
 
 test("every story illustration exists with its declared dimensions and a valid reveal point", async () => {
   for (const [id, art] of Object.entries(storyArt)) {
@@ -68,15 +69,13 @@ test("the first-act climax waits for the beacon to light after the moss removal"
   assert.equal(scene.lines.at(-1).text, "第一部 完");
 });
 
-test("first departure has its illustration, while the fireside waits until they sit together", () => {
-  const state = act(initialState(1000), { type: "start", id: "herbs" }, 1000);
-  assert.ok(availableStories(state).some((st) => st.id === "herbs-departure"));
-  assert.ok(storyArtAt("herbs-departure", 0));
-  assert.equal(storyArtAt("pilgrim-return", 0), undefined);
-  assert.equal(storyArtAt("pilgrim-return", 3), undefined);
-  assert.ok(storyArtAt("pilgrim-return", 6));
-  assert.ok(storyArtAt("pilgrim-return", 9));
-  assert.equal(storyArtAt("pilgrim-return", 3), undefined);
-  assert.equal(storyArtAt("camp-seat", 0), undefined);
+test("the first departure has its illustration, and unknown scenes have none", () => {
+  const fresh = initialPrologueState(1000),
+    opening = nextStage(fresh).quest;
+  const state = act(fresh, { type: "start", id: opening }, 1000);
+  assert.ok(availableStories(state).some((st) => st.id === opening + "-departure"));
+  // The opening scene's illustration belongs to its ending, after the handover.
+  assert.equal(storyArtAt(opening + "-departure", Infinity), undefined);
+  assert.ok(storyArtAt(opening + "-return", Infinity));
   assert.equal(storyArtAt("unknown-story", 0), undefined);
 });

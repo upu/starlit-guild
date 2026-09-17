@@ -178,7 +178,7 @@ test("story and banter portraits keep the expression of each individual line", (
 });
 
 test("story reader retains all revealed lines for scrolling, reveals art at its action, and only finishes on the final line", () => {
-  const story = stories.stories.find((st) => st.id === "pilgrim-return");
+  const story = stories.stories.find((st) => st.id === "tower-road-return");
   let read = 0,
     closed = 0;
   const h = harness("StoryReader", {

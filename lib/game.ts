@@ -1,11 +1,4 @@
 import { advanceQuestDestination } from "./quest-navigation.ts";
-import {
-  recruitments,
-  recruitmentByHero,
-  canPrepare,
-  prepared,
-  type RecruitmentProgress,
-} from "./recruitment.ts";
 import { chachaHero } from "./original-characters.ts";
 import {
   equipmentBonus,
@@ -34,7 +27,6 @@ import {
   WATERWAY_QUEST,
   RESTORATION_QUEST,
   MOSS_QUEST,
-  inPrologue,
   isPrologueQuest,
   stageUnlocked,
   stageEndingPending,
@@ -74,26 +66,11 @@ import {
 import { heroes as baseHeroes, quests as baseQuests, bonds, level } from "./roster.ts";
 export { bonds, level };
 export type Kind = "採取" | "護衛" | "討伐";
-// price remains legacy profile metadata; recruitment recipes are defined in recruitment.ts.
-function recruitmentUnlock(id: string) {
-  const recruitment = recruitmentByHero(id);
-  if (!recruitment) throw Error(`仲間「${id}」の加入条件が見つかりません。`);
-  return recruitment.unlock;
-}
-export const heroes = [
-  ...baseHeroes.map((h, i) => ({
-    ...h,
-    sprite: i,
-    unlock: i < 2 ? 0 : recruitmentUnlock(h.id),
-    price: [0, 0, 100, 220, 450, 700, 950, 1300][i],
-  })),
-  chachaHero,
-];
+export const heroes = [...baseHeroes.map((h, i) => ({ ...h, sprite: i })), chachaHero];
 export type Quest = (typeof baseQuests)[number] & {
   unlock: number;
   enemy: number;
   enemyName?: string;
-  companion?: string;
   background?: string;
   gatherTarget?: string;
   escortTarget?: string;
@@ -331,26 +308,12 @@ export const quests: Quest[] = (
     ...chapterTwoQuests,
   ] satisfies Quest[]
 ).sort((a, b) => a.unlock - b.unlock);
-export const recruitmentQuests: Quest[] = recruitments.map((r) => ({
-  ...r.mission,
-  id: "join-" + r.hero,
-  companion: r.hero,
-  unlock: r.unlock,
-  seconds: 600,
-  gold: 100 * r.mission.tier,
-  xp: 100 * r.mission.tier,
-  herbs: 0,
-  ore: 0,
-  availability: "once",
-}));
-export const allQuests: Quest[] = [...quests, ...recruitmentQuests];
-// Keep existing detour sequences stable when adding story quests.
-const detourQuests = allQuests.filter((q) => !chapterTwoQuests.some((stage) => stage.id === q.id));
+export const allQuests: Quest[] = quests;
 export const availableQuests = (s: State) =>
   quests.filter(
     (q) =>
       q.unlock <= s.clears &&
-      (!inPrologue(s) || isPrologueQuest(q.id)) &&
+      isPrologueQuest(q.id) &&
       stageUnlocked(s, q.id) &&
       (q.availability !== "once" || !s.done[q.id]),
   );
@@ -359,18 +322,7 @@ export type GameEvent = {
   id: string;
   at: number;
   kind:
-    | "hit"
-    | "gather"
-    | "hurt"
-    | "heal"
-    | "clear"
-    | "move"
-    | "rest"
-    | "assist"
-    | "skill"
-    | "combo"
-    | "burst"
-    | "discovery";
+    "hit" | "gather" | "hurt" | "heal" | "clear" | "move" | "rest" | "assist" | "skill" | "combo";
   text: string;
   amount?: number;
   hero?: string;
@@ -384,23 +336,13 @@ export type Actor = {
   nextAt: number;
   period: number;
 };
-export type Detour = {
-  node: number;
-  kind: "chest" | "herb" | "spirit";
-  hero: string;
-  at: number;
-  finishAt: number;
-  claimed: boolean;
-};
-export type Scene = { title: string; lines: string[]; at: number; kind: "combo" | "burst" };
+export type Scene = { title: string; lines: string[]; at: number; kind: "combo" };
 export type MemberHealth = { hp: number; maxHp: number };
 export type Run = {
   serial: number;
   nodes: number;
-  cheer: number;
   ward: number;
   comboAt: number;
-  detour: Detour | null;
   scene: Scene | null;
   actors: Actor[];
   enemyAt: number;
@@ -435,7 +377,6 @@ export type State = {
   prologue?: boolean;
   techniques?: Techniques;
   inventory?: Inventory;
-  recruitment?: RecruitmentProgress;
   story?: StoryProgress;
   wood: number;
   town: number;
@@ -495,20 +436,9 @@ function activeRun(sq: Squad) {
   if (!sq.run) throw Error(`隊「${sq.id}」は冒険中ではありません。`);
   return sq.run;
 }
-function firstMember(sq: Squad) {
-  const id = sq.members[0];
-  if (!id) throw Error(`隊「${sq.id}」に仲間がいません。`);
-  return id;
-}
-function actorByHero(r: Run, id: string) {
-  const actor = r.actors.find((a) => a.hero === id);
-  if (!actor) throw Error(`仲間「${id}」の行動状態が見つかりません。`);
-  return actor;
-}
 export function initialState(now: number): State {
   return {
     version: 4,
-    recruitment: { prepared: [] },
     story: { departed: [], completed: [], read: [] },
     wood: 0,
     town: 0,
@@ -589,7 +519,7 @@ export const memberLimit = (s: State) => (s.clears >= 10 ? 3 : 2);
 export const squadLimit = (s: State) => (s.owned.length >= 6 ? 3 : s.owned.length >= 4 ? 2 : 1);
 function standardEncounter(q: Quest, node: number): Encounter {
   if (q.kind === "採取") return node % 3 === 1 ? "battle" : "gather";
-  if (q.kind === "護衛") return (q.companion ? node % 3 : node) === 1 ? "escort" : "battle";
+  if (q.kind === "護衛") return node === 1 ? "escort" : "battle";
   return "battle";
 }
 export function encounter(q: Quest, node: number): Encounter {
@@ -712,24 +642,6 @@ function schedule(s: State, sq: Squad, r: Run, at: number) {
     enemy.nextAt = enemy.role ? at + 2800 + enemy.period : at + 3700 + index * 450;
   syncEnemyTotals(r);
   if (r.comboAt <= at) r.comboAt = at + 14500;
-  const prior = r.detour;
-  r.detour = !inPrologue(s) && prior?.node === r.node && prior.claimed ? prior : null;
-  if (!inPrologue(s) && r.node % 3 === 0 && !r.detour) {
-    const explorer =
-      ["finn", "aria", "poppy"].find((id) => sq.members.includes(id)) || firstMember(sq);
-    const kind = (["chest", "herb", "spirit"] as const)[
-      (r.round + Math.floor(r.node / 3) + detourQuests.findIndex((q) => q.id === r.quest)) % 3
-    ];
-    r.detour = {
-      node: r.node,
-      kind,
-      hero: explorer,
-      at: at + 900,
-      finishAt: at + (["finn", "aria", "poppy"].includes(explorer) ? 6200 : 8500),
-      claimed: false,
-    };
-    actorByHero(r, explorer).nextAt = r.detour.finishAt + 200;
-  }
   r.nextAt = nextEvent(r);
 }
 function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): Run {
@@ -742,10 +654,8 @@ function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): Run {
   const r: Run = {
     serial: 0,
     nodes: questNodes(q.id),
-    cheer: 0,
     ward: 0,
     comboAt: at + 14500,
-    detour: null,
     scene: null,
     actors: [],
     enemyAt: at + 3700,
@@ -769,12 +679,7 @@ function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): Run {
   return r;
 }
 function nextEvent(r: Run) {
-  return Math.min(
-    ...r.actors.map((a) => a.nextAt),
-    r.enemyAt,
-    r.comboAt,
-    r.detour && !r.detour.claimed ? r.detour.finishAt : Infinity,
-  );
+  return Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
 }
 export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
   aria: {
@@ -822,50 +727,16 @@ export const heroSkills: Record<string, { style: string; name: string; descripti
 export const bondKey = (ids: string[]) => [...ids].sort().join("-");
 export const bondLevel = (s: State, ids: string[]) =>
   Math.min(3, 1 + Math.floor((s.friendship[bondKey(ids)] || 0) / 12));
-function discover(s: State, sq: Squad, at: number) {
-  const r = activeRun(sq),
-    d = r.detour;
-  if (inPrologue(s) || !d || d.claimed) return;
-  d.claimed = true;
-  s.discoveries++;
-  const q = questById(r.quest);
-  const wood = q.tier + 1;
-  s.wood += wood;
-  let amount = wood;
-  let text = "";
-  if (d.kind === "chest") {
-    amount = Math.ceil(q.gold * 0.035);
-    s.gold += amount;
-    text = "隠し宝箱！ +" + String(amount) + " G";
-  } else if (d.kind === "herb") {
-    amount = 2 * q.tier;
-    s.herbs += amount;
-    text = "光る薬草を発見！ 薬草 +" + String(amount);
-  } else {
-    healAll(r, 0.12);
-    r.ward += Math.ceil(totalMaxHp(r) * 0.08);
-    text = "迷子の精霊がお礼にみんなのHPと加護をくれた。";
-  }
-  event(r, at, "discovery", text + " · 木材 +" + String(wood), undefined, d.hero);
-  addLog(s, heroById(d.hero).name + "：" + text, at);
-}
 function recordPairStory(s: State, sq: Squad, q: Quest) {
   s.story ??= storyProgress(s);
-  if (q.companion || !together(sq.members) || s.story.completed.includes(q.id)) return;
+  if (!together(sq.members) || s.story.completed.includes(q.id)) return;
   if (!s.story.departed.includes(q.id)) s.story.departed.push(q.id);
   s.story.completed.push(q.id);
 }
-function recruitCompanion(s: State, q: Quest, at: number) {
-  if (!q.companion || s.owned.includes(q.companion)) return;
-  s.owned.push(q.companion);
-  s.xp[q.companion] ??= 0;
-  addLog(s, heroById(q.companion).name + "が、自分の意志で旅団の仲間になった。", at);
-}
-function finishQuest(s: State, sq: Squad, q: Quest, at: number) {
+function finishQuest(s: State, sq: Squad, q: Quest) {
   recordPairStory(s, sq, q);
   s.clears++;
   s.done[q.id] = (s.done[q.id] || 0) + 1;
-  recruitCompanion(s, q, at);
 }
 function awardExperience(s: State, sq: Squad, xp: number) {
   for (const id of sq.members) s.xp[id] = (s.xp[id] || 0) + xp;
@@ -895,14 +766,13 @@ function reward(s: State, sq: Squad, q: Quest, at: number, finished: boolean) {
   s.herbs += herbs;
   s.ore += ore;
   s.wood += wood;
-  if (finished) finishQuest(s, sq, q, at);
+  if (finished) finishQuest(s, sq, q);
   awardExperience(s, sq, xp);
   awardFriendship(s, sq);
   return { gold, xp, herbs, ore, wood, at, finished };
 }
 function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   const r = activeRun(sq);
-  discover(s, sq, at);
   event(
     r,
     at,
@@ -931,11 +801,10 @@ function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   }
   sq.lastQuest ??= q.id;
   const canRepeat = !isPrologueQuest(q.id) || s.story?.read.includes(q.id + "-return");
-  if (sq.repeat && !q.companion && q.availability !== "once" && canRepeat) {
-    const { events, cheer, scene } = r;
+  if (sq.repeat && q.availability !== "once" && canRepeat) {
+    const { events, scene } = r;
     sq.run = makeRun(s, sq, q, at, r.round + 1);
     sq.run.events = events;
-    sq.run.cheer = cheer;
     sq.run.scene = scene;
   } else sq.run = null;
   return gain;
@@ -982,32 +851,6 @@ function combination(s: State, sq: Squad, at: number) {
     undefined,
     hit.enemy,
   );
-}
-function cheer(s: State, sq: Squad, at: number) {
-  const r = activeRun(sq);
-  r.cheer += 5;
-  if (r.cheer < 100) return;
-  r.cheer -= 100;
-  const q = questById(r.quest),
-    k = encounter(q, r.node);
-  r.scene = {
-    title: "全員必殺！ 星灯りの大応援",
-    lines: ["団長「みんな、今だ！」", "仲間たち「任せて！」"],
-    at,
-    kind: "burst",
-  };
-  healAll(r, 0.15);
-  for (const hero of sq.members) burstFromActor(s, r, k, hero, at);
-}
-function burstFromActor(s: State, r: Run, kind: Encounter, hero: string, at: number) {
-  if (memberHealth(r, hero).hp <= 0) return;
-  const base = Math.ceil(
-    (kind === "battle" && r.enemies?.length ? 12 : r.targetMax * 0.24) +
-      memberStats(s, hero)[statIndex(kind)] * 0.4,
-  );
-  const hit =
-    r.target > 0 ? damageEnemy(r, base, penetration(s, hero)) : { amount: 0, enemy: undefined };
-  event(r, at, "burst", heroById(hero).name + "の必殺技！", hit.amount, hero, undefined, hit.enemy);
 }
 function recoverRun(s: State, sq: Squad, r: Run, q: Quest, at: number) {
   for (const health of Object.values(r.health)) health.hp = health.maxHp;
@@ -1195,7 +1038,6 @@ function step(s: State, sq: Squad) {
     return null;
   }
   const kind = encounter(q, r.node);
-  if (r.detour && !r.detour.claimed && r.detour.finishAt === at) discover(s, sq, at);
   if (r.comboAt === at) {
     combination(s, sq, at);
     if (r.target <= 0) return completeNode(s, sq, q, at);
@@ -1215,18 +1057,6 @@ function step(s: State, sq: Squad) {
   finishStep(r, at);
   return null;
 }
-// Older prologue saves may contain a pending discovery. Resume its companion without awarding it.
-function clearPrologueDetour(s: State, sq: Squad) {
-  const r = sq.run,
-    d = r?.detour;
-  if (!inPrologue(s) || !r || !d) return;
-  if (!d.claimed) {
-    const actor = r.actors.find((a) => a.hero === d.hero);
-    if (actor) actor.nextAt = Math.min(actor.nextAt, Math.max(s.updatedAt, actor.arrivesAt));
-  }
-  r.detour = null;
-  if (r.phase !== "rest") r.nextAt = nextEvent(r);
-}
 function collectReward(rewards: Rewards, gain: ReturnType<typeof reward> | null) {
   if (!gain) return false;
   if (gain.finished) rewards.count++;
@@ -1238,18 +1068,12 @@ function collectReward(rewards: Rewards, gain: ReturnType<typeof reward> | null)
   return gain.finished;
 }
 function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
-  clearPrologueDetour(s, sq);
   let count = 0;
   while (sq.run && sq.run.nextAt <= end) {
     if (collectReward(rewards, step(s, sq))) count++;
   }
   if (count)
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
-}
-function shiftDetour(detour: Detour | null, shift: number) {
-  if (!detour) return;
-  detour.at += shift;
-  detour.finishAt += shift;
 }
 function shiftRun(r: Run, shift: number) {
   r.nextAt += shift;
@@ -1258,7 +1082,6 @@ function shiftRun(r: Run, shift: number) {
   r.energyAt += shift;
   r.enemyAt += shift;
   r.comboAt += shift;
-  shiftDetour(r.detour, shift);
   r.scene = null;
   for (const actor of r.actors) {
     actor.nextAt += shift;
@@ -1326,9 +1149,29 @@ function upgradePicnicRun(input: State): State {
     if (sq.run?.quest === PICNIC_QUEST && sq.run.enemies?.length === 0) delete sq.run.enemies;
   return s;
 }
+type LegacyDetourRun = Run & { detour: { hero: string; claimed: boolean } | null };
+const pendingDetour = (run: Run | null) => (run as LegacyDetourRun | null)?.detour;
+function forgetDetour(r: Run, updatedAt: number) {
+  const detour = pendingDetour(r);
+  if (!detour) return;
+  if (!detour.claimed) {
+    const actor = r.actors.find((a) => a.hero === detour.hero);
+    if (actor) actor.nextAt = Math.min(actor.nextAt, Math.max(updatedAt, actor.arrivesAt));
+  }
+  delete (r as Partial<LegacyDetourRun>).detour;
+  if (r.phase !== "rest") r.nextAt = nextEvent(r);
+}
+// Story saves written before detours were dropped can still hold a pending one, with its explorer
+// waiting on the discovery clock. Bring that companion back and forget the discovery, without loot.
+function upgradePendingDetour(input: State): State {
+  if (!input.squads.some((sq) => pendingDetour(sq.run))) return input;
+  const s = structuredClone(input);
+  for (const sq of s.squads) if (sq.run) forgetDetour(sq.run, s.updatedAt);
+  return s;
+}
 // Only v4 records load now; the v1-v3 migration chain went with the legacy mode.
 export function migrate(raw: State | LegacySharedHealthState): State {
-  return upgradePicnicRun(upgradeSharedHealth(raw));
+  return upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw)));
 }
 function addOnce(list: string[], value: string) {
   if (!list.includes(value)) list.push(value);
@@ -1347,17 +1190,6 @@ export function completeStoryStages(s: State, count: number) {
 }
 // Builds an achievement-count record for the regression tests that still cover the legacy mode.
 // The app never creates one: that mode is kept readable but is no longer maintained.
-export function legacyTestState(now: number, clears: number, lv: number, gold: number): State {
-  const s = initialState(now);
-  s.clears = Math.min(1000, Math.max(0, Math.floor(clears)));
-  s.gold = Math.min(10000000, Math.max(0, Math.floor(gold)));
-  s.herbs = s.ore = s.wood = s.clears * 15;
-  s.town = s.clears >= 20 ? 2 : s.clears >= 3 ? 1 : 0;
-  s.owned = heroes.filter((h) => h.unlock <= s.clears).map((h) => h.id);
-  for (const id of s.owned) s.xp[id] = 30 * (Math.min(50, Math.max(1, Math.floor(lv))) - 1) ** 2;
-  s.log = [{ at: now, text: "テスト用の冒険。普段の記録には影響しません。" }];
-  return s;
-}
 // Test records follow the story stages. The legacy achievement-count mode is no longer created.
 export function testState(now: number, stages: number, lv: number, gold: number): State {
   const s = initialPrologueState(now);
@@ -1380,20 +1212,10 @@ export type Action = {
   type:
     | "start"
     | "stop"
-    | "party"
-    | "nameSquad"
-    | "recruit"
-    | "gear"
-    | "camp"
-    | "daily"
     | "repeat"
     | "assist"
-    | "newSquad"
     | "sync"
-    | "detour"
-    | "build"
     | "readStory"
-    | "prepareRecruitment"
     | "buy"
     | "equip"
     | "learnTechnique"
@@ -1412,16 +1234,7 @@ export type Action = {
 };
 type ActionHandler = (s: State, sq: Squad, a: Action, now: number) => void;
 function hiddenQuest(s: State, q: Quest) {
-  return (
-    s.clears < q.unlock || (inPrologue(s) && !isPrologueQuest(q.id)) || !stageUnlocked(s, q.id)
-  );
-}
-function validateCompanionQuest(s: State, q: Quest) {
-  if (!q.companion) return;
-  if (s.owned.includes(q.companion) || !prepared(s, q.companion))
-    throw Error("出会いの画面で、専用クエストの支度をしてください。");
-  if (s.squads.some((p) => p.run?.quest === q.id))
-    throw Error("この専用クエストは、別の隊が冒険中です。");
+  return s.clears < q.unlock || !isPrologueQuest(q.id) || !stageUnlocked(s, q.id);
 }
 function startQuest(s: State, sq: Squad, a: Action) {
   if (sq.run) throw Error("この隊は冒険中です。");
@@ -1433,13 +1246,11 @@ function startQuest(s: State, sq: Squad, a: Action) {
   if (isPrologueQuest(q.id) && stageEndingPending(s))
     throw Error("達成後の物語を読み終えてから、次の出発へ進みましょう。");
   if (sq.members.length < 1) throw Error("仲間を1人以上編成してください。");
-  validateCompanionQuest(s, q);
   return q;
 }
 function recordDeparture(s: State, sq: Squad, q: Quest) {
   s.story ??= storyProgress(s);
-  if (!q.companion && together(sq.members) && !s.story.departed.includes(q.id))
-    s.story.departed.push(q.id);
+  if (together(sq.members) && !s.story.departed.includes(q.id)) s.story.departed.push(q.id);
 }
 function readDepartureStory(s: State, q: Quest) {
   const story = availableStories(s).find(
@@ -1449,7 +1260,7 @@ function readDepartureStory(s: State, q: Quest) {
 }
 function startAction(s: State, sq: Squad, a: Action, now: number) {
   const q = startQuest(s, sq, a);
-  if (inPrologue(s)) sq.members = trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"];
+  sq.members = trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"];
   recordDeparture(s, sq, q);
   if (typeof a.value === "boolean") sq.repeat = a.value;
   sq.run = makeRun(s, sq, q, now);
@@ -1474,7 +1285,6 @@ function joinStoryMira(s: State) {
     s.owned.push("mira");
     if (!Object.hasOwn(s.xp, "mira")) s.xp.mira = Math.min(s.xp.aria || 0, s.xp.leon || 0);
   }
-  if (!inPrologue(s)) return;
   const party = s.squads.find((p) => p.lastQuest === DELIVERY_PREP_QUEST) || s.squads[0];
   if (!party.run && !party.members.includes("mira")) party.members.push("mira");
 }
@@ -1483,32 +1293,6 @@ function stopAction(s: State, sq: Squad, _a: Action, now: number) {
   sq.run = null;
   addLog(s, `${squadName(sq)}が帰還。達成済みの報酬は持ち帰りました。`, now);
 }
-function validPartyMembers(s: State, sq: Squad, ids: unknown): ids is string[] {
-  return (
-    Array.isArray(ids) &&
-    ids.length >= 1 &&
-    ids.length <= Math.max(memberLimit(s), sq.members.length) &&
-    new Set(ids).size === ids.length &&
-    ids.every((id) => typeof id === "string" && s.owned.includes(id))
-  );
-}
-function partyAction(s: State, sq: Squad, a: Action) {
-  if (inPrologue(s)) throw Error("今はアリアとレオンで交易に向かいます。");
-  if (sq.run) throw Error("帰還してから編成を変更できます。");
-  const ids = a.members;
-  if (!validPartyMembers(s, sq, ids)) throw Error("編成する仲間を確認してください。");
-  if (s.squads.some((p) => p.id !== sq.id && p.members.some((id) => ids.includes(id))))
-    throw Error("他の隊の仲間は、その隊の編成から外してください。");
-  sq.members = ids;
-}
-function nameSquadAction(s: State, sq: Squad, a: Action) {
-  if (inPrologue(s)) throw Error("パーティ編成ができるようになると、隊に名前を付けられます。");
-  if (typeof a.name !== "string") throw Error("隊の名前を確認してください。");
-  const name = a.name.trim().replace(/\s+/g, " ");
-  if (name.length > 20) throw Error("隊の名前は20文字以内にしてください。");
-  if (name) sq.customName = name;
-  else delete sq.customName;
-}
 function autoNextQuestAction(s: State, _sq: Squad, a: Action) {
   if (typeof a.value !== "boolean") throw Error("設定を確認してください。");
   s.autoNextQuest = a.value;
@@ -1516,20 +1300,6 @@ function autoNextQuestAction(s: State, _sq: Squad, a: Action) {
 function repeatAction(_s: State, sq: Squad, a: Action) {
   if (typeof a.value !== "boolean") throw Error("設定を確認してください。");
   sq.repeat = a.value;
-}
-function newSquadAction(s: State) {
-  if (inPrologue(s)) throw Error("今はふたりで冒険を進めましょう。");
-  if (s.squads.length >= squadLimit(s)) throw Error("仲間が4人で2隊、6人で3隊を編成できます。");
-  const id = s.owned.find((hero) => s.squads.every((p) => !p.members.includes(hero)));
-  if (!id) throw Error("待機中の仲間を1人用意してください。");
-  const n = s.squads.length + 1;
-  s.squads.push({
-    id: `party-${String(n)}`,
-    name: defaultSquadName([id]),
-    members: [id],
-    repeat: true,
-    run: null,
-  });
 }
 function healAssist(s: State, sq: Squad, r: Run, now: number, targetId?: string) {
   if (targetId && !sq.members.includes(targetId)) throw Error("回復する仲間を確認してください。");
@@ -1549,7 +1319,7 @@ function healAssist(s: State, sq: Squad, r: Run, now: number, targetId?: string)
     r,
     now,
     "heal",
-    (inPrologue(s) ? "手助けで" : "団長の応援で") + heroById(target).name + "を回復！",
+    "手助けで" + heroById(target).name + "を回復！",
     restored,
     undefined,
     target,
@@ -1562,19 +1332,9 @@ function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
     members = sq.members.filter((id) => memberHealth(r, id).hp > 0),
     power = members.reduce((sum, id) => sum + penetration(s, id), 0) / Math.max(1, members.length),
     hit = damageEnemy(r, Math.max(2, Math.round(2 + s.gear + stats(s, sq)[index] * 0.035)), power);
-  event(
-    r,
-    now,
-    "assist",
-    inPrologue(s) ? "手助け！" : "団長の手助け！",
-    hit.amount,
-    undefined,
-    undefined,
-    hit.enemy,
-  );
+  event(r, now, "assist", "手助け！", hit.amount, undefined, undefined, hit.enemy);
 }
 function finishAssist(s: State, sq: Squad, r: Run, now: number) {
-  if (!inPrologue(s)) cheer(s, sq, now);
   if (r.target > 0) return;
   const gain = completeNode(s, sq, questById(r.quest), now);
   if (gain) addLog(s, squadName(sq) + "が区間の報酬を確保！ +" + String(gain.gold) + " G", now);
@@ -1586,90 +1346,6 @@ function assistAction(s: State, sq: Squad, a: Action, now: number) {
   if (a.mode === "heal") healAssist(s, sq, r, now, a.id);
   else strikeAssist(s, sq, r, now);
   finishAssist(s, sq, r, now);
-}
-function detourAction(s: State, sq: Squad, _a: Action, now: number) {
-  if (inPrologue(s)) throw Error("寄り道はまだできません。");
-  const r = sq.run,
-    d = r?.detour;
-  if (!r || !d || d.claimed || now < d.at || r.phase === "rest")
-    throw Error("寄り道を見つけたら指示できます。");
-  d.finishAt = Math.min(d.finishAt, now + 700);
-  const helper = actorByHero(r, d.hero);
-  helper.nextAt = Math.min(helper.nextAt, d.finishAt + 500);
-  r.nextAt = nextEvent(r);
-}
-function buildCost(town: number) {
-  return town === 0
-    ? { gold: 120, wood: 12, ore: 0, herbs: 0, clears: 1 }
-    : { gold: 600, wood: 60, ore: 12, herbs: 20, clears: 3 };
-}
-function canAffordBuild(s: State, cost: ReturnType<typeof buildCost>) {
-  return (
-    s.town < 2 &&
-    s.clears >= cost.clears &&
-    s.gold >= cost.gold &&
-    s.wood >= cost.wood &&
-    s.ore >= cost.ore &&
-    s.herbs >= cost.herbs
-  );
-}
-function buildAction(s: State, _sq: Squad, _a: Action, now: number) {
-  if (inPrologue(s)) throw Error("拠点はまだ作れません。");
-  const cost = buildCost(s.town);
-  if (!canAffordBuild(s, cost)) throw Error("建設に必要な材料か達成数が足りません。");
-  s.gold -= cost.gold;
-  s.wood -= cost.wood;
-  s.ore -= cost.ore;
-  s.herbs -= cost.herbs;
-  s.town++;
-  addLog(
-    s,
-    s.town === 1
-      ? "酒場が完成！ 仲間たちの帰る場所ができた。"
-      : "鍛冶場と薬草園が完成！ 拠点に暮らしが広がった。",
-    now,
-  );
-}
-function recruitAction() {
-  throw Error("仲間は専用クエストの達成で加入します。「新しい出会い」から支度しましょう。");
-}
-function prepareRecruitmentAction(s: State, _sq: Squad, a: Action, now: number) {
-  if (inPrologue(s)) throw Error("今はふたりで冒険を進めましょう。");
-  const recruitment = recruitmentByHero(a.id || "");
-  if (!recruitment || !canPrepare(s, recruitment))
-    throw Error("出会いの条件と必要な資材を確認してください。");
-  for (const key of ["gold", "wood", "herbs", "ore"] as const) s[key] -= recruitment.cost[key];
-  (s.recruitment ??= { prepared: [] }).prepared.push(recruitment.hero);
-  addLog(
-    s,
-    recruitment.name + "との専用クエスト「" + recruitment.mission.name + "」の支度が整った。",
-    now,
-  );
-}
-function gearAction(s: State) {
-  const cost = 100 * (s.gear + 1),
-    ore = 5 * (s.gear + 1);
-  if (s.clears < 3 || s.gear >= 15 || s.gold < cost || s.ore < ore)
-    throw Error("お金か鉱石が足りません。");
-  s.gold -= cost;
-  s.ore -= ore;
-  s.gear++;
-}
-function campAction(s: State) {
-  const cost = 150 * (s.camp + 1),
-    herbs = 12 * (s.camp + 1);
-  if (s.clears < 10 || s.camp >= 10 || s.gold < cost || s.herbs < herbs)
-    throw Error("お金か薬草が足りません。");
-  s.gold -= cost;
-  s.herbs -= herbs;
-  s.camp++;
-}
-function dailyAction(s: State, _sq: Squad, _a: Action, now: number) {
-  const day = new Date(now).toISOString().slice(0, 10);
-  if (s.clears < 3 || s.lastDaily === day) throw Error("今日の差し入れは受取済みです。");
-  s.lastDaily = day;
-  s.gold += 80;
-  s.herbs += 5;
 }
 function syncAction() {
   /* Cloning the current state completes synchronization. */
@@ -1705,18 +1381,8 @@ const actionHandlers: Record<Action["type"], ActionHandler> = {
   start: startAction,
   readStory: readStoryAction,
   stop: stopAction,
-  party: partyAction,
-  nameSquad: nameSquadAction,
   repeat: repeatAction,
-  newSquad: newSquadAction,
   assist: assistAction,
-  detour: detourAction,
-  build: buildAction,
-  recruit: recruitAction,
-  prepareRecruitment: prepareRecruitmentAction,
-  gear: gearAction,
-  camp: campAction,
-  daily: dailyAction,
   buy: buyAction,
   equip: equipAction,
 };

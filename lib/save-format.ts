@@ -8,7 +8,6 @@ import {
   type State,
 } from "./game.ts";
 import { stories } from "./stories.ts";
-import { recruitments } from "./recruitment.ts";
 import { isRecord } from "./external-input.ts";
 import { equipmentById, validInventory } from "./equipment.ts";
 import { techniqueById, validTechniques } from "./techniques.ts";
@@ -50,8 +49,6 @@ const event = z.object({
     "assist",
     "skill",
     "combo",
-    "burst",
-    "discovery",
   ]),
   text: z.string().max(300),
   amount: n.optional(),
@@ -73,25 +70,14 @@ const health = z.record(hero, z.object({ hp: n, maxHp: n.min(1) }));
 const run = z.object({
   serial: count,
   nodes: count.min(3).max(15),
-  cheer: n.max(100),
   ward: n,
   comboAt: n,
-  detour: z
-    .object({
-      node: count.max(14),
-      kind: z.enum(["chest", "herb", "spirit"]),
-      hero,
-      at: n,
-      finishAt: n,
-      claimed: z.boolean(),
-    })
-    .nullable(),
   scene: z
     .object({
       title: z.string().max(100),
       lines: z.array(z.string().max(200)).max(8),
       at: n,
-      kind: z.enum(["combo", "burst"]),
+      kind: z.literal("combo"),
     })
     .nullable(),
   quest: z.string().refine((v) => quests.some((q) => q.id === v)),
@@ -162,8 +148,6 @@ function validTimeline(squad: ParsedSquad, updatedAt: number) {
   if (!run) return true;
   if (run.node >= run.nodes || run.nextAt < updatedAt) return false;
   if (run.phase !== "rest" && run.comboAt < run.nextAt) return false;
-  if (run.phase !== "rest" && run.detour && !run.detour.claimed && run.detour.finishAt < run.nextAt)
-    return false;
   if (run.phase !== "rest" && run.enemyAt < run.nextAt) return false;
   return validActors(squad) && validEnemies(run);
 }
@@ -197,17 +181,7 @@ function validateState(s: ParsedState, ctx: z.RefinementCtx) {
     ctx.addIssue({ code: "custom", message: "Invalid techniques" });
   if (s.inventory && !validInventory(s.inventory, s.owned))
     ctx.addIssue({ code: "custom", message: "Invalid equipment ownership" });
-  const members = s.squads.flatMap((squad) => squad.members),
-    missions = s.squads.flatMap((squad) =>
-      squad.run?.quest.startsWith("join-") ? [squad.run.quest] : [],
-    );
-  if (
-    new Set(missions).size !== missions.length ||
-    missions.some(
-      (id) => !s.recruitment?.prepared.includes(id.slice(5)) || s.owned.includes(id.slice(5)),
-    )
-  )
-    ctx.addIssue({ code: "custom", message: "Invalid recruitment expedition" });
+  const members = s.squads.flatMap((squad) => squad.members);
   if (
     new Set(members).size !== members.length ||
     members.some((member) => !s.owned.includes(member)) ||
@@ -223,14 +197,6 @@ const stateBase = z.object({
   prologue: z.boolean().optional(),
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
-  recruitment: z
-    .object({
-      prepared: z
-        .array(z.string().refine((id) => recruitments.some((r) => r.hero === id)))
-        .max(recruitments.length)
-        .refine((ids) => new Set(ids).size === ids.length),
-    })
-    .optional(),
   story: storySchema.optional(),
   wood: n,
   town: count.max(2),

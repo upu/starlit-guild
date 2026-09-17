@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { setSound, unlockSound, sound, soundEvents } from "../lib/sound.ts";
 
-test("audio requires interaction, prioritizes one burst, bounds rapid taps and mutes immediately", () => {
+test("audio requires interaction, prioritizes one finisher, bounds rapid taps and mutes immediately", () => {
   let created = 0,
     started = 0;
   const contexts = [];
@@ -70,12 +70,12 @@ test("audio requires interaction, prioritizes one burst, bounds rapid taps and m
     const context = contexts[0];
     soundEvents([
       { kind: "hit", hero: "leon" },
-      { kind: "burst", hero: "aria" },
-      { kind: "burst", hero: "leon" },
+      { kind: "combo", hero: "aria" },
+      { kind: "combo", hero: "leon" },
     ]);
-    assert.equal(started, 14, "one six-note layered fanfare and its impact");
+    assert.equal(started, 8, "one four-note layered fanfare");
     for (let i = 0; i < 100; i++) sound("assist", true);
-    assert.equal(started, 14, "ordinary taps cannot drown out a finisher");
+    assert.equal(started, 8, "ordinary taps cannot drown out a finisher");
     context.currentTime = 1;
     sound("hit", false, "aria");
     const bow = started;
@@ -84,7 +84,7 @@ test("audio requires interaction, prioritizes one burst, bounds rapid taps and m
     setSound(false);
     assert.equal(context.gains[0].gain.value, 0);
     context.currentTime = 2;
-    sound("burst");
+    sound("combo");
     assert.equal(started, bow);
   } finally {
     delete globalThis.AudioContext;

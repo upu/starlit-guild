@@ -1,12 +1,5 @@
 import { pathToFileURL } from "node:url";
-import {
-  act,
-  settle,
-  initialPrologueState,
-  legacyTestState,
-  level,
-  allQuests,
-} from "../lib/game.ts";
+import { act, settle, initialPrologueState, level, allQuests } from "../lib/game.ts";
 import { prologueStages } from "../lib/prologue.ts";
 import { combatRank } from "../lib/combat.ts";
 
@@ -63,19 +56,6 @@ export function combatScenarios() {
       { type: "readStory", id: stage.quest + "-return" },
       result.state.updatedAt,
     );
-  }
-  for (const [quest, lv, gear] of [
-    ["herbs", 1, 0],
-    ["slime", 1, 0],
-    ["slime", 8, 1],
-    ["wolf", 1, 0],
-    ["wolf", 18, 3],
-    ["dragon", 1, 0],
-    ["dragon", 35, 5],
-  ]) {
-    const input = legacyTestState(1000, 60, lv, 10000);
-    input.gear = gear;
-    records.push({ ...simulateCombat(input, quest).record, gear });
   }
   return records;
 }

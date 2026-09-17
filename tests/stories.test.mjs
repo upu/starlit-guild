@@ -1,18 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialState, act, settle, quests, legacyTestState } from "../lib/game.ts";
-import {
-  stories,
-  availableStories,
-  campStories,
-  journeyBanter,
-  coupleCombo,
-} from "../lib/stories.ts";
+import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
+import { nextStage, storyStages } from "../lib/prologue.ts";
+import { stories, availableStories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 
-const start = (s) => act(s, { type: "start", id: "herbs" }, s.updatedAt);
+const start = (s) => act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
 const ids = (s) => availableStories(s).map((st) => st.id);
+
 test("idle trio conversations include Mira only while she is in the party and preserve the save", () => {
-  const state = initialState(1000),
+  const state = initialPrologueState(1000),
     squad = state.squads[0];
   const dialogue = () =>
     Array.from({ length: 8 }, (_, i) => journeyBanter(state, squad, i * 30000)).flat();
@@ -27,93 +23,64 @@ test("idle trio conversations include Mira only while she is in the party and pr
   squad.members = squad.members.filter((id) => id !== "mira");
   assert.ok(dialogue().every((line) => line.speaker !== "mira"));
 });
-function finish(s) {
-  let i = 0;
-  while (s.squads[0].run && i++ < 10000) s = settle(s, s.squads[0].run.nextAt).state;
-  assert.ok(i < 10000);
-  return s;
-}
 
-test("all quests have a departure and an ending; the accepted fireside scene is readable", () => {
+test("every story stage has exactly one departure and one ending, and ids stay unique", () => {
   assert.equal(new Set(stories.map((st) => st.id)).size, stories.length);
-  for (const q of quests) {
-    assert.equal(stories.filter((st) => st.quest === q.id && st.chapter === "departure").length, 1);
-    assert.equal(stories.filter((st) => st.quest === q.id && st.chapter === "return").length, 1);
+  for (const { quest } of storyStages) {
+    assert.equal(
+      stories.filter((st) => st.quest === quest && st.chapter === "departure").length,
+      1,
+    );
+    assert.equal(stories.filter((st) => st.quest === quest && st.chapter === "return").length, 1);
   }
-  assert.ok(
-    stories
-      .find((st) => st.id === "pilgrim-return")
-      .lines.some((line) => line.text === "今は、どこにも行かないよ。"),
-  );
+  assert.ok(stories.every((st) => storyStages.some((stage) => stage.quest === st.quest)));
 });
 
 test("reading and replaying are idempotent and never award gold or change clocks", () => {
-  const before = start(initialState(1000));
-  let s = act(before, { type: "readStory", id: "herbs-departure" }, 1000);
-  s = act(s, { type: "readStory", id: "herbs-departure" }, 1000);
-  assert.deepEqual(s.story.read, ["herbs-departure"]);
+  const before = start(initialPrologueState(1000)),
+    departure = nextStage(initialPrologueState(1000)).quest + "-departure";
+  let s = act(before, { type: "readStory", id: departure }, 1000);
+  s = act(s, { type: "readStory", id: departure }, 1000);
+  assert.deepEqual(s.story.read, [departure]);
   const rest = { ...s },
     expected = { ...before };
   delete rest.story;
   delete expected.story;
   assert.deepEqual(rest, expected);
-  assert.throws(() => act(s, { type: "readStory", id: "dragon-return" }, 1000));
+  assert.throws(() => act(s, { type: "readStory", id: "medicine-road-home-return" }, 1000));
   assert.throws(() => act(s, { type: "readStory", id: "not-a-scene" }, 1000));
 });
 
-test("a different party does not act out or unlock the couple expedition", () => {
-  let s = initialState(1000);
-  s = act(s, { type: "party", members: ["aria"] }, 1000);
-  s = act(s, { type: "repeat", value: false }, 1000);
-  s = start(s);
-  assert.deepEqual(journeyBanter(s, s.squads[0], 4000), []);
-  s = finish(s);
-  assert.deepEqual(s.story, { departed: [], completed: [], read: [] });
-  assert.deepEqual(ids(s), []);
-  s = act(s, { type: "party", members: ["aria", "leon"] }, s.updatedAt);
-  s = start(s);
-  assert.deepEqual(ids(s), ["herbs-departure"]);
+test("the opening stage only offers its own scenes until the pair has travelled", () => {
+  const fresh = initialPrologueState(1000);
+  assert.deepEqual(ids(fresh), []);
+  const departed = start(fresh);
+  assert.deepEqual(ids(departed), [nextStage(fresh).quest + "-departure"]);
 });
 
-test("camp scenes follow friendship and facilities and only feature people actually at home", () => {
-  const s = initialState(1000);
-  s.story = { departed: ["herbs"], completed: ["herbs"], read: [] };
-  assert.deepEqual(
-    campStories(s).map((st) => st.id),
-    ["camp-seat"],
-  );
-  s.friendship["aria-leon"] = 12;
-  s.town = 1;
-  assert.ok(campStories(s).some((st) => st.id === "camp-cup"));
-  assert.ok(!campStories(s).some((st) => st.id === "camp-tomorrow"));
-  s.friendship["aria-leon"] = 24;
-  assert.ok(campStories(s).some((st) => st.id === "camp-tomorrow"));
-  assert.ok(!campStories(s).some((st) => st.id === "camp-quiet-tea"));
-  s.owned.push("mira");
-  assert.ok(campStories(s).some((st) => st.id === "camp-quiet-tea"));
-  s.squads.push({ id: "party-2", name: "お茶の隊", members: ["mira"], repeat: true, run: null });
-  const away = act(s, { type: "start", id: "herbs", squad: "party-2" }, 1000);
-  assert.ok(!campStories(away).some((st) => st.id === "camp-quiet-tea"));
-  assert.deepEqual(campStories(start(s)), []);
-  // Memories remain available even when their participants depart.
-  assert.ok(ids(start(s)).includes("camp-cup"));
-});
-
-test("banter responds to rest, detours and region; friendship changes pair-specific coordination", () => {
-  let s = start(initialState(1000)),
-    sq = s.squads[0];
-  const snapshot = structuredClone(s);
-  assert.match(JSON.stringify(journeyBanter(s, sq, 4000)), /光ってる/);
+test("banter responds to rest and region; friendship changes pair-specific coordination", () => {
+  const s = start(initialPrologueState(1000)),
+    sq = s.squads[0],
+    snapshot = structuredClone(s);
+  assert.ok(journeyBanter(s, sq, 4000).length);
   assert.deepEqual(s, snapshot);
   sq.run.phase = "rest";
   assert.match(JSON.stringify(journeyBanter(s, sq, 4000)), /水/);
-  s.friendship["aria-leon"] = 12;
-  assert.match(JSON.stringify(journeyBanter(s, sq, 4000)), /隣/);
-  const low = coupleCombo(initialState(0), 0),
-    high = coupleCombo({ ...s, friendship: { "aria-leon": 24 } }, 0);
+  // Most stages have their own scripted lines; 2-3 falls through to the pair's own banter.
+  const paired = start(testState(1000, 11, 8, 1000));
+  paired.squads[0].run.phase = "rest";
+  paired.friendship["aria-leon"] = 12;
+  assert.match(JSON.stringify(journeyBanter(paired, paired.squads[0], 4000)), /隣/);
+  const low = coupleCombo(initialPrologueState(0), 0),
+    high = coupleCombo({ ...paired, friendship: { "aria-leon": 24 } }, 0);
   assert.notDeepEqual(low, high);
-  s = legacyTestState(1000, 60, 10, 10000);
-  s = act(s, { type: "start", id: "pilgrim" }, 1000);
-  s.squads[0].run.detour.claimed = true;
-  assert.match(JSON.stringify(journeyBanter(s, s.squads[0], 4000)), /霧/);
+});
+
+test("finishing a stage records its ending and never leaves the run behind", () => {
+  let s = start(testState(1000, 3, 8, 1000)),
+    i = 0;
+  while (s.squads[0].run && i++ < 10000) s = settle(s, s.squads[0].run.nextAt).state;
+  assert.ok(i < 10000);
+  assert.equal(s.squads[0].run, null);
+  assert.ok(ids(s).some((id) => id.endsWith("-return")));
 });

@@ -50,14 +50,6 @@ function celebrate(
       id: "journey-moment",
     });
 }
-function savedActionToast(action: Action) {
-  if (action.type === "party") toast.success("編成を保存しました。", { id: "party-saved" });
-  else if (action.type === "nameSquad")
-    toast.success(
-      action.name?.trim() ? "隊の名前を保存しました。" : "メンバー名の表示に戻しました。",
-      { id: "party-name-saved" },
-    );
-}
 function fresh(): SaveBundle {
   const p = newProfile();
   return {
@@ -354,9 +346,7 @@ export function useLocalGame(testToolsEnabled = false) {
           .filter((e) => !known.has(e.id) && e.kind !== "assist");
         if (added.length) soundEvents(added);
         if (a.type === "assist") sound(a.mode === "heal" ? "heal" : "assist", true);
-        else if (["start", "build", "prepareRecruitment", "gear"].includes(a.type))
-          sound("clear", true);
-        savedActionToast(a);
+        else if (a.type === "start") sound("clear", true);
         onSuccess?.(p.state);
         return true;
       } catch (e) {

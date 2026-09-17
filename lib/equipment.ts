@@ -1,5 +1,5 @@
 import type { State } from "./game.ts";
-import { inPrologue, stageUnlocked, TOWER_QUEST } from "./prologue.ts";
+import { stageUnlocked, TOWER_QUEST } from "./prologue.ts";
 
 export type EquipmentSlot = "weapon" | "armor";
 export type Equipment = {
@@ -118,7 +118,7 @@ export function availableCopies(s: Pick<State, "inventory">, id: string) {
   return (inventoryOf(s).items[id] ?? 0) - equippedBy(s, id).length;
 }
 export function shopTier(s: State) {
-  const unlocked = inPrologue(s) ? stageUnlocked(s, TOWER_QUEST) : s.clears >= 3;
+  const unlocked = stageUnlocked(s, TOWER_QUEST);
   return unlocked ? 1 : 0;
 }
 export const shopItems = (s: State) =>

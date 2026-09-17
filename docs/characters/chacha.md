@@ -28,8 +28,8 @@
 
 ## 外見・関連資料・実装
 
-[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[仲間と来客の会話](../../lib/character-encounters.ts)、[スチルの対応](../../lib/story-art.ts) を参照する。
+[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。従来モードの来客の会話は削除済み。
 
-加入は [加入の物語](../../lib/recruitment-stories.ts) と [仲間加入](../recruitment.md)、日常・道中は [物語データ](../../lib/stories.ts)、拠点の活動は [拠点の暮らし](../../app/guild-home.tsx) を確認する。
+日常・道中は [物語データ](../../lib/stories.ts) を確認する。加入の物語と拠点の活動は削除済みで、記録は [仲間加入](../recruitment.md) にある。
 
 数値・加入条件・表示条件の最終的な正は [現在のゲーム](../../lib/game.ts) と各シーンの実装。資料整理だけでゲームやセーブの内容は変わらない。

@@ -49,8 +49,8 @@ GPT Imageで作成した外見・衣装・人形の制作参考。茶色のツ�
 
 シート内に自動生成された年齢・身長・職業・台詞などの文字情報は、確定設定として扱わない。人物設定の正本は本ファイルと関連資料を優先する。
 
-[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[仲間と来客の会話](../../lib/character-encounters.ts)、[スチルの対応](../../lib/story-art.ts) を参照する。
+[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。従来モードの来客の会話は削除済み。
 
-初遭遇・クエストの会話は [マッドハロウィンの物語](../../lib/mad-halloween-stories.ts) を確認する。
+初遭遇・クエストの会話は削除済みで、資料側の記録だけが残る。
 
 数値・加入条件・表示条件の最終的な正は [現在のゲーム](../../lib/game.ts) と各シーンの実装。資料整理だけでゲームやセーブの内容は変わらない。

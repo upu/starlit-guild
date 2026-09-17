@@ -4,8 +4,6 @@ import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import ts from "typescript";
 
-const phone = readFileSync(new URL("../app/phone-game.tsx", import.meta.url), "utf8");
-const recruitment = readFileSync(new URL("../app/recruitment-board.tsx", import.meta.url), "utf8");
 const panels = readFileSync(new URL("../app/equipment-panels.tsx", import.meta.url), "utf8");
 const source = ts.createSourceFile(
   "equipment-panels.tsx",
@@ -71,36 +69,17 @@ test("empty inventory keeps all four resource counters visible", () => {
   );
 });
 
-test("legacy recruitment progress is neither displayed nor changed by opening inventory", () => {
+test("reading balances never changes the save", () => {
   const state = {
+    prologue: true,
     gold: 180,
     herbs: 80,
     ore: 5,
     wood: 40,
     owned: ["aria", "leon", "mira"],
-    done: { herbs: 12 },
-    recruitment: { prepared: ["mira"] },
+    done: { "village-trade": 12 },
   };
   const before = structuredClone(state);
   balances(state);
   assert.deepEqual(state, before);
-});
-
-test("the rare-material inventory component and its import are removed, not just hidden in chapter one", () => {
-  assert.doesNotMatch(phone, /\bRareInventory\b/);
-  assert.doesNotMatch(recruitment, /\bRareInventory\b|出会いをつなぐ希少素材|rare-inventory/);
-  assert.match(recruitment, /export function RecruitmentBoard\b/);
-  assert.match(recruitment, /function Preparation\b/);
-  assert.match(recruitment, /function RareSearch\b/);
-});
-
-test("rare-material notices no longer direct players to the removed inventory section", () => {
-  const journey = readFileSync(new URL("../lib/journey.ts", import.meta.url), "utf8");
-  const source = ts.createSourceFile("journey.ts", journey, ts.ScriptTarget.Latest, true);
-  const notice = source.statements.find(
-    (node) => ts.isFunctionDeclaration(node) && node.name?.text === "recruitmentNotice",
-  );
-  assert.ok(notice);
-  assert.doesNotMatch(notice.getText(source), /持ちもの|持ち物/);
-  assert.match(notice.getText(source), /との冒険の支度に使えます。/);
 });

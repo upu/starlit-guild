@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import { trioQuest } from "@/lib/chapter-two";
 import Image from "next/image";
 import { Check, LockKeyhole } from "lucide-react";
-import { availableQuests, heroes, squadName, type State, type Squad, type Quest } from "@/lib/game";
-import { inPrologue, storyStages, nextStage } from "@/lib/prologue";
+import { availableQuests, heroes, type State, type Quest } from "@/lib/game";
+import { storyStages, nextStage } from "@/lib/prologue";
 import { questChapters, questChapter } from "@/lib/quest-navigation";
 import { originalCharacters } from "@/lib/original-characters";
 import { Sprite } from "./sprite";
@@ -13,7 +13,6 @@ import { QuestProgressionSetting } from "./quest-progression-setting";
 
 type Props = {
   state: State;
-  squad: Squad;
   selected: string;
   onSelect: (id: string) => void;
   onConfirm: (id: string) => void;
@@ -22,7 +21,6 @@ type Props = {
 };
 export function QuestPicker({
   state: s,
-  squad: sq,
   selected,
   onSelect,
   onConfirm,
@@ -71,14 +69,8 @@ export function QuestPicker({
         disabled={!ready}
       />
       <p className="departure-party">
-        {!inPrologue(s) && <b>{squadName(sq)}</b>}
         <span>
-          {(inPrologue(s)
-            ? trioQuest(q.id)
-              ? ["aria", "leon", "mira"]
-              : ["aria", "leon"]
-            : sq.members
-          )
+          {(trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"])
             .map((id) => heroes.find((h) => h.id === id)?.name ?? "不明な仲間")
             .join("・")}
         </span>

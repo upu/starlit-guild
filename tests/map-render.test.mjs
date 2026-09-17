@@ -5,16 +5,16 @@ import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { initialState, initialPrologueState, act, settle, legacyTestState } from "../lib/game.ts";
+import { initialPrologueState, act, settle } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
-import { prologueStages } from "../lib/prologue.ts";
-import { madHalloweenStories } from "../lib/mad-halloween-stories.ts";
-import { characterEncounters } from "../lib/character-encounters.ts";
-import { storyArt, storyArtAt, storyThumbnail } from "../lib/story-art.ts";
-import { recruitments } from "../lib/recruitment.ts";
-import { adventureFrame, adventureAssets, adventureAction } from "../lib/adventure-presentation.ts";
+import { nextStage, prologueStages } from "../lib/prologue.ts";
+import { storyArtAt } from "../lib/story-art.ts";
+import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
+const OPENING = nextStage(initialPrologueState(0)).quest;
+const begin = (s = initialPrologueState(1000)) =>
+  act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
 const frameFor = (state, now = state.updatedAt) =>
-  adventureFrame({ squad: state.squads[0], now, ready: true, paused: false, startQuest: "herbs" });
+  adventureFrame({ squad: state.squads[0], now, ready: true, paused: false, startQuest: OPENING });
 const imageAlias = {
   "next/image": fileURLToPath(
     new URL("../node_modules/vinext/dist/shims/image.js", import.meta.url),
@@ -114,9 +114,7 @@ await build({
   alias: imageAlias,
   jsx: "automatic",
 });
-const { StoryReader, StoryLines, StoryLibrary, StoryAlbum, Banter } = await import(
-  storyOutput.href
-);
+const { StoryReader, Banter } = await import(storyOutput.href);
 const phoneOutput = new URL("../work/phone-render.mjs", import.meta.url);
 await build({
   entryPoints: ["app/phone-game.tsx"],
@@ -204,10 +202,6 @@ test("prologue guides the first quest choice before departure and keeps actions 
   ).state;
   const after = render(act(cleared, { type: "readStory", id: "village-trade-return" }, 3601000));
   assert.doesNotMatch(after, /quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
-  const legacy = render(initialState(1000));
-  assert.match(legacy, />キャラクター</);
-  assert.match(legacy, />拠点</);
-  assert.doesNotMatch(legacy, />思い出<|行き先を選ぶ|行き先を変える/);
 });
 
 test("stage progress retains the completed scenery until the next departure", () => {
@@ -269,84 +263,8 @@ test("stage progress retains the completed scenery until the next departure", ()
   }
 });
 
-test("guest stills reveal during their scene and enter the gallery only after reading", () => {
-  for (const scene of characterEncounters.filter((st) => storyArt[st.id])) {
-    const state = legacyTestState(1000, 60, 20, 100000);
-    state.town = 2;
-    for (const quest of scene.requiresQuests || []) state.done[quest] = 1;
-    state.story = { departed: [], completed: [], read: [] };
-    const library = () =>
-      renderToStaticMarkup(createElement(StoryLibrary, { state, onOpen: () => {} }));
-    const before = library();
-    assert.ok(before.includes(scene.title));
-    assert.ok(before.includes("仲間と来客"));
-    assert.ok(!before.includes(storyArt[scene.id].src), "later action is not a gallery spoiler");
-    const firstPage = renderToStaticMarkup(
-      createElement(StoryReader, {
-        story: scene,
-        ready: true,
-        onRead: () => true,
-        onClose: () => {},
-      }),
-    );
-    assert.ok(!firstPage.includes(storyArt[scene.id].src));
-    state.story.read.push(scene.id);
-    assert.ok(!library().includes(storyArt[scene.id].src));
-    const album = renderToStaticMarkup(createElement(StoryAlbum, { state, onBack: () => {} }));
-    assert.ok(album.includes(storyThumbnail(storyArt[scene.id])));
-    assert.ok(!album.includes(storyArt[scene.id].src), "album does not load full-size artwork");
-  }
-});
-
-test("original characters render as named speakers, portraits and battle targets", () => {
-  for (const story of [
-    ...madHalloweenStories,
-    ...characterEncounters,
-    ...stories.filter((st) => st.companion === "chacha"),
-  ]) {
-    const html = renderToStaticMarkup(
-      createElement(StoryReader, { story, ready: true, onRead: () => true, onClose: () => {} }),
-    );
-    assert.doesNotMatch(html, /undefined|NaN/);
-    const lines = renderToStaticMarkup(createElement(StoryLines, { lines: story.lines }));
-    for (const [id, name] of [
-      ["merrill", "メリル"],
-      ["pumpety", "パンプティ"],
-      ["chacha", "チャチャ"],
-    ])
-      if (story.lines.some((l) => l.speaker === id)) {
-        assert.ok(lines.includes(name));
-        assert.ok(
-          lines.includes(
-            id === "pumpety"
-              ? "/portraits/pumpety-expressions.webp"
-              : "/portraits/dialogue-atlas.png",
-          ),
-        );
-      }
-  }
-  for (const [id, asset] of [
-    ["midnight-snack", "merrill"],
-    ["puppet-midnight", "pumpety"],
-  ]) {
-    let state = legacyTestState(1000, 60, 20, 100000);
-    state = act(state, { type: "start", id }, 1000);
-    const html = renderToStaticMarkup(
-      createElement(MapStage, {
-        state,
-        squad: state.squads[0],
-        now: 1000,
-        onAction: () => {},
-        ready: true,
-        startQuest: id,
-      }),
-    );
-    assert.ok(adventureAssets(frameFor(state)).includes("/characters/" + asset + ".png"));
-    assert.doesNotMatch(html, /undefined|NaN/);
-  }
-});
 test("every restored expedition location renders with finite character coordinates", () => {
-  let state = act(initialState(1000), { type: "start", id: "herbs" }, 1000);
+  let state = begin();
   const visited = new Set();
   for (let i = 0; i < 10000 && visited.size < 15; i++) {
     const squad = state.squads[0],
@@ -359,7 +277,7 @@ test("every restored expedition location renders with finite character coordinat
           now: state.updatedAt,
           onAction: () => {},
           ready: true,
-          startQuest: "herbs",
+          startQuest: OPENING,
         }),
       );
       assert.match(html, new RegExp(`地点 ${node + 1}/15`));
@@ -375,45 +293,8 @@ test("every restored expedition location renders with finite character coordinat
   assert.equal(visited.size, 15);
 });
 
-test("all recruitment maps render every location with the accompanying candidate", () => {
-  for (const r of recruitments) {
-    let state = legacyTestState(1000, 60, 20, 10000000);
-    state.owned = state.owned.filter((id) => id !== r.hero);
-    state.wood = state.herbs = state.ore = 100000;
-    state.gear = 10;
-    state.done[r.rare.sources[0]] = r.rare.every * r.rare.count;
-    state = act(state, { type: "prepareRecruitment", id: r.hero }, 1000);
-    state = act(state, { type: "start", id: "join-" + r.hero }, 1000);
-    const visited = new Set();
-    for (let i = 0; state.squads[0].run && i < 20000; i++) {
-      const squad = state.squads[0],
-        node = squad.run.node;
-      if (!visited.has(node)) {
-        const html = renderToStaticMarkup(
-          createElement(MapStage, {
-            state,
-            squad,
-            now: state.updatedAt,
-            onAction: () => {},
-            ready: true,
-            startQuest: "herbs",
-          }),
-        );
-        assert.match(html, /が同行中/);
-        assert.ok(html.includes(r.mission.region));
-        assert.ok(html.includes(r.name));
-        assert.doesNotMatch(html, /NaN|undefined%/);
-        visited.add(node);
-      }
-      state = settle(state, state.squads[0].run.nextAt).state;
-    }
-    assert.equal(visited.size, 15, r.hero);
-    assert.ok(state.owned.includes(r.hero));
-  }
-});
-
 test("effects follow current events, expire on resume, and do not alter the save", () => {
-  const state = act(initialState(1000), { type: "start", id: "herbs" }, 1000),
+  const state = begin(),
     squad = state.squads[0],
     run = squad.run;
   run.node = 1;
@@ -438,7 +319,7 @@ test("effects follow current events, expire on resume, and do not alter the save
         now,
         onAction: () => {},
         ready: true,
-        startQuest: "herbs",
+        startQuest: OPENING,
       }),
     );
   const current = render(2200);
@@ -452,28 +333,6 @@ test("effects follow current events, expire on resume, and do not alter the save
   assert.deepEqual(state, before);
 });
 
-test("all discovery kinds render their artwork before and after automatic collection", () => {
-  const state = act(initialState(1000), { type: "start", id: "herbs" }, 1000),
-    squad = state.squads[0];
-  for (const kind of ["chest", "herb", "spirit"])
-    for (const claimed of [false, true]) {
-      squad.run.detour = { kind, claimed, node: 0, hero: "aria", at: 1500, finishAt: 2000 };
-      const html = renderToStaticMarkup(
-        createElement(MapStage, {
-          state,
-          squad,
-          now: 2100,
-          onAction: () => {},
-          ready: true,
-          startQuest: "herbs",
-        }),
-      );
-      assert.ok(adventureAssets(frameFor(state, 2100)).includes(`/items/${kind}.png`));
-      assert.equal(frameFor(state, 2100).discovery.kind, kind);
-      assert.doesNotMatch(html, /phaser-assist-controls|>寄り道<|>発見済み</);
-    }
-});
-
 function mapKey(state, key, ready = true, paused = false) {
   const tree = MapStage({
     state,
@@ -484,9 +343,9 @@ function mapKey(state, key, ready = true, paused = false) {
     },
     ready,
     paused,
-    startQuest: "herbs",
+    startQuest: OPENING,
   });
-  const map = tree.props.children
+  const map = [tree.props.children]
     .flat()
     .find((node) => node?.props?.className === "adventure-map phaser-map");
   return {
@@ -498,12 +357,11 @@ function mapKey(state, key, ready = true, paused = false) {
   };
 }
 test("keyboard map assistance works without separate buttons and respects input guards", () => {
-  const idle = initialState(1000);
+  const idle = initialPrologueState(1000);
   assert.equal(mapKey(idle, "Enter").map.props.tabIndex, undefined);
   assert.deepEqual(mapKey(idle, "Enter").press(), idle);
-  const state = act(idle, { type: "start", id: "herbs" }, 1000);
+  const state = begin(idle);
   const after = mapKey(state, "Enter").press();
-  assert.equal(after.squads[0].run.cheer, 5);
   assert.equal(after.squads[0].run.hits, 1);
   for (const [ready, paused] of [
     [false, false],
@@ -514,21 +372,20 @@ test("keyboard map assistance works without separate buttons and respects input 
   }
   assert.equal(
     adventureAction(
-      { squad: state.squads[0], ready: false, paused: false, now: 1000, startQuest: "herbs" },
+      { squad: state.squads[0], ready: false, paused: false, now: 1000, startQuest: OPENING },
       "help",
     ),
     null,
   );
 });
 test("resting keyboard assistance heals and H heals without striking", () => {
-  const state = act(initialState(1000), { type: "start", id: "herbs" }, 1000);
+  const state = begin();
   for (const health of Object.values(state.squads[0].run.health)) health.hp = 0;
   state.squads[0].run.phase = "rest";
   for (const key of ["Enter", " ", "h"]) {
     const after = mapKey(state, key).press().squads[0].run;
     assert.ok(Object.values(after.health).some((health) => health.hp > 0));
     assert.equal(after.phase, "move");
-    assert.equal(after.cheer, 5);
   }
   state.squads[0].run.phase = "work";
   state.squads[0].run.health.aria.hp = 10;
