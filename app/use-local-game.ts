@@ -126,7 +126,6 @@ export function useLocalGame(testToolsEnabled = false) {
         result.rewards.offline &&
         (result.rewards.count ||
           result.rewards.gold ||
-          result.rewards.wood ||
           result.rewards.herbs ||
           result.rewards.ore ||
           result.rewards.xp)

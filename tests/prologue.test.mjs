@@ -61,7 +61,6 @@ test("a pending detour in an older story save is forgotten and frees its explore
   assert.deepEqual(pending, before, "input save remains unchanged");
   assert.equal(restored.squads[0].run.detour, undefined, "the discovery is dropped");
   assert.equal(restored.gold, pending.gold, "no loot is awarded");
-  assert.equal(restored.discoveries, 0);
   const freed = restored.squads[0].run.actors[0];
   assert.equal(freed.hero, explorer.hero);
   assert.equal(freed.nextAt, explorer.arrivesAt, "the explorer acts again from its arrival");
@@ -71,7 +70,6 @@ test("a pending detour in an older story save is forgotten and frees its explore
     resumed = settle(restored, 3601000).state;
   assert.equal(resumed.gold, clean.gold);
   assert.equal(resumed.herbs, clean.herbs);
-  assert.equal(resumed.discoveries, 0);
 });
 
 test("new profiles begin with the two villagers and only the repeatable trade quest", () => {
@@ -182,7 +180,6 @@ test("many trades never open the base, other quests or recruitment; legacy recor
   const s = initialPrologueState(1000);
   s.clears = 60;
   s.gold = 100000;
-  s.wood = 10000;
   assert.deepEqual(
     availableQuests(s).map((q) => q.id),
     [TRADE_QUEST],

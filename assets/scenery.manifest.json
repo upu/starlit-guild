@@ -1,25 +1,6 @@
 {
   "version": 1,
   "files": {
-    "cave.png": {
-      "sourceHash": "23b473f98cdce1c8be1891a73ff8f25eac98ca48edea419f0f84b3a5bb2c5aab",
-      "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
-      "sourceBytes": 2912778,
-      "outputs": {
-        "thumbnail": {
-          "hash": "504fc020d7c23179749141803e47f548ef997b29ca8a7386f26bf5bdd41dd71d",
-          "bytes": 16320
-        },
-        "detail": {
-          "hash": "3dd078500507add537dd052901432abf2c16aea325d79bc92177f2e50a09fb67",
-          "bytes": 87134
-        },
-        "background": {
-          "hash": "c85a7e84f7fb3ec936b812a48bf20f9aafeaac118b5fa86da2ea0d7d2b812fe4",
-          "bytes": 334748
-        }
-      }
-    },
     "evening-trade-road.png": {
       "sourceHash": "88a7f522efe901d1ddc102bfae91e1cf9f13df00e4acad7d487eb2080aad2387",
       "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
@@ -134,25 +115,6 @@
         }
       }
     },
-    "ruins.png": {
-      "sourceHash": "66f865a453a137757a645dfb44d4e3f7447f820a22bb8a99d5b084e32f323fe0",
-      "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
-      "sourceBytes": 2855029,
-      "outputs": {
-        "thumbnail": {
-          "hash": "7fd5f137cf6b35109fd8a7a39c2c72cf9ada3a6347da8c51d2e604d6484b0396",
-          "bytes": 16406
-        },
-        "detail": {
-          "hash": "2292855170c517307a1555830e32bdb7204c32a5a16862639a0656f6b7449455",
-          "bytes": 76800
-        },
-        "background": {
-          "hash": "a8db2e98e315141b602cf4e9e0a0745953579a158c343279a39ce5a03e67ec6a",
-          "bytes": 294192
-        }
-      }
-    },
     "tower-drainage-open.png": {
       "sourceHash": "cc27eed54cae6620c1850cdb41c1cccb334e526c64cb36757a99db8fbe94bb3e",
       "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
@@ -207,25 +169,6 @@
         "background": {
           "hash": "c45ae6463cc009e0cc3309666e3c1d9a35b897bf1febfd6027bb29c3543a54bb",
           "bytes": 338222
-        }
-      }
-    },
-    "valley.png": {
-      "sourceHash": "baa5f3143824ba124cfc7cde9b34476f81594ab7dfcc2e4ed560144a417fd92b",
-      "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
-      "sourceBytes": 2960339,
-      "outputs": {
-        "thumbnail": {
-          "hash": "0e50c2d1ab463aee56bd0715c093c902d4d6736b9b1eacab3a22743e93b4118c",
-          "bytes": 26532
-        },
-        "detail": {
-          "hash": "26f411a6750644346f936d86a06b8f554af23ce23701eb75ed4dd82ea507319b",
-          "bytes": 105410
-        },
-        "background": {
-          "hash": "a3c7300ea5828d969e3cf0eb914c82f2e4fa6c6d6c2a00a1818ec4a705f1d487",
-          "bytes": 374462
         }
       }
     }

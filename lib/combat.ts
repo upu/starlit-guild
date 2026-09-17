@@ -45,7 +45,7 @@ export function combatRank(q: Quest) {
 }
 export function penetration(s: State, hero: string) {
   const weapon = equippedItems(s, hero).find((item) => item.slot === "weapon");
-  return level(s.xp[hero] || 0) - 1 + s.gear * 2 + (weapon?.tier || 0) * 3;
+  return level(s.xp[hero] || 0) - 1 + (weapon?.tier || 0) * 3;
 }
 export function reducedDamage(base: number, resistance: number, power: number) {
   return Math.max(

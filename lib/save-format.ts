@@ -198,26 +198,19 @@ const stateBase = z.object({
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
   story: storySchema.optional(),
-  wood: n,
-  town: count.max(2),
   friendship: keyedNumbers,
-  discoveries: count,
   gold: n,
   herbs: n,
   ore: n,
   owned: uniqueHeroes,
   xp: keyedNumbers,
-  gear: count.max(15),
-  camp: count.max(10),
   clears: count,
   done: keyedNumbers,
-  claimed: z.array(z.string().max(100)).max(100),
-  lastDaily: z.string().max(10),
   updatedAt: n,
   squads: z
     .array(
       z.object({
-        id: z.string().regex(/^party-[1-3]$/),
+        id: z.literal("party-1"),
         name: z.string().min(1).max(40),
         customName: z.string().min(1).max(20).optional(),
         members: uniqueHeroes,
@@ -229,10 +222,8 @@ const stateBase = z.object({
           .optional(),
       }),
     )
-    .min(1)
-    .max(3),
+    .length(1),
   log: z.array(z.object({ text: z.string().max(500), at: n })).max(40),
-  receipts: z.array(z.string().max(100)).max(64),
 });
 const stateSchema = stateBase.superRefine(validateState);
 export type Profile = { id: string; name: string; test: boolean; state: State };

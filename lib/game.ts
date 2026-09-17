@@ -344,25 +344,17 @@ export type State = {
   techniques?: Techniques;
   inventory?: Inventory;
   story?: StoryProgress;
-  wood: number;
-  town: number;
   friendship: Record<string, number>;
-  discoveries: number;
   gold: number;
   herbs: number;
   ore: number;
   owned: string[];
   xp: Record<string, number>;
-  gear: number;
-  camp: number;
   clears: number;
   done: Record<string, number>;
-  claimed: string[];
-  lastDaily: string;
   updatedAt: number;
   squads: Squad[];
   log: { text: string; at: number }[];
-  receipts: string[];
 };
 type LegacySharedRun = Omit<Run, "health"> & { hp: number; maxHp: number };
 type LegacySharedHealthState = Omit<State, "squads"> & {
@@ -374,7 +366,6 @@ export type Rewards = {
   xp: number;
   herbs: number;
   ore: number;
-  wood: number;
   offline: boolean;
   capped: boolean;
 };
@@ -406,27 +397,19 @@ export function initialState(now: number): State {
   return {
     version: 4,
     story: { departed: [], completed: [], read: [] },
-    wood: 0,
-    town: 0,
     friendship: {},
-    discoveries: 0,
     gold: 60,
     herbs: 0,
     ore: 0,
     owned: ["aria", "leon"],
     xp: {},
-    gear: 0,
-    camp: 0,
     clears: 0,
     done: {},
-    claimed: [],
-    lastDaily: "",
     updatedAt: now,
     squads: [
       { id: "party-1", name: "レオン・アリア", members: ["aria", "leon"], repeat: true, run: null },
     ],
     log: [{ at: now, text: "アリアとレオン、ふたりの旅が始まった。" }],
-    receipts: [],
   };
 }
 export function initialPrologueState(now: number): State {
@@ -437,12 +420,7 @@ export const activeBonds = (members: string[]) =>
 export function memberStats(s: State, id: string) {
   const h = heroById(id),
     bonus = equipmentBonus(s, id);
-  return h.stats.map(
-    (v, i) =>
-      Math.round(
-        v * (1 + 0.1 * (level(s.xp[id] || 0) - 1)) * (1 + 0.08 * s.gear + (s.town >= 2 ? 0.08 : 0)),
-      ) + bonus[i],
-  );
+  return h.stats.map((v, i) => Math.round(v * (1 + 0.1 * (level(s.xp[id] || 0) - 1))) + bonus[i]);
 }
 export function stats(s: State, sq: Squad) {
   return [0, 1, 2].map(
@@ -452,7 +430,7 @@ export function stats(s: State, sq: Squad) {
   );
 }
 export function memberMaxHp(s: State, id: string) {
-  return Math.round((40 + memberStats(s, id)[1] * 2) * (s.town >= 1 ? 1.1 : 1));
+  return Math.round(40 + memberStats(s, id)[1] * 2);
 }
 function memberHealth(r: Run, id: string) {
   if (!Object.hasOwn(r.health, id)) throw Error(`仲間「${id}」のHPが見つかりません。`);
@@ -524,7 +502,7 @@ export function targetName(q: Quest, node: number, nodes = 15) {
   if (kind === "escort") return q.escortTarget || "旅人を目的地へ";
   return enemyTargetName(q);
 }
-export const stepMs = (s: State) => Math.round(1050 * (1 - 0.035 * s.camp));
+export const stepMs = () => 1050;
 export function estimate(s: State, sq: Squad, q: Quest) {
   return Math.round(
     Array.from({ length: questNodes(q.id) }, (_, node) => estimateNode(s, sq, q, node)).reduce(
@@ -544,7 +522,7 @@ function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
         (techniqueMultiplier(s, id, kind, true, specialMultiplier(id)) -
           techniqueMultiplier(s, id, kind, false, 1)) /
           specialInterval(id),
-      period = (stepMs(s) * (0.8 + (heroes.findIndex((h) => h.id === id) % 4) * 0.13)) / 1000;
+      period = (stepMs() * (0.8 + (heroes.findIndex((h) => h.id === id) % 4) * 0.13)) / 1000;
     const hit = enemies.length
       ? reducedDamage(base * multiplier, enemies[0].resistance, penetration(s, id))
       : base * multiplier;
@@ -601,7 +579,7 @@ function schedule(s: State, sq: Squad, r: Run, at: number) {
     actions: 0,
     arrivesAt: at + travelMs(hero),
     nextAt: at + travelMs(hero),
-    period: Math.round(stepMs(s) * (0.8 + (heroes.findIndex((h) => h.id === hero) % 4) * 0.13)),
+    period: Math.round(stepMs() * (0.8 + (heroes.findIndex((h) => h.id === hero) % 4) * 0.13)),
   }));
   r.enemyAt = at + 3700;
   for (const [index, enemy] of (r.enemies || []).entries())
@@ -684,7 +662,7 @@ function awardExperience(s: State, sq: Squad, xp: number) {
 function awardFriendship(s: State, sq: Squad) {
   for (const bond of activeBonds(sq.members)) {
     const key = bondKey(bond.ids);
-    s.friendship[key] = (s.friendship[key] || 0) + (s.town >= 1 ? 2 : 1);
+    s.friendship[key] = (s.friendship[key] || 0) + 1;
   }
 }
 function reward(s: State, sq: Squad, q: Quest, at: number, finished: boolean) {
@@ -697,18 +675,16 @@ function reward(s: State, sq: Squad, q: Quest, at: number, finished: boolean) {
         ? Math.floor(totalGold / 5)
         : Math.floor((totalGold * (part + 1)) / portions) -
           Math.floor((totalGold * part) / portions);
-  const herbs = (q.herbs / portions + (s.town >= 2 ? 2 : 0)) * techniqueHerbs(s, sq.members),
+  const herbs = (q.herbs / portions) * techniqueHerbs(s, sq.members),
     ore = q.ore / portions,
-    xp = q.xp / portions,
-    wood = q.tier + 2;
+    xp = q.xp / portions;
   s.gold += gold;
   s.herbs += herbs;
   s.ore += ore;
-  s.wood += wood;
   if (finished) finishQuest(s, sq, q);
   awardExperience(s, sq, xp);
   awardFriendship(s, sq);
-  return { gold, xp, herbs, ore, wood, at, finished };
+  return { gold, xp, herbs, ore, at, finished };
 }
 function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   const r = activeRun(sq);
@@ -722,18 +698,12 @@ function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   );
   const finished = r.node === r.nodes - 1;
   const gain = (r.node + 1) % 3 === 0 || finished ? reward(s, sq, q, at, finished) : null;
-  if (gain)
-    event(
-      r,
-      at,
-      "clear",
-      "区間の報酬を確保！ +" + String(gain.gold) + " G · 木材 +" + String(gain.wood),
-    );
+  if (gain) event(r, at, "clear", "区間の報酬を確保！ +" + String(gain.gold) + " G");
   if (!finished) {
     r.node++;
     r.phase = "move";
     r.phaseAt = at;
-    healAll(r, s.town >= 2 ? 0.2 : 0.15);
+    healAll(r, 0.15);
     configureTarget(r, q);
     schedule(s, sq, r, at);
     return gain;
@@ -992,7 +962,6 @@ function collectReward(rewards: Rewards, gain: ReturnType<typeof reward> | null)
   rewards.xp += gain.xp;
   rewards.herbs += gain.herbs;
   rewards.ore += gain.ore;
-  rewards.wood += gain.wood;
   return gain.finished;
 }
 function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
@@ -1035,7 +1004,6 @@ export function settle(input: State, now: number) {
     xp: 0,
     herbs: 0,
     ore: 0,
-    wood: 0,
     offline: elapsed > 90000,
     capped: elapsed > 43200000,
   };
@@ -1045,7 +1013,6 @@ export function settle(input: State, now: number) {
   rewards.gold = s.gold - input.gold;
   rewards.herbs = s.herbs - input.herbs;
   rewards.ore = s.ore - input.ore;
-  rewards.wood = s.wood - input.wood;
   return { state: s, rewards };
 }
 function upgradeSharedHealth(input: State | LegacySharedHealthState): State {
@@ -1259,7 +1226,7 @@ function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
     index = statIndex(encounter(q, r.node)),
     members = sq.members.filter((id) => memberHealth(r, id).hp > 0),
     power = members.reduce((sum, id) => sum + penetration(s, id), 0) / Math.max(1, members.length),
-    hit = damageEnemy(r, Math.max(2, Math.round(2 + s.gear + stats(s, sq)[index] * 0.035)), power);
+    hit = damageEnemy(r, Math.max(2, Math.round(2 + stats(s, sq)[index] * 0.035)), power);
   event(r, now, "assist", "手助け！", hit.amount, undefined, undefined, hit.enemy);
 }
 function finishAssist(s: State, sq: Squad, r: Run, now: number) {

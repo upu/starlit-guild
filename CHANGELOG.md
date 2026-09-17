@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.2.19 | 2026-09-17 | 保存形式から従来モード専用フィールドを外す（#88 の第四段）（[#99](https://github.com/upu/starlit-guild/pull/99)） |
 | 0.2.18 | 2026-09-17 | 旧クエストと旧仲間のデータを削除する（#88 の第三段）（[#98](https://github.com/upu/starlit-guild/pull/98)） |
 | 0.2.17 | 2026-09-17 | 従来モードの画面と処理を削除する（#88 の第二段）（[#97](https://github.com/upu/starlit-guild/pull/97)） |
 | 0.2.16 | 2026-09-17 | v1〜v3の保存形式と移行コードを削除し、削除の判断基準を定める（[#95](https://github.com/upu/starlit-guild/pull/95)） |
