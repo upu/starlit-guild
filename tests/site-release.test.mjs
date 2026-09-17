@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,6 +16,7 @@ import {
 const sha = "a".repeat(40),
   canonical = { project_id: targets.production.projectId, d1: "DB", r2: null };
 const checker = fileURLToPath(new URL("../scripts/check-site-release.mjs", import.meta.url));
+const preparer = fileURLToPath(new URL("../scripts/prepare-site-manifest.mjs", import.meta.url));
 const observation = (target = "preview", mode = "test") => ({
   mode,
   site: {
@@ -177,10 +178,30 @@ test("delivery commit permits manifest adaptation but rejects uncommitted or unr
       }),
       /^PASS: production/,
     );
-    writeFileSync(
-      join(cwd, ".openai/hosting.json"),
-      JSON.stringify({ ...canonical, project_id: targets.preview.projectId }),
+    assert.throws(() =>
+      execFileSync(process.execPath, [preparer], {
+        cwd,
+        env: { ...process.env, SITE_TARGET: "invalid", SOURCE_COMMIT: source },
+        stdio: ["ignore", "pipe", "pipe"],
+      }),
     );
+    assert.deepEqual(
+      JSON.parse(readFileSync(join(cwd, ".openai/hosting.json"), "utf8")),
+      canonical,
+    );
+    writeFileSync(join(cwd, "game.txt"), "unrelated change");
+    assert.throws(() =>
+      execFileSync(process.execPath, [preparer], {
+        cwd,
+        env: { ...process.env, SITE_TARGET: "preview", SOURCE_COMMIT: source },
+        stdio: ["ignore", "pipe", "pipe"],
+      }),
+    );
+    git("restore", "game.txt");
+    execFileSync(process.execPath, [preparer], {
+      cwd,
+      env: { ...process.env, SITE_TARGET: "preview", SOURCE_COMMIT: source },
+    });
     assert.throws(() => checkSource(source, cwd));
     commit("preview target");
     checkSource(source, cwd);
