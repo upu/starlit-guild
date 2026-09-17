@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialPrologueState, initialState, act, settle, memberStats } from "../lib/game.ts";
+import { initialPrologueState, testState, act, settle, memberStats } from "../lib/game.ts";
 import { shopItems, inventoryOf, availableCopies, equipmentById } from "../lib/equipment.ts";
 import { storyItems } from "../lib/story-items.ts";
 import {
@@ -210,17 +210,11 @@ test("story inventory follows handovers and discoveries without spoilers or dupl
     before,
   );
 });
-test("legacy parties share equipment across squads without changing recruitment records", () => {
-  let s = initialState(1000);
-  s.clears = 10;
-  s.gold = 1000;
-  s.owned.push("mira", "finn");
-  s = action(s, { type: "newSquad" });
-  const before = structuredClone(s.recruitment);
-  s = action(s, { type: "buy", id: "leather-vest", squad: "party-2" });
+test("armour bought once is worn by one companion and stays in the save", () => {
+  let s = testState(1000, 12, 1, 1000);
+  s = action(s, { type: "buy", id: "leather-vest" });
   s = action(s, { type: "equip", hero: "mira", slot: "armor", id: "leather-vest" });
   assert.equal(availableCopies(s, "leather-vest"), 0);
-  assert.deepEqual(s.recruitment, before);
   assert.doesNotThrow(() => parseBundle(bundle(s)));
   assert.ok(equipmentById("leather-vest"));
 });

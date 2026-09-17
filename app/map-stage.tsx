@@ -1,8 +1,6 @@
 "use client";
 import { chapterTwoEnemyAsset } from "@/lib/chapter-two";
 import type { KeyboardEvent } from "react";
-import { Sparkles } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 import { PhaserAdventure } from "./phaser-adventure";
 import { BurstScene } from "./battle-effects";
 import {
@@ -10,8 +8,7 @@ import {
   adventureFrame,
   type AdventureIntent,
 } from "@/lib/adventure-presentation";
-import { inPrologue } from "@/lib/prologue";
-import { heroes, type State, type Squad, type Action } from "@/lib/game";
+import { type State, type Squad, type Action } from "@/lib/game";
 
 function activityLabel(frame: ReturnType<typeof adventureFrame>) {
   if (frame.phase === "move") return "次の地点へ移動中";
@@ -67,9 +64,6 @@ function JourneyOverlay({
             .join("、")}
           。
         </span>
-        {frame.quest.companion && (
-          <span>{heroes.find((h) => h.id === frame.quest.companion)?.name}が同行中。</span>
-        )}
         <span>
           {frame.targets
             .map((target) =>
@@ -81,21 +75,6 @@ function JourneyOverlay({
         </span>
       </div>
     </>
-  );
-}
-function CheerGauge({ state, run }: { state: State; run: Squad["run"] }) {
-  if (inPrologue(state)) return null;
-  const cheer = run?.cheer || 0;
-  return (
-    <div className={`cheer-gauge ${cheer >= 80 ? "charged" : ""}`}>
-      <div>
-        <Sparkles size={17} />
-        <span>団長の応援</span>
-        <b>{cheer} / 100</b>
-      </div>
-      <Progress value={cheer} aria-label="団長の応援ゲージ" />
-      <small>タップで +5。満タンになると全員で必殺技！</small>
-    </div>
   );
 }
 
@@ -122,7 +101,6 @@ export function MapStage({
       ready,
       startQuest,
       paused,
-      detours: !inPrologue(state),
       restorationComplete: !!state.done["tower-restoration"],
     },
     frame = adventureFrame(input),
@@ -164,7 +142,6 @@ export function MapStage({
         </div>
         <JourneyOverlay squad={squad} now={now} frame={frame} />
       </div>
-      <CheerGauge state={state} run={run} />
     </div>
   );
 }

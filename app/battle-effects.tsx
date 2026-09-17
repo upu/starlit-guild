@@ -22,7 +22,7 @@ export function BattleEffects({
         e.id.startsWith(`${String(run.round)}-${String(run.node)}-`) &&
         now >= e.at &&
         now - e.at < 1000 &&
-        ["hit", "skill", "heal", "hurt", "burst", "assist", "gather"].includes(e.kind),
+        ["hit", "skill", "heal", "hurt", "assist", "gather"].includes(e.kind),
     )
     .slice(-8);
   return (
@@ -53,7 +53,7 @@ function Impact({
   const pos = support ? location : point;
   return (
     <div
-      className={`battle-impact fx-${style} ${e.kind === "skill" || e.kind === "burst" ? "empowered" : ""}`}
+      className={`battle-impact fx-${style} ${e.kind === "skill" ? "empowered" : ""}`}
       style={
         {
           left: `${String(pos[0])}%`,
@@ -78,12 +78,9 @@ function Impact({
 
 export function BurstScene({ run, members, now }: { run: Run; members: string[]; now: number }) {
   const scene = run.scene;
-  if (!scene || now < scene.at || now - scene.at >= (scene.kind === "burst" ? 1900 : 2600))
-    return null;
+  if (!scene || now < scene.at || now - scene.at >= 2600) return null;
   const participants =
-    scene.kind === "combo"
-      ? activeBonds(members).find((b) => scene.title.startsWith(b.name))?.ids || members
-      : members;
+    activeBonds(members).find((b) => scene.title.startsWith(b.name))?.ids || members;
   return (
     <Finisher
       key={`${String(scene.at)}-${scene.kind}`}
@@ -100,13 +97,6 @@ function Finisher({ scene, members, now }: { scene: Scene; members: string[]; no
       className={`finisher-scene ${scene.kind}`}
       style={{ "--scene-age": `${String(-age)}ms` } as CSSProperties}
     >
-      {scene.kind === "burst" && (
-        <div className="starlight-wave" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </div>
-      )}
       <div className="finisher-banner" role="status">
         <div className="finisher-portraits" aria-hidden="true">
           {members.map((id, i) => (

@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.2.17 | 2026-09-17 | 従来モードの画面と処理を削除する（#88 の第二段）（[#97](https://github.com/upu/starlit-guild/pull/97)） |
 | 0.2.16 | 2026-09-17 | v1〜v3の保存形式と移行コードを削除し、削除の判断基準を定める（[#95](https://github.com/upu/starlit-guild/pull/95)） |
 | 0.2.15 | 2026-09-17 | 1-9のスチルをフードを外したアリアと淡紫の塔灯りに差し替え（[#94](https://github.com/upu/starlit-guild/pull/94)） |
 | 0.2.14 | 2026-09-16 | 従来記録を読み込まないようにする（#88 の第一段）（[#92](https://github.com/upu/starlit-guild/pull/92)） |

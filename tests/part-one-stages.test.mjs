@@ -193,7 +193,6 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
         startQuest: WETLAND_QUEST,
       });
     nodes.add(run.node);
-    assert.equal(run.detour, null);
     assert.equal(frame.background, q.background);
     assert.ok(existsSync(new URL("../public" + frame.background, import.meta.url)));
     assert.equal(frame.target.kind, "gather");
@@ -284,7 +283,6 @@ test("waterway exploration and restoration follow fieldwork order with small bat
           startQuest: id,
         });
       nodes.set(run.node, frame.target);
-      assert.equal(run.detour, null);
       assert.deepEqual(
         frame.members.map((m) => m.id),
         ["aria", "leon"],
@@ -393,7 +391,6 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
         frame.members.map((m) => m.id),
         ["aria", "leon"],
       );
-      assert.equal(run.detour, null);
       assert.ok(
         journeyBanter(s, s.squads[0], s.updatedAt).every((line) =>
           ["aria", "leon"].includes(line.speaker),
@@ -481,7 +478,6 @@ test("evening has more small encounters; town work has cargo, no battles or dama
           ["aria", "leon"].includes(line.speaker),
         ),
       );
-      assert.equal(run.detour, null);
       if (id === TOWN_QUEST) {
         assert.ok(Object.values(run.health).every((health) => health.hp === health.maxHp));
         assert.ok(

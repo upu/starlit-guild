@@ -57,9 +57,9 @@ export function heroAnimation(
   if (hurt) return pose(10 + Math.min(1, Math.floor((now - hurt.at) / 160)));
   const hit = member.hit,
     age = hit ? now - hit.at : Infinity;
-  if (!member.exploring && hit && hit.kind !== "gather" && age >= 0 && age < 650)
+  if (hit && hit.kind !== "gather" && age >= 0 && age < 650)
     return pose(4 + Math.min(3, Math.floor(age / 162.5)));
-  if (member.walking || member.exploring) return pose(Math.floor(now / 150) % 4);
+  if (member.walking) return pose(Math.floor(now / 150) % 4);
   // The second idle drawing closes the eyes; keep it a brief blink, not a long nap.
   return pose(now % 3600 >= 3450 ? 9 : 8);
 }

@@ -1,16 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import {
-  act,
-  settle,
-  initialState,
-  initialPrologueState,
-  legacyTestState,
-  allQuests,
-  estimate,
-} from "../lib/game.ts";
+import { act, settle, initialPrologueState, testState, allQuests, estimate } from "../lib/game.ts";
 import { journeyNotice } from "../lib/journey.ts";
-import { stageEndingPending } from "../lib/prologue.ts";
+import { nextStage, stageEndingPending, storyStages } from "../lib/prologue.ts";
 import {
   createEnemies,
   combatRank,
@@ -42,12 +34,13 @@ function bundle(state) {
     legacyImported: true,
   };
 }
+// The tower road is the first story stage whose nodes field a group of three.
+function storyRun(stages, level, gold = 1000) {
+  const source = testState(1000, stages, level, gold);
+  return act(source, { type: "start", id: nextStage(source).quest }, 1000);
+}
 function group() {
-  let state = act(
-    legacyTestState(1000, 4, 1, 1000),
-    { type: "start", id: "slime", value: false },
-    1000,
-  );
+  let state = storyRun(3, 1);
   for (let i = 0; state.squads[0].run.enemies.length !== 3 && i < 1000; i++)
     state = settle(state, state.squads[0].run.nextAt).state;
   assert.equal(state.squads[0].run.enemies.length, 3);
@@ -62,12 +55,14 @@ test("resistance scales damage by the growth gap, respects rounding and never dr
   assert.equal(reducedDamage(20, 30, 30), 20);
   assert.equal(reducedDamage(20, 30, 100), 20);
   assert.equal(reducedDamage(20, 10000, 0), 1);
-  const q = allQuests.find((q) => q.id === "dragon");
-  assert.ok(createEnemies(q, 0, 0)[0].maxHp < 200);
+  for (const { quest } of storyStages) {
+    const q = allQuests.find((item) => item.id === quest);
+    assert.ok(createEnemies(q, 0, 0)[0].maxHp < 200, quest);
+  }
 });
 
 test("levels, equipped weapons and gear overcome resistance without a new saved currency", () => {
-  const s = legacyTestState(1000, 60, 5, 1000);
+  const s = testState(1000, storyStages.length, 5, 1000);
   assert.equal(penetration(s, "aria"), 4);
   const bought = act(s, { type: "buy", id: "ash-bow" }, 1000);
   assert.equal(penetration(bought, "aria"), 4);
@@ -115,12 +110,8 @@ test("opponents have independent attack clocks and defeated opponents stop attac
   assert.ok(later.squads[0].run.events.every((e) => e.kind !== "hurt" || e.enemy !== "enemy-1"));
 });
 
-test("normal, special, combo, assist and burst attacks all respect the same resistance", () => {
-  let state = act(
-    legacyTestState(1000, 60, 1, 1000),
-    { type: "start", id: "dragon", value: false },
-    1000,
-  );
+test("normal, special, combo and assist attacks all respect the same resistance", () => {
+  let state = storyRun(15, 1);
   const seen = new Map();
   for (let i = 0; i < 20; i++) state = act(state, { type: "assist", mode: "strike" }, 1000);
   for (const event of state.squads[0].run.events)
@@ -130,8 +121,7 @@ test("normal, special, combo, assist and burst attacks all respect the same resi
     for (const event of state.squads[0].run.events)
       if (event.enemy && event.kind !== "hurt") seen.set(event.kind, event.amount);
   }
-  for (const kind of ["hit", "skill", "combo", "assist", "burst"])
-    assert.equal(seen.get(kind), 1, kind);
+  for (const kind of ["hit", "skill", "combo", "assist"]) assert.equal(seen.get(kind), 1, kind);
 });
 
 test("saving partially defeated groups roundtrips HP, clocks, events and offline results", () => {
@@ -142,21 +132,19 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
   r.nextAt = Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
   const parsed = parseBundle(bundle(source)).profiles[0].state;
   assert.deepEqual(parsed, { ...source, prologue: true });
-  const end = source.updatedAt + 60000,
+  // Stop short of the clear so the comparison stays about an unfinished battle.
+  const end = source.updatedAt + 30000,
     bulk = settle(parsed, end).state;
   let live = parsed;
   for (let now = parsed.updatedAt + 100; now < end; now += 100) live = settle(live, now).state;
   live = settle(live, end).state;
+  assert.ok(live.squads[0].run);
   assert.deepEqual(live, bulk);
   assert.doesNotThrow(() => parseBundle(bundle(bulk)));
 });
 
-test("legacy active battles keep exact progress and switch to groups at the next node", () => {
-  let state = act(
-    legacyTestState(1000, 4, 8, 1000),
-    { type: "start", id: "slime", value: false },
-    1000,
-  );
+test("saved battles without a group keep exact progress and regroup at the next node", () => {
+  let state = storyRun(3, 8);
   const r = state.squads[0].run;
   delete r.enemies;
   r.target = 17;
@@ -188,9 +176,11 @@ test("save validation rejects duplicate enemies, inconsistent totals and backwar
     mutate(state.squads[0].run);
     assert.throws(() => parseBundle(bundle(state)));
   }
-  const gathering = act(initialState(1000), { type: "start", id: "herbs" }, 1000);
+  const source = testState(1000, 0, 1, 1000),
+    gatheringQuest = nextStage(source).quest;
+  const gathering = act(source, { type: "start", id: gatheringQuest }, 1000);
   gathering.squads[0].run.enemies = createEnemies(
-    allQuests.find((q) => q.id === "herbs"),
+    allQuests.find((q) => q.id === gatheringQuest),
     0,
     1000,
   );
@@ -256,20 +246,12 @@ test("the first chapter needs training after its introduction, with the same gro
   const blocked = records.find((row) => row.quest === "old-waterway");
   assert.equal(blocked.cleared, false);
   assert.ok(blocked.rests > 0);
-  for (const quest of ["wolf", "dragon"]) {
-    const [weak, strong] = records.filter((row) => row.quest === quest);
-    assert.equal(weak.cleared, false);
-    assert.ok(weak.rests > 0);
-    assert.equal(strong.cleared, true);
-    assert.equal(strong.rests, 0);
-  }
   assert.ok(Math.max(...records.map((r) => r.maxEnemyHp)) < 200);
-  const s = legacyTestState(1000, 60, 1, 1000),
-    q = allQuests.find((q) => q.id === "wolf"),
-    grown = legacyTestState(1000, 60, 18, 1000);
-  grown.gear = 3;
+  const s = testState(1000, storyStages.length, 1, 1000),
+    q = allQuests.find((item) => item.id === "sweet-blockade"),
+    grown = testState(1000, storyStages.length, 18, 1000);
   assert.ok(estimate(grown, grown.squads[0], q) < estimate(s, s.squads[0], q));
-  assert.equal(combatRank(q), 18);
+  assert.equal(combatRank(q), 25);
 });
 
 test("weapons allow earlier clears, more levels work without new equipment, and actual farming reaches the finale", () => {
@@ -327,11 +309,7 @@ test("only read first-chapter stages farm automatically, earn XP offline and can
 });
 
 test("offline cap shifts stored enemy clocks by exactly the unprocessed time", () => {
-  const source = act(
-    legacyTestState(1000, 60, 1, 1000),
-    { type: "start", id: "dragon", value: false },
-    1000,
-  );
+  const source = storyRun(15, 1);
   const regular = settle(source, 1000 + 43200000).state,
     capped = settle(source, 1000 + 86400000).state;
   assert.ok(regular.squads[0].run);

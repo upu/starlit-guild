@@ -18,9 +18,7 @@ const roles: Record<string, string> = {
   noel: "song",
 };
 const priorities: Record<string, number> = {
-  burst: 9,
   combo: 8,
-  discovery: 7,
   clear: 6,
   skill: 5,
   heal: 4,
@@ -103,7 +101,7 @@ function whoosh(at: number, frequency: number, duration: number, volume: number)
   source.start(at);
   source.stop(at + duration);
 }
-/** One foreground cue per simulation batch; a burst wins over ordinary hits. */
+/** One foreground cue per simulation batch; a combo wins over ordinary hits. */
 export function soundEvents(events: GameEvent[]) {
   const event = events.reduce<GameEvent | undefined>(
     (best, e) => ((priorities[e.kind] || 0) > (best ? priorities[best.kind] || 0 : 0) ? e : best),
@@ -112,20 +110,18 @@ export function soundEvents(events: GameEvent[]) {
   if (event) sound(event.kind, false, event.hero);
 }
 function reserveCue(kind: string, manual: boolean, now: number) {
-  const accent = ["burst", "combo", "discovery", "clear"].includes(kind);
+  const accent = ["combo", "clear"].includes(kind);
   if (accent && now - lastAccent < 0.5) return null;
   if (!accent && (now < quietUntil || now - last < (manual ? 0.07 : 0.12))) return null;
   if (accent) {
     lastAccent = now;
-    quietUntil = now + (kind === "burst" ? 0.85 : 0.4);
+    quietUntil = now + 0.4;
   }
   last = now;
   return accent;
 }
 function accentNotes(kind: string) {
-  if (kind === "burst") return [262, 392, 523, 659, 784, 1047];
   if (kind === "combo") return [392, 494, 587, 784];
-  if (kind === "discovery") return [784, 988, 1319];
   return [523, 659, 784, 1047];
 }
 function playAccent(kind: string, now: number) {
@@ -133,10 +129,6 @@ function playAccent(kind: string, now: number) {
     tone(note, now + index * 0.085, 0.38, 0.085, "sine");
     tone(note * 2, now + index * 0.085, 0.25, 0.022, "triangle");
   });
-  if (kind === "burst") {
-    whoosh(now + 0.24, 800, 0.35, 0.16);
-    tone(110, now + 0.3, 0.38, 0.12, "triangle", 45);
-  }
 }
 function playMagic(kind: string, now: number, volume: number) {
   tone(330, now, 0.2, volume, "sine", 880);

@@ -1,18 +1,10 @@
 import { PICNIC_QUEST, MOON_HERB_QUEST } from "./chapter-two.ts";
 import type { State } from "./game.ts";
-import {
-  inPrologue,
-  TRADE_QUEST,
-  RETURN_QUEST,
-  TOWER_QUEST,
-  NIGHT_QUEST,
-  WETLAND_QUEST,
-} from "./prologue.ts";
+import { TRADE_QUEST, RETURN_QUEST, TOWER_QUEST, NIGHT_QUEST, WETLAND_QUEST } from "./prologue.ts";
 
 export type StoryItem = { id: string; name: string; description: string; image?: string };
 // Derive unique story objects from first readings. Replays and repeat quests never mint copies.
 export function storyItems(s: State): StoryItem[] {
-  if (!inPrologue(s)) return [];
   const read = (quest: string) => s.story?.read.includes(quest + "-return") ?? !!s.done[quest];
   const items: StoryItem[] = [];
   if (!read(TRADE_QUEST))

@@ -242,15 +242,11 @@ export function ConversationReader({
 export function memoryGroups(items: Story[]) {
   const questIds = [
     ...storyStages.map((stage) => stage.quest),
-    ...new Set(
-      items
-        .filter((st) => st.chapter === "departure" || st.chapter === "return")
-        .flatMap((st) => (st.quest ? [st.quest] : [])),
-    ),
+    ...new Set(items.flatMap((st) => (st.quest ? [st.quest] : []))),
   ];
   const journey = [...new Set(questIds)].flatMap((id) => {
     const entries = items
-      .filter((st) => st.quest === id && (st.chapter === "departure" || st.chapter === "return"))
+      .filter((st) => st.quest === id)
       .sort((a, b) => Number(a.chapter === "return") - Number(b.chapter === "return"));
     const stage = storyStages.find((stage) => stage.quest === id),
       quest = allQuests.find((q) => q.id === id);
@@ -265,24 +261,7 @@ export function memoryGroups(items: Story[]) {
         ]
       : [];
   });
-  const other = (["camp", "encounter", "recruitment"] as const).flatMap((chapter) => {
-    const entries = items.filter((st) => st.chapter === chapter);
-    return entries.length
-      ? [
-          {
-            id: chapter,
-            title:
-              chapter === "camp"
-                ? "拠点の日常"
-                : chapter === "encounter"
-                  ? "仲間と来客"
-                  : "仲間になるまで",
-            items: entries,
-          },
-        ]
-      : [];
-  });
-  return [...journey, ...other];
+  return journey;
 }
 
 export function StoryAlbum({ state: s, onBack }: { state: State; onBack: () => void }) {
@@ -386,11 +365,7 @@ export function StoryLibrary({
             >
               <span>
                 <small>
-                  {st.chapter === "departure"
-                    ? "出発前"
-                    : st.chapter === "return"
-                      ? "達成後"
-                      : st.place}
+                  {st.chapter === "departure" ? "出発前" : "達成後"}
                   {!read.includes(st.id) && " · 未読"}
                 </small>
                 <b>{st.title}</b>

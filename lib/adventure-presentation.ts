@@ -23,11 +23,10 @@ export type AdventureInput = {
   now: number;
   ready: boolean;
   paused: boolean;
-  detours?: boolean;
   restorationComplete?: boolean;
 };
 export type Point = { x: number; y: number };
-export type AdventureIntent = "help" | "heal" | "detour" | `heal:${string}`;
+export type AdventureIntent = "help" | "heal" | `heal:${string}`;
 const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 // Mira's map figure follows her character reference; dialogue portraits stay independent.
 export const spriteAsset = (index: number) =>
@@ -71,31 +70,6 @@ function memberPosition(
   const y = run ? target.y + 0.08 * (1 - progress) : 0.65 + (index % 2) * 0.03;
   return { x, y };
 }
-function explorationPosition(
-  input: AdventureInput,
-  run: ActiveRun | null,
-  id: string,
-  now: number,
-  position: Point,
-) {
-  const detour = input.detours === false ? null : run?.detour;
-  if (
-    !run ||
-    !detour ||
-    detour.hero !== id ||
-    detour.node !== run.node ||
-    detour.claimed ||
-    now < detour.at ||
-    run.phase === "rest"
-  )
-    return { ...position, exploring: false };
-  const t = clamp((now - detour.at) / 1400);
-  return {
-    x: position.x + (0.54 - position.x) * t,
-    y: position.y + (0.82 - position.y) * t,
-    exploring: true,
-  };
-}
 function memberVitals(run: ActiveRun | null, id: string) {
   if (!run) return { hp: 0, maxHp: 1, health: 1, down: false };
   const health = run.health[id];
@@ -119,18 +93,12 @@ function adventureMember(
   if (!hero) throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
   const actor = run?.actors.find((a) => a.hero === id),
     lastHit = events
-      .filter((e) => e.hero === id && ["hit", "gather", "skill", "burst", "heal"].includes(e.kind))
+      .filter((e) => e.hero === id && ["hit", "gather", "skill", "heal"].includes(e.kind))
       .at(-1);
   const age = lastHit ? now - lastHit.at : Infinity,
     attack = age < 650 ? Math.sin((age / 650) * Math.PI) : 0,
     target = memberTarget(skill.style, index);
-  const position = explorationPosition(
-      input,
-      run,
-      id,
-      now,
-      memberPosition(input.squad, run, target, id, index, now),
-    ),
+  const position = memberPosition(input.squad, run, target, id, index, now),
     vitals = memberVitals(run, id);
   return {
     id,
@@ -140,27 +108,13 @@ function adventureMember(
     x: position.x,
     y: position.y,
     walking: !!run && run.phase !== "rest" && !vitals.down && now < (actor?.arrivesAt || 0),
-    exploring: position.exploring,
-    attack: position.exploring || vitals.down ? 0 : attack,
+    attack: vitals.down ? 0 : attack,
     hit: lastHit,
     ...vitals,
   };
 }
-function frameDiscovery(input: AdventureInput, run: ActiveRun | null, now: number) {
-  const detour = input.detours === false ? null : run?.detour;
-  return detour &&
-    detour.node === run?.node &&
-    now >= detour.at &&
-    (!detour.claimed || now - detour.finishAt < 1000)
-    ? { ...detour, x: 0.72, y: 0.84 }
-    : null;
-}
 function frameCutin(run: ActiveRun | null, now: number) {
-  return run?.scene &&
-    now >= run.scene.at &&
-    now - run.scene.at < (run.scene.kind === "burst" ? 1900 : 2600)
-    ? run.scene
-    : null;
+  return run?.scene && now >= run.scene.at && now - run.scene.at < 2600 ? run.scene : null;
 }
 function targetAsset(
   quest: (typeof allQuests)[number],
@@ -287,8 +241,7 @@ export function adventureFrame(input: AdventureInput, now = input.now) {
     : `${squad.id}:idle:${quest.id}`;
   const events = recentEvents(run, now),
     members = squad.members.map((id, index) => adventureMember(input, run, events, now, id, index));
-  const discovery = frameDiscovery(input, run, now),
-    cutin = frameCutin(run, now),
+  const cutin = frameCutin(run, now),
     targets = frameTargets(quest, run, kind, now),
     target = targets.find((target) => !target.down) ?? targets.at(0) ?? null;
   const drained =
@@ -301,7 +254,6 @@ export function adventureFrame(input: AdventureInput, now = input.now) {
     members,
     target,
     targets,
-    discovery,
     events,
     cutin,
     ward: run?.ward || 0,
@@ -314,14 +266,9 @@ export function memberHealthLabel(
   return member.down ? `${member.name} · 戦闘不能` : member.name;
 }
 
-export function adventureAction(
-  input: AdventureInput,
-  intent: AdventureIntent,
-  now = input.now,
-): Action | null {
+export function adventureAction(input: AdventureInput, intent: AdventureIntent): Action | null {
   const run = input.squad.run;
   if (!input.ready || input.paused || !run) return null;
-  if (intent === "detour") return detourAction(input, run, now);
   const healing = intent === "heal" || intent.startsWith("heal:") || run.phase === "rest";
   if (!healing) return { type: "assist", squad: input.squad.id, mode: "strike" };
   const requested = intent.startsWith("heal:") ? intent.slice(5) : undefined,
@@ -340,19 +287,6 @@ export function adventureAction(
     return null;
   return { type: "assist", squad: input.squad.id, mode: "heal", id: target };
 }
-function detourAction(input: AdventureInput, run: ActiveRun, now: number): Action | null {
-  if (input.detours === false) return null;
-  const detour = run.detour;
-  if (
-    !detour ||
-    detour.node !== run.node ||
-    detour.claimed ||
-    now < detour.at ||
-    run.phase === "rest"
-  )
-    return null;
-  return { type: "detour", squad: input.squad.id };
-}
 
 export function adventureAssets(frame: AdventureFrame) {
   const assets = new Set([
@@ -368,10 +302,6 @@ export function adventureAssets(frame: AdventureFrame) {
     if (sheet?.ready) assets.add(sheet.asset);
   }
   for (const target of frame.targets) assets.add(target.asset);
-  if (frame.quest.companion) {
-    const guest = heroes.find((h) => h.id === frame.quest.companion);
-    if (guest) assets.add(spriteAsset(guest.sprite));
-  }
   return [...assets];
 }
 
@@ -389,12 +319,11 @@ export function adventureHit(
   height: number,
 ): AdventureIntent {
   const size = spriteSize(width, height, frame.phase === "idle");
-  // Match canvas visual bounds. Discoveries and companions win over the scenery.
+  // Match canvas visual bounds. Companions win over the scenery.
   const contains = (x: number, y: number, w: number, h: number) =>
     Math.abs(point.x - x * width) < w / 2 &&
     point.y > y * height - h * 0.9 &&
     point.y < y * height + h * 0.22;
-  if (frame.discovery && contains(frame.discovery.x, frame.discovery.y, 64, 64)) return "detour";
   for (const member of [...frame.members].reverse())
     if (contains(member.x, member.y, size * 0.8, size)) return `heal:${member.id}`;
   return "help";
@@ -403,7 +332,7 @@ export function adventureHit(
 export function eventColor(event: GameEvent) {
   if (event.kind === "heal") return 0x9ff0c2;
   if (event.kind === "hurt") return 0xf1a18c;
-  if (event.kind === "burst" || event.kind === "combo") return 0xffdf83;
+  if (event.kind === "combo") return 0xffdf83;
   const role = event.hero ? heroSkills[event.hero].style : "";
   return role === "mage"
     ? 0xc4b1ff

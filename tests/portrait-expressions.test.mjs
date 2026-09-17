@@ -87,13 +87,6 @@ test("expressions are authored for narrative context, narration has none, and un
   assert.equal(opening.lines.find((l) => l.text === "布、二枚？").expression, "surprised");
   const failure = stories.find((s) => s.id === "town-deliveries-departure");
   assert.equal(failure.lines.find((l) => l.text.startsWith("……ごめん。")).expression, "worried");
-  const mira = stories.find((s) => s.id === "recruit-mira-meeting");
-  assert.equal(mira.lines.find((l) => l.text.startsWith("私は大丈夫。")).expression, "tired");
-  const pumpety = stories.find((s) => s.id === "puppet-midnight-departure");
-  assert.equal(
-    pumpety.lines.find((l) => l.text.startsWith("もう名前で")).expression,
-    "mischievous",
-  );
   assert.ok(idleBanter(0).every((l) => l.expression === "smile"));
   assert.equal(
     portraits.expressionPortrait(0).position,

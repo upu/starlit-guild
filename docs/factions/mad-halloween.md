@@ -12,4 +12,4 @@
 
 ## 関連資料・実装
 
-各人の外見・武器・口調は個別ファイル、他の仲間との場面は [関係性と掛け合い](../relationships/README.md) に置く。初遭遇とクエストの会話は [マッドハロウィンの物語](../../lib/mad-halloween-stories.ts)、プロフィールは [追加キャラクター](../../lib/original-characters.ts)、来客シーンは [仲間と来客の会話](../../lib/character-encounters.ts) を確認する。
+各人の外見・武器・口調は個別ファイル、他の仲間との場面は [関係性と掛け合い](../relationships/README.md) に置く。プロフィールは [追加キャラクター](../../lib/original-characters.ts) を確認する。初遭遇・クエスト・来客の会話は削除済み。

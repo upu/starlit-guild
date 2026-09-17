@@ -1,5 +1,5 @@
 import type Phaser from "phaser";
-import { heroes, type GameEvent } from "@/lib/game";
+import { type GameEvent } from "@/lib/game";
 import {
   adventureFrame,
   adventureAssets,
@@ -91,8 +91,6 @@ export class AdventurePainter {
   private figures = new Map<string, Figure>();
   private opponents = new Map<string, Figure>();
   private guest: Figure | null = null;
-  private discovery!: Phaser.GameObjects.Image;
-  private discoveryLabel!: Phaser.GameObjects.Text;
   private effects = new Set<Phaser.GameObjects.GameObject>();
   private seen = new Map<string, number>();
   private sceneKey = "";
@@ -131,21 +129,6 @@ export class AdventurePainter {
     this.shade = this.scene.add.graphics().setDepth(1);
     this.ambient = this.scene.add.graphics().setDepth(2);
     this.meters = this.scene.add.graphics().setDepth(30);
-    this.discovery = this.scene.add
-      .image(0, 0, "/items/chest.png")
-      .setDepth(25)
-      .setOrigin(0.5, 0.9)
-      .setVisible(false);
-    this.discoveryLabel = this.scene.add
-      .text(0, 0, "", {
-        fontFamily: font,
-        fontSize: "12px",
-        color: "#fff0bd",
-        stroke: "#17352a",
-        strokeThickness: 4,
-      })
-      .setOrigin(0.5, 0)
-      .setDepth(26);
     this.scene.input.on(this.engine.Input.Events.POINTER_UP, (pointer: Phaser.Input.Pointer) => {
       this.pointerUp(pointer);
     });
@@ -277,7 +260,7 @@ export class AdventurePainter {
         (positive ? "+" : "−") + String(event.amount),
         {
           fontFamily: font,
-          fontSize: event.kind === "burst" ? "30px" : "23px",
+          fontSize: "23px",
           fontStyle: "bold",
           color: "#" + color.toString(16).padStart(6, "0"),
           stroke: "#123229",
@@ -299,7 +282,7 @@ export class AdventurePainter {
     age: number,
   ) {
     if (this.runtime.reduced || age > 650) return;
-    const size = event.kind === "burst" ? 38 : event.kind === "skill" ? 27 : 17;
+    const size = event.kind === "skill" ? 27 : 17;
     const ring = this.scene.add.circle(x, y, size).setStrokeStyle(2, color, 0.95).setDepth(48);
     this.transient(ring, { scale: 2.2, alpha: 0 }, 550 - age);
     if (this.rangedEffect(frame, actor, support, x, y, color, age)) return;
@@ -478,7 +461,7 @@ export class AdventurePainter {
         member.x * this.scene.scale.width,
         member.y * this.scene.scale.height + size * 0.13,
       )
-      .setText(member.exploring ? "寄り道中" : member.name);
+      .setText(member.name);
     const hurt = frame.events.some(
       (e) => e.kind === "hurt" && e.target === member.id && now - e.at < 130,
     );
@@ -532,7 +515,7 @@ export class AdventurePainter {
       pulse = this.runtime.reduced ? 1 : 1 + Math.sin(now / 420) * 0.015,
       events = frame.events.filter((event) => !event.enemy || event.enemy === target.id);
     const hurt = events.some(
-        (e) => ["hit", "assist", "burst", "skill", "combo"].includes(e.kind) && now - e.at < 140,
+        (e) => ["hit", "assist", "skill", "combo"].includes(e.kind) && now - e.at < 140,
       ),
       striking = events.find((e) => e.kind === "hurt" && now - e.at < 320);
     const offset =
@@ -567,68 +550,12 @@ export class AdventurePainter {
       .fillStyle(target.battle ? 0xf1b38e : 0xe9d89a)
       .fillRoundedRect(target.x * width - bar / 2, y, bar * target.value, 5, 2);
   }
-  private paintGuest(
-    input: ReturnType<AdventureBridge["read"]>,
-    frame: AdventureFrame,
-    size: number,
-  ) {
-    const guest =
-      frame.quest.companion && input.squad.run
-        ? heroes.find((h) => h.id === frame.quest.companion)
-        : null;
-    if (!guest) {
-      if (this.guest) {
-        this.removeFigure(this.guest);
-        this.guest = null;
-      }
-      return;
-    }
-    if (!this.guest) this.guest = this.makeFigure(guest.sprite, guest.name);
-    const width = this.scene.scale.width,
-      height = this.scene.scale.height,
-      asset = spriteAsset(guest.sprite);
-    this.guest.image
-      .setTexture(asset, spriteFrame(guest.sprite))
-      .setPosition(width * 0.12, height * 0.82)
-      .setDisplaySize(size * 0.65, size * 0.65)
-      .setDepth(19);
-    this.guest.shadow
-      .setPosition(width * 0.12, height * 0.82)
-      .setDisplaySize(size * 0.4, size * 0.07);
-    this.guest.label
-      .setText(guest.name + " · 同行中")
-      .setPosition(width * 0.12, height * 0.82 + size * 0.1);
-  }
-  private paintDiscovery(frame: AdventureFrame, now: number) {
-    const discovery = frame.discovery;
-    this.discovery.setVisible(!!discovery);
-    this.discoveryLabel.setVisible(!!discovery);
-    if (!discovery) return;
-    const width = this.scene.scale.width,
-      height = this.scene.scale.height,
-      float = this.runtime.reduced ? 0 : Math.sin(now / 380) * 3;
-    this.discovery
-      .setTexture(`/items/${discovery.kind}.png`)
-      .setPosition(discovery.x * width, discovery.y * height + float)
-      .setDisplaySize(64, 64)
-      .setAlpha(discovery.claimed ? 0.55 : 1);
-    const label = discovery.claimed
-      ? "見つけた！"
-      : discovery.kind === "chest"
-        ? "隠し宝箱"
-        : discovery.kind === "herb"
-          ? "光る薬草"
-          : "迷子の精霊";
-    this.discoveryLabel.setText(label).setPosition(discovery.x * width, discovery.y * height + 10);
-  }
   private paintEvents(frame: AdventureFrame, now: number) {
     for (const [id, at] of this.seen) if (now - at > 2000) this.seen.delete(id);
     for (const event of frame.events) {
       if (this.seen.has(event.id)) continue;
       this.seen.set(event.id, event.at);
-      if (
-        ["hit", "skill", "heal", "hurt", "burst", "combo", "assist", "gather"].includes(event.kind)
-      )
+      if (["hit", "skill", "heal", "hurt", "combo", "assist", "gather"].includes(event.kind))
         this.eventEffect(event, frame, now);
     }
   }
@@ -638,7 +565,6 @@ export class AdventurePainter {
     if (key === this.cutinKey) return;
     this.cutinKey = key;
     if (this.runtime.reduced) return;
-    if (frame.cutin.kind === "burst") this.scene.cameras.main.shake(160, 0.003);
     const width = this.scene.scale.width,
       height = this.scene.scale.height,
       wave = this.scene.add
@@ -668,8 +594,6 @@ export class AdventurePainter {
     const size = spriteSize(width, height, frame.phase === "idle");
     this.paintMembers(input, frame, now, size);
     this.paintTarget(frame, now, size);
-    this.paintGuest(input, frame, size);
-    this.paintDiscovery(frame, now);
     this.paintEvents(frame, now);
     this.paintCutin(input, frame);
   }

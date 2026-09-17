@@ -1,21 +1,21 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialState, act } from "../lib/game.ts";
+import { testState, act } from "../lib/game.ts";
+import { nextStage } from "../lib/prologue.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
 import { heroAnimation, heroSheets } from "../lib/hero-animation.ts";
 import { readFileSync } from "node:fs";
 
+// A stage the trio travels together, so Mira has her own actor on the map.
 function scene(now = 5000) {
-  const initial = initialState(1000);
-  initial.owned.push("mira");
-  initial.squads[0].members.push("mira");
-  const state = act(initial, { type: "start", id: "herbs" }, 1000);
+  const initial = testState(1000, 12, 1, 1000),
+    quest = nextStage(initial).quest;
+  const state = act(initial, { type: "start", id: quest }, 1000);
   const run = state.squads[0].run;
   run.phase = "work";
   run.events = [];
-  run.detour = null;
   for (const actor of run.actors) actor.arrivesAt = 2000;
-  const input = { squad: state.squads[0], startQuest: "herbs", now, ready: true, paused: false };
+  const input = { squad: state.squads[0], startQuest: quest, now, ready: true, paused: false };
   return { state, run, input };
 }
 const pose = (input, now = input.now, id = "aria", reduced = false) => {
@@ -123,20 +123,10 @@ test("hurt takes priority over attacking and addressed damage affects only its t
   assert.equal(pose(input, 5100, "leon").frame, "10");
 });
 
-test("gathering, detours, rest and reduced motion do not play combat poses", () => {
+test("gathering, rest and reduced motion do not play combat poses", () => {
   const { input, run } = scene();
   event(run, 5000, "gather", "aria");
   assert.ok(Number(pose(input).frame) >= 8);
-  event(run, 5000, "skill", "aria");
-  run.detour = {
-    hero: "aria",
-    node: run.node,
-    at: 4900,
-    finishAt: 8000,
-    kind: "herb",
-    claimed: false,
-  };
-  assert.ok(Number(pose(input).frame) < 4);
   assert.equal(pose(input, 5000, "aria", true).frame, "8");
   run.phase = "rest";
   assert.equal(pose(input).frame, "8");

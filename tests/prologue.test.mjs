@@ -9,11 +9,17 @@ import {
   allQuests,
   encounter,
 } from "../lib/game.ts";
-import { inPrologue, TRADE_QUEST, RETURN_QUEST, tradeEndingPending } from "../lib/prologue.ts";
+import {
+  inPrologue,
+  storyStages,
+  TRADE_QUEST,
+  RETURN_QUEST,
+  tradeEndingPending,
+} from "../lib/prologue.ts";
 import { availableStories, journeyBanter } from "../lib/stories.ts";
 import { nextGoal, journeyNotice } from "../lib/journey.ts";
 import { parseBundle } from "../lib/save-format.ts";
-import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
+import { adventureFrame } from "../lib/adventure-presentation.ts";
 
 function roundtrip(state) {
   const id = crypto.randomUUID();
@@ -34,46 +40,6 @@ function roundtrip(state) {
 }
 const depart = (s) =>
   act(s, { type: "start", id: TRADE_QUEST, readDeparture: true, value: true }, s.updatedAt);
-
-test("prologue has no discoveries; older pending detours resume without loot or save loss", () => {
-  let s = depart(initialPrologueState(1000));
-  const pending = structuredClone(s),
-    run = pending.squads[0].run;
-  run.detour = { node: 0, kind: "spirit", hero: "aria", at: 1900, finishAt: 7200, claimed: false };
-  run.actors[0].nextAt = 7400;
-  const input = {
-    squad: pending.squads[0],
-    now: 2000,
-    ready: true,
-    paused: false,
-    startQuest: TRADE_QUEST,
-    detours: false,
-  };
-  assert.equal(adventureFrame(input).discovery, null);
-  assert.ok(adventureFrame(input).members.every((m) => !m.exploring));
-  assert.equal(adventureAction(input, "detour"), null);
-  assert.throws(() => act(pending, { type: "detour" }, 2000));
-  const restored = settle(roundtrip(pending), 1000).state;
-  assert.equal(restored.squads[0].run.detour, null);
-  assert.equal(restored.gold, pending.gold);
-  assert.equal(restored.discoveries, 0);
-  assert.equal(restored.squads[0].run.actors[0].nextAt, run.actors[0].arrivesAt);
-  assert.ok(pending.squads[0].run.detour, "input save remains unchanged");
-  const baseline = settle(s, 3601000).state,
-    arrival = settle(restored, 3601000).state;
-  assert.equal(arrival.gold, baseline.gold);
-  assert.equal(arrival.herbs, baseline.herbs);
-  assert.equal(arrival.wood, baseline.wood);
-  assert.equal(arrival.discoveries, 0);
-  while (s.squads[0].run) {
-    assert.equal(s.squads[0].run.detour, null);
-    s = settle(s, s.squads[0].run.nextAt).state;
-  }
-  assert.equal(s.discoveries, 0);
-  assert.ok(!s.log.some((l) => /精霊|隠し宝箱|光る薬草/.test(l.text)));
-  const legacy = act(initialState(1000), { type: "start", id: "herbs" }, 1000);
-  assert.ok(legacy.squads[0].run.detour);
-});
 
 test("new profiles begin with the two villagers and only the repeatable trade quest", () => {
   const s = initialPrologueState(1000),
@@ -141,7 +107,7 @@ test("trade checkpoints and explicit interruption never award an ending early", 
   assert.ok(depart(stopped).squads[0].run);
 });
 
-test("tapping helps and heals without accumulating a leader burst in the prologue", () => {
+test("tapping helps and heals in the prologue", () => {
   let s = depart(initialPrologueState(1000)),
     target = s.squads[0].run.target;
   s = act(s, { type: "assist", mode: "strike" }, 1000);
@@ -150,9 +116,8 @@ test("tapping helps and heals without accumulating a leader burst in the prologu
   const hp = s.squads[0].run.health.aria.hp;
   for (let i = 0; i < 25; i++) s = act(s, { type: "assist", mode: "heal" }, 1000);
   assert.ok(s.squads[0].run.health.aria.hp > hp);
-  assert.equal(s.squads[0].run.cheer, 0);
   assert.equal(s.squads[0].run.scene, null);
-  assert.ok(s.squads[0].run.events.every((e) => e.kind !== "burst" && !e.text.includes("団長")));
+  assert.ok(s.squads[0].run.events.every((e) => !e.text.includes("団長")));
 });
 
 test("trade carries cargo and gathers herbs without showing an unintroduced escort companion", () => {
@@ -193,7 +158,6 @@ test("many trades never open the base, other quests or recruitment; legacy recor
     { type: "build" },
     { type: "newSquad" },
     { type: "party", members: ["aria"] },
-    { type: "prepareRecruitment", id: "mira" },
   ])
     assert.throws(() => act(s, action, 1000));
   assert.equal(nextGoal(s).destination, "quests");
@@ -219,13 +183,18 @@ test("one-off quest policy forbids replay and stops even with repeat enabled", (
     availability: "once",
   };
   allQuests.push(q);
+  storyStages.unshift({ ...storyStages[0], quest: q.id });
   try {
-    const started = act(initialState(1000), { type: "start", id: q.id, value: true }, 1000);
+    const started = act(initialPrologueState(1000), { type: "start", id: q.id, value: true }, 1000);
     const done = settle(started, 3601000).state;
     assert.equal(done.done[q.id], 1);
     assert.equal(done.squads[0].run, null);
     assert.throws(() => act(done, { type: "start", id: q.id }, done.updatedAt), /達成済み/);
   } finally {
     allQuests.splice(allQuests.indexOf(q), 1);
+    storyStages.splice(
+      storyStages.findIndex((stage) => stage.quest === q.id),
+      1,
+    );
   }
 });
