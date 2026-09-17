@@ -116,7 +116,7 @@ Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run format:check`�
 
 ## 公開
 
-公開先は `config/site-targets.json` のプレビューと本番。`.openai/hosting.json` は既存本番の識別子を保持する。`starlit-implement` は指定がなければマージ後のプレビュー反映まで含む。本番はスキル実行時の明示指定に加え、同じソースの確認と配備準備を終えた後の最終承認を得て更新する。PRのマージ承認とは分ける。
+公開先は `config/site-targets.json` のプレビューと本番。`.openai/hosting.json` は既存本番の識別子を保持する。`starlit-implement` はゲームバージョンを上げた変更なら指定がなければマージ後のプレビュー反映まで含む。据え置きなら明示的な反映依頼がない限り省略してよい。本番はスキル実行時の明示指定に加え、同じソースの確認と配備準備を終えた後の最終承認を得て更新する。PRのマージ承認とは分ける。
 
 Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リポジトリ。GitHubへのpushだけではゲームは更新されない。
 
@@ -124,7 +124,7 @@ Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リ
 
 公開作業では、作業中の別タスクや未確定差分を確認し、無関係な変更を失わせない。セーブデータやローカル作業ファイルはGitへ含めない。
 
-このリポジトリでエージェントが公開作業を行う場合は、[`AGENTS.md`](../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` の指示を優先する。
+エージェント共通の公開ルールは [エージェント共通ルール](agent-rules.md) を参照する。Codex の操作手順は [`AGENTS.md`](../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` に置く。
 
 ## データベース
 
