@@ -24,7 +24,7 @@
 
 ## 世界観・人物・シナリオ
 
-1. [資料案内](README.md)、[世界観](world-and-story.md)、[執筆指針](story-writing.md) を確認する。
+1. [資料案内](README.md)、[用語集](glossary.md)、[世界観](world-and-story.md)、[執筆指針](story-writing.md) を確認する。章・ステージ・クエストID・シーンIDの対応は用語集を使い、資料ごとに呼び名を作らない。
 2. [キャラクター一覧](characters/README.md) で登場人物の名前・別名・IDを確認し、該当する `docs/characters/<キャラID>.md` を読む。
 3. 個別ファイルから関係性・所属組織をたどる。アリアとレオンは [二人の関係性](relationships/aria-leon.md)、メリルとプティは [マッドハロウィン](factions/mad-halloween.md) も読む。
 4. 対象プロットと、個別資料が案内する既存シーン・プロフィールを読む。第一部は [第一部プロット](story-part-1.md) を確認し、現行の加入順や来客シーンを新しい第一部の確定事項にしない。
