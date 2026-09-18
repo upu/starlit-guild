@@ -222,7 +222,7 @@ test("stage progress retains the completed scenery until the next departure", ()
   for (const stage of prologueStages) {
     const idle = render(state);
     assert.ok(idle.includes(background));
-    assert.doesNotMatch(idle, /第一部 ·|undefined|>パーティ<|>拠点</);
+    assert.doesNotMatch(idle, /第一章 ·|undefined|>パーティ<|>拠点</);
     state = act(state, { type: "start", id: stage.quest, readDeparture: true }, state.updatedAt);
     const running = render(state);
     assert.match(running, /探索マップ/);

@@ -66,7 +66,7 @@ test("the first-act climax waits for the beacon to light after the moss removal"
   assert.equal(storyArtAt(scene.id, glow - 1), undefined);
   assert.equal(storyArtAt(scene.id, glow), art);
   assert.equal(storyArtAt("tower-restoration-return", Infinity), undefined);
-  assert.equal(scene.lines.at(-1).text, "第一部 完");
+  assert.equal(scene.lines.at(-1).text, "第一章 完");
 });
 
 test("the first departure has its illustration, and unknown scenes have none", () => {

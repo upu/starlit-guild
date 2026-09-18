@@ -26,7 +26,7 @@ export const prologueStories: Story[] = [
     id: TRADE_QUEST + "-departure",
     quest: TRADE_QUEST,
     title: "いつもの待ち合わせ",
-    place: "第一部 序章 · 村からの道が合わさるところ",
+    place: "第一章 1-1 · 村からの道が合わさるところ",
     chapter: "departure",
     lines: [
       n(
@@ -49,7 +49,7 @@ export const prologueStories: Story[] = [
     id: TRADE_QUEST + "-return",
     quest: TRADE_QUEST,
     title: "荷物を渡したら",
-    place: "第一部 序章 · 街の取引先",
+    place: "第一章 1-1 · 街の取引先",
     chapter: "return",
     lines: [
       n(
@@ -73,7 +73,7 @@ export const prologueStories: Story[] = [
     id: RETURN_QUEST + "-departure",
     quest: RETURN_QUEST,
     title: "帰りの包み",
-    place: "第一部 1-2 · 夕方の街の出口",
+    place: "第一章 1-2 · 夕方の街の出口",
     chapter: "departure",
     lines: [
       n(
@@ -95,7 +95,7 @@ export const prologueStories: Story[] = [
     id: RETURN_QUEST + "-return",
     quest: RETURN_QUEST,
     title: "いつもより少し騒がしい道",
-    place: "第一部 1-2 · 村々への分かれ道",
+    place: "第一章 1-2 · 村々への分かれ道",
     chapter: "return",
     lines: [
       n("村へ向かう道が二つに分かれた。アリアは荷を下ろし、さっきまで歩いていた街道を振り返る。"),
@@ -119,7 +119,7 @@ export const prologueStories: Story[] = [
     id: TOWN_QUEST + "-departure",
     quest: TOWN_QUEST,
     title: "いつもと違う置き場所",
-    place: "第一部 1-3 · 後日の交易先",
+    place: "第一章 1-3 · 後日の交易先",
     chapter: "departure",
     lines: [
       n(
@@ -154,7 +154,7 @@ export const prologueStories: Story[] = [
     id: TOWN_QUEST + "-return",
     quest: TOWN_QUEST,
     title: "不便の理由",
-    place: "第一部 1-3 · 配達を終えた店先",
+    place: "第一章 1-3 · 配達を終えた店先",
     chapter: "return",
     lines: [
       n(
@@ -195,7 +195,7 @@ export const prologueStories: Story[] = [
     id: TOWER_QUEST + "-departure",
     quest: TOWER_QUEST,
     title: "少し見に行こう",
-    place: "第一部 1-4 · 街外れの道",
+    place: "第一章 1-4 · 街外れの道",
     chapter: "departure",
     lines: [
       n(
@@ -224,7 +224,7 @@ export const prologueStories: Story[] = [
     id: TOWER_QUEST + "-return",
     quest: TOWER_QUEST,
     title: "石陰の拾いもの",
-    place: "第一部 1-4 · 塔の足元",
+    place: "第一章 1-4 · 塔の足元",
     chapter: "return",
     lines: [
       n(
@@ -275,7 +275,7 @@ export const prologueStories: Story[] = [
     id: NIGHT_QUEST + "-departure",
     quest: NIGHT_QUEST,
     title: "小さな灯りを連れて",
-    place: "第一部 1-5 · 塔から下る坂",
+    place: "第一章 1-5 · 塔から下る坂",
     chapter: "departure",
     lines: [
       n(
@@ -305,7 +305,7 @@ export const prologueStories: Story[] = [
     id: NIGHT_QUEST + "-return",
     quest: NIGHT_QUEST,
     title: "分かれ道までの灯り",
-    place: "第一部 1-5 · 夜の分かれ道",
+    place: "第一章 1-5 · 夜の分かれ道",
     chapter: "return",
     lines: [
       n("村々への分かれ道が近づいた。レオンは苔灯を受け取り、来た道で見たときより顔を近づけた。"),
@@ -345,7 +345,7 @@ export const prologueStories: Story[] = [
     id: WETLAND_QUEST + "-departure",
     quest: WETLAND_QUEST,
     title: "買い物のメモのない午後",
-    place: "第一部 1-6 · 午後の待ち合わせ",
+    place: "第一章 1-6 · 午後の待ち合わせ",
     chapter: "departure",
     lines: [
       n(
@@ -374,7 +374,7 @@ export const prologueStories: Story[] = [
     id: WETLAND_QUEST + "-return",
     quest: WETLAND_QUEST,
     title: "同じかもしれない",
-    place: "第一部 1-6 · 森の湿った木陰",
+    place: "第一章 1-6 · 森の湿った木陰",
     chapter: "return",
     lines: [
       n(

@@ -1,6 +1,6 @@
 # 演出素材
 
-## 第一部のステージ背景
+## 第一章のステージ背景
 
 内蔵 imagegen で各1回生成し、1536×1024 PNGを採用。`assets/source/scenery/evening-trade-road.png` は1-2の夕方の交易路、`assets/source/scenery/town-deliveries.png` は1-3の倉庫と商店の通り。`Quest.background` を通じてクエスト一覧・冒険マップに表示する。
 

@@ -17,7 +17,7 @@ export const towerFinaleStories: Story[] = [
     id: MOSS_QUEST + "-departure",
     quest: MOSS_QUEST,
     title: "もう一度、あの灯りを",
-    place: "第一部 1-9 · 水の引いた塔の足元",
+    place: "第一章 1-9 · 水の引いた塔の足元",
     chapter: "departure",
     lines: [
       n(
@@ -52,7 +52,7 @@ export const towerFinaleStories: Story[] = [
     id: MOSS_QUEST + "-return",
     quest: MOSS_QUEST,
     title: "灯りの戻る丘",
-    place: "第一部 1-9 · 塔の再点灯とエピローグ",
+    place: "第一章 1-9 · 塔の再点灯とエピローグ",
     chapter: "return",
     lines: [
       n(
@@ -125,7 +125,7 @@ export const towerFinaleStories: Story[] = [
       a("じゃあ、またね。", "smile"),
       l("ああ。また。", "smile"),
       n("二人はそれぞれの村へ歩き出した。振り返れば見える丘の上に、塔の灯りがともっていた。"),
-      n("第一部 完"),
+      n("第一章 完"),
     ],
   },
 ];

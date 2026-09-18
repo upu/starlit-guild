@@ -101,7 +101,7 @@ export function QuestPicker({
               />
               <span>
                 <small>
-                  {storyStages.find((stage) => stage.quest === item.id)?.label || item.region}
+                  {storyStages.find((stage) => stage.quest === item.id)?.number || item.region}
                   {item.availability === "once" ? " · 一度きり" : ""}
                 </small>
                 <b>{item.name}</b>
