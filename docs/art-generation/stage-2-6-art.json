@@ -42,7 +42,7 @@
     }
   ],
   "finalSelection": {
-    "still": "public/stories/begging-dolls.png",
+    "still": "assets/source/stories/begging-dolls.png",
     "source": "exec-e4a60112-811e-4a7c-b7c5-1560fe644ab4.png",
     "golem": "public/enemies/cargo-golem.png",
     "puppet": "public/enemies/mountain-puppet.png",

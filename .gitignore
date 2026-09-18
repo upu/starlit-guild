@@ -54,3 +54,10 @@ next-env.d.ts
 /assets/.scenery.lock
 /assets/scenery.manifest.json.*.tmp
 /public/scenery/*.tmp
+/assets/.story-stills.lock
+/assets/.bgm.lock
+/assets/*.manifest.json.*.tmp
+/public/stories/*.tmp.webp
+/public/stories/thumbnails/*.tmp.webp
+/public/music/*.tmp.m4a
+/.npm-cache/

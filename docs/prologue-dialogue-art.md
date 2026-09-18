@@ -4,7 +4,7 @@
 
 - `public/portraits/aria.png`：アリアの顔アイコン。
 - `public/portraits/leon.png`：レオンの顔アイコン。
-- `public/stories/village-trade-handover.png`：街の店主へ薬草と村の交易品を渡すスチル。
+- `assets/source/stories/village-trade-handover.png`：街の店主へ薬草と村の交易品を渡すスチル。
 
 ゲーム内の各台詞・会話冒頭・下部のチャット欄に `Portrait` を使用する。小表示用の顔は、後述の専用アトラスを使う。アリアとレオンの個別画像は制作参照に使い、マップや編成画面では全身絵を使う。
 

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "files": {
+    "camp": {
+      "sourceHash": "f14577a31d2752180d33219eb2ceef45e9dca672862c31044e2cb58103a56244",
+      "sourceBytes": 2304044,
+      "profileHash": "124def3e150d4dcb2ccac9dd6df41a58554d5efdef14a1ed7d63bc4fb58636e0",
+      "outputHash": "a31afdc78eb5f880bb47b0e6efee28696abb4314d97196a2af3ab0b5d9263970",
+      "outputBytes": 589638
+    },
+    "journey": {
+      "sourceHash": "f32b64fc399f2f96fa8a81ff87fea816edea5323b4465fe1d6bbab4752294ed1",
+      "sourceBytes": 1920044,
+      "profileHash": "124def3e150d4dcb2ccac9dd6df41a58554d5efdef14a1ed7d63bc4fb58636e0",
+      "outputHash": "f2eb95b035e076b1746911056c18dafb03f19acf225f2d1af38ce67d11196361",
+      "outputBytes": 492064
+    }
+  }
+}

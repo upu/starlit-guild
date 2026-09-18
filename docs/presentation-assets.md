@@ -42,6 +42,6 @@ Subject: friendly lost forest spirit, cute mint and aqua luminous small floating
 - 動きを減らす設定では着弾粒子・軌跡・全画面の光を省略し、静止したカットインとアイテムを表示する。
 - 既存の15地点描画、セーブ移行、オフライン精算、複数タブ復帰に加え、演出の期限・前地点除外・3種アイテムの描画・音の重複抑制と消音を自動検証する。
 - 画像は目視で確認。ブラウザーでのアニメーション目視、実機の音の聞こえ方・音量・性能は未検証。
-- BGMはオリジナル曲2曲を `public/music/camp.wav` と `public/music/journey.wav` に保存する。外部の音楽生成サービスは使用せず、`scripts/compose-bgm.mjs` に楽譜と合成方法を保持する。キャラ音声は未追加。
+- BGMはオリジナル曲2曲の元 WAV を `assets/source/music/` に保存し、`public/music/camp.m4a` と `public/music/journey.m4a` を配信する。生成手順は [音楽と効果音](audio.md) を参照。外部の音楽生成サービスは使用せず、`scripts/compose-bgm.mjs` に楽譜と合成方法を保持する。キャラ音声は未追加。
 
 クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。

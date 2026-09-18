@@ -40,8 +40,11 @@ jobs:
       - name: Check generated scenery images
         run: npm run images:check
 
-      - name: Check generated album thumbnails
-        run: npm run thumbnails:check
+      - name: Check generated story stills and album thumbnails
+        run: npm run stills:check
+
+      - name: Check generated BGM
+        run: npm run music:check
 
       - name: Run unit tests
         run: node --test tests/*.test.mjs

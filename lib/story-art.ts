@@ -10,7 +10,7 @@ export type StoryArt = {
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
   "waiting-households-return": {
-    src: "/stories/medicine-delivered.png",
+    src: "/stories/medicine-delivered.webp",
     videoSrc: "/stories/videos/medicine-delivered.mp4",
     alt: "少年と母親の側から正面に見るミラ。目元に寝不足の疲れをにじませながら「あーん」と促し、薬をすくった匙を少年の口元へ運ぶ。",
     width: 1536,
@@ -18,28 +18,28 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
     revealAtLine: 4,
   },
   "medicine-road-home-return": {
-    src: "/stories/three-cups-of-tea.png",
+    src: "/stories/three-cups-of-tea.webp",
     alt: "コミカルにデフォルメされた三人のお茶。仕事のメモへ手を伸ばして気まずそうなミラ、得意げに紙を押さえるアリア、笑うレオン。",
     width: 1536,
     height: 1024,
     revealAtLine: 11,
   },
   "begging-golem-departure": {
-    src: "/stories/begging-dolls.png",
+    src: "/stories/begging-dolls.webp",
     alt: "山道でハロウィン風に飾った大小の人形がお辞儀して両手を差し出し、その少し後ろで小柄なプティがパンプキンヘッドをかぶって操る。",
     width: 1536,
     height: 1024,
     revealAtLine: 3,
   },
   "moonlit-herbs-return": {
-    src: "/stories/mira-collapse.png",
+    src: "/stories/mira-collapse.webp",
     alt: "膝が折れて倒れたミラの上体をレオンが支え、アリアが荷物をどけてそばへ駆け寄る。机には作りかけの薬が残っている。",
     width: 1536,
     height: 1024,
     revealAtLine: 6,
   },
   "tower-moss-removal-return": {
-    src: "/stories/tower-light-restored.png",
+    src: "/stories/tower-light-restored.webp",
     alt: "夕暮れの丘で、フードを下ろしたアリアとレオンが石垣に寄り添って座り、正面の塔を見上げる後ろ姿。アリアの長い金髪と花飾りが見え、塔の窓には淡い紫の光がともる。",
     width: 1536,
     height: 1024,
@@ -53,14 +53,14 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
     revealAtLine: 5,
   },
   "tower-road-return": {
-    src: "/stories/tower-moss-discovery.png",
+    src: "/stories/tower-moss-discovery.webp",
     alt: "塔の足元で、アリアが木べらで分けた光る苔を、レオンの持つ浅い木の入れ物へ寄せる。小さな苔灯が二人の手元を淡く照らす。",
     width: 1536,
     height: 1024,
     revealAtLine: 20,
   },
   "village-trade-return": {
-    src: "/stories/village-trade-handover.png",
+    src: "/stories/village-trade-handover.webp",
     alt: "街の店先で、アリアが布で包んだ薬草を店主に渡し、レオンが村から預かった交易品を台に置く。",
     width: 1536,
     height: 1024,

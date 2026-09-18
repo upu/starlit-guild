@@ -7,6 +7,6 @@
   "assets": {
     "aria": "public/portraits/aria.png",
     "leon": "public/portraits/leon.png",
-    "trade": "public/stories/village-trade-handover.png"
+    "trade": "assets/source/stories/village-trade-handover.png"
   }
 }
