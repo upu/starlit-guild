@@ -98,7 +98,7 @@ test("2-6 save continues through 2-9 with first-ending gates, offline parity and
     for (const key of ["gold", "herbs", "ore", "owned", "inventory"])
       assert.deepEqual(s[key], offline[key]);
   }
-  assert.match(nextGoal(s).title, /第二部の冒険を終えました/);
+  assert.match(nextGoal(s).title, /第二章の冒険を終えました/);
   assert.doesNotMatch(nextGoal(s).detail, /準備中/);
   for (const id of stages) {
     const repeated = roundtrip(settle(start(s, id), s.updatedAt + 3600000).state);
@@ -151,5 +151,5 @@ test("finale stills reveal at the delivery and first sip, and the antagonist sta
       st.lines.filter((line) => line.speaker).every((line) => !line.text.includes("プティ")),
     ),
   );
-  assert.equal(finaleStories.at(-1).lines.at(-1).text, "第二部 完");
+  assert.equal(finaleStories.at(-1).lines.at(-1).text, "第二章 完");
 });

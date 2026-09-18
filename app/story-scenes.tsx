@@ -254,8 +254,7 @@ export function memoryGroups(items: Story[]) {
       ? [
           {
             id,
-            title:
-              (stage ? stage.label.split(" ")[0] + " · " : "") + (quest?.name || entries[0].title),
+            title: (stage ? stage.number + " · " : "") + (quest?.name || entries[0].title),
             items: entries,
           },
         ]

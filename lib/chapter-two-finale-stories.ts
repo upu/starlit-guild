@@ -11,7 +11,7 @@ export const finaleStories: Story[] = [
     id: BLOCKADE_QUEST + "-departure",
     quest: BLOCKADE_QUEST,
     title: "荷物の向こうの役者",
-    place: "第二部 2-7 · 古い作業場",
+    place: "第二章 2-7 · 古い作業場",
     chapter: "departure",
     lines: [
       n(
@@ -39,7 +39,7 @@ export const finaleStories: Story[] = [
     id: BLOCKADE_QUEST + "-return",
     quest: BLOCKADE_QUEST,
     title: "あなたも",
-    place: "第二部 2-7 · 作業場と街道",
+    place: "第二章 2-7 · 作業場と街道",
     chapter: "return",
     lines: [
       n(
@@ -85,7 +85,7 @@ export const finaleStories: Story[] = [
     id: HOUSE_CALLS_QUEST + "-departure",
     quest: HOUSE_CALLS_QUEST,
     title: "待っていた声",
-    place: "第二部 2-8 · 山向こうの集落",
+    place: "第二章 2-8 · 山向こうの集落",
     chapter: "departure",
     lines: [
       n(
@@ -109,7 +109,7 @@ export const finaleStories: Story[] = [
     id: HOUSE_CALLS_QUEST + "-return",
     quest: HOUSE_CALLS_QUEST,
     title: "ちゃんと届いて、よかった",
-    place: "第二部 2-8 · 往診先の家",
+    place: "第二章 2-8 · 往診先の家",
     chapter: "return",
     lines: [
       n(
@@ -147,7 +147,7 @@ export const finaleStories: Story[] = [
     id: MEDICINE_RETURN_QUEST + "-departure",
     quest: MEDICINE_RETURN_QUEST,
     title: "軽くなった荷物",
-    place: "第二部 2-9 · 翌朝の集落",
+    place: "第二章 2-9 · 翌朝の集落",
     chapter: "departure",
     lines: [
       n(
@@ -168,7 +168,7 @@ export const finaleStories: Story[] = [
     id: MEDICINE_RETURN_QUEST + "-return",
     quest: MEDICINE_RETURN_QUEST,
     title: "三人分のお茶",
-    place: "第二部 2-9 · 街の仕事場、いつもの分かれ道",
+    place: "第二章 2-9 · 街の仕事場、いつもの分かれ道",
     chapter: "return",
     lines: [
       n(
@@ -201,7 +201,7 @@ export const finaleStories: Story[] = [
       a("じゃあ、二人で。今度は私がお昼を用意するね。"),
       l("楽しみにしてる。"),
       n("アリアはうなずいて手を振り、レオンも手を上げた。二人は、それぞれの村への道を歩き出した。"),
-      n("第二部 完"),
+      n("第二章 完"),
     ],
   },
 ];

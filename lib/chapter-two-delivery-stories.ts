@@ -11,7 +11,7 @@ export const deliveryStories: Story[] = [
     id: DELIVERY_PREP_QUEST + "-departure",
     quest: DELIVERY_PREP_QUEST,
     title: "瓶ごとに、ひと包み",
-    place: "第二部 2-3 · ミラの仕事場",
+    place: "第二章 2-3 · ミラの仕事場",
     chapter: "departure",
     lines: [
       n(
@@ -36,7 +36,7 @@ export const deliveryStories: Story[] = [
     id: DELIVERY_PREP_QUEST + "-return",
     quest: DELIVERY_PREP_QUEST,
     title: "三人で持つ薬箱",
-    place: "第二部 2-3 · 配達の支度を終えた仕事場",
+    place: "第二章 2-3 · 配達の支度を終えた仕事場",
     chapter: "return",
     lines: [
       n(
@@ -64,7 +64,7 @@ export const deliveryStories: Story[] = [
     id: MOUNTAIN_QUEST + "-departure",
     quest: MOUNTAIN_QUEST,
     title: "大小の山賊",
-    place: "第二部 2-4 · 山道の入口",
+    place: "第二章 2-4 · 山道の入口",
     chapter: "departure",
     lines: [
       n(
@@ -87,7 +87,7 @@ export const deliveryStories: Story[] = [
     id: MOUNTAIN_QUEST + "-return",
     quest: MOUNTAIN_QUEST,
     title: "ここは待ちましょう",
-    place: "第二部 2-4 · 山道の休憩場所",
+    place: "第二章 2-4 · 山道の休憩場所",
     chapter: "return",
     lines: [
       n(
@@ -112,7 +112,7 @@ export const deliveryStories: Story[] = [
     id: SIGNPOST_QUEST + "-departure",
     quest: SIGNPOST_QUEST,
     title: "これはご挨拶なのよ",
-    place: "第二部 2-5 · 山道の分かれ道",
+    place: "第二章 2-5 · 山道の分かれ道",
     chapter: "departure",
     lines: [
       n(
@@ -138,7 +138,7 @@ export const deliveryStories: Story[] = [
     id: SIGNPOST_QUEST + "-return",
     quest: SIGNPOST_QUEST,
     title: "ごちそうさまなのよ",
-    place: "第二部 2-5 · 戻した道標のそば",
+    place: "第二章 2-5 · 戻した道標のそば",
     chapter: "return",
     lines: [
       n(
@@ -160,7 +160,7 @@ export const deliveryStories: Story[] = [
     id: GOLEM_QUEST + "-departure",
     quest: GOLEM_QUEST,
     title: "まだもらってない子",
-    place: "第二部 2-6 · 古い作業場の手前",
+    place: "第二章 2-6 · 古い作業場の手前",
     chapter: "departure",
     lines: [
       v("Trick or Treat！　お菓子をくれなきゃ、いたずらしちゃうよ！"),
@@ -184,7 +184,7 @@ export const deliveryStories: Story[] = [
     id: GOLEM_QUEST + "-return",
     quest: GOLEM_QUEST,
     title: "それはお薬なの",
-    place: "第二部 2-6 · 作業場へ続く脇道",
+    place: "第二章 2-6 · 作業場へ続く脇道",
     chapter: "return",
     lines: [
       n("レオンが大きな手を道の外へ押し戻した。ミラは薬箱を抱え直す。蓋も留め金も外れていない。"),

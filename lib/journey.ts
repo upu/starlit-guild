@@ -1,5 +1,5 @@
 import { nextStage, stageEndingPending, storyStages } from "./prologue.ts";
-import { heroes, power, encounter, type State, type Squad, type Quest } from "./game.ts";
+import { allQuests, heroes, power, encounter, type State, type Squad, type Quest } from "./game.ts";
 import { MOON_HERB_QUEST } from "./chapter-two.ts";
 import { techniquesUnlocked, learnableTechniques } from "./techniques.ts";
 import { combatRank, penetration } from "./combat.ts";
@@ -53,8 +53,9 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
     };
   const stage = nextStage(s),
     complete = !!s.done[stage.quest];
+  const name = allQuests.find((q) => q.id === stage.quest)?.name ?? "";
   return {
-    title: complete ? "第二部の冒険を終えました" : stage.label + " · " + stage.title,
+    title: complete ? "第二章の冒険を終えました" : `${stage.number} ${name} · ${stage.title}`,
     detail: complete
       ? "薬の配達を終え、三人で街へ戻りました。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。"
       : "画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。",

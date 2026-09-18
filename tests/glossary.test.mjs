@@ -31,11 +31,11 @@ test("the stage table lists every story stage once, in order, with the real name
   const table = rows("ステージとクエストID");
   assert.equal(table.length, storyStages.length, "行数がステージ数と一致しない");
   const constants = { ...prologue, ...chapterTwo };
-  for (const [index, [label, name, id, constant, region]] of table.entries()) {
+  for (const [index, [number, name, id, constant, region]] of table.entries()) {
     const stage = storyStages[index],
       quest = allQuests.find((q) => q.id === stage.quest);
-    assert.equal(label, stage.label, `${id}: ステージ名`);
-    assert.equal(id, stage.quest, `${label}: クエストID`);
+    assert.equal(number, stage.number, `${id}: 番号`);
+    assert.equal(id, stage.quest, `${number}: クエストID`);
     assert.equal(name, quest.name, `${id}: 表示名`);
     assert.equal(region, quest.region, `${id}: 地域`);
     assert.equal(constants[constant], stage.quest, `${id}: 定数 ${constant}`);
@@ -43,6 +43,32 @@ test("the stage table lists every story stage once, in order, with the real name
   // The chapter split in the table matches where the first chapter ends.
   assert.ok(table[prologueStages.length - 1][0].startsWith("1-"));
   assert.ok(table[prologueStages.length][0].startsWith("2-"));
+});
+
+test("stages carry a number and the quest name, with no second display name", () => {
+  for (const stage of storyStages) {
+    assert.match(stage.number, /^\d-\d$/, `${stage.quest}: 番号の形`);
+    assert.ok(!("label" in stage), `${stage.quest}: label が残っている`);
+  }
+});
+
+test("the story text says 章 everywhere, never 部", () => {
+  const files = [
+    "prologue-stories",
+    "waterway-stories",
+    "tower-finale-stories",
+    "chapter-two-stories",
+    "chapter-two-delivery-stories",
+    "chapter-two-finale-stories",
+    "journey",
+  ];
+  for (const name of files) {
+    const source = readFileSync(new URL(`../lib/${name}.ts`, import.meta.url), "utf8");
+    assert.doesNotMatch(source, /第[一二三四五]部/, `lib/${name}.ts に「部」が残っている`);
+  }
+  const places = stories.flatMap((story) => (story.place ? [story.place] : []));
+  for (const place of places.filter((text) => text.startsWith("第")))
+    assert.match(place, /^第[一二]章 \d-\d · /, `場所表示の形が揃っていない: ${place}`);
 });
 
 test("the scene id rule matches the stories and stills that exist", () => {

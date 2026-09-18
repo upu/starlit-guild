@@ -13,7 +13,7 @@ export const chapterTwoStories: Story[] = [
     id: PICNIC_QUEST + "-departure",
     quest: PICNIC_QUEST,
     title: "約束の休日",
-    place: "第二部 2-1 · 昼の坂道",
+    place: "第二章 2-1 · 昼の坂道",
     chapter: "departure",
     lines: [
       n(
@@ -33,7 +33,7 @@ export const chapterTwoStories: Story[] = [
     id: PICNIC_QUEST + "-return",
     quest: PICNIC_QUEST,
     title: "両方、半分ずつ",
-    place: "第二部 2-1 · 丘の木陰",
+    place: "第二章 2-1 · 丘の木陰",
     chapter: "return",
     lines: [
       n("木陰に布を広げると、坂の下に街の屋根が見えた。レオンが包みを開き、二種類のパンを並べる。"),
@@ -59,7 +59,7 @@ export const chapterTwoStories: Story[] = [
     id: MOON_HERB_QUEST + "-departure",
     quest: MOON_HERB_QUEST,
     title: "葉の裏も見せて",
-    place: "第二部 2-2 · 後日の街、ミラの仕事場",
+    place: "第二章 2-2 · 後日の街、ミラの仕事場",
     chapter: "departure",
     lines: [
       n(
@@ -86,7 +86,7 @@ export const chapterTwoStories: Story[] = [
     id: MOON_HERB_QUEST + "-return",
     quest: MOON_HERB_QUEST,
     title: "あと一人分の包み",
-    place: "第二部 2-2 · ミラの仕事場",
+    place: "第二章 2-2 · ミラの仕事場",
     chapter: "return",
     lines: [
       n(

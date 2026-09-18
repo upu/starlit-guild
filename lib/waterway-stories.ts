@@ -17,7 +17,7 @@ export const waterwayStories: Story[] = [
     id: WATERWAY_QUEST + "-departure",
     quest: WATERWAY_QUEST,
     title: "地図の端に残る線",
-    place: "第一部 1-7 · 再び訪れた塔",
+    place: "第一章 1-7 · 再び訪れた塔",
     chapter: "departure",
     lines: [
       n(
@@ -77,7 +77,7 @@ export const waterwayStories: Story[] = [
     id: WATERWAY_QUEST + "-return",
     quest: WATERWAY_QUEST,
     title: "草の下の出口",
-    place: "第一部 1-7 · 古い排水口",
+    place: "第一章 1-7 · 古い排水口",
     chapter: "return",
     lines: [
       n(
@@ -119,7 +119,7 @@ export const waterwayStories: Story[] = [
     id: RESTORATION_QUEST + "-departure",
     quest: RESTORATION_QUEST,
     title: "水の通り道を戻す仕事",
-    place: "第一部 1-8 · 水路を直す朝",
+    place: "第一章 1-8 · 水路を直す朝",
     chapter: "departure",
     lines: [
       n(
@@ -157,7 +157,7 @@ export const waterwayStories: Story[] = [
     id: RESTORATION_QUEST + "-return",
     quest: RESTORATION_QUEST,
     title: "水の通る音",
-    place: "第一部 1-8 · 修理を終えた水路",
+    place: "第一章 1-8 · 修理を終えた水路",
     chapter: "return",
     lines: [
       n("切り分けた幹のそばに、鋸と縄がまとめられた。下流から戻った作業者が、管理人へ手を上げる。"),
