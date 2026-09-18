@@ -17,19 +17,7 @@ const canMove = () =>
   !document.hidden && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const serverMotion = () => false;
 
-export function StoryArtwork({
-  art,
-  active = true,
-  onClick,
-  label,
-  buttonClass,
-}: {
-  art: StoryArt;
-  active?: boolean;
-  onClick: () => void;
-  label: string;
-  buttonClass: string;
-}) {
+function useArtworkPlayback(art: StoryArt, active: boolean) {
   const motion = useSyncExternalStore(subscribeMotion, canMove, serverMotion);
   const [paused, setPaused] = useState(false),
     [failed, setFailed] = useState(false);
@@ -52,8 +40,6 @@ export function StoryArtwork({
       element.pause();
     };
   }, [animate, paused, ended]);
-  const controlLabel = ended ? "動画をもう一度再生" : paused ? "動画を再生" : "動画を一時停止";
-  const ControlIcon = ended ? RotateCcw : paused ? Play : Pause;
   function togglePlayback() {
     if (ended) {
       position.current = 0;
@@ -62,43 +48,79 @@ export function StoryArtwork({
       setPaused(false);
     } else setPaused((value) => !value);
   }
+  return {
+    animate,
+    paused,
+    ended,
+    position,
+    video,
+    setEnded,
+    setPaused,
+    setFailed,
+    togglePlayback,
+  };
+}
+
+function artworkContent(art: StoryArt, playback: ReturnType<typeof useArtworkPlayback>) {
+  if (!playback.animate)
+    return (
+      <Image
+        src={art.src}
+        alt={art.alt}
+        width={art.width}
+        height={art.height}
+        loading="eager"
+        unoptimized
+      />
+    );
+  return (
+    <video
+      ref={playback.video}
+      src={art.videoSrc}
+      poster={art.src}
+      width={art.width}
+      height={art.height}
+      muted
+      autoPlay={!playback.paused && !playback.ended}
+      playsInline
+      preload="none"
+      tabIndex={-1}
+      aria-label={art.alt}
+      onLoadedMetadata={(event) => {
+        event.currentTarget.currentTime = playback.position.current;
+      }}
+      onEnded={() => {
+        playback.setEnded(true);
+        playback.setPaused(true);
+      }}
+      onError={() => {
+        playback.setFailed(true);
+      }}
+    />
+  );
+}
+
+export function StoryArtwork({
+  art,
+  active = true,
+  onClick,
+  label,
+  buttonClass,
+}: {
+  art: StoryArt;
+  active?: boolean;
+  onClick: () => void;
+  label: string;
+  buttonClass: string;
+}) {
+  const playback = useArtworkPlayback(art, active);
+  const { animate, paused, ended, togglePlayback } = playback;
+  const controlLabel = ended ? "動画をもう一度再生" : paused ? "動画を再生" : "動画を一時停止";
+  const ControlIcon = ended ? RotateCcw : paused ? Play : Pause;
   return (
     <div className="story-artwork">
       <button type="button" className={buttonClass} onClick={onClick} aria-label={label}>
-        {animate ? (
-          <video
-            ref={video}
-            src={art.videoSrc}
-            poster={art.src}
-            width={art.width}
-            height={art.height}
-            muted
-            autoPlay={!paused && !ended}
-            playsInline
-            preload="none"
-            tabIndex={-1}
-            aria-label={art.alt}
-            onLoadedMetadata={(event) => {
-              event.currentTarget.currentTime = position.current;
-            }}
-            onEnded={() => {
-              setEnded(true);
-              setPaused(true);
-            }}
-            onError={() => {
-              setFailed(true);
-            }}
-          />
-        ) : (
-          <Image
-            src={art.src}
-            alt={art.alt}
-            width={art.width}
-            height={art.height}
-            loading="eager"
-            unoptimized
-          />
-        )}
+        {artworkContent(art, playback)}
       </button>
       {animate && (
         <button
