@@ -1,19 +1,21 @@
 "use client";
-import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
-import Image from "next/image";
-import { BookOpen, ChevronRight } from "lucide-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type Dispatch,
+  type Ref,
+  type SetStateAction,
+  type UIEvent,
+} from "react";
+import { BookOpen, ChevronRight } from "lucide-react";
 import { Portrait } from "./portrait";
-import { StoryArtwork } from "./story-artwork";
-import { heroes, allQuests, type State } from "@/lib/game";
+import { storyArtwork, storyArtViewer, storyTapHint } from "./story-viewers";
+import { memoryGroups } from "./story-memory-groups";
+import { useStoryGestureHandlers, type StoryGesture } from "./story-gesture-handlers";
+import { heroes, type State } from "@/lib/game";
 import { originalCharacters } from "@/lib/original-characters";
-import { storyStages } from "@/lib/prologue";
 import {
   availableStories,
   stories,
@@ -21,52 +23,14 @@ import {
   type Story,
   type StoryLine,
 } from "@/lib/stories";
-import { storyArtAt, storyThumbnail, type StoryArt } from "@/lib/story-art";
+import { storyArtAt } from "@/lib/story-art";
 import type { StoryAdvance } from "./use-story-advance";
+export { ArtViewer, StoryAlbum } from "./story-viewers";
+export { memoryGroups } from "./story-memory-groups";
 const characters = [
   ...heroes,
   ...originalCharacters.filter((c) => !heroes.some((h) => h.id === c.id)),
 ];
-
-export function ArtViewer({
-  art,
-  title,
-  onClose,
-}: {
-  art: StoryArt | null;
-  title: string;
-  onClose: () => void;
-}) {
-  return (
-    <Dialog
-      open={!!art}
-      onOpenChange={(open) => {
-        if (!open) onClose();
-      }}
-    >
-      <DialogContent fullScreen className="art-viewer" showCloseButton={false}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription className="sr-only">
-            画像や余白をタップすると元の画面に戻ります。
-          </DialogDescription>
-        </DialogHeader>
-        {art && (
-          <StoryArtwork
-            key={art.src}
-            art={art}
-            onClick={onClose}
-            label="鑑賞を終えて戻る"
-            buttonClass="art-canvas"
-          />
-        )}
-        <button type="button" className="art-return" onClick={onClose}>
-          戻る
-        </button>
-      </DialogContent>
-    </Dialog>
-  );
-}
 
 export function StoryLines({ lines, startIndex = 0 }: { lines: StoryLine[]; startIndex?: number }) {
   return (
@@ -91,6 +55,41 @@ export function StoryLines({ lines, startIndex = 0 }: { lines: StoryLine[]; star
   );
 }
 
+function useStoryPageAdvance(
+  viewArt: boolean,
+  last: boolean,
+  ready: boolean,
+  page: number,
+  setPage: (page: number) => void,
+  finishing: { current: boolean },
+  onRead: () => boolean,
+  onClose: () => void,
+) {
+  return () => {
+    if (viewArt || finishing.current) return;
+    if (!last) {
+      setPage(page + 1);
+      return;
+    }
+    if (!ready) return;
+    finishing.current = true;
+    if (onRead()) onClose();
+    else finishing.current = false;
+  };
+}
+
+function storyPageState(story: Story, page: number, departure: boolean) {
+  const pages = story.lines.length,
+    art = storyArtAt(story.id, page),
+    last = page + 1 >= pages;
+  return {
+    pages,
+    art,
+    last,
+    advanceLabel: last ? (departure ? "冒険を始める" : "閉じる") : "会話を進める",
+  };
+}
+
 export function StoryReader({
   story,
   ready,
@@ -109,106 +108,44 @@ export function StoryReader({
   const [page, setPage] = useState(0),
     [viewArt, setViewArt] = useState(false);
   const dialogue = useRef<HTMLDivElement>(null);
-  const gesture = useRef<{ x: number; y: number; scrollTop: number; moved: boolean } | null>(null),
+  const gesture = useRef<StoryGesture | null>(null),
     finishing = useRef(false);
   useEffect(() => {
     if (dialogue.current) dialogue.current.scrollTop = dialogue.current.scrollHeight;
   }, [page]);
-  const pages = story.lines.length,
-    art = storyArtAt(story.id, page);
-  const last = page + 1 >= pages,
-    advanceLabel = last ? (departure ? "冒険を始める" : "閉じる") : "会話を進める";
-  function advance() {
-    if (viewArt || finishing.current) return;
-    if (!last) {
-      setPage(page + 1);
-      return;
-    }
-    if (!ready) return;
-    finishing.current = true;
-    if (onRead()) onClose();
-    else finishing.current = false;
-  }
+  const { pages, art, last, advanceLabel } = storyPageState(story, page, departure);
+  const advance = useStoryPageAdvance(
+    viewArt,
+    last,
+    ready,
+    page,
+    setPage,
+    finishing,
+    onRead,
+    onClose,
+  );
   useImperativeHandle(advanceRef, () => ({ advance }));
   return (
     <div className={"story-reader" + (art ? " story-reader-art" : "")}>
-      <div className="story-art-space">
-        {art && (
-          <figure className="story-still">
-            <StoryArtwork
-              key={art.src}
-              art={art}
-              active={!viewArt}
-              onClick={() => {
-                setViewArt(true);
-              }}
-              label={"絵を大きく見る：" + story.title}
-              buttonClass="still-expand"
-            />
-          </figure>
-        )}
-      </div>
+      {storyArtwork(art ?? null, viewArt, story.title, () => {
+        setViewArt(true);
+      })}
       <div
         className="story-conversation"
         role="button"
         tabIndex={0}
         aria-label={advanceLabel}
         aria-disabled={last && !ready}
-        onPointerDown={(event) => {
-          gesture.current = {
-            x: event.clientX,
-            y: event.clientY,
-            scrollTop: dialogue.current?.scrollTop || 0,
-            moved: false,
-          };
-        }}
-        onPointerMove={(event) => {
-          const start = gesture.current;
-          if (
-            start &&
-            (Math.abs(event.clientX - start.x) > 8 || Math.abs(event.clientY - start.y) > 8)
-          )
-            start.moved = true;
-        }}
-        onPointerCancel={() => {
-          if (gesture.current) gesture.current.moved = true;
-        }}
-        onClick={() => {
-          const start = gesture.current;
-          gesture.current = null;
-          if (
-            start &&
-            (start.moved || Math.abs((dialogue.current?.scrollTop || 0) - start.scrollTop) > 4)
-          )
-            return;
-          advance();
-        }}
-        onKeyDown={(event) => {
-          if ((event.key === "Enter" || event.key === " ") && !event.repeat) {
-            event.preventDefault();
-            advance();
-          }
-        }}
+        {...useStoryGestureHandlers(dialogue, gesture, advance)}
       >
         <div ref={dialogue} className="dialogue-page dialogue-history">
           <StoryLines lines={story.lines.slice(0, page + 1)} />
         </div>
-        <div className="story-tap-hint" aria-hidden="true">
-          <span>
-            {page + 1} / {pages}
-          </span>
-          <span className={last ? "story-end-action" : "story-continue"}>
-            {last ? advanceLabel : "▼"}
-          </span>
-        </div>
+        {storyTapHint(page, pages, last, advanceLabel)}
       </div>
-      <ArtViewer
-        art={viewArt && art ? art : null}
-        title={story.title}
-        onClose={() => {
-          setViewArt(false);
-        }}
-      />
+      {storyArtViewer(viewArt ? (art ?? null) : null, story.title, () => {
+        setViewArt(false);
+      })}
     </div>
   );
 }
@@ -239,76 +176,31 @@ export function ConversationReader({
   );
 }
 
-export function memoryGroups(items: Story[]) {
-  const questIds = [
-    ...storyStages.map((stage) => stage.quest),
-    ...new Set(items.flatMap((st) => (st.quest ? [st.quest] : []))),
-  ];
-  const journey = [...new Set(questIds)].flatMap((id) => {
-    const entries = items
-      .filter((st) => st.quest === id)
-      .sort((a, b) => Number(a.chapter === "return") - Number(b.chapter === "return"));
-    const stage = storyStages.find((stage) => stage.quest === id),
-      quest = allQuests.find((q) => q.id === id);
-    return entries.length
-      ? [
-          {
-            id,
-            title: (stage ? stage.number + " · " : "") + (quest?.name || entries[0].title),
-            items: entries,
-          },
-        ]
-      : [];
-  });
-  return journey;
-}
-
-export function StoryAlbum({ state: s, onBack }: { state: State; onBack: () => void }) {
-  const [viewing, setViewing] = useState<Story | null>(null),
-    read = storyProgress(s).read;
-  // Preserve reveal rules; only mount gallery images inside the album.
-  const gallery = availableStories(s).flatMap((st) => {
-    const art = storyArtAt(st.id, read.includes(st.id) ? Infinity : 0);
-    return art ? [{ story: st, art }] : [];
-  });
+function storyMemoryFilters(
+  onlyUnread: boolean,
+  setOnlyUnread: (value: boolean) => void,
+  available: Story[],
+  read: string[],
+) {
   return (
-    <section className="story-album">
-      <button className="outline" onClick={onBack}>
-        旅の手帳へ戻る
-      </button>
-      {gallery.length ? (
-        <div className="still-gallery">
-          {gallery.map(({ story: st, art }) => (
-            <button
-              key={st.id}
-              onClick={() => {
-                setViewing(st);
-              }}
-              aria-label={st.title + "の絵を大きく見る"}
-            >
-              <Image
-                src={storyThumbnail(art)}
-                alt={art.alt}
-                width={320}
-                height={320}
-                loading="lazy"
-                unoptimized
-              />
-              <span>{st.title}</span>
-            </button>
-          ))}
-        </div>
-      ) : (
-        <p>物語で出会った絵が、ここに残ります。</p>
-      )}
-      <ArtViewer
-        art={viewing ? storyArtAt(viewing.id, Infinity) || null : null}
-        title={viewing?.title || "アルバム"}
-        onClose={() => {
-          setViewing(null);
+    <div className="memory-filters" aria-label="物語の表示">
+      <button
+        aria-pressed={!onlyUnread}
+        onClick={() => {
+          setOnlyUnread(false);
         }}
-      />
-    </section>
+      >
+        すべて
+      </button>
+      <button
+        aria-pressed={onlyUnread}
+        onClick={() => {
+          setOnlyUnread(true);
+        }}
+      >
+        未読 {available.filter((st) => !read.includes(st.id)).length}
+      </button>
+    </div>
   );
 }
 
@@ -325,24 +217,7 @@ export function StoryLibrary({
   const itemsToShow = available.filter((st) => !onlyUnread || !read.includes(st.id));
   return (
     <div className="story-library">
-      <div className="memory-filters" aria-label="物語の表示">
-        <button
-          aria-pressed={!onlyUnread}
-          onClick={() => {
-            setOnlyUnread(false);
-          }}
-        >
-          すべて
-        </button>
-        <button
-          aria-pressed={onlyUnread}
-          onClick={() => {
-            setOnlyUnread(true);
-          }}
-        >
-          未読 {available.filter((st) => !read.includes(st.id)).length}
-        </button>
-      </div>
+      {storyMemoryFilters(onlyUnread, setOnlyUnread, available, read)}
       {available.length === 0 ? (
         <div className="story-empty">
           <BookOpen />
@@ -393,6 +268,70 @@ function sameBanter(left: StoryLine[], right: StoryLine[]) {
   );
 }
 
+function hasNextBanter(exchange: BanterExchange, lines: StoryLine[]) {
+  return (
+    exchange.index + 1 < exchange.lines.length ||
+    (lines.length > 0 && !sameBanter(exchange.lines, lines))
+  );
+}
+
+type BanterExchange = { lines: StoryLine[]; index: number; history: StoryLine[]; turn: number };
+function scheduleBanter(
+  paused: boolean,
+  hasNext: boolean,
+  line: StoryLine | undefined,
+  latest: { current: StoryLine[] },
+  setExchange: Dispatch<SetStateAction<BanterExchange>>,
+) {
+  if (paused || !hasNext) return;
+  let timer: ReturnType<typeof setTimeout>;
+  const schedule = () => {
+    clearTimeout(timer);
+    if (document.hidden) return;
+    timer = setTimeout(
+      () => {
+        setExchange((current) => {
+          const continuing = current.index + 1 < current.lines.length,
+            index = continuing ? current.index + 1 : 0,
+            nextLines = continuing ? current.lines : latest.current,
+            nextLine = nextLines.at(index);
+          if (!nextLine || (!continuing && sameBanter(current.lines, nextLines))) return current;
+          // Keep completed exchanges visible, but only append when there is new dialogue.
+          return {
+            lines: nextLines,
+            index,
+            history: [...current.history, nextLine].slice(-100),
+            turn: current.turn + 1,
+          };
+        });
+      },
+      Math.max(3500, (line?.text.length || 0) * 100),
+    );
+  };
+  schedule();
+  document.addEventListener("visibilitychange", schedule);
+  return () => {
+    clearTimeout(timer);
+    document.removeEventListener("visibilitychange", schedule);
+  };
+}
+
+function useBanterButtonHandlers(
+  followLatest: { current: boolean },
+  onRead: (lines: StoryLine[]) => void,
+  lines: StoryLine[],
+) {
+  return {
+    onScroll: (event: UIEvent<HTMLButtonElement>) => {
+      const el = event.currentTarget;
+      followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
+    },
+    onClick: () => {
+      onRead(lines);
+    },
+  };
+}
+
 export function Banter({
   lines,
   onRead,
@@ -420,54 +359,18 @@ export function Banter({
   }, [lines]);
   const line = exchange.lines.at(exchange.index);
   // Compare content, not the new array journeyBanter returns on every clock tick.
-  const hasNext =
-    exchange.index + 1 < exchange.lines.length ||
-    (lines.length > 0 && !sameBanter(exchange.lines, lines));
-  useEffect(() => {
-    if (paused || !hasNext) return;
-    let timer: ReturnType<typeof setTimeout>;
-    const schedule = () => {
-      clearTimeout(timer);
-      if (document.hidden) return;
-      timer = setTimeout(
-        () => {
-          setExchange((current) => {
-            const continuing = current.index + 1 < current.lines.length,
-              index = continuing ? current.index + 1 : 0,
-              nextLines = continuing ? current.lines : latest.current,
-              nextLine = nextLines.at(index);
-            if (!nextLine || (!continuing && sameBanter(current.lines, nextLines))) return current;
-            // Keep completed exchanges visible, but only append when there is new dialogue.
-            return {
-              lines: nextLines,
-              index,
-              history: [...current.history, nextLine].slice(-100),
-              turn: current.turn + 1,
-            };
-          });
-        },
-        Math.max(3500, (line?.text.length || 0) * 100),
-      );
-    };
-    schedule();
-    document.addEventListener("visibilitychange", schedule);
-    return () => {
-      clearTimeout(timer);
-      document.removeEventListener("visibilitychange", schedule);
-    };
-  }, [exchange, paused, line, hasNext]);
+  const hasNext = hasNextBanter(exchange, lines);
+  useEffect(
+    () => scheduleBanter(paused, hasNext, line, latest, setExchange),
+    [exchange, paused, line, hasNext],
+  );
+  const handlers = useBanterButtonHandlers(followLatest, onRead, exchange.lines);
   if (!line) return null;
   return (
     <button
       ref={dialogue}
       className="journey-banter journey-banter-history"
-      onScroll={(event) => {
-        const el = event.currentTarget;
-        followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
-      }}
-      onClick={() => {
-        onRead(exchange.lines);
-      }}
+      {...handlers}
       aria-label="道中の掛け合いを読む"
     >
       <span className="banter-copy">
