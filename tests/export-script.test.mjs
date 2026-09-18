@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
 import { originalCharacters } from "../lib/original-characters.ts";
@@ -55,10 +55,25 @@ test("each stage preserves its two scenes and every still reveal", () => {
         .slice(2);
       const expected = scene.lines.flatMap((line, index) => {
         const art = storyArt[id];
+        const imagePath = art ? `../../../public${art.src}` : "";
         const still =
           art?.revealAtLine === index
-            ? [`> スチル表示（${index + 1}行目）：${art.src} — ${art.alt}`]
+            ? [
+                `> スチル表示（${index + 1}行目）：${art.src} — ${art.alt}`,
+                `![${art.alt}](${imagePath})`,
+              ]
             : [];
+        if (still.length) {
+          assert.ok(
+            existsSync(
+              new URL(
+                imagePath,
+                new URL(`../docs/generated/stages/${stage.number}.md`, import.meta.url),
+              ),
+            ),
+            id,
+          );
+        }
         return [...still, formatLine(line)];
       });
       assert.deepEqual(actual, expected, id);

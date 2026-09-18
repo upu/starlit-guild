@@ -33,7 +33,13 @@ function sceneLines(story, label) {
   ];
   story.lines.forEach((line, index) => {
     if (art?.revealAtLine === index) {
-      lines.push(`> スチル表示（${index + 1}行目）：${art.src} — ${art.alt}`, "");
+      const alt = art.alt.replaceAll("\\", "\\\\").replaceAll("[", "\\[").replaceAll("]", "\\]");
+      lines.push(
+        `> スチル表示（${index + 1}行目）：${art.src} — ${art.alt}`,
+        "",
+        `![${alt}](../../../public${art.src})`,
+        "",
+      );
     }
     lines.push(formatLine(line), "");
   });
