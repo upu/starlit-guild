@@ -13,6 +13,8 @@ npm run lint
 npm run lint:fix
 npm run format
 npm run format:check
+npm run script:export
+npm run script:check
 npm run images:optimize
 npm run images:check
 npm run videos:optimize
@@ -22,6 +24,8 @@ npx tsc --noEmit
 ```
 
 `npm run dev` はローカル開発、`npm run build` は公開用ビルド。テストは新旧シミュレーション、移行、セーブ形式などを含む。
+
+`script:export` は実行時の会話とスチル表示位置をステージ順の [生成台本](generated/script.md) に書き出す。生成台本は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は生成結果とファイルの一致を検査し、CIでも実行する。道中の状況別の掛け合いは対象外。
 
 dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[元動画から配信用MP4を生成](story-videos.md)する。変更のない動画はスキップする。
 
