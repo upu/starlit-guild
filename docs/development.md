@@ -39,9 +39,7 @@ Sitesの実行時環境変数に `ENABLE_TEST_TOOLS=true` を設定したサイ�
 
 無効化しても既存の通常・テスト記録、ファイル読み込み、クラウド復元は保持する。復元したテスト記録でも数値調整はできない。この設定はゲームが提供するテスト機能の切り替えであり、端末保存やセーブファイルの直接改造を防ぐ仕組みではない。
 
-`npm run build` 後に `node tests/test-tools.integration.mjs` で、同じ成果物の実行時設定を切り替えるHTTP検証を行える。ローカルの一時Workerだけを使い、Sitesやユーザーのセーブには接続しない。
-
-`node tests/api-backup.integration.mjs` はバックアップAPIのHTTP検証を行う。`npm start` でWorkerを起動し、その前にローカルD1へ `drizzle/*.sql` を適用しておく（起動中に適用するとテーブルが見えないことがある）。既定の接続先は `http://localhost:5173` で、`TEST_ROOT` で変えられる。どちらの統合テストも `tests/*.test.mjs` に含まれないため、CIでは実行していない。
+テスト機能のHTTP検証は[手動テスト](#ローカルの手動テスト)を参照する。
 
 ## PRごとのゲームバージョン
 
@@ -103,6 +101,31 @@ Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run format:check`�
 初達成、レベルアップ、ステージ解放、ミラの加入、区間報酬の通知で自動周回を止めない。
 
 ## 検証
+
+### ローカルの手動テスト
+
+以下の5本は `node --test tests/*.test.mjs` の対象外。GitHub Actionsの定期実行・push時実行・必須checkには追加せず、関連する画面やAPIを変更したとき、または必要になったときにローカルで実行する。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）と `npm run build` を済ませてから、必要な行だけ実行する。ビルドとテストはSitesやユーザーのセーブを使わない。
+
+| テスト | 実行条件・コマンド | 確認内容・出力 |
+| --- | --- | --- |
+| `tests/quest-picker.browser.mjs` | Node版PlaywrightとChromium。`node tests/quest-picker.browser.mjs` | 行先選択・設定・画面幅。`work/quest-picker-browser/` にスクリーンショットと結果JSON |
+| `tests/story-video.browser.mjs` | Node版PlaywrightとChromium。`node tests/story-video.browser.mjs` | 再生・一時停止・再視聴・縮小画面・失敗時の代替表示。`work/story-video-browser/` にスクリーンショット |
+| `tests/dialog-layout.browser.py` | Python版PlaywrightとChromiumまたはWebKit。`python tests/dialog-layout.browser.py --engine chromium`（必要なら `--engine webkit` も） | 生成CSSによる各画面幅・回転・安全領域の配置。成功時はケース数を表示。失敗時は測定値を出力 |
+| `tests/test-tools.integration.mjs` | ビルド済み。`node tests/test-tools.integration.mjs` | 一時的なローカルWorkerで `ENABLE_TEST_TOOLS` の切り替えをHTTP検証。外部サイト・端末セーブは使用しない |
+| `tests/api-backup.integration.mjs` | ビルドとローカルD1の初期化後、別ターミナルで `npm start`。起動時に表示されたURLを `TEST_ROOT` に指定して `node tests/api-backup.integration.mjs` | ローカルのバックアップAPIで往復・隔離・不正入力を検証。`npm start` の既定は `http://127.0.0.1:8787`（テスト側の既定5173とは異なる） |
+
+Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合は `PLAYWRIGHT_MODULE` にパッケージの絶対パス、`CHROME_PATH` にChromiumの実行ファイルを指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要。Pythonテストは生成CSSと `components/ui/dialog.tsx` の実際のクラスを組み合わせた独立fixtureでWebKitも検査する。Node版2本の実コンポーネント検査とは異なるため、単に言語を揃える目的では移植せず維持する。ブラウザー幅の検査は実機確認の代わりにはならない。
+
+バックアップAPIだけは、**`npm start` の前に**同じローカル状態（`.wrangler/state`）のD1へ `drizzle/0000_organic_secret_warriors.sql`、`0001_abandoned_enchantress.sql`、`0002_complete_firelord.sql` を番号順に適用する。例（各コマンドを順に実行）:
+
+```bash
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute site-creator-d1 --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_organic_secret_warriors.sql
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute site-creator-d1 --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_abandoned_enchantress.sql
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute site-creator-d1 --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0002_complete_firelord.sql
+npm start
+```
+
+別ターミナルから `TEST_ROOT=http://127.0.0.1:8787 node tests/api-backup.integration.mjs` を実行する（PowerShellでは `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs`）。既存のローカルD1へ同じSQLを重複適用しない（新しい検証用状態で始める場合だけ初期化する）。公開先のD1には適用しない。`work/` と `.wrangler/` はGit管理対象外なので、失敗時のログ・スクリーンショットはローカルで確認し、必要なものだけ共有する。
 
 自動テストに加え、次は実機確認が必要な項目として扱う。
 
