@@ -51,15 +51,12 @@ const eslintConfig = defineConfig([
     // one-line style. The limits stay active for new files; split these as
     // tracked in issue #86 and remove entries here as they pass.
     files: [
-      "app/api/backup/route.ts",
       "app/phaser/adventure-painter.ts",
       "app/phone-game.tsx",
       "app/save-panel.tsx",
       "app/story-scenes.tsx",
       "app/use-local-game.ts",
-      "lib/chapter-two.ts",
       "lib/game.ts",
-      "lib/prologue-stories.ts",
     ],
     rules: {
       "max-lines": "off",

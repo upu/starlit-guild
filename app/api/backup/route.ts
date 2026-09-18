@@ -10,6 +10,18 @@ function storedBundle(data: string) {
     return null;
   }
 }
+async function storedBackups(db: ReturnType<typeof gameDb>, userId: string) {
+  const rows = await db
+    .prepare(
+      "SELECT data, updated_at FROM game_device_backups WHERE user_id = ? ORDER BY updated_at DESC LIMIT 20",
+    )
+    .bind(userId)
+    .all<{ data: string; updated_at: number }>();
+  return rows.results.flatMap((row) => {
+    const bundle = storedBundle(row.data);
+    return bundle ? [{ bundle, at: row.updated_at }] : [];
+  });
+}
 async function handle(request: Request, write: boolean) {
   let cookie: string | null = null;
   const json = (data: unknown, status = 200) =>
@@ -26,17 +38,7 @@ async function handle(request: Request, write: boolean) {
     cookie = identity.cookie;
     const db = gameDb();
     if (!write) {
-      const rows = await db
-        .prepare(
-          "SELECT data, updated_at FROM game_device_backups WHERE user_id = ? ORDER BY updated_at DESC LIMIT 20",
-        )
-        .bind(identity.id)
-        .all<{ data: string; updated_at: number }>();
-      const backups = rows.results.flatMap((row) => {
-        const bundle = storedBundle(row.data);
-        return bundle ? [{ bundle, at: row.updated_at }] : [];
-      });
-      return json({ backups });
+      return json({ backups: await storedBackups(db, identity.id) });
     }
     if (request.headers.get("content-type")?.split(";")[0] !== "application/json")
       return json({ error: "形式を確認してください。" }, 400);
