@@ -41,7 +41,8 @@ export const stories: Story[] = [...prologueStories, ...chapterTwoStories];
 
 export const characterNotes: Partial<Record<string, { habit: string }>> = {
   aria: {
-    habit: "勢いで引き受けて見込み違いに気づくことも。強がったあとでも、自分で謝ってやり直す。",
+    habit:
+      "薬草を追って帰り道を見失うことも。勢いで引き受けて失敗しても、強がったあとに自分で謝ってやり直す。",
   },
   leon: {
     habit:
