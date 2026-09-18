@@ -10,7 +10,7 @@ import { storyArt } from "../lib/story-art.ts";
 
 const glossary = readFileSync(new URL("../docs/glossary.md", import.meta.url), "utf8");
 
-// Rows look like: | 1-1 交易路（昼） | 街への交易 | `village-trade` | `TRADE_QUEST` | 街へ続く交易路 |
+// The stage table maps each displayed stage to its quest, scenes, and source documents.
 function rows(heading) {
   const section = glossary.split(`## ${heading}`)[1];
   assert.ok(section, `見出し「${heading}」が見つかりません`);
@@ -23,7 +23,7 @@ function rows(heading) {
       line
         .slice(1, -1)
         .split("|")
-        .map((cell) => cell.trim().replace(/^`|`$/g, "")),
+        .map((cell) => cell.trim().replaceAll("`", "")),
     );
 }
 
@@ -31,7 +31,7 @@ test("the stage table lists every story stage once, in order, with the real name
   const table = rows("ステージとクエストID");
   assert.equal(table.length, storyStages.length, "行数がステージ数と一致しない");
   const constants = { ...prologue, ...chapterTwo };
-  for (const [index, [number, name, id, constant, region]] of table.entries()) {
+  for (const [index, [number, name, id, constant, region, scenes, documents]] of table.entries()) {
     const stage = storyStages[index],
       quest = allQuests.find((q) => q.id === stage.quest);
     assert.equal(number, stage.number, `${id}: 番号`);
@@ -39,6 +39,14 @@ test("the stage table lists every story stage once, in order, with the real name
     assert.equal(name, quest.name, `${id}: 表示名`);
     assert.equal(region, quest.region, `${id}: 地域`);
     assert.equal(constants[constant], stage.quest, `${id}: 定数 ${constant}`);
+    assert.equal(scenes, `${id}-departure / ${id}-return`, `${id}: シーンID`);
+    assert.equal(
+      documents,
+      number.startsWith("1-")
+        ? "[物語](story-part-1.md) / [実装](prologue-gameplay.md)"
+        : "[物語](story-part-2.md) / [実装](chapter-two-gameplay.md)",
+      `${id}: 担当資料`,
+    );
   }
   // The chapter split in the table matches where the first chapter ends.
   assert.ok(table[prologueStages.length - 1][0].startsWith("1-"));
