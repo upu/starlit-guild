@@ -53,13 +53,11 @@ const eslintConfig = defineConfig([
     files: [
       "app/api/backup/route.ts",
       "app/map-stage.tsx",
-      "app/phaser-adventure.tsx",
       "app/phaser/adventure-game.ts",
       "app/phaser/adventure-painter.ts",
       "app/phone-game.tsx",
       "app/save-panel.tsx",
       "app/story-scenes.tsx",
-      "app/use-game-music.ts",
       "app/use-local-game.ts",
       "lib/adventure-presentation.ts",
       "lib/chapter-two.ts",

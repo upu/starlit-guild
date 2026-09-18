@@ -4,13 +4,20 @@ import type { Action } from "@/lib/game";
 import type { AdventureInput } from "@/lib/adventure-presentation";
 import { rendererSession, type RendererStatus } from "./phaser/renderer-session";
 
-export function PhaserAdventure({
-  input,
-  onAction,
-}: {
+type Props = {
   input: AdventureInput;
   onAction: (action: Action) => void;
-}) {
+};
+
+const loadAdventureGame: Parameters<typeof rendererSession>[2] = async () => {
+  const [{ default: Phaser }, { createAdventureGame }] = await Promise.all([
+    import("phaser"),
+    import("./phaser/adventure-game"),
+  ]);
+  return (parent, bridge) => createAdventureGame(parent, bridge, Phaser);
+};
+
+function usePhaserSession({ input, onAction }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const latest = useRef({ input, onAction, receivedAt: 0 });
   const session = useRef<ReturnType<typeof rendererSession> | null>(null);
@@ -34,13 +41,7 @@ export function PhaserAdventure({
         },
         status: setStatus,
       },
-      async () => {
-        const [{ default: Phaser }, { createAdventureGame }] = await Promise.all([
-          import("phaser"),
-          import("./phaser/adventure-game"),
-        ]);
-        return (parent, bridge) => createAdventureGame(parent, bridge, Phaser);
-      },
+      loadAdventureGame,
     );
     session.current = active;
     const resize = () => {
@@ -63,6 +64,18 @@ export function PhaserAdventure({
       session.current = null;
     };
   }, [retry]);
+  return {
+    host,
+    status,
+    restart: () => {
+      setStatus("loading");
+      setRetry((value) => value + 1);
+    },
+  };
+}
+
+export function PhaserAdventure({ input, onAction }: Props) {
+  const { host, status, restart } = usePhaserSession({ input, onAction });
   return (
     <>
       <div
@@ -77,16 +90,7 @@ export function PhaserAdventure({
           <span>
             {status === "error" ? "冒険の景色を読み込めませんでした。" : "冒険の景色を支度中…"}
           </span>
-          {status === "error" && (
-            <button
-              onClick={() => {
-                setStatus("loading");
-                setRetry((value) => value + 1);
-              }}
-            >
-              もう一度読み込む
-            </button>
-          )}
+          {status === "error" && <button onClick={restart}>もう一度読み込む</button>}
         </div>
       )}
     </>
