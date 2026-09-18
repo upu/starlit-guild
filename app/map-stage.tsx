@@ -69,7 +69,7 @@ function JourneyOverlay({
             .map((target) =>
               target.battle
                 ? `${target.name} ${target.down ? "撃破" : `HP ${String(target.hp)}/${String(target.maxHp)}`}`
-                : target.name,
+                : `${target.name} 作業残り ${String(target.hp)}/${String(target.maxHp)}`,
             )
             .join("、")}
         </span>

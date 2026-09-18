@@ -4,10 +4,12 @@ import { equippedItems } from "./equipment.ts";
 import {
   PICNIC_QUEST,
   MOON_HERB_QUEST,
+  DELIVERY_PREP_QUEST,
   MOUNTAIN_QUEST,
   SIGNPOST_QUEST,
   GOLEM_QUEST,
   BLOCKADE_QUEST,
+  HOUSE_CALLS_QUEST,
   MEDICINE_RETURN_QUEST,
 } from "./chapter-two.ts";
 import { prologueStages } from "./prologue.ts";
@@ -42,6 +44,12 @@ export function combatRank(q: Quest) {
   if (q.id === MEDICINE_RETURN_QUEST) return 20;
   const stage = prologueStages.findIndex((stage) => stage.quest === q.id);
   return stage >= 0 ? firstChapterRanks[stage] : Math.max(4, 4 + Math.round((q.need - 30) / 5));
+}
+export function workResistance(q: Quest) {
+  // These quiet stages have no enemy, but sit between ranked encounters.
+  if (q.id === DELIVERY_PREP_QUEST) return 21;
+  if (q.id === HOUSE_CALLS_QUEST) return 25;
+  return combatRank(q);
 }
 export function penetration(s: State, hero: string) {
   const weapon = equippedItems(s, hero).find((item) => item.slot === "weapon");
@@ -96,10 +104,12 @@ export function syncEnemyTotals(r: Run) {
   const living = r.enemies.filter((enemy) => enemy.hp > 0);
   if (living.length) r.enemyAt = Math.min(...living.map((enemy) => enemy.nextAt));
 }
-export function damageEnemy(r: Run, base: number, power: number) {
+export function damageEnemy(r: Run, base: number, power: number, workResistance = 0) {
   const enemy = focusedEnemy(r);
   if (!enemy) {
-    const amount = Math.max(1, Math.round(base));
+    const amount = workResistance
+      ? reducedDamage(base, workResistance, power)
+      : Math.max(1, Math.round(base));
     r.target = Math.max(0, r.target - amount);
     return { amount, enemy: undefined };
   }

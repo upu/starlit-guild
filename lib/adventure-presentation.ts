@@ -148,7 +148,7 @@ function frameTarget(
     sprite: targetSprite,
     asset: targetAsset(quest, run, kind, targetSprite),
     name: targetName(quest, run.node, run.nodes),
-    value: clamp((kind === "battle" ? run.target : run.targetMax - run.target) / run.targetMax),
+    value: clamp(run.target / run.targetMax),
     battle: kind === "battle",
     kind,
     cue: "",
