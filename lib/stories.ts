@@ -41,11 +41,16 @@ export const stories: Story[] = [...prologueStories, ...chapterTwoStories];
 
 export const characterNotes: Partial<Record<string, { habit: string }>> = {
   aria: {
-    habit: "気になるものを見つけると、考えるより先に足が動く。道を間違えても、つい強がってしまう。",
+    habit:
+      "薬草を追って帰り道を見失うことも。勢いで引き受けて失敗しても、強がったあとに自分で謝ってやり直す。",
   },
   leon: {
     habit:
-      "誰かの荷物や足元を、いつの間にか気にしている。自分の望みを聞かれると、言葉を選びすぎる。",
+      "「念のため」に予備を増やしすぎる。仲間の足元や疲れにはすぐ気づくのに、自分の望みは言いそびれる。",
+  },
+  mira: {
+    habit:
+      "人には休息を勧めるのに、自分の疲れは後回し。お茶の蒸らし時間だけは、どんなに急いでも譲らない。",
   },
 };
 export const together = (ids: string[]) => ids.includes("aria") && ids.includes("leon");
