@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { storyStages, prologueStages } from "../lib/prologue.ts";
 import * as prologue from "../lib/prologue.ts";
 import * as chapterTwo from "../lib/chapter-two.ts";
@@ -52,23 +52,40 @@ test("stages carry a number and the quest name, with no second display name", ()
   }
 });
 
-test("the story text says 章 everywhere, never 部", () => {
-  const files = [
-    "prologue-stories",
-    "waterway-stories",
-    "tower-finale-stories",
-    "chapter-two-stories",
-    "chapter-two-delivery-stories",
-    "chapter-two-finale-stories",
-    "journey",
-  ];
-  for (const name of files) {
-    const source = readFileSync(new URL(`../lib/${name}.ts`, import.meta.url), "utf8");
-    assert.doesNotMatch(source, /第[一二三四五]部/, `lib/${name}.ts に「部」が残っている`);
-  }
+// CHANGELOG.md quotes past pull request titles verbatim, so its old wording stays.
+function writtenSources() {
+  const root = new URL("../", import.meta.url);
+  const files = readdirSync(new URL("lib/", root))
+    .filter((name) => name.endsWith(".ts"))
+    .map((name) => ["lib/" + name, new URL("lib/" + name, root)]);
+  files.push(["README.md", new URL("README.md", root)]);
+  for (const name of readdirSync(new URL("docs/", root), { recursive: true }))
+    if (name.endsWith(".md")) files.push(["docs/" + name, new URL("docs/" + name, root)]);
+  return files;
+}
+
+test("the game text and the documentation say 章 everywhere, never 部", () => {
+  for (const [name, url] of writtenSources())
+    assert.doesNotMatch(
+      readFileSync(url, "utf8"),
+      /第[一二三四五]部/,
+      `${name} に「部」が残っている`,
+    );
   const places = stories.flatMap((story) => (story.place ? [story.place] : []));
   for (const place of places.filter((text) => text.startsWith("第")))
     assert.match(place, /^第[一二]章 \d-\d · /, `場所表示の形が揃っていない: ${place}`);
+});
+
+test("the documentation uses the same stage names as the game", () => {
+  const names = storyStages.map((stage) => allQuests.find((q) => q.id === stage.quest).name);
+  for (const [name, url] of writtenSources()) {
+    const text = readFileSync(url, "utf8");
+    for (const [index, stage] of storyStages.entries()) {
+      // A stage number followed by a quoted name must quote the current one.
+      for (const quoted of text.matchAll(new RegExp(`${stage.number}「([^」]+)」`, "g")))
+        assert.equal(quoted[1], names[index], `${name}: ${stage.number} の表示名`);
+    }
+  }
 });
 
 test("the scene id rule matches the stories and stills that exist", () => {
