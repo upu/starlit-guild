@@ -27,6 +27,43 @@ const centers: Partial<Record<number, [number, number]>> = {
   13: [0.53, 0.25],
   14: [0.52, 0.2],
 };
+
+function expressionFace(
+  portrait: NonNullable<ReturnType<typeof expressionPortrait>>,
+  size: number,
+) {
+  return (
+    <span
+      className="face-portrait"
+      aria-hidden="true"
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: `url(${portrait.src})`,
+        backgroundSize: portrait.size,
+        backgroundPosition: portrait.position,
+      }}
+    />
+  );
+}
+
+function dialogueFace(cell: number, size: number) {
+  return (
+    <span
+      className="face-portrait"
+      aria-hidden="true"
+      style={{
+        width: size,
+        height: size,
+        backgroundImage:
+          "image-set(url(/portraits/dialogue-atlas.png) 1x, url(/portraits/dialogue-atlas@2x.png) 2x)",
+        backgroundSize: "400% 300%",
+        backgroundPosition: `${String(((cell % 4) / 3) * 100)}% ${String((Math.floor(cell / 4) / 2) * 100)}%`,
+      }}
+    />
+  );
+}
+
 export function Portrait({
   index,
   size = 56,
@@ -37,36 +74,9 @@ export function Portrait({
   expression?: PortraitExpression;
 }) {
   const portrait = expressionPortrait(index, expression);
-  if (portrait)
-    return (
-      <span
-        className="face-portrait"
-        aria-hidden="true"
-        style={{
-          width: size,
-          height: size,
-          backgroundImage: `url(${portrait.src})`,
-          backgroundSize: portrait.size,
-          backgroundPosition: portrait.position,
-        }}
-      />
-    );
+  if (portrait) return expressionFace(portrait, size);
   const cell = dialogueCells[index];
-  if (cell !== undefined)
-    return (
-      <span
-        className="face-portrait"
-        aria-hidden="true"
-        style={{
-          width: size,
-          height: size,
-          backgroundImage:
-            "image-set(url(/portraits/dialogue-atlas.png) 1x, url(/portraits/dialogue-atlas@2x.png) 2x)",
-          backgroundSize: "400% 300%",
-          backgroundPosition: `${String(((cell % 4) / 3) * 100)}% ${String((Math.floor(cell / 4) / 2) * 100)}%`,
-        }}
-      />
-    );
+  if (cell !== undefined) return dialogueFace(cell, size);
   const face = faces[index],
     original = originalArt(index);
   const [cx, cy] = centers[index] || [0.5, 0.3],

@@ -13,6 +13,20 @@ import { StoryReader } from "./story-scenes";
 import { useStoryAdvance } from "./use-story-advance";
 import { StoryHeading } from "./story-heading";
 
+function clearCard(questName: string, ready: boolean, onClick: () => void) {
+  return (
+    <button className="quest-clear-card" disabled={!ready} onClick={onClick}>
+      <BadgeCheck size={64} strokeWidth={1.3} />
+      <strong>クエストクリア</strong>
+      <span>{questName}</span>
+      <small>
+        次へ
+        <ChevronRight size={18} />
+      </small>
+    </button>
+  );
+}
+
 export function QuestCompletion({
   story,
   questName,
@@ -58,21 +72,9 @@ export function QuestCompletion({
             advanceRef={readerRef}
           />
         ) : (
-          <button
-            className="quest-clear-card"
-            disabled={!ready}
-            onClick={() => {
-              setReading(true);
-            }}
-          >
-            <BadgeCheck size={64} strokeWidth={1.3} />
-            <strong>クエストクリア</strong>
-            <span>{questName}</span>
-            <small>
-              次へ
-              <ChevronRight size={18} />
-            </small>
-          </button>
+          clearCard(questName, ready, () => {
+            setReading(true);
+          })
         )}
       </DialogContent>
     </Dialog>
