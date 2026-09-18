@@ -19,6 +19,79 @@ type Props = {
   ready: boolean;
   onAutoNextChange: (value: boolean) => void;
 };
+
+function chapterButton(
+  item: (typeof questChapters)[number],
+  chapter: ReturnType<typeof questChapter>,
+  unlocked: Quest[],
+  ready: boolean,
+  changeChapter: (id: ReturnType<typeof questChapter>) => void,
+) {
+  const available = unlocked.some((q) => questChapter(q.id) === item.id);
+  if (item.id === "other" && !available) return null;
+  return (
+    <button
+      type="button"
+      key={item.id}
+      disabled={!ready || !available}
+      aria-pressed={chapter === item.id}
+      onClick={() => {
+        changeChapter(item.id);
+      }}
+    >
+      {!available && <LockKeyhole size={14} />} {item.label}
+      {!available && <span className="sr-only">（未解放）</span>}
+    </button>
+  );
+}
+
+function questOption(
+  item: Quest,
+  selected: string,
+  next: string,
+  done: State["done"],
+  ready: boolean,
+  onSelect: Props["onSelect"],
+  onConfirm: Props["onConfirm"],
+) {
+  return (
+    <button
+      type="button"
+      className="quest-option"
+      key={item.id}
+      disabled={!ready}
+      aria-pressed={selected === item.id}
+      onClick={() => {
+        if (!ready) return;
+        if (selected === item.id) onConfirm(item.id);
+        else onSelect(item.id);
+      }}
+    >
+      <Image
+        src={questScenery(item, "thumbnail")}
+        alt=""
+        width={320}
+        height={320}
+        loading="lazy"
+        unoptimized
+      />
+      <span>
+        <small>
+          {storyStages.find((stage) => stage.quest === item.id)?.number || item.region}
+          {item.availability === "once" ? " · 一度きり" : ""}
+        </small>
+        <b>{item.name}</b>
+        {done[item.id] > 0 ? (
+          <small className="quest-progress">クリア済み</small>
+        ) : (
+          item.id === next && <small className="quest-progress">次のステージ</small>
+        )}
+      </span>
+      {selected === item.id && <Check size={19} />}
+    </button>
+  );
+}
+
 export function QuestPicker({
   state: s,
   selected,
@@ -44,24 +117,7 @@ export function QuestPicker({
   return (
     <div className="quest-picker">
       <div className="quest-chapters" role="group" aria-label="クエストの章">
-        {questChapters.map((item) => {
-          const available = unlocked.some((q) => questChapter(q.id) === item.id);
-          if (item.id === "other" && !available) return null;
-          return (
-            <button
-              type="button"
-              key={item.id}
-              disabled={!ready || !available}
-              aria-pressed={chapter === item.id}
-              onClick={() => {
-                changeChapter(item.id);
-              }}
-            >
-              {!available && <LockKeyhole size={14} />} {item.label}
-              {!available && <span className="sr-only">（未解放）</span>}
-            </button>
-          );
-        })}
+        {questChapters.map((item) => chapterButton(item, chapter, unlocked, ready, changeChapter))}
       </div>
       <QuestProgressionSetting
         checked={s.autoNextQuest === true}
@@ -78,45 +134,23 @@ export function QuestPicker({
       <div className="quest-options" aria-label="クエストの一覧">
         {unlocked
           .filter((item) => questChapter(item.id) === chapter)
-          .map((item) => (
-            <button
-              type="button"
-              className="quest-option"
-              key={item.id}
-              disabled={!ready}
-              aria-pressed={q.id === item.id}
-              onClick={() => {
-                if (!ready) return;
-                if (q.id === item.id) onConfirm(item.id);
-                else onSelect(item.id);
-              }}
-            >
-              <Image
-                src={questScenery(item, "thumbnail")}
-                alt=""
-                width={320}
-                height={320}
-                loading="lazy"
-                unoptimized
-              />
-              <span>
-                <small>
-                  {storyStages.find((stage) => stage.quest === item.id)?.number || item.region}
-                  {item.availability === "once" ? " · 一度きり" : ""}
-                </small>
-                <b>{item.name}</b>
-                {s.done[item.id] > 0 ? (
-                  <small className="quest-progress">クリア済み</small>
-                ) : (
-                  item.id === next && <small className="quest-progress">次のステージ</small>
-                )}
-              </span>
-              {q.id === item.id && <Check size={19} />}
-            </button>
-          ))}
+          .map((item) => questOption(item, q.id, next, s.done, ready, onSelect, onConfirm))}
       </div>
       <QuestSummary quest={q} ready={ready} onConfirm={onConfirm} />
     </div>
+  );
+}
+
+function questOpponent(opponent: (typeof originalCharacters)[number]) {
+  return (
+    <span className="quest-opponent">
+      <Sprite index={opponent.sprite} size={112} />
+      <span>
+        <small>{opponent.faction}</small>
+        <b>{opponent.name}</b>
+        <span>{opponent.bio}</span>
+      </span>
+    </span>
   );
 }
 
@@ -170,16 +204,7 @@ function QuestSummary({
         <span>{q.region}</span>
       </span>
       <span className="quest-summary-title">{q.name}</span>
-      {opponent && (
-        <span className="quest-opponent">
-          <Sprite index={opponent.sprite} size={112} />
-          <span>
-            <small>{opponent.faction}</small>
-            <b>{opponent.name}</b>
-            <span>{opponent.bio}</span>
-          </span>
-        </span>
-      )}
+      {opponent && questOpponent(opponent)}
       <span className="quest-description">{q.desc}</span>
     </button>
   );
