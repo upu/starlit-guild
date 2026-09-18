@@ -12,7 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
-| 0.2.21 | 2026-09-18 | スチルとBGMを圧縮し、元素材からの生成を自動化（[#83](https://github.com/upu/starlit-guild/issues/83)） |
+| 0.2.21 | 2026-09-18 | スチルとBGMを圧縮し、元素材からの生成を自動化（[#104](https://github.com/upu/starlit-guild/pull/104)） |
 | 0.2.20 | 2026-09-18 | 用語集を追加し、章とステージの呼び名を揃える（[#100](https://github.com/upu/starlit-guild/pull/100)） |
 | 0.2.19 | 2026-09-17 | 保存形式の従来モード専用フィールドと従来記録の画像素材を削除する（#88 の第四段）（[#99](https://github.com/upu/starlit-guild/pull/99)） |
 | 0.2.18 | 2026-09-17 | 旧クエストと旧仲間のデータを削除する（#88 の第三段）（[#98](https://github.com/upu/starlit-guild/pull/98)） |
