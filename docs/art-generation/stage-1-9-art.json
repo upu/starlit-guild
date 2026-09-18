@@ -1,7 +1,7 @@
 {
   "useCase": "illustration-story",
   "mode": "built-in image_gen",
-  "originalGeneratedImagePath": "public/stories/tower-light-restored.png",
+  "originalGeneratedImagePath": "assets/source/stories/tower-light-restored.png",
   "dimensions": {
     "width": 1536,
     "height": 1024
@@ -9,7 +9,7 @@
   "bytes": 2747635,
   "sha256": "1403f34398b8c7a6bb23e1523cb327d6d477d30161024cc8826196da3f29aaa4",
   "referenceImages": [
-    "public/stories/tower-moss-discovery.png",
+    "assets/source/stories/tower-moss-discovery.png",
     "public/stages/tower-road.png"
   ],
   "generationPrompt": "Use case: illustration-story. Create one final 1536x1024 fantasy story still for STARLIT-GUILD. Paint a quiet blue-indigo twilight landscape after the tower moss has been removed. Exactly two youthful adult companions sit shoulder-to-shoulder on a low stone ledge at lower center, each about 20 to 25 percent of image height, seen entirely from behind and looking straight into the scene toward a modest cylindrical stone road-beacon near upper center-right. Aria sits left: long blonde hair mainly at the sides, green gold-trimmed hood continuously sewn into a broad green cloak, and one white feather. Leon sits right: brown hair, red scarf and short cape, blue tunic and steel shoulder armor. Their bent legs and boots are visible; a small basket of removed moss and a wooden scraper rest beside them. The wide scenic landscape dominates: atmospheric hills, an unlit winding country path and a distant village. Use loose hand-painted gouache and oil brushwork, matte broken color, soft irregular edges and restrained shapes. Inside the tower's small glass upper chamber, show only a very faint translucent muted lavender tint, about as bright as the twilight clouds. No white core, rays, halo, bloom, exterior light spill or glowing road. Convey a small earned victory and quiet affection without confession. Exactly two characters; no faces or profiles, embrace, combat, extra characters, giant tower, text, captions, logo or watermark.",
@@ -29,7 +29,7 @@
   "sceneId": "tower-moss-removal-return",
   "revealAtLine": 6,
   "adoptedImage": {
-    "path": "public/stories/tower-light-restored.png",
+    "path": "assets/source/stories/tower-light-restored.png",
     "source": "user-provided hood-down image on 2026-09-17, then edited with built-in image_gen",
     "sourceSha256": "d782ef9852e5e2e7387b5e744e42bf3fefb60cdcdba8bfe9a72ac27f1329aca7",
     "change": "Keep Aria's hood lowered, her long hair and flower ornament visible, and change the tower window from warm orange to faint lavender-purple.",

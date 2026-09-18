@@ -8,18 +8,18 @@
   ],
   "assets": [
     {
-      "path": "public/stories/medicine-delivered.png",
+      "path": "assets/source/stories/medicine-delivered.png",
       "scene": "waiting-households-return",
       "revealAtLine": 4,
       "prompt": "Edit this illustration, keeping its lovely patient-side camera composition almost unchanged. Same landscape 1536x1024 painterly detailed anime style, same exhausted lavender-haired healer Mira seen near-FRONTALLY in center, same moon/flower hair ornament, white/lavender robes, heavy eyelids and under-eye sleep deprivation shadows, gentle tired caring expression. Boy's head and mother's shoulder remain at foreground edges, Aria and Leon absent. CHANGE ACTION: this is administering medicine during treatment, not handing over packages. Mira holds a small wooden spoon containing liquid medicine in her right hand and extends it gently to the sick boy's OPEN MOUTH at the foreground right. Show enough of boy's side profile and slightly open mouth to clearly read 'open wide, ahh' and the spoon at his lips. Mother supports boy upright. Mira herself softly opens her mouth a little in an encouraging 'ahh' expression, warm reassuring gaze at boy. In her other hand near her torso she holds a small ceramic medicine bowl. Put the wrapped medicine and amber medicinal honey jar on the bedside surface, not held out as gifts. Delicate believable spoon, fingers, hands and lips, no forced feeding, no spills, no comic style here, no giant spoon, no text, no magical glow. Preserve fatigue, face identity, costume, setting, warm light and dominant frontal Mira composition.",
-      "editReference": "public/stories/medicine-delivered.png (patient-side frontal revision ec70541)",
+      "editReference": "assets/source/stories/medicine-delivered.png (patient-side frontal revision ec70541)",
       "costumeReference": "docs/characters/mira-reference-sheet.webp"
     },
     {
-      "path": "public/stories/three-cups-of-tea.png",
+      "path": "assets/source/stories/three-cups-of-tea.png",
       "scene": "medicine-road-home-return",
       "revealAtLine": 11,
-      "editReference": "public/stories/three-cups-of-tea.png (three-cup revision ec70541)"
+      "editReference": "assets/source/stories/three-cups-of-tea.png (three-cup revision ec70541)"
     }
   ],
   "revision": "Mira administers medicine with a spoon; tea scene becomes a comic chibi cutaway."

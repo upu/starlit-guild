@@ -1,17 +1,23 @@
 # スチル制作記録
 
+## 配信用 WebP の生成
+
+採用した元 PNG は `assets/source/stories/` に保存する。`npm run stills:optimize` は各 PNG から鑑賞用の `public/stories/<名前>.webp` と、中央を正方形に切り抜いた `public/stories/thumbnails/<名前>.webp` を生成する。設定は `config/story-stills.json`、入力・出力のハッシュと容量は `assets/story-stills.manifest.json` に記録する。元 PNG を配信しない。
+
+`npm run dev` と `npm run build` の開始前にも生成する。新しい絵を追加したら元 PNG・両 WebP・manifest を一緒にコミットし、鑑賞画面で構図を確認する。`npm run stills:check` はファイルを変えずに再生成の要否を調べ、CI でも実行する。保存されるのはシーン ID の既読情報で、画像パスの変更では `story.read` を変更しない。
+
 ## 第二章2-8・2-9：薬の配達と三人のお茶
 
 組み込み `image_gen` で各1536×1024の画像を制作。アリア・レオン・ミラのリファレンスシートを外見・衣装の参照に使い、文字なしの一枚絵にした。モデル識別子は返されていない。最終プロンプトは [生成記録](art-generation/chapter-two-finale-art.json) に保存。
 
-- `public/stories/medicine-delivered.png`：`waiting-households-return` の0始まり4行目、ミラが匙で薬を飲ませる行から表示。少年・母親側の肩越しにミラを正面から見る構図。重いまぶた、目の下の影、疲れた肩に寝不足をにじませ、薬を飲ませる優しさを保つ。衣装はミラの設定図に合わせ、肩が見えるローブと細い肩紐を保つ。アリアとレオンは画面外。瞬時の全快や魔法の発光を置かない。
-- `public/stories/three-cups-of-tea.png`：`medicine-road-home-return` の0始まり11行目、ミラがカップを受け取り一口飲む行から表示。ミラは空いた手を往診のメモへ伸ばし、アリアが紙をそっと遠ざける。レオンはカップを持って笑う。大きな頭と小さな体、誇張した表情のコミカルなデフォルメ画にし、同じ机に三人と三つのカップを置く。休んでも仕事を増やしかける癖を小さな仕草で見せる。対応する地の文もこの動作へ合わせた。
+- `assets/source/stories/medicine-delivered.png`：`waiting-households-return` の0始まり4行目、ミラが匙で薬を飲ませる行から表示。少年・母親側の肩越しにミラを正面から見る構図。重いまぶた、目の下の影、疲れた肩に寝不足をにじませ、薬を飲ませる優しさを保つ。衣装はミラの設定図に合わせ、肩が見えるローブと細い肩紐を保つ。アリアとレオンは画面外。瞬時の全快や魔法の発光を置かない。
+- `assets/source/stories/three-cups-of-tea.png`：`medicine-road-home-return` の0始まり11行目、ミラがカップを受け取り一口飲む行から表示。ミラは空いた手を往診のメモへ伸ばし、アリアが紙をそっと遠ざける。レオンはカップを持って笑う。大きな頭と小さな体、誇張した表情のコミカルなデフォルメ画にし、同じ机に三人と三つのカップを置く。休んでも仕事を増やしかける癖を小さな仕草で見せる。対応する地の文もこの動作へ合わせた。
 
 両画像を目視し、人物の外見、匙での服薬とお茶の最初の一口、三人の席とカップ数、不要な文字の不在を確認。読了後は共通アルバムから閲覧できる。
 
 ## 第二章2-6：大小の人形
 
-`public/stories/begging-dolls.png` は1536×1024。`begging-golem-departure` の0始まり3行目、大小の人形が同じおねだりをする行から表示し、既存の思い出・アルバムにも登録する。
+`assets/source/stories/begging-dolls.png` は1536×1024。`begging-golem-departure` の0始まり3行目、大小の人形が同じおねだりをする行から表示し、既存の思い出・アルバムにも登録する。
 
 大小の人形はカボチャやコウモリ、黒・緑・黄色の布でハロウィン風に飾る。少し後ろに小柄なプティを置き、パンプキンヘッドをかぶったまま操る。穴の内側は暗く、素顔や目元は見せない。ゴーレムの両手は各5本（親指1本＋指4本）。
 
@@ -19,7 +25,7 @@
 
 ## 第一章1-9：塔の再点灯
 
-組み込み image_gen で1536×1024の初版を生成。採用画像は2026-09-17にユーザー提供のフードを下ろした版をもとに、塔の窓の灯りを淡い紫へ編集し、`public/stories/tower-light-restored.png` へ保存した。`tower-moss-removal-return` の0始まり6行目、塔に淡い紫の光がともる瞬間から表示する。読了後はアルバムでも鑑賞できる。1-8には一枚絵を追加せず、水路の修理までに分けた。
+組み込み image_gen で1536×1024の初版を生成。採用画像は2026-09-17にユーザー提供のフードを下ろした版をもとに、塔の窓の灯りを淡い紫へ編集し、`assets/source/stories/tower-light-restored.png` へ保存した。`tower-moss-removal-return` の0始まり6行目、塔に淡い紫の光がともる瞬間から表示する。読了後はアルバムでも鑑賞できる。1-8には一枚絵を追加せず、水路の修理までに分けた。
 
 二人は寄り添って座り、正面の塔を向く後ろ姿。採用画像ではアリアのフードを下ろし、長い金髪と花飾りを見せる。塔の窓には弱い紫の灯りがともる。
 
@@ -43,7 +49,7 @@
 - `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。
 
-採用画像は、木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げた構図。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋を繊細に描く。原本は `public/stories/forest-moss-aria-oil.png` に保持し、ゲームと資料一覧では可逆WebPを参照する。WebPは1,873,356 bytesで、原本PNGの3,064,032 bytesから約39%削減。両画像をRGBAへ復号した全画素の一致を確認した。
+採用画像は、木漏れ日が差す苔むした石壁の前で、アリアが二つの苔の器を顔の近くへ持ち上げた構図。金髪、緑の瞳、尖った耳、羽飾りのある緑と金のフード、革手袋を繊細に描く。原本は `assets/source/stories/forest-moss-aria.png` に保持する。以前の可逆WebPは1,873,356 bytesで、原本PNGの3,064,032 bytesから約39%削減し、両画像の全画素一致を確認した。現在の配信用WebPは上記の生成手順で作る。
 
 提供画像の人物、二つの器、背景、文字の不在を目視確認。表示行・寸法・保存先は既存の自動テストで検証する。画像確認とゲーム画面のブラウザ操作・実機検証は区別する。
 
@@ -56,7 +62,7 @@
 | `assets/source/scenery/tower-road.png` | 1-4の一覧・冒険背景。昼の青空、畑、林、普通の土の道、遠景の小さな塔。水たまりや泥を強調しない |
 | `assets/source/scenery/moss-night-road.png` | 1-5の一覧・冒険背景。夜の交易路と村々への分かれ道。地面を見分けられる月明かり |
 | `public/items/moss-lamp.png` | 1-5の足元確認地点に表示する木の入れ物と淡く光る苔。透明背景。魔物除けや防御効果はない |
-| `public/stories/tower-moss-discovery.png` | `tower-road-return` の0始まり20行目、苔について尋ね、灯りとして試したい理由を伝え、採取の許可を得た後、木の入れ物の中で苔が光る場面から表示。読了後はアルバムでも鑑賞可能 |
+| `assets/source/stories/tower-moss-discovery.png` | `tower-road-return` の0始まり20行目、苔について尋ね、灯りとして試したい理由を伝え、採取の許可を得た後、木の入れ物の中で苔が光る場面から表示。読了後はアルバムでも鑑賞可能 |
 
 会話は一行送りのため、絵の表示条件は3行ごとのページ境界に縛らない。絵は光る苔を手に取る以前には見せない。
 
@@ -148,7 +154,7 @@ Use case: illustration-story. Create one original standalone wide landscape game
 
 ## 第二章2-2：ミラが倒れる
 
-- 採用画像：[`mira-collapse.png`](../public/stories/mira-collapse.png)、1536×1024。内蔵 `image_gen` で制作。
+- 採用画像：[`mira-collapse.png`](../assets/source/stories/mira-collapse.png)、1536×1024。内蔵 `image_gen` で制作。
 - 参考：`characters/aria-reference-sheet.webp`、`characters/leon-reference-sheet.webp`、`characters/mira-reference-sheet.webp`。外見・衣装のみを参照し、シート内の文字は設定へ採用しない。
 - 表示：`moonlit-herbs-return` の第7行（0始まりで6）、ミラの膝が折れる行から。2-1のお昼には画像を置かない。
 - 画像確認：倒れたミラをレオンが支え、アリアが荷物をどけて近くへ寄る。三人の外見、支える動作、作りかけの薬のある仕事場を確認した。

@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "files": {
+    "begging-dolls.png": {
+      "sourceHash": "fffe79c45d8f5a2be3e1feb6f1463ddc791dc2012ee249b6ffc9e580ecb54eda",
+      "sourceBytes": 3047642,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "bb6ecde937c8625389623f9931558854105c316e8c328fd9289c739df377bae0",
+          "bytes": 364458
+        },
+        "thumbnail": {
+          "hash": "9ab9ddbacf8a571a03900e52790a324e8c62bd6b80ccc262eb40a61a7a61fc1b",
+          "bytes": 33382
+        }
+      }
+    },
+    "forest-moss-aria.png": {
+      "sourceHash": "0f4b5f185e52a75332317ef75ce2c8cfa7c2b7c49f46740e597e6967385d0637",
+      "sourceBytes": 3064032,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "1164f9acc7ca2f6304bc7bc700cdb28b5aaf7c4279030537e527c0c8b0d762b7",
+          "bytes": 272812
+        },
+        "thumbnail": {
+          "hash": "a30363c5bad8f187e1b0d0ac044543c3f6f22a1b6db63b664bdbf5951c6d7d58",
+          "bytes": 23762
+        }
+      }
+    },
+    "medicine-delivered.png": {
+      "sourceHash": "759da2a730d02c90277b39b79223b1e747dc3bf695764079d3a8dd70c270edc9",
+      "sourceBytes": 2282466,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "06623e0ba6c71974a68dc88a958efefd62519498d791df6ed98f26c75ba32001",
+          "bytes": 178864
+        },
+        "thumbnail": {
+          "hash": "4303dcf1f48a497c4e7afc83dfc243399a5e69aa95f27620eeba2909a526eaf4",
+          "bytes": 18508
+        }
+      }
+    },
+    "mira-collapse.png": {
+      "sourceHash": "12001c04708068f17a9816064b63f0b0e2f972c11738c50912813156b0b35f46",
+      "sourceBytes": 3024970,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "bb294c80c862d6877032270c895c74ab534128738e3ef4971cdd1fc90910c653",
+          "bytes": 314810
+        },
+        "thumbnail": {
+          "hash": "9ce60f34177d1154059582665f93955bec8cc37a0299b4e53f4680ad44f37dc0",
+          "bytes": 24562
+        }
+      }
+    },
+    "three-cups-of-tea.png": {
+      "sourceHash": "fbe8d40a0e6bb163695f396badba1fea8a1fc91ade61d3fb6bb46dda6f865fce",
+      "sourceBytes": 2792592,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "694b34f52fd50ee11f89baeedd5ecf4f7eed2af5254c754f106ed33690912caf",
+          "bytes": 315180
+        },
+        "thumbnail": {
+          "hash": "64a22bd38f7ce0593b6388b55c790e870c4b5cca32b719ee287f9fa7fed29938",
+          "bytes": 29422
+        }
+      }
+    },
+    "tower-light-restored.png": {
+      "sourceHash": "363c218a8144c05a7c5185eea9c439d55f80affee9528553ab35c3d380251bda",
+      "sourceBytes": 2719459,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "104c5c4f327a850d9752864aae784534e88af59bcbf18eae4b1957fb6a7f8775",
+          "bytes": 267066
+        },
+        "thumbnail": {
+          "hash": "9df991fd36f5df552e98a64cad32a5ad37f30e3a06e16208b01dc8815caf8493",
+          "bytes": 23722
+        }
+      }
+    },
+    "tower-moss-discovery.png": {
+      "sourceHash": "bd2fb5d56ba1eb15f3322b9621bb8c399fc3e3d2638fe91b2160beae319c9510",
+      "sourceBytes": 2578332,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "75e19abbc277c160011ed5546dcde181db4e54e5fcf8c9a7efd4939b41d1dfcb",
+          "bytes": 222864
+        },
+        "thumbnail": {
+          "hash": "5ad35090d0d8edf1bd7f507cdc5371b85c46f97b5ddd32f4a81a80787e78457a",
+          "bytes": 17322
+        }
+      }
+    },
+    "village-trade-handover.png": {
+      "sourceHash": "6cd9e7604ea35dd87065f640bc7f2cceaefec49a52c75a76f744d0e09751e8db",
+      "sourceBytes": 2712857,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "3be46269666c42b405240abfaad133d3f1b7b51c9734efe2e8148836bf093dd1",
+          "bytes": 271280
+        },
+        "thumbnail": {
+          "hash": "1ddbb1f9de9e30eef8756fe7726d497b27b99cbb005d8041281a6c79e2bba758",
+          "bytes": 24496
+        }
+      }
+    }
+  }
+}

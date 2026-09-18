@@ -149,8 +149,8 @@ test("dialogue and banter show close-up portraits and the trade still appears fr
   assert.doesNotMatch(chat, /class="sprite/);
   assert.deepEqual(lines, before);
   for (let line = 0; line < story.lines.length; line += 3)
-    assert.equal(storyArtAt(story.id, line)?.src, "/stories/village-trade-handover.png");
-  assert.ok(first.includes("/stories/village-trade-handover.png"));
+    assert.equal(storyArtAt(story.id, line)?.src, "/stories/village-trade-handover.webp");
+  assert.ok(first.includes("/stories/village-trade-handover.webp"));
 });
 
 test("prologue guides the first quest choice before departure and keeps actions below chat", () => {

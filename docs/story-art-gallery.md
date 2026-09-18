@@ -2,19 +2,19 @@
 
 ## 薬を待つ家々
 
-![薬と蜜の配達](../public/stories/medicine-delivered.png)
+![薬と蜜の配達](../public/stories/medicine-delivered.webp)
 
 第二章2-8。ミラが子どもの口元へ薬の匙を運ぶ行から表示。
 
 ## 三人分のお茶
 
-![三人のお茶](../public/stories/three-cups-of-tea.png)
+![三人のお茶](../public/stories/three-cups-of-tea.webp)
 
 第二章2-9。ミラがカップを受け取り一口飲む行から表示。
 
 ## 灯りの戻る丘
 
-![塔の再点灯](../public/stories/tower-light-restored.png)
+![塔の再点灯](../public/stories/tower-light-restored.webp)
 
 第一章1-9。塔に淡い紫の光が戻る行で表示。アリアはフードを下ろし、長い金髪と花飾りを見せてレオンと寄り添って座る。二人は正面の塔を見上げ、窓には弱い紫の灯りがともる。[採用画像と初版の制作記録](art-generation/stage-1-9-art.json)。
 
@@ -31,7 +31,7 @@
 
 第一章1-4。管理人の許可を得て分けた光る苔が、小さな木の入れ物で手元を照らす。二人の顔と苔灯に寄った構図で、人物の外見は設定資料のリファレンスシートに合わせている。この絵の生成プロンプトと背景・苔灯の記録は [制作記録](story-art.md#第一章1-41-5) を参照。
 
-![塔の足元で、アリアとレオンが木の入れ物の中の光る苔を覗く。](../public/stories/tower-moss-discovery.png)
+![塔の足元で、アリアとレオンが木の入れ物の中の光る苔を覗く。](../public/stories/tower-moss-discovery.webp)
 
 ## 従来記録のスチル（削除済み）
 
@@ -56,6 +56,6 @@
 
 ## 第二章2-2：あと一人分の包み
 
-![倒れたミラをレオンが支え、アリアが駆け寄る](../public/stories/mira-collapse.png)
+![倒れたミラをレオンが支え、アリアが駆け寄る](../public/stories/mira-collapse.webp)
 
 `moonlit-herbs-return` の倒れる行から表示。制作条件は [スチル制作記録](story-art.md#第二章2-2ミラが倒れる) を参照。

@@ -274,9 +274,9 @@ function compose(track) {
     },
   };
 }
-await mkdir("public/music", { recursive: true });
+await mkdir("assets/source/music", { recursive: true });
 for (const track of tracks) {
   const { pcm, stats } = compose(track);
-  await writeFile(`public/music/${track.id}.wav`, pcm);
+  await writeFile(`assets/source/music/${track.id}.wav`, pcm);
   console.log(track.id, stats);
 }

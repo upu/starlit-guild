@@ -107,7 +107,7 @@ export class GameMusic {
       if (this.voice?.scene === scene) return;
       let pending = this.buffers.get(scene);
       if (!pending) {
-        pending = fetch(`/music/${scene}.wav`)
+        pending = fetch(`/music/${scene}.m4a`)
           .then((response) => {
             if (!response.ok) throw Error("audio");
             return response.arrayBuffer();

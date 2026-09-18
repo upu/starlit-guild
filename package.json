@@ -1,6 +1,6 @@
 {
   "name": "starlit-guild",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -8,8 +8,8 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "predev": "npm run images:optimize && npm run videos:optimize && npm run thumbnails:optimize",
-    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run thumbnails:optimize",
+    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize",
+    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --port 5173",
     "build": "vinext build",
@@ -24,8 +24,11 @@
     "db:generate": "drizzle-kit generate",
     "images:optimize": "node scripts/optimize-scenery.mjs",
     "images:check": "node scripts/optimize-scenery.mjs --check",
-    "thumbnails:optimize": "node scripts/optimize-story-thumbnails.mjs",
-    "thumbnails:check": "node scripts/optimize-story-thumbnails.mjs --check"
+    "stills:optimize": "node scripts/optimize-story-stills.mjs",
+    "stills:check": "node scripts/optimize-story-stills.mjs --check",
+    "music:compose": "node scripts/compose-bgm.mjs && npm run music:optimize",
+    "music:optimize": "node scripts/optimize-bgm.mjs",
+    "music:check": "node scripts/optimize-bgm.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

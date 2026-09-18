@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { setImmediate } from "node:timers/promises";
 import { GameMusic, parseMusic } from "../lib/music.ts";
+import { optimizeBgm } from "../scripts/optimize-bgm.mjs";
 
 function audioHarness() {
   const originalAudio = globalThis.AudioContext,
@@ -96,7 +97,7 @@ test("music is gesture-gated and a pending request cannot play after the tab bec
     assert.equal(h.requests.length, 0);
     music.unlock();
     await setImmediate();
-    assert.equal(h.requests[0].url, "/music/camp.wav");
+    assert.equal(h.requests[0].url, "/music/camp.m4a");
     music.configure("camp", false, { enabled: true, volume: 25 });
     await h.finish(0);
     assert.equal(h.contexts[0].sources.length, 0);
@@ -174,11 +175,15 @@ test("invalid music preferences fall back safely without changing game save data
 });
 
 test("both original BGM files are non-clipped audible PCM loops of the intended duration", () => {
+  optimizeBgm({ check: true, log: () => {} });
   for (const [name, seconds] of [
     ["camp", 48],
     ["journey", 40],
   ]) {
-    const wav = readFileSync(new URL(`../public/music/${name}.wav`, import.meta.url));
+    const wav = readFileSync(new URL(`../assets/source/music/${name}.wav`, import.meta.url));
+    const aac = readFileSync(new URL(`../public/music/${name}.m4a`, import.meta.url));
+    assert.equal(aac.toString("ascii", 4, 8), "ftyp");
+    assert.ok(aac.length < wav.length / 3);
     assert.equal(wav.toString("ascii", 0, 4), "RIFF");
     assert.equal(wav.readUInt16LE(20), 1);
     assert.equal(wav.readUInt32LE(24), 24000);
