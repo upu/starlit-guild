@@ -128,7 +128,7 @@ function tradeBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
     return [l("荷を下ろそう。木陰なら涼しい。"), a("うん。水、レオンの分も出すね。")];
   return run.node % 3 === 1
     ? [
-        a("あ、頼まれた薬草。任せて！ あの葉なら、すぐ見分けられるから。", "smile"),
+        a("あ、頼まれた薬草。任せて！　あの葉なら、すぐ見分けられるから。", "smile"),
         l("包みはここに置くぞ。採れたら入れてくれ。"),
       ]
     : [l("薬草の包み、荷物の上に置いたか？"), a("うん。潰れないように、紐も掛け直したよ。")];
@@ -212,7 +212,7 @@ function affectionBanter(level: number, variant: number): StoryLine[] {
       ? [a("帰ったら、隣の席取っておいて。"), l("……いつも空けてる。", "shy")]
       : [l("髪に葉っぱ、ついてるぞ。"), a("取って。……そんなにじっと見ないでよ。", "shy")];
   return variant
-    ? [a("こっちが近道！ たぶん！", "smile"), l("その「たぶん」は何回目だ？", "worried")]
+    ? [a("こっちが近道！　たぶん！", "smile"), l("その「たぶん」は何回目だ？", "worried")]
     : [l("少し歩くのが速くないか？"), a("レオンなら追いついてくれるでしょ。")];
 }
 function journeySituationBanter(run: NonNullable<Squad["run"]>, level: number): StoryLine[] | null {

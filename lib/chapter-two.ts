@@ -329,12 +329,21 @@ export function chapterTwoWorkload(id: string) {
     : 1;
 }
 function packingBanter(run: Run) {
-  if (run.quest === DELIVERY_PREP_QUEST)
-    return [
+  if (run.quest !== DELIVERY_PREP_QUEST) return null;
+  return [
+    [
       { speaker: "aria", text: "瓶と蜜は別々。荷札も合ってるよ。" },
       { speaker: "leon", text: "布を間に挟もう。隣の瓶とぶつからないように。" },
-    ];
-  return null;
+    ],
+    [
+      { speaker: "aria", text: "蜜のお店、こっちの通りだって。" },
+      { speaker: "leon", text: "先に瓶を受け取っておく。数だけ数えておいてくれ。" },
+    ],
+    [
+      { speaker: "aria", text: "これで全部そろったね。" },
+      { speaker: "leon", text: "控えと突き合わせよう。足りない分は、今日のうちに。" },
+    ],
+  ][run.node % 3];
 }
 function trioBanter(run: Run) {
   return run.phase === "rest"
@@ -346,7 +355,7 @@ function trioBanter(run: Run) {
       ? [
           { speaker: "aria", text: "この先、段差があるよ。右側なら歩きやすそう。" },
           { speaker: "leon", text: "荷物は内側へ。俺が外を見る。" },
-          { speaker: "mira", text: "私は治療を、二人は前を。" },
+          { speaker: "mira", text: "段差には手を、坂には息を。ゆっくりで大丈夫よ。" },
         ]
       : run.quest === SIGNPOST_QUEST
         ? [
@@ -412,34 +421,61 @@ function puppetBanter(run: Run) {
           ? "ああ。回り込むほうも見ておく。"
           : "大きいのが腕を広げた。二人とも、俺の後ろへ。",
     },
-    { speaker: "mira", text: "私は治療を、二人は前を。" },
+    {
+      speaker: "mira",
+      text:
+        run.node === 0
+          ? "薬箱はここに。深く踏み込みすぎないでね。"
+          : run.node === 1
+            ? "私は治療を、二人は前を。"
+            : "焦らなくていいわ。手当ては、すぐそこにあるもの。",
+    },
   ];
 }
 function finaleBanter(run: Run) {
   if (run.quest === BLOCKADE_QUEST && run.nodes === 3) return puppetBanter(run);
   if (run.quest === HOUSE_CALLS_QUEST)
     return [
-      { speaker: "aria", text: "次の包み、ここへ置くね。水も替えてきたよ。" },
-      { speaker: "mira", text: "ありがとう。診察が済んだら、お薬を確かめるわ。" },
-      { speaker: "leon", text: "空き瓶は別の袋だ。控えと合わせておこう。" },
-    ];
+      [
+        { speaker: "aria", text: "次の包み、ここへ置くね。水も替えてきたよ。" },
+        { speaker: "mira", text: "ありがとう。診察が済んだら、お薬を確かめるわ。" },
+        { speaker: "leon", text: "空き瓶は別の袋だ。控えと合わせておこう。" },
+      ],
+      [
+        { speaker: "aria", text: "お湯、もう一度沸かしてくるね。" },
+        { speaker: "mira", text: "助かるわ。この家は、もう少しかかりそうなの。" },
+        { speaker: "leon", text: "桶は表に置いておきます。冷めないうちに呼んでください。" },
+      ],
+      [
+        { speaker: "aria", text: "この控え、次はどの家？" },
+        { speaker: "leon", text: "坂の下の二軒だ。順番はこっちで揃えておく。" },
+        { speaker: "mira", text: "ありがとう。着いたら、先に喉を診るわね。" },
+      ],
+    ][run.node % 3];
   if (run.quest === MEDICINE_RETURN_QUEST)
     return [
-      { speaker: "aria", text: "荷車が来たよ。通れるようになって、よかったね。" },
-      { speaker: "leon", text: "ああ。草むらも見ておこう。小さい魔物はまだいる。" },
-      { speaker: "mira", text: "空き瓶を返したら、お茶にしましょう。" },
-    ];
+      [
+        { speaker: "aria", text: "荷車が来たよ。通れるようになって、よかったね。" },
+        { speaker: "leon", text: "ああ。草むらも見ておこう。小さい魔物はまだいる。" },
+        { speaker: "mira", text: "空き瓶を返したら、お茶にしましょう。" },
+      ],
+      [
+        { speaker: "aria", text: "道標、ちゃんとこっち向いてる。" },
+        { speaker: "leon", text: "ああ。作業場も静かなままだ。" },
+        { speaker: "mira", text: "あの子たち、どこへ行ったのかしらね。" },
+      ],
+    ][run.node % 2];
   if (run.quest === BLOCKADE_QUEST)
     return run.node < 9
       ? [
           { speaker: "aria", text: "荷物の前から、順番に止めるね。" },
-          { speaker: "leon", text: "大きい手は俺が見る。ミラ、後ろを頼む。" },
+          { speaker: "leon", text: "大きい手は俺が見る。ミラさん、後ろをお願いします。" },
           { speaker: "mira", text: "ええ。二人とも、傷はそのままにしないでね。" },
         ]
       : [
-          { speaker: "leon", text: "小さいほうは止まった。大きいのを押し戻すぞ。" },
-          { speaker: "aria", text: "任せて！　荷物から離れたほうを狙うね。" },
-          { speaker: "mira", text: "私は治療を、二人は前を。" },
+          { speaker: "aria", text: "ミラ、腕！　庇ったときに切ったでしょ。" },
+          { speaker: "leon", text: "血が出てます。先に巻いてください。" },
+          { speaker: "mira", text: "……あら。気づかなかったわ。あとで、必ず。" },
         ];
   return null;
 }

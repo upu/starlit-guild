@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.2.22 | 2026-09-18 | 第一章・第二章の会話を整える（レオンの敬語、ミラの口癖、未使用の決め台詞、表記統一）（[#PR](https://github.com/upu/starlit-guild/pull/PR)） |
 | 0.2.21 | 2026-09-18 | スチルとBGMを圧縮し、元素材からの生成を自動化（[#104](https://github.com/upu/starlit-guild/pull/104)） |
 | 0.2.20 | 2026-09-18 | 用語集を追加し、章とステージの呼び名を揃える（[#100](https://github.com/upu/starlit-guild/pull/100)） |
 | 0.2.19 | 2026-09-17 | 保存形式の従来モード専用フィールドと従来記録の画像素材を削除する（#88 の第四段）（[#99](https://github.com/upu/starlit-guild/pull/99)） |
