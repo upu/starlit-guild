@@ -12,7 +12,7 @@
 
 イベント会話には×ボタンを置かず、画面外タップ・Escも途中終了させない。最終ページの「冒険を始める」または「閉じる」でのみ終了する。ブラウザー自体を閉じることを妨げず、未読の到着話は保存されたまま残る。
 
-最終プロンプト一式と保存先は [生成記録](prologue-dialogue-art-generation.json) に記載。
+最終プロンプト一式と保存先は [生成記録](art-generation/prologue-dialogue-art-generation.json) に記載。
 
 ## 小表示用の顔アイコン
 
@@ -28,10 +28,10 @@
 
 64px角／人の比較画像を作成し、全11人の目・口、髪・帽子の目印とセル対応を確認した。高密度用は輪郭がぼやけにくいよう2倍の画素数を持たせる。チャット枠・顔の表示寸法・会話内容はサイズ調整時の状態を維持する。
 
-全員のプロンプトと書き出し仕様は [小表示向けの生成記録](dialogue-portraits-small-generation.json) に記載。
+全員のプロンプトと書き出し仕様は [小表示向けの生成記録](art-generation/dialogue-portraits-small-generation.json) に記載。
 
 ### アリアとレオンの年齢感
 
 二人の顔つきは既存の肖像・受け渡しスチルに合わせ、青年らしい比率と簡潔な描画を両立する。レオンは目の縦幅と頬の丸みを抑え、顎、鼻筋、首元を少ない線で描く。アリアは髪色・服の目印と青年らしさを保ちながら、やさしい目元、少し丸い頬と顎、小さな鼻と口でやわらかさを出す。
 
-通常用・高密度用アトラスの先頭2セルがアリアとレオン。残る9人と空きセルの並びは変えない。二人の基礎プロンプトは [年齢感の生成記録](dialogue-portraits-age-generation.json)、アリアの最終条件は [アリアの生成記録](dialogue-portraits-aria-soft-generation.json) に記載。
+通常用・高密度用アトラスの先頭2セルがアリアとレオン。残る9人と空きセルの並びは変えない。二人の基礎プロンプトは [年齢感の生成記録](art-generation/dialogue-portraits-age-generation.json)、アリアの最終条件は [アリアの生成記録](art-generation/dialogue-portraits-aria-soft-generation.json) に記載。
