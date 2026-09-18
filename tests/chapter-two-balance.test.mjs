@@ -84,13 +84,8 @@ test("boss difficulty rewards growth and defensive technique choice", () => {
   assert.ok(strong.cleared && strong.rests === 0 && strong.minHp >= 60);
 });
 test("non-hostile work takes sustained effort and preserves a partially completed target", () => {
-  let state = chapterTwoPresetState("standard", 1000);
-  for (const q of ["hilltop-picnic", "moonlit-herbs"]) {
-    const r = measure(state, q);
-    state = act(r.state, { type: "readStory", id: q + "-return" }, r.state.updatedAt);
-  }
-  const before = structuredClone(state),
-    result = measure(state, "medicine-packing").record;
+  const before = isolated("medicine-packing", 14),
+    result = measure(before, "medicine-packing").record;
   assert.ok(result.cleared && result.seconds >= 90 && result.hurt === 0);
   const q = allQuests.find((q) => q.id === "medicine-packing");
   assert.ok(estimate(before, before.squads[0], q) >= 90);
@@ -100,6 +95,19 @@ test("non-hostile work takes sustained effort and preserves a partially complete
   const same = settle(active, active.updatedAt).state;
   assert.equal(same.squads[0].run.target, 31);
   assert.equal(same.squads[0].run.targetMax, 56);
+});
+test("trained gathering clears resistant work faster without changing its rewards", () => {
+  const quest = "medicine-packing",
+    weakStart = isolated(quest, 14),
+    strongStart = isolated(quest, 30),
+    weak = measure(weakStart, quest),
+    strong = measure(strongStart, quest);
+  assert.ok(weak.record.cleared && strong.record.cleared);
+  assert.ok(weak.record.seconds > strong.record.seconds * 1.5);
+  assert.equal(weak.record.hurt, 0);
+  assert.equal(strong.record.hurt, 0);
+  assert.equal(weak.state.xp.aria - weakStart.xp.aria, strong.state.xp.aria - strongStart.xp.aria);
+  assert.equal(weak.state.gold - weakStart.gold, strong.state.gold - strongStart.gold);
 });
 test("standard reaches the end through earned growth; strong needs no farming", () => {
   const standard = chapterRoute(),

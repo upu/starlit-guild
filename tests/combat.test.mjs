@@ -71,6 +71,28 @@ test("levels and equipped weapons overcome resistance without a new saved curren
   assert.equal(penetration(worn, "leon"), 4);
 });
 
+test("work resistance slows an underpowered party and its remaining gauge shrinks", () => {
+  const state = act(initialPrologueState(1000), { type: "start", id: "village-trade" }, 1000),
+    run = state.squads[0].run;
+  assert.equal(run.enemies.length, 0);
+  const input = {
+    squad: state.squads[0],
+    now: state.updatedAt,
+    ready: true,
+    paused: false,
+    startQuest: "village-trade",
+  };
+  assert.equal(adventureFrame(input).target.value, 1);
+  const remaining = run.target;
+  const weak = damageEnemy(run, 20, 0, 20);
+  assert.equal(weak.amount, reducedDamage(20, 20, 0));
+  assert.equal(run.target, remaining - weak.amount);
+  assert.equal(adventureFrame(input).target.value, run.target / run.targetMax);
+  const strong = damageEnemy(run, 20, 20, 20);
+  assert.equal(strong.amount, 20);
+  assert.ok(strong.amount > weak.amount);
+});
+
 test("damage focuses one enemy, does not spill over, and advances to the next living opponent", () => {
   const s = group(),
     r = s.squads[0].run,
