@@ -14,6 +14,7 @@ import {
   penetration,
   reducedDamage,
   syncEnemyTotals,
+  workResistance,
   type Enemy,
 } from "./combat.ts";
 import {
@@ -523,9 +524,11 @@ function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
           techniqueMultiplier(s, id, kind, false, 1)) /
           specialInterval(id),
       period = (stepMs() * (0.8 + (heroes.findIndex((h) => h.id === id) % 4) * 0.13)) / 1000;
-    const hit = enemies.length
-      ? reducedDamage(base * multiplier, enemies[0].resistance, penetration(s, id))
-      : base * multiplier;
+    const hit = reducedDamage(
+      base * multiplier,
+      enemies.length ? enemies[0].resistance : workResistance(q),
+      penetration(s, id),
+    );
     return sum + hit / period;
   }, 0);
   const work = enemies.length
@@ -569,6 +572,9 @@ function configureTarget(r: Run, q: Quest) {
   r.target = r.targetMax;
   r.hits = 0;
   syncEnemyTotals(r);
+}
+function resistanceFor(q: Quest, kind: Encounter) {
+  return kind === "battle" ? 0 : workResistance(q);
 }
 export function travelMs(id: string) {
   return 2200 + (heroes.findIndex((h) => h.id === id) % 4) * 310;
@@ -745,7 +751,7 @@ function combination(s: State, sq: Squad, at: number) {
   const base =
       k === "battle" && r.enemies?.length ? 10 + lv * 4 : r.targetMax * (0.12 + 0.035 * lv),
     power = b.ids.reduce((sum, id) => sum + penetration(s, id), 0) / b.ids.length,
-    hit = damageEnemy(r, base, power);
+    hit = damageEnemy(r, base, power, resistanceFor(q, k));
   if (b.ids.includes("mira")) {
     healAll(r, 0.15);
     r.ward += Math.ceil(totalMaxHp(r) * 0.08);
@@ -855,6 +861,7 @@ function actorTurn(
     r,
     (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
     penetration(s, hero),
+    resistanceFor(q, kind),
   );
   r.hits++;
   actor.nextAt += actor.period;
@@ -1226,7 +1233,12 @@ function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
     index = statIndex(encounter(q, r.node)),
     members = sq.members.filter((id) => memberHealth(r, id).hp > 0),
     power = members.reduce((sum, id) => sum + penetration(s, id), 0) / Math.max(1, members.length),
-    hit = damageEnemy(r, Math.max(2, Math.round(2 + stats(s, sq)[index] * 0.035)), power);
+    hit = damageEnemy(
+      r,
+      Math.max(2, Math.round(2 + stats(s, sq)[index] * 0.035)),
+      power,
+      resistanceFor(q, encounter(q, r.node)),
+    );
   event(r, now, "assist", "手助け！", hit.amount, undefined, undefined, hit.enemy);
 }
 function finishAssist(s: State, sq: Squad, r: Run, now: number) {
