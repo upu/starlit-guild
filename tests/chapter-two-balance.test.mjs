@@ -109,6 +109,15 @@ test("trained gathering clears resistant work faster without changing its reward
   assert.equal(weak.state.xp.aria - weakStart.xp.aria, strong.state.xp.aria - strongStart.xp.aria);
   assert.equal(weak.state.gold - weakStart.gold, strong.state.gold - strongStart.gold);
 });
+test("escort work also rewards preparation without adding enemy attacks", () => {
+  const quest = "waiting-households",
+    weak = measure(isolated(quest, 18), quest).record,
+    strong = measure(isolated(quest, 30), quest).record;
+  assert.ok(weak.cleared && strong.cleared);
+  assert.ok(weak.seconds > strong.seconds * 1.5);
+  assert.equal(weak.hurt, 0);
+  assert.equal(strong.hurt, 0);
+});
 test("standard reaches the end through earned growth; strong needs no farming", () => {
   const standard = chapterRoute(),
     strong = chapterRoute("strong");
