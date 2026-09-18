@@ -50,6 +50,30 @@ function sceneClass(
   };
 }
 
+function createPhaserGame(
+  parent: HTMLElement,
+  scene: Phaser.Scene,
+  engine: typeof Phaser,
+  width: number,
+  height: number,
+) {
+  return new engine.Game({
+    type: engine.AUTO,
+    parent,
+    width,
+    height,
+    backgroundColor: "#193d30",
+    banner: false,
+    antialias: true,
+    roundPixels: false,
+    audio: { noAudio: true },
+    input: { keyboard: false },
+    scale: { mode: engine.Scale.NONE, expandParent: false },
+    fps: { target: 60 },
+    scene,
+  });
+}
+
 // This module is imported only after mounting in the browser. It never runs on the server.
 export function createAdventureGame(
   parent: HTMLElement,
@@ -75,21 +99,7 @@ export function createAdventureGame(
   const width = Math.max(1, parent.clientWidth),
     height = Math.max(1, parent.clientHeight);
   try {
-    game = new engine.Game({
-      type: engine.AUTO,
-      parent,
-      width,
-      height,
-      backgroundColor: "#193d30",
-      banner: false,
-      antialias: true,
-      roundPixels: false,
-      audio: { noAudio: true },
-      input: { keyboard: false },
-      scale: { mode: engine.Scale.NONE, expandParent: false },
-      fps: { target: 60 },
-      scene,
-    });
+    game = createPhaserGame(parent, scene, engine, width, height);
   } catch (error) {
     motion.removeEventListener("change", onMotion);
     throw error;

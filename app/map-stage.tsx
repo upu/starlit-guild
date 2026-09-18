@@ -78,6 +78,28 @@ function JourneyOverlay({
   );
 }
 
+function mapHeading(
+  frame: ReturnType<typeof adventureFrame>,
+  run: Squad["run"],
+  activity: string,
+  clears: number,
+) {
+  const q = frame.quest;
+  return (
+    <div className="map-heading">
+      <span className="eyebrow">{run ? "EXPLORING" : "A NEW ADVENTURE"}</span>
+      <h2>{q.region}</h2>
+      <span>
+        {run
+          ? `${String(run.round)} 周目 · 地点 ${String(run.node + 1)}/${String(run.nodes)} · ${activity}`
+          : clears === 0
+            ? "ふたりの小さな冒険が、ここから始まる。"
+            : "支度ができたら、次の冒険へ。"}
+      </span>
+    </div>
+  );
+}
+
 export function MapStage({
   state,
   squad,
@@ -129,17 +151,7 @@ export function MapStage({
         }
       >
         <PhaserAdventure input={input} onAction={onAction} />
-        <div className="map-heading">
-          <span className="eyebrow">{run ? "EXPLORING" : "A NEW ADVENTURE"}</span>
-          <h2>{q.region}</h2>
-          <span>
-            {run
-              ? `${String(run.round)} 周目 · 地点 ${String(run.node + 1)}/${String(run.nodes)} · ${activity}`
-              : state.clears === 0
-                ? "ふたりの小さな冒険が、ここから始まる。"
-                : "支度ができたら、次の冒険へ。"}
-          </span>
-        </div>
+        {mapHeading(frame, run, activity, state.clears)}
         <JourneyOverlay squad={squad} now={now} frame={frame} />
       </div>
     </div>
