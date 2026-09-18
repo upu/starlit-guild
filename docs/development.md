@@ -25,7 +25,7 @@ npx tsc --noEmit
 
 `npm run dev` はローカル開発、`npm run build` は公開用ビルド。テストは新旧シミュレーション、移行、セーブ形式などを含む。
 
-`script:export` は実行時の会話とスチル表示位置をステージ順の [生成台本](generated/script.md) に書き出す。生成台本は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は生成結果とファイルの一致を検査し、CIでも実行する。道中の状況別の掛け合いは対象外。
+`script:export` は実行時の会話・スチル表示位置・道中の掛け合いをステージごとのファイルへ書き出し、[生成台本の目次](generated/script.md) から読めるようにする。待機中や関係値別の共通会話は [共通の掛け合い](generated/banter.md) にまとめる。生成物は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は全ファイルの鮮度を検査し、CIでも実行する。
 
 dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[元動画から配信用MP4を生成](story-videos.md)する。変更のない動画はスキップする。
 
