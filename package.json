@@ -28,7 +28,9 @@
     "stills:check": "node scripts/optimize-story-stills.mjs --check",
     "music:compose": "node scripts/compose-bgm.mjs && npm run music:optimize",
     "music:optimize": "node scripts/optimize-bgm.mjs",
-    "music:check": "node scripts/optimize-bgm.mjs --check"
+    "music:check": "node scripts/optimize-bgm.mjs --check",
+    "script:export": "node scripts/export-script.mjs",
+    "script:check": "node scripts/export-script.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
