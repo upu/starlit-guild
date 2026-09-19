@@ -28,6 +28,14 @@ function load(file, modules) {
   return exports;
 }
 
+function loadSavePanel(modules) {
+  modules["./save-test-controls"] = load("../app/save-test-controls.tsx", modules);
+  modules["./save-records"] = load("../app/save-records.tsx", modules);
+  modules["./save-cloud-panel"] = load("../app/save-cloud-panel.tsx", modules);
+  modules["./save-panel-tabs"] = load("../app/save-panel-tabs.tsx", modules);
+  return load("../app/save-panel.tsx", modules);
+}
+
 test("page reads the runtime flag on each request and enables only the exact string true", () => {
   const env = {},
     Game = () => null;
@@ -99,7 +107,7 @@ test("save panel hides test creation and adjustment when disabled, including exi
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
     modules[`@/components/ui/${name}`] = ui;
-  const { SavePanel, TestControls } = load("../app/save-panel.tsx", modules);
+  const { SavePanel, TestControls } = loadSavePanel(modules);
   for (const enabled of [false, true]) {
     const profile = { id: "test", test: true, name: "test", state: { clears: 0 } },
       calls = [];
@@ -144,7 +152,7 @@ test("save panel offers deletion for every record and disables it for the last r
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
     modules[`@/components/ui/${name}`] = ui;
-  const { SavePanel } = load("../app/save-panel.tsx", modules);
+  const { SavePanel } = loadSavePanel(modules);
   const profiles = [
     { id: "first", test: false, name: "最初の冒険", state: { clears: 3 } },
     { id: "second", test: false, name: "読み込んだ冒険", state: { clears: 8 } },
