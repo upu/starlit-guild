@@ -47,16 +47,6 @@ const eslintConfig = defineConfig([
     "work/**",
   ]),
   {
-    // Files that exceeded the size limits once Prettier expanded the former
-    // one-line style. The limits stay active for new files; split these as
-    // tracked in issue #86 and remove entries here as they pass.
-    files: ["lib/game.ts"],
-    rules: {
-      "max-lines": "off",
-      "max-lines-per-function": "off",
-    },
-  },
-  {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
     extends: [tseslint.configs.disableTypeChecked],
     rules: {
