@@ -1,0 +1,90 @@
+export type Encounter = "battle" | "gather" | "escort";
+export type GameEvent = {
+  id: string;
+  at: number;
+  kind:
+    "hit" | "gather" | "hurt" | "heal" | "clear" | "move" | "rest" | "assist" | "skill" | "combo";
+  text: string;
+  amount?: number;
+  hero?: string;
+  target?: string;
+  enemy?: string;
+};
+export type Actor = {
+  actions: number;
+  hero: string;
+  arrivesAt: number;
+  nextAt: number;
+  period: number;
+};
+export type Scene = { title: string; lines: string[]; at: number; kind: "combo" };
+export type MemberHealth = { hp: number; maxHp: number };
+export type Run = {
+  serial: number;
+  nodes: number;
+  ward: number;
+  comboAt: number;
+  scene: Scene | null;
+  actors: Actor[];
+  enemyAt: number;
+  enemies?: Enemy[];
+  quest: string;
+  round: number;
+  node: number;
+  phase: "move" | "work" | "rest";
+  phaseAt: number;
+  nextAt: number;
+  started: number;
+  health: Record<string, MemberHealth>;
+  target: number;
+  targetMax: number;
+  hits: number;
+  energy: number;
+  energyAt: number;
+  events: GameEvent[];
+};
+export type Squad = {
+  id: string;
+  name: string;
+  customName?: string;
+  members: string[];
+  repeat: boolean;
+  run: Run | null;
+  lastQuest?: string;
+};
+export type State = {
+  version: 4;
+  autoNextQuest?: boolean;
+  prologue?: boolean;
+  techniques?: Techniques;
+  inventory?: Inventory;
+  story?: StoryProgress;
+  friendship: Record<string, number>;
+  gold: number;
+  herbs: number;
+  ore: number;
+  owned: string[];
+  xp: Record<string, number>;
+  clears: number;
+  done: Record<string, number>;
+  updatedAt: number;
+  squads: Squad[];
+  log: { text: string; at: number }[];
+};
+export type LegacySharedRun = Omit<Run, "health"> & { hp: number; maxHp: number };
+export type LegacySharedHealthState = Omit<State, "squads"> & {
+  squads: (Omit<Squad, "run"> & { run: LegacySharedRun | null })[];
+};
+export type Rewards = {
+  count: number;
+  gold: number;
+  xp: number;
+  herbs: number;
+  ore: number;
+  offline: boolean;
+  capped: boolean;
+};
+import type { Enemy } from "./combat.ts";
+import type { Inventory } from "./equipment.ts";
+import type { Techniques } from "./techniques.ts";
+import type { StoryProgress } from "./stories.ts";

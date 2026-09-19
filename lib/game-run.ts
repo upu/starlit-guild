@@ -1,0 +1,259 @@
+import { questNodes } from "./puppet-battles.ts";
+import { createEnemies, damageEnemy, penetration, syncEnemyTotals } from "./combat.ts";
+import { isPrologueQuest } from "./prologue.ts";
+import { chapterTwoWorkload } from "./chapter-two.ts";
+import { techniqueHerbs } from "./techniques.ts";
+import { coupleCombo, storyProgress, together } from "./stories.ts";
+import { heroes, type Quest } from "./game-content.ts";
+import type { GameEvent, Run, Squad, State } from "./game-types.ts";
+import {
+  activeBonds,
+  activeRun,
+  encounter,
+  healAll,
+  heroById,
+  memberHealth,
+  memberMaxHp,
+  questById,
+  resistanceFor,
+  stepMs,
+  targetName,
+  totalMaxHp,
+} from "./game-rules.ts";
+
+export function addLog(s: State, text: string, at: number) {
+  s.log = [{ text, at }, ...s.log].slice(0, 40);
+}
+export function event(
+  r: Run,
+  at: number,
+  kind: GameEvent["kind"],
+  text: string,
+  amount?: number,
+  hero?: string,
+  target?: string,
+  enemy?: string,
+) {
+  r.events = [
+    ...r.events,
+    {
+      id: `${String(r.round)}-${String(r.node)}-${String(at)}-${kind}-${String(r.hits)}-${hero || "leader"}-${target || "none"}-${String(++r.serial)}`,
+      at,
+      kind,
+      text,
+      amount,
+      hero,
+      target,
+      enemy,
+    },
+  ].slice(-12);
+}
+export function configureTarget(r: Run, q: Quest) {
+  r.enemies =
+    encounter(q, r.node) === "battle" ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15) : [];
+  r.targetMax = Math.round(
+    q.need * 1.12 * (encounter(q, r.node) === "escort" ? 1.8 : 2.3) * chapterTwoWorkload(q.id),
+  );
+  r.target = r.targetMax;
+  r.hits = 0;
+  syncEnemyTotals(r);
+}
+export function travelMs(id: string) {
+  return 2200 + (heroes.findIndex((h) => h.id === id) % 4) * 310;
+}
+export function schedule(s: State, sq: Squad, r: Run, at: number) {
+  r.actors = sq.members.map((hero) => ({
+    hero,
+    actions: 0,
+    arrivesAt: at + travelMs(hero),
+    nextAt: at + travelMs(hero),
+    period: Math.round(stepMs() * (0.8 + (heroes.findIndex((h) => h.id === hero) % 4) * 0.13)),
+  }));
+  r.enemyAt = at + 3700;
+  for (const [index, enemy] of (r.enemies || []).entries())
+    enemy.nextAt = enemy.role ? at + 2800 + enemy.period : at + 3700 + index * 450;
+  syncEnemyTotals(r);
+  if (r.comboAt <= at) r.comboAt = at + 14500;
+  r.nextAt = nextEvent(r);
+}
+export function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): Run {
+  const health = Object.fromEntries(
+    sq.members.map((id) => {
+      const maxHp = memberMaxHp(s, id);
+      return [id, { hp: maxHp, maxHp }];
+    }),
+  );
+  const r: Run = {
+    serial: 0,
+    nodes: questNodes(q.id),
+    ward: 0,
+    comboAt: at + 14500,
+    scene: null,
+    actors: [],
+    enemyAt: at + 3700,
+    quest: q.id,
+    round,
+    node: 0,
+    phase: "move",
+    phaseAt: at,
+    nextAt: at + 2200,
+    started: at,
+    health,
+    target: 0,
+    targetMax: 0,
+    hits: 0,
+    energy: 3,
+    energyAt: at,
+    events: [],
+  };
+  configureTarget(r, q);
+  schedule(s, sq, r, at);
+  return r;
+}
+export function nextEvent(r: Run) {
+  return Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
+}
+export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
+  aria: {
+    style: "ranged",
+    name: "風の二連矢",
+    description: "離れて矢を放ち、3回ごとに二連射。寄り道も得意。",
+  },
+  leon: {
+    style: "melee",
+    name: "暁の踏み込み",
+    description: "前線へ飛び込み、4回ごとに強力な斬撃。",
+  },
+  mira: {
+    style: "healer",
+    name: "月明かりの癒やし",
+    description: "4回の行動ごとに、最も弱った仲間を回復。",
+  },
+};
+export const bondKey = (ids: string[]) => [...ids].sort().join("-");
+export const bondLevel = (s: State, ids: string[]) =>
+  Math.min(3, 1 + Math.floor((s.friendship[bondKey(ids)] || 0) / 12));
+function recordPairStory(s: State, sq: Squad, q: Quest) {
+  s.story ??= storyProgress(s);
+  if (!together(sq.members) || s.story.completed.includes(q.id)) return;
+  if (!s.story.departed.includes(q.id)) s.story.departed.push(q.id);
+  s.story.completed.push(q.id);
+}
+function finishQuest(s: State, sq: Squad, q: Quest) {
+  recordPairStory(s, sq, q);
+  s.clears++;
+  s.done[q.id] = (s.done[q.id] || 0) + 1;
+}
+function awardExperience(s: State, sq: Squad, xp: number) {
+  for (const id of sq.members) s.xp[id] = (s.xp[id] || 0) + xp;
+}
+function awardFriendship(s: State, sq: Squad) {
+  for (const bond of activeBonds(sq.members)) {
+    const key = bondKey(bond.ids);
+    s.friendship[key] = (s.friendship[key] || 0) + 1;
+  }
+}
+export function reward(s: State, sq: Squad, q: Quest, at: number, finished: boolean) {
+  const r = activeRun(sq),
+    portions = r.nodes === questNodes(q.id) ? Math.ceil(r.nodes / 3) : 5,
+    part = Math.floor(r.node / 3);
+  const totalGold = q.gold,
+    gold =
+      portions === 5
+        ? Math.floor(totalGold / 5)
+        : Math.floor((totalGold * (part + 1)) / portions) -
+          Math.floor((totalGold * part) / portions);
+  const herbs = (q.herbs / portions) * techniqueHerbs(s, sq.members),
+    ore = q.ore / portions,
+    xp = q.xp / portions;
+  s.gold += gold;
+  s.herbs += herbs;
+  s.ore += ore;
+  if (finished) finishQuest(s, sq, q);
+  awardExperience(s, sq, xp);
+  awardFriendship(s, sq);
+  return { gold, xp, herbs, ore, at, finished };
+}
+export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
+  const r = activeRun(sq);
+  event(
+    r,
+    at,
+    "clear",
+    r.enemies?.some((enemy) => enemy.role === "puppeteer")
+      ? "人形が止まり、少女は糸を引いて退いた"
+      : targetName(q, r.node, r.nodes) + "をクリア！",
+  );
+  const finished = r.node === r.nodes - 1;
+  const gain = (r.node + 1) % 3 === 0 || finished ? reward(s, sq, q, at, finished) : null;
+  if (gain) event(r, at, "clear", "区間の報酬を確保！ +" + String(gain.gold) + " G");
+  if (!finished) {
+    r.node++;
+    r.phase = "move";
+    r.phaseAt = at;
+    healAll(r, 0.15);
+    configureTarget(r, q);
+    schedule(s, sq, r, at);
+    return gain;
+  }
+  sq.lastQuest ??= q.id;
+  const canRepeat = !isPrologueQuest(q.id) || s.story?.read.includes(q.id + "-return");
+  if (sq.repeat && q.availability !== "once" && canRepeat) {
+    const { events, scene } = r;
+    sq.run = makeRun(s, sq, q, at, r.round + 1);
+    sq.run.events = events;
+    sq.run.scene = scene;
+  } else sq.run = null;
+  return gain;
+}
+export function combination(s: State, sq: Squad, at: number) {
+  const r = activeRun(sq),
+    bs = activeBonds(sq.members);
+  r.comboAt = at + 14500;
+  if (!bs.length) return;
+  const b = bs[(r.node + r.round) % bs.length],
+    lv = bondLevel(s, b.ids),
+    q = questById(r.quest),
+    k = encounter(q, r.node),
+    first = heroById(b.ids[0]).name,
+    second = heroById(b.ids[1]).name;
+  if (b.ids.some((id) => memberHealth(r, id).hp <= 0)) return;
+  const lines =
+    lv === 1
+      ? b.lines
+      : lv === 2
+        ? [first + "「いつもの合図で、いくよ！」", second + "「息はぴったりだ！」"]
+        : [first + "「この先も、一緒に！」", second + "「どんな冒険だって！」"];
+  r.scene = {
+    title: b.name + " · 連携 Lv." + String(lv),
+    lines: together(b.ids) ? coupleCombo(s, r.node + r.round) : lines,
+    at,
+    kind: "combo",
+  };
+  const base =
+      k === "battle" && r.enemies?.length ? 10 + lv * 4 : r.targetMax * (0.12 + 0.035 * lv),
+    power = b.ids.reduce((sum, id) => sum + penetration(s, id), 0) / b.ids.length,
+    hit = damageEnemy(r, base, power, resistanceFor(q, k));
+  if (b.ids.includes("mira")) {
+    healAll(r, 0.15);
+    r.ward += Math.ceil(totalMaxHp(r) * 0.08);
+  }
+  event(
+    r,
+    at,
+    "combo",
+    b.name + "！ " + (k === "battle" ? "連携攻撃" : "息の合った作業"),
+    hit.amount,
+    b.ids[0],
+    undefined,
+    hit.enemy,
+  );
+}
+export function recoverRun(s: State, sq: Squad, r: Run, q: Quest, at: number) {
+  for (const health of Object.values(r.health)) health.hp = health.maxHp;
+  configureTarget(r, q);
+  r.phase = "move";
+  r.phaseAt = at;
+  schedule(s, sq, r, at);
+  event(r, at, "heal", "みんなでひと休みして、もう一度。");
+}
