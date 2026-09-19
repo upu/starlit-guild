@@ -3,16 +3,7 @@ export type GameEvent = {
   id: string;
   at: number;
   kind:
-    | "hit"
-    | "gather"
-    | "hurt"
-    | "heal"
-    | "clear"
-    | "move"
-    | "rest"
-    | "assist"
-    | "skill"
-    | "combo";
+    "hit" | "gather" | "hurt" | "heal" | "clear" | "move" | "rest" | "assist" | "skill" | "combo";
   text: string;
   amount?: number;
   hero?: string;
