@@ -50,12 +50,7 @@ const eslintConfig = defineConfig([
     // Files that exceeded the size limits once Prettier expanded the former
     // one-line style. The limits stay active for new files; split these as
     // tracked in issue #86 and remove entries here as they pass.
-    files: [
-      "app/phaser/adventure-painter.ts",
-      "app/phone-game.tsx",
-      "app/use-local-game.ts",
-      "lib/game.ts",
-    ],
+    files: ["app/phaser/adventure-painter.ts", "app/use-local-game.ts", "lib/game.ts"],
     rules: {
       "max-lines": "off",
       "max-lines-per-function": "off",

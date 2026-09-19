@@ -50,6 +50,13 @@ test("story and banter dialogs wire outside clicks to their reader; ordinary she
     "./use-story-advance": { useStoryAdvance: () => ({ readerRef, onPointerDownOutside }) },
     "./story-scenes": { StoryReader: "reader", ConversationReader: "reader" },
     "./story-heading": { StoryHeading: "story-heading" },
+    "./phone-game-sheets": {
+      resolveSheet: (model, advanceRef) => ({
+        title: "test",
+        description: "test",
+        content: model.sheet ? jsxRuntime.jsx("reader", { advanceRef }) : null,
+      }),
+    },
     "@/components/ui/dialog": {
       Dialog: "dialog",
       DialogContent: "content",
@@ -58,7 +65,7 @@ test("story and banter dialogs wire outside clicks to their reader; ordinary she
       DialogDescription: "description",
     },
   };
-  const phoneSource = readFileSync(new URL("../app/phone-game.tsx", import.meta.url), "utf8");
+  const phoneSource = readFileSync(new URL("../app/phone-game-frame.tsx", import.meta.url), "utf8");
   const phoneCode = ts.transpileModule(phoneSource, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
@@ -66,7 +73,7 @@ test("story and banter dialogs wire outside clicks to their reader; ordinary she
       jsx: ts.JsxEmit.ReactJSX,
     },
   }).outputText;
-  vm.runInNewContext(phoneCode + "\nexports.SheetDialog=SheetDialog;", {
+  vm.runInNewContext(phoneCode, {
     exports,
     require: (id) => modules[id] ?? {},
   });

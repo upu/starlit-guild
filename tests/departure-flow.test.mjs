@@ -37,16 +37,26 @@ vm.runInNewContext(
       })[id] || new Proxy({}, { get: (_, name) => String(name) }),
   },
 );
-const source =
-  readFileSync(new URL("../app/phone-game.tsx", import.meta.url), "utf8") +
-  "\nexport {AdventureDestination,collectionSheet};";
-const code = ts.transpileModule(source, {
-  compilerOptions: {
-    module: ts.ModuleKind.CommonJS,
-    target: ts.ScriptTarget.ES2022,
-    jsx: ts.JsxEmit.ReactJSX,
-  },
-}).outputText;
+function compile(relativePath) {
+  return ts.transpileModule(readFileSync(new URL(relativePath, import.meta.url), "utf8"), {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+      jsx: ts.JsxEmit.ReactJSX,
+    },
+  }).outputText;
+}
+const code = compile("../app/phone-game.tsx"),
+  frameCode = compile("../app/phone-game-frame.tsx"),
+  sheetsCode = compile("../app/phone-game-sheets.tsx");
+function evaluate(source, modules) {
+  const exports = {};
+  vm.runInNewContext(source, {
+    exports,
+    require: (id) => modules[id] || new Proxy({}, { get: (_, name) => String(name) }),
+  });
+  return exports;
+}
 function harness(initialState) {
   const slots = [],
     exports = {};
@@ -88,10 +98,15 @@ function harness(initialState) {
     "./install-guide": { useInstallPrompt: () => ({}) },
     "./use-game-music": { useGameMusic: () => ({}) },
     "./use-journey-hints": { useJourneyHints: () => ({}) },
+    "./quest-picker": pickerExports,
   };
-  vm.runInNewContext(code, {
-    exports,
-    require: (id) => modules[id] || new Proxy({}, { get: (_, name) => String(name) }),
+  const sheetExports = evaluate(sheetsCode, modules);
+  modules["./phone-game-sheets"] = sheetExports;
+  const frameExports = evaluate(frameCode, modules);
+  modules["./phone-game-frame"] = frameExports;
+  Object.assign(exports, evaluate(code, modules), {
+    AdventureDestination: frameExports.AdventureDestination,
+    collectionSheet: sheetExports.collectionSheet,
   });
   function render() {
     cursor = 0;
