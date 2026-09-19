@@ -20,6 +20,20 @@ const code = ts.transpileModule(
     },
   },
 ).outputText;
+const moduleCodes = [
+  ["./story-viewers", "../app/story-viewers.tsx"],
+  ["./story-memory-groups", "../app/story-memory-groups.ts"],
+  ["./story-gesture-handlers", "../app/story-gesture-handlers.ts"],
+].map(([id, path]) => [
+  id,
+  ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+      jsx: ts.JsxEmit.ReactJSX,
+    },
+  }).outputText,
+]);
 function harness(name, initialProps) {
   const slots = [],
     timers = new Map(),
@@ -83,12 +97,18 @@ function harness(name, initialProps) {
       ]),
     ),
   };
+  const requireModule = (id) => {
+    if (!(id in modules)) throw Error(id);
+    return modules[id];
+  };
+  for (const [id, moduleCode] of moduleCodes) {
+    const moduleExports = {};
+    vm.runInNewContext(moduleCode, { exports: moduleExports, require: requireModule });
+    modules[id] = moduleExports;
+  }
   vm.runInNewContext(code, {
     exports,
-    require: (id) => {
-      if (!(id in modules)) throw Error(id);
-      return modules[id];
-    },
+    require: requireModule,
     document,
     window: { getSelection: () => null },
     setTimeout: (fn) => {

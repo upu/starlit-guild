@@ -54,7 +54,6 @@ const eslintConfig = defineConfig([
       "app/phaser/adventure-painter.ts",
       "app/phone-game.tsx",
       "app/save-panel.tsx",
-      "app/story-scenes.tsx",
       "app/use-local-game.ts",
       "lib/game.ts",
     ],

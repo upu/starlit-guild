@@ -15,6 +15,18 @@ const compiled = ts.transpileModule(source, {
     jsx: ts.JsxEmit.ReactJSX,
   },
 });
+const viewerCode = ts.transpileModule(
+  readFileSync(new URL("../app/story-viewers.tsx", import.meta.url), "utf8"),
+  { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } },
+).outputText;
+const memoryCode = ts.transpileModule(
+  readFileSync(new URL("../app/story-memory-groups.ts", import.meta.url), "utf8"),
+  { compilerOptions: { module: ts.ModuleKind.CommonJS } },
+).outputText;
+const gestureCode = ts.transpileModule(
+  readFileSync(new URL("../app/story-gesture-handlers.ts", import.meta.url), "utf8"),
+  { compilerOptions: { module: ts.ModuleKind.CommonJS } },
+).outputText;
 const story = {
   id: "dialog-test",
   title: "会話の確認",
@@ -80,7 +92,7 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
     "./story-artwork": { StoryArtwork: "StoryArtwork" },
     "@/lib/game": { heroes: [], allQuests: [] },
     "@/lib/original-characters": { originalCharacters: [] },
-    "@/lib/prologue": { prologueStages: [] },
+    "@/lib/prologue": { prologueStages: [], storyStages: [] },
     "@/lib/stories": {},
     "@/lib/story-art": { storyArtAt: () => (withArt ? fixtureArt : null) },
     "@/components/ui/dialog": Object.fromEntries(
@@ -89,12 +101,22 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
       ),
     ),
   };
+  const requireModule = (id) => {
+    assert.ok(id in modules, id);
+    return modules[id];
+  };
+  for (const [id, code] of [
+    ["./story-viewers", viewerCode],
+    ["./story-memory-groups", memoryCode],
+    ["./story-gesture-handlers", gestureCode],
+  ]) {
+    const moduleExports = {};
+    vm.runInNewContext(code, { exports: moduleExports, require: requireModule });
+    modules[id] = moduleExports;
+  }
   vm.runInNewContext(compiled.outputText, {
     exports,
-    require: (id) => {
-      assert.ok(id in modules, id);
-      return modules[id];
-    },
+    require: requireModule,
     window: { getSelection: () => selection },
   });
   function render(next = props) {
