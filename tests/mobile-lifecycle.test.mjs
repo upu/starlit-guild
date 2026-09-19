@@ -11,10 +11,15 @@ import * as backupApi from "../lib/backup-api.ts";
 import * as apiInput from "../lib/api-input.ts";
 import * as externalInput from "../lib/external-input.ts";
 
-const code = ts.transpileModule(
-  readFileSync(new URL("../app/use-local-game.ts", import.meta.url), "utf8"),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
-).outputText;
+function compile(relativePath) {
+  return ts.transpileModule(readFileSync(new URL(relativePath, import.meta.url), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+}
+const code = compile("../app/use-local-game.ts"),
+  stateCode = compile("../app/local-game-state.ts"),
+  lifecycleCode = compile("../app/local-game-lifecycle.ts"),
+  actionsCode = compile("../app/local-game-actions.ts");
 function harness(testToolsEnabled, initialBundle) {
   let now = 1000,
     writes = 0,
@@ -62,7 +67,6 @@ function harness(testToolsEnabled, initialBundle) {
     },
   };
   const context = {
-    exports,
     require: (id) => {
       if (!(id in modules)) throw Error(id);
       return modules[id];
@@ -96,7 +100,15 @@ function harness(testToolsEnabled, initialBundle) {
       return new Promise(() => {});
     },
   };
-  vm.runInNewContext(code, context);
+  const evaluate = (source) => {
+    const moduleExports = {};
+    vm.runInNewContext(source, { ...context, exports: moduleExports });
+    return moduleExports;
+  };
+  modules["./local-game-state"] = evaluate(stateCode);
+  modules["./local-game-lifecycle"] = evaluate(lifecycleCode);
+  modules["./local-game-actions"] = evaluate(actionsCode);
+  Object.assign(exports, evaluate(code));
   if (initialBundle) data.set(exports.SAVE_KEY, JSON.stringify(initialBundle));
   const hook = exports.useLocalGame(testToolsEnabled);
   effects.forEach((fn) => fn());

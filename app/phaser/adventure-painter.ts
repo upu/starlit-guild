@@ -1,88 +1,32 @@
 import type Phaser from "phaser";
-import { type GameEvent } from "@/lib/game";
 import {
   adventureFrame,
   adventureAssets,
   adventureAction,
   adventureHit,
-  eventColor,
   memberHealthLabel,
-  spriteAsset,
-  spriteFrame,
   spriteSize,
   type AdventureFrame,
 } from "@/lib/adventure-presentation";
 import type { AdventureBridge } from "./renderer-session";
 import { heroSheets, heroAnimation } from "@/lib/hero-animation";
 import { enemyTexture } from "./enemy-texture";
+import { AdventureEffectsPainter } from "./adventure-painter-effects";
+import {
+  enemyAspect,
+  enemyLabelColor,
+  enemyWindup,
+  makeFigure,
+  memberAngle,
+  memberBob,
+  memberLunge,
+  registerHeroFrames,
+  removeFigure,
+  type Figure,
+  type Member,
+  type RuntimeState,
+} from "./adventure-painter-figures";
 
-type Figure = {
-  image: Phaser.GameObjects.Image;
-  shadow: Phaser.GameObjects.Ellipse;
-  label: Phaser.GameObjects.Text;
-};
-type RuntimeState = { disposed: boolean; paused: boolean; created: boolean; reduced: boolean };
-type Member = AdventureFrame["members"][number];
-const font = '"Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif';
-function memberBob(
-  member: Member,
-  now: number,
-  index: number,
-  reduced: boolean,
-  animated: boolean,
-) {
-  if (reduced || animated) return 0;
-  return Math.sin(now / (member.walking ? 85 : 550) + index * 2) * (member.walking ? 4 : 1.7);
-}
-function memberLunge(
-  member: Member,
-  size: number,
-  reduced: boolean,
-  front: boolean,
-  attacking: boolean,
-) {
-  return !reduced && front && attacking ? member.attack * size * 0.18 : 0;
-}
-function memberAngle(
-  member: Member,
-  now: number,
-  index: number,
-  reduced: boolean,
-  animated: boolean,
-  front: boolean,
-) {
-  if (reduced || animated) return 0;
-  if (member.walking) return Math.sin(now / 100 + index) * 3;
-  return front ? member.attack * -7 : 0;
-}
-
-const enemyLabelColor = (cue: string) => (cue ? "#ffe58c" : "#fff1cf");
-const enemyWindup = (cue: string, reduced: boolean, now: number) =>
-  cue && !reduced ? Math.sin(now / 140) * 4 : 0;
-const enemyAspect = (asset: string) => (asset.startsWith("/enemies/") ? 2 / 3 : 1);
-function registerHeroFrames(
-  texture: Phaser.Textures.Texture,
-  sheet: NonNullable<(typeof heroSheets)[string]>,
-) {
-  if (sheet.frames) {
-    sheet.frames.forEach(([x, y, w, h], index) =>
-      texture.add(String(index), 0, x, y, w, h)?.setTrim(420, 420, (420 - w) / 2, 378 - h, w, h),
-    );
-    return;
-  }
-  const source = texture.getSourceImage() as HTMLImageElement,
-    w = source.width / sheet.columns,
-    h = source.height / sheet.rows;
-  for (let i = 0; i < sheet.columns * sheet.rows; i++)
-    texture.add(
-      String(i),
-      0,
-      Math.round((i % sheet.columns) * w),
-      Math.round(Math.floor(i / sheet.columns) * h),
-      Math.floor(w),
-      Math.floor(h),
-    );
-}
 export class AdventurePainter {
   private background!: Phaser.GameObjects.Image;
   private shade!: Phaser.GameObjects.Graphics;
@@ -90,11 +34,8 @@ export class AdventurePainter {
   private ambient!: Phaser.GameObjects.Graphics;
   private figures = new Map<string, Figure>();
   private opponents = new Map<string, Figure>();
-  private guest: Figure | null = null;
-  private effects = new Set<Phaser.GameObjects.GameObject>();
-  private seen = new Map<string, number>();
+  private effects: AdventureEffectsPainter;
   private sceneKey = "";
-  private cutinKey = "";
   private backgroundKey = "";
   private loading = false;
   failed = false;
@@ -105,7 +46,9 @@ export class AdventurePainter {
     private engine: typeof Phaser,
     private runtime: RuntimeState,
     private syncPause: () => void,
-  ) {}
+  ) {
+    this.effects = new AdventureEffectsPainter(scene, runtime);
+  }
   initialize() {
     if (this.runtime.disposed) return;
     if (this.failed) {
@@ -161,23 +104,6 @@ export class AdventurePainter {
     const action = adventureAction(input, intent);
     if (action) this.bridge.act(action);
   }
-  private makeFigure(index: number, name: string): Figure {
-    const asset = spriteAsset(index);
-    return {
-      image: this.scene.add.image(0, 0, asset, spriteFrame(index)).setOrigin(0.5, 0.9),
-      shadow: this.scene.add.ellipse(0, 0, 60, 12, 0x092821, 0.28).setDepth(4),
-      label: this.scene.add
-        .text(0, 0, name, {
-          fontFamily: font,
-          fontSize: "12px",
-          color: "#fff1cf",
-          stroke: "#132e27",
-          strokeThickness: 4,
-        })
-        .setOrigin(0.5, 0)
-        .setDepth(31),
-    };
-  }
   private registerSheets() {
     for (const sheet of Object.values(heroSheets)) {
       if (!sheet) continue;
@@ -187,11 +113,6 @@ export class AdventurePainter {
       if (texture.has("0")) continue;
       registerHeroFrames(texture, sheet);
     }
-  }
-  private removeFigure(figure: Figure) {
-    figure.image.destroy();
-    figure.shadow.destroy();
-    figure.label.destroy();
   }
   private ensureAssets(frame: AdventureFrame) {
     const missing = adventureAssets(frame).filter((asset) => !this.scene.textures.exists(asset));
@@ -208,154 +129,11 @@ export class AdventurePainter {
     return false;
   }
   clearEffects() {
-    for (const effect of this.effects) {
-      this.scene.tweens.killTweensOf(effect);
-      effect.destroy();
-    }
     this.effects.clear();
-    this.seen.clear();
   }
   stopMotion() {
     this.clearEffects();
     this.scene.cameras.main.resetFX();
-  }
-  private transient(
-    object: Phaser.GameObjects.GameObject,
-    properties: Record<string, unknown>,
-    duration: number,
-  ) {
-    if (this.effects.size >= 64) {
-      object.destroy();
-      return;
-    }
-    this.effects.add(object);
-    this.scene.tweens.add({
-      targets: object,
-      ...properties,
-      duration: Math.max(60, duration),
-      ease: "Cubic.Out",
-      onComplete: () => {
-        this.effects.delete(object);
-        object.destroy();
-      },
-    });
-  }
-  private amountEffect(
-    event: GameEvent,
-    frame: AdventureFrame,
-    x: number,
-    y: number,
-    color: number,
-    age: number,
-  ) {
-    if (!event.amount) return;
-    const positive =
-      event.kind === "heal" ||
-      event.kind === "gather" ||
-      (event.kind === "assist" && !frame.target?.battle);
-    const text = this.scene.add
-      .text(
-        x + ((this.seen.size % 3) - 1) * 15,
-        y - 18,
-        (positive ? "+" : "−") + String(event.amount),
-        {
-          fontFamily: font,
-          fontSize: "23px",
-          fontStyle: "bold",
-          color: "#" + color.toString(16).padStart(6, "0"),
-          stroke: "#123229",
-          strokeThickness: 5,
-        },
-      )
-      .setOrigin(0.5)
-      .setDepth(55);
-    this.transient(text, { y: y - (this.runtime.reduced ? 18 : 58), alpha: 0 }, 1000 - age);
-  }
-  private strikeEffect(
-    event: GameEvent,
-    frame: AdventureFrame,
-    actor: Member,
-    support: boolean,
-    x: number,
-    y: number,
-    color: number,
-    age: number,
-  ) {
-    if (this.runtime.reduced || age > 650) return;
-    const size = event.kind === "skill" ? 27 : 17;
-    const ring = this.scene.add.circle(x, y, size).setStrokeStyle(2, color, 0.95).setDepth(48);
-    this.transient(ring, { scale: 2.2, alpha: 0 }, 550 - age);
-    if (this.rangedEffect(frame, actor, support, x, y, color, age)) return;
-    this.slashEffect(event, frame, support, x, y, age);
-  }
-  private rangedEffect(
-    frame: AdventureFrame,
-    actor: Member,
-    support: boolean,
-    x: number,
-    y: number,
-    color: number,
-    age: number,
-  ) {
-    if (
-      !["ranged", "mage", "bard", "healer"].includes(actor.role) ||
-      support ||
-      !frame.target?.battle
-    )
-      return false;
-    const bolt = this.scene.add
-      .circle(
-        actor.x * this.scene.scale.width,
-        actor.y * this.scene.scale.height - 40,
-        actor.role === "mage" ? 7 : 3,
-        color,
-      )
-      .setDepth(46);
-    this.transient(bolt, { x, y, alpha: 0.1 }, Math.max(100, 350 - age));
-    return true;
-  }
-  private slashEffect(
-    event: GameEvent,
-    frame: AdventureFrame,
-    support: boolean,
-    x: number,
-    y: number,
-    age: number,
-  ) {
-    if (support || !frame.target?.battle) return;
-    const slash = this.scene.add.graphics().setPosition(x, y).setDepth(49);
-    slash.lineStyle(event.kind === "skill" ? 6 : 3, 0xfff9e4, 0.95).lineBetween(-25, 20, 25, -20);
-    this.transient(slash, { scaleX: 1.6, scaleY: 1.4, alpha: 0 }, 350 - age);
-  }
-  private moteEffects(support: boolean, x: number, y: number, color: number, age: number) {
-    if (this.runtime.reduced || age > 650) return;
-    for (let i = 0; i < 5; i++) {
-      const angle = (i * Math.PI * 2) / 5,
-        mote = this.scene.add.circle(x, y, 2 + (i % 2), color).setDepth(47);
-      this.transient(
-        mote,
-        { x: x + Math.cos(angle) * 45, y: y + Math.sin(angle) * 35 - (support ? 20 : 0), alpha: 0 },
-        650 - age,
-      );
-    }
-  }
-  private eventEffect(event: GameEvent, frame: AdventureFrame, now: number) {
-    const width = this.scene.scale.width,
-      height = this.scene.scale.height,
-      age = now - event.at;
-    const actor = frame.members.find((m) => m.id === event.hero) || frame.members[0];
-    const support =
-      event.kind === "heal" || event.kind === "hurt" || (event.kind === "skill" && !event.amount);
-    const dest =
-      frame.members.find((m) => m.id === event.target) ||
-      (support ? actor : frame.targets.find((target) => target.id === event.enemy) || frame.target);
-    if (!dest) return;
-    const x = dest.x * width,
-      y = dest.y * height - spriteSize(width, height) * 0.45,
-      color = eventColor(event);
-    this.amountEffect(event, frame, x, y, color, age);
-    this.strikeEffect(event, frame, actor, support, x, y, color, age);
-    this.moteEffects(support, x, y, color, age);
   }
   private paintBackground(now: number, width: number, height: number) {
     const source = this.background.texture.getSourceImage() as HTMLImageElement,
@@ -438,7 +216,7 @@ export class AdventurePainter {
   ) {
     let figure = this.figures.get(member.id);
     if (!figure) {
-      figure = this.makeFigure(member.sprite, member.name);
+      figure = makeFigure(this.scene, member.sprite, member.name);
       this.figures.set(member.id, figure);
     }
     const pose = heroSheets[member.id]?.ready
@@ -477,7 +255,7 @@ export class AdventurePainter {
   ) {
     for (const [id, figure] of this.figures)
       if (!frame.members.some((m) => m.id === id)) {
-        this.removeFigure(figure);
+        removeFigure(figure);
         this.figures.delete(id);
       }
     this.meters.clear();
@@ -488,7 +266,7 @@ export class AdventurePainter {
     const living = frame.targets.filter((target) => !target.down);
     for (const [id, figure] of this.opponents)
       if (!living.some((target) => target.id === id)) {
-        this.removeFigure(figure);
+        removeFigure(figure);
         this.opponents.delete(id);
       }
     for (const target of living) this.paintOpponent(frame, target, now, size);
@@ -501,7 +279,7 @@ export class AdventurePainter {
   ) {
     let opponent = this.opponents.get(target.id);
     if (!opponent) {
-      opponent = this.makeFigure(target.sprite, target.name);
+      opponent = makeFigure(this.scene, target.sprite, target.name);
       this.opponents.set(target.id, opponent);
     }
     const width = this.scene.scale.width,
@@ -550,29 +328,6 @@ export class AdventurePainter {
       .fillStyle(target.battle ? 0xf1b38e : 0xe9d89a)
       .fillRoundedRect(target.x * width - bar / 2, y, bar * target.value, 5, 2);
   }
-  private paintEvents(frame: AdventureFrame, now: number) {
-    for (const [id, at] of this.seen) if (now - at > 2000) this.seen.delete(id);
-    for (const event of frame.events) {
-      if (this.seen.has(event.id)) continue;
-      this.seen.set(event.id, event.at);
-      if (["hit", "skill", "heal", "hurt", "combo", "assist", "gather"].includes(event.kind))
-        this.eventEffect(event, frame, now);
-    }
-  }
-  private paintCutin(input: ReturnType<AdventureBridge["read"]>, frame: AdventureFrame) {
-    if (!frame.cutin) return;
-    const key = input.squad.id + ":" + frame.cutin.kind + ":" + String(frame.cutin.at);
-    if (key === this.cutinKey) return;
-    this.cutinKey = key;
-    if (this.runtime.reduced) return;
-    const width = this.scene.scale.width,
-      height = this.scene.scale.height,
-      wave = this.scene.add
-        .circle(width * 0.65, height * 0.55, 30)
-        .setStrokeStyle(4, 0xffe3a0, 0.9)
-        .setDepth(45);
-    this.transient(wave, { scale: Math.max(width, height) / 40, alpha: 0 }, 700);
-  }
   paint() {
     const input = this.bridge.read(),
       now = input.now,
@@ -594,7 +349,7 @@ export class AdventurePainter {
     const size = spriteSize(width, height, frame.phase === "idle");
     this.paintMembers(input, frame, now, size);
     this.paintTarget(frame, now, size);
-    this.paintEvents(frame, now);
-    this.paintCutin(input, frame);
+    this.effects.paintEvents(frame, now);
+    this.effects.paintCutin(input, frame);
   }
 }
