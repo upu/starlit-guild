@@ -310,29 +310,28 @@
   font-size: 12px;
   text-shadow: 0 1px 3px #10281e;
 }
-.map-journey > div {
-  display: flex;
-  gap: 5px;
-  max-width: 290px;
-  flex: 1;
-}
-.map-journey i {
-  height: 4px;
-  flex: 1;
+.map-journey > progress {
+  appearance: none;
+  border: 0;
+  border-radius: 4px;
+  height: 5px;
   background: #0b302ab3;
-  border: 1px solid #faf2cb66;
-  border-radius: 3px;
+  accent-color: #dec17a;
+  max-width: 290px;
+  min-width: 30px;
+  flex: 1;
 }
-.map-journey i:nth-child(3n) {
-  margin-right: 5px;
+.map-journey > progress::-webkit-progress-bar {
+  background: #0b302ab3;
+  border-radius: 4px;
 }
-.map-journey .complete {
+.map-journey > progress::-webkit-progress-value {
   background: #dec17a;
-  border-color: #ffe8a3;
+  border-radius: 4px;
 }
-.map-journey .current {
-  background: #fff1bf;
-  box-shadow: 0 0 9px #ffdc87;
+.map-journey > progress::-moz-progress-bar {
+  background: #dec17a;
+  border-radius: 4px;
 }
 .phone-game .cheer-gauge {
   height: 38px;

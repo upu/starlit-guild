@@ -1,4 +1,5 @@
 import type Phaser from "phaser";
+import type { RoadLook } from "@/lib/chapter-road-presentation";
 import {
   ROAD_LENGTH,
   travellerLane,
@@ -40,6 +41,7 @@ export class RoadPainter {
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
   private destination: Phaser.GameObjects.Text;
+  private look?: RoadLook;
 
   constructor(private scene: Phaser.Scene) {
     this.backdrop = scene.add.tileSprite(0, 0, 1, 1, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
@@ -74,6 +76,15 @@ export class RoadPainter {
       Math.floor(source.width / 4),
       Math.floor(source.height / 3),
     );
+    for (let i = 0; i < 12; i++)
+      atlas.add(
+        String(i),
+        0,
+        Math.round(((i % 4) * source.width) / 4),
+        Math.round((Math.floor(i / 4) * source.height) / 3),
+        Math.floor(source.width / 4),
+        Math.floor(source.height / 3),
+      );
   }
 
   private registerSheet(id: Traveller["id"]) {
@@ -110,6 +121,11 @@ export class RoadPainter {
   }
 
   private scenery(state: RoadBattle, reduced: boolean) {
+    const background = this.look?.background || ROAD_BACKGROUND;
+    if (this.backdrop.texture.key !== background) {
+      this.backdrop.setTexture(background);
+      this.sizeKey = "";
+    }
     const { width, height } = this.scene.scale;
     const key = `${String(width)}:${String(height)}`;
     if (this.sizeKey !== key) {
@@ -119,8 +135,10 @@ export class RoadPainter {
     const position = reduced ? 0 : state.distance * 0.3;
     if (this.backdrop.tilePositionX !== position) this.backdrop.tilePositionX = position;
     this.trail.setX(reduced ? 0 : -(((state.distance * width) / 560) % width));
-    this.destination.setPosition(this.screenX(ROAD_LENGTH + 100, state), height * 0.36);
-    this.destination.setVisible(state.distance > ROAD_LENGTH - 380);
+    const length = this.look?.length ?? ROAD_LENGTH;
+    this.destination.setText(this.look ? "目的地 →" : "森の出口 →");
+    this.destination.setPosition(this.screenX(length + 100, state), height * 0.36);
+    this.destination.setVisible(state.phase === "journey" && state.distance > length - 380);
   }
 
   private resizeScenery(width: number, height: number) {
@@ -155,7 +173,7 @@ export class RoadPainter {
   private heroPose(state: RoadBattle, hero: Traveller, reduced: boolean) {
     if (reduced || hero.hp <= 0 || state.phase !== "journey") return 8;
     const hit = state.effects
-      .filter((item) => item.hero === hero.id && item.kind !== "hurt")
+      .filter((item) => item.hero === hero.id && item.kind !== "hurt" && item.kind !== "gather")
       .at(-1);
     const hurt = state.effects
       .filter((item) => item.hero === hero.id && item.kind === "hurt")
@@ -163,9 +181,13 @@ export class RoadPainter {
     if (hurt && state.time >= hurt.at && state.time - hurt.at < 300) return 11;
     if (hit && state.time >= hit.at && state.time - hit.at < 600)
       return 4 + Math.floor((state.time - hit.at) / 150);
-    if (isWorking(state, hero) && state.gathering?.kind === "herb")
+    if (this.working(state, hero) && state.gathering?.kind === "herb")
       return 9 + (Math.floor(state.time / 380) % 2);
     return hero.walking ? Math.floor(state.time / 150) % 4 : 8;
+  }
+
+  private working(state: RoadBattle, hero: Traveller) {
+    return this.look ? this.look.workers.includes(hero.id) : isWorking(state, hero);
   }
 
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
@@ -176,7 +198,7 @@ export class RoadPainter {
     }
     const size = Math.min(108, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
     const x = this.screenX(hero.x, state);
-    const gathering = isWorking(state, hero) && state.gathering?.kind === "herb";
+    const gathering = this.working(state, hero) && state.gathering?.kind === "herb";
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
     const y = travellerLane(hero.id) * this.scene.scale.height + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
@@ -186,7 +208,9 @@ export class RoadPainter {
       .setFlipX(hero.facing < 0)
       .setDepth(10 + travellerLane(hero.id) * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
-    figure.label.setPosition(x, y + 13);
+    figure.label
+      .setPosition(x, y + 13)
+      .setText(travellerNames[hero.id] + (hero.hp <= 0 ? " · 戦闘不能" : ""));
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
@@ -207,6 +231,9 @@ export class RoadPainter {
       .setOrigin(walk?.originX ?? frame.originX, walk?.originY ?? frame.originY);
   }
 
+  private enemyLabel(enemy: RoadEnemy) {
+    return this.look?.enemies[enemy.id]?.label || enemyName(enemy);
+  }
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
     let figure = this.enemies.get(enemy.id);
     if (!figure) {
@@ -221,7 +248,7 @@ export class RoadPainter {
     const bounce = reduced ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
     const puppet = enemy.kind !== "slime";
     const asset = puppet ? ROAD_PUPPETS : "/sprites.png";
-    const frame = puppet ? enemy.kind : "slime";
+    const frame = puppet ? enemy.kind : this.look?.enemies[enemy.id]?.frame || "slime";
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
     figure.image
@@ -230,7 +257,10 @@ export class RoadPainter {
       .setFlipX(puppet ? enemy.x < state.heroes[0].x : enemy.x > state.heroes[0].x)
       .setDepth(10 + enemy.lane * 10);
     if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
-    figure.label.setPosition(x, y + 14).setText(enemyName(enemy));
+    figure.label
+      .setPosition(x, y + 14)
+      .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
+      .setText(this.enemyLabel(enemy));
     if (enemy.kind !== "pumpety") this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }
 
@@ -245,23 +275,25 @@ export class RoadPainter {
     const size = cargo
       ? Math.min(145, this.scene.scale.width * 0.3)
       : Math.min(48, this.scene.scale.width * 0.12);
-    const asset = cargo ? ROAD_CARGO : ROAD_HERB;
+    const asset = this.look?.work?.asset || (cargo ? ROAD_CARGO : ROAD_HERB);
     if (this.gathering.image.texture.key !== asset) this.gathering.image.setTexture(asset);
     this.gathering.image.setOrigin(0.5, cargo ? 0.74 : 0.92);
     this.gathering.image.setPosition(x, y).setDisplaySize(size, size);
     this.gathering.label
       .setText(
-        cargo
-          ? { pack: "包み直し", carry: "運搬中", unload: "荷下ろし", gather: "" }[point.task]
-          : point.remaining < point.total
-            ? "採取中"
-            : "薬草",
+        this.look?.work?.label ||
+          (cargo
+            ? { pack: "包み直し", carry: "運搬中", unload: "荷下ろし", gather: "" }[point.task]
+            : point.remaining < point.total
+              ? "採取中"
+              : "薬草"),
       )
       .setPosition(x, y + 14);
     this.health(x, y + 5, size, point.remaining / point.total);
   }
 
-  paint(state: RoadBattle, reduced: boolean) {
+  paint(state: RoadBattle, reduced: boolean, look?: RoadLook) {
+    this.look = look;
     this.scenery(state, reduced);
     this.bars.clear();
     this.paintGathering(state);

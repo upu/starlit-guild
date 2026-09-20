@@ -7,6 +7,13 @@ import { coupleCombo, storyProgress, together } from "./stories.ts";
 import { heroes, type Quest } from "./game-content.ts";
 import type { GameEvent, Run, Squad, State } from "./game-types.ts";
 import {
+  ensureChapterRoad,
+  placeRoadEnemies,
+  roadImpact,
+  roadActionKind,
+  CHAPTER_ROAD_STEP,
+} from "./chapter-road.ts";
+import {
   activeBonds,
   activeRun,
   encounter,
@@ -34,6 +41,7 @@ export function event(
   target?: string,
   enemy?: string,
 ) {
+  roadImpact(r, kind, hero, target, enemy);
   r.events = [
     ...r.events,
     {
@@ -49,6 +57,7 @@ export function event(
   ].slice(-12);
 }
 export function configureTarget(r: Run, q: Quest) {
+  if (r.road) delete r.road.ambushNode;
   r.enemies =
     encounter(q, r.node) === "battle" ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15) : [];
   r.targetMax = Math.round(
@@ -57,11 +66,19 @@ export function configureTarget(r: Run, q: Quest) {
   r.target = r.targetMax;
   r.hits = 0;
   syncEnemyTotals(r);
+  placeRoadEnemies(r);
 }
 export function travelMs(id: string) {
   return 2200 + (heroes.findIndex((h) => h.id === id) % 4) * 310;
 }
 export function schedule(s: State, sq: Squad, r: Run, at: number) {
+  if (r.road) {
+    r.road.at = at;
+    r.road.previousAt = at;
+    r.road.nextAt = at + CHAPTER_ROAD_STEP;
+    r.road.previousCamera = r.road.camera;
+    for (const position of Object.values(r.road.members)) position.previousX = position.x;
+  }
   r.actors = sq.members.map((hero) => ({
     hero,
     actions: 0,
@@ -107,11 +124,17 @@ export function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): R
     events: [],
   };
   configureTarget(r, q);
+  if (s.prologue) ensureChapterRoad(r, sq, q, at);
   schedule(s, sq, r, at);
   return r;
 }
 export function nextEvent(r: Run) {
-  return Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
+  return Math.min(
+    ...r.actors.map((a) => a.nextAt),
+    r.enemyAt,
+    r.comboAt,
+    r.road?.nextAt ?? Infinity,
+  );
 }
 export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
   aria: {
@@ -174,6 +197,20 @@ export function reward(s: State, sq: Squad, q: Quest, at: number, finished: bool
   awardFriendship(s, sq);
   return { gold, xp, herbs, ore, at, finished };
 }
+function rewardRoadPortions(s: State, sq: Squad, q: Quest, at: number) {
+  const r = activeRun(sq);
+  const lastNode = r.road?.ambushNode ?? r.node;
+  let gain: ReturnType<typeof reward> | null = null;
+  // The work and its ambush consume the same original two portions, exactly once.
+  while (r.node <= lastNode) {
+    if ((r.node + 1) % 3 === 0 || r.node === r.nodes - 1)
+      gain = reward(s, sq, q, at, r.node === r.nodes - 1);
+    if (r.node === lastNode) break;
+    r.node++;
+    healAll(r, 0.15);
+  }
+  return gain;
+}
 export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   const r = activeRun(sq);
   event(
@@ -184,8 +221,8 @@ export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
       ? "人形が止まり、少女は糸を引いて退いた"
       : targetName(q, r.node, r.nodes) + "をクリア！",
   );
+  const gain = rewardRoadPortions(s, sq, q, at);
   const finished = r.node === r.nodes - 1;
-  const gain = (r.node + 1) % 3 === 0 || finished ? reward(s, sq, q, at, finished) : null;
   if (gain) event(r, at, "clear", "区間の報酬を確保！ +" + String(gain.gold) + " G");
   if (!finished) {
     r.node++;
@@ -214,7 +251,7 @@ export function combination(s: State, sq: Squad, at: number) {
   const b = bs[(r.node + r.round) % bs.length],
     lv = bondLevel(s, b.ids),
     q = questById(r.quest),
-    k = encounter(q, r.node),
+    k = roadActionKind(q, r),
     first = heroById(b.ids[0]).name,
     second = heroById(b.ids[1]).name;
   if (b.ids.some((id) => memberHealth(r, id).hp <= 0)) return;

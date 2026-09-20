@@ -1,6 +1,12 @@
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
+  advanceChapterRoad,
+  roadActorReady,
+  roadActionKind,
+  roadComplete,
+} from "./chapter-road.ts";
+import {
   TOWN_QUEST,
   TOWER_QUEST,
   NIGHT_QUEST,
@@ -115,6 +121,11 @@ function actorTurn(
     actor.nextAt += actor.period;
     return;
   }
+  if (!roadActorReady(q, r, actor.hero)) {
+    actor.nextAt += 100;
+    return;
+  }
+  kind = roadActionKind(q, r, actor.hero);
   const hero = actor.hero,
     member = memberStats(s, hero),
     bond = activeBonds(sq.members).reduce((value, item) => value + item.bonus, 0);
@@ -126,6 +137,8 @@ function actorTurn(
     (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
     penetration(s, hero),
     resistanceFor(q, kind),
+    hero,
+    !!r.road && kind !== "battle",
   );
   r.hits++;
   actor.nextAt += actor.period;
@@ -158,7 +171,7 @@ function runActorTurns(
   for (const actor of r.actors) {
     if (actor.nextAt !== at) continue;
     actorTurn(s, sq, r, q, kind, actor, at);
-    if (r.target <= 0) return { completed: true, gain: completeNode(s, sq, q, at) };
+    if (roadComplete(r)) return { completed: true, gain: completeNode(s, sq, q, at) };
   }
   return { completed: false, gain: null };
 }
@@ -207,9 +220,10 @@ function step(s: State, sq: Squad) {
     return null;
   }
   const kind = encounter(q, r.node);
+  advanceChapterRoad(q, r, at);
   if (r.comboAt === at) {
     combination(s, sq, at);
-    if (r.target <= 0) return completeNode(s, sq, q, at);
+    if (roadComplete(r)) return completeNode(s, sq, q, at);
   }
   if (r.phase === "move") {
     r.phase = "work";
@@ -244,6 +258,11 @@ function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
 }
 function shiftRun(r: Run, shift: number) {
+  if (r.road) {
+    r.road.at += shift;
+    r.road.previousAt += shift;
+    r.road.nextAt += shift;
+  }
   r.nextAt += shift;
   r.phaseAt += shift;
   r.started += shift;

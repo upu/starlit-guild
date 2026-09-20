@@ -194,9 +194,18 @@ function frameTargets(
   run: ActiveRun | null,
   kind: ReturnType<typeof encounter> | null,
   now: number,
-) {
+): NonNullable<ReturnType<typeof frameTarget>>[] {
   const base = frameTarget(quest, run, kind);
   if (!base) return [];
+  if (run?.road?.ambushNode !== undefined) {
+    const enemies = frameTargets(
+      quest,
+      { ...run, node: run.road.ambushNode, road: undefined },
+      "battle",
+      now,
+    );
+    return [{ ...base, down: run.target <= 0 }, ...enemies];
+  }
   const enemies = run?.enemies;
   if (!enemies?.length) return [base];
   const positions =

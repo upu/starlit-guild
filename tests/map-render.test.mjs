@@ -242,7 +242,7 @@ test("stage progress retains the completed scenery until the next departure", ()
       const battle = structuredClone(state);
       battle.squads[0].run.node = 1;
       battle.squads[0].run.phase = "work";
-      assert.match(render(battle), /魔物と戦闘中/);
+      assert.match(render(battle), /道を開きながら前へ/);
       assert.doesNotMatch(render(battle), /いたずらを阻止中/);
     }
     // Render progression with sufficient training; difficulty has its own simulations.
@@ -265,7 +265,7 @@ test("stage progress retains the completed scenery until the next departure", ()
 test("every restored expedition location renders with finite character coordinates", () => {
   let state = begin();
   const visited = new Set();
-  for (let i = 0; i < 10000 && visited.size < 15; i++) {
+  for (let i = 0; i < 10000 && state.squads[0].run; i++) {
     const squad = state.squads[0],
       node = squad.run.node;
     if (!visited.has(node)) {
@@ -279,14 +279,16 @@ test("every restored expedition location renders with finite character coordinat
           startQuest: OPENING,
         }),
       );
-      assert.match(html, new RegExp(`地点 ${node + 1}/15`));
+      assert.match(html, /旅の道のり/);
       assert.doesNotMatch(html, /NaN|undefined%/);
       for (const member of frameFor(state).members) {
         assert.ok(Number.isFinite(member.x) && Number.isFinite(member.y));
         assert.ok(member.x >= 0 && member.x <= 1 && member.y >= 0 && member.y <= 1);
       }
       visited.add(node);
+      if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
     }
+    if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
     state = settle(state, state.squads[0].run.nextAt).state;
   }
   assert.equal(visited.size, 15);

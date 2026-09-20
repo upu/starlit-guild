@@ -4,6 +4,7 @@ import { initialPrologueState, act, settle, allQuests, estimate } from "../lib/g
 import { storyStages } from "../lib/prologue.ts";
 import { createEnemies, syncEnemyTotals, damageEnemy } from "../lib/combat.ts";
 import { groupEnemyTurns } from "../lib/enemy-turns.ts";
+import { placeRoadEnemies } from "../lib/chapter-road.ts";
 import { questNodes, puppetCue } from "../lib/puppet-battles.ts";
 import { adventureFrame, adventureAssets, spriteSize } from "../lib/adventure-presentation.ts";
 import { parseBundle } from "../lib/save-format.ts";
@@ -50,6 +51,10 @@ function finalBattle() {
     r.phaseAt,
   );
   syncEnemyTotals(r);
+  placeRoadEnemies(r);
+  // Direct strike tests start with both sides already in melee range.
+  for (const position of Object.values(r.road.members)) position.x = 560;
+  for (const position of Object.values(r.road.opponents)) position.x = 600;
   return s;
 }
 test("short stages retain full coins and XP, distinct formations and live/offline results", () => {
@@ -63,7 +68,7 @@ test("short stages retain full coins and XP, distinct formations and live/offlin
     for (let i = 0; s.squads[0].run && i < 10000; i++) {
       const r = s.squads[0].run;
       seen.set(
-        r.node,
+        r.road?.ambushNode ?? r.node,
         r.enemies.map((e) => e.role),
       );
       s = roundtrip(settle(s, r.nextAt).state);
@@ -157,6 +162,7 @@ test("old 15-node saves keep HP, clocks, rewards and composition until completin
     let s = ready(id);
     const r = s.squads[0].run,
       q = allQuests.find((q) => q.id === id);
+    delete r.road; // Historical saves have no spatial clock.
     r.nodes = 15;
     r.node = id === ids[0] ? 7 : 10;
     r.enemies = createEnemies(q, r.node, r.phaseAt, false);
@@ -204,7 +210,7 @@ test("sweeps consume shared wards once per hit and never hit fallen members", ()
 test("short battles recover after defeat, keep rewards on return and survive capped offline time", () => {
   let s = ready(ids[1], 1),
     rest;
-  for (let i = 0; i < 500 && !rest; i++) {
+  for (let i = 0; s.updatedAt < 601000 && !rest; i++) {
     s = settle(s, s.squads[0].run.nextAt).state;
     if (s.squads[0].run.phase === "rest") rest = roundtrip(s);
   }

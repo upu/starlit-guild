@@ -13,6 +13,7 @@ import {
   MEDICINE_RETURN_QUEST,
 } from "./chapter-two.ts";
 import { prologueStages } from "./prologue.ts";
+import { nearestOpponent } from "./chapter-road.ts";
 import {
   puppetFormation,
   puppetStats,
@@ -98,14 +99,23 @@ export function focusedEnemy(r: Run) {
 }
 export function syncEnemyTotals(r: Run) {
   if (!r.enemies?.length) return;
-  r.target = r.enemies.reduce((sum, enemy) => sum + enemy.hp, 0);
-  r.targetMax = r.enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0);
+  if (r.road?.ambushNode === undefined) {
+    r.target = r.enemies.reduce((sum, enemy) => sum + enemy.hp, 0);
+    r.targetMax = r.enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0);
+  }
   // Keep the legacy clock as a finite, serializable projection.
   const living = r.enemies.filter((enemy) => enemy.hp > 0);
   if (living.length) r.enemyAt = Math.min(...living.map((enemy) => enemy.nextAt));
 }
-export function damageEnemy(r: Run, base: number, power: number, workResistance = 0) {
-  const enemy = focusedEnemy(r);
+export function damageEnemy(
+  r: Run,
+  base: number,
+  power: number,
+  workResistance = 0,
+  hero?: string,
+  working = false,
+) {
+  const enemy = working ? undefined : r.road && hero ? nearestOpponent(r, hero) : focusedEnemy(r);
   if (!enemy) {
     const amount = workResistance
       ? reducedDamage(base, workResistance, power)

@@ -73,9 +73,10 @@ test("2-6 save continues through 2-9 with first-ending gates, offline parity and
     for (let limit = 0; live.squads[0].run && limit < 20000; limit++) {
       const run = live.squads[0].run,
         q = allQuests.find((q) => q.id === id);
-      if (!seenNodes.has(run.node)) {
-        seenNodes.add(run.node);
-        if (encounter(q, run.node) === "battle") battleCount++;
+      const encounterNode = run.road?.ambushNode ?? run.node;
+      if (!seenNodes.has(encounterNode)) {
+        seenNodes.add(encounterNode);
+        if (encounter(q, encounterNode) === "battle") battleCount++;
       }
       if (id === HOUSE_CALLS_QUEST) {
         assert.equal(frame(live).target.battle, false);

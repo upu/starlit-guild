@@ -1,0 +1,94 @@
+import type Phaser from "phaser";
+import { adventureAction } from "@/lib/adventure-presentation";
+import { chapterRoadFrame, chapterRoadHit } from "@/lib/chapter-road-presentation";
+import { RoadPainter, ROAD_BACKGROUND } from "../battle-prototype/road-painter";
+import {
+  ROAD_EFFECTS,
+  ROAD_HERB,
+  ROAD_CARGO,
+  ROAD_PUPPETS,
+  roadSheet,
+  roadWalkSheet,
+} from "../battle-prototype/road-art";
+import type { AdventureBridge } from "./renderer-session";
+import type { RuntimeState } from "./adventure-painter-figures";
+
+export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
+  const { look } = chapterRoadFrame(input);
+  return [
+    ...new Set([
+      "/sprites.png",
+      ROAD_BACKGROUND,
+      look.background,
+      ROAD_EFFECTS,
+      ROAD_HERB,
+      ROAD_CARGO,
+      ROAD_PUPPETS,
+      ...(["aria", "leon", "mira"] as const).flatMap((id) => [roadSheet(id), roadWalkSheet(id)]),
+      ...(look.work ? [look.work.asset] : []),
+    ]),
+  ];
+}
+
+export class ChapterRoadPainter {
+  private painter?: RoadPainter;
+  private loading = false;
+  failed = false;
+  constructor(
+    private scene: Phaser.Scene,
+    private bridge: AdventureBridge,
+    private engine: typeof Phaser,
+    private runtime: RuntimeState,
+    private syncPause: () => void,
+  ) {}
+  initialize() {
+    if (this.runtime.disposed || this.failed) return;
+    this.painter = new RoadPainter(this.scene);
+    this.scene.input.on(this.engine.Input.Events.POINTER_UP, (pointer: Phaser.Input.Pointer) => {
+      this.pointerUp(pointer);
+    });
+    this.runtime.created = true;
+    this.bridge.status("ready");
+    this.paint();
+    queueMicrotask(this.syncPause);
+  }
+  private pointerUp(pointer: Phaser.Input.Pointer) {
+    if (
+      this.runtime.disposed ||
+      this.runtime.paused ||
+      this.loading ||
+      this.failed ||
+      pointer.button !== 0 ||
+      pointer.getDistance() > 14
+    )
+      return;
+    const input = this.bridge.read();
+    const intent = chapterRoadHit(input, pointer, this.scene.scale.width, this.scene.scale.height);
+    const action = adventureAction(input, intent);
+    if (action) this.bridge.act(action);
+  }
+  private ensureAssets() {
+    const missing = chapterRoadAssets(this.bridge.read()).filter(
+      (asset) => !this.scene.textures.exists(asset),
+    );
+    if (!missing.length) return true;
+    if (this.loading) return false;
+    this.loading = true;
+    this.bridge.status("loading");
+    for (const asset of missing) this.scene.load.image(asset, asset);
+    this.scene.load.once(this.engine.Loader.Events.COMPLETE, () => {
+      this.loading = false;
+      if (!this.runtime.disposed && !this.failed) this.bridge.status("ready");
+    });
+    this.scene.load.start();
+    return false;
+  }
+  stopMotion() {
+    this.paint();
+  }
+  paint() {
+    if (!this.painter || !this.ensureAssets()) return;
+    const { battle, look } = chapterRoadFrame(this.bridge.read());
+    this.painter.paint(battle, this.runtime.reduced, look);
+  }
+}

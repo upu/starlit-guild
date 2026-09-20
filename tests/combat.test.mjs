@@ -37,7 +37,10 @@ function bundle(state) {
 // The tower road is the first story stage whose nodes field a group of three.
 function storyRun(stages, level, gold = 1000) {
   const source = testState(1000, stages, level, gold);
-  return act(source, { type: "start", id: nextStage(source).quest }, 1000);
+  const state = act(source, { type: "start", id: nextStage(source).quest }, 1000);
+  // These grouped-target contract checks also cover pre-scrolling saves. Spatial combat is covered in chapter-road.test.
+  delete state.squads[0].run.road;
+  return state;
 }
 function group() {
   let state = storyRun(3, 1);

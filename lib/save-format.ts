@@ -67,7 +67,27 @@ const enemy = z.object({
   role: z.enum(puppetRoles).optional(),
 });
 const health = z.record(hero, z.object({ hp: n, maxHp: n.min(1) }));
+const coordinate = z.number().finite().min(-10000).max(10000);
+const position = z.object({
+  x: coordinate,
+  previousX: coordinate,
+  recoil: coordinate,
+  walking: z.boolean(),
+  facing: z.union([z.literal(1), z.literal(-1)]),
+});
+const road = z.object({
+  version: z.literal(1),
+  at: n,
+  previousAt: n,
+  nextAt: n,
+  camera: coordinate,
+  previousCamera: coordinate,
+  members: z.record(hero, position),
+  opponents: z.record(enemyId, position),
+  ambushNode: count.max(14).optional(),
+});
 const run = z.object({
+  road: road.optional(),
   serial: count,
   nodes: count.min(3).max(15),
   ward: n,
@@ -149,7 +169,48 @@ function validTimeline(squad: ParsedSquad, updatedAt: number) {
   if (run.node >= run.nodes || run.nextAt < updatedAt) return false;
   if (run.phase !== "rest" && run.comboAt < run.nextAt) return false;
   if (run.phase !== "rest" && run.enemyAt < run.nextAt) return false;
-  return validActors(squad) && validEnemies(run);
+  return validActors(squad) && validEnemies(run) && validRoad(squad);
+}
+
+function validRoad(squad: ParsedSquad) {
+  const run = squad.run,
+    road = run?.road;
+  if (!run) return true;
+  if (!road) return true;
+  if (
+    Object.keys(road.members).length !== squad.members.length ||
+    squad.members.some((id) => !(id in road.members))
+  )
+    return false;
+  if (
+    Object.keys(road.opponents).length !== (run.enemies?.length || 0) ||
+    run.enemies?.some((e) => !(e.id in road.opponents))
+  )
+    return false;
+  return validRoadClocks(run) && validRoadAmbush(run);
+}
+function validRoadClocks(run: ParsedRun) {
+  const road = run.road;
+  if (!road) return true;
+  return (
+    run.target <= run.targetMax &&
+    road.previousAt <= road.at &&
+    road.at <= road.nextAt &&
+    (run.phase === "rest" || road.nextAt >= run.nextAt)
+  );
+}
+function validRoadAmbush(run: ParsedRun) {
+  const road = run.road;
+  if (!road) return true;
+  if (road.ambushNode === undefined) return true;
+  const quest = quests.find((q) => q.id === run.quest);
+  return (
+    !!quest &&
+    road.ambushNode === run.node + 1 &&
+    road.ambushNode < run.nodes &&
+    encounter(quest, run.node) !== "battle" &&
+    encounter(quest, road.ambushNode) === "battle"
+  );
 }
 type ParsedRun = z.infer<typeof run>;
 function validEnemies(run: ParsedRun) {
@@ -157,7 +218,8 @@ function validEnemies(run: ParsedRun) {
   if (!enemies) return true; // Existing battles keep their exact progress until the next node.
   const quest = quests.find((q) => q.id === run.quest);
   if (!quest) return false;
-  if (encounter(quest, run.node) !== "battle") return enemies.length === 0;
+  const ambush = run.road?.ambushNode !== undefined;
+  if (encounter(quest, run.node) !== "battle" && !ambush) return enemies.length === 0;
   if (
     !enemies.length ||
     new Set(enemies.map((enemy) => enemy.id)).size !== enemies.length ||
@@ -165,12 +227,13 @@ function validEnemies(run: ParsedRun) {
   )
     return false;
   if (
-    run.target !== enemies.reduce((sum, enemy) => sum + enemy.hp, 0) ||
-    run.targetMax !== enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0)
+    !ambush &&
+    (run.target !== enemies.reduce((sum, enemy) => sum + enemy.hp, 0) ||
+      run.targetMax !== enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0))
   )
     return false;
   const living = enemies.filter((enemy) => enemy.hp > 0);
-  if (!living.length) return false;
+  if (!living.length) return ambush;
   return (
     run.enemyAt === Math.min(...living.map((enemy) => enemy.nextAt)) &&
     (run.phase === "rest" || living.every((enemy) => enemy.nextAt >= run.nextAt))
