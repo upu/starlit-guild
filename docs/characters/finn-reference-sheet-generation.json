@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not returned",
+  "target": "docs/characters/finn-reference-sheet.webp",
+  "identityReference": "User-approved A3 concept from this conversation (not included in the repository)",
+  "styleReference": "mira-reference-sheet.webp",
+  "encoding": "Lossless WebP at native generated resolution; no resize."
+}
