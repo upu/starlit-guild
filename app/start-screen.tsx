@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import "./start-screen.css";
 import { SceneAtmosphere } from "./scene-atmosphere";
 import { APP_VERSION } from "./app-version";
@@ -53,6 +54,9 @@ export function StartScreen({
           {error ? "記録を確認する" : ready ? "- START -" : "- LOADING -"}
         </button>
         {error && <p role="alert">{error}</p>}
+        <Link className="start-prototype" href="/battle-prototype">
+          横スクロール戦闘を試す
+        </Link>
         <span className="start-version">v{APP_VERSION}</span>
       </div>
     </main>
