@@ -10,6 +10,7 @@ import * as journey from "../lib/journey.ts";
 import * as backupApi from "../lib/backup-api.ts";
 import * as apiInput from "../lib/api-input.ts";
 import * as externalInput from "../lib/external-input.ts";
+import * as localIds from "../lib/local-id.ts";
 
 function compile(relativePath) {
   return ts.transpileModule(readFileSync(new URL(relativePath, import.meta.url), "utf8"), {
@@ -59,6 +60,7 @@ function harness(testToolsEnabled, initialBundle) {
     "@/lib/api-input": apiInput,
     "@/lib/chapter-two-presets": chapterPresets,
     "@/lib/external-input": externalInput,
+    "@/lib/local-id": localIds,
     "@/lib/sound": {
       setSound: () => {},
       sound: () => {},

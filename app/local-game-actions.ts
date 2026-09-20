@@ -1,4 +1,5 @@
 "use client";
+import { localId } from "@/lib/local-id";
 import { toast } from "sonner";
 import { act, testState, type Action, type State } from "@/lib/game";
 import { parseBundle, type Profile } from "@/lib/save-format";
@@ -124,7 +125,7 @@ export function createRestoreCopy(context: GameContext) {
     if (bundle.profiles.length >= 12)
       throw Error("記録は12個までです。不要な記録を削除してから読み込んでください。");
     const profile = structuredClone(source);
-    profile.id = crypto.randomUUID();
+    profile.id = localId();
     profile.name = (profile.name + "（復元）").slice(0, 50);
     bundle.profiles.push(profile);
     bundle.active = profile.id;
@@ -142,7 +143,7 @@ export function createImportFile(context: GameContext, restoreCopy: (profile: Pr
     if (!profile) throw Error("選択中の記録を読み込めません。");
     if (!context.currentRef.current) {
       const recovered = freshBundle();
-      recovered.profiles = [{ ...profile, id: crypto.randomUUID() }];
+      recovered.profiles = [{ ...profile, id: localId() }];
       recovered.active = recovered.profiles[0].id;
       localStorage.setItem(SAVE_KEY + "-unreadable", localStorage.getItem(SAVE_KEY) || "");
       context.ownerRef.current = true;

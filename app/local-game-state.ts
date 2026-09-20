@@ -1,4 +1,5 @@
 "use client";
+import { localId } from "@/lib/local-id";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
 import { initialPrologueState, settle, type Rewards } from "@/lib/game";
@@ -21,7 +22,7 @@ type BackupRead = ReturnType<typeof parseBackupReadResponse>;
 
 export function newProfile(test = false, preset?: ChapterTwoPreset): Profile {
   return {
-    id: crypto.randomUUID(),
+    id: localId(),
     name: preset
       ? chapterTwoPresets.find((p) => p.id === preset)?.name || "第2章テスト"
       : test
@@ -35,7 +36,7 @@ export function freshBundle(): SaveBundle {
   const profile = newProfile();
   return {
     format: 4,
-    deviceId: crypto.randomUUID(),
+    deviceId: localId(),
     active: profile.id,
     profiles: [profile],
     serial: 0,

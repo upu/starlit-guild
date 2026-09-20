@@ -1,3 +1,4 @@
+import { localId } from "./local-id.ts";
 import { z } from "zod";
 import {
   heroes,
@@ -328,7 +329,7 @@ function storyProfile(profile: unknown) {
 }
 function freshProfile() {
   return {
-    id: crypto.randomUUID(),
+    id: localId(),
     name: "新しい冒険",
     test: false,
     state: initialPrologueState(Date.now()),
