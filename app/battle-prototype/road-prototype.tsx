@@ -4,7 +4,8 @@ import { useState } from "react";
 import { ROAD_LENGTH, roadStatus } from "@/lib/scrolling-battle";
 import { useRoadBattle, useRoadCanvas } from "./use-road-battle";
 import { RoadChat } from "./road-chat";
-import { RoadControls, RoadHealth, RoadLoadout } from "./road-controls";
+import { RoadControls, RoadLoadout, RoadStages } from "./road-controls";
+import { roadStages } from "@/lib/scrolling-stages";
 import "./road.css";
 
 function RoadStage({ game }: { game: ReturnType<typeof useRoadBattle> }) {
@@ -17,7 +18,7 @@ function RoadStage({ game }: { game: ReturnType<typeof useRoadBattle> }) {
     <section className="road-stage" aria-label="横スクロールの戦場">
       <div ref={host} className="road-canvas" data-status={game.status} aria-hidden="true" />
       <div className="road-scene-caption">
-        <span>木漏れ日の街道</span>
+        <span>{roadStages[game.view.stage].name}</span>
         <span>{game.paused ? "一時停止中" : "自動で冒険中"}</span>
       </div>
       <div className="road-scene-status" role="status">
@@ -53,7 +54,9 @@ export default function RoadPrototype() {
       <header className="road-header">
         <div>
           <span className="road-eyebrow">STARLIT GUILD / BATTLE STUDY</span>
-          <h1>ふたりで、森の向こうへ。</h1>
+          <h1>
+            {state.heroes.length === 3 ? "みんなで、森の向こうへ。" : "ふたりで、森の向こうへ。"}
+          </h1>
         </div>
         <Link href="/">タイトルへ</Link>
       </header>
@@ -61,6 +64,7 @@ export default function RoadPrototype() {
         <span>横スクロール戦闘の試作</span>
         <p>眺めるだけで進む旅。ときどき、あなたの手助けを。</p>
       </div>
+      <RoadStages stage={state.stage} select={game.selectStage} />
       <div className="road-progress">
         <div>
           <span>出発</span>
@@ -73,17 +77,17 @@ export default function RoadPrototype() {
       </div>
       <RoadStage game={game} />
       <div className="road-summary">
-        <RoadHealth state={state} />
         <span>
-          討伐 {state.defeated} · 踏破 {state.clears}回
+          討伐 {state.defeated} · 薬草 {state.herbs} · 踏破 {state.clears}回
         </span>
       </div>
-      <RoadChat time={state.time} />
+      <RoadChat key={state.stage} time={state.time} members={state.heroes.map((hero) => hero.id)} />
       <RoadLoadout state={state} equip={game.equip} />
       <RoadControls
         paused={game.paused}
         disabled={game.status !== "ready"}
         resting={state.phase === "rest"}
+        gathering={!!state.gathering}
         assist={game.assist}
         togglePause={() => {
           game.setPaused(!game.paused);

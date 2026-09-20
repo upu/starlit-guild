@@ -144,19 +144,6 @@
   font-size: 11px;
   color: #bbcebb;
 }
-.road-party {
-  display: flex;
-  gap: 20px;
-}
-.road-party > div {
-  display: grid;
-  gap: 4px;
-}
-.road-party meter {
-  width: 86px;
-  height: 7px;
-  accent-color: #afd197;
-}
 .road-chat {
   border-top: 1px solid #99b18c33;
   border-bottom: 1px solid #99b18c33;
@@ -336,10 +323,25 @@
   .road-controls button {
     padding: 8px 10px;
   }
-  .road-party {
-    gap: 14px;
-  }
-  .road-party meter {
-    width: 68px;
-  }
+}
+.road-stages {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-bottom: 10px;
+  font-size: 11px;
+  color: #bbcebb;
+}
+.road-stages label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.road-stages select {
+  color: #f3e6c7;
+  background: #173c2d;
+  border: 1px solid #628569;
+  border-radius: 6px;
+  padding: 7px 10px;
 }

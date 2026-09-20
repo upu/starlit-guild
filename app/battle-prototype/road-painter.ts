@@ -3,12 +3,14 @@ import {
   ROAD_LENGTH,
   travellerLane,
   travellerNames,
-  travellerOffset,
   type RoadBattle,
   type RoadEnemy,
-  type RoadEffect,
   type Traveller,
 } from "@/lib/scrolling-battle";
+
+import { isWorking } from "@/lib/scrolling-travel";
+import { RoadEffects } from "./road-effects";
+import { roadSheet, roadFrame } from "./road-art";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
 export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
@@ -16,7 +18,10 @@ export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
 export class RoadPainter {
   private backdrop: Phaser.GameObjects.TileSprite;
   private ground: Phaser.GameObjects.Graphics;
-  private effects: Phaser.GameObjects.Graphics;
+  private trail: Phaser.GameObjects.Graphics;
+  private sizeKey = "";
+  private gathering: Figure;
+  private effects: RoadEffects;
   private bars: Phaser.GameObjects.Graphics;
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
@@ -25,7 +30,11 @@ export class RoadPainter {
   constructor(private scene: Phaser.Scene) {
     this.backdrop = scene.add.tileSprite(0, 0, 1, 1, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
     this.ground = scene.add.graphics().setDepth(1);
-    this.effects = scene.add.graphics().setDepth(40);
+    this.trail = scene.add.graphics().setDepth(2);
+    this.gathering = this.makeFigure("/items/herb.png", "__BASE", "薬草");
+    this.gathering.image.setDepth(16).setVisible(false);
+    this.gathering.label.setVisible(false);
+    this.effects = new RoadEffects(scene);
     this.bars = scene.add.graphics().setDepth(30);
     this.destination = scene.add
       .text(0, 0, "森の出口 →", {
@@ -36,7 +45,7 @@ export class RoadPainter {
         padding: { x: 12, y: 8 },
       })
       .setDepth(5);
-    for (const id of ["aria", "leon"]) this.registerSheet(id);
+    for (const id of ["aria", "leon", "mira"] as const) this.registerSheet(id);
     const atlas = scene.textures.get("/sprites.png");
     const source = atlas.getSourceImage() as HTMLImageElement;
     atlas.add(
@@ -49,18 +58,12 @@ export class RoadPainter {
     );
   }
 
-  private registerSheet(id: string) {
-    const texture = this.scene.textures.get(`/animations/${id}-v1.png`);
-    const image = texture.getSourceImage() as HTMLImageElement;
-    for (let index = 0; index < 12; index++)
-      texture.add(
-        String(index),
-        0,
-        Math.round(((index % 4) * image.width) / 4),
-        Math.round((Math.floor(index / 4) * image.height) / 3),
-        Math.floor(image.width / 4),
-        Math.floor(image.height / 3),
-      );
+  private registerSheet(id: Traveller["id"]) {
+    const texture = this.scene.textures.get(roadSheet(id));
+    for (let index = 0; index < 12; index++) {
+      const frame = roadFrame(id, index);
+      texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
+    }
   }
 
   private makeFigure(asset: string, frame: string, name: string): Figure {
@@ -85,29 +88,36 @@ export class RoadPainter {
 
   private scenery(state: RoadBattle, reduced: boolean) {
     const { width, height } = this.scene.scale;
-    const source = this.backdrop.texture.getSourceImage() as HTMLImageElement;
-    const scale = Math.max(width / source.width, height / source.height);
-    this.backdrop.setSize(width, height).setTileScale(scale).setAlpha(0.8);
-    this.backdrop.tilePositionX = reduced ? 0 : state.distance * 0.3;
-    this.ground.clear();
-    this.ground.fillStyle(0x132f25, 0.36).fillRect(0, 0, width, height);
-    this.ground.fillStyle(0x9c9264, 0.25).fillRect(0, height * 0.57, width, height * 0.29);
-    this.roadDetails(state, reduced);
+    const key = `${String(width)}:${String(height)}`;
+    if (this.sizeKey !== key) {
+      this.sizeKey = key;
+      this.resizeScenery(width, height);
+    }
+    const position = reduced ? 0 : state.distance * 0.3;
+    if (this.backdrop.tilePositionX !== position) this.backdrop.tilePositionX = position;
+    this.trail.setX(reduced ? 0 : -(((state.distance * width) / 560) % width));
     this.destination.setPosition(this.screenX(ROAD_LENGTH + 100, state), height * 0.36);
     this.destination.setVisible(state.distance > ROAD_LENGTH - 380);
   }
 
-  private roadDetails(state: RoadBattle, reduced: boolean) {
-    const { width, height } = this.scene.scale;
-    const offset = reduced ? 0 : (state.distance * width) / 560;
-    for (let index = 0; index < 18; index++) {
-      const x = ((((index * 97 - offset) % (width + 130)) + width + 130) % (width + 130)) - 65;
+  private resizeScenery(width: number, height: number) {
+    const source = this.backdrop.texture.getSourceImage() as HTMLImageElement;
+    this.backdrop
+      .setSize(width, height)
+      .setTileScale(Math.max(width / source.width, height / source.height))
+      .setAlpha(0.8);
+    this.ground.clear();
+    this.ground.fillStyle(0x132f25, 0.36).fillRect(0, 0, width, height);
+    this.ground.fillStyle(0x9c9264, 0.25).fillRect(0, height * 0.57, width, height * 0.29);
+    this.trail.clear();
+    for (let index = 0; index < 36; index++) {
+      const x = (index * width) / 18;
       const y = height * (index % 2 ? 0.89 : 0.49);
-      this.ground.fillStyle(index % 3 ? 0x426541 : 0xa4b478, 0.7);
-      this.ground.fillEllipse(x, y, 16 + (index % 4) * 6, 5);
-      this.ground.lineStyle(2, 0x749a60, 0.7);
-      this.ground.lineBetween(x, y, x - 4, y - 9);
-      this.ground.lineBetween(x + 2, y, x + 6, y - 13);
+      this.trail.fillStyle(index % 3 ? 0x426541 : 0xa4b478, 0.7);
+      this.trail.fillEllipse(x, y, 16 + ((index % 18) % 4) * 6, 5);
+      this.trail.lineStyle(2, 0x749a60, 0.7);
+      this.trail.lineBetween(x, y, x - 4, y - 9);
+      this.trail.lineBetween(x + 2, y, x + 6, y - 13);
     }
   }
 
@@ -127,29 +137,35 @@ export class RoadPainter {
     const hurt = state.effects
       .filter((item) => item.hero === hero.id && item.kind === "hurt")
       .at(-1);
-    if (hurt && state.time - hurt.at < 300) return 10 + Math.floor((state.time - hurt.at) / 150);
-    if (hit && state.time - hit.at < 600) return 4 + Math.floor((state.time - hit.at) / 150);
-    return state.walking ? Math.floor(state.time / 150) % 4 : 8;
+    if (hurt && state.time >= hurt.at && state.time - hurt.at < 300) return 11;
+    if (hit && state.time >= hit.at && state.time - hit.at < 600)
+      return 4 + Math.floor((state.time - hit.at) / 150);
+    if (isWorking(state, hero)) return 9 + (Math.floor(state.time / 380) % 2);
+    return hero.walking ? Math.floor(state.time / 150) % 4 : 8;
   }
 
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
     let figure = this.heroes.get(hero.id);
     if (!figure) {
-      figure = this.makeFigure(`/animations/${hero.id}-v1.png`, "8", travellerNames[hero.id]);
+      figure = this.makeFigure(roadSheet(hero.id), "8", travellerNames[hero.id]);
       this.heroes.set(hero.id, figure);
     }
-    const size = Math.min(145, this.scene.scale.width * 0.24, this.scene.scale.height * 0.44);
-    const x = this.screenX(state.distance + travellerOffset(hero.id), state);
-    const y = travellerLane(hero.id) * this.scene.scale.height;
+    const size = Math.min(108, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
+    const x = this.screenX(hero.x, state);
+    const gathering = isWorking(state, hero);
+    const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
+    const y = travellerLane(hero.id) * this.scene.scale.height + crouch;
+    const pose = String(this.heroPose(state, hero, reduced));
+    const frame = roadFrame(hero.id, Number(pose));
+    if (figure.image.frame.name !== pose) figure.image.setFrame(pose);
     figure.image
-      .setFrame(String(this.heroPose(state, hero, reduced)))
       .setPosition(x, y)
-      .setDisplaySize(size, size)
+      .setScale(size / 362)
+      .setOrigin(frame.originX, frame.originY)
+      .setFlipX(hero.facing < 0)
       .setDepth(10 + travellerLane(hero.id) * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
-    figure.label
-      .setPosition(x, y + 13)
-      .setText(travellerNames[hero.id] + (hero.hp <= 0 ? " · 戦闘不能" : ""));
+    figure.label.setPosition(x, y + 13);
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
@@ -168,50 +184,44 @@ export class RoadPainter {
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(true)
+      .setFlipX(enemy.x > state.heroes[0].x)
       .setDepth(10 + enemy.lane * 10);
-    figure.label.setPosition(x, y + 14);
+    figure.label.setPosition(x, y + 14).setText(enemy.boss ? "大きなスライム" : "");
     this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }
 
-  private paintEffects(state: RoadBattle, reduced: boolean) {
-    this.effects.clear();
-    if (reduced) return;
-    for (const item of state.effects) {
-      if (state.time - item.at <= 450) this.paintEffect(state, item);
-    }
-  }
-
-  private paintEffect(state: RoadBattle, item: RoadEffect) {
-    const age = state.time - item.at;
-    const x = this.screenX(item.x, state),
-      y = item.lane * this.scene.scale.height - 32;
-    this.effects.lineStyle(
-      item.wide ? 4 : 2,
-      item.kind === "hurt" ? 0xf09780 : 0xffe9ad,
-      1 - age / 450,
-    );
-    if (item.kind === "arrow") {
-      const start = this.screenX(state.distance - 32, state);
-      const end = start + (x - start) * Math.min(1, age / 170);
-      this.effects.lineBetween(end - 26, y, end, y);
-    } else {
-      this.effects.strokeCircle(x, y, 8 + age / (item.wide ? 9 : 22));
-      this.effects.lineBetween(x - 15, y + 18, x + 15, y - 18);
-    }
+  private paintGathering(state: RoadBattle) {
+    const point = state.gathering;
+    this.gathering.image.setVisible(!!point);
+    this.gathering.label.setVisible(!!point);
+    if (!point) return;
+    const x = this.screenX(point.x + 65, state),
+      y = this.scene.scale.height * 0.64;
+    const size = Math.min(48, this.scene.scale.width * 0.12);
+    this.gathering.image.setPosition(x, y).setDisplaySize(size, size);
+    this.gathering.label
+      .setText(point.remaining < point.total ? "採取中" : "薬草")
+      .setPosition(x, y + 14);
+    this.health(x, y + 5, size, point.remaining / point.total);
   }
 
   paint(state: RoadBattle, reduced: boolean) {
     this.scenery(state, reduced);
     this.bars.clear();
+    this.paintGathering(state);
     for (const [id, figure] of this.enemies) {
       if (state.enemies.some((enemy) => enemy.id === id && enemy.hp > 0)) continue;
       figure.image.destroy();
       figure.label.destroy();
       this.enemies.delete(id);
     }
+    for (const [id, figure] of this.heroes) {
+      const active = state.heroes.some((hero) => hero.id === id);
+      figure.image.setVisible(active);
+      figure.label.setVisible(active);
+    }
     for (const hero of state.heroes) this.paintHero(state, hero, reduced);
     for (const enemy of state.enemies) if (enemy.hp > 0) this.paintEnemy(state, enemy, reduced);
-    this.paintEffects(state, reduced);
+    this.effects.paint(state, reduced, (x) => this.screenX(x, state));
   }
 }

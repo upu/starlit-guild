@@ -40,15 +40,16 @@ try {
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "一時停止", exact: true }).click();
+  assert.equal(await page.locator("meter").count(), 0);
   const progress = await page.getByRole("progressbar").getAttribute("value");
   await page.waitForTimeout(600);
   assert.equal(await page.getByRole("progressbar").getAttribute("value"), progress);
-  assert.equal(await page.getByRole("button", { name: /タップで援護/ }).isDisabled(), true);
+  assert.equal(await page.locator(".road-assist").isDisabled(), true);
   await page.locator(".road-loadout summary").click();
   await page.getByLabel("アリアの技", { exact: true }).selectOption("rapid");
   await page.getByLabel("レオンの技", { exact: true }).selectOption("guard");
   await page.getByRole("button", { name: "再開", exact: true }).click();
-  await page.getByRole("button", { name: /タップで援護/ }).click();
+  await page.locator(".road-assist").click();
   await page.getByRole("button", { name: "試作を最初からやり直す" }).click();
   assert.equal(await page.getByLabel("アリアの技", { exact: true }).inputValue(), "rapid");
   await page.locator(".road-loadout summary").click();
@@ -57,6 +58,20 @@ try {
   const summary = await page.locator(".road-summary").innerText();
   assert.match(summary, /踏破 [1-9]\d*回/);
   assert.ok((await page.locator(".road-chat-line").count()) >= 4);
+  for (const stage of ["trio", "worksite", "forest"]) {
+    await page.getByLabel("試すステージ", { exact: true }).selectOption(stage);
+    await page.clock.runFor(stage === "worksite" ? 11000 : 4500);
+    await page.screenshot({ path: `${output}/stage-${stage}.png` });
+    assert.equal(
+      await page.locator(".road-chat-title h2").innerText(),
+      stage === "forest" ? "道中のふたり" : "道中の三人",
+    );
+    if (stage !== "forest")
+      assert.ok((await page.locator(".road-speaker").allTextContents()).includes("ミラ"));
+    await page.clock.fastForward(150000);
+    await page.clock.runFor(500);
+    assert.match(await page.locator(".road-summary").innerText(), /踏破 [1-9]\d*回/);
+  }
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.clock.runFor(500);
   await page.locator(".road-prototype").evaluate((el) => {
@@ -67,11 +82,11 @@ try {
   assert.deepEqual(storage, { "prototype-save-sentinel": "untouched" });
   const recovery = await context.newPage();
   recovery.on("pageerror", (error) => errors.push(error.message));
-  await recovery.route("**/animations/aria-v1.png", (route) => route.abort());
+  await recovery.route("**/animations/road/aria-v1.png", (route) => route.abort());
   await recovery.goto(`${root}/battle-prototype`);
   await recovery.locator('.road-canvas[data-status="error"]').waitFor();
   assert.equal(await recovery.getByRole("progressbar").getAttribute("value"), "0");
-  await recovery.unroute("**/animations/aria-v1.png");
+  await recovery.unroute("**/animations/road/aria-v1.png");
   await recovery.getByRole("button", { name: "もう一度読み込む" }).click();
   await recovery.locator('.road-canvas[data-status="ready"]').waitFor();
   assert.equal(await recovery.locator("canvas").count(), 1, "retry removes the old canvas");

@@ -5,7 +5,8 @@ import { expressionPortrait } from "@/lib/portrait-expressions";
 
 function ChatLine({ line }: { line: ReturnType<typeof roadChat>[number] }) {
   const aria = line.speaker === "aria";
-  const portrait = expressionPortrait(aria ? 0 : 1, line.expression);
+  const mira = line.speaker === "mira";
+  const portrait = expressionPortrait(mira ? 2 : aria ? 0 : 1, line.expression);
   return (
     <li className={`road-chat-line ${aria ? "is-aria" : "is-leon"}`}>
       <span
@@ -18,15 +19,15 @@ function ChatLine({ line }: { line: ReturnType<typeof roadChat>[number] }) {
         }}
       />
       <div>
-        <span className="road-speaker">{aria ? "アリア" : "レオン"}</span>
+        <span className="road-speaker">{mira ? "ミラ" : aria ? "アリア" : "レオン"}</span>
         <p>{line.text}</p>
       </div>
     </li>
   );
 }
 
-export function RoadChat({ time }: { time: number }) {
-  const lines = roadChat(time);
+export function RoadChat({ time, members }: { time: number; members: readonly string[] }) {
+  const lines = roadChat(time, members);
   const lastId = lines.at(-1)?.id;
   const list = useRef<HTMLOListElement>(null);
   const following = useRef(true);
@@ -36,7 +37,7 @@ export function RoadChat({ time }: { time: number }) {
   return (
     <section className="road-chat" aria-label="道中の掛け合い">
       <div className="road-chat-title">
-        <h2>道中のふたり</h2>
+        <h2>{members.length === 3 ? "道中の三人" : "道中のふたり"}</h2>
         <span>冒険は会話中も進みます</span>
       </div>
       <ol

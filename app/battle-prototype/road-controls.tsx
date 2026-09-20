@@ -1,5 +1,37 @@
 "use client";
-import { travellerNames, type Loadout, type RoadBattle } from "@/lib/scrolling-battle";
+import { type Loadout, type RoadBattle } from "@/lib/scrolling-battle";
+import { roadStages, type RoadStageId } from "@/lib/scrolling-stages";
+
+export function RoadStages({
+  stage,
+  select,
+}: {
+  stage: RoadStageId;
+  select: (id: RoadStageId) => void;
+}) {
+  return (
+    <div className="road-stages">
+      <label>
+        試すステージ
+        <select
+          aria-label="試すステージ"
+          value={stage}
+          onChange={(event) => {
+            const value = event.target.value;
+            if (value === "forest" || value === "trio" || value === "worksite") select(value);
+          }}
+        >
+          {Object.entries(roadStages).map(([id, item]) => (
+            <option value={id} key={id}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <span>{roadStages[stage].description} · 切替で試作を再出発</span>
+    </div>
+  );
+}
 
 export function RoadLoadout({
   state,
@@ -44,28 +76,10 @@ export function RoadLoadout({
           </select>
         </label>
       </div>
+      {state.heroes.some((hero) => hero.id === "mira") && (
+        <p className="road-footnote">ミラ · 傷ついた仲間を自動回復。採取中は作業も手伝います。</p>
+      )}
     </details>
-  );
-}
-
-export function RoadHealth({ state }: { state: RoadBattle }) {
-  return (
-    <div className="road-party">
-      {state.heroes.map((hero) => (
-        <div key={hero.id}>
-          <span>
-            {travellerNames[hero.id]}
-            {hero.hp <= 0 ? " · 戦闘不能" : ""}
-          </span>
-          <meter
-            min={0}
-            max={hero.maxHp}
-            value={hero.hp}
-            aria-label={`${travellerNames[hero.id]}のHP`}
-          />
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -73,6 +87,7 @@ type ControlsProps = {
   paused: boolean;
   disabled: boolean;
   resting: boolean;
+  gathering: boolean;
   assist: () => void;
   togglePause: () => void;
   restart: () => void;
@@ -82,6 +97,7 @@ export function RoadControls({
   paused,
   disabled,
   resting,
+  gathering,
   assist,
   togglePause,
   restart,
@@ -89,7 +105,7 @@ export function RoadControls({
   return (
     <div className="road-controls">
       <button className="road-assist" disabled={disabled || paused} onClick={assist}>
-        {resting ? "回復を手伝う" : "タップで援護"}
+        {resting ? "回復を手伝う" : gathering ? "採取を手伝う" : "タップで援護"}
         <span>操作しなくても進みます</span>
       </button>
       <button disabled={disabled} onClick={togglePause}>

@@ -2,6 +2,8 @@ import type Phaser from "phaser";
 import type { RoadBattle } from "@/lib/scrolling-battle";
 import { RoadPainter, ROAD_BACKGROUND } from "./road-painter";
 
+import { ROAD_EFFECTS, roadSheet } from "./road-art";
+
 export type RoadBridge = {
   read: () => RoadBattle;
   assist: () => void;
@@ -19,9 +21,12 @@ function roadScene(engine: typeof Phaser, bridge: RoadBridge, motion: MediaQuery
       });
       for (const asset of [
         ROAD_BACKGROUND,
+        "/items/herb.png",
         "/sprites.png",
-        "/animations/aria-v1.png",
-        "/animations/leon-v1.png",
+        roadSheet("aria"),
+        roadSheet("leon"),
+        roadSheet("mira"),
+        ROAD_EFFECTS,
       ])
         this.load.image(asset, asset);
     }

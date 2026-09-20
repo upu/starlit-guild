@@ -8,6 +8,8 @@ import {
   type RoadBattle,
 } from "@/lib/scrolling-battle";
 import type { RoadBridge } from "./road-renderer";
+import { roadPresentation } from "@/lib/scrolling-presentation";
+import type { RoadStageId } from "@/lib/scrolling-stages";
 
 function snapshot(state: RoadBattle) {
   return {
@@ -19,13 +21,23 @@ function snapshot(state: RoadBattle) {
 
 export function useRoadBattle() {
   const state = useRef(createRoadBattle());
+  const clock = useRef({ at: 0, active: false, frozen: 0 });
   const [view, setView] = useState(createRoadBattle);
   const [paused, setPaused] = useState(false);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const refresh = useCallback(() => {
     setView(snapshot(state.current));
   }, []);
-  const read = useCallback(() => state.current, []);
+  const read = useCallback(
+    () =>
+      roadPresentation(
+        state.current,
+        clock.current.active
+          ? Math.max(0, performance.now() - clock.current.at)
+          : clock.current.frozen,
+      ),
+    [],
+  );
   const assist = useCallback(() => {
     if (!paused && status === "ready") {
       assistRoadBattle(state.current);
@@ -34,18 +46,22 @@ export function useRoadBattle() {
   }, [paused, status, refresh]);
   useEffect(() => {
     if (paused || status !== "ready") return;
-    let last = performance.now(),
+    let last = performance.now() - clock.current.frozen,
       paintedAt = last;
+    clock.current = { at: last, active: true, frozen: 0 };
     const timer = setInterval(() => {
       const now = performance.now();
       advanceRoadBattle(state.current, now - last);
       last = now;
+      clock.current.at = now;
       if (now - paintedAt >= 200) {
         refresh();
         paintedAt = now;
       }
     }, 50);
     return () => {
+      clock.current.frozen = Math.max(0, performance.now() - clock.current.at);
+      clock.current.active = false;
       clearInterval(timer);
     };
   }, [paused, status, refresh]);
@@ -53,11 +69,15 @@ export function useRoadBattle() {
     state.current.loadout = { ...loadout };
     refresh();
   };
-  const restart = () => {
-    state.current = createRoadBattle(state.current.loadout);
+  const selectStage = (stage: RoadStageId) => {
+    state.current = createRoadBattle(state.current.loadout, stage);
+    clock.current.frozen = 0;
     refresh();
   };
-  return { view, paused, setPaused, status, setStatus, read, assist, equip, restart };
+  const restart = () => {
+    selectStage(state.current.stage);
+  };
+  return { view, paused, setPaused, status, setStatus, read, assist, equip, restart, selectStage };
 }
 
 export function useRoadCanvas(bridge: RoadBridge, retry: number) {
