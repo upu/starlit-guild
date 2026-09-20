@@ -9,6 +9,82 @@ import {
 import { roadChat } from "../lib/scrolling-banter.ts";
 import { isWorking } from "../lib/scrolling-travel.ts";
 import { roadPresentation } from "../lib/scrolling-presentation.ts";
+import { commandPuppets } from "../lib/scrolling-puppets.ts";
+
+test("cargo is packed, moved with its companions, paused for guards, and unloaded", () => {
+  const state = createRoadBattle(undefined, "cargo");
+  const phases = new Set();
+  let pauseSeen = false,
+    resumed = false,
+    previousX = 180;
+  while (!state.clears && state.time < 180000) {
+    const before = state.gathering;
+    const blocked = before?.task === "carry" && state.enemies.some((enemy) => enemy.hp > 0);
+    const x = before?.x;
+    advanceRoadBattle(state, 50);
+    const point = state.gathering;
+    if (!point) continue;
+    phases.add(point.task);
+    assert.ok(point.x >= previousX);
+    previousX = point.x;
+    if (blocked && state.enemies.some((enemy) => enemy.hp > 0)) {
+      assert.equal(point.x, x, "cart must wait during an attack");
+      pauseSeen = true;
+    }
+    if (pauseSeen && point.task === "carry" && point.x > x) resumed = true;
+    if (point.task === "carry") {
+      const beforeTap = point.x;
+      assistRoadBattle(state);
+      assert.equal(point.x, beforeTap, "tapping cannot teleport the cargo");
+    }
+  }
+  assert.deepEqual([...phases], ["pack", "carry", "unload"]);
+  assert.ok(pauseSeen && resumed);
+  assert.equal(state.deliveries, 1);
+  assert.equal(state.herbs, 0);
+  assert.equal(state.clears, 1);
+  assert.equal(state.rests, 0);
+});
+
+test("the two actors attack while their puppeteer commands and then withdraws", () => {
+  const state = createRoadBattle(undefined, "puppets");
+  advanceRoadBattle(state, 50);
+  assert.deepEqual(
+    state.enemies.map((enemy) => enemy.kind),
+    ["puppet", "golem", "pumpety"],
+  );
+  const master = state.enemies.at(-1);
+  const actors = state.enemies.slice(0, 2);
+  master.nextAttack = state.time;
+  for (const actor of actors) actor.nextAttack = state.time + 2000;
+  commandPuppets(state, master);
+  assert.ok(actors.every((actor) => actor.nextAttack === state.time + 350));
+  assert.equal(master.nextAttack, state.time + 4800);
+  advanceRoadBattle(state, 120000);
+  assert.ok(state.clears >= 1);
+  assert.equal(state.rests, 0);
+  for (const actor of actors) actor.hp = 0;
+  state.enemies = [...actors, master];
+  const count = state.defeated;
+  commandPuppets(state, master);
+  assert.equal(master.hp, 0);
+  assert.equal(state.defeated, count, "withdrawal is not another kill");
+});
+
+test("new stages complete unattended with every loadout and identical catch-up", () => {
+  for (const stage of ["cargo", "puppets"])
+    for (const aria of ["rapid", "pierce"])
+      for (const leon of ["guard", "sweep"]) {
+        const live = createRoadBattle({ aria, leon }, stage);
+        const idle = createRoadBattle({ aria, leon }, stage);
+        for (let t = 0; t < 180000; t += 100) advanceRoadBattle(live, 100);
+        advanceRoadBattle(idle, 180000);
+        assert.deepEqual(live, idle);
+        assert.ok(live.clears >= 2);
+        assert.equal(live.rests, 0);
+        if (stage === "puppets") assert.ok(live.defeated <= live.round * 2);
+      }
+});
 
 function finish(loadout, assisted = false) {
   const state = createRoadBattle(loadout);

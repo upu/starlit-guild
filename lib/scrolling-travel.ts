@@ -1,5 +1,6 @@
 import type { RoadBattle, RoadEnemy, Traveller } from "./scrolling-battle.ts";
 import { roadStages, roadStops } from "./scrolling-stages.ts";
+import { workCargo } from "./scrolling-work.ts";
 
 export const ROAD_LENGTH = 900;
 export const ROAD_STEP = 50;
@@ -9,14 +10,23 @@ export function prepareRoadStop(state: RoadBattle) {
   const stop = roadStops(state.stage).at(state.spawn);
   if (!stop || Math.max(...state.heroes.map((hero) => hero.x)) < stop.x - 230) return;
   state.spawn++;
-  if (stop.kind === "gather") {
+  if (stop.kind === "gather" || stop.kind === "cargo") {
     state.gathering = {
+      kind: stop.kind === "cargo" ? "cargo" : "herb",
+      task: stop.kind === "cargo" ? "pack" : "gather",
       x: stop.x,
+      previousX: stop.x,
       remaining: roadStages[state.stage].work,
       total: roadStages[state.stage].work,
       waves: 0,
       rear: state.spawn % 2 === 0,
     };
+    return;
+  }
+  if (stop.kind === "puppets") {
+    spawnRoadEnemy(state, stop.x, 160, false, 0, "puppet");
+    spawnRoadEnemy(state, stop.x + 65, 480, true, 2, "golem");
+    spawnRoadEnemy(state, stop.x + 155, 1, false, 0, "pumpety");
     return;
   }
   for (let index = 0; index < stop.count; index++) {
@@ -25,8 +35,16 @@ export function prepareRoadStop(state: RoadBattle) {
   }
 }
 
-function spawnRoadEnemy(state: RoadBattle, x: number, hp: number, boss = false, index = 0) {
+function spawnRoadEnemy(
+  state: RoadBattle,
+  x: number,
+  hp: number,
+  boss = false,
+  index = 0,
+  kind: RoadEnemy["kind"] = "slime",
+) {
   state.enemies.push({
+    kind,
     id: ++state.serial,
     x,
     previousX: x,
@@ -66,7 +84,7 @@ function travelTarget(state: RoadBattle, hero: Traveller) {
   if (state.gathering && isRoadWorker(state, hero))
     return state.gathering.x + gatheringOffset[hero.id];
   const enemy = state.enemies
-    .filter((item) => item.hp > 0)
+    .filter((item) => item.hp > 0 && item.kind !== "pumpety")
     .sort((a, b) => Math.abs(a.x - hero.x) - Math.abs(b.x - hero.x))
     .at(0);
   if (enemy) return combatTarget(hero, enemy);
@@ -112,6 +130,11 @@ function travelSpeed(state: RoadBattle, hero: Traveller) {
 export function gatherOnRoad(state: RoadBattle) {
   const point = state.gathering;
   if (!point) return;
+  if (point.kind === "cargo") {
+    workCargo(state);
+    gatheringAmbush(state);
+    return;
+  }
   const workers = state.heroes.filter((hero) => isWorking(state, hero));
   const power = workers.reduce((sum, hero) => sum + (hero.id === "aria" ? 1 : 0.7), 0);
   point.remaining = Math.max(0, point.remaining - ROAD_STEP * power);
@@ -134,6 +157,7 @@ function gatheringAmbush(state: RoadBattle) {
   const point = state.gathering;
   if (!point || state.enemies.some((enemy) => enemy.hp > 0)) return;
   const stage = roadStages[state.stage];
+  if (point.kind === "cargo" && point.task !== "carry") return;
   if (point.waves >= stage.waves || point.remaining > point.total * (0.8 - point.waves * 0.4))
     return;
   const rear = point.waves % 2 === 0 ? point.rear : !point.rear;

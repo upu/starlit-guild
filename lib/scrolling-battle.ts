@@ -9,6 +9,7 @@ import {
   roadGuard,
 } from "./scrolling-travel.ts";
 import { roadStages, type RoadStageId } from "./scrolling-stages.ts";
+import { commandPuppets } from "./scrolling-puppets.ts";
 export { ROAD_LENGTH, ROAD_STEP } from "./scrolling-travel.ts";
 export type TravellerId = "aria" | "leon" | "mira";
 export type Loadout = { aria: "pierce" | "rapid"; leon: "sweep" | "guard" };
@@ -25,6 +26,7 @@ export type Traveller = {
   facing: 1 | -1;
 };
 export type RoadEnemy = {
+  kind: "slime" | "puppet" | "golem" | "pumpety";
   id: number;
   x: number;
   previousX: number;
@@ -54,8 +56,12 @@ export type RoadBattle = {
   distance: number;
   previousDistance: number;
   herbs: number;
+  deliveries: number;
   gathering: {
+    kind: "herb" | "cargo";
+    task: "gather" | "pack" | "carry" | "unload";
     x: number;
+    previousX: number;
     remaining: number;
     total: number;
     waves: number;
@@ -77,7 +83,7 @@ export type RoadBattle = {
   effects: RoadEffect[];
 };
 export const travellerNames = { aria: "アリア", leon: "レオン", mira: "ミラ" };
-export const travellerLane = (id: TravellerId) => ({ aria: 0.57, leon: 0.75, mira: 0.66 })[id];
+export const travellerLane = (id: TravellerId) => ({ aria: 0.54, leon: 0.82, mira: 0.68 })[id];
 const startingX = { aria: 0, leon: 40, mira: -40 };
 
 export function createRoadBattle(
@@ -91,6 +97,7 @@ export function createRoadBattle(
     distance: 0,
     previousDistance: 0,
     herbs: 0,
+    deliveries: 0,
     gathering: null,
     walking: true,
     round: 1,
@@ -151,7 +158,8 @@ function attackTargets(state: RoadBattle, hero: Traveller) {
   const ranged = hero.id !== "leon";
   const x = hero.x;
   const targets = state.enemies.filter(
-    (enemy) => enemy.hp > 0 && Math.abs(enemy.x - x) <= (ranged ? 205 : 64),
+    (enemy) =>
+      enemy.hp > 0 && enemy.kind !== "pumpety" && Math.abs(enemy.x - x) <= (ranged ? 205 : 64),
   );
   if (!targets.length) return;
   targets.sort((a, b) => Math.abs(a.x - x) - Math.abs(b.x - x));
@@ -204,6 +212,10 @@ function strikeEnemy(state: RoadBattle, hero: Traveller, enemy: RoadEnemy, wide:
 }
 
 function enemyAttack(state: RoadBattle, enemy: RoadEnemy) {
+  if (enemy.kind === "pumpety") {
+    commandPuppets(state, enemy);
+    return;
+  }
   if (Math.abs(enemy.recoil) > 1) {
     enemy.x += (enemy.recoil * ROAD_STEP) / 1000;
     enemy.recoil *= 0.72;
@@ -255,10 +267,15 @@ function recover(state: RoadBattle) {
   state.phase = "journey";
 }
 
-function tick(state: RoadBattle) {
+function rememberPositions(state: RoadBattle) {
   state.previousDistance = state.distance;
   for (const hero of state.heroes) hero.previousX = hero.x;
   for (const enemy of state.enemies) enemy.previousX = enemy.x;
+  if (state.gathering) state.gathering.previousX = state.gathering.x;
+}
+
+function tick(state: RoadBattle) {
+  rememberPositions(state);
   state.time += ROAD_STEP;
   state.effects = state.effects.filter((item) => state.time - item.at < 900);
   if (state.phase !== "journey") {
@@ -300,11 +317,19 @@ export function assistRoadBattle(state: RoadBattle) {
   if (state.gathering) {
     const point = state.gathering;
     if (!state.heroes.some((hero) => hero.hp > 0 && Math.abs(hero.x - point.x) < 70)) return false;
+    // Carrying moves the cart through space; tapping must not teleport or bypass the ambush.
+    if (point.task === "carry") return assistEnemy(state);
     point.remaining = Math.max(0, point.remaining - 350);
     state.assistAt = state.time + 150;
     return true;
   }
-  const enemy = state.enemies.find((item) => item.hp > 0 && item.x - state.distance < 360);
+  return assistEnemy(state);
+}
+
+function assistEnemy(state: RoadBattle) {
+  const enemy = state.enemies.find(
+    (item) => item.hp > 0 && item.kind !== "pumpety" && item.x - state.distance < 360,
+  );
   if (!enemy) return false;
   const amount = damage(state, enemy, 8);
   effect(state, { kind: "assist", x: enemy.x, lane: enemy.lane, amount });
@@ -315,13 +340,30 @@ export function assistRoadBattle(state: RoadBattle) {
 export function roadStatus(state: RoadBattle) {
   if (state.phase === "arrived") return "森を抜けた！ ひと息ついたら、もう一周";
   if (state.phase === "rest") return "ひと休み中 · 回復したら自動で再出発";
-  if (state.gathering) {
-    if (state.enemies.some((enemy) => enemy.hp > 0))
-      return `採取を続行 · ${travellerNames[roadGuard(state)?.id ?? "leon"]}が護衛中`;
-    return state.gathering.remaining < state.gathering.total
-      ? "みんなで薬草を採取中"
-      : "道端に薬草を見つけた";
-  }
+  if (state.gathering) return workStatus(state, state.gathering);
+  const puppeteer = state.enemies.find((enemy) => enemy.kind === "pumpety" && enemy.hp > 0);
+  if (puppeteer)
+    return puppeteer.nextAttack - state.time > 3600
+      ? "もう一回なのよ！ · 人形が追撃"
+      : "人形を止めよう · 後方から操るカボチャ頭の少女";
   if (state.enemies.some((enemy) => enemy.boss)) return "道をふさぐ大きなスライム";
   return state.enemies.length ? "道中の魔物と交戦中" : "森の出口を目指して、右へ";
+}
+
+function workStatus(state: RoadBattle, point: NonNullable<RoadBattle["gathering"]>) {
+  if (point.kind === "cargo") return cargoStatus(state);
+  if (state.enemies.some((enemy) => enemy.hp > 0))
+    return `採取を続行 · ${travellerNames[roadGuard(state)?.id ?? "leon"]}が護衛中`;
+  return point.remaining < point.total ? "みんなで薬草を採取中" : "道端に薬草を見つけた";
+}
+
+function cargoStatus(state: RoadBattle) {
+  if (state.enemies.some((enemy) => enemy.hp > 0))
+    return "荷車を止めて護衛中 · 撃退したら運搬を再開";
+  return {
+    pack: "みんなで包み直し・荷札を確認",
+    carry: "荷車を届け先へ運搬中",
+    unload: "届け先で荷下ろし中",
+    gather: "",
+  }[state.gathering?.task ?? "pack"];
 }

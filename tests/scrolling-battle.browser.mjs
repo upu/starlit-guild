@@ -58,9 +58,11 @@ try {
   const summary = await page.locator(".road-summary").innerText();
   assert.match(summary, /踏破 [1-9]\d*回/);
   assert.ok((await page.locator(".road-chat-line").count()) >= 4);
-  for (const stage of ["trio", "worksite", "forest"]) {
+  for (const stage of ["trio", "worksite", "cargo", "puppets", "forest"]) {
     await page.getByLabel("試すステージ", { exact: true }).selectOption(stage);
-    await page.clock.runFor(stage === "worksite" ? 11000 : 4500);
+    await page.clock.runFor(
+      stage === "worksite" || stage === "cargo" ? 11000 : stage === "puppets" ? 1500 : 4500,
+    );
     await page.screenshot({ path: `${output}/stage-${stage}.png` });
     assert.equal(
       await page.locator(".road-chat-title h2").innerText(),

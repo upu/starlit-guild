@@ -18,7 +18,7 @@ export function RoadStages({
           value={stage}
           onChange={(event) => {
             const value = event.target.value;
-            if (value === "forest" || value === "trio" || value === "worksite") select(value);
+            if (Object.hasOwn(roadStages, value)) select(value as RoadStageId);
           }}
         >
           {Object.entries(roadStages).map(([id, item]) => (
@@ -87,7 +87,7 @@ type ControlsProps = {
   paused: boolean;
   disabled: boolean;
   resting: boolean;
-  gathering: boolean;
+  work: "gather" | "pack" | "carry" | "unload" | undefined;
   assist: () => void;
   togglePause: () => void;
   restart: () => void;
@@ -97,7 +97,7 @@ export function RoadControls({
   paused,
   disabled,
   resting,
-  gathering,
+  work,
   assist,
   togglePause,
   restart,
@@ -105,7 +105,13 @@ export function RoadControls({
   return (
     <div className="road-controls">
       <button className="road-assist" disabled={disabled || paused} onClick={assist}>
-        {resting ? "回復を手伝う" : gathering ? "採取を手伝う" : "タップで援護"}
+        {resting
+          ? "回復を手伝う"
+          : work === "gather"
+            ? "採取を手伝う"
+            : work && work !== "carry"
+              ? "荷物の作業を手伝う"
+              : "タップで援護"}
         <span>操作しなくても進みます</span>
       </button>
       <button disabled={disabled} onClick={togglePause}>

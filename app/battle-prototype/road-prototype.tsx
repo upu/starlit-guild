@@ -79,6 +79,7 @@ export default function RoadPrototype() {
       <div className="road-summary">
         <span>
           討伐 {state.defeated} · 薬草 {state.herbs} · 踏破 {state.clears}回
+          {state.stage === "cargo" && ` · 配達 ${String(state.deliveries)}回`}
         </span>
       </div>
       <RoadChat key={state.stage} time={state.time} members={state.heroes.map((hero) => hero.id)} />
@@ -87,7 +88,7 @@ export default function RoadPrototype() {
         paused={game.paused}
         disabled={game.status !== "ready"}
         resting={state.phase === "rest"}
-        gathering={!!state.gathering}
+        work={state.gathering?.task}
         assist={game.assist}
         togglePause={() => {
           game.setPaused(!game.paused);

@@ -10,10 +10,24 @@ import {
 
 import { isWorking } from "@/lib/scrolling-travel";
 import { RoadEffects } from "./road-effects";
-import { roadSheet, roadFrame } from "./road-art";
+import {
+  roadSheet,
+  roadFrame,
+  roadWalkSheet,
+  roadWalkFrame,
+  ROAD_HERB,
+  ROAD_CARGO,
+  ROAD_PUPPETS,
+} from "./road-art";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
 export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
+const puppetNames = { pumpety: "プティ", puppet: "人形", golem: "ゴーレム", slime: "" };
+function enemyName(enemy: RoadEnemy) {
+  if (enemy.kind !== "slime") return puppetNames[enemy.kind];
+  return enemy.boss ? "大きなスライム" : "";
+}
+const enemySize = (enemy: RoadEnemy) => (enemy.boss ? 1.65 : enemy.kind === "pumpety" ? 1 : 0.75);
 
 export class RoadPainter {
   private backdrop: Phaser.GameObjects.TileSprite;
@@ -31,7 +45,7 @@ export class RoadPainter {
     this.backdrop = scene.add.tileSprite(0, 0, 1, 1, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
     this.ground = scene.add.graphics().setDepth(1);
     this.trail = scene.add.graphics().setDepth(2);
-    this.gathering = this.makeFigure("/items/herb.png", "__BASE", "薬草");
+    this.gathering = this.makeFigure(ROAD_HERB, "__BASE", "薬草");
     this.gathering.image.setDepth(16).setVisible(false);
     this.gathering.label.setVisible(false);
     this.effects = new RoadEffects(scene);
@@ -46,6 +60,10 @@ export class RoadPainter {
       })
       .setDepth(5);
     for (const id of ["aria", "leon", "mira"] as const) this.registerSheet(id);
+    const puppets = scene.textures.get(ROAD_PUPPETS);
+    puppets.add("pumpety", 0, 0, 0, 740, 724);
+    puppets.add("puppet", 0, 740, 0, 610, 724);
+    puppets.add("golem", 0, 1350, 0, 822, 724);
     const atlas = scene.textures.get("/sprites.png");
     const source = atlas.getSourceImage() as HTMLImageElement;
     atlas.add(
@@ -64,6 +82,9 @@ export class RoadPainter {
       const frame = roadFrame(id, index);
       texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
     }
+    const walk = this.scene.textures.get(roadWalkSheet(id));
+    for (let index = 0; index < 4; index++)
+      walk.add(String(index), 0, (index % 2) * 627, Math.floor(index / 2) * 627, 627, 627);
   }
 
   private makeFigure(asset: string, frame: string, name: string): Figure {
@@ -83,6 +104,8 @@ export class RoadPainter {
   }
 
   private screenX(x: number, state: RoadBattle) {
+    if (state.stage === "puppets")
+      return this.scene.scale.width * 0.2 + ((x - state.distance) * this.scene.scale.width) / 600;
     return this.scene.scale.width * 0.35 + ((x - state.distance) * this.scene.scale.width) / 560;
   }
 
@@ -140,7 +163,8 @@ export class RoadPainter {
     if (hurt && state.time >= hurt.at && state.time - hurt.at < 300) return 11;
     if (hit && state.time >= hit.at && state.time - hit.at < 600)
       return 4 + Math.floor((state.time - hit.at) / 150);
-    if (isWorking(state, hero)) return 9 + (Math.floor(state.time / 380) % 2);
+    if (isWorking(state, hero) && state.gathering?.kind === "herb")
+      return 9 + (Math.floor(state.time / 380) % 2);
     return hero.walking ? Math.floor(state.time / 150) % 4 : 8;
   }
 
@@ -152,16 +176,13 @@ export class RoadPainter {
     }
     const size = Math.min(108, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
     const x = this.screenX(hero.x, state);
-    const gathering = isWorking(state, hero);
+    const gathering = isWorking(state, hero) && state.gathering?.kind === "herb";
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
     const y = travellerLane(hero.id) * this.scene.scale.height + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
-    const frame = roadFrame(hero.id, Number(pose));
-    if (figure.image.frame.name !== pose) figure.image.setFrame(pose);
+    this.applyHeroPose(figure.image, hero.id, pose, size);
     figure.image
       .setPosition(x, y)
-      .setScale(size / 362)
-      .setOrigin(frame.originX, frame.originY)
       .setFlipX(hero.facing < 0)
       .setDepth(10 + travellerLane(hero.id) * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
@@ -169,25 +190,48 @@ export class RoadPainter {
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
+  private applyHeroPose(
+    image: Phaser.GameObjects.Image,
+    id: Traveller["id"],
+    pose: string,
+    size: number,
+  ) {
+    const frame = roadFrame(id, Number(pose));
+    const walking = Number(pose) < 4;
+    const asset = walking ? roadWalkSheet(id) : roadSheet(id);
+    const walk = walking ? roadWalkFrame(id, Number(pose)) : null;
+    if (image.texture.key !== asset) image.setTexture(asset, pose);
+    else if (image.frame.name !== pose) image.setFrame(pose);
+    image
+      .setScale(walk ? size * walk.scale : size / 362)
+      .setOrigin(walk?.originX ?? frame.originX, walk?.originY ?? frame.originY);
+  }
+
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
     let figure = this.enemies.get(enemy.id);
     if (!figure) {
-      figure = this.makeFigure("/sprites.png", "slime", enemy.boss ? "大きなスライム" : "");
+      figure = this.makeFigure("/sprites.png", "slime", "");
       this.enemies.set(enemy.id, figure);
     }
     const size =
       Math.min(115, this.scene.scale.width * 0.19, this.scene.scale.height * 0.32) *
-      (enemy.boss ? 1.65 : 0.75);
+      enemySize(enemy);
     const x = this.screenX(enemy.x, state),
       y = enemy.lane * this.scene.scale.height;
     const bounce = reduced ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
+    const puppet = enemy.kind !== "slime";
+    const asset = puppet ? ROAD_PUPPETS : "/sprites.png";
+    const frame = puppet ? enemy.kind : "slime";
+    if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
+      figure.image.setTexture(asset, frame);
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(enemy.x > state.heroes[0].x)
+      .setFlipX(puppet ? enemy.x < state.heroes[0].x : enemy.x > state.heroes[0].x)
       .setDepth(10 + enemy.lane * 10);
-    figure.label.setPosition(x, y + 14).setText(enemy.boss ? "大きなスライム" : "");
-    this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
+    if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
+    figure.label.setPosition(x, y + 14).setText(enemyName(enemy));
+    if (enemy.kind !== "pumpety") this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }
 
   private paintGathering(state: RoadBattle) {
@@ -195,12 +239,24 @@ export class RoadPainter {
     this.gathering.image.setVisible(!!point);
     this.gathering.label.setVisible(!!point);
     if (!point) return;
+    const cargo = point.kind === "cargo";
     const x = this.screenX(point.x + 65, state),
       y = this.scene.scale.height * 0.64;
-    const size = Math.min(48, this.scene.scale.width * 0.12);
+    const size = cargo
+      ? Math.min(145, this.scene.scale.width * 0.3)
+      : Math.min(48, this.scene.scale.width * 0.12);
+    const asset = cargo ? ROAD_CARGO : ROAD_HERB;
+    if (this.gathering.image.texture.key !== asset) this.gathering.image.setTexture(asset);
+    this.gathering.image.setOrigin(0.5, cargo ? 0.74 : 0.92);
     this.gathering.image.setPosition(x, y).setDisplaySize(size, size);
     this.gathering.label
-      .setText(point.remaining < point.total ? "採取中" : "薬草")
+      .setText(
+        cargo
+          ? { pack: "包み直し", carry: "運搬中", unload: "荷下ろし", gather: "" }[point.task]
+          : point.remaining < point.total
+            ? "採取中"
+            : "薬草",
+      )
       .setPosition(x, y + 14);
     this.health(x, y + 5, size, point.remaining / point.total);
   }
