@@ -2,15 +2,13 @@ import type Phaser from "phaser";
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import { roadBackdrop, roadX, roadY } from "@/lib/road-layout";
 import {
-  ROAD_LENGTH,
   travellerLane,
   travellerNames,
   type RoadBattle,
   type RoadEnemy,
   type Traveller,
-} from "@/lib/scrolling-battle";
+} from "@/lib/road-view";
 
-import { isWorking } from "@/lib/scrolling-travel";
 import { RoadEffects } from "./road-effects";
 import {
   roadSheet,
@@ -116,9 +114,9 @@ export class RoadPainter {
       }
     const work = this.scene.textures.get(ROAD_WORKSITES);
     const objects = [
-      [76, 114, 592, 462],
-      [790, 113, 591, 486],
-      [1505, 96, 600, 515],
+      [133, 215, 497, 339],
+      [798, 147, 564, 433],
+      [1504, 195, 538, 398],
     ];
     for (const [index, name] of ["moss", "waterway", "parcels"].entries()) {
       const [x, y, w, h] = objects[index];
@@ -176,7 +174,7 @@ export class RoadPainter {
       this.resizeScenery(width, height);
     }
     const source = this.backdrop.texture.getSourceImage() as HTMLImageElement;
-    const length = this.look?.length ?? ROAD_LENGTH;
+    const length = this.look?.length ?? 1;
     const view = roadBackdrop(
       width,
       height,
@@ -228,13 +226,13 @@ export class RoadPainter {
     if (hurt && state.time >= hurt.at && state.time - hurt.at < 300) return 11;
     if (hit && state.time >= hit.at && state.time - hit.at < 600)
       return 4 + Math.floor((state.time - hit.at) / 150);
-    if (this.working(state, hero) && state.gathering?.task === "gather")
+    if (this.working(hero) && state.gathering?.task === "gather")
       return 9 + (Math.floor(state.time / 380) % 2);
     return hero.walking ? Math.floor(state.time / 150) % 4 : 8;
   }
 
-  private working(state: RoadBattle, hero: Traveller) {
-    return this.look ? this.look.workers.includes(hero.id) : isWorking(state, hero);
+  private working(hero: Traveller) {
+    return !!this.look?.workers.includes(hero.id);
   }
 
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
@@ -245,7 +243,7 @@ export class RoadPainter {
     }
     const size = Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
     const x = this.screenX(hero.x, state);
-    const gathering = this.working(state, hero) && state.gathering?.task === "gather";
+    const gathering = this.working(hero) && state.gathering?.task === "gather";
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
     const y = roadY(travellerLane(hero.id), this.scene.scale.height) + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
@@ -269,7 +267,7 @@ export class RoadPainter {
     reduced: boolean,
     size: number,
   ) {
-    if (!this.working(state, hero)) return false;
+    if (!this.working(hero)) return false;
     const packing = state.gathering?.task === "pack" || state.gathering?.task === "unload";
     const pushing = state.gathering?.kind === "cargo" && state.gathering.task === "carry";
     if (!packing && !pushing) return false;
@@ -379,7 +377,7 @@ export class RoadPainter {
     this.bars.fillStyle(0xefcf89).fillRoundedRect(x - width / 2, y, width * progress, 4, 2);
   }
 
-  paint(state: RoadBattle, reduced: boolean, look?: RoadLook) {
+  paint(state: RoadBattle, reduced: boolean, look: RoadLook) {
     this.look = look;
     this.scenery(state, reduced);
     this.bars.clear();

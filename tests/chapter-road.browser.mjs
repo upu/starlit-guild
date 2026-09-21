@@ -71,6 +71,13 @@ try {
       page = await context.newPage(),
       save = fixture(index, mode);
     page.on("pageerror", (e) => errors.push(e.message));
+    const roadAssets = new Set();
+    page.on("request", (request) => {
+      if (request.url().includes("/animations/road/"))
+        roadAssets.add(new URL(request.url()).pathname);
+    });
+    if (name === "cargo")
+      await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
     if (mode === "worksite" || mode === "arrival")
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
@@ -83,6 +90,11 @@ try {
     assert.equal(await page.getByRole("link", { name: "横スクロール戦闘を試す" }).count(), 0);
     await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
     await page.clock.runFor(100);
+    if (name === "cargo") {
+      await page.getByRole("button", { name: "もう一度読み込む" }).waitFor();
+      await page.unroute("**/animations/road/aria-v1.webp");
+      await page.getByRole("button", { name: "もう一度読み込む" }).click();
+    }
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
     await page.clock.runFor(mode === "worksite" ? 50 : 900);
     assert.equal(await page.locator("canvas").count(), 1);
@@ -120,9 +132,14 @@ try {
     const after = await page.evaluate(() => JSON.parse(localStorage.getItem("starlit-guild-v4")));
     assert.equal(after.active, save.active);
     assert.ok(after.profiles[0].state.gold >= before.profiles[0].state.gold);
+    assert.ok(roadAssets.size >= 14);
+    assert.ok([...roadAssets].every((asset) => asset.endsWith(".webp")));
     results.push({ name, quest: save.profiles[0].state.squads[0].run.quest, reloaded: true });
     await context.close();
   }
+  const removedRoute = await browser.newContext();
+  assert.equal((await removedRoute.request.get(`${root}/battle-prototype`)).status(), 404);
+  await removedRoute.close();
   assert.deepEqual(errors, []);
   writeFileSync(`${output}/results.json`, JSON.stringify({ results, errors }, null, 2));
   console.log(JSON.stringify({ results, errors }, null, 2));

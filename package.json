@@ -8,8 +8,8 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize",
-    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize",
+    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
+    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --hostname 0.0.0.0 --port 5173",
     "build": "vinext build",
@@ -30,7 +30,9 @@
     "music:optimize": "node scripts/optimize-bgm.mjs",
     "music:check": "node scripts/optimize-bgm.mjs --check",
     "script:export": "node scripts/export-script.mjs",
-    "script:check": "node scripts/export-script.mjs --check"
+    "script:check": "node scripts/export-script.mjs --check",
+    "road-art:optimize": "node scripts/optimize-road-art.mjs",
+    "road-art:check": "node scripts/optimize-road-art.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

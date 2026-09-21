@@ -1,5 +1,5 @@
 import type Phaser from "phaser";
-import type { RoadBattle, RoadEffect } from "@/lib/scrolling-battle";
+import type { RoadBattle, RoadEffect } from "@/lib/road-view";
 import { ROAD_EFFECTS } from "./road-art";
 import { roadY } from "@/lib/road-layout";
 

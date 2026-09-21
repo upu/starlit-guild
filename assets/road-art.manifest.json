@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "files": {
+    "aria-v1.png": {
+      "sourceHash": "9eac7d322e4b30bbfae6a7561befc67c8e0f2e4980a0a5810b5834611178e580",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "aria-v1.webp",
+      "outputHash": "1a51ac838c8b193c7b6777e63a8fe606fec73fe467ebd3dafb52edc777d77650",
+      "sourceBytes": 1985880,
+      "outputBytes": 1469684
+    },
+    "aria-walk-v2.png": {
+      "sourceHash": "f1b368629f77d11b34561fc3c7b4300b23ca8a6d8fd3bc983db5a3e3704c328d",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "aria-walk-v2.webp",
+      "outputHash": "f45290ba10fe941c1ae78a49483640c569a6d4471f210ce6ae56f31e084b38f1",
+      "sourceBytes": 1351025,
+      "outputBytes": 965034
+    },
+    "cargo-v1.png": {
+      "sourceHash": "493bb2818d7f4d367e450a8b0191cad811e165b6c0ec2eabefa3c8adde0c09fb",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "cargo-v1.webp",
+      "outputHash": "47722e7cacb994c0da530cc78554ee475f87eaf71c7877e4df431a2ea2485ecd",
+      "sourceBytes": 759776,
+      "outputBytes": 488018
+    },
+    "destination-v1.png": {
+      "sourceHash": "be7952f3c4f0d192d26c06c05b449595b05247203b34d65cc8b07a264b48cb58",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "destination-v1.webp",
+      "outputHash": "8aceaa030af31eeed39c341300df9e3256f93af63b1f0036001e108bce06b2e8",
+      "sourceBytes": 1036993,
+      "outputBytes": 713468
+    },
+    "effects-v2.png": {
+      "sourceHash": "5a070b9f12bd886f7817a758dbea326398b65d49280d6d714b25774bd417ae47",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "effects-v2.webp",
+      "outputHash": "36bf96414256869e5f60ff2784d2ce2ab171b3f0dcf45d5ee66570ff7b09614a",
+      "sourceBytes": 1171172,
+      "outputBytes": 914382
+    },
+    "herb-v2.png": {
+      "sourceHash": "3783637963fa67a2a756cfc9eb4f5f190d98212c3bcb5f34ee64776d99e24578",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "herb-v2.webp",
+      "outputHash": "bcba038e887df1160d7c0562ebbf7773ce846eb6d9ed2837c3bae53394bf56dc",
+      "sourceBytes": 806949,
+      "outputBytes": 524788
+    },
+    "leon-v1.png": {
+      "sourceHash": "d620987d04120a6f5522236cd064e37d9ec59a3d0d16afd2a7bfcf97795db943",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "leon-v1.webp",
+      "outputHash": "176fdfea0aa33d2fa347c9589d32b8ee2b776f8c339521123468174ebac1f266",
+      "sourceBytes": 1479663,
+      "outputBytes": 1057564
+    },
+    "leon-walk-v2.png": {
+      "sourceHash": "8ff7f84dc85e8c8a07268332920421f3997b08932a26dd4727d2a9dd5b4bbe4b",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "leon-walk-v2.webp",
+      "outputHash": "e3b00994467a6aeca380a549e911b3d456d4cf08c4be0b0e5b2b4067fdcd519f",
+      "sourceBytes": 1064152,
+      "outputBytes": 718790
+    },
+    "mira-v1.png": {
+      "sourceHash": "f617600db1b79c71002c63c9846af0281da22ed9ec7ae425386767457f9df402",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "mira-v1.webp",
+      "outputHash": "ce32b27b0b3929e3445a4af326d9bdbdb953d798ab1e58a9d7f4bf94707886d6",
+      "sourceBytes": 2223090,
+      "outputBytes": 1620850
+    },
+    "mira-walk-v2.png": {
+      "sourceHash": "e49729b2dd79b32b2ca82324706f26c790292e2492ee6e41cc5d8793f21ca740",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "mira-walk-v2.webp",
+      "outputHash": "8e427822559e86845f01aebd8b8358ebf3da314011e4794d8711a504fc4a8143",
+      "sourceBytes": 1583460,
+      "outputBytes": 1119638
+    },
+    "packing-v1.png": {
+      "sourceHash": "ef1178a680cf1e01c52fbf402c76b710b6f9ecf546254a5c7f2a8ec403c7ac71",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "packing-v1.webp",
+      "outputHash": "54a346701747a28e5d9531ab16cea387ee758c94f3656227a8e6b27648fffaef",
+      "sourceBytes": 1267018,
+      "outputBytes": 890718
+    },
+    "puppets-v1.png": {
+      "sourceHash": "5bb812e2dff0ab0eec18151ddca52ba1a802ea33b143648d13eeeb55914a1392",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "puppets-v1.webp",
+      "outputHash": "5eec9ef6248451d632bb66754d4d971e91b7733021c79507cbfe62525d1e0549",
+      "sourceBytes": 2240846,
+      "outputBytes": 1665688
+    },
+    "push-v1.png": {
+      "sourceHash": "b3d3a39de405e8f9a9570fa9964e07f132f077a6cf09c9515c8338110390ff8b",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "push-v1.webp",
+      "outputHash": "4b3f53a45dc547262a8058caa4368fb3451be41e99d3d784d9b151cb5acb813f",
+      "sourceBytes": 2261994,
+      "outputBytes": 1143588
+    },
+    "worksites-v1.png": {
+      "sourceHash": "a6d43f71b122d5e0b9561e61b1def358e9e7d31c3680e440584e7272e974383e",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "worksites-v1.webp",
+      "outputHash": "c0b0a3920c379058f4aed17d7a92780cb4a04407e387ea12900f41d5989513ac",
+      "sourceBytes": 876851,
+      "outputBytes": 584896
+    }
+  }
+}

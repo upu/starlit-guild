@@ -40,6 +40,9 @@ jobs:
       - name: Check generated scenery images
         run: npm run images:check
 
+      - name: Check generated road art
+        run: npm run road-art:check
+
       - name: Check generated story stills and album thumbnails
         run: npm run stills:check
 

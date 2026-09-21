@@ -9,7 +9,7 @@ import {
   chapterRoadX,
 } from "../lib/chapter-road-presentation.ts";
 import { roadActionKind, roadHasEnemies } from "../lib/chapter-road.ts";
-import { travellerLane } from "../lib/scrolling-battle.ts";
+import { travellerLane } from "../lib/road-view.ts";
 import { roadY, roadBackdrop } from "../lib/road-layout.ts";
 
 function start(index, level = 30) {
@@ -159,7 +159,7 @@ test("work sites match the chapter setting instead of falling back to treasure c
     const frame = chapterRoadFrame(input(state));
     assert.equal(frame.look.work.frame, expected);
     assert.equal(frame.look.urban, [2, 11].includes(stage));
-    assert.equal(frame.look.work.asset, "/animations/road/worksites-v1.png");
+    assert.equal(frame.look.work.asset, "/animations/road/worksites-v1.webp");
   }
   for (let stage = 0; stage < 18; stage++) {
     const state = start(stage);

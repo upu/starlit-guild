@@ -24,7 +24,7 @@ import {
   type RoadEnemy,
   type TravellerId,
   type Traveller,
-} from "./scrolling-battle.ts";
+} from "./road-view.ts";
 
 export type RoadLook = {
   background: string;
@@ -112,12 +112,8 @@ function drawnHeroes(input: AdventureInput, frame: AdventureFrame): RoadBattle["
       hp: run ? member.hp : 1,
       maxHp: run ? member.maxHp : 1,
       x,
-      previousX: x,
-      recoil: position?.recoil || 0,
       walking: !!position?.walking && run?.phase !== "rest",
       facing: position?.facing || 1,
-      nextAttack: 0,
-      attacks: 0,
     };
   });
 }
@@ -137,12 +133,9 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
       id: index + 1,
       kind: enemyKind(enemy.role || (frame.quest.enemy >= 12 ? "golem" : undefined)),
       x,
-      previousX: x,
-      recoil: position?.recoil || 0,
       lane: enemy.role === "puppeteer" ? 0.48 : [0.74, 0.57, 0.84][index],
       hp: enemy.hp,
       maxHp: enemy.maxHp,
-      nextAttack: enemy.nextAt,
       boss: enemy.role === "sweeper" || enemy.role === "golem",
     };
   });
@@ -162,23 +155,9 @@ function makeBattle(input: AdventureInput, frame: AdventureFrame): RoadBattle {
   const battle: RoadBattle = {
     stage: run?.enemies?.some((enemy) => enemy.role) ? "puppets" : "forest",
     time: input.now,
-    remainder: 0,
     distance: camera,
-    previousDistance: camera,
-    herbs: 0,
-    deliveries: 0,
     gathering: null,
-    walking: false,
-    round: run?.round || 1,
-    clears: 0,
-    defeated: 0,
-    rests: 0,
     phase: !run ? "arrived" : run.phase === "rest" ? "rest" : "journey",
-    resumeAt: 0,
-    spawn: 0,
-    serial: 0,
-    assistAt: 0,
-    loadout: { aria: "pierce", leon: "sweep" },
     effects: [],
     heroes: drawnHeroes(input, frame),
     enemies: drawnEnemies(input, frame),
@@ -236,11 +215,8 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     kind: cargo ? "cargo" : "herb",
     task: workTask(look.work.frame === "parcels", frame.quest, run),
     x,
-    previousX: x,
     remaining: run.target,
     total: run.targetMax,
-    waves: 0,
-    rear: false,
   };
   for (const hero of battle.heroes) {
     if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;

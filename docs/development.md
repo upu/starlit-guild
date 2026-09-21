@@ -17,6 +17,8 @@ npm run script:export
 npm run script:check
 npm run images:optimize
 npm run images:check
+npm run road-art:optimize
+npm run road-art:check
 npm run videos:optimize
 npm run videos:check
 node --test tests/*.test.mjs
@@ -33,7 +35,7 @@ npx tsc --noEmit
 
 `script:export` は実行時の会話・スチル表示位置・道中の掛け合いをステージごとのファイルへ書き出し、[生成台本の目次](generated/script.md) から読めるようにする。スチルは表示行の直前に画像も埋め込み、Markdownプレビューで確認できる。待機中や関係値別の共通会話は [共通の掛け合い](generated/banter.md) にまとめる。生成物は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は全ファイルの鮮度を検査し、CIでも実行する。
 
-dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[元動画から配信用MP4を生成](story-videos.md)する。変更のない動画はスキップする。
+dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[横スクロール戦闘のPNG原本からロスレスWebPを生成](scrolling-battle.md)、[元動画から配信用MP4を生成](story-videos.md)する。変更のない素材はスキップする。
 
 ## テスト機能の環境設定
 

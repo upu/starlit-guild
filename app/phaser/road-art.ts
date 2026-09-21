@@ -1,15 +1,15 @@
-import type { TravellerId } from "@/lib/scrolling-battle";
+import type { TravellerId } from "@/lib/road-view";
 
-export const roadSheet = (id: TravellerId) => `/animations/road/${id}-v1.png`;
-export const ROAD_EFFECTS = "/animations/road/effects-v2.png";
-export const ROAD_HERB = "/animations/road/herb-v2.png";
-export const ROAD_CARGO = "/animations/road/cargo-v1.png";
-export const ROAD_PUPPETS = "/animations/road/puppets-v1.png";
-export const ROAD_PUSH = "/animations/road/push-v1.png";
-export const ROAD_PACKING = "/animations/road/packing-v1.png";
-export const ROAD_DESTINATION = "/animations/road/destination-v1.png";
-export const ROAD_WORKSITES = "/animations/road/worksites-v1.png";
-export const roadWalkSheet = (id: TravellerId) => `/animations/road/${id}-walk-v2.png`;
+export const roadSheet = (id: TravellerId) => `/animations/road/${id}-v1.webp`;
+export const ROAD_EFFECTS = "/animations/road/effects-v2.webp";
+export const ROAD_HERB = "/animations/road/herb-v2.webp";
+export const ROAD_CARGO = "/animations/road/cargo-v1.webp";
+export const ROAD_PUPPETS = "/animations/road/puppets-v1.webp";
+export const ROAD_PUSH = "/animations/road/push-v1.webp";
+export const ROAD_PACKING = "/animations/road/packing-v1.webp";
+export const ROAD_DESTINATION = "/animations/road/destination-v1.webp";
+export const ROAD_WORKSITES = "/animations/road/worksites-v1.webp";
+export const roadWalkSheet = (id: TravellerId) => `/animations/road/${id}-walk-v2.webp`;
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.

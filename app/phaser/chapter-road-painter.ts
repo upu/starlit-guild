@@ -1,7 +1,7 @@
 import type Phaser from "phaser";
 import { adventureAction } from "@/lib/adventure-presentation";
 import { chapterRoadFrame, chapterRoadHit } from "@/lib/chapter-road-presentation";
-import { RoadPainter, ROAD_BACKGROUND } from "../battle-prototype/road-painter";
+import { RoadPainter, ROAD_BACKGROUND } from "./road-painter";
 import {
   ROAD_EFFECTS,
   ROAD_HERB,
@@ -13,7 +13,7 @@ import {
   ROAD_WORKSITES,
   roadSheet,
   roadWalkSheet,
-} from "../battle-prototype/road-art";
+} from "./road-art";
 import type { AdventureBridge } from "./renderer-session";
 import type { RuntimeState } from "./adventure-painter-figures";
 
