@@ -6,6 +6,7 @@ import "./battle-effects.css";
 import "./stories.css";
 import "./navigation.css"; // Adventure, party, and memory navigation.
 import "./cinematic.css";
+import "./quest-picker.css";
 import "./phaser.css";
 import "./prologue.css";
 import "./equipment.css";

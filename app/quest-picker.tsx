@@ -1,14 +1,12 @@
 "use client";
 import { useRef, useState } from "react";
-import { trioQuest } from "@/lib/chapter-two";
 import Image from "next/image";
+import { questScenery } from "@/lib/scenery";
+import { trioQuest } from "@/lib/chapter-two";
 import { Check, LockKeyhole } from "lucide-react";
 import { availableQuests, heroes, type State, type Quest } from "@/lib/game";
 import { storyStages, nextStage } from "@/lib/prologue";
 import { questChapters, questChapter } from "@/lib/quest-navigation";
-import { originalCharacters } from "@/lib/original-characters";
-import { Sprite } from "./sprite";
-import { questScenery } from "@/lib/scenery";
 import { QuestProgressionSetting } from "./quest-progression-setting";
 
 type Props = {
@@ -68,6 +66,7 @@ function questOption(
       }}
     >
       <Image
+        className="quest-option-art"
         src={questScenery(item, "thumbnail")}
         alt=""
         width={320}
@@ -75,17 +74,26 @@ function questOption(
         loading="lazy"
         unoptimized
       />
-      <span>
-        <small>
-          {storyStages.find((stage) => stage.quest === item.id)?.number || item.region}
-          {item.availability === "once" ? " · 一度きり" : ""}
-        </small>
+      <span className="quest-option-copy">
+        <span className="quest-option-meta">
+          <small>
+            {storyStages.find((stage) => stage.quest === item.id)?.number || item.region}
+          </small>
+          {done[item.id] > 0 ? (
+            <span
+              className="quest-clear-badge"
+              role="img"
+              aria-label="クリア済み"
+              title="クリア済み"
+            >
+              <Check size={12} aria-hidden="true" />
+            </span>
+          ) : (
+            item.id === next && <small className="quest-progress">次のステージ</small>
+          )}
+          {item.availability === "once" && <small>一度きり</small>}
+        </span>
         <b>{item.name}</b>
-        {done[item.id] > 0 ? (
-          <small className="quest-progress">クリア済み</small>
-        ) : (
-          item.id === next && <small className="quest-progress">次のステージ</small>
-        )}
       </span>
       {selected === item.id && <Check size={19} />}
     </button>
@@ -119,38 +127,27 @@ export function QuestPicker({
       <div className="quest-chapters" role="group" aria-label="クエストの章">
         {questChapters.map((item) => chapterButton(item, chapter, unlocked, ready, changeChapter))}
       </div>
-      <QuestProgressionSetting
-        checked={s.autoNextQuest === true}
-        onChange={onAutoNextChange}
-        disabled={!ready}
-      />
-      <p className="departure-party">
-        <span>
-          {(trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"])
-            .map((id) => heroes.find((h) => h.id === id)?.name ?? "不明な仲間")
-            .join("・")}
-        </span>
-      </p>
-      <div className="quest-options" aria-label="クエストの一覧">
-        {unlocked
-          .filter((item) => questChapter(item.id) === chapter)
-          .map((item) => questOption(item, q.id, next, s.done, ready, onSelect, onConfirm))}
+      <div className="quest-list-scroll">
+        <QuestProgressionSetting
+          checked={s.autoNextQuest === true}
+          onChange={onAutoNextChange}
+          disabled={!ready}
+        />
+        <p className="departure-party">
+          <span>
+            {(trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"])
+              .map((id) => heroes.find((h) => h.id === id)?.name ?? "不明な仲間")
+              .join("・")}
+          </span>
+        </p>
+        <div className="quest-options" aria-label="クエストの一覧">
+          {unlocked
+            .filter((item) => questChapter(item.id) === chapter)
+            .map((item) => questOption(item, q.id, next, s.done, ready, onSelect, onConfirm))}
+        </div>
       </div>
       <QuestSummary quest={q} ready={ready} onConfirm={onConfirm} />
     </div>
-  );
-}
-
-function questOpponent(opponent: (typeof originalCharacters)[number]) {
-  return (
-    <span className="quest-opponent">
-      <Sprite index={opponent.sprite} size={112} />
-      <span>
-        <small>{opponent.faction}</small>
-        <b>{opponent.name}</b>
-        <span>{opponent.bio}</span>
-      </span>
-    </span>
   );
 }
 
@@ -163,7 +160,6 @@ function QuestSummary({
   ready: boolean;
   onConfirm: (id: string) => void;
 }) {
-  const opponent = originalCharacters.find((c) => c.sprite === q.enemy);
   const pointer = useRef({ x: 0, y: 0, moved: false });
   return (
     <button
@@ -191,20 +187,10 @@ function QuestSummary({
         onConfirm(q.id);
       }}
     >
-      <span className="quest-landscape">
-        <Image
-          key={q.id}
-          src={questScenery(q, "detail")}
-          alt={q.region}
-          width={800}
-          height={450}
-          loading="eager"
-          unoptimized
-        />
-        <span>{q.region}</span>
+      <span className="quest-summary-label">
+        選択中 · {storyStages.find((stage) => stage.quest === q.id)?.number || q.region}
       </span>
       <span className="quest-summary-title">{q.name}</span>
-      {opponent && questOpponent(opponent)}
       <span className="quest-description">{q.desc}</span>
     </button>
   );
