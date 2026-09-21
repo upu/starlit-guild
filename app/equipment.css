@@ -696,3 +696,28 @@
 .character-slot-fixed + p {
   margin-top: 6px;
 }
+
+@media (min-width: 1024px) {
+  .character-picker > button {
+    min-width: 64px;
+    min-height: 64px;
+  }
+  .character-picker .face-portrait {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  .character-heading > .face-portrait {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .character-heading {
+    gap: 18px;
+  }
+  .character-heading h2 {
+    font-size: 28px;
+  }
+  .character-panel .character-heading p,
+  .character-heading span {
+    font-size: 18px;
+  }
+}

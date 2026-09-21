@@ -238,7 +238,6 @@ function CharacterEquipment(props: Props & { hero: string }) {
   const inventory = inventoryOf(props.state);
   return (
     <section className="character-loadout" aria-label="装備">
-      <h3>装備</h3>
       <div className="character-slots">
         {(["weapon", "armor"] as const).map((kind) => {
           const item = equipmentById(inventory.equipped[props.hero]?.[kind] ?? "");
@@ -275,7 +274,6 @@ function CharacterEquipment(props: Props & { hero: string }) {
 function FixedTechnique({ state, hero }: { state: State; hero: string }) {
   return (
     <section className="character-skill">
-      <h3>スキル</h3>
       <div className="character-slot character-slot-fixed" aria-label="アクティブ技・変更不可">
         <small>アクティブ技</small>
         <TechniqueIcon id={equippedTechnique(state, hero, "active") ?? hero} slot="active" />

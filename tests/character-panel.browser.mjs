@@ -125,7 +125,13 @@ try {
     const faces = await picker
       .locator(".face-portrait")
       .evaluateAll((els) => els.map((el) => [el.offsetWidth, el.offsetHeight]));
-    assert.ok(faces.every(([w, h]) => w === 40 && h === 40));
+    const faceSize = width >= 1024 ? 56 : 40;
+    assert.ok(faces.every(([w, h]) => w === faceSize && h === faceSize));
+    assert.equal(
+      (await page.locator(".character-heading > .face-portrait").boundingBox()).width,
+      width >= 1024 ? 80 : 56,
+    );
+    assert.equal(await page.getByRole("heading", { name: /^(装備|スキル)$/ }).count(), 0);
     await page.getByRole("button", { name: "レオン", exact: true }).hover();
     await page.waitForTimeout(200);
     assert.equal(

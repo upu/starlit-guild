@@ -122,10 +122,7 @@ export function TechniquePanel(props: Props) {
     return null;
   const candidates = learnableTechniques(props.state).filter((t) => t.hero === props.hero);
   return (
-    <section className="character-skill">
-      <h3>
-        スキル <small>所持金 {Math.floor(props.state.gold).toLocaleString("ja-JP")} G</small>
-      </h3>
+    <section className="character-skill" aria-label="スキル">
       {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
       {candidates.length > 0 && <p>習得できる技があります。</p>}
       <p role="status">{notice.hero === props.hero ? notice.text : ""}</p>
@@ -156,6 +153,9 @@ export function TechniquePanel(props: Props) {
       <div id="character-technique-options">
         {slot && (
           <>
+            <p className="technique-funds">
+              所持金 {Math.floor(props.state.gold).toLocaleString("ja-JP")} G
+            </p>
             <p className="technique-help">
               セットすると自動で働きます。帰還中の付け替えは何度でも無料です。
             </p>
