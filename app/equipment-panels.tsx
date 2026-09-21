@@ -169,17 +169,13 @@ function EquipmentChoice({
         </span>
       </span>
       <p>{item.description}</p>
-      <button
-        disabled={!props.ready || worn || available < 1}
-        aria-label={`${item.name}を装備する`}
-        onClick={() => props.onAction({ type: "equip", hero, slot, id: item.id })}
-      >
+      <small>
         {worn
           ? "装備中"
           : available > 0
-            ? "装備する"
+            ? "選択中のアイコンをもう一度タップで装備"
             : equippedBy(props.state, item.id).map(heroName).join("・") + "が装備中"}
-      </button>
+      </small>
     </article>
   );
 }
@@ -195,6 +191,19 @@ function EquipmentSlotPanel({
     );
   const [selected, setSelected] = useState(current?.id ?? "empty");
   const item = choices.find((candidate) => candidate.id === selected);
+  function select(id: string) {
+    if (id !== selected) {
+      setSelected(id);
+      return;
+    }
+    if (!props.ready) return;
+    if (id === "empty") {
+      if (current) props.onAction({ type: "equip", hero, slot });
+      return;
+    }
+    if (id !== current?.id && availableCopies(props.state, id) > 0)
+      props.onAction({ type: "equip", hero, slot, id });
+  }
   return (
     <section className="character-equipment">
       <h3>{slot === "weapon" ? "武器の付け替え" : "防具の付け替え"}</h3>
@@ -202,7 +211,7 @@ function EquipmentSlotPanel({
         label="装備の候補"
         emptyLabel="装備を外す"
         selected={selected}
-        onSelect={setSelected}
+        onSelect={select}
         choices={choices.map((candidate) => ({
           id: candidate.id,
           name: candidate.name,
@@ -214,16 +223,9 @@ function EquipmentSlotPanel({
         <EquipmentChoice {...props} item={item} hero={hero} slot={slot} />
       ) : (
         <div className="character-choice-detail">
-          <p>{current ? "装備を外してバッグに戻します。" : "何も装備していません。"}</p>
-          {current && (
-            <button
-              className="outline"
-              disabled={!props.ready}
-              onClick={() => props.onAction({ type: "equip", hero, slot })}
-            >
-              外してバッグへ戻す
-            </button>
-          )}
+          <p>
+            {current ? "空のアイコンをもう一度タップで装備を外します。" : "何も装備していません。"}
+          </p>
         </div>
       )}
       {choices.length === 0 && <p>装備できる品はまだありません。</p>}
@@ -258,7 +260,7 @@ function CharacterEquipment(props: Props & { hero: string }) {
               ) : (
                 <SquareDashed className="empty-slot-icon" aria-hidden="true" />
               )}
-              <small>{label}</small>
+              <small>{item?.name ?? `${label}なし`}</small>
             </button>
           );
         })}

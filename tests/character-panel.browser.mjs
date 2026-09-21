@@ -116,16 +116,45 @@ try {
       .locator(".face-portrait")
       .evaluateAll((els) => els.map((el) => [el.offsetWidth, el.offsetHeight]));
     assert.ok(faces.every(([w, h]) => w === 40 && h === 40));
+    await page.getByRole("button", { name: "レオン", exact: true }).hover();
+    await page.waitForTimeout(200);
+    assert.equal(
+      await page
+        .getByRole("button", { name: "レオン", exact: true })
+        .evaluate((el) => getComputedStyle(el).backgroundColor),
+      "rgb(48, 74, 58)",
+    );
+    await page.locator(".character-slot").first().hover();
+    await page.waitForTimeout(200);
+    assert.equal(
+      await page
+        .locator(".character-slot")
+        .first()
+        .evaluate((el) => getComputedStyle(el).backgroundColor),
+      "rgb(48, 74, 58)",
+    );
     await page.screenshot({ path: path.join(dir, "overview-" + width + ".png") });
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
-    await page.getByRole("button", { name: "トネリコの弓を装備する" }).click();
+    assert.match(
+      await page.locator(".character-slot").first().getAttribute("aria-label"),
+      /使い慣れた弓/,
+    );
+    assert.equal(await page.getByRole("button", { name: "トネリコの弓を装備する" }).count(), 0);
+    const candidate = page.getByRole("button", { name: "トネリコの弓", exact: true });
+    await candidate.hover();
+    await page.waitForTimeout(200);
+    assert.equal(
+      await candidate.evaluate((el) => getComputedStyle(el).backgroundColor),
+      "rgb(59, 80, 55)",
+    );
+    await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     assert.match(
       await page.locator(".character-slot").first().getAttribute("aria-label"),
       /トネリコの弓/,
     );
     await page.getByRole("button", { name: "装備を外す", exact: true }).click();
-    await page.getByRole("button", { name: "外してバッグへ戻す" }).click();
+    await page.getByRole("button", { name: "装備を外す", exact: true }).click();
     assert.equal(
       await page.locator(".character-slot").first().locator(".empty-slot-icon").count(),
       1,
@@ -135,17 +164,23 @@ try {
       /装備なし/,
     );
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
-    await page.getByRole("button", { name: "トネリコの弓を装備する" }).click();
+    await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
-    await page.getByRole("button", { name: /常に働く技.*習得・セット/ }).click();
+    await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
     assert.equal(
       await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
       1,
     );
     await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
+    const unlearned = page.getByRole("button", { name: "野草の目利き", exact: true });
+    assert.equal(await unlearned.getAttribute("data-muted"), "true");
+    assert.equal(await unlearned.innerText(), "");
+    await unlearned.click();
+    assert.equal(await unlearned.getAttribute("data-muted"), "true");
+    assert.match(await page.locator(".character-choice-detail").last().innerText(), /未習得/);
     await page.screenshot({ path: path.join(dir, "candidates-" + width + ".png") });
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
-    await page.getByRole("button", { name: "野草の目利きをセットする" }).click();
+    await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
     assert.match(
       await page.locator(".character-slot").last().getAttribute("aria-label"),
       /野草の目利き/,
@@ -158,16 +193,16 @@ try {
     assert.equal(await page.locator(".character-heading h2").innerText(), "レオン");
     assert.equal(
       await page
-        .getByRole("button", { name: /常に働く技.*習得・セット/ })
+        .getByRole("button", { name: /パッシブ技.*習得・セット/ })
         .getAttribute("aria-expanded"),
       "true",
     );
     assert.equal(await page.locator('[role="status"]').textContent(), "");
     await page.getByRole("button", { name: "堅実な備え", exact: true }).click();
     await page.getByRole("button", { name: "堅実な備えを習得する" }).click();
-    await page.getByRole("button", { name: "堅実な備えをセットする" }).click();
+    await page.getByRole("button", { name: "堅実な備え", exact: true }).click();
     await page.getByRole("button", { name: "技を外す候補", exact: true }).click();
-    await page.getByRole("button", { name: "技を外す", exact: true }).click();
+    await page.getByRole("button", { name: "技を外す候補", exact: true }).click();
     assert.equal(
       await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
       1,

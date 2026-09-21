@@ -1,7 +1,7 @@
 import { SquareDashed } from "lucide-react";
 import type { ReactNode } from "react";
 
-type Choice = { id: string; name: string; icon: ReactNode; badge?: string };
+type Choice = { id: string; name: string; icon: ReactNode; badge?: string; muted?: boolean };
 export function CharacterIconChoices({
   choices,
   selected,
@@ -15,7 +15,7 @@ export function CharacterIconChoices({
   label: string;
   emptyLabel: string;
 }) {
-  const options = [
+  const options: Choice[] = [
     ...choices,
     {
       id: "empty",
@@ -30,6 +30,7 @@ export function CharacterIconChoices({
         <button
           key={choice.id}
           className="character-icon-choice"
+          data-muted={choice.muted || undefined}
           aria-label={choice.name}
           title={choice.name}
           aria-pressed={selected === choice.id}

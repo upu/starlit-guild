@@ -667,3 +667,26 @@
   min-height: 44px;
   white-space: normal;
 }
+/* Icon buttons retain their dark surface on pointer hover. */
+.phone-game
+  :is(.character-picker > button, .character-slot, .character-icon-choice, .shop-slot):hover:not(
+    :disabled
+  ) {
+  background: #304a3a;
+  color: #efdfb9;
+}
+.phone-game
+  :is(.character-picker > button, .character-slot, .character-icon-choice, .shop-slot):is(
+    [aria-pressed="true"],
+    [aria-expanded="true"]
+  ):hover:not(:disabled) {
+  background: #3b5037;
+}
+.character-icon-choice[data-muted="true"] > svg {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+.character-slot > small {
+  text-align: center;
+  overflow-wrap: anywhere;
+}
