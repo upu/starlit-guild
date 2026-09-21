@@ -268,7 +268,8 @@ export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
         className={
           "phone-dialog" +
           (conversation ? " story-dialog" : "") +
-          (m.sheet === "quests" ? " quest-dialog" : "")
+          (m.sheet === "quests" ? " quest-dialog" : "") +
+          (m.sheet === "shop" ? " shop-dialog" : "")
         }
       >
         {conversation ? (

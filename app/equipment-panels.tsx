@@ -18,8 +18,6 @@ import {
   equippedBy,
   availableCopies,
   canEquip,
-  shopItems,
-  shopTier,
   type Equipment,
   type EquipmentSlot,
 } from "@/lib/equipment";
@@ -32,7 +30,7 @@ type Props = { state: State; ready: boolean; onAction: (action: Action) => boole
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
 const heroName = (id: string) => heroes.find((hero) => hero.id === id)?.name ?? id;
 const statLabels = ["採取", "護衛", "討伐"];
-function Bonuses({ item }: { item: Equipment }) {
+export function Bonuses({ item }: { item: Equipment }) {
   return (
     <span className="equipment-bonuses">
       {item.bonus.map((value, index) =>
@@ -126,67 +124,6 @@ export function InventoryPanel({ state: s }: { state: State }) {
           </div>
         )}
       </section>
-    </div>
-  );
-}
-function ShopCard({
-  item,
-  state,
-  ready,
-  onAction,
-  onBought,
-}: Props & { item: Equipment; onBought: (name: string) => void }) {
-  const enough = state.gold >= item.price;
-  return (
-    <article className="shop-item">
-      <div className="shop-item-heading">
-        <EquipmentIcon item={item} />
-        <h3>{item.name}</h3>
-      </div>
-      <p>{item.description}</p>
-      <span className="equipment-wearers">
-        {item.heroes ? item.heroes.map(heroName).join("・") + "用" : "だれでも装備できます"}
-      </span>
-      <Bonuses item={item} />
-      <div className="shop-purchase">
-        <small>所持 {inventoryOf(state).items[item.id] ?? 0}</small>
-        <button
-          disabled={!ready || !enough || (inventoryOf(state).items[item.id] ?? 0) >= 9999}
-          onClick={() => {
-            if (onAction({ type: "buy", id: item.id })) onBought(item.name);
-          }}
-          aria-label={`${item.name}を${String(item.price)} Gで購入`}
-        >
-          {amount(item.price)} Gで購入
-        </button>
-      </div>
-      {!enough && <small>あと {amount(item.price - state.gold)} G</small>}
-    </article>
-  );
-}
-export function ShopPanel(props: Props) {
-  const [bought, setBought] = useState("");
-  return (
-    <div className="shop-panel">
-      <div className="shop-wallet">
-        <Coins aria-hidden="true" />
-        <span>所持金</span>
-        <b>{amount(props.state.gold)} G</b>
-      </div>
-      <p className="purchase-notice" role="status">
-        {bought
-          ? `${bought}をバッグに入れました。`
-          : "購入した装備は、キャラクター画面で付け替えられます。"}
-      </p>
-      {shopTier(props.state) === 0 ? (
-        <p>街の配達仕事を終えると、お店を利用できます。</p>
-      ) : (
-        <div className="shop-items">
-          {shopItems(props.state).map((item) => (
-            <ShopCard key={item.id} {...props} item={item} onBought={setBought} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

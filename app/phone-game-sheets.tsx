@@ -1,7 +1,8 @@
 import type { Ref } from "react";
 import { BookOpen, ChevronRight, Heart, Lightbulb, Images } from "lucide-react";
 import { equippedTechnique, techniqueById } from "@/lib/techniques";
-import { InventoryPanel, ShopPanel } from "./equipment-panels";
+import { InventoryPanel } from "./equipment-panels";
+import { ShopPanel } from "./shop-panel";
 import { QuestPicker } from "./quest-picker";
 import { SavePanel } from "./save-panel";
 import { StoryLibrary, StoryAlbum, StoryReader } from "./story-scenes";
