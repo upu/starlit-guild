@@ -1,0 +1,57 @@
+.chapter-three-preview {
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow-y: auto;
+  background: #102a26;
+  color: #f0e5ca;
+  padding: 24px max(16px, calc((100vw - 760px) / 2)) max(32px, env(safe-area-inset-bottom));
+}
+.chapter-three-preview header {
+  margin-bottom: 28px;
+}
+.chapter-three-preview header a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #e4cb91;
+  text-decoration: underline;
+}
+.chapter-three-preview h1 {
+  font-size: 28px;
+  margin: 8px 0 12px;
+}
+.chapter-three-preview h2 {
+  font-size: 18px;
+  color: #e4cb91;
+}
+.chapter-three-preview p {
+  line-height: 1.8;
+}
+.preview-kicker,
+.preview-note {
+  color: #bacdb7;
+  font-size: 14px;
+}
+.preview-note {
+  margin-top: 12px;
+}
+.preview-sections {
+  display: grid;
+  gap: 24px;
+}
+.preview-dialog .story-art-space {
+  display: none;
+}
+.preview-dialog .story-reader {
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+.preview-dialog .story-conversation {
+  min-height: 0;
+  flex: 1;
+}
+.preview-dialog .story-line p,
+.preview-dialog .story-narration {
+  overflow-wrap: anywhere;
+}

@@ -53,6 +53,25 @@
 
 例：`village-trade-departure` / `village-trade-return`。スチルの対応は `lib/story-art.ts` がシーンIDをキーに持ち、場面と表示行は [スチル制作記録](art/story-art.md)、採用画像は [スチル一覧](art/story-art-gallery.md) にある。
 
+## 第三章の試読用シーン
+
+第三章は[試読ページ](gameplay/chapter-three-gameplay.md)で会話を確認する。以下は試読専用IDで、クエストIDではなく、セーブや本編のステージ一覧には登録しない。
+
+| 番号 | 表示名 | 試読シーンID |
+| --- | --- | --- |
+| 幕間 | 私が用意するお昼 | `chapter-three-draft-interlude-return` |
+| 3-1 | 隣の席の聞き上手 | `chapter-three-draft-3-1-departure` / `chapter-three-draft-3-1-return` |
+| 3-2 | 石を敷いた街 | `chapter-three-draft-3-2-departure` / `chapter-three-draft-3-2-return` |
+| 3-3 | 抜けた石の行き先 | `chapter-three-draft-3-3-departure` / `chapter-three-draft-3-3-return` |
+| 3-4 | 庭を照らす買い物 | `chapter-three-draft-3-4-departure` / `chapter-three-draft-3-4-return` |
+| 3-5 | 同じ灯りを探して | `chapter-three-draft-3-5-departure` / `chapter-three-draft-3-5-return` |
+| 3-6 | 四人で下見 | `chapter-three-draft-3-6-departure` / `chapter-three-draft-3-6-return` |
+| 3-7 | 灯りのお披露目 | `chapter-three-draft-3-7-departure` / `chapter-three-draft-3-7-return` |
+| 3-8 | 間違った荷物を戻す夜 | `chapter-three-draft-3-8-departure` / `chapter-three-draft-3-8-return` |
+| 3-9 | 戻る灯り、増える同行者 | `chapter-three-draft-3-9-departure` / `chapter-three-draft-3-9-return` |
+
+幕間の `return` は既存会話型で試読するための値で、冒険達成を意味しない。本編への接続時にクエストIDと幕間の扱いを決める。
+
 ## 従来モードの旧クエストID
 
 以下は削除済みの試作で使ったIDの記録で、現在の `allQuests` には含まれない。旧通常依頼9件の出典は [削除前の `lib/game-v1.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game-v1.ts)、来客依頼2件の出典は [削除前の `lib/game.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game.ts)、加入専用依頼7件の出典は [削除前の `lib/recruitment.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/recruitment.ts)。遊び方と会話は [従来モードの記録](archive/legacy-mode.md)、旧加入条件は [仲間加入](archive/recruitment.md) を参照する。

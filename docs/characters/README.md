@@ -4,7 +4,7 @@
 
 会話を追加するときは [物語・会話の制作指針](../story/story-writing.md) も参照する。
 
-世界・塔・苔と旅の動機は [世界観と物語](../story/world-and-story.md)、公開済み第一章の塔の事件は [第一章プロット](../story/story-part-1.md)、第二章の計画は [第二章計画](../story/story-part-2.md)、その実装状況は [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md#実装状況) を参照する。第三章の計画は [第三章計画](../story/story-part-3.md) にあり、実装はまだない。
+世界・塔・苔と旅の動機は [世界観と物語](../story/world-and-story.md)、公開済み第一章の塔の事件は [第一章プロット](../story/story-part-1.md)、第二章の計画は [第二章計画](../story/story-part-2.md)、その実装状況は [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md#実装状況) を参照する。第三章の計画は [第三章計画](../story/story-part-3.md) にあり、実装状況は[第三章の実装仕様](../gameplay/chapter-three-gameplay.md#実装状況)を参照する。
 
 ## 読み始める順序
 

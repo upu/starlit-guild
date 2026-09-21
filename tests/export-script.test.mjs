@@ -20,10 +20,10 @@ const readGenerated = (path) =>
 
 test("generated index links all stages and every generated file is current", () => {
   const files = renderScripts();
-  assert.equal(files.size, storyStages.length + 2);
+  assert.equal(files.size, storyStages.length + 3);
   for (const [path, content] of files) assert.equal(readGenerated(path), content, path);
   const index = files.get("script.md");
-  assert.ok(index.split("\n").length < 30);
+  assert.ok(index.split("\n").length < 35);
   assert.deepEqual(
     [...index.matchAll(/^- \[(.+)\]\(stages\/(.+)\.md\)$/gm)].map((match) => match[1]),
     storyStages.map(

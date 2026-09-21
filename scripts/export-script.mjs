@@ -1,16 +1,17 @@
 import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
+import { allQuests, initialPrologueState } from "../lib/game.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
-import { originalCharacters } from "../lib/original-characters.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 import { storyArt } from "../lib/story-art.ts";
+import { chapterThreeSections } from "../lib/chapter-three-stories.ts";
+import { storySpeakers } from "../lib/story-speakers.ts";
 
 const outputDirectory = new URL("../docs/generated/", import.meta.url);
 const marker = "> 自動生成ファイルです。手で編集せず、`npm run script:export` で更新してください。";
-const names = new Map([...heroes, ...originalCharacters].map(({ id, name }) => [id, name]));
+const names = new Map(storySpeakers.map(({ id, name }) => [id, name]));
 const questNames = new Map(allQuests.map(({ id, name }) => [id, name]));
 
 function formatLine(line) {
@@ -171,6 +172,25 @@ export function renderScripts() {
   }
   index.push("", "- [共通の掛け合い](banter.md)", "");
   files.set("banter.md", renderCommonBanter());
+  const draft = [
+    "# 第三章の会話（試読）",
+    "",
+    marker,
+    "",
+    "本編の進行には未接続。幕間と各場面の出発前・達成後の会話を収録します。",
+    "",
+  ];
+  for (const section of chapterThreeSections) {
+    for (const story of section.scenes) {
+      const timing =
+        section.number === "幕間"
+          ? "幕間"
+          : `${section.number} ${story.chapter === "departure" ? "出発前" : "達成後"}`;
+      draft.push(...sceneLines(story, timing));
+    }
+  }
+  files.set("chapter-three.md", draft.join("\n"));
+  index.push("制作中：[第三章の会話（試読）](chapter-three.md)", "");
   files.set("script.md", index.join("\n"));
   return files;
 }

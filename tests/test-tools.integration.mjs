@@ -33,6 +33,18 @@ try {
     assert.ok(match, "Runtime capability missing from server response");
     assert.equal(match[1], String(value === "true"));
     assert.match(response.headers.get("cache-control"), /no-store/);
+    const preview = await worker.dispatchFetch(
+      "http://localhost/story-preview/chapter-three?ENABLE_TEST_TOOLS=true",
+    );
+    const previewBody = await preview.text();
+    assert.equal(preview.status, value === "true" ? 200 : 404);
+    if (value === "true") {
+      assert.match(previewBody, /石を敷いた街/);
+      assert.match(previewBody, /chapter-three-draft-3-9-return/);
+      assert.match(preview.headers.get("cache-control"), /no-store/);
+    } else {
+      assert.doesNotMatch(previewBody, /chapter-three-draft-/);
+    }
     console.log(
       `PASS: ENABLE_TEST_TOOLS=${JSON.stringify(value) ?? "unset"} => ${match[1]}, no-store`,
     );
