@@ -43,6 +43,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [戦闘バランス](gameplay/combat-balance.md) — 育成差による減衰、敵と回復、第二章の育成時間・テスト開始データ・調整手順
 - [セーブシステム](gameplay/save-system.md) — 端末保存、バックアップ、記録、移行、複数タブ
 - [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) — 2-1〜2-9、ミラ加入、技の習得・セット、互換性
+- [第三章の会話先行実装](gameplay/chapter-three-gameplay.md) — 会話データと生成台本、今後の冒険実装
 - [第一章のゲーム実装](gameplay/prologue-gameplay.md) — 第一章の進行、表示、周回、互換性
 
 ## 従来モードの記録
@@ -55,7 +56,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [世界観と物語](story/world-and-story.md) — 制作の核、地理、塔と苔などの共通設定
 - [第一章プロット](story/story-part-1.md) — 公開済み第一章の出来事、因果、今後へ残る事実
 - [第二章計画](story/story-part-2.md) — 全9ステージの進行・会話案、ミラ加入、プティの山賊騒ぎ、レベルとコインによる技習得、一枚絵の配置。実装状況は [第二章のゲーム実装](gameplay/chapter-two-gameplay.md#実装状況)
-- [第三章計画](story/story-part-3.md) — 石を敷いた街と弱った塔、フィン加入、冒険のない幕間。検討段階で実装はない
+- [第三章計画](story/story-part-3.md) — 石のすり替えと塔の復旧、フィンの同行、冒険のない幕間
 - [用語集](glossary.md) — 章・ステージ・クエストID・シーンID・置き場の対応表
 - [キャラクター一覧・設定](characters/README.md) — キャラ別ファイル、名前・別名・ID、設定の区分
 - [関係性と掛け合い](relationships/README.md) — 組み合わせごとの関係性と既存シーン
@@ -103,4 +104,4 @@ READMEへ詳細仕様を追記するのではなく、既存資料の担当範�
 
 変更履歴や一時的な不具合記録はREADMEに積み上げず、Git履歴やIssueへ残す。バージョン単位の要約だけは [`CHANGELOG.md`](../CHANGELOG.md) にまとめる。
 
-「実装済み」「未実装」などの進捗は、章ごとの実装仕様（[第一章](gameplay/prologue-gameplay.md)、[第二章](gameplay/chapter-two-gameplay.md#実装状況)）だけで管理する。第三章は実装に着手する時点で実装仕様を作る。制作資料・人物資料・世界観資料には進捗を書き写さず、必要ならそこへリンクする。
+「実装済み」「未実装」などの進捗は、章ごとの実装仕様（[第一章](gameplay/prologue-gameplay.md)、[第二章](gameplay/chapter-two-gameplay.md#実装状況)）だけで管理する。第三章は[会話先行実装](gameplay/chapter-three-gameplay.md)で管理する。制作資料・人物資料・世界観資料には進捗を書き写さず、必要ならそこへリンクする。

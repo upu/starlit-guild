@@ -31,7 +31,7 @@
 
 ## 登場に備えた素材
 
-フィンの [9表情](../../public/portraits/finn-expressions.webp) は [採用シート](../characters/finn-reference-sheet.webp) をもとに制作した。768×768px・3列×3行のWebP（品質82）で、通常・笑顔・驚き／困り・真剣・照れ／疲れ・ニヤリ・思案を収録する。表情の意図は [人物資料](../characters/finn.md#顔アイコン)、制作条件は [生成記録](../art-generation/finn-expressions-generation.json) を参照。キャラクター登録と台詞への割り当ては未実装のため、上記の表示対象にはまだ含めない。
+フィンの [9表情](../../public/portraits/finn-expressions.webp) は [採用シート](../characters/finn-reference-sheet.webp) をもとに制作した。768×768px・3列×3行のWebP（品質82）で、通常・笑顔・驚き／困り・真剣・照れ／疲れ・ニヤリ・思案を収録する。表情の意図は [人物資料](../characters/finn.md#顔アイコン)、制作条件は [生成記録](../art-generation/finn-expressions-generation.json) を参照。会話との接続範囲は[第三章の実装仕様](../gameplay/chapter-three-gameplay.md#実装状況)を参照する。
 
 `expressionPortrait("finn", "thoughtful")` で右下の思案顔を取得できる。`lib/portrait-expressions.ts` のキャラ別定義が列数・行数・表情順を持つ。ミラ・プティは4列×2行、アリア・レオンは共用の4列×4行を使い、未収録の表情を指定した場合は通常顔へ戻る。既存の数値IDによる呼び出しも維持する。フィンのゲーム内登録番号はまだ割り当てない。
 
