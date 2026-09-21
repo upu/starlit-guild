@@ -1,6 +1,6 @@
 # サイトの確認と公開
 
-第一章の公開後は、変更をプレビューで確認してから本番へ反映する。公開先のID・URLは [config/site-targets.json](../config/site-targets.json) を正本とする。GitHubへのpushやPRマージそのものには自動配備はなく、スキルがマージ後にSitesへの反映を続ける。
+第一章の公開後は、変更をプレビューで確認してから本番へ反映する。公開先のID・URLは [config/site-targets.json](../../config/site-targets.json) を正本とする。GitHubへのpushやPRマージそのものには自動配備はなく、スキルがマージ後にSitesへの反映を続ける。
 
 ## 環境と依頼
 
@@ -34,7 +34,7 @@
 
 ## 公開用チェックアウト
 
-GitHubの `.openai/hosting.json` は本番のまま保持する。このリポジトリの配信手順はmanifestの `project_id` を使うため、環境変数は宛先選択に使い、実際の配信用manifestを生成する。独立した配信用チェックアウトで `SITE_TARGET` に `preview` または `production` を設定し、`prepare-site-manifest.mjs` で **manifestの `project_id` だけを変更した配信用コミット** を作る。スクリプトは `SOURCE_COMMIT` の完全なSHAとソースに一致する作業ファイルを要求し、IDを [宛先一覧](../config/site-targets.json) から選ぶ。
+GitHubの `.openai/hosting.json` は本番のまま保持する。このリポジトリの配信手順はmanifestの `project_id` を使うため、環境変数は宛先選択に使い、実際の配信用manifestを生成する。独立した配信用チェックアウトで `SITE_TARGET` に `preview` または `production` を設定し、`prepare-site-manifest.mjs` で **manifestの `project_id` だけを変更した配信用コミット** を作る。スクリプトは `SOURCE_COMMIT` の完全なSHAとソースに一致する作業ファイルを要求し、IDを [宛先一覧](../../config/site-targets.json) から選ぶ。
 
 - `sourceCommit`: 確認対象となるGitHubのマージ済みソースSHA。両環境で共通。
 - `deliveryCommit`: 対象Siteに実際にpushし、ビルド・梱包・保存する完全なSHA。サイト設定の差により `sourceCommit` と異なり得る。
@@ -67,7 +67,7 @@ node scripts/check-site-release.mjs preview <sourceCommit> work/observed.json
 node scripts/check-site-release.mjs production <sourceCommit> work/observed.json
 ```
 
-観測値の形は [site-observation.json](templates/site-observation.json)。これは未確認のひな型であり、そのまま本番検査に通らない。Sitesの `get_site`、`get_environment_variables`、バージョンと公開状態の取得結果から対象項目だけを転記する。
+観測値の形は [site-observation.json](../templates/site-observation.json)。これは未確認のひな型であり、そのまま本番検査に通らない。Sitesの `get_site`、`get_environment_variables`、バージョンと公開状態の取得結果から対象項目だけを転記する。
 
 - `site.url`: 配置済みなら返された公開URL、初回だけ登録時に返された予定URL。宛先一覧から観測結果を捏造しない。
 - `environment.testTools`: 実際の値が文字列 `true` なら `"true"`、未設定または文字列 `false` なら `null`。不明・秘密化された値・その他の文字列を無効と決めつけない。
@@ -81,7 +81,7 @@ node scripts/check-site-release.mjs production <sourceCommit> work/observed.json
 
 ## 第一章の確認表
 
-これは公開済み第一章の回帰確認。新しいシナリオの採用事項を定める資料ではない。現行の進行条件は [第一章のゲーム実装](prologue-gameplay.md) と `lib/prologue.ts` を参照する。
+これは公開済み第一章の回帰確認。新しいシナリオの採用事項を定める資料ではない。現行の進行条件は [第一章のゲーム実装](../gameplay/prologue-gameplay.md) と `lib/prologue.ts` を参照する。
 
 ### 通常記録での通し確認
 

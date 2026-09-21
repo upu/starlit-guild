@@ -7,7 +7,7 @@ description: STARLIT-GUILDの合意済み変更をGitHubとSitesへ反映する�
 
 共通ルールは [エージェント共通ルール](../../../docs/agent-rules.md)。このスキルの Sites 操作は Codex 向けであり、他のエージェントは自分の実行環境に合う手段を使う。
 
-公開先の正本は `config/site-targets.json`。実施時に [サイトの確認と公開](../../../docs/site-release.md) を読み、宛先、確認記録、配信用コミットの作り方を確認する。Sitesの最新ツール仕様はインストール済みの `sites-building` / `sites-hosting` を正とする。
+公開先の正本は `config/site-targets.json`。実施時に [サイトの確認と公開](../../../docs/development/site-release.md) を読み、宛先、確認記録、配信用コミットの作り方を確認する。Sitesの最新ツール仕様はインストール済みの `sites-building` / `sites-hosting` を正とする。
 
 ## 依頼の解釈
 
@@ -32,10 +32,10 @@ description: STARLIT-GUILDの合意済み変更をGitHubとSitesへ反映する�
 
 ## 配信と動作確認
 
-1. [公開用チェックアウト](../../../docs/site-release.md#公開用チェックアウト) の手順で、対象Site専用の独立したチェックアウトを用意する。本番用manifestを共有作業場所で切り替えない。`SITE_TARGET` と `SOURCE_COMMIT` を指定して `prepare-site-manifest.mjs` で宛先を選ぶ。プレビューの配信用コミットは `sourceCommit` とmanifestの `project_id` だけが異なる。`check-site-release.mjs` で差分・実際の宛先・フラグを検査してからビルド、push、梱包する。
+1. [公開用チェックアウト](../../../docs/development/site-release.md#公開用チェックアウト) の手順で、対象Site専用の独立したチェックアウトを用意する。本番用manifestを共有作業場所で切り替えない。`SITE_TARGET` と `SOURCE_COMMIT` を指定して `prepare-site-manifest.mjs` で宛先を選ぶ。プレビューの配信用コミットは `sourceCommit` とmanifestの `project_id` だけが異なる。`check-site-release.mjs` で差分・実際の宛先・フラグを検査してからビルド、push、梱包する。
 2. 本番向けでは、下記の最終確認を終えるまで本番側の変更を実行しない。承認済みの本番またはプレビューでは、Sitesにpushした配信用コミットの完全なSHAを `commit_sha` に渡し、その同じコミットから作った成果物を保存・デプロイする。GitHubの `sourceCommit` とSitesの `deliveryCommit` を混同しない。取得資格情報はコマンド単位で使い、ファイル・ログ・remote URLへ残さない。
 3. 非終端の公開結果だけ `get_deployment_status` で確認する。タイムアウトは既存バージョンと公開状態を照合してから再試行する。成功は `succeeded` と一致するURL・ソースで判断する。共有範囲を変えて公開を通さない。
-4. プレビューでは [第一章の確認表](../../../docs/site-release.md#第一章の確認表) に従い、テスト用記録で変更箇所、通常記録で通し進行・保存復元を確認する。同じソースでテスト機能を無効にした配置も確認する。環境設定を戻す際も再デプロイし、通常設定 `true` への復帰を確認する。
+4. プレビューでは [第一章の確認表](../../../docs/development/site-release.md#第一章の確認表) に従い、テスト用記録で変更箇所、通常記録で通し進行・保存復元を確認する。同じソースでテスト機能を無効にした配置も確認する。環境設定を戻す際も再デプロイし、通常設定 `true` への復帰を確認する。
 5. 本番依頼がある場合は同じ `sourceCommit` の確認記録と本番環境の観測値で公開前検査を行い、下記の最終確認へ進む。未完了・失敗・別SHAの確認は本番公開の根拠にしない。実機未確認なら範囲と理由を残し、ブラウザー確認とは分けて報告する。既知の実機不具合は解消してから公開する。ソースを変更したら必要なプレビュー確認をやり直す。
 6. 本番公開後は新しいブラウザーセッションで起動・素材読み込み・テスト機能非表示を確認する。ユーザーの端末保存を初期化・置換しない。失敗時は新しい不具合と前バージョンへの復旧可否を確認し、DBを巻き戻さない。
 

@@ -8,7 +8,7 @@
 
 ## 第二章2-8・2-9：薬の配達と三人のお茶
 
-組み込み `image_gen` で各1536×1024の画像を制作。アリア・レオン・ミラのリファレンスシートを外見・衣装の参照に使い、文字なしの一枚絵にした。モデル識別子は返されていない。最終プロンプトは [生成記録](art-generation/chapter-two-finale-art.json) に保存。
+組み込み `image_gen` で各1536×1024の画像を制作。アリア・レオン・ミラのリファレンスシートを外見・衣装の参照に使い、文字なしの一枚絵にした。モデル識別子は返されていない。最終プロンプトは [生成記録](../art-generation/chapter-two-finale-art.json) に保存。
 
 - `assets/source/stories/medicine-delivered.png`：`waiting-households-return` の0始まり4行目、ミラが匙で薬を飲ませる行から表示。少年・母親側の肩越しにミラを正面から見る構図。重いまぶた、目の下の影、疲れた肩に寝不足をにじませ、薬を飲ませる優しさを保つ。衣装はミラの設定図に合わせ、肩が見えるローブと細い肩紐を保つ。アリアとレオンは画面外。瞬時の全快や魔法の発光を置かない。
 - `assets/source/stories/three-cups-of-tea.png`：`medicine-road-home-return` の0始まり11行目、ミラがカップを受け取り一口飲む行から表示。ミラは空いた手を往診のメモへ伸ばし、アリアが紙をそっと遠ざける。レオンはカップを持って笑う。大きな頭と小さな体、誇張した表情のコミカルなデフォルメ画にし、同じ机に三人と三つのカップを置く。休んでも仕事を増やしかける癖を小さな仕草で見せる。対応する地の文もこの動作へ合わせた。
@@ -21,7 +21,7 @@
 
 大小の人形はカボチャやコウモリ、黒・緑・黄色の布でハロウィン風に飾る。少し後ろに小柄なプティを置き、パンプキンヘッドをかぶったまま操る。穴の内側は暗く、素顔や目元は見せない。ゴーレムの両手は各5本（親指1本＋指4本）。
 
-戦闘用の `public/enemies/mountain-puppet.png` と `public/enemies/cargo-golem.png` は同じ意匠の1024×1536透過PNG。2-5の人形、2-6の人形と大型ゴーレムに使い、縦横比を保って表示する。制作ツールは組み込み `image_gen`。モデルの識別子は返されていない。詳細は [生成記録](art-generation/stage-2-6-art.json) を参照。
+戦闘用の `public/enemies/mountain-puppet.png` と `public/enemies/cargo-golem.png` は同じ意匠の1024×1536透過PNG。2-5の人形、2-6の人形と大型ゴーレムに使い、縦横比を保って表示する。制作ツールは組み込み `image_gen`。モデルの識別子は返されていない。詳細は [生成記録](../art-generation/stage-2-6-art.json) を参照。
 
 ## 第一章1-9：塔の再点灯
 
@@ -29,7 +29,7 @@
 
 二人は寄り添って座り、正面の塔を向く後ろ姿。採用画像ではアリアのフードを下ろし、長い金髪と花飾りを見せる。塔の窓には弱い紫の灯りがともる。
 
-初版と差し替え時のプロンプト、採用画像の出典とハッシュは [制作記録](art-generation/stage-1-9-art.json) に保存する。モデル識別子はツールから返されていない。画像の確認とブラウザ・実機確認は区別する。
+初版と差し替え時のプロンプト、採用画像の出典とハッシュは [制作記録](../art-generation/stage-1-9-art.json) に保存する。モデル識別子はツールから返されていない。画像の確認とブラウザ・実機確認は区別する。
 
 初版では、アリアのフードとマントの布の連続を局所修正した。これは差し替え前の制作履歴であり、現在の採用画像には適用しない。
 
@@ -44,7 +44,7 @@
 
 ## 第一章1-6
 
-森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](art-generation/stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](art-generation/stage-1-6-closeup-art.json) に保存した。
+森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](../art-generation/stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](../art-generation/stage-1-6-closeup-art.json) に保存した。
 
 - `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。
@@ -70,7 +70,7 @@
 
 ### 発見場面のアップへの改訂（2026-09-16）
 
-組み込み `image_gen` で既存の `tower-moss-discovery.png` を編集し、同じ保存先へ差し替えた。出力は1536×1024のPNG。人物の外見と絵柄は [アリアの設定画](characters/aria-reference-sheet.webp) と [レオンの設定画](characters/leon-reference-sheet.webp) を直接参照した。二人の顔と苔灯に寄り、アリアの頭のフードを下ろして白い花飾りと編み込みを見せる。顔、衣装、木べら、容器を支える手、淡い苔の光を画像で確認した。会話と表示条件は既存のまま。
+組み込み `image_gen` で既存の `tower-moss-discovery.png` を編集し、同じ保存先へ差し替えた。出力は1536×1024のPNG。人物の外見と絵柄は [アリアの設定画](../characters/aria-reference-sheet.webp) と [レオンの設定画](../characters/leon-reference-sheet.webp) を直接参照した。二人の顔と苔灯に寄り、アリアの頭のフードを下ろして白い花飾りと編み込みを見せる。顔、衣装、木べら、容器を支える手、淡い苔の光を画像で確認した。会話と表示条件は既存のまま。
 
 さらに色合いを設定画へ寄せ、夕日の橙色と強い陰影を抑えた。淡いベージュの金髪、明るい肌、落ち着いた緑・くすんだ赤・青灰色の衣装、柔らかな陰影を優先し、アップの構図と手元の動作を維持。組み込み `image_gen` による1536×1024 PNGを同じ保存先へ差し替え、設定画と目視で比較した。
 
@@ -96,7 +96,7 @@
 
 定義は `lib/story-art.ts` から削除済みで、現在は表示しない。以下は制作記録として残す。
 
-組み込みの image_gen を使用し、各場面を独立した1枚絵として生成。`public/stories/first-map.png` を絵柄とアリア・レオンの参照、`public/sprites.png` を仲間の人物デザインの参照とする。原寸の PNG を保存し、生成プロンプトと出力寸法は [生成記録](art-generation/story-art-generation.json) に保存する。
+組み込みの image_gen を使用し、各場面を独立した1枚絵として生成。`public/stories/first-map.png` を絵柄とアリア・レオンの参照、`public/sprites.png` を仲間の人物デザインの参照とする。原寸の PNG を保存し、生成プロンプトと出力寸法は [生成記録](../art-generation/story-art-generation.json) に保存する。
 
 | 物語 | シーンID | 保存先 | 初めて表示する行と場面 |
 | --- | --- | --- | --- |
@@ -148,13 +148,13 @@ Use case: illustration-story. Create one original standalone wide landscape game
 | 返さない宝物 | pumpety-finn-keepsake.png | 6 | 人形がお辞儀をし、プティが鍵を返す |
 | 三分を数える手 | chacha-mira-tea.png | 3 | ミラが砂時計を置き直し、チャチャが座ってカップを持つ |
 
-3枚とも1536×1024。衣装と既存の仲間の外見を引き継ぎ、文字や吹き出しは入れない。生成プロンプトと入力画像は [採用画像の制作記録](art-generation/original-character-art-v2-prompts.json)、画像の一覧は [オリジナルキャラクターのギャラリー](original-character-gallery.md)。
+3枚とも1536×1024。衣装と既存の仲間の外見を引き継ぎ、文字や吹き出しは入れない。生成プロンプトと入力画像は [採用画像の制作記録](../art-generation/original-character-art-v2-prompts.json)、画像の一覧は [オリジナルキャラクターのギャラリー](original-character-gallery.md)。
 
 目視確認では人物は各2人で、指定衣装・表情・小道具・場面に対応している。チャチャの絵には予備も含めた3客のカップがあり、大剣は画面端で一部切れるが、物語の動作と鑑賞を妨げないため採用。
 
 ## 第二章2-2：ミラが倒れる
 
-- 採用画像：[`mira-collapse.png`](../assets/source/stories/mira-collapse.png)、1536×1024。内蔵 `image_gen` で制作。
+- 採用画像：[`mira-collapse.png`](../../assets/source/stories/mira-collapse.png)、1536×1024。内蔵 `image_gen` で制作。
 - 参考：`characters/aria-reference-sheet.webp`、`characters/leon-reference-sheet.webp`、`characters/mira-reference-sheet.webp`。外見・衣装のみを参照し、シート内の文字は設定へ採用しない。
 - 表示：`moonlit-herbs-return` の第7行（0始まりで6）、ミラの膝が折れる行から。2-1のお昼には画像を置かない。
 - 画像確認：倒れたミラをレオンが支え、アリアが荷物をどけて近くへ寄る。三人の外見、支える動作、作りかけの薬のある仕事場を確認した。

@@ -10,8 +10,8 @@
 
 | 呼び名 | コード | 物語の資料 | 実装の資料 |
 | --- | --- | --- | --- |
-| 第一章 | `lib/prologue.ts`（`prologueStages`） | [第一章プロット](story-part-1.md) | [第一章のゲーム実装](prologue-gameplay.md) |
-| 第二章 | `lib/chapter-two.ts`（`chapterTwoStages`） | [第二章計画](story-part-2.md) | [第二章のゲーム実装](chapter-two-gameplay.md) |
+| 第一章 | `lib/prologue.ts`（`prologueStages`） | [第一章プロット](story/story-part-1.md) | [第一章のゲーム実装](gameplay/prologue-gameplay.md) |
+| 第二章 | `lib/chapter-two.ts`（`chapterTwoStages`） | [第二章計画](story/story-part-2.md) | [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) |
 
 第一章と第二章を合わせたものが `storyStages`（`lib/prologue.ts`）。ステージの解放順・次の行先はこの並びで決まる。
 
@@ -21,24 +21,24 @@
 
 | 番号 | 表示名 | クエストID | 定数 | 地域 | 出発 / 達成シーンID | 担当資料 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1-1 | 街への交易 | `village-trade` | `TRADE_QUEST` | 街へ続く交易路 | `village-trade-departure` / `village-trade-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-2 | 夕暮れの帰り道 | `evening-trade-road` | `RETURN_QUEST` | 村へ戻る交易路 | `evening-trade-road-departure` / `evening-trade-road-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-3 | 街の配達仕事 | `town-deliveries` | `TOWN_QUEST` | 街の倉庫と商店 | `town-deliveries-departure` / `town-deliveries-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-4 | 丘の塔まで足を伸ばす | `tower-road` | `TOWER_QUEST` | 畑と林を抜ける丘の道 | `tower-road-departure` / `tower-road-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-5 | 苔灯と帰る夜道 | `moss-night-road` | `NIGHT_QUEST` | 村々へ続く夜の交易路 | `moss-night-road-departure` / `moss-night-road-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-6 | 森の苔を探して | `forest-wetland` | `WETLAND_QUEST` | 木陰に水の残る森の湿地 | `forest-wetland-departure` / `forest-wetland-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-7 | 古い水路をたどって | `old-waterway` | `WATERWAY_QUEST` | 塔の裏手の湿った斜面 | `old-waterway-departure` / `old-waterway-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-8 | 水の通り道を戻す仕事 | `tower-restoration` | `RESTORATION_QUEST` | 塔の古い排水路 | `tower-restoration-departure` / `tower-restoration-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 1-9 | もう一度、あの灯りを | `tower-moss-removal` | `MOSS_QUEST` | 水の引いた塔の足元 | `tower-moss-removal-departure` / `tower-moss-removal-return` | [物語](story-part-1.md) / [実装](prologue-gameplay.md) |
-| 2-1 | お昼を持って、あの坂へ | `hilltop-picnic` | `PICNIC_QUEST` | 昼の丘へ続く坂道 | `hilltop-picnic-departure` / `hilltop-picnic-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-2 | 月をためる草 | `moonlit-herbs` | `MOON_HERB_QUEST` | 月光の差し込む林 | `moonlit-herbs-departure` / `moonlit-herbs-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-3 | 配達の支度 | `medicine-packing` | `DELIVERY_PREP_QUEST` | 街の店先と仕事場 | `medicine-packing-departure` / `medicine-packing-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-4 | 山道の入口 | `mountain-entrance` | `MOUNTAIN_QUEST` | 山向こうへ続く道 | `mountain-entrance-departure` / `mountain-entrance-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-5 | くるくる道標 | `spinning-signpost` | `SIGNPOST_QUEST` | 道標のある分かれ道 | `spinning-signpost-departure` / `spinning-signpost-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-6 | もう一人の山賊 | `begging-golem` | `GOLEM_QUEST` | 古い作業場の手前 | `begging-golem-departure` / `begging-golem-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-7 | お菓子の通せんぼ | `sweet-blockade` | `BLOCKADE_QUEST` | 街道脇の古い作業場 | `sweet-blockade-departure` / `sweet-blockade-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-8 | 薬を待つ家々 | `waiting-households` | `HOUSE_CALLS_QUEST` | 山向こうの集落 | `waiting-households-departure` / `waiting-households-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
-| 2-9 | 帰りの薬箱 | `medicine-road-home` | `MEDICINE_RETURN_QUEST` | 通行の戻った山道 | `medicine-road-home-departure` / `medicine-road-home-return` | [物語](story-part-2.md) / [実装](chapter-two-gameplay.md) |
+| 1-1 | 街への交易 | `village-trade` | `TRADE_QUEST` | 街へ続く交易路 | `village-trade-departure` / `village-trade-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-2 | 夕暮れの帰り道 | `evening-trade-road` | `RETURN_QUEST` | 村へ戻る交易路 | `evening-trade-road-departure` / `evening-trade-road-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-3 | 街の配達仕事 | `town-deliveries` | `TOWN_QUEST` | 街の倉庫と商店 | `town-deliveries-departure` / `town-deliveries-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-4 | 丘の塔まで足を伸ばす | `tower-road` | `TOWER_QUEST` | 畑と林を抜ける丘の道 | `tower-road-departure` / `tower-road-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-5 | 苔灯と帰る夜道 | `moss-night-road` | `NIGHT_QUEST` | 村々へ続く夜の交易路 | `moss-night-road-departure` / `moss-night-road-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-6 | 森の苔を探して | `forest-wetland` | `WETLAND_QUEST` | 木陰に水の残る森の湿地 | `forest-wetland-departure` / `forest-wetland-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-7 | 古い水路をたどって | `old-waterway` | `WATERWAY_QUEST` | 塔の裏手の湿った斜面 | `old-waterway-departure` / `old-waterway-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-8 | 水の通り道を戻す仕事 | `tower-restoration` | `RESTORATION_QUEST` | 塔の古い排水路 | `tower-restoration-departure` / `tower-restoration-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 1-9 | もう一度、あの灯りを | `tower-moss-removal` | `MOSS_QUEST` | 水の引いた塔の足元 | `tower-moss-removal-departure` / `tower-moss-removal-return` | [物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md) |
+| 2-1 | お昼を持って、あの坂へ | `hilltop-picnic` | `PICNIC_QUEST` | 昼の丘へ続く坂道 | `hilltop-picnic-departure` / `hilltop-picnic-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-2 | 月をためる草 | `moonlit-herbs` | `MOON_HERB_QUEST` | 月光の差し込む林 | `moonlit-herbs-departure` / `moonlit-herbs-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-3 | 配達の支度 | `medicine-packing` | `DELIVERY_PREP_QUEST` | 街の店先と仕事場 | `medicine-packing-departure` / `medicine-packing-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-4 | 山道の入口 | `mountain-entrance` | `MOUNTAIN_QUEST` | 山向こうへ続く道 | `mountain-entrance-departure` / `mountain-entrance-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-5 | くるくる道標 | `spinning-signpost` | `SIGNPOST_QUEST` | 道標のある分かれ道 | `spinning-signpost-departure` / `spinning-signpost-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-6 | もう一人の山賊 | `begging-golem` | `GOLEM_QUEST` | 古い作業場の手前 | `begging-golem-departure` / `begging-golem-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-7 | お菓子の通せんぼ | `sweet-blockade` | `BLOCKADE_QUEST` | 街道脇の古い作業場 | `sweet-blockade-departure` / `sweet-blockade-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-8 | 薬を待つ家々 | `waiting-households` | `HOUSE_CALLS_QUEST` | 山向こうの集落 | `waiting-households-departure` / `waiting-households-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 2-9 | 帰りの薬箱 | `medicine-road-home` | `MEDICINE_RETURN_QUEST` | 通行の戻った山道 | `medicine-road-home-departure` / `medicine-road-home-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
 
 クエスト一覧のカードは小見出しに番号、太字に表示名を出す。ヒントは「番号 表示名 · 物語の題」の形（例：`1-4 丘の塔まで足を伸ばす · 少し見に行こう`）。物語の題（`stage.title`）はその回の読み物の見出しで、行先の名前ではない。
 
@@ -51,11 +51,11 @@
 | 出発前 | `<クエストID>-departure` | 「出発」を押したあと、冒険が始まる前 |
 | 達成後 | `<クエストID>-return` | 15地点を走り終えたあと |
 
-例：`village-trade-departure` / `village-trade-return`。スチルの対応は `lib/story-art.ts` がシーンIDをキーに持ち、場面と表示行は [スチル制作記録](story-art.md)、採用画像は [スチル一覧](story-art-gallery.md) にある。
+例：`village-trade-departure` / `village-trade-return`。スチルの対応は `lib/story-art.ts` がシーンIDをキーに持ち、場面と表示行は [スチル制作記録](art/story-art.md)、採用画像は [スチル一覧](art/story-art-gallery.md) にある。
 
 ## 従来モードの旧クエストID
 
-以下は削除済みの試作で使ったIDの記録で、現在の `allQuests` には含まれない。旧通常依頼9件の出典は [削除前の `lib/game-v1.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game-v1.ts)、来客依頼2件の出典は [削除前の `lib/game.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game.ts)、加入専用依頼7件の出典は [削除前の `lib/recruitment.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/recruitment.ts)。遊び方と会話は [従来モードの記録](legacy-mode.md)、旧加入条件は [仲間加入](recruitment.md) を参照する。
+以下は削除済みの試作で使ったIDの記録で、現在の `allQuests` には含まれない。旧通常依頼9件の出典は [削除前の `lib/game-v1.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game-v1.ts)、来客依頼2件の出典は [削除前の `lib/game.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game.ts)、加入専用依頼7件の出典は [削除前の `lib/recruitment.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/recruitment.ts)。遊び方と会話は [従来モードの記録](archive/legacy-mode.md)、旧加入条件は [仲間加入](archive/recruitment.md) を参照する。
 
 | 旧クエストID | 表示名 | 区分 |
 | --- | --- | --- |
@@ -87,7 +87,7 @@
 | 言葉 | 意味 | コード上の名前 |
 | --- | --- | --- |
 | 物語モード | 現在の遊び方。章立てのステージを順に進む | `state.prologue === true`（`inPrologue`） |
-| 従来モード | 章立てにする前の試作。[削除済み](gameplay.md#従来モードの扱い) | （なし） |
+| 従来モード | 章立てにする前の試作。[削除済み](gameplay/gameplay.md#従来モードの扱い) | （なし） |
 | 記録 | プレイヤーのセーブ1件。画面では「冒険の記録」 | `Profile` / `State` |
 | 隊 | 冒険に出るメンバーのまとまり。現在は1つだけ | `Squad` |
 | 地点 | 1周15回ある移動・戦闘・採取の単位 | `run.node` |

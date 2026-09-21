@@ -2,7 +2,7 @@
 
 キャラID: `merrill`
 
-[キャラクター一覧・設定の扱い](README.md) · [物語・会話の制作指針](../story-writing.md)
+[キャラクター一覧・設定の扱い](README.md) · [物語・会話の制作指針](../story/story-writing.md)
 
 ## 制作の核・書くときの手がかり
 
@@ -13,8 +13,8 @@
 
 ## 採用済み
 
-- **従来記録のみ**：`midnight-snack` の出発・帰還、`puppet-midnight` の帰還。魔物を食べる、耳を断られた話、小動物を追う、プティの人形をかじろうとする。加入はしない。[従来モード](../gameplay.md#従来モードの扱い)のため、ここへ新しい場面を足さない。
-- **新しい物語**：扱いは未設定。珍しいものの噂を聞いて食べに来る絡みは [世界観の将来の種](../world-and-story.md) の候補で、どの章で描くかは決めていない。
+- **従来記録のみ**：`midnight-snack` の出発・帰還、`puppet-midnight` の帰還。魔物を食べる、耳を断られた話、小動物を追う、プティの人形をかじろうとする。加入はしない。[従来モード](../gameplay/gameplay.md#従来モードの扱い)のため、ここへ新しい場面を足さない。
+- **新しい物語**：扱いは未設定。珍しいものの噂を聞いて食べに来る絡みは [世界観の将来の種](../story/world-and-story.md) の候補で、どの章で描くかは決めていない。
 
 ## メリルの描画時の補足
 
@@ -32,7 +32,7 @@
 
 ## 外見・関連資料・実装
 
-[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../original-character-art.md)、[採用画像](../original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。従来モードの来客の会話は削除済み。
+[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../art/original-character-art.md)、[採用画像](../art/original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。従来モードの来客の会話は削除済み。
 
 初遭遇・クエストの会話は削除済みで、資料側の記録だけが残る。
 

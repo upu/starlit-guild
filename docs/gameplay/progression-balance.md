@@ -80,10 +80,10 @@ v0.3.7の初期装備の能力追加とミラの加入装備を適用し、章�
 | 用途 | 正本・入口 |
 | --- | --- |
 | 章の基準・接続・時間 | この文書 |
-| 計算と個別戦闘・作業・回復の調整 | [combat-balance.md](combat-balance.md)、[combat.ts](../lib/combat.ts)、[game.ts](../lib/game.ts) |
-| 第二章の進行・報酬 | [chapter-two-gameplay.md](chapter-two-gameplay.md)、[chapter-two.ts](../lib/chapter-two.ts) |
-| 第一章の連続試走 | [check-combat-balance.mjs](../scripts/check-combat-balance.mjs) の `trainedChapter(true)` |
-| 第二章の連続・独立試走 | [check-chapter-two-balance.mjs](../scripts/check-chapter-two-balance.mjs) の `chapterRoute` / `measure` |
-| 章間の状態継続・通算時間 | [check-progression-balance.mjs](../scripts/check-progression-balance.mjs) |
-| 第二章の固定開始データ | [chapter-two-presets.ts](../lib/chapter-two-presets.ts) |
-| 回帰検証 | [chapter-two-balance.test.mjs](../tests/chapter-two-balance.test.mjs)、[progression-balance.test.mjs](../tests/progression-balance.test.mjs) |
+| 計算と個別戦闘・作業・回復の調整 | [combat-balance.md](combat-balance.md)、[combat.ts](../../lib/combat.ts)、[game.ts](../../lib/game.ts) |
+| 第二章の進行・報酬 | [chapter-two-gameplay.md](chapter-two-gameplay.md)、[chapter-two.ts](../../lib/chapter-two.ts) |
+| 第一章の連続試走 | [check-combat-balance.mjs](../../scripts/check-combat-balance.mjs) の `trainedChapter(true)` |
+| 第二章の連続・独立試走 | [check-chapter-two-balance.mjs](../../scripts/check-chapter-two-balance.mjs) の `chapterRoute` / `measure` |
+| 章間の状態継続・通算時間 | [check-progression-balance.mjs](../../scripts/check-progression-balance.mjs) |
+| 第二章の固定開始データ | [chapter-two-presets.ts](../../lib/chapter-two-presets.ts) |
+| 回帰検証 | [chapter-two-balance.test.mjs](../../tests/chapter-two-balance.test.mjs)、[progression-balance.test.mjs](../../tests/progression-balance.test.mjs) |

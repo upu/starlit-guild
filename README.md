@@ -12,7 +12,7 @@
 - 冒険や日常の物語、掛け合い、スチルを「思い出」から読み返せます。
 - 進行は端末保存を正本とし、クラウドバックアップとファイル保存に対応します。
 
-現行ゲームの詳しい挙動は [ゲームプレイ仕様](docs/gameplay.md)、保存と互換性は [セーブシステム](docs/save-system.md) を参照してください。
+現行ゲームの詳しい挙動は [ゲームプレイ仕様](docs/gameplay/gameplay.md)、保存と互換性は [セーブシステム](docs/gameplay/save-system.md) を参照してください。
 
 ## 開発
 
@@ -28,7 +28,7 @@ npx tsc --noEmit
 
 冒険描画は Phaser、画面・会話・設定は React、保存やバックアップには localStorage / D1 / Drizzle を使用しています。
 
-開発・公開時の注意は [開発と運用](docs/development.md) にまとめています。
+開発・公開時の注意は [開発と運用](docs/development/development.md) にまとめています。
 
 ## ドキュメント
 
@@ -40,4 +40,4 @@ npx tsc --noEmit
 
 ゲームサイトは所有者向けの限定公開です。GitHubの `origin` への push だけではサイトは更新されません。公開作業では Sites 側への同期とビルドを別途行います。
 
-公開手順と保存データを扱う際の注意は [開発と運用](docs/development.md) を参照してください。
+公開手順と保存データを扱う際の注意は [開発と運用](docs/development/development.md) を参照してください。
