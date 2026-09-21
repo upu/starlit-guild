@@ -16,6 +16,21 @@
         }
       }
     },
+    "finn-at-breakfast.png": {
+      "sourceHash": "14c509f987d70fddc42767798bc769e1dda6143ae794e25d7821218d7588d322",
+      "sourceBytes": 2356674,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "3a8d30b73612e95d763b8a6371eacc708f0e1589d922c032fc6e5893f6b63d97",
+          "bytes": 183170
+        },
+        "thumbnail": {
+          "hash": "40f89d751faa965c431794956400efe2fd3e5165ff880a2bb7ad940ed256a19c",
+          "bytes": 15440
+        }
+      }
+    },
     "forest-moss-aria.png": {
       "sourceHash": "0f4b5f185e52a75332317ef75ce2c8cfa7c2b7c49f46740e597e6967385d0637",
       "sourceBytes": 3064032,
@@ -28,6 +43,21 @@
         "thumbnail": {
           "hash": "a30363c5bad8f187e1b0d0ac044543c3f6f22a1b6db63b664bdbf5951c6d7d58",
           "bytes": 23762
+        }
+      }
+    },
+    "four-cups-of-tea.png": {
+      "sourceHash": "2d22661685ebee1c19996ef7339ecc02241b2e2260c51ecd0216cb139f1423ae",
+      "sourceBytes": 2764410,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "94415edad134ae2e28c1436febc8c2bcd94d08d9c82a7b78b94584fd430e26d2",
+          "bytes": 279798
+        },
+        "thumbnail": {
+          "hash": "39e212804c9011a1d235ae8debfd79a3de3e30800456f670fb9530cf0a500c20",
+          "bytes": 22574
         }
       }
     },
@@ -58,6 +88,21 @@
         "thumbnail": {
           "hash": "9ce60f34177d1154059582665f93955bec8cc37a0299b4e53f4680ad44f37dc0",
           "bytes": 24562
+        }
+      }
+    },
+    "mira-tends-finn.png": {
+      "sourceHash": "48599b14fb9d1506298481daff982616d9a6ac78a98ca08c99f05fec6db35db5",
+      "sourceBytes": 2700365,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "9bb946d4b2b76b73ebef7f7595beef3123a7ce7229d69edf4ccad8a3ed4e626a",
+          "bytes": 232424
+        },
+        "thumbnail": {
+          "hash": "55c6db2b035604a984c3f3b62e861c0c5cc0b359145c52e0864148ed97fc76fc",
+          "bytes": 18346
         }
       }
     },
