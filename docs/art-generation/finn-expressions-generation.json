@@ -5,8 +5,8 @@
   "identityReference": "docs/characters/finn-reference-sheet.webp",
   "layoutReference": "public/portraits/mira-expressions.webp",
   "layout": {
-    "columns": 4,
-    "rows": 2,
+    "columns": 3,
+    "rows": 3,
     "cellSize": 256,
     "expressions": [
       "neutral",
@@ -16,10 +16,17 @@
       "serious",
       "shy",
       "tired",
-      "mischievous"
+      "mischievous",
+      "thoughtful"
     ]
   },
-  "encoding": "Flatten to opaque ivory #f5f0e7, resize to 1024x512, lossless WebP.",
+  "encoding": "Lossless WebP, 768x768; nine original 256px cells packed row-major without redrawing or resampling.",
   "prompt": "Create a production-ready 4-column by 2-row expression portrait atlas of FINN, exactly 8 equally sized square cells, landscape aspect ratio exactly 2:1, ideally 2048x1024. Image 1 is the STRICT Finn identity master, image 2 is ONLY a framing/layout example of another character. Draw only Finn from image 1. No text, labels, numbers, signatures, decorative borders or gutters. Every cell meets adjacent cells edge to edge at exact quarter-width and half-height boundaries, each with opaque pale ivory background. Same face scale, eye baseline, orientation (almost frontal with a very slight three-quarter angle) and lighting across all 8 cells. VERY CLOSE face icons like image 2: face fills most of each square; crop upper hair and outer hair if needed, retain eyes, nose, mouth, cheeks and chin fully. No torso shots. Bottom edge may include just collar. No hands or props obscuring face. Finn: handsome but scruffy late-forties man, warm tan skin, subtle crow's feet, uneven short beard stubble, drooping gray-violet eyes, flowing dark warm brown wavy hair with loose cheek-framing strands and low ponytail. Dark olive-charcoal old coat with antique gold trim and cream shirt, same brass drop earrings as identity sheet. Preserve his adult masculine face, not young pretty boy, not elderly caricature. Fine thin anime lines, soft luminous shading, muted colors, detailed hair strands and irises as the identity reference; do not copy Mira's female face, pale skin, hair color, flowers, clothes or jewelry. EXACT ROW-MAJOR expressions: top row 1 neutral: relaxed attentive eyes, faint habitual glib closed-mouth smile; 2 smile: clearly joyful broad open smile with teeth, eyes happily narrowed; 3 surprised: widened eyes, raised brows, open rounded mouth; 4 worried: sheepish apologetic face, inner brows up, uneasy asymmetric mouth, visibly caught exaggerating. Bottom row 5 serious: focused steady gaze, lowered brows, firmly closed mouth, no smile; 6 shy: embarrassed by unexpected praise, subtle warm blush, averted eyes, restrained awkward little smile, still a middle-aged man; 7 tired: heavy eyelids and lowered brows, weary slack slightly open mouth, no cheerful grin; 8 mischievous: clearly confident crooked grin and one cocked eyebrow, inviting a dubious deal, warm rather than evil. Distinguish all 8 at 64px viewing size using eye and mouth shapes. Consistent anatomy, hair shape, tan, beard, earring counts and positions in every cell. No extra faces. Precisely aligned 4x2 evenly sized tiles for direct CSS spritesheet use.",
-  "generatedSource": "exec-9629ae49-fe65-4726-8c8d-05883c6f9d63.png"
+  "generatedSource": "exec-9629ae49-fe65-4726-8c8d-05883c6f9d63.png",
+  "assembly": {
+    "baseEightCells": "c469a7d:public/portraits/finn-expressions.webp",
+    "thoughtfulCell": "32b8357:public/portraits/finn-thoughtful.webp",
+    "thoughtfulGeneration": "finn-thoughtful-generation.json",
+    "validation": "All nine decoded RGBA cells exactly match their source cells."
+  }
 }

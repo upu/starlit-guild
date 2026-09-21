@@ -93,3 +93,35 @@ test("expressions are authored for narrative context, narration has none, and un
     portraits.expressionPortrait(0, "neutral").position,
   );
 });
+
+test("Finn uses nine cells through the shared API; eight-cell characters fall back safely", async () => {
+  const expected = [
+    "0% 0%",
+    "50% 0%",
+    "100% 0%",
+    "0% 50%",
+    "50% 50%",
+    "100% 50%",
+    "0% 100%",
+    "50% 100%",
+    "100% 100%",
+  ];
+  for (const [cell, expression] of portraits.portraitExpressions.entries()) {
+    assert.deepEqual(portraits.expressionPortrait("finn", expression), {
+      src: "/portraits/finn-expressions.webp",
+      size: "300% 300%",
+      position: expected[cell],
+    });
+  }
+  const meta = await sharp(
+    readFileSync(new URL("../public/portraits/finn-expressions.webp", import.meta.url)),
+  ).metadata();
+  assert.equal(meta.width, 768);
+  assert.equal(meta.height, 768);
+  for (const character of ["aria", "leon", "mira", "pumpety", 0, 1, 2, 13]) {
+    assert.deepEqual(
+      portraits.expressionPortrait(character, "thoughtful"),
+      portraits.expressionPortrait(character),
+    );
+  }
+});

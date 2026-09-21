@@ -21,9 +21,9 @@
 
 ## 登場に備えた素材
 
-フィンの [8表情](../public/portraits/finn-expressions.webp) は [採用シート](characters/finn-reference-sheet.webp) をもとに制作した。同じ1024×512px・4列×2行・表情順で、可逆WebPを使用する。表情の意図は [人物資料](characters/finn.md#顔アイコン)、制作条件は [生成記録](art-generation/finn-expressions-generation.json) を参照。キャラクター登録と台詞への割り当ては未実装のため、上記の表示対象にはまだ含めない。
+フィンの [9表情](../public/portraits/finn-expressions.webp) は [採用シート](characters/finn-reference-sheet.webp) をもとに制作した。768×768px・3列×3行の可逆WebPで、通常・笑顔・驚き／困り・真剣・照れ／疲れ・ニヤリ・思案を収録する。表情の意図は [人物資料](characters/finn.md#顔アイコン)、制作条件は [生成記録](art-generation/finn-expressions-generation.json) を参照。キャラクター登録と台詞への割り当ては未実装のため、上記の表示対象にはまだ含めない。
 
-フィンには顎に手を添えた [思案顔](../public/portraits/finn-thoughtful.webp) も用意した。256px角の独立画像で、既存8表情の列挙・アトラス形式は変更しない。こちらも台詞への割り当ては未実装。
+`expressionPortrait("finn", "thoughtful")` で右下の思案顔を取得できる。`lib/portrait-expressions.ts` のキャラ別定義が列数・行数・表情順を持つ。既存キャラは4列×2行のままで、未収録の表情を指定した場合は通常顔へ戻る。既存の数値IDによる呼び出しも維持する。フィンのゲーム内登録番号はまだ割り当てない。
 
 ## 生成記録
 
