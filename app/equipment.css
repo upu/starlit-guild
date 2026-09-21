@@ -721,3 +721,38 @@
     font-size: 18px;
   }
 }
+.character-scroll {
+  flex: 1;
+}
+.character-bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 44%;
+  max-height: 360px;
+  min-height: 0;
+  border-top: 1px solid #9a8c58;
+  background: #172e26;
+}
+.character-bottom-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  padding: 4px 12px;
+}
+.phone-game .character-bottom-toolbar button {
+  min-height: 32px;
+  padding: 3px 12px;
+  font-size: 12px;
+}
+.character-bottom-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
+  padding: 0 12px 12px;
+}
+.character-bottom .character-equipment {
+  padding: 10px;
+}
+.character-bottom p {
+  font-size: 14px;
+}

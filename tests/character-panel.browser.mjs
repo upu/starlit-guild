@@ -151,6 +151,14 @@ try {
     );
     await page.screenshot({ path: path.join(dir, "overview-" + width + ".png") });
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
+    const bottom = page.locator(".character-bottom");
+    const equipmentBox = await bottom.boundingBox();
+    await page.locator(".character-scroll").evaluate((el) => {
+      el.scrollTop = el.scrollHeight;
+    });
+    assert.equal((await bottom.boundingBox()).y, equipmentBox.y);
+    assert.equal(await page.locator(".character-scroll .character-icon-choices").count(), 0);
+
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     assert.match(
       await page.locator(".character-slot").first().getAttribute("aria-label"),
@@ -183,6 +191,16 @@ try {
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
     await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+    assert.equal((await bottom.boundingBox()).y, equipmentBox.y);
+    assert.equal(await page.locator(".character-bottom").count(), 1);
+    assert.equal(
+      await page
+        .locator(".character-bottom")
+        .getByText(/所持金/)
+        .count(),
+      0,
+    );
+
     assert.equal(
       await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
       1,
@@ -195,7 +213,18 @@ try {
     assert.equal(await unlearned.getAttribute("data-muted"), "true");
     assert.match(await page.locator(".character-choice-detail").last().innerText(), /未習得/);
     await page.screenshot({ path: path.join(dir, "candidates-" + width + ".png") });
+    assert.match(
+      await page.locator(".character-choice-detail").last().innerText(),
+      /所持金 1,000 G/,
+    );
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
+    assert.equal(
+      await page
+        .locator(".character-bottom")
+        .getByText(/所持金/)
+        .count(),
+      0,
+    );
     await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
     assert.match(
       await page.locator(".character-slot").last().getAttribute("aria-label"),

@@ -23,8 +23,13 @@ import {
   type EquipmentSlot,
 } from "@/lib/equipment";
 import { storyItems } from "@/lib/story-items";
-import { techniquesUnlocked, equippedTechnique } from "@/lib/techniques";
-import { TechniquePanel } from "./technique-panel";
+import {
+  techniquesUnlocked,
+  equippedTechnique,
+  techniques,
+  type TechniqueSlot,
+} from "@/lib/techniques";
+import { TechniquePanel, TechniqueDetails } from "./technique-panel";
 import { ShopItemIcon } from "./shop-item-icon";
 import { TechniqueIcon } from "./technique-icon";
 import { Portrait } from "./portrait";
@@ -233,8 +238,14 @@ function EquipmentSlotPanel({
   );
 }
 
-function CharacterEquipment(props: Props & { hero: string }) {
-  const [slot, setSlot] = useState<EquipmentSlot | null>(null);
+function CharacterEquipment(
+  props: Props & {
+    hero: string;
+    slot: string | null;
+    onSlot: (slot: EquipmentSlot | null) => void;
+  },
+) {
+  const slot = props.slot;
   const inventory = inventoryOf(props.state);
   return (
     <section className="character-loadout" aria-label="装備">
@@ -249,9 +260,9 @@ function CharacterEquipment(props: Props & { hero: string }) {
               aria-label={`${label}・${item?.name ?? "装備なし"}・付け替える`}
               title={item?.name ?? "装備なし"}
               aria-expanded={slot === kind}
-              aria-controls="character-equipment-options"
+              aria-controls="character-options"
               onClick={() => {
-                setSlot(slot === kind ? null : kind);
+                props.onSlot(slot === kind ? null : kind);
               }}
             >
               <small>{label}</small>
@@ -264,9 +275,6 @@ function CharacterEquipment(props: Props & { hero: string }) {
             </button>
           );
         })}
-      </div>
-      <div id="character-equipment-options">
-        {slot && <EquipmentSlotPanel key={`${props.hero}-${slot}`} {...props} slot={slot} />}
       </div>
     </section>
   );
@@ -283,13 +291,29 @@ function FixedTechnique({ state, hero }: { state: State; hero: string }) {
     </section>
   );
 }
+function CharacterHeading({ state, hero }: { state: State; hero: (typeof heroes)[number] }) {
+  const hp = state.squads.find((squad) => squad.members.includes(hero.id))?.run?.health[hero.id];
+  return (
+    <div className="character-heading">
+      <Portrait index={hero.sprite} size={56} />
+      <div>
+        <h2>{hero.name}</h2>
+        <p>{hero.job}</p>
+        <span>Lv. {level(state.xp[hero.id] ?? 0)}</span>
+        <p>
+          {hp
+            ? `HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`
+            : `最大HP ${String(memberMaxHp(state, hero.id))}`}
+        </p>
+      </div>
+    </div>
+  );
+}
 export function CharacterPanel(props: Props) {
+  const [slot, setSlot] = useState<EquipmentSlot | TechniqueSlot | null>(null);
   const [selected, setSelected] = useState("aria"),
     roster = heroes.filter((hero) => props.state.owned.includes(hero.id)),
     hero = roster.find((hero) => hero.id === selected) ?? roster[0];
-  const hp = props.state.squads.find((squad) => squad.members.includes(hero.id))?.run?.health[
-    hero.id
-  ];
   return (
     <div className="character-panel">
       <div className="character-picker" aria-label="キャラクターを選ぶ">
@@ -308,30 +332,55 @@ export function CharacterPanel(props: Props) {
         ))}
       </div>
       <div className="character-scroll">
-        <div className="character-heading">
-          <Portrait index={hero.sprite} size={56} />
-          <div>
-            <h2>{hero.name}</h2>
-            <p>{hero.job}</p>
-            <span>Lv. {level(props.state.xp[hero.id] ?? 0)}</span>
-            <p>
-              {hp
-                ? `HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`
-                : `最大HP ${String(memberMaxHp(props.state, hero.id))}`}
-            </p>
-          </div>
-        </div>
+        <CharacterHeading state={props.state} hero={hero} />
         <details className="character-bio" key={hero.id}>
           <summary>キャラクター詳細</summary>
           <p>{hero.bio}</p>
         </details>
         <StatRow values={memberStats(props.state, hero.id)} />
-        <CharacterEquipment {...props} hero={hero.id} />
+        <CharacterEquipment {...props} hero={hero.id} slot={slot} onSlot={setSlot} />
         {(!techniquesUnlocked(props.state) || !["aria", "leon"].includes(hero.id)) && (
           <FixedTechnique state={props.state} hero={hero.id} />
         )}
-        <TechniquePanel {...props} hero={hero.id} />
+        <TechniquePanel {...props} hero={hero.id} slot={slot} onSlot={setSlot} />
       </div>
+      <CharacterDetails
+        {...props}
+        hero={hero.id}
+        slot={slot}
+        onClose={() => {
+          setSlot(null);
+        }}
+      />
     </div>
+  );
+}
+
+function CharacterDetails(
+  props: Props & { hero: string; slot: EquipmentSlot | TechniqueSlot | null; onClose: () => void },
+) {
+  const { slot, hero } = props;
+  if (!slot) return null;
+  const equipmentSlot = slot === "weapon" || slot === "armor";
+  if (
+    !equipmentSlot &&
+    (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === hero))
+  )
+    return null;
+  return (
+    <section className="character-bottom" id="character-options" aria-label="付け替え候補">
+      <div className="character-bottom-toolbar">
+        <button className="outline" onClick={props.onClose}>
+          閉じる
+        </button>
+      </div>
+      <div className="character-bottom-scroll" key={hero + slot}>
+        {equipmentSlot ? (
+          <EquipmentSlotPanel {...props} slot={slot} />
+        ) : (
+          <TechniqueDetails {...props} slot={slot} />
+        )}
+      </div>
+    </section>
   );
 }

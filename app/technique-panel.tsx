@@ -36,6 +36,7 @@ function TechniqueChoice({
       <small>
         {known ? "習得済み" : `未習得 · 必要 Lv. ${String(t.level)} · ${String(t.cost)} G`}
       </small>
+      {!known && <small>所持金 {Math.floor(s.gold).toLocaleString("ja-JP")} G</small>}
       {!known && !enoughLevel && <small>レベルが足りません</small>}
       {!known && s.gold < t.cost && <small>所持金が足りません</small>}
       {known ? (
@@ -111,12 +112,10 @@ function TechniqueChoices({
   );
 }
 
-export function TechniquePanel(props: Props) {
-  const [notice, setNotice] = useState({ hero: props.hero, text: "" });
-  const [slot, setSlot] = useState<TechniqueSlot | null>(null);
-  const showNotice = (text: string) => {
-    setNotice({ hero: props.hero, text });
-  };
+export function TechniquePanel(
+  props: Props & { slot: string | null; onSlot: (slot: TechniqueSlot | null) => void },
+) {
+  const slot = props.slot;
   const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
   if (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === props.hero))
     return null;
@@ -125,7 +124,6 @@ export function TechniquePanel(props: Props) {
     <section className="character-skill" aria-label="スキル">
       {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
       {candidates.length > 0 && <p>習得できる技があります。</p>}
-      <p role="status">{notice.hero === props.hero ? notice.text : ""}</p>
       <div className="character-slots">
         {(["active", "passive"] as const).map((kind) => {
           const current = techniques.find(
@@ -138,9 +136,9 @@ export function TechniquePanel(props: Props) {
               aria-label={`${kind === "active" ? "アクティブ技" : "パッシブ技"}・${current?.name ?? "セットなし"}・習得・セット`}
               title={current?.name ?? "セットなし"}
               aria-expanded={slot === kind}
-              aria-controls="character-technique-options"
+              aria-controls="character-options"
               onClick={() => {
-                setSlot(slot === kind ? null : kind);
+                props.onSlot(slot === kind ? null : kind);
               }}
             >
               <small>{kind === "active" ? "アクティブ技" : "パッシブ技"}</small>
@@ -150,24 +148,16 @@ export function TechniquePanel(props: Props) {
           );
         })}
       </div>
-      <div id="character-technique-options">
-        {slot && (
-          <>
-            <p className="technique-funds">
-              所持金 {Math.floor(props.state.gold).toLocaleString("ja-JP")} G
-            </p>
-            <p className="technique-help">
-              セットすると自動で働きます。帰還中の付け替えは何度でも無料です。
-            </p>
-            <TechniqueChoices
-              key={`${props.hero}-${slot}`}
-              {...props}
-              slot={slot}
-              notice={showNotice}
-            />
-          </>
-        )}
-      </div>
     </section>
+  );
+}
+
+export function TechniqueDetails(props: Props & { slot: TechniqueSlot }) {
+  const [notice, setNotice] = useState("");
+  return (
+    <>
+      <TechniqueChoices {...props} notice={setNotice} />
+      <p role="status">{notice}</p>
+    </>
   );
 }
