@@ -1,9 +1,5 @@
 import { originalArt } from "@/lib/original-characters";
-import {
-  expressionPortrait,
-  type PortraitCharacter,
-  type PortraitExpression,
-} from "@/lib/portrait-expressions";
+import { expressionPortrait, type PortraitExpression } from "@/lib/portrait-expressions";
 
 const faces: Record<number, string> = { 0: "/portraits/aria.png", 1: "/portraits/leon.png" };
 const dialogueCells: Partial<Record<number, number>> = {
@@ -73,13 +69,12 @@ export function Portrait({
   size = 56,
   expression = "neutral",
 }: {
-  index: number | PortraitCharacter;
+  index: number;
   size?: number;
   expression?: PortraitExpression;
 }) {
   const portrait = expressionPortrait(index, expression);
   if (portrait) return expressionFace(portrait, size);
-  if (typeof index !== "number") return null;
   const cell = dialogueCells[index];
   if (cell !== undefined) return dialogueFace(cell, size);
   return legacyFace(index, size);

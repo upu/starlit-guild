@@ -78,9 +78,6 @@ function TestProfileButton({ game, onCreate }: { game: Game; onCreate: () => voi
       </button>
       <p>第2章から試す</p>
       <small>今の冒険を残して、別のテスト記録を作ります。どちらも2-1の出発前から始まります。</small>
-      <a className="story-entry" href="/story-preview/chapter-three">
-        第三章の会話を試読する →
-      </a>
       {chapterTwoPresets.map((preset) => (
         <button
           key={preset.id}

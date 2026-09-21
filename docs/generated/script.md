@@ -25,4 +25,4 @@
 
 - [共通の掛け合い](banter.md)
 
-制作中：[第三章の会話（試読）](chapter-three.md)
+制作中：[第三章の会話（レビュー用）](chapter-three.md)

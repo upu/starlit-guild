@@ -1,4 +1,3 @@
-import * as storySpeakers from "../lib/story-speakers.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -85,7 +84,6 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
   };
   const jsx = (type, props, key) => ({ type, props, key });
   const modules = {
-    "@/lib/story-speakers": storySpeakers,
     react,
     "react/jsx-runtime": { jsx, jsxs: jsx },
     "next/image": { default: "img" },

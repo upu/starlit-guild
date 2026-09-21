@@ -53,11 +53,11 @@
 
 例：`village-trade-departure` / `village-trade-return`。スチルの対応は `lib/story-art.ts` がシーンIDをキーに持ち、場面と表示行は [スチル制作記録](art/story-art.md)、採用画像は [スチル一覧](art/story-art-gallery.md) にある。
 
-## 第三章の試読用シーン
+## 第三章の先行会話
 
-第三章は[試読ページ](gameplay/chapter-three-gameplay.md)で会話を確認する。以下は試読専用IDで、クエストIDではなく、セーブや本編のステージ一覧には登録しない。
+第三章の先行会話は[生成台本](generated/chapter-three.md)で確認する。以下は会話データの仮IDで、クエストIDではなく、セーブや本編のステージ一覧には登録しない。
 
-| 番号 | 表示名 | 試読シーンID |
+| 番号 | 表示名 | 先行会話ID |
 | --- | --- | --- |
 | 幕間 | 私が用意するお昼 | `chapter-three-draft-interlude-return` |
 | 3-1 | 隣の席の聞き上手 | `chapter-three-draft-3-1-departure` / `chapter-three-draft-3-1-return` |
@@ -70,7 +70,7 @@
 | 3-8 | 間違った荷物を戻す夜 | `chapter-three-draft-3-8-departure` / `chapter-three-draft-3-8-return` |
 | 3-9 | 戻る灯り、増える同行者 | `chapter-three-draft-3-9-departure` / `chapter-three-draft-3-9-return` |
 
-幕間の `return` は既存会話型で試読するための値で、冒険達成を意味しない。本編への接続時にクエストIDと幕間の扱いを決める。
+幕間の `return` は既存会話型で保持するための値で、冒険達成を意味しない。本編への接続時にクエストIDと幕間の扱いを決める。
 
 ## 従来モードの旧クエストID
 

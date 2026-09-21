@@ -128,7 +128,7 @@ await build({
   alias: imageAlias,
   jsx: "automatic",
 });
-const { StoryReader, StoryLines, Banter } = await import(storyOutput.href);
+const { StoryReader, Banter } = await import(storyOutput.href);
 const phoneOutput = new URL("../work/phone-render.mjs", import.meta.url);
 await build({
   entryPoints: ["app/phone-game.tsx"],
@@ -141,19 +141,6 @@ await build({
   jsx: "automatic",
 });
 const { PhoneGame } = await import(phoneOutput.href);
-
-test("Finn renders with his own name and shared nine-expression atlas without joining the roster", () => {
-  const html = renderToStaticMarkup(
-    createElement(StoryLines, {
-      lines: [{ speaker: "finn", text: "まかせとけって。", expression: "thoughtful" }],
-    }),
-  );
-  assert.match(html, /フィン/);
-  assert.match(html, /まかせとけって。/);
-  assert.match(html, /finn-expressions\.webp/);
-  assert.match(html, /background-size:300% 300%/);
-  assert.match(html, /background-position:100% 100%/);
-});
 
 test("dialogue and banter show close-up portraits and the trade still appears from the first page", () => {
   const story = stories.find((st) => st.id === "village-trade-return");

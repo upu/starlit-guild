@@ -13,8 +13,8 @@ import { Portrait } from "./portrait";
 import { storyArtwork, storyArtViewer, storyTapHint } from "./story-viewers";
 import { memoryGroups } from "./story-memory-groups";
 import { useStoryGestureHandlers, type StoryGesture } from "./story-gesture-handlers";
-import type { State } from "@/lib/game";
-import { storySpeakers as characters } from "@/lib/story-speakers";
+import { heroes, type State } from "@/lib/game";
+import { originalCharacters } from "@/lib/original-characters";
 import {
   availableStories,
   stories,
@@ -26,6 +26,10 @@ import { storyArtAt } from "@/lib/story-art";
 import type { StoryAdvance } from "./use-story-advance";
 export { ArtViewer, StoryAlbum } from "./story-viewers";
 export { memoryGroups } from "./story-memory-groups";
+const characters = [
+  ...heroes,
+  ...originalCharacters.filter((c) => !heroes.some((h) => h.id === c.id)),
+];
 
 export function StoryLines({ lines, startIndex = 0 }: { lines: StoryLine[]; startIndex?: number }) {
   return (

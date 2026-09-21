@@ -43,7 +43,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [戦闘バランス](gameplay/combat-balance.md) — 育成差による減衰、敵と回復、第二章の育成時間・テスト開始データ・調整手順
 - [セーブシステム](gameplay/save-system.md) — 端末保存、バックアップ、記録、移行、複数タブ
 - [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) — 2-1〜2-9、ミラ加入、技の習得・セット、互換性
-- [第三章の会話先行実装](gameplay/chapter-three-gameplay.md) — 試読ページ、会話の接続範囲と今後の冒険実装
+- [第三章の会話先行実装](gameplay/chapter-three-gameplay.md) — 会話データと生成台本、今後の冒険実装
 - [第一章のゲーム実装](gameplay/prologue-gameplay.md) — 第一章の進行、表示、周回、互換性
 
 ## 従来モードの記録
