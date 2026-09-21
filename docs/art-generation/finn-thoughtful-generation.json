@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not returned",
+  "target": "public/portraits/finn-thoughtful.webp",
+  "identityReference": "public/portraits/finn-expressions.webp",
+  "poseReference": "User-supplied thoughtful hand-to-chin image (not included in repository)",
+  "encoding": "256x256 opaque ivory, lossless WebP.",
+  "prompt": "Create ONE square close-up face icon of Finn with a thoughtful, slightly scheming hand-to-chin expression. Reference 1 is the requested POSE AND MOOD: fingers resting lightly across chin/lower lip, knowing half-lidded sideways gaze, subtle asymmetric closed-mouth smile, relaxed contemplation with dubious charm. Reference 2 is the STRICT ADOPTED IDENTITY AND RENDERING STYLE: match that man's face shape, tan, age, gray-violet eyes, dark warm brown wavy hair, uneven stubble, gold drop earrings, dark olive coat with muted gold edge and cream shirt. Preserve reference 2 rather than redesigning his face to reference 1. Late-forties but aging well, handsome relaxed dubious intermediary, not evil, not a teen. Right hand naturally supports chin, index finger rests just below lower lip without hiding smile, thumb beneath jaw, other fingers naturally curled; anatomically correct 5-finger hand. Cheap plain rings on right index and ring finger. Do not copy the extra pendant necklaces from reference 1. Thin delicate anime linework, soft painterly highlights, muted warm colors consistent with the eight-icon atlas. SINGLE 1:1 square, face very large filling most of icon, eyes/nose/mouth readable at 64px; crop outer hair and shoulders as needed, include chin-touching hand without zooming out to a torso portrait. Opaque ivory #f5f0e7 plain background. No text, border, frame, labels, watermark, extra panels. Match the face size in one cell of reference 2. The expression feels like 'さて、どう話を持っていくか' rather than a broad mischievous grin."
+}

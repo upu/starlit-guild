@@ -23,6 +23,8 @@
 
 フィンの [8表情](../public/portraits/finn-expressions.webp) は [採用シート](characters/finn-reference-sheet.webp) をもとに制作した。同じ1024×512px・4列×2行・表情順で、可逆WebPを使用する。表情の意図は [人物資料](characters/finn.md#顔アイコン)、制作条件は [生成記録](art-generation/finn-expressions-generation.json) を参照。キャラクター登録と台詞への割り当ては未実装のため、上記の表示対象にはまだ含めない。
 
+フィンには顎に手を添えた [思案顔](../public/portraits/finn-thoughtful.webp) も用意した。256px角の独立画像で、既存8表情の列挙・アトラス形式は変更しない。こちらも台詞への割り当ては未実装。
+
 ## 生成記録
 
 採用したアップ構図の参照画像・生成出力・最終プロンプトは [生成記録](art-generation/dialogue-expressions-generation.json) に保存する。内蔵画像生成ツールで、4人の外見・8表情・コマ順を維持して描き直した。参照シートの文字情報を人物設定として採用していない。
