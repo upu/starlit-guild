@@ -332,6 +332,19 @@ function useBanterButtonHandlers(
   };
 }
 
+function banterLine(entry: StoryLine, key: number) {
+  const speaker = characters.find((h) => h.id === entry.speaker);
+  return (
+    <span className="banter-line" key={key}>
+      {speaker && <Portrait index={speaker.sprite} size={40} expression={entry.expression} />}
+      <span className="banter-message">
+        {speaker && <b>{speaker.name}：</b>}
+        {entry.text}
+      </span>
+    </span>
+  );
+}
+
 export function Banter({
   lines,
   onRead,
@@ -374,20 +387,9 @@ export function Banter({
       aria-label="道中の掛け合いを読む"
     >
       <span className="banter-copy">
-        {exchange.history.map((entry, i) => {
-          const speaker = characters.find((h) => h.id === entry.speaker);
-          return (
-            <span className="banter-line" key={exchange.turn - exchange.history.length + 1 + i}>
-              {speaker && (
-                <Portrait index={speaker.sprite} size={64} expression={entry.expression} />
-              )}
-              <span className="banter-message">
-                {speaker && <b>{speaker.name}</b>}
-                {entry.text}
-              </span>
-            </span>
-          );
-        })}
+        {exchange.history.map((entry, i) =>
+          banterLine(entry, exchange.turn - exchange.history.length + 1 + i),
+        )}
       </span>
     </button>
   );

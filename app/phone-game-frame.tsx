@@ -189,7 +189,10 @@ function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
 }
 function AdventureTab({ model: m }: { model: PhoneFrameModel }) {
   return (
-    <TabsContent value="adventure" className="phone-adventure">
+    <TabsContent
+      value="adventure"
+      className={"phone-adventure" + (m.run ? " phone-adventure-running" : "")}
+    >
       <MapStage
         state={m.state}
         squad={m.squad}

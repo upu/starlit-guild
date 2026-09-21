@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-21",
+  "tool": "built-in image_gen",
+  "model": "not reported by tool",
+  "conversion": "Lanczos3 resize to 256px per face, WebP quality 82, effort 6",
+  "characters": [
+    {
+      "id": "mira",
+      "reference": "docs/characters/mira-reference-sheet.webp",
+      "generatedImage": "exec-e7676906-32e5-40e3-83ee-f32baa436d71.png",
+      "initialImage": "exec-fc984bf4-bbf9-4cbb-840f-e74fb8d22287.png",
+      "output": "public/portraits/mira-expressions.webp",
+      "dimensions": [
+        1024,
+        512
+      ],
+      "columns": 4,
+      "rows": 2,
+      "notes": "Faithful tight face close-ups; preserve heavy upper lids, gray-violet eyes, moon/flower ornament. Targeted edit strengthens cool desaturated gray-violet under-eye hollows in all expressions, strongest in tired. Mid-twenties age in mira.md supersedes old reference-sheet text. Final correction reduces discoloration intensity by about one third with narrower softer edges, retaining subtle chronic fatigue and stronger tired expression.",
+      "bytes": 103076,
+      "intermediateImage": "exec-9730b1dd-bc6d-4be0-8252-11e5b15dbead.png"
+    },
+    {
+      "id": "finn",
+      "reference": "docs/characters/finn-reference-sheet.webp",
+      "generatedImage": "exec-605c7ae9-98e2-4404-9a7a-02e9d8c7c1e0.png",
+      "output": "public/portraits/finn-expressions.webp",
+      "dimensions": [
+        768,
+        768
+      ],
+      "columns": 3,
+      "rows": 3,
+      "notes": "Late-forties man; tan skin, stubble, subtle crow feet, drooping gray-violet eyes, loosely tied dark brown hair. Tight face crop, eight standard expressions plus thoughtful with finger at chin. Existing shared API only; no new character registration or dialogue assignment.",
+      "bytes": 217748
+    }
+  ]
+}

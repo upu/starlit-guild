@@ -77,6 +77,10 @@ export function Portrait({
   if (portrait) return expressionFace(portrait, size);
   const cell = dialogueCells[index];
   if (cell !== undefined) return dialogueFace(cell, size);
+  return legacyFace(index, size);
+}
+
+function legacyFace(index: number, size: number) {
   const face = faces[index],
     original = originalArt(index);
   const [cx, cy] = centers[index] || [0.5, 0.3],

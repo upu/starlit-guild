@@ -142,8 +142,8 @@ test("dialogue and banter show close-up portraits and the trade still appears fr
     before = structuredClone(lines);
   const chat = renderToStaticMarkup(createElement(Banter, { lines, onRead: () => {} }));
   assert.match(chat, /face-portrait/);
-  assert.ok(chat.includes("/portraits/aria-expressions.webp"));
-  assert.match(chat, /background-size:400% 200%/);
+  assert.ok(chat.includes("/portraits/aria-leon-expressions-v2.webp"));
+  assert.match(chat, /background-size:400% 400%/);
   assert.equal((chat.match(/face-portrait/g) || []).length, 1);
   assert.ok(!chat.includes(lines[1].text));
   assert.doesNotMatch(chat, /class="sprite/);

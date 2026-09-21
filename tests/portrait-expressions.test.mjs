@@ -34,7 +34,7 @@ vm.runInNewContext(code, {
   },
 });
 
-test("four reference characters use their own eight-cell atlas; other characters retain their art", async () => {
+test("reference characters retain eight expressions and other characters retain their art", async () => {
   for (const [index, name] of [
     [0, "aria"],
     [1, "leon"],
@@ -46,9 +46,11 @@ test("four reference characters use their own eight-cell atlas; other characters
       const portrait = exports.Portrait({ index, expression, size: 72 });
       assert.equal(
         portrait.props.style.backgroundImage,
-        `url(/portraits/${name}-expressions.webp)`,
+        index < 2
+          ? "url(/portraits/aria-leon-expressions-v2.webp)"
+          : `url(/portraits/${name}-expressions.webp)`,
       );
-      assert.equal(portrait.props.style.backgroundSize, "400% 200%");
+      assert.equal(portrait.props.style.backgroundSize, index < 2 ? "400% 400%" : "400% 200%");
       positions.add(portrait.props.style.backgroundPosition);
     }
     assert.equal(positions.size, 8);
@@ -92,6 +94,42 @@ test("expressions are authored for narrative context, narration has none, and un
     portraits.expressionPortrait(0).position,
     portraits.expressionPortrait(0, "neutral").position,
   );
+});
+
+test("chat and story sizes share close-ups with distinct speakers and expressions", async () => {
+  const positions = new Set();
+  for (const index of [0, 1]) {
+    for (const expression of portraits.portraitExpressions.slice(0, 8)) {
+      const compact = exports.Portrait({ index, expression, size: 40 });
+      assert.equal(
+        compact.props.style.backgroundImage,
+        "url(/portraits/aria-leon-expressions-v2.webp)",
+      );
+      assert.equal(compact.props.style.backgroundSize, "400% 400%");
+      positions.add(compact.props.style.backgroundPosition);
+      assert.equal(
+        exports.Portrait({ index, expression }).props.style.backgroundImage,
+        compact.props.style.backgroundImage,
+      );
+    }
+    assert.deepEqual(
+      portraits.expressionPortrait(index, "thoughtful"),
+      portraits.expressionPortrait(index, "neutral"),
+    );
+  }
+  assert.equal(positions.size, 16);
+  assert.equal(portraits.expressionPortrait(0).position, "0% 0%");
+  assert.equal(portraits.expressionPortrait(1, "mischievous").position, "100% 100%");
+  for (const index of [2, 13, 3])
+    assert.deepEqual(
+      exports.Portrait({ index, size: 40 }).props.style.backgroundImage,
+      exports.Portrait({ index, size: 72 }).props.style.backgroundImage,
+    );
+  const meta = await sharp(
+    readFileSync(new URL("../public/portraits/aria-leon-expressions-v2.webp", import.meta.url)),
+  ).metadata();
+  assert.equal(meta.width, meta.height);
+  assert.ok(meta.width >= 1024);
 });
 
 test("Finn uses nine cells through the shared API; eight-cell characters fall back safely", async () => {

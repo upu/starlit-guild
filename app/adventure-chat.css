@@ -1,0 +1,55 @@
+/* Map and chat share one row so the scenery continues behind the conversation. */
+.phone-game .phone-adventure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 48px;
+  gap: 0;
+}
+.phone-game .phone-adventure .map-shell {
+  grid-area: 1 / 1;
+  height: 100%;
+}
+.phone-game .phone-adventure > .journey-banter,
+.phone-game .phone-adventure > .phone-banter {
+  grid-area: 1 / 1;
+  align-self: end;
+  position: relative;
+  z-index: 6;
+  margin: 0;
+}
+.phone-game .phone-adventure-running {
+  --chat-rows: 5;
+}
+.phone-game .phone-adventure > .journey-banter,
+.phone-game .phone-adventure > .journey-banter:hover:not(:disabled),
+.phone-game .phone-adventure > .journey-banter:focus,
+.phone-game .phone-adventure > .journey-banter:active,
+.phone-game .phone-adventure > .phone-banter {
+  background: rgb(30 33 37 / 38%);
+  color: #fff;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  text-shadow: 0 1px 2px #000;
+  box-shadow: none;
+}
+.phone-game .journey-banter-history .banter-message b {
+  color: #f5deb0;
+}
+.phone-game .phone-adventure > .adventure-actions {
+  grid-area: 2 / 1;
+}
+/* Keep journey progress just above the bottom conversation. */
+.phone-game .phone-adventure .map-journey {
+  bottom: calc(var(--chat-rows, 3) * (2.5rem + 2px) + 13px);
+}
+/* Short screens prioritize the battle and retain scrolling for older lines. */
+@media (max-height: 740px) {
+  .phone-game .phone-adventure-running {
+    --chat-rows: 3;
+  }
+}
+@media (max-height: 650px) {
+  .phone-game .phone-adventure {
+    grid-template-rows: minmax(370px, 1fr) 48px;
+    overflow-y: auto;
+  }
+}
