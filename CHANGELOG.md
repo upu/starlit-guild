@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.3.6 | 2026-09-21 | キャラクター画面の選択・装備・スキルをコンパクトにする（[#128](https://github.com/upu/starlit-guild/pull/128)） |
 | 0.3.5 | 2026-09-21 | ショップをアイコン一覧と下部固定の詳細表示にする（[#127](https://github.com/upu/starlit-guild/pull/127)） |
 | 0.3.4 | 2026-09-21 | チャット欄のタップによる拡大表示を取り除く（[#126](https://github.com/upu/starlit-guild/pull/126)） |
 | 0.3.3 | 2026-09-21 | クエストを縦1列に整理し、選択中の行先を下部に固定する（[#125](https://github.com/upu/starlit-guild/pull/125)） |
