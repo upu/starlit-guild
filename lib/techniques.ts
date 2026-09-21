@@ -59,7 +59,7 @@ export const techniques: Technique[] = [
     slot: "passive",
     name: "狩人の狙い",
     description: "自分の通常攻撃・技の威力が15%増える。",
-    level: 20,
+    level: 14,
     cost: 120,
   },
   {
@@ -95,7 +95,7 @@ export const techniques: Technique[] = [
     slot: "passive",
     name: "剣の心得",
     description: "自分の通常攻撃・技の威力が15%増える。",
-    level: 20,
+    level: 14,
     cost: 120,
   },
 ];
