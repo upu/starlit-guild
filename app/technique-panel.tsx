@@ -6,9 +6,9 @@ import { level, type State, type Action } from "@/lib/game";
 import {
   techniques,
   techniquesUnlocked,
+  learnableTechniques,
   knowsTechnique,
   equippedTechnique,
-  learnableTechniques,
   type Technique,
   type TechniqueSlot,
 } from "@/lib/techniques";
@@ -53,6 +53,11 @@ function TechniqueChoice({
     </article>
   );
 }
+function affordableTechniques(props: Props) {
+  return props.ready
+    ? learnableTechniques(props.state).filter((t) => props.state.gold >= t.cost)
+    : [];
+}
 function TechniqueChoices({
   slot,
   notice,
@@ -62,6 +67,7 @@ function TechniqueChoices({
   const current = equippedTechnique(props.state, props.hero, slot);
   const [selected, setSelected] = useState(current ?? "empty");
   const choices = techniques.filter((t) => t.hero === props.hero && t.slot === slot);
+  const learnable = affordableTechniques(props);
   const chosen = choices.find((t) => t.id === selected);
   function select(id: string) {
     if (id !== selected) {
@@ -97,6 +103,7 @@ function TechniqueChoices({
           icon: <TechniqueIcon id={t.id} slot={slot} />,
           badge: current === t.id ? "セット中" : undefined,
           muted: !knowsTechnique(props.state, t.id),
+          learnable: learnable.some((candidate) => candidate.id === t.id),
         }))}
       />
       {chosen ? (
@@ -119,11 +126,9 @@ export function TechniquePanel(
   const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
   if (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === props.hero))
     return null;
-  const candidates = learnableTechniques(props.state).filter((t) => t.hero === props.hero);
   return (
     <section className="character-skill" aria-label="スキル">
       {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
-      {candidates.length > 0 && <p>習得できる技があります。</p>}
       <div className="character-slots">
         {(["active", "passive"] as const).map((kind) => {
           const current = techniques.find(

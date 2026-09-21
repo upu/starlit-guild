@@ -1,7 +1,17 @@
 import { SquareDashed, Check } from "lucide-react";
 import { useId, type ReactNode } from "react";
 
-type Choice = { id: string; name: string; icon: ReactNode; badge?: string; muted?: boolean };
+type Choice = {
+  id: string;
+  name: string;
+  icon: ReactNode;
+  badge?: string;
+  muted?: boolean;
+  learnable?: boolean;
+};
+function LearnableDot({ id }: { id: string }) {
+  return <span className="character-learnable-dot" id={id} role="img" aria-label="習得できます" />;
+}
 export function CharacterIconChoices({
   choices,
   selected,
@@ -32,7 +42,9 @@ export function CharacterIconChoices({
           className="character-icon-choice"
           data-muted={choice.muted || undefined}
           aria-label={choice.name}
-          aria-describedby={choice.badge ? `${statusId}-${choice.id}` : undefined}
+          aria-describedby={
+            choice.badge || choice.learnable ? `${statusId}-${choice.id}` : undefined
+          }
           title={choice.name}
           aria-pressed={selected === choice.id}
           onClick={() => {
@@ -40,6 +52,7 @@ export function CharacterIconChoices({
           }}
         >
           {choice.icon}
+          {choice.learnable && <LearnableDot id={`${statusId}-${choice.id}`} />}
           {choice.badge && (
             <span
               className="character-equipped-mark"

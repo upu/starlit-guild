@@ -792,3 +792,14 @@
   height: 12px;
   stroke-width: 3;
 }
+.character-learnable-dot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ef6666;
+  border: 1px solid #ffd8c9;
+  box-shadow: 0 0 0 1px #172e26;
+}

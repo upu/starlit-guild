@@ -18,7 +18,8 @@ const bundle = await build({
  import {CharacterPanel} from './app/equipment-panels';
  import {testState,act} from './lib/game';
  import {initialInventory} from './lib/equipment';
- const initial=testState(1000,new URLSearchParams(location.search).has("locked") ? 2 : 14,20,1000);
+ const params=new URLSearchParams(location.search);
+ const initial=testState(1000,params.has("locked") ? 2 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
  function App(){
@@ -208,6 +209,7 @@ try {
     await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
     const unlearned = page.getByRole("button", { name: "野草の目利き", exact: true });
     assert.equal(await unlearned.getAttribute("data-muted"), "true");
+    assert.equal(await unlearned.locator(".character-learnable-dot").count(), 1);
     assert.equal(await unlearned.innerText(), "");
     await unlearned.click();
     assert.equal(await unlearned.getAttribute("data-muted"), "true");
@@ -218,6 +220,7 @@ try {
       /所持金 1,000 G/,
     );
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
+    assert.equal(await unlearned.locator(".character-learnable-dot").count(), 0);
     assert.equal(
       await page
         .locator(".character-bottom")
@@ -280,6 +283,26 @@ try {
     await page.getByRole("button", { name: "レオン", exact: true }).click();
     assert.match(await fixed.innerText(), /暁の踏み込み/);
     await page.screenshot({ path: path.join(dir, "locked-" + width + ".png") });
+    await page.goto("http://127.0.0.1:" + server.address().port + "/?limited");
+    await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+    assert.equal(
+      await page
+        .getByRole("button", { name: "野草の目利き", exact: true })
+        .locator(".character-learnable-dot")
+        .count(),
+      1,
+    );
+    assert.equal(
+      await page
+        .getByRole("button", { name: "狩人の狙い", exact: true })
+        .locator(".character-learnable-dot")
+        .count(),
+      0,
+    );
+    await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
+    await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
+    await page.getByRole("button", { name: /アクティブ技.*習得・セット/ }).click();
+    assert.equal(await page.locator(".character-learnable-dot").count(), 0);
     await context.close();
   }
 } finally {
