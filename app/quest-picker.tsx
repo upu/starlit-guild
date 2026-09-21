@@ -1,5 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
+import Image from "next/image";
+import { questScenery } from "@/lib/scenery";
 import { trioQuest } from "@/lib/chapter-two";
 import { Check, LockKeyhole } from "lucide-react";
 import { availableQuests, heroes, type State, type Quest } from "@/lib/game";
@@ -63,6 +65,15 @@ function questOption(
         else onSelect(item.id);
       }}
     >
+      <Image
+        className="quest-option-art"
+        src={questScenery(item, "thumbnail")}
+        alt=""
+        width={48}
+        height={48}
+        loading="lazy"
+        unoptimized
+      />
       <span className="quest-option-copy">
         <span className="quest-option-meta">
           <small>
@@ -181,7 +192,6 @@ function QuestSummary({
       </span>
       <span className="quest-summary-title">{q.name}</span>
       <span className="quest-description">{q.desc}</span>
-      <span className="quest-confirm-label">このクエストに決定 →</span>
     </button>
   );
 }

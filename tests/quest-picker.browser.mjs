@@ -209,7 +209,8 @@ try {
       false,
     );
     const sceneryRequests = [...new Set(requests.filter((p) => p.startsWith("/scenery/")))];
-    assert.deepEqual(sceneryRequests, []);
+    assert.ok(sceneryRequests.length > 0);
+    assert.ok(sceneryRequests.every((path) => path.endsWith("-thumbnail.webp")));
     assert.deepEqual(errors, []);
     results.push({ width, sceneryRequests, errors });
     await context.close();

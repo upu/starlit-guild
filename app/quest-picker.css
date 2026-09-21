@@ -55,6 +55,14 @@
   flex: 1;
   gap: 3px;
 }
+.quest-option .quest-option-art {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 6px;
+}
 .quest-option .quest-option-meta {
   flex-direction: row;
   align-items: center;
@@ -97,11 +105,6 @@
 .quest-description {
   font-size: 12px;
   line-height: 1.6;
-}
-.quest-confirm-label {
-  align-self: flex-end;
-  color: #ffe29e;
-  font-size: 12px;
 }
 @media (max-height: 500px) {
   .phone-dialog.quest-dialog {
