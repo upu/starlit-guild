@@ -44,9 +44,22 @@ v0.3.7の初期装備の能力追加とミラの加入装備を適用し、章�
 
 固定の方針での一例であり、最短時間や全員の必須育成時間ではない。第一章は3分以内に終わらなければ既読ステージで5分育成し、店が開いたら二人分の武器と革の上着を購入。第二章も3分で帰還し、既読の2-5→2-4→2-2→2-1の優先順で5分育成して再挑戦する。手助け・追加技の購入は使わない。会話は即読了としている。
 
-## スマホ確認用の固定開始データとの違い
+## ゲーム内から作るテスト開始データ
 
-`lib/chapter-two-presets.ts` の「標準」は第一章読了済み、二人Lv.10・経験値2430、店の武器と革の上着、所持金640 G。履歴・資源を簡略化した再現用データで、通し測定の第一章終了データそのものではない。
+「セーブ・設定 → 記録」のテストプレイは、ファイルなしで独立した記録を追加する。通常記録と作成済みテスト記録は変更しない。
+
+| 選択肢 | 開始状態 |
+| --- | --- |
+| 強くて最初から | Lv.50・100万G。ストーリーは未達成、初期装備 |
+| 2章・標準 | 第一章の標準通し試走の終了状態。二人Lv.11、装備・経験値・所持金を継続 |
+| 3章・標準 | 第二章の標準通し試走の終了状態。三人Lv.17、幕間のお昼から |
+| 3章・クリア状態 | 第三章の標準通し試走の終了状態。四人Lv.22、全会話読了、新装備 |
+
+実行時は `lib/test-presets.ts` が `lib/generated/chapter-test-states.json` を複製する。スマホ上で試走は行わない。`npm run presets:generate` が各章の標準試走へ前章の状態全体を渡して再生成し、表示レベルもこのデータから求める。`npm run presets:check` をCIで実行し、バランス変更後の更新漏れを検出する。章追加時は `scripts/generate-test-presets.mjs` に通し試走とステージ一覧を追加する。標準開始ボタンは各章分、クリア状態は最新章分を自動で並べる。
+
+## 旧固定データによる比較試走
+
+`lib/chapter-two-presets.ts` は数値比較スクリプト専用に残す。従来の「標準」は第一章読了済み、二人Lv.10・経験値2430、店の武器と革の上着、所持金640 G。履歴・資源を簡略化した再現用データで、現在のゲーム内ボタンには使用しない。
 
 | 第二章の開始条件 | 追加育成 | 章全体 | 終了Lv（アリア／レオン／ミラ） |
 | --- | --- | --- | --- |
@@ -85,7 +98,8 @@ v0.3.7の初期装備の能力追加とミラの加入装備を適用し、章�
 | 第一章の連続試走 | [check-combat-balance.mjs](../../scripts/check-combat-balance.mjs) の `trainedChapter(true)` |
 | 第二章の連続・独立試走 | [check-chapter-two-balance.mjs](../../scripts/check-chapter-two-balance.mjs) の `chapterRoute` / `measure` |
 | 章間の状態継続・通算時間 | [check-progression-balance.mjs](../../scripts/check-progression-balance.mjs) |
-| 第二章の固定開始データ | [chapter-two-presets.ts](../../lib/chapter-two-presets.ts) |
+| ゲーム内の開始データ | [test-presets.ts](../../lib/test-presets.ts)、[生成スクリプト](../../scripts/generate-test-presets.mjs) |
+| 旧比較用の固定開始データ | [chapter-two-presets.ts](../../lib/chapter-two-presets.ts) |
 | 回帰検証 | [chapter-two-balance.test.mjs](../../tests/chapter-two-balance.test.mjs)、[progression-balance.test.mjs](../../tests/progression-balance.test.mjs) |
 
 ## 第三章の通し測定（v0.3.9）

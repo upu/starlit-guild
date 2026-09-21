@@ -1,4 +1,4 @@
-import * as chapterPresets from "../lib/chapter-two-presets.ts";
+import * as chapterPresets from "../lib/test-presets.ts";
 import * as prologue from "../lib/prologue.ts";
 import * as game from "../lib/game.ts";
 import { test } from "node:test";
@@ -101,32 +101,45 @@ test("save panel hides test creation and adjustment when disabled, including exi
     sonner: { toast: {} },
     "./music-settings": ui,
     "./quest-progression-setting": ui,
-    "@/lib/chapter-two-presets": chapterPresets,
+    "@/lib/test-presets": chapterPresets,
     "@/lib/prologue": prologue,
+    "@/lib/game": game,
     "@/lib/external-input": {},
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
     modules[`@/components/ui/${name}`] = ui;
   const { SavePanel, TestControls } = loadSavePanel(modules);
   for (const enabled of [false, true]) {
-    const profile = { id: "test", test: true, name: "test", state: { clears: 0 } },
+    const profile = {
+        id: "test",
+        test: true,
+        name: "test",
+        state: { clears: 0, done: {}, xp: { aria: 0 }, gold: 60 },
+      },
       calls = [];
     const game = {
       s: profile.state,
       testToolsEnabled: enabled,
       bundle: { active: "test", profiles: [profile] },
       profile,
-      createProfile: (v) => calls.push(v),
+      createProfile: (v, preset) => calls.push([v, preset]),
     };
     const tree = elements(SavePanel({ game }));
     const buttons = tree.filter(
       (e) =>
-        e.type === "button" && elements(e.props.children).some((c) => c.type === "FlaskConical"),
+        e.type === "button" &&
+        elements(e.props.children).some(
+          (c) =>
+            c.type === "b" && chapterPresets.testPresets.some((p) => p.name === c.props.children),
+        ),
     );
-    assert.equal(buttons.length, enabled ? 1 : 0);
+    assert.equal(buttons.length, enabled ? 4 : 0);
     if (enabled) {
-      buttons[0].props.onClick();
-      assert.deepEqual(calls, [true]);
+      for (const button of buttons) button.props.onClick();
+      assert.deepEqual(
+        calls,
+        chapterPresets.testPresets.map((p) => [true, p.id]),
+      );
     }
     assert.equal(TestControls({ game, onAdjust: () => {} }) !== null, enabled);
     assert.equal(
@@ -146,16 +159,27 @@ test("save panel offers deletion for every record and disables it for the last r
     sonner: { toast: {} },
     "./music-settings": ui,
     "./quest-progression-setting": ui,
-    "@/lib/chapter-two-presets": chapterPresets,
+    "@/lib/test-presets": chapterPresets,
     "@/lib/prologue": prologue,
+    "@/lib/game": game,
     "@/lib/external-input": {},
   };
   for (const name of ["dialog", "alert-dialog", "select", "tabs", "input", "switch"])
     modules[`@/components/ui/${name}`] = ui;
   const { SavePanel } = loadSavePanel(modules);
   const profiles = [
-    { id: "first", test: false, name: "最初の冒険", state: { clears: 3 } },
-    { id: "second", test: false, name: "読み込んだ冒険", state: { clears: 8 } },
+    {
+      id: "first",
+      test: false,
+      name: "最初の冒険",
+      state: { clears: 3, done: {}, xp: { aria: 0 }, gold: 60 },
+    },
+    {
+      id: "second",
+      test: false,
+      name: "読み込んだ冒険",
+      state: { clears: 8, done: {}, xp: { aria: 0 }, gold: 60 },
+    },
   ];
   const makeGame = (list) => ({
     s: list[0].state,

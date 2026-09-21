@@ -54,3 +54,6 @@ jobs:
 
       - name: Run unit tests
         run: node --test tests/*.test.mjs
+
+      - name: Check test presets against standard chapter progression
+        run: npm run presets:check

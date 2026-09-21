@@ -8,11 +8,7 @@ import { journeyNotice } from "@/lib/journey";
 import { sound, soundEvents } from "@/lib/sound";
 import { parseBackupReadResponse, parseBackupWriteResponse } from "@/lib/backup-api";
 import { errorMessage } from "@/lib/external-input";
-import {
-  chapterTwoPresets,
-  chapterTwoPresetState,
-  type ChapterTwoPreset,
-} from "@/lib/chapter-two-presets";
+import { testPresets, testPresetState, type TestPreset } from "@/lib/test-presets";
 
 export const SAVE_KEY = "starlit-guild-v4";
 export const LEASE_KEY = SAVE_KEY + "-tab";
@@ -20,16 +16,16 @@ export const FIVE_MINUTES = 300000;
 export type CloudCopy = { bundle: SaveBundle; at: number };
 type BackupRead = ReturnType<typeof parseBackupReadResponse>;
 
-export function newProfile(test = false, preset?: ChapterTwoPreset): Profile {
+export function newProfile(test = false, preset?: TestPreset): Profile {
   return {
     id: localId(),
     name: preset
-      ? chapterTwoPresets.find((p) => p.id === preset)?.name || "第2章テスト"
+      ? testPresets.find((p) => p.id === preset)?.name || "テスト用の冒険"
       : test
         ? "テスト用の冒険"
         : "新しい冒険",
     test,
-    state: preset ? chapterTwoPresetState(preset, Date.now()) : initialPrologueState(Date.now()),
+    state: preset ? testPresetState(preset, Date.now()) : initialPrologueState(Date.now()),
   };
 }
 export function freshBundle(): SaveBundle {

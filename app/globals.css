@@ -2667,14 +2667,13 @@ footer > span:first-child {
 }
 .chapter-test-start p {
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .chapter-test-start small {
   font-size: 12px;
   line-height: 1.7;
-}
-.chapter-test-start > button:first-child {
-  flex-direction: row;
-  align-items: center;
 }
 .save-dialog {
   grid-template-columns: minmax(0, 1fr);

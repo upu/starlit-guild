@@ -5,7 +5,7 @@ import { act, testState, type Action, type State } from "@/lib/game";
 import { parseBundle, type Profile } from "@/lib/save-format";
 import { setSound, sound, soundEvents, unlockSound } from "@/lib/sound";
 import { parseJson } from "@/lib/external-input";
-import type { ChapterTwoPreset } from "@/lib/chapter-two-presets";
+import type { TestPreset } from "@/lib/test-presets";
 import {
   LEASE_KEY,
   SAVE_KEY,
@@ -67,7 +67,7 @@ export function createSwitchProfile(context: GameContext) {
   };
 }
 export function createProfileAction(context: GameContext, testToolsEnabled: boolean) {
-  return (test = false, preset?: ChapterTwoPreset) => {
+  return (test = false, preset?: TestPreset) => {
     const bundle = context.currentRef.current;
     if (!bundle || !context.ownerRef.current || ((test || preset) && !testToolsEnabled)) return;
     if (bundle.profiles.length >= 12) {
