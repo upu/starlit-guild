@@ -14,6 +14,8 @@ import {
   CHAPTER_ROAD_SPACING,
 } from "./chapter-road.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
+import { roadX, roadY } from "./road-layout.ts";
+import { roadWorkLook } from "./chapter-road-work-look.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -27,11 +29,11 @@ export type RoadLook = {
   background: string;
   length: number;
   workers: string[];
-  work?: { asset: string; label: string; cargo: boolean };
+  urban: boolean;
+  work?: { asset: string; frame?: string; label: string; cargo: boolean };
   enemies: Record<number, { frame: string; label: string }>;
 };
-export const chapterRoadX = (x: number, camera: number, width: number, stage = "forest") =>
-  width * (stage === "puppets" ? 0.2 + (x - camera) / 600 : 0.35 + (x - camera) / 560);
+export const chapterRoadX = roadX;
 
 // Predict only the drawing between 200 ms React snapshots. Combat and saved coordinates stay untouched.
 function drawnX(position: RoadPosition, run: Run, now: number) {
@@ -61,6 +63,8 @@ function effects(run: Run | null, battle: RoadBattle): RoadEffect[] {
     .flatMap((event) => {
       const kind = effectKind(event);
       if (!kind || battle.time - event.at > 650) return [];
+      // Work and tap assistance without an enemy are not attacks on the supplies.
+      if (battle.gathering && !event.enemy && !event.target && kind !== "heal") return [];
       const hero = battle.heroes.find((h) => h.id === (event.hero || event.target));
       const id = eventHash(event.id);
       const destination = effectDestination(battle, event);
@@ -184,6 +188,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
   return {
     background: frame.background,
+    urban: ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id),
     length: (run?.nodes || 15) * CHAPTER_ROAD_SPACING,
     workers:
       run && run.phase !== "rest"
@@ -221,16 +226,8 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     road = run?.road;
   const kind = run ? encounter(frame.quest, run.node) : null;
   if (!run || kind === "battle") return;
-  const label = targetName(frame.quest, run.node, run.nodes);
-  const herb = /薬草|草葉|月白草/.test(label),
-    cargo = kind === "escort" && !frame.quest.escortAsset;
-  look.work = {
-    asset: herb
-      ? "/animations/road/herb-v2.png"
-      : frame.quest.escortAsset || (cargo ? "/animations/road/cargo-v1.png" : "/items/chest.png"),
-    label,
-    cargo,
-  };
+  look.work = roadWorkLook(frame.quest, run);
+  const cargo = look.work.cargo;
   const x = road ? workPoint(frame.quest, run) - 65 : 160;
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",
@@ -242,6 +239,9 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     waves: 0,
     rear: false,
   };
+  for (const hero of battle.heroes) {
+    if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
+  }
 }
 export function chapterRoadFrame(input: AdventureInput): { battle: RoadBattle; look: RoadLook } {
   const frame = adventureFrame(input),
@@ -259,19 +259,19 @@ export function chapterRoadHit(
   height: number,
 ): AdventureIntent {
   const { battle } = chapterRoadFrame(input);
-  const size = Math.min(108, width * 0.18, height * 0.34);
+  const size = Math.min(90, width * 0.18, height * 0.34);
   const distance = (h: Traveller) =>
     Math.hypot(
       point.x - chapterRoadX(h.x, battle.distance, width, battle.stage),
-      point.y - (travellerLane(h.id) * height - size * 0.45),
+      point.y - (roadY(travellerLane(h.id), height) - size * 0.45),
     );
   const hero = [...battle.heroes]
     .sort((a, b) => distance(a) - distance(b))
     .find(
       (h) =>
         Math.abs(point.x - chapterRoadX(h.x, battle.distance, width, battle.stage)) < size * 0.45 &&
-        point.y > travellerLane(h.id) * height - size * 0.9 &&
-        point.y < travellerLane(h.id) * height + size * 0.2,
+        point.y > roadY(travellerLane(h.id), height) - size * 0.9 &&
+        point.y < roadY(travellerLane(h.id), height) + size * 0.2,
     );
   return hero ? `heal:${hero.id}` : "help";
 }

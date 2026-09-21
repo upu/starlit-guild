@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { act, settle, testState } from "../lib/game.ts";
 import { storyStages } from "../lib/prologue.ts";
+import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173",
   output = "work/chapter-road-browser";
@@ -15,7 +16,19 @@ function fixture(index, mode) {
     { type: "start", id: storyStages[index].quest, readDeparture: true, value: false },
     now,
   );
-  if (mode === "boss")
+  if (mode === "worksite") {
+    for (let i = 0; i < 1000; i++) {
+      const frame = chapterRoadFrame({
+        squad: s.squads[0],
+        startQuest: storyStages[index].quest,
+        now: s.updatedAt,
+        ready: true,
+        paused: false,
+      });
+      if (frame.look.workers.length === 2 && frame.look.work) break;
+      s = settle(s, s.squads[0].run.nextAt).state;
+    }
+  } else if (mode === "boss")
     while (s.squads[0].run.node < 2 && s.updatedAt < now + 180000)
       s = settle(s, s.squads[0].run.nextAt).state;
   else if (mode === "ambush")
@@ -38,6 +51,10 @@ const errors = [],
   results = [];
 try {
   for (const [name, index, mode] of [
+    ["cargo", 0, "worksite"],
+    ["town", 2, "worksite"],
+    ["moss", 5, "worksite"],
+    ["waterway", 6, "worksite"],
     ["forest", 0, "ambush"],
     ["work", 11, "work"],
     ["trio", 12, "battle"],
@@ -48,14 +65,19 @@ try {
       save = fixture(index, mode);
     page.on("pageerror", (e) => errors.push(e.message));
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
+    if (mode === "worksite")
+      await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {
       if (!localStorage.getItem("starlit-guild-v4"))
         localStorage.setItem("starlit-guild-v4", JSON.stringify(save));
     }, save);
     await page.goto(root);
+    await page.clock.runFor(100);
+    assert.equal(await page.getByRole("link", { name: "横スクロール戦闘を試す" }).count(), 0);
     await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
+    await page.clock.runFor(100);
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
-    await page.clock.runFor(900);
+    await page.clock.runFor(mode === "worksite" ? 50 : 900);
     assert.equal(await page.locator("canvas").count(), 1);
     assert.equal(await page.locator(".journey-banter").count(), 1);
     assert.ok(await page.locator(".map-journey progress").count());
@@ -66,7 +88,10 @@ try {
           [320, 568],
           [844, 390],
         ]
-      : [[390, 844]]) {
+      : [
+          [1280, 960],
+          [390, 844],
+        ]) {
       await page.setViewportSize({ width, height });
       await page.clock.runFor(350);
       const layout = await page
@@ -81,7 +106,9 @@ try {
     assert.equal(before.active, save.active);
     assert.ok(before.profiles[0].state.squads[0].run.road);
     await page.reload();
+    await page.clock.runFor(100);
     await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
+    await page.clock.runFor(100);
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
     const after = await page.evaluate(() => JSON.parse(localStorage.getItem("starlit-guild-v4")));
     assert.equal(after.active, save.active);

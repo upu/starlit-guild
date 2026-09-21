@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import type { RoadBattle, RoadEffect } from "@/lib/scrolling-battle";
 import { ROAD_EFFECTS } from "./road-art";
+import { roadY } from "@/lib/road-layout";
 
 const frames = { arrow: 0, slash: 1, magic: 2, heal: 2, gather: 3, assist: 1, hurt: 1 };
 
@@ -39,9 +40,9 @@ export class RoadEffects {
     const age = state.time - effect.at;
     const scale = Math.min(1, this.scene.scale.width / 620);
     const endX = screenX(effect.x),
-      endY = effect.lane * this.scene.scale.height - 24 * scale;
+      endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),
-      startY = (effect.fromLane ?? effect.lane) * this.scene.scale.height - 28 * scale;
+      startY = roadY(effect.fromLane ?? effect.lane, this.scene.scale.height) - 28 * scale;
     const projectile = effect.kind === "arrow" || effect.kind === "magic";
     const progress = projectile ? Math.min(1, age / 240) : 1;
     sprite.setPosition(startX + (endX - startX) * progress, startY + (endY - startY) * progress);

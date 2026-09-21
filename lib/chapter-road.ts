@@ -19,11 +19,16 @@ export const roadPoint = (r: Run) => r.node * CHAPTER_ROAD_SPACING + 180;
 export function movingWork(q: Quest, r: Run) {
   return (
     encounter(q, r.node) === "escort" &&
-    /運ぶ|運搬|配達|届け|持ち帰/.test(targetName(q, r.node, r.nodes))
+    (q.id === "village-trade" || /運ぶ|運搬|配達|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
   );
 }
 export function workPoint(q: Quest, r: Run) {
   return roadPoint(r) + (movingWork(q, r) ? (1 - r.target / r.targetMax) * 85 : 0);
+}
+export function roadWorkOffset(q: Quest, r: Run, hero: string) {
+  if (movingWork(q, r) && !q.escortAsset)
+    return ({ aria: -110, leon: -90, mira: -145 } as Record<string, number>)[hero] || -110;
+  return ({ aria: -70, leon: 70, mira: -125 } as Record<string, number>)[hero] || 0;
 }
 
 // Attaching coordinates never rebuilds an existing target or changes its health/rewards.
@@ -95,7 +100,7 @@ export function roadActorReady(q: Quest, r: Run, hero: string) {
   if (movingWork(q, r) && roadHasEnemies(r) && roadActionKind(q, r, hero) !== "battle")
     return false;
   if (roadActionKind(q, r, hero) !== "battle")
-    return Math.abs(position.x - workPoint(q, r) - (workOffsets[hero] || 0)) < 12;
+    return Math.abs(position.x - workPoint(q, r) - roadWorkOffset(q, r, hero)) < 12;
   const target = nearestOpponent(r, hero);
   if (!target) return !r.enemies?.length;
   return Math.abs(position.x - r.road.opponents[target.id].x) <= (hero === "leon" ? 68 : 210);
@@ -136,7 +141,7 @@ function moveMember(q: Quest, r: Run, id: string, dt: number) {
     return;
   }
   const enemy = roadActionKind(q, r, id) === "battle" ? nearestOpponent(r, id) : undefined;
-  let target = workPoint(q, r) + (workOffsets[id] || 0);
+  let target = workPoint(q, r) + roadWorkOffset(q, r, id);
   if (enemy) {
     const x = road.opponents[enemy.id].x;
     position.facing = x >= position.x ? 1 : -1;

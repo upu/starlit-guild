@@ -5,6 +5,8 @@ import { RoadPainter, ROAD_BACKGROUND } from "./road-painter";
 import {
   ROAD_EFFECTS,
   ROAD_HERB,
+  ROAD_PUSH,
+  ROAD_WORKSITES,
   ROAD_CARGO,
   ROAD_PUPPETS,
   roadSheet,
@@ -29,6 +31,8 @@ function roadScene(engine: typeof Phaser, bridge: RoadBridge, motion: MediaQuery
       for (const asset of [
         ROAD_BACKGROUND,
         ROAD_HERB,
+        ROAD_PUSH,
+        ROAD_WORKSITES,
         ROAD_CARGO,
         ROAD_PUPPETS,
         "/sprites.png",

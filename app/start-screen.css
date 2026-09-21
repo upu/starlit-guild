@@ -1,14 +1,4 @@
 /* Artwork sets the scale; motion stays on decorative layers, away from tap targets. */
-main.start-screen .start-prototype {
-  display: grid;
-  place-items: center;
-  min-height: 44px;
-  color: #dfd9b7;
-  font-size: 12px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-shadow: 0 2px 6px #020e18;
-}
 main.start-screen {
   width: min(100%, 1440px);
   background: #081922;

@@ -10,6 +10,7 @@ import {
 } from "../lib/chapter-road-presentation.ts";
 import { roadActionKind, roadHasEnemies } from "../lib/chapter-road.ts";
 import { travellerLane } from "../lib/scrolling-battle.ts";
+import { roadY, roadBackdrop } from "../lib/road-layout.ts";
 
 function start(index, level = 30) {
   const state = testState(1000, index, level, 1000);
@@ -129,7 +130,7 @@ test("drawing is read-only, uses real individual HP and accurately targets taps 
   for (const hero of frame.battle.heroes) {
     const point = {
       x: chapterRoadX(hero.x, frame.battle.distance, 390),
-      y: travellerLane(hero.id) * 300 - 15,
+      y: roadY(travellerLane(hero.id), 300) - Math.min(108, 390 * 0.18, 300 * 0.34) * 0.45,
     };
     assert.equal(chapterRoadHit(input(s, 2350), point, 390, 300), `heal:${hero.id}`);
   }
@@ -144,5 +145,68 @@ test("drawing is read-only, uses real individual HP and accurately targets taps 
     const bad = structuredClone(s);
     mutate(bad.squads[0].run);
     assert.throws(() => roundtrip(bad));
+  }
+});
+
+test("work sites match the chapter setting instead of falling back to treasure chests", () => {
+  for (const [stage, expected] of [
+    [2, "parcels"],
+    [5, "moss"],
+    [6, "waterway"],
+    [11, "parcels"],
+  ]) {
+    const state = start(stage);
+    const frame = chapterRoadFrame(input(state));
+    assert.equal(frame.look.work.frame, expected);
+    assert.equal(frame.look.urban, [2, 11].includes(stage));
+    assert.equal(frame.look.work.asset, "/animations/road/worksites-v1.png");
+  }
+  for (let stage = 0; stage < 18; stage++) {
+    const state = start(stage);
+    const frame = chapterRoadFrame(input(state));
+    assert.notEqual(frame.look.work?.asset, "/items/chest.png");
+  }
+});
+
+test("transport advances behind the cart, pauses for an ambush and never slashes supplies", () => {
+  let state = start(1, 5),
+    pushing = false,
+    defended = false;
+  for (let i = 0; i < 6000 && state.squads[0].run; i++) {
+    const run = state.squads[0].run;
+    const { battle, look } = chapterRoadFrame(input(state));
+    if (look.work?.cargo && look.workers.length) {
+      pushing = true;
+      for (const hero of battle.heroes.filter((h) => look.workers.includes(h.id)))
+        assert.ok(hero.x < battle.gathering.x + 65 - 60);
+      assert.ok(
+        battle.effects.every((e) => ["heal", "hurt"].includes(e.kind) || battle.enemies.length),
+      );
+    }
+    if (look.work?.cargo && roadHasEnemies(run)) {
+      defended = true;
+      const before = run.target;
+      state = settle(state, run.nextAt).state;
+      if (state.squads[0].run?.node === run.node) assert.equal(state.squads[0].run.target, before);
+    } else state = settle(state, run.nextAt).state;
+    if (pushing && defended) break;
+  }
+  assert.ok(pushing && defended);
+});
+
+test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {
+  for (const [width, height] of [
+    [1280, 900],
+    [390, 630],
+    [320, 250],
+    [844, 240],
+  ]) {
+    assert.ok(roadY(0.82, height) - roadY(0.54, height) <= 68);
+    for (const progress of [0, 0.4, 1]) {
+      const box = roadBackdrop(width, height, 1536, 1024, progress);
+      assert.ok(box.x <= 0 && box.y <= 0);
+      assert.ok(box.x + box.width >= width - 0.01);
+      assert.ok(box.y + box.height >= height - 0.01);
+    }
   }
 });

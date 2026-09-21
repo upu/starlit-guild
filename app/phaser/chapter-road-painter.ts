@@ -7,6 +7,8 @@ import {
   ROAD_HERB,
   ROAD_CARGO,
   ROAD_PUPPETS,
+  ROAD_PUSH,
+  ROAD_WORKSITES,
   roadSheet,
   roadWalkSheet,
 } from "../battle-prototype/road-art";
@@ -24,6 +26,8 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_HERB,
       ROAD_CARGO,
       ROAD_PUPPETS,
+      ROAD_PUSH,
+      ROAD_WORKSITES,
       ...(["aria", "leon", "mira"] as const).flatMap((id) => [roadSheet(id), roadWalkSheet(id)]),
       ...(look.work ? [look.work.asset] : []),
     ]),
