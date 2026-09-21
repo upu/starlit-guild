@@ -25,6 +25,17 @@
   align-self: start;
   margin-top: 96px;
 }
+/* Give the short finisher banner priority without discarding conversation history. */
+.phone-game .phone-adventure:has(.finisher-scene) > .journey-banter,
+.phone-game .phone-adventure:has(.finisher-scene) > .phone-banter {
+  visibility: hidden;
+}
+@media (min-width: 760px) and (min-height: 741px) {
+  .phone-game .phone-adventure-running > .journey-banter,
+  .phone-game .phone-adventure-running > .phone-banter {
+    margin-top: 144px;
+  }
+}
 .phone-game .phone-adventure > .journey-banter,
 .phone-game .phone-adventure > .journey-banter:hover:not(:disabled),
 .phone-game .phone-adventure > .journey-banter:focus,
