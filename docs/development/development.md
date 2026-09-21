@@ -33,9 +33,9 @@ npx tsc --noEmit
 
 セーブは端末・ブラウザー・接続先アドレスごとに別になる。PCの続きで遊ぶ場合はセーブファイルの書き出し・読み込みを使う。LANのHTTPでも端末保存は利用できる。
 
-`script:export` は実行時の会話・スチル表示位置・道中の掛け合いをステージごとのファイルへ書き出し、[生成台本の目次](generated/script.md) から読めるようにする。スチルは表示行の直前に画像も埋め込み、Markdownプレビューで確認できる。待機中や関係値別の共通会話は [共通の掛け合い](generated/banter.md) にまとめる。生成物は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は全ファイルの鮮度を検査し、CIでも実行する。
+`script:export` は実行時の会話・スチル表示位置・道中の掛け合いをステージごとのファイルへ書き出し、[生成台本の目次](../generated/script.md) から読めるようにする。スチルは表示行の直前に画像も埋め込み、Markdownプレビューで確認できる。待機中や関係値別の共通会話は [共通の掛け合い](../generated/banter.md) にまとめる。生成物は手で編集せず、会話やスチルを変更したら再生成する。`script:check` は全ファイルの鮮度を検査し、CIでも実行する。
 
-dev / buildの開始時に、[背景PNGから用途別WebPを生成](scenery-images.md)し、[横スクロール戦闘のPNG原本からロスレスWebPを生成](scrolling-battle.md)、[元動画から配信用MP4を生成](story-videos.md)する。変更のない素材はスキップする。
+dev / buildの開始時に、[背景PNGから用途別WebPを生成](../art/scenery-images.md)し、[横スクロール戦闘のPNG原本からロスレスWebPを生成](../gameplay/scrolling-battle.md)、[元動画から配信用MP4を生成](../art/story-videos.md)する。変更のない素材はスキップする。
 
 ## テスト機能の環境設定
 
@@ -73,7 +73,7 @@ GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更
 
 ### 変更履歴
 
-バージョンを上げたPRは [`CHANGELOG.md`](../CHANGELOG.md) へその版の1行を足す。PRタイトルと番号をそのまま転記し、版の順に並べる。`no-game-change` でバージョンが変わらないPRは記載しない。
+バージョンを上げたPRは [`CHANGELOG.md`](../../CHANGELOG.md) へその版の1行を足す。PRタイトルと番号をそのまま転記し、版の順に並べる。`no-game-change` でバージョンが変わらないPRは記載しない。
 
 `scripts/check-pr-version.mjs` は、`main` と版が変わるPRで、その版の番号が `CHANGELOG.md` に現れなければ失敗する。ファイルを触っただけでは通らない。不具合の個別履歴や検討の経緯はここへ積まず、IssueとGit履歴へ残す。
 
@@ -90,13 +90,13 @@ Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run format:check`�
 冒険の描画はPhaserを使う。キャラクター、会話、設定などはReact側で扱い、進行・保存の判定を描画ループへ重複実装しない。
 
 - [Phaser冒険画面](phaser-adventure.md) — 描画構成と検証範囲
-- [ゲームプレイ仕様](gameplay.md) — プレイヤーから見える現行挙動
-- [セーブシステム](save-system.md) — 保存、復元、互換性
-- [音楽と効果音](audio.md) — BGMと効果音
+- [ゲームプレイ仕様](../gameplay/gameplay.md) — プレイヤーから見える現行挙動
+- [セーブシステム](../gameplay/save-system.md) — 保存、復元、互換性
+- [音楽と効果音](../art/audio.md) — BGMと効果音
 
 ## スマホUI
 
-画面ごとの入口と操作は [ゲームプレイ仕様](gameplay.md#起動と画面) にまとめる。通常画面では縦スクロールを抑え、長い設定やログはダイアログ内、収まらない説明はカード内、高さのない画面では内容部分をスクロールする。
+画面ごとの入口と操作は [ゲームプレイ仕様](../gameplay/gameplay.md#起動と画面) にまとめる。通常画面では縦スクロールを抑え、長い設定やログはダイアログ内、収まらない説明はカード内、高さのない画面では内容部分をスクロールする。
 
 主要なタップ領域は44px以上を基本とする。下部ナビは画面下端まで配置し、iPhoneのホームインジケータに必要な余白を重複して確保しない。
 
@@ -161,10 +161,10 @@ Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リ
 
 公開作業では、作業中の別タスクや未確定差分を確認し、無関係な変更を失わせない。セーブデータやローカル作業ファイルはGitへ含めない。
 
-エージェント共通の公開ルールは [エージェント共通ルール](agent-rules.md) を参照する。Codex の操作手順は [`AGENTS.md`](../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` に置く。
+エージェント共通の公開ルールは [エージェント共通ルール](../agent-rules.md) を参照する。Codex の操作手順は [`AGENTS.md`](../../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` に置く。
 
 ## データベース
 
 Drizzleの適用済みマイグレーションは変更せず、変更は新しいマイグレーションとして追加する。
 
-バックアップ用テーブルと旧形式の扱いは [セーブシステム](save-system.md) を参照する。
+バックアップ用テーブルと旧形式の扱いは [セーブシステム](../gameplay/save-system.md) を参照する。

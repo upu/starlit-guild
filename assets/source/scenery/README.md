@@ -4,4 +4,4 @@
 
 `npm run images:optimize` を実行し、元画像・生成WebP・manifestを一緒にコミットする。元画像はそのまま保存し、配信には使わない。
 
-詳細は [クエスト画像の生成](../../../docs/scenery-images.md) を参照。
+詳細は [クエスト画像の生成](../../../docs/art/scenery-images.md) を参照。

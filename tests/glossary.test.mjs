@@ -43,8 +43,8 @@ test("the stage table lists every story stage once, in order, with the real name
     assert.equal(
       documents,
       number.startsWith("1-")
-        ? "[物語](story-part-1.md) / [実装](prologue-gameplay.md)"
-        : "[物語](story-part-2.md) / [実装](chapter-two-gameplay.md)",
+        ? "[物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md)"
+        : "[物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md)",
       `${id}: 担当資料`,
     );
   }

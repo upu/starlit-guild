@@ -4,4 +4,4 @@ Grokなどから取得した元動画をこのフォルダーへ置く。ファ�
 
 `npm run videos:optimize`、`npm run dev`、`npm run build` で `public/stories/videos/<名前>.mp4` を生成する。起動後に追加した場合はコマンドを再実行する。
 
-元動画を配信用MP4で上書きしない。詳しい設定・導入・削除方法は [動画素材の管理](../../../docs/story-videos.md) を参照。
+元動画を配信用MP4で上書きしない。詳しい設定・導入・削除方法は [動画素材の管理](../../../docs/art/story-videos.md) を参照。

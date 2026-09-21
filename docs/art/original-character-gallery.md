@@ -1,23 +1,23 @@
 # オリジナルキャラクターと新しい思い出
 
 指定された参考絵に合わせて修正した立ち絵と、既存の仲間とのスチル。従来モードの削除にともない、チャチャの立ち絵と会話絵3枚は画像も削除した（構図と条件は下の記録に残す）。
-制作方法は組み込み image_gen。[メリルの自然なポーズとギャグスチルの修正記録](art-generation/merrill-relaxed-gag-prompts.json)・[最終プロンプトと参照画像](art-generation/original-character-art-v2-prompts.json)・[制作記録](original-character-art.md)。
+制作方法は組み込み image_gen。[メリルの自然なポーズとギャグスチルの修正記録](../art-generation/merrill-relaxed-gag-prompts.json)・[最終プロンプトと参照画像](../art-generation/original-character-art-v2-prompts.json)・[制作記録](original-character-art.md)。
 
 ## メリル
 
 `a10777_zen_2.jpg` の装具を優先。本人の左腕だけに装備し、手の甲側から全指の指先まで覆うガントレットそのものが琴。手のひらと指の腹は開け、弦は前腕の甲側にだけ張られる。右手は素手。立ち絵は演奏せず、左腕と手首を自然に保つポーズ。
 
-![メリルのガントレット型の琴](../public/characters/merrill.png)
+![メリルのガントレット型の琴](../../public/characters/merrill.png)
 
 ## チャチャ（削除済み）
 
-`a26705_bust_2.jpg` を優先。筋肉の輪郭を抑えた柔らかな体つき、銀の鎧と青い服。大剣を振るう力持ちと、おっとりした性格はそのまま。人物設定は [chacha.md](characters/chacha.md) が正本。
+`a26705_bust_2.jpg` を優先。筋肉の輪郭を抑えた柔らかな体つき、銀の鎧と青い服。大剣を振るう力持ちと、おっとりした性格はそのまま。人物設定は [chacha.md](../characters/chacha.md) が正本。
 
 ## パンプティ（プティ）
 
 `502328_e13571_pinup.jpg` を優先。黒い身頃、緑の袖、黄色いスカート。ツインテールと八重歯、人形遣いの道具。
 
-![パンプティの新しい立ち絵](../public/characters/pumpety.png)
+![パンプティの新しい立ち絵](../../public/characters/pumpety.png)
 
 ## 来客の会話とスチル（削除済み）
 
