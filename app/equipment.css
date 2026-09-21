@@ -607,8 +607,9 @@
   gap: 8px;
 }
 .phone-game .character-icon-choice {
-  width: 64px;
-  min-height: 66px;
+  position: relative;
+  width: 56px;
+  min-height: 56px;
   height: auto;
   padding: 6px;
   display: flex;
@@ -733,17 +734,6 @@
   border-top: 1px solid #9a8c58;
   background: #172e26;
 }
-.character-bottom-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  flex-shrink: 0;
-  padding: 4px 12px;
-}
-.phone-game .character-bottom-toolbar button {
-  min-height: 32px;
-  padding: 3px 12px;
-  font-size: 12px;
-}
 .character-bottom-scroll {
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -755,4 +745,50 @@
 }
 .character-bottom p {
   font-size: 14px;
+}
+
+.character-bottom {
+  position: relative;
+}
+.phone-game .character-bottom-close {
+  position: absolute;
+  top: 4px;
+  right: 16px;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: 0;
+  background: #203c30;
+  color: #efdfb9;
+}
+.phone-game .character-bottom-close:hover {
+  background: #304a3a;
+}
+.character-bottom-close > svg {
+  width: 20px;
+  height: 20px;
+}
+.character-bottom .character-equipment > h3 {
+  min-height: 32px;
+  padding-right: 40px;
+  align-content: center;
+}
+.character-equipped-mark {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  background: #e6ce8e;
+  color: #172e26;
+  border: 1px solid #172e26;
+  border-radius: 50%;
+}
+.character-equipped-mark > svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
 }

@@ -1,5 +1,5 @@
-import { SquareDashed } from "lucide-react";
-import type { ReactNode } from "react";
+import { SquareDashed, Check } from "lucide-react";
+import { useId, type ReactNode } from "react";
 
 type Choice = { id: string; name: string; icon: ReactNode; badge?: string; muted?: boolean };
 export function CharacterIconChoices({
@@ -15,13 +15,13 @@ export function CharacterIconChoices({
   label: string;
   emptyLabel: string;
 }) {
+  const statusId = useId();
   const options: Choice[] = [
     ...choices,
     {
       id: "empty",
       name: emptyLabel,
       icon: <SquareDashed className="empty-slot-icon" aria-hidden="true" />,
-      badge: "空",
     },
   ];
   return (
@@ -32,6 +32,7 @@ export function CharacterIconChoices({
           className="character-icon-choice"
           data-muted={choice.muted || undefined}
           aria-label={choice.name}
+          aria-describedby={choice.badge ? `${statusId}-${choice.id}` : undefined}
           title={choice.name}
           aria-pressed={selected === choice.id}
           onClick={() => {
@@ -39,7 +40,16 @@ export function CharacterIconChoices({
           }}
         >
           {choice.icon}
-          {choice.badge && <small>{choice.badge}</small>}
+          {choice.badge && (
+            <span
+              className="character-equipped-mark"
+              id={`${statusId}-${choice.id}`}
+              role="img"
+              aria-label={choice.badge}
+            >
+              <Check aria-hidden="true" />
+            </span>
+          )}
         </button>
       ))}
     </div>

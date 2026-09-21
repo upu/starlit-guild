@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { CharacterIconChoices } from "./character-icon-choices";
 import Image from "next/image";
-import { Coins, Leaf, Gem, Shield, Swords, Package, SquareDashed } from "lucide-react";
+import { Coins, Leaf, Gem, Shield, Swords, Package, SquareDashed, X } from "lucide-react";
 import {
   heroes,
   memberStats,
@@ -369,11 +369,14 @@ function CharacterDetails(
     return null;
   return (
     <section className="character-bottom" id="character-options" aria-label="付け替え候補">
-      <div className="character-bottom-toolbar">
-        <button className="outline" onClick={props.onClose}>
-          閉じる
-        </button>
-      </div>
+      <button
+        className="character-bottom-close"
+        aria-label="閉じる"
+        title="閉じる"
+        onClick={props.onClose}
+      >
+        <X aria-hidden="true" />
+      </button>
       <div className="character-bottom-scroll" key={hero + slot}>
         {equipmentSlot ? (
           <EquipmentSlotPanel {...props} slot={slot} />
