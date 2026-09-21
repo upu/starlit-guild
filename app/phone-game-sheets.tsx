@@ -4,7 +4,7 @@ import { equippedTechnique, techniqueById } from "@/lib/techniques";
 import { InventoryPanel, ShopPanel } from "./equipment-panels";
 import { QuestPicker } from "./quest-picker";
 import { SavePanel } from "./save-panel";
-import { StoryLibrary, StoryAlbum, ConversationReader, StoryReader } from "./story-scenes";
+import { StoryLibrary, StoryAlbum, StoryReader } from "./story-scenes";
 import { Sprite } from "./sprite";
 import { InstallGuide } from "./install-guide";
 import { questAdvice } from "@/lib/journey";
@@ -105,20 +105,6 @@ function readingSheet(m: SheetModel, advanceRef: Ref<StoryAdvance>): SheetView |
           departure={!!m.pendingDeparture}
           onClose={m.closeStory}
           advanceRef={advanceRef}
-        />
-      ),
-    };
-  if (m.sheet === "banter")
-    return {
-      title: "仲間との道中",
-      description: m.activeQuest?.name || "次の冒険を待ちながら",
-      content: (
-        <ConversationReader
-          advanceRef={advanceRef}
-          lines={m.banterSnapshot}
-          onClose={() => {
-            m.setSheet(null);
-          }}
         />
       ),
     };

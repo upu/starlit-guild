@@ -180,10 +180,6 @@ function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
       key={(m.game.profile?.id || "") + ":" + m.squad.id + ":" + (m.run?.quest || "idle")}
       lines={m.banter}
       paused={!!m.sheet || !!m.ending || !!m.game.report || !m.ready}
-      onRead={(lines) => {
-        m.setBanterSnapshot(lines);
-        m.setSheet("banter");
-      }}
     />
   );
 }
@@ -251,7 +247,7 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
 }
 export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
   const { readerRef, onPointerDownOutside } = useStoryAdvance(),
-    conversation = m.sheet === "story" || m.sheet === "banter";
+    conversation = m.sheet === "story";
   const { title, description, content } = resolveSheet(m, readerRef);
   return (
     <Dialog

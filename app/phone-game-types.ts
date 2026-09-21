@@ -28,7 +28,6 @@ export type Sheet =
   | "stories"
   | "album"
   | "story"
-  | "banter"
   | "personality"
   | null;
 export type ReturnIntent = {
@@ -42,8 +41,6 @@ export type SheetModel = {
   reading: Story | null;
   ready: boolean;
   pendingDeparture: Action | null;
-  activeQuest: (typeof allQuests)[number] | undefined;
-  banterSnapshot: StoryLine[];
   hero: (typeof heroes)[number];
   state: State;
   goal: ReturnType<typeof nextGoal>;
@@ -78,7 +75,6 @@ export type PhoneFrameModel = SheetModel & {
   quote: string;
   destinationChosen: boolean;
   roster: (typeof heroes)[number][];
-  setBanterSnapshot: Dispatch<SetStateAction<StoryLine[]>>;
   setHeroIndex: Dispatch<SetStateAction<number>>;
   requestReturn: (destination: "adventure" | "companions", quest?: string) => void;
   confirmReturn: () => void;
