@@ -10,10 +10,11 @@ import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { questNodes, puppetCue } from "../lib/puppet-battles.ts";
 import { adventureFrame, adventureAssets, spriteSize } from "../lib/adventure-presentation.ts";
 import { parseBundle } from "../lib/save-format.ts";
+import { joinStoryMira } from "../lib/game-actions.ts";
 const ids = ["spinning-signpost", "begging-golem", "sweet-blockade"];
 function ready(id, level = 25) {
   const s = initialPrologueState(1000);
-  s.owned.push("mira");
+  joinStoryMira(s);
   s.xp = { aria: 30 * (level - 1) ** 2, leon: 30 * (level - 1) ** 2, mira: 30 * (level - 1) ** 2 };
   for (const { quest } of storyStages.slice(
     0,

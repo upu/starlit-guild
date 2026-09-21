@@ -23,7 +23,12 @@ import {
   MOON_HERB_QUEST,
   SIGNPOST_QUEST,
 } from "./chapter-two.ts";
-import { equippedTechnique, techniqueMultiplier, techniqueText } from "./techniques.ts";
+import {
+  equippedTechnique,
+  techniqueHealing,
+  techniqueMultiplier,
+  techniqueText,
+} from "./techniques.ts";
 import { level } from "./roster.ts";
 import type { Quest } from "./game-content.ts";
 import type { Actor, Encounter, GameEvent, Rewards, Run, Squad, State } from "./game-types.ts";
@@ -106,7 +111,7 @@ function actorEventText(q: Quest, kind: Encounter, hero: string, special: boolea
 function healFromActor(s: State, sq: Squad, r: Run, hero: string, special: boolean, at: number) {
   const target = lowestHealth(r, sq.members);
   if (!special || hero !== "mira" || !target) return;
-  const heal = 5 + level(s.xp[hero] || 0),
+  const heal = techniqueHealing(s, hero, 5 + level(s.xp[hero] || 0)),
     restored = healMember(r, target, heal);
   event(r, at, "heal", heroSkills[hero].name, restored, hero, target);
 }

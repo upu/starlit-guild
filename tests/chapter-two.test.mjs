@@ -27,6 +27,7 @@ import {
   knowsTechnique,
   techniqueMultiplier,
   techniqueDamage,
+  learnableTechniques,
 } from "../lib/techniques.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { nextGoal, journeyNotice } from "../lib/journey.ts";
@@ -69,6 +70,15 @@ test("2-3 joins Mira after rest once; the new party and replay survive saves", (
   assert.deepEqual(joined.squads[0].members, joined.owned);
   assert.equal(joined.gold, packed.gold);
   assert.equal(joined.xp.mira, Math.min(joined.xp.aria, joined.xp.leon));
+  assert.deepEqual(joined.inventory.equipped.mira, {
+    weapon: "familiar-staff",
+    armor: "travel-clothes",
+  });
+  assert.equal(joined.inventory.items["travel-clothes"], 3);
+  assert.equal(joined.inventory.items["familiar-staff"], 1);
+  assert.ok(learnableTechniques(joined).some((t) => t.hero === "mira" && t.slot === "passive"));
+  assert.equal(knowsTechnique(joined, "mira-care"), false);
+  assert.equal(equippedTechnique(joined, "mira", "passive"), null);
   assert.deepEqual(read(joined, DELIVERY_PREP_QUEST), joined);
   assert.match(journeyNotice(packed, joined).title, /ミラが仲間/);
   const early = roundtrip(start(joined, PICNIC_QUEST));
@@ -105,7 +115,7 @@ test("2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
     const inventory = offline.inventory,
       herbs = offline.herbs;
     s = roundtrip(read(offline, id));
-    assert.deepEqual(s.inventory, inventory);
+    if (id !== DELIVERY_PREP_QUEST) assert.deepEqual(s.inventory, inventory);
     assert.equal(s.herbs, herbs);
   }
   assert.match(nextGoal(s).title, /2-7/);
@@ -359,8 +369,43 @@ test("coins, levels, hero and slot are checked; learning is distinct from free e
     () => act(low, { type: "learnTechnique", id: "aria-aim" }, low.updatedAt),
     /足りません/,
   );
-  const grown = { ...low, xp: { aria: 30 * 19 ** 2, leon: 0 } };
+  const grown = { ...low, xp: { aria: 30 * 13 ** 2, leon: 0 } };
   assert.match(journeyNotice(low, grown).title, /習得できる技/);
+});
+
+test("second passives become learnable at level 14 after the picnic and still need coins and a slot", () => {
+  for (const [hero, id] of [
+    ["aria", "aria-aim"],
+    ["leon", "leon-sword"],
+  ]) {
+    const before = unlocked();
+    before.gold = 120;
+    before.xp[hero] = 30 * 13 ** 2 - 1;
+    assert.ok(!learnableTechniques(before).some((t) => t.id === id));
+    assert.throws(
+      () => act(before, { type: "learnTechnique", id }, before.updatedAt),
+      /足りません/,
+    );
+    const ready = structuredClone(before);
+    ready.xp[hero]++;
+    assert.ok(learnableTechniques(ready).some((t) => t.id === id));
+    const locked = structuredClone(ready);
+    locked.story.read = locked.story.read.filter((id) => id !== PICNIC_QUEST + "-return");
+    assert.ok(!learnableTechniques(locked).some((t) => t.id === id));
+    assert.throws(() => act(locked, { type: "learnTechnique", id }, locked.updatedAt), /2-1/);
+    assert.throws(
+      () => act({ ...ready, gold: 119 }, { type: "learnTechnique", id }, ready.updatedAt),
+      /足りません/,
+    );
+    const learned = roundtrip(act(ready, { type: "learnTechnique", id }, ready.updatedAt));
+    assert.equal(learned.gold, 0);
+    assert.equal(equippedTechnique(learned, hero, "passive"), null);
+    assert.equal(techniqueMultiplier(learned, hero, "battle", false, 1), 1);
+    const equipped = roundtrip(
+      act(learned, { type: "setTechnique", hero, techniqueSlot: "passive", id }, learned.updatedAt),
+    );
+    assert.equal(techniqueMultiplier(equipped, hero, "battle", false, 1), 1.15);
+  }
 });
 
 test("only equipped techniques affect actions and rewards; offline and live simulation agree", () => {

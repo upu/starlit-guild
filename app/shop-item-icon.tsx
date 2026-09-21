@@ -3,6 +3,12 @@ import type { ReactNode } from "react";
 import type { Equipment } from "@/lib/equipment";
 
 const artwork: Partial<Record<string, ReactNode>> = {
+  "familiar-staff": (
+    <>
+      <path d="M13 35L25 11" stroke="#ab83bf" strokeWidth="4" strokeLinecap="round" />
+      <path d="M28 4A7 7 0 1 0 33 15A7 7 0 0 1 28 4Z" fill="#e4c889" stroke="#fff0bb" />
+    </>
+  ),
   "familiar-bow": (
     <>
       <path d="M12 5Q36 20 12 35" fill="none" stroke="#aa7950" strokeWidth="4" />

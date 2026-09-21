@@ -4,6 +4,46 @@ import { act, settle, availableQuests, level, allQuests, estimate } from "../lib
 import { chapterTwoPresetState } from "../lib/chapter-two-presets.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { measure, isolated, chapterRoute } from "../scripts/check-chapter-two-balance.mjs";
+import { equippedTechnique, learnableTechniques } from "../lib/techniques.ts";
+
+test("Mira can learn a passive on joining; only setting it improves actual healing", () => {
+  const initial = isolated("begging-golem", 1);
+  assert.ok(learnableTechniques(initial).some((t) => t.id === "mira-care"));
+  const learned = act(initial, { type: "learnTechnique", id: "mira-care" }, 1000);
+  assert.equal(learned.gold, initial.gold - 80);
+  assert.equal(equippedTechnique(learned, "mira", "passive"), null);
+  const equipped = act(
+    learned,
+    { type: "setTechnique", hero: "mira", techniqueSlot: "passive", id: "mira-care" },
+    1000,
+  );
+  const removed = act(
+    equipped,
+    { type: "setTechnique", hero: "mira", techniqueSlot: "passive" },
+    1000,
+  );
+  function firstHeal(input) {
+    let state = act(input, { type: "start", id: "begging-golem", readDeparture: true }, 1000);
+    state.squads[0].run.health.mira.hp = 1;
+    const start = structuredClone(state);
+    for (let i = 0; i < 1000 && state.squads[0].run; i++) {
+      state = settle(state, state.squads[0].run.nextAt).state;
+      const heal = state.squads[0].run?.events.find((e) => e.kind === "heal" && e.hero === "mira");
+      if (heal) {
+        assert.deepEqual(
+          { ...settle(start, state.updatedAt).state, log: [] },
+          { ...state, log: [] },
+        );
+        return heal.amount;
+      }
+    }
+    assert.fail("Mira never healed");
+  }
+  assert.equal(firstHeal(initial), 6);
+  assert.equal(firstHeal(learned), 6);
+  assert.equal(firstHeal(equipped), 7);
+  assert.equal(firstHeal(removed), 6);
+});
 
 test("chapter presets keep the story entry, locked recruitment and independent saved state", () => {
   for (const preset of ["standard", "strong"]) {

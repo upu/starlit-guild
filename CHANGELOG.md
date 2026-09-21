@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.3.7 | 2026-09-21 | 初期装備と第二章のパッシブ習得時期を整える（[#129](https://github.com/upu/starlit-guild/pull/129)） |
 | 0.3.6 | 2026-09-21 | キャラクター画面の選択・装備・スキルをコンパクトにする（[#128](https://github.com/upu/starlit-guild/pull/128)） |
 | 0.3.5 | 2026-09-21 | ショップをアイコン一覧と下部固定の詳細表示にする（[#127](https://github.com/upu/starlit-guild/pull/127)） |
 | 0.3.4 | 2026-09-21 | チャット欄のタップによる拡大表示を取り除く（[#126](https://github.com/upu/starlit-guild/pull/126)） |

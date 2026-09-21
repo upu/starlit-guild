@@ -41,6 +41,54 @@ function bundle(state) {
 function action(s, a) {
   return act(s, a, s.updatedAt);
 }
+test("starter gear improves stats and shop gear remains an upgrade", () => {
+  for (const [hero, weapon] of [
+    ["aria", "ash-bow"],
+    ["leon", "steel-sword"],
+  ]) {
+    const s = progress(3),
+      starter = memberStats(s, hero);
+    const bare = action(action(s, { type: "equip", hero, slot: "weapon" }), {
+      type: "equip",
+      hero,
+      slot: "armor",
+    });
+    assert.deepEqual(
+      starter,
+      memberStats(bare, hero).map((v, i) => v + Number(i > 0)),
+    );
+    const bought = action(s, { type: "buy", id: weapon });
+    const upgraded = action(bought, { type: "equip", hero, slot: "weapon", id: weapon });
+    assert.ok(memberStats(upgraded, hero)[2] > starter[2]);
+  }
+});
+
+test("joined old saves receive Mira gear once without replacing worn gear or expedition progress", () => {
+  const old = testState(1000, 12, 14, 2000);
+  delete old.inventory;
+  const before = structuredClone(old);
+  const loaded = parseBundle(bundle(old)).profiles[0].state;
+  assert.deepEqual(old, before);
+  assert.equal(loaded.inventory.items["travel-clothes"], 3);
+  assert.equal(loaded.inventory.equipped.mira.weapon, "familiar-staff");
+  const removed = action(action(loaded, { type: "equip", hero: "mira", slot: "weapon" }), {
+    type: "equip",
+    hero: "mira",
+    slot: "armor",
+  });
+  assert.deepEqual(parseBundle(bundle(removed)).profiles[0].state, removed);
+  const worn = action(action(old, { type: "buy", id: "leather-vest" }), {
+    type: "equip",
+    hero: "mira",
+    slot: "armor",
+    id: "leather-vest",
+  });
+  const away = action(worn, { type: "start", id: TOWER_QUEST, readDeparture: true });
+  const migrated = parseBundle(bundle(away)).profiles[0].state;
+  assert.equal(migrated.inventory.equipped.mira.armor, "leather-vest");
+  assert.deepEqual(migrated.squads, away.squads);
+  assert.deepEqual(parseBundle(bundle(migrated)).profiles[0].state, migrated);
+});
 test("shop unlocks after 1-3 and keeps its assortment through the whole first chapter", () => {
   const s = progress(0);
   s.clears = 500;
@@ -91,16 +139,16 @@ test("one shared copy cannot be worn twice, unequipping returns it and stats cha
     leon = memberStats(s, "leon");
   s = action(s, { type: "equip", hero: "aria", slot: "armor", id: "leather-vest" });
   assert.equal(availableCopies(s, "leather-vest"), 0);
-  assert.deepEqual(memberStats(s, "aria"), [aria[0], aria[1] + 2, aria[2]]);
+  assert.deepEqual(memberStats(s, "aria"), [aria[0], aria[1] + 1, aria[2]]);
   assert.deepEqual(memberStats(s, "leon"), leon);
   assert.throws(() =>
     action(s, { type: "equip", hero: "leon", slot: "armor", id: "leather-vest" }),
   );
   s = action(s, { type: "equip", hero: "aria", slot: "armor" });
   assert.equal(availableCopies(s, "leather-vest"), 1);
-  assert.deepEqual(memberStats(s, "aria"), aria);
+  assert.deepEqual(memberStats(s, "aria"), [aria[0], aria[1] - 1, aria[2]]);
   s = action(s, { type: "equip", hero: "leon", slot: "armor", id: "leather-vest" });
-  assert.equal(memberStats(s, "leon")[1], leon[1] + 2);
+  assert.equal(memberStats(s, "leon")[1], leon[1] + 1);
 });
 test("equipment changes affect combat and preserve HP ratio without healing or reviving", () => {
   let s = action(progress(6), { type: "buy", id: "leather-vest" });

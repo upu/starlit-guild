@@ -18,6 +18,15 @@ export type Technique = {
 };
 export const techniques: Technique[] = [
   {
+    id: "mira-care",
+    hero: "mira",
+    slot: "passive",
+    name: "丁寧な手当て",
+    description: "自分の回復技で戻すHPが15%増える。",
+    level: 1,
+    cost: 80,
+  },
+  {
     id: "aria-double",
     hero: "aria",
     slot: "active",
@@ -50,7 +59,7 @@ export const techniques: Technique[] = [
     slot: "passive",
     name: "狩人の狙い",
     description: "自分の通常攻撃・技の威力が15%増える。",
-    level: 20,
+    level: 14,
     cost: 120,
   },
   {
@@ -86,7 +95,7 @@ export const techniques: Technique[] = [
     slot: "passive",
     name: "剣の心得",
     description: "自分の通常攻撃・技の威力が15%増える。",
-    level: 20,
+    level: 14,
     cost: 120,
   },
 ];
@@ -177,6 +186,8 @@ export const techniqueDamage = (s: State, hero: string, damage: number) =>
   );
 export const techniqueHerbs = (s: State, members: string[]) =>
   members.some((hero) => equippedTechnique(s, hero, "passive") === "aria-herbs") ? 1.25 : 1;
+export const techniqueHealing = (s: State, hero: string, amount: number) =>
+  Math.round(amount * (equippedTechnique(s, hero, "passive") === "mira-care" ? 1.15 : 1));
 export function validTechniques(progress: Techniques, owned: string[]) {
   if (new Set(progress.learned).size !== progress.learned.length) return false;
   if (progress.learned.some((id) => !owned.includes(techniqueById(id)?.hero ?? ""))) return false;
