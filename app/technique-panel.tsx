@@ -146,8 +146,9 @@ export function TechniquePanel(props: Props) {
                 setSlot(slot === kind ? null : kind);
               }}
             >
-              <TechniqueIcon id={current?.id} slot={kind} />
               <small>{kind === "active" ? "アクティブ技" : "パッシブ技"}</small>
+              <TechniqueIcon id={current?.id} slot={kind} />
+              <b>{current?.name ?? "セットなし"}</b>
             </button>
           );
         })}

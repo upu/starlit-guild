@@ -493,18 +493,17 @@
 }
 .character-slots {
   display: grid;
-  grid-template-columns: repeat(2, 88px);
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 .phone-game .character-slot {
-  display: flex;
+  display: grid;
+  grid-template-columns: 84px 40px minmax(0, 1fr);
   align-items: center;
-  flex-direction: column;
-  justify-content: center;
   gap: 6px;
   min-width: 0;
   height: auto;
-  min-height: 76px;
+  min-height: 58px;
   padding: 8px;
   white-space: normal;
   text-align: left;
@@ -689,4 +688,11 @@
 .character-slot > small {
   text-align: center;
   overflow-wrap: anywhere;
+}
+
+.character-slot-fixed {
+  cursor: default;
+}
+.character-slot-fixed + p {
+  margin-top: 6px;
 }

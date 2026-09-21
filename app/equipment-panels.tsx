@@ -23,7 +23,7 @@ import {
   type EquipmentSlot,
 } from "@/lib/equipment";
 import { storyItems } from "@/lib/story-items";
-import { techniquesUnlocked } from "@/lib/techniques";
+import { techniquesUnlocked, equippedTechnique } from "@/lib/techniques";
 import { TechniquePanel } from "./technique-panel";
 import { ShopItemIcon } from "./shop-item-icon";
 import { TechniqueIcon } from "./technique-icon";
@@ -255,12 +255,13 @@ function CharacterEquipment(props: Props & { hero: string }) {
                 setSlot(slot === kind ? null : kind);
               }}
             >
+              <small>{label}</small>
               {item ? (
                 <ShopItemIcon item={item} />
               ) : (
                 <SquareDashed className="empty-slot-icon" aria-hidden="true" />
               )}
-              <small>{item?.name ?? `${label}なし`}</small>
+              <b>{item?.name ?? `${label}なし`}</b>
             </button>
           );
         })}
@@ -268,6 +269,19 @@ function CharacterEquipment(props: Props & { hero: string }) {
       <div id="character-equipment-options">
         {slot && <EquipmentSlotPanel key={`${props.hero}-${slot}`} {...props} slot={slot} />}
       </div>
+    </section>
+  );
+}
+function FixedTechnique({ state, hero }: { state: State; hero: string }) {
+  return (
+    <section className="character-skill">
+      <h3>スキル</h3>
+      <div className="character-slot character-slot-fixed" aria-label="アクティブ技・変更不可">
+        <small>アクティブ技</small>
+        <TechniqueIcon id={equippedTechnique(state, hero, "active") ?? hero} slot="active" />
+        <b>{heroSkills[hero].name}</b>
+      </div>
+      <p>{heroSkills[hero].description}</p>
     </section>
   );
 }
@@ -316,13 +330,7 @@ export function CharacterPanel(props: Props) {
         <StatRow values={memberStats(props.state, hero.id)} />
         <CharacterEquipment {...props} hero={hero.id} />
         {(!techniquesUnlocked(props.state) || !["aria", "leon"].includes(hero.id)) && (
-          <section className="character-skill">
-            <h3 className="character-innate">
-              <TechniqueIcon id={hero.id} slot="active" />
-              {heroSkills[hero.id].name}
-            </h3>
-            <p>{heroSkills[hero.id].description}</p>
-          </section>
+          <FixedTechnique state={props.state} hero={hero.id} />
         )}
         <TechniquePanel {...props} hero={hero.id} />
       </div>

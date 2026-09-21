@@ -18,7 +18,7 @@ const bundle = await build({
  import {CharacterPanel} from './app/equipment-panels';
  import {testState,act} from './lib/game';
  import {initialInventory} from './lib/equipment';
- const initial=testState(1000,14,20,1000);
+ const initial=testState(1000,new URLSearchParams(location.search).has("locked") ? 2 : 14,20,1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
  function App(){
@@ -112,6 +112,16 @@ try {
     const picker = page.locator(".character-picker");
     await picker.waitFor();
     const initialBox = await picker.boundingBox();
+    const rows = await page.locator(".character-slot").evaluateAll((els) =>
+      els.map((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.x, y: r.y, bottom: r.bottom };
+      }),
+    );
+    assert.equal(rows.length, 4);
+    assert.ok(
+      rows.every((r, i) => i === 0 || (Math.abs(r.x - rows[0].x) < 1 && r.y >= rows[i - 1].bottom)),
+    );
     const faces = await picker
       .locator(".face-portrait")
       .evaluateAll((els) => els.map((el) => [el.offsetWidth, el.offsetHeight]));
@@ -223,6 +233,18 @@ try {
       height,
       "fixed portraits, equipment, learning, switching, unequipping",
     );
+    await page.goto("http://127.0.0.1:" + server.address().port + "/?locked");
+    const fixed = page.locator(".character-slot-fixed");
+    await fixed.waitFor();
+    assert.match(await fixed.innerText(), /アクティブ技/);
+    assert.match(await fixed.innerText(), /風の二連矢/);
+    assert.equal(await page.getByRole("button", { name: /アクティブ技|パッシブ技/ }).count(), 0);
+    assert.equal(await page.getByText("パッシブ技", { exact: true }).count(), 0);
+    await fixed.click();
+    assert.equal(await page.locator(".character-icon-choices").count(), 0);
+    await page.getByRole("button", { name: "レオン", exact: true }).click();
+    assert.match(await fixed.innerText(), /暁の踏み込み/);
+    await page.screenshot({ path: path.join(dir, "locked-" + width + ".png") });
     await context.close();
   }
 } finally {
