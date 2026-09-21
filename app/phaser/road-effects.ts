@@ -2,12 +2,15 @@ import type Phaser from "phaser";
 import type { RoadBattle, RoadEffect } from "@/lib/road-view";
 import { ROAD_EFFECTS } from "./road-art";
 import { roadY } from "@/lib/road-layout";
+import { paintCommand } from "./road-command-effect";
 
-const frames = { arrow: 0, slash: 1, magic: 2, heal: 2, gather: 3, assist: 1, hurt: 1 };
+const frames = { arrow: 0, slash: 1, magic: 2, heal: 2, gather: 3, assist: 1, hurt: 1, command: 2 };
 
 export class RoadEffects {
   private sprites = new Map<number, Phaser.GameObjects.Image>();
+  private threads: Phaser.GameObjects.Graphics;
   constructor(private scene: Phaser.Scene) {
+    this.threads = scene.add.graphics().setDepth(39);
     const texture = scene.textures.get(ROAD_EFFECTS);
     const source = texture.getSourceImage() as HTMLImageElement;
     const side = Math.floor(source.width / 2);
@@ -16,22 +19,28 @@ export class RoadEffects {
   }
 
   paint(state: RoadBattle, reduced: boolean, screenX: (x: number) => number) {
+    this.threads.clear();
     const visible = state.effects.filter(
       (effect) =>
-        !reduced &&
+        (!reduced || effect.kind === "command") &&
         effect.kind !== "hurt" &&
         state.time >= effect.at &&
-        state.time - effect.at < 600,
+        state.time - effect.at < (effect.kind === "command" ? 900 : 600),
     );
     for (const [id, sprite] of this.sprites) {
       if (visible.some((effect) => effect.id === id)) continue;
       sprite.destroy();
       this.sprites.delete(id);
     }
-    for (const effect of visible) this.paintOne(state, effect, screenX);
+    for (const effect of visible) this.paintOne(state, effect, screenX, reduced);
   }
 
-  private paintOne(state: RoadBattle, effect: RoadEffect, screenX: (x: number) => number) {
+  private paintOne(
+    state: RoadBattle,
+    effect: RoadEffect,
+    screenX: (x: number) => number,
+    reduced: boolean,
+  ) {
     let sprite = this.sprites.get(effect.id);
     if (!sprite) {
       sprite = this.scene.add.image(0, 0, ROAD_EFFECTS, String(frames[effect.kind])).setDepth(40);
@@ -43,6 +52,18 @@ export class RoadEffects {
       endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),
       startY = roadY(effect.fromLane ?? effect.lane, this.scene.scale.height) - 28 * scale;
+    if (effect.kind === "command") {
+      paintCommand(
+        this.threads,
+        sprite,
+        { x: startX, y: startY - 10 * scale },
+        { x: endX, y: endY },
+        age,
+        scale,
+        reduced,
+      );
+      return;
+    }
     const projectile = effect.kind === "arrow" || effect.kind === "magic";
     const progress = projectile ? Math.min(1, age / 240) : 1;
     sprite.setPosition(startX + (endX - startX) * progress, startY + (endY - startY) * progress);

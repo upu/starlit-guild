@@ -43,12 +43,30 @@ function fixture(index, mode) {
         break;
       s = settle(s, s.squads[0].run.nextAt).state;
     }
-  } else if (mode === "boss")
+  } else if (mode === "boss" || mode.startsWith("command"))
     while ((s.squads[0].run.node < 2 || s.squads[0].run.road.scene) && s.updatedAt < now + 180000)
       s = settle(s, s.squads[0].run.nextAt).state;
   else if (mode === "ambush" || mode === "rear")
     while (s.squads[0].run.road.ambushNode === undefined && s.updatedAt < now + 60000)
       s = settle(s, s.squads[0].run.nextAt).state;
+  if (mode.startsWith("command")) {
+    for (let i = 0; i < 1500; i++) {
+      const r = s.squads[0].run;
+      if (r.events.some((e) => e.kind === "move" && e.enemy && e.at === s.updatedAt)) break;
+      s = settle(s, r.nextAt).state;
+    }
+    const delay = mode === "command-arrival" ? 650 : 230;
+    s = settle(s, s.updatedAt + delay).state;
+    assert.ok(
+      chapterRoadFrame({
+        squad: s.squads[0],
+        startQuest: storyStages[index].quest,
+        now: s.updatedAt,
+        ready: true,
+        paused: false,
+      }).battle.effects.some((e) => e.kind === "command"),
+    );
+  }
   if (mode === "rear") {
     const r = s.squads[0].run,
       road = r.road,
@@ -88,6 +106,8 @@ try {
     ["rear-signpost", 13, "rear"],
     ["trio-work", 16, "worksite"],
     ["puppets", 15, "boss"],
+    ["command", 15, "command"],
+    ["command-arrival", 15, "command-arrival"],
     ["withdraw", 15, "withdraw"],
     ["enter", 15, "enter"],
     ["escape", 15, "escape"],
@@ -105,7 +125,10 @@ try {
     if (name === "cargo")
       await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
-    if (["worksite", "arrival", "withdraw", "enter", "escape", "rear"].includes(mode))
+    if (
+      ["worksite", "arrival", "withdraw", "enter", "escape", "rear"].includes(mode) ||
+      mode.startsWith("command")
+    )
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {
       if (!localStorage.getItem("starlit-guild-v4"))
@@ -159,6 +182,8 @@ try {
     }
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.clock.runFor(300);
+    if (mode.startsWith("command"))
+      await page.screenshot({ path: `${output}/${name}-reduced.png` });
     const before = await page.evaluate(() => JSON.parse(localStorage.getItem("starlit-guild-v4")));
     assert.equal(before.active, save.active);
     assert.ok(before.profiles[0].state.squads[0].run.road);

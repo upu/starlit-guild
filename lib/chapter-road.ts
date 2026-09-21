@@ -199,6 +199,18 @@ function moveEnemy(r: Run, enemy: Enemy, dt: number) {
   const x = road.members[target].x;
   move(position, Math.abs(x - position.x) > 52 ? x : position.x, enemy.role ? 18 : 25, dt);
 }
+function movePuppeteer(r: Run, dt: number) {
+  const road = r.road;
+  const master = r.enemies?.find((enemy) => enemy.role === "puppeteer" && enemy.hp > 0);
+  if (!road || road.scene || !master) return;
+  const dolls = (r.enemies || []).filter((enemy) => enemy.role !== "puppeteer" && enemy.hp > 0);
+  if (!dolls.length) return;
+  const position = road.opponents[master.id];
+  const rear = Math.max(...dolls.map((enemy) => road.opponents[enemy.id].x)) + 100;
+  // Retreat faster than ordinary knockback, without chasing dolls back into the front line.
+  move(position, Math.max(position.x, rear), 110, dt);
+  position.facing = -1;
+}
 export function advanceChapterRoad(q: Quest, r: Run, at: number) {
   const road = r.road;
   if (!road) return;
@@ -211,6 +223,7 @@ export function advanceChapterRoad(q: Quest, r: Run, at: number) {
   ambush(q, r, at);
   for (const actor of r.actors) moveMember(q, r, actor.hero, dt);
   for (const enemy of r.enemies || []) moveEnemy(r, enemy, dt);
+  movePuppeteer(r, dt);
   advanceTransport(q, r, dt);
   updateRoadCamera(r);
 }

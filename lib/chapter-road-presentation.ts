@@ -53,7 +53,6 @@ function enemyKind(role?: string): RoadEnemy["kind"] {
   return role === "puppet" ? "puppet" : "slime";
 }
 function effectKind(event: GameEvent): RoadEffect["kind"] | null {
-  if (event.kind === "move" && event.enemy) return "magic";
   if (["hurt", "gather", "heal", "assist"].includes(event.kind))
     return event.kind as RoadEffect["kind"];
   if (!["hit", "skill", "combo"].includes(event.kind)) return null;
@@ -64,6 +63,7 @@ function effects(run: Run | null, battle: RoadBattle): RoadEffect[] {
   return run.events
     .filter((event) => event.id.startsWith(`${String(run.round)}-${String(run.node)}-`))
     .flatMap((event) => {
+      if (event.kind === "move" && event.enemy) return commandEffects(event, battle);
       const kind = effectKind(event);
       if (!kind || battle.time - event.at > 650) return [];
       // Work and tap assistance without an enemy are not attacks on the supplies.
@@ -85,6 +85,26 @@ function effects(run: Run | null, battle: RoadBattle): RoadEffect[] {
         },
       ];
     });
+}
+
+function commandEffects(event: GameEvent, battle: RoadBattle): RoadEffect[] {
+  const age = battle.time - event.at;
+  const master = battle.enemies.find(
+    (enemy) => enemy.id === Number(event.enemy?.split("-")[1]) && enemy.kind === "pumpety",
+  );
+  if (!master || master.hp <= 0 || age < 0 || age >= 900) return [];
+  return battle.enemies
+    .filter((enemy) => enemy.hp > 0 && ["puppet", "golem"].includes(enemy.kind))
+    .map((enemy) => ({
+      id: eventHash(`${event.id}-command-${String(enemy.id)}`),
+      kind: "command",
+      at: event.at,
+      amount: 0,
+      fromX: master.x,
+      fromLane: master.lane,
+      x: enemy.x,
+      lane: enemy.lane,
+    }));
 }
 
 function eventHash(id: string) {
@@ -237,6 +257,10 @@ export function chapterRoadFrame(
     look = makeLook(input, frame);
   addWork(input, frame, battle, look);
   battle.effects = effects(run, battle);
+  if (battle.effects.some((effect) => effect.kind === "command")) {
+    const master = battle.enemies.find((enemy) => enemy.kind === "pumpety");
+    if (master) look.enemies[master.id].label = "もう一回なのよ！";
+  }
   presentRoadScene(battle, run, input.now, reduced, worldWidth);
   return { battle, look };
 }

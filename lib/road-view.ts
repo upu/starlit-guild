@@ -21,7 +21,7 @@ export type RoadEnemy = {
 export type RoadEffect = {
   id: number;
   at: number;
-  kind: "arrow" | "slash" | "hurt" | "assist" | "gather" | "heal" | "magic";
+  kind: "arrow" | "slash" | "hurt" | "assist" | "gather" | "heal" | "magic" | "command";
   x: number;
   lane: number;
   amount: number;
