@@ -55,7 +55,7 @@ v0.3.7の初期装備の能力追加とミラの加入装備を適用し、章�
 | 3章・標準 | 第二章の標準通し試走の終了状態。三人Lv.17、幕間のお昼から |
 | 3章・クリア状態 | 第三章の標準通し試走の終了状態。四人Lv.22、全会話読了、新装備 |
 
-実行時は `lib/test-presets.ts` が `lib/generated/chapter-test-states.json` を複製する。スマホ上で試走は行わない。`npm run presets:generate` が各章の標準試走へ前章の状態全体を渡して再生成し、表示レベルもこのデータから求める。`npm run presets:check` をCIで実行し、バランス変更後の更新漏れを検出する。章追加時は `scripts/generate-test-presets.mjs` に通し試走とステージ一覧を追加する。標準開始ボタンは各章分、クリア状態は最新章分を自動で並べる。
+実行時は `lib/test-presets.ts` が `lib/generated/chapter-test-states.json` を複製する。スマホ上で試走は行わない。`npm run presets:generate` が各章の標準試走へ前章の状態全体を渡して再生成し、表示レベルもこのデータから求める。章の追加・バランス調整時に再生成し、必要に応じて `npm run presets:check` で確認する。通し試走による開始データの検査は毎回のCIでは実行しない。章追加時は `scripts/generate-test-presets.mjs` に通し試走とステージ一覧を追加する。標準開始ボタンは各章分、クリア状態は最新章分を自動で並べる。
 
 ## 旧固定データによる比較試走
 
