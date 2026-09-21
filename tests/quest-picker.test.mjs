@@ -121,16 +121,9 @@ test("opens the selected destination chapter and filters cards; switching only p
   assert.equal(h.props.selected, chapterTwo.PICNIC_QUEST);
   h.button(chapterTwo.PICNIC_QUEST).props.onClick();
   assert.deepEqual(h.confirmed, [chapterTwo.PICNIC_QUEST]);
-  const image = nodes(h.cards()[0]).find((node) => node.props?.src);
   assert.equal(
-    image.props.src,
-    scenery.questScenery(
-      {
-        id: chapterTwo.PICNIC_QUEST,
-        background: game.allQuests.find((q) => q.id === chapterTwo.PICNIC_QUEST).background,
-      },
-      "thumbnail",
-    ),
+    nodes(h.cards()[0]).some((node) => node.props?.src),
+    false,
   );
 });
 

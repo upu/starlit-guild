@@ -1,0 +1,117 @@
+/* Keep the destination visible while only the list scrolls. */
+.phone-dialog.quest-dialog {
+  display: flex;
+  flex-direction: column;
+  height: calc(
+    var(--game-height, 100dvh) - 24px - env(safe-area-inset-top) - var(--game-safe-bottom, 0px)
+  );
+  overflow: hidden;
+  gap: 10px !important;
+}
+.quest-dialog > [data-slot="dialog-header"] {
+  flex-shrink: 0;
+}
+.quest-picker {
+  flex: 1;
+  min-height: 0;
+  gap: 10px;
+}
+.quest-chapters,
+.quest-summary {
+  flex-shrink: 0;
+}
+.quest-list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 3px;
+  scrollbar-gutter: stable;
+}
+.quest-list-scroll > * {
+  flex-shrink: 0;
+}
+.quest-picker .departure-party {
+  margin: 0;
+  padding: 0 3px;
+  border: 0;
+  background: none;
+}
+.quest-options .quest-option {
+  min-height: 64px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: linear-gradient(115deg, #294337, #20382f);
+  align-items: center;
+}
+.quest-options .quest-option[aria-pressed="true"] {
+  background: linear-gradient(115deg, #465b3e, #2d4433);
+  box-shadow: inset 3px 0 #e2c77f;
+}
+.quest-option .quest-option-copy {
+  flex: 1;
+  gap: 3px;
+}
+.quest-option .quest-option-meta {
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.quest-option .quest-clear-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #99bf94;
+  color: #18372a;
+}
+.quest-clear-badge svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+.quest-option b {
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.quest-picker .quest-summary {
+  padding: 12px 14px;
+  gap: 4px;
+  box-shadow: 0 -4px 16px #081d1b33;
+}
+.quest-summary-label {
+  color: #c2d0b6;
+  font-size: 11px;
+}
+.quest-summary-title {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.quest-description {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.quest-confirm-label {
+  align-self: flex-end;
+  color: #ffe29e;
+  font-size: 12px;
+}
+@media (max-height: 500px) {
+  .phone-dialog.quest-dialog {
+    padding-block: 10px !important;
+  }
+  .quest-picker .quest-summary {
+    padding-block: 6px;
+    gap: 2px;
+  }
+  .quest-summary .quest-description {
+    display: none;
+  }
+}

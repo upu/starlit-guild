@@ -25,7 +25,7 @@ const bundle = await build({
   const profile={id:'fixture',name:'表示確認',test:false,state};
   const game={s:state,ready:true,otherTab:false,profile,bundle:{sound:false,profiles:[profile],active:profile.id},dispatch,copies:[],toggleSound:()=>{}};
   const music={preferences:{enabled:false,volume:50},scene:'camp',setEnabled:()=>{},setVolume:()=>{}};
-  return <main className="phone-game"><div className="phone-dialog quest-dialog fixture" data-slot="dialog-content"><h2>クエスト</h2><SavePanel game={game} music={music}/>{confirmed?<button onClick={()=>setConfirmed('')}>選び直す</button>:<QuestPicker state={state} selected={selected} onSelect={setSelected} onConfirm={setConfirmed} ready onAutoNextChange={value=>dispatch({type:'autoNextQuest',value})}/>}<output>{confirmed}</output></div></main>;
+  return <main className="phone-game"><div className="phone-dialog quest-dialog fixture" data-slot="dialog-content"><div data-slot="dialog-header"><h2>クエスト</h2><p>行き先を選び、もう一度タップで決定。</p></div><SavePanel game={game} music={music}/>{confirmed?<button onClick={()=>setConfirmed('')}>選び直す</button>:<QuestPicker state={state} selected={selected} onSelect={setSelected} onConfirm={setConfirmed} ready onAutoNextChange={value=>dispatch({type:'autoNextQuest',value})}/>}<output>{confirmed}</output></div></main>;
  }
  createRoot(document.getElementById('root')).render(<App/>);
  `,
@@ -123,8 +123,15 @@ async function checkThumb(switchControl) {
 }
 try {
   const results = [];
-  for (const width of [360, 390, 768, 1364]) {
-    const context = await browser.newContext({ viewport: { width, height: 844 }, hasTouch: true });
+  for (const [width, height] of [
+    [320, 568],
+    [360, 844],
+    [390, 844],
+    [768, 844],
+    [1364, 844],
+    [844, 390],
+  ]) {
+    const context = await browser.newContext({ viewport: { width, height }, hasTouch: true });
     const page = await context.newPage(),
       errors = [],
       requests = [];
@@ -147,7 +154,29 @@ try {
     assert.equal(await page.locator(".quest-option").count(), 9);
     await page.screenshot({ path: path.join(dir, `chapter-one-${width}.png`) });
     const detail = page.locator(".quest-summary");
-    await detail.scrollIntoViewIfNeeded();
+    const before = await detail.boundingBox();
+    assert.ok(before.y >= 0 && before.y + before.height <= height);
+    const list = page.locator(".quest-list-scroll");
+    await list.evaluate((el) => {
+      el.scrollTop = el.scrollHeight;
+    });
+    const after = await detail.boundingBox();
+    assert.equal(after.y, before.y);
+    const last = await page.locator(".quest-option").last().boundingBox();
+    assert.ok(last.y + last.height <= after.y);
+    const cards = await page.locator(".quest-option").evaluateAll((elements) =>
+      elements.map((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.x, y: r.y, height: r.height };
+      }),
+    );
+    assert.ok(
+      cards.every(
+        (card, i) =>
+          card.x === cards[0].x && (!i || card.y >= cards[i - 1].y + cards[i - 1].height),
+      ),
+    );
+    assert.equal(await page.locator(".quest-clear-badge").count(), 9);
     await page.screenshot({ path: path.join(dir, `detail-${width}.png`) });
     await detail.hover();
     assert.equal(
@@ -155,9 +184,9 @@ try {
       "rgb(44, 66, 50)",
     );
     const detailBox = await detail.boundingBox();
-    await page.mouse.move(detailBox.x + 30, detailBox.y + 100);
+    await page.mouse.move(detailBox.x + 30, detailBox.y + 10);
     await page.mouse.down();
-    await page.mouse.move(detailBox.x + 30, detailBox.y + 150, { steps: 6 });
+    await page.mouse.move(detailBox.x + 30, detailBox.y + 35, { steps: 6 });
     await page.mouse.up();
     assert.equal(await page.locator("output").innerText(), "");
     await page.evaluate(() => window.getSelection()?.removeAllRanges());
@@ -180,11 +209,7 @@ try {
       false,
     );
     const sceneryRequests = [...new Set(requests.filter((p) => p.startsWith("/scenery/")))];
-    assert.ok(sceneryRequests.length > 0);
-    assert.ok(
-      sceneryRequests.every((p) => /-(thumbnail|detail)\.webp$/.test(p)),
-      sceneryRequests.join(),
-    );
+    assert.deepEqual(sceneryRequests, []);
     assert.deepEqual(errors, []);
     results.push({ width, sceneryRequests, errors });
     await context.close();
