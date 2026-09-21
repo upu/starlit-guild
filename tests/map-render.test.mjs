@@ -66,7 +66,7 @@ test("characters and shared bag expose starting equipment and trade cargo withou
     );
   assert.match(character, /アリア/);
   assert.match(character, /レオン/);
-  assert.match(character, /最大HP 60/);
+  assert.match(character, /最大HP 62/);
   assert.match(character, /風の二連矢/);
   assert.match(character, /使い慣れた弓/);
   assert.match(character, /旅の服/);

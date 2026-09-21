@@ -1,5 +1,10 @@
 import { advanceQuestDestination } from "./quest-navigation.ts";
-import { buyEquipment, changeEquipment, type EquipmentSlot } from "./equipment.ts";
+import {
+  buyEquipment,
+  changeEquipment,
+  grantMiraEquipment,
+  type EquipmentSlot,
+} from "./equipment.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import { isPrologueQuest, stageEndingPending, stageUnlocked } from "./prologue.ts";
 import { DELIVERY_PREP_QUEST, trioQuest } from "./chapter-two.ts";
@@ -101,6 +106,7 @@ export function joinStoryMira(s: State) {
     if (!Object.hasOwn(s.xp, "mira")) s.xp.mira = Math.min(s.xp.aria || 0, s.xp.leon || 0);
   }
   const party = s.squads.find((p) => p.lastQuest === DELIVERY_PREP_QUEST) || s.squads[0];
+  grantMiraEquipment(s);
   if (!party.run && !party.members.includes("mira")) party.members.push("mira");
 }
 function stopAction(s: State, sq: Squad, _a: Action, now: number) {

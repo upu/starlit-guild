@@ -23,7 +23,7 @@ export const equipment: Equipment[] = [
     description: "アリアが手になじませてきた弓。いつもの交易にも携えている。",
     slot: "weapon",
     heroes: ["aria"],
-    bonus: [0, 0, 0],
+    bonus: [0, 0, 1],
     price: 0,
     tier: 0,
   },
@@ -33,7 +33,7 @@ export const equipment: Equipment[] = [
     description: "レオンが手入れを続けている剣。街道を歩くときの備え。",
     slot: "weapon",
     heroes: ["leon"],
-    bonus: [0, 0, 0],
+    bonus: [0, 0, 1],
     price: 0,
     tier: 0,
   },
@@ -42,7 +42,17 @@ export const equipment: Equipment[] = [
     name: "旅の服",
     description: "動きやすい、いつもの旅支度。",
     slot: "armor",
-    bonus: [0, 0, 0],
+    bonus: [0, 1, 0],
+    price: 0,
+    tier: 0,
+  },
+  {
+    id: "familiar-staff",
+    name: "使い慣れた杖",
+    description: "ミラが往診に携える杖。仲間を守る小さな支え。",
+    slot: "weapon",
+    heroes: ["mira"],
+    bonus: [0, 1, 0],
     price: 0,
     tier: 0,
   },
@@ -97,8 +107,17 @@ export function initialInventory(): Inventory {
     },
   };
 }
-// Missing fields in old saves represent the same zero-bonus starting equipment.
+// Missing fields in old saves represent the starting equipment.
 export const inventoryOf = (s: Pick<State, "inventory">) => s.inventory ?? initialInventory();
+export function grantMiraEquipment(s: State) {
+  if (!s.owned.includes("mira") || s.inventory?.items["familiar-staff"]) return;
+  const inventory = (s.inventory ??= initialInventory());
+  inventory.items["familiar-staff"] = 1;
+  inventory.items["travel-clothes"] = (inventory.items["travel-clothes"] ?? 0) + 1;
+  const slots = (inventory.equipped.mira ??= {});
+  slots.weapon ??= "familiar-staff";
+  slots.armor ??= "travel-clothes";
+}
 export function equippedItems(s: Pick<State, "inventory">, hero: string) {
   return Object.values(inventoryOf(s).equipped[hero] ?? {}).flatMap((id) => {
     const item = equipmentById(id);

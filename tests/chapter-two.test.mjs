@@ -27,6 +27,7 @@ import {
   knowsTechnique,
   techniqueMultiplier,
   techniqueDamage,
+  learnableTechniques,
 } from "../lib/techniques.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { nextGoal, journeyNotice } from "../lib/journey.ts";
@@ -69,6 +70,15 @@ test("2-3 joins Mira after rest once; the new party and replay survive saves", (
   assert.deepEqual(joined.squads[0].members, joined.owned);
   assert.equal(joined.gold, packed.gold);
   assert.equal(joined.xp.mira, Math.min(joined.xp.aria, joined.xp.leon));
+  assert.deepEqual(joined.inventory.equipped.mira, {
+    weapon: "familiar-staff",
+    armor: "travel-clothes",
+  });
+  assert.equal(joined.inventory.items["travel-clothes"], 3);
+  assert.equal(joined.inventory.items["familiar-staff"], 1);
+  assert.ok(learnableTechniques(joined).some((t) => t.hero === "mira" && t.slot === "passive"));
+  assert.equal(knowsTechnique(joined, "mira-care"), false);
+  assert.equal(equippedTechnique(joined, "mira", "passive"), null);
   assert.deepEqual(read(joined, DELIVERY_PREP_QUEST), joined);
   assert.match(journeyNotice(packed, joined).title, /ミラが仲間/);
   const early = roundtrip(start(joined, PICNIC_QUEST));
@@ -105,7 +115,7 @@ test("2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
     const inventory = offline.inventory,
       herbs = offline.herbs;
     s = roundtrip(read(offline, id));
-    assert.deepEqual(s.inventory, inventory);
+    if (id !== DELIVERY_PREP_QUEST) assert.deepEqual(s.inventory, inventory);
     assert.equal(s.herbs, herbs);
   }
   assert.match(nextGoal(s).title, /2-7/);

@@ -9,11 +9,13 @@ import {
   Shield,
   Sword,
   Sparkles,
+  HeartPlus,
   type LucideIcon,
 } from "lucide-react";
 import type { TechniqueSlot } from "@/lib/techniques";
 
 const icons: Partial<Record<string, LucideIcon>> = {
+  "mira-care": HeartPlus,
   "aria-double": BowArrow,
   "aria-gather": Leaf,
   "aria-herbs": Sprout,
