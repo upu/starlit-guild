@@ -21,9 +21,6 @@
   --chat-rows: 5;
 }
 .phone-game .phone-adventure > .journey-banter,
-.phone-game .phone-adventure > .journey-banter:hover:not(:disabled),
-.phone-game .phone-adventure > .journey-banter:focus,
-.phone-game .phone-adventure > .journey-banter:active,
 .phone-game .phone-adventure > .phone-banter {
   background: rgb(30 33 37 / 38%);
   color: #fff;

@@ -40,7 +40,7 @@ test("outside primary clicks advance once and suppress dismissal; context clicks
   assert.equal(prevented, 6);
 });
 
-test("story and banter dialogs wire outside clicks to their reader; ordinary sheets do not", () => {
+test("story dialogs wire outside clicks to their reader; ordinary sheets do not", () => {
   const exports = {},
     readerRef = { current: null },
     onPointerDownOutside = () => {};
@@ -48,7 +48,7 @@ test("story and banter dialogs wire outside clicks to their reader; ordinary she
     react: {},
     "react/jsx-runtime": jsxRuntime,
     "./use-story-advance": { useStoryAdvance: () => ({ readerRef, onPointerDownOutside }) },
-    "./story-scenes": { StoryReader: "reader", ConversationReader: "reader" },
+    "./story-scenes": { StoryReader: "reader" },
     "./story-heading": { StoryHeading: "story-heading" },
     "./phone-game-sheets": {
       resolveSheet: (model, advanceRef) => ({
@@ -77,7 +77,7 @@ test("story and banter dialogs wire outside clicks to their reader; ordinary she
     exports,
     require: (id) => modules[id] ?? {},
   });
-  for (const sheet of ["story", "banter", null]) {
+  for (const sheet of ["story", null]) {
     const model = {
       sheet,
       reading: { id: "test", title: "test", place: "test" },

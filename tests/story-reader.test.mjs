@@ -180,7 +180,7 @@ test("story and banter portraits keep the expression of each individual line", (
     rows.map((row) => row.props.children[0].props.expression),
     ["surprised", "smile"],
   );
-  const banter = harness("Banter", { lines, onRead() {} });
+  const banter = harness("Banter", { lines });
   banter.tick();
   const history = banter.find("banter-copy").props.children;
   assert.deepEqual(
@@ -189,7 +189,7 @@ test("story and banter portraits keep the expression of each individual line", (
   );
   // Equal words from a different scene can carry a different emotion.
   const next = [{ ...lines[1], expression: "worried" }];
-  banter.render({ lines: next, onRead() {} });
+  banter.render({ lines: next });
   banter.tick();
   assert.equal(
     banter.find("banter-copy").props.children.at(-1).props.children[0].props.expression,
@@ -286,13 +286,7 @@ test("banter keeps a complete exchange while the route changes and pauses under 
       { speaker: "leon", text: "その返事" },
     ],
     next = [{ speaker: "leon", text: "次の場所" }];
-  let opened;
-  const props = {
-    lines,
-    onRead: (lines) => {
-      opened = lines;
-    },
-  };
+  const props = { lines };
   const h = harness("Banter", props);
   assert.ok(h.text().includes(lines[0].text));
   assert.ok(!h.text().includes(lines[1].text));
@@ -301,8 +295,8 @@ test("banter keeps a complete exchange while the route changes and pauses under 
   assert.ok(h.text().includes(lines[0].text));
   assert.ok(h.text().includes(lines[1].text));
   assert.ok(!h.text().includes(next[0].text));
-  h.find("button").props.onClick();
-  assert.deepEqual(opened, lines);
+  assert.equal(h.find("button"), undefined);
+  assert.equal(h.find("journey-banter journey-banter-history").props.onClick, undefined);
   h.render({ ...props, lines: next, paused: true });
   assert.equal(h.timerCount(), 0);
   h.render({ ...props, lines: next, paused: false });
@@ -321,13 +315,13 @@ test("banter keeps a complete exchange while the route changes and pauses under 
   assert.ok(h.text().includes(next[0].text));
   assert.ok(h.text().includes(later[0].text));
   const viewport = { scrollHeight: 900, clientHeight: 220, scrollTop: 100 };
-  h.find("button").props.ref.current = viewport;
-  h.find("button").props.onScroll({ currentTarget: viewport });
+  h.find("journey-banter journey-banter-history").props.ref.current = viewport;
+  h.find("journey-banter journey-banter-history").props.onScroll({ currentTarget: viewport });
   h.render({ ...props, lines: [{ speaker: "leon", text: "歩幅を合わせよう。" }] });
   h.tick();
   assert.equal(viewport.scrollTop, 100, "reading history is not interrupted");
   viewport.scrollTop = 680;
-  h.find("button").props.onScroll({ currentTarget: viewport });
+  h.find("journey-banter journey-banter-history").props.onScroll({ currentTarget: viewport });
   viewport.scrollHeight = 1000;
   h.render({ ...props, lines: [{ speaker: "aria", text: "うん、一緒に行こう。" }] });
   h.tick();
@@ -379,13 +373,7 @@ test("banter stops after the idle exchange even with fresh arrays on every clock
       { speaker: "leon", text: "ああ。アリアを待ってた。" },
     ],
     before = structuredClone(lines);
-  let opened;
-  const props = {
-    lines,
-    onRead: (value) => {
-      opened = value;
-    },
-  };
+  const props = { lines };
   const h = harness("Banter", props);
   assert.equal(h.timerCount(), 1);
   for (let i = 0; i < 10; i++) h.render({ ...props, lines: structuredClone(lines) });
@@ -404,8 +392,8 @@ test("banter stops after the idle exchange even with fresh arrays on every clock
   h.render({ ...props, paused: true });
   h.render({ ...props, paused: false });
   assert.equal(h.timerCount(), 0);
-  h.find("button").props.onClick();
-  assert.deepEqual(opened, lines);
+  assert.equal(h.find("button"), undefined);
+  assert.equal(h.find("journey-banter journey-banter-history").props.onClick, undefined);
   assert.deepEqual(lines, before);
 });
 
@@ -415,7 +403,7 @@ test("each banter line keeps its own speaker portrait, including history and nar
     { speaker: "leon", text: "足元に気をつけて。" },
     { text: "風が吹いた。" },
   ];
-  const h = harness("Banter", { lines, onRead: () => {} });
+  const h = harness("Banter", { lines });
   h.tick();
   h.tick();
   const rows = h.find("banter-copy").props.children;
@@ -432,7 +420,7 @@ test("banter resumes for new content, finishes the exchange, and stops again", (
       { speaker: "leon", text: "出発しよう。" },
       { speaker: "aria", text: "うん、行こう！" },
     ];
-  const props = { lines: idle, onRead: () => {} },
+  const props = { lines: idle },
     h = harness("Banter", props);
   assert.equal(h.timerCount(), 0);
   h.render({ ...props, lines: next });
@@ -451,7 +439,7 @@ test("banter resumes for new content, finishes the exchange, and stops again", (
 });
 
 test("banter waits for initial dialogue and keeps history when no new lines arrive", () => {
-  const props = { lines: [], onRead: () => {} },
+  const props = { lines: [] },
     h = harness("Banter", props);
   assert.equal(h.find("button"), undefined);
   assert.equal(h.timerCount(), 0);
@@ -472,7 +460,7 @@ test("banter waits for initial dialogue and keeps history when no new lines arri
 
 test("banter compares speakers as well as text and bounds genuine new history", () => {
   const text = "分かった。",
-    props = { lines: [{ speaker: "aria", text }], onRead: () => {} },
+    props = { lines: [{ speaker: "aria", text }] },
     h = harness("Banter", props);
   h.render({ ...props, lines: [{ speaker: "leon", text }] });
   h.tick();
@@ -491,7 +479,7 @@ test("banter compares speakers as well as text and bounds genuine new history", 
 
 test("banter uses the latest pending exchange without replaying one that was withdrawn", () => {
   const lines = [{ speaker: "aria", text: "待機中。" }],
-    props = { lines, onRead: () => {} },
+    props = { lines },
     h = harness("Banter", props);
   h.render({ ...props, lines: [{ speaker: "leon", text: "一時的な会話。" }] });
   assert.equal(h.timerCount(), 1);

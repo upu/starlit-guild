@@ -7,7 +7,6 @@ import {
   type Dispatch,
   type Ref,
   type SetStateAction,
-  type UIEvent,
 } from "react";
 import { BookOpen, ChevronRight } from "lucide-react";
 import { Portrait } from "./portrait";
@@ -147,32 +146,6 @@ export function StoryReader({
         setViewArt(false);
       })}
     </div>
-  );
-}
-
-export function ConversationReader({
-  lines,
-  onClose,
-  advanceRef,
-}: {
-  lines: StoryLine[];
-  onClose: () => void;
-  advanceRef?: Ref<StoryAdvance>;
-}) {
-  return (
-    <StoryReader
-      story={{
-        id: "journey-conversation",
-        title: "道中の会話",
-        place: "道中",
-        chapter: "departure",
-        lines,
-      }}
-      ready
-      onRead={() => true}
-      onClose={onClose}
-      advanceRef={advanceRef}
-    />
   );
 }
 
@@ -316,22 +289,6 @@ function scheduleBanter(
   };
 }
 
-function useBanterButtonHandlers(
-  followLatest: { current: boolean },
-  onRead: (lines: StoryLine[]) => void,
-  lines: StoryLine[],
-) {
-  return {
-    onScroll: (event: UIEvent<HTMLButtonElement>) => {
-      const el = event.currentTarget;
-      followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
-    },
-    onClick: () => {
-      onRead(lines);
-    },
-  };
-}
-
 function banterLine(entry: StoryLine, key: number) {
   const speaker = characters.find((h) => h.id === entry.speaker);
   return (
@@ -345,22 +302,14 @@ function banterLine(entry: StoryLine, key: number) {
   );
 }
 
-export function Banter({
-  lines,
-  onRead,
-  paused = false,
-}: {
-  lines: StoryLine[];
-  onRead: (lines: StoryLine[]) => void;
-  paused?: boolean;
-}) {
+export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?: boolean }) {
   const [exchange, setExchange] = useState({
     lines,
     index: 0,
     history: lines.slice(0, 1),
     turn: 0,
   });
-  const dialogue = useRef<HTMLButtonElement>(null);
+  const dialogue = useRef<HTMLDivElement>(null);
   const followLatest = useRef(true);
   useEffect(() => {
     if (dialogue.current && followLatest.current)
@@ -377,20 +326,24 @@ export function Banter({
     () => scheduleBanter(paused, hasNext, line, latest, setExchange),
     [exchange, paused, line, hasNext],
   );
-  const handlers = useBanterButtonHandlers(followLatest, onRead, exchange.lines);
   if (!line) return null;
   return (
-    <button
+    <div
       ref={dialogue}
       className="journey-banter journey-banter-history"
-      {...handlers}
-      aria-label="道中の掛け合いを読む"
+      onScroll={(event) => {
+        const el = event.currentTarget;
+        followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
+      }}
+      role="region"
+      tabIndex={0}
+      aria-label="道中の掛け合い"
     >
       <span className="banter-copy">
         {exchange.history.map((entry, i) =>
           banterLine(entry, exchange.turn - exchange.history.length + 1 + i),
         )}
       </span>
-    </button>
+    </div>
   );
 }

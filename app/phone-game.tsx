@@ -12,10 +12,9 @@ import {
   storyProgress,
   together,
   type Story,
-  type StoryLine,
 } from "@/lib/stories";
 import { TRADE_QUEST, isPrologueQuest, stageEndingPending, restingQuest } from "@/lib/prologue";
-import { heroes, availableQuests, allQuests, activeBonds } from "@/lib/game";
+import { heroes, availableQuests, activeBonds } from "@/lib/game";
 import type { Action, State, Squad } from "@/lib/game";
 import type { Game, PhoneFrameModel, ReturnIntent, Sheet, SheetModel } from "./phone-game-types";
 
@@ -75,8 +74,7 @@ function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex:
 function usePhoneContext(game: Game) {
   const installStatus = useInstallPrompt();
   const [pendingDeparture, setPendingDeparture] = useState<Action | null>(null),
-    [reading, setReading] = useState<Story | null>(null),
-    [banterSnapshot, setBanterSnapshot] = useState<StoryLine[]>([]);
+    [reading, setReading] = useState<Story | null>(null);
   const [view, setView] = useState("adventure"),
     [sheet, setSheet] = useState<Sheet>(null),
     [questChoices, setQuestChoices] = useState<Record<string, string>>({}),
@@ -107,8 +105,6 @@ function usePhoneContext(game: Game) {
     setPendingDeparture,
     reading,
     setReading,
-    banterSnapshot,
-    setBanterSnapshot,
     view,
     setView,
     sheet,
@@ -239,8 +235,6 @@ function usePhoneGameModel(game: Game): PhoneFrameModel {
     reading: context.reading,
     ready: context.ready,
     pendingDeparture: context.pendingDeparture,
-    activeQuest: allQuests.find((quest) => quest.id === context.run?.quest),
-    banterSnapshot: context.banterSnapshot,
     hero: context.hero,
     state: context.s,
     goal: context.goal,
@@ -275,7 +269,6 @@ function usePhoneGameModel(game: Game): PhoneFrameModel {
     quote: context.quote,
     destinationChosen: context.destinationChosen,
     roster: context.roster,
-    setBanterSnapshot: context.setBanterSnapshot,
     setHeroIndex: context.setHeroIndex,
     requestReturn: navigation.requestReturn,
     confirmReturn: navigation.confirmReturn,
