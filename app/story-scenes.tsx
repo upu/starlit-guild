@@ -336,9 +336,7 @@ function banterLine(entry: StoryLine, key: number) {
   const speaker = characters.find((h) => h.id === entry.speaker);
   return (
     <span className="banter-line" key={key}>
-      {speaker && (
-        <Portrait index={speaker.sprite} size={40} expression={entry.expression} variant="chat" />
-      )}
+      {speaker && <Portrait index={speaker.sprite} size={40} expression={entry.expression} />}
       <span className="banter-message">
         {speaker && <b>{speaker.name}：</b>}
         {entry.text}
