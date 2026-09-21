@@ -713,15 +713,16 @@
   padding-right: 4px;
 }
 .phone-game .journey-banter.journey-banter-history {
-  --chat-line-height: 1.5rem;
-  --chat-face-size: 4rem;
-  --chat-height: calc(2 * var(--chat-face-size) + 11px);
+  --chat-line-height: 1.25rem;
+  --chat-face-size: calc(2 * var(--chat-line-height));
+  --chat-height: calc(var(--chat-rows, 3) * (var(--chat-face-size) + 2px) + 7px);
   height: var(--chat-height);
   min-height: 0;
   max-height: var(--chat-height);
   flex: 0 0 var(--chat-height);
   overflow-y: auto;
   overflow-anchor: none;
+  overscroll-behavior: contain;
   align-items: flex-start;
   padding: 4px 6px;
   gap: 0;
@@ -736,7 +737,7 @@
   align-items: center;
   min-height: var(--chat-face-size);
   gap: 6px;
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: var(--chat-line-height);
 }
 .phone-game .journey-banter-history .banter-line > .face-portrait {
@@ -747,6 +748,7 @@
 }
 .phone-game .journey-banter-history .banter-message {
   display: block;
+  font-weight: 400;
   flex: 1;
   min-width: 0;
   overflow: visible;
@@ -755,15 +757,10 @@
   overflow-wrap: anywhere;
 }
 .phone-game .journey-banter-history .banter-message b {
-  display: block;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  display: inline;
+  font-size: inherit;
+  line-height: inherit;
   font-weight: 600;
-}
-@media (min-width: 900px) {
-  .phone-game .journey-banter.journey-banter-history {
-    --chat-face-size: 4.5rem;
-  }
 }
 .journey-banter-history .banter-line:last-child,
 .dialogue-history .story-lines > :last-child {

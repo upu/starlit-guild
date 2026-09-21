@@ -379,10 +379,10 @@ export function Banter({
           return (
             <span className="banter-line" key={exchange.turn - exchange.history.length + 1 + i}>
               {speaker && (
-                <Portrait index={speaker.sprite} size={64} expression={entry.expression} />
+                <Portrait index={speaker.sprite} size={40} expression={entry.expression} />
               )}
               <span className="banter-message">
-                {speaker && <b>{speaker.name}</b>}
+                {speaker && <b>{speaker.name}：</b>}
                 {entry.text}
               </span>
             </span>
