@@ -4,6 +4,9 @@ import { initialPrologueState, act, settle, allQuests, estimate } from "../lib/g
 import { storyStages } from "../lib/prologue.ts";
 import { createEnemies, syncEnemyTotals, damageEnemy } from "../lib/combat.ts";
 import { groupEnemyTurns } from "../lib/enemy-turns.ts";
+import { placeRoadEnemies, advanceChapterRoad } from "../lib/chapter-road.ts";
+import { event } from "../lib/game-run.ts";
+import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { questNodes, puppetCue } from "../lib/puppet-battles.ts";
 import { adventureFrame, adventureAssets, spriteSize } from "../lib/adventure-presentation.ts";
 import { parseBundle } from "../lib/save-format.ts";
@@ -50,6 +53,10 @@ function finalBattle() {
     r.phaseAt,
   );
   syncEnemyTotals(r);
+  placeRoadEnemies(r);
+  // Direct strike tests start with both sides already in melee range.
+  for (const position of Object.values(r.road.members)) position.x = 560;
+  for (const position of Object.values(r.road.opponents)) position.x = 600;
   return s;
 }
 test("short stages retain full coins and XP, distinct formations and live/offline results", () => {
@@ -63,7 +70,7 @@ test("short stages retain full coins and XP, distinct formations and live/offlin
     for (let i = 0; s.squads[0].run && i < 10000; i++) {
       const r = s.squads[0].run;
       seen.set(
-        r.node,
+        r.road?.ambushNode ?? r.node,
         r.enemies.map((e) => e.role),
       );
       s = roundtrip(settle(s, r.nextAt).state);
@@ -112,6 +119,92 @@ test("heavy attacks hit harder, sweep hits two distinct members, and commands re
   assert.equal(master.hp, 0);
   assert.equal(r.target, 0);
 });
+test("command light travels from the master to living dolls, survives loading and expires with its cue", () => {
+  const s = finalBattle(),
+    r = s.squads[0].run;
+  const [small, big, master] = r.enemies;
+  const at = s.updatedAt;
+  small.nextAt = big.nextAt = at + 5000;
+  master.nextAt = at;
+  r.road.opponents[master.id].x = 780;
+  groupEnemyTurns(
+    s,
+    s.squads[0],
+    r,
+    allQuests.find((q) => q.id === r.quest),
+    at,
+    event,
+  );
+  const frame = (state, now = at + 200, reduced = false) =>
+    chapterRoadFrame(
+      {
+        squad: state.squads[0],
+        startQuest: r.quest,
+        now,
+        ready: true,
+        paused: false,
+      },
+      reduced,
+    );
+  const before = structuredClone(s);
+  const shown = frame(s);
+  const commands = shown.battle.effects.filter((e) => e.kind === "command");
+  assert.equal(commands.length, 2);
+  assert.equal(new Set(commands.map((e) => e.id)).size, 2);
+  for (const effect of commands) {
+    assert.equal(effect.fromX, shown.battle.enemies[2].x);
+    assert.equal(effect.fromLane, shown.battle.enemies[2].lane);
+    assert.ok(
+      shown.battle.enemies.slice(0, 2).some((e) => e.x === effect.x && e.lane === effect.lane),
+    );
+  }
+  assert.equal(shown.look.enemies[3].label, "もう一回なのよ！");
+  assert.deepEqual(s, before); // Presentation does not move actors or apply another attack.
+  assert.deepEqual(frame(roundtrip(s)), shown);
+  assert.equal(
+    frame(s, at + 200, true).battle.effects.filter((e) => e.kind === "command").length,
+    2,
+  );
+  small.hp = 0;
+  assert.equal(frame(s).battle.effects.filter((e) => e.kind === "command").length, 1);
+  assert.equal(frame(s, at - 1).battle.effects.filter((e) => e.kind === "command").length, 0);
+  assert.equal(frame(s, at + 900).battle.effects.filter((e) => e.kind === "command").length, 0);
+  assert.notEqual(frame(s, at + 900).look.enemies[3].label, "もう一回なのよ！");
+  r.road.scene = { kind: "escape", at };
+  assert.deepEqual(frame(s).battle.effects, []);
+});
+
+test("the master backs away behind living dolls throughout repeated golem knockback", () => {
+  const s = finalBattle(),
+    r = s.squads[0].run;
+  const q = allQuests.find((q) => q.id === r.quest);
+  const [small, big, master] = r.enemies;
+  const golem = r.road.opponents[big.id],
+    leader = r.road.opponents[master.id];
+  leader.x = leader.previousX = golem.x + 100;
+  const origin = leader.x;
+  for (let tick = 0; tick < 150; tick++) {
+    golem.recoil = 50;
+    const previous = leader.x;
+    advanceChapterRoad(q, r, r.road.at + 100);
+    assert.ok(leader.x >= golem.x + 99);
+    assert.ok(leader.x - previous <= 11.001);
+  }
+  assert.ok(golem.x > origin + 400);
+  const stopped = leader.x;
+  big.hp = 0;
+  advanceChapterRoad(q, r, r.road.at + 100);
+  assert.equal(leader.x, stopped); // Do not chase back into the front line after the golem falls.
+  const doll = r.road.opponents[small.id];
+  doll.x = leader.x - 99;
+  doll.recoil = 50;
+  advanceChapterRoad(q, r, r.road.at + 100);
+  assert.ok(leader.x >= doll.x + 99);
+  // An in-progress save may already have the master in front of the remaining doll.
+  leader.x = doll.x - 120;
+  for (let tick = 0; tick < 30; tick++) advanceChapterRoad(q, r, r.road.at + 100);
+  assert.ok(leader.x >= doll.x + 99);
+});
 test("commands, telegraphs, individual art and clocks survive saving and reduced-size layouts", () => {
   const s = roundtrip(finalBattle()),
     r = s.squads[0].run,
@@ -157,6 +250,7 @@ test("old 15-node saves keep HP, clocks, rewards and composition until completin
     let s = ready(id);
     const r = s.squads[0].run,
       q = allQuests.find((q) => q.id === id);
+    delete r.road; // Historical saves have no spatial clock.
     r.nodes = 15;
     r.node = id === ids[0] ? 7 : 10;
     r.enemies = createEnemies(q, r.node, r.phaseAt, false);
@@ -204,7 +298,7 @@ test("sweeps consume shared wards once per hit and never hit fallen members", ()
 test("short battles recover after defeat, keep rewards on return and survive capped offline time", () => {
   let s = ready(ids[1], 1),
     rest;
-  for (let i = 0; i < 500 && !rest; i++) {
+  for (let i = 0; s.updatedAt < 601000 && !rest; i++) {
     s = settle(s, s.squads[0].run.nextAt).state;
     if (s.squads[0].run.phase === "rest") rest = roundtrip(s);
   }

@@ -83,7 +83,7 @@ test("characters use actual special effects, and an automatic combination crosse
   let s = start(game.testState(1000, 3, 1, 1000));
   const kinds = new Set(),
     skills = new Set();
-  for (let i = 0; i < 100 && s.squads[0].run; i++) {
+  for (let i = 0; s.updatedAt < 61000 && s.squads[0].run; i++) {
     s = game.settle(s, s.squads[0].run.nextAt).state;
     for (const e of s.squads[0].run?.events || []) {
       kinds.add(e.kind);
@@ -96,7 +96,7 @@ test("characters use actual special effects, and an automatic combination crosse
   assert.ok(s.friendship["aria-leon"] > 0);
 });
 test("higher friendship unlocks stronger linked attacks and new dialogue", () => {
-  const s = start();
+  const s = start(game.testState(1000, 3, 1, 1000));
   const enhanced = structuredClone(s);
   enhanced.friendship["aria-leon"] = 24;
   const a = game.settle(s, 15500).state.squads[0].run,

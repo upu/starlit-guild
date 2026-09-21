@@ -1,6 +1,13 @@
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
+  advanceChapterRoad,
+  roadActorReady,
+  roadActionKind,
+  roadComplete,
+  roadTransport,
+} from "./chapter-road.ts";
+import {
   TOWN_QUEST,
   TOWER_QUEST,
   NIGHT_QUEST,
@@ -43,6 +50,7 @@ import {
   addLog,
   combination,
   completeNode,
+  finishRoadScene,
   event,
   heroSkills,
   nextEvent,
@@ -115,17 +123,29 @@ function actorTurn(
     actor.nextAt += actor.period;
     return;
   }
+  if (!roadActorReady(q, r, actor.hero)) {
+    actor.nextAt += 100;
+    return;
+  }
+  kind = roadActionKind(q, r, actor.hero);
   const hero = actor.hero,
     member = memberStats(s, hero),
     bond = activeBonds(sq.members).reduce((value, item) => value + item.bonus, 0);
   actor.actions++;
   const special = actor.actions % specialInterval(hero) === 0,
     multiplier = techniqueMultiplier(s, hero, kind, special, specialMultiplier(hero));
+  if (roadTransport(r) && kind !== "battle") {
+    actor.nextAt += actor.period;
+    healFromActor(s, sq, r, hero, special, at);
+    return;
+  }
   const hit = damageEnemy(
     r,
     (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
     penetration(s, hero),
     resistanceFor(q, kind),
+    hero,
+    !!r.road && kind !== "battle",
   );
   r.hits++;
   actor.nextAt += actor.period;
@@ -158,7 +178,7 @@ function runActorTurns(
   for (const actor of r.actors) {
     if (actor.nextAt !== at) continue;
     actorTurn(s, sq, r, q, kind, actor, at);
-    if (r.target <= 0) return { completed: true, gain: completeNode(s, sq, q, at) };
+    if (roadComplete(r)) return { completed: true, gain: completeNode(s, sq, q, at) };
   }
   return { completed: false, gain: null };
 }
@@ -202,14 +222,17 @@ function step(s: State, sq: Squad) {
   const r = activeRun(sq),
     q = questById(r.quest),
     at = r.nextAt;
+  if (r.road?.scene) return finishRoadScene(s, sq, q, at);
   if (r.phase === "rest") {
     recoverRun(s, sq, r, q, at);
     return null;
   }
   const kind = encounter(q, r.node);
+  advanceChapterRoad(q, r, at);
+  if (roadComplete(r)) return completeNode(s, sq, q, at);
   if (r.comboAt === at) {
     combination(s, sq, at);
-    if (r.target <= 0) return completeNode(s, sq, q, at);
+    if (roadComplete(r)) return completeNode(s, sq, q, at);
   }
   if (r.phase === "move") {
     r.phase = "work";
@@ -244,6 +267,12 @@ function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
 }
 function shiftRun(r: Run, shift: number) {
+  if (r.road) {
+    if (r.road.scene) r.road.scene.at += shift;
+    r.road.at += shift;
+    r.road.previousAt += shift;
+    r.road.nextAt += shift;
+  }
   r.nextAt += shift;
   r.phaseAt += shift;
   r.started += shift;

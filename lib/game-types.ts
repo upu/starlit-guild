@@ -20,6 +20,7 @@ export type Actor = {
 export type Scene = { title: string; lines: string[]; at: number; kind: "combo" };
 export type MemberHealth = { hp: number; maxHp: number };
 export type Run = {
+  road?: import("./chapter-road-types.ts").ChapterRoad;
   serial: number;
   nodes: number;
   ward: number;

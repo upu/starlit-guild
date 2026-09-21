@@ -1,7 +1,6 @@
 import type Phaser from "phaser";
-import { adventureFrame, adventureAssets } from "@/lib/adventure-presentation";
 import type { AdventureBridge, AdventureRenderer } from "./renderer-session";
-import { AdventurePainter } from "./adventure-painter";
+import { ChapterRoadPainter, chapterRoadAssets } from "./chapter-road-painter";
 
 type RuntimeState = { disposed: boolean; paused: boolean; created: boolean; reduced: boolean };
 
@@ -12,18 +11,17 @@ function sceneClass(
   syncPause: () => void,
 ) {
   return class AdventureScene extends engine.Scene {
-    painter: AdventurePainter;
+    painter: ChapterRoadPainter;
     constructor() {
       super("adventure");
-      this.painter = new AdventurePainter(this, bridge, engine, runtime, syncPause);
+      this.painter = new ChapterRoadPainter(this, bridge, engine, runtime, syncPause);
     }
     preload() {
       this.load.on(engine.Loader.Events.FILE_LOAD_ERROR, () => {
         this.painter.failed = true;
         bridge.status("error");
       });
-      for (const asset of adventureAssets(adventureFrame(bridge.read())))
-        this.load.image(asset, asset);
+      for (const asset of chapterRoadAssets(bridge.read())) this.load.image(asset, asset);
     }
     create() {
       try {
@@ -65,6 +63,9 @@ function createPhaserGame(
     backgroundColor: "#193d30",
     banner: false,
     antialias: true,
+    antialiasGL: true,
+    pixelArt: false,
+    mipmapFilter: "LINEAR_MIPMAP_LINEAR",
     roundPixels: false,
     audio: { noAudio: true },
     input: { keyboard: false },

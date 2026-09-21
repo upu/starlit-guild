@@ -206,7 +206,7 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
       ),
     );
     for (const member of frame.members) {
-      if (member.hit) {
+      if (member.hit && !member.hit.enemy) {
         worked = true;
         assert.equal(member.hit.kind, "gather");
       }
@@ -269,7 +269,14 @@ test("waterway exploration and restoration follow fieldwork order with small bat
           paused: false,
           startQuest: id,
         });
-      nodes.set(run.node, frame.target);
+      nodes.set(run.node, frame.targets[0]);
+      if (run.road?.ambushNode !== undefined) {
+        nodes.set(
+          run.road.ambushNode,
+          frame.targets.find((t) => t.battle),
+        );
+        battled = true;
+      }
       assert.deepEqual(
         frame.members.map((m) => m.id),
         ["aria", "leon"],
@@ -289,13 +296,14 @@ test("waterway exploration and restoration follow fieldwork order with small bat
       if (frame.target.kind === "battle") battled = true;
       else {
         for (const member of frame.members) {
-          if (member.hit) {
+          if (member.hit && !member.hit.enemy) {
             worked = true;
             assert.equal(member.hit.kind, "gather");
           }
-          assert.ok(
-            ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
-          );
+          if (!member.hit?.enemy)
+            assert.ok(
+              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
+            );
         }
       }
       s = settle(s, run.nextAt).state;
@@ -389,13 +397,14 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
           assert.ok(existsSync(new URL("../public" + frame.target.asset, import.meta.url)));
         }
         for (const member of frame.members) {
-          if (member.hit) {
+          if (member.hit && !member.hit.enemy) {
             worked = true;
             assert.equal(member.hit.kind, "gather");
           }
-          assert.ok(
-            ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
-          );
+          if (!member.hit?.enemy)
+            assert.ok(
+              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
+            );
         }
       }
       s = settle(s, run.nextAt).state;
@@ -479,10 +488,11 @@ test("evening has more small encounters; town work has cargo, no battles or dama
           startQuest: id,
         });
         for (const member of current.members)
-          assert.ok(
-            ![4, 5, 6, 7].includes(Number(heroAnimation(member, current, s.updatedAt).frame)),
-            "delivery work never uses weapon attack poses",
-          );
+          if (!member.hit?.enemy)
+            assert.ok(
+              ![4, 5, 6, 7].includes(Number(heroAnimation(member, current, s.updatedAt).frame)),
+              "delivery work never uses weapon attack poses",
+            );
       }
       s = settle(s, run.nextAt).state;
     }

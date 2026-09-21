@@ -1,4 +1,5 @@
 "use client";
+import { localId } from "@/lib/local-id";
 import { useEffect } from "react";
 import { parseBundle } from "@/lib/save-format";
 import { setSound } from "@/lib/sound";
@@ -148,7 +149,7 @@ function startTimers(context: LifecycleContext) {
 }
 function startLifecycle(context: LifecycleContext) {
   context.mountedRef.current = true;
-  context.tabIdRef.current = crypto.randomUUID();
+  context.tabIdRef.current = localId();
   context.lastAttemptRef.current = Date.now();
   const timers = startTimers(context),
     visible = visibleHandler(context),

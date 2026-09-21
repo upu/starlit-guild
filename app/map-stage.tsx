@@ -9,6 +9,7 @@ import {
   type AdventureIntent,
 } from "@/lib/adventure-presentation";
 import { type State, type Squad, type Action } from "@/lib/game";
+import { chapterRoadActivity, chapterRoadProgress } from "@/lib/chapter-road-presentation";
 
 function activityLabel(frame: ReturnType<typeof adventureFrame>) {
   if (frame.phase === "move") return "次の地点へ移動中";
@@ -50,12 +51,8 @@ function JourneyOverlay({
     <>
       <BurstScene run={run} members={squad.members} now={now} />
       <div className="map-journey" aria-hidden="true">
-        <span>旅の道のり</span>
-        <div>
-          {Array.from({ length: run.nodes }, (_, i) => (
-            <i key={i} className={i < run.node ? "complete" : i === run.node ? "current" : ""} />
-          ))}
-        </div>
+        <span>旅の道のり · {chapterRoadProgress(run)}%</span>
+        <progress max={100} value={chapterRoadProgress(run)} />
       </div>
       <div className="sr-only">
         <span>
@@ -91,7 +88,7 @@ function mapHeading(
       <h2>{q.region}</h2>
       <span>
         {run
-          ? `${String(run.round)} 周目 · 地点 ${String(run.node + 1)}/${String(run.nodes)} · ${activity}`
+          ? `${String(run.round)} 周目 · ${activity}`
           : clears === 0
             ? "ふたりの小さな冒険が、ここから始まる。"
             : "支度ができたら、次の冒険へ。"}
@@ -132,7 +129,7 @@ export function MapStage({
     const action = adventureAction(input, intent);
     if (action) onAction(action);
   }
-  const activity = activityLabel(frame);
+  const activity = run?.road ? chapterRoadActivity(input) : activityLabel(frame);
   return (
     <div className="map-shell">
       <div

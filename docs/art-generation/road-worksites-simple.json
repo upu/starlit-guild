@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/road/worksites-v1.png",
+  "output": "public/animations/road/worksites-v1.webp",
+  "reference": "Previous worksites-v1.png from PR 121 before simplification",
+  "prompt": "Edit this transparent RPG worksite sprite sheet into a much simpler clean small-size version. Keep EXACTLY three isolated objects in one horizontal row, equal square cells: LEFT a small low cushion of green moss with ONLY three broad little leaves and one smooth pebble; CENTER a tiny stone drainage opening built from ONLY three smooth pale gray stones, a little blue water ribbon and two green moss patches; RIGHT ONLY two small cloth parcels (one muted green and one dusty blue), each tied with simple beige string, one plain blank tag. Remove wicker basket, ferns, tiny detailed foliage, gravel scatter, scratches, material noise, busy texture and elaborate shading. Style: clean cozy hand-painted anime RPG prop icons, confident warm dark outlines, broad flat color areas with ONE soft shadow and highlight, clear silhouettes readable at 60px. Not photorealistic, not pixel art. Match original subdued palette and 3/4 side perspective. All objects separately centered in three equal cells, with at least 12 percent transparent margins and no overlap, full objects shown. True transparent alpha PNG background. No ground plane, no words, no letters, no numbers.",
+  "distribution": "Lossless WebP via npm run road-art:optimize; unchanged dimensions and visible pixels"
+}

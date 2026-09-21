@@ -9,6 +9,7 @@ import {
 } from "./game.ts";
 import { techniqueDamage } from "./techniques.ts";
 import { syncEnemyTotals, type Enemy } from "./combat.ts";
+import { roadEnemyReady, roadEnemyTargets } from "./chapter-road.ts";
 
 type Emit = (
   r: Run,
@@ -47,13 +48,17 @@ function strike(
   emit: Emit,
   followup = false,
 ) {
-  const living = sq.members.filter((id) => r.health[id].hp > 0),
+  if (r.road && !roadEnemyReady(r, enemy.id)) return;
+  const living = r.road
+      ? roadEnemyTargets(r, enemy.id)
+      : sq.members.filter((id) => r.health[id].hp > 0),
     count = enemy.role === "sweeper" ? 2 : 1;
   const defense = (stats(s, sq)[1] * 0.05) / (r.enemies?.length || 1);
-  const offset = Math.floor((at - r.started) / enemy.period) + index;
+  const offset = r.road ? 0 : Math.floor((at - r.started) / enemy.period) + index;
   for (let i = 0; i < Math.min(count, living.length); i++) {
     const target = living[(offset + i) % living.length],
-      hurt = Math.max(1, techniqueDamage(s, target, enemy.attack - defense)),
+      cover = r.road && target === "leon" ? 0.7 : 1,
+      hurt = Math.max(1, techniqueDamage(s, target, (enemy.attack - defense) * cover)),
       blocked = Math.min(r.ward, hurt),
       damage = Math.min(r.health[target].hp, hurt - blocked);
     r.ward -= blocked;
@@ -76,6 +81,10 @@ export function groupEnemyTurns(s: State, sq: Squad, r: Run, q: Quest, at: numbe
   const enemies = r.enemies || [];
   for (const [index, enemy] of enemies.entries()) {
     if (enemy.hp <= 0 || enemy.nextAt !== at) continue;
+    if (enemy.role !== "puppeteer" && !roadEnemyReady(r, enemy.id)) {
+      enemy.nextAt = at + 100;
+      continue;
+    }
     enemy.nextAt += enemy.period;
     if (enemy.role === "puppeteer") {
       emit(
@@ -96,4 +105,5 @@ export function groupEnemyTurns(s: State, sq: Squad, r: Run, q: Quest, at: numbe
     } else strike(s, sq, r, q, enemy, at, index, emit);
   }
   syncEnemyTotals(r);
+  if (!enemies.some((enemy) => enemy.hp > 0)) r.enemyAt = at + 1450;
 }

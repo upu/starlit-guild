@@ -255,6 +255,7 @@ test("herb quest combines observation and combat; Mira does not walk with the pa
 test("an in-progress picnic from the local gathering version loads without losing progress or resources", () => {
   const old = start(firstChapter(), PICNIC_QUEST),
     run = old.squads[0].run;
+  delete run.road; // The historical gathering save predates spatial coordinates.
   run.enemies = [];
   run.target = 11;
   run.targetMax = 31;

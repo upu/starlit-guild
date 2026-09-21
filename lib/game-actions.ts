@@ -7,6 +7,7 @@ import { learnTechnique, setTechnique, type TechniqueSlot } from "./techniques.t
 import { availableStories, storyProgress, together } from "./stories.ts";
 import { allQuests, type Quest } from "./game-content.ts";
 import type { Run, Squad, State } from "./game-types.ts";
+import { roadComplete, roadActionKind } from "./chapter-road.ts";
 import {
   encounter,
   healMember,
@@ -142,7 +143,7 @@ function healAssist(s: State, sq: Squad, r: Run, now: number, targetId?: string)
 function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
   if (r.phase === "rest") throw Error("回復で立て直しましょう。");
   const q = questById(r.quest),
-    index = statIndex(encounter(q, r.node)),
+    index = statIndex(roadActionKind(q, r)),
     members = sq.members.filter((id) => memberHealth(r, id).hp > 0),
     power = members.reduce((sum, id) => sum + penetration(s, id), 0) / Math.max(1, members.length),
     hit = damageEnemy(
@@ -150,17 +151,20 @@ function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
       Math.max(2, Math.round(2 + stats(s, sq)[index] * 0.035)),
       power,
       resistanceFor(q, encounter(q, r.node)),
+      undefined,
+      !!r.road && roadActionKind(q, r) !== "battle",
     );
   event(r, now, "assist", "手助け！", hit.amount, undefined, undefined, hit.enemy);
 }
 function finishAssist(s: State, sq: Squad, r: Run, now: number) {
-  if (r.target > 0) return;
+  if (!roadComplete(r)) return;
   const gain = completeNode(s, sq, questById(r.quest), now);
   if (gain) addLog(s, squadName(sq) + "が区間の報酬を確保！ +" + String(gain.gold) + " G", now);
 }
 function assistAction(s: State, sq: Squad, a: Action, now: number) {
   const r = sq.run;
   if (!r) throw Error("冒険中に応援できます。");
+  if (r.road?.scene) return;
   r.hits++;
   if (a.mode === "heal") healAssist(s, sq, r, now, a.id);
   else strikeAssist(s, sq, r, now);
