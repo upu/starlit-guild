@@ -2,7 +2,7 @@ import type { TravellerId } from "@/lib/road-view";
 
 export const roadSheet = (id: TravellerId) =>
   `/animations/road/${id}-v${id === "mira" ? "2" : "1"}.webp`;
-export const ROAD_SIGNPOST = "/animations/road/signpost-v1.webp";
+export const ROAD_SIGNPOST = "/animations/road/signpost-v2.webp";
 // Tight native rectangles; casting holds its raised pose before returning to idle.
 export const miraFrames = [
   [31, 43, 275, 282],

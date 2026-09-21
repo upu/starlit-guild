@@ -26,3 +26,5 @@
 `tests/chapter-road.test.mjs`・`tests/road-transport.test.mjs`・`tests/road-scenes.test.mjs` で無操作踏破・報酬・保存互換・オフライン進行・固定距離運搬を検証する。`tests/road-art.test.mjs` は原本とWebPの寸法・透明度・可視画素の一致と更新検知を確認する。
 
 ローカル起動後の `node tests/chapter-road.browser.mjs` は合成セーブと独立したブラウザーを使い、PC・スマホ幅の本編画面、再読み込み、画像読み込み失敗からの再試行を確認する。ユーザーの記録は変更しない。必要なら `PLAYWRIGHT_MODULE`・`TEST_ROOT` を指定する。ブラウザー幅の確認はスマホ実機の体感確認とは区別する。
+
+後方の敵との戦闘ではカメラも左へ戻る。生存中の仲間に加え、左向きの攻撃対象にも余白を取り、後退や遠距離攻撃で画面外へ消えないようにする。道しるべは板一枚と支柱・二つの足跡へ簡略化（[制作記録](art-generation/road-simple-signpost.json)）。小型の人形は仲間の約1/2〜2/3の高さで表示し、戦闘・撤退・逃走で統一する。

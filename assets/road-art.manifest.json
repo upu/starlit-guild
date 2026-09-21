@@ -105,13 +105,13 @@
       "sourceBytes": 2261994,
       "outputBytes": 1143588
     },
-    "signpost-v1.png": {
-      "sourceHash": "b9968ed1613078002af7f916b238ae72ed6bdabc647ebb8641310422ff4ebab3",
+    "signpost-v2.png": {
+      "sourceHash": "27249a325e704e620629d9e76c5eba6f7f817c3a6c9a6332a44ee820c06fe036",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
-      "output": "signpost-v1.webp",
-      "outputHash": "56e015633a625627d6f345706d0adfa942462dbc40873066f99c99be6af0db0f",
-      "sourceBytes": 1690117,
-      "outputBytes": 649692
+      "output": "signpost-v2.webp",
+      "outputHash": "ddb065299ce1784cb1a9e650b2c1b6e1347bf2580a84bfe844dbad32fd27ee0e",
+      "sourceBytes": 177681,
+      "outputBytes": 98642
     },
     "worksites-v1.png": {
       "sourceHash": "a6d43f71b122d5e0b9561e61b1def358e9e7d31c3680e440584e7272e974383e",

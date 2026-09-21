@@ -34,7 +34,8 @@ function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
   if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
   return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
 }
-const enemySize = (enemy: RoadEnemy) => (enemy.boss ? 1.65 : enemy.kind === "pumpety" ? 1 : 0.75);
+const enemySize = (enemy: RoadEnemy) =>
+  ({ puppet: 0.45, pumpety: 1, golem: 1.65, slime: enemy.boss ? 1.65 : 0.75 })[enemy.kind];
 
 export class RoadPainter {
   private backdrop: Phaser.GameObjects.Image;
@@ -108,7 +109,7 @@ export class RoadPainter {
   }
 
   private registerWorkArt() {
-    this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 269, 74, 690, 1157);
+    this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 470, 340, 370, 605);
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
     const push = this.scene.textures.get(ROAD_PUSH);
@@ -314,7 +315,12 @@ export class RoadPainter {
   private workAppearance(cargo: boolean) {
     const size = cargo
       ? Math.min(145, this.scene.scale.width * 0.3)
-      : Math.min(this.look?.work?.frame === "waterway" ? 85 : 65, this.scene.scale.width * 0.2);
+      : Math.min(
+          ({ waterway: 85, signpost: 44 } as Record<string, number>)[
+            this.look?.work?.frame || ""
+          ] || 65,
+          this.scene.scale.width * 0.2,
+        );
     const asset = this.look?.work?.asset || (cargo ? ROAD_CARGO : ROAD_HERB);
     const frame = this.look?.work?.frame || (cargo ? "cart" : "__BASE");
     return { size, asset, frame };

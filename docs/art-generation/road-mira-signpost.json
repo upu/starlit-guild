@@ -21,7 +21,8 @@
     "prompts": [
       "A single compact game worksite prop for checking footprints against a trail sign in a cozy fantasy side-scrolling RPG. Isolated transparent PNG sprite. A short weathered wooden signpost with TWO SMALL opposite pointing blank arrow planks, only a simple carved leaf symbol, NO text/letters/numbers. Beside its base a very small isolated patch of warm brown dirt holding three clearly recognizable boot prints curving past the post, two small grass tufts. No crates, no bags, no boxes, no cargo, no map scroll, no large landscape. Simple clear silhouette and broad color shapes readable at 80px high, clean warm dark outlines, soft hand-painted anime shading like a small RPG prop. Three-quarter side view, restrained browns/greens. Full object centered with 12 percent transparent margin; truly transparent alpha background. Do not include solid colored backdrop, ground extending to edges, or drop shadows.",
       "Keep this exact wooden two-way signpost and three footprints object, but REMOVE COMPLETELY all soft brown/gold/green glow, halo, vignette, shadow, and haze around the prop. The outside of the crisp object silhouette and small footprint dirt patch must be fully transparent alpha zero. Simplify bark scratches, tiny moss flecks and gravel: clean chunky painted shapes readable at 80px. Preserve blank sign planks with leaf symbols, three boot prints and two small grass tufts. True transparent PNG, no backdrop."
-    ]
+    ],
+    "supersededBy": "road-simple-signpost.json"
   },
   "distribution": "Lossless WebP via road-art:optimize; native images retained. The renderer caches isolated small figure frames with smooth downsampling and mipmapped filtering."
 }

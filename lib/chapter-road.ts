@@ -227,9 +227,12 @@ function updateRoadCamera(r: Run) {
   if (!road) return;
   const living = r.actors.filter((actor) => r.health[actor.hero].hp > 0);
   if (living.length)
-    road.camera = Math.max(
-      road.camera,
-      Math.min(...living.map((actor) => road.members[actor.hero].x)),
+    road.camera = Math.min(
+      ...living.map((actor) => road.members[actor.hero].x),
+      // Keep the attacker in view even when a ranged companion faces left.
+      ...(r.enemies || [])
+        .filter((enemy) => enemy.hp > 0)
+        .map((enemy) => road.opponents[enemy.id].x + 80),
     );
 }
 export function roadImpact(

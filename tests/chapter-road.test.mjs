@@ -107,6 +107,33 @@ test("workers cooperate, split into guard and gatherer under attack and face rea
   );
 });
 
+test("camera follows leftward recoil and keeps a rear attacker visible, then follows the return to work", () => {
+  let s = start(13, 30);
+  while (s.squads[0].run.road.ambushNode === undefined) s = settle(s, s.squads[0].run.nextAt).state;
+  const run = s.squads[0].run,
+    road = run.road,
+    enemy = road.opponents[run.enemies[0].id];
+  // Reproduce a prolonged rear fight beyond the previously reached camera position.
+  enemy.x = enemy.previousX = road.camera - 340;
+  road.members.leon.x = road.members.leon.previousX = enemy.x + 55;
+  road.members.leon.recoil = -45;
+  const oldCamera = road.camera;
+  assert.ok(chapterRoadX(enemy.x, oldCamera, 390, "puppets") < 0);
+  s = settle(s, s.updatedAt + 100).state;
+  assert.ok(s.squads[0].run.road.camera < oldCamera);
+  for (const width of [320, 390, 1280]) {
+    const { battle } = chapterRoadFrame(input(s, s.updatedAt + 80));
+    for (const x of [battle.enemies[0].x, battle.heroes.find((h) => h.id === "leon").x]) {
+      const drawn = chapterRoadX(x, battle.distance, width, battle.stage);
+      assert.ok(drawn >= 24 && drawn <= width - 24);
+    }
+  }
+  assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
+  const leftCamera = s.squads[0].run.road.camera;
+  s = settle(s, s.updatedAt + 15000).state;
+  assert.ok(s.squads[0].run.road.camera > leftCamera);
+});
+
 test("old unfinished saves retain exact HP, clocks and rewards and adopt scrolling on next departure", () => {
   let s = start(9, 30);
   delete s.squads[0].run.road;

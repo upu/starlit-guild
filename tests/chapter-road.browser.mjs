@@ -46,9 +46,18 @@ function fixture(index, mode) {
   } else if (mode === "boss")
     while ((s.squads[0].run.node < 2 || s.squads[0].run.road.scene) && s.updatedAt < now + 180000)
       s = settle(s, s.squads[0].run.nextAt).state;
-  else if (mode === "ambush")
+  else if (mode === "ambush" || mode === "rear")
     while (s.squads[0].run.road.ambushNode === undefined && s.updatedAt < now + 60000)
       s = settle(s, s.squads[0].run.nextAt).state;
+  if (mode === "rear") {
+    const r = s.squads[0].run,
+      road = r.road,
+      enemy = road.opponents[r.enemies[0].id];
+    enemy.x = enemy.previousX = road.camera - 340;
+    road.members.leon.x = road.members.leon.previousX = enemy.x + 55;
+    road.members.leon.recoil = -45;
+    s = settle(s, s.updatedAt + 100).state;
+  }
   const id = crypto.randomUUID();
   return {
     format: 4,
@@ -76,6 +85,7 @@ try {
     ["work", 11, "worksite"],
     ["trio", 12, "battle"],
     ["signpost", 13, "worksite"],
+    ["rear-signpost", 13, "rear"],
     ["trio-work", 16, "worksite"],
     ["puppets", 15, "boss"],
     ["withdraw", 15, "withdraw"],
@@ -95,7 +105,7 @@ try {
     if (name === "cargo")
       await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
-    if (["worksite", "arrival", "withdraw", "enter", "escape"].includes(mode))
+    if (["worksite", "arrival", "withdraw", "enter", "escape", "rear"].includes(mode))
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {
       if (!localStorage.getItem("starlit-guild-v4"))
