@@ -44,7 +44,19 @@ await build({
   alias: imageAlias,
   jsx: "automatic",
 });
-const { CharacterPanel, InventoryPanel, ShopPanel } = await import(equipmentOutput.href);
+const { CharacterPanel, InventoryPanel } = await import(equipmentOutput.href);
+const shopOutput = new URL("../work/shop-render.mjs", import.meta.url);
+await build({
+  entryPoints: ["app/shop-panel.tsx"],
+  outfile: fileURLToPath(shopOutput),
+  bundle: true,
+  platform: "node",
+  format: "esm",
+  packages: "external",
+  alias: imageAlias,
+  jsx: "automatic",
+});
+const { ShopPanel } = await import(shopOutput.href);
 
 test("characters and shared bag expose starting equipment and trade cargo without requiring departure", () => {
   const s = initialPrologueState(1000),
@@ -96,7 +108,10 @@ test("shop renders only unlocked goods, prices and affordability and the bag lab
   const poor = renderToStaticMarkup(
     createElement(ShopPanel, { state: { ...s, gold: 0 }, ready: true, onAction: () => true }),
   );
-  assert.equal((poor.match(/disabled=""/g) || []).length, 4);
+  // Only purchase is disabled: unaffordable goods remain inspectable.
+  assert.equal((poor.match(/disabled=""/g) || []).length, 1);
+  assert.equal((poor.match(/class="shop-slot"/g) || []).length, 4);
+  assert.equal((poor.match(/<section/g) || []).length, 1);
   assert.match(poor, /あと 100 G/);
   const bag = renderToStaticMarkup(createElement(InventoryPanel, { state: s }));
   assert.match(bag, /トネリコの弓/);

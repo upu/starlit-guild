@@ -10,6 +10,7 @@ import "./quest-picker.css";
 import "./phaser.css";
 import "./prologue.css";
 import "./equipment.css";
+import "./shop.css";
 import "./adventure-actions.css";
 import "./adventure-chat.css";
 
