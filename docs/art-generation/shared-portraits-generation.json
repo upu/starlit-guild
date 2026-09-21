@@ -9,8 +9,8 @@
   "output": "public/portraits/aria-leon-expressions-v2.webp",
   "generatedImage": "exec-f5d20988-38f8-488c-a636-1f9d2abcf25b.png",
   "dimensions": [
-    1254,
-    1254
+    1024,
+    1024
   ],
   "layout": {
     "columns": 4,
@@ -32,6 +32,7 @@
     "mischievous"
   ],
   "promptSummary": "4 by 4 face atlas using the canonical reference sheets directly. Faithful refined youthful anime proportions, not chibi. Extremely tight close-ups, face fills cell, hair and ear tips may be cropped. Same eight expressions per character. Aria mischievous is a cute proud I did it face with slightly lifted chin and a friendly confident smile, never a sly or malicious sneer. Leon keeps a subtle playful smile. Designed for both 40px chat and larger story dialogue.",
-  "conversion": "Lossless WebP encoding only; no resizing or cropping. Requested 1024 square, actual generated dimensions 1254 square retained.",
-  "usage": "Shared by chat, story dialogue, memories and character portraits for Aria and Leon."
+  "conversion": "Lanczos3 resize to 1024 square (256px per face), WebP quality 82, effort 6. Display QA at 40px and 72px.",
+  "usage": "Shared by chat, story dialogue, memories and character portraits for Aria and Leon.",
+  "bytes": 393320
 }
