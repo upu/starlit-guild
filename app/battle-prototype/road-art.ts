@@ -6,6 +6,8 @@ export const ROAD_HERB = "/animations/road/herb-v2.png";
 export const ROAD_CARGO = "/animations/road/cargo-v1.png";
 export const ROAD_PUPPETS = "/animations/road/puppets-v1.png";
 export const ROAD_PUSH = "/animations/road/push-v1.png";
+export const ROAD_PACKING = "/animations/road/packing-v1.png";
+export const ROAD_DESTINATION = "/animations/road/destination-v1.png";
 export const ROAD_WORKSITES = "/animations/road/worksites-v1.png";
 export const roadWalkSheet = (id: TravellerId) => `/animations/road/${id}-walk-v2.png`;
 

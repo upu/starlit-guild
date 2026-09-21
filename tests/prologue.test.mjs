@@ -138,17 +138,21 @@ test("trade checkpoints and explicit interruption never award an ending early", 
   assert.ok(depart(stopped).squads[0].run);
 });
 
-test("tapping helps and heals in the prologue", () => {
+test("tapping preserves transport distance, helps gathering and heals in the prologue", () => {
   let s = depart(initialPrologueState(1000)),
     target = s.squads[0].run.target;
   s = act(s, { type: "assist", mode: "strike" }, 1000);
-  assert.ok(s.squads[0].run.target < target);
+  assert.equal(s.squads[0].run.target, target);
   s.squads[0].run.health.aria.hp -= 30;
   const hp = s.squads[0].run.health.aria.hp;
   for (let i = 0; i < 25; i++) s = act(s, { type: "assist", mode: "heal" }, 1000);
   assert.ok(s.squads[0].run.health.aria.hp > hp);
   assert.equal(s.squads[0].run.scene, null);
   assert.ok(s.squads[0].run.events.every((e) => !e.text.includes("団長")));
+  while (s.squads[0].run.node === 0) s = settle(s, s.squads[0].run.nextAt).state;
+  target = s.squads[0].run.target;
+  s = act(s, { type: "assist", mode: "strike" }, s.updatedAt);
+  assert.ok(s.squads[0].run.target < target);
 });
 
 test("trade carries cargo and gathers herbs without showing an unintroduced escort companion", () => {

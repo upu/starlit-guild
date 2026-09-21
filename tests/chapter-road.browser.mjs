@@ -16,7 +16,7 @@ function fixture(index, mode) {
     { type: "start", id: storyStages[index].quest, readDeparture: true, value: false },
     now,
   );
-  if (mode === "worksite") {
+  if (mode === "worksite" || mode === "arrival") {
     for (let i = 0; i < 1000; i++) {
       const frame = chapterRoadFrame({
         squad: s.squads[0],
@@ -25,7 +25,12 @@ function fixture(index, mode) {
         ready: true,
         paused: false,
       });
-      if (frame.look.workers.length === 2 && frame.look.work) break;
+      if (
+        frame.look.workers.length === 2 &&
+        frame.look.work &&
+        (mode !== "arrival" || s.squads[0].run.node === s.squads[0].run.nodes - 1)
+      )
+        break;
       s = settle(s, s.squads[0].run.nextAt).state;
     }
   } else if (mode === "boss")
@@ -52,11 +57,13 @@ const errors = [],
 try {
   for (const [name, index, mode] of [
     ["cargo", 0, "worksite"],
+    ["return-cargo", 1, "worksite"],
     ["town", 2, "worksite"],
+    ["arrival", 2, "arrival"],
     ["moss", 5, "worksite"],
     ["waterway", 6, "worksite"],
     ["forest", 0, "ambush"],
-    ["work", 11, "work"],
+    ["work", 11, "worksite"],
     ["trio", 12, "battle"],
     ["puppets", 15, "boss"],
   ]) {
@@ -65,7 +72,7 @@ try {
       save = fixture(index, mode);
     page.on("pageerror", (e) => errors.push(e.message));
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
-    if (mode === "worksite")
+    if (mode === "worksite" || mode === "arrival")
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {
       if (!localStorage.getItem("starlit-guild-v4"))

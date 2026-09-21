@@ -13,7 +13,7 @@ import {
   MEDICINE_RETURN_QUEST,
 } from "./chapter-two.ts";
 import { prologueStages } from "./prologue.ts";
-import { nearestOpponent } from "./chapter-road.ts";
+import { nearestOpponent, roadTransport } from "./chapter-road.ts";
 import {
   puppetFormation,
   puppetStats,
@@ -117,6 +117,7 @@ export function damageEnemy(
 ) {
   const enemy = working ? undefined : r.road && hero ? nearestOpponent(r, hero) : focusedEnemy(r);
   if (!enemy) {
+    if (roadTransport(r)) return { amount: 0, enemy: undefined };
     const amount = workResistance
       ? reducedDamage(base, workResistance, power)
       : Math.max(1, Math.round(base));

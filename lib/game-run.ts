@@ -11,6 +11,8 @@ import {
   placeRoadEnemies,
   roadImpact,
   roadActionKind,
+  roadTransport,
+  roadHasEnemies,
   CHAPTER_ROAD_STEP,
 } from "./chapter-road.ts";
 import {
@@ -243,10 +245,16 @@ export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
   } else sq.run = null;
   return gain;
 }
+function combinationLines(level: number, first: string, second: string, original: string[]) {
+  if (level === 1) return original;
+  if (level === 2) return [first + "「いつもの合図で、いくよ！」", second + "「息はぴったりだ！」"];
+  return [first + "「この先も、一緒に！」", second + "「どんな冒険だって！」"];
+}
 export function combination(s: State, sq: Squad, at: number) {
   const r = activeRun(sq),
     bs = activeBonds(sq.members);
   r.comboAt = at + 14500;
+  if (roadTransport(r) && !roadHasEnemies(r)) return;
   if (!bs.length) return;
   const b = bs[(r.node + r.round) % bs.length],
     lv = bondLevel(s, b.ids),
@@ -255,12 +263,7 @@ export function combination(s: State, sq: Squad, at: number) {
     first = heroById(b.ids[0]).name,
     second = heroById(b.ids[1]).name;
   if (b.ids.some((id) => memberHealth(r, id).hp <= 0)) return;
-  const lines =
-    lv === 1
-      ? b.lines
-      : lv === 2
-        ? [first + "「いつもの合図で、いくよ！」", second + "「息はぴったりだ！」"]
-        : [first + "「この先も、一緒に！」", second + "「どんな冒険だって！」"];
+  const lines = combinationLines(lv, first, second, b.lines);
   r.scene = {
     title: b.name + " · 連携 Lv." + String(lv),
     lines: together(b.ids) ? coupleCombo(s, r.node + r.round) : lines,

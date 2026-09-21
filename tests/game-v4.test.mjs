@@ -96,7 +96,7 @@ test("characters use actual special effects, and an automatic combination crosse
   assert.ok(s.friendship["aria-leon"] > 0);
 });
 test("higher friendship unlocks stronger linked attacks and new dialogue", () => {
-  const s = start();
+  const s = start(game.testState(1000, 3, 1, 1000));
   const enhanced = structuredClone(s);
   enhanced.friendship["aria-leon"] = 24;
   const a = game.settle(s, 15500).state.squads[0].run,

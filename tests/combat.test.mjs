@@ -75,7 +75,7 @@ test("levels and equipped weapons overcome resistance without a new saved curren
 });
 
 test("work resistance slows an underpowered party and its remaining gauge shrinks", () => {
-  const state = act(initialPrologueState(1000), { type: "start", id: "village-trade" }, 1000),
+  const state = act(testState(1000, 11, 1, 1000), { type: "start", id: "medicine-packing" }, 1000),
     run = state.squads[0].run;
   assert.equal(run.enemies.length, 0);
   const input = {
@@ -83,7 +83,7 @@ test("work resistance slows an underpowered party and its remaining gauge shrink
     now: state.updatedAt,
     ready: true,
     paused: false,
-    startQuest: "village-trade",
+    startQuest: "medicine-packing",
   };
   assert.equal(adventureFrame(input).target.value, 1);
   const remaining = run.target;

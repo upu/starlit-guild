@@ -5,6 +5,7 @@ import {
   roadActorReady,
   roadActionKind,
   roadComplete,
+  roadTransport,
 } from "./chapter-road.ts";
 import {
   TOWN_QUEST,
@@ -132,6 +133,11 @@ function actorTurn(
   actor.actions++;
   const special = actor.actions % specialInterval(hero) === 0,
     multiplier = techniqueMultiplier(s, hero, kind, special, specialMultiplier(hero));
+  if (roadTransport(r) && kind !== "battle") {
+    actor.nextAt += actor.period;
+    healFromActor(s, sq, r, hero, special, at);
+    return;
+  }
   const hit = damageEnemy(
     r,
     (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
@@ -221,6 +227,7 @@ function step(s: State, sq: Squad) {
   }
   const kind = encounter(q, r.node);
   advanceChapterRoad(q, r, at);
+  if (roadComplete(r)) return completeNode(s, sq, q, at);
   if (r.comboAt === at) {
     combination(s, sq, at);
     if (roadComplete(r)) return completeNode(s, sq, q, at);

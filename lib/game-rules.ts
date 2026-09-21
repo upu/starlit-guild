@@ -8,6 +8,8 @@ import { waterwayWork } from "./waterway-work.ts";
 import { bonds, level } from "./roster.ts";
 import { heroes, allQuests, type Quest } from "./game-content.ts";
 import type { Encounter, MemberHealth, Run, Squad, State } from "./game-types.ts";
+import { movingWork, ROAD_CARRY_DISTANCE, ROAD_CARRY_SPEED } from "./chapter-road.ts";
+import { isPrologueQuest } from "./prologue.ts";
 
 export function heroById(id: string) {
   const hero = heroes.find((h) => h.id === id);
@@ -166,6 +168,8 @@ export function resistanceFor(q: Quest, kind: Encounter) {
   return kind === "battle" ? 0 : workResistance(q);
 }
 function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
+  if (isPrologueQuest(q.id) && movingWork(q, { node, nodes: questNodes(q.id) }))
+    return 2.5 + ROAD_CARRY_DISTANCE / ROAD_CARRY_SPEED;
   const kind = encounter(q, node),
     enemies = kind === "battle" ? createEnemies(q, node, 0) : [],
     bond = activeBonds(sq.members).reduce((sum, b) => sum + b.bonus, 0);

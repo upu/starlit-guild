@@ -1,11 +1,13 @@
 import type { Encounter, GameEvent, Quest, Run, Squad } from "./game.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
-import { encounter, targetName } from "./game-rules.ts";
+import { encounter, targetName, questById } from "./game-rules.ts";
 import { isPrologueQuest } from "./prologue.ts";
 import { createEnemies, syncEnemyTotals, type Enemy } from "./combat.ts";
 
 export const CHAPTER_ROAD_STEP = 100;
 export const CHAPTER_ROAD_SPACING = 210;
+export const ROAD_CARRY_DISTANCE = 180;
+export const ROAD_CARRY_SPEED = 24;
 export const workOffsets: Record<string, number> = { aria: -12, leon: 32, mira: -58 };
 const speed: Record<string, number> = { aria: 87, leon: 103, mira: 82 };
 export const roadPosition = (x: number): RoadPosition => ({
@@ -16,14 +18,17 @@ export const roadPosition = (x: number): RoadPosition => ({
   facing: 1,
 });
 export const roadPoint = (r: Run) => r.node * CHAPTER_ROAD_SPACING + 180;
-export function movingWork(q: Quest, r: Run) {
+export function movingWork(q: Quest, r: Pick<Run, "node" | "nodes">) {
   return (
     encounter(q, r.node) === "escort" &&
-    (q.id === "village-trade" || /運ぶ|運搬|配達|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
+    (q.id === "village-trade" || /運ぶ|運び|運搬|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
   );
 }
 export function workPoint(q: Quest, r: Run) {
-  return roadPoint(r) + (movingWork(q, r) ? (1 - r.target / r.targetMax) * 85 : 0);
+  return roadPoint(r) + (movingWork(q, r) ? (1 - r.target / r.targetMax) * ROAD_CARRY_DISTANCE : 0);
+}
+export function roadTransport(r: Run) {
+  return !!r.road && movingWork(questById(r.quest), r);
 }
 export function roadWorkOffset(q: Quest, r: Run, hero: string) {
   if (movingWork(q, r) && !q.escortAsset)
@@ -188,7 +193,16 @@ export function advanceChapterRoad(q: Quest, r: Run, at: number) {
   ambush(q, r, at);
   for (const actor of r.actors) moveMember(q, r, actor.hero, dt);
   for (const enemy of r.enemies || []) moveEnemy(r, enemy, dt);
+  advanceTransport(q, r, dt);
   updateRoadCamera(r);
+}
+function advanceTransport(q: Quest, r: Run, dt: number) {
+  if (r.phase !== "work" || !movingWork(q, r) || roadHasEnemies(r)) return;
+  const living = r.actors.filter((actor) => r.health[actor.hero].hp > 0);
+  if (!living.length || !living.every((actor) => roadActorReady(q, r, actor.hero))) return;
+  // Existing saves keep their completed fraction. Only travelled distance consumes the remainder.
+  const fraction = r.target / r.targetMax - (ROAD_CARRY_SPEED * dt) / ROAD_CARRY_DISTANCE;
+  r.target = fraction < 1e-8 ? 0 : r.targetMax * fraction;
 }
 function updateRoadCamera(r: Run) {
   const road = r.road;

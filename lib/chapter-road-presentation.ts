@@ -12,6 +12,7 @@ import {
   workPoint,
   movingWork,
   CHAPTER_ROAD_SPACING,
+  ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
 import { roadX, roadY } from "./road-layout.ts";
@@ -189,7 +190,9 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   return {
     background: frame.background,
     urban: ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id),
-    length: (run?.nodes || 15) * CHAPTER_ROAD_SPACING,
+    length:
+      (run?.nodes || 15) * CHAPTER_ROAD_SPACING +
+      (run && movingWork(frame.quest, { ...run, node: run.nodes - 1 }) ? ROAD_CARRY_DISTANCE : 0),
     workers:
       run && run.phase !== "rest"
         ? input.squad.members.filter(
@@ -214,12 +217,12 @@ function enemyLabel(frame: AdventureFrame, id: string) {
   return target?.cue || target?.name || "";
 }
 function workTask(
-  cargo: boolean,
+  parcels: boolean,
   q: AdventureFrame["quest"],
   run: Run,
 ): NonNullable<RoadBattle["gathering"]>["task"] {
-  if (!cargo) return "gather";
-  return movingWork(q, run) ? "carry" : "pack";
+  if (movingWork(q, run)) return "carry";
+  return parcels ? "pack" : "gather";
 }
 function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {
   const run = input.squad.run,
@@ -231,7 +234,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   const x = road ? workPoint(frame.quest, run) - 65 : 160;
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",
-    task: workTask(cargo, frame.quest, run),
+    task: workTask(look.work.frame === "parcels", frame.quest, run),
     x,
     previousX: x,
     remaining: run.target,
