@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { TechniqueIcon } from "./technique-icon";
 import { level, type State, type Action } from "@/lib/game";
 import {
   techniques,
@@ -32,10 +33,16 @@ function TechniqueChoice({
   }
   return (
     <article className="shop-item">
-      <h4>{t.name}</h4>
+      <h4>
+        <TechniqueIcon id={t.id} slot={t.slot} />
+        {t.name}
+      </h4>
       <p>{t.description}</p>
       <small>{known ? "習得済み" : `必要 Lv. ${String(t.level)} · ${String(t.cost)} G`}</small>
+      {!known && !enoughLevel && <small>レベルが足りません</small>}
+      {!known && s.gold < t.cost && <small>所持金が足りません</small>}
       <button
+        aria-label={`${t.name}を${known ? "セットする" : "習得する"}`}
         disabled={!props.ready || selected || (known ? away : !enoughLevel || s.gold < t.cost)}
         onClick={choose}
       >
@@ -79,19 +86,58 @@ function TechniqueChoices({
   );
 }
 export function TechniquePanel(props: Props) {
-  const [notice, setNotice] = useState("");
+  const [notice, setNotice] = useState({ hero: props.hero, text: "" });
+  const [slot, setSlot] = useState<TechniqueSlot | null>(null);
+  const showNotice = (text: string) => {
+    setNotice({ hero: props.hero, text });
+  };
+  const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
   if (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === props.hero))
     return null;
   const candidates = learnableTechniques(props.state).filter((t) => t.hero === props.hero);
   return (
     <section className="character-skill">
-      <h3>技の習得・セット</h3>
-      <p>所持金 {Math.floor(props.state.gold).toLocaleString("ja-JP")} G</p>
-      <p>技はセットすると自動で働きます。付け替えは帰還中に、何度でも無料でできます。</p>
+      <h3>
+        スキル <small>所持金 {Math.floor(props.state.gold).toLocaleString("ja-JP")} G</small>
+      </h3>
+      {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
       {candidates.length > 0 && <p>習得できる技があります。</p>}
-      <p role="status">{notice}</p>
-      <TechniqueChoices {...props} slot="active" notice={setNotice} />
-      <TechniqueChoices {...props} slot="passive" notice={setNotice} />
+      <p role="status">{notice.hero === props.hero ? notice.text : ""}</p>
+      <div className="character-slots">
+        {(["active", "passive"] as const).map((kind) => {
+          const current = techniques.find(
+            (t) => t.id === equippedTechnique(props.state, props.hero, kind),
+          );
+          return (
+            <button
+              key={kind}
+              className="character-slot"
+              aria-expanded={slot === kind}
+              aria-controls="character-technique-options"
+              onClick={() => {
+                setSlot(slot === kind ? null : kind);
+              }}
+            >
+              <TechniqueIcon id={current?.id} slot={kind} />
+              <span>
+                <small>{kind === "active" ? "自動で使う技" : "常に働く技"}</small>
+                <b>{current?.name ?? "セットなし"}</b>
+                <small>習得・セット</small>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <div id="character-technique-options">
+        {slot && (
+          <>
+            <p className="technique-help">
+              セットすると自動で働きます。帰還中の付け替えは何度でも無料です。
+            </p>
+            <TechniqueChoices {...props} slot={slot} notice={showNotice} />
+          </>
+        )}
+      </div>
     </section>
   );
 }

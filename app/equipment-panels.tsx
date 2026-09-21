@@ -24,6 +24,8 @@ import {
 import { storyItems } from "@/lib/story-items";
 import { techniquesUnlocked } from "@/lib/techniques";
 import { TechniquePanel } from "./technique-panel";
+import { ShopItemIcon } from "./shop-item-icon";
+import { TechniqueIcon } from "./technique-icon";
 import { Portrait } from "./portrait";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
@@ -154,6 +156,7 @@ function EquipmentChoice({
       disabled={!props.ready || worn || available < 1}
       onClick={() => props.onAction({ type: "equip", hero, slot, id: item.id })}
     >
+      <ShopItemIcon item={item} />
       <span>
         <b>{item.name}</b>
         <span className="equipment-comparison">
@@ -194,8 +197,7 @@ function EquipmentSlotPanel({
         {slot === "weapon" ? "武器" : "防具"}
         <span>{current?.name ?? "装備なし"}</span>
       </h3>
-      <details>
-        <summary>付け替える</summary>
+      <div>
         <div className="equipment-choices">
           {choices.map((item) => (
             <EquipmentChoice key={item.id} {...props} item={item} hero={hero} slot={slot} />
@@ -211,7 +213,49 @@ function EquipmentSlotPanel({
             </button>
           )}
         </div>
-      </details>
+      </div>
+    </section>
+  );
+}
+function CharacterEquipment(props: Props & { hero: string }) {
+  const [slot, setSlot] = useState<EquipmentSlot | null>(null);
+  const inventory = inventoryOf(props.state);
+  return (
+    <section className="character-loadout" aria-label="装備">
+      <h3>装備</h3>
+      <div className="character-slots">
+        {(["weapon", "armor"] as const).map((kind) => {
+          const item = equipmentById(inventory.equipped[props.hero]?.[kind] ?? "");
+          const label = kind === "weapon" ? "武器" : "防具";
+          return (
+            <button
+              key={kind}
+              className="character-slot"
+              aria-expanded={slot === kind}
+              aria-controls="character-equipment-options"
+              onClick={() => {
+                setSlot(slot === kind ? null : kind);
+              }}
+            >
+              {item ? (
+                <ShopItemIcon item={item} />
+              ) : kind === "weapon" ? (
+                <Swords aria-hidden="true" />
+              ) : (
+                <Shield aria-hidden="true" />
+              )}
+              <span>
+                <small>{label}</small>
+                <b>{item?.name ?? "装備なし"}</b>
+                <small>付け替える</small>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <div id="character-equipment-options">
+        {slot && <EquipmentSlotPanel {...props} slot={slot} />}
+      </div>
     </section>
   );
 }
@@ -229,39 +273,47 @@ export function CharacterPanel(props: Props) {
           <button
             key={member.id}
             aria-pressed={hero.id === member.id}
+            aria-label={member.name}
+            title={member.name}
             onClick={() => {
               setSelected(member.id);
             }}
           >
-            <Portrait index={member.sprite} size={64} />
-            <span>{member.name}</span>
+            <Portrait index={member.sprite} size={40} />
           </button>
         ))}
       </div>
-      <div className="character-heading">
-        <Portrait index={hero.sprite} size={144} />
-        <div>
-          <h2>{hero.name}</h2>
-          <p>{hero.job}</p>
-          <span>Lv. {level(props.state.xp[hero.id] ?? 0)}</span>
-          <p>
-            {hp
-              ? `HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`
-              : `最大HP ${String(memberMaxHp(props.state, hero.id))}`}
-          </p>
+      <div className="character-scroll">
+        <div className="character-heading">
+          <Portrait index={hero.sprite} size={56} />
+          <div>
+            <h2>{hero.name}</h2>
+            <p>{hero.job}</p>
+            <span>Lv. {level(props.state.xp[hero.id] ?? 0)}</span>
+            <p>
+              {hp
+                ? `HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`
+                : `最大HP ${String(memberMaxHp(props.state, hero.id))}`}
+            </p>
+          </div>
         </div>
+        <details className="character-bio" key={hero.id}>
+          <summary>キャラクター詳細</summary>
+          <p>{hero.bio}</p>
+        </details>
+        <StatRow values={memberStats(props.state, hero.id)} />
+        <CharacterEquipment {...props} hero={hero.id} />
+        {(!techniquesUnlocked(props.state) || !["aria", "leon"].includes(hero.id)) && (
+          <section className="character-skill">
+            <h3 className="character-innate">
+              <TechniqueIcon id={hero.id} slot="active" />
+              {heroSkills[hero.id].name}
+            </h3>
+            <p>{heroSkills[hero.id].description}</p>
+          </section>
+        )}
+        <TechniquePanel {...props} hero={hero.id} />
       </div>
-      <p>{hero.bio}</p>
-      <StatRow values={memberStats(props.state, hero.id)} />
-      {(!techniquesUnlocked(props.state) || !["aria", "leon"].includes(hero.id)) && (
-        <section className="character-skill">
-          <h3>{heroSkills[hero.id].name}</h3>
-          <p>{heroSkills[hero.id].description}</p>
-        </section>
-      )}
-      <TechniquePanel key={hero.id} {...props} hero={hero.id} />
-      <EquipmentSlotPanel {...props} hero={hero.id} slot="weapon" />
-      <EquipmentSlotPanel {...props} hero={hero.id} slot="armor" />
     </div>
   );
 }
