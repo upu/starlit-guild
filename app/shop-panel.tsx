@@ -13,10 +13,9 @@ import { Bonuses } from "./equipment-panels";
 import { ShopItemIcon } from "./shop-item-icon";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
-type Filter = "all" | EquipmentSlot;
+type Filter = EquipmentSlot;
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
 const filters = [
-  { id: "all", label: "すべて" },
   { id: "weapon", label: "武器" },
   { id: "armor", label: "防具" },
 ] as const;
@@ -133,10 +132,10 @@ function ShopFilters({ filter, onChange }: { filter: Filter; onChange: (id: Filt
 }
 
 export function ShopPanel(props: Props) {
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>("weapon");
   const [selectedId, setSelectedId] = useState("");
   const [purchase, setPurchase] = useState({ name: "", count: 0 });
-  const items = shopItems(props.state).filter((item) => filter === "all" || item.slot === filter);
+  const items = shopItems(props.state).filter((item) => item.slot === filter);
   const selected = items.find((item) => item.id === selectedId) ?? items.at(0);
   const unlocked = shopTier(props.state) > 0;
   return (

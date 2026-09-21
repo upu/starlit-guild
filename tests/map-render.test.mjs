@@ -110,7 +110,7 @@ test("shop renders only unlocked goods, prices and affordability and the bag lab
   );
   // Only purchase is disabled: unaffordable goods remain inspectable.
   assert.equal((poor.match(/disabled=""/g) || []).length, 1);
-  assert.equal((poor.match(/class="shop-slot"/g) || []).length, 4);
+  assert.equal((poor.match(/class="shop-slot"/g) || []).length, 2);
   assert.equal((poor.match(/<section/g) || []).length, 1);
   assert.match(poor, /あと 100 G/);
   const bag = renderToStaticMarkup(createElement(InventoryPanel, { state: s }));
