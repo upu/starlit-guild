@@ -45,3 +45,14 @@ export function expressionPortrait(
     position: `${String(((cell % atlas.columns) / (atlas.columns - 1)) * 100)}% ${String((Math.floor(cell / atlas.columns) / (atlas.rows - 1)) * 100)}%`,
   };
 }
+
+// The compact art is opt-in for chat; story readers keep the detailed portraits.
+export function chatExpressionPortrait(index: number, expression: PortraitExpression = "neutral") {
+  if (index !== 0 && index !== 1) return expressionPortrait(index, expression);
+  const cell = Math.max(0, standardAtlas.expressions.indexOf(expression)) + index * 8;
+  return {
+    src: "/portraits/chat-aria-leon-expressions.webp",
+    size: "400% 400%",
+    position: `${String(((cell % 4) / 3) * 100)}% ${String((Math.floor(cell / 4) / 3) * 100)}%`,
+  };
+}

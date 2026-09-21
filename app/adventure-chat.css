@@ -20,28 +20,12 @@
 .phone-game .phone-adventure-running {
   --chat-rows: 5;
 }
-.phone-game .phone-adventure-running > .journey-banter,
-.phone-game .phone-adventure-running > .phone-banter {
-  align-self: start;
-  margin-top: 96px;
-}
-/* Give the short finisher banner priority without discarding conversation history. */
-.phone-game .phone-adventure:has(.finisher-scene) > .journey-banter,
-.phone-game .phone-adventure:has(.finisher-scene) > .phone-banter {
-  visibility: hidden;
-}
-@media (min-width: 760px) and (min-height: 741px) {
-  .phone-game .phone-adventure-running > .journey-banter,
-  .phone-game .phone-adventure-running > .phone-banter {
-    margin-top: 144px;
-  }
-}
 .phone-game .phone-adventure > .journey-banter,
 .phone-game .phone-adventure > .journey-banter:hover:not(:disabled),
 .phone-game .phone-adventure > .journey-banter:focus,
 .phone-game .phone-adventure > .journey-banter:active,
 .phone-game .phone-adventure > .phone-banter {
-  background: rgb(30 33 37 / 62%);
+  background: rgb(30 33 37 / 38%);
   color: #fff;
   border-top: 1px solid rgb(255 255 255 / 18%);
   text-shadow: 0 1px 2px #000;
@@ -53,9 +37,9 @@
 .phone-game .phone-adventure > .adventure-actions {
   grid-area: 2 / 1;
 }
-/* The running conversation sits below the heading, clear of the ground plane. */
+/* Keep journey progress just above the bottom conversation. */
 .phone-game .phone-adventure .map-journey {
-  bottom: 10px;
+  bottom: calc(var(--chat-rows, 3) * (2.5rem + 2px) + 13px);
 }
 /* Short screens prioritize the battle and retain scrolling for older lines. */
 @media (max-height: 740px) {

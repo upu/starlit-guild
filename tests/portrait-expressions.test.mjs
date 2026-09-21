@@ -94,6 +94,42 @@ test("expressions are authored for narrative context, narration has none, and un
   );
 });
 
+test("compact chat art preserves each speaker and expression without changing dialogue art", async () => {
+  const positions = new Set();
+  for (const index of [0, 1]) {
+    for (const expression of portraits.portraitExpressions.slice(0, 8)) {
+      const compact = exports.Portrait({ index, expression, variant: "chat", size: 40 });
+      assert.equal(
+        compact.props.style.backgroundImage,
+        "url(/portraits/chat-aria-leon-expressions.webp)",
+      );
+      assert.equal(compact.props.style.backgroundSize, "400% 400%");
+      positions.add(compact.props.style.backgroundPosition);
+      assert.equal(
+        exports.Portrait({ index, expression }).props.style.backgroundImage,
+        `url(/portraits/${index === 0 ? "aria" : "leon"}-expressions.webp)`,
+      );
+    }
+    assert.deepEqual(
+      portraits.chatExpressionPortrait(index, "thoughtful"),
+      portraits.chatExpressionPortrait(index, "neutral"),
+    );
+  }
+  assert.equal(positions.size, 16);
+  assert.equal(portraits.chatExpressionPortrait(0).position, "0% 0%");
+  assert.equal(portraits.chatExpressionPortrait(1, "mischievous").position, "100% 100%");
+  for (const index of [2, 13, 3])
+    assert.deepEqual(
+      exports.Portrait({ index, variant: "chat" }).props.style,
+      exports.Portrait({ index }).props.style,
+    );
+  const meta = await sharp(
+    readFileSync(new URL("../public/portraits/chat-aria-leon-expressions.webp", import.meta.url)),
+  ).metadata();
+  assert.equal(meta.width, meta.height);
+  assert.ok(meta.width >= 1024);
+});
+
 test("Finn uses nine cells through the shared API; eight-cell characters fall back safely", async () => {
   const expected = [
     "0% 0%",

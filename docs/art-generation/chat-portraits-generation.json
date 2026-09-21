@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-21",
+  "tool": "built-in image_gen",
+  "model": "not reported by tool",
+  "references": ["public/portraits/aria-expressions.webp", "public/portraits/leon-expressions.webp"],
+  "output": "public/portraits/chat-aria-leon-expressions.webp",
+  "generatedImage": "exec-872862b5-88a4-4072-ad4a-1eb8b8542183.png",
+  "dimensions": [1254, 1254],
+  "layout": {"columns": 4, "rows": 4, "characters": ["aria", "leon"], "rowsPerCharacter": 2},
+  "expressions": ["neutral", "smile", "surprised", "worried", "serious", "shy", "tired", "mischievous"],
+  "promptSummary": "A 4 by 4 atlas of simplified anime/chibi face icons readable at 40 CSS pixels. First two rows Aria: blonde hair, green eyes, elf ears, white flower, green collar. Last two rows Leon: tousled brown hair, brown eyes, red scarf and dark collar. Bold clean outlines, broad hair locks, flat cel shading, no hatching, fine strands or texture. Large readable eyes, eyebrows and mouths. Same eight expressions and framing per character. Muted dark green-gray backgrounds, no captions, frames or grid lines.",
+  "conversion": "Lossless WebP encoding only; no resizing or cropping. Requested 1024 square, actual generated dimensions 1254 square retained.",
+  "usage": "Only Portrait variant=chat for Aria and Leon; detailed dialogue portraits remain unchanged."
+}

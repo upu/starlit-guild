@@ -19,6 +19,14 @@
 
 これは既存の会話への表示実装であり、新しい第二章のシナリオ実装ではない。プティの素顔画像は従来記録向け。第二章のパンプキンヘッド姿へこの素顔を流用しない。かぶり物の状態は第二章実装側で別に扱い、[人物設定](characters/pumpety.md) を守る。
 
+## 小さなチャット用の表情
+
+アリアとレオンは道中・待機中の40pxチャットだけ、[簡略化した16コマの表情](../public/portraits/chat-aria-leon-expressions.webp) を使う。通常の会話画面・思い出・キャラクター画面は従来の絵を維持する。他の人物のチャットも従来の表情画像を使う。
+
+画像は1254×1254px・4列×4行の可逆WebP。上2行がアリア、下2行がレオンで、各8表情の順序は従来と同じ。細かな髪の線・陰影を減らし、目・眉・口を大きく整理した。アリアの金髪・緑の目・エルフ耳・白い花、レオンの茶髪・茶色の目・赤い襟元を維持する。`Portrait` の `variant="chat"` で切り替え、未知・未収録の表情は通常顔に戻す。
+
+内蔵画像生成ツールで2026-09-21に制作。参照は既存の `aria-expressions.webp` と `leon-expressions.webp`。生成PNGを再描画・切り取りせず可逆WebPへ変換した。制作条件は [生成記録](art-generation/chat-portraits-generation.json) を参照。
+
 ## 登場に備えた素材
 
 フィンの [9表情](../public/portraits/finn-expressions.webp) は [採用シート](characters/finn-reference-sheet.webp) をもとに制作した。768×768px・3列×3行の可逆WebPで、通常・笑顔・驚き／困り・真剣・照れ／疲れ・ニヤリ・思案を収録する。表情の意図は [人物資料](characters/finn.md#顔アイコン)、制作条件は [生成記録](art-generation/finn-expressions-generation.json) を参照。キャラクター登録と台詞への割り当ては未実装のため、上記の表示対象にはまだ含めない。
