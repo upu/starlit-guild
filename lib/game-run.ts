@@ -1,3 +1,4 @@
+import { beginRoadExit, startRoadScene } from "./road-scenes.ts";
 import { questNodes } from "./puppet-battles.ts";
 import { createEnemies, damageEnemy, penetration, syncEnemyTotals } from "./combat.ts";
 import { isPrologueQuest } from "./prologue.ts";
@@ -213,8 +214,9 @@ function rewardRoadPortions(s: State, sq: Squad, q: Quest, at: number) {
   }
   return gain;
 }
-export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
+export function completeNode(s: State, sq: Squad, q: Quest, at: number, afterScene = false) {
   const r = activeRun(sq);
+  if (!afterScene && beginRoadExit(r, at)) return null;
   event(
     r,
     at,
@@ -233,6 +235,7 @@ export function completeNode(s: State, sq: Squad, q: Quest, at: number) {
     healAll(r, 0.15);
     configureTarget(r, q);
     schedule(s, sq, r, at);
+    if (afterScene) startRoadScene(r, "enter", at);
     return gain;
   }
   sq.lastQuest ??= q.id;
@@ -296,4 +299,13 @@ export function recoverRun(s: State, sq: Squad, r: Run, q: Quest, at: number) {
   r.phaseAt = at;
   schedule(s, sq, r, at);
   event(r, at, "heal", "みんなでひと休みして、もう一度。");
+}
+
+export function finishRoadScene(s: State, sq: Squad, q: Quest, at: number) {
+  const r = activeRun(sq),
+    kind = r.road?.scene?.kind;
+  if (r.road) delete r.road.scene;
+  if (kind !== "enter") return completeNode(s, sq, q, at, true);
+  schedule(s, sq, r, at);
+  return null;
 }

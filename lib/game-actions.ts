@@ -164,6 +164,7 @@ function finishAssist(s: State, sq: Squad, r: Run, now: number) {
 function assistAction(s: State, sq: Squad, a: Action, now: number) {
   const r = sq.run;
   if (!r) throw Error("冒険中に応援できます。");
+  if (r.road?.scene) return;
   r.hits++;
   if (a.mode === "heal") healAssist(s, sq, r, now, a.id);
   else strikeAssist(s, sq, r, now);

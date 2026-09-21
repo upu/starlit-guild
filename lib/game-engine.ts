@@ -50,6 +50,7 @@ import {
   addLog,
   combination,
   completeNode,
+  finishRoadScene,
   event,
   heroSkills,
   nextEvent,
@@ -221,6 +222,7 @@ function step(s: State, sq: Squad) {
   const r = activeRun(sq),
     q = questById(r.quest),
     at = r.nextAt;
+  if (r.road?.scene) return finishRoadScene(s, sq, q, at);
   if (r.phase === "rest") {
     recoverRun(s, sq, r, q, at);
     return null;
@@ -266,6 +268,7 @@ function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
 }
 function shiftRun(r: Run, shift: number) {
   if (r.road) {
+    if (r.road.scene) r.road.scene.at += shift;
     r.road.at += shift;
     r.road.previousAt += shift;
     r.road.nextAt += shift;

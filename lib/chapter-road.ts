@@ -57,16 +57,34 @@ export function ensureChapterRoad(r: Run, sq: Squad, q: Quest, at: number) {
 export function placeRoadEnemies(r: Run) {
   const road = r.road;
   if (!road) return;
+  resetRoadRetry(r);
+  const front =
+    r.quest === "sweet-blockade"
+      ? Math.max(roadPoint(r), ...Object.values(road.members).map((p) => p.x + 240))
+      : roadPoint(r);
   const rear = road.ambushNode !== undefined && r.node % 2 === 0;
   road.opponents = Object.fromEntries(
     (r.enemies || []).map((enemy, index) => {
       const x =
         road.ambushNode === undefined
-          ? roadPoint(r) + index * 58
+          ? front + index * 58
           : roadPoint(r) + (rear ? -150 - index * 40 : 185 + index * 40);
       return [enemy.id, roadPosition(x)];
     }),
   );
+}
+function resetRoadRetry(r: Run) {
+  const road = r.road;
+  if (!road || r.quest !== "sweet-blockade" || r.phase !== "rest") return;
+  // Rebase a repeated attempt without changing anyone's on-screen position.
+  // Relative spawning must not accumulate unbounded world coordinates during offline retries.
+  const shift = Math.max(...Object.values(road.members).map((p) => p.x)) - roadPoint(r) + 240;
+  road.camera -= shift;
+  road.previousCamera -= shift;
+  for (const position of Object.values(road.members)) {
+    position.x -= shift;
+    position.previousX -= shift;
+  }
 }
 export function roadGuard(r: Run) {
   return (

@@ -16,6 +16,7 @@ export type RoadEnemy = {
   hp: number;
   maxHp: number;
   boss: boolean;
+  pose?: "fallen" | "retreat" | "enter" | "drag";
 };
 export type RoadEffect = {
   id: number;
@@ -31,6 +32,7 @@ export type RoadEffect = {
 };
 export type RoadBattle = {
   stage: "forest" | "puppets";
+  scene?: import("./road-scenes.ts").RoadSceneKind;
   time: number;
   distance: number;
   gathering: {
@@ -45,5 +47,4 @@ export type RoadBattle = {
   enemies: RoadEnemy[];
   effects: RoadEffect[];
 };
-export const travellerNames = { aria: "アリア", leon: "レオン", mira: "ミラ" };
 export const travellerLane = (id: TravellerId) => ({ aria: 0.54, leon: 0.82, mira: 0.68 })[id];

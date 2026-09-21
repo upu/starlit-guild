@@ -1,13 +1,8 @@
+import { paintPuppetStrings } from "./road-puppet-strings";
 import type Phaser from "phaser";
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import { roadBackdrop, roadX, roadY } from "@/lib/road-layout";
-import {
-  travellerLane,
-  travellerNames,
-  type RoadBattle,
-  type RoadEnemy,
-  type Traveller,
-} from "@/lib/road-view";
+import { travellerLane, type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view";
 
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
@@ -34,6 +29,11 @@ function enemyName(enemy: RoadEnemy) {
   if (enemy.kind !== "slime") return puppetNames[enemy.kind];
   return enemy.boss ? "大きなスライム" : "";
 }
+const enemyFalls = (enemy: RoadEnemy) => enemy.pose === "fallen" || enemy.pose === "drag";
+function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
+  if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
+  return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
+}
 const enemySize = (enemy: RoadEnemy) => (enemy.boss ? 1.65 : enemy.kind === "pumpety" ? 1 : 0.75);
 
 export class RoadPainter {
@@ -45,6 +45,7 @@ export class RoadPainter {
   private effects: RoadEffects;
   private spriteFilter: RoadSpriteFilter;
   private bars: Phaser.GameObjects.Graphics;
+  private strings: Phaser.GameObjects.Graphics;
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
   private destination: Phaser.GameObjects.Image;
@@ -59,6 +60,7 @@ export class RoadPainter {
     this.gathering.image.setDepth(16).setVisible(false);
     this.gathering.label.setVisible(false);
     this.effects = new RoadEffects(scene);
+    this.strings = scene.add.graphics().setDepth(18);
     this.bars = scene.add.graphics().setDepth(30);
     this.destination = scene.add.image(0, 0, ROAD_DESTINATION).setOrigin(0.5, 1).setDepth(5);
     for (const id of ["aria", "leon", "mira"] as const) this.registerSheet(id);
@@ -198,7 +200,9 @@ export class RoadPainter {
     const markerHeight = Math.min(125, width * 0.26, height * 0.4);
     this.destination.setDisplaySize((markerHeight * 874) / 1144, markerHeight);
     this.destination.setPosition(this.screenX(length + 100, state), roadY(0.6, height));
-    this.destination.setVisible(state.phase === "journey" && state.distance > length - 380);
+    this.destination.setVisible(
+      !!this.look?.destination && state.phase === "journey" && state.distance > length - 380,
+    );
   }
 
   private resizeScenery(width: number, height: number) {
@@ -227,7 +231,7 @@ export class RoadPainter {
   }
 
   private heroPose(state: RoadBattle, hero: Traveller, reduced: boolean) {
-    if (reduced || hero.hp <= 0 || state.phase !== "journey") return 8;
+    if (reduced || state.scene || hero.hp <= 0 || state.phase !== "journey") return 8;
     const hit = state.effects
       .filter((item) => item.hero === hero.id && item.kind !== "hurt" && item.kind !== "gather")
       .at(-1);
@@ -249,7 +253,7 @@ export class RoadPainter {
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
     let figure = this.heroes.get(hero.id);
     if (!figure) {
-      figure = this.makeFigure(roadSheet(hero.id), "8", travellerNames[hero.id]);
+      figure = this.makeFigure(roadSheet(hero.id), "8", "");
       this.heroes.set(hero.id, figure);
     }
     const size = Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
@@ -266,9 +270,7 @@ export class RoadPainter {
       .setFlipX(hero.facing < 0)
       .setDepth(10 + travellerLane(hero.id) * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
-    figure.label
-      .setPosition(x, y + 13)
-      .setText(travellerNames[hero.id] + (hero.hp <= 0 ? " · 戦闘不能" : ""));
+    figure.label.setVisible(false);
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
@@ -286,7 +288,8 @@ export class RoadPainter {
       enemySize(enemy);
     const x = this.screenX(enemy.x, state),
       y = roadY(enemy.lane, this.scene.scale.height);
-    const bounce = reduced ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
+    const bounce =
+      reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
     const puppet = enemy.kind !== "slime";
     const asset = puppet ? ROAD_PUPPETS : "/sprites.png";
     const frame = puppet ? enemy.kind : this.look?.enemies[enemy.id]?.frame || "slime";
@@ -295,14 +298,17 @@ export class RoadPainter {
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(puppet ? enemy.x < state.heroes[0].x : enemy.x > state.heroes[0].x)
+      .setFlipX(enemyFacesRight(enemy, state.heroes[0].x))
+      .setAngle(enemyFalls(enemy) ? -20 : 0)
       .setDepth(10 + enemy.lane * 10);
     if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
     figure.label
+      .setVisible(!enemy.pose)
       .setPosition(x, y + 14)
       .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
       .setText(this.enemyLabel(enemy));
-    if (enemy.kind !== "pumpety") this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
+    if (enemy.kind !== "pumpety" && !enemy.pose)
+      this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }
 
   private workAppearance(cargo: boolean) {
@@ -364,7 +370,7 @@ export class RoadPainter {
     this.bars.clear();
     this.paintGathering(state);
     for (const [id, figure] of this.enemies) {
-      if (state.enemies.some((enemy) => enemy.id === id && enemy.hp > 0)) continue;
+      if (state.enemies.some((enemy) => enemy.id === id && (enemy.hp > 0 || enemy.pose))) continue;
       figure.image.destroy();
       figure.label.destroy();
       this.enemies.delete(id);
@@ -375,7 +381,9 @@ export class RoadPainter {
       figure.label.setVisible(active);
     }
     for (const hero of state.heroes) this.paintHero(state, hero, reduced);
-    for (const enemy of state.enemies) if (enemy.hp > 0) this.paintEnemy(state, enemy, reduced);
+    for (const enemy of state.enemies)
+      if (enemy.hp > 0 || enemy.pose) this.paintEnemy(state, enemy, reduced);
+    paintPuppetStrings(this.strings, state, this.scene.scale.height, (x) => this.screenX(x, state));
     this.effects.paint(state, reduced, (x) => this.screenX(x, state));
   }
 }

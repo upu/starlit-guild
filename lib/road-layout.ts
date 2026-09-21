@@ -3,7 +3,7 @@ export const roadY = (lane: number, height: number) =>
   height * 0.7 + (lane - 0.68) * Math.min(240, height * 0.65);
 export const roadX = (x: number, camera: number, width: number, stage = "forest") =>
   width * (stage === "puppets" ? 0.2 : 0.35) +
-  (x - camera) * Math.min(1.1, width / (stage === "puppets" ? 600 : 560));
+  (x - camera) * Math.min(1.1, width / (stage === "puppets" ? 800 : 560));
 
 // Painted scenes are not tileable. Pan within one oversized image, never wrap its edges.
 export function roadBackdrop(

@@ -98,7 +98,12 @@ export class ChapterRoadPainter {
   }
   paint() {
     if (!this.painter || !this.ensureAssets()) return;
-    const { battle, look } = chapterRoadFrame(this.bridge.read());
+    const width = this.scene.scale.width;
+    const { battle, look } = chapterRoadFrame(
+      this.bridge.read(),
+      this.runtime.reduced,
+      width / Math.min(1.1, width / 800),
+    );
     this.painter.paint(battle, this.runtime.reduced, look);
   }
 }

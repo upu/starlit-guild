@@ -15,4 +15,5 @@ export type ChapterRoad = {
   members: Record<string, RoadPosition>;
   opponents: Record<string, RoadPosition>;
   ambushNode?: number;
+  scene?: { kind: import("./road-scenes.ts").RoadSceneKind; at: number };
 };

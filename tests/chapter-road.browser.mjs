@@ -16,7 +16,17 @@ function fixture(index, mode) {
     { type: "start", id: storyStages[index].quest, readDeparture: true, value: false },
     now,
   );
-  if (mode === "worksite" || mode === "arrival") {
+  if (["withdraw", "enter", "escape"].includes(mode)) {
+    for (let i = 0; i < 15000 && s.squads[0].run?.road.scene?.kind !== mode; i++)
+      s = settle(s, s.squads[0].run.nextAt).state;
+    assert.equal(s.squads[0].run.road.scene.kind, mode);
+    s = settle(
+      s,
+      s.updatedAt +
+        (s.squads[0].run.nextAt - s.updatedAt) *
+          { withdraw: 0.27, enter: 0.85, escape: 0.29 }[mode],
+    ).state;
+  } else if (mode === "worksite" || mode === "arrival") {
     for (let i = 0; i < 1000; i++) {
       const frame = chapterRoadFrame({
         squad: s.squads[0],
@@ -34,7 +44,7 @@ function fixture(index, mode) {
       s = settle(s, s.squads[0].run.nextAt).state;
     }
   } else if (mode === "boss")
-    while (s.squads[0].run.node < 2 && s.updatedAt < now + 180000)
+    while ((s.squads[0].run.node < 2 || s.squads[0].run.road.scene) && s.updatedAt < now + 180000)
       s = settle(s, s.squads[0].run.nextAt).state;
   else if (mode === "ambush")
     while (s.squads[0].run.road.ambushNode === undefined && s.updatedAt < now + 60000)
@@ -68,7 +78,11 @@ try {
     ["signpost", 13, "worksite"],
     ["trio-work", 16, "worksite"],
     ["puppets", 15, "boss"],
+    ["withdraw", 15, "withdraw"],
+    ["enter", 15, "enter"],
+    ["escape", 15, "escape"],
   ]) {
+    if (process.env.TEST_SCENES && !process.env.TEST_SCENES.split(",").includes(name)) continue;
     const context = await browser.newContext({ viewport: { width: 390, height: 844 } }),
       page = await context.newPage(),
       save = fixture(index, mode);
@@ -81,7 +95,7 @@ try {
     if (name === "cargo")
       await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
-    if (mode === "worksite" || mode === "arrival")
+    if (["worksite", "arrival", "withdraw", "enter", "escape"].includes(mode))
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {
       if (!localStorage.getItem("starlit-guild-v4"))
@@ -124,6 +138,8 @@ try {
           [390, 844],
         ]) {
       await page.setViewportSize({ width, height });
+      // Let ResizeObserver apply the real canvas dimensions before advancing its fake RAF clock.
+      await new Promise((resolve) => setTimeout(resolve, 75));
       await page.clock.runFor(350);
       const layout = await page
         .locator(".phone-game")
@@ -144,7 +160,7 @@ try {
     const after = await page.evaluate(() => JSON.parse(localStorage.getItem("starlit-guild-v4")));
     assert.equal(after.active, save.active);
     assert.ok(after.profiles[0].state.gold >= before.profiles[0].state.gold);
-    assert.ok(roadAssets.size >= 14);
+    assert.ok(roadAssets.size >= 15);
     assert.ok([...roadAssets].every((asset) => asset.endsWith(".webp")));
     results.push({ name, quest: save.profiles[0].state.squads[0].run.quest, reloaded: true });
     await context.close();

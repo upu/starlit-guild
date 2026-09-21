@@ -1,3 +1,4 @@
+import { validRoadScene } from "./road-scenes.ts";
 import { localId } from "./local-id.ts";
 import { z } from "zod";
 import {
@@ -86,6 +87,7 @@ const road = z.object({
   members: z.record(hero, position),
   opponents: z.record(enemyId, position),
   ambushNode: count.max(14).optional(),
+  scene: z.object({ kind: z.enum(["withdraw", "enter", "escape"]), at: n }).optional(),
 });
 const run = z.object({
   road: road.optional(),
@@ -188,7 +190,7 @@ function validRoad(squad: ParsedSquad) {
     run.enemies?.some((e) => !(e.id in road.opponents))
   )
     return false;
-  return validRoadClocks(run) && validRoadAmbush(run);
+  return validRoadClocks(run) && validRoadAmbush(run) && validRoadScene(run);
 }
 function validRoadClocks(run: ParsedRun) {
   const road = run.road;
@@ -214,6 +216,9 @@ function validRoadAmbush(run: ParsedRun) {
   );
 }
 type ParsedRun = z.infer<typeof run>;
+function validStoppedEnemies(run: ParsedRun, ambush: boolean) {
+  return ambush || (!!run.road?.scene && validRoadScene(run));
+}
 function validEnemies(run: ParsedRun) {
   const enemies = run.enemies;
   if (!enemies) return true; // Existing battles keep their exact progress until the next node.
@@ -234,7 +239,7 @@ function validEnemies(run: ParsedRun) {
   )
     return false;
   const living = enemies.filter((enemy) => enemy.hp > 0);
-  if (!living.length) return ambush;
+  if (!living.length) return validStoppedEnemies(run, ambush);
   return (
     run.enemyAt === Math.min(...living.map((enemy) => enemy.nextAt)) &&
     (run.phase === "rest" || living.every((enemy) => enemy.nextAt >= run.nextAt))

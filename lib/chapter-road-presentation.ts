@@ -1,3 +1,4 @@
+import { presentRoadScene } from "./road-scene-presentation.ts";
 import {
   adventureFrame,
   type AdventureInput,
@@ -31,6 +32,7 @@ export type RoadLook = {
   length: number;
   workers: string[];
   urban: boolean;
+  destination: boolean;
   work?: { asset: string; frame?: string; label: string; cargo: boolean };
   enemies: Record<number, { frame: string; label: string }>;
 };
@@ -39,7 +41,7 @@ export const chapterRoadX = roadX;
 // Predict only the drawing between 200 ms React snapshots. Combat and saved coordinates stay untouched.
 function drawnX(position: RoadPosition, run: Run, now: number) {
   const road = run.road;
-  if (!road || run.phase === "rest") return position.x;
+  if (!road || road.scene || run.phase === "rest") return position.x;
   const elapsed = Math.max(0, Math.min(200, now - road.at));
   const dt = Math.max(1, road.at - road.previousAt);
   const velocity = Math.max(-110, Math.min(110, ((position.x - position.previousX) * 1000) / dt));
@@ -133,7 +135,7 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
       id: index + 1,
       kind: enemyKind(enemy.role || (frame.quest.enemy >= 12 ? "golem" : undefined)),
       x,
-      lane: enemy.role === "puppeteer" ? 0.48 : [0.74, 0.57, 0.84][index],
+      lane: enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index],
       hp: enemy.hp,
       maxHp: enemy.maxHp,
       boss: enemy.role === "sweeper" || enemy.role === "golem",
@@ -168,6 +170,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
   return {
     background: frame.background,
+    destination: !["spinning-signpost", "begging-golem", "sweet-blockade"].includes(frame.quest.id),
     urban: ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id),
     length:
       (run?.nodes || 15) * CHAPTER_ROAD_SPACING +
@@ -223,13 +226,18 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
   }
 }
-export function chapterRoadFrame(input: AdventureInput): { battle: RoadBattle; look: RoadLook } {
+export function chapterRoadFrame(
+  input: AdventureInput,
+  reduced = false,
+  worldWidth = 1400,
+): { battle: RoadBattle; look: RoadLook } {
   const frame = adventureFrame(input),
     run = input.squad.run;
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
   addWork(input, frame, battle, look);
   battle.effects = effects(run, battle);
+  presentRoadScene(battle, run, input.now, reduced, worldWidth);
   return { battle, look };
 }
 export function chapterRoadHit(
@@ -259,6 +267,12 @@ export function chapterRoadActivity(input: AdventureInput) {
   const run = input.squad.run;
   if (!run) return "支度中";
   if (run.phase === "rest") return "ひと休み中";
+  if (run.road?.scene)
+    return {
+      withdraw: "人形たちがいったん退く",
+      enter: "カボチャ頭の少女と人形たち",
+      escape: "少女が人形たちを引いて逃げる",
+    }[run.road.scene.kind];
   const quest = adventureFrame(input).quest;
   if (run.road?.ambushNode !== undefined && roadHasEnemies(run))
     return run.target > 0 ? "作業中の仲間を護衛" : "襲ってきた敵を撃退中";
