@@ -65,21 +65,21 @@
       "sourceBytes": 1064152,
       "outputBytes": 718790
     },
-    "mira-v1.png": {
-      "sourceHash": "f617600db1b79c71002c63c9846af0281da22ed9ec7ae425386767457f9df402",
+    "mira-v2.png": {
+      "sourceHash": "a38705d896c34cf6e4df9a20d9046cff11b4c579134b637eca61816fca85ee20",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
-      "output": "mira-v1.webp",
-      "outputHash": "ce32b27b0b3929e3445a4af326d9bdbdb953d798ab1e58a9d7f4bf94707886d6",
-      "sourceBytes": 2223090,
-      "outputBytes": 1620850
+      "output": "mira-v2.webp",
+      "outputHash": "5a1ad486237404aeda6c77a69a6653711d70c3635f96b04efc1a0e79e4ab2a20",
+      "sourceBytes": 2281719,
+      "outputBytes": 1703038
     },
-    "mira-walk-v2.png": {
-      "sourceHash": "e49729b2dd79b32b2ca82324706f26c790292e2492ee6e41cc5d8793f21ca740",
+    "mira-walk-v3.png": {
+      "sourceHash": "2e40107a7e2ec98c8fe7a0ac94afc707913ccb93b038a7168f7f4b37de9feeda",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
-      "output": "mira-walk-v2.webp",
-      "outputHash": "8e427822559e86845f01aebd8b8358ebf3da314011e4794d8711a504fc4a8143",
-      "sourceBytes": 1583460,
-      "outputBytes": 1119638
+      "output": "mira-walk-v3.webp",
+      "outputHash": "b6e1dc8315a97c1817dd83471260845b77a2ca9bdb1d0231a28247ad8a555f1f",
+      "sourceBytes": 1582604,
+      "outputBytes": 1118800
     },
     "packing-v1.png": {
       "sourceHash": "ef1178a680cf1e01c52fbf402c76b710b6f9ecf546254a5c7f2a8ec403c7ac71",
@@ -104,6 +104,14 @@
       "outputHash": "4b3f53a45dc547262a8058caa4368fb3451be41e99d3d784d9b151cb5acb813f",
       "sourceBytes": 2261994,
       "outputBytes": 1143588
+    },
+    "signpost-v1.png": {
+      "sourceHash": "b9968ed1613078002af7f916b238ae72ed6bdabc647ebb8641310422ff4ebab3",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "signpost-v1.webp",
+      "outputHash": "56e015633a625627d6f345706d0adfa942462dbc40873066f99c99be6af0db0f",
+      "sourceBytes": 1690117,
+      "outputBytes": 649692
     },
     "worksites-v1.png": {
       "sourceHash": "a6d43f71b122d5e0b9561e61b1def358e9e7d31c3680e440584e7272e974383e",

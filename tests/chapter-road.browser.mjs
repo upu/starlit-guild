@@ -26,7 +26,7 @@ function fixture(index, mode) {
         paused: false,
       });
       if (
-        frame.look.workers.length === 2 &&
+        frame.look.workers.length === s.squads[0].members.length &&
         frame.look.work &&
         (mode !== "arrival" || s.squads[0].run.node === s.squads[0].run.nodes - 1)
       )
@@ -65,6 +65,8 @@ try {
     ["forest", 0, "ambush"],
     ["work", 11, "worksite"],
     ["trio", 12, "battle"],
+    ["signpost", 13, "worksite"],
+    ["trio-work", 16, "worksite"],
     ["puppets", 15, "boss"],
   ]) {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 } }),
@@ -85,6 +87,15 @@ try {
       if (!localStorage.getItem("starlit-guild-v4"))
         localStorage.setItem("starlit-guild-v4", JSON.stringify(save));
     }, save);
+    await page.addInitScript(() => {
+      window.roadMipFilters = 0;
+      const original = WebGLRenderingContext.prototype.texParameteri;
+      WebGLRenderingContext.prototype.texParameteri = function (target, parameter, value) {
+        if (parameter === this.TEXTURE_MIN_FILTER && value === this.LINEAR_MIPMAP_LINEAR)
+          window.roadMipFilters++;
+        return original.call(this, target, parameter, value);
+      };
+    });
     await page.goto(root);
     await page.clock.runFor(100);
     assert.equal(await page.getByRole("link", { name: "横スクロール戦闘を試す" }).count(), 0);
@@ -98,6 +109,7 @@ try {
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
     await page.clock.runFor(mode === "worksite" ? 50 : 900);
     assert.equal(await page.locator("canvas").count(), 1);
+    assert.ok(await page.evaluate(() => window.roadMipFilters > 0));
     assert.equal(await page.locator(".journey-banter").count(), 1);
     assert.ok(await page.locator(".map-journey progress").count());
     for (const [width, height] of name === "forest"

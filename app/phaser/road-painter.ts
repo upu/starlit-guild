@@ -10,11 +10,12 @@ import {
 } from "@/lib/road-view";
 
 import { RoadEffects } from "./road-effects";
+import { RoadSpriteFilter } from "./road-sprite-filter";
+import { applyHeroPose, applyWorkPose } from "./road-poses";
 import {
   roadSheet,
   roadFrame,
   roadWalkSheet,
-  roadWalkFrame,
   ROAD_HERB,
   ROAD_CARGO,
   ROAD_PUPPETS,
@@ -22,6 +23,8 @@ import {
   ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
+  ROAD_SIGNPOST,
+  miraFrames,
 } from "./road-art";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
@@ -40,6 +43,7 @@ export class RoadPainter {
   private sizeKey = "";
   private gathering: Figure;
   private effects: RoadEffects;
+  private spriteFilter: RoadSpriteFilter;
   private bars: Phaser.GameObjects.Graphics;
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
@@ -47,6 +51,7 @@ export class RoadPainter {
   private look?: RoadLook;
 
   constructor(private scene: Phaser.Scene) {
+    this.spriteFilter = new RoadSpriteFilter(scene);
     this.backdrop = scene.add.image(0, 0, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
     this.ground = scene.add.graphics().setDepth(1);
     this.trail = scene.add.graphics().setDepth(2);
@@ -86,7 +91,12 @@ export class RoadPainter {
 
   private registerSheet(id: Traveller["id"]) {
     const texture = this.scene.textures.get(roadSheet(id));
+    if (id === "mira") {
+      for (const [index, [x, y, w, h]] of miraFrames.entries())
+        texture.add(String(index), 0, x, y, w, h);
+    }
     for (let index = 0; index < 12; index++) {
+      if (id === "mira") continue;
       const frame = roadFrame(id, index);
       texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
     }
@@ -96,6 +106,7 @@ export class RoadPainter {
   }
 
   private registerWorkArt() {
+    this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 269, 74, 690, 1157);
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
     const push = this.scene.textures.get(ROAD_PUSH);
@@ -247,8 +258,9 @@ export class RoadPainter {
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
     const y = roadY(travellerLane(hero.id), this.scene.scale.height) + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
-    const pushing = this.applyWorkPose(figure.image, state, hero, reduced, size);
-    if (!pushing) this.applyHeroPose(figure.image, hero.id, pose, size);
+    const pushing = this.working(hero) && applyWorkPose(figure.image, state, hero, reduced, size);
+    if (!pushing) applyHeroPose(figure.image, hero.id, pose, size);
+    this.spriteFilter.apply(figure.image);
     figure.image
       .setPosition(x, y)
       .setFlipX(hero.facing < 0)
@@ -258,43 +270,6 @@ export class RoadPainter {
       .setPosition(x, y + 13)
       .setText(travellerNames[hero.id] + (hero.hp <= 0 ? " · 戦闘不能" : ""));
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
-  }
-
-  private applyWorkPose(
-    image: Phaser.GameObjects.Image,
-    state: RoadBattle,
-    hero: Traveller,
-    reduced: boolean,
-    size: number,
-  ) {
-    if (!this.working(hero)) return false;
-    const packing = state.gathering?.task === "pack" || state.gathering?.task === "unload";
-    const pushing = state.gathering?.kind === "cargo" && state.gathering.task === "carry";
-    if (!packing && !pushing) return false;
-    const moving = !reduced && !state.enemies.some((enemy) => enemy.hp > 0);
-    const step = moving ? Math.floor(state.time / (packing ? 750 : 220)) % 2 : 0;
-    image
-      .setTexture(packing ? ROAD_PACKING : ROAD_PUSH, `${hero.id}-${String(step)}`)
-      .setOrigin(0.5, 1)
-      .setScale((size * (packing ? 0.72 : 0.9)) / image.frame.height);
-    return true;
-  }
-
-  private applyHeroPose(
-    image: Phaser.GameObjects.Image,
-    id: Traveller["id"],
-    pose: string,
-    size: number,
-  ) {
-    const frame = roadFrame(id, Number(pose));
-    const walking = Number(pose) < 4;
-    const asset = walking ? roadWalkSheet(id) : roadSheet(id);
-    const walk = walking ? roadWalkFrame(id, Number(pose)) : null;
-    if (image.texture.key !== asset) image.setTexture(asset, pose);
-    else if (image.frame.name !== pose) image.setFrame(pose);
-    image
-      .setScale(walk ? size * walk.scale : size / 362)
-      .setOrigin(walk?.originX ?? frame.originX, walk?.originY ?? frame.originY);
   }
 
   private enemyLabel(enemy: RoadEnemy) {
@@ -342,7 +317,13 @@ export class RoadPainter {
   private workLabel(point: NonNullable<RoadBattle["gathering"]>) {
     if (this.look?.work) return this.look.work.label;
     if (point.kind === "cargo")
-      return { pack: "包み直し", carry: "運搬中", unload: "荷下ろし", gather: "" }[point.task];
+      return {
+        pack: "包み直し",
+        carry: "運搬中",
+        unload: "荷下ろし",
+        gather: "",
+        inspect: "確認中",
+      }[point.task];
     return point.remaining < point.total ? "採取中" : "薬草";
   }
 

@@ -1,6 +1,27 @@
 import type { TravellerId } from "@/lib/road-view";
 
-export const roadSheet = (id: TravellerId) => `/animations/road/${id}-v1.webp`;
+export const roadSheet = (id: TravellerId) =>
+  `/animations/road/${id}-v${id === "mira" ? "2" : "1"}.webp`;
+export const ROAD_SIGNPOST = "/animations/road/signpost-v1.webp";
+// Tight native rectangles; casting holds its raised pose before returning to idle.
+export const miraFrames = [
+  [31, 43, 275, 282],
+  [333, 40, 276, 283],
+  [643, 39, 274, 286],
+  [959, 38, 271, 285],
+  [24, 353, 267, 283],
+  [327, 344, 280, 294],
+  [327, 344, 280, 294],
+  [32, 653, 262, 284],
+  [32, 653, 262, 284],
+  [338, 679, 269, 255],
+  [641, 675, 240, 251],
+  [960, 667, 251, 267],
+  [26, 950, 264, 274],
+  [333, 950, 264, 273],
+  [640, 955, 275, 264],
+  [954, 954, 259, 265],
+];
 export const ROAD_EFFECTS = "/animations/road/effects-v2.webp";
 export const ROAD_HERB = "/animations/road/herb-v2.webp";
 export const ROAD_CARGO = "/animations/road/cargo-v1.webp";
@@ -9,7 +30,8 @@ export const ROAD_PUSH = "/animations/road/push-v1.webp";
 export const ROAD_PACKING = "/animations/road/packing-v1.webp";
 export const ROAD_DESTINATION = "/animations/road/destination-v1.webp";
 export const ROAD_WORKSITES = "/animations/road/worksites-v1.webp";
-export const roadWalkSheet = (id: TravellerId) => `/animations/road/${id}-walk-v2.webp`;
+export const roadWalkSheet = (id: TravellerId) =>
+  `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.
@@ -27,10 +49,10 @@ const walkBounds = {
     [68, 47, 509, 571],
   ],
   mira: [
-    [87, 58, 601, 588],
-    [38, 58, 540, 591],
-    [85, 35, 604, 559],
-    [36, 33, 543, 564],
+    [87, 57, 602, 589],
+    [38, 57, 541, 592],
+    [85, 33, 605, 560],
+    [35, 31, 544, 565],
   ],
 };
 export function roadWalkFrame(id: TravellerId, pose: number) {

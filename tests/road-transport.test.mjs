@@ -26,6 +26,23 @@ function start(index, level) {
 }
 const quest = (run) => allQuests.find((q) => q.id === run.quest);
 
+test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {
+  const state = start(13, 12),
+    run = state.squads[0].run;
+  const frame = chapterRoadFrame({
+    squad: state.squads[0],
+    startQuest: run.quest,
+    now: state.updatedAt,
+    ready: true,
+    paused: false,
+  });
+  assert.equal(frame.look.work.asset, "/animations/road/signpost-v1.webp");
+  assert.equal(frame.battle.gathering.task, "inspect");
+  assert.equal(movingWork(quest(run), run), false);
+  run.node = 2;
+  assert.equal(movingWork(quest(run), run), true);
+});
+
 test("transport covers the same distance at the same speed regardless of level", () => {
   const durations = [];
   for (const level of [1, 12, 30]) {

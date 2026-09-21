@@ -3,6 +3,8 @@ import { movingWork } from "./chapter-road.ts";
 
 export function roadWorkLook(q: Quest, run: Run) {
   const label = targetName(q, run.node, run.nodes);
+  if (q.id === "spinning-signpost" && !movingWork(q, run))
+    return { asset: "/animations/road/signpost-v1.webp", label, cargo: false, frame: "signpost" };
   if (q.escortAsset) return { asset: q.escortAsset, label, cargo: false, frame: undefined };
   if (movingWork(q, run))
     return { asset: "/animations/road/cargo-v1.webp", label, cargo: true, frame: undefined };

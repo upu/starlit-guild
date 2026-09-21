@@ -196,12 +196,13 @@ function enemyLabel(frame: AdventureFrame, id: string) {
   return target?.cue || target?.name || "";
 }
 function workTask(
-  parcels: boolean,
+  frame: string | undefined,
   q: AdventureFrame["quest"],
   run: Run,
 ): NonNullable<RoadBattle["gathering"]>["task"] {
   if (movingWork(q, run)) return "carry";
-  return parcels ? "pack" : "gather";
+  if (frame === "signpost") return "inspect";
+  return frame === "parcels" ? "pack" : "gather";
 }
 function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {
   const run = input.squad.run,
@@ -213,7 +214,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   const x = road ? workPoint(frame.quest, run) - 65 : 160;
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",
-    task: workTask(look.work.frame === "parcels", frame.quest, run),
+    task: workTask(look.work.frame, frame.quest, run),
     x,
     remaining: run.target,
     total: run.targetMax,

@@ -35,7 +35,7 @@ export type RoadBattle = {
   distance: number;
   gathering: {
     kind: "herb" | "cargo";
-    task: "gather" | "pack" | "carry" | "unload";
+    task: "gather" | "pack" | "carry" | "unload" | "inspect";
     x: number;
     remaining: number;
     total: number;
