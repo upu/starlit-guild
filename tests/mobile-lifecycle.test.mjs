@@ -159,7 +159,7 @@ test("enabled test tools adjust only the test profile and preserve the ordinary 
     p = b.profiles.find((p) => p.id === b.active);
   assert.equal(p.test, true);
   assert.equal(p.state.gold, 5000);
-  assert.equal(p.state.clears, 18);
+  assert.equal(p.state.clears, 20);
   assert.deepEqual(b.profiles[0], ordinary);
 });
 

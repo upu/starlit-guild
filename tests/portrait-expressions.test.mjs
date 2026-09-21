@@ -64,7 +64,7 @@ test("reference characters retain eight expressions and other characters retain 
       portraits.expressionPortrait(index, "neutral").position,
     );
   }
-  for (const index of [3, 4, 5, 6, 7, 12, 14]) {
+  for (const index of [4, 5, 6, 7, 12, 14]) {
     assert.equal(portraits.expressionPortrait(index, "smile"), null);
     assert.ok(
       exports

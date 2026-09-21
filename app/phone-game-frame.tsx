@@ -292,7 +292,7 @@ function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
     <QuestCompletion
       key={(m.game.profile?.id ?? "unassigned") + ":" + ending.id}
       story={ending}
-      questName={allQuests.find((q) => q.id === ending.quest)?.name ?? "不明な依頼"}
+      questName={allQuests.find((q) => q.id === ending.quest)?.name ?? ending.title}
       ready={m.ready}
       onRead={() => m.readStory(ending.id)}
       onClose={() => {

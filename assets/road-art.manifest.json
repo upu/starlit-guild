@@ -41,6 +41,14 @@
       "sourceBytes": 1171172,
       "outputBytes": 914382
     },
+    "finn-v1.png": {
+      "sourceHash": "53dfb47444e28d398bfee689b56939cfcdf478cdf15f7c4a89411fa0ccee0b12",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "finn-v1.webp",
+      "outputHash": "0d89f5460322927b33afae7e90958ab46bcb8b9b92b71de8c2ccf780b914dcf6",
+      "sourceBytes": 2256827,
+      "outputBytes": 1581158
+    },
     "herb-v2.png": {
       "sourceHash": "3783637963fa67a2a756cfc9eb4f5f190d98212c3bcb5f34ee64776d99e24578",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",

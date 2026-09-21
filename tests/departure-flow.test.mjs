@@ -1,3 +1,5 @@
+import * as storyParty from "../lib/story-party.ts";
+import * as interludes from "../lib/interludes.ts";
 import * as navigation from "../lib/quest-navigation.ts";
 import * as chapterTwo from "../lib/chapter-two.ts";
 import { test } from "node:test";
@@ -30,6 +32,7 @@ vm.runInNewContext(
         "@/lib/quest-navigation": navigation,
         "react/jsx-runtime": jsxRuntime,
         "@/lib/chapter-two": chapterTwo,
+        "@/lib/story-party": storyParty,
         "@/lib/game": game,
         "@/lib/prologue": prologue,
         "@/lib/original-characters": { originalCharacters: [] },
@@ -77,6 +80,7 @@ function harness(initialState) {
     },
   };
   const modules = {
+    "@/lib/interludes": interludes,
     react: {
       useState(initial) {
         const i = cursor++;

@@ -1,3 +1,4 @@
+import { BERNE_QUEST, STONE_RETURN_QUEST, BERNE_RESTORATION_QUEST } from "./chapter-three.ts";
 export type StoryArt = {
   src: string;
   videoSrc?: string;
@@ -9,6 +10,27 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+  [BERNE_QUEST + "-departure"]: {
+    src: "/stories/finn-at-breakfast.webp",
+    alt: "食堂の隣の席で、頬杖をついて三人へ話しかけるフィン。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 5,
+  },
+  [STONE_RETURN_QUEST + "-departure"]: {
+    src: "/stories/mira-tends-finn.webp",
+    alt: "仕事の直前、ミラがフィンの傷ついた手を洗い、包帯を巻く。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 5,
+  },
+  [BERNE_RESTORATION_QUEST + "-return"]: {
+    src: "/stories/four-cups-of-tea.webp",
+    alt: "灯りが戻ったベルネの食堂で、お茶を囲むアリア、レオン、ミラ、フィン。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 5,
+  },
   "waiting-households-return": {
     src: "/stories/medicine-delivered.webp",
     videoSrc: "/stories/videos/medicine-delivered.mp4",

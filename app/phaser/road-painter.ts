@@ -20,6 +20,7 @@ import {
   ROAD_WORKSITES,
   ROAD_SIGNPOST,
   miraFrames,
+  finnFrames,
 } from "./road-art";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
@@ -64,7 +65,7 @@ export class RoadPainter {
     this.strings = scene.add.graphics().setDepth(18);
     this.bars = scene.add.graphics().setDepth(30);
     this.destination = scene.add.image(0, 0, ROAD_DESTINATION).setOrigin(0.5, 1).setDepth(5);
-    for (const id of ["aria", "leon", "mira"] as const) this.registerSheet(id);
+    for (const id of ["aria", "leon", "mira", "finn"] as const) this.registerSheet(id);
     this.registerWorkArt();
     this.destination.setFrame("marker");
     const puppets = scene.textures.get(ROAD_PUPPETS);
@@ -94,6 +95,11 @@ export class RoadPainter {
 
   private registerSheet(id: Traveller["id"]) {
     const texture = this.scene.textures.get(roadSheet(id));
+    if (id === "finn") {
+      for (const [index, [x, y, w, h]] of finnFrames.entries())
+        texture.add(String(index), 0, x, y, w, h);
+      return;
+    }
     if (id === "mira") {
       for (const [index, [x, y, w, h]] of miraFrames.entries())
         texture.add(String(index), 0, x, y, w, h);

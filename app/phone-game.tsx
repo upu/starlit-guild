@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { pendingInterlude } from "@/lib/interludes";
 import { useGameMusic } from "./use-game-music";
 import { useJourneyHints } from "./use-journey-hints";
 import { useInstallPrompt } from "./install-guide";
@@ -66,7 +67,9 @@ function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex:
     quote: lines[Math.floor(clock / 8000) % lines.length],
     ending: pendingEnding
       ? (stories.find((story) => story.id === pendingEnding + "-return") ?? null)
-      : null,
+      : !run
+        ? (stories.find((story) => story.id === pendingInterlude(s)?.id) ?? null)
+        : null,
     destinationChosen: hasDestination(s, squad, questChoices[squad.id]),
   };
 }

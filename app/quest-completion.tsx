@@ -40,7 +40,7 @@ export function QuestCompletion({
   onRead: () => boolean;
   onClose: () => void;
 }) {
-  const [reading, setReading] = useState(false);
+  const [reading, setReading] = useState(story.chapter === "interlude");
   const { readerRef, onPointerDownOutside } = useStoryAdvance();
   return (
     <Dialog open onOpenChange={() => {}}>

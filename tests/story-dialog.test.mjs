@@ -1,3 +1,4 @@
+import * as interludes from "../lib/interludes.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -84,6 +85,7 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
   };
   const jsx = (type, props, key) => ({ type, props, key });
   const modules = {
+    "@/lib/interludes": interludes,
     react,
     "react/jsx-runtime": { jsx, jsxs: jsx },
     "next/image": { default: "img" },

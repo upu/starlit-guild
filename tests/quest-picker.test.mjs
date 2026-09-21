@@ -1,3 +1,4 @@
+import * as storyParty from "../lib/story-party.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -62,6 +63,7 @@ function harness(state, selected = prologue.TRADE_QUEST) {
     },
     "react/jsx-runtime": jsxRuntime,
     "@/lib/chapter-two": chapterTwo,
+    "@/lib/story-party": storyParty,
     "@/lib/game": game,
     "@/lib/prologue": prologue,
     "@/lib/quest-navigation": navigation,

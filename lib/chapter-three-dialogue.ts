@@ -1,6 +1,7 @@
+import { chapterThreeStages, LUNCH_INTERLUDE } from "./chapter-three.ts";
 import type { Story, StoryLine } from "./stories.ts";
 
-// Draft IDs never enter quest progress or saves. Assign quest IDs when gameplay is connected.
+// Stable gameplay IDs are assigned here; dialogue remains in a single source.
 export type ChapterThreeSection = { number: string; title: string; scenes: Story[] };
 export const chapterThreeSpeakers = {
   aria: "アリア",
@@ -27,5 +28,9 @@ export function scene(
   place: string,
   lines: StoryLine[],
 ): Story {
-  return { id: `chapter-three-draft-${number}-${chapter}`, chapter, title, place, lines };
+  if (number === "interlude")
+    return { id: LUNCH_INTERLUDE, chapter: "interlude", title, place, lines };
+  const quest = chapterThreeStages.find((stage) => stage.number === number)?.quest;
+  if (!quest) throw Error("第三章のステージ番号を確認してください。");
+  return { id: quest + "-" + chapter, quest, chapter, title, place, lines };
 }

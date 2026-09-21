@@ -203,9 +203,9 @@ test("test records always follow the story stages and never create a legacy adve
 
   const every = testState(1000, storyStages.length, 20, 20000);
   assert.equal(inPrologue(every), true);
-  assert.equal(every.story.read.length, storyStages.length * 2);
+  assert.equal(every.story.read.length, storyStages.length * 2 + 1);
   assert.ok(every.owned.includes("mira"), "2-3を読了するとミラが加入する");
-  assert.deepEqual(every.owned, ["aria", "leon", "mira"], "旧加入の仲間は配られない");
+  assert.deepEqual(every.owned, ["aria", "leon", "mira", "finn"], "旧加入の仲間は配られない");
   const earned = storyStages.reduce(
     (total, { quest }) => total + game.allQuests.find((q) => q.id === quest).herbs,
     0,

@@ -1,5 +1,5 @@
 // Read-only display data for the chapter battle renderer.
-export type TravellerId = "aria" | "leon" | "mira";
+export type TravellerId = "aria" | "leon" | "mira" | "finn";
 export type Traveller = {
   id: TravellerId;
   hp: number;
@@ -47,4 +47,5 @@ export type RoadBattle = {
   enemies: RoadEnemy[];
   effects: RoadEffect[];
 };
-export const travellerLane = (id: TravellerId) => ({ aria: 0.54, leon: 0.82, mira: 0.68 })[id];
+export const travellerLane = (id: TravellerId) =>
+  ({ aria: 0.54, leon: 0.82, mira: 0.68, finn: 0.43 })[id];

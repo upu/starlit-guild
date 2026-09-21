@@ -12,8 +12,9 @@
 | --- | --- | --- | --- |
 | 第一章 | `lib/prologue.ts`（`prologueStages`） | [第一章プロット](story/story-part-1.md) | [第一章のゲーム実装](gameplay/prologue-gameplay.md) |
 | 第二章 | `lib/chapter-two.ts`（`chapterTwoStages`） | [第二章計画](story/story-part-2.md) | [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) |
+| 第三章 | `lib/chapter-three.ts`（`chapterThreeStages`） | [第三章計画](story/story-part-3.md) | [第三章のゲーム実装](gameplay/chapter-three-gameplay.md) |
 
-第一章と第二章を合わせたものが `storyStages`（`lib/prologue.ts`）。ステージの解放順・次の行先はこの並びで決まる。
+第一章から第三章を合わせたものが `storyStages`（`lib/prologue.ts`）。ステージの解放順・次の行先はこの並びで決まる。
 
 ## ステージとクエストID
 
@@ -39,6 +40,15 @@
 | 2-7 | お菓子の通せんぼ | `sweet-blockade` | `BLOCKADE_QUEST` | 街道脇の古い作業場 | `sweet-blockade-departure` / `sweet-blockade-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
 | 2-8 | 薬を待つ家々 | `waiting-households` | `HOUSE_CALLS_QUEST` | 山向こうの集落 | `waiting-households-departure` / `waiting-households-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
 | 2-9 | 帰りの薬箱 | `medicine-road-home` | `MEDICINE_RETURN_QUEST` | 通行の戻った山道 | `medicine-road-home-departure` / `medicine-road-home-return` | [物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md) |
+| 3-1 | 隣の席の聞き上手 | `berne-road` | `BERNE_QUEST` | ベルネへの街道 | `berne-road-departure` / `berne-road-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-2 | 石を敷いた街 | `berne-house-calls` | `BERNE_CALLS_QUEST` | ベルネの石畳と往診先 | `berne-house-calls-departure` / `berne-house-calls-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-3 | 抜けた石の行き先 | `missing-keystone` | `STONE_TRACE_QUEST` | 塔へ続く古い石組み | `missing-keystone-departure` / `missing-keystone-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-4 | 庭を照らす買い物 | `riverside-manor` | `MANOR_QUEST` | 川向こうの屋敷 | `riverside-manor-departure` / `riverside-manor-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-5 | 同じ灯りを探して | `matching-lantern-stone` | `REPLACEMENT_QUEST` | 石工の資材置き場 | `matching-lantern-stone-departure` / `matching-lantern-stone-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-6 | 四人で下見 | `manor-survey` | `REHEARSAL_QUEST` | 屋敷の庭と作業通路 | `manor-survey-departure` / `manor-survey-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-7 | 灯りのお披露目 | `garden-reception` | `RECEPTION_QUEST` | 客を迎える屋敷の庭 | `garden-reception-departure` / `garden-reception-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-8 | 間違った荷物を戻す夜 | `keystone-night-road` | `STONE_RETURN_QUEST` | 橋へ続く夜の街道 | `keystone-night-road-departure` / `keystone-night-road-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 3-9 | 戻る灯り、増える同行者 | `berne-restoration` | `BERNE_RESTORATION_QUEST` | ベルネの塔の足元 | `berne-restoration-departure` / `berne-restoration-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
 
 クエスト一覧のカードは小見出しに番号、太字に表示名を出す。ヒントは「番号 表示名 · 物語の題」の形（例：`1-4 丘の塔まで足を伸ばす · 少し見に行こう`）。物語の題（`stage.title`）はその回の読み物の見出しで、行先の名前ではない。
 
@@ -55,22 +65,11 @@
 
 ## 第三章の先行会話
 
-第三章の先行会話は[生成台本](generated/chapter-three.md)で確認する。以下は会話データの仮IDで、クエストIDではなく、セーブや本編のステージ一覧には登録しない。
+先行会話の仮IDは保存には使用しない。本編でのIDは上のステージ表へ統合した。[生成台本](generated/chapter-three.md)は幕間を含む読み順で確認できる。
 
-| 番号 | 表示名 | 先行会話ID |
-| --- | --- | --- |
-| 幕間 | 私が用意するお昼 | `chapter-three-draft-interlude-return` |
-| 3-1 | 隣の席の聞き上手 | `chapter-three-draft-3-1-departure` / `chapter-three-draft-3-1-return` |
-| 3-2 | 石を敷いた街 | `chapter-three-draft-3-2-departure` / `chapter-three-draft-3-2-return` |
-| 3-3 | 抜けた石の行き先 | `chapter-three-draft-3-3-departure` / `chapter-three-draft-3-3-return` |
-| 3-4 | 庭を照らす買い物 | `chapter-three-draft-3-4-departure` / `chapter-three-draft-3-4-return` |
-| 3-5 | 同じ灯りを探して | `chapter-three-draft-3-5-departure` / `chapter-three-draft-3-5-return` |
-| 3-6 | 四人で下見 | `chapter-three-draft-3-6-departure` / `chapter-three-draft-3-6-return` |
-| 3-7 | 灯りのお披露目 | `chapter-three-draft-3-7-departure` / `chapter-three-draft-3-7-return` |
-| 3-8 | 間違った荷物を戻す夜 | `chapter-three-draft-3-8-departure` / `chapter-three-draft-3-8-return` |
-| 3-9 | 戻る灯り、増える同行者 | `chapter-three-draft-3-9-departure` / `chapter-three-draft-3-9-return` |
+## 幕間
 
-幕間の `return` は既存会話型で保持するための値で、冒険達成を意味しない。本編への接続時にクエストIDと幕間の扱いを決める。
+「私が用意するお昼」のシーンIDは `interlude-walnut-lunch`、種類は `interlude`。2-9読了で解放し、読了すると3-1が開く。冒険・報酬・クエストIDは持たず、既読は通常の `story.read` に保存する。思い出では2-9と3-1の間に並ぶ。
 
 ## 従来モードの旧クエストID
 

@@ -17,12 +17,23 @@ function applyMiraPose(image: Phaser.GameObjects.Image, pose: number, size: numb
     .setScale((size * (kneeling ? 0.72 : 0.9)) / image.frame.height);
 }
 
+function applyFinnPose(image: Phaser.GameObjects.Image, pose: string, size: number) {
+  const crouching = [9, 10, 14, 15].includes(Number(pose));
+  image
+    .setTexture(roadSheet("finn"), pose)
+    .setOrigin(0.5, 1)
+    .setScale((size * (crouching ? 0.72 : 0.9)) / image.frame.height);
+}
 export function applyHeroPose(
   image: Phaser.GameObjects.Image,
   id: Traveller["id"],
   pose: string,
   size: number,
 ) {
+  if (id === "finn") {
+    applyFinnPose(image, pose, size);
+    return;
+  }
   if (id === "mira" && Number(pose) >= 4) {
     applyMiraPose(image, Number(pose), size);
     return;
@@ -60,7 +71,9 @@ export function applyWorkPose(
   }[kind];
   const moving = !reduced && !state.enemies.some((enemy) => enemy.hp > 0);
   const step = moving ? Math.floor(state.time / pose.duration) % 2 : 0;
-  if (hero.id === "mira") applyMiraPose(image, pose.mira + step, size);
+  if (hero.id === "finn")
+    applyHeroPose(image, hero.id, String((kind === "push" ? 12 : 14) + step), size);
+  else if (hero.id === "mira") applyMiraPose(image, pose.mira + step, size);
   else
     image
       .setTexture(pose.asset, `${hero.id}-${String(step)}`)

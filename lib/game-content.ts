@@ -1,3 +1,4 @@
+import { chapterThreeQuests } from "./chapter-three.ts";
 import {
   TRADE_QUEST,
   RETURN_QUEST,
@@ -222,6 +223,7 @@ export const quests: Quest[] = (
       availability: "repeatable",
     },
     ...chapterTwoQuests,
+    ...chapterThreeQuests,
   ] satisfies Quest[]
 ).sort((a, b) => a.unlock - b.unlock);
 export const allQuests: Quest[] = quests;

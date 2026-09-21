@@ -1,3 +1,4 @@
+import { isChapterThreeQuest } from "./chapter-three.ts";
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
@@ -80,12 +81,14 @@ function quietStageWork(q: Quest, kind: Encounter) {
   );
 }
 function actorEventKind(q: Quest, kind: Encounter, special: boolean): GameEvent["kind"] {
+  if (isChapterThreeQuest(q.id) && kind !== "battle") return "gather";
   if (quietStageWork(q, kind)) return "gather";
   if (special) return "skill";
   return kind === "battle" ? "hit" : "gather";
 }
 function stageWorkText(q: Quest, kind: Encounter, special: boolean) {
   if (kind === "battle") return null;
+  if (isChapterThreeQuest(q.id)) return "声を掛け合って作業を進める";
   if ([RESTORATION_QUEST, MOSS_QUEST].includes(q.id))
     return kind === "gather" ? "手の届く範囲を丁寧に取り除く" : "声を掛け合って作業を進める";
   const texts: Partial<Record<string, [string, string]>> = {

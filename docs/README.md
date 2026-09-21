@@ -43,7 +43,7 @@ READMEはプロジェクトの入口に留め、細かな数値・解放条件�
 - [戦闘バランス](gameplay/combat-balance.md) — 育成差による減衰、敵と回復、第二章の育成時間・テスト開始データ・調整手順
 - [セーブシステム](gameplay/save-system.md) — 端末保存、バックアップ、記録、移行、複数タブ
 - [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) — 2-1〜2-9、ミラ加入、技の習得・セット、互換性
-- [第三章の会話先行実装](gameplay/chapter-three-gameplay.md) — 会話データと生成台本、今後の冒険実装
+- [第三章のゲーム実装](gameplay/chapter-three-gameplay.md) — 幕間、3-1〜3-9、フィン同行、ベルネの装備
 - [第一章のゲーム実装](gameplay/prologue-gameplay.md) — 第一章の進行、表示、周回、互換性
 
 ## 従来モードの記録
@@ -104,4 +104,4 @@ READMEへ詳細仕様を追記するのではなく、既存資料の担当範�
 
 変更履歴や一時的な不具合記録はREADMEに積み上げず、Git履歴やIssueへ残す。バージョン単位の要約だけは [`CHANGELOG.md`](../CHANGELOG.md) にまとめる。
 
-「実装済み」「未実装」などの進捗は、章ごとの実装仕様（[第一章](gameplay/prologue-gameplay.md)、[第二章](gameplay/chapter-two-gameplay.md#実装状況)）だけで管理する。第三章は[会話先行実装](gameplay/chapter-three-gameplay.md)で管理する。制作資料・人物資料・世界観資料には進捗を書き写さず、必要ならそこへリンクする。
+「実装済み」「未実装」などの進捗は、章ごとの実装仕様（[第一章](gameplay/prologue-gameplay.md)、[第二章](gameplay/chapter-two-gameplay.md#実装状況)）だけで管理する。第三章は[ゲーム実装](gameplay/chapter-three-gameplay.md)で管理する。制作資料・人物資料・世界観資料には進捗を書き写さず、必要ならそこへリンクする。

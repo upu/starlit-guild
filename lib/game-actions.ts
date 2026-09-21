@@ -1,13 +1,16 @@
+import { storyParty } from "./story-party.ts";
+import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
 import { advanceQuestDestination } from "./quest-navigation.ts";
 import {
   buyEquipment,
   changeEquipment,
   grantMiraEquipment,
+  grantFinnEquipment,
   type EquipmentSlot,
 } from "./equipment.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import { isPrologueQuest, stageEndingPending, stageUnlocked } from "./prologue.ts";
-import { DELIVERY_PREP_QUEST, trioQuest } from "./chapter-two.ts";
+import { DELIVERY_PREP_QUEST } from "./chapter-two.ts";
 import { learnTechnique, setTechnique, type TechniqueSlot } from "./techniques.ts";
 import { availableStories, storyProgress, together } from "./stories.ts";
 import { allQuests, type Quest } from "./game-content.ts";
@@ -80,7 +83,8 @@ function readDepartureStory(s: State, q: Quest) {
 }
 function startAction(s: State, sq: Squad, a: Action, now: number) {
   const q = startQuest(s, sq, a);
-  sq.members = trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"];
+  if (isChapterThreeQuest(q.id)) joinStoryFinn(s);
+  sq.members = storyParty(q.id);
   recordDeparture(s, sq, q);
   if (typeof a.value === "boolean") sq.repeat = a.value;
   sq.run = makeRun(s, sq, q, now);
@@ -108,6 +112,15 @@ export function joinStoryMira(s: State) {
   const party = s.squads.find((p) => p.lastQuest === DELIVERY_PREP_QUEST) || s.squads[0];
   grantMiraEquipment(s);
   if (!party.run && !party.members.includes("mira")) party.members.push("mira");
+}
+export function joinStoryFinn(s: State) {
+  if (!s.owned.includes("finn")) {
+    s.owned.push("finn");
+    s.xp.finn = Math.min(s.xp.aria || 0, s.xp.leon || 0, s.xp.mira || 0);
+  }
+  grantFinnEquipment(s);
+  const party = s.squads.find((p) => p.lastQuest === BERNE_QUEST) || s.squads[0];
+  if (!party.run && !party.members.includes("finn")) party.members.push("finn");
 }
 function stopAction(s: State, sq: Squad, _a: Action, now: number) {
   if (sq.run) sq.lastQuest ??= sq.run.quest;

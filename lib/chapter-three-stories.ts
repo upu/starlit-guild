@@ -2,7 +2,7 @@ import { chapterThreeOpening } from "./chapter-three-opening-stories.ts";
 import { chapterThreePreparation } from "./chapter-three-preparation-stories.ts";
 import { chapterThreeFinale } from "./chapter-three-finale-stories.ts";
 
-// Draft dialogue: intentionally not added to stories, storyStages, or the roster.
+// Runtime and generated scripts share these scene objects.
 export const chapterThreeSections = [
   ...chapterThreeOpening,
   ...chapterThreePreparation,
