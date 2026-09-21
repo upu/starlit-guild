@@ -1,4 +1,5 @@
 import {
+  SquareDashed,
   BowArrow,
   Leaf,
   Sprout,
@@ -24,6 +25,7 @@ const icons: Partial<Record<string, LucideIcon>> = {
 };
 
 export function TechniqueIcon({ id, slot }: { id?: string | null; slot: TechniqueSlot }) {
-  const Icon = (id && icons[id]) || (slot === "active" ? Sparkles : Shield);
+  if (!id) return <SquareDashed className="empty-slot-icon" aria-hidden="true" />;
+  const Icon = icons[id] || (slot === "active" ? Sparkles : Shield);
   return <Icon className={`technique-icon technique-icon-${slot}`} aria-hidden="true" />;
 }

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { CharacterIconChoices } from "./character-icon-choices";
 import { TechniqueIcon } from "./technique-icon";
 import { level, type State, type Action } from "@/lib/game";
 import {
@@ -32,7 +33,7 @@ function TechniqueChoice({
       notice(t.name + "を習得しました。「セットする」で使い始められます。");
   }
   return (
-    <article className="shop-item">
+    <article className="character-choice-detail">
       <h4>
         <TechniqueIcon id={t.id} slot={t.slot} />
         {t.name}
@@ -57,34 +58,60 @@ function TechniqueChoices({
   ...props
 }: Props & { slot: TechniqueSlot; notice: (text: string) => void }) {
   const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
+  const current = equippedTechnique(props.state, props.hero, slot);
+  const [selected, setSelected] = useState(current ?? "empty");
+  const choices = techniques.filter((t) => t.hero === props.hero && t.slot === slot);
+  const chosen = choices.find((t) => t.id === selected);
   return (
     <section className="character-equipment">
       <h3>
         {slot === "active" ? "自動で使う技" : "常に働く技"}
         <span>1枠</span>
       </h3>
-      <div className="equipment-choices">
-        {techniques
-          .filter((t) => t.hero === props.hero && t.slot === slot)
-          .map((t) => (
-            <TechniqueChoice key={t.id} {...props} technique={t} notice={notice} />
-          ))}
-        {equippedTechnique(props.state, props.hero, slot) && (
-          <button
-            className="outline"
-            disabled={!props.ready || away}
-            onClick={() => {
-              if (props.onAction({ type: "setTechnique", hero: props.hero, techniqueSlot: slot }))
-                notice("技を外しました。習得済みの技は無料でセットできます。");
-            }}
-          >
-            技を外す
-          </button>
-        )}
-      </div>
+      <CharacterIconChoices
+        label="技の候補"
+        emptyLabel="技を外す候補"
+        selected={selected}
+        onSelect={setSelected}
+        choices={choices.map((t) => ({
+          id: t.id,
+          name: t.name,
+          icon: <TechniqueIcon id={t.id} slot={slot} />,
+          badge:
+            current === t.id
+              ? "セット中"
+              : knowsTechnique(props.state, t.id)
+                ? "習得済み"
+                : "未習得",
+        }))}
+      />
+      {chosen ? (
+        <TechniqueChoice {...props} technique={chosen} notice={notice} />
+      ) : (
+        <div className="character-choice-detail">
+          <p>
+            {current
+              ? "技を外します。習得済みの技は無料でセットできます。"
+              : "技をセットしていません。"}
+          </p>
+          {current && (
+            <button
+              className="outline"
+              disabled={!props.ready || away}
+              onClick={() => {
+                if (props.onAction({ type: "setTechnique", hero: props.hero, techniqueSlot: slot }))
+                  notice("技を外しました。習得済みの技は無料でセットできます。");
+              }}
+            >
+              技を外す
+            </button>
+          )}
+        </div>
+      )}
     </section>
   );
 }
+
 export function TechniquePanel(props: Props) {
   const [notice, setNotice] = useState({ hero: props.hero, text: "" });
   const [slot, setSlot] = useState<TechniqueSlot | null>(null);
@@ -112,6 +139,8 @@ export function TechniquePanel(props: Props) {
             <button
               key={kind}
               className="character-slot"
+              aria-label={`${kind === "active" ? "自動で使う技" : "常に働く技"}・${current?.name ?? "セットなし"}・習得・セット`}
+              title={current?.name ?? "セットなし"}
               aria-expanded={slot === kind}
               aria-controls="character-technique-options"
               onClick={() => {
@@ -119,11 +148,7 @@ export function TechniquePanel(props: Props) {
               }}
             >
               <TechniqueIcon id={current?.id} slot={kind} />
-              <span>
-                <small>{kind === "active" ? "自動で使う技" : "常に働く技"}</small>
-                <b>{current?.name ?? "セットなし"}</b>
-                <small>習得・セット</small>
-              </span>
+              <small>{kind === "active" ? "自動で使う技" : "常に働く技"}</small>
             </button>
           );
         })}
@@ -134,7 +159,12 @@ export function TechniquePanel(props: Props) {
             <p className="technique-help">
               セットすると自動で働きます。帰還中の付け替えは何度でも無料です。
             </p>
-            <TechniqueChoices {...props} slot={slot} notice={showNotice} />
+            <TechniqueChoices
+              key={`${props.hero}-${slot}`}
+              {...props}
+              slot={slot}
+              notice={showNotice}
+            />
           </>
         )}
       </div>

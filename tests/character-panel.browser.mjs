@@ -118,16 +118,38 @@ try {
     assert.ok(faces.every(([w, h]) => w === 40 && h === 40));
     await page.screenshot({ path: path.join(dir, "overview-" + width + ".png") });
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
-    await page.getByRole("button", { name: /トネリコの弓.*装備する/ }).click();
-    assert.match(await page.locator(".character-slot").first().innerText(), /トネリコの弓/);
+    await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
+    await page.getByRole("button", { name: "トネリコの弓を装備する" }).click();
+    assert.match(
+      await page.locator(".character-slot").first().getAttribute("aria-label"),
+      /トネリコの弓/,
+    );
+    await page.getByRole("button", { name: "装備を外す", exact: true }).click();
     await page.getByRole("button", { name: "外してバッグへ戻す" }).click();
-    assert.match(await page.locator(".character-slot").first().innerText(), /装備なし/);
-    await page.getByRole("button", { name: /トネリコの弓.*装備する/ }).click();
+    assert.equal(
+      await page.locator(".character-slot").first().locator(".empty-slot-icon").count(),
+      1,
+    );
+    assert.match(
+      await page.locator(".character-slot").first().getAttribute("aria-label"),
+      /装備なし/,
+    );
+    await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
+    await page.getByRole("button", { name: "トネリコの弓を装備する" }).click();
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
     await page.getByRole("button", { name: /常に働く技.*習得・セット/ }).click();
+    assert.equal(
+      await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
+      1,
+    );
+    await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
+    await page.screenshot({ path: path.join(dir, "candidates-" + width + ".png") });
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
     await page.getByRole("button", { name: "野草の目利きをセットする" }).click();
-    assert.match(await page.locator(".character-slot").last().innerText(), /野草の目利き/);
+    assert.match(
+      await page.locator(".character-slot").last().getAttribute("aria-label"),
+      /野草の目利き/,
+    );
     await page.locator(".character-scroll").evaluate((el) => {
       el.scrollTop = el.scrollHeight;
     });
@@ -141,10 +163,19 @@ try {
       "true",
     );
     assert.equal(await page.locator('[role="status"]').textContent(), "");
+    await page.getByRole("button", { name: "堅実な備え", exact: true }).click();
     await page.getByRole("button", { name: "堅実な備えを習得する" }).click();
     await page.getByRole("button", { name: "堅実な備えをセットする" }).click();
-    await page.getByRole("button", { name: "技を外す" }).click();
-    assert.match(await page.locator(".character-slot").last().innerText(), /セットなし/);
+    await page.getByRole("button", { name: "技を外す候補", exact: true }).click();
+    await page.getByRole("button", { name: "技を外す", exact: true }).click();
+    assert.equal(
+      await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
+      1,
+    );
+    assert.match(
+      await page.locator(".character-slot").last().getAttribute("aria-label"),
+      /セットなし/,
+    );
     await page.screenshot({ path: path.join(dir, "skills-" + width + ".png") });
     const overflow = await page
       .locator(".character-scroll")

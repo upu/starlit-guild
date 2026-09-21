@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
+import { CharacterIconChoices } from "./character-icon-choices";
 import Image from "next/image";
-import { Coins, Leaf, Gem, Shield, Swords, Package } from "lucide-react";
+import { Coins, Leaf, Gem, Shield, Swords, Package, SquareDashed } from "lucide-react";
 import {
   heroes,
   memberStats,
@@ -151,11 +152,7 @@ function EquipmentChoice({
   const worn = current?.id === item.id,
     available = availableCopies(props.state, item.id);
   return (
-    <button
-      className="equipment-choice"
-      disabled={!props.ready || worn || available < 1}
-      onClick={() => props.onAction({ type: "equip", hero, slot, id: item.id })}
-    >
+    <article className="character-choice-detail">
       <ShopItemIcon item={item} />
       <span>
         <b>{item.name}</b>
@@ -171,14 +168,19 @@ function EquipmentChoice({
           })}
         </span>
       </span>
-      <small>
+      <p>{item.description}</p>
+      <button
+        disabled={!props.ready || worn || available < 1}
+        aria-label={`${item.name}を装備する`}
+        onClick={() => props.onAction({ type: "equip", hero, slot, id: item.id })}
+      >
         {worn
           ? "装備中"
           : available > 0
             ? "装備する"
             : equippedBy(props.state, item.id).map(heroName).join("・") + "が装備中"}
-      </small>
-    </button>
+      </button>
+    </article>
   );
 }
 function EquipmentSlotPanel({
@@ -191,18 +193,28 @@ function EquipmentSlotPanel({
     choices = equipment.filter(
       (item) => item.slot === slot && canEquip(item, hero) && (inventory.items[item.id] ?? 0) > 0,
     );
+  const [selected, setSelected] = useState(current?.id ?? "empty");
+  const item = choices.find((candidate) => candidate.id === selected);
   return (
     <section className="character-equipment">
-      <h3>
-        {slot === "weapon" ? "武器" : "防具"}
-        <span>{current?.name ?? "装備なし"}</span>
-      </h3>
-      <div>
-        <div className="equipment-choices">
-          {choices.map((item) => (
-            <EquipmentChoice key={item.id} {...props} item={item} hero={hero} slot={slot} />
-          ))}
-          {choices.length === 0 && <p>装備できる品はまだありません。</p>}
+      <h3>{slot === "weapon" ? "武器の付け替え" : "防具の付け替え"}</h3>
+      <CharacterIconChoices
+        label="装備の候補"
+        emptyLabel="装備を外す"
+        selected={selected}
+        onSelect={setSelected}
+        choices={choices.map((candidate) => ({
+          id: candidate.id,
+          name: candidate.name,
+          icon: <ShopItemIcon item={candidate} />,
+          badge: current?.id === candidate.id ? "装備中" : undefined,
+        }))}
+      />
+      {item ? (
+        <EquipmentChoice {...props} item={item} hero={hero} slot={slot} />
+      ) : (
+        <div className="character-choice-detail">
+          <p>{current ? "装備を外してバッグに戻します。" : "何も装備していません。"}</p>
           {current && (
             <button
               className="outline"
@@ -213,10 +225,12 @@ function EquipmentSlotPanel({
             </button>
           )}
         </div>
-      </div>
+      )}
+      {choices.length === 0 && <p>装備できる品はまだありません。</p>}
     </section>
   );
 }
+
 function CharacterEquipment(props: Props & { hero: string }) {
   const [slot, setSlot] = useState<EquipmentSlot | null>(null);
   const inventory = inventoryOf(props.state);
@@ -231,6 +245,8 @@ function CharacterEquipment(props: Props & { hero: string }) {
             <button
               key={kind}
               className="character-slot"
+              aria-label={`${label}・${item?.name ?? "装備なし"}・付け替える`}
+              title={item?.name ?? "装備なし"}
               aria-expanded={slot === kind}
               aria-controls="character-equipment-options"
               onClick={() => {
@@ -239,22 +255,16 @@ function CharacterEquipment(props: Props & { hero: string }) {
             >
               {item ? (
                 <ShopItemIcon item={item} />
-              ) : kind === "weapon" ? (
-                <Swords aria-hidden="true" />
               ) : (
-                <Shield aria-hidden="true" />
+                <SquareDashed className="empty-slot-icon" aria-hidden="true" />
               )}
-              <span>
-                <small>{label}</small>
-                <b>{item?.name ?? "装備なし"}</b>
-                <small>付け替える</small>
-              </span>
+              <small>{label}</small>
             </button>
           );
         })}
       </div>
       <div id="character-equipment-options">
-        {slot && <EquipmentSlotPanel {...props} slot={slot} />}
+        {slot && <EquipmentSlotPanel key={`${props.hero}-${slot}`} {...props} slot={slot} />}
       </div>
     </section>
   );
