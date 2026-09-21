@@ -41,6 +41,9 @@
   background: none;
 }
 .quest-options .quest-option {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 64px;
   padding: 9px 12px;
   border-radius: 8px;
@@ -54,14 +57,24 @@
 .quest-option .quest-option-copy {
   flex: 1;
   gap: 3px;
+  text-shadow:
+    0 1px 3px #10271f,
+    0 0 8px #10271f;
 }
 .quest-option .quest-option-art {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: 60%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 5px;
-  margin-right: 6px;
+  opacity: 0.65;
+  mask-image: linear-gradient(to right, transparent, #000 65%);
+  pointer-events: none;
+}
+.quest-option > svg {
+  color: #ffe29e;
+  filter: drop-shadow(0 1px 2px #10271f);
 }
 .quest-option .quest-option-meta {
   flex-direction: row;

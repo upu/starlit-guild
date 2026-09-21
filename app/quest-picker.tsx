@@ -69,8 +69,8 @@ function questOption(
         className="quest-option-art"
         src={questScenery(item, "thumbnail")}
         alt=""
-        width={48}
-        height={48}
+        width={320}
+        height={320}
         loading="lazy"
         unoptimized
       />
