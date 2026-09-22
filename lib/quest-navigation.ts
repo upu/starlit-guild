@@ -22,6 +22,12 @@ function setInterludeDestination(s: State) {
     if (!sq.run && (s.autoNextQuest || sq.lastQuest === LUNCH_INTERLUDE))
       sq.lastQuest = BERNE_QUEST;
 }
+function nextDestination(s: State, index: number) {
+  const interlude = pendingInterlude(s);
+  if (interlude?.after === storyStages[index].quest) return interlude.id;
+  const next = storyStages[index + 1]?.quest;
+  return next && stageUnlocked(s, next) ? next : undefined;
+}
 // Called only on the first reading of an ending, after the next stage unlocks.
 export function advanceQuestDestination(s: State, storyId: string) {
   if (storyId === LUNCH_INTERLUDE && stageUnlocked(s, BERNE_QUEST)) {
@@ -32,15 +38,8 @@ export function advanceQuestDestination(s: State, storyId: string) {
   const index = storyStages.findIndex((stage) => stage.quest + "-return" === storyId);
   if (index < 0) return;
   const current = storyStages[index].quest,
-    interlude = pendingInterlude(s),
-    next = interlude?.after === current ? interlude.id : storyStages[index + 1]?.quest;
-  if (
-    !s.done[current] ||
-    !next ||
-    s.done[next] ||
-    (next !== interlude?.id && !stageUnlocked(s, next))
-  )
-    return;
+    next = nextDestination(s, index);
+  if (!s.done[current] || !next || s.done[next]) return;
   for (const squad of s.squads) {
     if (!squad.run && squad.lastQuest === current) squad.lastQuest = next;
   }

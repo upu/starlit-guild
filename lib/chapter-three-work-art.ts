@@ -1,5 +1,5 @@
 // Matches the three jobs in each chapter-three route; transport keeps the shared cart.
-const frames: Record<string, readonly string[]> = {
+const frames: Partial<Record<string, readonly string[]>> = {
   "berne-road": ["cargo", "battle", "signpost"],
   "berne-house-calls": ["cargo", "parcels", "stonework"],
   "missing-keystone": ["stonework", "records", "stonework"],
