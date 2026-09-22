@@ -60,7 +60,7 @@ GitHub ActionsはPR本文の選択と、PRの `package.json` / `package-lock.jso
 
 判定はPR本文から読むため、作業中に判定が変わったときは**本文を直してから**版を合わせる。失敗したジョブの再実行は元のイベントの本文を読み直すだけで、直した本文は反映されない。本文の編集自体が新しい検査を動かすので、編集後の実行結果を見る。
 
-GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更ではSitesへ配信しない。
+バージョン更新やPRマージ自体ではSitesへ自動配備されない。マージ後に反映を続ける条件は [共通ルールの公開先](../agent-rules.md#公開先) に従う。
 
 ### マイナー版を上げる契機
 
@@ -79,11 +79,11 @@ GitHubの番号変更とSitesの公開は別作業。公開依頼がない変更
 
 ### コード品質
 
-整形はPrettier（`.prettierrc.json`、印字幅100）で行い、`npm run format` で全体を整える。`components/ui` と `hooks/use-mobile.ts` はshadcnから取り込んだままの形を保つため対象外で、`docs/`、`public/`、`assets/`、`drizzle/` も整形しない（`.prettierignore`）。コードを圧縮した1行書きには戻さず、関数長・ファイル長の上限が実際の行数で働くようにする。整形導入時に上限を超えていたファイルは `eslint.config.mjs` の一時的な除外一覧にあり、分割が済んだものから一覧を外す。
+整形はPrettier（[設定](../../.prettierrc.json)、印字幅100）で行い、`npm run format` で全体を整える。取り込み済みUI・生成物・Markdownなどの除外範囲は [.prettierignore](../../.prettierignore) を正とする。コードを圧縮した1行書きには戻さず、関数長・ファイル長の上限が実際の行数で働くようにする。
 
-LintはYAMORUと同じ型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
+Lintは型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。具体的な制限と除外は [eslint.config.mjs](../../eslint.config.mjs) を正とする。`components/ui` と `hooks/use-mobile.ts` は取り込み元の形を維持するため一部ルールの対象外であり、分割待ちの一時的な除外ではない。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
 
-Pull Requestと`main`へのpushでは、GitHub Actionsが`npm run format:check`、`npm run lint`、`npx tsc --noEmit`、生成素材の検査（`images:check` / `videos:check`）、`node --test tests/*.test.mjs` の全ユニットテストを実行する。PRのバージョン判定は `pr-version.yml` が `tests/pr-version.test.mjs` と `scripts/check-pr-version.mjs` で検証する。ブラウザーテストとビルド後のHTTP検証はCIに含めず、手動で実行する。
+Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台本の鮮度・全ユニットテストを検査する。実行コマンドの正本は [lint.yml](../../.github/workflows/lint.yml)、PRのバージョン判定は [pr-version.yml](../../.github/workflows/pr-version.yml)。ブラウザーテストとビルド後のHTTP検証はCIに含めず、[手動テスト](#ローカルの手動テスト)として実行する。
 
 ## 実装の分担
 
@@ -153,15 +153,11 @@ npm start
 
 ## 公開
 
-公開先は `config/site-targets.json` のプレビューと本番。`.openai/hosting.json` は既存本番の識別子を保持する。`starlit-implement` はゲームバージョンを上げた変更なら指定がなければマージ後のプレビュー反映まで含む。据え置きなら明示的な反映依頼がない限り省略してよい。本番はスキル実行時の明示指定に加え、同じソースの確認と配備準備を終えた後の最終承認を得て更新する。PRのマージ承認とは分ける。
+反映の要否・宛先・依頼による制限は [共通ルールの公開先](../agent-rules.md#公開先) に従う。本番配備の最終承認はPRマージ承認と分ける。
 
 Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リポジトリ。GitHubへのpushだけではゲームは更新されない。
 
-公開先の検査、サイトごとの配信用コミット、第一章の確認表、環境設定と結果の記録方法は [サイトの確認と公開](site-release.md) を参照する。ローカルのみ・PR作成まで・配備しない指定を優先し、調査・相談だけでは配備しない。
-
-公開作業では、作業中の別タスクや未確定差分を確認し、無関係な変更を失わせない。セーブデータやローカル作業ファイルはGitへ含めない。
-
-エージェント共通の公開ルールは [エージェント共通ルール](../agent-rules.md) を参照する。Codex の操作手順は [`AGENTS.md`](../../AGENTS.md) と `.agents/skills/starlit-publish/SKILL.md` に置く。
+公開先の検査、サイトごとの配信用コミット、第一章の確認表、環境設定と結果の記録方法は [サイトの確認と公開](site-release.md) を参照する。Codex の操作手順は [AGENTS.md](../../AGENTS.md) から [starlit-publish](../../.agents/skills/starlit-publish/SKILL.md) へ進む。
 
 ## データベース
 
