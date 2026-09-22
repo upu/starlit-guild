@@ -287,7 +287,7 @@ button {
 .phone-adventure .map-heading .eyebrow {
   display: none;
 }
-.phone-adventure .map-heading > span:last-child {
+.phone-adventure .map-heading > span:last-of-type {
   font-size: 11px;
 }
 .phone-adventure .map-hero .sprite {
@@ -1046,7 +1046,7 @@ button {
   .phone-adventure .map-heading h2 {
     font-size: 20px;
   }
-  .phone-adventure .map-heading > span:last-child {
+  .phone-adventure .map-heading > span:last-of-type {
     font-size: 10px;
   }
   .phone-adventure .map-hero .sprite {

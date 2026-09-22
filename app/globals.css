@@ -326,7 +326,7 @@ small,
   font-weight: 500;
   color: #fff2ce;
 }
-.map-heading > span:last-child {
+.map-heading > span:last-of-type {
   font-size: 13px;
   color: #e0e6ce;
 }
@@ -1527,7 +1527,7 @@ footer > span:first-child {
   .map-heading h2 {
     font-size: 24px;
   }
-  .map-heading > span:last-child {
+  .map-heading > span:last-of-type {
     font-size: 12px;
   }
   .map-heading .eyebrow {
