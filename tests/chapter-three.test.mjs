@@ -19,8 +19,94 @@ import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { trainedChapter } from "../scripts/check-combat-balance.mjs";
 import { chapterRoute, measure } from "../scripts/check-chapter-two-balance.mjs";
 import { chapterThreeRoute, outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
+import { roadActionKind, roadHasEnemies } from "../lib/chapter-road.ts";
+import { roadWorkLook } from "../lib/chapter-road-work-look.ts";
+import { techniqueMultiplier } from "../lib/techniques.ts";
+import { idleBanter } from "../lib/idle-banter.ts";
+import { chapterThreeBanter } from "../lib/chapter-three-banter.ts";
 
 const read = (s, id) => act(s, { type: "readStory", id }, s.updatedAt);
+test("stopped cargo recruits every living member into combat, then resumes its remaining journey", () => {
+  let s = act(
+    read(testState(1000, 18, 17, 5000), LUNCH_INTERLUDE),
+    { type: "start", id: BERNE_QUEST },
+    1000,
+  );
+  const q = questById(BERNE_QUEST);
+  for (let i = 0; i < 2000 && !roadHasEnemies(s.squads[0].run); i++)
+    s = settle(s, s.squads[0].run.nextAt).state;
+  const run = s.squads[0].run,
+    node = run.node,
+    remaining = run.target,
+    began = s.updatedAt;
+  assert.equal(encounter(q, node), "escort");
+  assert.ok(roadHasEnemies(run));
+  for (const id of s.squads[0].members) assert.equal(roadActionKind(q, run, id), "battle", id);
+  const participants = new Set();
+  for (let i = 0; i < 2000 && roadHasEnemies(s.squads[0].run); i++) {
+    s = settle(s, s.squads[0].run.nextAt).state;
+    const r = s.squads[0].run;
+    assert.equal(r.target, remaining, "cart waits while the party fights");
+    for (const e of r.events)
+      if (e.at > began && ["hit", "skill", "heal"].includes(e.kind) && e.hero)
+        participants.add(e.hero);
+  }
+  assert.deepEqual([...participants].sort(), ["aria", "finn", "leon", "mira"]);
+  assert.ok(!roadHasEnemies(s.squads[0].run));
+  for (let i = 0; i < 2000 && s.squads[0].run.target >= remaining; i++)
+    s = settle(s, s.squads[0].run.nextAt).state;
+  assert.equal(s.squads[0].run.node, node);
+  assert.ok(s.squads[0].run.target < remaining, "remaining cargo resumes after combat");
+});
+
+test("third-chapter inspection props match signs, dry paving and measurement records", () => {
+  for (const [id, node, frame] of [
+    [BERNE_QUEST, 2, "signpost"],
+    ["berne-house-calls", 2, "stonework"],
+    ["missing-keystone", 1, "records"],
+    ["matching-lantern-stone", 2, "records"],
+  ]) {
+    const look = roadWorkLook(questById(id), { quest: id, node, nodes: 15 });
+    assert.equal(look.frame, frame);
+    assert.equal(look.cargo, false);
+    assert.ok(!look.asset.includes("herb"));
+  }
+});
+
+test("Finn passive is purchased, equipped, persisted and applies only to his combat", () => {
+  let s = testState(1000, 19, 17, 5000);
+  const old = structuredClone(s);
+  s = act(s, { type: "learnTechnique", id: "finn-opening" }, 1000);
+  assert.equal(s.gold, old.gold - 120);
+  assert.equal(techniqueMultiplier(s, "finn", "battle", false, 1), 1);
+  s = roundtrip(
+    act(
+      s,
+      { type: "setTechnique", hero: "finn", techniqueSlot: "passive", id: "finn-opening" },
+      1000,
+    ),
+  );
+  assert.equal(techniqueMultiplier(s, "finn", "battle", false, 1), 1.15);
+  assert.equal(techniqueMultiplier(s, "finn", "battle", true, 1.6), 1.6 * 1.15);
+  assert.equal(techniqueMultiplier(s, "finn", "gather", false, 1), 1);
+  assert.equal(techniqueMultiplier(s, "aria", "battle", false, 1), 1);
+  assert.throws(() =>
+    act(testState(1000, 18, 17, 5000), { type: "learnTechnique", id: "finn-opening" }, 1000),
+  );
+});
+
+test("four-person camp and each third-chapter route have distinct dialogue without future injuries", () => {
+  const party = ["aria", "leon", "mira", "finn"];
+  const camp = Array.from({ length: 8 }, (_, i) => idleBanter(i * 30000, party));
+  assert.equal(new Set(camp.map(JSON.stringify)).size, 8);
+  assert.ok(camp.every((lines) => lines.some((line) => line.speaker === "finn")));
+  for (const { quest } of chapterThreeStages) {
+    const lines = [0, 3, 6].map((node) => chapterThreeBanter({ quest, node, phase: "move" }));
+    assert.equal(new Set(lines.map(JSON.stringify)).size, 3, quest);
+    if (![STONE_RETURN_QUEST, "berne-restoration"].includes(quest))
+      assert.ok(!JSON.stringify(lines).includes("包帯"));
+  }
+});
 function roundtrip(s) {
   const id = "11111111-1111-4111-8111-111111111111";
   return parseBundle(

@@ -84,6 +84,12 @@ try {
   const initial = testState(Date.now(), 18, 25, 10000);
   initial.autoNextQuest = true;
   const { page, context } = await open(initial);
+  assert.equal(await page.locator(".story-conversation").count(), 0);
+  await page.getByRole("button", { name: "クエストを開く", exact: true }).click();
+  await page.getByRole("button", { name: "第三章", exact: true }).click();
+  await page.locator(".quest-option").filter({ hasText: "私が用意するお昼" }).click();
+  if (await page.locator(".quest-summary").count()) await page.locator(".quest-summary").click();
+  await page.getByRole("button", { name: "出発", exact: true }).click();
   await page.getByRole("button", { name: "私が用意するお昼：会話を進める", exact: true }).waitFor();
   assert.equal(await page.getByText("クエストクリア", { exact: true }).count(), 0);
   await screenshots(page, "interlude");
@@ -92,6 +98,12 @@ try {
   assert.ok(state.story.read.includes(LUNCH_INTERLUDE));
   assert.equal(state.gold, initial.gold);
   assert.equal(state.squads[0].lastQuest, BERNE_QUEST);
+  await page.getByRole("button", { name: "クエストを開く", exact: true }).click();
+  assert.equal(
+    await page.locator(".quest-option").filter({ hasText: "私が用意するお昼" }).count(),
+    0,
+  );
+  await page.getByRole("button", { name: "閉じる", exact: true }).click();
   await page.getByRole("button", { name: "出発", exact: true }).click();
   await page
     .getByRole("button", { name: "あの丘の塔、あんたらか：会話を進める", exact: true })
@@ -106,10 +118,13 @@ try {
   await screenshots(page, "four-travellers");
   await context.close();
   results.push("interlude-to-first-departure");
-  for (const index of [1, 2, 3, 4, 5, 6, 7, 8]) {
+  for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8]) {
     const quest = chapterThreeStages[index].quest;
+    let initial = testState(Date.now(), 18 + index, 25, 10000);
+    if (index === 0)
+      initial = act(initial, { type: "readStory", id: LUNCH_INTERLUDE }, initial.updatedAt);
     let state = act(
-      testState(Date.now(), 18 + index, 25, 10000),
+      initial,
       { type: "start", id: quest, readDeparture: true, value: false },
       Date.now(),
     );
@@ -123,7 +138,10 @@ try {
       if (
         index === 7
           ? frame.battle.effects.some((effect) => effect.hero === "finn" && effect.kind === "slash")
-          : frame.look.workers.length === 4
+          : frame.look.workers.length === 4 &&
+            (!(index in { 0: 1, 1: 1, 2: 1, 4: 1 }) ||
+              frame.look.work?.frame ===
+                { 0: "signpost", 1: "stonework", 2: "records", 4: "records" }[index])
       )
         break;
       state = settle(state, state.squads[0].run.nextAt).state;

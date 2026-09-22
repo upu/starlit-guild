@@ -1,4 +1,5 @@
 import { storyParty } from "./story-party.ts";
+import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
 import { advanceQuestDestination } from "./quest-navigation.ts";
 import {
@@ -82,6 +83,14 @@ function readDepartureStory(s: State, q: Quest) {
   if (story && !s.story?.read.includes(story.id)) s.story?.read.push(story.id);
 }
 function startAction(s: State, sq: Squad, a: Action, now: number) {
+  if (a.id && isInterlude(a.id)) {
+    if (sq.run || !interludeUnlocked(s, a.id) || s.story?.read.includes(a.id))
+      throw Error("この幕間には、今は出発できません。");
+    if (!a.readDeparture) throw Error("幕間の会話を読み終えましょう。");
+    sq.lastQuest = a.id;
+    readStoryAction(s, sq, a);
+    return;
+  }
   const q = startQuest(s, sq, a);
   if (isChapterThreeQuest(q.id)) joinStoryFinn(s);
   sq.members = storyParty(q.id);

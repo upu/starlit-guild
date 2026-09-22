@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-22",
+  "reference": "assets/source/road/worksites-v1.png",
+  "output": "assets/source/road/berne-worksites-v1.png",
+  "prompt": "Create one transparent RPG prop spritesheet, exactly two separate sprites side by side in equal-width cells with wide clear transparent margins. Reference image is STYLE ONLY (soft hand-painted Japanese fantasy chibi game props, warm outlined simplified shapes readable at 80px). Left sprite: dry beige-grey ancient stone paving/stonework, five rectangular stone slabs, one tilted loose block exposing a dry narrow groove, a tiny root and trowel to suggest masonry inspection and repair. Absolutely NO water, stream, drainpipe, arch, blue liquid, lush herbs or moss mound. Right sprite: small low wooden stone-inspection table with two cut stone samples, an unrolled parchment plan with simple dimension lines, wooden ruler/calipers, rolled records. No legible text. Both sprites same ground baseline, three-quarter low side view, clean isolated silhouettes, no characters, no background scenery, no borders, no shadows beyond subtle contact shading. True transparent alpha background. Make one horizontal atlas 1536x768 if possible, objects entirely within their respective halves, generous separation, no overlapping. Match reference illustration quality, not reference subjects."
+}

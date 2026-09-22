@@ -48,6 +48,7 @@ export const ROAD_PUSH = "/animations/road/push-v1.webp";
 export const ROAD_PACKING = "/animations/road/packing-v1.webp";
 export const ROAD_DESTINATION = "/animations/road/destination-v1.webp";
 export const ROAD_WORKSITES = "/animations/road/worksites-v1.webp";
+export const ROAD_BERNE_WORKSITES = "/animations/road/berne-worksites-v1.webp";
 export const roadWalkSheet = (id: TravellerId) =>
   id === "finn" ? roadSheet(id) : `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
 

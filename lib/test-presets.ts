@@ -1,6 +1,7 @@
 import chapterStates from "./generated/chapter-test-states.json" with { type: "json" };
 import { initialPrologueState, level, type State } from "./game.ts";
 import { storyStages } from "./prologue.ts";
+import { pendingInterlude } from "./interludes.ts";
 
 const latest = chapterStates[chapterStates.length - 1];
 const standardPresets = chapterStates.slice(0, -1).map(({ chapter, state }) => ({
@@ -41,6 +42,6 @@ export function testPresetState(preset: TestPreset, now: number): State {
   state.log = [{ at: now, text: config.name + "のテスト記録を作りました。" }];
   const next =
     storyStages.find((stage) => !state.done[stage.quest]) ?? storyStages[storyStages.length - 1];
-  for (const squad of state.squads) squad.lastQuest = next.quest;
+  for (const squad of state.squads) squad.lastQuest = pendingInterlude(state)?.id || next.quest;
   return state;
 }

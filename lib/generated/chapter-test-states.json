@@ -58,12 +58,12 @@
           "tower-moss-removal-return"
         ]
       },
-      "friendship": { "aria-leon": 224 },
-      "gold": 4390,
+      "friendship": { "aria-leon": 225 },
+      "gold": 4420,
       "herbs": 20,
       "ore": 0,
       "owned": ["aria", "leon"],
-      "xp": { "aria": 3365, "leon": 3365 },
+      "xp": { "aria": 3382, "leon": 3382 },
       "clears": 40,
       "done": {
         "village-trade": 1,
@@ -200,12 +200,12 @@
           "medicine-road-home-return"
         ]
       },
-      "friendship": { "aria-leon": 405 },
-      "gold": 12637,
+      "friendship": { "aria-leon": 406 },
+      "gold": 12667,
       "herbs": 68,
       "ore": 0,
       "owned": ["aria", "leon", "mira"],
-      "xp": { "aria": 8553, "leon": 8553, "mira": 8553 },
+      "xp": { "aria": 8570, "leon": 8570, "mira": 8570 },
       "clears": 79,
       "done": {
         "village-trade": 1,
@@ -390,13 +390,13 @@
           "berne-restoration-return"
         ]
       },
-      "friendship": { "aria-leon": 540 },
-      "gold": 18177,
+      "friendship": { "aria-leon": 491 },
+      "gold": 15303,
       "herbs": 68,
       "ore": 0,
       "owned": ["aria", "leon", "mira", "finn"],
-      "xp": { "aria": 14373, "leon": 14373, "mira": 14373, "finn": 14373 },
-      "clears": 98,
+      "xp": { "aria": 12362, "leon": 12362, "mira": 12362, "finn": 12362 },
+      "clears": 94,
       "done": {
         "village-trade": 1,
         "evening-trade-road": 1,
@@ -416,7 +416,7 @@
         "sweet-blockade": 1,
         "waiting-households": 1,
         "medicine-road-home": 1,
-        "berne-road": 11,
+        "berne-road": 7,
         "berne-house-calls": 1,
         "missing-keystone": 1,
         "riverside-manor": 1,

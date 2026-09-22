@@ -11,6 +11,57 @@ const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
   ...(expression ? { expression } : {}),
 });
 const m = (text: string): StoryLine => ({ speaker: "mira", text });
+const f = (text: string): StoryLine => ({ speaker: "finn", text });
+const quartetExchanges: StoryLine[][] = [
+  [
+    f("レオンくん、紐を一本借りてもいいかい。"),
+    l("昨日の紐は、どうしました？"),
+    f("ああ、あれは今、別の人を助けてる。"),
+    l("又貸ししたんですね。先に返してもらってください。"),
+  ],
+  [
+    a("フィンって、どこの街にも知り合いがいるの？"),
+    f("おう。俺が来るのを、首を長くして待ってる。"),
+    l("借りたものを返す約束も、忘れないでくださいね。"),
+    f("……そこまで覚えてなくてもいいんだがねえ。"),
+  ],
+  [
+    m("出る前に、皆の傷薬を足しておくわね。"),
+    f("その前にお茶だ。ミラ先生の分も注いじまった。"),
+    m("じゃあ、一杯だけ。飲んだら続きを……。"),
+    f("おう。まずは座ってから聞こうか。"),
+  ],
+  [
+    f("いい匂いだねえ。おじさんの分もあるかい？"),
+    a("四つに分けてあるよ。大きさは選んじゃだめ。"),
+    f("参ったね、もう目をつけてたんだが。"),
+    l("それはアリアの分です。こっちをどうぞ。"),
+  ],
+  [
+    l("フィンさん、帰りに寄る店は、これで全部ですか？"),
+    f("だいたいは。顔を出したら、増えるかもしれんね。"),
+    a("また何か頼まれるの？"),
+    f("返す物を思い出す、って場合もある。"),
+  ],
+  [
+    a("その指輪、大事なもの？"),
+    f("預かり物でね。なくさないよう、こうしてる。"),
+    m("持ち主の方は、どちらに？"),
+    f("……次に会ったら、忘れず返すよ。"),
+  ],
+  [
+    f("レオンくんの袋、ちょっとした店が開けそうだな。"),
+    l("替えの留め具も入っています。念のためです。"),
+    a("だからって、フィンの荷物まで引き受けちゃだめだよ。"),
+    f("おっと。まだ何も言ってないぜ。"),
+  ],
+  [
+    m("あら、私の薬箱の留め具、直してくれたの？"),
+    f("引っかかってたからな。指先だけなら、まだ役に立つ。"),
+    l("外した部品も、こちらへお願いします。"),
+    f("信用が細かいねえ。ほら、二つともあるよ。"),
+  ],
+];
 // These exchanges fit any departure and reveal no later story events.
 const exchanges: StoryLine[][] = [
   [a("準備できた？", "smile"), l("ああ。アリアを待ってた。", "smile")],
@@ -80,8 +131,10 @@ export function idleBanter(
   now: number,
   members: readonly string[] = ["aria", "leon"],
 ): StoryLine[] {
-  const pool = ["aria", "leon", "mira"].every((id) => members.includes(id))
-    ? trioExchanges
-    : exchanges;
+  const pool = ["aria", "leon", "mira", "finn"].every((id) => members.includes(id))
+    ? quartetExchanges
+    : ["aria", "leon", "mira"].every((id) => members.includes(id))
+      ? trioExchanges
+      : exchanges;
   return pool[Math.floor(Math.max(0, now) / 30000) % pool.length];
 }

@@ -122,6 +122,7 @@ function renderCommonBanter() {
   for (const [heading, members, count] of [
     ["二人で待機中", ["aria", "leon"], 6],
     ["三人で待機中", ["aria", "leon", "mira"], 8],
+    ["四人で待機中", ["aria", "leon", "mira", "finn"], 8],
   ]) {
     lines.push(`## ${heading}`, "");
     for (let index = 0; index < count; index++) {

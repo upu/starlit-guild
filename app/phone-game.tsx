@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { pendingInterlude } from "@/lib/interludes";
+import { isInterlude, interludeUnlocked } from "@/lib/interludes";
+import { BERNE_QUEST } from "@/lib/chapter-three";
 import { useGameMusic } from "./use-game-music";
 import { useJourneyHints } from "./use-journey-hints";
 import { useInstallPrompt } from "./install-guide";
@@ -26,6 +27,13 @@ function departureStory(state: State, action: Action) {
   const actionId = action.id;
   if (action.type !== "start" || !actionId) return null;
   const target = state.squads.find((party) => party.id === action.squad) || state.squads[0];
+  if (
+    !target.run &&
+    isInterlude(actionId) &&
+    interludeUnlocked(state, actionId) &&
+    !state.story?.read.includes(actionId)
+  )
+    return stories.find((story) => story.id === actionId) ?? null;
   if (target.run || !together(target.members) || storyProgress(state).departed.includes(actionId))
     return null;
   return stories.find((story) => story.id === actionId + "-departure") ?? null;
@@ -67,9 +75,7 @@ function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex:
     quote: lines[Math.floor(clock / 8000) % lines.length],
     ending: pendingEnding
       ? (stories.find((story) => story.id === pendingEnding + "-return") ?? null)
-      : !run
-        ? (stories.find((story) => story.id === pendingInterlude(s)?.id) ?? null)
-        : null,
+      : null,
     destinationChosen: hasDestination(s, squad, questChoices[squad.id]),
   };
 }
@@ -152,7 +158,9 @@ function phoneStoryActions(context: PhoneContext) {
   const finishStory = () => {
     if (!context.reading) return false;
     const ok = context.pendingDeparture
-      ? context.game.dispatch({ ...context.pendingDeparture, readDeparture: true })
+      ? context.game.dispatch({ ...context.pendingDeparture, readDeparture: true }, () => {
+          if (context.reading?.chapter === "interlude") context.setQuest(BERNE_QUEST);
+        })
       : readStory(context.reading.id);
     if (ok) context.setPendingDeparture(null);
     return ok;

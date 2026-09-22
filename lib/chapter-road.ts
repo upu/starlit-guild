@@ -100,6 +100,7 @@ export function roadHasEnemies(r: Run) {
 export function roadActionKind(q: Quest, r: Run, hero?: string): Encounter {
   const kind = encounter(q, r.node);
   if (!r.road || kind === "battle" || !roadHasEnemies(r)) return kind;
+  if (movingWork(q, r)) return "battle";
   const guard = roadGuard(r),
     health = guard ? r.health[guard] : undefined;
   const needsHelp = health && health.hp < health.maxHp * 0.8;
@@ -122,8 +123,6 @@ export function roadActorReady(q: Quest, r: Run, hero: string) {
   if (!r.road) return true;
   const position = r.road.members[hero];
   if (Math.abs(position.recoil) > 5) return false;
-  if (movingWork(q, r) && roadHasEnemies(r) && roadActionKind(q, r, hero) !== "battle")
-    return false;
   if (roadActionKind(q, r, hero) !== "battle")
     return Math.abs(position.x - workPoint(q, r) - roadWorkOffset(q, r, hero)) < 12;
   const target = nearestOpponent(r, hero);

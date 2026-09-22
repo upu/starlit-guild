@@ -54,7 +54,11 @@ test("all 27 stages advance only after ending, cross chapters, persist and never
     const before = structuredClone(s);
     s = roundtrip(read(s, stage.quest));
     if (index === 17) {
-      assert.equal(s.squads[0].lastQuest, stage.quest, "interlude gates the chapter boundary");
+      assert.equal(
+        s.squads[0].lastQuest,
+        LUNCH_INTERLUDE,
+        "selects the interlude without starting it",
+      );
       s = roundtrip(dispatch(s, { type: "readStory", id: LUNCH_INTERLUDE }));
     }
     assert.equal(s.squads[0].lastQuest, storyStages[index + 1]?.quest || stage.quest);

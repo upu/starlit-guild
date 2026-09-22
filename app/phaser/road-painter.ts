@@ -18,6 +18,7 @@ import {
   ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
+  ROAD_BERNE_WORKSITES,
   ROAD_SIGNPOST,
   miraFrames,
   finnFrames,
@@ -133,6 +134,9 @@ export class RoadPainter {
         push.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
     const work = this.scene.textures.get(ROAD_WORKSITES);
+    const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
+    berne.add("stonework", 0, 53, 271, 788, 433);
+    berne.add("records", 0, 933, 250, 797, 468);
     const objects = [
       [133, 215, 497, 339],
       [798, 147, 564, 433],

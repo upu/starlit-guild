@@ -60,6 +60,7 @@ test("presets preserve earned equipment and story gates, and create independent 
   assert.deepEqual(two.owned, ["aria", "leon"]);
   const three = testPresetState("chapter-3", 1000);
   assert.equal(pendingInterlude(three).id, "interlude-walnut-lunch");
+  assert.equal(three.squads[0].lastQuest, "interlude-walnut-lunch");
   assert.equal(stageUnlocked(three, "berne-road"), false);
   assert.deepEqual(three.owned, ["aria", "leon", "mira"]);
   const clear = testPresetState("latest-clear", 1000);

@@ -364,7 +364,8 @@ function CharacterDetails(
   const equipmentSlot = slot === "weapon" || slot === "armor";
   if (
     !equipmentSlot &&
-    (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === hero))
+    (!techniquesUnlocked(props.state) ||
+      !techniques.some((t) => t.hero === hero && t.slot === slot))
   )
     return null;
   return (

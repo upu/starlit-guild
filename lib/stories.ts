@@ -1,5 +1,5 @@
 import { chapterThreeStories } from "./chapter-three-stories.ts";
-import { chapterThreeBanter } from "./chapter-three.ts";
+import { chapterThreeBanter } from "./chapter-three-banter.ts";
 import { interludeUnlocked } from "./interludes.ts";
 import type { State, Squad } from "./game.ts";
 import {

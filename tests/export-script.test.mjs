@@ -103,6 +103,7 @@ test("shared banter includes both idle parties, relationship tiers and combo lin
   for (const [members, count] of [
     [["aria", "leon"], 6],
     [["aria", "leon", "mira"], 8],
+    [["aria", "leon", "mira", "finn"], 8],
   ]) {
     for (let index = 0; index < count; index++) {
       assert.ok(

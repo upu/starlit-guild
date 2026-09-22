@@ -1,5 +1,5 @@
 import { pendingInterlude } from "./interludes.ts";
-import { BERNE_QUEST } from "./chapter-three.ts";
+import { BERNE_QUEST, LUNCH_INTERLUDE } from "./chapter-three.ts";
 import { nextStage, stageEndingPending, storyStages } from "./prologue.ts";
 import { allQuests, heroes, power, encounter, type State, type Squad, type Quest } from "./game.ts";
 import { MOON_HERB_QUEST } from "./chapter-two.ts";
@@ -39,9 +39,10 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
   if (pendingInterlude(s))
     return {
       title: "幕間 · 私が用意するお昼",
-      detail: "約束のお昼を、ふたりで。会話を読むと第三章へ進めます。",
-      action: "幕間を読む",
-      destination: "adventure",
+      detail: "休みの日のお昼へ。クエストから選んで出発し、会話を読むと第三章へ進めます。",
+      action: "クエストを開く",
+      destination: "quests",
+      questId: LUNCH_INTERLUDE,
     };
   if (stageEndingPending(s))
     return {

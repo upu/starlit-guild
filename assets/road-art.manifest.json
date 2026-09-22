@@ -17,6 +17,14 @@
       "sourceBytes": 1351025,
       "outputBytes": 965034
     },
+    "berne-worksites-v1.png": {
+      "sourceHash": "9a1d031ae6e43e26c2dac15ed1ac6c8f41712b1c890f0df7c90844a653809c50",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "berne-worksites-v1.webp",
+      "outputHash": "639b54a878e2c8993c19815f9466f24ebac132d1a0df153f269b49b417a0f8ed",
+      "sourceBytes": 1063859,
+      "outputBytes": 697200
+    },
     "cargo-v1.png": {
       "sourceHash": "493bb2818d7f4d367e450a8b0191cad811e165b6c0ec2eabefa3c8adde0c09fb",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",

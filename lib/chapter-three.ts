@@ -1,4 +1,4 @@
-import type { Quest, Run } from "./game.ts";
+import type { Quest } from "./game.ts";
 
 export const BERNE_QUEST = "berne-road";
 export const BERNE_CALLS_QUEST = "berne-house-calls";
@@ -191,31 +191,3 @@ export function chapterThreeWork(id: string, node: number) {
   return pattern ? pattern[node % pattern.length] : null;
 }
 export const chapterThreeWorkload = (id: string) => (isChapterThreeQuest(id) ? 2.4 : 1);
-export function chapterThreeBanter(run: Run) {
-  if (!isChapterThreeQuest(run.quest)) return null;
-  if (run.phase === "rest" && ![STONE_RETURN_QUEST, BERNE_RESTORATION_QUEST].includes(run.quest))
-    return [
-      { speaker: "mira", text: "ここで少し休みましょう。水も飲んでね。" },
-      { speaker: "finn", text: "助かるねえ。先生も座りなよ、ほら、ここ空いてる。" },
-    ];
-  if (run.phase === "rest")
-    return [
-      { speaker: "mira", text: "手を見せて。包帯を替えたら、お茶にしましょう。" },
-      { speaker: "finn", text: "先生の分も出しとくよ。今度は一緒に座ってくれ。" },
-    ];
-  if (run.quest === STONE_RETURN_QUEST)
-    return [
-      { speaker: "leon", text: "荷車から離れないで。橋まで、あと少しだ。" },
-      { speaker: "finn", text: "おう。石も先生も、ちゃんと連れてく。" },
-    ];
-  if (run.quest === BERNE_RESTORATION_QUEST)
-    return [
-      { speaker: "finn", text: "こちら、お通りくださーい。石は触ってないぞ、先生。" },
-      { speaker: "mira", text: "ええ。その手は、今日は休ませてね。" },
-    ];
-  return [
-    { speaker: "aria", text: "次の場所、控えと合ってる？" },
-    { speaker: "leon", text: "ああ。帰る道も、ここを通る。" },
-    { speaker: "finn", text: "抜かりないねえ。おじさんも見習うか。" },
-  ];
-}

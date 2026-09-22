@@ -18,6 +18,15 @@ export type Technique = {
 };
 export const techniques: Technique[] = [
   {
+    id: "finn-opening",
+    hero: "finn",
+    slot: "passive",
+    name: "隙を見抜く目",
+    description: "自分の通常攻撃・技の威力が15%増える。",
+    level: 17,
+    cost: 120,
+  },
+  {
     id: "mira-care",
     hero: "mira",
     slot: "passive",
@@ -169,7 +178,9 @@ export function techniqueMultiplier(
   const passive = equippedTechnique(s, hero, "passive");
   return (
     multiplier *
-    (kind === "battle" && ["aria-aim", "leon-sword"].includes(passive ?? "") ? 1.15 : 1)
+    (kind === "battle" && ["aria-aim", "leon-sword", "finn-opening"].includes(passive ?? "")
+      ? 1.15
+      : 1)
   );
 }
 export function techniqueText(s: State, hero: string, kind: Encounter, special: boolean) {
