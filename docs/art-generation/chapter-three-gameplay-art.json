@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "references": {
+    "finn": [
+      "docs/characters/finn-reference-sheet.webp",
+      "public/animations/road/mira-v2.webp"
+    ]
+  },
+  "assets": [
+    {
+      "source": "assets/source/road/finn-v1.png",
+      "prompt": "Use case: stylized-concept. Create production game sprite atlas for Finn, the middle aged man in reference 1; reference 2 is ONLY chibi rendering style and pose-grid example, do not copy its female character. Genuine transparent background, no checkerboard baked in, no text. Square 1536x1536, EXACTLY 4 columns x 4 rows equal cells, 16 distinct full-body poses, one centered character entirely inside each cell, generous transparent margins. All face RIGHT in side-three-quarter view. Consistent same feet baseline and character size in every cell, 2.5-head tall chibi, fine clean outlines, softly shaded muted fantasy colors. Finn: late forties man, tan skin, scruffy stubble, droopy gray-purple eyes and easy sly smile, messy dark brown hair tied low, worn charcoal olive long coat with old gold trim/ochre lining, open cream shirt, brown trousers and boots, light luggage NONE. Preserve mature masculine face even in chibi. Short practical dagger only in attack poses. Row 1: four WALK frames genuinely alternating LEFT foot forward, passing, RIGHT foot forward, passing; coat swings. Row 2: dagger ready, dagger wind-up, dagger strike to RIGHT, dagger recovery. Row 3: relaxed standing idle hands free, crouch inspecting a stone, flinch from hit, seated catching breath. Row 4: lean forward hands pressing invisible cart TWO alternating pushing poses, crouching hands tie plain parcel TWO different tying poses. Do not draw the cart. Every image isolated, no overlapping frames, NO scenic ground shadows or labels. Purpose: small sprites animated and cropped individually in game.",
+      "notes": "Native transparent RGBA. Renderer reads individual pose rectangles, preserving pixels."
+    },
+    {
+      "source": "assets/source/scenery/berne.png",
+      "prompt": "Use case: stylized-concept. Background artwork for a cozy Japanese fantasy RPG, horizontal side-scrolling adventure map. Landscape 1536x1024. Berne, an inhabited old European-inspired stone-paved town by a river. Warm sandstone small homes, muted terracotta roofs, distant squat ancient stone tower with very faint violet light in its windows. Some cobbles removed neatly for repair, small patches of dimly glowing lavender stones remaining in the old paving. Stonework, plants, wooden fences and baskets. Quiet overcast morning, soft watercolor-painted anime game scenery, warm gentle colors and finely drawn edges. Lower 40% a spacious continuous FLAT horizontal cobbled walkway in side view for characters to walk, no strong depth perspective in this foreground lane. Rich upper scene, clear foreground. No characters, no text, no HUD, no icons, no giant crystals or gemstones, no ruins devastation, no menace. Finished detailed game background."
+    },
+    {
+      "source": "assets/source/scenery/riverside-manor.png",
+      "prompt": "Use case: stylized-concept. Create polished cozy fantasy JRPG side-scrolling background, landscape 1536x1024. The working courtyard garden of a lived-in small manor across a river from an old stone-paved town. Late afternoon golden soft daylight, gentle watercolor anime painting with fine detailed edges, restrained ochre, sage green, muted terracotta and cream. Upper half: stone manor wall and arched kitchen doorway on left, trimmed hedges with garden work passage, potted flowers and a cloth-covered low display pedestal on right, river bridge glimpsed behind wall, no monumental palace. A few plain wooden crates and neatly folded cloth at edges. Lower 40% is clear continuous horizontal level paved garden walkway for four chibi characters, no obstacles in foreground path, no strong depth perspective in lower walking lane. No people or characters, no text or signs, no HUD, no modern things, no giant gemstones. Designed as reusable background for moving pots, preparations and reconnaissance, welcoming atmosphere rather than a dungeon."
+    }
+  ]
+}

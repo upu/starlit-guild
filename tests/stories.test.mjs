@@ -33,7 +33,11 @@ test("every story stage has exactly one departure and one ending, and ids stay u
     );
     assert.equal(stories.filter((st) => st.quest === quest && st.chapter === "return").length, 1);
   }
-  assert.ok(stories.every((st) => storyStages.some((stage) => stage.quest === st.quest)));
+  assert.ok(
+    stories.every(
+      (st) => st.chapter === "interlude" || storyStages.some((stage) => stage.quest === st.quest),
+    ),
+  );
 });
 
 test("reading and replaying are idempotent and never award gold or change clocks", () => {

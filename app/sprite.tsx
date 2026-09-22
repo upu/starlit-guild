@@ -8,6 +8,21 @@ export function Sprite({
   size?: number;
   className?: string;
 }) {
+  if (index === 3)
+    return (
+      <span
+        className={`sprite ${className}`}
+        style={{
+          width: size,
+          height: size,
+          backgroundImage: "url(/portraits/finn-expressions.webp)",
+          backgroundSize: "300% 300%",
+          backgroundPosition: "0% 0%",
+          imageRendering: "auto",
+        }}
+        aria-hidden="true"
+      />
+    );
   const art = originalArt(index);
   return (
     <span

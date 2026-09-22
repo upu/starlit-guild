@@ -5,7 +5,7 @@ import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { initialPrologueState, act, settle } from "../lib/game.ts";
+import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
 import { nextStage, prologueStages } from "../lib/prologue.ts";
 import { storyArtAt } from "../lib/story-art.ts";
@@ -45,6 +45,19 @@ await build({
   jsx: "automatic",
 });
 const { CharacterPanel, InventoryPanel } = await import(equipmentOutput.href);
+test("Mira and Finn show exactly one fixed active skill and a usable passive slot", () => {
+  for (const hero of ["mira", "finn"]) {
+    const state = testState(1000, 19, 17, 5000);
+    state.owned = [hero];
+    const html = renderToStaticMarkup(
+      createElement(CharacterPanel, { state, ready: true, onAction: () => true }),
+    );
+    assert.equal((html.match(/<small>アクティブ技<\/small>/g) || []).length, 1);
+    assert.equal((html.match(/<small>パッシブ技<\/small>/g) || []).length, 1);
+    assert.ok(html.includes('aria-label="アクティブ技・変更不可"'));
+    assert.ok(!html.includes("アクティブ技・セットなし"));
+  }
+});
 const shopOutput = new URL("../work/shop-render.mjs", import.meta.url);
 await build({
   entryPoints: ["app/shop-panel.tsx"],

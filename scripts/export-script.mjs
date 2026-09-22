@@ -122,6 +122,7 @@ function renderCommonBanter() {
   for (const [heading, members, count] of [
     ["二人で待機中", ["aria", "leon"], 6],
     ["三人で待機中", ["aria", "leon", "mira"], 8],
+    ["四人で待機中", ["aria", "leon", "mira", "finn"], 8],
   ]) {
     lines.push(`## ${heading}`, "");
     for (let index = 0; index < count; index++) {
@@ -157,7 +158,10 @@ function renderCommonBanter() {
 
 export function renderScripts() {
   const byId = new Map(stories.map((story) => [story.id, story]));
-  if (byId.size !== storyStages.length * 2) {
+  if (
+    byId.size !==
+    storyStages.length * 2 + stories.filter((story) => story.chapter === "interlude").length
+  ) {
     throw new Error("ステージ一覧とシーン数が一致しません");
   }
   const files = new Map();
@@ -181,7 +185,7 @@ export function renderScripts() {
     "",
     marker,
     "",
-    "本編の進行には未接続。幕間と各場面の出発前・達成後の会話を収録します。",
+    "本編の幕間と各ステージの出発前・達成後を、物語順に収録します。",
     "",
   ];
   for (const section of chapterThreeSections) {
@@ -194,7 +198,7 @@ export function renderScripts() {
     }
   }
   files.set("chapter-three.md", draft.join("\n"));
-  index.push("制作中：[第三章の会話（レビュー用）](chapter-three.md)", "");
+  index.push("[第三章の会話（幕間を含む）](chapter-three.md)", "");
   files.set("script.md", index.join("\n"));
   return files;
 }

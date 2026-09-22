@@ -12,11 +12,11 @@
 
 採用した一枚絵は次の3枚。原本は1536×1024のPNGで、共通パイプラインから鑑賞用WebPと320×320のサムネイルを生成する。[画像一覧](story-art-gallery.md#第三章の一枚絵)と[採用画像・プロンプトの生成記録](../art-generation/chapter-three-stills.json)を参照。表示の接続状況は[第三章の実装仕様](../gameplay/chapter-three-gameplay.md#実装状況)で管理する。
 
-| 原本（`assets/source/stories/`） | 対応する先行会話 | 場面 |
+| 原本（`assets/source/stories/`） | 対応する会話 | 場面 |
 | --- | --- | --- |
-| `finn-at-breakfast.png` | `chapter-three-draft-3-1-departure` | 食堂の隣の席で頬杖をつくフィン。気の抜けた姿と、話を聞いている目を見せる |
-| `mira-tends-finn.png` | `chapter-three-draft-3-8-departure` | ミラがフィンの右手の傷を手当てする。指を動かせるよう薄く布を巻く |
-| `four-cups-of-tea.png` | `chapter-three-draft-3-9-return` | 灯りが戻った夕方、四人でお茶。アリアとレオンは設定図に沿った若い顔立ち、フィンは目を閉じた笑顔と指輪、ミラは血色の薄い疲れた顔を保つ |
+| `finn-at-breakfast.png` | `berne-road-departure` | 食堂の隣の席で頬杖をつくフィン。気の抜けた姿と、話を聞いている目を見せる |
+| `mira-tends-finn.png` | `keystone-night-road-departure` | ミラがフィンの右手の傷を手当てする。指を動かせるよう薄く布を巻く |
+| `four-cups-of-tea.png` | `berne-restoration-return` | 灯りが戻った夕方、四人でお茶。アリアとレオンは設定図に沿った若い顔立ち、フィンは目を閉じた笑顔と指輪、ミラは血色の薄い疲れた顔を保つ |
 
 お茶会の採用版は、設定資料から新規生成した絵にアリアとレオンの顔立ちを合わせたもの。フィンは右手に包帯、左手に指輪をつける。制作ツールは組み込み `image_gen`、モデル識別子は返されていない。
 

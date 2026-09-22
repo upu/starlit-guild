@@ -17,6 +17,14 @@
       "sourceBytes": 1351025,
       "outputBytes": 965034
     },
+    "berne-worksites-v1.png": {
+      "sourceHash": "9a1d031ae6e43e26c2dac15ed1ac6c8f41712b1c890f0df7c90844a653809c50",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "berne-worksites-v1.webp",
+      "outputHash": "639b54a878e2c8993c19815f9466f24ebac132d1a0df153f269b49b417a0f8ed",
+      "sourceBytes": 1063859,
+      "outputBytes": 697200
+    },
     "cargo-v1.png": {
       "sourceHash": "493bb2818d7f4d367e450a8b0191cad811e165b6c0ec2eabefa3c8adde0c09fb",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
@@ -40,6 +48,14 @@
       "outputHash": "36bf96414256869e5f60ff2784d2ce2ab171b3f0dcf45d5ee66570ff7b09614a",
       "sourceBytes": 1171172,
       "outputBytes": 914382
+    },
+    "finn-v1.png": {
+      "sourceHash": "53dfb47444e28d398bfee689b56939cfcdf478cdf15f7c4a89411fa0ccee0b12",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "finn-v1.webp",
+      "outputHash": "0d89f5460322927b33afae7e90958ab46bcb8b9b92b71de8c2ccf780b914dcf6",
+      "sourceBytes": 2256827,
+      "outputBytes": 1581158
     },
     "herb-v2.png": {
       "sourceHash": "3783637963fa67a2a756cfc9eb4f5f190d98212c3bcb5f34ee64776d99e24578",

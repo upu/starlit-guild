@@ -109,7 +109,7 @@ lib/puppet-battles.ts が専用編成、lib/enemy-turns.ts が号令と複数対
 
 ### 再現できるテスト開始データ
 
-正本は `lib/chapter-two-presets.ts`。プレビューの「セーブ・設定」→「記録」から、ファイルなしで新しい記録として作成する。
+以下の固定比較データの正本は `lib/chapter-two-presets.ts`。ゲーム内「セーブ・設定」→「記録」の開始データは、各章の通し試走を引き継ぐ `lib/test-presets.ts` を使う。現在の選択肢・戦力は[ゲーム内のテスト開始データ](progression-balance.md#ゲーム内から作るテスト開始データ)を参照する。
 
 | 条件 | 標準 | 余裕あり |
 | --- | --- | --- |

@@ -1,3 +1,4 @@
+import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
 import {
   adventureFrame,
@@ -190,8 +191,20 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
   return {
     background: frame.background,
-    destination: !["spinning-signpost", "begging-golem", "sweet-blockade"].includes(frame.quest.id),
-    urban: ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id),
+    destination: ![
+      "spinning-signpost",
+      "begging-golem",
+      "sweet-blockade",
+      "missing-keystone",
+      "matching-lantern-stone",
+      "manor-survey",
+      "garden-reception",
+      "berne-restoration",
+    ].includes(frame.quest.id),
+    urban:
+      ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id) ||
+      (isChapterThreeQuest(frame.quest.id) &&
+        ![BERNE_QUEST, STONE_RETURN_QUEST].includes(frame.quest.id)),
     length:
       (run?.nodes || 15) * CHAPTER_ROAD_SPACING +
       (run && movingWork(frame.quest, { ...run, node: run.nodes - 1 }) ? ROAD_CARRY_DISTANCE : 0),
@@ -224,7 +237,7 @@ function workTask(
   run: Run,
 ): NonNullable<RoadBattle["gathering"]>["task"] {
   if (movingWork(q, run)) return "carry";
-  if (frame === "signpost") return "inspect";
+  if (frame === "signpost" || frame === "records") return "inspect";
   return frame === "parcels" ? "pack" : "gather";
 }
 function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {

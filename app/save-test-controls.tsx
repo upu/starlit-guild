@@ -2,48 +2,9 @@
 import { useState } from "react";
 import { FlaskConical } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { prologueStages, storyStages } from "@/lib/prologue";
+import { level } from "@/lib/game";
+import { storyStages } from "@/lib/prologue";
 import type { Game } from "./save-panel-types";
-
-function TestPresets({
-  game,
-  adjust,
-}: {
-  game: Game;
-  adjust: (clears: number, level: number, gold: number) => void;
-}) {
-  return (
-    <div className="test-presets">
-      <button
-        className="outline"
-        disabled={game.otherTab}
-        onClick={() => {
-          adjust(0, 1, 60);
-        }}
-      >
-        序盤
-      </button>
-      <button
-        className="outline"
-        disabled={game.otherTab}
-        onClick={() => {
-          adjust(prologueStages.length, 8, 5000);
-        }}
-      >
-        第1章クリア
-      </button>
-      <button
-        className="outline"
-        disabled={game.otherTab}
-        onClick={() => {
-          adjust(storyStages.length, 20, 20000);
-        }}
-      >
-        全ステージ
-      </button>
-    </div>
-  );
-}
 
 function TestFields({
   game,
@@ -86,7 +47,11 @@ function TestFields({
 }
 
 export function TestControls({ game, onAdjust }: { game: Game; onAdjust: () => void }) {
-  const [values, setValues] = useState([prologueStages.length, 5, 3000]);
+  const [values, setValues] = useState([
+    storyStages.filter((stage) => game.s.done[stage.quest]).length,
+    level(game.s.xp.aria),
+    game.s.gold,
+  ]);
   if (!game.testToolsEnabled || !game.profile?.test) return null;
   const adjust = (clears: number, level: number, gold: number) => {
     game.adjust(clears, level, gold);
@@ -99,7 +64,7 @@ export function TestControls({ game, onAdjust }: { game: Game; onAdjust: () => v
         <b>テスト用の冒険</b>
         <small>変更するのはこの記録だけです。適用すると、隊はキャンプへ戻ります。</small>
       </div>
-      <TestPresets game={game} adjust={adjust} />
+
       <TestFields
         game={game}
         values={values}

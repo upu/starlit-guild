@@ -1,3 +1,6 @@
+import { chapterThreeStories } from "./chapter-three-stories.ts";
+import { chapterThreeBanter } from "./chapter-three-banter.ts";
+import { interludeUnlocked } from "./interludes.ts";
 import type { State, Squad } from "./game.ts";
 import {
   TRADE_QUEST,
@@ -22,7 +25,7 @@ export type Story = {
   place: string;
   lines: StoryLine[];
   quest?: string;
-  chapter: "departure" | "return";
+  chapter: "departure" | "return" | "interlude";
 };
 export type StoryProgress = { departed: string[]; completed: string[]; read: string[] };
 const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
@@ -37,9 +40,13 @@ const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
 });
 
 // Their affection is mutual. Progress shows trust and small choices, never a forced confession.
-export const stories: Story[] = [...prologueStories, ...chapterTwoStories];
+export const stories: Story[] = [...prologueStories, ...chapterTwoStories, ...chapterThreeStories];
 
 export const characterNotes: Partial<Record<string, { habit: string }>> = {
+  finn: {
+    habit:
+      "都合のいい話は先に、肝心な話はあとから。借りた道具も食堂代も、次の仕事が済んだらと言い続ける。",
+  },
   aria: {
     habit:
       "薬草を追って帰り道を見失うことも。勢いで引き受けて失敗しても、強がったあとに自分で謝ってやり直す。",
@@ -81,7 +88,9 @@ function storyAvailable(progress: StoryProgress, story: Story) {
 }
 export function availableStories(s: State): Story[] {
   const p = storyProgress(s);
-  return stories.filter((story) => storyAvailable(p, story));
+  return stories.filter((story) =>
+    story.chapter === "interlude" ? interludeUnlocked(s, story.id) : storyAvailable(p, story),
+  );
 }
 export function coupleCombo(s: State, variant: number): string[] {
   const lines = [
@@ -195,6 +204,8 @@ function wetlandBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
 function routeBanter(sq: Squad): StoryLine[] | null {
   const run = sq.run;
   if (!run) return null;
+  const third = chapterThreeBanter(run);
+  if (third) return third;
   const chapterTwo = chapterTwoBanter(run);
   if (chapterTwo) return chapterTwo;
   const waterway = waterwayBanter(run);

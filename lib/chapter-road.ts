@@ -8,8 +8,8 @@ export const CHAPTER_ROAD_STEP = 100;
 export const CHAPTER_ROAD_SPACING = 210;
 export const ROAD_CARRY_DISTANCE = 180;
 export const ROAD_CARRY_SPEED = 24;
-export const workOffsets: Record<string, number> = { aria: -12, leon: 32, mira: -58 };
-const speed: Record<string, number> = { aria: 87, leon: 103, mira: 82 };
+export const workOffsets: Record<string, number> = { aria: -12, leon: 32, mira: -58, finn: -100 };
+const speed: Record<string, number> = { aria: 87, leon: 103, mira: 82, finn: 108 };
 export const roadPosition = (x: number): RoadPosition => ({
   x,
   previousX: x,
@@ -32,8 +32,10 @@ export function roadTransport(r: Run) {
 }
 export function roadWorkOffset(q: Quest, r: Run, hero: string) {
   if (movingWork(q, r) && !q.escortAsset)
-    return ({ aria: -110, leon: -90, mira: -145 } as Record<string, number>)[hero] || -110;
-  return ({ aria: -70, leon: 70, mira: -125 } as Record<string, number>)[hero] || 0;
+    return (
+      ({ aria: -110, leon: -90, mira: -145, finn: -175 } as Record<string, number>)[hero] || -110
+    );
+  return ({ aria: -70, leon: 70, mira: -125, finn: 110 } as Record<string, number>)[hero] || 0;
 }
 
 // Attaching coordinates never rebuilds an existing target or changes its health/rewards.
@@ -98,6 +100,7 @@ export function roadHasEnemies(r: Run) {
 export function roadActionKind(q: Quest, r: Run, hero?: string): Encounter {
   const kind = encounter(q, r.node);
   if (!r.road || kind === "battle" || !roadHasEnemies(r)) return kind;
+  if (movingWork(q, r)) return "battle";
   const guard = roadGuard(r),
     health = guard ? r.health[guard] : undefined;
   const needsHelp = health && health.hp < health.maxHp * 0.8;
@@ -120,13 +123,14 @@ export function roadActorReady(q: Quest, r: Run, hero: string) {
   if (!r.road) return true;
   const position = r.road.members[hero];
   if (Math.abs(position.recoil) > 5) return false;
-  if (movingWork(q, r) && roadHasEnemies(r) && roadActionKind(q, r, hero) !== "battle")
-    return false;
   if (roadActionKind(q, r, hero) !== "battle")
     return Math.abs(position.x - workPoint(q, r) - roadWorkOffset(q, r, hero)) < 12;
   const target = nearestOpponent(r, hero);
   if (!target) return !r.enemies?.length;
-  return Math.abs(position.x - r.road.opponents[target.id].x) <= (hero === "leon" ? 68 : 210);
+  return (
+    Math.abs(position.x - r.road.opponents[target.id].x) <=
+    (["leon", "finn"].includes(hero) ? 68 : 210)
+  );
 }
 export function roadEnemyTargets(r: Run, enemy: string) {
   const road = r.road,
@@ -168,7 +172,7 @@ function moveMember(q: Quest, r: Run, id: string, dt: number) {
   if (enemy) {
     const x = road.opponents[enemy.id].x;
     position.facing = x >= position.x ? 1 : -1;
-    const range = id === "leon" ? 48 : 185;
+    const range = ["leon", "finn"].includes(id) ? 48 : 185;
     target = Math.abs(x - position.x) <= range ? position.x : x - position.facing * range;
   }
   move(position, target, speed[id] || 85, dt);

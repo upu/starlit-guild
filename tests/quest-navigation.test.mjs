@@ -1,3 +1,4 @@
+import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { initialPrologueState, act, settle } from "../lib/game.ts";
@@ -44,7 +45,7 @@ test("old saves default to off; setting persists and can be disabled without cha
   assert.throws(() => roundtrip({ ...s, autoNextQuest: "yes" }));
 });
 
-test("all 18 stages advance only after ending, cross chapters, persist and never auto-depart", () => {
+test("all 27 stages advance only after ending, cross chapters, persist and never auto-depart", () => {
   let s = dispatch(initialPrologueState(1000), { type: "autoNextQuest", value: true });
   s.xp.aria = s.xp.leon = 30 * 24 ** 2;
   for (const [index, stage] of storyStages.entries()) {
@@ -52,6 +53,14 @@ test("all 18 stages advance only after ending, cross chapters, persist and never
     assert.equal(s.squads[0].lastQuest, stage.quest, "arrival does not skip the ending");
     const before = structuredClone(s);
     s = roundtrip(read(s, stage.quest));
+    if (index === 17) {
+      assert.equal(
+        s.squads[0].lastQuest,
+        LUNCH_INTERLUDE,
+        "selects the interlude without starting it",
+      );
+      s = roundtrip(dispatch(s, { type: "readStory", id: LUNCH_INTERLUDE }));
+    }
     assert.equal(s.squads[0].lastQuest, storyStages[index + 1]?.quest || stage.quest);
     assert.equal(s.squads[0].run, null);
     assert.equal(s.gold, before.gold);

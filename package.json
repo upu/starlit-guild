@@ -1,6 +1,6 @@
 {
   "name": "starlit-guild",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
@@ -32,7 +32,9 @@
     "script:export": "node scripts/export-script.mjs",
     "script:check": "node scripts/export-script.mjs --check",
     "road-art:optimize": "node scripts/optimize-road-art.mjs",
-    "road-art:check": "node scripts/optimize-road-art.mjs --check"
+    "road-art:check": "node scripts/optimize-road-art.mjs --check",
+    "presets:generate": "node scripts/generate-test-presets.mjs",
+    "presets:check": "node scripts/generate-test-presets.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

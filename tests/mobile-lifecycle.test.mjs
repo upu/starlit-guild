@@ -1,4 +1,4 @@
-import * as chapterPresets from "../lib/chapter-two-presets.ts";
+import * as chapterPresets from "../lib/test-presets.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -58,7 +58,7 @@ function harness(testToolsEnabled, initialBundle) {
     "@/lib/journey": journey,
     "@/lib/backup-api": backupApi,
     "@/lib/api-input": apiInput,
-    "@/lib/chapter-two-presets": chapterPresets,
+    "@/lib/test-presets": chapterPresets,
     "@/lib/external-input": externalInput,
     "@/lib/local-id": localIds,
     "@/lib/sound": {
@@ -159,31 +159,30 @@ test("enabled test tools adjust only the test profile and preserve the ordinary 
     p = b.profiles.find((p) => p.id === b.active);
   assert.equal(p.test, true);
   assert.equal(p.state.gold, 5000);
-  assert.equal(p.state.clears, 18);
+  assert.equal(p.state.clears, 20);
   assert.deepEqual(b.profiles[0], ordinary);
 });
 
 test("chapter presets create separate records, respect the capability and capacity, and reload", () => {
   const disabled = harness(false),
     unchanged = disabled.data.get(disabled.key);
-  disabled.hook.createProfile(true, "standard");
-  disabled.hook.createProfile(false, "strong");
+  disabled.hook.createProfile(true, "chapter-3");
+  disabled.hook.createProfile(false, "strong-start");
   assert.equal(disabled.data.get(disabled.key), unchanged);
   const h = harness(true),
     ordinary = h.read().profiles[0];
-  for (const preset of ["standard", "strong"]) h.hook.createProfile(true, preset);
+  for (const preset of chapterPresets.testPresets) h.hook.createProfile(true, preset.id);
   const bundle = h.read();
-  assert.equal(bundle.profiles.length, 3);
+  assert.equal(bundle.profiles.length, 5);
   assert.deepEqual(bundle.profiles[0], ordinary);
   for (const p of bundle.profiles.slice(1)) {
     assert.equal(p.test, true);
     assert.equal(p.state.prologue, true);
-    assert.equal(p.state.done["hilltop-picnic"], undefined);
   }
   assert.deepEqual(harness(true, bundle).read().profiles, bundle.profiles);
   h.hook.switchProfile(ordinary.id);
   assert.deepEqual(h.read().profiles[0], ordinary);
-  for (let i = 0; i < 12; i++) h.hook.createProfile(true, "standard");
+  for (let i = 0; i < 12; i++) h.hook.createProfile(true, "chapter-3");
   assert.equal(h.read().profiles.length, 12);
 });
 test("disabling tools preserves saved and restored test profiles without permitting adjustments", async () => {

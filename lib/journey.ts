@@ -1,3 +1,5 @@
+import { pendingInterlude } from "./interludes.ts";
+import { BERNE_QUEST, LUNCH_INTERLUDE } from "./chapter-three.ts";
 import { nextStage, stageEndingPending, storyStages } from "./prologue.ts";
 import { allQuests, heroes, power, encounter, type State, type Squad, type Quest } from "./game.ts";
 import { MOON_HERB_QUEST } from "./chapter-two.ts";
@@ -34,6 +36,14 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
       action: "冒険を見守る",
       destination: "adventure",
     };
+  if (pendingInterlude(s))
+    return {
+      title: "幕間 · 私が用意するお昼",
+      detail: "休みの日のお昼へ。クエストから選んで出発し、会話を読むと第三章へ進めます。",
+      action: "クエストを開く",
+      destination: "quests",
+      questId: LUNCH_INTERLUDE,
+    };
   if (stageEndingPending(s))
     return {
       title: "達成後のひと幕",
@@ -55,9 +65,9 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
     complete = !!s.done[stage.quest];
   const name = allQuests.find((q) => q.id === stage.quest)?.name ?? "";
   return {
-    title: complete ? "第二章の冒険を終えました" : `${stage.number} ${name} · ${stage.title}`,
+    title: complete ? "第三章の冒険を終えました" : `${stage.number} ${name} · ${stage.title}`,
     detail: complete
-      ? "薬の配達を終え、三人で街へ戻りました。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。"
+      ? "ベルネの塔に灯りが戻り、四人で次の旅へ。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。"
       : "画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。",
     action: "クエストを開く",
     destination: "quests",
@@ -97,6 +107,19 @@ function prologueNotice(before: State, after: State): JourneyNotice | null {
   return stage ? { title: stage.arrival, description: stage.detail } : null;
 }
 export function journeyNotice(before: State, after: State): JourneyNotice | null {
+  if (!before.owned.includes("finn") && after.owned.includes("finn"))
+    return {
+      title: "フィンが同行します",
+      description: "四人でベルネへ。フィンの装備はキャラクター画面で確認できます。",
+    };
+  if (
+    !before.story?.read.includes(BERNE_QUEST + "-return") &&
+    after.story?.read.includes(BERNE_QUEST + "-return")
+  )
+    return {
+      title: "ベルネの装備が入荷しました",
+      description: "四人の武器と新しい上着が、お店に並びました。",
+    };
   if (
     !before.owned.includes("mira") &&
     after.owned.includes("mira") &&

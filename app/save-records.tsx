@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { chapterTwoPresets } from "@/lib/chapter-two-presets";
+import { testPresets } from "@/lib/test-presets";
 import type { Game } from "./save-panel-types";
 
 function DeleteProfileButton({
@@ -65,20 +65,12 @@ function TestProfileButton({ game, onCreate }: { game: Game; onCreate: () => voi
   if (!game.testToolsEnabled) return null;
   return (
     <div className="chapter-test-start">
-      <button
-        className="outline"
-        disabled={game.otherTab}
-        onClick={() => {
-          game.createProfile(true);
-          onCreate();
-        }}
-      >
+      <p>
         <FlaskConical size={15} />
-        テスト用を作る
-      </button>
-      <p>第2章から試す</p>
-      <small>今の冒険を残して、別のテスト記録を作ります。どちらも2-1の出発前から始まります。</small>
-      {chapterTwoPresets.map((preset) => (
+        テストプレイ
+      </p>
+      <small>始めたい状態を選んでください。今の冒険を残して、別のテスト記録を作ります。</small>
+      {testPresets.map((preset) => (
         <button
           key={preset.id}
           className="outline"

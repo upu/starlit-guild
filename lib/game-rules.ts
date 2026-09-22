@@ -1,3 +1,4 @@
+import { chapterThreeWorkload, chapterThreeWork } from "./chapter-three.ts";
 import { equipmentBonus } from "./equipment.ts";
 import { questNodes, puppetBattleName } from "./puppet-battles.ts";
 import { createEnemies, penetration, reducedDamage, workResistance } from "./combat.ts";
@@ -101,7 +102,7 @@ export function healAll(r: Run, ratio: number) {
 }
 export const power = (s: State, sq: Squad, q: Quest) =>
   stats(s, sq)[["採取", "護衛", "討伐"].indexOf(q.kind)];
-export const memberLimit = (s: State) => (s.clears >= 10 ? 3 : 2);
+export const memberLimit = (s: State) => (s.owned.includes("finn") ? 4 : s.clears >= 10 ? 3 : 2);
 export const squadLimit = (s: State) => (s.owned.length >= 6 ? 3 : s.owned.length >= 4 ? 2 : 1);
 function standardEncounter(q: Quest, node: number): Encounter {
   if (q.kind === "採取") return node % 3 === 1 ? "battle" : "gather";
@@ -109,7 +110,8 @@ function standardEncounter(q: Quest, node: number): Encounter {
   return "battle";
 }
 export function encounter(q: Quest, node: number): Encounter {
-  const work = chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
+  const work =
+    chapterThreeWork(q.id, node) || chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
   if (work) return work.kind;
   if (q.id === WETLAND_QUEST) return "gather";
   if (q.id === TOWN_QUEST) return "escort";
@@ -133,7 +135,8 @@ function enemyTargetName(q: Quest) {
 export function targetName(q: Quest, node: number, nodes = 15) {
   const battle = puppetBattleName(q.id, node, nodes);
   if (battle) return battle;
-  const work = chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
+  const work =
+    chapterThreeWork(q.id, node) || chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
   if (work) return work.name;
   if (q.id === WETLAND_QUEST)
     return ["湿った木陰を探す", "苔の葉を見分ける", "群落の周りを確かめる"][node % 3];
@@ -160,6 +163,7 @@ export function specialInterval(hero: string) {
   return hero === "aria" ? 3 : 4;
 }
 export function specialMultiplier(hero: string) {
+  if (hero === "finn") return 1.6;
   if (hero === "leon") return 1.7;
   if (hero === "aria") return 1.65;
   return 1;
@@ -190,6 +194,10 @@ function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
   }, 0);
   const work = enemies.length
     ? enemies.reduce((sum, enemy) => sum + enemy.hp, 0)
-    : q.need * 1.12 * (kind === "escort" ? 1.8 : 2.3) * chapterTwoWorkload(q.id);
+    : q.need *
+      1.12 *
+      (kind === "escort" ? 1.8 : 2.3) *
+      chapterTwoWorkload(q.id) *
+      chapterThreeWorkload(q.id);
   return 2.5 + work / Math.max(0.1, dps);
 }

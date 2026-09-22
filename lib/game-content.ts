@@ -1,3 +1,5 @@
+import { chapterThreeQuests } from "./chapter-three.ts";
+import { interludeQuests, isInterlude, interludeUnlocked } from "./interludes.ts";
 import {
   TRADE_QUEST,
   RETURN_QUEST,
@@ -222,14 +224,17 @@ export const quests: Quest[] = (
       availability: "repeatable",
     },
     ...chapterTwoQuests,
+    ...interludeQuests,
+    ...chapterThreeQuests,
   ] satisfies Quest[]
 ).sort((a, b) => a.unlock - b.unlock);
 export const allQuests: Quest[] = quests;
 export const availableQuests = (s: State) =>
-  quests.filter(
-    (q) =>
-      q.unlock <= s.clears &&
-      isPrologueQuest(q.id) &&
-      stageUnlocked(s, q.id) &&
-      (q.availability !== "once" || !s.done[q.id]),
+  quests.filter((q) =>
+    isInterlude(q.id)
+      ? interludeUnlocked(s, q.id) && !s.story?.read.includes(q.id)
+      : q.unlock <= s.clears &&
+        isPrologueQuest(q.id) &&
+        stageUnlocked(s, q.id) &&
+        (q.availability !== "once" || !s.done[q.id]),
   );

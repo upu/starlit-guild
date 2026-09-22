@@ -87,7 +87,16 @@ const artwork: Partial<Record<string, ReactNode>> = {
 
 // Small silhouettes stay distinct at 40px; unknown items retain a slot fallback.
 export function ShopItemIcon({ item }: { item: Equipment }) {
-  const art = artwork[item.id];
+  const family: Partial<Record<string, string>> = {
+    "berne-bow": "ash-bow",
+    "berne-sword": "steel-sword",
+    "berne-staff": "familiar-staff",
+    "berne-dagger": "familiar-sword",
+    "familiar-dagger": "familiar-sword",
+    "berne-jacket": "leather-vest",
+    "berne-workcoat": "gathering-coat",
+  };
+  const art = artwork[family[item.id] ?? item.id];
   if (!art)
     return item.slot === "weapon" ? <Swords aria-hidden="true" /> : <Shield aria-hidden="true" />;
   return (

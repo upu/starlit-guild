@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { questScenery } from "@/lib/scenery";
-import { trioQuest } from "@/lib/chapter-two";
+import { storyParty } from "@/lib/story-party";
 import { Check, LockKeyhole } from "lucide-react";
 import { availableQuests, heroes, type State, type Quest } from "@/lib/game";
 import { storyStages, nextStage } from "@/lib/prologue";
@@ -135,7 +135,7 @@ export function QuestPicker({
         />
         <p className="departure-party">
           <span>
-            {(trioQuest(q.id) ? ["aria", "leon", "mira"] : ["aria", "leon"])
+            {storyParty(q.id)
               .map((id) => heroes.find((h) => h.id === id)?.name ?? "不明な仲間")
               .join("・")}
           </span>

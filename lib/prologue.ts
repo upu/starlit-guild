@@ -1,3 +1,4 @@
+import { chapterThreeStages, isChapterThreeQuest, LUNCH_INTERLUDE } from "./chapter-three.ts";
 import { chapterTwoStages } from "./chapter-two.ts";
 import type { State, Squad } from "./game.ts";
 
@@ -75,7 +76,7 @@ export const prologueStages = [
     detail: "道具を置いて、ふたりで塔を見上げましょう。",
   },
 ];
-export const storyStages = [...prologueStages, ...chapterTwoStages];
+export const storyStages = [...prologueStages, ...chapterTwoStages, ...chapterThreeStages];
 export const isPrologueQuest = (id: string) => storyStages.some((stage) => stage.quest === id);
 // Absent in existing saves: those adventures keep their unlocked features.
 export const inPrologue = (s: State) => s.prologue === true;
@@ -98,6 +99,7 @@ export const stageEndingPending = (s: State) =>
 export const tradeEndingPending = (s: State) => stageEndingPending(s) === TRADE_QUEST;
 // Use recorded completions and readings; do not migrate or reset existing saves.
 export function stageUnlocked(s: State, id: string) {
+  if (isChapterThreeQuest(id) && !s.story?.read.includes(LUNCH_INTERLUDE)) return false;
   const index = storyStages.findIndex((stage) => stage.quest === id);
   return (
     index <= 0 ||

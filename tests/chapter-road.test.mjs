@@ -1,3 +1,4 @@
+import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState, allQuests, encounter } from "../lib/game.ts";
@@ -13,7 +14,8 @@ import { travellerLane } from "../lib/road-view.ts";
 import { roadY, roadBackdrop } from "../lib/road-layout.ts";
 
 function start(index, level = 30) {
-  const state = testState(1000, index, level, 1000);
+  let state = testState(1000, index, level, 1000);
+  if (index === 18) state = act(state, { type: "readStory", id: LUNCH_INTERLUDE }, 1000);
   return act(
     state,
     { type: "start", id: storyStages[index].quest, value: false, readDeparture: true },
@@ -42,7 +44,7 @@ const input = (s, now = s.updatedAt) => ({
   paused: false,
 });
 
-test("all 18 scrolling stages finish unattended, roundtrip coordinates, preserve exact rewards and offline parity", () => {
+test("all 27 scrolling stages finish unattended, roundtrip coordinates, preserve exact rewards and offline parity", () => {
   for (let index = 0; index < storyStages.length; index++) {
     const initial = start(index),
       q = allQuests.find((q) => q.id === storyStages[index].quest);

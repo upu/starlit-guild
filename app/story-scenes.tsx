@@ -212,7 +212,11 @@ export function StoryLibrary({
             >
               <span>
                 <small>
-                  {st.chapter === "departure" ? "出発前" : "達成後"}
+                  {st.chapter === "interlude"
+                    ? "幕間"
+                    : st.chapter === "departure"
+                      ? "出発前"
+                      : "達成後"}
                   {!read.includes(st.id) && " · 未読"}
                 </small>
                 <b>{st.title}</b>

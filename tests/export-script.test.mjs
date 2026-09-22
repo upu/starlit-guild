@@ -23,7 +23,7 @@ test("generated index links all stages and every generated file is current", () 
   assert.equal(files.size, storyStages.length + 3);
   for (const [path, content] of files) assert.equal(readGenerated(path), content, path);
   const index = files.get("script.md");
-  assert.ok(index.split("\n").length < 35);
+  assert.ok(index.split("\n").length < 45);
   assert.deepEqual(
     [...index.matchAll(/^- \[(.+)\]\(stages\/(.+)\.md\)$/gm)].map((match) => match[1]),
     storyStages.map(
@@ -34,7 +34,7 @@ test("generated index links all stages and every generated file is current", () 
 });
 
 test("each stage preserves its two scenes and every still reveal", () => {
-  assert.equal(stories.length, storyStages.length * 2);
+  assert.equal(stories.filter((st) => st.chapter !== "interlude").length, storyStages.length * 2);
   for (const stage of storyStages) {
     const content = readGenerated(`stages/${stage.number}.md`);
     assert.match(content, /自動生成ファイルです。手で編集せず/);
@@ -103,6 +103,7 @@ test("shared banter includes both idle parties, relationship tiers and combo lin
   for (const [members, count] of [
     [["aria", "leon"], 6],
     [["aria", "leon", "mira"], 8],
+    [["aria", "leon", "mira", "finn"], 8],
   ]) {
     for (let index = 0; index < count; index++) {
       assert.ok(

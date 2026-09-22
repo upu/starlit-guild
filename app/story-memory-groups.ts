@@ -1,3 +1,4 @@
+import { interludes } from "@/lib/interludes";
 import { allQuests } from "@/lib/game";
 import { storyStages } from "@/lib/prologue";
 import type { Story } from "@/lib/stories";
@@ -23,5 +24,15 @@ export function memoryGroups(items: Story[]) {
         ]
       : [];
   });
+  for (const entry of interludes) {
+    const scenes = items.filter((st) => st.id === entry.id);
+    if (!scenes.length) continue;
+    const index = journey.findIndex((group) => group.id === entry.before);
+    journey.splice(index < 0 ? journey.length : index, 0, {
+      id: entry.id,
+      title: "幕間 · " + scenes[0].title,
+      items: scenes,
+    });
+  }
   return journey;
 }

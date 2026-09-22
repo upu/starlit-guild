@@ -11,6 +11,7 @@ import {
   ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
+  ROAD_BERNE_WORKSITES,
   ROAD_SIGNPOST,
   roadSheet,
   roadWalkSheet,
@@ -33,8 +34,12 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_PACKING,
       ROAD_DESTINATION,
       ROAD_WORKSITES,
+      ROAD_BERNE_WORKSITES,
       ROAD_SIGNPOST,
-      ...(["aria", "leon", "mira"] as const).flatMap((id) => [roadSheet(id), roadWalkSheet(id)]),
+      ...(["aria", "leon", "mira", "finn"] as const).flatMap((id) => [
+        roadSheet(id),
+        roadWalkSheet(id),
+      ]),
       ...(look.work ? [look.work.asset] : []),
     ]),
   ];

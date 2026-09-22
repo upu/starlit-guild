@@ -1,3 +1,4 @@
+import { chapterThreeWorkload } from "./chapter-three.ts";
 import { beginRoadExit, startRoadScene } from "./road-scenes.ts";
 import { questNodes } from "./puppet-battles.ts";
 import { createEnemies, damageEnemy, penetration, syncEnemyTotals } from "./combat.ts";
@@ -64,7 +65,11 @@ export function configureTarget(r: Run, q: Quest) {
   r.enemies =
     encounter(q, r.node) === "battle" ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15) : [];
   r.targetMax = Math.round(
-    q.need * 1.12 * (encounter(q, r.node) === "escort" ? 1.8 : 2.3) * chapterTwoWorkload(q.id),
+    q.need *
+      1.12 *
+      (encounter(q, r.node) === "escort" ? 1.8 : 2.3) *
+      chapterTwoWorkload(q.id) *
+      chapterThreeWorkload(q.id),
   );
   r.target = r.targetMax;
   r.hits = 0;
@@ -140,6 +145,11 @@ export function nextEvent(r: Run) {
   );
 }
 export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
+  finn: {
+    style: "melee",
+    name: "隙を突く一刺し",
+    description: "短剣で素早く間合いに入り、4回ごとに隙を突く一撃。",
+  },
   aria: {
     style: "ranged",
     name: "風の二連矢",

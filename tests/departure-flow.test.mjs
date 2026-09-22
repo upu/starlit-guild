@@ -1,5 +1,8 @@
+import * as storyParty from "../lib/story-party.ts";
+import * as interludes from "../lib/interludes.ts";
 import * as navigation from "../lib/quest-navigation.ts";
 import * as chapterTwo from "../lib/chapter-two.ts";
+import * as chapterThree from "../lib/chapter-three.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -30,6 +33,7 @@ vm.runInNewContext(
         "@/lib/quest-navigation": navigation,
         "react/jsx-runtime": jsxRuntime,
         "@/lib/chapter-two": chapterTwo,
+        "@/lib/story-party": storyParty,
         "@/lib/game": game,
         "@/lib/prologue": prologue,
         "@/lib/original-characters": { originalCharacters: [] },
@@ -77,6 +81,8 @@ function harness(initialState) {
     },
   };
   const modules = {
+    "@/lib/interludes": interludes,
+    "@/lib/chapter-three": chapterThree,
     react: {
       useState(initial) {
         const i = cursor++;
@@ -355,6 +361,40 @@ test("idle dialogue has six complete, distinct exchanges and never changes the s
   assert.equal(new Set(exchanges).size, 6);
   assert.equal(JSON.stringify(story.journeyBanter(s, s.squads[0], 180000)), exchanges[0]);
   assert.deepEqual(s, before);
+});
+
+test("interlude waits for quest selection and departure, remains after cancel and vanishes only on finishing", () => {
+  for (const autoNextQuest of [false, true]) {
+    const s = game.testState(1000, 18, 17, 5000);
+    s.autoNextQuest = autoNextQuest;
+    const h = harness(s),
+      id = chapterThree.LUNCH_INTERLUDE;
+    assert.equal(h.model.ending, null);
+    assert.equal(h.model.reading, null);
+    assert.ok(game.availableQuests(s).some((q) => q.id === id));
+    h.model.selectQuest(id);
+    h.render();
+    h.departButton().props.onClick();
+    h.render();
+    assert.equal(h.model.reading.id, id);
+    assert.equal(h.api.s.squads[0].run, null);
+    h.model.closeStory();
+    h.render();
+    assert.deepEqual(h.api.s, s);
+    h.departButton().props.onClick();
+    h.render();
+    h.model.finishStory();
+    h.model.closeStory();
+    h.render();
+    assert.ok(h.api.s.story.read.includes(id));
+    assert.equal(h.model.quest.id, chapterThree.BERNE_QUEST);
+    assert.equal(harness(h.api.s).model.quest.id, chapterThree.BERNE_QUEST);
+    assert.equal(h.model.run, null);
+    assert.equal(h.api.s.gold, s.gold);
+    assert.deepEqual(h.api.s.xp, s.xp);
+    assert.deepEqual(h.api.s.done, s.done);
+    assert.ok(!game.availableQuests(h.api.s).some((q) => q.id === id));
+  }
 });
 
 test("reading the first ending replaces a previous UI choice with the saved next destination without departing", () => {

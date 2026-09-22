@@ -131,6 +131,7 @@ export function TechniquePanel(
       {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
       <div className="character-slots">
         {(["active", "passive"] as const).map((kind) => {
+          if (!techniques.some((t) => t.hero === props.hero && t.slot === kind)) return null;
           const current = techniques.find(
             (t) => t.id === equippedTechnique(props.state, props.hero, kind),
           );

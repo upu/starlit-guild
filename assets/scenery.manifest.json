@@ -1,6 +1,25 @@
 {
   "version": 1,
   "files": {
+    "berne.png": {
+      "sourceHash": "1ca347478f233b26ba1c35762bb398be10d958cb7ca63215d78f54bb4e07b93f",
+      "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
+      "sourceBytes": 3005883,
+      "outputs": {
+        "thumbnail": {
+          "hash": "c4dbfb58fac8a3e69667c6bf24df8e1b75dc0467d9a5b1a99f3429b11af08342",
+          "bytes": 19966
+        },
+        "detail": {
+          "hash": "fac7345a77f5e81b096f7d2f3a8e8693b72d97850d8b4db34575a4a8863b4a74",
+          "bytes": 88214
+        },
+        "background": {
+          "hash": "096e97a9ece018dd6c2193b9a34a347e6f8a9fbbf0f08302fb906e787d25e954",
+          "bytes": 311950
+        }
+      }
+    },
     "evening-trade-road.png": {
       "sourceHash": "88a7f522efe901d1ddc102bfae91e1cf9f13df00e4acad7d487eb2080aad2387",
       "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
@@ -112,6 +131,25 @@
         "background": {
           "hash": "8f9003382d3bc4b2a236e3bc8a159c500a6452278d91e64469b725fe1c59d196",
           "bytes": 498472
+        }
+      }
+    },
+    "riverside-manor.png": {
+      "sourceHash": "2088cec0dbd08ad9cbc7e9ac9f645128645ad13265d3d53153489f5852ff585a",
+      "profileHash": "0d9bcdd43e40ea4dacc2dcd9bb33a676d8e7e98fedc6f7195b8a89ae149b5df8",
+      "sourceBytes": 3163261,
+      "outputs": {
+        "thumbnail": {
+          "hash": "b8f5336700997861a3a409dea76d80d0b5d499bd6fc486c77486b5dd51d6bfa5",
+          "bytes": 24064
+        },
+        "detail": {
+          "hash": "e7fa1596501e2fb0128531809aeacc115b04279a0fe7e1db48d12d1602d56306",
+          "bytes": 94508
+        },
+        "background": {
+          "hash": "c1add2ce42f0c24d635a8fc7957f5887a5b1af0383449b37646356f69da624fc",
+          "bytes": 360430
         }
       }
     },

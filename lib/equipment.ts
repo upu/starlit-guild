@@ -1,3 +1,4 @@
+import { BERNE_QUEST } from "./chapter-three.ts";
 import type { State } from "./game.ts";
 import { stageUnlocked, TOWER_QUEST } from "./prologue.ts";
 
@@ -17,6 +18,74 @@ export type Inventory = {
   equipped: Partial<Record<string, Partial<Record<EquipmentSlot, string>>>>;
 };
 export const equipment: Equipment[] = [
+  {
+    id: "familiar-dagger",
+    name: "使い慣れた短剣",
+    description: "フィンが外套の内に忍ばせる、手入れの行き届いた短剣。",
+    slot: "weapon",
+    heroes: ["finn"],
+    bonus: [1, 0, 1],
+    price: 0,
+    tier: 0,
+  },
+  {
+    id: "berne-bow",
+    name: "楡の合わせ弓",
+    description: "ベルネの職人が張りを揃えた、狙いのぶれにくい弓。",
+    slot: "weapon",
+    heroes: ["aria"],
+    bonus: [3, 0, 5],
+    price: 420,
+    tier: 2,
+  },
+  {
+    id: "berne-sword",
+    name: "鍛え鋼の剣",
+    description: "刃と重心を整えた、街道の護衛向けの剣。",
+    slot: "weapon",
+    heroes: ["leon"],
+    bonus: [0, 2, 6],
+    price: 420,
+    tier: 2,
+  },
+  {
+    id: "berne-staff",
+    name: "白樺の往診杖",
+    description: "石畳でも滑りにくい石突きを備えた、軽い杖。",
+    slot: "weapon",
+    heroes: ["mira"],
+    bonus: [2, 5, 2],
+    price: 360,
+    tier: 2,
+  },
+  {
+    id: "berne-dagger",
+    name: "細工師の短剣",
+    description: "細かな作業にも扱いやすい、よく研がれた短剣。",
+    slot: "weapon",
+    heroes: ["finn"],
+    bonus: [4, 0, 5],
+    price: 360,
+    tier: 2,
+  },
+  {
+    id: "berne-jacket",
+    name: "重ね革の旅上着",
+    description: "肘と肩を補強し、動きやすさを残した上着。",
+    slot: "armor",
+    bonus: [0, 6, 0],
+    price: 300,
+    tier: 2,
+  },
+  {
+    id: "berne-workcoat",
+    name: "石工の作業外套",
+    description: "膝をつく調査や石の扱いに向く、丈夫な仕立て。",
+    slot: "armor",
+    bonus: [5, 2, 0],
+    price: 280,
+    tier: 2,
+  },
   {
     id: "familiar-bow",
     name: "使い慣れた弓",
@@ -118,6 +187,15 @@ export function grantMiraEquipment(s: State) {
   slots.weapon ??= "familiar-staff";
   slots.armor ??= "travel-clothes";
 }
+export function grantFinnEquipment(s: State) {
+  if (!s.owned.includes("finn") || s.inventory?.items["familiar-dagger"]) return;
+  const inventory = (s.inventory ??= initialInventory());
+  inventory.items["familiar-dagger"] = 1;
+  inventory.items["travel-clothes"] = (inventory.items["travel-clothes"] ?? 0) + 1;
+  const slots = (inventory.equipped.finn ??= {});
+  slots.weapon ??= "familiar-dagger";
+  slots.armor ??= "travel-clothes";
+}
 export function equippedItems(s: Pick<State, "inventory">, hero: string) {
   return Object.values(inventoryOf(s).equipped[hero] ?? {}).flatMap((id) => {
     const item = equipmentById(id);
@@ -137,6 +215,7 @@ export function availableCopies(s: Pick<State, "inventory">, id: string) {
   return (inventoryOf(s).items[id] ?? 0) - equippedBy(s, id).length;
 }
 export function shopTier(s: State) {
+  if (s.done[BERNE_QUEST] && s.story?.read.includes(BERNE_QUEST + "-return")) return 2;
   const unlocked = stageUnlocked(s, TOWER_QUEST);
   return unlocked ? 1 : 0;
 }

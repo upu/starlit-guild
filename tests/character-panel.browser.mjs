@@ -19,7 +19,7 @@ const bundle = await build({
  import {testState,act} from './lib/game';
  import {initialInventory} from './lib/equipment';
  const params=new URLSearchParams(location.search);
- const initial=testState(1000,params.has("locked") ? 2 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
+ const initial=testState(1000,params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
  function App(){
@@ -303,6 +303,31 @@ try {
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
     await page.getByRole("button", { name: /アクティブ技.*習得・セット/ }).click();
     assert.equal(await page.locator(".character-learnable-dot").count(), 0);
+    await page.goto("http://127.0.0.1:" + server.address().port + "/?quartet");
+    for (const [hero, passive] of [
+      ["ミラ", "丁寧な手当て"],
+      ["フィン", "隙を見抜く目"],
+    ]) {
+      await page.getByRole("button", { name: hero, exact: true }).click();
+      assert.equal(await page.getByText("アクティブ技", { exact: true }).count(), 1);
+      assert.equal(
+        await page.getByRole("button", { name: /アクティブ技.*習得・セット/ }).count(),
+        0,
+      );
+      await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+      await page.getByRole("button", { name: passive, exact: true }).click();
+      await page.getByRole("button", { name: passive + "を習得する", exact: true }).click();
+      await page.getByRole("button", { name: passive, exact: true }).click();
+      await page.getByRole("button", { name: "閉じる", exact: true }).click();
+      assert.equal(
+        await page
+          .getByRole("button", { name: "パッシブ技・" + passive + "・習得・セット", exact: true })
+          .count(),
+        1,
+      );
+      await page.screenshot({ path: path.join(dir, hero + "-" + width + ".png") });
+    }
+    assert.deepEqual(errors, []);
     await context.close();
   }
 } finally {

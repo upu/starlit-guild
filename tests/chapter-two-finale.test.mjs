@@ -99,7 +99,7 @@ test("2-6 save continues through 2-9 with first-ending gates, offline parity and
     for (const key of ["gold", "herbs", "ore", "owned", "inventory"])
       assert.deepEqual(s[key], offline[key]);
   }
-  assert.match(nextGoal(s).title, /第二章の冒険を終えました/);
+  assert.match(nextGoal(s).title, /幕間/);
   assert.doesNotMatch(nextGoal(s).detail, /準備中/);
   for (const id of stages) {
     const repeated = roundtrip(settle(start(s, id), s.updatedAt + 3600000).state);

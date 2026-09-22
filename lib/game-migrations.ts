@@ -1,10 +1,11 @@
+import { BERNE_QUEST, LUNCH_INTERLUDE, isChapterThreeQuest } from "./chapter-three.ts";
 import { DELIVERY_PREP_QUEST, PICNIC_QUEST } from "./chapter-two.ts";
 import { nextStage, storyStages } from "./prologue.ts";
 import { storyProgress } from "./stories.ts";
 import type { LegacySharedHealthState, LegacySharedRun, Run, State } from "./game-types.ts";
 import { initialPrologueState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
-import { joinStoryMira } from "./game-actions.ts";
+import { joinStoryMira, joinStoryFinn } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
 
 function upgradeSharedHealth(input: State | LegacySharedHealthState): State {
@@ -78,6 +79,8 @@ export function completeStoryStages(s: State, count: number) {
     addOnce(story.read, quest + "-departure");
     addOnce(story.read, quest + "-return");
     if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+    if (isChapterThreeQuest(quest)) addOnce(story.read, LUNCH_INTERLUDE);
+    if (quest === BERNE_QUEST) joinStoryFinn(s);
   }
 }
 // Builds an achievement-count record for the regression tests that still cover the legacy mode.

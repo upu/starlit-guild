@@ -15,6 +15,7 @@ import {
 import type { TechniqueSlot } from "@/lib/techniques";
 
 const icons: Partial<Record<string, LucideIcon>> = {
+  "finn-opening": Crosshair,
   "mira-care": HeartPlus,
   "aria-double": BowArrow,
   "aria-gather": Leaf,

@@ -7,7 +7,7 @@ import { stories, availableStories } from "../lib/stories.ts";
 import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
 import { renderScripts } from "../scripts/export-script.mjs";
 
-test("draft dialogue is complete, renderable, and stays outside game progression", () => {
+test("third-chapter dialogue is complete, renderable, connected and locked on a fresh save", () => {
   assert.equal(chapterThreeSections.length, 10);
   assert.equal(chapterThreeStories.length, 19);
   assert.equal(new Set(chapterThreeStories.map((scene) => scene.id)).size, 19);
@@ -21,9 +21,9 @@ test("draft dialogue is complete, renderable, and stays outside game progression
   }
   for (const scene of chapterThreeStories) {
     assert.ok(scene.lines.length > 0);
-    assert.equal(scene.quest, undefined);
-    assert.ok(!stories.some((live) => live.id === scene.id));
-    assert.ok(!allQuests.some((quest) => quest.id === scene.quest));
+    assert.ok(stories.includes(scene));
+    if (scene.chapter === "interlude") assert.equal(scene.quest, undefined);
+    else assert.ok(allQuests.some((quest) => quest.id === scene.quest));
     for (const line of scene.lines) {
       assert.ok(line.text.trim());
       if (!line.speaker) continue;
@@ -33,8 +33,8 @@ test("draft dialogue is complete, renderable, and stays outside game progression
         assert.ok(portraitAtlases[line.speaker].expressions.includes(line.expression));
     }
   }
-  assert.ok(!heroes.some((hero) => hero.id === "finn"));
-  assert.ok(availableStories(state).every((scene) => !scene.id.startsWith("chapter-three-draft-")));
+  assert.ok(heroes.some((hero) => hero.id === "finn"));
+  assert.ok(availableStories(state).every((scene) => !chapterThreeStories.includes(scene)));
   assert.equal(JSON.stringify(state), before);
 });
 
