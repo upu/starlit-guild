@@ -50,10 +50,6 @@ function JourneyOverlay({
   return (
     <>
       <BurstScene run={run} members={squad.members} now={now} />
-      <div className="map-journey" aria-hidden="true">
-        <span>旅の道のり · {chapterRoadProgress(run)}%</span>
-        <progress max={100} value={chapterRoadProgress(run)} />
-      </div>
       <div className="sr-only">
         <span>
           {frame.members
@@ -93,6 +89,12 @@ function mapHeading(
             ? "ふたりの小さな冒険が、ここから始まる。"
             : "支度ができたら、次の冒険へ。"}
       </span>
+      {run && (
+        <div className="map-journey" aria-hidden="true">
+          <span>旅の道のり · {chapterRoadProgress(run)}%</span>
+          <progress max={100} value={chapterRoadProgress(run)} />
+        </div>
+      )}
     </div>
   );
 }
