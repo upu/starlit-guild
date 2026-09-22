@@ -1,10 +1,12 @@
 # アリア・レオン・ミラの動作画像
 
+案内：[人物画像](character-images.md)
+
 ## ミラと山道
 
 ミラは `docs/characters/mira-reference-sheet.webp` を人物の正本、既存の二人の動作画像を画風の参考に、組み込み `image_gen` で制作。採用した `public/animations/mira-v1.png` は1448×1086のRGBA PNGで、歩行4コマ、攻撃・回復の詠唱4コマ、待機・瞬き2コマ、被弾2コマを収録する。細かな塗りの揺れが縮小時に粗く見えたため、輪郭と色面を整理した修正版を採用した。
 
-2-4と2-6は、足元が谷の遠景に重なっていた背景を `assets/source/scenery/mountain-road.png`（1024×1536）へ変更。待機位置と戦闘位置の下に、地面が連続する山道を描いた。画像の生成・修正は組み込みツールを使い、原本の画素はプログラムで加工していない。
+同時に制作した2-4・2-6の背景は [山道の背景](background-images.md#山道の背景) を参照する。
 
 最終プロンプト・参照・採用原本は [ミラと山道の生成記録](../art-generation/mira-animation-road-art.json)。
 

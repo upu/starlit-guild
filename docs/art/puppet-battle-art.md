@@ -1,5 +1,7 @@
 # 覆面の操り手の戦闘画像
 
+案内：[人物画像](character-images.md)
+
 採用画像：public/enemies/masked-pumpety.png。2-7最後の戦闘のみで使用する。1024×1536、RGBA PNG。背景の透明画素と実際のPhaser描画を確認済み。
 
 既存の public/characters/pumpety.png を参照し、imagegenで制作。黒い身頃、緑の袖、黄色のスカート、茶色の髪とブーツを保ち、頭全体をカボチャで覆う。穴の中は黒く、目元と素顔を見せない。木製の操り棒を掲げ、本人以外の人形は画像に含めない。ゲーム側で左右反転し、味方へ向ける。

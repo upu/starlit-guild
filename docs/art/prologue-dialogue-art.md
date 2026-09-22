@@ -1,5 +1,7 @@
 # 第一章の顔アイコンと受け渡しスチル
 
+案内：[人物画像](character-images.md)
+
 組み込みの画像生成ツールを使用し、`public/stories/first-map.png` と `public/sprites.png` を人物・画風の参照にした。採用素材の表示条件と再生成に必要な情報をまとめる。
 
 - `public/portraits/aria.png`：アリアの顔アイコン。

@@ -1,5 +1,7 @@
 # ストーリー動画の管理
 
+案内：[アート・音](README.md)
+
 ## 使い方
 
 1. 元動画を `assets/source/story-videos/` へ置く。英小文字・数字・ハイフンのファイル名を使う（例：`medicine-delivered.mp4`）。MP4 / MOV / WebM / MKVに対応。同名・別拡張子はエラー。

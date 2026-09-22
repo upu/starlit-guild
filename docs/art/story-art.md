@@ -1,5 +1,7 @@
 # スチル制作記録
 
+案内：[アート・音](README.md)
+
 ## 配信用 WebP の生成
 
 採用した元 PNG は `assets/source/stories/` に保存する。`npm run stills:optimize` は各 PNG から鑑賞用の `public/stories/<名前>.webp` と、中央を正方形に切り抜いた `public/stories/thumbnails/<名前>.webp` を生成する。設定は `config/story-stills.json`、入力・出力のハッシュと容量は `assets/story-stills.manifest.json` に記録する。元 PNG を配信しない。

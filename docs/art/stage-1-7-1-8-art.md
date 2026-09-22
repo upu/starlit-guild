@@ -1,5 +1,7 @@
 # STARLIT-GUILD drainage art
 
+案内：[背景画像](background-images.md)
+
 Mode: built-in image_gen. The two adopted 1536x1024 landscape backgrounds were visually inspected. Stage 1-8 has no ending still; the restored background and dialogue carry that part of the story.
 
 | Asset | Repository path | Usage |
