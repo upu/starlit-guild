@@ -100,6 +100,7 @@ try {
     ["moss", 5, "worksite"],
     ["waterway", 6, "worksite"],
     ["forest", 0, "ambush"],
+    ["touch", 0, "ambush"],
     ["work", 11, "worksite"],
     ["trio", 12, "battle"],
     ["signpost", 13, "worksite"],
@@ -113,7 +114,11 @@ try {
     ["escape", 15, "escape"],
   ]) {
     if (process.env.TEST_SCENES && !process.env.TEST_SCENES.split(",").includes(name)) continue;
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 } }),
+    const context = await browser.newContext({
+        viewport: { width: 390, height: 844 },
+        hasTouch: name === "touch",
+        isMobile: name === "touch",
+      }),
       page = await context.newPage(),
       save = fixture(index, mode);
     page.on("pageerror", (e) => errors.push(e.message));
@@ -159,7 +164,7 @@ try {
     assert.ok(await page.evaluate(() => window.roadMipFilters > 0));
     assert.equal(await page.locator(".journey-banter").count(), 1);
     assert.ok(await page.locator(".map-journey progress").count());
-    for (const [width, height] of name === "forest"
+    for (const [width, height] of ["forest", "touch"].includes(name)
       ? [
           [1280, 960],
           [390, 844],
@@ -178,6 +183,47 @@ try {
         .locator(".phone-game")
         .evaluate((el) => ({ width: el.clientWidth, scrollWidth: el.scrollWidth }));
       assert.ok(layout.scrollWidth <= layout.width + 1);
+      const chat = page.getByRole("region", { name: "道中の掛け合い" });
+      const chatStyle = () =>
+        chat.evaluate((el) => {
+          const style = getComputedStyle(el);
+          return { background: style.backgroundColor, image: style.backgroundImage };
+        });
+      const background = await chatStyle();
+      assert.deepEqual(background, { background: "rgba(30, 33, 37, 0.38)", image: "none" });
+      await chat.hover();
+      assert.deepEqual(await chatStyle(), background);
+      await chat.focus();
+      assert.deepEqual(await chatStyle(), background);
+      await page.mouse.down();
+      assert.deepEqual(await chatStyle(), background);
+      await page.mouse.up();
+      if (name === "touch") {
+        await chat.tap();
+        assert.deepEqual(await chatStyle(), background);
+      }
+      const geometry = await page.evaluate(() => {
+        const chat = document.querySelector(".journey-banter");
+        const map = document.querySelector(".adventure-map").getBoundingClientRect();
+        const progress = document.querySelector(".map-journey").getBoundingClientRect();
+        const activity = document
+          .querySelector(".map-heading > span:last-of-type")
+          .getBoundingClientRect();
+        return {
+          rows: Number(getComputedStyle(chat).getPropertyValue("--chat-rows")),
+          chatHeight: chat.getBoundingClientRect().height,
+          progressTop: progress.top - map.top,
+          progressBottom: progress.bottom,
+          activityBottom: activity.bottom,
+          chatTop: chat.getBoundingClientRect().top,
+        };
+      });
+      const rows = width < 760 || (name === "touch" && height <= 500) ? 3 : 5;
+      assert.equal(geometry.rows, rows);
+      assert.ok(Math.abs(geometry.chatHeight - (rows * 42 + 7)) <= 1);
+      assert.ok(geometry.progressTop < 180);
+      assert.ok(geometry.progressBottom > geometry.activityBottom);
+      assert.ok(geometry.progressBottom < geometry.chatTop);
       await page.screenshot({ path: `${output}/${name}-${width}.png` });
     }
     await page.emulateMedia({ reducedMotion: "reduce" });

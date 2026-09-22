@@ -1,5 +1,7 @@
 # シナリオスチル一覧
 
+案内：[アート・音](README.md)
+
 ## 薬を待つ家々
 
 ![薬と蜜の配達](../../public/stories/medicine-delivered.webp)

@@ -21,6 +21,9 @@
   --chat-rows: 5;
 }
 .phone-game .phone-adventure > .journey-banter,
+.phone-game .phone-adventure > .journey-banter:hover:not(:disabled),
+.phone-game .phone-adventure > .journey-banter:focus,
+.phone-game .phone-adventure > .journey-banter:active,
 .phone-game .phone-adventure > .phone-banter {
   background: rgb(30 33 37 / 38%);
   color: #fff;
@@ -34,12 +37,13 @@
 .phone-game .phone-adventure > .adventure-actions {
   grid-area: 2 / 1;
 }
-/* Keep journey progress just above the bottom conversation. */
+/* Keep progress in the heading flow, below the current activity. */
 .phone-game .phone-adventure .map-journey {
-  bottom: calc(var(--chat-rows, 3) * (2.5rem + 2px) + 13px);
+  position: static;
+  margin-top: 6px;
 }
-/* Short screens prioritize the battle and retain scrolling for older lines. */
-@media (max-height: 740px) {
+/* Phones show three messages; older lines remain available by scrolling. */
+@media (max-width: 759px), (hover: none) and (pointer: coarse) and (max-height: 500px) {
   .phone-game .phone-adventure-running {
     --chat-rows: 3;
   }

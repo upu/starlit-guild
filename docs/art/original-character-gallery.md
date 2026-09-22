@@ -1,5 +1,7 @@
 # オリジナルキャラクターと新しい思い出
 
+案内：[人物画像](character-images.md)
+
 指定された参考絵に合わせて修正した立ち絵と、既存の仲間とのスチル。従来モードの削除にともない、チャチャの立ち絵と会話絵3枚は画像も削除した（構図と条件は下の記録に残す）。
 制作方法は組み込み image_gen。[メリルの自然なポーズとギャグスチルの修正記録](../art-generation/merrill-relaxed-gag-prompts.json)・[最終プロンプトと参照画像](../art-generation/original-character-art-v2-prompts.json)・[制作記録](original-character-art.md)。
 

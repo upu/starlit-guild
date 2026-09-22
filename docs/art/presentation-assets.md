@@ -1,15 +1,10 @@
 # 演出素材
 
+案内：[アイコン・演出](icons-and-effects.md)
+
 ## 第一章のステージ背景
 
-内蔵 imagegen で各1回生成し、1536×1024 PNGを採用。`assets/source/scenery/evening-trade-road.png` は1-2の夕方の交易路、`assets/source/scenery/town-deliveries.png` は1-3の倉庫と商店の通り。`Quest.background` を通じてクエスト一覧・冒険マップに表示する。
-
-共通指示：STARLIT-GUILDの温かな日本風ファンタジーRPG向け、painterly anime environment、crisp polished warm soft light、landscape 1536×1024。人物・敵・文字・UIを描かず、下半分は仲間のスプライトを置ける広い前景にする。
-
-- 夕方の交易路：quiet rural dirt trade road at sunset, low trees and grassy verge, fork in distance, golden orange sky, no tower or glowing moss。採用画像の遠景には街並みと尖塔状の屋根があるが、物語の塔としては扱わない。
-- 街の仕事：modest medieval fantasy town market warehouse lane in daytime, timber and cream plaster stores, crates and cloth parcels at sides, cart near store, sunlit cobblestone street, no visible tower。
-
-目視で前景の余白・人物やUIの不在を確認。キャラクター立ち絵・会話スチルは既存素材を維持する。
+交易路・街の背景の制作記録は [背景画像](background-images.md#交易路と街の背景) へ移した。
 
 ## 発見アイテム
 
@@ -43,5 +38,3 @@ Subject: friendly lost forest spirit, cute mint and aqua luminous small floating
 - 既存の15地点描画、セーブ移行、オフライン精算、複数タブ復帰に加え、演出の期限・前地点除外・3種アイテムの描画・音の重複抑制と消音を自動検証する。
 - 画像は目視で確認。ブラウザーでのアニメーション目視、実機の音の聞こえ方・音量・性能は未検証。
 - BGMはオリジナル曲2曲の元 WAV を `assets/source/music/` に保存し、`public/music/camp.m4a` と `public/music/journey.m4a` を配信する。生成手順は [音楽と効果音](audio.md) を参照。外部の音楽生成サービスは使用せず、`scripts/compose-bgm.mjs` に楽譜と合成方法を保持する。キャラ音声は未追加。
-
-クエスト背景の元PNGは `assets/source/scenery/` へ移動済み。実際の表示には[用途別の生成WebP](scenery-images.md)を使用する。
