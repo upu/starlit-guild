@@ -1,5 +1,7 @@
 # スタートページのアート
 
+案内：[背景画像](background-images.md)
+
 内蔵 imagegen で生成。背景は WebP に変換し、ロゴは生成時のアルファチャンネルを保った lossless WebP として保存。
 
 - 横画面: `public/title/starlight-towers.webp`（1536 × 1024）
