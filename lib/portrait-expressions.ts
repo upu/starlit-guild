@@ -9,6 +9,7 @@ export const portraitExpressions = [
   "tired",
   "mischievous",
   "thoughtful",
+  "shouting",
 ] as const;
 export type PortraitExpression = (typeof portraitExpressions)[number];
 
@@ -18,7 +19,12 @@ export const portraitAtlases = {
   leon: standardAtlas,
   mira: standardAtlas,
   pumpety: standardAtlas,
-  finn: { columns: 3, rows: 3, expressions: portraitExpressions },
+  finn: { columns: 3, rows: 3, expressions: portraitExpressions.slice(0, 9) },
+  lico: {
+    columns: 3,
+    rows: 3,
+    expressions: [...portraitExpressions.slice(0, 8), "shouting"],
+  },
 } as const;
 export type PortraitCharacter = keyof typeof portraitAtlases;
 

@@ -139,7 +139,7 @@ test("Finn uses nine cells through the shared API; eight-cell characters fall ba
     "50% 100%",
     "100% 100%",
   ];
-  for (const [cell, expression] of portraits.portraitExpressions.entries()) {
+  for (const [cell, expression] of portraits.portraitExpressions.slice(0, 9).entries()) {
     assert.deepEqual(portraits.expressionPortrait("finn", expression), {
       src: "/portraits/finn-expressions.webp",
       size: "300% 300%",
@@ -157,4 +157,35 @@ test("Finn uses nine cells through the shared API; eight-cell characters fall ba
       portraits.expressionPortrait(character),
     );
   }
+});
+
+test("Lico's grin and discovery shout render distinct cells at chat and dialogue sizes", async () => {
+  for (const size of [40, 72]) {
+    const positions = new Set();
+    for (const expression of portraits.portraitAtlases.lico.expressions) {
+      const face = exports.Portrait({ index: "lico", expression, size });
+      assert.equal(face.props.style.backgroundImage, "url(/portraits/lico-expressions.webp)");
+      assert.equal(face.props.style.backgroundSize, "300% 300%");
+      assert.equal(face.props.style.width, size);
+      positions.add(face.props.style.backgroundPosition);
+    }
+    assert.equal(positions.size, 9);
+  }
+  assert.equal(portraits.expressionPortrait("lico", "mischievous").position, "50% 100%");
+  assert.equal(portraits.expressionPortrait("lico", "shouting").position, "100% 100%");
+  assert.equal(portraits.expressionPortrait("lico", "surprised").position, "100% 0%");
+  assert.deepEqual(
+    portraits.expressionPortrait("lico", "thoughtful"),
+    portraits.expressionPortrait("lico"),
+  );
+  for (const character of ["aria", "leon", "mira", "pumpety", "finn"])
+    assert.deepEqual(
+      portraits.expressionPortrait(character, "shouting"),
+      portraits.expressionPortrait(character),
+    );
+  const meta = await sharp(
+    readFileSync(new URL("../public/portraits/lico-expressions.webp", import.meta.url)),
+  ).metadata();
+  assert.equal(meta.width, 768);
+  assert.equal(meta.height, 768);
 });

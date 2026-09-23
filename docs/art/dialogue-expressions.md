@@ -35,7 +35,15 @@
 
 フィンの [9表情](../../public/portraits/finn-expressions.webp) は [採用シート](../characters/finn-reference-sheet.webp) をもとに制作した。768×768px・3列×3行のWebP（品質82）で、通常・笑顔・驚き／困り・真剣・照れ／疲れ・ニヤリ・思案を収録する。表情の意図は [人物資料](../characters/finn.md#顔アイコン)、制作条件は [生成記録](../art-generation/finn-expressions-generation.json) を参照。会話との接続範囲は[第三章の実装仕様](../gameplay/chapter-three-gameplay.md#実装状況)を参照する。
 
-`expressionPortrait("finn", "thoughtful")` で右下の思案顔を取得できる。`lib/portrait-expressions.ts` のキャラ別定義が列数・行数・表情順を持つ。ミラ・プティは4列×2行、アリア・レオンは共用の4列×4行を使い、未収録の表情を指定した場合は通常顔へ戻る。既存の数値IDによる呼び出しも維持する。フィンのゲーム内登録番号はまだ割り当てない。
+`expressionPortrait("finn", "thoughtful")` で右下の思案顔を取得できる。`lib/portrait-expressions.ts` のキャラ別定義が列数・行数・表情順を持つ。ミラ・プティは4列×2行、アリア・レオンは共用の4列×4行を使い、未収録の表情を指定した場合は通常顔へ戻る。既存の数値IDによる呼び出しも維持する。
+
+### リコ
+
+[リコの9表情](../../public/portraits/lico-expressions.webp) は [採用シート](../characters/lico-reference-sheet.webp) と [人物資料の指定](../characters/lico.md#顔アイコン) をもとに制作。上段は通常 `neutral`・笑顔 `smile`・驚き `surprised`、中段は困り `worried`・真剣 `serious`・照れ `shy`、下段は疲れ `tired`・怪しい笑み `mischievous`・叫び `shouting`。丸メガネは円形の細いフレームへ修正した。
+
+怪しい笑みは片側の口の端が上がる好奇心の表情。叫びは「あーーっ！」と何かを発見した顔で、普通の驚きより大きく口と目を開ける。画像内に台詞は入れない。768×768px、1コマ256px、WebP品質82・effort 6で147,630バイト。40pxと72pxの表示サイズで確認する。最終プロンプトと修正指示は [生成記録](../art-generation/lico-expressions-generation.json) に保存。
+
+`<Portrait index="lico" expression="mischievous" />` / `<Portrait index="lico" expression="shouting" />` で共通部品から表示できる。`expressionPortrait("lico", "shouting")` は右下のコマを返す。リコの `thoughtful`、他の人物の `shouting` のように未収録の表情は通常顔へ戻る。リコの数値IDや登場シーンは今回追加しない。
 
 ## 生成記録
 

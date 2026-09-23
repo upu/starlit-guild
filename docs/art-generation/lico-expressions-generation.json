@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-23",
+  "tool": "built-in image_gen",
+  "revisionPrompt": "Use case: precise-object-edit. Edit target: the attached 3x3 Lico face expression atlas. Make ONLY the eyeglasses visibly more ROUND in ALL NINE cells. Replace the existing wide oval/rounded irregular rims with classic thin dark metal PERFECTLY CIRCULAR round spectacles, a clear circle per lens (near-equal height and width in these near-front views). They should read immediately as round little circles, NOT horizontally elongated ovals, aviators, rounded rectangles, or drooping teardrops. Keep appropriate subtle perspective for each face but strong circular character. Retain the glasses slipping low on the nose with eyes near upper part of lenses. Preserve the same character, identical faces, mouth and eye expressions, freckles, hair, spider-lily ornament, soft colors, fine art style, crop and cell alignment. Do NOT change the distinctive crooked suspicious grin in bottom middle or the loudly open-mouthed discovery shout in bottom right. Preserve EXACTLY 3 columns and 3 rows, square sheet, same expression order, ivory backgrounds, no gutters, no text or labels. All changes restricted to glasses frames and necessary local overlap.",
+  "model": "not reported by tool",
+  "target": "public/portraits/lico-expressions.webp",
+  "identityReference": "docs/characters/lico-reference-sheet.webp",
+  "generatedSource": "exec-1b6eb356-766f-43d7-9a83-69658ac28b18.png",
+  "layout": {
+    "columns": 3,
+    "rows": 3,
+    "cellSize": 256,
+    "expressions": [
+      "neutral",
+      "smile",
+      "surprised",
+      "worried",
+      "serious",
+      "shy",
+      "tired",
+      "mischievous",
+      "shouting"
+    ]
+  },
+  "encoding": "Lanczos3 resize to 768x768, WebP quality 82, effort 6",
+  "prompt": "Use case: stylized-concept.\nAsset type: production Japanese fantasy RPG dialogue face portrait sprite atlas.\nReference image 1 is the authoritative character reference for Lico (Licorice). Create a NEW expression atlas of this SAME young adult woman, about 18, preserving her plain approachable natural facial features, plentiful freckles, low slipping ROUND glasses, pale moss/yellow-green eyes, tousled dark reddish-brown / muted plum-brown hair tied in a short low-to-mid ponytail, subtle red spider-lily hair ornament, ivory and muted olive herbal alchemist clothing. Faithful detailed soft anime illustration, fine lines and muted watercolor-like rendering matching reference. Not chibi, not glamorous, not overly perfected beauty. No pronounced dark circles or exhausted appearance except mildly in tired cell.\nComposition: square canvas, exactly 3 columns x 3 rows of equal square cells, row-major. NO gutters, NO borders, NO text, NO labels, NO speech bubbles, NO lettering, NO watermark. Each cell is an independently framed very tight FACE CLOSE-UP; eyes, nose, freckles, glasses and mouth large and readable at 40px and 72px. Crop crown, outer hair and shoulders at cell edges as needed. Face must dominate cell, not a bust portrait. Keep scale, identity and face center consistent between expressions. Flat opaque warm ivory background in each cell. No props obscuring face.\nEXACT expression order:\nRow 1 left: neutral, quiet absentminded, slightly sleepy eyes, relaxed closed mouth.\nRow 1 middle: smile, gentle small natural friendly smile.\nRow 1 right: surprised, raised brows and wide eyes, SMALL rounded open mouth.\nRow 2 left: worried, awkward slightly troubled brows and mouth.\nRow 2 middle: serious, focused on observing a specimen, calm concentrated eyes, closed mouth, not angry.\nRow 2 right: shy, quietly embarrassed, slight blush, gaze a little aside, restrained mouth.\nRow 3 left: tired, mildly heavy eyelids, little sigh, not sickly.\nRow 3 middle: MANDATORY peculiar suspicious grin: ONE corner of her mouth curls upward with an uneven mischievous crooked grin, eyelids lower and eyes glint with intense fascination at a new glowing substance. Odd and a little socially off-putting but endearing and addictive to look at. Curiosity not cruelty. NOT villainous, NOT horror, NOT conventional sweet smile. Make asymmetry legible.\nRow 3 right: MANDATORY sudden loud discovery shout 'あーーっ！' expressed ONLY through face, do NOT write it. Eyes wide and alight with discovery, brows raised, jaw dropped and mouth very WIDE OPEN in a loud energetic exclamation, as if she suddenly spotted a fascinating glowing plant. Clearly much stronger and louder than the ordinary surprised face in top right. Not rage, not pain, not fear; explosive curiosity.\nConstraints: all nine cells depict same character, same freckles glasses hair eyes and clothing colors. Keep subtle softness but strongly distinct eyes and mouth especially bottom middle and bottom right. Do not copy the entire reference layout; output only the strict 3x3 face atlas.",
+  "initialSource": "exec-2433c6ef-069c-43de-8fe4-3fb74d33c8b6.png",
+  "bytes": 147630
+}
