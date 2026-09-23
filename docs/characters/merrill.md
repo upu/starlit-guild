@@ -22,7 +22,7 @@
 
 ## 関係性・関連する人物
 
-[プティ](pumpety.md)、[ポピー](poppy.md)、[マッドハロウィン](../factions/mad-halloween.md)。
+[プティ](pumpety.md)、[リコ](lico.md)、[マッドハロウィン](../factions/mad-halloween.md)。
 
 [関係性の一覧と既存の掛け合い](../relationships/README.md) も確認する。関係性の共通本文はここへ複製しない。
 

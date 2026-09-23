@@ -50,7 +50,7 @@
 
 ## 関係性・関連する人物
 
-[レオンとの関係](../relationships/aria-leon.md)、[ポピー](poppy.md)。
+[レオンとの関係](../relationships/aria-leon.md)、[リコ](lico.md)。
 
 [関係性の一覧と既存の掛け合い](../relationships/README.md) も確認する。関係性の共通本文はここへ複製しない。
 
