@@ -26,6 +26,7 @@ import { ShopItemIcon } from "./shop-item-icon";
 import { TechniqueIcon } from "./technique-icon";
 import { Portrait } from "./portrait";
 import { CharacterLevel } from "./character-level";
+import { useCharacterSwipe } from "./use-character-swipe";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
@@ -307,6 +308,12 @@ export function CharacterPanel(props: Props) {
   const [selected, setSelected] = useState("aria"),
     roster = heroes.filter((hero) => props.state.owned.includes(hero.id)),
     hero = roster.find((hero) => hero.id === selected) ?? roster[0];
+  const swipe = useCharacterSwipe(
+    roster.map((member) => member.id),
+    hero.id,
+    slot !== null,
+    setSelected,
+  );
   return (
     <div className="character-panel">
       <div className="character-picker" aria-label="キャラクターを選ぶ">
@@ -324,7 +331,7 @@ export function CharacterPanel(props: Props) {
           </button>
         ))}
       </div>
-      <div className="character-scroll">
+      <div className="character-scroll" {...swipe}>
         <CharacterHeading state={props.state} hero={hero} />
         <details className="character-bio" key={hero.id}>
           <summary>キャラクター詳細</summary>

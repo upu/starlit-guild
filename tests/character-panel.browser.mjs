@@ -10,6 +10,32 @@ import assert from "node:assert/strict";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = fileURLToPath(new URL("../", import.meta.url)),
   dir = path.join(root, "work/character-browser");
+async function swipe(page, selector, dx, dy = 0) {
+  const box = await page.locator(selector).boundingBox();
+  assert.ok(box, `${selector} is visible`);
+  const x = box.x + box.width / 2;
+  const y = box.y + Math.min(box.height / 2, 70);
+  const client = await page.context().newCDPSession(page);
+  await client.send("Input.dispatchTouchEvent", {
+    type: "touchStart",
+    touchPoints: [{ x, y }],
+  });
+  for (let step = 1; step <= 4; step++) {
+    await client.send("Input.dispatchTouchEvent", {
+      type: "touchMove",
+      touchPoints: [{ x: x + (dx * step) / 4, y: y + (dy * step) / 4 }],
+    });
+  }
+  await client.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await client.detach();
+}
+async function assertCharacter(page, name) {
+  await page.waitForFunction(
+    (expected) => document.querySelector(".character-heading h2")?.textContent === expected,
+    name,
+  );
+  assert.equal(await page.locator('.character-picker button[aria-pressed="true"]').count(), 1);
+}
 mkdirSync(dir, { recursive: true });
 const bundle = await build({
   stdin: {
@@ -341,6 +367,50 @@ try {
       );
       await page.screenshot({ path: path.join(dir, hero + "-" + width + ".png") });
     }
+    await page.goto("http://127.0.0.1:" + server.address().port + "/?quartet");
+    await assertCharacter(page, "アリア");
+    await swipe(page, ".character-scroll", -75);
+    await assertCharacter(page, "レオン");
+    await swipe(page, ".character-scroll", -75);
+    await assertCharacter(page, "ミラ");
+    await swipe(page, ".character-scroll", 75);
+    await assertCharacter(page, "レオン");
+    await swipe(page, ".character-scroll", 45);
+    await assertCharacter(page, "レオン");
+    const scroll = page.locator(".character-scroll");
+    const scrollTop = await scroll.evaluate((el) => {
+      el.scrollTop = el.scrollHeight;
+      return el.scrollTop;
+    });
+    await swipe(page, ".character-scroll", -80, 110);
+    await assertCharacter(page, "レオン");
+    if (scrollTop > 0) {
+      await page.waitForFunction(
+        (previous) => document.querySelector(".character-scroll").scrollTop < previous,
+        scrollTop,
+      );
+    }
+    await page.getByRole("button", { name: "フィン", exact: true }).click();
+    await assertCharacter(page, "フィン");
+    await swipe(page, ".character-scroll", -75);
+    await assertCharacter(page, "フィン");
+    await page.getByRole("button", { name: "アリア", exact: true }).click();
+    await swipe(page, ".character-scroll", 75);
+    await assertCharacter(page, "アリア");
+    await picker.evaluate((el) => {
+      el.style.width = "120px";
+    });
+    await swipe(page, ".character-picker", -75);
+    await assertCharacter(page, "アリア");
+    assert.ok((await picker.evaluate((el) => el.scrollLeft)) > 0, "picker remains scrollable");
+    await page.getByRole("button", { name: /武器.*付け替える/ }).click();
+    await swipe(page, ".character-scroll", -75);
+    await assertCharacter(page, "アリア");
+    await swipe(page, ".character-bottom", -75);
+    await assertCharacter(page, "アリア");
+    await page.getByRole("button", { name: "閉じる", exact: true }).click();
+    await swipe(page, ".character-scroll", -75);
+    await assertCharacter(page, "レオン");
     assert.deepEqual(errors, []);
     await context.close();
   }
