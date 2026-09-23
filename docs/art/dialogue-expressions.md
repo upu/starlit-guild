@@ -47,7 +47,7 @@
 
 ### メリル
 
-[メリルの8表情](../../public/portraits/merrill-expressions.webp)は[採用シート原本](../characters/merrill-reference-sheet.png)から制作。4列×2行、1024×512px、1コマ256px、WebP品質82・effort 6で157,492バイト。不透明なアイボリー背景で顔を大きく描く。
+[メリルの8表情](../../public/portraits/merrill-expressions.webp)は[採用シート原本](../characters/merrill-reference-sheet.png)から制作。4列×2行、1024×512px、1コマ256px、WebP品質82・effort 6で100,426バイト。不透明なアイボリー背景。頭頂部・髪・花の外側や肩を切り、目・頬・口が枠を大きく占めるアップへ修正した。40px・72pxの縮小表示で表情と舌なめずりを目視確認。
 
 | 位置 | 表情キー | 意図 |
 | --- | --- | --- |
@@ -58,7 +58,7 @@
 | 下段左 | `savoring` | 目を閉じて味わう満足 |
 | 下段2番目 | `excited` | 食べ物を見つけた期待と喜び |
 | 下段3番目 | `serious` | 注意を向ける真剣な顔 |
-| 下段右 | `predatory` | 食べ物候補を見定める捕食者の目 |
+| 下段右 | `predatory` | 食べ物候補を見定める捕食者の目と舌なめずり |
 
 `<Portrait index="merrill" expression="predatory" />` または `expressionPortrait(12, "predatory")` で共通のアトラスから取得する。未収録の表情は通常顔へ戻る。他の人物に `predatory`・`savoring`・`excited` を指定しても、その人物の通常顔になる。登場シーンと台詞ごとの表情指定は今回追加しない。
 
