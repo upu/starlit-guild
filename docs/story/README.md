@@ -18,6 +18,7 @@
 | 第一章 | [第一章プロット](story-part-1.md) | [第一章のゲーム実装](../gameplay/prologue-gameplay.md) |
 | 第二章 | [第二章計画](story-part-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
 | 第三章 | [第三章計画](story-part-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
+| 第四章 | [第四章計画](story-part-4.md) | 未作成 |
 
 ## 台本と場面の素材
 
