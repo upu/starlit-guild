@@ -4,7 +4,7 @@ import "./phone.css";
 import "./mobile-polish.css";
 import "./battle-effects.css";
 import "./stories.css";
-import "./navigation.css"; // Adventure, party, and memory navigation.
+import "./navigation.css"; // Adventure, party, and memory screens.
 import "./cinematic.css";
 import "./quest-picker.css";
 import "./phaser.css";
@@ -13,6 +13,8 @@ import "./equipment.css";
 import "./shop.css";
 import "./adventure-actions.css";
 import "./adventure-chat.css";
+import "./phone-navigation.css"; // Shared bottom navigation shell and responsive sizing.
+import "./dialog-shell.css"; // Shared dialog shell; feature dialogs keep their own layout.
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#102a26" };
 

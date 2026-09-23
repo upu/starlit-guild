@@ -388,10 +388,6 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
   font-size: 12px;
   padding: 8px;
 }
-.phone-navigation .memory-nav-icon {
-  position: relative;
-  display: inline-flex;
-}
 .memory-nav-icon svg {
   width: 21px;
   height: 21px;
@@ -566,9 +562,7 @@ body:has(.art-viewer) [data-sonner-toaster] {
   height: 100%;
   object-fit: contain;
 }
-.art-viewer [data-slot="dialog-close"],
-.phone-dialog [data-slot="dialog-close"],
-.save-dialog [data-slot="dialog-close"] {
+.art-viewer [data-slot="dialog-close"] {
   width: 44px;
   height: 44px;
   min-height: 44px;
@@ -578,12 +572,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   border: 1px solid #6b7d59;
   border-radius: 8px;
   opacity: 1;
-}
-.phone-dialog [data-slot="dialog-header"],
-.save-dialog [data-slot="dialog-header"] {
-  padding-right: 48px;
-  text-align: left;
-  min-height: 44px;
 }
 .quest-picker {
   display: flex;
@@ -908,8 +896,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   --game-height: 100dvh;
   --game-top: 0px;
   --game-safe-bottom: env(safe-area-inset-bottom, 0px);
-  --game-nav-height: calc(56px + var(--game-safe-bottom));
-  --game-nav-color: #102a26;
 }
 html {
   background: var(--game-nav-color);
@@ -928,33 +914,6 @@ body {
 }
 .game-keyboard-open {
   --game-safe-bottom: 0px;
-}
-/* Anchor navigation to the viewport like YAMORU, independent of the game frame. */
-.phone-game .phone-tabs {
-  padding-bottom: var(--game-nav-height);
-}
-.phone-game .phone-navigation {
-  position: fixed;
-  z-index: 30;
-  left: 50%;
-  bottom: 0;
-  width: min(100%, 1180px);
-  transform: translateX(-50%);
-  height: var(--game-nav-height) !important;
-  padding: 2px max(8px, env(safe-area-inset-right)) calc(2px + var(--game-safe-bottom))
-    max(8px, env(safe-area-inset-left)) !important;
-  background: var(--game-nav-color) !important;
-}
-.phone-game .phone-navigation [data-slot="tabs-trigger"] {
-  flex-direction: row;
-  gap: 5px !important;
-  padding: 0 !important;
-  font-size: 11px;
-}
-.phone-game .phone-navigation [data-slot="tabs-trigger"] > svg,
-.phone-navigation .memory-nav-icon svg {
-  width: 18px !important;
-  height: 18px !important;
 }
 .phone-game .phone-header {
   height: 52px;
@@ -1043,12 +1002,6 @@ body {
   height: 4px;
   margin: 0;
   box-shadow: 0 0 0 1px #132625b0;
-}
-.phone-dialog,
-.save-dialog {
-  max-height: calc(
-    var(--game-height, 100dvh) - 24px - env(safe-area-inset-top) - var(--game-safe-bottom)
-  );
 }
 .start-screen {
   width: min(100%, 520px);

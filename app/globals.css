@@ -1894,12 +1894,6 @@ footer > span:first-child {
   padding: 7px 12px;
   height: 36px;
 }
-.save-dialog {
-  max-height: 88dvh;
-  overflow-y: auto;
-  gap: 18px !important;
-  max-width: 590px !important;
-}
 .save-section {
   display: flex;
   flex-direction: column;
@@ -2059,9 +2053,6 @@ footer > span:first-child {
   .click-hint {
     font-size: 11px;
     margin-right: auto;
-  }
-  .save-dialog {
-    padding: 22px 18px !important;
   }
   .save-buttons button {
     min-width: 130px;
@@ -2674,9 +2665,6 @@ footer > span:first-child {
 .chapter-test-start small {
   font-size: 12px;
   line-height: 1.7;
-}
-.save-dialog {
-  grid-template-columns: minmax(0, 1fr);
 }
 .save-dialog > div {
   min-width: 0;

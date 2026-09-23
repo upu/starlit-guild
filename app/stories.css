@@ -594,12 +594,12 @@
 .story-heading > button:hover:not(:disabled) {
   background: #243f34;
 }
-.story-heading [data-slot="dialog-title"] {
+.phone-dialog .story-heading [data-slot="dialog-title"] {
   font-size: 18px;
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
-.story-heading [data-slot="dialog-description"] {
+.phone-dialog .story-heading [data-slot="dialog-description"] {
   font-size: 12px;
   line-height: 1.4;
   color: #c8d3bf;

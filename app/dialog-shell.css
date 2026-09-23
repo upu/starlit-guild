@@ -1,0 +1,55 @@
+/* Common phone/save dialog frame. Feature dialogs own their content and exceptions. */
+.phone-dialog,
+.save-dialog {
+  width: calc(100vw - 24px) !important;
+  max-width: 490px !important;
+  max-height: calc(
+    var(--game-height, 100dvh) - 24px - env(safe-area-inset-top) - var(--game-safe-bottom)
+  );
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 23px 20px !important;
+  gap: 15px !important;
+}
+.save-dialog {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.phone-dialog p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #bfccb4;
+}
+.phone-dialog [data-slot="dialog-title"] {
+  font-size: 21px;
+}
+.phone-dialog [data-slot="dialog-description"] {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.phone-dialog small {
+  font-size: 12px;
+}
+
+.phone-dialog button,
+.save-dialog button {
+  min-height: 44px;
+}
+.phone-dialog [data-slot="dialog-close"],
+.save-dialog [data-slot="dialog-close"] {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: #284136;
+  color: #efdbac;
+  border: 1px solid #6b7d59;
+  border-radius: 8px;
+  opacity: 1;
+}
+.phone-dialog [data-slot="dialog-header"],
+.save-dialog [data-slot="dialog-header"] {
+  padding-right: 48px;
+  text-align: left;
+  min-height: 44px;
+}
