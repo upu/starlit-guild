@@ -2,32 +2,10 @@ import * as interludes from "../lib/interludes.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import vm from "node:vm";
-import ts from "typescript";
 import { compactCss } from "./compact-css.mjs";
+import { loadStoryScenes, storySceneCompilation } from "./helpers/story-scene-modules.mjs";
 
 // Isolate the reader controls from game state; this is not a mounted-browser test.
-const source = readFileSync(new URL("../app/story-scenes.tsx", import.meta.url), "utf8");
-const compiled = ts.transpileModule(source, {
-  reportDiagnostics: true,
-  compilerOptions: {
-    module: ts.ModuleKind.CommonJS,
-    target: ts.ScriptTarget.ES2022,
-    jsx: ts.JsxEmit.ReactJSX,
-  },
-});
-const viewerCode = ts.transpileModule(
-  readFileSync(new URL("../app/story-viewers.tsx", import.meta.url), "utf8"),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } },
-).outputText;
-const memoryCode = ts.transpileModule(
-  readFileSync(new URL("../app/story-memory-groups.ts", import.meta.url), "utf8"),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS } },
-).outputText;
-const gestureCode = ts.transpileModule(
-  readFileSync(new URL("../app/story-gesture-handlers.ts", import.meta.url), "utf8"),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS } },
-).outputText;
 const story = {
   id: "dialog-test",
   title: "会話の確認",
@@ -38,8 +16,7 @@ const story = {
 const fixtureArt = { src: "/fixture.png", alt: "確認用", width: 800, height: 600 };
 
 function harness(overrides = {}, { withArt = false, selection = null } = {}) {
-  const slots = [],
-    exports = {};
+  const slots = [];
   let cursor = 0,
     effects = [],
     tree,
@@ -103,22 +80,7 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
       ),
     ),
   };
-  const requireModule = (id) => {
-    assert.ok(id in modules, id);
-    return modules[id];
-  };
-  for (const [id, code] of [
-    ["./story-viewers", viewerCode],
-    ["./story-memory-groups", memoryCode],
-    ["./story-gesture-handlers", gestureCode],
-  ]) {
-    const moduleExports = {};
-    vm.runInNewContext(code, { exports: moduleExports, require: requireModule });
-    modules[id] = moduleExports;
-  }
-  vm.runInNewContext(compiled.outputText, {
-    exports,
-    require: requireModule,
+  const exports = loadStoryScenes(modules, {
     window: { getSelection: () => selection },
   });
   function render(next = props) {
@@ -157,10 +119,7 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
 }
 
 test("story reader TSX has no syntax diagnostics", () => {
-  assert.deepEqual(
-    compiled.diagnostics.filter((d) => d.category === ts.DiagnosticCategory.Error),
-    [],
-  );
+  assert.deepEqual(storySceneCompilation.diagnostics, []);
 });
 
 test("intermediate lines show one continuation icon, not an instruction or final action", () => {

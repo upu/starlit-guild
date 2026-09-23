@@ -1,54 +1,47 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { runInNewContext } from "node:vm";
-import ts from "typescript";
+import * as jsxRuntime from "react/jsx-runtime";
+import { compileSourceModule, evaluateSourceModule } from "./helpers/source-module.mjs";
 
-const panels = readFileSync(new URL("../app/equipment-panels.tsx", import.meta.url), "utf8");
-const source = ts.createSourceFile(
-  "equipment-panels.tsx",
-  panels,
-  ts.ScriptTarget.Latest,
-  true,
-  ts.ScriptKind.TSX,
-);
-const resources = source.statements.find(
-  (node) => ts.isFunctionDeclaration(node) && node.name?.text === "ResourcesGrid",
-);
-const formatter = source.statements.find(
-  (node) =>
-    ts.isVariableStatement(node) &&
-    node.declarationList.declarations.some(
-      (declaration) => declaration.name.getText(source) === "amount",
-    ),
-);
-assert.ok(resources && formatter);
-const compiled = ts.transpileModule(`${formatter.getText(source)}\n${resources.getText(source)}`, {
-  fileName: "inventory.tsx",
-  compilerOptions: {
-    target: ts.ScriptTarget.ES2022,
-    module: ts.ModuleKind.CommonJS,
-    jsx: ts.JsxEmit.React,
-    jsxFactory: "element",
+const ui = (...names) => Object.fromEntries(names.map((name) => [name, name]));
+// Render the exported component from its whole source module. Other imports are
+// registered explicitly, but their components are not rendered in this test.
+const exports = evaluateSourceModule(
+  compileSourceModule("../app/equipment-panels.tsx", import.meta.url),
+  {
+    react: {
+      useState: () => {
+        throw new Error("Unexpected useState in ResourcesGrid");
+      },
+    },
+    "react/jsx-runtime": jsxRuntime,
+    "./character-icon-choices": ui("CharacterIconChoices"),
+    "next/image": { default: "img" },
+    "lucide-react": {
+      Coins: "coins",
+      Leaf: "leaf",
+      Gem: "gem",
+      ...ui("Shield", "Swords", "Package", "SquareDashed", "X"),
+    },
+    "@/lib/game": {},
+    "@/lib/equipment": {},
+    "@/lib/story-items": {},
+    "@/lib/techniques": {},
+    "./technique-panel": ui("TechniquePanel", "TechniqueDetails"),
+    "./shop-item-icon": ui("ShopItemIcon"),
+    "./technique-icon": ui("TechniqueIcon"),
+    "./portrait": ui("Portrait"),
   },
-}).outputText;
-const exports = {};
-runInNewContext(compiled, {
-  exports,
-  element: (type, props, ...children) => ({ type, props, children: children.flat(Infinity) }),
-  Coins: "coins",
-  Leaf: "leaf",
-  Gem: "gem",
-});
+);
 function balances(state) {
   const content = exports.ResourcesGrid({ state });
   assert.equal(content.type, "div");
   assert.equal(content.props.className, "inventory-grid");
-  assert.equal(content.children.length, 3);
-  return Array.from(content.children, (cell) => ({
-    icon: cell.children[0].type,
-    label: cell.children[1].children.join(""),
-    amount: cell.children[2].children.join(""),
+  assert.equal(content.props.children.length, 3);
+  return Array.from(content.props.children, (cell) => ({
+    icon: cell.props.children[0].type,
+    label: cell.props.children[1].props.children,
+    amount: cell.props.children[2].props.children,
   }));
 }
 test("bag keeps all normal resources with the existing formatting", () => {

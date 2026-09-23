@@ -1,0 +1,19 @@
+import { compileSourceModule, evaluateSourceModule } from "./source-module.mjs";
+
+export const storySceneCompilation = compileSourceModule(
+  "../../app/story-scenes.tsx",
+  import.meta.url,
+);
+const dependencies = [
+  ["./story-viewers", "../../app/story-viewers.tsx"],
+  ["./story-memory-groups", "../../app/story-memory-groups.ts"],
+  ["./story-gesture-handlers", "../../app/story-gesture-handlers.ts"],
+].map(([id, path]) => [id, compileSourceModule(path, import.meta.url)]);
+
+export function loadStoryScenes(modules, globals = {}) {
+  const registry = { ...modules };
+  for (const [id, compiled] of dependencies) {
+    registry[id] = evaluateSourceModule(compiled, registry);
+  }
+  return evaluateSourceModule(storySceneCompilation, registry, globals);
+}
