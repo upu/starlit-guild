@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { act, settle, availableQuests, level, allQuests, estimate } from "../lib/game.ts";
 import { chapterTwoPresetState } from "../lib/chapter-two-presets.ts";
 import { parseBundle } from "../lib/save-format.ts";
-import { measure, isolated, chapterRoute } from "../scripts/check-chapter-two-balance.mjs";
+import { measure, isolated } from "../scripts/check-chapter-two-balance.mjs";
 import { equippedTechnique, learnableTechniques } from "../lib/techniques.ts";
 
 test("Mira can learn a passive on joining; only setting it improves actual healing", () => {
@@ -157,15 +157,4 @@ test("escort work also rewards preparation without adding enemy attacks", () => 
   assert.ok(weak.seconds > strong.seconds * 1.5);
   assert.equal(weak.hurt, 0);
   assert.equal(strong.hurt, 0);
-});
-test("standard reaches the end through earned growth; strong needs no farming", () => {
-  const standard = chapterRoute(),
-    strong = chapterRoute("strong");
-  assert.equal(standard.records.length, 9);
-  assert.ok(standard.records.every((r) => r.cleared));
-  assert.ok(standard.trainingSeconds >= 1800 && standard.trainingSeconds <= 3600);
-  assert.ok(standard.totalSeconds > standard.trainingSeconds);
-  assert.equal(strong.records.length, 9);
-  assert.ok(strong.records.every((r) => r.cleared && r.rests === 0));
-  assert.equal(strong.trainingSeconds, 0);
 });

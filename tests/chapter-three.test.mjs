@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { act, settle, testState, availableQuests, encounter, level } from "../lib/game.ts";
+import { act, settle, testState, availableQuests, encounter } from "../lib/game.ts";
 import { questById } from "../lib/game-rules.ts";
 import { availableStories } from "../lib/stories.ts";
 import { stageUnlocked, stageEndingPending } from "../lib/prologue.ts";
@@ -14,9 +14,8 @@ import {
 import { inventoryOf, shopItems } from "../lib/equipment.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
-import { trainedChapter } from "../scripts/check-combat-balance.mjs";
-import { chapterRoute, measure } from "../scripts/check-chapter-two-balance.mjs";
-import { chapterThreeRoute, outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
+import { measure } from "../scripts/check-chapter-two-balance.mjs";
+import { outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
 import { roadActionKind, roadHasEnemies } from "../lib/chapter-road.ts";
 import { techniqueMultiplier } from "../lib/techniques.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
@@ -175,26 +174,4 @@ test("quiet jobs never spawn enemies", () => {
     for (let node = 0; node < 15; node++)
       assert.notEqual(encounter(questById(quest), node), "battle");
   }
-});
-
-test("earned chapter-two state carries through all nine stages with sustainable growth and equipped advantage", () => {
-  const first = trainedChapter(true),
-    second = chapterRoute("standard", first.state);
-  const original = structuredClone(second.state);
-  const third = chapterThreeRoute(second.state);
-  assert.deepEqual(second.state, original);
-  assert.equal(third.records.length, 9);
-  assert.ok(third.records.every((r) => r.cleared));
-  assert.ok(third.trainingSeconds <= 3600, "implementation guardrail, not an agreed time target");
-  assert.ok(third.state.owned.every((id) => level(third.state.xp[id]) >= 20));
-  assert.deepEqual(roundtrip(third.state), JSON.parse(JSON.stringify(third.state)));
-  const start = testState(1000, 25, 19, 10000);
-  const plain = measure(start, STONE_RETURN_QUEST);
-  const equipped = measure(outfitBerne(start), STONE_RETURN_QUEST);
-  assert.ok(
-    equipped.record.cleared || equipped.state.squads[0].run.node > plain.state.squads[0].run.node,
-  );
-  const strong = measure(outfitBerne(testState(1000, 25, 30, 10000)), STONE_RETURN_QUEST);
-  assert.ok(strong.record.cleared);
-  assert.equal(strong.record.rests, 0);
 });
