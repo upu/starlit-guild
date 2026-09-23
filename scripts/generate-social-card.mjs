@@ -12,14 +12,15 @@ const outputs = ["app/opengraph-image.png", "app/twitter-image.png"].map((file) 
 
 const logoImage = await sharp(logo)
   .trim({ background: "#00000000", threshold: 10 })
-  .resize({ width: 430 })
+  .resize({ width: 300 })
   .png()
   .toBuffer();
 
 const shade = Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <defs><linearGradient id="shade"><stop stop-color="#071727" stop-opacity=".75"/>
-    <stop offset=".48" stop-color="#071727" stop-opacity=".24"/>
-    <stop offset=".7" stop-color="#071727" stop-opacity="0"/></linearGradient></defs>
+  <defs><linearGradient id="shade"><stop stop-color="#10243c" stop-opacity=".99"/>
+    <stop offset=".25" stop-color="#10243c" stop-opacity=".99"/>
+    <stop offset=".32" stop-color="#10243c" stop-opacity=".4"/>
+    <stop offset=".36" stop-color="#10243c" stop-opacity="0"/></linearGradient></defs>
   <path fill="url(#shade)" d="M0 0h1200v630H0z"/>
 </svg>`);
 
@@ -27,7 +28,7 @@ const card = await sharp(background)
   .resize(1200, 630, { fit: "cover" })
   .composite([
     { input: shade, left: 0, top: 0 },
-    { input: logoImage, left: 20, top: 75 },
+    { input: logoImage, left: 12, top: 205 },
   ])
   .png({ compressionLevel: 9 })
   .toBuffer();

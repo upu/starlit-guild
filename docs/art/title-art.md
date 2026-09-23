@@ -12,7 +12,7 @@
 
 ## 共有リンクのカード画像
 
-`assets/source/social/x-card-background.png` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp) のリファレンスシートと横画面の風景を参照して内蔵 imagegen で生成した横長の原本。三人の顔・衣装・画風を設定画に寄せた。文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が既存の透過ロゴを合成し、1200 × 630 PNG を `app/opengraph-image.png` と `app/twitter-image.png` に出力する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。
+`assets/source/social/x-card-background.png` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp) のリファレンスシートを参照して内蔵 imagegen で生成した横長の原本。淡い水彩の線と塗り、三人の顔・衣装・装飾を設定画に寄せ、ミラの姿と月の杖まで見せる。文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が左側に濃紺の地と既存の透過ロゴを合成し、1200 × 630 PNG を `app/opengraph-image.png` と `app/twitter-image.png` に出力する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。
 
 ## 生成プロンプト
 
