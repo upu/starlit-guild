@@ -49,6 +49,14 @@
       "sourceBytes": 1171172,
       "outputBytes": 914382
     },
+    "finn-pull-v1.png": {
+      "sourceHash": "5875e025353b289d3eef593f34db812a03c904c53c93592e32787641e0b190ce",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "finn-pull-v1.webp",
+      "outputHash": "72d91f75b096e3bd8ed44cf2b6abcf2f0a8de326acf26b6e47a1460806d88a6e",
+      "sourceBytes": 1264340,
+      "outputBytes": 828774
+    },
     "finn-v1.png": {
       "sourceHash": "53dfb47444e28d398bfee689b56939cfcdf478cdf15f7c4a89411fa0ccee0b12",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
@@ -104,6 +112,14 @@
       "outputHash": "54a346701747a28e5d9531ab16cea387ee758c94f3656227a8e6b27648fffaef",
       "sourceBytes": 1267018,
       "outputBytes": 890718
+    },
+    "pull-v1.png": {
+      "sourceHash": "3b37afa410a037c8e8dcca8a3d1c1e4226315116fe99f22e10ddbff2253bc8e5",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "pull-v1.webp",
+      "outputHash": "c153def0b2a1f2797256eca4f250e4438614d491ac33855ac0d6941ee2a5641e",
+      "sourceBytes": 2262374,
+      "outputBytes": 1135110
     },
     "puppets-v1.png": {
       "sourceHash": "5bb812e2dff0ab0eec18151ddca52ba1a802ea33b143648d13eeeb55914a1392",

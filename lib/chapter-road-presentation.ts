@@ -13,6 +13,8 @@ import {
   roadHasEnemies,
   workPoint,
   movingWork,
+  roadPuller,
+  roadWorkOffset,
   CHAPTER_ROAD_SPACING,
   ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
@@ -32,6 +34,7 @@ export type RoadLook = {
   background: string;
   length: number;
   workers: string[];
+  puller: string | null;
   urban: boolean;
   destination: boolean;
   work?: { asset: string; frame?: string; label: string; cargo: boolean };
@@ -81,7 +84,7 @@ function effects(run: Run | null, battle: RoadBattle): RoadEffect[] {
           amount: event.amount || 0,
           ...destination,
           fromX: hero?.x,
-          fromLane: hero ? travellerLane(hero.id) : undefined,
+          fromLane: hero?.lane,
           wide: event.kind === "skill" || event.kind === "combo",
         },
       ];
@@ -115,13 +118,13 @@ function eventHash(id: string) {
 }
 function effectDestination(battle: RoadBattle, event: GameEvent) {
   const target = battle.heroes.find((h) => h.id === event.target);
-  if (target) return { x: target.x, lane: travellerLane(target.id) };
+  if (target) return { x: target.x, lane: target.lane };
   const enemy = battle.enemies.find((e) => e.id === Number(event.enemy?.split("-")[1]));
   if (enemy) return { x: enemy.x, lane: enemy.lane };
   const hero = battle.heroes.find((h) => h.id === event.hero);
   return {
     x: battle.gathering ? battle.gathering.x + 65 : (hero?.x ?? battle.distance),
-    lane: hero ? travellerLane(hero.id) : 0.64,
+    lane: hero?.lane ?? 0.64,
   };
 }
 function drawnHeroes(input: AdventureInput, frame: AdventureFrame): RoadBattle["heroes"] {
@@ -135,6 +138,7 @@ function drawnHeroes(input: AdventureInput, frame: AdventureFrame): RoadBattle["
       hp: run ? member.hp : 1,
       maxHp: run ? member.maxHp : 1,
       x,
+      lane: travellerLane(member.id as TravellerId),
       walking: !!position?.walking && run?.phase !== "rest",
       facing: position?.facing || 1,
     };
@@ -216,6 +220,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
               roadActorReady(frame.quest, run, id),
           )
         : [],
+    puller: run ? roadPuller(frame.quest, run) : null,
     enemies: Object.fromEntries(
       (run?.enemies || []).map((enemy, index) => [
         index + 1,
@@ -240,6 +245,36 @@ function workTask(
   if (frame === "signpost" || frame === "records") return "inspect";
   return frame === "parcels" ? "pack" : "gather";
 }
+function gatheringX(
+  road: Run["road"],
+  q: AdventureFrame["quest"],
+  run: Run,
+  cargo: boolean,
+  task: string,
+  puller: string | null,
+) {
+  if (!road) return 160;
+  return workPoint(q, run) - (cargo && task === "carry" && puller ? 105 : 65);
+}
+function arrangeCarriers(
+  frame: AdventureFrame,
+  run: Run,
+  battle: RoadBattle,
+  puller: string | null,
+) {
+  if (!puller) return;
+  const rear = { aria: -110, leon: -90, mira: -120, finn: -130 } as Record<string, number>;
+  for (const hero of battle.heroes) {
+    const visualOffset = hero.id === puller ? 45 : rear[hero.id] || -110;
+    hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
+    if (hero.id === puller) hero.lane = 0.82;
+  }
+}
+function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
+  for (const hero of battle.heroes) {
+    if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
+  }
+}
 function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {
   const run = input.squad.run,
     road = run?.road;
@@ -247,17 +282,17 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   if (!run || kind === "battle") return;
   look.work = roadWorkLook(frame.quest, run);
   const cargo = look.work.cargo;
-  const x = road ? workPoint(frame.quest, run) - 65 : 160;
+  const task = workTask(look.work.frame, frame.quest, run);
+  const x = gatheringX(road, frame.quest, run, cargo, task, look.puller);
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",
-    task: workTask(look.work.frame, frame.quest, run),
+    task,
     x,
     remaining: run.target,
     total: run.targetMax,
   };
-  for (const hero of battle.heroes) {
-    if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
-  }
+  if (cargo && task === "carry") arrangeCarriers(frame, run, battle, look.puller);
+  faceWorkers(battle, look, cargo, x);
 }
 export function chapterRoadFrame(
   input: AdventureInput,
@@ -288,15 +323,15 @@ export function chapterRoadHit(
   const distance = (h: Traveller) =>
     Math.hypot(
       point.x - chapterRoadX(h.x, battle.distance, width, battle.stage),
-      point.y - (roadY(travellerLane(h.id), height) - size * 0.45),
+      point.y - (roadY(h.lane, height) - size * 0.45),
     );
   const hero = [...battle.heroes]
     .sort((a, b) => distance(a) - distance(b))
     .find(
       (h) =>
         Math.abs(point.x - chapterRoadX(h.x, battle.distance, width, battle.stage)) < size * 0.45 &&
-        point.y > roadY(travellerLane(h.id), height) - size * 0.9 &&
-        point.y < roadY(travellerLane(h.id), height) + size * 0.2,
+        point.y > roadY(h.lane, height) - size * 0.9 &&
+        point.y < roadY(h.lane, height) + size * 0.2,
     );
   return hero ? `heal:${hero.id}` : "help";
 }

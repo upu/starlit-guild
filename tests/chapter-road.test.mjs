@@ -177,17 +177,21 @@ test("drawing is read-only, uses real individual HP and accurately targets taps 
   }
 });
 
-test("transport advances behind the cart, pauses for an ambush and never slashes supplies", () => {
+test("transport splits pulling and pushing, pauses for an ambush and never slashes supplies", () => {
   let state = start(1, 5),
-    pushing = false,
+    transporting = false,
     defended = false;
   for (let i = 0; i < 6000 && state.squads[0].run; i++) {
     const run = state.squads[0].run;
     const { battle, look } = chapterRoadFrame(input(state));
     if (look.work?.cargo && look.workers.length) {
-      pushing = true;
-      for (const hero of battle.heroes.filter((h) => look.workers.includes(h.id)))
-        assert.ok(hero.x < battle.gathering.x + 65 - 60);
+      transporting = true;
+      const cartX = battle.gathering.x + 65;
+      assert.ok(look.puller);
+      for (const hero of battle.heroes.filter((h) => look.workers.includes(h.id))) {
+        if (hero.id === look.puller) assert.ok(hero.x > cartX + 50);
+        else assert.ok(hero.x < cartX - 40);
+      }
       assert.ok(
         battle.effects.every((e) => ["heal", "hurt"].includes(e.kind) || battle.enemies.length),
       );
@@ -198,9 +202,9 @@ test("transport advances behind the cart, pauses for an ambush and never slashes
       state = settle(state, run.nextAt).state;
       if (state.squads[0].run?.node === run.node) assert.equal(state.squads[0].run.target, before);
     } else state = settle(state, run.nextAt).state;
-    if (pushing && defended) break;
+    if (transporting && defended) break;
   }
-  assert.ok(pushing && defended);
+  assert.ok(transporting && defended);
 });
 
 test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {

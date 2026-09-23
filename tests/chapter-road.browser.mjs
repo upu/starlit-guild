@@ -106,6 +106,8 @@ try {
     ["signpost", 13, "worksite"],
     ["rear-signpost", 13, "rear"],
     ["trio-work", 16, "worksite"],
+    ["four-cargo", 24, "worksite"],
+    ["four-finn", 24, "worksite"],
     ["puppets", 15, "boss"],
     ["command", 15, "command"],
     ["command-arrival", 15, "command-arrival"],
@@ -121,6 +123,7 @@ try {
       }),
       page = await context.newPage(),
       save = fixture(index, mode);
+    if (name === "four-finn") save.profiles[0].state.squads[0].run.health.leon.hp = 0;
     page.on("pageerror", (e) => errors.push(e.message));
     const roadAssets = new Set();
     page.on("request", (request) => {

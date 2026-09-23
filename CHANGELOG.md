@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.4.3 | 2026-09-24 | 荷車の運搬を引き手と押し手に分ける（[#162](https://github.com/upu/starlit-guild/pull/162)） |
 | 0.4.2 | 2026-09-23 | キャラクター画面で左右スワイプによる切り替えを追加（[#161](https://github.com/upu/starlit-guild/pull/161)） |
 | 0.4.1 | 2026-09-23 | キャラクター画面に経験値と次レベルまでの進捗を表示する（[#159](https://github.com/upu/starlit-guild/pull/159)） |
 | 0.4.0 | 2026-09-23 | docs: 第四章計画（苦い灯りと、名前のない旅団）を追加（[#155](https://github.com/upu/starlit-guild/pull/155)） |

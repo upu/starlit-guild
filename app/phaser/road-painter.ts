@@ -2,7 +2,7 @@ import { paintPuppetStrings } from "./road-puppet-strings";
 import type Phaser from "phaser";
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import { roadBackdrop, roadX, roadY } from "@/lib/road-layout";
-import { travellerLane, type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view";
+import { type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view";
 
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
@@ -15,6 +15,8 @@ import {
   ROAD_CARGO,
   ROAD_PUPPETS,
   ROAD_PUSH,
+  ROAD_PULL,
+  ROAD_FINN_PULL,
   ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
@@ -133,6 +135,13 @@ export class RoadPainter {
         const [x, y, w, h] = rects[index * 2 + step];
         push.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
+    const pull = this.scene.textures.get(ROAD_PULL);
+    for (const [index, id] of ["aria", "leon", "mira"].entries())
+      for (let step = 0; step < 2; step++)
+        pull.add(`${id}-${String(step)}`, 0, step * 512, index * 512, 512, 512);
+    const finnPull = this.scene.textures.get(ROAD_FINN_PULL);
+    for (let step = 0; step < 2; step++)
+      finnPull.add(`finn-${String(step)}`, 0, step * 887, 0, 887, 887);
     const work = this.scene.textures.get(ROAD_WORKSITES);
     const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
     berne.add("stonework", 0, 53, 271, 788, 433);
@@ -271,15 +280,17 @@ export class RoadPainter {
     const x = this.screenX(hero.x, state);
     const gathering = this.working(hero) && state.gathering?.task === "gather";
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
-    const y = roadY(travellerLane(hero.id), this.scene.scale.height) + crouch;
+    const y = roadY(hero.lane, this.scene.scale.height) + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
-    const pushing = this.working(hero) && applyWorkPose(figure.image, state, hero, reduced, size);
-    if (!pushing) applyHeroPose(figure.image, hero.id, pose, size);
+    const working =
+      this.working(hero) &&
+      applyWorkPose(figure.image, state, hero, reduced, size, hero.id === this.look?.puller);
+    if (!working) applyHeroPose(figure.image, hero.id, pose, size);
     this.spriteFilter.apply(figure.image);
     figure.image
       .setPosition(x, y)
       .setFlipX(hero.facing < 0)
-      .setDepth(10 + travellerLane(hero.id) * 10)
+      .setDepth(10 + hero.lane * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
     figure.label.setVisible(false);
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
@@ -365,7 +376,8 @@ export class RoadPainter {
     this.gathering.image
       .setPosition(x, y)
       .setScale(size / this.gathering.image.frame.width)
-      .setDepth(10 + lane * 10);
+      .setDepth(10 + lane * 10 - 0.1)
+      .setFlipX(cargo && point.task === "carry" && !!this.look?.puller);
     this.gathering.label
       .setText(this.workLabel(point))
       .setWordWrapWidth(Math.min(190, this.scene.scale.width * 0.42), true)

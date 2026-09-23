@@ -5,6 +5,7 @@ export type Traveller = {
   hp: number;
   maxHp: number;
   x: number;
+  lane: number;
   walking: boolean;
   facing: 1 | -1;
 };
