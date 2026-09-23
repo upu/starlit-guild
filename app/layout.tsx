@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
+import siteTargets from "../config/site-targets.json";
 import "./globals.css";
 import "./phone.css";
 import "./mobile-polish.css";
@@ -18,9 +20,17 @@ import "./dialog-shell.css"; // Shared dialog shell; feature dialogs keep their 
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#102a26" };
 
-export const metadata: Metadata = {
+const sharedMetadata: Metadata = {
   title: "星灯りの旅団 | STARLIT GUILD",
   description: "仲間を見守り、旅団と帰る場所を育てる。タップで応援できるファンタジー放置RPG。",
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: "星灯りの旅団",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "星灯りの旅団", statusBarStyle: "default" },
   other: {
@@ -32,6 +42,20 @@ export const metadata: Metadata = {
     apple: "/icons/apple-touch-icon.png",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("host");
+  const localHost = host?.startsWith("localhost:") || host?.startsWith("127.0.0.1:");
+  const protocol = localHost ? "http" : "https";
+  const siteUrl = new URL(host ? `${protocol}://${host}` : siteTargets.production.url);
+
+  return {
+    ...sharedMetadata,
+    metadataBase: siteUrl,
+    openGraph: { ...sharedMetadata.openGraph, url: siteUrl },
+  };
+}
 
 export default function RootLayout({
   children,

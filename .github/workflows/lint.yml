@@ -49,6 +49,9 @@ jobs:
       - name: Check generated story stills and album thumbnails
         run: npm run stills:check
 
+      - name: Check generated social card images
+        run: npm run social-card:check
+
       - name: Check generated BGM
         run: npm run music:check
 

@@ -34,6 +34,8 @@
     "script:check": "node scripts/export-script.mjs --check",
     "road-art:optimize": "node scripts/optimize-road-art.mjs",
     "road-art:check": "node scripts/optimize-road-art.mjs --check",
+    "social-card:generate": "node scripts/generate-social-card.mjs",
+    "social-card:check": "node scripts/generate-social-card.mjs --check",
     "presets:generate": "node scripts/generate-test-presets.mjs",
     "presets:check": "node scripts/generate-test-presets.mjs --check"
   },
