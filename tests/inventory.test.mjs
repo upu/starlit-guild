@@ -32,6 +32,7 @@ const exports = evaluateSourceModule(
     "./technique-icon": ui("TechniqueIcon"),
     "./portrait": ui("Portrait"),
     "./character-level": ui("CharacterLevel"),
+    "./use-character-swipe": { useCharacterSwipe: () => ({}) },
   },
 );
 function balances(state) {
