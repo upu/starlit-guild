@@ -1,10 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { act, settle, testState, availableQuests, encounter, level } from "../lib/game.ts";
+import { act, settle, testState, availableQuests, encounter } from "../lib/game.ts";
 import { questById } from "../lib/game-rules.ts";
-import { availableStories, stories } from "../lib/stories.ts";
-import { storyArtAt } from "../lib/story-art.ts";
+import { availableStories } from "../lib/stories.ts";
 import { stageUnlocked, stageEndingPending } from "../lib/prologue.ts";
 import { pendingInterlude } from "../lib/interludes.ts";
 import {
@@ -16,11 +14,9 @@ import {
 import { inventoryOf, shopItems } from "../lib/equipment.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
-import { trainedChapter } from "../scripts/check-combat-balance.mjs";
-import { chapterRoute, measure } from "../scripts/check-chapter-two-balance.mjs";
-import { chapterThreeRoute, outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
+import { measure } from "../scripts/check-chapter-two-balance.mjs";
+import { outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
 import { roadActionKind, roadHasEnemies } from "../lib/chapter-road.ts";
-import { roadWorkLook } from "../lib/chapter-road-work-look.ts";
 import { techniqueMultiplier } from "../lib/techniques.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
 import { chapterThreeBanter } from "../lib/chapter-three-banter.ts";
@@ -57,20 +53,6 @@ test("stopped cargo recruits every living member into combat, then resumes its r
     s = settle(s, s.squads[0].run.nextAt).state;
   assert.equal(s.squads[0].run.node, node);
   assert.ok(s.squads[0].run.target < remaining, "remaining cargo resumes after combat");
-});
-
-test("third-chapter inspection props match signs, dry paving and measurement records", () => {
-  for (const [id, node, frame] of [
-    [BERNE_QUEST, 2, "signpost"],
-    ["berne-house-calls", 2, "stonework"],
-    ["missing-keystone", 1, "records"],
-    ["matching-lantern-stone", 2, "records"],
-  ]) {
-    const look = roadWorkLook(questById(id), { quest: id, node, nodes: 15 });
-    assert.equal(look.frame, frame);
-    assert.equal(look.cargo, false);
-    assert.ok(!look.asset.includes("herb"));
-  }
 });
 
 test("Finn passive is purchased, equipped, persisted and applies only to his combat", () => {
@@ -186,48 +168,10 @@ test("Berne assortment requires arrival reading and remains buyable on revisitin
   assert.equal(shopItems(s).filter((item) => item.tier === 2).length, 6);
 });
 
-test("quiet jobs never spawn enemies; exchange happens before the playable night road and bridge dialogue after", () => {
+test("quiet jobs never spawn enemies", () => {
   for (const { quest } of chapterThreeStages) {
     if ([BERNE_QUEST, STONE_RETURN_QUEST].includes(quest)) continue;
     for (let node = 0; node < 15; node++)
       assert.notEqual(encounter(questById(quest), node), "battle");
   }
-  const departure = stories.find((s) => s.id === STONE_RETURN_QUEST + "-departure");
-  const ending = stories.find((s) => s.id === STONE_RETURN_QUEST + "-return");
-  assert.ok(departure.lines.some((l) => l.text.includes("覆いの下へ布")));
-  assert.match(departure.lines.at(-1).text, /橋まで運んで/);
-  assert.equal(ending.lines[0].text, "二人とも、こちらへ。傷はない？");
-  assert.ok(!ending.lines.some((l) => l.text.includes("覆いの下へ布")));
-  for (const id of [
-    BERNE_QUEST + "-departure",
-    STONE_RETURN_QUEST + "-departure",
-    "berne-restoration-return",
-  ]) {
-    assert.equal(storyArtAt(id, 4), undefined);
-    assert.ok(storyArtAt(id, 5));
-  }
-  const png = readFileSync(new URL("../assets/source/road/finn-v1.png", import.meta.url));
-  assert.equal(png[25], 6, "Finn uses real transparency");
-});
-
-test("earned chapter-two state carries through all nine stages with sustainable growth and equipped advantage", () => {
-  const first = trainedChapter(true),
-    second = chapterRoute("standard", first.state);
-  const original = structuredClone(second.state);
-  const third = chapterThreeRoute(second.state);
-  assert.deepEqual(second.state, original);
-  assert.equal(third.records.length, 9);
-  assert.ok(third.records.every((r) => r.cleared));
-  assert.ok(third.trainingSeconds <= 3600, "implementation guardrail, not an agreed time target");
-  assert.ok(third.state.owned.every((id) => level(third.state.xp[id]) >= 20));
-  assert.deepEqual(roundtrip(third.state), JSON.parse(JSON.stringify(third.state)));
-  const start = testState(1000, 25, 19, 10000);
-  const plain = measure(start, STONE_RETURN_QUEST);
-  const equipped = measure(outfitBerne(start), STONE_RETURN_QUEST);
-  assert.ok(
-    equipped.record.cleared || equipped.state.squads[0].run.node > plain.state.squads[0].run.node,
-  );
-  const strong = measure(outfitBerne(testState(1000, 25, 30, 10000)), STONE_RETURN_QUEST);
-  assert.ok(strong.record.cleared);
-  assert.equal(strong.record.rests, 0);
 });

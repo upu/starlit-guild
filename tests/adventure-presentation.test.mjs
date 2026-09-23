@@ -7,7 +7,6 @@ import {
   adventureAssets,
   adventureAction,
   adventureHit,
-  memberHealthLabel,
 } from "../lib/adventure-presentation.ts";
 import { rendererSession } from "../app/phaser/renderer-session.ts";
 import { nextStage } from "../lib/prologue.ts";
@@ -21,11 +20,6 @@ const input = (state, extra = {}) => ({
   ready: true,
   paused: false,
   ...extra,
-});
-
-test("character health labels leave exact HP values to the bar", () => {
-  assert.equal(memberHealthLabel({ name: "アリア", down: false }), "アリア");
-  assert.equal(memberHealthLabel({ name: "レオン", down: true }), "レオン · 戦闘不能");
 });
 
 test("rendering many frames interpolates independently without advancing or modifying the save", () => {

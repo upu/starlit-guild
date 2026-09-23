@@ -40,7 +40,7 @@ v0.3.10で幕間、3-1〜3-9、フィンの同行、ベルネのショップ装�
 
 `node scripts/check-chapter-three-balance.mjs` は第一章→第二章の終了状態を丸ごと受け取る。装備費用2760Gを実際に支払い、3分でクリアできなければ既読の街道を5分周回する。開始Lv.17、追加育成10分、第三章2241秒、終了四人Lv.21。時間目標は未合意で、測定結果は[戦力と到達時間](progression-balance.md)に分けて記録する。実機の体感確認は未実施。
 
-`tests/chapter-three.test.mjs` は旧記録・幕間ゲート・加入の一度きり付与・装備解放と費用・戦闘範囲・会話の接続・通し育成を確認する。`tests/chapter-road.test.mjs` は全27ステージの保存往復、ライブ／留守中精算、正確な報酬を確認する。
+`tests/chapter-three.test.mjs` は旧記録・幕間ゲート・加入の一度きり付与・装備解放と費用・戦闘範囲・会話の接続を確認する。第三章の通し育成は手動テストの `tests/chapter-runs.balance.mjs` で確認する。`tests/chapter-road.test.mjs` は全27ステージの保存往復、ライブ／留守中精算、正確な報酬を確認する。
 
 `tests/chapter-three.browser.mjs` は隔離したテスト記録で幕間→初回出発、第三章各ステージ、ショップを確認する。Chromeの320・390・1280px幅で横あふれなし、画像の読み込み失敗・未捕捉例外なし。実行時は `TEST_ROOT`、必要なら `PLAYWRIGHT_MODULE` と `CHROME_PATH` を指定する。スマホ実機の確認とは区別する。
 

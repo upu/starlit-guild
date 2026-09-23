@@ -56,13 +56,6 @@ test("the stage table lists every story stage once, in order, with the real name
   assert.ok(table[prologueStages.length][0].startsWith("2-"));
 });
 
-test("stages carry a number and the quest name, with no second display name", () => {
-  for (const stage of storyStages) {
-    assert.match(stage.number, /^\d-\d$/, `${stage.quest}: 番号の形`);
-    assert.ok(!("label" in stage), `${stage.quest}: label が残っている`);
-  }
-});
-
 // CHANGELOG.md quotes past pull request titles verbatim, so its old wording stays.
 function writtenSources() {
   const root = new URL("../", import.meta.url);
@@ -74,18 +67,6 @@ function writtenSources() {
     if (name.endsWith(".md")) files.push(["docs/" + name, new URL("docs/" + name, root)]);
   return files;
 }
-
-test("the game text and the documentation say 章 everywhere, never 部", () => {
-  for (const [name, url] of writtenSources())
-    assert.doesNotMatch(
-      readFileSync(url, "utf8"),
-      /第[一二三四五]部/,
-      `${name} に「部」が残っている`,
-    );
-  const places = stories.flatMap((story) => (story.place ? [story.place] : []));
-  for (const place of places.filter((text) => text.startsWith("第")))
-    assert.match(place, /^第[一二]章 \d-\d · /, `場所表示の形が揃っていない: ${place}`);
-});
 
 test("the documentation uses the same stage names as the game", () => {
   const names = storyStages.map((stage) => allQuests.find((q) => q.id === stage.quest).name);

@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const begin = "<!-- manual-test-inventory:start -->";
 const end = "<!-- manual-test-inventory:end -->";
-const manualTest = /\.(?:browser\.mjs|browser\.py|integration\.mjs)$/;
+const manualTest = /\.(?:browser\.mjs|browser\.py|integration\.mjs|balance\.mjs)$/;
 
 export function documentedTests(markdown) {
   const start = markdown.indexOf(begin);

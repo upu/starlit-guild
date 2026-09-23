@@ -14,9 +14,7 @@ import { parseBundle } from "../lib/save-format.ts";
 import { adventureFrame, spriteSize } from "../lib/adventure-presentation.ts";
 import {
   combatScenarios,
-  chapterComparisons,
   chapterCombatState,
-  trainedChapter,
   tappedCombat,
 } from "../scripts/check-combat-balance.mjs";
 
@@ -275,22 +273,6 @@ test("the first chapter needs training after its introduction, with the same gro
     grown = testState(1000, storyStages.length, 18, 1000);
   assert.ok(estimate(grown, grown.squads[0], q) < estimate(s, s.squads[0], q));
   assert.equal(combatRank(q), 25);
-});
-
-test("weapons allow earlier clears, more levels work without new equipment, and actual farming reaches the finale", () => {
-  const records = chapterComparisons();
-  const result = (quest, lv, equipped) =>
-    records.find((r) => r.quest === quest && r.levels[0] === lv && r.equipped === equipped);
-  assert.equal(result("tower-restoration", 8, false).cleared, false);
-  assert.equal(result("tower-restoration", 8, true).cleared, true);
-  assert.equal(result("tower-moss-removal", 10, false).cleared, false);
-  assert.equal(result("tower-moss-removal", 10, true).cleared, true);
-  assert.equal(result("tower-moss-removal", 15, false).cleared, true);
-  const trained = trainedChapter();
-  assert.equal(trained.records.length, 9);
-  assert.ok(trained.records.every((r) => r.cleared));
-  assert.ok(trained.trainingSeconds >= 600 && trained.trainingSeconds <= 3600);
-  assert.ok(trained.totalSeconds < 7200);
 });
 
 test("rapid tapping can overcome an underleveled first-chapter finale without a cooldown", () => {

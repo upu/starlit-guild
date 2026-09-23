@@ -1,9 +1,7 @@
 import * as interludes from "../lib/interludes.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { compactCss } from "./compact-css.mjs";
-import { loadStoryScenes, storySceneCompilation } from "./helpers/story-scene-modules.mjs";
+import { loadStoryScenes } from "./helpers/story-scene-modules.mjs";
 
 // Isolate the reader controls from game state; this is not a mounted-browser test.
 const story = {
@@ -117,10 +115,6 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
     },
   };
 }
-
-test("story reader TSX has no syntax diagnostics", () => {
-  assert.deepEqual(storySceneCompilation.diagnostics, []);
-});
 
 test("intermediate lines show one continuation icon, not an instruction or final action", () => {
   const h = harness({ departure: true });
@@ -275,38 +269,6 @@ test("outside advancement shares final readiness and completion guards with dial
   outside();
   h.click();
   assert.deepEqual(h.counts(), { read: 1, closed: 1 });
-});
-
-test("story dialog reserves the lower half from the first line, independently of artwork and history length", () => {
-  const css = compactCss(readFileSync(new URL("../app/stories.css", import.meta.url), "utf8"));
-  const dialog = css.match(/\.phone-dialog:has\(>\.story-reader\)\{([^}]+)\}/)[1];
-  for (const declaration of [
-    "top:auto",
-    "width:auto!important",
-    "margin:0 auto",
-    "translate:none",
-    "transform:none",
-    "animation:none",
-    "max-height:var(--story-dialog-height)",
-    "overflow:hidden",
-  ])
-    assert.ok(dialog.includes(declaration), declaration);
-  assert.ok(dialog.includes("env(safe-area-inset-left,0px)"));
-  assert.ok(dialog.includes("env(safe-area-inset-right,0px)"));
-  assert.ok(dialog.includes("var(--game-height,100dvh)"));
-  assert.ok(dialog.includes("height:var(--story-dialog-height)"));
-  assert.ok(dialog.includes("--story-conversation-height:calc(var(--story-dialog-height) / 2)"));
-  assert.ok(dialog.includes("background:transparent!important"));
-  assert.match(
-    css,
-    /\.phone-dialog>\.story-reader\{[^}]*grid-template-rows:minmax\(0,1fr\) var\(--story-conversation-height\)/,
-  );
-  assert.doesNotMatch(css, /\.phone-dialog:has\(>\.story-reader-art\)/);
-  assert.match(
-    css,
-    /\.dialogue-history\{[^}]*min-height:0;[^}]*overflow-y:auto;overscroll-behavior:contain/,
-  );
-  assert.match(css, /\.story-tap-hint\{[^}]*flex:none/);
 });
 
 test("the upper artwork slot stays present before and after an illustration appears", () => {

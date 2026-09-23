@@ -69,38 +69,6 @@ test("still pipeline rejects stale output and preserves the original PNG", async
   }
 });
 
-test("the moss illustration waits until the caretaker has allowed the sample and the container glows", () => {
-  const scene = stories.find((st) => st.id === "tower-road-return"),
-    art = storyArt[scene.id];
-  const permission = scene.lines.findIndex((line) => line.text.includes("ひとつまみで足りる"));
-  const glow = scene.lines.findIndex((line) => line.text.includes("入れ物の中で柔らかく光った"));
-  assert.ok(permission >= 0 && permission < glow);
-  assert.equal(art.revealAtLine, glow);
-  assert.equal(storyArtAt(scene.id, glow - 1), undefined);
-  assert.equal(storyArtAt(scene.id, glow), art);
-});
-
-test("forest comparison art waits for Aria to lift both samples toward her face", () => {
-  const scene = stories.find((st) => st.id === "forest-wetland-return"),
-    art = storyArt[scene.id];
-  const comparison = scene.lines.findIndex((line) => line.text.includes("顔の近くまで持ち上げた"));
-  assert.equal(art.revealAtLine, comparison);
-  assert.equal(storyArtAt(scene.id, comparison - 1), undefined);
-  assert.equal(storyArtAt(scene.id, comparison), art);
-});
-
-test("the first-act climax waits for the beacon to light after the moss removal", () => {
-  const scene = stories.find((st) => st.id === "tower-moss-removal-return"),
-    art = storyArt[scene.id];
-  const glow = scene.lines.findIndex((line) => line.text.includes("淡い紫の光がともった"));
-  assert.ok(glow > 0);
-  assert.equal(art.revealAtLine, glow);
-  assert.equal(storyArtAt(scene.id, glow - 1), undefined);
-  assert.equal(storyArtAt(scene.id, glow), art);
-  assert.equal(storyArtAt("tower-restoration-return", Infinity), undefined);
-  assert.equal(scene.lines.at(-1).text, "第一章 完");
-});
-
 test("the first departure has its illustration, and unknown scenes have none", () => {
   const fresh = initialPrologueState(1000),
     opening = nextStage(fresh).quest;

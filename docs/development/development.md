@@ -112,7 +112,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 
 ### ローカルの手動テスト
 
-以下の8本は `node --test tests/*.test.mjs` の対象外。変更した機能に合う行だけローカルで実行する。PR前の共通検証は [コード品質](#コード品質) に従う。CIの `npm run manual-tests:check` はこの一覧と実在ファイルの一致だけを検査し、ブラウザーテストや章の通し試走を実行しない。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）を済ませる。
+以下の9本は `node --test tests/*.test.mjs` の対象外。変更した機能に合う行だけローカルで実行する。PR前の共通検証は [コード品質](#コード品質) に従う。CIの `npm run manual-tests:check` はこの一覧と実在ファイルの一致だけを検査し、ブラウザーテストや章の通し試走を実行しない。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）を済ませる。
 
 <!-- manual-test-inventory:start -->
 | テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
@@ -123,6 +123,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/dialog-layout.browser.py` 会話・ダイアログの画面幅、回転、安全領域 | Python版Playwright + ChromiumまたはWebKit。`npm run build`。生成CSSを使う独立fixture。外部サーバー不要 | `python tests/dialog-layout.browser.py --engine chromium`（WebKitは `--engine webkit`） | 成功時のケース数、失敗時の測定値を標準出力 |
 | `tests/chapter-road.browser.mjs` 道中演出・Canvas・再読み込み・画像失敗 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-road.browser.mjs` | `work/chapter-road-browser/` の画像・`results.json` |
 | `tests/chapter-three.browser.mjs` 第三章の幕間→出発・各ステージ・ショップ | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-three.browser.mjs` | `work/chapter-three-browser/` の画像・`result.json` |
+| `tests/chapter-runs.balance.mjs` 第一章〜第三章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約25秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の4件のPASS表示 |
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
 <!-- manual-test-inventory:end -->

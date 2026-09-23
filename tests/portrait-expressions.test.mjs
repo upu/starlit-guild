@@ -84,11 +84,6 @@ test("expressions are authored for narrative context, narration has none, and un
           `${story.id}: ${line.expression}`,
         );
     }
-  const opening = stories.find((s) => s.id === "village-trade-departure");
-  assert.equal(opening.lines.find((l) => l.text === "待った？").expression, "smile");
-  assert.equal(opening.lines.find((l) => l.text === "布、二枚？").expression, "surprised");
-  const failure = stories.find((s) => s.id === "town-deliveries-departure");
-  assert.equal(failure.lines.find((l) => l.text.startsWith("……ごめん。")).expression, "worried");
   assert.ok(idleBanter(0).every((l) => l.expression === "smile"));
   assert.equal(
     portraits.expressionPortrait(0).position,

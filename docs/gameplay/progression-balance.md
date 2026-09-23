@@ -100,7 +100,7 @@ v0.3.7の初期装備の能力追加とミラの加入装備を適用し、章�
 | 章間の状態継続・通算時間 | [check-progression-balance.mjs](../../scripts/check-progression-balance.mjs) |
 | ゲーム内の開始データ | [test-presets.ts](../../lib/test-presets.ts)、[生成スクリプト](../../scripts/generate-test-presets.mjs) |
 | 旧比較用の固定開始データ | [chapter-two-presets.ts](../../lib/chapter-two-presets.ts) |
-| 回帰検証 | [chapter-two-balance.test.mjs](../../tests/chapter-two-balance.test.mjs)、[progression-balance.test.mjs](../../tests/progression-balance.test.mjs) |
+| 回帰検証 | [chapter-two-balance.test.mjs](../../tests/chapter-two-balance.test.mjs)、手動の通し試走 [chapter-runs.balance.mjs](../../tests/chapter-runs.balance.mjs) |
 
 ## 第三章の通し測定（v0.3.10）
 

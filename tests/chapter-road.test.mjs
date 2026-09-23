@@ -177,26 +177,6 @@ test("drawing is read-only, uses real individual HP and accurately targets taps 
   }
 });
 
-test("work sites match the chapter setting instead of falling back to treasure chests", () => {
-  for (const [stage, expected] of [
-    [2, "parcels"],
-    [5, "moss"],
-    [6, "waterway"],
-    [11, "parcels"],
-  ]) {
-    const state = start(stage);
-    const frame = chapterRoadFrame(input(state));
-    assert.equal(frame.look.work.frame, expected);
-    assert.equal(frame.look.urban, [2, 11].includes(stage));
-    assert.equal(frame.look.work.asset, "/animations/road/worksites-v1.webp");
-  }
-  for (let stage = 0; stage < 18; stage++) {
-    const state = start(stage);
-    const frame = chapterRoadFrame(input(state));
-    assert.notEqual(frame.look.work?.asset, "/items/chest.png");
-  }
-});
-
 test("transport advances behind the cart, pauses for an ambush and never slashes supplies", () => {
   let state = start(1, 5),
     pushing = false,

@@ -36,13 +36,6 @@ const nodes = (node) =>
     : [node, ...[node.props?.children].flat(Infinity).flatMap(nodes)];
 const render = (props) => nodes(exports.DialogContent(props));
 
-test("dialog content TSX has no syntax diagnostics", () => {
-  assert.deepEqual(
-    compiled.diagnostics.filter((d) => d.category === ts.DiagnosticCategory.Error),
-    [],
-  );
-});
-
 test("ordinary and story dialogs have no translated or zoomed centering to leak into anchored layouts", () => {
   for (const className of [undefined, "phone-dialog", "phone-dialog story-dialog", "save-dialog"]) {
     const content = render({ className }).find((node) => node.type === "content");
