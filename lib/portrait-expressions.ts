@@ -63,7 +63,10 @@ export function expressionPortrait(
   if (character === "aria" || character === "leon") return closeupPortrait(character, expression);
   const atlas = portraitAtlases[character];
   // An expression absent from this character's atlas falls back to neutral.
-  const cell = Math.max(0, atlas.expressions.indexOf(expression));
+  const cell = Math.max(
+    0,
+    atlas.expressions.findIndex((candidate) => candidate === expression),
+  );
   // The artwork itself is a close-up: show one whole cell without an extra crop.
   return {
     src: `/portraits/${character}-expressions.webp`,
