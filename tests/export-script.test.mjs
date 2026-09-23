@@ -7,7 +7,13 @@ import { originalCharacters } from "../lib/original-characters.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 import { storyArt } from "../lib/story-art.ts";
+import { chapterThreeSections } from "../lib/chapter-three-stories.ts";
 import { renderScripts } from "../scripts/export-script.mjs";
+import {
+  sourceForStageBanter,
+  sourceForStory,
+  validateStorySources,
+} from "../scripts/script-sources.mjs";
 
 const names = new Map([...heroes, ...originalCharacters].map(({ id, name }) => [id, name]));
 const formatLine = (line) =>
@@ -128,4 +134,63 @@ test("shared banter includes both idle parties, relationship tiers and combo lin
     for (const variant of [0, 1])
       assert.ok(content.includes(coupleCombo(state, variant).join("\n")));
   }
+});
+
+test("every scene and route has a checked editing source", () => {
+  validateStorySources(stories);
+  const byId = new Map(stories.map((story) => [story.id, story]));
+  for (const [id, file] of [
+    ["village-trade-departure", "lib/prologue-early-stories.ts"],
+    ["tower-moss-removal-return", "lib/tower-finale-stories.ts"],
+    ["hilltop-picnic-departure", "lib/chapter-two-stories.ts"],
+    ["waiting-households-return", "lib/chapter-two-finale-stories.ts"],
+    ["interlude-walnut-lunch", "lib/chapter-three-opening-stories.ts"],
+    ["berne-road-departure", "lib/chapter-three-opening-stories.ts"],
+  ]) {
+    assert.equal(sourceForStory(byId.get(id)).file, file, id);
+  }
+  for (const [quest, file] of [
+    [storyStages[0].quest, "lib/stories.ts"],
+    [storyStages[7].quest, "lib/waterway-banter.ts"],
+    [storyStages[9].quest, "lib/chapter-two.ts"],
+    [storyStages[18].quest, "lib/chapter-three-banter.ts"],
+  ]) {
+    assert.equal(sourceForStageBanter(quest).file, file, quest);
+  }
+  assert.throws(() => sourceForStory({ id: "unknown" }), /本文出典/);
+  assert.throws(() => sourceForStageBanter("unknown"), /掛け合いの出典/);
+  assert.throws(() => validateStorySources(stories.slice(1)), /使われない本文出典/);
+});
+
+test("generated source links resolve, and art links appear only for scenes with stills", () => {
+  const files = renderScripts();
+  for (const [path, content] of files) {
+    const document = new URL(`../docs/generated/${path}`, import.meta.url);
+    for (const match of content.matchAll(/\[lib\/[^\]]+\]\(([^)]+)\)/g))
+      assert.ok(existsSync(new URL(match[1], document)), `${path}: ${match[1]}`);
+  }
+  for (const stage of storyStages) {
+    const content = files.get(`stages/${stage.number}.md`);
+    assert.equal([...content.matchAll(/^本文の編集元：/gm)].length, 3, stage.number);
+    assert.equal(
+      [...content.matchAll(/^IDの接続元：/gm)].length,
+      stage.number.startsWith("3-") ? 2 : 0,
+      stage.number,
+    );
+    assert.equal(
+      [...content.matchAll(/^スチル定義：/gm)].length,
+      ["departure", "return"].filter((part) => storyArt[`${stage.quest}-${part}`]).length,
+      stage.number,
+    );
+  }
+  const third = chapterThreeSections.flatMap((section) => section.scenes);
+  const draft = files.get("chapter-three.md");
+  assert.match(draft, /scene\("interlude", "return", …\)/);
+  assert.equal([...draft.matchAll(/^本文の編集元：/gm)].length, third.length);
+  assert.equal([...draft.matchAll(/^IDの接続元：/gm)].length, third.length);
+  assert.equal(
+    [...draft.matchAll(/^スチル定義：/gm)].length,
+    third.filter((s) => storyArt[s.id]).length,
+  );
+  assert.equal([...files.get("banter.md").matchAll(/^本文の編集元：/gm)].length, 6);
 });
