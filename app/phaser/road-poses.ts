@@ -7,6 +7,8 @@ import {
   roadWalkSheet,
   ROAD_PACKING,
   ROAD_PUSH,
+  ROAD_PULL,
+  ROAD_FINN_PULL,
 } from "./road-art";
 
 function applyMiraPose(image: Phaser.GameObjects.Image, pose: number, size: number) {
@@ -49,11 +51,11 @@ export function applyHeroPose(
     .setOrigin(walk?.originX ?? frame.originX, walk?.originY ?? frame.originY);
 }
 
-function workKind(state: RoadBattle) {
+function workKind(state: RoadBattle, pulling: boolean) {
   const point = state.gathering;
   if (!point) return null;
   if (point.task === "pack" || point.task === "unload") return "pack";
-  return point.kind === "cargo" && point.task === "carry" ? "push" : null;
+  return point.kind === "cargo" && point.task === "carry" ? (pulling ? "pull" : "push") : null;
 }
 
 export function applyWorkPose(
@@ -62,22 +64,39 @@ export function applyWorkPose(
   hero: Traveller,
   reduced: boolean,
   size: number,
+  pulling: boolean,
 ) {
-  const kind = workKind(state);
+  const kind = workKind(state, pulling);
   if (!kind) return false;
   const pose = {
     pack: { duration: 750, mira: 14, asset: ROAD_PACKING, height: 0.72 },
     push: { duration: 220, mira: 12, asset: ROAD_PUSH, height: 0.9 },
+    pull: { duration: 220, mira: 12, asset: ROAD_PULL, height: 0.9 },
   }[kind];
   const moving = !reduced && !state.enemies.some((enemy) => enemy.hp > 0);
   const step = moving ? Math.floor(state.time / pose.duration) % 2 : 0;
-  if (hero.id === "finn")
+  if (applyExistingWorkPose(image, hero, kind, pose.mira, step, size)) return true;
+  image
+    .setTexture(hero.id === "finn" ? ROAD_FINN_PULL : pose.asset, `${hero.id}-${String(step)}`)
+    .setOrigin(0.5, 1)
+    .setScale((size * pose.height) / image.frame.height);
+  return true;
+}
+
+function applyExistingWorkPose(
+  image: Phaser.GameObjects.Image,
+  hero: Traveller,
+  kind: "pack" | "push" | "pull",
+  mira: number,
+  step: number,
+  size: number,
+) {
+  if (kind === "pull") return false;
+  if (hero.id === "finn") {
     applyHeroPose(image, hero.id, String((kind === "push" ? 12 : 14) + step), size);
-  else if (hero.id === "mira") applyMiraPose(image, pose.mira + step, size);
-  else
-    image
-      .setTexture(pose.asset, `${hero.id}-${String(step)}`)
-      .setOrigin(0.5, 1)
-      .setScale((size * pose.height) / image.frame.height);
+    return true;
+  }
+  if (hero.id !== "mira") return false;
+  applyMiraPose(image, mira + step, size);
   return true;
 }

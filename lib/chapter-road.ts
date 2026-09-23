@@ -30,6 +30,14 @@ export function workPoint(q: Quest, r: Run) {
 export function roadTransport(r: Run) {
   return !!r.road && movingWork(questById(r.quest), r);
 }
+export function roadPuller(q: Quest, r: Run) {
+  if (r.phase !== "work" || !movingWork(q, r) || q.escortAsset) return null;
+  return (
+    ["leon", "finn", "aria", "mira"].find(
+      (id) => r.actors.some((actor) => actor.hero === id) && r.health[id].hp > 0,
+    ) ?? null
+  );
+}
 export function roadWorkOffset(q: Quest, r: Run, hero: string) {
   if (movingWork(q, r) && !q.escortAsset)
     return (

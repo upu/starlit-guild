@@ -7,6 +7,7 @@ import { combination } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import {
   movingWork,
+  roadPuller,
   workPoint,
   ROAD_CARRY_DISTANCE,
   ROAD_CARRY_SPEED,
@@ -25,6 +26,36 @@ function start(index, level) {
   );
 }
 const quest = (run) => allQuests.find((q) => q.id === run.quest);
+
+test("a living member takes over pulling when the lead carrier falls", () => {
+  let state = start(0, 12);
+  while (state.squads[0].run.phase !== "work")
+    state = settle(state, state.squads[0].run.nextAt).state;
+  const run = state.squads[0].run;
+  const q = quest(run);
+  assert.equal(roadPuller(q, run), "leon");
+  const before = { ...run.road.members.leon };
+  const frame = chapterRoadFrame({
+    squad: state.squads[0],
+    startQuest: run.quest,
+    now: run.road.at,
+    ready: true,
+    paused: false,
+  });
+  assert.equal(frame.look.puller, "leon");
+  assert.deepEqual(run.road.members.leon, before);
+  run.health.leon.hp = 0;
+  assert.equal(roadPuller(q, run), "aria");
+  const handoff = chapterRoadFrame({
+    squad: state.squads[0],
+    startQuest: run.quest,
+    now: run.road.at,
+    ready: true,
+    paused: false,
+  });
+  assert.equal(handoff.look.puller, "aria");
+  assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
+});
 
 test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {
   const state = start(13, 12),
