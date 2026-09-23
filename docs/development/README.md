@@ -4,6 +4,7 @@
 
 | 目的 | 資料 |
 | --- | --- |
+| 依頼内容から編集するコード・仕様・検証を探す | [作業別のコード案内](code-map.md) |
 | 開発環境・コマンド・検証・版の管理を確認する | [開発と運用](development.md) |
 | プレビュー・本番を確認、公開する | [サイトの確認と公開](site-release.md) |
 | 冒険画面の描画構成を調べる | [Phaser冒険画面](phaser-adventure.md) / [本編の横スクロール戦闘](../gameplay/scrolling-battle.md) |
