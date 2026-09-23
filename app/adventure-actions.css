@@ -1,7 +1,3 @@
-.phone-game .phone-navigation {
-  height: var(--game-nav-height) !important;
-}
-
 .phone-game .adventure-actions {
   position: relative;
   z-index: 20;
@@ -75,22 +71,10 @@
   }
 }
 
-@media (max-height: 700px) {
-  .phone-game .phone-navigation {
-    height: var(--game-nav-height) !important;
-  }
-}
-
 @media (max-height: 600px) {
   .phone-game .adventure-actions {
     height: 48px;
     min-height: 48px;
     padding-block: 2px;
-  }
-}
-
-@media (max-height: 530px) {
-  .phone-game .phone-navigation {
-    height: var(--game-nav-height) !important;
   }
 }

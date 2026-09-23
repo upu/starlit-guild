@@ -1,0 +1,134 @@
+/* Bottom navigation shell. Screen contents stay in their feature CSS. */
+:root {
+  --game-nav-height: calc(56px + var(--game-safe-bottom));
+  --game-nav-color: #102a26;
+}
+
+@media (min-width: 760px) {
+  :root {
+    --game-nav-height: calc(64px + var(--game-safe-bottom));
+  }
+}
+
+.phone-navigation {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  flex-shrink: 0;
+  width: 100%;
+  padding: 5px 8px calc(5px + env(safe-area-inset-bottom)) !important;
+  border-radius: 0 !important;
+  background: #142c28 !important;
+  border-top: 1px solid #6b714f;
+  gap: 5px !important;
+}
+.phone-navigation [data-slot="tabs-trigger"] {
+  display: flex !important;
+  flex-direction: column;
+  gap: 2px !important;
+  min-width: 0;
+  height: 100%;
+  padding: 3px 0 !important;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #a6bca5;
+  box-shadow: none;
+  font-size: 12px;
+}
+.phone-navigation [data-slot="tabs-trigger"] > svg {
+  width: 21px !important;
+  height: 21px !important;
+}
+.phone-navigation [data-slot="tabs-trigger"][data-state="active"] {
+  background: #d3b86b17;
+  color: #edd393 !important;
+  box-shadow: inset 0 2px #d7bd70;
+}
+.phone-navigation [data-slot="tabs-trigger"]:after {
+  display: none;
+}
+.phone-navigation .memory-nav-icon {
+  position: relative;
+  display: inline-flex;
+}
+.phone-navigation [data-slot="tabs-trigger"] > img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px #081d2160);
+}
+
+/* The reserved space and fixed bar share a height, including the safe area. */
+.phone-game .phone-tabs {
+  padding-bottom: var(--game-nav-height);
+}
+.phone-game .phone-navigation {
+  position: fixed;
+  z-index: 30;
+  left: 50%;
+  bottom: 0;
+  width: min(100%, 1180px);
+  transform: translateX(-50%);
+  height: var(--game-nav-height) !important;
+  padding: 2px max(8px, env(safe-area-inset-right)) calc(2px + var(--game-safe-bottom))
+    max(8px, env(safe-area-inset-left)) !important;
+  background: #102a26 !important;
+  border-color: #8b8b5c70;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.phone-game .phone-navigation [data-slot="tabs-trigger"] {
+  flex-direction: row;
+  gap: 5px !important;
+  padding: 0 !important;
+  line-height: 16px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.phone-game .phone-navigation [data-slot="tabs-trigger"] > svg,
+.phone-navigation .memory-nav-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+.phone-game .phone-navigation [data-slot="tabs-trigger"][data-state="active"] {
+  background: linear-gradient(#e4c57f23, #e4c57f08);
+  color: #f6d994 !important;
+}
+
+/* The prologue has only two destinations; the normal game reserves three. */
+.phone-game.prologue-game .phone-navigation {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.prologue-game .phone-navigation [data-slot="tabs-trigger"] {
+  flex: 1;
+}
+
+@media (min-width: 760px) {
+  .phone-game .phone-navigation {
+    gap: 12px !important;
+    padding-inline: 24px !important;
+  }
+  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
+    gap: 8px !important;
+  }
+}
+@media (max-height: 700px) {
+  .phone-navigation [data-slot="tabs-trigger"] > img {
+    width: 24px;
+    height: 24px;
+  }
+  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
+    line-height: 14px;
+  }
+}
+@media (max-height: 530px) {
+  .phone-navigation [data-slot="tabs-trigger"] > img {
+    width: 20px;
+    height: 20px;
+  }
+  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
+    padding: 1px 0 !important;
+    font-size: 11px;
+  }
+}

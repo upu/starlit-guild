@@ -126,16 +126,6 @@
   white-space: normal;
   line-height: 1.6;
 }
-.phone-game .phone-navigation {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.prologue-game .phone-navigation {
-  grid-template-columns: minmax(0, 1fr);
-}
-.prologue-game .phone-navigation [data-slot="tabs-trigger"] {
-  flex: 1;
-  font-size: 14px;
-}
 .phone-game .journey-banter,
 .phone-game .journey-banter:hover:not(:disabled),
 .phone-game .journey-banter:focus,

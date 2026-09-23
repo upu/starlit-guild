@@ -29,20 +29,12 @@
   justify-content: center;
   padding: 5px;
 }
-.handbook-button > img,
-.phone-navigation [data-slot="tabs-trigger"] > img {
+.handbook-button > img {
   width: 32px;
   height: 32px;
   object-fit: contain;
   flex-shrink: 0;
   filter: drop-shadow(0 1px 2px #081d2160);
-}
-.phone-game .phone-navigation {
-  height: calc(68px + env(safe-area-inset-bottom)) !important;
-}
-.phone-game .phone-navigation [data-slot="tabs-trigger"] {
-  font-size: 12px;
-  line-height: 16px;
 }
 .phone-game.prologue-game .phone-adventure .map-heading {
   right: 116px;
@@ -75,9 +67,6 @@
 .phone-game .adventure-actions {
   position: relative;
   z-index: 6;
-}
-.phone-game.prologue-game .phone-navigation {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .phone-game .adventure-actions {
   display: flex;
@@ -431,31 +420,6 @@
   .phone-game .adventure-actions {
     min-height: 66px;
     padding-block: 4px;
-  }
-}
-@media (max-height: 700px) {
-  .phone-game .phone-navigation {
-    height: calc(56px + env(safe-area-inset-bottom)) !important;
-  }
-  .phone-navigation [data-slot="tabs-trigger"] > img {
-    width: 24px;
-    height: 24px;
-  }
-  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
-    line-height: 14px;
-  }
-}
-@media (max-height: 530px) {
-  .phone-game .phone-navigation {
-    height: calc(48px + env(safe-area-inset-bottom)) !important;
-  }
-  .phone-navigation [data-slot="tabs-trigger"] > img {
-    width: 20px;
-    height: 20px;
-  }
-  .phone-game .phone-navigation [data-slot="tabs-trigger"] {
-    padding: 1px 0 !important;
-    font-size: 11px;
   }
 }
 

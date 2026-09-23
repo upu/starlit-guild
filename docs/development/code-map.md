@@ -10,6 +10,7 @@
 - [戦闘・育成・進行時間](code-map/balance.md)
 - [冒険画面の描画・タップ](code-map/drawing.md)
 - [キャラクター・装備・ショップ](code-map/equipment.md)
+- [下部ナビ・共通ダイアログの枠](code-map/ui-shell.md)
 - [画像・動画・音の素材と生成物](code-map/assets.md)
 
 PR前の共通検証は [開発と運用](development.md#コード品質)、画面・APIの対象別の準備と実行手順は [手動テスト一覧](development.md#ローカルの手動テスト)。ソース・テストを追加・移動したときは該当する案内を更新する。仕様本文、人物設定、実装状況は各担当資料を正本とし、ここへ転記しない。

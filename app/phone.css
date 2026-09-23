@@ -186,44 +186,6 @@ button {
 .phone-screen > [data-state="inactive"] {
   display: none !important;
 }
-.phone-navigation {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr);
-  flex-shrink: 0;
-  width: 100%;
-  height: calc(62px + env(safe-area-inset-bottom)) !important;
-  padding: 5px 8px calc(5px + env(safe-area-inset-bottom)) !important;
-  border-radius: 0 !important;
-  background: #142c28 !important;
-  border-top: 1px solid #6b714f;
-  gap: 5px !important;
-}
-.phone-navigation [data-slot="tabs-trigger"] {
-  display: flex !important;
-  flex-direction: column;
-  gap: 2px !important;
-  min-width: 0;
-  height: 100%;
-  padding: 3px 0 !important;
-  background: transparent;
-  border: 0;
-  border-radius: 8px;
-  color: #a6bca5;
-  box-shadow: none;
-  font-size: 12px;
-}
-.phone-navigation [data-slot="tabs-trigger"] > svg {
-  width: 21px !important;
-  height: 21px !important;
-}
-.phone-navigation [data-slot="tabs-trigger"][data-state="active"] {
-  background: #d3b86b17;
-  color: #edd393 !important;
-  box-shadow: inset 0 2px #d7bd70;
-}
-.phone-navigation [data-slot="tabs-trigger"]:after {
-  display: none;
-}
 .phone-adventure {
   display: flex;
   flex-direction: column;
@@ -713,31 +675,6 @@ button {
   width: 21px;
   height: 21px;
 }
-.phone-dialog,
-.save-dialog {
-  width: calc(100vw - 24px) !important;
-  max-width: 490px !important;
-  max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 23px 20px !important;
-  gap: 15px !important;
-}
-.phone-dialog p {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #bfccb4;
-}
-.phone-dialog [data-slot="dialog-title"] {
-  font-size: 21px;
-}
-.phone-dialog [data-slot="dialog-description"] {
-  font-size: 13px;
-  line-height: 1.7;
-}
-.phone-dialog small {
-  font-size: 12px;
-}
 .phone-squads {
   display: flex;
   flex-direction: column;
@@ -964,9 +901,6 @@ button {
     height: 30px;
     min-height: 30px;
   }
-  .phone-navigation {
-    height: calc(56px + env(safe-area-inset-bottom)) !important;
-  }
   .phone-quests,
   .phone-companions,
   .phone-home {
@@ -1122,16 +1056,6 @@ button {
   .phone-wallet {
     height: 27px;
     min-height: 27px;
-  }
-  .phone-navigation {
-    height: calc(48px + env(safe-area-inset-bottom)) !important;
-  }
-  .phone-navigation [data-slot="tabs-trigger"] > svg {
-    width: 17px !important;
-    height: 17px !important;
-  }
-  .phone-navigation [data-slot="tabs-trigger"] {
-    font-size: 11px;
   }
   .phone-banter {
     display: none;

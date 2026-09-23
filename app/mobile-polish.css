@@ -164,10 +164,6 @@
   line-height: 1.7;
   color: #bfcbb4;
 }
-.phone-dialog button,
-.save-dialog button {
-  min-height: 44px;
-}
 .phone-dialog .install-guide button {
   white-space: normal;
 }
