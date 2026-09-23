@@ -22,6 +22,8 @@ const bundle = await build({
  const initial=testState(1000,params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
+ initial.xp.leon+=500;
+ if(params.has("max")) initial.xp.aria=72030;
  function App(){
   const [state,setState]=useState(initial);
   const dispatch=a=>{setState(s=>act(s,a,s.updatedAt));return true;};
@@ -150,6 +152,10 @@ try {
         .evaluate((el) => getComputedStyle(el).backgroundColor),
       "rgb(48, 74, 58)",
     );
+    const heading = page.locator(".character-heading");
+    assert.match(await heading.innerText(), /Lv\. 20\s+EXP 10,830 \/ 12,000\s*次のLvまで 1,170/);
+    assert.equal(await heading.locator("progress").getAttribute("aria-label"), "次のレベルまで 0%");
+    assert.ok((await heading.boundingBox()).height <= 130, "heading too tall");
     await page.screenshot({ path: path.join(dir, "overview-" + width + ".png") });
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
     const bottom = page.locator(".character-bottom");
@@ -239,6 +245,8 @@ try {
     assert.equal((await picker.boundingBox()).y, initialBox.y);
     await page.getByRole("button", { name: "レオン", exact: true }).click();
     assert.equal(await page.locator(".character-heading h2").innerText(), "レオン");
+    assert.match(await heading.innerText(), /EXP 11,330 \/ 12,000\s*次のLvまで 670/);
+    await heading.screenshot({ path: path.join(dir, "exp-" + width + ".png") });
     assert.equal(
       await page
         .getByRole("button", { name: /パッシブ技.*習得・セット/ })
@@ -271,6 +279,12 @@ try {
       height,
       "fixed portraits, equipment, learning, switching, unequipping",
     );
+    await page.goto("http://127.0.0.1:" + server.address().port + "/?max");
+    await heading.waitFor();
+    assert.match(await heading.innerText(), /Lv\. 50\s*MAX\s+EXP 72,030/);
+    assert.equal(await heading.getByText(/次のLv/).count(), 0);
+    assert.equal(await heading.locator("progress").count(), 0);
+    await page.screenshot({ path: path.join(dir, "max-" + width + ".png") });
     await page.goto("http://127.0.0.1:" + server.address().port + "/?locked");
     const fixed = page.locator(".character-slot-fixed");
     await fixed.waitFor();
