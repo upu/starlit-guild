@@ -64,7 +64,7 @@ test("reference characters retain eight expressions and other characters retain 
       portraits.expressionPortrait(index, "neutral").position,
     );
   }
-  for (const index of [4, 5, 6, 7, 12, 14]) {
+  for (const index of [4, 5, 6, 7, 14]) {
     assert.equal(portraits.expressionPortrait(index, "smile"), null);
     assert.ok(
       exports
@@ -188,4 +188,49 @@ test("Lico's grin and discovery shout render distinct cells at chat and dialogue
   ).metadata();
   assert.equal(meta.width, 768);
   assert.equal(meta.height, 768);
+});
+
+test("Merrill's appetite expressions share the atlas through named and legacy portrait calls", async () => {
+  const expected = [
+    ["neutral", "0% 0%"],
+    ["smile", "33.33333333333333% 0%"],
+    ["surprised", "66.66666666666666% 0%"],
+    ["mischievous", "100% 0%"],
+    ["savoring", "0% 100%"],
+    ["excited", "33.33333333333333% 100%"],
+    ["serious", "66.66666666666666% 100%"],
+    ["predatory", "100% 100%"],
+  ];
+  for (const [expression, position] of expected) {
+    for (const index of ["merrill", 12]) {
+      assert.deepEqual(portraits.expressionPortrait(index, expression), {
+        src: "/portraits/merrill-expressions.webp",
+        size: "400% 200%",
+        position,
+      });
+      for (const size of [40, 72]) {
+        const face = exports.Portrait({ index, expression, size });
+        assert.equal(face.props.style.backgroundImage, "url(/portraits/merrill-expressions.webp)");
+        assert.equal(face.props.style.backgroundPosition, position);
+        assert.equal(face.props.style.backgroundSize, "400% 200%");
+        assert.equal(face.props.style.width, size);
+      }
+    }
+  }
+  for (const expression of ["worried", "shy", "tired", "thoughtful", "shouting"])
+    assert.deepEqual(
+      portraits.expressionPortrait("merrill", expression),
+      portraits.expressionPortrait("merrill"),
+    );
+  for (const character of ["aria", "leon", "mira", "pumpety", "finn", "lico"])
+    for (const expression of ["predatory", "savoring", "excited"])
+      assert.deepEqual(
+        portraits.expressionPortrait(character, expression),
+        portraits.expressionPortrait(character),
+      );
+  const meta = await sharp(
+    readFileSync(new URL("../public/portraits/merrill-expressions.webp", import.meta.url)),
+  ).metadata();
+  assert.equal(meta.width, 1024);
+  assert.equal(meta.height, 512);
 });

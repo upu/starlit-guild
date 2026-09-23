@@ -10,6 +10,9 @@ export const portraitExpressions = [
   "mischievous",
   "thoughtful",
   "shouting",
+  "savoring",
+  "excited",
+  "predatory",
 ] as const;
 export type PortraitExpression = (typeof portraitExpressions)[number];
 
@@ -19,6 +22,20 @@ export const portraitAtlases = {
   leon: standardAtlas,
   mira: standardAtlas,
   pumpety: standardAtlas,
+  merrill: {
+    columns: 4,
+    rows: 2,
+    expressions: [
+      "neutral",
+      "smile",
+      "surprised",
+      "mischievous",
+      "savoring",
+      "excited",
+      "serious",
+      "predatory",
+    ],
+  },
   finn: { columns: 3, rows: 3, expressions: portraitExpressions.slice(0, 9) },
   lico: {
     columns: 3,
@@ -33,6 +50,7 @@ const portraitCharacters: Partial<Record<number, PortraitCharacter>> = {
   1: "leon",
   2: "mira",
   3: "finn",
+  12: "merrill",
   13: "pumpety",
 };
 

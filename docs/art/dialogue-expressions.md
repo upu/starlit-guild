@@ -45,6 +45,25 @@
 
 `<Portrait index="lico" expression="mischievous" />` / `<Portrait index="lico" expression="shouting" />` で共通部品から表示できる。`expressionPortrait("lico", "shouting")` は右下のコマを返す。リコの `thoughtful`、他の人物の `shouting` のように未収録の表情は通常顔へ戻る。リコの数値IDや登場シーンは今回追加しない。
 
+### メリル
+
+[メリルの8表情](../../public/portraits/merrill-expressions.webp)は[採用シート原本](../characters/merrill-reference-sheet.png)から制作。4列×2行、1024×512px、1コマ256px、WebP品質82・effort 6で157,492バイト。不透明なアイボリー背景で顔を大きく描く。
+
+| 位置 | 表情キー | 意図 |
+| --- | --- | --- |
+| 上段左 | `neutral` | 親しみのある通常顔 |
+| 上段2番目 | `smile` | 目を閉じて満面の笑顔 |
+| 上段3番目 | `surprised` | 目を見開き、小さく口を開けた驚き |
+| 上段右 | `mischievous` | 横目でニヤリ |
+| 下段左 | `savoring` | 目を閉じて味わう満足 |
+| 下段2番目 | `excited` | 食べ物を見つけた期待と喜び |
+| 下段3番目 | `serious` | 注意を向ける真剣な顔 |
+| 下段右 | `predatory` | 食べ物候補を見定める捕食者の目 |
+
+`<Portrait index="merrill" expression="predatory" />` または `expressionPortrait(12, "predatory")` で共通のアトラスから取得する。未収録の表情は通常顔へ戻る。他の人物に `predatory`・`savoring`・`excited` を指定しても、その人物の通常顔になる。登場シーンと台詞ごとの表情指定は今回追加しない。
+
+元シートの6表情と、追加した真剣・捕食者の目を収録する。石榴の花・緑のボブ・瞳・旅装を維持し、花は頭から生える体の一部として扱う。内蔵画像生成ツールで制作し、生成PNGをLanczos3で縮小した。最終プロンプトと参照・画像情報は[生成記録](../art-generation/merrill-expressions-generation.json)を参照。
+
 ## 生成記録
 
 採用したアップ構図の参照画像・生成出力・最終プロンプトは [生成記録](../art-generation/dialogue-expressions-generation.json) に保存する。内蔵画像生成ツールで、4人の外見・8表情・コマ順を維持して描き直した。参照シートの文字情報を人物設定として採用していない。
