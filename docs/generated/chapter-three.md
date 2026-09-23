@@ -8,6 +8,8 @@
 
 シーンID：`interlude-walnut-lunch`
 場所：休みの日の丘
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("interlude", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `LUNCH_INTERLUDE`
 
 アリアが布を広げ、包みからパンと小さな焼き菓子を並べた。レオンは隣に腰を下ろす。
 
@@ -77,6 +79,9 @@
 
 シーンID：`berne-road-departure`
 場所：往診へ向かう街道の食堂
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/finn-at-breakfast.webp`）
 
 次の往診の日の朝。三人は、石畳の街ベルネへ向かう途中の食堂で荷を下ろした。
 
@@ -138,6 +143,8 @@
 
 シーンID：`berne-road-return`
 場所：街を見下ろす道の休憩所
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 街の塔が見えた。フィンは休憩所の縁へ腰を下ろし、外套から折り畳んだ紙を出した。
 
@@ -171,6 +178,8 @@
 
 シーンID：`berne-house-calls-departure`
 場所：街の門から往診先へ続く通り
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 街へ入ると、壁や石畳が淡く光っていた。門のすぐ先だけ、新しい土がむき出しになっている。
 
@@ -198,6 +207,8 @@
 
 シーンID：`berne-house-calls-return`
 場所：往診先の家の軒下
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 診察を終えたミラが薬を渡す間、アリアは軒先の小さな石を見上げた。灯りは通りの石と同じ色をしている。
 
@@ -251,6 +262,8 @@
 
 シーンID：`missing-keystone-departure`
 場所：塔の足元の点検場
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌朝、管理人と石工は、古い図面と、取り外した石の控えを並べていた。塔の中の点検では原因が見つからなかったという。
 
@@ -280,6 +293,8 @@
 
 シーンID：`missing-keystone-return`
 場所：外された石段の跡
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 石工が地面を露出させると、塔から伸びる石組みが、一つの空所で途切れていた。区画図の線もそこへ集まっている。
 
@@ -321,6 +336,8 @@
 
 シーンID：`riverside-manor-departure`
 場所：川向こうの屋敷の勝手口
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 その日の午後、四人は川向こうの屋敷を訪ねた。フィンが勝手口の戸を叩く。
 
@@ -354,6 +371,8 @@
 
 シーンID：`riverside-manor-return`
 場所：屋敷の庭の展示台
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 荷を運び終えた四人の前で、庭師が展示台の布を外した。淡い光の下に、三本の溝が見える。
 
@@ -403,6 +422,8 @@
 
 シーンID：`matching-lantern-stone-departure`
 場所：街の石工の資材置き場
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌朝、石工は、建て替えた家の中庭から保管していた石を見せてくれた。塔へ続く石組みとは離れていた物だという。
 
@@ -444,6 +465,8 @@
 
 シーンID：`matching-lantern-stone-return`
 場所：資材置き場の暗い物置
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 候補をより分けるうち、明るい石から先に脇へ戻された。フィンが残った石をのぞき込む。
 
@@ -491,6 +514,8 @@
 
 シーンID：`manor-survey-departure`
 場所：屋敷へ戻る道
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 午後、四人は下見のためにもう一度川を渡った。フィンは昨日の帰りに橋の宿から引き取った鍋を提げている。レオンの背には、道具の詰まった袋がある。
 
@@ -520,6 +545,8 @@
 
 シーンID：`manor-survey-return`
 場所：屋敷の裏庭
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 庭師は鉢を運びながら、展示台は灯りを披露する直前まで開けないと話した。手伝いを終え、四人は裏庭へ集まる。
 
@@ -559,6 +586,8 @@
 
 シーンID：`garden-reception-departure`
 場所：客を迎える前の屋敷の庭
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌日の夕方。借りた手押し車には、鉢と布に包んだ石が載っていた。料理人に頼まれた荷と一緒に、四人は裏庭へ入る。
 
@@ -600,6 +629,8 @@
 
 シーンID：`garden-reception-return`
 場所：展示台の裏の作業場
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 作業場から、展示台と出口の門が見えた。アリアは戻る角へ、小さな目印の紐を結ぶ。
 
@@ -633,6 +664,9 @@
 
 シーンID：`keystone-night-road-departure`
 場所：覆いが開く直前の展示台
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/mira-tends-finn.webp`）
 
 鉢を持ち上げた拍子に、台の脚が敷布を噛んだ。フィンが手を差し入れ、布を抜く。袖口から、赤い筋がにじんだ。
 
@@ -700,6 +734,8 @@
 
 シーンID：`keystone-night-road-return`
 場所：夜の街道の橋
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 ミラ：二人とも、こちらへ。傷はない？
 
@@ -717,6 +753,8 @@
 
 シーンID：`berne-restoration-departure`
 場所：塔へ続く古い石組み
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
 
 朝、管理人と石工が作業の支度を整えて待っていた。通りの人たちは柵を運び、石を戻す場所を空けている。
 
@@ -756,6 +794,9 @@
 
 シーンID：`berne-restoration-return`
 場所：灯りの戻る街の食堂
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/four-cups-of-tea.webp`）
 
 石を戻しても、塔はすぐには明るくならなかった。夕方になって、窓の中に淡い紫が戻り、足元の石組みへ光が続いた。
 

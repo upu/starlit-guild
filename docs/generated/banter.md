@@ -4,6 +4,8 @@
 
 ## 二人で待機中
 
+本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
+
 ### 1
 
 アリア：準備できた？
@@ -45,6 +47,8 @@
 アリア：私も。じゃあ、違うほうを半分ずつね。
 
 ## 三人で待機中
+
+本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
 
 ### 1
 
@@ -113,6 +117,8 @@
 レオン：ミラさんの分です。もう分けたので。
 
 ## 四人で待機中
+
+本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
 
 ### 1
 
@@ -196,6 +202,8 @@
 
 ## 関係値 0〜11
 
+本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
+
 ### 道中 A
 
 レオン：少し歩くのが速くないか？
@@ -226,6 +234,8 @@
 
 ## 関係値 12〜23
 
+本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
+
 ### 道中 A
 
 レオン：髪に葉っぱ、ついてるぞ。
@@ -255,6 +265,8 @@
 アリア「レオンがいると、ついね。」
 
 ## 関係値 24以上
+
+本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
 
 ### 道中 A
 
