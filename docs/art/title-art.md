@@ -10,6 +10,10 @@
 
 画面の向きに合わせて背景を切り替える。タイトルと START は風景に焼き込まず、独立して配置する。キャッチコピーは表示しない。
 
+## 共有リンクのカード画像
+
+`assets/source/social/x-card-background.webp` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp) のリファレンスシートを参照して内蔵 imagegen で生成した横長の原本。淡い水彩の線と塗りを保ち、三人の後ろに星空と灯りの塔を描く。文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が既存の透過ロゴを合成し、1200 × 630 PNG を `public/social/x-card.png` に1枚だけ出力する。OGPとXは同じ画像URLを参照する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。
+
 ## 生成プロンプト
 
 ### 横画面の風景
