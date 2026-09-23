@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-23",
+  "tool": "built-in image_gen",
+  "model": "not reported by tool",
+  "target": "public/portraits/merrill-expressions.webp",
+  "identityReference": "docs/characters/merrill-reference-sheet.png",
+  "reference": {
+    "width": 1448,
+    "height": 1086,
+    "encoding": "User-provided PNG preserved byte-for-byte",
+    "sha256": "d45a6e1afe02fdba977c74f774721afa54d2999d46e7f062f3d1df1254c66668"
+  },
+  "generatedSource": "exec-636625a1-eb23-4eae-b1b0-1ae80af8acdc.png",
+  "generatedDimensions": {
+    "width": 1774,
+    "height": 887
+  },
+  "layout": {
+    "columns": 4,
+    "rows": 2,
+    "cellSize": 256,
+    "expressions": [
+      "neutral",
+      "smile",
+      "surprised",
+      "mischievous",
+      "savoring",
+      "excited",
+      "serious",
+      "predatory"
+    ]
+  },
+  "encoding": "Lanczos3 resize to 1024x512, WebP quality 82, effort 6",
+  "bytes": 100426,
+  "prompt": "Use case: stylized-concept.\nAsset type: production JRPG dialogue face-icon expression atlas for Merrill.\nUse the supplied Merrill reference sheet as the strict identity and painting style reference. Create ONE landscape 2:1 image, an EXACT 4 columns by 2 rows uniform grid of EIGHT square face close-ups. Grid fills canvas edge-to-edge, equal cell sizes, no gaps, no borders, no text or labels. Each square shows one full face and bob haircut, tiny shoulders; face fills about 75% cell width, consistent centered eye line and head scale across all cells, designed to read at 64px. Plain warm ivory background in each cell.\nPreserve sage-green short tousled bob, green eyes, youthful soft rounded face, red pomegranate flowers and leaves growing naturally from her head on viewer right (not a removable hair ornament), separate small red ribbon, cream blouse and muted green hooded travel jacket. Match the beautiful detailed soft anime illustration and restrained earthy colors of the provided reference. No weapons, hands, food, large backpack, writing, borders or watermarks in this face atlas.\nEXACT cell order left-to-right top-to-bottom:\n1 neutral: reference upper-left expression, gentle open-eyed friendly small smile.\n2 smile: reference upper-middle expression, joyful laugh with closed crescent eyes and open smiling mouth.\n3 surprised: reference upper-right expression, wide eyes, small round open mouth.\n4 mischievous: reference lower-left expression, knowing sideways glance and subtle closed-mouth smirk.\n5 savoring: reference lower-middle expression, both eyes closed, peaceful satisfied expression enjoying a taste, no hand.\n6 excited: reference lower-right expression, shining wide eyes and eager open smile on discovering something appetizing.\n7 serious: attentive calm face, mouth closed, brows slightly lowered, not angry.\n8 predatory: distinctive PREDATOR'S EYES, the same innocent-faced Merrill sizing up potential food with unsettling quiet appetite: upper eyelids lowered, sharply focused green irises, smaller ROUND pupils, a direct piercing gaze, chin slightly lowered, small confident closed-mouth smile. Keep green eye color and human-shaped eyes, not red glowing eyes or slit monster pupils. This is hungry concentration, not rage, cruelty, horror or a different character. No blood, saliva or fangs.\nKeep all eight expressions strongly distinguishable while preserving exactly the same character. Output 2048x1024 if possible.",
+  "initialSource": "exec-18f81db9-c0d5-4508-8c6b-a269a860abb9.png",
+  "revisionPrompt": "Use case: identity-preserve. Edit target: Merrill's attached 4x2 face expression atlas. Make exactly TWO requested changes and retain all eight identities, expression order, detailed soft anime painting, sage-green hair, green eyes, pomegranate flowers, colors and ivory backgrounds.\n1. MUCH TIGHTER FACE CLOSE-UPS in EVERY cell, for 40px game icons. Zoom each existing face about 1.5x. Face skin from cheeks and eyes to mouth must dominate the square. Crop the crown/top hair, outer hair and much of the flower at the edges. Bottom ends immediately below chin, omit shoulders and almost all neck/clothing. Show both eyes, eyebrows, nose, cheeks and full mouth clearly, preserve chin. NOT head-and-shoulders portraits. Flowers can be partially cropped but retain recognizable red flower fragments at viewer right. Keep each face centered and scale consistent, distinguish expression even at 40px.\n2. ONLY bottom-right cell: retain the predatory half-lidded focused green eyes and hungry small smile, add clear LIP-LICKING: small visible tongue tip sweeping across one corner of the upper lip, visibly touching the lip, as if anticipating a delicious snack. Slightly parted smiling mouth to make tongue-tip readable at small scale. Food appetite, playful yet unsettling predator intent; NOT tongue hanging straight down, not panting, no saliva, no fangs, no food or other props. Keep the other seven mouths and expressions unchanged.\nExact 4 columns by 2 rows uniform square cells, landscape 2:1, no borders, gutters, text, labels, watermarks. Top row neutral / laughing with closed eyes / surprised / mischievous. Bottom row savoring with closed eyes / excited open smile / serious / predatory licking lips. Preserve same innocent youthful round face, same drawing style, all image content limited to faces. Output 2048x1024 if possible.",
+  "visualCheck": "40px and 72px cells: tight face crop, eight expressions and lip-licking in bottom right visually checked"
+}
