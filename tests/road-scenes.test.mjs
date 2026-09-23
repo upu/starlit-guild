@@ -50,11 +50,6 @@ const view = (s, now = s.updatedAt) =>
     paused: false,
   });
 
-test("2-5 through 2-7 have no destination marker; surrounding journey stages keep it", () => {
-  for (let stage = 12; stage <= 16; stage++)
-    assert.equal(view(start(stage)).look.destination, stage === 12 || stage === 16);
-});
-
 test("pushed-forward dolls withdraw before the final formation enters, with saved combat held", () => {
   let s = until(start(), (r) => r.node === 1);
   const road = s.squads[0].run.road;

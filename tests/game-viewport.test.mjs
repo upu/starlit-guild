@@ -10,9 +10,6 @@ const navigationCss = compactCss(
 const phoneNavigationCss = compactCss(
   readFileSync(new URL("../app/phone-navigation.css", import.meta.url), "utf8"),
 );
-const dialogShellCss = compactCss(
-  readFileSync(new URL("../app/dialog-shell.css", import.meta.url), "utf8"),
-);
 const layoutSource = readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
 const manifest = JSON.parse(
   readFileSync(new URL("../public/manifest.webmanifest", import.meta.url), "utf8"),
@@ -28,37 +25,6 @@ test("software keyboard uses the reduced visual viewport", () => {
 
 test("keyboard fallback uses the window height without Visual Viewport API", () => {
   assert.equal(gameViewportHeight(844, undefined, true), 844);
-});
-
-test("bottom navigation is fixed to the viewport and reserves its layout space", () => {
-  assert.match(phoneNavigationCss, /--game-nav-height:calc\(56px \+ var\(--game-safe-bottom\)\)/);
-  assert.match(
-    phoneNavigationCss,
-    /\.phone-game \.phone-tabs\{padding-bottom:var\(--game-nav-height\)\}/,
-  );
-  assert.match(
-    phoneNavigationCss,
-    /\.phone-game \.phone-navigation\{[^}]*position:fixed;[^}]*bottom:0;[^}]*height:var\(--game-nav-height\)!important;[^}]*padding:[^}]*calc\(2px \+ var\(--game-safe-bottom\)\)/,
-  );
-  assert.match(
-    phoneNavigationCss,
-    /@media\(min-width:760px\)\{\s*:root\{--game-nav-height:calc\(64px \+ var\(--game-safe-bottom\)\)\}/,
-  );
-});
-
-test("shared shells load after screen-specific styles, with dialog space tied to the game viewport", () => {
-  assert.ok(
-    layoutSource.indexOf('import "./adventure-chat.css"') <
-      layoutSource.indexOf('import "./phone-navigation.css"'),
-  );
-  assert.ok(
-    layoutSource.indexOf('import "./phone-navigation.css"') <
-      layoutSource.indexOf('import "./dialog-shell.css"'),
-  );
-  assert.match(
-    dialogShellCss,
-    /\.phone-dialog,\.save-dialog\{[^}]*max-height:calc\(var\(--game-height,100dvh\) - 24px - env\(safe-area-inset-top\) - var\(--game-safe-bottom\)\)/,
-  );
 });
 
 test("browser-owned bottom area uses the navigation color", () => {

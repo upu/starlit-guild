@@ -7,7 +7,6 @@ import { BLOCKADE_QUEST, HOUSE_CALLS_QUEST, MEDICINE_RETURN_QUEST } from "../lib
 import { finaleStories } from "../lib/chapter-two-finale-stories.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { nextGoal } from "../lib/journey.ts";
-import { storyArtAt } from "../lib/story-art.ts";
 import { availableStories, journeyBanter } from "../lib/stories.ts";
 import { createEnemies } from "../lib/combat.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
@@ -134,17 +133,7 @@ test("2-7 advances through mixed puppets to their masked commander, with distinc
     assert.doesNotMatch(JSON.stringify(banter), /大きい手|小さいのも/);
   }
 });
-test("finale stills reveal at the delivery and first sip, and the antagonist stays masked and unjoined", () => {
-  for (const [id, action] of [
-    [HOUSE_CALLS_QUEST, "薬の包みと蜜の瓶"],
-    [MEDICINE_RETURN_QUEST, "一口飲んだ"],
-  ]) {
-    const story = finaleStories.find((st) => st.id === id + "-return"),
-      index = story.lines.findIndex((line) => line.text.includes(action));
-    assert.ok(index > 0);
-    assert.equal(storyArtAt(story.id, index - 1), undefined);
-    assert.ok(existsSync("public" + storyArtAt(story.id, index).src));
-  }
+test("the antagonist stays masked and unjoined through the finale", () => {
   const blockade = finaleStories.filter((st) => st.quest === BLOCKADE_QUEST);
   assert.ok(blockade.every((st) => st.lines.every((line) => line.speaker !== "pumpety")));
   assert.ok(

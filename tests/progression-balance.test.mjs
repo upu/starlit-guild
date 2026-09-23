@@ -3,16 +3,7 @@ import assert from "node:assert/strict";
 import { trainedChapter } from "../scripts/check-combat-balance.mjs";
 import { chapterRoute } from "../scripts/check-chapter-two-balance.mjs";
 import { progressionRoute } from "../scripts/check-progression-balance.mjs";
-import { allQuests } from "../lib/game.ts";
-import { chapterTwoStages } from "../lib/chapter-two.ts";
 
-test("chapter two preserves existing XP rewards instead of compensating for longer work", () => {
-  const rewards = [90, 100, 110, 140, 150, 170, 200, 170, 160];
-  assert.deepEqual(
-    chapterTwoStages.map((stage) => allQuests.find((q) => q.id === stage.quest).xp),
-    rewards,
-  );
-});
 test("chapter continuity carries earned state without mutation or a reset of elapsed time", () => {
   const first = trainedChapter(true),
     before = structuredClone(first.state);

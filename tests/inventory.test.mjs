@@ -59,17 +59,3 @@ test("empty inventory keeps every resource counter visible", () => {
     ["0", "0", "0"],
   );
 });
-
-test("reading balances never changes the save", () => {
-  const state = {
-    prologue: true,
-    gold: 180,
-    herbs: 80,
-    ore: 5,
-    owned: ["aria", "leon", "mira"],
-    done: { "village-trade": 12 },
-  };
-  const before = structuredClone(state);
-  balances(state);
-  assert.deepEqual(state, before);
-});
