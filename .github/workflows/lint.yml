@@ -49,7 +49,7 @@ jobs:
       - name: Check generated story stills and album thumbnails
         run: npm run stills:check
 
-      - name: Check generated social card images
+      - name: Check generated social card image
         run: npm run social-card:check
 
       - name: Check generated BGM

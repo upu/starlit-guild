@@ -49,11 +49,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const localHost = host?.startsWith("localhost:") || host?.startsWith("127.0.0.1:");
   const protocol = localHost ? "http" : "https";
   const siteUrl = new URL(host ? `${protocol}://${host}` : siteTargets.production.url);
+  const image = {
+    url: new URL("/social/x-card.png", siteUrl),
+    width: 1200,
+    height: 630,
+    alt: "星灯りの夜空を背景に並ぶアリア、レオン、ミラと、星灯りの旅団のロゴ",
+  };
 
   return {
     ...sharedMetadata,
     metadataBase: siteUrl,
-    openGraph: { ...sharedMetadata.openGraph, url: siteUrl },
+    openGraph: { ...sharedMetadata.openGraph, url: siteUrl, images: [image] },
+    twitter: { ...sharedMetadata.twitter, images: [image] },
   };
 }
 
