@@ -3,15 +3,7 @@ import { useState } from "react";
 import { CharacterIconChoices } from "./character-icon-choices";
 import Image from "next/image";
 import { Coins, Leaf, Gem, Shield, Swords, Package, SquareDashed, X } from "lucide-react";
-import {
-  heroes,
-  memberStats,
-  memberMaxHp,
-  heroSkills,
-  level,
-  type State,
-  type Action,
-} from "@/lib/game";
+import { heroes, memberStats, memberMaxHp, heroSkills, type State, type Action } from "@/lib/game";
 import {
   equipment,
   equipmentById,
@@ -33,6 +25,7 @@ import { TechniquePanel, TechniqueDetails } from "./technique-panel";
 import { ShopItemIcon } from "./shop-item-icon";
 import { TechniqueIcon } from "./technique-icon";
 import { Portrait } from "./portrait";
+import { CharacterLevel } from "./character-level";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
@@ -299,7 +292,7 @@ function CharacterHeading({ state, hero }: { state: State; hero: (typeof heroes)
       <div>
         <h2>{hero.name}</h2>
         <p>{hero.job}</p>
-        <span>Lv. {level(state.xp[hero.id] ?? 0)}</span>
+        <CharacterLevel xp={state.xp[hero.id] ?? 0} />
         <p>
           {hp
             ? `HP ${String(Math.ceil(hp.hp))} / ${String(hp.maxHp)}`

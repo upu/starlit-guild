@@ -1,4 +1,4 @@
-export { bonds, level } from "./roster.ts";
+export { bonds, level, levelProgress } from "./roster.ts";
 export type { Kind } from "./roster.ts";
 export { heroes, quests, allQuests, availableQuests } from "./game-content.ts";
 export type { Quest } from "./game-content.ts";

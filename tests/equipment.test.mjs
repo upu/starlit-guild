@@ -1,6 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialPrologueState, testState, act, settle, memberStats } from "../lib/game.ts";
+import {
+  initialPrologueState,
+  testState,
+  act,
+  settle,
+  memberStats,
+  level,
+  levelProgress,
+} from "../lib/game.ts";
 import { shopItems, inventoryOf, availableCopies, equipmentById } from "../lib/equipment.ts";
 import { storyItems } from "../lib/story-items.ts";
 import {
@@ -265,4 +273,32 @@ test("armour bought once is worn by one companion and stays in the save", () => 
   assert.equal(availableCopies(s, "leather-vest"), 0);
   assert.doesNotThrow(() => parseBundle(bundle(s)));
   assert.ok(equipmentById("leather-vest"));
+});
+
+test("level progress matches the level formula and stops at the cap", () => {
+  assert.deepEqual(levelProgress(0), {
+    level: 1,
+    xp: 0,
+    start: 0,
+    next: 30,
+    remaining: 30,
+    ratio: 0,
+  });
+  for (const xp of [29, 30, 119, 120, 3850, 30 * 48 ** 2, 30 * 49 ** 2 - 1]) {
+    const progress = levelProgress(xp);
+    assert.equal(progress.level, level(xp));
+    assert.equal(level(progress.start), progress.level);
+    assert.equal(level(progress.next), progress.level + 1);
+    assert.equal(level(progress.next - 1), progress.level);
+    assert.equal(progress.remaining, progress.next - xp);
+    assert.ok(progress.ratio >= 0 && progress.ratio < 1);
+  }
+  for (const xp of [30 * 49 ** 2, 72030, 200000]) {
+    const progress = levelProgress(xp);
+    assert.equal(progress.level, 50);
+    assert.equal(progress.xp, xp);
+    assert.equal(progress.next, null);
+    assert.equal(progress.remaining, 0);
+    assert.equal(progress.ratio, 1);
+  }
 });
