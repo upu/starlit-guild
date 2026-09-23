@@ -1,45 +1,18 @@
 import * as interludes from "../lib/interludes.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import vm from "node:vm";
-import ts from "typescript";
 import * as jsxRuntime from "react/jsx-runtime";
 import * as game from "../lib/game.ts";
 import * as stories from "../lib/stories.ts";
 import * as prologue from "../lib/prologue.ts";
 import * as art from "../lib/story-art.ts";
 import * as originals from "../lib/original-characters.ts";
+import { loadStoryScenes } from "./helpers/story-scene-modules.mjs";
 
-const code = ts.transpileModule(
-  readFileSync(new URL("../app/story-scenes.tsx", import.meta.url), "utf8"),
-  {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2022,
-      jsx: ts.JsxEmit.ReactJSX,
-    },
-  },
-).outputText;
-const moduleCodes = [
-  ["./story-viewers", "../app/story-viewers.tsx"],
-  ["./story-memory-groups", "../app/story-memory-groups.ts"],
-  ["./story-gesture-handlers", "../app/story-gesture-handlers.ts"],
-].map(([id, path]) => [
-  id,
-  ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2022,
-      jsx: ts.JsxEmit.ReactJSX,
-    },
-  }).outputText,
-]);
 function harness(name, initialProps) {
   const slots = [],
     timers = new Map(),
-    listeners = new Set(),
-    exports = {};
+    listeners = new Set();
   let cursor = 0,
     effects = [],
     tree,
@@ -99,18 +72,7 @@ function harness(name, initialProps) {
       ]),
     ),
   };
-  const requireModule = (id) => {
-    if (!(id in modules)) throw Error(id);
-    return modules[id];
-  };
-  for (const [id, moduleCode] of moduleCodes) {
-    const moduleExports = {};
-    vm.runInNewContext(moduleCode, { exports: moduleExports, require: requireModule });
-    modules[id] = moduleExports;
-  }
-  vm.runInNewContext(code, {
-    exports,
-    require: requireModule,
+  const exports = loadStoryScenes(modules, {
     document,
     window: { getSelection: () => null },
     setTimeout: (fn) => {

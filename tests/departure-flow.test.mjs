@@ -1,66 +1,38 @@
 import * as storyParty from "../lib/story-party.ts";
 import * as interludes from "../lib/interludes.ts";
 import * as navigation from "../lib/quest-navigation.ts";
-import * as chapterTwo from "../lib/chapter-two.ts";
 import * as chapterThree from "../lib/chapter-three.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import vm from "node:vm";
-import ts from "typescript";
 import * as jsxRuntime from "react/jsx-runtime";
 import * as game from "../lib/game.ts";
 import * as story from "../lib/stories.ts";
 import * as prologue from "../lib/prologue.ts";
 import * as journey from "../lib/journey.ts";
 import * as equipment from "../lib/equipment.ts";
+import * as techniques from "../lib/techniques.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
+import { compileSourceModule, evaluateSourceModule } from "./helpers/source-module.mjs";
 
-const pickerExports = {};
-vm.runInNewContext(
-  ts.transpileModule(readFileSync(new URL("../app/quest-picker.tsx", import.meta.url), "utf8"), {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2022,
-      jsx: ts.JsxEmit.ReactJSX,
-    },
-  }).outputText,
+const ui = (...names) => Object.fromEntries(names.map((name) => [name, name]));
+const pickerExports = evaluateSourceModule(
+  compileSourceModule("../app/quest-picker.tsx", import.meta.url),
   {
-    exports: pickerExports,
-    require: (id) =>
-      ({
-        react: { useState: (value) => [typeof value === "function" ? value() : value, () => {}] },
-        "@/lib/quest-navigation": navigation,
-        "react/jsx-runtime": jsxRuntime,
-        "@/lib/chapter-two": chapterTwo,
-        "@/lib/story-party": storyParty,
-        "@/lib/game": game,
-        "@/lib/prologue": prologue,
-        "@/lib/original-characters": { originalCharacters: [] },
-        "@/lib/scenery": { questScenery: () => "" },
-      })[id] || new Proxy({}, { get: (_, name) => String(name) }),
+    react: { useState: (value) => [typeof value === "function" ? value() : value, () => {}] },
+    "@/lib/quest-navigation": navigation,
+    "react/jsx-runtime": jsxRuntime,
+    "@/lib/story-party": storyParty,
+    "@/lib/game": game,
+    "@/lib/prologue": prologue,
+    "@/lib/scenery": { questScenery: () => "" },
+    "next/image": { default: "img" },
+    "lucide-react": ui("Check", "LockKeyhole"),
+    "./quest-progression-setting": ui("QuestProgressionSetting"),
   },
 );
-function compile(relativePath) {
-  return ts.transpileModule(readFileSync(new URL(relativePath, import.meta.url), "utf8"), {
-    compilerOptions: {
-      module: ts.ModuleKind.CommonJS,
-      target: ts.ScriptTarget.ES2022,
-      jsx: ts.JsxEmit.ReactJSX,
-    },
-  }).outputText;
-}
-const code = compile("../app/phone-game.tsx"),
-  frameCode = compile("../app/phone-game-frame.tsx"),
-  sheetsCode = compile("../app/phone-game-sheets.tsx");
-function evaluate(source, modules) {
-  const exports = {};
-  vm.runInNewContext(source, {
-    exports,
-    require: (id) => modules[id] || new Proxy({}, { get: (_, name) => String(name) }),
-  });
-  return exports;
-}
+const code = compileSourceModule("../app/phone-game.tsx", import.meta.url),
+  frameCode = compileSourceModule("../app/phone-game-frame.tsx", import.meta.url),
+  sheetsCode = compileSourceModule("../app/phone-game-sheets.tsx", import.meta.url);
 function harness(initialState) {
   const slots = [],
     exports = {};
@@ -83,6 +55,7 @@ function harness(initialState) {
   const modules = {
     "@/lib/interludes": interludes,
     "@/lib/chapter-three": chapterThree,
+    "@/lib/techniques": techniques,
     react: {
       useState(initial) {
         const i = cursor++;
@@ -101,16 +74,47 @@ function harness(initialState) {
     "@/lib/prologue": prologue,
     "@/lib/journey": journey,
     "@/lib/equipment": equipment,
-    "./install-guide": { useInstallPrompt: () => ({}) },
+    "next/image": { default: "img" },
+    "lucide-react": ui("House", "BookOpen", "ChevronRight", "Heart", "Lightbulb", "Images"),
+    "@/components/ui/tabs": ui("Tabs", "TabsList", "TabsTrigger", "TabsContent"),
+    "@/components/ui/dialog": ui(
+      "Dialog",
+      "DialogContent",
+      "DialogHeader",
+      "DialogTitle",
+      "DialogDescription",
+    ),
+    "@/components/ui/alert-dialog": ui(
+      "AlertDialog",
+      "AlertDialogContent",
+      "AlertDialogHeader",
+      "AlertDialogTitle",
+      "AlertDialogDescription",
+      "AlertDialogFooter",
+      "AlertDialogCancel",
+      "AlertDialogAction",
+    ),
+    "@/components/ui/sonner": ui("Toaster"),
+    "./equipment-panels": ui("CharacterPanel", "InventoryPanel"),
+    "./shop-entry": ui("ShopEntry"),
+    "./shop-panel": ui("ShopPanel"),
+    "./quest-completion": ui("QuestCompletion"),
+    "./map-stage": ui("MapStage"),
+    "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StoryReader"),
+    "./story-heading": ui("StoryHeading"),
+    "./sprite": ui("Sprite"),
+    "./save-panel": ui("SavePanel"),
+    "./install-guide": { useInstallPrompt: () => ({}), InstallGuide: "InstallGuide" },
+    "./use-story-advance": { useStoryAdvance: () => ({}) },
     "./use-game-music": { useGameMusic: () => ({}) },
     "./use-journey-hints": { useJourneyHints: () => ({}) },
     "./quest-picker": pickerExports,
   };
-  const sheetExports = evaluate(sheetsCode, modules);
+  const sheetExports = evaluateSourceModule(sheetsCode, modules);
   modules["./phone-game-sheets"] = sheetExports;
-  const frameExports = evaluate(frameCode, modules);
+  const frameExports = evaluateSourceModule(frameCode, modules);
   modules["./phone-game-frame"] = frameExports;
-  Object.assign(exports, evaluate(code, modules), {
+  Object.assign(exports, evaluateSourceModule(code, modules), {
     AdventureDestination: frameExports.AdventureDestination,
     collectionSheet: sheetExports.collectionSheet,
   });
