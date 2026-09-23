@@ -28,6 +28,9 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      - name: Check manual test inventory
+        run: npm run manual-tests:check
+
       - name: Run lint
         run: npm run lint
 

@@ -112,17 +112,24 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 
 ### ローカルの手動テスト
 
-以下の5本は `node --test tests/*.test.mjs` の対象外。GitHub Actionsの定期実行・push時実行・必須checkには追加せず、関連する画面やAPIを変更したとき、または必要になったときにローカルで実行する。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）と `npm run build` を済ませてから、必要な行だけ実行する。ビルドとテストはSitesやユーザーのセーブを使わない。
+以下の8本は `node --test tests/*.test.mjs` の対象外。変更した機能に合う行だけローカルで実行する。PR前の共通検証は [コード品質](#コード品質) に従う。CIの `npm run manual-tests:check` はこの一覧と実在ファイルの一致だけを検査し、ブラウザーテストや章の通し試走を実行しない。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）を済ませる。
 
-| テスト | 実行条件・コマンド | 確認内容・出力 |
-| --- | --- | --- |
-| `tests/quest-picker.browser.mjs` | Node版PlaywrightとChromium。`node tests/quest-picker.browser.mjs` | 行先選択・設定・画面幅。`work/quest-picker-browser/` にスクリーンショットと結果JSON |
-| `tests/story-video.browser.mjs` | Node版PlaywrightとChromium。`node tests/story-video.browser.mjs` | 再生・一時停止・再視聴・縮小画面・失敗時の代替表示。`work/story-video-browser/` にスクリーンショット |
-| `tests/dialog-layout.browser.py` | Python版PlaywrightとChromiumまたはWebKit。`python tests/dialog-layout.browser.py --engine chromium`（必要なら `--engine webkit` も） | 生成CSSによる各画面幅・回転・安全領域の配置。成功時はケース数を表示。失敗時は測定値を出力 |
-| `tests/test-tools.integration.mjs` | ビルド済み。`node tests/test-tools.integration.mjs` | 一時的なローカルWorkerで `ENABLE_TEST_TOOLS` の切り替えをHTTP検証。外部サイト・端末セーブは使用しない |
-| `tests/api-backup.integration.mjs` | ビルドとローカルD1の初期化後、別ターミナルで `npm start`。起動時に表示されたURLを `TEST_ROOT` に指定して `node tests/api-backup.integration.mjs` | ローカルのバックアップAPIで往復・隔離・不正入力を検証。`npm start` の既定は `http://127.0.0.1:8787`（テスト側の既定5173とは異なる） |
+<!-- manual-test-inventory:start -->
+| テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
+| --- | --- | --- | --- |
+| `tests/quest-picker.browser.mjs` 行先選択・設定・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身が部品を組み立てて一時サーバーを起動 | `node tests/quest-picker.browser.mjs` | `work/quest-picker-browser/` の画像・`results.json` |
+| `tests/story-video.browser.mjs` 再生・停止・再視聴・代替表示 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/story-video.browser.mjs` | `work/story-video-browser/` の画像、終了表示 |
+| `tests/character-panel.browser.mjs` 人物画面・装備候補・スキル・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/character-panel.browser.mjs` | `work/character-browser/` の画像、終了表示 |
+| `tests/dialog-layout.browser.py` 会話・ダイアログの画面幅、回転、安全領域 | Python版Playwright + ChromiumまたはWebKit。`npm run build`。生成CSSを使う独立fixture。外部サーバー不要 | `python tests/dialog-layout.browser.py --engine chromium`（WebKitは `--engine webkit`） | 成功時のケース数、失敗時の測定値を標準出力 |
+| `tests/chapter-road.browser.mjs` 道中演出・Canvas・再読み込み・画像失敗 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-road.browser.mjs` | `work/chapter-road-browser/` の画像・`results.json` |
+| `tests/chapter-three.browser.mjs` 第三章の幕間→出発・各ステージ・ショップ | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-three.browser.mjs` | `work/chapter-three-browser/` の画像・`result.json` |
+| `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
+| `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
+<!-- manual-test-inventory:end -->
 
-Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合は `PLAYWRIGHT_MODULE` にパッケージの絶対パス、`CHROME_PATH` にChromiumの実行ファイルを指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要。Pythonテストは生成CSSと `components/ui/dialog.tsx` の実際のクラスを組み合わせた独立fixtureでWebKitも検査する。Node版2本の実コンポーネント検査とは異なるため、単に言語を揃える目的では移植せず維持する。ブラウザー幅の検査は実機確認の代わりにはならない。
+Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合はPowerShellで `$env:PLAYWRIGHT_MODULE='C:\絶対パス\node_modules\playwright'`、`$env:CHROME_PATH='C:\絶対パス\chrome.exe'` を指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要で、`--executable` でブラウザー実行ファイルを指定できる。Pythonテストは生成CSSと `components/ui/dialog.tsx` のクラスを組み合わせた独立fixtureで、`--css` はビルドできない場合の独立fixture専用。部品fixtureの3本もゲーム全体へ接続するテストではない。
+
+道中演出と第三章の2本は起動中のゲームへ接続する。`TEST_ROOT` の既定は `http://localhost:5173`。開発サーバーの実際のポートが違う場合は、実行前に `$env:TEST_ROOT='http://localhost:<実際のポート>'` を設定する。道中演出の対象を絞るなら `$env:TEST_SCENES='cargo,touch'` のように指定できる。どちらも隔離したブラウザーと合成セーブを使い、利用者のセーブは変更しない。公開サイトには向けない。
 
 バックアップAPIだけは、**`npm start` の前に**同じローカル状態（`.wrangler/state`）のD1へ `drizzle/0000_organic_secret_warriors.sql`、`0001_abandoned_enchantress.sql`、`0002_complete_firelord.sql` を番号順に適用する。例（各コマンドを順に実行）:
 
@@ -133,7 +140,7 @@ node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1
 npm start
 ```
 
-別ターミナルから `TEST_ROOT=http://127.0.0.1:8787 node tests/api-backup.integration.mjs` を実行する（PowerShellでは `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs`）。既存のローカルD1へ同じSQLを重複適用しない（新しい検証用状態で始める場合だけ初期化する）。公開先のD1には適用しない。`work/` と `.wrangler/` はGit管理対象外なので、失敗時のログ・スクリーンショットはローカルで確認し、必要なものだけ共有する。
+`npm start` の起動URLを確認し、別ターミナルから表の `TEST_ROOT` をそのURLに合わせて実行する。`npm start` の既定は `http://127.0.0.1:8787` で、テスト側の既定5173とは異なる。既存のローカルD1へ同じSQLを重複適用しない（新しい検証用状態で始める場合だけ初期化する）。公開先のD1には適用しない。`work/` と `.wrangler/` はGit管理対象外なので、失敗時のログ・スクリーンショットはローカルで確認し、必要なものだけ共有する。ブラウザー幅の検査はスマホ実機確認の代わりにはならない。
 
 自動テストに加え、次は実機確認が必要な項目として扱う。
 
