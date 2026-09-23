@@ -16,6 +16,7 @@
     "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix --max-warnings=0",
+    "manual-tests:check": "node scripts/check-manual-test-inventory.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "version:patch": "npm version patch --no-git-tag-version",
