@@ -31,6 +31,7 @@ const exports = evaluateSourceModule(
     "./shop-item-icon": ui("ShopItemIcon"),
     "./technique-icon": ui("TechniqueIcon"),
     "./portrait": ui("Portrait"),
+    "./character-level": ui("CharacterLevel"),
   },
 );
 function balances(state) {

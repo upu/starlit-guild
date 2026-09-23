@@ -51,4 +51,15 @@ export const bonds = [
     lines: ["アリア「こっちが近道！ たぶん！」", "レオン「その『たぶん』は何回目だ？」"],
   },
 ];
-export const level = (xp: number) => Math.min(50, 1 + Math.floor(Math.sqrt(xp / 30)));
+export const maxLevel = 50;
+export const level = (xp: number) => Math.min(maxLevel, 1 + Math.floor(Math.sqrt(xp / 30)));
+/** Total XP at which a hero reaches the given level. */
+export const levelStartXp = (lv: number) => 30 * (lv - 1) ** 2;
+/** Where the XP sits inside the current level; `next` is null at the level cap. */
+export function levelProgress(xp: number) {
+  const lv = level(xp),
+    start = levelStartXp(lv);
+  if (lv >= maxLevel) return { level: lv, xp, start, next: null, remaining: 0, ratio: 1 };
+  const next = levelStartXp(lv + 1);
+  return { level: lv, xp, start, next, remaining: next - xp, ratio: (xp - start) / (next - start) };
+}
