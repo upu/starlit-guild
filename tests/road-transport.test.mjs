@@ -58,7 +58,7 @@ test("a living member takes over pulling when the lead carrier falls", () => {
   assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
 });
 
-test("four carriers keep their feet close to the cart on a compact adventure canvas", () => {
+test("four carriers share the cart's ground line and spread behind it", () => {
   let state = start(24, 12);
   while (state.squads[0].run.phase !== "work")
     state = settle(state, state.squads[0].run.nextAt).state;
@@ -74,9 +74,12 @@ test("four carriers keep their feet close to the cart on a compact adventure can
   assert.equal(frame.battle.heroes.length, 4);
   const cartFeet = roadY(0.82, 200);
   for (const hero of frame.battle.heroes) {
-    assert.ok(cartFeet - roadY(hero.lane, 200) <= 27, hero.id);
-    assert.ok(hero.lane <= 0.82, hero.id);
+    assert.equal(roadY(hero.lane, 200), cartFeet, hero.id);
   }
+  const pushers = frame.battle.heroes.filter((hero) => hero.id !== frame.look.puller);
+  assert.ok(
+    Math.max(...pushers.map((hero) => hero.x)) - Math.min(...pushers.map((hero) => hero.x)) >= 50,
+  );
   assert.equal(frame.battle.heroes.find((hero) => hero.id === frame.look.puller).lane, 0.82);
 });
 
