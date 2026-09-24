@@ -263,11 +263,12 @@ function arrangeCarriers(
   puller: string | null,
 ) {
   if (!puller) return;
-  const rear = { aria: -110, leon: -90, mira: -120, finn: -130 } as Record<string, number>;
+  // Keep every carrier on the cart's ground line and spread pushers to its left.
+  const rear = { aria: -145, leon: -145, mira: -175, finn: -205 } as Record<string, number>;
   for (const hero of battle.heroes) {
     const visualOffset = hero.id === puller ? 45 : rear[hero.id] || -110;
     hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
-    if (hero.id === puller) hero.lane = 0.82;
+    hero.lane = 0.82;
   }
 }
 function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
