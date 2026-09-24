@@ -15,7 +15,7 @@ export const earlyPrologueStories: Story[] = [
       ),
       a("待った？", "smile"),
       l("今来たところ。そっちの荷物、それで全部か？"),
-      a("うん。街で渡す分と、帰りの買い物のメモ。レオンは……ずいぶん多くない？", "surprised"),
+      a("うん。リーネで渡す分と、帰りの買い物のメモ。レオンは……ずいぶん多くない？", "surprised"),
       l("預かった品はこっち。あとは替えの紐と、包みと、雨が降ったときの布。"),
       a("布、二枚？", "surprised"),
       l("念のためだ。一枚濡れても、もう一枚使える。"),
@@ -30,7 +30,7 @@ export const earlyPrologueStories: Story[] = [
     id: TRADE_QUEST + "-return",
     quest: TRADE_QUEST,
     title: "荷物を渡したら",
-    place: "第一章 1-1 · 街の取引先",
+    place: "第一章 1-1 · リーネの取引先",
     chapter: "return",
     lines: [
       n(
@@ -104,7 +104,7 @@ export const earlyPrologueStories: Story[] = [
     chapter: "departure",
     lines: [
       n(
-        "後日の交易で、二人はまた街を訪れた。いつもの品を渡し終えると、取引先の人が荷札のついた小箱を台へ載せた。",
+        "後日の交易で、二人はまたリーネを訪れた。いつもの品を渡し終えると、取引先の人が荷札のついた小箱を台へ載せた。",
       ),
       n("「もう少し手を貸してもらえるかい。倉庫の品を、通りの店へ届けてほしいんだ」"),
       a("このくらいなら、一度で運べるよ。任せて！", "smile"),
