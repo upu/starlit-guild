@@ -57,13 +57,22 @@ function mossBanter(run: Run): StoryLine[] {
     ];
   return [a("石の継ぎ目、見えてきたよ。", "smile"), l("ああ。残りも管理人さんと確かめよう。")];
 }
+function restBanter(run: Run): StoryLine[] {
+  if (run.quest === RESTORATION_QUEST)
+    return [
+      a("ちょっと休憩。水の音、ここからでも聞こえるね。", "smile"),
+      l("ああ。作業の人の通り道を空けて、そこに座ろう。", "tired"),
+    ];
+  if (run.quest === MOSS_QUEST)
+    return [l("籠を置くぞ。少し休もう。", "tired"), a("うん。葉っぱ、袖にまでついてる。", "smile")];
+  return [
+    l("乾いたところへ戻ろう。少し休みたい。", "tired"),
+    a("うん。道具を置いて、私も一緒に座る。", "smile"),
+  ];
+}
 export function waterwayBanter(run: Run): StoryLine[] | null {
   if (![WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST].includes(run.quest)) return null;
-  if (run.phase === "rest")
-    return [
-      l("乾いたところへ戻ろう。少し休みたい。", "tired"),
-      a("うん。道具を置いて、私も一緒に座る。", "smile"),
-    ];
+  if (run.phase === "rest") return restBanter(run);
   if (run.quest === MOSS_QUEST) return mossBanter(run);
   return run.quest === WATERWAY_QUEST ? searchBanter(run) : repairBanter(run);
 }

@@ -4,8 +4,10 @@ const a = (text: string): StoryLine => ({ speaker: "aria", text });
 const l = (text: string): StoryLine => ({ speaker: "leon", text });
 const m = (text: string): StoryLine => ({ speaker: "mira", text });
 const n = (text: string): StoryLine => ({ text });
-// Keep the caller unnamed and without an unmasked portrait, even when the helmeted figure appears.
+// Keep the caller unnamed and without an unmasked portrait. Before she is seen, only her voice speaks.
 const v = (text: string) => n("木々の奥からの声「" + text + "」");
+// Once the pumpkin-headed figure is visible, label what is seen rather than a name.
+const h = (text: string) => n("パンプキンヘッドの影「" + text + "」");
 // Named bystanders who speak more than once in a scene get a label.
 const s = (who: string, text: string) => n(who + "「" + text + "」");
 export const deliveryStories: Story[] = [
@@ -161,7 +163,7 @@ export const deliveryStories: Story[] = [
       n("小さな人形が菓子を抱えて枝の間へ跳ねた。姿の見えない声だけが、その奥から続く。"),
       v("でも、まだもらってない子がいるのよ"),
       m("薬の包みも確かめましょう。蜜の瓶は……全部あるわ。"),
-      l("薬用の蜜は無事だ。次は荷物の後ろも見る。"),
+      l("荷物の後ろは……やられたな。菓子の包みが、もう一つ空だ。"),
       a("道標を戻したばかりなのに。今度は何が出てくるの？"),
       n("返事の代わりに、道の先で重い足音がした。"),
     ],
@@ -205,7 +207,7 @@ export const deliveryStories: Story[] = [
         "足元の人形が布を引き、蜜の瓶を脇道へ運んでいた。大きなゴーレムも後ずさりして、道を塞ぐように向きを変える。",
       ),
       m("待って。それは、喉を痛めている子たちのお薬なの。"),
-      v("甘い匂いがするのよ。プティには分かるのよ！"),
+      h("甘い匂いがするのよ。プティには分かるのよ！"),
       a("分かるなら、返して！"),
       n(
         "人形は包みを引いたまま、道脇の古い作業場へ入っていった。木戸の隙間に、見覚えのある布が見える。",
