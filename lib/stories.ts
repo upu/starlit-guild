@@ -179,8 +179,8 @@ function nightBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
       a("うん。通り道を確かめてからね。"),
     ];
   return [
-    a("そろそろ分かれ道だね。苔灯、持つの替わろうか？"),
-    l("ああ。包みは俺が持つから、両手を空けて。"),
+    l("そろそろ分かれ道だな。苔灯、持つの替わろうか？"),
+    a("平気。足元係だもん。レオンは前を見てて。", "smile"),
   ];
 }
 function wetlandBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
