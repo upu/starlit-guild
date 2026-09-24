@@ -106,12 +106,25 @@ function packingBanter(run: Run) {
     ],
   ][run.node % 3];
 }
+const trioRests = [
+  [
+    { speaker: "mira", text: "痛いのは、我慢しなくていいのよ。手を見せてね。" },
+    { speaker: "aria", text: "ミラも座って。水、三人分あるから。" },
+  ],
+  [
+    { speaker: "leon", text: "少し休みましょう。荷物は俺が見ています。" },
+    { speaker: "mira", text: "ありがとう。その前に、ひとつだけ。包帯の数を――" },
+    { speaker: "aria", text: "それは座ってから数えよう。" },
+  ],
+  [
+    { speaker: "aria", text: "はあ……ちょっと、足が止まっちゃった。" },
+    { speaker: "mira", text: "深い息を、ひとつ。急がなくていいのよ。" },
+    { speaker: "leon", text: "水を回します。ミラさんの分も。" },
+  ],
+];
 function trioBanter(run: Run) {
   return run.phase === "rest"
-    ? [
-        { speaker: "mira", text: "痛いのは、我慢しなくていいのよ。手を見せてね。" },
-        { speaker: "aria", text: "ミラも座って。水、三人分あるから。" },
-      ]
+    ? trioRests[run.node % trioRests.length]
     : run.quest === MOUNTAIN_QUEST
       ? [
           { speaker: "aria", text: "この先、段差があるよ。右側なら歩きやすそう。" },
