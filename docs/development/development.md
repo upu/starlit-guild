@@ -165,7 +165,7 @@ npm start
 
 Gitの `origin` はGitHubの非公開リポジトリ、`sites` はSites専用リポジトリ。GitHubへのpushだけではゲームは更新されない。
 
-公開先の検査、サイトごとの配信用コミット、第一章の確認表、環境設定と結果の記録方法は [サイトの確認と公開](site-release.md) を参照する。Codex の操作手順は [AGENTS.md](../../AGENTS.md) から [starlit-publish](../../.agents/skills/starlit-publish/SKILL.md) へ進む。
+公開先の検査、サイトごとの配信用コミット、第一章の確認表、環境設定と結果の記録方法は [サイトの確認と公開](site-release.md) を参照する。Codex の操作手順は [Codex の作業手順](codex.md) から [starlit-publish](../../.agents/skills/starlit-publish/SKILL.md) へ進む。
 
 ## データベース
 
