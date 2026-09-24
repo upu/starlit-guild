@@ -5,6 +5,7 @@ import { storyStages } from "../lib/prologue.ts";
 import { damageEnemy } from "../lib/combat.ts";
 import { combination } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
+import { roadY } from "../lib/road-layout.ts";
 import {
   movingWork,
   roadPuller,
@@ -55,6 +56,28 @@ test("a living member takes over pulling when the lead carrier falls", () => {
   });
   assert.equal(handoff.look.puller, "aria");
   assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
+});
+
+test("four carriers keep their feet close to the cart on a compact adventure canvas", () => {
+  let state = start(24, 12);
+  while (state.squads[0].run.phase !== "work")
+    state = settle(state, state.squads[0].run.nextAt).state;
+  const run = state.squads[0].run;
+  const frame = chapterRoadFrame({
+    squad: state.squads[0],
+    startQuest: run.quest,
+    now: state.updatedAt,
+    ready: true,
+    paused: false,
+  });
+  assert.equal(frame.battle.gathering.task, "carry");
+  assert.equal(frame.battle.heroes.length, 4);
+  const cartFeet = roadY(0.82, 200);
+  for (const hero of frame.battle.heroes) {
+    assert.ok(cartFeet - roadY(hero.lane, 200) <= 27, hero.id);
+    assert.ok(hero.lane <= 0.82, hero.id);
+  }
+  assert.equal(frame.battle.heroes.find((hero) => hero.id === frame.look.puller).lane, 0.82);
 });
 
 test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {
