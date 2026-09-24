@@ -8,7 +8,7 @@
 | --- | --- |
 | [背景画像](background-images.md) | クエスト背景の原本・配信、場所ごとの制作記録、タイトル背景 |
 | [人物画像](character-images.md) | 設定図、立ち絵、表情、動作画像、敵の戦闘画像 |
-| [スチル制作記録](story-art.md) / [一覧](story-art-gallery.md) | 物語の一枚絵、場面別の生成条件と採用画像 |
+| [スチル制作記録](story-art.md) / [一覧](story-art-gallery.md) / [第四章の候補](chapter-four-stills.md) | 物語の一枚絵、場面別の生成条件と採用画像、未制作の候補 |
 | [動画素材](story-videos.md) | 元動画、配信用MP4、ゲーム内の再生 |
 | [アイコン・演出](icons-and-effects.md) | ナビゲーション、クエスト・お店、発見アイテム、戦闘演出 |
 | [音楽と効果音](audio.md) | BGM・効果音の仕様、生成と配信 |
