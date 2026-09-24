@@ -12,7 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
-| 0.4.6 | 2026-09-24 | 第四章の詳細台本を作成し、既存の物語にリーネの地名を反映（[#167](https://github.com/upu/starlit-guild/pull/167)） |
+| 0.4.6 | 2026-09-24 | 第四章の詳細台本を作成し、既存の物語にリンデの地名を反映（[#167](https://github.com/upu/starlit-guild/pull/167)） |
 | 0.4.5 | 2026-09-24 | 第一章〜第三章の会話の矛盾を直し、布と胡桃の小さな伏線を回収する（[#168](https://github.com/upu/starlit-guild/pull/168)） |
 | 0.4.4 | 2026-09-24 | 荷車運搬中のキャラの足元を揃える（[#165](https://github.com/upu/starlit-guild/pull/165)） |
 | 0.4.3 | 2026-09-24 | 荷車の運搬を引き手と押し手に分ける（[#162](https://github.com/upu/starlit-guild/pull/162)） |
