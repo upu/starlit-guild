@@ -1,6 +1,6 @@
 # 第四章計画：灯りをつなぐ約束
 
-章名と各場面の題は作業題。会話案と場面構成は制作案。具体的な発言と動作は [詳細台本](chapter-four-script.md)、任意の短いやり取りは [道中と日常の掛け合い](chapter-four-banter.md) にまとめる。実装後の会話はコードを正とし、生成台本から読む。
+章名と各場面の題は作業題。会話案と場面構成は制作案。具体的な発言と動作は [詳細台本](chapter-four-script.md)、任意の短いやり取りは [道中と日常の掛け合い](chapter-four-banter.md) にまとめる。実装後の会話はコードを正とし、[ゲーム内台本](game-script/README.md)から読む。
 
 [資料案内](../README.md) · [世界観](world-and-story.md) · [執筆指針](story-writing.md) · [第三章計画](story-part-3.md) · [リコ](../characters/lico.md) · [フィン](../characters/finn.md)
 

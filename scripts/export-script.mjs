@@ -8,11 +8,18 @@ import { idleBanter } from "../lib/idle-banter.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 import { storyArt } from "../lib/story-art.ts";
-import { chapterThreeSections } from "../lib/chapter-three-stories.ts";
+import { interludes } from "../lib/interludes.ts";
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
 import { sourceForStageBanter, sourceForStory, validateStorySources } from "./script-sources.mjs";
 
-const outputDirectory = new URL("../docs/generated/", import.meta.url);
+const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);
+const chapterNames = new Map([
+  ["1", "第一章"],
+  ["2", "第二章"],
+  ["3", "第三章"],
+  ["4", "第四章"],
+  ["5", "第五章"],
+]);
 const marker = "> 自動生成ファイルです。手で編集せず、`npm run script:export` で更新してください。";
 const names = new Map([
   ...[...heroes, ...originalCharacters].map(({ id, name }) => [id, name]),
@@ -20,12 +27,16 @@ const names = new Map([
 ]);
 const questNames = new Map(allQuests.map(({ id, name }) => [id, name]));
 
-function sourceLink(document, file) {
+function relativePath(document, file) {
   const root = fileURLToPath(new URL("../", import.meta.url));
   const target = resolve(root, file);
   if (!existsSync(target)) throw new Error(`台本の出典パスが見つかりません: ${file}`);
   const from = resolve(fileURLToPath(outputDirectory), dirname(document));
-  return `[${file}](${relative(from, target).replaceAll("\\", "/")})`;
+  return relative(from, target).replaceAll("\\", "/");
+}
+
+function sourceLink(document, file) {
+  return `[${file}](${relativePath(document, file)})`;
 }
 
 function formatLine(line) {
@@ -34,14 +45,14 @@ function formatLine(line) {
   return name ? `${name}：${line.text}` : line.text;
 }
 
-function sceneLines(story, label, document) {
+function sceneLines(story, label, document, level = "###") {
   const art = storyArt[story.id];
   const source = sourceForStory(story);
   if (art && (art.revealAtLine < 0 || art.revealAtLine >= story.lines.length)) {
     throw new Error(`スチル表示行が範囲外です: ${story.id}`);
   }
   const lines = [
-    `## ${label}：${story.title}`,
+    `${level} ${label}：${story.title}`,
     "",
     `シーンID：\`${story.id}\``,
     `場所：${story.place}`,
@@ -64,7 +75,7 @@ function sceneLines(story, label, document) {
       lines.push(
         `> スチル表示（${index + 1}行目）：${art.src} — ${art.alt}`,
         "",
-        `![${alt}](../../../public${art.src})`,
+        `![${alt}](${relativePath(document, `public${art.src}`)})`,
         "",
       );
     }
@@ -93,14 +104,14 @@ function stageBanter(quest, document) {
   }
   const source = sourceForStageBanter(quest);
   const lines = [
-    "## 道中の掛け合い",
+    "### 道中の掛け合い",
     "",
     `本文の編集元：${sourceLink(document, source.file)}（\`${source.hint}\`）`,
     "表示条件は地点と休憩状態によって変わります。",
     "",
   ];
   for (const { dialogue, conditions } of variants.values()) {
-    lines.push(`### ${describeConditions(conditions)}`, "");
+    lines.push(`#### ${describeConditions(conditions)}`, "");
     for (const line of dialogue) lines.push(formatLine(line), "");
   }
   return lines;
@@ -133,17 +144,71 @@ function describeConditions(conditions) {
   return labels.join("／");
 }
 
-function renderStage(stage, byId) {
+const chapterOf = (stage) => stage.number.split("-")[0];
+const stageAnchor = (stage) => `stage-${stage.number}`;
+const chapterFile = (chapter) => `chapter-${chapter}.md`;
+
+function chapterName(chapter) {
+  const name = chapterNames.get(chapter);
+  if (!name) throw new Error(`章の呼び名が見つかりません: ${chapter}`);
+  return name;
+}
+
+function renderStage(stage, byId, document) {
   const questName = questNames.get(stage.quest);
   if (!questName) throw new Error(`ステージ名が見つかりません: ${stage.quest}`);
-  const lines = [`# ${stage.number} ${questName}`, "", marker, ""];
-  const document = `stages/${stage.number}.md`;
   const departure = byId.get(`${stage.quest}-departure`);
   const ending = byId.get(`${stage.quest}-return`);
   if (!departure || !ending) throw new Error(`シーンが見つかりません: ${stage.quest}`);
-  lines.push(...sceneLines(departure, "出発前", document));
-  lines.push(...stageBanter(stage.quest, document));
-  lines.push(...sceneLines(ending, "達成後", document));
+  return [
+    `<a id="${stageAnchor(stage)}"></a>`,
+    "",
+    `## ${stage.number} ${questName}`,
+    "",
+    ...sceneLines(departure, "出発前", document),
+    ...stageBanter(stage.quest, document),
+    ...sceneLines(ending, "達成後", document),
+  ];
+}
+
+function renderInterlude(story, document) {
+  return [`<a id="${story.id}"></a>`, "", ...sceneLines(story, "幕間", document, "##")];
+}
+
+// Interludes are read between stages, so each one sits just before the stage it unlocks.
+function chapterEntries(stages, byId) {
+  return stages.flatMap((stage) => [
+    ...interludes
+      .filter((entry) => entry.before === stage.quest)
+      .map((entry) => {
+        const story = byId.get(entry.id);
+        if (!story) throw new Error(`幕間のシーンが見つかりません: ${entry.id}`);
+        return { story };
+      }),
+    { stage },
+  ]);
+}
+
+function renderChapter(chapter, stages, byId) {
+  const document = chapterFile(chapter);
+  const entries = chapterEntries(stages, byId);
+  const lines = [
+    `# ${chapterName(chapter)}のゲーム内台本`,
+    "",
+    marker,
+    "",
+    "各ステージの出発前・道中の掛け合い・達成後を、遊ぶ順に収録しています。幕間は解放される位置に置いています。",
+    "",
+    ...entries.map(({ stage, story }) =>
+      stage
+        ? `- [${stage.number} ${questNames.get(stage.quest)}](#${stageAnchor(stage)})`
+        : `- [幕間 ${story.title}](#${story.id})`,
+    ),
+    "",
+  ];
+  for (const { stage, story } of entries) {
+    lines.push(...(stage ? renderStage(stage, byId, document) : renderInterlude(story, document)));
+  }
   return lines.join("\n");
 }
 
@@ -205,42 +270,37 @@ export function renderScripts() {
   ) {
     throw new Error("ステージ一覧とシーン数が一致しません");
   }
+  const placed = interludes.filter((entry) =>
+    storyStages.some((stage) => stage.quest === entry.before),
+  );
+  if (placed.length !== stories.filter((story) => story.chapter === "interlude").length) {
+    throw new Error("幕間の置き場所が見つかりません");
+  }
+  const chapters = Map.groupBy(storyStages, chapterOf);
   const files = new Map();
   const index = [
     "# ゲーム内台本",
     "",
     marker,
     "",
-    "実行時の会話とスチル表示位置を収録しています。道中の掛け合いは、表示条件ごとの台詞を載せています。",
+    "実行時の会話とスチル表示位置を、章ごとに遊ぶ順で収録しています。道中の掛け合いは、表示条件ごとの台詞を載せています。",
     "",
   ];
-  for (const stage of storyStages) {
-    const path = `stages/${stage.number}.md`;
-    files.set(path, renderStage(stage, byId));
-    index.push(`- [${stage.number} ${questNames.get(stage.quest)}](${path})`);
+  for (const [chapter, stages] of chapters) {
+    const path = chapterFile(chapter);
+    files.set(path, renderChapter(chapter, stages, byId));
+    index.push(
+      `- [${chapterName(chapter)}](${path})（${stages[0].number}〜${stages.at(-1).number}）`,
+      ...chapterEntries(stages, byId).map(({ stage, story }) =>
+        stage
+          ? `  - [${stage.number} ${questNames.get(stage.quest)}](${path}#${stageAnchor(stage)})`
+          : `  - [幕間 ${story.title}](${path}#${story.id})`,
+      ),
+    );
   }
-  index.push("", "- [共通の掛け合い](banter.md)", "");
+  index.push("- [共通の掛け合い](banter.md) — 待機中と関係値別の道中・協力技", "");
   files.set("banter.md", renderCommonBanter());
-  const draft = [
-    "# 第三章の会話（レビュー用）",
-    "",
-    marker,
-    "",
-    "本編の幕間と各ステージの出発前・達成後を、物語順に収録します。",
-    "",
-  ];
-  for (const section of chapterThreeSections) {
-    for (const story of section.scenes) {
-      const timing =
-        section.number === "幕間"
-          ? "幕間"
-          : `${section.number} ${story.chapter === "departure" ? "出発前" : "達成後"}`;
-      draft.push(...sceneLines(story, timing, "chapter-three.md"));
-    }
-  }
-  files.set("chapter-three.md", draft.join("\n"));
-  index.push("[第三章の会話（幕間を含む）](chapter-three.md)", "");
-  files.set("script.md", index.join("\n"));
+  files.set("README.md", index.join("\n"));
   return files;
 }
 
@@ -259,11 +319,10 @@ async function checkOrWrite(files, check) {
       await writeFile(target, content, "utf8");
     }
   }
-  const stageDirectory = new URL("stages/", outputDirectory);
-  const existing = await readdir(stageDirectory).catch(() => []);
+  const existing = await readdir(outputDirectory).catch(() => []);
   for (const filename of existing.filter((name) => name.endsWith(".md"))) {
-    if (files.has(`stages/${filename}`)) continue;
-    const target = new URL(filename, stageDirectory);
+    if (files.has(filename)) continue;
+    const target = new URL(filename, outputDirectory);
     const content = await readFile(target, "utf8");
     if (!content.includes(marker)) continue;
     if (check) stale = true;
@@ -275,5 +334,5 @@ async function checkOrWrite(files, check) {
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   const check = process.argv.includes("--check");
   await checkOrWrite(renderScripts(), check);
-  if (!check) console.log("docs/generated/ の台本を更新しました。");
+  if (!check) console.log("docs/story/game-script/ の台本を更新しました。");
 }

@@ -30,9 +30,11 @@
 | --- | --- |
 | `docs/characters/`・`relationships/`・`factions/` | 人物・関係性・組織で正本を分ける。人物の追加は [共通書式](../characters/_template.md) を使う |
 | `docs/art-generation/` | 生成プロンプトと制作条件のJSON。対応するアート資料から案内する |
-| `docs/generated/` | [台本・掛け合い](../story/README.md#台本と場面の素材)。手編集せず `npm run script:export` で更新する |
+| `docs/story/game-script/` | [ゲーム内台本](../story/README.md#台本と場面の素材)。手編集せず `npm run script:export` で更新する |
 | `docs/templates/` | 公開確認などの雛形。[公開前検査](site-release.md#公開前検査と確認記録) から使う |
 | `docs/archive/` | [現在は使わない仕様・試作の記録](../archive/README.md) |
+
+ソースから書き出す資料は、`generated` のような作り方の区分ではなく読む分野の下へ専用ディレクトリを作って置き、手で書く資料と同じディレクトリに混ぜない。ディレクトリの案内（`README.md`）も生成し、自動生成であることを冒頭に示す。コードが読み込む生成データは `lib/generated/` など使う側に置く。
 
 直下には資料案内・[共通ルール](../agent-rules.md)・[用語集](../glossary.md)・旧リンク向けの [キャラクター案内](../characters.md) を置く。旧案内へ設定本文は追加しない。
 
