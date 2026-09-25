@@ -177,7 +177,6 @@ test("chapter presets create separate records, respect the capability and capaci
   assert.deepEqual(bundle.profiles[0], ordinary);
   for (const p of bundle.profiles.slice(1)) {
     assert.equal(p.test, true);
-    assert.equal(p.state.prologue, true);
   }
   assert.deepEqual(harness(true, bundle).read().profiles, bundle.profiles);
   h.hook.switchProfile(ordinary.id);

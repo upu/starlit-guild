@@ -26,7 +26,6 @@ export const interludeQuests: Quest[] = [
     xp: 0,
     herbs: 0,
     ore: 0,
-    unlock: 0,
     enemy: 0,
     availability: "once",
     background: "/scenery/tower-road-background.webp",

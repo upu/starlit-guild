@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
+import { initialState, act, settle, testState } from "../lib/game.ts";
 import { nextStage, storyStages } from "../lib/prologue.ts";
 import { stories, availableStories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 
@@ -8,7 +8,7 @@ const start = (s) => act(s, { type: "start", id: nextStage(s).quest }, s.updated
 const ids = (s) => availableStories(s).map((st) => st.id);
 
 test("idle trio conversations include Mira only while she is in the party and preserve the save", () => {
-  const state = initialPrologueState(1000),
+  const state = initialState(1000),
     squad = state.squads[0];
   const dialogue = () =>
     Array.from({ length: 8 }, (_, i) => journeyBanter(state, squad, i * 30000)).flat();
@@ -41,8 +41,8 @@ test("every story stage has exactly one departure and one ending, and ids stay u
 });
 
 test("reading and replaying are idempotent and never award gold or change clocks", () => {
-  const before = start(initialPrologueState(1000)),
-    departure = nextStage(initialPrologueState(1000)).quest + "-departure";
+  const before = start(initialState(1000)),
+    departure = nextStage(initialState(1000)).quest + "-departure";
   let s = act(before, { type: "readStory", id: departure }, 1000);
   s = act(s, { type: "readStory", id: departure }, 1000);
   assert.deepEqual(s.story.read, [departure]);
@@ -56,14 +56,14 @@ test("reading and replaying are idempotent and never award gold or change clocks
 });
 
 test("the opening stage only offers its own scenes until the pair has travelled", () => {
-  const fresh = initialPrologueState(1000);
+  const fresh = initialState(1000);
   assert.deepEqual(ids(fresh), []);
   const departed = start(fresh);
   assert.deepEqual(ids(departed), [nextStage(fresh).quest + "-departure"]);
 });
 
 test("banter responds to rest and region; friendship changes pair-specific coordination", () => {
-  const s = start(initialPrologueState(1000)),
+  const s = start(initialState(1000)),
     sq = s.squads[0],
     snapshot = structuredClone(s);
   assert.ok(journeyBanter(s, sq, 4000).length);
@@ -75,7 +75,7 @@ test("banter responds to rest and region; friendship changes pair-specific coord
   paired.squads[0].run.phase = "rest";
   paired.friendship["aria-leon"] = 12;
   assert.match(JSON.stringify(journeyBanter(paired, paired.squads[0], 4000)), /隣/);
-  const low = coupleCombo(initialPrologueState(0), 0),
+  const low = coupleCombo(initialState(0), 0),
     high = coupleCombo({ ...paired, friendship: { "aria-leon": 24 } }, 0);
   assert.notDeepEqual(low, high);
 });

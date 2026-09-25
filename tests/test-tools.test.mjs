@@ -210,23 +210,20 @@ test("save panel offers deletion for every record and disables it for the last r
   assert.equal(only.props.disabled, true);
 });
 
-test("test records always follow the story stages and never create a legacy adventure", () => {
+test("test records always follow the story stages", () => {
   const { testState } = game;
-  const { storyStages, prologueStages, inPrologue, stageUnlocked, nextStage } = prologue;
+  const { storyStages, prologueStages, stageUnlocked, nextStage } = prologue;
   const fresh = testState(1000, 0, 1, 60);
-  assert.equal(inPrologue(fresh), true);
   assert.deepEqual(fresh.story.read, []);
   assert.equal(nextStage(fresh).quest, storyStages[0].quest);
 
   const firstChapter = testState(1000, prologueStages.length, 8, 5000);
-  assert.equal(inPrologue(firstChapter), true);
   assert.equal(firstChapter.clears, prologueStages.length);
   assert.equal(stageUnlocked(firstChapter, storyStages[prologueStages.length].quest), true);
   assert.equal(nextStage(firstChapter).quest, storyStages[prologueStages.length].quest);
   assert.ok(!firstChapter.owned.includes("mira"));
 
   const every = testState(1000, storyStages.length, 20, 20000);
-  assert.equal(inPrologue(every), true);
   assert.equal(every.story.read.length, storyStages.length * 2 + 1);
   assert.ok(every.owned.includes("mira"), "2-3を読了するとミラが加入する");
   assert.deepEqual(every.owned, ["aria", "leon", "mira", "finn"], "旧加入の仲間は配られない");
@@ -237,9 +234,8 @@ test("test records always follow the story stages and never create a legacy adve
   assert.equal(every.herbs, earned, "素材は実際のステージ報酬だけを配る");
   assert.equal(every.ore, 0);
 
-  // Counts beyond the story stop at the last stage instead of falling back to the legacy mode.
+  // Counts beyond the story stop at the last stage.
   const beyond = testState(1000, 1000, 20, 20000);
-  assert.equal(inPrologue(beyond), true);
   assert.equal(beyond.clears, storyStages.length);
   assert.deepEqual(beyond.story.read, every.story.read);
 });

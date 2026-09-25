@@ -85,7 +85,6 @@ function fixture(index, mode) {
     serial: 0,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });

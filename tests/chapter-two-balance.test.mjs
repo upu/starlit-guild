@@ -50,7 +50,6 @@ test("chapter presets keep the story entry, locked recruitment and independent s
     const state = chapterTwoPresetState(preset, 1000),
       id = crypto.randomUUID();
     assert.deepEqual(state.owned, ["aria", "leon"]);
-    assert.equal(state.prologue, true);
     assert.equal(state.squads[0].lastQuest, "hilltop-picnic");
     assert.ok(availableQuests(state).some((q) => q.id === "hilltop-picnic"));
     assert.ok(!availableQuests(state).some((q) => q.id === "mountain-entrance"));
@@ -65,7 +64,6 @@ test("chapter presets keep the story entry, locked recruitment and independent s
           serial: 0,
           sound: false,
           cloudAt: 0,
-          legacyImported: true,
         }),
       ),
     ).profiles[0].state;

@@ -1,5 +1,5 @@
 import { pathToFileURL } from "node:url";
-import { initialPrologueState, level, memberStats, memberMaxHp } from "../lib/game.ts";
+import { initialState, level, memberStats, memberMaxHp } from "../lib/game.ts";
 import { inventoryOf } from "../lib/equipment.ts";
 import { equippedTechnique } from "../lib/techniques.ts";
 import { trainedChapter } from "./check-combat-balance.mjs";
@@ -41,7 +41,7 @@ export function progressionRoute() {
     chapters: [
       {
         chapter: 1,
-        start: checkpoint(initialPrologueState(1000)),
+        start: checkpoint(initialState(1000)),
         end: handoff,
         trainingSeconds: first.trainingSeconds,
         totalSeconds: first.totalSeconds,

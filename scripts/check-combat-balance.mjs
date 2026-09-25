@@ -1,5 +1,5 @@
 import { pathToFileURL } from "node:url";
-import { act, settle, initialPrologueState, level, allQuests } from "../lib/game.ts";
+import { act, settle, initialState, level, allQuests } from "../lib/game.ts";
 import { prologueStages } from "../lib/prologue.ts";
 import { combatRank } from "../lib/combat.ts";
 
@@ -46,7 +46,7 @@ export function simulateCombat(input, quest, limitMs = 600000) {
 }
 export function combatScenarios() {
   const records = [];
-  let state = initialPrologueState(1000);
+  let state = initialState(1000);
   for (const stage of prologueStages) {
     const result = simulateCombat(state, stage.quest);
     records.push(result.record);
@@ -60,7 +60,7 @@ export function combatScenarios() {
   return records;
 }
 export function chapterCombatState(index, lv, equipped = false) {
-  let state = initialPrologueState(1000);
+  let state = initialState(1000);
   state.gold = 1000;
   for (const stage of prologueStages.slice(0, index)) {
     state.done[stage.quest] = 1;
@@ -93,7 +93,7 @@ export function chapterComparisons() {
   );
 }
 export function trainedChapter(includeState = false) {
-  let state = initialPrologueState(1000),
+  let state = initialState(1000),
     trainingSeconds = 0;
   const records = [];
   for (const [index, stage] of prologueStages.entries()) {

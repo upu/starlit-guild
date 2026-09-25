@@ -4,14 +4,14 @@ import { chapterThreeSections, chapterThreeStories } from "../lib/chapter-three-
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
 import { expressionPortrait, portraitAtlases } from "../lib/portrait-expressions.ts";
 import { stories, availableStories } from "../lib/stories.ts";
-import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
+import { allQuests, heroes, initialState } from "../lib/game.ts";
 import { renderScripts } from "../scripts/export-script.mjs";
 
 test("third-chapter dialogue is complete, renderable, connected and locked on a fresh save", () => {
   assert.equal(chapterThreeSections.length, 10);
   assert.equal(chapterThreeStories.length, 19);
   assert.equal(new Set(chapterThreeStories.map((scene) => scene.id)).size, 19);
-  const state = initialPrologueState(0);
+  const state = initialState(0);
   const before = JSON.stringify(state);
   for (const section of chapterThreeSections.slice(1)) {
     assert.deepEqual(

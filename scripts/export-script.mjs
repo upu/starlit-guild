@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
+import { allQuests, heroes, initialState } from "../lib/game.ts";
 import { originalCharacters } from "../lib/original-characters.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
 import { storyStages } from "../lib/prologue.ts";
@@ -85,7 +85,7 @@ function sceneLines(story, label, document, level = "###") {
 }
 
 function stageBanter(quest, document) {
-  const state = initialPrologueState(0);
+  const state = initialState(0);
   const squad = state.squads[0];
   const variants = new Map();
   const nodeCounts = quest === "sweet-blockade" ? [15, 3] : [15];
@@ -235,7 +235,7 @@ function renderCommonBanter() {
     [12, "関係値 12〜23"],
     [24, "関係値 24以上"],
   ]) {
-    const state = initialPrologueState(0);
+    const state = initialState(0);
     state.friendship["aria-leon"] = friendship;
     const squad = state.squads[0];
     squad.run = { quest: "common", nodes: 15, node: 0, phase: "travel", started: 0, health: {} };

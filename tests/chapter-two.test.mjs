@@ -2,7 +2,6 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import {
-  initialPrologueState,
   initialState,
   act,
   settle,
@@ -37,7 +36,7 @@ import { adventureFrame } from "../lib/adventure-presentation.ts";
 import { heroAnimation } from "../lib/hero-animation.ts";
 
 function firstChapter() {
-  const s = initialPrologueState(1000);
+  const s = initialState(1000);
   s.gold = 0;
   s.clears = 9;
   s.xp = { aria: 30 * 24 ** 2, leon: 30 * 24 ** 2 };
@@ -164,7 +163,6 @@ function roundtrip(state) {
         serial: 1,
         sound: false,
         cloudAt: 0,
-        legacyImported: true,
       }),
     ),
   ).profiles[0].state;
@@ -193,7 +191,6 @@ test("old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
   assert.equal(end.done[MOON_HERB_QUEST], 1);
   assert.equal(end.squads[0].run, null);
   assert.deepEqual(end.owned, ["aria", "leon"]);
-  assert.equal(end.prologue, true);
   assert.equal(end.techniques, undefined);
   const done = read(end, MOON_HERB_QUEST);
   assert.equal(nextGoal(done).questId, DELIVERY_PREP_QUEST);
@@ -450,6 +447,6 @@ test("only equipped techniques affect actions and rewards; offline and live simu
   invalid.techniques.equipped.aria.passive = "aria-herbs";
   invalid.techniques.learned.push("aria-herbs");
   assert.throws(() => roundtrip(invalid));
-  // A record without techniques still loads; the legacy mode is dropped instead.
-  assert.equal(roundtrip(initialState(1000)).prologue, true);
+  // A record without techniques still loads.
+  assert.equal(roundtrip(initialState(1000)).techniques, undefined);
 });
