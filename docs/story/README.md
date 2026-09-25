@@ -13,17 +13,17 @@
 
 ## 章の資料
 
-| 章 | プロット・制作案 | 実装・確認手順 |
-| --- | --- | --- |
-| 第一章 | [第一章プロット](story-part-1.md) | [第一章のゲーム実装](../gameplay/prologue-gameplay.md) |
-| 第二章 | [第二章計画](story-part-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
-| 第三章 | [第三章計画](story-part-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
-| 第四章 | [第四章計画](story-part-4.md) | 未作成 |
+| 章 | プロット・制作案 | ゲーム内台本 | 実装・確認手順 |
+| --- | --- | --- | --- |
+| 第一章 | [第一章プロット](story-part-1.md) | [第一章](game-script/chapter-1.md) | [第一章のゲーム実装](../gameplay/prologue-gameplay.md) |
+| 第二章 | [第二章計画](story-part-2.md) | [第二章](game-script/chapter-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
+| 第三章 | [第三章計画](story-part-3.md) | [第三章](game-script/chapter-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
+| 第四章 | [第四章計画](story-part-4.md)・[詳細台本](chapter-four-script.md)・[道中と日常の掛け合い](chapter-four-banter.md) | — | 未作成 |
 
 ## 台本と場面の素材
 
-- [第四章の詳細台本](chapter-four-script.md)・[第四章の道中と日常の掛け合い](chapter-four-banter.md) — 第四章計画を具体化した制作案。幕間・全9場面・戦闘のやり取り・結成後の日常。
-- [ゲーム内台本](game-script/README.md) — 実装済みの会話をソースから章ごとに出力したもの。[第一章](game-script/chapter-1.md)・[第二章](game-script/chapter-2.md)・[第三章](game-script/chapter-3.md) を遊ぶ順に通読でき、待機中などの共通会話は [共通の掛け合い](game-script/banter.md) にある。手編集せず `npm run script:export` で更新する。
+- [ゲーム内台本](game-script/README.md) — 実装済みの会話をソースから章ごとに出力したもの。各章は上の表から開き、待機中などの章をまたぐ会話は [共通の掛け合い](game-script/banter.md) にある。手編集せず `npm run script:export` で更新する。
+- 実装前の詳細台本・掛け合いの制作案は、上の表の「プロット・制作案」から対象章のものを開く。
 - [スチル制作記録](../art/story-art.md)・[スチル一覧](../art/story-art-gallery.md) — 場面の画像と生成条件。
 - [動画素材の管理](../art/story-videos.md) — 場面で再生する動画の管理。
 - [従来モードの記録](../archive/README.md) — 現在の物語と区別して参照する過去の出来事。
