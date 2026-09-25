@@ -40,10 +40,6 @@
   -webkit-user-select: none;
   user-select: none;
 }
-/* Touch keeps the hover state after a press; keep the global gold button hover off tabs. */
-.phone-navigation [data-slot="tabs-trigger"]:not([data-state="active"]):hover {
-  background: transparent;
-}
 .phone-navigation [data-slot="tabs-trigger"] > img {
   -webkit-user-drag: none;
 }

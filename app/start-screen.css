@@ -76,7 +76,6 @@ main.start-screen .start-entry > button {
     text-shadow 0.2s;
 }
 main.start-screen .start-entry > button:hover:not(:disabled) {
-  background: transparent;
   box-shadow: none;
   transform: none;
   color: #fffaf0;

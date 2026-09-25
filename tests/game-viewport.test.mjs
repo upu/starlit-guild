@@ -47,9 +47,15 @@ test("bottom navigation tabs ignore long-press selection and sticky hover", () =
   assert.match(rule, /^[^}]*-webkit-touch-callout:none/);
   assert.match(rule, /^[^}]*-webkit-user-select:none;user-select:none/);
   assert.match(rule, /^[^}]*-webkit-tap-highlight-color:transparent/);
-  assert.ok(
-    phoneNavigationCss.includes(
-      `${trigger}:not([data-state="active"]):hover{background:transparent}`,
-    ),
+});
+
+test("gold button hover stays off touch screens and buttons with their own background", () => {
+  const globalsCss = compactCss(
+    readFileSync(new URL("../app/globals.css", import.meta.url), "utf8"),
   );
+  assert.match(
+    globalsCss,
+    /@media\(hover:hover\)\{button:where\(:not\(:disabled\):hover\),\.button:where\(:hover\)\{background:#e3c789\}\}/,
+  );
+  assert.doesNotMatch(globalsCss, /(^|[}\s,])button:hover/);
 });
