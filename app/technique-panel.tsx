@@ -84,17 +84,17 @@ function TechniqueChoices({
         id: id === "empty" ? undefined : id,
       })
     )
-      notice(id === "empty" ? "技を外しました。" : "技をセットしました。");
+      notice(id === "empty" ? "スキルを外しました。" : "スキルをセットしました。");
   }
   return (
     <section className="character-equipment">
       <h3>
-        {slot === "active" ? "アクティブ技" : "パッシブ技"}
+        {slot === "active" ? "アクティブスキル" : "パッシブスキル"}
         <span>1枠</span>
       </h3>
       <CharacterIconChoices
-        label="技の候補"
-        emptyLabel="技を外す候補"
+        label="スキルの候補"
+        emptyLabel="スキルを外す候補"
         selected={selected}
         onSelect={select}
         choices={choices.map((t) => ({
@@ -110,9 +110,7 @@ function TechniqueChoices({
         <TechniqueChoice {...props} technique={chosen} notice={notice} />
       ) : (
         <div className="character-choice-detail">
-          <p>
-            {current ? "空のアイコンをもう一度タップで技を外します。" : "技をセットしていません。"}
-          </p>
+          <p>{current ? "空のアイコンを再タップでスキルを外します。" : "スキルは未セットです。"}</p>
         </div>
       )}
     </section>
@@ -128,7 +126,7 @@ export function TechniquePanel(
     return null;
   return (
     <section className="character-skill" aria-label="スキル">
-      {away && <p>冒険中です。技の付け替えは帰還後にできます。</p>}
+      {away && <p>冒険中です。スキルの付け替えは帰還後にできます。</p>}
       <div className="character-slots">
         {(["active", "passive"] as const).map((kind) => {
           if (!techniques.some((t) => t.hero === props.hero && t.slot === kind)) return null;
@@ -139,7 +137,7 @@ export function TechniquePanel(
             <button
               key={kind}
               className="character-slot"
-              aria-label={`${kind === "active" ? "アクティブ技" : "パッシブ技"}・${current?.name ?? "セットなし"}・習得・セット`}
+              aria-label={`${kind === "active" ? "アクティブスキル" : "パッシブスキル"}・${current?.name ?? "セットなし"}・習得・セット`}
               title={current?.name ?? "セットなし"}
               aria-expanded={slot === kind}
               aria-controls="character-options"
@@ -147,7 +145,7 @@ export function TechniquePanel(
                 props.onSlot(slot === kind ? null : kind);
               }}
             >
-              <small>{kind === "active" ? "アクティブ技" : "パッシブ技"}</small>
+              <small>{kind === "active" ? "アクティブ" : "パッシブ"}</small>
               <TechniqueIcon id={current?.id} slot={kind} />
               <b>{current?.name ?? "セットなし"}</b>
             </button>

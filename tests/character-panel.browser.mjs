@@ -223,7 +223,7 @@ try {
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     await page.getByRole("button", { name: "トネリコの弓", exact: true }).click();
     await page.getByRole("button", { name: /武器.*付け替える/ }).click();
-    await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+    await page.getByRole("button", { name: /パッシブスキル.*習得・セット/ }).click();
     assert.equal((await bottom.boundingBox()).y, equipmentBox.y);
     assert.equal(await page.locator(".character-bottom").count(), 1);
     assert.equal(
@@ -275,7 +275,7 @@ try {
     await heading.screenshot({ path: path.join(dir, "exp-" + width + ".png") });
     assert.equal(
       await page
-        .getByRole("button", { name: /パッシブ技.*習得・セット/ })
+        .getByRole("button", { name: /パッシブスキル.*習得・セット/ })
         .getAttribute("aria-expanded"),
       "true",
     );
@@ -283,8 +283,8 @@ try {
     await page.getByRole("button", { name: "堅実な備え", exact: true }).click();
     await page.getByRole("button", { name: "堅実な備えを習得する" }).click();
     await page.getByRole("button", { name: "堅実な備え", exact: true }).click();
-    await page.getByRole("button", { name: "技を外す候補", exact: true }).click();
-    await page.getByRole("button", { name: "技を外す候補", exact: true }).click();
+    await page.getByRole("button", { name: "スキルを外す候補", exact: true }).click();
+    await page.getByRole("button", { name: "スキルを外す候補", exact: true }).click();
     assert.equal(
       await page.locator(".character-slot").last().locator(".empty-slot-icon").count(),
       1,
@@ -314,17 +314,20 @@ try {
     await page.goto("http://127.0.0.1:" + server.address().port + "/?locked");
     const fixed = page.locator(".character-slot-fixed");
     await fixed.waitFor();
-    assert.match(await fixed.innerText(), /アクティブ技/);
+    assert.match(await fixed.innerText(), /アクティブ/);
     assert.match(await fixed.innerText(), /風の二連矢/);
-    assert.equal(await page.getByRole("button", { name: /アクティブ技|パッシブ技/ }).count(), 0);
-    assert.equal(await page.getByText("パッシブ技", { exact: true }).count(), 0);
+    assert.equal(
+      await page.getByRole("button", { name: /アクティブスキル|パッシブスキル/ }).count(),
+      0,
+    );
+    assert.equal(await page.getByText("パッシブ", { exact: true }).count(), 0);
     await fixed.click();
     assert.equal(await page.locator(".character-icon-choices").count(), 0);
     await page.getByRole("button", { name: "レオン", exact: true }).click();
     assert.match(await fixed.innerText(), /暁の踏み込み/);
     await page.screenshot({ path: path.join(dir, "locked-" + width + ".png") });
     await page.goto("http://127.0.0.1:" + server.address().port + "/?limited");
-    await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+    await page.getByRole("button", { name: /パッシブスキル.*習得・セット/ }).click();
     assert.equal(
       await page
         .getByRole("button", { name: "野草の目利き", exact: true })
@@ -341,7 +344,7 @@ try {
     );
     await page.getByRole("button", { name: "野草の目利き", exact: true }).click();
     await page.getByRole("button", { name: "野草の目利きを習得する" }).click();
-    await page.getByRole("button", { name: /アクティブ技.*習得・セット/ }).click();
+    await page.getByRole("button", { name: /アクティブスキル.*習得・セット/ }).click();
     assert.equal(await page.locator(".character-learnable-dot").count(), 0);
     await page.goto("http://127.0.0.1:" + server.address().port + "/?quartet");
     for (const [hero, passive] of [
@@ -349,19 +352,22 @@ try {
       ["フィン", "隙を見抜く目"],
     ]) {
       await page.getByRole("button", { name: hero, exact: true }).click();
-      assert.equal(await page.getByText("アクティブ技", { exact: true }).count(), 1);
+      assert.equal(await page.getByText("アクティブ", { exact: true }).count(), 1);
       assert.equal(
-        await page.getByRole("button", { name: /アクティブ技.*習得・セット/ }).count(),
+        await page.getByRole("button", { name: /アクティブスキル.*習得・セット/ }).count(),
         0,
       );
-      await page.getByRole("button", { name: /パッシブ技.*習得・セット/ }).click();
+      await page.getByRole("button", { name: /パッシブスキル.*習得・セット/ }).click();
       await page.getByRole("button", { name: passive, exact: true }).click();
       await page.getByRole("button", { name: passive + "を習得する", exact: true }).click();
       await page.getByRole("button", { name: passive, exact: true }).click();
       await page.getByRole("button", { name: "閉じる", exact: true }).click();
       assert.equal(
         await page
-          .getByRole("button", { name: "パッシブ技・" + passive + "・習得・セット", exact: true })
+          .getByRole("button", {
+            name: "パッシブスキル・" + passive + "・習得・セット",
+            exact: true,
+          })
           .count(),
         1,
       );

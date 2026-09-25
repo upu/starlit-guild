@@ -120,7 +120,7 @@ function heroSheet(m: SheetModel): SheetView | null {
   const skill = ["aria", "leon"].includes(m.hero.id)
     ? (techniqueById(equippedTechnique(m.state, m.hero.id, "active") || "") ?? {
         name: "通常行動",
-        description: "自動で使う技はセットされていません。",
+        description: "自動で使うスキルはセットされていません。",
       })
     : heroSkills[m.hero.id];
   return {
