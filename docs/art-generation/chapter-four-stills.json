@@ -1,0 +1,183 @@
+{
+  "tool": "built-in image_gen",
+  "model": "not reported by tool",
+  "selection": "第四章の優先4場面をユーザーが採用。原本・鑑賞用画像・サムネイルを登録する。",
+  "records": [
+    {
+      "date": "2026-09-25",
+      "tool": "built-in image_gen",
+      "model": "not reported by tool",
+      "sourceCommit": "7d803c96dfceff7dd6cb1c55e68320d5c3108217",
+      "title": "苗を守るリコ",
+      "scene": "第四章4-7 出発前／リコは籠を引き寄せ、胸に抱えてメリルの前へ立った。",
+      "selection": "ユーザーがキャラクター紹介を兼ねる全身構図01を選択。リコの赤・黒衣装とメリルの脚の厚みを調整。",
+      "path": "assets/source/stories/lico-protects-seedlings.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2723855,
+      "sha256": "4f15c0dd59c53e9bb84dab2c804d7ea47ce2289e91e032da37af41680b85b2d3",
+      "detail": "public/stories/lico-protects-seedlings.webp",
+      "thumbnail": "public/stories/thumbnails/lico-protects-seedlings.webp",
+      "sceneId": null,
+      "fromLine": null,
+      "integration": "素材保存のみ。第四章の本編実装時に表示行を決める。",
+      "source": "exec-fb00c5b5-79b4-4b67-a99e-b0e1f6b1a1ce.png",
+      "selectedCompositionSource": "exec-5eb58e6b-79aa-4a5b-82a2-d18007936709.png",
+      "initialPrompt": "Use case: illustration-story\nCreate ONE finished landscape narrative JRPG event illustration, 1536x1024, for STARLIT-GUILD chapter 4 scene 4-7 \"Lico protects the seedlings\". No collage, panels, typography or dialogue.\nReferences: image 1 is the canonical Lico character design; image 2 is the canonical Merrill character design, including her special LEFT-arm instrument gauntlet; image 3 is ONLY the existing game's rendering/style reference, do not copy its scene or cast.\n\nExact story moment: Outside behind an old stone tower, at the loading area of a small moss-growing site in Brekka. Lico has just snatched a woven basket of living moss transplants to her chest and physically steps between Merrill and the remaining baskets. She is protecting the plants needed to establish a new growing bed. Merrill is a food-obsessed dryad who wants to taste another clump, still innocently delighted and curious, not malicious. Warm late-afternoon natural light, shaded stone and greenery; gentle pale yellow-green moss glow rather than intense neon.\n\nA distinctly NEW composition: full-body wide lateral staging, the camera perpendicular to the loading path, at normal human chest height. Merrill stands at the LEFT of the image in profile/three-quarter profile facing right, eager bare right hand slightly extended. Lico stands at the RIGHT facing left with both feet planted apart, hugging the single moss basket against her chest and physically blocking the path. Their whole figures including Lico's sandals and Merrill's boots are visible, with natural small statures, not elongated fashion figures. Allow a clear gap between them. Stacks of covered baskets and the escape/loading route continue behind Lico to the far right; tower wall frames the left. Show both faces in readable near profile, visually prioritize the contrast between Lico's determination and Merrill's appetite. This is a spacious scene of a blockade, not a close-up chase. No extra people.\n\nLico identity: human young woman around 18, short and sturdy rather than delicate; abundant distinct freckles across nose and cheeks, fine genuinely ROUND glasses slipping slightly down her nose, moss yellow-green eyes, messy dark reddish-brown short ponytail with flyaways and red spider-lily detail. Preserve her approachable, slightly odd face rather than smoothing her into a generic flawless beauty. Cream work apron over layered cream/olive rustic alchemist clothes with subdued red details, practical herbal pouches and small bottles, sandals. Follow reference 1 design. At this moment serious protectiveness, not a villain grin.\nMerrill identity: youthful small dryad girl, short uneven green bob and green eyes, real red pomegranate flowers and leaves GROWING from the head, separate red ribbon. Cream blouse, short muted gray-green hooded jacket, practical dark shorts, sturdy lace-up boots and healthy strong legs; age-appropriate outdoor traveler design exactly matching reference 2. Oversized food-stuffed backpack with mushrooms, bread and wrapped provisions, a small pumpkin charm. Friendly curious expression with bright appetite, not cruel, no fangs, no drool.\nCritical gauntlet: ONLY Merrill's anatomical LEFT arm wears the pomegranate-wood lyre GAUNTLET, integral strings along the DORSAL surface of her forearm, extending as fitted dorsal armor over the back of the hand and the back of all fingers to the fingertips. Palm and finger pads are open. Right hand and right forearm bare. It is NOT a separate U-shaped harp, NOT a harp glued to the arm, NOT vines growing from flesh. Study reference 2 carefully. Keep arm/wrist anatomy natural and prioritize the two-person emotional beat.\n\nStyle: high-quality warm painterly anime fantasy game CG matching the third reference's delicate detailed linework, nuanced eyes, textured layered cloth, wood and stone, cinematic depth and atmospheric light. The first two references determine facial and costume identities. Natural proportions, expressive readable faces, full-bleed composition. Moss basket and both faces should read even as a small image. No decorative border, text, labels, speech bubbles, hearts, watermark, blood, gore, attacks on ears, combat spell blasts, modern objects, costume redesign, duplicate limbs, extra fingers.\nCreate one standalone image only. This is a new alternative composition of the same exact scene, not a modification of facial identities or outfits. The basket is carried by Lico, never offered to Merrill. Merrill's eyes track the moss. Preserve freckles and ROUND glasses. Check LEFT gauntlet all five dorsal fingers extend through fingertips; RIGHT hand remains bare.",
+      "initialReferences": [
+        "docs/characters/lico-reference-sheet.webp at sourceCommit",
+        "docs/characters/merrill-reference-sheet.png at sourceCommit",
+        "assets/source/stories/four-cups-of-tea.png at sourceCommit"
+      ],
+      "revisionPrompt": "Use case: precise-object-edit / identity-preserve.\nImage 1 is the EDIT TARGET: the selected full-body composition 01 of Lico protecting a basket of moss from Merrill.\nImage 2 is the NEW authoritative Lico clothing color reference. Use it ONLY to update Lico's outfit, not to change the target's pose or composition.\n\nMake exactly TWO requested changes:\n1. Lico, the reddish-brown-haired bespectacled woman on the RIGHT, now wears the red-and-black outfit from image 2. NEW APPROVED COSTUME PALETTE: red and black must be unmistakably the dominant clothing colors. Charcoal-black hooded outer robe/mantle and long skirt (#242124), muted deep-crimson work apron (#862A37) with restrained dark botanical texture, slightly brighter blood-red spider-lily embroidery and red lining/ties (#A43640). Warm ivory blouse and tiny ruffle edges only as secondary contrast. Dark near-black brown leather bags, straps and sandals, antique brass hardware. No olive-green or beige dominance in the clothes. Moss-yellow-green eyes and glowing potion stay unchanged as SMALL complementary accents. Natural dyed linen and worn practical cloth, not glossy leather, not gothic aristocracy, not luxurious fashion. Keep the work apron instantly legible, simple and practical.\nMatch the color allocation precisely: deep red apron chest panel and the long apron down the FRONT; charcoal black outer cloak and lower skirt with red spider-lily embroidery and red inner lining; warm ivory sleeves and small hems. Preserve the existing garment silhouettes, seams, layering, accessories, her face, expression, freckles, round spectacles, yellow-green eyes, brown hair, hands, basket and feet. This is a natural practical herbal alchemist outfit, not a new ornate fashion costume.\n2. Merrill, the green-haired traveler on the LEFT, should have noticeably fuller, sturdier legs, both thighs AND calves. Increase their width modestly but clearly, around 20 percent from the target image, with rounded healthy contours and natural knee/ankle transitions. The intent is a short, solidly built forest traveler, not a slender model. Keep the same stature, leg length, stance and exact foot positions. Adjust shorts leg openings, straps and boot cuffs naturally to fit without constriction or pinching. Keep clothing coverage unchanged and framing neutral and character-introduction focused. Do not change her face, torso, arms, costume colors, flowers or backpack. Keep the instrument gauntlet ONLY on her LEFT arm, its dorsal plates covering the back of hand and all fingers through the fingertips. Right arm bare.\n\nLOCKED INVARIANTS: the full-body two-person wide composition and BOTH pairs of footwear completely visible; Merrill stays on the left, Lico on the right; same distance and stance, same tower/courtyard, handcart and baskets, lighting, time of day, camera, aspect ratio 1536x1024, painterly anime style, no text. Preserve Lico holding and protecting the basket (never handing it over), Merrill's hungry innocent smile and reaching pose. No changes besides outfit recolor and the modest leg-build adjustment. No cropped feet, no additional characters, no new accessories, no glamour posing.",
+      "revisionReferences": [
+        "selectedCompositionSource",
+        "exec-949f8f34-41a2-4564-88b4-44c6ae2e6739.png"
+      ],
+      "qa": [
+        "二人とも足元まで見える全身構図",
+        "リコの深紅の前掛け、炭黒の上着・スカート、そばかす、丸眼鏡を確認",
+        "メリルの太もも・ふくらはぎの厚み、左腕だけの琴の籠手を確認",
+        "会話とアルバムへの接続・ブラウザー実機確認は未実施"
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "tool": "built-in image_gen",
+      "model": "not reported by tool",
+      "sourceCommit": "0626d2387e138751dc08abeb5cf4f6833f4da8df",
+      "title": "徹夜明けのミラ",
+      "scene": "第四章4-4 出発前 — 朝になっていた",
+      "selection": "構図02を基に再生成した屋内版v3をユーザーが採用。",
+      "path": "assets/source/stories/mira-after-all-nighter.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 3156868,
+      "sha256": "187333722ad119c8a2ad0159e62e265d1acde468fcdda64f4852a6aefffd8c30",
+      "detail": "public/stories/mira-after-all-nighter.webp",
+      "thumbnail": "public/stories/thumbnails/mira-after-all-nighter.webp",
+      "sceneId": null,
+      "fromLine": null,
+      "integration": "素材保存のみ。第四章の本編実装時に表示行を決める。",
+      "source": "exec-dbd37a0c-8c72-4a71-bbc5-6b74befe1ebf.png",
+      "selectedOutput": "outputs/chapter-four-stills/mira-after-all-nighter/composition-02-indoor-fresh-v3.png",
+      "method": "Fresh generation guided by character sheets and selected composition, not iterative editing.",
+      "prompt": "Create a completely NEW, high quality, freshly rendered illustration from scratch for the Japanese fantasy RPG STARLIT-GUILD. This is a NEW GENERATION, not an edit, retouch, inpainting, pixel-preserving transformation, or filtering of the previous image. Use the first three character reference sheets for identity, costume design and drawing style. Use the fourth reference ONLY as guidance for the selected composition, the three facial expressions and indoor setting. Redraw every detail cleanly with crisp confident linework and rich delicate anime painting, no cumulative blur or image degradation. Landscape 1536x1024.\n\nScene: after a full night of making house calls, healer Mira returns to the inn just before dawn. Three visible adult characters, medium triangular composition inspired by reference4: Finn leaning toward her from left, Mira closest to viewer in the center, Aria leaning toward her on right, offering an indoor wooden chair. Mira is still taking out her next house-call note from her medicine satchel, because she does not count herself among the people who need care. Finn has worried knitted eyebrows and fond, slightly incredulous concern; Aria has tender worried eyes and an earnest attentive expression; Mira has a tiny gentle stubborn 'I am still all right' smile, tired heavy eyelids with still-clear focused eyes. Preserve the charm and emotional connection of these three expressions. Only Mira, Finn and Aria are visible. Leon is offscreen.\n\nCRUCIAL NEW DIRECTION: Mira must look noticeably more worn out and disheveled from an all-nighter. Do not leave her hair and clothes pristine. Her lavender braid has loosened with uneven loops, many escaped wisps at the crown and sides, several longer stray locks drooping across her temples and cheek, subtly mussed bangs, her recognizable crescent floral hair clip sitting slightly askew. Keep the recognizable long lavender hairstyle and braid identity. Her pale youthful face shows subtle purple-gray under-eye fatigue, slightly drooping shoulders and a slumped but still working posture. Her familiar white and lavender healer dress is clearly rumpled: irregular compression folds at her waist and torso, creased fabric at neckline and skirt, collar slightly askew, small dark bow no longer neatly centered, an unevenly settled outer fabric panel and slightly wrinkled ribbons. Make the overnight wear readable at first glance, with clean well-drawn intentional details. Clothing remains intact, opaque, properly covering her, with the same design as the reference. No torn clothing, bruises, injuries, dramatic dirt, no flushed drunk face, no aging her, no sleeping, no collapsed unconscious pose. She is an adult in her mid-twenties, slim with a modest bust and soft approachable face.\n\nFinn: visibly middle-aged late-forties man, brown untidy low ponytail, subtle stubble and crow's feet, slightly tanned skin, charcoal olive cloak with understated gold trim over open ivory shirt, rings; naturally concerned and experienced, not a young pretty boy.\nAria: young adult elf, long golden hair with side braids, green eyes, white flower ornament, pointed ears, green cloak with gold trim over ivory ranger clothing, gloves, hood down. She is drawing the chair closer by its backrest, naturally within the indoor space.\nAnatomically coherent hands, five digits per hand, accurate grasping of note, bag and chair. Avoid obscuring Mira's expression with hands.\n\nSetting: unquestionably INSIDE an inn entrance hall/common room, timber beams, plaster walls, warm muted lantern glow, cold predawn blue daylight and town shapes visible THROUGH a window in upper left. All characters and the chair are indoors, grounded on an interior wooden floor. No outdoor chairs, no staff or wand propped against a building; omit staffs entirely. Warm intimate character-centered storytelling, background secondary. No captions, labels, panel borders, watermarks or text. Final image is one complete clean illustration, not a reference sheet or comparison.",
+      "references": [
+        {
+          "path": "docs/characters/mira-reference-sheet.webp",
+          "sha256": "095ea37351098c217a59f394545a2dd9f36492067f6489073dfaa702c888c631"
+        },
+        {
+          "path": "docs/characters/finn-reference-sheet.webp",
+          "sha256": "4162b8cd84a2e426c474a50b0607a5665e49b37432a8c775d28a0ceb9fae4cd0"
+        },
+        {
+          "path": "docs/characters/aria-reference-sheet.webp",
+          "sha256": "8902356b77da795520a3590fc3d059a799d2dacb031634de24b3dec03224d980"
+        },
+        {
+          "path": "outputs/chapter-four-stills/mira-after-all-nighter/composition-02-indoor-v2.png",
+          "sha256": "4eef9f65db4fda2981df0dc0266b0dcf22aaa31fcfe6bb0e136d19bb0a180b16"
+        }
+      ],
+      "referenceNote": "outputs配下の構図参照は制作中間画像。採用原本のみGit管理し、参照の同定用にパスとSHA-256を記録する。",
+      "qa": [
+        "宿の屋内に三人と椅子が収まる。杖は描かない。",
+        "ミラの乱れた髪と皺のある服、心配するフィンとアリアの表情を確認。"
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "tool": "built-in image_gen",
+      "model": "not reported by tool",
+      "sourceCommit": "0626d2387e138751dc08abeb5cf4f6833f4da8df",
+      "title": "青い布の陰",
+      "scene": "第四章4-4 追跡の途中 — 一日目",
+      "selection": "ユーザー指定「OK、v13で」。v9の構図を基に新規生成したv13を採用。",
+      "path": "assets/source/stories/blue-cloth-alley.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2593760,
+      "sha256": "234b89d9942368214a57dcdf8ed8c5aff120edd49a8709024a27743a02f1c850",
+      "detail": "public/stories/blue-cloth-alley.webp",
+      "thumbnail": "public/stories/thumbnails/blue-cloth-alley.webp",
+      "sceneId": null,
+      "fromLine": null,
+      "integration": "素材保存のみ。第四章の本編実装時に表示行を決める。",
+      "source": "exec-18b34d32-ecfe-44f3-a0f2-064414d8ced1.png",
+      "selectedOutput": "outputs/chapter-four-stills/blue-cloth-alley/blue-cloth-soft-hair-visible-hands-fresh-v13.png",
+      "method": "Built-in image_gen; fresh generation referenced to v9",
+      "prompt": "Create a NEW freshly rendered landscape1536x1024 Japanese fantasy story illustration from scratch using references. Reference1 (v9) is the USER'S PREFERRED COMPOSITION. References2,3 are Aria and Leon canonical identity and outfit. Do not invent a new crop or viewpoint. Match reference1's camera angle, waist-up framing, character positions, sizes, faces, stone recess, diagonal blue cloth contour at lower left and narrow street slit. No close chest-up crop, no horizontal cloth across bottom. Keep the visible arm hug and BOTH of Aria's hands in view. Do NOT hide hands as a workaround. This is fresh generation to preserve image quality, not repeated pixel retouching.\n\nChanges to v9:\n1. Hair rendering on BOTH characters becomes much SOFTER, PALER, AIRIER and SILKIER. Aria remains blonde, now delicate pale champagne-gold with light cream highlights, softly colored slender flyaway strands and fine weightless locks. Leon remains brown-haired, now softly shaded ash-brown with airy feathered ends. Reduce dark outlines, harsh groove-like strand shadows, heavy brown underpainting, rigid chunky locks and metallic shine. Use pastel low-contrast translucent-looking strand edges and soft broad color transitions, while HAIR itself remains opaque and detailed. Fine wisps flow lightly without looking tangled or wet. Preserve length, shapes, braids, flowers, identities; do not bleach Leon white. Light luminous soft anime hair, not blurry or out of focus.\n2. Stronger snug arm hug: Aria draws Leon's near RIGHT arm gently but firmly against her fully clothed upper torso, bringing her shoulder and body close against his upper arm. Her left elbow tucked in tightly, shoulder leaning inward, soft green cloak/ivory sleeve bunching gently at the contact. Her head tilts slightly closer to his red scarf. They squeeze together to fit behind the small screen. Warm innocent practical hiding, natural body mechanics. Maintain normal proportions and intact opaque clothes, no increased exposure or body-part emphasis. Show the visible left-arm wrap and closer body contact, not just a hand resting on his sleeve.\n3. RESTORE Leon's SILVER SHOULDER ARMOR on BOTH shoulders, especially the near shoulder alongside Aria in the center: rounded silver engraved cap and articulated overlapping plates with rivets as in reference3. Clearly visible above his white sleeve. His blue tunic alone cannot replace the pauldron.\n\nHAND ANATOMY AND VISIBILITY:\nAria's anatomical RIGHT arm rises at picture-left to hold the same cloth edge as v9, her right glove pinching the cloth, five anatomical digits with realistic occlusion.\nAria's anatomical LEFT arm wraps around BEHIND Leon's near RIGHT arm below shoulder armor, exactly the directional logic of v9's lower hand. Her LEFT hand emerges from the FAR SIDE of his arm. The left wrist is on the picture-RIGHT side of that visible hand, and its FOUR fingers curve toward picture-LEFT around his white sleeve. We see the BACK of this LEFT glove; the correct left thumb is on its upper edge opposed to the four fingers. Preserve this left-handed orientation. DO NOT flip it into a right hand with wrist at left and fingertips pointing right. Keep finger roots and wrist continuous and natural, no extra digits, no floating hand. Show one natural left forearm loop and one left wrist, no second hand on upper sleeve. Her entire gripping left hand is clearly visible unobscured as in v9. Do not raise foreground cloth over it, do not crop it, do not remove it. Exactly two Aria hands visible: right at cloth and left around Leon's sleeve. Leon's own hands naturally low, mostly out of crop.\n\nEmotion and story: Both are tracking the cart, heads and eyes toward the tiny slit at far left, NOT looking at viewer or staring at each other. Aria focused with a subtle shy almost-smile. Leon visibly gently flustered by closeness, faint warmth at cheeks, eyebrows slightly raised and lips barely parted. Keep the appeal of reference1, no broad grin, fear or comedy sweat.\nAria: elf ears, green eyes, side braids and white flower/feather ornament, forest-green gold-trim hood-down cloak, ivory ranger clothing and brown leather gloves/belt. Leon human ears, brown eyes, red scarf/cape, blue tunic, ivory sleeves and restored silver pauldrons. Characters fully clothed.\nWide opaque blue laundry shields both figures from the street, camera on inside hidden side. The v9 diagonal blue shape occupies lower LEFT only, leaving BOTH hands and waist-up interaction visible on RIGHT. Narrow left slit shows cart fragment in dawn light, right stone wall, softly shaded interior. Crisp new painting, soft hair but clear faces and cloth, no text, borders, watermark, panels or extra foreground people.",
+      "references": [
+        {
+          "path": "outputs/chapter-four-stills/blue-cloth-alley/blue-cloth-concealed-fresh-v9.png",
+          "sha256": "69acbbec95fa849d88ec0d771faa3d2d2099e6dd8a31acc8ef3323d3ca51eaab"
+        },
+        {
+          "path": "docs/characters/aria-reference-sheet.webp",
+          "sha256": "8902356b77da795520a3590fc3d059a799d2dacb031634de24b3dec03224d980"
+        },
+        {
+          "path": "docs/characters/leon-reference-sheet.webp",
+          "sha256": "2de99a8272195fbb89f6911d6b5d46ff7900ea57fe891886f2909c6117e57d92"
+        }
+      ],
+      "referenceNote": "outputs配下の構図参照は制作中間画像。採用原本のみGit管理し、参照の同定用にパスとSHA-256を記録する。",
+      "qa": [
+        "アリアの右手は布、左腕はレオンの右腕へ回る。双方の視線は布の隙間へ向く。",
+        "腰上構図、両肩の銀の防具、淡く軽い髪、身を寄せる距離感を採用。"
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "tool": "built-in image_gen",
+      "model": "not reported by tool",
+      "sourceCommit": "0626d2387e138751dc08abeb5cf4f6833f4da8df",
+      "title": "星灯りの旅団の結成",
+      "scene": "第四章4-9 達成後・後半 — 最後の空欄",
+      "selection": "ユーザー指定「４を採用」。構図04を採用。",
+      "path": "assets/source/stories/guild-formation.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2910039,
+      "sha256": "7acf829c9f4e8767d88b65a95ebf33d245f52426f2e4906e9a72865e721f2eb4",
+      "detail": "public/stories/guild-formation.webp",
+      "thumbnail": "public/stories/thumbnails/guild-formation.webp",
+      "sceneId": null,
+      "fromLine": null,
+      "integration": "素材保存のみ。第四章の本編実装時に表示行を決める。",
+      "source": "exec-504fd572-a3e9-402c-8c16-95b4becd249c.png",
+      "selectedOutput": "outputs/chapter-four-stills/guild-formation/composition-04.png",
+      "method": "Built-in image_gen; five independent fresh generations",
+      "prompt": "Use case: illustration-story. Create one NEW standalone landscape1536x1024 Japanese fantasy RPG story illustration for STARLIT-GUILD. All five supplied sheets are character identity/costume references ONLY, in this order: 1 Aria, 2 Leon, 3 Mira, 4 Finn, 5 Lico. Exactly THESE FIVE characters, all five identifiable faces clearly visible, no missing member, duplicates or extra foreground people. Single full-bleed scene, not a reference sheet or panels.\n\nNarrative: Chapter4 finale, the five friends register their newly formed traveling guild at a modest town registration office in Linde. They already chose its name earlier. Leon has JUST written his name in the deputy representative field. Aria now writes her name in the ADJACENT representative field on the SAME registration document. She signs with a small elegant feather dip pen in her RIGHT BARE HAND and gently holds the edge of the paper flat with her LEFT BARE HAND; she has removed her gloves to write. Leon stands beside her looking at the pen tip and then at her with quiet warm trust. Mira and Finn lean in to watch from the other part of their small group, while shorter Lico peers attentively at the form and its occupation field, a tiny awkward pleased smile. The five becoming one group is the emotional center. A practical small act with a sense of a shared future, not a staged graduation portrait, not a grand royal ceremony. Do not make everyone beam identically or stare at viewer.\n\nOne wooden registration desk/counter, one main sheet with two clearly neighboring signature boxes, one contains a short abstract ink signature and the other is being signed. A few additional blank rows suggest member/occupation fields. Do not rely on readable Japanese words or exact names. No large visible title, no logos, no subtitles or speech balloons. Include a small inkwell and modest neatly stacked papers, no clutter. The receptionist is offscreen, not a sixth visible person. Modest timber/plaster office interior, shelves with ledgers and pigeonholes, gentle warm daylight through a window, background subordinate to five faces and hands. No wine, beer, cups, toast, confetti, magical glow, potions on registration desk or weapons in hands.\n\nCHARACTER LOCKS:\nAria: youthful elf with green eyes, long pale champagne-gold wavy hair, small braids, white flowers and feather ornament, pointed ears, forest-green cloak with botanical gold trim hood DOWN, ivory ranger clothes and brown leather waist belts. Bright purposeful smile softened by a little nervousness about signing. She is the one actively writing.\nLeon: youthful human, short tousled brown hair, brown eyes, RED scarf/short cape, BLUE tunic and ivory sleeves, SILVER metal shoulder pauldrons on BOTH shoulders with overlapping plates, brown leather belt/pouches. Both pauldrons stay present, including the one near Aria; don't simplify away his shoulder equipment. Quiet slightly bashful smile, dependable but youthful, watching her sign. His hands simply relaxed or resting separately at the desk edge, not guiding her hand.\nMira: adult mid-twenties healer, soft youthful face, long lavender hair with braid and crescent/flower ornament, white/lavender robes with gold details, dark neck bow and star. Gentle fond smile, rested and groomed at this later scene, NOT the exhausted all-nighter, no eye bags. No staff in this image.\nFinn: late-forties human man, brown untidy low ponytail, light tan, stubble and crow's feet, downturned gray-violet eyes, worn charcoal-olive gold-trim cloak over open ivory shirt, cheap rings, very little luggage. Wry affectionate amused smile, experienced scruffy charm; NOT a youthful pretty boy, not elderly, no round spectacles.\nLico: short human young woman, visibly shorter than others, small but not excessively skinny, unpretentious slightly odd approachable face with MANY FRECKLES, round thin-frame glasses sitting a little low, pale moss-green eyes, reddish-brown/muted burgundy messy short ponytail, red spider-lily ornament. CRIMSON WORK APRON over CHARCOAL BLACK outer clothing/skirt with restrained red embroidery, ivory blouse only as secondary color, dark pouches, simple sandals if feet visible. Red-and-black color masses prominent, no green outfit. Thoughtful curious faintly lopsided smile, interested in the paperwork and a little shy about joining, not sinister and not glossy generic perfect beauty.\n\nStyle: retain individual facial designs and reference costumes. Crisp delicate linework with rich but gentle painted material detail, soft daylight, mild warm/cool separation. Hair on all characters especially AIRY, SILKY and lightly painted: fine strands, gentle pale highlights, low-contrast shading and softly colored thin outlines; preserve each hair color but avoid heavy dark strand grooves, metallic shine and chunky rigid locks. No blur. Natural body proportions, upright grounded poses around desk, physically plausible positions with nobody intersecting furniture. Carefully correct right/left hands and opposing thumbs, five digits per hand, no duplicated hands or fingers, no unnecessary hand pile or touching hands. Show practical gestures, not overly complicated interlocked poses. Keep all five expressive faces legible.\nComposition for this independent image: Clearly WIDER room-scale establishing composition showing all FIVE full bodies and their real height differences around a freestanding visitor signing table, NOT another waist-up frontal portrait. Aria seated at the near-left side writing; Leon stands beside her at center-left watching; Mira stands at far side of table with gentle smile; Finn leans casually at the back-right corner; shorter Lico stands near-right on simple sandals, leaning to read. Visible chair legs, feet, floorboards, timber room and daylight window. Table at lower middle, five form a compact uneven ring around it. Faces remain individually legible and expressive despite wider framing. Registration clerk offscreen at a separate service desk.",
+      "references": [
+        {
+          "path": "docs/characters/aria-reference-sheet.webp",
+          "sha256": "8902356b77da795520a3590fc3d059a799d2dacb031634de24b3dec03224d980"
+        },
+        {
+          "path": "docs/characters/leon-reference-sheet.webp",
+          "sha256": "2de99a8272195fbb89f6911d6b5d46ff7900ea57fe891886f2909c6117e57d92"
+        },
+        {
+          "path": "docs/characters/mira-reference-sheet.webp",
+          "sha256": "095ea37351098c217a59f394545a2dd9f36492067f6489073dfaa702c888c631"
+        },
+        {
+          "path": "docs/characters/finn-reference-sheet.webp",
+          "sha256": "4162b8cd84a2e426c474a50b0607a5665e49b37432a8c775d28a0ceb9fae4cd0"
+        },
+        {
+          "path": "docs/characters/lico-reference-sheet.webp",
+          "sha256": "5d041950aabd94797238ec0987822020cfc8fe22e9ab35ab9c2bb40715752fac"
+        }
+      ],
+      "referenceNote": "outputs配下の構図参照は制作中間画像。採用原本のみGit管理し、参照の同定用にパスとSHA-256を記録する。",
+      "qa": [
+        "アリアが署名し、レオン・ミラ・フィン・リコが同じ机を囲む五人の構図。",
+        "署名する右手と紙に添えた左手、隣り合う欄を確認。リコは赤・黒の衣装。"
+      ]
+    }
+  ]
+}

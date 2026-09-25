@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-25",
+  "tool": "built-in image_gen",
+  "model": "not reported by tool",
+  "sourceCommit": "7d803c96dfceff7dd6cb1c55e68320d5c3108217",
+  "request": "リコの衣装をリファレンスシートも含めて赤・黒基調へ変更する。下段中央の瓶を持つ手の六本指を修正する。",
+  "palette": "NEW APPROVED COSTUME PALETTE: red and black must be unmistakably the dominant clothing colors. Charcoal-black hooded outer robe/mantle and long skirt (#242124), muted deep-crimson work apron (#862A37) with restrained dark botanical texture, slightly brighter blood-red spider-lily embroidery and red lining/ties (#A43640). Warm ivory blouse and tiny ruffle edges only as secondary contrast. Dark near-black brown leather bags, straps and sandals, antique brass hardware. No olive-green or beige dominance in the clothes. Moss-yellow-green eyes and glowing potion stay unchanged as SMALL complementary accents. Natural dyed linen and worn practical cloth, not glossy leather, not gothic aristocracy, not luxurious fashion. Keep the work apron instantly legible, simple and practical.",
+  "records": [
+    {
+      "path": "docs/characters/lico-reference-sheet.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1800610,
+      "sha256": "5d041950aabd94797238ec0987822020cfc8fe22e9ab35ab9c2bb40715752fac",
+      "reference": "docs/characters/lico-reference-sheet.webp at sourceCommit",
+      "initialGeneratedSource": "exec-949f8f34-41a2-4564-88b4-44c6ae2e6739.png",
+      "source": "exec-69d56579-d973-444f-a370-d6d1d6760a86.png",
+      "encoding": "1536x1024, lossless WebP",
+      "prompt": "Use case: precise-object-edit, canonical character reference sheet costume recoloring.\nEdit the provided Lico reference sheet ONLY to adopt the following new clothing palette across EVERY full-body view, face crop where clothes appear, costume detail, accessory detail and palette swatch. Preserve the sheet layout and all panel positions, aspect ratio and 1536x1024 size; keep all artwork and details as close as possible.\nNEW APPROVED COSTUME PALETTE: red and black must be unmistakably the dominant clothing colors. Charcoal-black hooded outer robe/mantle and long skirt (#242124), muted deep-crimson work apron (#862A37) with restrained dark botanical texture, slightly brighter blood-red spider-lily embroidery and red lining/ties (#A43640). Warm ivory blouse and tiny ruffle edges only as secondary contrast. Dark near-black brown leather bags, straps and sandals, antique brass hardware. No olive-green or beige dominance in the clothes. Moss-yellow-green eyes and glowing potion stay unchanged as SMALL complementary accents. Natural dyed linen and worn practical cloth, not glossy leather, not gothic aristocracy, not luxurious fashion. Keep the work apron instantly legible, simple and practical.\nKeep Lico's EXACT face, plentiful freckles, circular glasses, expressions, messy reddish-brown ponytail, yellow-green eyes, skin tone, anatomy, stature, body shape, pose, all garment shapes, sleeve shape, apron outline, hair ornament, potion bottles and notebook contents unchanged. Recolor only the textiles, matching leather, decorative thread and costume palette swatches. The round glasses are very important; do not smooth out freckles or beautify the face. The character is an approachable slightly odd human alchemist, not a witch, vampire or noblewoman. Keep the botanical and chemistry identity. No weapons or machine equipment. The main cloak is BLACK not green; APRON distinctly DEEP RED not ivory; the blouse stays warm ivory; the lower skirt is charcoal black. Colors consistently match in front/side/back views and details. Update the existing swatch column to include charcoal black and deep crimson while retaining skin/hair/eye/potion colors. Don't add writing or labels, don't remove any panel, don't invent accessories.",
+      "correctionPrompt": "Use case: precise-object-edit. Correct ONE small anatomical error in this existing character reference sheet. The edit target is ONLY the enlarged hand holding a green potion flask in the BOTTOM ROW, near the CENTER (roughly x=770 to 950, y=800 to 1020 on this 1536x1024 sheet). This hand currently appears to have six fingers.\nRedraw that single hand as an anatomically natural HUMAN FIVE-DIGIT hand: exactly ONE thumb and FOUR fingers total. A natural grip on the glass neck of the potion flask, with one thumb opposing the fingers; some fingers may be partially occluded by the flask to avoid any duplication. Every visible digit must connect naturally to the same hand/palm, with normal joint count and natural wrist alignment. No extra fingertip, no duplicated thumb, no floating finger-like skin shape. Keep its skin tone, delicate drawing and flask grip functional. Keep the round glass flask, neck, cork, glowing green liquid and wrist/sleeve position essentially unchanged; adjust tiny local overlaps as needed to correct anatomy.\nAll other parts are LOCKED: whole sheet layout, all full-body views, ALL faces/freckles/round spectacles/expressions, hair, red-black costume colors and designs, swatches, other detail panels, background and 1536x1024 framing. Do not edit other hands or change costume. No additional text or labels. This is a tiny localized correction, NOT a new character design or new reference sheet.",
+      "qa": "全身三方向の赤・黒配色と顔の特徴を確認。瓶を持つ手の部分を拡大し、見える指先が5本であることを確認。"
+    },
+    {
+      "path": "public/portraits/lico-expressions.webp",
+      "width": 768,
+      "height": 768,
+      "bytes": 132066,
+      "sha256": "1d1e24724346f70fcec18399783a3f006537d577148ee7943eafea767f6a4255",
+      "reference": "public/portraits/lico-expressions.webp at sourceCommit",
+      "source": "exec-4b2c8ee0-172d-420d-8803-6ee3ccda397e.png",
+      "encoding": "768x768, Lanczos3, WebP quality 82 effort 6",
+      "prompt": "Use case: precise-object-edit. Edit this existing 3x3 Lico face expression atlas ONLY to recolor the visible clothing at the very bottom of the nine face portraits. Preserve EXACTLY all face pixels/expressions as closely as possible, round glasses, freckles, hair, eye color, each crop, the full-bleed 3x3 layout, cell scale and alignment, and the ivory backgrounds. No new text, borders or gutters.\nNEW APPROVED COSTUME PALETTE: red and black must be unmistakably the dominant clothing colors. Charcoal-black hooded outer robe/mantle and long skirt (#242124), muted deep-crimson work apron (#862A37) with restrained dark botanical texture, slightly brighter blood-red spider-lily embroidery and red lining/ties (#A43640). Warm ivory blouse and tiny ruffle edges only as secondary contrast. Dark near-black brown leather bags, straps and sandals, antique brass hardware. No olive-green or beige dominance in the clothes. Moss-yellow-green eyes and glowing potion stay unchanged as SMALL complementary accents. Natural dyed linen and worn practical cloth, not glossy leather, not gothic aristocracy, not luxurious fashion. Keep the work apron instantly legible, simple and practical.\nOnly a little shoulder/cloak and neckline is visible: change olive-green cloak fabric to charcoal BLACK, make visible fabric lining/ties/embroidery muted deep RED, keep the ivory blouse neckline. Nothing else changes. Do not redraw expressions, especially the asymmetric strange smile in bottom-middle and wide open discovery shout in bottom-right. Output a square 3x3 atlas with exactly the same nine expressions and cell order.",
+      "layout": {
+        "columns": 3,
+        "rows": 3,
+        "cellSize": 256,
+        "expressions": [
+          "neutral",
+          "smile",
+          "surprised",
+          "worried",
+          "serious",
+          "shy",
+          "tired",
+          "mischievous",
+          "shouting"
+        ]
+      }
+    }
+  ],
+  "implementation": "Lico remains absent from current story scenes. Shared atlas layout and API unchanged."
+}
