@@ -23,6 +23,7 @@ import {
   type StoryLine,
 } from "@/lib/stories";
 import { storyArtAt } from "@/lib/story-art";
+import { hasNextBanter, nextBanter, startBanter, type BanterExchange } from "@/lib/banter-exchange";
 import type { StoryAdvance } from "./use-story-advance";
 export { ArtViewer, StoryAlbum } from "./story-viewers";
 export { memoryGroups } from "./story-memory-groups";
@@ -233,26 +234,6 @@ export function StoryLibrary({
   );
 }
 
-function sameBanter(left: StoryLine[], right: StoryLine[]) {
-  return (
-    left.length === right.length &&
-    left.every(
-      (entry, i) =>
-        entry.speaker === right[i].speaker &&
-        entry.text === right[i].text &&
-        entry.expression === right[i].expression,
-    )
-  );
-}
-
-function hasNextBanter(exchange: BanterExchange, lines: StoryLine[]) {
-  return (
-    exchange.index + 1 < exchange.lines.length ||
-    (lines.length > 0 && !sameBanter(exchange.lines, lines))
-  );
-}
-
-type BanterExchange = { lines: StoryLine[]; index: number; history: StoryLine[]; turn: number };
 function scheduleBanter(
   paused: boolean,
   hasNext: boolean,
@@ -267,20 +248,7 @@ function scheduleBanter(
     if (document.hidden) return;
     timer = setTimeout(
       () => {
-        setExchange((current) => {
-          const continuing = current.index + 1 < current.lines.length,
-            index = continuing ? current.index + 1 : 0,
-            nextLines = continuing ? current.lines : latest.current,
-            nextLine = nextLines.at(index);
-          if (!nextLine || (!continuing && sameBanter(current.lines, nextLines))) return current;
-          // Keep completed exchanges visible, but only append when there is new dialogue.
-          return {
-            lines: nextLines,
-            index,
-            history: [...current.history, nextLine].slice(-100),
-            turn: current.turn + 1,
-          };
-        });
+        setExchange((current) => nextBanter(current, latest.current));
       },
       Math.max(3500, (line?.text.length || 0) * 100),
     );
@@ -307,12 +275,7 @@ function banterLine(entry: StoryLine, key: number) {
 }
 
 export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?: boolean }) {
-  const [exchange, setExchange] = useState({
-    lines,
-    index: 0,
-    history: lines.slice(0, 1),
-    turn: 0,
-  });
+  const [exchange, setExchange] = useState(() => startBanter(lines));
   const dialogue = useRef<HTMLDivElement>(null);
   const followLatest = useRef(true);
   useEffect(() => {
@@ -325,6 +288,7 @@ export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?:
   }, [lines]);
   const line = exchange.lines.at(exchange.index);
   // Compare content, not the new array journeyBanter returns on every clock tick.
+  // Exchanges already shown in this quest stay in the history instead of being appended again.
   const hasNext = hasNextBanter(exchange, lines);
   useEffect(
     () => scheduleBanter(paused, hasNext, line, latest, setExchange),

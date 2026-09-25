@@ -395,11 +395,10 @@ test("banter resumes for new content, finishes the exchange, and stops again", (
   h.tick();
   assert.ok(h.text().includes(next[1].text));
   assert.equal(h.timerCount(), 0);
-  // Returning to an earlier exchange after different dialogue is still allowed.
+  // Returning to an earlier exchange (e.g. after a rest) does not replay it.
   h.render(props);
-  h.tick();
   assert.equal(h.timerCount(), 0);
-  assert.equal(h.text().split(idle[0].text).length - 1, 2);
+  assert.equal(h.text().split(idle[0].text).length - 1, 1);
 });
 
 test("banter waits for initial dialogue and keeps history when no new lines arrive", () => {
