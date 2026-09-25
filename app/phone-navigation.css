@@ -34,6 +34,14 @@
   color: #a6bca5;
   box-shadow: none;
   font-size: 12px;
+  /* Long presses on phones must not select the label or open the image menu. */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.phone-navigation [data-slot="tabs-trigger"] > img {
+  -webkit-user-drag: none;
 }
 .phone-navigation [data-slot="tabs-trigger"] > svg {
   width: 21px !important;

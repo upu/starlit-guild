@@ -104,7 +104,6 @@
   white-space: normal;
 }
 .phone-game .journey-banter,
-.phone-game .journey-banter:hover:not(:disabled),
 .phone-game .journey-banter:focus,
 .phone-game .journey-banter:active {
   background: linear-gradient(110deg, #203c32, #132d29);
@@ -121,8 +120,7 @@
   background: linear-gradient(145deg, #253e32, #142d29);
   border-color: #aa925b;
 }
-.quest-clear-card,
-.quest-clear-card:hover:not(:disabled) {
+.quest-clear-card {
   display: flex;
   flex-direction: column;
   gap: 12px;
