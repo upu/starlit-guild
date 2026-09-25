@@ -32,7 +32,6 @@ function bundle(state) {
     serial: 0,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 const roundtrip = (s) => parseBundle(JSON.parse(JSON.stringify(bundle(s)))).profiles[0].state;

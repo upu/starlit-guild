@@ -45,7 +45,6 @@ let save = {
   serial: 2,
   sound: false,
   cloudAt: 0,
-  legacyImported: true,
 };
 const post = (cookie, body, origin = root) =>
   fetch(root + "/api/backup", {

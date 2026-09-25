@@ -43,7 +43,6 @@ function bundle(state) {
     serial: 1,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 function action(s, a) {

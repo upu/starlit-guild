@@ -295,7 +295,6 @@ export type SaveBundle = {
   serial: number;
   sound: boolean;
   cloudAt: number;
-  legacyImported: boolean;
 };
 export const bundleSchema = z
   .object({
@@ -311,7 +310,6 @@ export const bundleSchema = z
     serial: count,
     sound: z.boolean(),
     cloudAt: n,
-    legacyImported: z.boolean(),
   })
   .refine(
     (b) =>

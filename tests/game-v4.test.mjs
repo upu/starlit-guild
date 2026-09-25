@@ -15,7 +15,6 @@ function bundle(state, format = 4) {
     serial: 1,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 test("checkpoint rewards survive return without marking an unfinished quest complete", () => {

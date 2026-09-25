@@ -64,7 +64,6 @@ test("chapter presets keep the story entry, locked recruitment and independent s
           serial: 0,
           sound: false,
           cloudAt: 0,
-          legacyImported: true,
         }),
       ),
     ).profiles[0].state;

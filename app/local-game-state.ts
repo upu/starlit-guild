@@ -38,7 +38,6 @@ export function freshBundle(): SaveBundle {
     serial: 0,
     sound: true,
     cloudAt: 0,
-    legacyImported: false,
   };
 }
 function readableCloudCopies(data: BackupRead) {

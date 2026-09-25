@@ -29,7 +29,6 @@ function bundle(state) {
     serial: 1,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 // The tower road is the first story stage whose nodes field a group of three.

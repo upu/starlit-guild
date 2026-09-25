@@ -22,7 +22,6 @@ function roundtrip(state) {
         serial: 0,
         sound: false,
         cloudAt: 0,
-        legacyImported: true,
       }),
     ),
   ).profiles[0].state;

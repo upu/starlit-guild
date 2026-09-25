@@ -32,7 +32,6 @@ async function open(state) {
     serial: 0,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
   await page.clock.install({ time: new Date(state.updatedAt) });
   await page.clock.setFixedTime(new Date(state.updatedAt));
