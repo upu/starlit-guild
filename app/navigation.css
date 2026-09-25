@@ -64,93 +64,6 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
 .phone-header .save-status {
   margin-left: auto;
 }
-.phone-game .adventure-toolbar {
-  height: auto;
-  min-height: 48px;
-  gap: 6px;
-  padding: 3px 12px;
-  flex-shrink: 0;
-}
-.phone-game .adventure-toolbar .squad-selector {
-  flex: 1;
-  min-width: 0;
-  justify-content: flex-start;
-  min-height: 44px;
-  padding: 4px 0;
-}
-.squad-selector > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.phone-game .adventure-toolbar .edit-party {
-  min-height: 38px;
-  padding: 4px 12px;
-  background: #294236;
-  border: 1px solid #61765a;
-  border-radius: 7px;
-  color: #e7d5a5;
-}
-.phone-game .adventure-toolbar > .icon-button {
-  margin-left: 0;
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
-}
-.adventure-destination {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 12px 10px;
-  flex-shrink: 0;
-  border-bottom: 1px solid #405a49;
-}
-.adventure-destination > div {
-  flex: 1;
-  min-width: 0;
-}
-.adventure-destination small,
-.adventure-destination b {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.adventure-destination small {
-  font-size: 11px;
-  color: #b4c6ae;
-  margin-bottom: 3px;
-}
-.adventure-destination b {
-  font-size: 14px;
-  font-weight: 500;
-  color: #f0dca8;
-}
-.adventure-destination > button {
-  min-height: 44px;
-  padding: 6px 8px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-.adventure-return {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 8px;
-  padding: 6px 12px;
-  border-top: 1px solid #425b48;
-  flex-shrink: 0;
-}
-.adventure-return button {
-  min-height: 44px;
-  padding: 6px 5px;
-  font-size: 12px;
-}
-.adventure-return button[aria-pressed="true"] {
-  background: #374b33;
-  color: #ffe3a1;
-  border-color: #d8bc75;
-}
-.phone-game .phone-party,
 .phone-game .phone-memories {
   display: flex;
   flex-direction: column;
@@ -160,237 +73,18 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-.phone-party > *,
 .phone-memories > * {
   flex-shrink: 0;
 }
-.phone-party h3,
 .quest-summary h3 {
   font-size: 18px;
   font-weight: 500;
   color: #efdbac;
 }
-.phone-party small {
-  font-size: 12px;
-  line-height: 1.7;
-  color: #bacbad;
-}
-.phone-party p {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #c0cdb6;
-}
-.phone-party .recruit-link {
-  font-size: 12px;
-  min-height: 44px;
-  padding: 7px;
-}
-.squad-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.phone-game .squad-card {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  text-align: left;
-  padding: 12px;
-  background: #213b31;
-  border: 1px solid #5a7052;
-  color: #e7d9b6;
-  border-radius: 9px;
-}
-.squad-card > span:first-child {
-  min-width: 0;
-  flex: 1;
-}
-.squad-card b {
-  font-size: 14px;
-  font-weight: 500;
-  display: block;
-}
-.squad-card small {
-  display: block;
-  font-size: 11px;
-}
-.phone-game .squad-card[aria-pressed="true"] {
-  border-color: #d6ba70;
-  background: #344b36;
-  box-shadow: inset 3px 0 #d6ba70;
-}
-.squad-faces {
-  display: flex;
-  flex-shrink: 0;
-}
-.squad-faces .sprite {
-  margin-left: -7px;
-  flex-shrink: 0;
-}
-.party-editor {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  border-top: 1px solid #506649;
-  padding-top: 16px;
-}
-.party-editor .screen-heading {
-  min-height: 30px;
-}
-.party-editor .screen-heading > span {
-  font-size: 13px;
-  white-space: nowrap;
-  color: #d6d7b5;
-}
-.party-name {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 11px;
-  background: #1a332a;
-  border: 1px solid #506649;
-  border-radius: 8px;
-}
-.party-name > label {
-  font-size: 12px;
-  color: #d8c794;
-}
-.party-name > div {
-  display: flex;
-  gap: 8px;
-}
-.party-name input {
-  min-width: 0;
-  flex: 1;
-  height: 44px;
-  padding: 8px 11px;
-  border: 1px solid #68775d;
-  border-radius: 6px;
-  background: #102821;
-  color: #eee4c9;
-}
-.party-name input::placeholder {
-  color: #8fa192;
-}
-.party-name button {
-  min-height: 44px;
-  padding: 7px 12px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-.party-running {
-  padding: 12px;
-  background: #283e31;
-  border: 1px solid #72815a;
-  border-radius: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.party-running p {
-  width: 100%;
-}
-.party-running button {
-  font-size: 12px;
-  min-height: 44px;
-  flex: 1;
-  padding: 7px;
-}
-.roster-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-.roster-card {
-  border: 1px solid #516c51;
-  border-radius: 9px;
-  overflow: hidden;
-  background: #20392e;
-  min-width: 0;
-}
-.roster-card.picked {
-  border-color: #d8bd78;
-  background: #304834;
-}
-.phone-game .roster-pick {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border: 0;
-  border-radius: 0;
-  padding: 10px 5px 8px;
-  gap: 2px;
-  background: transparent;
-  color: #ecdbaf;
-  font-weight: 400;
-}
-.phone-game .roster-pick:hover:not(:disabled) {
-  background: #ffffff08;
-}
-.phone-game .roster-pick:disabled {
-  opacity: 0.75;
-}
-.roster-pick b {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.roster-pick small {
-  font-size: 11px;
-}
-.roster-stats {
-  font-size: 11px;
-  color: #c7d5bc;
-  white-space: nowrap;
-  margin-top: 5px;
-}
-.phone-game .roster-info {
-  min-height: 44px;
-  width: 100%;
-  border-radius: 0;
-  border: 0;
-  border-top: 1px solid #54654c;
-  font-size: 12px;
-  background: #162d2560;
-  color: #e5d1a0;
-  padding: 7px;
-}
-.party-save {
-  position: sticky;
-  bottom: -16px;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
-  background: #152c27f5;
-  border: 1px solid #687451;
-  border-radius: 8px;
-  box-shadow: 0 -4px 16px #0a171b30;
-}
-.party-save > span {
-  width: 100%;
-  font-size: 12px;
-  color: #ead29d;
-}
-.party-save button {
-  flex: 1;
-  min-height: 44px;
-  font-size: 13px;
-  padding: 7px;
-}
 .phone-memories .screen-heading button {
   min-height: 44px;
   font-size: 12px;
   padding: 8px;
-}
-.memory-nav-icon svg {
-  width: 21px;
-  height: 21px;
 }
 .unread-dot {
   position: absolute;
@@ -697,130 +391,12 @@ body:has(.art-viewer) [data-sonner-toaster] {
 .phone-game .phone-adventure .map-shell {
   min-height: 0;
 }
-.phone-game .phone-home {
-  min-height: 0;
-}
-.phone-brand > div {
-  min-width: 0;
-}
-.phone-brand h1 {
-  white-space: nowrap;
-}
 .phone-header .save-status {
   margin-left: 0;
 }
-.phone-game .journey-hint-button {
-  flex-shrink: 0;
-  min-height: 44px;
-  padding: 4px 7px;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 400;
-  background: #264035;
-  color: #e9d4a0;
-  border-color: #50624b;
-}
-.journey-hint-button > span {
-  position: relative;
-  display: flex;
-}
-.journey-hint-button .unread-dot {
-  right: -2px;
-  top: -4px;
-}
-.phone-game .adventure-toolbar {
-  min-height: 44px;
-  padding-block: 0;
-}
-.phone-game .adventure-destination {
-  padding-bottom: 6px;
-}
-.phone-game .adventure-return {
-  padding-block: 3px;
-}
 /* Only interactive map objects intercept a tap; scenery falls through to the map button. */
-.phone-game .map-tap-surface {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.phone-game .map-tap-surface:hover:not(:disabled) {
-  background: transparent;
-}
-.phone-game .map-tap-surface:focus-visible {
-  outline-offset: -4px;
-}
-.adventure-map .map-heading,
-.adventure-map .map-node,
-.adventure-map .route-line,
-.adventure-map .quest-guest,
-.adventure-map .map-caption {
+.adventure-map .map-heading {
   pointer-events: none;
-}
-.adventure-map .map-node .target {
-  pointer-events: auto;
-  min-width: 72px;
-  min-height: 72px;
-}
-.adventure-map .map-node.current {
-  z-index: 6;
-}
-.phone-game .hero-heal-target {
-  position: absolute;
-  inset: 0 -5px;
-  z-index: 1;
-  min-width: 64px;
-  min-height: 72px;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  pointer-events: auto;
-}
-.phone-game .hero-heal-target:hover:not(:disabled) {
-  background: #a4dbaa18;
-}
-.phone-game .hero-heal-target:disabled {
-  pointer-events: none;
-}
-.phone-game .hero-heal-target:active:not(:disabled) {
-  background: #a4dbaa35;
-}
-.phone-game .party-health {
-  min-height: 44px;
-  bottom: 8px;
-  font-weight: 400;
-  touch-action: manipulation;
-}
-.phone-game .party-health:disabled {
-  opacity: 1;
-}
-.phone-game .party-health:hover:not(:disabled) {
-  background: #284c39;
-}
-.phone-game .cheer-gauge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 32px;
-  padding: 5px 12px;
-}
-.phone-game .cheer-gauge > div:first-child {
-  flex-shrink: 0;
-  margin: 0;
-  font-size: 11px;
-}
-.phone-game .cheer-gauge > [data-slot="progress"] {
-  flex: 1;
-  min-width: 0;
 }
 .phone-game .journey-banter {
   min-height: 0;
@@ -845,24 +421,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   min-height: 34px;
 }
 @media (max-width: 360px) {
-  .phone-brand h1 {
-    font-size: 16px;
-    letter-spacing: 0;
-  }
-  .phone-brand {
-    gap: 6px;
-  }
-  .phone-brand > img {
-    width: 32px;
-    height: 32px;
-  }
-  .phone-game .journey-hint-button {
-    flex-direction: column;
-    font-size: 10px;
-    gap: 0;
-    min-width: 44px;
-    padding: 2px;
-  }
   .phone-header {
     padding-inline: 8px;
   }
@@ -882,12 +440,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   }
   .phone-game .phone-adventure .map-shell {
     flex: 1 0 220px;
-  }
-  .phone-game .phone-home {
-    overflow-y: auto;
-  }
-  .phone-game .phone-home .home-map {
-    min-height: 220px;
   }
 }
 
@@ -920,88 +472,6 @@ body {
   min-height: 52px;
   padding: 4px max(8px, env(safe-area-inset-right)) 4px max(8px, env(safe-area-inset-left));
   gap: 6px;
-}
-.phone-game .phone-header .phone-wallet {
-  min-width: 0;
-  flex: 1;
-  height: 44px;
-  min-height: 44px;
-  padding: 0 3px;
-  border: 0;
-  background: transparent;
-  justify-content: space-between;
-  gap: 4px;
-}
-.phone-header .phone-wallet > span {
-  gap: 3px;
-  font-size: 11px;
-}
-.phone-header .phone-wallet svg {
-  width: 12px;
-  height: 12px;
-  flex-shrink: 0;
-}
-.phone-game .journey-hint-button {
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
-  padding: 0;
-}
-.phone-game .journey-hint-button svg {
-  width: 20px;
-  height: 20px;
-}
-.phone-game .adventure-toolbar {
-  gap: 6px;
-}
-.phone-game .adventure-toolbar .return-button {
-  font-size: 12px;
-  min-height: 44px;
-  padding: 4px 10px;
-}
-.phone-game .adventure-destination {
-  min-height: 50px;
-}
-.phone-game .adventure-destination b {
-  font-size: 13px;
-}
-.phone-game .map-hero .party-health {
-  position: relative;
-  top: auto;
-  bottom: auto;
-  left: auto;
-  width: 66px;
-  max-width: none;
-  height: 24px;
-  min-height: 24px;
-  padding: 0 4px;
-  gap: 3px;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  pointer-events: auto;
-}
-.phone-game .map-hero .party-health > [data-slot="progress"] {
-  height: 4px;
-  box-shadow: 0 0 0 1px #132625b0;
-}
-.phone-game .map-hero .party-health:hover:not(:disabled) {
-  background: #234e3470;
-}
-.phone-game .map-hero .party-health:disabled {
-  pointer-events: none;
-}
-.phone-game .adventure-map .target-meter {
-  width: 54px;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  top: 95%;
-}
-.phone-game .adventure-map .target-meter > [data-slot="progress"] {
-  height: 4px;
-  margin: 0;
-  box-shadow: 0 0 0 1px #132625b0;
 }
 .start-screen {
   width: min(100%, 520px);
@@ -1039,16 +509,6 @@ body {
   .phone-game .phone-header {
     gap: 4px;
     padding-inline: 4px;
-  }
-  .phone-header .phone-wallet > span {
-    font-size: 10px;
-    gap: 2px;
-  }
-  .phone-header .phone-wallet svg {
-    width: 11px;
-  }
-  .phone-game .adventure-toolbar .return-button {
-    padding-inline: 7px;
   }
 }
 @media (max-height: 500px) {
@@ -1116,14 +576,6 @@ body {
 .quest-summary-title {
   font-size: 18px;
   color: #efdbac;
-}
-.quest-summary .quest-landscape {
-  display: block;
-  flex-shrink: 0;
-}
-.quest-summary .quest-opponent > span {
-  display: flex;
-  flex-direction: column;
 }
 .quest-option .quest-progress {
   color: #ffe29e;

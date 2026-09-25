@@ -1,151 +1,10 @@
-.phone-brand > img {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  flex-shrink: 0;
-}
-.journey-goal {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  width: 100%;
-  min-height: 58px;
-  flex-shrink: 0;
-  padding: 7px 14px;
-  text-align: left;
-  border: 0;
-  border-bottom: 1px solid #7a754c;
-  border-radius: 0;
-  background: linear-gradient(110deg, #334435, #25382e);
-  color: #f1dd9e;
-}
-.journey-goal > span {
-  min-width: 0;
-  animation: goal-arrives 0.35s ease-out;
-}
-.journey-goal small {
-  display: block;
-  font-size: 11px;
-  line-height: 1.4;
-  color: #bfcca9;
-}
-.journey-goal b {
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.journey-goal > svg {
-  flex-shrink: 0;
-}
-.journey-steps {
-  list-style: decimal;
-  padding-left: 22px;
-  display: grid;
-  gap: 10px;
-  color: #d5dbbd;
-  font-size: 14px;
-  line-height: 1.7;
-}
-.phone-game .icon-button,
-.phone-header .save-status,
-.phone-game .party-slots > .icon-button {
+.phone-header .save-status {
   width: 44px;
   height: 44px;
   min-width: 44px;
 }
-.phone-game .phone-wallet {
-  min-height: 44px;
-  height: 44px;
-}
-.phone-game .assist-actions > button,
-.phone-game .idle-map-note > button,
-.phone-game .quest-depart > .full,
-.phone-game .hero-pick,
-.phone-game .party-slots > button:last-child {
-  min-height: 44px;
-  height: auto;
-}
-.phone-game .preview-link,
-.phone-game .advice-link {
-  min-height: 44px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  align-items: center;
-  font-size: 13px;
-  padding: 5px 8px;
-  color: #efda98;
-}
-.phone-game .advice-link {
-  justify-content: flex-start;
-  padding-left: 0;
-}
-.phone-game .phone-hero-card,
-.phone-game .phone-quest-detail {
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  justify-content: flex-start;
-}
-.phone-game .phone-hero-card > *,
-.phone-game .phone-quest-detail > * {
-  flex-shrink: 0;
-}
-.phone-game .phone-hero-card {
-  gap: 9px;
-}
 .phone-game .phone-stat-row > span {
   font-size: 13px;
-}
-.phone-game .map-hero > .hero-name,
-.phone-game .target-meter > span,
-.phone-game .target-meter small {
-  font-size: 12px;
-}
-.party-comparison {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  background: #263c31;
-  border: 1px solid #5e7254;
-  border-radius: 9px;
-}
-.party-comparison > div {
-  display: grid;
-  grid-template-columns: 1fr 2fr 40px;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #d9ddb9;
-}
-.party-comparison b {
-  font-size: 18px;
-  color: #f3dca0;
-  text-align: center;
-}
-.party-comparison small {
-  text-align: right;
-}
-.return-goal {
-  border: 1px solid #8d8154;
-  border-radius: 10px;
-  background: #2b4032;
-  padding: 16px;
-  display: grid;
-  gap: 9px;
-}
-.return-goal > small {
-  color: #c9c694;
-}
-.return-goal h3 {
-  font-size: 18px;
-  color: #eddb9f;
-  line-height: 1.6;
 }
 .install-guide {
   display: grid;
@@ -167,67 +26,13 @@
 .phone-dialog .install-guide button {
   white-space: normal;
 }
-.phone-game .build-shortage {
-  color: #edce98;
-  font-size: 13px;
-  line-height: 1.7;
-}
-.phone-home .home-map {
-  animation: home-light 0.6s ease-out;
-}
-.phone-game .home-caption {
-  font-size: 12px;
-  line-height: 1.6;
-}
-.phone-game .home-bubble {
-  font-size: 12px;
-  max-width: 155px;
-}
 .phone-game :focus-visible {
   outline: 3px solid #f1d27b;
   outline-offset: 3px;
 }
-@keyframes goal-arrives {
-  from {
-    opacity: 0.3;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes home-light {
-  from {
-    filter: brightness(1.5);
-  }
-  to {
-    filter: brightness(1);
-  }
-}
 @media (max-height: 740px) {
   .phone-banter {
     display: none;
-  }
-  .phone-game .phone-companions,
-  .phone-game .phone-quests {
-    gap: 5px;
-    padding: 8px 10px;
-  }
-  .phone-game .phone-hero-title .sprite {
-    width: 60px !important;
-    height: 60px !important;
-  }
-  .phone-game .phone-hero-card {
-    padding: 10px;
-  }
-  .journey-goal {
-    min-height: 54px;
-    padding-block: 5px;
-  }
-  .phone-game .phone-quest-detail {
-    gap: 10px;
-    padding: 12px;
   }
 }
 @media (max-height: 570px) {
@@ -235,13 +40,8 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  .phone-game .phone-adventure,
-  .phone-game .phone-home {
+  .phone-game .phone-adventure {
     min-height: 380px;
-  }
-  .phone-game .phone-quests,
-  .phone-game .phone-companions {
-    min-height: 480px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

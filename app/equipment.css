@@ -39,19 +39,6 @@
 .phone-game.prologue-game .phone-adventure .map-heading {
   right: 116px;
 }
-.phone-game .adventure-toolbar {
-  height: 60px;
-  padding-right: 112px;
-}
-.phone-game .adventure-toolbar .squad-selector {
-  min-width: 0;
-  flex: 1;
-}
-.adventure-toolbar .squad-selector > span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .phone-game .phone-adventure {
   display: flex;
   flex-direction: column;
@@ -285,46 +272,12 @@
   color: #f0e5c6;
   font-weight: 400;
 }
-.character-equipment summary,
-.legacy-party > summary {
+.character-equipment summary {
   cursor: pointer;
   min-height: 44px;
   align-content: center;
   font-size: 16px;
   color: #dbc58a;
-}
-.equipment-choices {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 8px;
-}
-.phone-game .equipment-choice {
-  width: 100%;
-  justify-content: space-between;
-  gap: 10px;
-  text-align: left;
-  padding: 12px;
-  background: #2b4737;
-  border-color: #71845c;
-  color: #ecdfbd;
-  white-space: normal;
-}
-.equipment-choice > span {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.equipment-choice b {
-  font-size: 16px;
-  font-weight: 500;
-}
-.equipment-choice small {
-  font-size: 14px;
-  max-width: 95px;
-}
-.equipment-choice:disabled {
-  opacity: 0.65;
 }
 .equipment-comparison,
 .equipment-bonuses {
@@ -334,11 +287,6 @@
   font-size: 14px;
   line-height: 1.6;
   color: #c4d6ad;
-}
-.legacy-party {
-  margin-top: 20px;
-  border-top: 1px solid #78855b;
-  padding-top: 8px;
 }
 .bag-content {
   display: flex;
@@ -545,8 +493,7 @@
   border-color: #edce87;
   background: #3b5037;
 }
-.character-slot > svg,
-.equipment-choice > svg {
+.character-slot > svg {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
@@ -561,18 +508,8 @@
   margin-top: 8px;
   padding: 10px;
 }
-.character-panel .equipment-choice > span {
-  flex: 1;
-  min-width: 0;
-}
-.character-panel .equipment-choice {
-  flex-wrap: wrap;
-}
 .character-panel .equipment-comparison {
   flex-wrap: wrap;
-}
-.character-panel .equipment-choice small {
-  white-space: normal;
 }
 .character-skill > h3 {
   display: flex;
@@ -587,12 +524,6 @@
 .character-panel .character-skill > p {
   font-size: 13px;
 }
-.character-skill .shop-item h4,
-.character-innate {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 .technique-icon {
   width: 32px;
   height: 32px;
@@ -603,10 +534,6 @@
 }
 .technique-icon-passive {
   color: #a7d8b2;
-}
-.character-panel .technique-help {
-  font-size: 13px;
-  margin-top: 8px;
 }
 
 .character-slot > small {
