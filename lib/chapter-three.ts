@@ -125,7 +125,6 @@ export const chapterThreeQuests: Quest[] = definitions.map(
     xp: 180 + i * 15,
     herbs: 0,
     ore: 0,
-    unlock: 0,
     enemy: 8,
     enemyName: "街道のスライム",
     background: `/scenery/${scenery}-background.webp`,

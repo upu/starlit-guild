@@ -1,14 +1,6 @@
 import { validRoadScene } from "./road-scenes.ts";
-import { localId } from "./local-id.ts";
 import { z } from "zod";
-import {
-  heroes,
-  allQuests as quests,
-  migrate,
-  encounter,
-  initialPrologueState,
-  type State,
-} from "./game.ts";
+import { heroes, allQuests as quests, migrate, encounter, type State } from "./game.ts";
 import { stories } from "./stories.ts";
 import { isRecord } from "./external-input.ts";
 import { equipmentById, validInventory } from "./equipment.ts";
@@ -263,7 +255,6 @@ function validateState(s: ParsedState, ctx: z.RefinementCtx) {
 const stateBase = z.object({
   version: z.literal(4),
   autoNextQuest: z.boolean().optional(),
-  prologue: z.boolean().optional(),
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
   story: storySchema.optional(),
@@ -304,7 +295,6 @@ export type SaveBundle = {
   serial: number;
   sound: boolean;
   cloudAt: number;
-  legacyImported: boolean;
 };
 export const bundleSchema = z
   .object({
@@ -320,37 +310,12 @@ export const bundleSchema = z
     serial: count,
     sound: z.boolean(),
     cloudAt: n,
-    legacyImported: z.boolean(),
   })
   .refine(
     (b) =>
       new Set(b.profiles.map((p) => p.id)).size === b.profiles.length &&
       b.profiles.some((p) => p.id === b.active),
   );
-// The legacy mode is gone. Its records are dropped so the story records in the
-// same file still load, instead of the whole bundle failing validation.
-function storyProfile(profile: unknown) {
-  return isRecord(profile) && isRecord(profile.state) && profile.state.prologue === true;
-}
-function freshProfile() {
-  return {
-    id: localId(),
-    name: "新しい冒険",
-    test: false,
-    state: initialPrologueState(Date.now()),
-  };
-}
-function dropLegacyProfiles(raw: unknown): unknown {
-  if (!isRecord(raw) || !Array.isArray(raw.profiles)) return raw;
-  const profiles: unknown[] = raw.profiles;
-  const kept = profiles.filter(storyProfile);
-  if (kept.length === profiles.length) return raw;
-  if (!kept.length) kept.push(freshProfile());
-  const active = kept.some((p) => isRecord(p) && p.id === raw.active)
-    ? raw.active
-    : (kept[0] as { id: string }).id;
-  return { ...raw, profiles: kept, active };
-}
 function upgradeCurrentBundle(raw: unknown): unknown {
   if (!isRecord(raw) || raw.format !== 4 || !Array.isArray(raw.profiles)) return raw;
   const profiles: unknown[] = raw.profiles;
@@ -372,7 +337,7 @@ function upgradeCurrentBundle(raw: unknown): unknown {
   };
 }
 export function parseBundle(raw: unknown): SaveBundle {
-  const result = bundleSchema.safeParse(upgradeCurrentBundle(dropLegacyProfiles(raw)));
+  const result = bundleSchema.safeParse(upgradeCurrentBundle(raw));
   if (!result.success)
     throw Error("冒険の記録を読み取れません。STARLIT GUILD のセーブファイルを選んでください。");
   return result.data;

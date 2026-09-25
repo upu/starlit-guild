@@ -1,5 +1,5 @@
 import chapterStates from "./generated/chapter-test-states.json" with { type: "json" };
-import { initialPrologueState, level, type State } from "./game.ts";
+import { initialState, level, type State } from "./game.ts";
 import { storyStages } from "./prologue.ts";
 import { pendingInterlude } from "./interludes.ts";
 
@@ -32,7 +32,7 @@ export function testPresetState(preset: TestPreset, now: number): State {
   if (!config) throw Error("テスト用の開始条件を確認してください。");
   const state: State = config.completedChapter
     ? (structuredClone(chapterStates[config.completedChapter - 1].state) as State)
-    : initialPrologueState(now);
+    : initialState(now);
   if (!config.completedChapter) {
     state.gold = 1000000;
     for (const hero of state.owned) state.xp[hero] = 30 * 49 ** 2;

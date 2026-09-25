@@ -7,7 +7,7 @@ import sharp from "sharp";
 import { storyArt, storyArtAt } from "../lib/story-art.ts";
 import { optimizeStoryStills } from "../scripts/optimize-story-stills.mjs";
 import { stories, availableStories } from "../lib/stories.ts";
-import { initialPrologueState, act } from "../lib/game.ts";
+import { initialState, act } from "../lib/game.ts";
 import { nextStage } from "../lib/prologue.ts";
 
 test("every story illustration exists with its declared dimensions and a valid reveal point", async () => {
@@ -70,7 +70,7 @@ test("still pipeline rejects stale output and preserves the original PNG", async
 });
 
 test("the first departure has its illustration, and unknown scenes have none", () => {
-  const fresh = initialPrologueState(1000),
+  const fresh = initialState(1000),
     opening = nextStage(fresh).quest;
   const state = act(fresh, { type: "start", id: opening }, 1000);
   assert.ok(availableStories(state).some((st) => st.id === opening + "-departure"));

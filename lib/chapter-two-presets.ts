@@ -1,4 +1,4 @@
-import { initialPrologueState, completeStoryStages, act, type State } from "./game.ts";
+import { initialState, completeStoryStages, act, type State } from "./game.ts";
 import { prologueStages } from "./prologue.ts";
 
 export const chapterTwoPresets = [
@@ -21,7 +21,7 @@ export type ChapterTwoPreset = (typeof chapterTwoPresets)[number]["id"];
 export function chapterTwoPresetState(preset: ChapterTwoPreset, now: number): State {
   const config = chapterTwoPresets.find((item) => item.id === preset);
   if (!config) throw Error("テスト用の開始条件を確認してください。");
-  let state = initialPrologueState(now);
+  let state = initialState(now);
   state.gold = 1000;
   state.clears = prologueStages.length;
   completeStoryStages(state, prologueStages.length);

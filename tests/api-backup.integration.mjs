@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
+import { initialState, act, settle, testState } from "../lib/game.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { TRADE_QUEST } from "../lib/prologue.ts";
@@ -24,7 +24,7 @@ const normal = {
   id: crypto.randomUUID(),
   name: "Normal isolated API test",
   test: false,
-  state: initialPrologueState(Date.now()),
+  state: initialState(Date.now()),
 };
 const test = {
   id: crypto.randomUUID(),
@@ -45,7 +45,6 @@ let save = {
   serial: 2,
   sound: false,
   cloudAt: 0,
-  legacyImported: true,
 };
 const post = (cookie, body, origin = root) =>
   fetch(root + "/api/backup", {

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import { initialPrologueState, act, settle, testState, allQuests } from "../lib/game.ts";
+import { initialState, act, settle, testState, allQuests } from "../lib/game.ts";
 import {
   adventureFrame,
   adventureAssets,
@@ -10,8 +10,8 @@ import {
 } from "../lib/adventure-presentation.ts";
 import { rendererSession } from "../app/phaser/renderer-session.ts";
 import { nextStage } from "../lib/prologue.ts";
-const OPENING = nextStage(initialPrologueState(0)).quest;
-const begin = (s = initialPrologueState(1000)) =>
+const OPENING = nextStage(initialState(0)).quest;
+const begin = (s = initialState(1000)) =>
   act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
 const input = (state, extra = {}) => ({
   squad: state.squads[0],
@@ -67,7 +67,7 @@ test("canvas hit priority dispatches exactly one action and healing never hits t
       "help",
     );
   }
-  assert.equal(adventureAction(input(initialPrologueState(1000)), "help"), null);
+  assert.equal(adventureAction(input(initialState(1000)), "help"), null);
   for (const extra of [{ ready: false }, { paused: true }])
     for (const intent of ["help", "heal"])
       assert.equal(adventureAction(input(state, extra), intent), null);
@@ -84,7 +84,7 @@ test("renderer mount cancellation prevents late imports from creating an orphan 
   const loading = new Promise((r) => {
     resolve = r;
   });
-  const bridge = { read: () => input(initialPrologueState(1000)), act: () => {}, status: () => {} };
+  const bridge = { read: () => input(initialState(1000)), act: () => {}, status: () => {} };
   const session = rendererSession({}, bridge, () => loading);
   session.destroy();
   session.destroy();
@@ -97,7 +97,7 @@ test("renderer mount cancellation prevents late imports from creating an orphan 
 });
 
 test("renderer receives the latest state, resize and pause; cleanup blocks callbacks and destroys once", async () => {
-  let source = input(initialPrologueState(1000)),
+  let source = input(initialState(1000)),
     bridgeRef,
     destroyed = 0,
     actions = 0,
@@ -153,7 +153,7 @@ test("a failed renderer reports an error and a separate retry can start cleanly"
   console.error = () => {};
   try {
     const bridge = {
-      read: () => input(initialPrologueState(1000)),
+      read: () => input(initialState(1000)),
       act: () => {},
       status: (s) => statuses.push(s),
     };
@@ -185,7 +185,7 @@ test("renderer setup failure destroys the partially initialized instance", async
     const session = rendererSession(
       {},
       {
-        read: () => input(initialPrologueState(1000)),
+        read: () => input(initialState(1000)),
         act: () => {},
         status: (s) => statuses.push(s),
       },

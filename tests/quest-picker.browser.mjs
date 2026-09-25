@@ -16,8 +16,8 @@ const bundle = await build({
     contents: `
  import React,{useState} from 'react';import {createRoot} from 'react-dom/client';
  import {QuestPicker} from './app/quest-picker';import {SavePanel} from './app/save-panel';
- import {initialPrologueState,act} from './lib/game';import {storyStages} from './lib/prologue';
- const initial=initialPrologueState(1000);
+ import {initialState,act} from './lib/game';import {storyStages} from './lib/prologue';
+ const initial=initialState(1000);
  for(const {quest} of storyStages.slice(0,14)){initial.done[quest]=1;initial.story.completed.push(quest);initial.story.read.push(quest+'-return');}
  function App(){
   const [state,setState]=useState(initial),[selected,setSelected]=useState(storyStages[14].quest),[confirmed,setConfirmed]=useState('');

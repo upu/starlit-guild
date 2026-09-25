@@ -2,7 +2,7 @@
 import { localId } from "@/lib/local-id";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
-import { initialPrologueState, settle, type Rewards } from "@/lib/game";
+import { initialState, settle, type Rewards } from "@/lib/game";
 import { parseBundle, type Profile, type SaveBundle } from "@/lib/save-format";
 import { journeyNotice } from "@/lib/journey";
 import { sound, soundEvents } from "@/lib/sound";
@@ -25,7 +25,7 @@ export function newProfile(test = false, preset?: TestPreset): Profile {
         ? "テスト用の冒険"
         : "新しい冒険",
     test,
-    state: preset ? testPresetState(preset, Date.now()) : initialPrologueState(Date.now()),
+    state: preset ? testPresetState(preset, Date.now()) : initialState(Date.now()),
   };
 }
 export function freshBundle(): SaveBundle {
@@ -38,7 +38,6 @@ export function freshBundle(): SaveBundle {
     serial: 0,
     sound: true,
     cloudAt: 0,
-    legacyImported: false,
   };
 }
 function readableCloudCopies(data: BackupRead) {

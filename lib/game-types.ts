@@ -56,7 +56,6 @@ export type Squad = {
 export type State = {
   version: 4;
   autoNextQuest?: boolean;
-  prologue?: boolean;
   techniques?: Techniques;
   inventory?: Inventory;
   story?: StoryProgress;

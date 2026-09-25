@@ -212,7 +212,7 @@ function phoneNavigationActions(
     }
     context.setSheet(null);
     if (goal.questId) context.setQuest(goal.questId);
-    context.setView(goal.destination === "party" ? "companions" : goal.destination);
+    context.setView(goal.destination);
   };
   const navigate = (view: string) => {
     context.setSheet(null);
