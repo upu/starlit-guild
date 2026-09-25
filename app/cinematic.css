@@ -196,37 +196,8 @@
   background: linear-gradient(100deg, #142b28, #203b31);
   border-color: #72816050;
 }
-.phone-game .phone-header .phone-wallet {
-  max-width: 480px;
-  margin-right: auto;
-}
-.phone-game .phone-header .phone-wallet > span {
-  font-size: 14px;
-}
-.phone-game .adventure-toolbar {
-  background: #16312a;
-}
-.phone-game .adventure-destination {
-  background: #16312a;
-  border-color: #71805c70;
-}
-.phone-game .adventure-destination > button {
-  font-size: 14px;
-}
 .phone-game .phone-adventure .adventure-map {
   background: #294938;
-}
-.scene-backdrop {
-  position: absolute;
-  inset: -2%;
-  z-index: -1;
-  pointer-events: none;
-  background-size: cover;
-  background-position: center;
-  animation: landscape-drift 30s ease-in-out infinite alternate;
-}
-.phone-game .map-vignette {
-  background: linear-gradient(#082a24b8, transparent 30%, transparent 74%, #082a2470);
 }
 .phone-game .map-heading {
   top: 18px;
@@ -246,55 +217,9 @@
   color: #f0ecd1;
   line-height: 1.7;
 }
-.phone-game .phone-adventure .map-hero .sprite {
-  width: clamp(74px, 9cqw, 112px) !important;
-  height: clamp(74px, 9cqw, 112px) !important;
-  transform-origin: 50% 88%;
-}
 .phone-game .phone-adventure .target .sprite {
   width: clamp(82px, 10cqw, 124px) !important;
   height: clamp(82px, 10cqw, 124px) !important;
-}
-.phone-game .adventure-map[data-phase="idle"] .map-hero .sprite {
-  width: clamp(100px, 18cqw, 190px) !important;
-  height: clamp(100px, 18cqw, 190px) !important;
-  animation: companion-idle 4s ease-in-out var(--delay) infinite;
-}
-.phone-game .adventure-map[data-phase="idle"] .map-hero {
-  animation: panel-reveal 0.65s ease-out both;
-}
-.phone-game .adventure-map .route-line {
-  opacity: 0.7;
-}
-.phone-game .adventure-map[data-phase="move"] .route-line polyline {
-  animation: route-flow 2s linear infinite;
-}
-.phone-game .idle-map-note {
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  min-height: 68px;
-  padding: 12px 14px;
-  gap: 12px;
-  background: #112e27ed;
-  border: 1px solid #e2c37d85;
-  box-shadow: 0 10px 26px #08251f44;
-  border-radius: 9px;
-  backdrop-filter: blur(8px);
-}
-.phone-game .idle-map-note > span {
-  font-size: 14px;
-  line-height: 1.6;
-}
-.phone-game .idle-map-note > button {
-  height: auto;
-  min-height: 48px;
-  font-size: 15px;
-  padding: 10px 20px;
-  flex-shrink: 0;
-  background: linear-gradient(120deg, #e8cb83, #f2dba0);
-  color: #243b2e;
-  box-shadow: 0 0 22px #efd08b24;
 }
 .map-journey {
   position: absolute;
@@ -333,16 +258,6 @@
   background: #dec17a;
   border-radius: 4px;
 }
-.phone-game .cheer-gauge {
-  height: 38px;
-  padding: 6px 18px;
-  background: linear-gradient(90deg, #18362d, #34432d);
-  border-color: #baab6a70;
-}
-.phone-game .cheer-gauge > div:first-child,
-.phone-game .cheer-gauge b {
-  font-size: 12px;
-}
 .phone-game .journey-banter {
   display: flex;
   flex-direction: row;
@@ -353,20 +268,6 @@
   overflow: hidden;
   background: linear-gradient(110deg, #203c32, #132d29);
   border-top: 1px solid #beac7260;
-}
-.banter-portrait {
-  width: 62px;
-  align-self: center;
-  flex-shrink: 0;
-  overflow: hidden;
-  border-radius: 50%;
-  background: radial-gradient(circle, #617c4c, #213d30 70%);
-  border: 1px solid #b3a66c70;
-}
-.banter-portrait > .sprite {
-  width: 62px !important;
-  height: 62px !important;
-  transform: scale(1.25) translateY(5px);
 }
 .banter-copy {
   display: flex;
@@ -388,157 +289,13 @@
 .phone-game .banter-line > span {
   -webkit-line-clamp: 1;
 }
-.banter-chevron {
-  flex-shrink: 0;
-  color: #d5be83;
-}
 .phone-screen > [data-state="active"] {
   animation: panel-reveal 0.3s ease-out;
 }
 
-/* Character cards use the existing high-resolution atlas, not new character art. */
-.phone-game .phone-party,
 .phone-game .phone-memories {
   padding: 22px 18px;
   background: radial-gradient(ellipse at 10% 0, #31514080, transparent 55%), #112b26;
-}
-.phone-game .roster-grid {
-  gap: 14px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.phone-game .roster-card {
-  border: 1px solid #71826190;
-  border-radius: 12px;
-  background: #1a352c;
-  transition:
-    transform 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-.phone-game .roster-card.picked {
-  border-color: #dbc181;
-  box-shadow:
-    inset 0 0 0 1px #dbc18140,
-    0 5px 20px #071b1830;
-}
-.phone-game .roster-pick {
-  padding: 0 0 12px;
-  gap: 5px;
-}
-.phone-game .roster-art {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: clamp(145px, 24vw, 215px);
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 75%, #b6c48b47, transparent 70%),
-    linear-gradient(160deg, #345c47, #172d29);
-}
-.phone-game .roster-art > .sprite {
-  width: clamp(136px, 23vw, 196px) !important;
-  height: clamp(136px, 23vw, 196px) !important;
-  transition: transform 0.35s;
-  filter: drop-shadow(0 10px 8px #071a1c70);
-}
-.phone-game .roster-card:nth-child(2n) .roster-art {
-  background:
-    radial-gradient(ellipse at 50% 75%, #d6b56b44, transparent 70%),
-    linear-gradient(160deg, #4a5041, #1b302e);
-}
-.roster-level {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  font-size: 12px;
-  color: #ffebae;
-  background: #142d26d9;
-  border: 1px solid #9d9f6c70;
-  border-radius: 5px;
-  padding: 3px 7px;
-}
-.phone-game .roster-job {
-  font-size: 12px;
-  color: #d0cbaa;
-  margin: 7px 6px 0;
-  line-height: 1.6;
-}
-.phone-game .roster-pick > b {
-  font-size: 21px;
-  color: #f2dfb2;
-}
-.phone-game .roster-pick > small {
-  font-size: 12px;
-}
-.phone-game .roster-stats {
-  font-size: 12px;
-  white-space: normal;
-}
-.phone-game .roster-info {
-  font-size: 14px;
-  border-color: #72805b60;
-}
-.phone-game .roster-pick:disabled {
-  opacity: 1;
-  color: #c6cebc;
-}
-.phone-game .roster-pick:disabled > small {
-  color: #bdc7b6;
-}
-@media (hover: hover) {
-  .phone-game .roster-card:has(.roster-pick:not(:disabled)):hover {
-    transform: translateY(-3px);
-    border-color: #e6cf93;
-  }
-  .roster-pick:not(:disabled):hover .sprite {
-    transform: translateY(-4px) scale(1.045);
-  }
-}
-
-.phone-game .phone-home {
-  padding: 0;
-  gap: 0;
-  background: #102923;
-}
-.phone-game .phone-home > .screen-heading {
-  padding: 12px 20px;
-}
-.phone-game .phone-home .home-map {
-  border: 0;
-  border-radius: 0;
-  background: #244737;
-  container-type: inline-size;
-}
-.phone-game .phone-home .home-hero .sprite {
-  width: clamp(68px, 9cqw, 112px) !important;
-  height: clamp(68px, 9cqw, 112px) !important;
-}
-.phone-game .phone-home .home-menu {
-  padding: 10px 16px;
-  border-top: 1px solid #9a945c70;
-}
-.phone-game .phone-home .home-title {
-  left: 20px;
-  right: auto;
-  max-width: calc(100% - 40px);
-  bottom: 102px;
-  background: transparent;
-  padding: 0;
-  text-shadow: 0 2px 8px #10271e;
-}
-.phone-game .phone-home .home-title h2 {
-  font-size: clamp(24px, 3.2vw, 34px);
-  color: #fff0c4;
-}
-.phone-game .phone-home .home-conversation {
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  border-radius: 9px;
-  background: #102e27eb;
-  backdrop-filter: blur(8px);
 }
 .still-gallery button {
   position: relative;
@@ -578,29 +335,6 @@
 .story-reader > .story-still + div {
   animation: dialogue-in 0.35s ease-out;
 }
-
-@keyframes landscape-drift {
-  from {
-    transform: scale(1.01) translateX(-0.5%);
-  }
-  to {
-    transform: scale(1.04) translateX(0.5%);
-  }
-}
-@keyframes companion-idle {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-1deg);
-  }
-  50% {
-    transform: translateY(-5px) rotate(1deg);
-  }
-}
-@keyframes route-flow {
-  to {
-    stroke-dashoffset: -4.8;
-  }
-}
 @keyframes dialogue-in {
   from {
     opacity: 0;
@@ -623,26 +357,10 @@
     min-height: 62px;
     padding-inline: 24px;
   }
-  .phone-game .phone-header .phone-wallet {
-    max-width: 510px;
-  }
   .phone-game .phone-adventure {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto minmax(0, 1fr) auto;
-  }
-  .phone-game .adventure-toolbar {
-    padding: 10px 22px;
-    min-height: 62px;
-    border-bottom: 1px solid #71805c70;
-  }
-  .phone-game .adventure-destination {
-    padding: 8px 22px;
-    gap: 16px;
-    min-height: 62px;
-  }
-  .phone-game .adventure-destination b {
-    font-size: 16px;
   }
   .phone-game .phone-adventure .map-shell,
   .phone-game .journey-banter,
@@ -662,13 +380,6 @@
   .phone-game .map-heading > span:last-of-type {
     font-size: 14px;
   }
-  .phone-game .idle-map-note {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    width: min(540px, 90%);
-    bottom: 24px;
-  }
   .phone-game .journey-banter {
     padding: 12px 28px;
     min-height: 94px;
@@ -676,72 +387,17 @@
   .phone-game .banter-line > span {
     -webkit-line-clamp: 2;
   }
-  .phone-game .phone-party,
   .phone-game .phone-memories {
     padding: 28px clamp(24px, 5vw, 64px);
-  }
-  .phone-game .roster-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-  .phone-game .roster-grid:has(> .roster-card:last-child:nth-child(2)) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 660px;
-    width: 100%;
-    align-self: center;
-  }
-  .phone-game .squad-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .phone-game .still-gallery {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .phone-game .phone-home > .screen-heading {
-    padding: 16px 26px;
-  }
-  .phone-game .phone-home .home-menu {
-    padding-inline: 26px;
-  }
-}
-@media (min-width: 1100px) {
-  .phone-game .roster-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 @media (max-width: 380px) {
-  .phone-game .phone-header .phone-wallet > span {
-    font-size: 12px;
-  }
-  .phone-game .idle-map-note {
-    left: 12px;
-    right: 12px;
-    padding: 8px;
-    gap: 8px;
-  }
-  .phone-game .idle-map-note > button {
-    padding-inline: 12px;
-    font-size: 14px;
-  }
-  .phone-game .idle-map-note > span {
-    font-size: 12px;
-  }
   .phone-game .journey-banter {
     gap: 8px;
     padding: 8px 10px;
-  }
-  .banter-portrait {
-    width: 48px;
-  }
-  .banter-portrait > .sprite {
-    width: 48px !important;
-    height: 48px !important;
-  }
-  .phone-game .roster-grid {
-    gap: 10px;
-  }
-  .phone-game .roster-job {
-    font-size: 12px;
   }
 }
 @media (max-height: 700px) {
@@ -753,20 +409,11 @@
   .phone-game .banter-line > span {
     -webkit-line-clamp: 1;
   }
-  .phone-game .adventure-map[data-phase="idle"] .map-hero .sprite {
-    width: 100px !important;
-    height: 100px !important;
-  }
   .phone-game .map-heading {
     top: 12px;
   }
   .phone-game .map-heading .eyebrow {
     display: none;
-  }
-  .phone-game .idle-map-note {
-    bottom: 12px;
-    min-height: 56px;
-    padding-block: 6px;
   }
 }
 @media (max-height: 500px) {
@@ -788,14 +435,10 @@
   .phone-game .phone-adventure .map-shell {
     flex: 1 0 320px;
   }
-  .phone-game .phone-home .home-map {
-    min-height: 280px;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .start-screen *,
   .scene-atmosphere *,
-  .scene-backdrop,
   .phone-game *,
   .story-reader *,
   .quest-picker * {

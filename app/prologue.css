@@ -29,16 +29,6 @@
   flex: 1;
   text-align: left;
 }
-.phone-game .adventure-destination > .quest-control {
-  position: relative;
-  flex: 0 0 auto;
-  z-index: 20;
-}
-.phone-game .quest-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 .phone-game .departure-button {
   min-height: 44px;
   min-width: 68px;
@@ -107,24 +97,11 @@
 .quest-tutorial-departure:before {
   right: 21px;
 }
-.phone-game .adventure-destination .quest-tutorial b {
-  font-size: 14px;
-  color: inherit;
-  line-height: inherit;
-  white-space: normal;
-}
 .phone-game .adventure-actions .quest-tutorial b {
   font-size: 14px;
   color: inherit;
   line-height: inherit;
   white-space: normal;
-}
-.prologue-game .adventure-destination {
-  padding-top: 8px;
-}
-.prologue-game .adventure-destination b {
-  white-space: normal;
-  line-height: 1.6;
 }
 .phone-game .journey-banter,
 .phone-game .journey-banter:hover:not(:disabled),
@@ -138,11 +115,6 @@
 .phone-game .journey-banter:focus-visible {
   outline: 2px solid #a7c7b5;
   outline-offset: -3px;
-}
-@media (max-height: 600px) {
-  .prologue-game .adventure-destination {
-    padding-block: 4px;
-  }
 }
 .phone-dialog.quest-completion {
   padding: 12px;
@@ -197,28 +169,8 @@
   padding: 6px;
   gap: 14px;
 }
-.banter-portrait {
-  display: flex;
-  aspect-ratio: 1;
-  border: 0;
-  background: none;
-}
-.phone-game .banter-portrait {
-  width: 72px;
-}
 .phone-game .journey-banter {
   min-height: 88px;
-}
-.banter-portrait > .face-portrait {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 1;
-  border-radius: 50%;
-}
-@media (max-width: 380px), (max-height: 700px) {
-  .phone-game .banter-portrait {
-    width: 64px;
-  }
 }
 @media (max-height: 700px) {
   .phone-game .journey-banter {
