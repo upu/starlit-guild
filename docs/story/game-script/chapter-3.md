@@ -1,15 +1,28 @@
-# 第三章の会話（レビュー用）
+# 第三章のゲーム内台本
 
 > 自動生成ファイルです。手で編集せず、`npm run script:export` で更新してください。
 
-本編の幕間と各ステージの出発前・達成後を、物語順に収録します。
+各ステージの出発前・道中の掛け合い・達成後を、遊ぶ順に収録しています。幕間は解放される位置に置いています。
+
+- [幕間 私が用意するお昼](#interlude-walnut-lunch)
+- [3-1 隣の席の聞き上手](#stage-3-1)
+- [3-2 石を敷いた街](#stage-3-2)
+- [3-3 抜けた石の行き先](#stage-3-3)
+- [3-4 庭を照らす買い物](#stage-3-4)
+- [3-5 同じ灯りを探して](#stage-3-5)
+- [3-6 四人で下見](#stage-3-6)
+- [3-7 灯りのお披露目](#stage-3-7)
+- [3-8 間違った荷物を戻す夜](#stage-3-8)
+- [3-9 戻る灯り、増える同行者](#stage-3-9)
+
+<a id="interlude-walnut-lunch"></a>
 
 ## 幕間：私が用意するお昼
 
 シーンID：`interlude-walnut-lunch`
 場所：休みの日の丘
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("interlude", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `LUNCH_INTERLUDE`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("interlude", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `LUNCH_INTERLUDE`
 
 アリアが布を広げ、包みからパンと小さな焼き菓子を並べた。レオンは隣に腰を下ろす。
 
@@ -75,13 +88,17 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 アリア：それ、楽しみにしてる。
 
-## 3-1 出発前：あの丘の塔、あんたらか
+<a id="stage-3-1"></a>
+
+## 3-1 隣の席の聞き上手
+
+### 出発前：あの丘の塔、あんたらか
 
 シーンID：`berne-road-departure`
 場所：往診へ向かう街道の食堂
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
-スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/finn-at-breakfast.webp`）
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/finn-at-breakfast.webp`）
 
 次の往診の日の朝。三人は、リンデから石畳の街ベルネへ向かう途中の食堂で荷を下ろした。
 
@@ -139,12 +156,77 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 アリア：案内してもらう前に、貸しができちゃったね。
 
-## 3-1 達成後：その紙はどこから
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["berne-road"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+フィン：門が見えたら、左の荷車道へ入ろう。
+
+アリア：左ね。あの木の方？
+
+レオン：木は右だ。道しるべを見てから曲がろう。
+
+#### 移動：地点4、5、6、13、14、15
+
+ミラ：薬の包み、重くないかしら。
+
+フィン：平気平気。先生は次の往診先を教えてくれ。
+
+レオン：俺も持ちます。揺らさないように行きましょう。
+
+#### 移動：地点7〜9
+
+アリア：フィンは、塔の灯りが明るかった頃も知ってる？
+
+フィン：おう。門を閉めるまで、荷車が通ってた。最近は皆、帰りを急いでるね。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：その紙はどこから
 
 シーンID：`berne-road-return`
 場所：街を見下ろす道の休憩所
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-1", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 街の塔が見えた。フィンは休憩所の縁へ腰を下ろし、外套から折り畳んだ紙を出した。
 
@@ -174,12 +256,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 レオン：返す相手も、あとで教えてください。
 
-## 3-2 出発前：足元の灯り
+<a id="stage-3-2"></a>
+
+## 3-2 石を敷いた街
+
+### 出発前：足元の灯り
 
 シーンID：`berne-house-calls-departure`
 場所：街の門から往診先へ続く通り
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 街へ入ると、壁や石畳が淡く光っていた。門のすぐ先だけ、新しい土がむき出しになっている。
 
@@ -203,12 +289,75 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィン：時と場合によるねえ。
 
-## 3-2 達成後：二年前に買った石
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["berne-house-calls"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+ミラ：次のお家は、この角を曲がったところね。
+
+フィン：あの青い戸だ。段差があるから、包みは俺が先に持ってくよ。
+
+#### 移動：地点4、5、6、13、14、15
+
+アリア：ここだけ、石の色が違うね。
+
+レオン：新しく埋めた跡かもしれない。踏む前に確かめよう。
+
+#### 移動：地点7〜9
+
+フィン：ミラ先生、湯はここに置くぞ。
+
+ミラ：ありがとう。あら、隣のお宅にも顔を出せそうね。
+
+フィン：その前に一口飲もうや。湯が冷めちまう。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：二年前に買った石
 
 シーンID：`berne-house-calls-return`
 場所：往診先の家の軒下
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-2", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 診察を終えたミラが薬を渡す間、アリアは軒先の小さな石を見上げた。灯りは通りの石と同じ色をしている。
 
@@ -258,12 +407,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィンは控えの端を見つめ、手元の紙を外套へしまった。
 
-## 3-3 出発前：図面の外へ続く線
+<a id="stage-3-3"></a>
+
+## 3-3 抜けた石の行き先
+
+### 出発前：図面の外へ続く線
 
 シーンID：`missing-keystone-departure`
 場所：塔の足元の点検場
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌朝、管理人と石工は、古い図面と、取り外した石の控えを並べていた。塔の中の点検では原因が見つからなかったという。
 
@@ -289,12 +442,77 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィンは少し笑い、紙を図面の横へ置いた。
 
-## 3-3 達成後：それも、俺の口利きだ
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["missing-keystone"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+アリア：根っこ、溝の奥まで入ってる。
+
+レオン：引っ張ると石まで動く。先に土を払おう。
+
+#### 移動：地点4、5、6、13、14、15
+
+フィン：控えなら、こっちにも一枚ある。
+
+レオン：どこから持ってきた紙ですか？
+
+フィン：石工に借りた分だよ。今度のは、ちゃんと。
+
+#### 移動：地点7〜9
+
+ミラ：こちらから灯りを当てるわね。
+
+アリア：見えた。図の線と、ここがつながってる。
+
+フィン：おう、印を頼む。俺には似た溝ばかりに見える。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：それも、俺の口利きだ
 
 シーンID：`missing-keystone-return`
 場所：外された石段の跡
-本文の編集元：[lib/chapter-three-opening-stories.ts](../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-opening-stories.ts](../../../lib/chapter-three-opening-stories.ts)（`scene("3-3", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 石工が地面を露出させると、塔から伸びる石組みが、一つの空所で途切れていた。区画図の線もそこへ集まっている。
 
@@ -332,12 +550,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 アリア：なら、まず見に行こう。本当にその石なのか、確かめなきゃ。
 
-## 3-4 出発前：待っていてくれた人
+<a id="stage-3-4"></a>
+
+## 3-4 庭を照らす買い物
+
+### 出発前：待っていてくれた人
 
 シーンID：`riverside-manor-departure`
 場所：川向こうの屋敷の勝手口
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 その日の午後、四人は川向こうの屋敷を訪ねた。フィンが勝手口の戸を叩く。
 
@@ -367,12 +589,73 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 アリア：手伝う話になったんだよ。
 
-## 3-4 達成後：買ったのは、光る石
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["riverside-manor"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+フィン：厨房はこっち。戸を開けるから、荷を頼む。
+
+レオン：ありがとうございます。敷居を越えますよ。
+
+#### 移動：地点4、5、6、13、14、15
+
+アリア：この鉢、葉っぱで前が見えない。
+
+レオン：右に一歩。そこで止まって、俺が台を寄せる。
+
+#### 移動：地点7〜9
+
+ミラ：荷札は、こちら向きでいいのかしら。
+
+フィン：おう。受け取る人に見せよう。中身を聞かれても困るしね。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：買ったのは、光る石
 
 シーンID：`riverside-manor-return`
 場所：屋敷の庭の展示台
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-4", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 荷を運び終えた四人の前で、庭師が展示台の布を外した。淡い光の下に、三本の溝が見える。
 
@@ -418,12 +701,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 レオンは展示台の寸法を書き留めた。アリアは石の光を、小さな白い布に映して見比べる。
 
-## 3-5 出発前：持ち出していい石
+<a id="stage-3-5"></a>
+
+## 3-5 同じ灯りを探して
+
+### 出発前：持ち出していい石
 
 シーンID：`matching-lantern-stone-departure`
 場所：街の石工の資材置き場
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌朝、石工は、建て替えた家の中庭から保管していた石を見せてくれた。塔へ続く石組みとは離れていた物だという。
 
@@ -461,12 +748,75 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 ミラ：あと一人だけ。すぐ戻るわ。
 
-## 3-5 達成後：光をためる時間
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["matching-lantern-stone"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+レオン：この石は、持ち出してよい印がありますね。
+
+フィン：あるある。そこは、ちゃんと確かめてもらおう。
+
+#### 移動：地点4、5、6、13、14、15
+
+アリア：同じ色でも、布をかけると違って見えるね。
+
+ミラ：同じ厚さの布で比べましょう。こちらを使って。
+
+#### 移動：地点7〜9
+
+フィン：大きさは、これで足りるかい？
+
+レオン：幅は合っています。厚みも測ってからにしましょう。
+
+アリア：記録の方、私が押さえてるね。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：光をためる時間
 
 シーンID：`matching-lantern-stone-return`
 場所：資材置き場の暗い物置
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-5", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 候補をより分けるうち、明るい石から先に脇へ戻された。フィンが残った石をのぞき込む。
 
@@ -510,12 +860,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 レオンは火鉢へやかんを掛け、アリアがカップを集めた。フィンが四人分の椅子を寄せる。薬の包みは、お茶が済むまで机の端に残った。
 
-## 3-6 出発前：普通の顔で
+<a id="stage-3-6"></a>
+
+## 3-6 四人で下見
+
+### 出発前：普通の顔で
 
 シーンID：`manor-survey-departure`
 場所：屋敷へ戻る道
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 午後、四人は下見のためにもう一度川を渡った。フィンは昨日の帰りに橋の宿から引き取った鍋を提げている。レオンの背には、道具の詰まった袋がある。
 
@@ -549,12 +903,77 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 料理人は鍋磨きの布をフィンの胸へ押しつけ、厨房へ戻っていった。
 
-## 3-6 達成後：鍵は返してください
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["manor-survey"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+アリア：フィン、その鍋、ぶつけないでね。
+
+フィン：分かってるって。借りるときより丁寧に運んでるよ。
+
+レオン：借りるときも丁寧にしてください。
+
+#### 移動：地点4、5、6、13、14、15
+
+ミラ：この布は、どちらへ畳めばいいの？
+
+フィン：端を内側へ。ほどく人の手が引っかからないようにな。
+
+#### 移動：地点7〜9
+
+レオン：出口から、作業場の戸が見えますね。
+
+アリア：あの植え込みを通るんだね。覚えた。
+
+レオン：似た形があるから、通路の札も見ておこう。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：鍵は返してください
 
 シーンID：`manor-survey-return`
 場所：屋敷の裏庭
-本文の編集元：[lib/chapter-three-preparation-stories.ts](../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-preparation-stories.ts](../../../lib/chapter-three-preparation-stories.ts)（`scene("3-6", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 庭師は鉢を運びながら、展示台は灯りを披露する直前まで開けないと話した。手伝いを終え、四人は裏庭へ集まる。
 
@@ -590,12 +1009,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィン：そこは、まかせとけって。
 
-## 3-7 出発前：右に曲がった、その先
+<a id="stage-3-7"></a>
+
+## 3-7 灯りのお披露目
+
+### 出発前：右に曲がった、その先
 
 シーンID：`garden-reception-departure`
 場所：客を迎える前の屋敷の庭
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 翌日の夕方。借りた手押し車には、鉢と布に包んだ石が載っていた。料理人に頼まれた荷と一緒に、四人は裏庭へ入る。
 
@@ -633,12 +1056,73 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィン：よし。おじさんは、後ろから押す役に戻っていいか？
 
-## 3-7 達成後：予定と違う手
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["garden-reception"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+アリア：この先は鉢の跡が続いてる。今度は札も合ってるよ。
+
+レオン：ああ。荷車が通れる幅もある。進もう。
+
+#### 移動：地点4、5、6、13、14、15
+
+フィン：荷物が減ると、レオンくんの足も軽いねえ。
+
+レオン：予備は厨房にあります。必要になったら、そこへ戻ります。
+
+#### 移動：地点7〜9
+
+ミラ：包みの結び目、ほどけていないわ。
+
+フィン：助かる。客が来る前に、こっちを片付けようか。
+
+#### 休憩：地点1〜3
+
+ミラ：ここで少し休みましょう。水も飲んでね。
+
+フィン：助かるねえ。ミラ先生も座りなよ、ここ空いてる。
+
+#### 休憩：地点4〜6
+
+レオン：荷は木陰へ寄せました。少し休みましょう。
+
+アリア：お菓子も出すね。フィン、一つずつだよ。
+
+フィン：まだ手も出してないんだがねえ。
+
+#### 休憩：地点7〜9
+
+フィン：急がば休め、ってね。
+
+ミラ：手当てが要る方はいない？
+
+レオン：ミラさんも、一緒に休んでください。
+
+#### 休憩：地点10〜12
+
+アリア：ひと休みしよう。お茶、まだ温かいよ。
+
+フィン：こりゃいい。先生、一番に飲みなよ。
+
+ミラ：ありがとう。……では、遠慮なく。
+
+#### 休憩：地点13〜15
+
+レオン：少し座りましょう。荷の紐も締め直します。
+
+フィン：レオンくんの荷、朝より増えてないか？
+
+レオン：増えていません。念のためです。
+
+### 達成後：予定と違う手
 
 シーンID：`garden-reception-return`
 場所：展示台の裏の作業場
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-7", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 作業場から、展示台と出口の門が見えた。アリアは戻る角へ、小さな目印の紐を結ぶ。
 
@@ -678,13 +1162,17 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィンは布を手押し車の縁へ掛けた。石の包みが、鉢の影に隠れた。
 
-## 3-8 出発前：まだ、手は動く
+<a id="stage-3-8"></a>
+
+## 3-8 間違った荷物を戻す夜
+
+### 出発前：まだ、手は動く
 
 シーンID：`keystone-night-road-departure`
 場所：覆いが開く直前の展示台
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
-スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/mira-tends-finn.webp`）
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/mira-tends-finn.webp`）
 
 鉢を持ち上げた拍子に、台の脚が敷布を噛んだ。フィンが手を差し入れ、布を抜く。袖口から、赤い筋がにじんだ。
 
@@ -748,12 +1236,53 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 レオン：橋まで運んで。ここは俺が止める。
 
-## 3-8 達成後：橋のたもとで
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["keystone-night-road"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+レオン：荷車を止めよう。斜面に魔物がいる。
+
+アリア：私もこっちから射つ。荷物には近づけさせない。
+
+フィン：おう。片付いたら、また押そう。
+
+#### 移動：地点4、5、6、13、14、15
+
+ミラ：フィンさん、その手、痛むでしょう。
+
+フィン：橋まで行ったら見せるよ。今はこいつを転がしちまおう。
+
+ミラ：血がにじんだら、すぐ止まってね。
+
+#### 移動：地点7〜9
+
+アリア：橋の欄干が見えた！
+
+レオン：最後の坂だ。車輪の横へ回る。
+
+フィン：まかせとけって。石も先生も、ちゃんと連れてく。
+
+#### 休憩：地点1、2、3、7、8、9、13、14、15
+
+ミラ：手を見せて。包帯を替えたら、お茶にしましょう。
+
+フィン：ミラ先生の分も出しとくよ。今度は一緒に座ってくれ。
+
+#### 休憩：地点4、5、6、10、11、12
+
+フィン：かすり傷だって。そんな顔しなさんな。
+
+ミラ：言葉より、この包帯を見ているの。こちらへ手を出して。
+
+### 達成後：橋のたもとで
 
 シーンID：`keystone-night-road-return`
 場所：夜の街道の橋
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-8", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 橋のたもとで手押し車を止めた。最後の坂で魔物を食い止めていたレオンが、少し遅れて追いつく。
 
@@ -781,12 +1310,16 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 ミラ：この道も、落ち着いて往診に通れるようになるといいわね。
 
-## 3-9 出発前：もとの場所へ
+<a id="stage-3-9"></a>
+
+## 3-9 戻る灯り、増える同行者
+
+### 出発前：もとの場所へ
 
 シーンID：`berne-restoration-departure`
 場所：塔へ続く古い石組み
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "departure", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "departure", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
 
 朝、管理人と石工が作業の支度を整えて待っていた。通りの人たちは柵を運び、石を戻す場所を空けている。
 
@@ -822,13 +1355,52 @@ IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogu
 
 フィン：分かった、分かった。道を空ける仕事なら得意だ。
 
-## 3-9 達成後：次の話も、全部とは限らない
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-three-banter.ts](../../../lib/chapter-three-banter.ts)（`chapterThreeBanter() / routes["berne-restoration"]`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1、2、3、10、11、12
+
+フィン：こちら、お通りくださーい。足元の紐をまたいでな。
+
+ミラ：その手で柵まで持ち上げないでね。
+
+フィン：おう。今日は声を張る役だ。
+
+#### 移動：地点4、5、6、13、14、15
+
+アリア：この根をよければ、溝の向きが見えるよ。
+
+レオン：土を受ける。石は、石工さんに確かめてもらおう。
+
+#### 移動：地点7〜9
+
+フィン：ミラ先生、お茶の約束、覚えてるかい。
+
+ミラ：ええ。こちらの方の手当てが済んだら……。
+
+フィン：なら、湯を頼んどくよ。四人分な。
+
+#### 休憩：地点1、2、3、7、8、9、13、14、15
+
+ミラ：手を見せて。包帯を替えたら、お茶にしましょう。
+
+フィン：ミラ先生の分も出しとくよ。今度は一緒に座ってくれ。
+
+#### 休憩：地点4、5、6、10、11、12
+
+フィン：かすり傷だって。そんな顔しなさんな。
+
+ミラ：言葉より、この包帯を見ているの。こちらへ手を出して。
+
+### 達成後：次の話も、全部とは限らない
 
 シーンID：`berne-restoration-return`
 場所：灯りの戻る街の食堂
-本文の編集元：[lib/chapter-three-finale-stories.ts](../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "return", …)`）
-IDの接続元：[lib/chapter-three-dialogue.ts](../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../lib/chapter-three.ts) の `chapterThreeStages`
-スチル定義：[lib/story-art.ts](../../lib/story-art.ts) の `storyArt`（`/stories/four-cups-of-tea.webp`）
+本文の編集元：[lib/chapter-three-finale-stories.ts](../../../lib/chapter-three-finale-stories.ts)（`scene("3-9", "return", …)`）
+IDの接続元：[lib/chapter-three-dialogue.ts](../../../lib/chapter-three-dialogue.ts) の `scene()` → [lib/chapter-three.ts](../../../lib/chapter-three.ts) の `chapterThreeStages`
+スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/four-cups-of-tea.webp`）
 
 石を戻しても、塔はすぐには明るくならなかった。夕方になって、窓の中に淡い紫が戻り、足元の石組みへ光が続いた。
 

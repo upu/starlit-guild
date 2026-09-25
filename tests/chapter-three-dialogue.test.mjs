@@ -40,8 +40,8 @@ test("third-chapter dialogue is complete, renderable, connected and locked on a 
 
 test("exported draft contains each scene in reading order and names Finn", () => {
   const files = renderScripts();
-  const draft = files.get("chapter-three.md");
-  assert.match(files.get("script.md"), /\(chapter-three\.md\)/);
+  const draft = files.get("chapter-3.md");
+  assert.match(files.get("README.md"), /\(chapter-3\.md\)/);
   assert.match(draft, /フィン：/);
   let previous = -1;
   for (const scene of chapterThreeStories) {

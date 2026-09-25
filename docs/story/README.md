@@ -23,7 +23,7 @@
 ## 台本と場面の素材
 
 - [第四章の詳細台本](chapter-four-script.md)・[第四章の道中と日常の掛け合い](chapter-four-banter.md) — 第四章計画を具体化した制作案。幕間・全9場面・戦闘のやり取り・結成後の日常。
-- [生成台本](../generated/script.md)・[掛け合い](../generated/banter.md)・[第三章の生成台本](../generated/chapter-three.md) — ソースから出力した会話。手編集せず `npm run script:export` で更新する。ステージ別台本は生成台本からたどる。
+- [ゲーム内台本](game-script/README.md) — 実装済みの会話をソースから章ごとに出力したもの。[第一章](game-script/chapter-1.md)・[第二章](game-script/chapter-2.md)・[第三章](game-script/chapter-3.md) を遊ぶ順に通読でき、待機中などの共通会話は [共通の掛け合い](game-script/banter.md) にある。手編集せず `npm run script:export` で更新する。
 - [スチル制作記録](../art/story-art.md)・[スチル一覧](../art/story-art-gallery.md) — 場面の画像と生成条件。
 - [動画素材の管理](../art/story-videos.md) — 場面で再生する動画の管理。
 - [従来モードの記録](../archive/README.md) — 現在の物語と区別して参照する過去の出来事。

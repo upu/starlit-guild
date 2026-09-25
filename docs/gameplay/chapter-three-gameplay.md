@@ -1,6 +1,6 @@
 # 第三章のゲーム実装
 
-[物語の計画](../story/story-part-3.md) · [生成台本](../generated/chapter-three.md) · [用語集](../glossary.md) · [戦力と到達時間](progression-balance.md)
+[物語の計画](../story/story-part-3.md) · [ゲーム内台本](../story/game-script/chapter-3.md) · [用語集](../glossary.md) · [戦力と到達時間](progression-balance.md)
 
 ## 実装状況
 
@@ -46,7 +46,7 @@ v0.3.10で幕間、3-1〜3-9、フィンの同行、ベルネのショップ装�
 
 ## データと画像の置き場
 
-会話本文は `lib/chapter-three-*-stories.ts`、IDの接続は `lib/chapter-three-dialogue.ts`。`npm run script:export` で章全体とステージ別台本を生成する。
+会話本文は `lib/chapter-three-*-stories.ts`、IDの接続は `lib/chapter-three-dialogue.ts`。`npm run script:export` で幕間を含む章全体の台本を生成する。
 
 画像原本は `assets/source/road/finn-v1.png`、`assets/source/scenery/berne.png`、`assets/source/scenery/riverside-manor.png`。配信用WebPは既存の最適化スクリプトで生成。生成プロンプトと参照は[制作記録](../art-generation/chapter-three-gameplay-art.json)に保持する。
 

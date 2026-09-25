@@ -4,7 +4,7 @@
 
 ## 二人で待機中
 
-本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
+本文の編集元：[lib/idle-banter.ts](../../../lib/idle-banter.ts) の `idleBanter()`
 
 ### 1
 
@@ -48,7 +48,7 @@
 
 ## 三人で待機中
 
-本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
+本文の編集元：[lib/idle-banter.ts](../../../lib/idle-banter.ts) の `idleBanter()`
 
 ### 1
 
@@ -118,7 +118,7 @@
 
 ## 四人で待機中
 
-本文の編集元：[lib/idle-banter.ts](../../lib/idle-banter.ts) の `idleBanter()`
+本文の編集元：[lib/idle-banter.ts](../../../lib/idle-banter.ts) の `idleBanter()`
 
 ### 1
 
@@ -202,7 +202,7 @@
 
 ## 関係値 0〜11
 
-本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
+本文の編集元：[lib/stories.ts](../../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
 
 ### 道中 A
 
@@ -234,7 +234,7 @@
 
 ## 関係値 12〜23
 
-本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
+本文の編集元：[lib/stories.ts](../../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
 
 ### 道中 A
 
@@ -266,7 +266,7 @@
 
 ## 関係値 24以上
 
-本文の編集元：[lib/stories.ts](../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
+本文の編集元：[lib/stories.ts](../../../lib/stories.ts) の `journeyBanter()` / `coupleCombo()`
 
 ### 道中 A
 

@@ -1,6 +1,6 @@
 # 第三章計画：石を敷いた街
 
-章名と各場面の題は作業題。今回合意した筋を以下の制作方針とする。会話の本文はコードを正とし、[生成台本](../generated/chapter-three.md)から読む。具体的な台詞・演出は生成台本を読んで調整できる。
+章名と各場面の題は作業題。今回合意した筋を以下の制作方針とする。会話の本文はコードを正とし、[第三章のゲーム内台本](game-script/chapter-3.md)から読む。具体的な台詞・演出はゲーム内台本を読んで調整できる。
 
 [資料案内](../README.md) · [世界観](world-and-story.md) · [執筆指針](story-writing.md) · [実装仕様と実装状況](../gameplay/chapter-three-gameplay.md) · [フィン](../characters/finn.md)
 

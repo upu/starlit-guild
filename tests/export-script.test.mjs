@@ -8,6 +8,7 @@ import { storyStages } from "../lib/prologue.ts";
 import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 import { storyArt } from "../lib/story-art.ts";
 import { chapterThreeSections } from "../lib/chapter-three-stories.ts";
+import { interludes } from "../lib/interludes.ts";
 import { renderScripts } from "../scripts/export-script.mjs";
 import {
   sourceForStageBanter,
@@ -18,41 +19,84 @@ import {
 const names = new Map([...heroes, ...originalCharacters].map(({ id, name }) => [id, name]));
 const formatLine = (line) =>
   line.speaker && names.has(line.speaker) ? `${names.get(line.speaker)}：${line.text}` : line.text;
+const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);
 const readGenerated = (path) =>
-  readFileSync(new URL(`../docs/generated/${path}`, import.meta.url), "utf8").replaceAll(
-    "\r\n",
-    "\n",
-  );
+  readFileSync(new URL(path, outputDirectory), "utf8").replaceAll("\r\n", "\n");
+const chapterPath = (stage) => `chapter-${stage.number.split("-")[0]}.md`;
+const chapters = [...new Set(storyStages.map(chapterPath))];
+// A stage's block runs from its anchor to the next anchor in the chapter file.
+const stageBlock = (content, stage) =>
+  content.split(`<a id="stage-${stage.number}"></a>`)[1].split('\n<a id="')[0];
 
-test("generated index links all stages and every generated file is current", () => {
+test("generated index links every chapter and stage, and every generated file is current", () => {
   const files = renderScripts();
-  assert.equal(files.size, storyStages.length + 3);
+  assert.deepEqual([...files.keys()].sort(), [...chapters, "README.md", "banter.md"].sort());
   for (const [path, content] of files) assert.equal(readGenerated(path), content, path);
-  const index = files.get("script.md");
-  assert.ok(index.split("\n").length < 45);
+  const index = files.get("README.md");
+  assert.ok(index.split("\n").length < 60);
   assert.deepEqual(
-    [...index.matchAll(/^- \[(.+)\]\(stages\/(.+)\.md\)$/gm)].map((match) => match[1]),
-    storyStages.map(
-      (stage) => `${stage.number} ${allQuests.find((quest) => quest.id === stage.quest)?.name}`,
+    [...index.matchAll(/^ {2}- \[(\d+-\d+ .+)\]\((chapter-\d+\.md)#stage-(.+)\)$/gm)].map(
+      (match) => [match[1], match[2], match[3]],
     ),
+    storyStages.map((stage) => [
+      `${stage.number} ${allQuests.find((quest) => quest.id === stage.quest)?.name}`,
+      chapterPath(stage),
+      stage.number,
+    ]),
   );
+  for (const chapter of chapters)
+    assert.match(index, new RegExp(`^- \\[.+\\]\\(${chapter}\\)`, "m"));
   assert.match(index, /\[共通の掛け合い\]\(banter\.md\)/);
+});
+
+test("chapter files keep stages in play order and place interludes before the stage they unlock", () => {
+  for (const chapter of chapters) {
+    const content = readGenerated(chapter);
+    const stages = storyStages.filter((stage) => chapterPath(stage) === chapter);
+    const positions = stages.map((stage) => content.indexOf(`<a id="stage-${stage.number}"></a>`));
+    assert.ok(
+      positions.every((position) => position > 0),
+      chapter,
+    );
+    assert.deepEqual(
+      positions,
+      [...positions].sort((a, b) => a - b),
+      chapter,
+    );
+    for (const stage of stages)
+      assert.ok(content.includes(`](#stage-${stage.number})`), stage.number);
+  }
+  for (const entry of interludes) {
+    const stage = storyStages.find((item) => item.quest === entry.before);
+    const content = readGenerated(chapterPath(stage));
+    const anchor = content.indexOf(`<a id="${entry.id}"></a>`);
+    assert.ok(anchor > 0, entry.id);
+    assert.ok(anchor < content.indexOf(`<a id="stage-${stage.number}"></a>`), entry.id);
+    assert.ok(content.includes(`シーンID：\`${entry.id}\``), entry.id);
+  }
+  const third = chapterThreeSections.flatMap((section) => section.scenes);
+  const ids = [...readGenerated("chapter-3.md").matchAll(/^シーンID：`(.+)`$/gm)].map((m) => m[1]);
+  assert.deepEqual(
+    ids,
+    third.map((story) => story.id),
+  );
 });
 
 test("each stage preserves its two scenes and every still reveal", () => {
   assert.equal(stories.filter((st) => st.chapter !== "interlude").length, storyStages.length * 2);
   for (const stage of storyStages) {
-    const content = readGenerated(`stages/${stage.number}.md`);
-    assert.match(content, /自動生成ファイルです。手で編集せず/);
-    assert.ok(content.indexOf("## 出発前") < content.indexOf("## 道中の掛け合い"));
-    assert.ok(content.indexOf("## 道中の掛け合い") < content.indexOf("## 達成後"));
+    const file = readGenerated(chapterPath(stage));
+    assert.match(file, /自動生成ファイルです。手で編集せず/);
+    const content = stageBlock(file, stage);
+    assert.ok(content.indexOf("### 出発前") < content.indexOf("### 道中の掛け合い"));
+    assert.ok(content.indexOf("### 道中の掛け合い") < content.indexOf("### 達成後"));
     for (const chapter of ["departure", "return"]) {
       const id = `${stage.quest}-${chapter}`;
       const scene = stories.find((story) => story.id === id);
       assert.ok(scene, id);
       const section = content
-        .split(chapter === "departure" ? "## 出発前" : "## 達成後")[1]
-        .split(chapter === "departure" ? "## 道中の掛け合い" : "\n## ")[0];
+        .split(chapter === "departure" ? "### 出発前" : "### 達成後")[1]
+        .split("### 道中の掛け合い")[0];
       assert.ok(section.includes(`シーンID：\`${id}\``), id);
       const actual = section
         .split(/\n\n/)
@@ -71,12 +115,7 @@ test("each stage preserves its two scenes and every still reveal", () => {
             : [];
         if (still.length) {
           assert.ok(
-            existsSync(
-              new URL(
-                imagePath,
-                new URL(`../docs/generated/stages/${stage.number}.md`, import.meta.url),
-              ),
-            ),
+            existsSync(new URL(imagePath, new URL(chapterPath(stage), outputDirectory))),
             id,
           );
         }
@@ -89,7 +128,7 @@ test("each stage preserves its two scenes and every still reveal", () => {
 
 test("stage files include every route banter variant from runtime", () => {
   for (const stage of storyStages) {
-    const content = readGenerated(`stages/${stage.number}.md`);
+    const content = stageBlock(readGenerated(chapterPath(stage)), stage);
     const state = initialPrologueState(0);
     const squad = state.squads[0];
     for (const nodes of stage.quest === "sweet-blockade" ? [15, 3] : [15]) {
@@ -165,12 +204,12 @@ test("every scene and route has a checked editing source", () => {
 test("generated source links resolve, and art links appear only for scenes with stills", () => {
   const files = renderScripts();
   for (const [path, content] of files) {
-    const document = new URL(`../docs/generated/${path}`, import.meta.url);
+    const document = new URL(path, outputDirectory);
     for (const match of content.matchAll(/\[lib\/[^\]]+\]\(([^)]+)\)/g))
       assert.ok(existsSync(new URL(match[1], document)), `${path}: ${match[1]}`);
   }
   for (const stage of storyStages) {
-    const content = files.get(`stages/${stage.number}.md`);
+    const content = stageBlock(files.get(chapterPath(stage)), stage);
     assert.equal([...content.matchAll(/^本文の編集元：/gm)].length, 3, stage.number);
     assert.equal(
       [...content.matchAll(/^IDの接続元：/gm)].length,
@@ -183,14 +222,13 @@ test("generated source links resolve, and art links appear only for scenes with 
       stage.number,
     );
   }
-  const third = chapterThreeSections.flatMap((section) => section.scenes);
-  const draft = files.get("chapter-three.md");
-  assert.match(draft, /scene\("interlude", "return", …\)/);
-  assert.equal([...draft.matchAll(/^本文の編集元：/gm)].length, third.length);
-  assert.equal([...draft.matchAll(/^IDの接続元：/gm)].length, third.length);
-  assert.equal(
-    [...draft.matchAll(/^スチル定義：/gm)].length,
-    third.filter((s) => storyArt[s.id]).length,
-  );
+  const lunch = stories.find((story) => story.id === interludes[0].id);
+  const interludeBlock = files
+    .get(chapterPath(storyStages.find((stage) => stage.quest === interludes[0].before)))
+    .split(`<a id="${lunch.id}"></a>`)[1]
+    .split('\n<a id="')[0];
+  assert.match(interludeBlock, /scene\("interlude", "return", …\)/);
+  assert.equal([...interludeBlock.matchAll(/^本文の編集元：/gm)].length, 1);
+  assert.equal([...interludeBlock.matchAll(/^IDの接続元：/gm)].length, 1);
   assert.equal([...files.get("banter.md").matchAll(/^本文の編集元：/gm)].length, 6);
 });
