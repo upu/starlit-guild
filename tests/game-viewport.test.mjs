@@ -40,3 +40,16 @@ test("installed iOS layout avoids the viewport-fit cover height bug", () => {
   assert.doesNotMatch(phoneNavigationCss, /@media\(display-mode:standalone\).*--game-height:100vh/);
   assert.doesNotMatch(navigationCss, /body\{position:fixed/);
 });
+
+test("bottom navigation tabs ignore long-press selection and sticky hover", () => {
+  const trigger = '.phone-navigation [data-slot="tabs-trigger"]';
+  const rule = phoneNavigationCss.slice(phoneNavigationCss.indexOf(`${trigger}{`));
+  assert.match(rule, /^[^}]*-webkit-touch-callout:none/);
+  assert.match(rule, /^[^}]*-webkit-user-select:none;user-select:none/);
+  assert.match(rule, /^[^}]*-webkit-tap-highlight-color:transparent/);
+  assert.ok(
+    phoneNavigationCss.includes(
+      `${trigger}:not([data-state="active"]):hover{background:transparent}`,
+    ),
+  );
+});
