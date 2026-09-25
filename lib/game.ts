@@ -23,8 +23,6 @@ export {
   stats,
   memberMaxHp,
   power,
-  memberLimit,
-  squadLimit,
   encounter,
   targetName,
   stepMs,

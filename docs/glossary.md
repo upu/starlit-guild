@@ -71,31 +71,6 @@
 
 「私が用意するお昼」のシーンID・選択用クエストIDは `interlude-walnut-lunch`、種類は `interlude`。2-9読了で第三章のクエスト一覧に解放し、選んで出発すると会話が始まる。戦闘・報酬・クリア数はなく、既読は通常の `story.read` に保存する。初回読了で一覧から消え、3-1が開く。思い出では2-9と3-1の間に並び、再読できる。
 
-## 従来モードの旧クエストID
-
-以下は削除済みの試作で使ったIDの記録で、現在の `allQuests` には含まれない。旧通常依頼9件の出典は [削除前の `lib/game-v1.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game-v1.ts)、来客依頼2件の出典は [削除前の `lib/game.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/game.ts)、加入専用依頼7件の出典は [削除前の `lib/recruitment.ts`](https://github.com/upu/starlit-guild/blob/69c76b9/lib/recruitment.ts)。遊び方と会話は [従来モードの記録](archive/legacy-mode.md)、旧加入条件は [仲間加入](archive/recruitment.md) を参照する。
-
-| 旧クエストID | 表示名 | 区分 |
-| --- | --- | --- |
-| `herbs` | 月しずく草の採取 | 通常依頼 |
-| `cart` | パン屋の荷馬車 | 通常依頼 |
-| `slime` | 畑を荒らすスライム | 通常依頼 |
-| `crystal` | 青晶石の採掘 | 通常依頼 |
-| `pilgrim` | 星見の巡礼団 | 通常依頼 |
-| `wolf` | 霧狼の群れ | 通常依頼 |
-| `blossom` | 千年樹の花 | 通常依頼 |
-| `royal` | 王女の秘密の旅 | 通常依頼 |
-| `dragon` | 古塔の星喰い竜 | 通常依頼 |
-| `midnight-snack` | その耳はおやつじゃない | 来客依頼 |
-| `puppet-midnight` | 消灯、人形たちの時間 | 来客依頼 |
-| `join-mira` | 夜明けを待つ往診 | 加入専用依頼 |
-| `join-chacha` | 天使は岩を持ち上げる | 加入専用依頼 |
-| `join-finn` | 小箱を持ち主のもとへ | 加入専用依頼 |
-| `join-garr` | 最後のひとりが渡るまで | 加入専用依頼 |
-| `join-luna` | 消えた星座の観測所 | 加入専用依頼 |
-| `join-poppy` | 枯れない庭の作り方 | 加入専用依頼 |
-| `join-noel` | まだ名前のない旅の歌 | 加入専用依頼 |
-
 ## キャラクターID
 
 人物の名前・別名・IDは [キャラクター一覧](characters/README.md) が正本。ここには写さない。個別資料は `docs/characters/<キャラID>.md`。
@@ -105,7 +80,6 @@
 | 言葉 | 意味 | コード上の名前 |
 | --- | --- | --- |
 | 物語モード | 現在の遊び方。章立てのステージを順に進む | `state.prologue === true`（`inPrologue`） |
-| 従来モード | 章立てにする前の試作。[削除済み](gameplay/gameplay.md#従来モードの扱い) | （なし） |
 | 記録 | プレイヤーのセーブ1件。画面では「冒険の記録」 | `Profile` / `State` |
 | 隊 | 冒険に出るメンバーのまとまり。現在は1つだけ | `Squad` |
 | 地点 | 1周15回ある移動・戦闘・採取の単位 | `run.node` |

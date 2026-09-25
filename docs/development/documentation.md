@@ -32,7 +32,6 @@
 | `docs/art-generation/` | 生成プロンプトと制作条件のJSON。対応するアート資料から案内する |
 | `docs/story/game-script/` | [ゲーム内台本](../story/README.md#台本と場面の素材)。手編集せず `npm run script:export` で更新する |
 | `docs/templates/` | 公開確認などの雛形。[公開前検査](site-release.md#公開前検査と確認記録) から使う |
-| `docs/archive/` | [現在は使わない仕様・試作の記録](../archive/README.md) |
 
 ソースから書き出す資料は、`generated` のような作り方の区分ではなく読む分野の下へ専用ディレクトリを作って置き、手で書く資料と同じディレクトリに混ぜない。ディレクトリの案内（`README.md`）も生成し、自動生成であることを冒頭に示す。コードが読み込む生成データは `lib/generated/` など使う側に置く。
 

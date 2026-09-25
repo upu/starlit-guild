@@ -209,16 +209,6 @@ function adviceSheet(m: SheetModel): SheetView | null {
           >
             仲間の編成へ
           </button>
-          {m.run && (
-            <button
-              className="outline"
-              onClick={() => {
-                m.setSheet("party");
-              }}
-            >
-              隊を選ぶ
-            </button>
-          )}
         </>
       ),
     };
