@@ -140,13 +140,6 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
   aspect-ratio: 1;
   object-fit: cover;
 }
-.still-gallery button > span {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px;
-  font-size: 12px;
-}
 .story-still .still-expand {
   position: relative;
   display: block;
