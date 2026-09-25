@@ -16,6 +16,21 @@
         }
       }
     },
+    "blue-cloth-alley.png": {
+      "sourceHash": "234b89d9942368214a57dcdf8ed8c5aff120edd49a8709024a27743a02f1c850",
+      "sourceBytes": 2593760,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "9c99f0133f007ba481c8dd7893b3a75f0e15c29ae2e0115a2eac1bea86d4a12b",
+          "bytes": 218612
+        },
+        "thumbnail": {
+          "hash": "53f6df322ec4d6c3cece72e39d03b296832acd5fe44f87a052fcac753fdbcdf5",
+          "bytes": 14562
+        }
+      }
+    },
     "finn-at-breakfast.png": {
       "sourceHash": "14c509f987d70fddc42767798bc769e1dda6143ae794e25d7821218d7588d322",
       "sourceBytes": 2356674,
@@ -61,6 +76,21 @@
         }
       }
     },
+    "guild-formation.png": {
+      "sourceHash": "7acf829c9f4e8767d88b65a95ebf33d245f52426f2e4906e9a72865e721f2eb4",
+      "sourceBytes": 2910039,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "711d1361bc84b0af5b7845ccb8dd88aa2b841f4684efd9b0079ce12ff283f5dd",
+          "bytes": 314500
+        },
+        "thumbnail": {
+          "hash": "8f1427def9776562caa84d6260db25c2e98928ffada7c5fe0c8924721f3ba8e7",
+          "bytes": 24336
+        }
+      }
+    },
     "lico-protects-seedlings.png": {
       "sourceHash": "4f15c0dd59c53e9bb84dab2c804d7ea47ce2289e91e032da37af41680b85b2d3",
       "sourceBytes": 2723855,
@@ -88,6 +118,21 @@
         "thumbnail": {
           "hash": "4303dcf1f48a497c4e7afc83dfc243399a5e69aa95f27620eeba2909a526eaf4",
           "bytes": 18508
+        }
+      }
+    },
+    "mira-after-all-nighter.png": {
+      "sourceHash": "187333722ad119c8a2ad0159e62e265d1acde468fcdda64f4852a6aefffd8c30",
+      "sourceBytes": 3156868,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "2e3454af82df35a7d5bf856c6686ac08d21fe13eba46c6f3571382eb68b828ad",
+          "bytes": 355766
+        },
+        "thumbnail": {
+          "hash": "a7e9d6261aa4952e27198517035b62a121c85a5526e76a57241cbe06419e6a9a",
+          "bytes": 25434
         }
       }
     },
