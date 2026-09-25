@@ -6,7 +6,7 @@ import { MOON_HERB_QUEST } from "./chapter-two.ts";
 import { techniquesUnlocked, learnableTechniques } from "./techniques.ts";
 import { combatRank, penetration } from "./combat.ts";
 
-export type Destination = "adventure" | "quests" | "recruit" | "build" | "companions" | "party";
+export type Destination = "adventure" | "quests" | "companions";
 export type JourneyGoal = {
   hintId?: string;
   title: string;

@@ -22,5 +22,3 @@
 - [第一章のゲーム実装](prologue-gameplay.md)
 - [第二章のゲーム実装](chapter-two-gameplay.md)
 - [第三章のゲーム実装資料](chapter-three-gameplay.md)
-
-削除した仕様を調べる場合は [従来モードの記録](../archive/README.md) を参照する。

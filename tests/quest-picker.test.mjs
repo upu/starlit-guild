@@ -99,7 +99,7 @@ function harness(state, selected = prologue.TRADE_QUEST) {
   };
 }
 function chapterTwoState() {
-  const s = game.initialPrologueState(1000);
+  const s = game.initialState(1000);
   for (const stage of prologue.prologueStages) {
     s.done[stage.quest] = 1;
     s.story.completed.push(stage.quest);
@@ -133,7 +133,7 @@ test("opens the selected destination chapter and filters cards; switching only p
 });
 
 test("locked chapter hides its quests; the switch writes the same persisted preference", () => {
-  const h = harness(game.initialPrologueState(1000));
+  const h = harness(game.initialState(1000));
   assert.equal(h.button("two").props.disabled, true);
   assert.equal(h.cards().length, 1);
   assert.equal(h.setting().props.checked, false);
@@ -148,7 +148,7 @@ test("locked chapter hides its quests; the switch writes the same persisted pref
 });
 
 test("detail confirms on tap and keyboard but not drag, pointer cancellation or text selection", () => {
-  const h = harness(game.initialPrologueState(1000));
+  const h = harness(game.initialState(1000));
   let card = h.summary();
   card.props.onPointerDown({ clientX: 10, clientY: 10 });
   card.props.onClick({ detail: 1 });

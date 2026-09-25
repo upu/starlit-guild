@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
 import * as jsxRuntime from "react/jsx-runtime";
-import { initialPrologueState, act, settle } from "../lib/game.ts";
+import { initialState, act, settle } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
 import { tradeEndingPending, TRADE_QUEST } from "../lib/prologue.ts";
 
@@ -84,7 +84,7 @@ function harness(state, ready = true) {
 }
 const arrive = () =>
   settle(
-    act(initialPrologueState(1000), { type: "start", id: TRADE_QUEST, readDeparture: true }, 1000),
+    act(initialState(1000), { type: "start", id: TRADE_QUEST, readDeparture: true }, 1000),
     3601000,
   ).state;
 

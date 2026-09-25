@@ -33,59 +33,6 @@ button {
   gap: 8px;
   border-bottom: 1px solid #3f5848;
 }
-.phone-brand {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-right: auto;
-  min-width: 0;
-}
-.phone-brand > svg {
-  color: #dbc181;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-.phone-brand h1 {
-  font-size: 19px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  line-height: 1.5;
-}
-.phone-brand span {
-  font-size: 11px;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #a7b9a3;
-  max-width: 230px;
-}
-.phone-game .icon-button {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  flex-shrink: 0;
-  position: relative;
-  padding: 0;
-  background: #264035;
-  border: 1px solid #50624b;
-  color: #d9c68c;
-  border-radius: 9px;
-}
-.icon-button > svg {
-  width: 19px;
-  height: 19px;
-}
-.icon-button > i {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #ead177;
-}
 .phone-header .save-status {
   width: 40px;
   height: 40px;
@@ -110,39 +57,6 @@ button {
   display: block;
   width: 19px;
   height: 19px;
-}
-.phone-wallet {
-  height: 35px;
-  min-height: 35px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border: 0;
-  border-bottom: 1px solid #3c5243;
-  border-radius: 0;
-  background: #192e2a;
-  padding: 0 10px;
-  gap: 6px;
-  color: #e7d8ae;
-}
-.phone-wallet > span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-}
-.phone-wallet svg {
-  width: 14px;
-  height: 14px;
-  color: #d6bd7b;
-}
-.phone-wallet > span:nth-child(2) svg {
-  color: #aad294;
-}
-.phone-wallet > span:nth-child(3) svg {
-  color: #a7c6e3;
 }
 .phone-notice {
   display: flex;
@@ -192,36 +106,6 @@ button {
   padding: 0 !important;
   gap: 0;
 }
-.adventure-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  height: 44px;
-  padding: 4px 10px;
-  flex-shrink: 0;
-}
-.adventure-toolbar > button:first-child {
-  background: transparent;
-  border: 0;
-  padding: 4px 0;
-  min-width: 0;
-  font-weight: 400;
-  color: #dce2c5;
-  font-size: 13px;
-  gap: 8px;
-}
-.adventure-toolbar > button:first-child small {
-  font-size: 11px;
-  color: #a7b79e;
-}
-.adventure-toolbar > .icon-button {
-  margin-left: auto;
-  width: 33px;
-  height: 33px;
-  min-width: 33px;
-  border: 0;
-  background: transparent;
-}
 .phone-adventure .map-shell {
   display: flex;
   flex-direction: column;
@@ -252,66 +136,9 @@ button {
 .phone-adventure .map-heading > span:last-of-type {
   font-size: 11px;
 }
-.phone-adventure .map-hero .sprite {
-  width: 67px !important;
-  height: 67px !important;
-}
-.phone-adventure .map-hero > .hero-name {
-  font-size: 10px;
-}
 .phone-adventure .target .sprite {
   width: 70px !important;
   height: 70px !important;
-}
-.phone-adventure .target-meter {
-  width: 102px;
-}
-.phone-adventure .target-meter > span {
-  font-size: 10px;
-}
-.phone-adventure .target-meter small {
-  font-size: 10px;
-}
-.phone-adventure .target-meter [data-slot="progress"] {
-  margin: 2px 0;
-}
-.phone-adventure .party-health {
-  left: 12px;
-  bottom: 12px;
-  width: 210px;
-  max-width: 80%;
-  font-size: 11px;
-  padding: 5px 8px;
-}
-.phone-adventure .expedition-path {
-  bottom: 46px;
-  left: 12px;
-  right: 12px;
-  font-size: 11px;
-  padding: 4px 7px;
-}
-.phone-adventure .expedition-path small {
-  display: none;
-}
-.phone-adventure .cheer-gauge {
-  flex-shrink: 0;
-  padding: 7px 13px 6px;
-  height: 49px;
-  border-top: 1px solid #5a7056;
-}
-.phone-adventure .cheer-gauge > div:first-child {
-  font-size: 12px;
-  line-height: 1.2;
-  margin-bottom: 5px;
-}
-.phone-adventure .cheer-gauge b {
-  font-size: 11px;
-}
-.phone-adventure .cheer-gauge > small {
-  display: none;
-}
-.phone-adventure .cheer-gauge [data-slot="progress"] {
-  height: 6px;
 }
 .phone-adventure .assistance {
   padding: 6px 12px;
@@ -323,54 +150,8 @@ button {
   gap: 0;
 }
 .phone-adventure .assistance > div:first-child,
-.phone-adventure .assistance > small,
-.phone-adventure .click-hint {
+.phone-adventure .assistance > small {
   display: none;
-}
-.phone-adventure .assist-actions {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 10px;
-  width: 100%;
-  margin: 0;
-}
-.phone-adventure .assist-actions > button {
-  height: 42px;
-  min-height: 42px;
-  font-size: 15px;
-  padding: 7px 12px;
-}
-.phone-adventure .idle-map-note {
-  bottom: 16px;
-  left: 13px;
-  right: 13px;
-  padding: 8px;
-  gap: 5px;
-}
-.phone-adventure .idle-map-note > span {
-  font-size: 11px;
-}
-.phone-adventure .idle-map-note > button {
-  height: 38px;
-  font-size: 13px;
-}
-.phone-adventure .detour-target {
-  padding: 5px 7px;
-}
-.phone-adventure .detour-target small {
-  display: none;
-}
-.phone-adventure .combo-scene {
-  top: 23%;
-  min-width: 240px;
-  max-width: 93%;
-  padding: 9px 13px;
-}
-.phone-adventure .combo-scene strong {
-  font-size: 15px;
-}
-.phone-adventure .combo-scene > span {
-  font-size: 12px;
 }
 .phone-banter {
   display: flex;
@@ -407,168 +188,9 @@ button {
   font-weight: 500;
   color: #e4d3a1;
 }
-.screen-heading > small,
-.home-level {
+.screen-heading > small {
   font-size: 12px;
   color: #a8bda5;
-}
-.phone-quests,
-.phone-companions,
-.phone-home {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 14px;
-  min-height: 0;
-}
-.quest-pager {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-shrink: 0;
-}
-.quest-pager > span {
-  font-size: 13px;
-  color: #c7c8aa;
-}
-.phone-quest-detail {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid #657450;
-  background: linear-gradient(150deg, #324c39, #1b332e);
-  border-radius: 9px;
-}
-.phone-quest-detail h3 {
-  font-size: 25px;
-  font-weight: 500;
-  line-height: 1.55;
-  color: #f1dfaf;
-}
-.phone-quest-detail > p {
-  font-size: 15px;
-  line-height: 1.9;
-  color: #c7d1b7;
-}
-.phone-quest-detail .eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.08em;
-}
-.quest-rewards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 12px;
-  color: #e4cd94;
-  font-size: 14px;
-}
-.quest-rewards > span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.phone-aptitude {
-  border-top: 1px solid #577053;
-  padding-top: 13px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 14px;
-  color: #c4d0b5;
-}
-.phone-aptitude b {
-  color: #e4d397;
-}
-.phone-aptitude small {
-  font-size: 12px;
-}
-.phone-quest-detail > small {
-  font-size: 12px;
-}
-.quest-depart {
-  flex-shrink: 0;
-  text-align: center;
-}
-.quest-depart > .full {
-  min-height: 43px;
-  font-size: 15px;
-}
-.quest-depart > .quiet {
-  min-height: 30px;
-  padding: 3px 6px;
-  font-size: 12px;
-}
-.quest-depart > small {
-  display: block;
-  margin-top: 7px;
-  font-size: 12px;
-}
-.party-slots {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex-shrink: 0;
-  min-height: 36px;
-}
-.party-slots > .icon-button {
-  min-width: 30px;
-  width: 30px;
-  height: 30px;
-}
-.party-slots > span {
-  font-size: 12px;
-  max-width: 125px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.party-slots > small {
-  font-size: 12px;
-  margin-left: auto;
-  white-space: nowrap;
-}
-.party-slots > button:last-child {
-  font-size: 12px;
-  white-space: nowrap;
-  padding: 6px 9px;
-}
-.phone-hero-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 11px;
-  flex: 1;
-  min-height: 0;
-  border: 1px solid #596d50;
-  background: #243c31;
-  border-radius: 9px;
-  padding: 17px;
-}
-.phone-hero-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.phone-hero-title h3 {
-  font-size: 25px;
-  font-weight: 500;
-  color: #eed7a1;
-}
-.phone-hero-title small {
-  font-size: 12px;
-}
-.phone-hero-title > div > span {
-  font-size: 13px;
-  color: #cbbd8e;
-}
-.phone-hero-card > p {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #b8c9ae;
 }
 .phone-stat-row {
   display: flex;
@@ -588,128 +210,6 @@ button {
   font-size: 17px;
   color: #e1d09b;
   font-weight: 500;
-}
-.phone-skill b {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 14px;
-  color: #dfc58d;
-  font-weight: 500;
-}
-.phone-skill p {
-  font-size: 13px;
-  line-height: 1.7;
-  color: #b9c9b2;
-  margin-top: 4px;
-}
-.hero-pick {
-  min-height: 43px;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.phone-home .guild-home {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex: 1;
-  margin: 0;
-}
-.phone-home .home-map {
-  flex: 1;
-  min-height: 0;
-  aspect-ratio: auto;
-  background-size: cover;
-  background-position: center;
-}
-.phone-home .guild-home > .town-bonuses,
-.phone-home .guild-home > .town-build,
-.phone-home .guild-home > .home-complete {
-  display: none;
-}
-.phone-home .home-title {
-  left: 10px;
-  right: 10px;
-  bottom: 68px;
-  padding: 8px;
-}
-.phone-home .home-title h2 {
-  font-size: 21px;
-}
-.phone-home .home-title .eyebrow {
-  display: none;
-}
-.phone-home .home-caption {
-  font-size: 11px;
-  left: 10px;
-  right: 10px;
-  bottom: 12px;
-  padding: 7px;
-}
-.phone-home .home-hero .sprite {
-  width: 60px !important;
-  height: 60px !important;
-}
-.phone-home .home-bubble {
-  font-size: 10px;
-  padding: 3px 6px;
-}
-.home-menu {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  flex-shrink: 0;
-}
-.home-menu > button {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  height: 62px;
-  padding: 7px;
-  background: #2e4434;
-  color: #e4cd93;
-  border-color: #687452;
-  font-size: 13px;
-}
-.home-menu svg {
-  width: 21px;
-  height: 21px;
-}
-.phone-squads {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.phone-squads > button {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  color: #d4dabd;
-  background: #233b31;
-  border-color: #53654a;
-  padding: 8px 10px;
-}
-.phone-squads > button.selected {
-  border-color: #d8bd73;
-}
-.phone-squads > button > span:first-child {
-  text-align: left;
-  font-size: 14px;
-}
-.phone-squads small {
-  display: block;
-  font-size: 11px;
-}
-.phone-squads > button > span:last-child {
-  display: flex;
-}
-.phone-squads .sprite + .sprite {
-  margin-left: -10px;
-}
-.phone-bond {
-  display: flex;
-  align-items: center;
-  gap: 7px;
 }
 .inventory-grid {
   display: grid;
@@ -754,59 +254,6 @@ button {
 }
 .phone-journal p {
   font-size: 13px;
-}
-.building-details .home-map {
-  display: none;
-}
-.building-details .guild-home {
-  margin: 0;
-}
-.building-details .town-bonuses {
-  padding-top: 0;
-}
-.building-details .town-build {
-  padding: 14px;
-}
-.phone-upgrades {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.phone-upgrades article {
-  padding: 15px;
-  border: 1px solid #586b4f;
-  border-radius: 7px;
-  background: #263a30;
-}
-.phone-upgrades article > svg {
-  color: #d8bc75;
-}
-.phone-upgrades h3 {
-  font-size: 19px;
-  margin-top: 7px;
-  font-weight: 500;
-}
-.phone-upgrades button {
-  margin-top: 10px;
-  width: 100%;
-  font-size: 13px;
-}
-.phone-upgrades p {
-  font-size: 13px;
-  margin-top: 5px;
-}
-.gift-art {
-  width: 60px;
-  height: 60px;
-  margin: 10px auto;
-  color: #d8bd78;
-}
-.recruit-portrait {
-  text-align: center;
-}
-.recruit-portrait h3 {
-  font-size: 25px;
-  font-weight: 500;
 }
 .offline-loot {
   display: grid;
@@ -884,28 +331,11 @@ button {
   .phone-adventure .map-heading h2 {
     font-size: 27px;
   }
-  .phone-adventure .map-hero .sprite {
-    width: 80px !important;
-    height: 80px !important;
-  }
 }
 @media (max-height: 700px) {
   .phone-header {
     height: 52px;
     padding-block: 5px;
-  }
-  .phone-brand h1 {
-    font-size: 17px;
-  }
-  .phone-wallet {
-    height: 30px;
-    min-height: 30px;
-  }
-  .phone-quests,
-  .phone-companions,
-  .phone-home {
-    padding: 10px;
-    gap: 7px;
   }
   .screen-heading {
     min-height: 28px;
@@ -913,69 +343,15 @@ button {
   .screen-heading h2 {
     font-size: 20px;
   }
-  .quest-pager .icon-button {
-    height: 32px;
-    width: 32px;
-    min-width: 32px;
-  }
-  .phone-quest-detail {
-    padding: 13px;
-    gap: 10px;
-  }
-  .phone-quest-detail h3 {
-    font-size: 22px;
-  }
-  .phone-quest-detail > p {
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .quest-rewards {
-    gap: 5px 9px;
-    font-size: 13px;
-  }
-  .phone-aptitude {
-    padding-top: 8px;
-    font-size: 13px;
-  }
-  .phone-hero-card {
-    padding: 12px;
-    gap: 8px;
-  }
-  .phone-hero-title .sprite {
-    width: 80px !important;
-    height: 80px !important;
-  }
-  .phone-hero-title h3 {
-    font-size: 22px;
-  }
-  .phone-hero-card > p {
-    font-size: 13px;
-    line-height: 1.6;
-  }
   .phone-stat-row {
     padding-block: 7px;
-  }
-  .phone-skill p {
-    font-size: 12px;
-  }
-  .phone-adventure .cheer-gauge {
-    height: 41px;
-    padding: 5px 12px;
   }
   .phone-adventure .assistance {
     min-height: 48px;
     padding: 4px 11px;
   }
-  .phone-adventure .assist-actions > button {
-    height: 39px;
-    min-height: 39px;
-    font-size: 14px;
-  }
   .phone-banter {
     height: 27px;
-  }
-  .adventure-toolbar {
-    height: 36px;
   }
   .phone-adventure .map-heading h2 {
     font-size: 20px;
@@ -983,61 +359,15 @@ button {
   .phone-adventure .map-heading > span:last-of-type {
     font-size: 10px;
   }
-  .phone-adventure .map-hero .sprite {
-    width: 56px !important;
-    height: 56px !important;
-  }
   .phone-adventure .target .sprite {
     width: 58px !important;
     height: 58px !important;
   }
-  .phone-adventure .target-meter {
-    padding: 2px 4px;
-  }
-  .phone-adventure .target-meter small {
-    display: none;
-  }
-  .phone-adventure .combo-scene {
-    padding: 6px 9px;
-    top: 20%;
-    min-width: 220px;
-  }
-  .phone-adventure .combo-scene strong {
-    font-size: 13px;
-  }
-  .phone-adventure .combo-scene > span {
-    font-size: 11px;
-  }
-  .phone-adventure .detour-target > svg {
-    width: 18px;
-    height: 18px;
-  }
-  .phone-adventure .detour-target > span {
-    font-size: 10px;
-  }
 }
 @media (max-width: 360px) {
-  .phone-brand h1 {
-    font-size: 17px;
-  }
   .phone-header {
     padding-inline: 10px;
     gap: 5px;
-  }
-  .phone-brand span {
-    max-width: 170px;
-  }
-  .party-slots > span {
-    max-width: 84px;
-  }
-  .phone-hero-title {
-    gap: 6px;
-  }
-  .phone-skill p {
-    font-size: 12px;
-  }
-  .phone-quest-detail h3 {
-    font-size: 21px;
   }
   .phone-stat-row {
     gap: 5px;
@@ -1047,15 +377,8 @@ button {
   }
 }
 @media (max-height: 530px) {
-  .phone-brand span {
-    display: none;
-  }
   .phone-header {
     height: 43px;
-  }
-  .phone-wallet {
-    height: 27px;
-    min-height: 27px;
   }
   .phone-banter {
     display: none;
@@ -1067,71 +390,11 @@ button {
   .phone-adventure .map-heading h2 {
     font-size: 17px;
   }
-  .phone-quest-detail {
-    gap: 6px;
-    padding: 10px;
-  }
-  .phone-quest-detail > p {
-    font-size: 12px;
-    line-height: 1.5;
-  }
-  .phone-quest-detail h3 {
-    font-size: 19px;
-  }
-  .phone-quest-detail > small {
-    display: none;
-  }
-  .phone-hero-card > p {
-    display: none;
-  }
-  .phone-hero-title .sprite {
-    width: 55px !important;
-    height: 55px !important;
-  }
-  .phone-hero-title small {
-    font-size: 10px;
-  }
-  .phone-hero-title h3 {
-    font-size: 19px;
-  }
-  .phone-hero-card {
-    gap: 5px;
-    padding: 9px;
-  }
-  .phone-skill p {
-    font-size: 11px;
-  }
   .phone-stat-row {
     padding-block: 5px;
   }
-  .phone-quest-detail .eyebrow {
-    font-size: 11px;
-  }
-  .quest-rewards {
-    grid-template-columns: repeat(4, auto);
-    font-size: 11px;
-  }
-  .phone-aptitude {
-    gap: 0;
-    padding-top: 5px;
-    font-size: 12px;
-  }
-  .quest-depart > .full,
-  .hero-pick {
-    min-height: 35px;
-    font-size: 13px;
-  }
-  .quest-depart > small {
-    font-size: 10px;
-    margin-top: 3px;
-  }
   .screen-heading h2 {
     font-size: 18px;
-  }
-  .screen-heading > .icon-button {
-    height: 28px;
-    width: 28px;
-    min-width: 28px;
   }
 }
 .phone-game [data-sonner-toaster],

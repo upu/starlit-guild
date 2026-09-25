@@ -1,5 +1,5 @@
 "use client";
-import { initialPrologueState } from "@/lib/game";
+import { initialState } from "@/lib/game";
 import {
   SAVE_KEY,
   useBackup,
@@ -36,7 +36,7 @@ export function useLocalGame(testToolsEnabled = false) {
     profile = state.bundle?.profiles.find((item) => item.id === state.bundle?.active);
   return {
     testToolsEnabled,
-    s: profile?.state || initialPrologueState(0),
+    s: profile?.state || initialState(0),
     profile,
     bundle: state.bundle,
     clock: state.clock,

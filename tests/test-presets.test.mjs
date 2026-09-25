@@ -33,7 +33,6 @@ test("presets preserve earned equipment and story gates, and create independent 
         serial: 0,
         sound: false,
         cloudAt: 0,
-        legacyImported: true,
       }).success,
     );
     assert.equal(state.updatedAt, 2000);

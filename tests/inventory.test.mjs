@@ -47,7 +47,7 @@ function balances(state) {
   }));
 }
 test("bag keeps all normal resources with the existing formatting", () => {
-  const state = Object.freeze({ prologue: true, gold: 12345.9, herbs: 8.7, ore: 3 });
+  const state = Object.freeze({ gold: 12345.9, herbs: 8.7, ore: 3 });
   assert.deepEqual(balances(state), [
     { icon: "coins", label: "お金", amount: "12,345" },
     { icon: "leaf", label: "薬草", amount: "8" },
@@ -57,7 +57,7 @@ test("bag keeps all normal resources with the existing formatting", () => {
 
 test("empty inventory keeps every resource counter visible", () => {
   assert.deepEqual(
-    balances({ prologue: true, gold: 0, herbs: 0, ore: 0 }).map((item) => item.amount),
+    balances({ gold: 0, herbs: 0, ore: 0 }).map((item) => item.amount),
     ["0", "0", "0"],
   );
 });

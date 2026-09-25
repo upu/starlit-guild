@@ -132,7 +132,7 @@ export function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): R
     events: [],
   };
   configureTarget(r, q);
-  if (s.prologue) ensureChapterRoad(r, sq, q, at);
+  ensureChapterRoad(r, sq, q, at);
   schedule(s, sq, r, at);
   return r;
 }

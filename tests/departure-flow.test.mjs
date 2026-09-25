@@ -178,7 +178,7 @@ function harness(initialState) {
 }
 function afterTrade() {
   let s = game.act(
-    game.initialPrologueState(1000),
+    game.initialState(1000),
     { type: "start", id: prologue.TRADE_QUEST, readDeparture: true },
     1000,
   );
@@ -323,7 +323,7 @@ test("picker controls respect inactive tabs and a failed return leaves the picke
 });
 
 test("fresh profiles are guided from choosing a quest to departing without changing their save early", () => {
-  const s = game.initialPrologueState(1000),
+  const s = game.initialState(1000),
     h = harness(s);
   assert.equal(h.departButton(), undefined);
   assert.match(h.guideText(), /クエスト.*行き先を選ぼう/);
@@ -352,7 +352,7 @@ test("fresh profiles are guided from choosing a quest to departing without chang
   assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
 });
 test("idle dialogue has six complete, distinct exchanges and never changes the save", () => {
-  const s = game.initialPrologueState(1000),
+  const s = game.initialState(1000),
     before = structuredClone(s),
     exchanges = [];
   for (let i = 0; i < 6; i++) {
@@ -402,7 +402,7 @@ test("interlude waits for quest selection and departure, remains after cancel an
 });
 
 test("reading the first ending replaces a previous UI choice with the saved next destination without departing", () => {
-  let s = game.act(game.initialPrologueState(1000), { type: "autoNextQuest", value: true }, 1000);
+  let s = game.act(game.initialState(1000), { type: "autoNextQuest", value: true }, 1000);
   s = game.settle(
     game.act(s, { type: "start", id: prologue.TRADE_QUEST, readDeparture: true }, 1000),
     3601000,

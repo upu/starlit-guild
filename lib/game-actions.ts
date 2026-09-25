@@ -58,7 +58,7 @@ export type Action = {
 };
 type ActionHandler = (s: State, sq: Squad, a: Action, now: number) => void;
 function hiddenQuest(s: State, q: Quest) {
-  return s.clears < q.unlock || !isPrologueQuest(q.id) || !stageUnlocked(s, q.id);
+  return !isPrologueQuest(q.id) || !stageUnlocked(s, q.id);
 }
 function startQuest(s: State, sq: Squad, a: Action) {
   if (sq.run) throw Error("この隊は冒険中です。");

@@ -43,59 +43,10 @@
   z-index: 4;
   right: 20px;
 }
-.phone-game .phaser-map .idle-map-note {
-  z-index: 5;
-}
-.phone-game .phaser-assist-controls {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  padding: 7px 14px;
-  background: #17342c;
-  border-top: 1px solid #b5a56b70;
-  flex-shrink: 0;
-}
-.phone-game .phaser-assist-controls > button {
-  min-height: 44px;
-  flex: 1;
-  font-size: 14px;
-  padding: 6px 10px;
-  gap: 6px;
-}
-.phaser-assist-controls > button > span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.phaser-assist-controls small {
-  font-size: 12px;
-  white-space: nowrap;
-}
 .phone-game .phaser-map .map-journey {
   bottom: 10px;
 }
-@media (min-width: 760px) {
-  .phone-game .phaser-assist-controls {
-    padding: 8px 24px;
-    justify-content: center;
-  }
-  .phone-game .phaser-assist-controls > button {
-    max-width: 240px;
-  }
-}
 @media (max-width: 380px) {
-  .phone-game .phaser-assist-controls {
-    gap: 5px;
-    padding-inline: 8px;
-  }
-  .phone-game .phaser-assist-controls > button {
-    font-size: 12px;
-    padding-inline: 5px;
-  }
-  .phaser-assist-controls > button > span {
-    flex-direction: column;
-    gap: 0;
-  }
   .phone-game .phaser-map .map-heading h2 {
     font-size: 24px;
   }

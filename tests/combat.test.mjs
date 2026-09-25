@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { act, settle, initialPrologueState, testState, allQuests, estimate } from "../lib/game.ts";
+import { act, settle, initialState, testState, allQuests, estimate } from "../lib/game.ts";
 import { journeyNotice } from "../lib/journey.ts";
 import { nextStage, stageEndingPending, storyStages } from "../lib/prologue.ts";
 import {
@@ -25,11 +25,10 @@ function bundle(state) {
     format: 4,
     deviceId: crypto.randomUUID(),
     active: id,
-    profiles: [{ id, name: "combat test", test: true, state: { ...state, prologue: true } }],
+    profiles: [{ id, name: "combat test", test: true, state }],
     serial: 1,
     sound: false,
     cloudAt: 0,
-    legacyImported: true,
   };
 }
 // The tower road is the first story stage whose nodes field a group of three.
@@ -152,7 +151,7 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
   damageEnemy(r, 3, 99);
   r.nextAt = Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
   const parsed = parseBundle(bundle(source)).profiles[0].state;
-  assert.deepEqual(parsed, { ...source, prologue: true });
+  assert.deepEqual(parsed, source);
   // Stop short of the clear so the comparison stays about an unfinished battle.
   const end = source.updatedAt + 30000,
     bulk = settle(parsed, end).state;
@@ -283,11 +282,7 @@ test("rapid tapping can overcome an underleveled first-chapter finale without a 
 });
 
 test("only read first-chapter stages farm automatically, earn XP offline and can be stopped", () => {
-  let state = act(
-    initialPrologueState(1000),
-    { type: "start", id: "village-trade", value: true },
-    1000,
-  );
+  let state = act(initialState(1000), { type: "start", id: "village-trade", value: true }, 1000);
   state = settle(state, 100000).state;
   assert.equal(state.squads[0].run, null);
   assert.equal(state.done["village-trade"], 1);

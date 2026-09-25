@@ -55,9 +55,6 @@ export function initialState(now: number): State {
     log: [{ at: now, text: "アリアとレオン、ふたりの旅が始まった。" }],
   };
 }
-export function initialPrologueState(now: number): State {
-  return { ...initialState(now), prologue: true };
-}
 export const activeBonds = (members: string[]) =>
   bonds.filter((b) => b.ids.every((id) => members.includes(id)));
 export function memberStats(s: State, id: string) {
@@ -102,8 +99,6 @@ export function healAll(r: Run, ratio: number) {
 }
 export const power = (s: State, sq: Squad, q: Quest) =>
   stats(s, sq)[["採取", "護衛", "討伐"].indexOf(q.kind)];
-export const memberLimit = (s: State) => (s.owned.includes("finn") ? 4 : s.clears >= 10 ? 3 : 2);
-export const squadLimit = (s: State) => (s.owned.length >= 6 ? 3 : s.owned.length >= 4 ? 2 : 1);
 function standardEncounter(q: Quest, node: number): Encounter {
   if (q.kind === "採取") return node % 3 === 1 ? "battle" : "gather";
   if (q.kind === "護衛") return node === 1 ? "escort" : "battle";

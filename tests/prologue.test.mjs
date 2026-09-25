@@ -1,21 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import {
-  initialState,
-  initialPrologueState,
-  act,
-  settle,
-  availableQuests,
-  allQuests,
-  encounter,
-} from "../lib/game.ts";
-import {
-  inPrologue,
-  storyStages,
-  TRADE_QUEST,
-  RETURN_QUEST,
-  tradeEndingPending,
-} from "../lib/prologue.ts";
+import { initialState, act, settle, availableQuests, allQuests, encounter } from "../lib/game.ts";
+import { storyStages, TRADE_QUEST, RETURN_QUEST, tradeEndingPending } from "../lib/prologue.ts";
 import { availableStories, journeyBanter } from "../lib/stories.ts";
 import { nextGoal, journeyNotice } from "../lib/journey.ts";
 import { parseBundle } from "../lib/save-format.ts";
@@ -33,7 +19,6 @@ function roundtrip(state) {
         serial: 1,
         sound: false,
         cloudAt: 0,
-        legacyImported: true,
       }),
     ),
   ).profiles[0].state;
@@ -43,7 +28,7 @@ const depart = (s) =>
 
 // The detour system is gone, but a story save written before it was removed can still carry one.
 test("a pending detour in an older story save is forgotten and frees its explorer", () => {
-  const pending = depart(initialPrologueState(1000)),
+  const pending = depart(initialState(1000)),
     run = pending.squads[0].run;
   const explorer = run.actors[0];
   run.detour = {
@@ -66,14 +51,14 @@ test("a pending detour in an older story save is forgotten and frees its explore
   assert.equal(freed.nextAt, explorer.arrivesAt, "the explorer acts again from its arrival");
   assert.ok(restored.squads[0].run.nextAt <= freed.nextAt);
   // The freed timeline reaches the same place as a save that never held a discovery.
-  const clean = settle(depart(initialPrologueState(1000)), 3601000).state,
+  const clean = settle(depart(initialState(1000)), 3601000).state,
     resumed = settle(restored, 3601000).state;
   assert.equal(resumed.gold, clean.gold);
   assert.equal(resumed.herbs, clean.herbs);
 });
 
 test("new profiles begin with the two villagers and only the repeatable trade quest", () => {
-  const s = initialPrologueState(1000),
+  const s = initialState(1000),
     snapshot = structuredClone(s);
   assert.deepEqual(s.owned, ["aria", "leon"]);
   assert.equal(s.squads[0].run, null);
@@ -87,11 +72,10 @@ test("new profiles begin with the two villagers and only the repeatable trade qu
   assert.equal(nextGoal(s).questId, TRADE_QUEST);
   assert.deepEqual(s, snapshot);
   assert.throws(() => act(s, { type: "start", id: "herbs" }, 1000));
-  assert.equal(roundtrip(s).prologue, true);
 });
 
 test("departure reading is atomic; offline arrival stops once and preserves its unread ending", () => {
-  let s = depart(initialPrologueState(1000));
+  let s = depart(initialState(1000));
   assert.deepEqual(s.story.read, [TRADE_QUEST + "-departure"]);
   s = roundtrip(s);
   const before = structuredClone(s);
@@ -105,7 +89,6 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
   const read = act(arrival, { type: "readStory", id: TRADE_QUEST + "-return" }, arrival.updatedAt);
   assert.equal(tradeEndingPending(roundtrip(read)), false);
   assert.equal(read.gold, arrival.gold);
-  assert.equal(inPrologue(read), true);
   const once = act(
     roundtrip(read),
     { type: "start", id: TRADE_QUEST, readDeparture: true, value: false },
@@ -127,7 +110,7 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
 });
 
 test("trade checkpoints and explicit interruption never award an ending early", () => {
-  let s = depart(initialPrologueState(1000));
+  let s = depart(initialState(1000));
   while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt).state;
   assert.ok(s.gold > 60);
   assert.equal(tradeEndingPending(s), false);
@@ -139,7 +122,7 @@ test("trade checkpoints and explicit interruption never award an ending early", 
 });
 
 test("tapping preserves transport distance, helps gathering and heals in the prologue", () => {
-  let s = depart(initialPrologueState(1000)),
+  let s = depart(initialState(1000)),
     target = s.squads[0].run.target;
   s = act(s, { type: "assist", mode: "strike" }, 1000);
   assert.equal(s.squads[0].run.target, target);
@@ -161,7 +144,7 @@ test("trade carries cargo and gathers herbs without showing an unintroduced esco
     [0, 1, 2].map((n) => encounter(q, n)),
     ["escort", "gather", "battle"],
   );
-  const s = depart(initialPrologueState(1000));
+  const s = depart(initialState(1000));
   const frame = adventureFrame({
     squad: s.squads[0],
     now: 1000,
@@ -180,8 +163,8 @@ test("trade carries cargo and gathers herbs without showing an unintroduced esco
   );
 });
 
-test("many trades never open the base, other quests or recruitment; legacy records no longer load", () => {
-  const s = initialPrologueState(1000);
+test("many trades never open the base, other quests or recruitment", () => {
+  const s = initialState(1000);
   s.clears = 60;
   s.gold = 100000;
   assert.deepEqual(
@@ -195,19 +178,6 @@ test("many trades never open the base, other quests or recruitment; legacy recor
   ])
     assert.throws(() => act(s, action, 1000));
   assert.equal(nextGoal(s).destination, "quests");
-  // The legacy mode is not maintained: its records are dropped instead of loading.
-  const legacy = initialState(1000);
-  legacy.clears = 60;
-  legacy.gold = 12345;
-  legacy.done.herbs = 60;
-  const restored = roundtrip(legacy);
-  assert.equal(inPrologue(restored), true);
-  assert.equal(restored.clears, 0);
-  assert.deepEqual(restored.done, {});
-  assert.deepEqual(
-    availableQuests(restored).map((q) => q.id),
-    [TRADE_QUEST],
-  );
 });
 
 test("one-off quest policy forbids replay and stops even with repeat enabled", () => {
@@ -219,7 +189,7 @@ test("one-off quest policy forbids replay and stops even with repeat enabled", (
   allQuests.push(q);
   storyStages.unshift({ ...storyStages[0], quest: q.id });
   try {
-    const started = act(initialPrologueState(1000), { type: "start", id: q.id, value: true }, 1000);
+    const started = act(initialState(1000), { type: "start", id: q.id, value: true }, 1000);
     const done = settle(started, 3601000).state;
     assert.equal(done.done[q.id], 1);
     assert.equal(done.squads[0].run, null);

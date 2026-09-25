@@ -14,8 +14,7 @@
 
 ## 採用済み
 
-- **従来記録のみ**：`midnight-snack` の出発・帰還、`puppet-midnight` の帰還。魔物を食べる、耳を断られた話、小動物を追う、プティの人形をかじろうとする。加入はしない。[従来モード](../gameplay/gameplay.md#従来モードの扱い)のため、ここへ新しい場面を足さない。
-- **新しい物語**：[第四章計画](../story/story-part-4.md#4-7-苔は渡さないメリル戦) の制作案で、光る苔の噂を聞いて食べに来る。移し替える苗を話を聞かずに食べ始め、旅団とリコと戦う。一株を抱えて去り、加入はしない。未実装。
+- [第四章計画](../story/story-part-4.md#4-7-苔は渡さないメリル戦) の制作案で、光る苔の噂を聞いて食べに来る。移し替える苗を話を聞かずに食べ始め、旅団とリコと戦う。一株を抱えて去り、加入はしない。未実装。
 
 ## ドライアドとしての設定
 
@@ -71,7 +70,7 @@
 
 ## 外見・関連資料・実装
 
-[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../art/original-character-art.md)、[採用画像](../art/original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。従来モードの来客の会話は削除済み。
+[プロフィール](../../lib/original-characters.ts)、[画像制作記録](../art/original-character-art.md)、[採用画像](../art/original-character-gallery.md)、[スチルの対応](../../lib/story-art.ts) を参照する。
 
 初遭遇・クエストの会話は削除済みで、資料側の記録だけが残る。
 

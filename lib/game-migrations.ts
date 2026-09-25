@@ -3,7 +3,7 @@ import { DELIVERY_PREP_QUEST, PICNIC_QUEST } from "./chapter-two.ts";
 import { nextStage, storyStages } from "./prologue.ts";
 import { storyProgress } from "./stories.ts";
 import type { LegacySharedHealthState, LegacySharedRun, Run, State } from "./game-types.ts";
-import { initialPrologueState, memberMaxHp, questById } from "./game-rules.ts";
+import { initialState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
 import { joinStoryMira, joinStoryFinn } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
@@ -83,16 +83,14 @@ export function completeStoryStages(s: State, count: number) {
     if (quest === BERNE_QUEST) joinStoryFinn(s);
   }
 }
-// Builds an achievement-count record for the regression tests that still cover the legacy mode.
-// The app never creates one: that mode is kept readable but is no longer maintained.
-// Test records follow the story stages. The legacy achievement-count mode is no longer created.
+// Test records follow the story stages.
 export function testState(now: number, stages: number, lv: number, gold: number): State {
-  const s = initialPrologueState(now);
+  const s = initialState(now);
   const count = Math.min(storyStages.length, Math.max(0, Math.floor(stages)));
   completeStoryStages(s, count);
   s.clears = count;
   s.gold = Math.min(10000000, Math.max(0, Math.floor(gold)));
-  // Carry the materials those stages actually reward. Wood belongs to the legacy camp only.
+  // Carry the materials those stages actually reward.
   for (const { quest } of storyStages.slice(0, count)) {
     const q = questById(quest);
     s.herbs += q.herbs;
