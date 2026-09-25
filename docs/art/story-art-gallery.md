@@ -2,6 +2,12 @@
 
 案内：[アート・音](README.md)
 
+## 第四章：苗を守るリコ
+
+![赤と黒の衣装のリコが苗の籠を抱えて道をふさぎ、食料を背負ったメリルが手を伸ばす。](../../public/stories/lico-protects-seedlings.webp)
+
+第四章4-7向けの採用素材。人物紹介を兼ねた全身構図で、右のリコが苗を守り、左のメリルが狙う。ゲームの会話・アルバムへの接続は第四章の実装時に行う。[制作条件](chapter-four-stills.md#4-7の採用画像)と[生成記録](../art-generation/chapter-four-stills.json)を参照する。
+
 ## 薬を待つ家々
 
 ![薬と蜜の配達](../../public/stories/medicine-delivered.webp)

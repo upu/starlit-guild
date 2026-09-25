@@ -61,6 +61,21 @@
         }
       }
     },
+    "lico-protects-seedlings.png": {
+      "sourceHash": "4f15c0dd59c53e9bb84dab2c804d7ea47ce2289e91e032da37af41680b85b2d3",
+      "sourceBytes": 2723855,
+      "profileHash": "6be20b7429cc35f73075b9b9b8af62630ea04ed0c22bb62666dec2d0b25b11bb",
+      "outputs": {
+        "detail": {
+          "hash": "8bd568b4d955950138012a301f6e6be706a65b1cea23fb35c0f38c2b73ac0e36",
+          "bytes": 286952
+        },
+        "thumbnail": {
+          "hash": "e4a4b5cc0bc617b7a6712c77d1b49ba51f0809b509a6cf4530dbb46e3d8f62fd",
+          "bytes": 26262
+        }
+      }
+    },
     "medicine-delivered.png": {
       "sourceHash": "759da2a730d02c90277b39b79223b1e747dc3bf695764079d3a8dd70c270edc9",
       "sourceBytes": 2282466,
