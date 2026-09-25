@@ -7,7 +7,7 @@ import * as jsx from "react/jsx-runtime";
 import * as equipment from "../lib/equipment.ts";
 import * as journey from "../lib/journey.ts";
 import * as externalInput from "../lib/external-input.ts";
-import { initialPrologueState } from "../lib/game.ts";
+import { initialState } from "../lib/game.ts";
 import { prologueStages, TOWN_QUEST } from "../lib/prologue.ts";
 
 function source(path) {
@@ -59,7 +59,7 @@ function harness(data = new Map(), denyStorage = false) {
   };
 }
 function progress(count) {
-  const s = initialPrologueState(1000);
+  const s = initialState(1000);
   for (const stage of prologueStages.slice(0, count)) {
     s.done[stage.quest] = 1;
     s.story.departed.push(stage.quest);

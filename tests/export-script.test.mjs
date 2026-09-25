@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { allQuests, heroes, initialPrologueState } from "../lib/game.ts";
+import { allQuests, heroes, initialState } from "../lib/game.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
 import { originalCharacters } from "../lib/original-characters.ts";
 import { storyStages } from "../lib/prologue.ts";
@@ -129,7 +129,7 @@ test("each stage preserves its two scenes and every still reveal", () => {
 test("stage files include every route banter variant from runtime", () => {
   for (const stage of storyStages) {
     const content = stageBlock(readGenerated(chapterPath(stage)), stage);
-    const state = initialPrologueState(0);
+    const state = initialState(0);
     const squad = state.squads[0];
     for (const nodes of stage.quest === "sweet-blockade" ? [15, 3] : [15]) {
       for (const phase of ["travel", "rest"]) {
@@ -161,7 +161,7 @@ test("shared banter includes both idle parties, relationship tiers and combo lin
     }
   }
   for (const friendship of [0, 12, 24]) {
-    const state = initialPrologueState(0);
+    const state = initialState(0);
     state.friendship["aria-leon"] = friendship;
     const squad = state.squads[0];
     squad.run = { quest: "common", nodes: 15, node: 0, phase: "travel", started: 0, health: {} };

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import { initialPrologueState, act, settle, allQuests, encounter } from "../lib/game.ts";
+import { initialState, act, settle, allQuests, encounter } from "../lib/game.ts";
 import { storyStages, stageEndingPending, stageUnlocked } from "../lib/prologue.ts";
 import { BLOCKADE_QUEST, HOUSE_CALLS_QUEST, MEDICINE_RETURN_QUEST } from "../lib/chapter-two.ts";
 import { finaleStories } from "../lib/chapter-two-finale-stories.ts";
@@ -32,7 +32,7 @@ function roundtrip(state) {
   ).profiles[0].state;
 }
 function ready() {
-  const s = initialPrologueState(1000);
+  const s = initialState(1000);
   s.clears = 15;
   s.owned.push("mira");
   s.xp = { aria: 30 * 24 ** 2, leon: 30 * 24 ** 2, mira: 30 * 24 ** 2 };

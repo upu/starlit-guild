@@ -293,7 +293,7 @@ test("banter keeps a complete exchange while the route changes and pauses under 
 });
 
 test("memories interleave departure and ending by stage; album stays separate and returns to the handbook", () => {
-  let state = game.initialPrologueState(1000);
+  let state = game.initialState(1000);
   // The library test needs cleared stories, independently of combat training requirements.
   for (const hero of state.owned) state.xp[hero] = 30 * 19 ** 2;
   for (const stage of prologue.prologueStages) {

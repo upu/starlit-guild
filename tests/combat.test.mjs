@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { act, settle, initialPrologueState, testState, allQuests, estimate } from "../lib/game.ts";
+import { act, settle, initialState, testState, allQuests, estimate } from "../lib/game.ts";
 import { journeyNotice } from "../lib/journey.ts";
 import { nextStage, stageEndingPending, storyStages } from "../lib/prologue.ts";
 import {
@@ -283,11 +283,7 @@ test("rapid tapping can overcome an underleveled first-chapter finale without a 
 });
 
 test("only read first-chapter stages farm automatically, earn XP offline and can be stopped", () => {
-  let state = act(
-    initialPrologueState(1000),
-    { type: "start", id: "village-trade", value: true },
-    1000,
-  );
+  let state = act(initialState(1000), { type: "start", id: "village-trade", value: true }, 1000);
   state = settle(state, 100000).state;
   assert.equal(state.squads[0].run, null);
   assert.equal(state.done["village-trade"], 1);

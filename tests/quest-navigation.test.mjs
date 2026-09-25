@@ -1,7 +1,7 @@
 import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialPrologueState, act, settle } from "../lib/game.ts";
+import { initialState, act, settle } from "../lib/game.ts";
 import { storyStages, TRADE_QUEST, RETURN_QUEST } from "../lib/prologue.ts";
 import { questChapter } from "../lib/quest-navigation.ts";
 import { parseBundle } from "../lib/save-format.ts";
@@ -29,7 +29,7 @@ function roundtrip(state) {
 }
 
 test("old saves default to off; setting persists and can be disabled without changing destination", () => {
-  const old = initialPrologueState(1000),
+  const old = initialState(1000),
     original = structuredClone(old);
   assert.equal(roundtrip(old).autoNextQuest, undefined);
   let s = arrive(old, TRADE_QUEST);
@@ -46,7 +46,7 @@ test("old saves default to off; setting persists and can be disabled without cha
 });
 
 test("all 27 stages advance only after ending, cross chapters, persist and never auto-depart", () => {
-  let s = dispatch(initialPrologueState(1000), { type: "autoNextQuest", value: true });
+  let s = dispatch(initialState(1000), { type: "autoNextQuest", value: true });
   s.xp.aria = s.xp.leon = 30 * 24 ** 2;
   for (const [index, stage] of storyStages.entries()) {
     s = arrive(s, stage.quest);
@@ -76,7 +76,7 @@ test("all 27 stages advance only after ending, cross chapters, persist and never
 });
 
 test("turning off before reading keeps the destination; enabling later does not jump on reread", () => {
-  let s = dispatch(initialPrologueState(1000), { type: "autoNextQuest", value: true });
+  let s = dispatch(initialState(1000), { type: "autoNextQuest", value: true });
   s = arrive(s, TRADE_QUEST);
   s = dispatch(s, { type: "autoNextQuest", value: false });
   s = read(s, TRADE_QUEST);

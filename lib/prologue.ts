@@ -78,8 +78,6 @@ export const prologueStages = [
 ];
 export const storyStages = [...prologueStages, ...chapterTwoStages, ...chapterThreeStages];
 export const isPrologueQuest = (id: string) => storyStages.some((stage) => stage.quest === id);
-// Absent in existing saves: those adventures keep their unlocked features.
-export const inPrologue = (s: State) => s.prologue === true;
 // Old saves lack lastQuest. Use their last recorded stage without jumping to an unlocked one.
 export function restingQuest(s: State, sq: Squad) {
   return (

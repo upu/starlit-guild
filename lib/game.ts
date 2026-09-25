@@ -17,7 +17,6 @@ export {
   defaultSquadName,
   squadName,
   initialState,
-  initialPrologueState,
   activeBonds,
   memberStats,
   stats,

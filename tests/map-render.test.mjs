@@ -5,13 +5,13 @@ import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { initialPrologueState, act, settle, testState } from "../lib/game.ts";
+import { initialState, act, settle, testState } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
 import { nextStage, prologueStages } from "../lib/prologue.ts";
 import { storyArtAt } from "../lib/story-art.ts";
 import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
-const OPENING = nextStage(initialPrologueState(0)).quest;
-const begin = (s = initialPrologueState(1000)) =>
+const OPENING = nextStage(initialState(0)).quest;
+const begin = (s = initialState(1000)) =>
   act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
 const frameFor = (state, now = state.updatedAt) =>
   adventureFrame({ squad: state.squads[0], now, ready: true, paused: false, startQuest: OPENING });
@@ -72,7 +72,7 @@ await build({
 const { ShopPanel } = await import(shopOutput.href);
 
 test("characters and shared bag expose starting equipment and trade cargo without requiring departure", () => {
-  const s = initialPrologueState(1000),
+  const s = initialState(1000),
     before = structuredClone(s),
     character = renderToStaticMarkup(
       createElement(CharacterPanel, { state: s, ready: true, onAction: () => true }),
@@ -100,7 +100,7 @@ test("characters and shared bag expose starting equipment and trade cargo withou
 });
 
 test("shop renders only unlocked goods, prices and affordability and the bag labels bought equipment", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const { quest } of prologueStages.slice(0, 3)) {
     s.done[quest] = 1;
     s.story.departed.push(quest);
@@ -195,7 +195,7 @@ test("prologue guides the first quest choice before departure and keeps actions 
         },
       }),
     );
-  const fresh = initialPrologueState(1000),
+  const fresh = initialState(1000),
     html = render(fresh);
   assert.doesNotMatch(html, />出発</);
   assert.match(html, />キャラクター</);
@@ -245,7 +245,7 @@ test("stage progress retains the completed scenery until the next departure", ()
         },
       }),
     );
-  let state = initialPrologueState(1000),
+  let state = initialState(1000),
     background = "/scenery/forest-background.webp";
   for (const stage of prologueStages) {
     const idle = render(state);
@@ -386,7 +386,7 @@ function mapKey(state, key, ready = true, paused = false) {
   };
 }
 test("keyboard map assistance works without separate buttons and respects input guards", () => {
-  const idle = initialPrologueState(1000);
+  const idle = initialState(1000);
   assert.equal(mapKey(idle, "Enter").map.props.tabIndex, undefined);
   assert.deepEqual(mapKey(idle, "Enter").press(), idle);
   const state = begin(idle);

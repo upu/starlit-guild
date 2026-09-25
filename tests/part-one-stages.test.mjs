@@ -1,15 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import {
-  initialPrologueState,
-  initialState,
-  act,
-  settle,
-  availableQuests,
-  allQuests,
-  encounter,
-} from "../lib/game.ts";
+import { initialState, act, settle, availableQuests, allQuests, encounter } from "../lib/game.ts";
 import {
   TRADE_QUEST,
   RETURN_QUEST,
@@ -64,7 +56,7 @@ function roundtrip(state) {
 }
 
 test("1-1 through 1-9 requires each ending, stops offline and roundtrips without extra rewards", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const [i, stage] of prologueStages.entries()) {
     assert.equal(nextGoal(s).questId, stage.quest);
     assert.deepEqual(
@@ -104,7 +96,7 @@ test("1-1 through 1-9 requires each ending, stops offline and roundtrips without
 
 test("interruption and reload preserve progress without unlocking later stages", () => {
   for (const { quest: id } of prologueStages.slice(1)) {
-    let s = initialPrologueState(1000);
+    let s = initialState(1000);
     for (const stage of prologueStages.slice(
       0,
       prologueStages.findIndex((stage) => stage.quest === id),
@@ -124,8 +116,8 @@ test("interruption and reload preserve progress without unlocking later stages",
   }
 });
 
-test("existing prologue trades unlock the return route; legacy records no longer load", () => {
-  const old = read(finish(start(initialPrologueState(1000), TRADE_QUEST)), TRADE_QUEST);
+test("existing prologue trades unlock the return route", () => {
+  const old = read(finish(start(initialState(1000), TRADE_QUEST)), TRADE_QUEST);
   old.done[TRADE_QUEST] = 30;
   old.clears = 30;
   old.gold = 9876;
@@ -133,17 +125,10 @@ test("existing prologue trades unlock the return route; legacy records no longer
   assert.deepEqual(saved, old);
   assert.equal(nextGoal(saved).questId, RETURN_QUEST);
   assert.equal(start(saved, RETURN_QUEST).gold, 9876);
-  // The legacy mode is not maintained: its records are dropped instead of loading.
-  const legacy = initialState(1000);
-  legacy.clears = 60;
-  legacy.done.herbs = 60;
-  const restored = roundtrip(legacy);
-  assert.equal(restored.clears, 0);
-  assert.ok(availableQuests(restored).every((q) => q.id !== "dragon"));
 });
 
 test("a saved 1-3 ending unlocks 1-4 only after reading, without changing old resources or history", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const id of [TRADE_QUEST, RETURN_QUEST]) s = read(finish(start(s, id)), id);
   s = roundtrip(finish(start(s, TOWN_QUEST)));
   assert.ok(!availableQuests(s).some((q) => q.id === TOWER_QUEST));
@@ -158,7 +143,7 @@ test("a saved 1-3 ending unlocks 1-4 only after reading, without changing old re
 });
 
 test("a saved 1-5 ending opens the wetland only after reading and preserves resources", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const stage of prologueStages.slice(0, 4))
     s = read(finish(start(s, stage.quest)), stage.quest);
   s = roundtrip(finish(start(s, NIGHT_QUEST)));
@@ -174,7 +159,7 @@ test("a saved 1-5 ending opens the wetland only after reading and preserves reso
 });
 
 test("wetland observation causes no damage, weapon work or moss harvest rewards", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const stage of prologueStages.slice(0, 5))
     s = read(finish(start(s, stage.quest)), stage.quest);
   const herbs = s.herbs,
@@ -228,7 +213,7 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
 });
 
 test("saved 1-6 through 1-8 endings gate the next stage without changing resources or old history", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const stage of prologueStages.slice(0, 5))
     s = read(finish(start(s, stage.quest)), stage.quest);
   for (const [previous, next] of [
@@ -250,7 +235,7 @@ test("saved 1-6 through 1-8 endings gate the next stage without changing resourc
 });
 
 test("waterway exploration and restoration follow fieldwork order with small battles and matching scenery", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const stage of prologueStages.slice(0, 6))
     s = read(finish(start(s, stage.quest)), stage.quest);
   for (const id of [WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST]) {
@@ -359,7 +344,7 @@ test("waterway exploration and restoration follow fieldwork order with small bat
 });
 
 test("tower gathering and night lamp work keep small battles, appropriate assets and noncombat poses", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   for (const id of [TRADE_QUEST, RETURN_QUEST, TOWN_QUEST]) s = read(finish(start(s, id)), id);
   for (const id of [TOWER_QUEST, NIGHT_QUEST]) {
     const q = allQuests.find((q) => q.id === id),
@@ -416,7 +401,7 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
 });
 
 test("idle scenery follows the last actual departure across completion, replay, interruption and reload", () => {
-  let s = initialPrologueState(1000);
+  let s = initialState(1000);
   assert.equal(restingQuest(s, s.squads[0]), TRADE_QUEST);
   for (const id of [...prologueStages.map((stage) => stage.quest), TRADE_QUEST]) {
     s = roundtrip(start(s, id));
@@ -427,7 +412,7 @@ test("idle scenery follows the last actual departure across completion, replay, 
   s = start(s, RETURN_QUEST);
   s = roundtrip(act(s, { type: "stop" }, s.updatedAt));
   assert.equal(restingQuest(s, s.squads[0]), RETURN_QUEST);
-  const old = read(finish(start(initialPrologueState(1000), TRADE_QUEST)), TRADE_QUEST);
+  const old = read(finish(start(initialState(1000), TRADE_QUEST)), TRADE_QUEST);
   delete old.squads[0].lastQuest;
   const restored = roundtrip(old);
   assert.deepEqual(restored, old);
@@ -453,7 +438,7 @@ test("evening has more small encounters; town work has cargo, no battles or dama
       .length;
   assert.ok(battles(RETURN_QUEST) > battles(TRADE_QUEST));
   assert.equal(battles(TOWN_QUEST), 0);
-  let s = read(finish(start(initialPrologueState(1000), TRADE_QUEST)), TRADE_QUEST);
+  let s = read(finish(start(initialState(1000), TRADE_QUEST)), TRADE_QUEST);
   for (const id of [RETURN_QUEST, TOWN_QUEST]) {
     s = start(s, id);
     const frame = adventureFrame({

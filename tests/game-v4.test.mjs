@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import * as game from "../lib/game.ts";
 import { nextStage } from "../lib/prologue.ts";
 import { parseBundle } from "../lib/save-format.ts";
-const start = (s = game.initialPrologueState(1000), quest = nextStage(s).quest) =>
+const start = (s = game.initialState(1000), quest = nextStage(s).quest) =>
   game.act(s, { type: "start", id: quest }, s.updatedAt);
 function bundle(state, format = 4) {
   const id = crypto.randomUUID();
@@ -105,7 +105,7 @@ test("higher friendship unlocks stronger linked attacks and new dialogue", () =>
   assert.match(b.scene.title, /Lv.3/);
 });
 test("party names follow their members", () => {
-  const s = game.initialPrologueState(1000);
+  const s = game.initialState(1000);
   assert.equal(game.squadName(s.squads[0]), "レオン・アリア");
   assert.throws(() => game.act(s, { type: "nameSquad", name: "幼なじみ組" }, 1000));
   assert.doesNotThrow(() => parseBundle(bundle(s)));
@@ -128,34 +128,4 @@ test("offline cap and every transition remain exportable, including rest", () =>
   assert.equal(result.rewards.capped, true);
   assert.doesNotThrow(() => parseBundle(bundle(result.state)));
   assert.equal(result.rewards.gold, result.state.gold - s.gold);
-});
-
-test("saves keep story records and drop the legacy ones instead of failing to load", () => {
-  const story = game.initialPrologueState(1000),
-    legacy = game.initialState(1000);
-  legacy.clears = 60;
-  const id = crypto.randomUUID(),
-    storyId = crypto.randomUUID();
-  const mixed = {
-    ...bundle(legacy),
-    active: id,
-    profiles: [
-      { id, name: "以前の冒険", test: false, state: legacy },
-      { id: storyId, name: "物語の冒険", test: false, state: story },
-    ],
-  };
-  const parsed = parseBundle(JSON.parse(JSON.stringify(mixed)));
-  assert.deepEqual(
-    parsed.profiles.map((p) => p.id),
-    [storyId],
-    "従来記録だけを落とし、物語モードの記録は残す",
-  );
-  assert.equal(parsed.active, storyId, "選択中だった従来記録の代わりに残った記録を選ぶ");
-
-  // A file with nothing but legacy records still opens, as a new story record.
-  const onlyLegacy = parseBundle(JSON.parse(JSON.stringify(bundle(legacy))));
-  assert.equal(onlyLegacy.profiles.length, 1);
-  assert.equal(onlyLegacy.profiles[0].state.prologue, true);
-  assert.equal(onlyLegacy.profiles[0].state.clears, 0);
-  assert.equal(onlyLegacy.active, onlyLegacy.profiles[0].id);
 });

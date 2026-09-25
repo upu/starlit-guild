@@ -39,6 +39,8 @@ export function activeRun(sq: Squad) {
 export function initialState(now: number): State {
   return {
     version: 4,
+    // Older app versions drop records without this mark, so new records keep writing it.
+    prologue: true,
     story: { departed: [], completed: [], read: [] },
     friendship: {},
     gold: 60,
@@ -54,9 +56,6 @@ export function initialState(now: number): State {
     ],
     log: [{ at: now, text: "アリアとレオン、ふたりの旅が始まった。" }],
   };
-}
-export function initialPrologueState(now: number): State {
-  return { ...initialState(now), prologue: true };
 }
 export const activeBonds = (members: string[]) =>
   bonds.filter((b) => b.ids.every((id) => members.includes(id)));

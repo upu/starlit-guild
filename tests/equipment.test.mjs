@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  initialPrologueState,
+  initialState,
   testState,
   act,
   settle,
@@ -23,7 +23,7 @@ import {
 import { parseBundle } from "../lib/save-format.ts";
 
 function progress(count) {
-  const s = initialPrologueState(1000);
+  const s = initialState(1000);
   s.gold = 2000;
   for (const stage of prologueStages.slice(0, count)) {
     s.done[stage.quest] = 1;

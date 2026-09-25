@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { initialPrologueState, act, settle, allQuests, estimate } from "../lib/game.ts";
+import { initialState, act, settle, allQuests, estimate } from "../lib/game.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { createEnemies, syncEnemyTotals, damageEnemy } from "../lib/combat.ts";
 import { groupEnemyTurns } from "../lib/enemy-turns.ts";
@@ -13,7 +13,7 @@ import { parseBundle } from "../lib/save-format.ts";
 import { joinStoryMira } from "../lib/game-actions.ts";
 const ids = ["spinning-signpost", "begging-golem", "sweet-blockade"];
 function ready(id, level = 25) {
-  const s = initialPrologueState(1000);
+  const s = initialState(1000);
   joinStoryMira(s);
   s.xp = { aria: 30 * (level - 1) ** 2, leon: 30 * (level - 1) ** 2, mira: 30 * (level - 1) ** 2 };
   for (const { quest } of storyStages.slice(

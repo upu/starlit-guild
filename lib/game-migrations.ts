@@ -3,7 +3,7 @@ import { DELIVERY_PREP_QUEST, PICNIC_QUEST } from "./chapter-two.ts";
 import { nextStage, storyStages } from "./prologue.ts";
 import { storyProgress } from "./stories.ts";
 import type { LegacySharedHealthState, LegacySharedRun, Run, State } from "./game-types.ts";
-import { initialPrologueState, memberMaxHp, questById } from "./game-rules.ts";
+import { initialState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
 import { joinStoryMira, joinStoryFinn } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
@@ -85,7 +85,7 @@ export function completeStoryStages(s: State, count: number) {
 }
 // Test records follow the story stages.
 export function testState(now: number, stages: number, lv: number, gold: number): State {
-  const s = initialPrologueState(now);
+  const s = initialState(now);
   const count = Math.min(storyStages.length, Math.max(0, Math.floor(stages)));
   completeStoryStages(s, count);
   s.clears = count;
