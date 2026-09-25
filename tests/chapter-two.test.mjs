@@ -192,7 +192,6 @@ test("old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
   assert.equal(end.done[MOON_HERB_QUEST], 1);
   assert.equal(end.squads[0].run, null);
   assert.deepEqual(end.owned, ["aria", "leon"]);
-  assert.equal(end.prologue, true);
   assert.equal(end.techniques, undefined);
   const done = read(end, MOON_HERB_QUEST);
   assert.equal(nextGoal(done).questId, DELIVERY_PREP_QUEST);

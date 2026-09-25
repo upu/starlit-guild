@@ -39,8 +39,6 @@ export function activeRun(sq: Squad) {
 export function initialState(now: number): State {
   return {
     version: 4,
-    // Older app versions drop records without this mark, so new records keep writing it.
-    prologue: true,
     story: { departed: [], completed: [], read: [] },
     friendship: {},
     gold: 60,

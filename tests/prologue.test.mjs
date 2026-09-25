@@ -73,7 +73,6 @@ test("new profiles begin with the two villagers and only the repeatable trade qu
   assert.equal(nextGoal(s).questId, TRADE_QUEST);
   assert.deepEqual(s, snapshot);
   assert.throws(() => act(s, { type: "start", id: "herbs" }, 1000));
-  assert.equal(roundtrip(s).prologue, true);
 });
 
 test("departure reading is atomic; offline arrival stops once and preserves its unread ending", () => {
@@ -91,7 +90,6 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
   const read = act(arrival, { type: "readStory", id: TRADE_QUEST + "-return" }, arrival.updatedAt);
   assert.equal(tradeEndingPending(roundtrip(read)), false);
   assert.equal(read.gold, arrival.gold);
-  assert.equal(read.prologue, true);
   const once = act(
     roundtrip(read),
     { type: "start", id: TRADE_QUEST, readDeparture: true, value: false },

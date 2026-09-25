@@ -25,7 +25,7 @@ function bundle(state) {
     format: 4,
     deviceId: crypto.randomUUID(),
     active: id,
-    profiles: [{ id, name: "combat test", test: true, state: { ...state, prologue: true } }],
+    profiles: [{ id, name: "combat test", test: true, state }],
     serial: 1,
     sound: false,
     cloudAt: 0,
@@ -152,7 +152,7 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
   damageEnemy(r, 3, 99);
   r.nextAt = Math.min(...r.actors.map((a) => a.nextAt), r.enemyAt, r.comboAt);
   const parsed = parseBundle(bundle(source)).profiles[0].state;
-  assert.deepEqual(parsed, { ...source, prologue: true });
+  assert.deepEqual(parsed, source);
   // Stop short of the clear so the comparison stays about an unfinished battle.
   const end = source.updatedAt + 30000,
     bulk = settle(parsed, end).state;

@@ -82,7 +82,6 @@ test("1-1 through 1-9 requires each ending, stops offline and roundtrips without
     assert.equal(stageEndingPending(s), undefined);
   }
   assert.deepEqual(s.owned, ["aria", "leon"]);
-  assert.equal(s.prologue, true);
   assert.equal(availableStories(s).length, 18);
   assert.equal(nextGoal(s).questId, "hilltop-picnic");
   assert.match(nextGoal(s).title, /2-1/);
@@ -208,7 +207,6 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
   s = finish(start(s, WETLAND_QUEST));
   assert.equal(s.done[WETLAND_QUEST], 2);
   assert.equal(stageEndingPending(s), undefined);
-  assert.equal(s.prologue, true);
   assert.deepEqual(s.owned, ["aria", "leon"]);
 });
 
@@ -339,7 +337,6 @@ test("waterway exploration and restoration follow fieldwork order with small bat
     const snapshot = structuredClone(s);
     assert.deepEqual(read(s, id), snapshot);
   }
-  assert.equal(s.prologue, true);
   assert.deepEqual(s.owned, ["aria", "leon"]);
 });
 

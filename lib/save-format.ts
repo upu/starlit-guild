@@ -255,7 +255,6 @@ function validateState(s: ParsedState, ctx: z.RefinementCtx) {
 const stateBase = z.object({
   version: z.literal(4),
   autoNextQuest: z.boolean().optional(),
-  prologue: z.boolean().optional(),
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
   story: storySchema.optional(),
