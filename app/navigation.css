@@ -140,13 +140,6 @@ button[data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
   aspect-ratio: 1;
   object-fit: cover;
 }
-.still-gallery button > span {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px;
-  font-size: 12px;
-}
 .story-still .still-expand {
   position: relative;
   display: block;
@@ -225,9 +218,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   background: transparent;
   cursor: zoom-out;
   touch-action: manipulation;
-}
-.art-viewer .art-canvas:hover:not(:disabled) {
-  background: transparent;
 }
 .art-canvas:focus-visible {
   outline: 2px solid #e5ca88;
