@@ -87,9 +87,13 @@ button,
   text-decoration: none;
   transition: background 0.15s;
 }
-button:hover:not(:disabled),
-.button:hover {
-  background: #e3c789;
+/* Only pointers that can hover lighten the default gold button. The low specificity lets any
+   button that sets its own background keep it without a hover override. */
+@media (hover: hover) {
+  button:where(:not(:disabled):hover),
+  .button:where(:hover) {
+    background: #e3c789;
+  }
 }
 button:disabled {
   cursor: not-allowed;
@@ -146,7 +150,6 @@ small,
   font-weight: 400;
 }
 .save-status:hover:not(:disabled) {
-  background: transparent;
   color: #ded5b9;
 }
 .save-dialog p {

@@ -226,9 +226,6 @@ body:has(.art-viewer) [data-sonner-toaster] {
   cursor: zoom-out;
   touch-action: manipulation;
 }
-.art-viewer .art-canvas:hover:not(:disabled) {
-  background: transparent;
-}
 .art-canvas:focus-visible {
   outline: 2px solid #e5ca88;
   outline-offset: 2px;
