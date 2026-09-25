@@ -1,5 +1,5 @@
 {
-  "description": "第四章の横スクロール画面で使用する実行時立ち絵。組み込み image_gen を使用。",
+  "description": "第四章の横スクロール画面と人物表示に使う立ち絵。組み込み image_gen を使用。",
   "assets": [
     {
       "output": "public/characters/lico-v1.png",
@@ -9,11 +9,11 @@
       "sha256": "78f18dba26094dab543b0166fd37b90debf6d15a48694a4a5a14cfe86464922b"
     },
     {
-      "output": "public/characters/merrill-cutout.png",
-      "source": "public/characters/merrill.png",
-      "mode": "built-in image_gen, background removal edit",
-      "prompt": "Remove the solid deep green background from this Merrill full-body character art and output transparent alpha. Keep the entire figure in precisely the original pose and design, including wink, playful grin, flowers, red bow, backpack, mushroom cluster, metal arm, clothing, thick legs and shoes. No crop or added objects.",
-      "sha256": "c1989cbe6f5214f3ff0cf3136fe610651296f38d4d912375962253060869e60d"
+      "output": "public/characters/merrill-v2.png",
+      "source": "docs/characters/merrill-reference-sheet.png",
+      "mode": "built-in image_gen, reference-guided generation",
+      "prompt": "Create a new full-body transparent-background 2D game character sprite of Merrill, using the attached APPROVED reference sheet as the authoritative design. Match its soft painterly anime rendering and exact character identity. Show one standing three-quarter/front pose, feet fully visible, centered with a close crop around her silhouette for clear readability when reduced to about 70 pixels tall. She is a small 148 cm-looking dryad girl with a youthful friendly face, green eyes, short uneven muted sage-green bob, thick healthy thighs and calves (not slender or long-legged), and sturdy lace-up boots. The red pomegranate blossoms and leaves grow naturally from her head; keep the separate red ribbon. Use the reference sheet's cream blouse, short muted green hooded jacket, dark shorts, brown belts and pouches, very large food-stuffed travel backpack with mushrooms, fruit, wrapped meat and a small pumpkin-face charm or lantern. Her LEFT forearm alone wears the reference sheet's carved pomegranate-wood gauntlet that is itself a stringed instrument: strings run along the outer/back surface toward the back of the hand; no separate harp, no gauntlet on the right arm. Right hand bare. Keep both arms relaxed, not playing. Give her an approachable mischievous smile and a food-curious gaze, not a sinister expression. The in-game pose should be visually compact and readable beside the other party sprites. Transparent alpha outside the silhouette, with no scenery, floor, colored background, frame, words, labels, watermark, duplicate figure, or character sheet panels.",
+      "sha256": "05227f956008166622308b93e9a30536de65c963bb417e115a70bedf9d2e6481"
     }
   ]
 }

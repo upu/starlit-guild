@@ -6,14 +6,14 @@
 
 ## 採用中の立ち絵
 
-- メリル：緑のボブ、花と赤いリボン、秋の飾り。深緑背景の肖像。左腕の琴と自然な立ち姿は下記の専用条件に従う。
+- メリル：採用リファレンスシートを基にした小柄な旅装。緑のボブ、頭から生える石榴の花と赤いリボン、食料を詰めた大きな背負い袋、左腕の木製の琴のガントレットを持つ。ゲーム内は透明背景の `public/characters/merrill-v2.png` を使う。
 - パンプティ：茶色いツインテール、青緑の目、八重歯。黒い身頃、緑の袖、黄色いスカート。人形と操り糸を使い、楽器は持たせない。
 
-配置先は `public/characters/{merrill,pumpety}.png`。既存アトラスの8〜11番を維持し、追加分は12・13番を使用する。
+パンプティは `public/characters/pumpety.png` に配置する。既存アトラスの8〜11番を維持し、追加分は12・13番を使用する。
 
-パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。立ち絵は深緑の背景を持つ肖像として枠付きで表示し、透過画像として扱わない。
+パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。
 
-第四章4-7の横スクロール画面だけは、元の `public/characters/merrill.png` を参照し、人物を維持したまま背景を透過した `public/characters/merrill-cutout.png` を使う。元の肖像画像は差し替えない。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+第四章4-7の横スクロール画面と人物表示は、採用リファレンスシートから作り直した同じメリルの立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
 
 ## メリルの琴とポーズ
 
@@ -27,7 +27,7 @@
 
 ## メリルの採用シートと顔アイコン
 
-2026-09-23の[採用シート原本](../characters/merrill-reference-sheet.png)と[8表情の顔アイコン](../../public/portraits/merrill-expressions.webp)を追加した。顔アイコンの表情キーと使い方は[会話の表情](dialogue-expressions.md#メリル)、外見の正本は[人物設定](../characters/merrill.md)。既存の立ち絵は差し替えない。
+2026-09-23の[採用シート原本](../characters/merrill-reference-sheet.png)と[8表情の顔アイコン](../../public/portraits/merrill-expressions.webp)を追加した。顔アイコンの表情キーと使い方は[会話の表情](dialogue-expressions.md#メリル)、外見の正本は[人物設定](../characters/merrill.md)。立ち絵v2もこのシートを参照する。
 
 ## 確認
 

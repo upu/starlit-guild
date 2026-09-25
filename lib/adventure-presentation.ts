@@ -131,7 +131,7 @@ function targetAsset(
   if (kind === "battle" && quest.id === LICO_RECORDS_QUEST && encounterNode === 14)
     return "/characters/lico-v1.png";
   if (kind === "battle" && quest.id === MERRILL_SEEDLINGS_QUEST && encounterNode === 8)
-    return "/characters/merrill-cutout.png";
+    return "/characters/merrill-v2.png";
   const enemyArt = kind === "battle" ? chapterTwoEnemyAsset(quest.id, run.node) : null;
   if (enemyArt) return enemyArt;
   if (kind === "escort")

@@ -49,4 +49,4 @@ export type RoadBattle = {
   effects: RoadEffect[];
 };
 export const travellerLane = (id: TravellerId) =>
-  ({ aria: 0.54, leon: 0.82, mira: 0.68, finn: 0.43, lico: 0.34 })[id];
+  ({ aria: 0.54, leon: 0.82, mira: 0.68, finn: 0.43, lico: 0.63 })[id];

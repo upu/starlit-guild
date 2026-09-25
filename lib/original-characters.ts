@@ -4,7 +4,7 @@ export const originalCharacters = [
     id: "merrill",
     name: "メリル",
     sprite: 12,
-    art: "/characters/merrill.png",
+    art: "/characters/merrill-v2.png",
     job: "悪食のドライアド吟遊詩人",
     faction: "マッドハロウィン",
     bio: "左腕の琴を右手で弾き、踊りながら次のひと口を探す。キノコ料理が得意だが、珍しいキノコに手を出しては毒に当たる。魔物も食べる。エルフの耳まで珍しい食材扱いするのは、冗談か本気か分からない。",

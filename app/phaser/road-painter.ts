@@ -30,7 +30,7 @@ import {
   enemyFacesRight,
   enemyFalls,
   enemyName,
-  enemySize,
+  enemyDisplayHeight,
 } from "./road-enemy-appearance";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
@@ -305,9 +305,7 @@ export class RoadPainter {
       figure = this.makeFigure("/sprites.png", "slime", "");
       this.enemies.set(enemy.id, figure);
     }
-    const size =
-      Math.min(115, this.scene.scale.width * 0.19, this.scene.scale.height * 0.32) *
-      enemySize(enemy);
+    const size = enemyDisplayHeight(enemy, this.scene.scale.width, this.scene.scale.height);
     const x = this.screenX(enemy.x, state),
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =

@@ -19,19 +19,24 @@ export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
   if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
   return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
 }
-export const enemySize = (enemy: RoadEnemy) =>
+const enemySize = (enemy: RoadEnemy) =>
   ({
     puppet: 0.45,
     pumpety: 1,
     golem: 1.65,
     slime: enemy.boss ? 1.65 : 0.75,
-    lico: 1.25,
-    merrill: 1.25,
+    lico: 1,
+    merrill: 1,
   })[enemy.kind];
+export function enemyDisplayHeight(enemy: RoadEnemy, width: number, height: number) {
+  if (enemy.kind === "lico" || enemy.kind === "merrill")
+    return Math.min(90, width * 0.18, height * 0.34) * 0.9;
+  return Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);
+}
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
   if (enemy.kind === "lico" || enemy.kind === "merrill")
     return {
-      asset: enemy.kind === "lico" ? "/characters/lico-v1.png" : "/characters/merrill-cutout.png",
+      asset: enemy.kind === "lico" ? "/characters/lico-v1.png" : "/characters/merrill-v2.png",
       frame: "__BASE",
       puppet: false,
       character: true,
