@@ -308,13 +308,24 @@
   object-fit: cover;
   transition: transform 0.6s;
 }
+/* The title sits on the thumbnail's lower edge so each tile stays square. */
 .still-gallery button > span {
-  display: block;
-  padding: 6px;
-  font-size: 12px;
+  position: absolute;
+  inset: auto 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  padding: 16px 6px 0;
+  /* A border instead of bottom padding keeps clamped lines from peeking out. */
+  border-bottom: 5px solid transparent;
+  font-size: 11px;
+  line-height: 1.35;
   color: #fff0c8;
-  line-height: 1.5;
+  text-shadow: 0 1px 2px #000c;
+  background: linear-gradient(transparent, #0b1d19e6) border-box;
   overflow-wrap: anywhere;
+  pointer-events: none;
 }
 .still-gallery button:hover > img {
   transform: scale(1.03);

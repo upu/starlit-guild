@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.4.9 | 2026-09-25 | アルバム一覧のタイトルを絵の上に重ねてコンパクトに表示する（[#177](https://github.com/upu/starlit-guild/pull/177)） |
 | 0.4.8 | 2026-09-25 | 道中の掛け合いで一度表示した会話を繰り返さない（[#176](https://github.com/upu/starlit-guild/pull/176)） |
 | 0.4.7 | 2026-09-25 | 従来モードの資料と実装の名残を削除する（[#172](https://github.com/upu/starlit-guild/pull/172)） |
 | 0.4.6 | 2026-09-24 | 第四章の詳細台本を作成し、既存の物語にリンデの地名を反映（[#167](https://github.com/upu/starlit-guild/pull/167)） |
