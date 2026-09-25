@@ -1,4 +1,10 @@
 import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
+import {
+  LICO_RECORDS_QUEST,
+  MERRILL_SEEDLINGS_QUEST,
+  MOSS_TRANSPLANT_QUEST,
+  isChapterFourQuest,
+} from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
 import {
   adventureFrame,
@@ -150,6 +156,12 @@ function legacyOpponents(run: Run | null, frame: AdventureFrame) {
     { id: "enemy-1", hp: run.target, maxHp: run.targetMax, nextAt: run.enemyAt, role: undefined },
   ];
 }
+function drawnEnemyKind(run: Run | null, frame: AdventureFrame, role?: string) {
+  const encounterNode = run?.road?.ambushNode ?? run?.node;
+  if (run?.quest === LICO_RECORDS_QUEST && encounterNode === 14) return "lico";
+  if (run?.quest === MERRILL_SEEDLINGS_QUEST && encounterNode === 8) return "merrill";
+  return enemyKind(role || (frame.quest.enemy >= 12 ? "golem" : undefined));
+}
 function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[] {
   const run = input.squad.run,
     road = run?.road;
@@ -158,7 +170,7 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
     const x = position && run ? drawnX(position, run, input.now) : 200 + index * 65;
     return {
       id: index + 1,
-      kind: enemyKind(enemy.role || (frame.quest.enemy >= 12 ? "golem" : undefined)),
+      kind: drawnEnemyKind(run, frame, enemy.role),
       x,
       lane: enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index],
       hp: enemy.hp,
@@ -207,6 +219,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
     ].includes(frame.quest.id),
     urban:
       ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id) ||
+      (isChapterFourQuest(frame.quest.id) && frame.quest.id !== MOSS_TRANSPLANT_QUEST) ||
       (isChapterThreeQuest(frame.quest.id) &&
         ![BERNE_QUEST, STONE_RETURN_QUEST].includes(frame.quest.id)),
     length:

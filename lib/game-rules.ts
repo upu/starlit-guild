@@ -1,4 +1,5 @@
 import { chapterThreeWorkload, chapterThreeWork } from "./chapter-three.ts";
+import { chapterFourWorkload, chapterFourWork } from "./chapter-four.ts";
 import { equipmentBonus } from "./equipment.ts";
 import { questNodes, puppetBattleName } from "./puppet-battles.ts";
 import { createEnemies, penetration, reducedDamage, workResistance } from "./combat.ts";
@@ -106,7 +107,10 @@ function standardEncounter(q: Quest, node: number): Encounter {
 }
 export function encounter(q: Quest, node: number): Encounter {
   const work =
-    chapterThreeWork(q.id, node) || chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
+    chapterFourWork(q.id, node) ||
+    chapterThreeWork(q.id, node) ||
+    chapterTwoWork(q.id, node) ||
+    waterwayWork(q.id, node);
   if (work) return work.kind;
   if (q.id === WETLAND_QUEST) return "gather";
   if (q.id === TOWN_QUEST) return "escort";
@@ -131,7 +135,10 @@ export function targetName(q: Quest, node: number, nodes = 15) {
   const battle = puppetBattleName(q.id, node, nodes);
   if (battle) return battle;
   const work =
-    chapterThreeWork(q.id, node) || chapterTwoWork(q.id, node) || waterwayWork(q.id, node);
+    chapterFourWork(q.id, node) ||
+    chapterThreeWork(q.id, node) ||
+    chapterTwoWork(q.id, node) ||
+    waterwayWork(q.id, node);
   if (work) return work.name;
   if (q.id === WETLAND_QUEST)
     return ["湿った木陰を探す", "苔の葉を見分ける", "群落の周りを確かめる"][node % 3];
@@ -158,6 +165,7 @@ export function specialInterval(hero: string) {
   return hero === "aria" ? 3 : 4;
 }
 export function specialMultiplier(hero: string) {
+  if (hero === "lico") return 1.35;
   if (hero === "finn") return 1.6;
   if (hero === "leon") return 1.7;
   if (hero === "aria") return 1.65;
@@ -193,6 +201,7 @@ function estimateNode(s: State, sq: Squad, q: Quest, node: number) {
       1.12 *
       (kind === "escort" ? 1.8 : 2.3) *
       chapterTwoWorkload(q.id) *
-      chapterThreeWorkload(q.id);
+      chapterThreeWorkload(q.id) *
+      chapterFourWorkload(q.id);
   return 2.5 + work / Math.max(0.1, dps);
 }

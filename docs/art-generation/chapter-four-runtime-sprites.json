@@ -1,0 +1,19 @@
+{
+  "description": "第四章の横スクロール画面で使用する実行時立ち絵。組み込み image_gen を使用。",
+  "assets": [
+    {
+      "output": "public/characters/lico-v1.png",
+      "source": "docs/characters/lico-reference-sheet.webp",
+      "mode": "built-in image_gen, reference-guided generation",
+      "promptSummary": "採用シートのリコの特徴を保ち、赤と黒の衣装、丸眼鏡、薬瓶、植物標本を持つ全身立ち絵を透明背景で作る。ゲーム内で縮小表示できるよう足元まで収める。",
+      "sha256": "78f18dba26094dab543b0166fd37b90debf6d15a48694a4a5a14cfe86464922b"
+    },
+    {
+      "output": "public/characters/merrill-cutout.png",
+      "source": "public/characters/merrill.png",
+      "mode": "built-in image_gen, background removal edit",
+      "prompt": "Remove the solid deep green background from this Merrill full-body character art and output transparent alpha. Keep the entire figure in precisely the original pose and design, including wink, playful grin, flowers, red bow, backpack, mushroom cluster, metal arm, clothing, thick legs and shoes. No crop or added objects.",
+      "sha256": "c1989cbe6f5214f3ff0cf3136fe610651296f38d4d912375962253060869e60d"
+    }
+  ]
+}

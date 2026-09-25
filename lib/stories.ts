@@ -1,7 +1,9 @@
 import { chapterThreeStories } from "./chapter-three-stories.ts";
+import { chapterFourStories } from "./chapter-four-stories.ts";
+import { chapterFourBanter } from "./chapter-four-banter.ts";
 import { chapterThreeBanter } from "./chapter-three-banter.ts";
 import { interludeUnlocked } from "./interludes.ts";
-import type { State, Squad } from "./game.ts";
+import type { Run, State, Squad } from "./game.ts";
 import {
   TRADE_QUEST,
   RETURN_QUEST,
@@ -40,7 +42,12 @@ const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
 });
 
 // Their affection is mutual. Progress shows trust and small choices, never a forced confession.
-export const stories: Story[] = [...prologueStories, ...chapterTwoStories, ...chapterThreeStories];
+export const stories: Story[] = [
+  ...prologueStories,
+  ...chapterTwoStories,
+  ...chapterThreeStories,
+  ...chapterFourStories,
+];
 
 export const characterNotes: Partial<Record<string, { habit: string }>> = {
   finn: {
@@ -204,12 +211,17 @@ function wetlandBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
 function routeBanter(sq: Squad): StoryLine[] | null {
   const run = sq.run;
   if (!run) return null;
+  const fourth = chapterFourBanter(run);
+  if (fourth) return fourth;
   const third = chapterThreeBanter(run);
   if (third) return third;
   const chapterTwo = chapterTwoBanter(run);
   if (chapterTwo) return chapterTwo;
   const waterway = waterwayBanter(run);
   if (waterway) return waterway;
+  return legacyRouteBanter(run);
+}
+function legacyRouteBanter(run: Run): StoryLine[] | null {
   if (run.quest === WETLAND_QUEST) return wetlandBanter(run);
   if (run.quest === TOWER_QUEST) return towerBanter(run);
   if (run.quest === NIGHT_QUEST) return nightBanter(run);

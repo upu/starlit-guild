@@ -32,6 +32,13 @@ export function applyHeroPose(
   pose: string,
   size: number,
 ) {
+  if (id === "lico") {
+    image
+      .setTexture(roadSheet(id))
+      .setOrigin(0.5, 1)
+      .setScale((size * 0.9) / image.frame.height);
+    return;
+  }
   if (id === "finn") {
     applyFinnPose(image, pose, size);
     return;
@@ -66,6 +73,10 @@ export function applyWorkPose(
   size: number,
   pulling: boolean,
 ) {
+  if (hero.id === "lico") {
+    applyHeroPose(image, hero.id, "8", size);
+    return true;
+  }
   const kind = workKind(state, pulling);
   if (!kind) return false;
   const pose = {

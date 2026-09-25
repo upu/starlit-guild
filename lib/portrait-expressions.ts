@@ -50,6 +50,7 @@ const portraitCharacters: Partial<Record<number, PortraitCharacter>> = {
   1: "leon",
   2: "mira",
   3: "finn",
+  4: "lico",
   12: "merrill",
   13: "pumpety",
 };

@@ -8,8 +8,14 @@ export const CHAPTER_ROAD_STEP = 100;
 export const CHAPTER_ROAD_SPACING = 210;
 export const ROAD_CARRY_DISTANCE = 180;
 export const ROAD_CARRY_SPEED = 24;
-export const workOffsets: Record<string, number> = { aria: -12, leon: 32, mira: -58, finn: -100 };
-const speed: Record<string, number> = { aria: 87, leon: 103, mira: 82, finn: 108 };
+export const workOffsets: Record<string, number> = {
+  aria: -12,
+  leon: 32,
+  mira: -58,
+  finn: -100,
+  lico: -142,
+};
+const speed: Record<string, number> = { aria: 87, leon: 103, mira: 82, finn: 108, lico: 82 };
 export const roadPosition = (x: number): RoadPosition => ({
   x,
   previousX: x,

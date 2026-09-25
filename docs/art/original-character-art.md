@@ -13,6 +13,8 @@
 
 パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。立ち絵は深緑の背景を持つ肖像として枠付きで表示し、透過画像として扱わない。
 
+第四章4-7の横スクロール画面だけは、元の `public/characters/merrill.png` を参照し、人物を維持したまま背景を透過した `public/characters/merrill-cutout.png` を使う。元の肖像画像は差し替えない。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+
 ## メリルの琴とポーズ
 
 以下の銀青色の装具などは、既存画像を制作した当時の条件。メリルを新たに描く際の外見・材質は [人物設定](../characters/merrill.md#外見の設定採用) と [ドライアドとしての設定](../characters/merrill.md#ドライアドとしての設定) を正とし、この記録を最新の固定条件として流用しない。

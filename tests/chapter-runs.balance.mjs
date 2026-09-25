@@ -8,6 +8,7 @@ import { STONE_RETURN_QUEST } from "../lib/chapter-three.ts";
 import { chapterComparisons, trainedChapter } from "../scripts/check-combat-balance.mjs";
 import { chapterRoute, measure } from "../scripts/check-chapter-two-balance.mjs";
 import { chapterThreeRoute, outfitBerne } from "../scripts/check-chapter-three-balance.mjs";
+import { chapterFourRoute } from "../scripts/check-chapter-four-balance.mjs";
 import { progressionRoute } from "../scripts/check-progression-balance.mjs";
 
 function roundtrip(s) {
@@ -101,4 +102,18 @@ test("third chapter: earned chapter-two state carries through all nine stages wi
   const strong = measure(outfitBerne(testState(1000, 25, 30, 10000)), STONE_RETURN_QUEST);
   assert.ok(strong.record.cleared);
   assert.equal(strong.record.rests, 0);
+});
+
+test("fourth chapter carries the complete third-chapter state through nine stages and a fifth companion", () => {
+  const first = trainedChapter(true);
+  const second = chapterRoute("standard", first.state);
+  const third = chapterThreeRoute(second.state);
+  const before = structuredClone(third.state);
+  const fourth = chapterFourRoute(third.state);
+  assert.deepEqual(third.state, before);
+  assert.equal(fourth.records.length, 9);
+  assert.ok(fourth.records.every((record) => record.cleared));
+  assert.ok(fourth.state.owned.includes("lico"));
+  assert.ok(fourth.state.story.read.includes("starlit-guild-founding-return"));
+  assert.deepEqual(roundtrip(fourth.state), JSON.parse(JSON.stringify(fourth.state)));
 });

@@ -1,4 +1,5 @@
 import { isChapterThreeQuest } from "./chapter-three.ts";
+import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
@@ -81,6 +82,8 @@ function quietStageWork(q: Quest, kind: Encounter) {
   );
 }
 function actorEventKind(q: Quest, kind: Encounter, special: boolean): GameEvent["kind"] {
+  if ([LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST].includes(q.id) && kind === "battle")
+    return "gather";
   if (isChapterThreeQuest(q.id) && kind !== "battle") return "gather";
   if (quietStageWork(q, kind)) return "gather";
   if (special) return "skill";
@@ -105,6 +108,8 @@ function stageWorkText(q: Quest, kind: Encounter, special: boolean) {
   return texts[q.id]?.[Number(special)] || null;
 }
 function actorEventText(q: Quest, kind: Encounter, hero: string, special: boolean) {
+  if (q.id === LICO_RECORDS_QUEST && kind === "battle") return "板と栓を押さえる";
+  if (q.id === MERRILL_SEEDLINGS_QUEST && kind === "battle") return "苗の籠を守る";
   const work = stageWorkText(q, kind, special);
   if (work) return work;
   if (q.id === TOWN_QUEST) return special ? "息を合わせて荷運び" : "荷札の確認・配達";

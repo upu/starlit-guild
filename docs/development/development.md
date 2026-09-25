@@ -123,7 +123,8 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/dialog-layout.browser.py` 会話・ダイアログの画面幅、回転、安全領域 | Python版Playwright + ChromiumまたはWebKit。`npm run build`。生成CSSを使う独立fixture。外部サーバー不要 | `python tests/dialog-layout.browser.py --engine chromium`（WebKitは `--engine webkit`） | 成功時のケース数、失敗時の測定値を標準出力 |
 | `tests/chapter-road.browser.mjs` 道中演出・Canvas・再読み込み・画像失敗 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-road.browser.mjs` | `work/chapter-road-browser/` の画像・`results.json` |
 | `tests/chapter-three.browser.mjs` 第三章の幕間→出発・各ステージ・ショップ | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-three.browser.mjs` | `work/chapter-three-browser/` の画像・`result.json` |
-| `tests/chapter-runs.balance.mjs` 第一章〜第三章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約25秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の4件のPASS表示 |
+| `tests/chapter-four.browser.mjs` 第四章の幕間・初回出発・リコとメリルの対立・五人表示 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/chapter-four.browser.mjs` | `work/chapter-four-browser/` の画像・`result.json` |
+| `tests/chapter-runs.balance.mjs` 第一章〜第四章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約45秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の5件のPASS表示 |
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
 <!-- manual-test-inventory:end -->

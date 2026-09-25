@@ -10,6 +10,7 @@ import {
 import { techniqueDamage } from "./techniques.ts";
 import { syncEnemyTotals, type Enemy } from "./combat.ts";
 import { roadEnemyReady, roadEnemyTargets } from "./chapter-road.ts";
+import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 
 type Emit = (
   r: Run,
@@ -23,6 +24,8 @@ type Emit = (
 ) => void;
 export function enemyText(q: Quest, blocked: number) {
   if (blocked) return "障壁で攻撃を軽減";
+  if (q.id === LICO_RECORDS_QUEST) return "仕掛けの光と煙に足止めされた";
+  if (q.id === MERRILL_SEEDLINGS_QUEST) return "メリルの演奏に籠の運び手が立ち止まった";
   if (q.enemy === 12) return "メリルが踊りながらかじりつく！";
   if (q.enemy === 13) return "プティの人形が糸を引いて飛びかかる！";
   return "魔物の攻撃";

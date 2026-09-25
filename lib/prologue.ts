@@ -1,4 +1,5 @@
 import { chapterThreeStages, isChapterThreeQuest, LUNCH_INTERLUDE } from "./chapter-three.ts";
+import { chapterFourStages, isChapterFourQuest, WALNUT_INTERLUDE } from "./chapter-four.ts";
 import { chapterTwoStages } from "./chapter-two.ts";
 import type { State, Squad } from "./game.ts";
 
@@ -76,7 +77,12 @@ export const prologueStages = [
     detail: "道具を置いて、ふたりで塔を見上げましょう。",
   },
 ];
-export const storyStages = [...prologueStages, ...chapterTwoStages, ...chapterThreeStages];
+export const storyStages = [
+  ...prologueStages,
+  ...chapterTwoStages,
+  ...chapterThreeStages,
+  ...chapterFourStages,
+];
 export const isPrologueQuest = (id: string) => storyStages.some((stage) => stage.quest === id);
 // Old saves lack lastQuest. Use their last recorded stage without jumping to an unlocked one.
 export function restingQuest(s: State, sq: Squad) {
@@ -98,6 +104,7 @@ export const tradeEndingPending = (s: State) => stageEndingPending(s) === TRADE_
 // Use recorded completions and readings; do not migrate or reset existing saves.
 export function stageUnlocked(s: State, id: string) {
   if (isChapterThreeQuest(id) && !s.story?.read.includes(LUNCH_INTERLUDE)) return false;
+  if (isChapterFourQuest(id) && !s.story?.read.includes(WALNUT_INTERLUDE)) return false;
   const index = storyStages.findIndex((stage) => stage.quest === id);
   return (
     index <= 0 ||

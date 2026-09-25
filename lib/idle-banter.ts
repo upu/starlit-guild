@@ -12,6 +12,15 @@ const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
 });
 const m = (text: string): StoryLine => ({ speaker: "mira", text });
 const f = (text: string): StoryLine => ({ speaker: "finn", text });
+const r = (text: string): StoryLine => ({ speaker: "lico", text });
+const quintetExchanges: StoryLine[][] = [
+  [r("あの道の光、昨日より薄い。あとで比べたい。"), a("道を歩き終えてからね。私も見るよ。")],
+  [l("試料の瓶は閉めましたか。"), r("うん。……開けるときは止まる。覚えてる。")],
+  [m("リコ、指先が荒れているわ。"), r("この葉の汁。痛くはないけど、先に洗う。")],
+  [f("おじさんにもその薬草ソーダ、分けてくれるかい？"), r("飲む前に、材料は言う。苦いよ。")],
+  [a("その石、気になる？"), r("うん。帰り道にもあるなら、印をつけておく。")],
+  [r("夕暮れまで、まだあるでしょ。"), l("寄り道は、帰りの時間を決めてからにしましょう。")],
+];
 const quartetExchanges: StoryLine[][] = [
   [
     f("レオンくん、紐を一本借りてもいいかい。"),
@@ -131,10 +140,12 @@ export function idleBanter(
   now: number,
   members: readonly string[] = ["aria", "leon"],
 ): StoryLine[] {
-  const pool = ["aria", "leon", "mira", "finn"].every((id) => members.includes(id))
-    ? quartetExchanges
-    : ["aria", "leon", "mira"].every((id) => members.includes(id))
-      ? trioExchanges
-      : exchanges;
+  const pool = ["aria", "leon", "mira", "finn", "lico"].every((id) => members.includes(id))
+    ? quintetExchanges
+    : ["aria", "leon", "mira", "finn"].every((id) => members.includes(id))
+      ? quartetExchanges
+      : ["aria", "leon", "mira"].every((id) => members.includes(id))
+        ? trioExchanges
+        : exchanges;
   return pool[Math.floor(Math.max(0, now) / 30000) % pool.length];
 }

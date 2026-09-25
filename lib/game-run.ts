@@ -1,4 +1,5 @@
 import { chapterThreeWorkload } from "./chapter-three.ts";
+import { chapterFourWorkload } from "./chapter-four.ts";
 import { beginRoadExit, startRoadScene } from "./road-scenes.ts";
 import { questNodes } from "./puppet-battles.ts";
 import { createEnemies, damageEnemy, penetration, syncEnemyTotals } from "./combat.ts";
@@ -69,7 +70,8 @@ export function configureTarget(r: Run, q: Quest) {
       1.12 *
       (encounter(q, r.node) === "escort" ? 1.8 : 2.3) *
       chapterTwoWorkload(q.id) *
-      chapterThreeWorkload(q.id),
+      chapterThreeWorkload(q.id) *
+      chapterFourWorkload(q.id),
   );
   r.target = r.targetMax;
   r.hits = 0;
@@ -145,6 +147,11 @@ export function nextEvent(r: Run) {
   );
 }
 export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
+  lico: {
+    style: "ranged",
+    name: "発光試料の目くらまし",
+    description: "薬液の光で敵の動きを鈍らせる。採取と調査も得意。",
+  },
   finn: {
     style: "melee",
     name: "隙を突く一刺し",

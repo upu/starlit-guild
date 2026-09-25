@@ -10,7 +10,7 @@
 
 キャラクター紹介としても外見を読み取れるよう、構図候補01の二人の全身が見える横構図を採用。左にメリル、右にリコを置き、足元まで収める。リコは赤・黒の新しい衣装に揃え、メリルは太ももとふくらはぎの厚みを増した。背景に運搬路と荷車を残す。
 
-原本は `assets/source/stories/lico-protects-seedlings.png`（1536×1024）。[共通の制作記録](story-art.md#第四章のスチル制作)と[生成プロンプト・参照画像・ハッシュ](../art-generation/chapter-four-stills.json)を参照。ゲームの会話・アルバムにはまだ接続していない。
+原本は `assets/source/stories/lico-protects-seedlings.png`（1536×1024）。[共通の制作記録](story-art.md#第四章のスチル制作)と[生成プロンプト・参照画像・ハッシュ](../art-generation/chapter-four-stills.json)を参照。4-7出発会話とアルバムに接続している。
 
 ## 4-4の採用画像：徹夜明けのミラ
 

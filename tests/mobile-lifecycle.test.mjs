@@ -173,7 +173,7 @@ test("chapter presets create separate records, respect the capability and capaci
     ordinary = h.read().profiles[0];
   for (const preset of chapterPresets.testPresets) h.hook.createProfile(true, preset.id);
   const bundle = h.read();
-  assert.equal(bundle.profiles.length, 5);
+  assert.equal(bundle.profiles.length, chapterPresets.testPresets.length + 1);
   assert.deepEqual(bundle.profiles[0], ordinary);
   for (const p of bundle.profiles.slice(1)) {
     assert.equal(p.test, true);

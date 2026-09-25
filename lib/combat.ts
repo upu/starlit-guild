@@ -1,4 +1,5 @@
 import { chapterThreeRank } from "./chapter-three.ts";
+import { chapterFourRank, isChapterFourQuest } from "./chapter-four.ts";
 import type { Quest, Run, State } from "./game.ts";
 import { level } from "./roster.ts";
 import { equippedItems } from "./equipment.ts";
@@ -37,6 +38,7 @@ const firstChapterRanks = [0, 1, 2, 6, 10, 12, 17, 21, 25];
 
 // Difficulty belongs to a quest, never its repeat count or the save's total clears.
 export function combatRank(q: Quest) {
+  if (isChapterFourQuest(q.id)) return chapterFourRank(q.id);
   const third = chapterThreeRank(q.id);
   if (third !== undefined) return third;
   if (q.id === PICNIC_QUEST) return 0;

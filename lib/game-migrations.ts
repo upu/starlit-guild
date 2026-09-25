@@ -1,11 +1,12 @@
 import { BERNE_QUEST, LUNCH_INTERLUDE, isChapterThreeQuest } from "./chapter-three.ts";
+import { MERRILL_SEEDLINGS_QUEST, WALNUT_INTERLUDE, isChapterFourQuest } from "./chapter-four.ts";
 import { DELIVERY_PREP_QUEST, PICNIC_QUEST } from "./chapter-two.ts";
 import { nextStage, storyStages } from "./prologue.ts";
 import { storyProgress } from "./stories.ts";
 import type { LegacySharedHealthState, LegacySharedRun, Run, State } from "./game-types.ts";
 import { initialState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
-import { joinStoryMira, joinStoryFinn } from "./game-actions.ts";
+import { joinStoryMira, joinStoryFinn, joinStoryLico } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
 
 function upgradeSharedHealth(input: State | LegacySharedHealthState): State {
@@ -69,6 +70,11 @@ export function migrate(raw: State | LegacySharedHealthState): State {
 function addOnce(list: string[], value: string) {
   if (!list.includes(value)) list.push(value);
 }
+function completeStoryJoin(s: State, quest: string) {
+  if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+  if (quest === BERNE_QUEST) joinStoryFinn(s);
+  if (quest === MERRILL_SEEDLINGS_QUEST) joinStoryLico(s);
+}
 // Mark the first stages as departed, completed, and read, with the joins they carry.
 export function completeStoryStages(s: State, count: number) {
   const story = (s.story ??= storyProgress(s));
@@ -78,9 +84,9 @@ export function completeStoryStages(s: State, count: number) {
     addOnce(story.completed, quest);
     addOnce(story.read, quest + "-departure");
     addOnce(story.read, quest + "-return");
-    if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+    completeStoryJoin(s, quest);
     if (isChapterThreeQuest(quest)) addOnce(story.read, LUNCH_INTERLUDE);
-    if (quest === BERNE_QUEST) joinStoryFinn(s);
+    if (isChapterFourQuest(quest)) addOnce(story.read, WALNUT_INTERLUDE);
   }
 }
 // Test records follow the story stages.

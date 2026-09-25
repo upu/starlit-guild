@@ -16,6 +16,7 @@ import { isPrologueQuest, RESTORATION_QUEST } from "./prologue.ts";
 import { chapterTwoEnemyAsset, chapterTwoGolem } from "./chapter-two.ts";
 import type { Enemy } from "./combat.ts";
 import { puppetLook, puppetCue } from "./puppet-battles.ts";
+import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 
 export type AdventureInput = {
   squad: Squad;
@@ -30,7 +31,11 @@ export type AdventureIntent = "help" | "heal" | `heal:${string}`;
 const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 // Mira's map figure follows her character reference; dialogue portraits stay independent.
 export const spriteAsset = (index: number) =>
-  index === 2 ? "/animations/mira-v1.png" : originalArt(index) || "/sprites.png";
+  index === 2
+    ? "/animations/mira-v1.png"
+    : index === 4
+      ? "/characters/lico-v1.png"
+      : originalArt(index) || "/sprites.png";
 export const spriteFrame = (index: number) =>
   index === 2 ? "8" : spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
 type ActiveRun = NonNullable<Squad["run"]>;
@@ -122,6 +127,11 @@ function targetAsset(
   kind: ReturnType<typeof encounter> | null,
   sprite: number,
 ) {
+  const encounterNode = run.road?.ambushNode ?? run.node;
+  if (kind === "battle" && quest.id === LICO_RECORDS_QUEST && encounterNode === 14)
+    return "/characters/lico-v1.png";
+  if (kind === "battle" && quest.id === MERRILL_SEEDLINGS_QUEST && encounterNode === 8)
+    return "/characters/merrill-cutout.png";
   const enemyArt = kind === "battle" ? chapterTwoEnemyAsset(quest.id, run.node) : null;
   if (enemyArt) return enemyArt;
   if (kind === "escort")

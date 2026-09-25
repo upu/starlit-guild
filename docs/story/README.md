@@ -18,7 +18,7 @@
 | 第一章 | [第一章プロット](story-part-1.md) | [第一章](game-script/chapter-1.md) | [第一章のゲーム実装](../gameplay/prologue-gameplay.md) |
 | 第二章 | [第二章計画](story-part-2.md) | [第二章](game-script/chapter-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
 | 第三章 | [第三章計画](story-part-3.md) | [第三章](game-script/chapter-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
-| 第四章 | [第四章計画](story-part-4.md)・[詳細台本](chapter-four-script.md)・[道中と日常の掛け合い](chapter-four-banter.md) | — | 未作成 |
+| 第四章 | [第四章計画](story-part-4.md)・[詳細台本](chapter-four-script.md)・[道中と日常の掛け合い](chapter-four-banter.md) | [第四章](game-script/chapter-4.md) | [第四章のゲーム実装](../gameplay/chapter-four-gameplay.md) |
 
 ## 台本と場面の素材
 

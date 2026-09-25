@@ -1,4 +1,5 @@
 import * as chapterThree from "../lib/chapter-three.ts";
+import * as chapterFour from "../lib/chapter-four.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
@@ -31,7 +32,7 @@ function rows(heading) {
 test("the stage table lists every story stage once, in order, with the real names and ids", () => {
   const table = rows("ステージとクエストID");
   assert.equal(table.length, storyStages.length, "行数がステージ数と一致しない");
-  const constants = { ...prologue, ...chapterTwo, ...chapterThree };
+  const constants = { ...prologue, ...chapterTwo, ...chapterThree, ...chapterFour };
   for (const [index, [number, name, id, constant, region, scenes, documents]] of table.entries()) {
     const stage = storyStages[index],
       quest = allQuests.find((q) => q.id === stage.quest);
@@ -47,7 +48,9 @@ test("the stage table lists every story stage once, in order, with the real name
         ? "[物語](story/story-part-1.md) / [実装](gameplay/prologue-gameplay.md)"
         : number.startsWith("2-")
           ? "[物語](story/story-part-2.md) / [実装](gameplay/chapter-two-gameplay.md)"
-          : "[物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md)",
+          : number.startsWith("3-")
+            ? "[物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md)"
+            : "[物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md)",
       `${id}: 担当資料`,
     );
   }

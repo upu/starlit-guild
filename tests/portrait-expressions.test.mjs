@@ -64,7 +64,8 @@ test("reference characters retain eight expressions and other characters retain 
       portraits.expressionPortrait(index, "neutral").position,
     );
   }
-  for (const index of [4, 5, 6, 7, 14]) {
+  assert.equal(portraits.expressionPortrait(4, "smile")?.src, "/portraits/lico-expressions.webp");
+  for (const index of [5, 6, 7, 14]) {
     assert.equal(portraits.expressionPortrait(index, "smile"), null);
     assert.ok(
       exports
