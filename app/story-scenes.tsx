@@ -90,6 +90,55 @@ function storyPageState(story: Story, page: number, departure: boolean) {
   };
 }
 
+type StoryReaderProps = {
+  story: Story;
+  ready: boolean;
+  onRead: () => boolean;
+  onClose: () => void;
+  departure?: boolean;
+  advanceRef?: Ref<StoryAdvance>;
+};
+export type StageTitle = { number: string; name: string };
+function StageTitleCard({
+  stage,
+  onStart,
+  advanceRef,
+}: {
+  stage: StageTitle;
+  onStart: () => void;
+  advanceRef?: Ref<StoryAdvance>;
+}) {
+  useImperativeHandle(advanceRef, () => ({ advance: onStart }));
+  return (
+    <div className="story-reader stage-title-reader">
+      <button
+        type="button"
+        className="stage-title-card"
+        aria-label={`${stage.number} ${stage.name}：会話を始める`}
+        onClick={onStart}
+      >
+        <span>{stage.number}</span>
+        <strong>{stage.name}</strong>
+      </button>
+    </div>
+  );
+}
+// A stage departure opens on its number and name, then the conversation starts on a tap.
+export function StageStoryReader({ stage, ...props }: StoryReaderProps & { stage?: StageTitle }) {
+  const [intro, setIntro] = useState(!!stage);
+  if (intro && stage)
+    return (
+      <StageTitleCard
+        stage={stage}
+        advanceRef={props.advanceRef}
+        onStart={() => {
+          setIntro(false);
+        }}
+      />
+    );
+  return <StoryReader {...props} />;
+}
+
 export function StoryReader({
   story,
   ready,
@@ -97,14 +146,7 @@ export function StoryReader({
   onClose,
   departure = false,
   advanceRef,
-}: {
-  story: Story;
-  ready: boolean;
-  onRead: () => boolean;
-  onClose: () => void;
-  departure?: boolean;
-  advanceRef?: Ref<StoryAdvance>;
-}) {
+}: StoryReaderProps) {
   const [page, setPage] = useState(0),
     [viewArt, setViewArt] = useState(false);
   const dialogue = useRef<HTMLDivElement>(null);

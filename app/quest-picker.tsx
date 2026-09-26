@@ -132,6 +132,7 @@ export function QuestPicker({
           checked={s.autoNextQuest === true}
           onChange={onAutoNextChange}
           disabled={!ready}
+          compact
         />
         <p className="departure-party">
           <span>
