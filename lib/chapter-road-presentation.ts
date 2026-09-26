@@ -30,6 +30,7 @@ import {
 import type { RoadPosition } from "./chapter-road-types.ts";
 import { roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
+import { spreadBattleParty } from "./road-party-formation.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -299,9 +300,12 @@ function arrangeCarriers(
   battle: RoadBattle,
   puller: string | null,
 ) {
-  if (!puller) return;
+  if (!puller || roadHasEnemies(run)) return;
   // Keep every carrier on the cart's ground line and spread pushers to its left.
-  const rear = { aria: -145, leon: -145, mira: -175, finn: -205 } as Record<string, number>;
+  const rear = { aria: -145, leon: -145, mira: -175, finn: -205, lico: -240 } as Record<
+    string,
+    number
+  >;
   for (const hero of battle.heroes) {
     const visualOffset = hero.id === puller ? 45 : rear[hero.id] || -110;
     hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
@@ -342,6 +346,7 @@ export function chapterRoadFrame(
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
   addWork(input, frame, battle, look);
+  spreadBattleParty(battle, look.workers);
   battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
   if (battle.effects.some((effect) => effect.kind === "command")) {
     const master = battle.enemies.find((enemy) => enemy.kind === "pumpety");

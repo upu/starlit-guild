@@ -6,6 +6,8 @@ import { damageEnemy } from "../lib/combat.ts";
 import { combination } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadY } from "../lib/road-layout.ts";
+import { travellerLane } from "../lib/road-view.ts";
+import { roadHasEnemies } from "../lib/chapter-road.ts";
 import {
   movingWork,
   roadPuller,
@@ -27,6 +29,44 @@ function start(index, level) {
   );
 }
 const quest = (run) => allQuests.find((q) => q.id === run.quest);
+
+test("five companions leave the cart formation during Merrill's ambush and resume carrying afterward", () => {
+  let state = start(34, 25);
+  let defended = false,
+    resumed = false;
+  while (state.squads[0].run && !resumed) {
+    const run = state.squads[0].run;
+    const before = structuredClone(run);
+    const { battle, look } = chapterRoadFrame({
+      squad: state.squads[0],
+      now: run.road.at,
+      ready: true,
+      paused: false,
+    });
+    if (run.enemies.some((enemy) => enemy.trick === "merrill") && roadHasEnemies(run)) {
+      defended = true;
+      assert.deepEqual(look.workers, []);
+      const leon = battle.heroes.find((hero) => hero.id === "leon");
+      assert.equal(
+        leon.x,
+        run.road.members.leon.x,
+        "pulling offset must not move Leon through the enemies",
+      );
+      assert.equal(leon.lane, travellerLane("leon"));
+      assert.equal(new Set(battle.heroes.map((hero) => hero.lane)).size, 5);
+      const lico = battle.heroes.find((hero) => hero.id === "lico");
+      assert.ok(lico.lane > 0.82, "Lico is in front of the cart, not hidden behind it");
+      assert.deepEqual(run, before, "drawing must not change saved combat");
+    } else if (defended && look.workers.length === 5 && battle.gathering?.task === "carry") {
+      resumed = true;
+      const cartX = battle.gathering.x + 65;
+      assert.ok(battle.heroes.find((hero) => hero.id === "leon").x > cartX + 50);
+      assert.ok(battle.heroes.find((hero) => hero.id === "lico").x < cartX - 40);
+    }
+    state = settle(state, run.nextAt);
+  }
+  assert.ok(defended && resumed);
+});
 
 test("a living member takes over pulling when the lead carrier falls", () => {
   let state = start(0, 12);

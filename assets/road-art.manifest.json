@@ -97,6 +97,14 @@
       "sourceBytes": 1064152,
       "outputBytes": 718790
     },
+    "lico-motion-v1.png": {
+      "sourceHash": "44ebb56410358589b28a7fca17f73c3e64f5626aa1b18fa3394281005a45f85d",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "lico-motion-v1.webp",
+      "outputHash": "f97959224158de0b6cfb1bfed9debda89ca60550d87a1e87b9e3122c887967d9",
+      "sourceBytes": 1377178,
+      "outputBytes": 939568
+    },
     "lico-standing-v1.png": {
       "sourceHash": "36438d77ac150da871d224a5f8b31d70b8ea2f554a5de6c9d34f6366a8d9d2c1",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",

@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-26",
+  "mode": "built-in image_gen",
+  "purpose": "リコの歩行2コマ・荷車を押す2コマ。既存の簡素な約2.3頭身を維持する。",
+  "reference": "assets/source/road/lico-standing-v1.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent game character animation atlas. Image 1 is the identity and rendering reference for Lico. Create exactly FOUR full-body sprites in a clean equal 2x2 grid with wide transparent gaps, no labels and no scenery. All four face RIGHT in matching three-quarter side view. Preserve the reference's short 2.3-head chibi body proportions, large round glasses, green eyes, freckles, reddish brown high ponytail with red flower ribbon, black cloak, cream shirt, simple red apron, brown crossbody bag, brown sandals and flat bold clean shading. This is a simplified tiny game sprite, no added decorations. Put the potion bottle away: empty hands in all four frames. Top-left: walking right, left leg leading and right arm forward. Top-right: walking right, right leg leading and left arm forward, complementary alternating step. Bottom-left: pushing a heavy invisible cart to the right, torso leaning forward gently, BOTH hands extended forward at chest level palms pressing, left leg leading right leg pushing from behind. Bottom-right: same pushing pose and hand contact location, right leg leading and left leg behind. Do NOT draw the cart or any object in the hands. Same head size, outfit and consistent camera across all four sprites, head never changes size; pushing is mildly shorter due to leaning. Feet on same baseline within each cell, generous clear margin, keep full ponytail and fingers within each cell. Genuinely transparent alpha background, no ground shadows, no checkered pattern, no words, no frame borders.",
+  "generated": "C:/Users/spitz/.codex/generated_images/01a0d93a-ee5f-7141-ae16-170fd8c05d88/exec-0b560ccb-e5d5-475f-b12c-7ab505843f7b.png",
+  "source": "assets/source/road/lico-motion-v1.png",
+  "output": "public/animations/road/lico-motion-v1.webp",
+  "processing": "生成RGBA原本1225x1284をそのまま保存。実行時に歩行A/B・押すA/Bの矩形を登録。足元を合わせ、共通倍率0.9/629を使い、前傾時も頭の大きさを変えない。WebPはroad-artパイプラインで可逆圧縮。",
+  "frames": [
+    [
+      83,
+      7,
+      425,
+      627
+    ],
+    [
+      721,
+      7,
+      425,
+      631
+    ],
+    [
+      101,
+      658,
+      429,
+      601
+    ],
+    [
+      738,
+      656,
+      415,
+      604
+    ]
+  ]
+}

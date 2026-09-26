@@ -91,6 +91,10 @@ function stageRun(index, target) {
       ready: true,
       paused: false,
     });
+    if (target === "walk")
+      return frame.battle.heroes.some((hero) => hero.id === "lico" && hero.walking);
+    if (target === "push")
+      return frame.battle.gathering?.task === "carry" && frame.look.workers.includes("lico");
     if (typeof target === "number")
       return (
         run.node === target &&
@@ -206,6 +210,8 @@ try {
     ["korotake-summon", 7, "summon"],
     ["merrill-party-song", 7, "song"],
     ["five-companions", 8, 0],
+    ["lico-walking", 7, "walk"],
+    ["lico-pushing", 7, "push"],
   ]) {
     const state = stageRun(index, node);
     if (name === "lico-and-merrill") assert.ok(state.owned.includes("lico"));
@@ -214,6 +220,10 @@ try {
       assert.equal(state.squads[0].run.quest, MERRILL_SEEDLINGS_QUEST);
     const { page, context } = await open(state);
     await capture(page, name);
+    if (["walk", "push"].includes(node)) {
+      await page.clock.setFixedTime(new Date(state.updatedAt + (node === "walk" ? 150 : 220)));
+      await capture(page, `${name}-next-step`);
+    }
     if (["paralyze", "summon", "song"].includes(node)) await verifyBattleDialogue(page, state);
     await context.close();
     results.push(name);

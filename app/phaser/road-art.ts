@@ -49,15 +49,25 @@ export const ROAD_PUPPETS = "/animations/road/puppets-v1.webp";
 export const ROAD_PUSH = "/animations/road/push-v1.webp";
 export const ROAD_PULL = "/animations/road/pull-v1.webp";
 export const ROAD_FINN_PULL = "/animations/road/finn-pull-v1.webp";
+export const ROAD_LICO_MOTION = "/animations/road/lico-motion-v1.webp";
+// Walk A/B, push A/B. Tight rectangles share one scale, preserving head size when leaning.
+export const licoMotionFrames = [
+  [83, 7, 425, 627],
+  [721, 7, 425, 631],
+  [101, 658, 429, 601],
+  [738, 656, 415, 604],
+];
 export const ROAD_PACKING = "/animations/road/packing-v1.webp";
 export const ROAD_DESTINATION = "/animations/road/destination-v1.webp";
 export const ROAD_WORKSITES = "/animations/road/worksites-v1.webp";
 export const ROAD_BERNE_WORKSITES = "/animations/road/berne-worksites-v1.webp";
 export const ROAD_LEDGER_DESK = "/animations/road/ledger-desk-v1.webp";
 export const roadWalkSheet = (id: TravellerId) =>
-  id === "finn" || id === "lico"
-    ? roadSheet(id)
-    : `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
+  id === "lico"
+    ? ROAD_LICO_MOTION
+    : id === "finn"
+      ? roadSheet(id)
+      : `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.
@@ -82,7 +92,7 @@ const walkBounds = {
   ],
 };
 export function roadWalkFrame(id: TravellerId, pose: number) {
-  if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 512 };
+  if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 629 };
   if (id === "finn") return { originX: 0.5, originY: 1, scale: 0.9 / finnFrames[pose][3] };
   const [left, top, right, bottom] = walkBounds[id][pose];
   return { originX: (left + right) / 2 / 627, originY: bottom / 627, scale: 0.9 / (bottom - top) };
