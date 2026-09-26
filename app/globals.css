@@ -330,34 +330,6 @@ small,
   color: #a8bca5;
   margin-top: 18px;
 }
-.journal article {
-  border-left: 1px solid #718069;
-  padding: 8px 0 24px 21px;
-  margin-left: 5px;
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 15px;
-  position: relative;
-}
-.journal article:before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border: 1px solid #ddc590;
-  border-radius: 50%;
-  background: #273c30;
-  position: absolute;
-  left: -4px;
-  top: 16px;
-}
-.journal time {
-  color: #9caf9c;
-  font-size: 12px;
-}
-.journal p {
-  font-size: 14px;
-  color: #cbd4bc;
-}
 .ending {
   border: 1px solid #b49c5c;
   background: #d8b86b0c;
@@ -577,10 +549,6 @@ footer > span:first-child {
   }
   .switch-row {
     font-size: 14px;
-  }
-  .journal article {
-    grid-template-columns: 1fr;
-    gap: 4px;
   }
   .notice {
     flex-wrap: wrap;

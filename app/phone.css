@@ -237,24 +237,6 @@ button {
   font-weight: 500;
   color: #e3d2a0;
 }
-.phone-journal {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 56dvh;
-  overflow-y: auto;
-}
-.phone-journal article {
-  border-left: 1px solid #70805b;
-  padding: 6px 0 9px 13px;
-}
-.phone-journal time {
-  font-size: 11px;
-  color: #96aa91;
-}
-.phone-journal p {
-  font-size: 13px;
-}
 .save-pagination {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
