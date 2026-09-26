@@ -63,7 +63,6 @@ function TechniqueChoices({
   notice,
   ...props
 }: Props & { slot: TechniqueSlot; notice: (text: string) => void }) {
-  const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
   const current = equippedTechnique(props.state, props.hero, slot);
   const [selected, setSelected] = useState(current ?? "empty");
   const choices = techniques.filter((t) => t.hero === props.hero && t.slot === slot);
@@ -74,7 +73,7 @@ function TechniqueChoices({
       setSelected(id);
       return;
     }
-    if (!props.ready || away || id === current) return;
+    if (!props.ready || id === current) return;
     if (id !== "empty" && !knowsTechnique(props.state, id)) return;
     if (
       props.onAction({
@@ -121,12 +120,10 @@ export function TechniquePanel(
   props: Props & { slot: string | null; onSlot: (slot: TechniqueSlot | null) => void },
 ) {
   const slot = props.slot;
-  const away = props.state.squads.some((sq) => sq.run && sq.members.includes(props.hero));
   if (!techniquesUnlocked(props.state) || !techniques.some((t) => t.hero === props.hero))
     return null;
   return (
     <section className="character-skill" aria-label="スキル">
-      {away && <p>冒険中です。スキルの付け替えは帰還後にできます。</p>}
       <div className="character-slots">
         {(["active", "passive"] as const).map((kind) => {
           if (!techniques.some((t) => t.hero === props.hero && t.slot === kind)) return null;
