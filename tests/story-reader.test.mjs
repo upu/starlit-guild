@@ -473,6 +473,7 @@ test("a stage departure opens on its number and name, and a tap or outside tap s
   const card = tree.type(tree.props),
     button = [card.props.children].flat().find((n) => n.type === "button");
   assert.equal(button.props.className, "stage-title-card");
+  assert.equal([button.props.children].flat().length, 2, "only the number and name are shown");
   assert.deepEqual(
     [button.props.children]
       .flat()

@@ -216,10 +216,3 @@
   color: #e4ddc7;
   overflow-wrap: anywhere;
 }
-.stage-title-card > small {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  font-size: 14px;
-}

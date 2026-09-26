@@ -112,13 +112,14 @@ function StageTitleCard({
   return (
     <div className="story-reader">
       <div className="story-art-space" />
-      <button type="button" className="stage-title-card" onClick={onStart}>
+      <button
+        type="button"
+        className="stage-title-card"
+        aria-label={`${stage.number} ${stage.name}：会話を始める`}
+        onClick={onStart}
+      >
         <span>{stage.number}</span>
         <strong>{stage.name}</strong>
-        <small>
-          会話を始める
-          <ChevronRight size={18} />
-        </small>
       </button>
     </div>
   );
