@@ -158,7 +158,7 @@ const patterns: Partial<Record<string, Work[]>> = {
   [MOSS_TRAIL_QUEST]: jobs(
     "escort",
     "一日目の荷車を追う",
-    "青い布を目印に戻る",
+    "一日目・青い布を目印に宿へ戻る",
     "二日目の裏道を追う",
   ),
   [MOSS_BEDS_QUEST]: jobs("gather", "苔床の列を数える", "水路と札を調べる", "塔からの距離を測る"),
@@ -183,6 +183,9 @@ const patterns: Partial<Record<string, Work[]>> = {
     "リンデの倉庫へ向かう",
   ),
 };
+// The fifteen waypoints advance through day one, the return trip, then day two.
+export const mossTrailPhase = (node: number) => (node < 6 ? 0 : node < 8 ? 1 : 2);
+
 export function chapterFourWork(id: string, node: number): Work | undefined {
   if (id === LICO_RECORDS_QUEST)
     return node === 14
@@ -194,6 +197,6 @@ export function chapterFourWork(id: string, node: number): Work | undefined {
     return node === 8
       ? { kind: "battle", name: "メリルから苗の籠を守る" }
       : { kind: "escort", name: "苗の籠を運び出す" };
-  return patterns[id]?.[node % 3];
+  return patterns[id]?.[id === MOSS_TRAIL_QUEST ? mossTrailPhase(node) : node % 3];
 }
 export const chapterFourWorkload = (id: string) => (isChapterFourQuest(id) ? 2 : 1);

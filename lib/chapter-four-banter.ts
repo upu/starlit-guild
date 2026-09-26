@@ -1,4 +1,9 @@
-import { chapterFourStages, isChapterFourQuest } from "./chapter-four.ts";
+import {
+  chapterFourStages,
+  isChapterFourQuest,
+  MOSS_TRAIL_QUEST,
+  mossTrailPhase,
+} from "./chapter-four.ts";
 import type { Run } from "./game.ts";
 import type { StoryLine } from "./stories.ts";
 
@@ -52,6 +57,16 @@ const routes: Record<string, StoryLine[][]> = {
         text: "そのために先生へ頼んだんだろ。今戻ったら、引き継いだ先生が困るよ。",
       },
       { speaker: "mira", text: "……そうね。戻ったら、様子を聞かせていただくわ。" },
+    ],
+    [
+      { speaker: "aria", text: "荷車、角を曲がるよ。" },
+      { speaker: "leon", text: "見えてる。少し間を空けてから行こう。" },
+      { speaker: "aria", text: "うん。今度の角は、右だね。" },
+    ],
+    [
+      { speaker: "aria", text: "帰り道は、あの青い布のところからだよね。" },
+      { speaker: "leon", text: "ああ。曲がり角も書いておいた。明日はここから先を確かめよう。" },
+      { speaker: "aria", text: "うん。付き合ってくれて、ありがとう。" },
     ],
   ],
   [chapterFourStages[4].quest]: [
@@ -128,6 +143,13 @@ const rests: StoryLine[][] = [
     { speaker: "leon", text: "道を確かめてから進もう。" },
   ],
 ];
+function mossTrailBanter(node: number): StoryLine[] {
+  const pool = routes[MOSS_TRAIL_QUEST];
+  const phase = mossTrailPhase(node);
+  if (phase === 0) return pool[2];
+  if (phase === 1) return pool[3];
+  return pool[node < 11 ? 1 : 0];
+}
 export function chapterFourBanter(run: Run): StoryLine[] | null {
   if (!isChapterFourQuest(run.quest)) return null;
   if (run.phase !== "rest" && run.quest === chapterFourStages[6].quest && run.node < 9)
@@ -135,8 +157,7 @@ export function chapterFourBanter(run: Run): StoryLine[] | null {
       { speaker: "lico", text: "苗を運ぶなら、あの籠を先に守って。" },
       { speaker: "leon", text: "道を空けます。アリア、布を頼む。" },
     ];
-  if (run.phase !== "rest" && run.quest === chapterFourStages[3].quest && run.node < 8)
-    return routes[run.quest][1];
+  if (run.phase !== "rest" && run.quest === MOSS_TRAIL_QUEST) return mossTrailBanter(run.node);
   const pool = run.phase === "rest" ? rests : routes[run.quest];
   if (!pool.length) return null;
   return pool[Math.floor(run.node / 6) % pool.length];

@@ -1,14 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { act, availableQuests, encounter, testState } from "../lib/game.ts";
+import { act, availableQuests, encounter, settle, targetName, testState } from "../lib/game.ts";
 import {
   WALNUT_INTERLUDE,
   LINDE_REQUESTS_QUEST,
+  MOSS_TRAIL_QUEST,
   LICO_RECORDS_QUEST,
   MERRILL_SEEDLINGS_QUEST,
   chapterFourStages,
 } from "../lib/chapter-four.ts";
 import { chapterFourStories } from "../lib/chapter-four-stories.ts";
+import { chapterFourBanter } from "../lib/chapter-four-banter.ts";
 import { storyArt } from "../lib/story-art.ts";
 import { parseBundle } from "../lib/save-format.ts";
 
@@ -78,6 +80,47 @@ test("Lico can join the first shared fight without duplicating her level or alte
   assert.equal(replay.owned.filter((id) => id === "lico").length, 1);
   const old = dispatch(stopped, { type: "start", id: chapterFourStages[0].quest });
   assert.deepEqual(old.squads[0].members, ["aria", "leon", "mira", "finn"]);
+});
+
+test("the moss trail progresses through two days in order, including banter and saved resumption", () => {
+  let state = dispatch(testState(1000, 30, 40, 10000), {
+    type: "start",
+    id: MOSS_TRAIL_QUEST,
+    readDeparture: true,
+    value: false,
+  });
+  const quest = availableQuests(state).find((q) => q.id === MOSS_TRAIL_QUEST);
+  const visits = new Map();
+  while (state.squads[0].run) {
+    const run = state.squads[0].run;
+    if (!visits.has(run.node)) {
+      const name = targetName(quest, run.node, run.nodes);
+      const lines = chapterFourBanter(run);
+      if (run.node < 8) {
+        assert.ok(lines.every((line) => ["aria", "leon"].includes(line.speaker)));
+        assert.ok(lines.every((line) => !line.text.includes("昨日")));
+      } else if (run.node < 11) {
+        assert.deepEqual(
+          lines.map((line) => line.speaker),
+          ["mira", "finn", "mira"],
+        );
+      } else {
+        assert.ok(lines[0].text.includes("昨日"));
+      }
+      visits.set(run.node, name);
+      state = roundtrip(state);
+      assert.deepEqual(chapterFourBanter(state.squads[0].run), lines);
+    }
+    state = settle(state, run.nextAt).state;
+  }
+  assert.deepEqual(
+    [...visits.values()],
+    [
+      ...Array(6).fill("一日目の荷車を追う"),
+      ...Array(2).fill("一日目・青い布を目印に宿へ戻る"),
+      ...Array(7).fill("二日目の裏道を追う"),
+    ],
+  );
 });
 
 test("the approved fourth-chapter stills appear at their matching moments", () => {
