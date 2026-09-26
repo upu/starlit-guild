@@ -137,8 +137,16 @@ test("the antagonist stays masked and unjoined through the finale", () => {
   assert.ok(blockade.every((st) => st.lines.every((line) => line.speaker !== "pumpety")));
   assert.ok(
     blockade.every((st) =>
-      st.lines.filter((line) => line.speaker).every((line) => !line.text.includes("プティ")),
+      st.lines
+        .filter((line) => line.speaker && line.speaker !== "masked-pumpety")
+        .every((line) => !line.text.includes("プティ")),
     ),
   );
+  for (const story of blockade) {
+    const masked = story.lines.filter((line) => line.speaker === "masked-pumpety");
+    assert.ok(masked.length > 0);
+    assert.ok(masked.every((line) => line.expression === "mischievous"));
+    assert.ok(story.lines.every((line) => !line.text.startsWith("パンプキンヘッドの少女「")));
+  }
   assert.equal(finaleStories.at(-1).lines.at(-1).text, "第二章 完");
 });

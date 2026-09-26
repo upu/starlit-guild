@@ -17,6 +17,7 @@ import {
 } from "../scripts/script-sources.mjs";
 
 const names = new Map([...heroes, ...originalCharacters].map(({ id, name }) => [id, name]));
+names.set("masked-pumpety", "カボチャ頭の少女");
 const formatLine = (line) =>
   line.speaker && names.has(line.speaker) ? `${names.get(line.speaker)}：${line.text}` : line.text;
 const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);

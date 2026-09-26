@@ -19,7 +19,11 @@ const n = (text: string): StoryLine => ({ text });
 // Keep the caller unnamed and without an unmasked portrait. Before she is seen, only her voice speaks.
 const v = (text: string) => n("木々の奥からの声「" + text + "」");
 // Once the pumpkin-headed figure is visible, label what is seen rather than a name.
-const h = (text: string) => n("パンプキンヘッドの影「" + text + "」");
+const h = (text: string): StoryLine => ({
+  speaker: "masked-pumpety",
+  expression: "mischievous",
+  text,
+});
 // Named bystanders who speak more than once in a scene get a label.
 const s = (who: string, text: string) => n(who + "「" + text + "」");
 export const deliveryStories: Story[] = [

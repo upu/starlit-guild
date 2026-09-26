@@ -17,7 +17,11 @@ const m = (text: string, expression: StoryLine["expression"] = "neutral"): Story
 });
 const n = (text: string): StoryLine => ({ text });
 // A helmeted stranger, never the unmasked visitor portrait or a friendly name.
-const p = (text: string) => n("パンプキンヘッドの少女「" + text + "」");
+const p = (text: string): StoryLine => ({
+  speaker: "masked-pumpety",
+  expression: "mischievous",
+  text,
+});
 export const finaleStories: Story[] = [
   {
     id: BLOCKADE_QUEST + "-departure",
