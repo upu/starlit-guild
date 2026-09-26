@@ -252,6 +252,12 @@ export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
       <DialogContent
         {...(!description ? { "aria-describedby": undefined } : {})}
         showCloseButton={m.sheet !== "story"}
+        onOpenAutoFocus={(event) => {
+          // Focusing the chapter select on open pops its picker on phones; hold focus on the dialog.
+          if (m.sheet !== "quests") return;
+          event.preventDefault();
+          (event.currentTarget as HTMLElement).focus({ preventScroll: true });
+        }}
         onPointerDownOutside={conversation ? onPointerDownOutside : undefined}
         onInteractOutside={(event) => {
           if (conversation) event.preventDefault();

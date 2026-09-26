@@ -139,13 +139,9 @@ test("opens the selected destination chapter and filters cards; switching only p
   );
 });
 
-test("locked chapter hides its quests; the switch writes the same persisted preference", () => {
+test("chapter one alone shows no selector; the switch writes the same persisted preference", () => {
   const h = harness(game.initialState(1000));
-  assert.equal(h.option("two").props.disabled, true);
-  assert.equal(h.option("four").props.disabled, true);
-  h.changeChapter("four");
-  h.changeChapter("unknown");
-  assert.equal(h.chapter().props.value, "one");
+  assert.equal(h.chapter(), undefined, "a single open chapter needs no selector");
   assert.equal(h.cards().length, 1);
   assert.equal(h.setting().props.compact, true, "the picker omits the description");
   assert.equal(h.setting().props.checked, false);
@@ -153,11 +149,28 @@ test("locked chapter hides its quests; the switch writes the same persisted pref
   assert.equal(h.setting().props.checked, true);
   assert.equal(h.props.state.autoNextQuest, true);
   h.props.ready = false;
-  assert.equal(h.chapter().props.disabled, true);
   assert.equal(h.setting().props.disabled, true);
   assert.equal(h.summary().props.disabled, true);
   h.button(prologue.TRADE_QUEST).props.onClick();
   assert.equal(h.confirmed.length, 0);
+});
+
+test("selector lists only unlocked chapters and ignores locked or unknown ones", () => {
+  const h = harness(chapterTwoState(), chapterTwo.PICNIC_QUEST);
+  assert.deepEqual(
+    h
+      .all()
+      .filter((node) => node.type === "option")
+      .map((node) => node.key),
+    ["one", "two"],
+  );
+  assert.equal(h.option("three"), undefined);
+  assert.equal(h.option("four"), undefined);
+  h.changeChapter("four");
+  h.changeChapter("unknown");
+  assert.equal(h.chapter().props.value, "two");
+  h.props.ready = false;
+  assert.equal(h.chapter().props.disabled, true);
 });
 
 test("detail confirms on tap and keyboard but not drag, pointer cancellation or text selection", () => {
