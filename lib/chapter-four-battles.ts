@@ -60,7 +60,7 @@ function cue(
     at,
     "move",
     value === "summon"
-      ? "メリルがカバンからコロタケを二体投げた！"
+      ? "メリルがカバンからコロタケを四体投げた！"
       : value === "song"
         ? "メリルの歌と踊りで敵側全員が元気を取り戻す"
         : "リコのしびれ煙で一時的に麻痺",
@@ -72,8 +72,8 @@ function cue(
 }
 function summon(r: Run, enemy: Enemy, at: number, emit: BattleEmit) {
   const enemies = r.enemies;
-  if (!enemies || enemies.length >= 3 || !r.road) return false;
-  for (let index = enemies.length; index < 3; index++) {
+  if (!enemies || enemies.length >= 5 || !r.road) return false;
+  for (let index = enemies.length; index < 5; index++) {
     const maxHp = Math.round(enemy.maxHp * 0.65);
     const mushroom: Enemy = {
       id: `enemy-${String(index + 1)}`,

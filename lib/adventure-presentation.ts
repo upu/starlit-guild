@@ -228,6 +228,8 @@ function frameTargets(
           { x: 0.73, y: 0.43 },
           { x: 0.86, y: 0.63 },
           { x: 0.72, y: 0.83 },
+          { x: 0.9, y: 0.36 },
+          { x: 0.92, y: 0.9 },
         ];
   return enemies.map((enemy, index) => {
     if (enemy.role) return puppetTarget(base, enemy, index, enemies.length, run, now);

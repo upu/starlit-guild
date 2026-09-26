@@ -63,20 +63,26 @@ test("Merrill throws independent mushrooms, then heals allies without resurrecti
     master = r.enemies[0],
     mushroom = r.enemies[1];
   assert.equal(mushroom.trick, "mushroom");
-  assert.equal(r.enemies.length, 3, "two mushrooms appear in the same action");
-  assert.equal(r.enemies[1].nextAt, r.enemies[2].nextAt);
+  assert.equal(r.enemies.length, 5, "four mushrooms appear in the same action");
+  assert.equal(new Set(r.enemies.slice(1).map((e) => e.nextAt)).size, 1);
+  assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
+  for (const enemy of frame(s).battle.enemies) {
+    assert.ok(Number.isFinite(enemy.x) && Number.isFinite(enemy.lane));
+  }
   assert.ok(r.road.opponents[mushroom.id]);
   assert.equal(mushroom.nextAt, master.cueAt + 1900);
-  assert.equal(frame(s).battle.effects.filter((e) => e.kind === "mushroomThrow").length, 2);
-  mushroom.hp = 1;
+  assert.equal(frame(s).battle.effects.filter((e) => e.kind === "mushroomThrow").length, 4);
+  for (const enemy of r.enemies.slice(1)) enemy.hp = 1;
   master.hp -= 2;
-  r.enemies[2].hp = 1;
   confrontationTurn(r, master, master.nextAt, noEmit);
   assert.ok(mushroom.hp > 1);
   assert.equal(master.hp, master.maxHp);
-  assert.ok(r.enemies[2].hp > 1, "the same song heals every living ally");
+  assert.ok(
+    r.enemies.every((e) => e.hp > 1),
+    "the same song heals every living ally",
+  );
   confrontationTurn(r, master, master.nextAt + master.period, noEmit);
-  assert.equal(r.enemies.length, 3);
+  assert.equal(r.enemies.length, 5);
   mushroom.hp = 0;
   const second = r.enemies[2];
   second.hp = second.maxHp - 1;
@@ -84,7 +90,7 @@ test("Merrill throws independent mushrooms, then heals allies without resurrecti
     confrontationTurn(r, master, master.nextAt + 7200 + i * 3600, noEmit);
   assert.equal(mushroom.hp, 0);
   assert.equal(second.hp, second.maxHp);
-  assert.equal(r.enemies.length, 3);
+  assert.equal(r.enemies.length, 5);
 });
 
 test("Lico stops one actor temporarily without poison damage; movement and pair actions obey the status", () => {

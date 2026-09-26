@@ -191,12 +191,16 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
       action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
       actionAt: enemy.cueAt,
       x,
-      lane: enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index],
+      lane: drawnEnemyLane(enemy, index),
       hp: enemy.hp,
       maxHp: enemy.maxHp,
       boss: enemy.role === "sweeper" || enemy.role === "golem",
     };
   });
+}
+function drawnEnemyLane(enemy: { role?: string; trick?: string }, index: number) {
+  if (enemy.trick === "mushroom") return [0.47, 0.8, 0.61, 0.93][index - 1];
+  return enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index];
 }
 function cameraX(run: Run | null, now: number) {
   if (!run?.road) return 0;

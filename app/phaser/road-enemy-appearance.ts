@@ -1,5 +1,5 @@
 import type { RoadLook } from "@/lib/chapter-road-presentation";
-import type { RoadEnemy } from "@/lib/road-view";
+import type { RoadEnemy, RoadBattle } from "@/lib/road-view";
 import { ROAD_PUPPETS } from "./road-art";
 import type Phaser from "phaser";
 import type { RoadSpriteFilter } from "./road-sprite-filter";
@@ -19,6 +19,13 @@ export function enemyName(enemy: RoadEnemy) {
 }
 export const enemyLabel = (enemy: RoadEnemy, look?: RoadLook) =>
   look?.enemies[enemy.id]?.label || enemyName(enemy);
+export const enemyArrived = (enemy: RoadEnemy, time: number, reduced: boolean) =>
+  reduced || !enemy.appearsAt || time >= enemy.appearsAt;
+export const enemyPresent = (state: RoadBattle, id: number, reduced: boolean) =>
+  state.enemies.some(
+    (enemy) =>
+      enemy.id === id && (enemy.hp > 0 || enemy.pose) && enemyArrived(enemy, state.time, reduced),
+  );
 export const enemyFalls = (enemy: RoadEnemy) => enemy.pose === "fallen" || enemy.pose === "drag";
 export function enemyAngle(enemy: RoadEnemy, time: number, reduced: boolean) {
   if (enemyFalls(enemy)) return -20;

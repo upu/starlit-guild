@@ -28,6 +28,8 @@ import {
 } from "./road-art";
 import {
   enemyAppearance,
+  enemyArrived,
+  enemyPresent,
   enemyFacesRight,
   enemyAngle,
   fitEnemy,
@@ -303,7 +305,7 @@ export class RoadPainter {
   }
 
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
-    if (!reduced && enemy.appearsAt && state.time < enemy.appearsAt) return;
+    if (!enemyArrived(enemy, state.time, reduced)) return;
     let figure = this.enemies.get(enemy.id);
     if (!figure) {
       figure = this.makeFigure("/sprites.png", "slime", "");
@@ -399,7 +401,7 @@ export class RoadPainter {
     this.bars.clear();
     this.paintGathering(state);
     for (const [id, figure] of this.enemies) {
-      if (state.enemies.some((enemy) => enemy.id === id && (enemy.hp > 0 || enemy.pose))) continue;
+      if (enemyPresent(state, id, reduced)) continue;
       figure.image.destroy();
       figure.label.destroy();
       this.enemies.delete(id);

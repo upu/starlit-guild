@@ -29,7 +29,7 @@ const uniqueHeroes = z
   .min(1)
   .max(heroes.length)
   .refine((v) => new Set(v).size === v.length);
-const enemyId = z.enum(["enemy-1", "enemy-2", "enemy-3"]);
+const enemyId = z.enum(["enemy-1", "enemy-2", "enemy-3", "enemy-4", "enemy-5"]);
 const event = z.object({
   id: z.string().max(180),
   at: n,
@@ -115,7 +115,7 @@ const run = z.object({
   energyAt: n,
   events: z.array(event).max(12),
   enemyAt: n,
-  enemies: z.array(enemy).max(3).optional(),
+  enemies: z.array(enemy).max(5).optional(),
   actors: z
     .array(
       z.object({
@@ -231,6 +231,7 @@ function validStoppedEnemies(run: ParsedRun, ambush: boolean) {
 }
 function validConfrontationEnemies(run: ParsedRun) {
   const duel = confrontation(run.quest, run.road?.ambushNode ?? run.node);
+  if ((run.enemies?.length || 0) > 3 && duel !== "merrill") return false;
   return !(run.enemies || []).some(
     (e) =>
       e.trick &&

@@ -12,6 +12,7 @@ import {
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { chapterFourBattleBanter } from "../lib/chapter-four-battle-banter.ts";
 import { expressionPortrait } from "../lib/portrait-expressions.ts";
+import { chapterFourStories } from "../lib/chapter-four-stories.ts";
 
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173";
@@ -114,7 +115,18 @@ function stageRun(index, target) {
 }
 
 async function verifyBattleDialogue(page, state) {
-  const lines = chapterFourBattleBanter(state.squads[0].run);
+  const run = state.squads[0].run;
+  if (run.enemies[0].cue === "summon") {
+    assert.equal(run.enemies.filter((e) => e.trick === "mushroom").length, 4);
+    const frame = chapterRoadFrame({
+      squad: state.squads[0],
+      now: state.updatedAt,
+      ready: true,
+      paused: false,
+    });
+    assert.equal(new Set(frame.battle.enemies.slice(1).map((e) => e.lane)).size, 4);
+  }
+  const lines = chapterFourBattleBanter(run);
   assert.ok((await page.locator(".journey-banter").innerText()).includes(lines[0].text));
   const portrait = expressionPortrait(lines[0].speaker, lines[0].expression);
   const icon = page
@@ -131,6 +143,39 @@ async function verifyBattleDialogue(page, state) {
       "100% 100%",
     ),
   );
+}
+
+async function verifyKorotakeEnding() {
+  const { page, context } = await open(testState(Date.now(), 35, 25, 10000));
+  await page.getByRole("button", { name: "旅の手帳：ヒント・思い出・アルバム・設定" }).click();
+  await page.getByRole("button", { name: /^思い出/ }).click();
+  await page.getByRole("button", { name: /感想は一株分/ }).click();
+  const ending = chapterFourStories.find((s) => s.id === "merrill-seedlings-return");
+  for (let i = 1; i < ending.lines.length; i++) {
+    await page.getByRole("button", { name: "会話を進める", exact: true }).press("Enter");
+    await page.clock.runFor(30);
+  }
+  assert.ok(
+    (await page.locator(".story-narration").last().innerText()).includes(
+      "※コロタケは、このあとメリルが美味しくいただきました。",
+    ),
+  );
+  const excited = page
+    .locator(".story-merrill")
+    .filter({ hasText: "四つとも、バター焼き" })
+    .locator('[style*="background-image"]');
+  const actual = (await excited.evaluate((el) => el.style.backgroundPosition))
+    .split(" ")
+    .map(parseFloat);
+  const expected = expressionPortrait("merrill", "excited").position.split(" ").map(parseFloat);
+  actual.forEach((value, i) => assert.ok(Math.abs(value - expected[i]) < 0.001));
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.clock.runFor(100);
+    await page.screenshot({ path: `${output}/korotake-ending-${width}.png` });
+  }
+  await context.close();
+  results.push("korotake-ending");
 }
 
 try {
@@ -173,6 +218,7 @@ try {
     await context.close();
     results.push(name);
   }
+  await verifyKorotakeEnding();
   assert.deepEqual(errors, []);
   writeFileSync(`${output}/result.json`, JSON.stringify({ results, errors }, null, 2));
   console.log(JSON.stringify({ results, errors }));

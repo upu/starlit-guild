@@ -19,7 +19,7 @@ export function confrontationEffects(run: Run | null, battle: RoadBattle): RoadE
           ? battle.enemies.filter((e) => e.kind === "mushroom")
           : battle.heroes.filter((h) => h.paralyzed);
     return targets.map((target, index) => ({
-      id: -Math.round(cueAt) * 4 - index,
+      id: -Math.round(cueAt) * 8 - index,
       at: cueAt,
       kind: cue === "summon" ? "mushroomThrow" : cue,
       x: target.x,
