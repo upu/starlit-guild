@@ -6,7 +6,7 @@
 
 採用した元 PNG は `assets/source/stories/` に保存する。`npm run stills:optimize` は各 PNG から鑑賞用の `public/stories/<名前>.webp` と、中央を正方形に切り抜いた `public/stories/thumbnails/<名前>.webp` を生成する。設定は `config/story-stills.json`、入力・出力のハッシュと容量は `assets/story-stills.manifest.json` に記録する。元 PNG を配信しない。
 
-`npm run dev` と `npm run build` の開始前にも生成する。新しい絵を追加したら元 PNG・両 WebP・manifest を一緒にコミットし、鑑賞画面で構図を確認する。`npm run stills:check` はファイルを変えずに再生成の要否を調べ、CI でも実行する。保存されるのはシーン ID の既読情報で、画像パスの変更では `story.read` を変更しない。
+`npm run dev` と `npm run build` の開始前にも生成する。新しい絵を追加したら元 PNG・両 WebP・manifest を一緒にコミットし、鑑賞画面で構図を確認する。`npm run stills:check` はファイルを変えずに再生成の要否を調べ、CI でも実行する。再生成の判定は [背景画像](scenery-images.md) と同じで、sharp の版だけでは再生成しない。保存されるのはシーン ID の既読情報で、画像パスの変更では `story.read` を変更しない。
 
 ## 第四章のスチル制作
 
