@@ -281,16 +281,39 @@ test("a still active other tab prevents writes both on resume and pagehide", () 
   assert.equal(h.data.get(h.key), saved);
   assert.equal(h.hook.dispatch({ type: "start", id: "village-trade" }), false);
 });
-test("returning from a screen lock settles earned progress once", () => {
+test("the adventure pauses while the screen is locked and resumes where it stopped", () => {
   const h = harness();
   h.hook.dispatch({ type: "start", id: "village-trade" });
   h.visibility("hidden");
+  const before = h.read().profiles[0].state;
   h.setNow(3601000);
   h.visibility("visible");
-  const first = h.read();
-  assert.ok(first.profiles[0].state.clears > 0);
+  const after = h.read().profiles[0].state,
+    run = after.squads[0].run;
+  assert.equal(after.clears, before.clears);
+  assert.equal(after.gold, before.gold);
+  assert.deepEqual(after.xp, before.xp);
+  assert.equal(run.quest, "village-trade");
+  assert.equal(run.node, before.squads[0].run.node);
+  assert.equal(
+    run.nextAt - before.squads[0].run.nextAt,
+    3601000 - before.updatedAt,
+    "the run's clocks moved by exactly the locked time",
+  );
+  assert.equal(after.updatedAt, 3601000);
+});
+test("even a short time away is skipped, so returning never plays time off screen", () => {
+  const h = harness();
+  h.hook.dispatch({ type: "start", id: "village-trade" });
+  h.visibility("hidden");
+  const before = h.read().profiles[0].state;
+  h.setNow(before.updatedAt + 3000);
   h.visibility("visible");
-  const second = h.read();
-  assert.equal(second.profiles[0].state.gold, first.profiles[0].state.gold);
-  assert.equal(second.profiles[0].state.clears, first.profiles[0].state.clears);
+  const after = h.read().profiles[0].state;
+  const shifted = structuredClone(before.squads[0].run);
+  assert.equal(after.updatedAt, before.updatedAt + 3000);
+  assert.equal(after.squads[0].run.nextAt - shifted.nextAt, 3000);
+  assert.equal(after.squads[0].run.hits, shifted.hits);
+  assert.deepEqual(after.squads[0].run.health, shifted.health);
+  assert.equal(after.gold, before.gold);
 });

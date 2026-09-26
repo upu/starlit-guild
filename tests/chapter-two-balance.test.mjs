@@ -27,13 +27,10 @@ test("Mira can learn a passive on joining; only setting it improves actual heali
     state.squads[0].run.health.mira.hp = 1;
     const start = structuredClone(state);
     for (let i = 0; i < 1000 && state.squads[0].run; i++) {
-      state = settle(state, state.squads[0].run.nextAt).state;
+      state = settle(state, state.squads[0].run.nextAt);
       const heal = state.squads[0].run?.events.find((e) => e.kind === "heal" && e.hero === "mira");
       if (heal) {
-        assert.deepEqual(
-          { ...settle(start, state.updatedAt).state, log: [] },
-          { ...state, log: [] },
-        );
+        assert.deepEqual({ ...settle(start, state.updatedAt), log: [] }, { ...state, log: [] });
         return heal.amount;
       }
     }
@@ -85,7 +82,7 @@ test("Mira leaves a window of damage between heals and healing survives live/off
     times = [];
   const seen = new Set();
   while (state.squads[0].run && state.updatedAt < 25000) {
-    state = settle(state, state.squads[0].run.nextAt).state;
+    state = settle(state, state.squads[0].run.nextAt);
     for (const e of state.squads[0].run?.events || []) {
       if (e.hero !== "mira" || e.kind !== "heal" || seen.has(e.id)) continue;
       seen.add(e.id);
@@ -100,7 +97,7 @@ test("Mira leaves a window of damage between heals and healing survives live/off
         3 * run.actors.find((a) => a.hero === "mira").period,
   );
   for (let i = 1; i < times.length; i++) assert.ok(times[i] - times[i - 1] >= 4000);
-  const offline = settle(initial, state.updatedAt).state;
+  const offline = settle(initial, state.updatedAt);
   assert.deepEqual({ ...offline, log: [] }, { ...state, log: [] });
 });
 test("boss difficulty rewards growth and defensive technique choice", () => {
@@ -130,7 +127,7 @@ test("non-hostile work takes sustained effort and preserves a partially complete
   const active = act(before, { type: "start", id: q.id, readDeparture: true }, before.updatedAt);
   active.squads[0].run.targetMax = 56;
   active.squads[0].run.target = 31;
-  const same = settle(active, active.updatedAt).state;
+  const same = settle(active, active.updatedAt);
   assert.equal(same.squads[0].run.target, 31);
   assert.equal(same.squads[0].run.targetMax, 56);
 });

@@ -108,7 +108,7 @@ function usePhoneContext(game: Game) {
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
   const auto =
-    !sheet && !game.report && view === "adventure" && !returnIntent && world.ready
+    !sheet && view === "adventure" && !returnIntent && world.ready
       ? autoDeparture(world.s, world.squad, world.choice)
       : null;
   const setQuest = (id: string) => {
@@ -238,7 +238,6 @@ function phoneNavigationActions(
   openQuests: (id?: string) => void,
 ) {
   const followGoal = (goal: JourneyGoal) => {
-    context.game.setReport(null);
     if (goal.destination === "quests") {
       openQuests(goal.questId || context.quest.id);
       return;

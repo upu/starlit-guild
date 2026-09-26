@@ -2,7 +2,7 @@
 import { localId } from "@/lib/local-id";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
-import { initialState, settle, type Rewards } from "@/lib/game";
+import { initialState, settleOnScreen, skipTo, type State } from "@/lib/game";
 import { parseBundle, type Profile, type SaveBundle } from "@/lib/save-format";
 import { journeyNotice } from "@/lib/journey";
 import { sound, soundEvents } from "@/lib/sound";
@@ -72,8 +72,7 @@ export function useLocalGameState() {
     [cloudBusy, setCloudBusy] = useState(false),
     [copies, setCopies] = useState<CloudCopy[]>([]),
     [otherTab, setOtherTab] = useState(false),
-    [saved, setSaved] = useState(0),
-    [report, setReport] = useState<Rewards | null>(null);
+    [saved, setSaved] = useState(0);
   const currentRef = useRef<SaveBundle | null>(null),
     tabIdRef = useRef(""),
     ownerRef = useRef(false),
@@ -97,8 +96,6 @@ export function useLocalGameState() {
     setOtherTab,
     saved,
     setSaved,
-    report,
-    setReport,
     currentRef,
     tabIdRef,
     ownerRef,
@@ -136,10 +133,13 @@ export function useLocalPersistence(state: LocalGameState) {
 }
 export type LocalPersistence = ReturnType<typeof useLocalPersistence>;
 
+// The game advances only while it is on screen. `advance` plays the time since the last tick;
+// `resume` is for coming back (load, returning to the page, switching or restoring a record)
+// and skips the time spent away, so nothing progresses off screen.
 export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence["publish"]) {
-  const { currentRef, ownerRef, setClock, setError, setReport } = state;
-  return useCallback(
-    (now: number) => {
+  const { currentRef, ownerRef, setClock, setError } = state;
+  const update = useCallback(
+    (now: number, next: (state: State, now: number) => State) => {
       const bundle = currentRef.current;
       if (!bundle || !ownerRef.current) return;
       const profile = bundle.profiles.find((item) => item.id === bundle.active);
@@ -148,33 +148,40 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
         return;
       }
       const before = profile.state,
-        previous = before.updatedAt,
-        result = settle(before, now),
-        rewards = result.rewards;
-      profile.state = result.state;
-      if (!rewards.offline) celebrate(before, profile.state);
-      if (
-        rewards.offline &&
-        (rewards.count || rewards.gold || rewards.herbs || rewards.ore || rewards.xp)
-      )
-        setReport(rewards);
+        after = next(before, now);
+      profile.state = after;
+      celebrate(before, after);
       if (document.visibilityState === "visible") {
-        const recent = profile.state.squads
+        const recent = after.squads
           .flatMap((squad) => squad.run?.events || [])
           .filter(
             (event) =>
-              event.at > previous &&
+              event.at > before.updatedAt &&
               now - event.at < 350 &&
               !["assist", "move", "rest"].includes(event.kind),
           );
         soundEvents(recent);
-        if (rewards.count && !rewards.offline) sound("clear");
+        if (after.clears > before.clears) sound("clear");
       }
       setClock(now);
       publish(bundle);
     },
-    [currentRef, ownerRef, publish, setClock, setError, setReport],
+    [currentRef, ownerRef, publish, setClock, setError],
   );
+  return {
+    advance: useCallback(
+      (now: number) => {
+        update(now, settleOnScreen);
+      },
+      [update],
+    ),
+    resume: useCallback(
+      (now: number) => {
+        update(now, skipTo);
+      },
+      [update],
+    ),
+  };
 }
 export type LocalAdvance = ReturnType<typeof useLocalAdvance>;
 

@@ -255,17 +255,6 @@ button {
 .phone-journal p {
   font-size: 13px;
 }
-.offline-loot {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  background: #263d31;
-  border: 1px solid #5c704e;
-  padding: 17px;
-  border-radius: 6px;
-  color: #e3d2a2;
-  font-size: 15px;
-}
 .save-pagination {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

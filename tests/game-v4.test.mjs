@@ -19,7 +19,7 @@ function bundle(state, format = 4) {
 }
 test("checkpoint rewards survive return without marking an unfinished quest complete", () => {
   let s = start();
-  while (s.squads[0].run.node < 3) s = game.settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.node < 3) s = game.settle(s, s.squads[0].run.nextAt);
   assert.equal(s.clears, 0);
   assert.ok(s.gold > 60);
   const before = s.gold;
@@ -35,9 +35,9 @@ test("each character has independent HP and enemy attacks name its target", () =
   let after = s.squads[0].run,
     hurt;
   for (let i = 0; !hurt && i < 200; i++) {
-    after = game.settle(s, s.squads[0].run.enemyAt).state.squads[0].run;
+    after = game.settle(s, s.squads[0].run.enemyAt).squads[0].run;
     hurt = after.events.find((event) => event.kind === "hurt");
-    if (!hurt) s = game.settle(s, s.squads[0].run.nextAt).state;
+    if (!hurt) s = game.settle(s, s.squads[0].run.nextAt);
   }
   assert.ok(hurt?.target);
   assert.ok(after.health[hurt.target].hp < before[hurt.target].hp);
@@ -56,11 +56,11 @@ test("healing targets one character, and the party rests only when everyone is d
   s.squads[0].run.health.aria.hp = 0;
   const ariaActor = s.squads[0].run.actors.find((actor) => actor.hero === "aria"),
     actions = ariaActor.actions;
-  s = game.settle(s, ariaActor.nextAt).state;
+  s = game.settle(s, ariaActor.nextAt);
   assert.equal(s.squads[0].run.actors.find((actor) => actor.hero === "aria").actions, actions);
   assert.notEqual(s.squads[0].run.phase, "rest");
   for (const health of Object.values(s.squads[0].run.health)) health.hp = 0;
-  s = game.settle(s, s.squads[0].run.nextAt).state;
+  s = game.settle(s, s.squads[0].run.nextAt);
   assert.equal(s.squads[0].run.phase, "rest");
 });
 test("shared-HP v4 saves migrate their remaining ratio to every character", () => {
@@ -83,7 +83,7 @@ test("characters use actual special effects, and an automatic combination crosse
   const kinds = new Set(),
     skills = new Set();
   for (let i = 0; s.updatedAt < 61000 && s.squads[0].run; i++) {
-    s = game.settle(s, s.squads[0].run.nextAt).state;
+    s = game.settle(s, s.squads[0].run.nextAt);
     for (const e of s.squads[0].run?.events || []) {
       kinds.add(e.kind);
       if (e.kind === "skill") skills.add(e.hero);
@@ -98,8 +98,8 @@ test("higher friendship unlocks stronger linked attacks and new dialogue", () =>
   const s = start(game.testState(1000, 3, 1, 1000));
   const enhanced = structuredClone(s);
   enhanced.friendship["aria-leon"] = 24;
-  const a = game.settle(s, 15500).state.squads[0].run,
-    b = game.settle(enhanced, 15500).state.squads[0].run;
+  const a = game.settle(s, 15500).squads[0].run,
+    b = game.settle(enhanced, 15500).squads[0].run;
   assert.notDeepEqual(a.scene.lines, b.scene.lines);
   assert.match(b.scene.title, /Lv.3/);
 });
@@ -111,20 +111,35 @@ test("party names follow their members", () => {
 });
 test("offline and small updates produce the same rewards, friendship and timelines", () => {
   const s = start(),
-    bulk = game.settle(s, 601000).state;
+    bulk = game.settle(s, 601000);
   let frames = s;
-  for (let now = 1100; now <= 601000; now += 100) frames = game.settle(frames, now).state;
+  for (let now = 1100; now <= 601000; now += 100) frames = game.settle(frames, now);
   for (const key of ["gold", "herbs", "ore", "xp", "clears", "friendship", "squads"])
     assert.deepEqual(frames[key], bulk[key], key);
 });
-test("offline cap and every transition remain exportable, including rest", () => {
+test("every transition remains exportable, including rest and a long simulated span", () => {
   let s = start(game.testState(1000, 15, 1, 20000));
   for (let i = 0; i < 500; i++) {
-    s = game.settle(s, s.squads[0].run.nextAt).state;
+    s = game.settle(s, s.squads[0].run.nextAt);
     assert.doesNotThrow(() => parseBundle(bundle(s)));
   }
-  const result = game.settle(s, s.updatedAt + 86400000);
-  assert.equal(result.rewards.capped, true);
-  assert.doesNotThrow(() => parseBundle(bundle(result.state)));
-  assert.equal(result.rewards.gold, result.state.gold - s.gold);
+  assert.doesNotThrow(() => parseBundle(bundle(game.settle(s, s.updatedAt + 86400000))));
+});
+test("time off screen is skipped whole: the run resumes exactly where it stopped", () => {
+  const s = start(game.testState(1000, 3, 10, 0)),
+    away = 3600000;
+  for (const resumed of [
+    game.skipTo(s, s.updatedAt + away),
+    game.settleOnScreen(s, s.updatedAt + away),
+  ]) {
+    const run = resumed.squads[0].run;
+    assert.equal(resumed.updatedAt, s.updatedAt + away);
+    assert.equal(resumed.gold, s.gold, "nothing is earned off screen");
+    assert.deepEqual(resumed.xp, s.xp);
+    assert.equal(run.node, s.squads[0].run.node);
+    assert.equal(run.nextAt - s.squads[0].run.nextAt, away);
+    assert.doesNotThrow(() => parseBundle(bundle(resumed)));
+  }
+  const tick = s.updatedAt + game.ON_SCREEN_LIMIT;
+  assert.deepEqual(game.settleOnScreen(s, tick), game.settle(s, tick), "ticks play normally");
 });
