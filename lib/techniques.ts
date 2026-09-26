@@ -22,7 +22,7 @@ export const techniques: Technique[] = [
     hero: "finn",
     slot: "passive",
     name: "隙を見抜く目",
-    description: "自分の通常攻撃・技の威力が15%増える。",
+    description: "自分の通常攻撃・スキルの威力が15%増える。",
     level: 17,
     cost: 120,
   },
@@ -31,7 +31,7 @@ export const techniques: Technique[] = [
     hero: "mira",
     slot: "passive",
     name: "丁寧な手当て",
-    description: "自分の回復技で戻すHPが15%増える。",
+    description: "自分の回復スキルで戻すHPが15%増える。",
     level: 1,
     cost: 80,
   },
@@ -40,7 +40,7 @@ export const techniques: Technique[] = [
     hero: "aria",
     slot: "active",
     name: "風の二連矢",
-    description: "3回ごとに威力1.65倍。これまで使ってきた技。",
+    description: "3回ごとに威力1.65倍。これまで使ってきたスキル。",
     level: 1,
     cost: 0,
   },
@@ -67,7 +67,7 @@ export const techniques: Technique[] = [
     hero: "aria",
     slot: "passive",
     name: "狩人の狙い",
-    description: "自分の通常攻撃・技の威力が15%増える。",
+    description: "自分の通常攻撃・スキルの威力が15%増える。",
     level: 14,
     cost: 120,
   },
@@ -76,7 +76,7 @@ export const techniques: Technique[] = [
     hero: "leon",
     slot: "active",
     name: "暁の踏み込み",
-    description: "4回ごとに威力1.7倍。これまで使ってきた技。",
+    description: "4回ごとに威力1.7倍。これまで使ってきたスキル。",
     level: 1,
     cost: 0,
   },
@@ -103,7 +103,7 @@ export const techniques: Technique[] = [
     hero: "leon",
     slot: "passive",
     name: "剣の心得",
-    description: "自分の通常攻撃・技の威力が15%増える。",
+    description: "自分の通常攻撃・スキルの威力が15%増える。",
     level: 14,
     cost: 120,
   },
@@ -130,13 +130,13 @@ export const learnableTechniques = (s: State) =>
     : [];
 function requireTechniqueAccess(s: State, hero: string) {
   if (!techniquesUnlocked(s) || !s.owned.includes(hero))
-    throw Error("技は2-1のお昼を終えてから、仲間ごとに習得できます。");
+    throw Error("スキルは2-1のお昼を終えてから、仲間ごとに習得できます。");
 }
 export function learnTechnique(s: State, id: string) {
   const t = techniqueById(id);
-  if (!t) throw Error("習得する技を確認してください。");
+  if (!t) throw Error("習得するスキルを確認してください。");
   requireTechniqueAccess(s, t.hero);
-  if (knowsTechnique(s, id)) throw Error("この技は習得済みです。");
+  if (knowsTechnique(s, id)) throw Error("このスキルは習得済みです。");
   if (level(s.xp[t.hero] || 0) < t.level || s.gold < t.cost)
     throw Error("必要レベルかコインが足りません。");
   s.gold -= t.cost;
@@ -146,10 +146,10 @@ export function setTechnique(s: State, hero: string, slot: TechniqueSlot, id?: s
   requireTechniqueAccess(s, hero);
   if (!["active", "passive"].includes(slot)) throw Error("セットする枠を確認してください。");
   if (s.squads.some((sq) => sq.run && sq.members.includes(hero)))
-    throw Error("技の付け替えは帰還してから行えます。");
+    throw Error("スキルの付け替えは帰還してから行えます。");
   const t = id ? techniqueById(id) : null;
   if (id && (!t || t.hero !== hero || t.slot !== slot || !knowsTechnique(s, id)))
-    throw Error("セットする技を確認してください。");
+    throw Error("セットするスキルを確認してください。");
   const progress = (s.techniques ??= { learned: [], equipped: {} });
   (progress.equipped[hero] ??= {})[slot] = id || null;
 }

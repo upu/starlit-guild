@@ -52,10 +52,10 @@ test("Mira and Finn show exactly one fixed active skill and a usable passive slo
     const html = renderToStaticMarkup(
       createElement(CharacterPanel, { state, ready: true, onAction: () => true }),
     );
-    assert.equal((html.match(/<small>アクティブ技<\/small>/g) || []).length, 1);
-    assert.equal((html.match(/<small>パッシブ技<\/small>/g) || []).length, 1);
-    assert.ok(html.includes('aria-label="アクティブ技・変更不可"'));
-    assert.ok(!html.includes("アクティブ技・セットなし"));
+    assert.equal((html.match(/<small>アクティブ<\/small>/g) || []).length, 1);
+    assert.equal((html.match(/<small>パッシブ<\/small>/g) || []).length, 1);
+    assert.ok(html.includes('aria-label="アクティブスキル・変更不可"'));
+    assert.ok(!html.includes("アクティブスキル・セットなし"));
   }
 });
 const shopOutput = new URL("../work/shop-render.mjs", import.meta.url);
