@@ -1,6 +1,6 @@
 # パンプキンヘッドの会話アイコン
 
-2026-09-26、内蔵 image_gen で生成・編集。初版は `public/enemies/masked-pumpety.png` を参照した胸上の構図。小さな表示に合わせ、初版と素顔の `public/portraits/pumpety-expressions.webp` を参照して顔アップへ修正した。少し広げた穴から中の目元・口元が見えるというユーザー指定を反映。生成画像を1024×1024のWebP（quality 90）へ変換し、`public/portraits/masked-pumpety-expressions.webp` に配置。共通Portrait APIで2×2の各セルを表示し、ブラウザーの40pxチャット表示を確認する。
+2026-09-26、内蔵 image_gen で生成・編集。初版は `public/enemies/masked-pumpety.png` を参照した胸上の構図。小さな表示に合わせ、初版と素顔の `public/portraits/pumpety-expressions.webp` を参照して顔アップへ修正した。少し広げた穴から中の目元・口元が見えるというユーザー指定を反映。生成時は1024×1024の4コマにしたが、最終採用は右上のいたずら顔1枚。右上512×512pxを切り出し、256×256pxのWebP（quality 82、effort 6）へ縮小して `public/portraits/masked-pumpety-expressions.webp` に配置した。共通Portrait APIの1列×1行として扱い、ブラウザーの40pxチャット表示を確認する。以下は切り出し前の制作履歴。
 
 ## 使用したプロンプト
 
@@ -18,3 +18,8 @@ Targeted edit of image 1, the 2x2 closeup pumpkin helmet portrait atlas. Image 2
 目・口に続き、4コマとも鼻の穴にも中の鼻と肌が見えるよう調整。穴の形・大きさと縁の影は維持し、ほかの構図・表情は変更しない。内蔵 image_gen を使用。
 
 Precise tiny local edit of this 2x2 pumpkin-helmet portrait atlas. Change ONLY the black triangular NOSE HOLE in EACH of the four cells. The user's request: nose hole should reveal the girl's underlying real nose and skin, just as clearly and at the same softly lit brightness as the real skin visible through the existing eye and mouth holes. Replace each black triangle interior with a small naturally recessed glimpse of the girl's skin and delicate anime nose tip/bridge. Keep the triangular hole shape and size exactly, preserve a thin dark contact shadow at its thick pumpkin rim so it still reads as a cutout in a worn shell. Nose is anatomically aligned between her existing eyes and mouth. Do not make it a large projecting nose on the pumpkin surface. Keep EVERYTHING else unchanged: identical closeup crop, 2x2 equal grid, pumpkin texture, bow, hair, eyes, mouths, expressions and face positions. No new labels or borders. ALL four nose openings must show skin, none should remain filled black.
+
+
+## 最終採用
+
+ユーザー指定で右上のいたずら顔だけを採用。再生成せず既存画像から切り出し、3つの不採用コマは配信素材から取り除いた。第二章のカボチャ姿は1枚で統一し、素顔のプティの既存表情素材は維持する。

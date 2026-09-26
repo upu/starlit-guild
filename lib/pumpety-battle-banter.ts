@@ -22,7 +22,7 @@ export const pumpetyBattleExchanges = {
   falter: [
     {
       speaker: "masked-pumpety",
-      expression: "surprised",
+      expression: "mischievous",
       text: "あっ、そっちの子！　寝るにはまだ早いのよ！",
     },
     {
@@ -34,7 +34,7 @@ export const pumpetyBattleExchanges = {
   escape: [
     {
       speaker: "masked-pumpety",
-      expression: "worried",
+      expression: "mischievous",
       text: "今日はここまでなのよ！　ほら、ふたりとも、帰るのよ！",
     },
     { speaker: "aria", expression: "surprised", text: "引っぱって帰るの！？　蜜は置いてってよ！" },

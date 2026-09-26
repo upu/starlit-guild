@@ -4,7 +4,11 @@ import { act, settle, testState } from "../lib/game.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { chapterTwoBanter } from "../lib/chapter-two.ts";
 import { pumpetyBattleBanter, pumpetyBattleExchanges } from "../lib/pumpety-battle-banter.ts";
-import { portraitAtlases, expressionPortrait } from "../lib/portrait-expressions.ts";
+import {
+  portraitAtlases,
+  portraitExpressions,
+  expressionPortrait,
+} from "../lib/portrait-expressions.ts";
 import { startBanter, retainBanter, nextBanter } from "../lib/banter-exchange.ts";
 
 test("normal blockade play projects command motions and retains masked dialogue through escape", () => {
@@ -47,6 +51,12 @@ test("normal blockade play projects command motions and retains masked dialogue 
 });
 
 test("every battle line specifies a supported masked portrait instead of the unmasked atlas", () => {
+  for (const expression of [undefined, ...portraitExpressions])
+    assert.deepEqual(expressionPortrait("masked-pumpety", expression), {
+      src: "/portraits/masked-pumpety-expressions.webp",
+      size: "100% 100%",
+      position: "0% 0%",
+    });
   for (const lines of Object.values(pumpetyBattleExchanges))
     for (const line of lines) {
       assert.notEqual(line.speaker, "pumpety");
