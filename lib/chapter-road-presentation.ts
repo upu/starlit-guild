@@ -1,5 +1,13 @@
 import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
+import {
+  LICO_RECORDS_QUEST,
+  MERRILL_SEEDLINGS_QUEST,
+  MOSS_TRANSPLANT_QUEST,
+  isChapterFourQuest,
+} from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
+import { paralyzed } from "./chapter-four-battles.ts";
+import { confrontationEffects, mushroomArrival } from "./chapter-four-battle-presentation.ts";
 import {
   adventureFrame,
   type AdventureInput,
@@ -21,6 +29,7 @@ import {
 import type { RoadPosition } from "./chapter-road-types.ts";
 import { roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
+import { spreadBattleParty } from "./road-party-formation.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -37,7 +46,7 @@ export type RoadLook = {
   puller: string | null;
   urban: boolean;
   destination: boolean;
-  work?: { asset: string; frame?: string; label: string; cargo: boolean };
+  work?: ReturnType<typeof roadWorkLook>;
   enemies: Record<number, { frame: string; label: string }>;
 };
 export const chapterRoadX = roadX;
@@ -141,14 +150,33 @@ function drawnHeroes(input: AdventureInput, frame: AdventureFrame): RoadBattle["
       lane: travellerLane(member.id as TravellerId),
       walking: !!position?.walking && run?.phase !== "rest",
       facing: position?.facing || 1,
+      paralyzed: paralyzed(
+        run?.actors.find((a) => a.hero === member.id),
+        input.now,
+      ),
     };
   });
 }
 function legacyOpponents(run: Run | null, frame: AdventureFrame) {
   if (!run || !frame.target?.battle) return [];
   return [
-    { id: "enemy-1", hp: run.target, maxHp: run.targetMax, nextAt: run.enemyAt, role: undefined },
+    {
+      id: "enemy-1",
+      hp: run.target,
+      maxHp: run.targetMax,
+      nextAt: run.enemyAt,
+      role: undefined,
+      trick: undefined,
+      cue: undefined,
+      cueAt: undefined,
+    },
   ];
+}
+function drawnEnemyKind(run: Run | null, frame: AdventureFrame, role?: string) {
+  const encounterNode = run?.road?.ambushNode ?? run?.node;
+  if (run?.quest === LICO_RECORDS_QUEST && encounterNode === 14) return "lico";
+  if (run?.quest === MERRILL_SEEDLINGS_QUEST && encounterNode === 8) return "merrill";
+  return enemyKind(role || (frame.quest.enemy >= 12 ? "golem" : undefined));
 }
 function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[] {
   const run = input.squad.run,
@@ -158,14 +186,21 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
     const x = position && run ? drawnX(position, run, input.now) : 200 + index * 65;
     return {
       id: index + 1,
-      kind: enemyKind(enemy.role || (frame.quest.enemy >= 12 ? "golem" : undefined)),
+      kind: enemy.trick || drawnEnemyKind(run, frame, enemy.role),
+      appearsAt: mushroomArrival(run, enemy.id),
+      action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
+      actionAt: enemy.cueAt,
       x,
-      lane: enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index],
+      lane: drawnEnemyLane(enemy, index),
       hp: enemy.hp,
       maxHp: enemy.maxHp,
       boss: enemy.role === "sweeper" || enemy.role === "golem",
     };
   });
+}
+function drawnEnemyLane(enemy: { role?: string; trick?: string }, index: number) {
+  if (enemy.trick === "mushroom") return [0.47, 0.8, 0.61, 0.93][index - 1];
+  return enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index];
 }
 function cameraX(run: Run | null, now: number) {
   if (!run?.road) return 0;
@@ -207,6 +242,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
     ].includes(frame.quest.id),
     urban:
       ["town-deliveries", "medicine-packing", "waiting-households"].includes(frame.quest.id) ||
+      (isChapterFourQuest(frame.quest.id) && frame.quest.id !== MOSS_TRANSPLANT_QUEST) ||
       (isChapterThreeQuest(frame.quest.id) &&
         ![BERNE_QUEST, STONE_RETURN_QUEST].includes(frame.quest.id)),
     length:
@@ -236,15 +272,6 @@ function enemyLabel(frame: AdventureFrame, id: string) {
   const target = frame.targets.find((target) => target.id === id);
   return target?.cue || target?.name || "";
 }
-function workTask(
-  frame: string | undefined,
-  q: AdventureFrame["quest"],
-  run: Run,
-): NonNullable<RoadBattle["gathering"]>["task"] {
-  if (movingWork(q, run)) return "carry";
-  if (frame === "signpost" || frame === "records") return "inspect";
-  return frame === "parcels" ? "pack" : "gather";
-}
 function gatheringX(
   road: Run["road"],
   q: AdventureFrame["quest"],
@@ -262,9 +289,12 @@ function arrangeCarriers(
   battle: RoadBattle,
   puller: string | null,
 ) {
-  if (!puller) return;
+  if (!puller || roadHasEnemies(run)) return;
   // Keep every carrier on the cart's ground line and spread pushers to its left.
-  const rear = { aria: -145, leon: -145, mira: -175, finn: -205 } as Record<string, number>;
+  const rear = { aria: -145, leon: -145, mira: -175, finn: -205, lico: -240 } as Record<
+    string,
+    number
+  >;
   for (const hero of battle.heroes) {
     const visualOffset = hero.id === puller ? 45 : rear[hero.id] || -110;
     hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
@@ -283,7 +313,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   if (!run || kind === "battle") return;
   look.work = roadWorkLook(frame.quest, run);
   const cargo = look.work.cargo;
-  const task = workTask(look.work.frame, frame.quest, run);
+  const task = look.work.task;
   const x = gatheringX(road, frame.quest, run, cargo, task, look.puller);
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",
@@ -305,7 +335,8 @@ export function chapterRoadFrame(
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
   addWork(input, frame, battle, look);
-  battle.effects = effects(run, battle);
+  spreadBattleParty(battle, look.workers);
+  battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
   if (battle.effects.some((effect) => effect.kind === "command")) {
     const master = battle.enemies.find((enemy) => enemy.kind === "pumpety");
     if (master) look.enemies[master.id].label = "もう一回なのよ！";

@@ -6,14 +6,26 @@
 
 ## 採用中の立ち絵
 
-- メリル：緑のボブ、花と赤いリボン、秋の飾り。深緑背景の肖像。左腕の琴と自然な立ち姿は下記の専用条件に従う。
+- メリル：採用リファレンスシートを基にした小柄な旅装。緑のボブ、頭から生える石榴の花と赤いリボン、食料を詰めた大きな背負い袋、左腕の木製の琴のガントレットを持つ。ゲーム内は透明背景の `public/characters/merrill-v2.png` を使う。
 - パンプティ：茶色いツインテール、青緑の目、八重歯。黒い身頃、緑の袖、黄色いスカート。人形と操り糸を使い、楽器は持たせない。
 
-配置先は `public/characters/{merrill,pumpety}.png`。既存アトラスの8〜11番を維持し、追加分は12・13番を使用する。
+パンプティは `public/characters/pumpety.png` に配置する。既存アトラスの8〜11番を維持し、追加分は12・13番を使用する。
 
-パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。立ち絵は深緑の背景を持つ肖像として枠付きで表示し、透過画像として扱わない。
+パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。
+
+メリルの人物表示は採用リファレンスシートから作り直した立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの通常立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の立ち絵制作記録](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+
+横スクロール画面では、主人公と頭・胴・脚の比率を揃えた約2.3頭身の専用画像を使う。4-7のリコ、4-8のメリル、共闘・加入後のリコは `public/animations/road/lico-standing-v1.webp` / `merrill-standing-v1.webp`。リコの丸眼鏡・そばかす・赤黒の衣装・サンダル、メリルの石榴の花・食料の大荷物・左腕の琴のガントレットを残す。通常姿勢に加え、メリルには下記の演奏・踊りの姿勢がある。リコの歩行・運搬は下記の動作画像を使い、攻撃は通常姿勢を使う。原本は `assets/source/road/`、初版は [第四章の戦闘用画像](../art-generation/chapter-four-battle-sprites.json)、現行版のプロンプトは [小表示向けの簡素化](../art-generation/chapter-four-battle-sprites-simple.json) を参照する。
+
+60〜80pxの小表示では、人物を見分ける輪郭・主要色・代表的な持ち物を優先する。リコは丸眼鏡・無地の赤い前掛け・緑の薬瓶、メリルは緑のボブ・大きな赤い花・茸と果実が覗く背負い袋・弦のあるガントレットを読み取れる形に整理した。細かな刺繍、金具、鎖、多数の装飾品を省き、髪は大きな束、服は広い色面と少ない影で描く。等身を下げる際は装飾密度も合わせ、実表示サイズで確認する。
+
+## リコの歩行と運搬
+
+`lico-motion-v1.webp` は歩行2コマ、荷車を押す2コマを持つ。瓶はしまい、歩くときは腕を振り、押すときは前傾して両手を前へ出す。通常の移動と運搬を実際の作業状態から切り替え、動きを減らす設定ではコマを固定する。途中加入後にも画像と矩形を読み込む。原本・プロンプト・切り出し矩形は [リコの動作画像の生成記録](../art-generation/lico-road-motion.json) を参照する。
 
 ## メリルの琴とポーズ
+
+第四章の回復行動には `merrill-song-v1.webp` を使用する。右手で左腕の琴を弾き、片膝を上げた演奏・踊りの姿勢。召喚する `mushroom-v1.webp` とともに、[生成記録](../art-generation/chapter-four-battle-actions.json)へ参照・採用部分・加工を記録した。投擲は通常姿勢の傾きと、カバン側から弧を描いて飛ぶ独立したキノコ画像で表す。
 
 以下の銀青色の装具などは、既存画像を制作した当時の条件。メリルを新たに描く際の外見・材質は [人物設定](../characters/merrill.md#外見の設定採用) と [ドライアドとしての設定](../characters/merrill.md#ドライアドとしての設定) を正とし、この記録を最新の固定条件として流用しない。
 
@@ -25,7 +37,7 @@
 
 ## メリルの採用シートと顔アイコン
 
-2026-09-23の[採用シート原本](../characters/merrill-reference-sheet.png)と[8表情の顔アイコン](../../public/portraits/merrill-expressions.webp)を追加した。顔アイコンの表情キーと使い方は[会話の表情](dialogue-expressions.md#メリル)、外見の正本は[人物設定](../characters/merrill.md)。既存の立ち絵は差し替えない。
+2026-09-23の[採用シート原本](../characters/merrill-reference-sheet.png)と[8表情の顔アイコン](../../public/portraits/merrill-expressions.webp)を追加した。顔アイコンの表情キーと使い方は[会話の表情](dialogue-expressions.md#メリル)、外見の正本は[人物設定](../characters/merrill.md)。立ち絵v2もこのシートを参照する。
 
 ## 確認
 

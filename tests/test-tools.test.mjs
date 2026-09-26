@@ -133,7 +133,7 @@ test("save panel hides test creation and adjustment when disabled, including exi
             c.type === "b" && chapterPresets.testPresets.some((p) => p.name === c.props.children),
         ),
     );
-    assert.equal(buttons.length, enabled ? 4 : 0);
+    assert.equal(buttons.length, enabled ? chapterPresets.testPresets.length : 0);
     if (enabled) {
       for (const button of buttons) button.props.onClick();
       assert.deepEqual(
@@ -224,9 +224,9 @@ test("test records always follow the story stages", () => {
   assert.ok(!firstChapter.owned.includes("mira"));
 
   const every = testState(1000, storyStages.length, 20, 20000);
-  assert.equal(every.story.read.length, storyStages.length * 2 + 1);
+  assert.equal(every.story.read.length, storyStages.length * 2 + 2);
   assert.ok(every.owned.includes("mira"), "2-3を読了するとミラが加入する");
-  assert.deepEqual(every.owned, ["aria", "leon", "mira", "finn"], "旧加入の仲間は配られない");
+  assert.deepEqual(every.owned, ["aria", "leon", "mira", "finn", "lico"]);
   const earned = storyStages.reduce(
     (total, { quest }) => total + game.allQuests.find((q) => q.id === quest).herbs,
     0,

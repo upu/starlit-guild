@@ -1,4 +1,6 @@
 import { chapterThreeRank } from "./chapter-three.ts";
+import { confrontationEnemies, type BattleTrick, type BattleCue } from "./chapter-four-battles.ts";
+import { chapterFourRank, isChapterFourQuest } from "./chapter-four.ts";
 import type { Quest, Run, State } from "./game.ts";
 import { level } from "./roster.ts";
 import { equippedItems } from "./equipment.ts";
@@ -31,12 +33,17 @@ export type Enemy = {
   period: number;
   nextAt: number;
   role?: PuppetRole;
+  trick?: BattleTrick;
+  actions?: number;
+  cue?: BattleCue;
+  cueAt?: number;
 };
 export const RESISTANCE_RATE = 1.15;
 const firstChapterRanks = [0, 1, 2, 6, 10, 12, 17, 21, 25];
 
 // Difficulty belongs to a quest, never its repeat count or the save's total clears.
 export function combatRank(q: Quest) {
+  if (isChapterFourQuest(q.id)) return chapterFourRank(q.id);
   const third = chapterThreeRank(q.id);
   if (third !== undefined) return third;
   if (q.id === PICNIC_QUEST) return 0;
@@ -71,6 +78,8 @@ export function enemyCount(q: Quest, node: number) {
   return 1 + (Math.floor(node / 3) % maximum);
 }
 export function createEnemies(q: Quest, node: number, at: number, modern = true): Enemy[] {
+  const duel = confrontationEnemies(q.id, node, combatRank(q), at);
+  if (duel) return duel;
   const formation = modern ? puppetFormation(q.id, node) : null;
   if (formation)
     return formation.map((role, index) => {

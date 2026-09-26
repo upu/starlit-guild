@@ -213,7 +213,7 @@ test("generated source links resolve, and art links appear only for scenes with 
     assert.equal([...content.matchAll(/^本文の編集元：/gm)].length, 3, stage.number);
     assert.equal(
       [...content.matchAll(/^IDの接続元：/gm)].length,
-      stage.number.startsWith("3-") ? 2 : 0,
+      stage.number.startsWith("3-") || stage.number.startsWith("4-") ? 2 : 0,
       stage.number,
     );
     assert.equal(
@@ -230,5 +230,5 @@ test("generated source links resolve, and art links appear only for scenes with 
   assert.match(interludeBlock, /scene\("interlude", "return", …\)/);
   assert.equal([...interludeBlock.matchAll(/^本文の編集元：/gm)].length, 1);
   assert.equal([...interludeBlock.matchAll(/^IDの接続元：/gm)].length, 1);
-  assert.equal([...files.get("banter.md").matchAll(/^本文の編集元：/gm)].length, 6);
+  assert.equal([...files.get("banter.md").matchAll(/^本文の編集元：/gm)].length, 7);
 });

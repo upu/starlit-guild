@@ -14,6 +14,7 @@ import {
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
+  ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
   roadSheet,
   roadWalkSheet,
@@ -39,11 +40,21 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_DESTINATION,
       ROAD_WORKSITES,
       ROAD_BERNE_WORKSITES,
+      ROAD_LEDGER_DESK,
       ROAD_SIGNPOST,
       ...(["aria", "leon", "mira", "finn"] as const).flatMap((id) => [
         roadSheet(id),
         roadWalkSheet(id),
       ]),
+      ...(input.squad.members.includes("lico") ? [roadSheet("lico"), roadWalkSheet("lico")] : []),
+      ...(input.squad.run?.quest === "lico-records" ? [roadSheet("lico")] : []),
+      ...(input.squad.run?.quest === "merrill-seedlings"
+        ? [
+            "/animations/road/merrill-standing-v1.webp",
+            "/animations/road/merrill-song-v1.webp",
+            "/animations/road/mushroom-v1.webp",
+          ]
+        : []),
       ...(look.work ? [look.work.asset] : []),
     ]),
   ];

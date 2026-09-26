@@ -35,4 +35,16 @@
   - [3-7 灯りのお披露目](chapter-3.md#stage-3-7)
   - [3-8 間違った荷物を戻す夜](chapter-3.md#stage-3-8)
   - [3-9 戻る灯り、増える同行者](chapter-3.md#stage-3-9)
+- [第四章](chapter-4.md)（4-1〜4-10）
+  - [幕間 約束の胡桃](chapter-4.md#interlude-promised-walnuts)
+  - [4-1 塔を直した人たちへ](chapter-4.md#stage-4-1)
+  - [4-2 見当違いの灯り](chapter-4.md#stage-4-2)
+  - [4-3 醸造の町ブレッカ](chapter-4.md#stage-4-3)
+  - [4-4 毎朝光る苔・一日目](chapter-4.md#stage-4-4)
+  - [4-5 毎朝光る苔・二日目](chapter-4.md#stage-4-5)
+  - [4-6 塔のそばの苔床](chapter-4.md#stage-4-6)
+  - [4-7 消える前に](chapter-4.md#stage-4-7)
+  - [4-8 苔は渡さない](chapter-4.md#stage-4-8)
+  - [4-9 光が抜ける前に](chapter-4.md#stage-4-9)
+  - [4-10 同じ宛先へ](chapter-4.md#stage-4-10)
 - [共通の掛け合い](banter.md) — 待機中と関係値別の道中・協力技

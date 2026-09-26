@@ -9,7 +9,21 @@ import {
   ROAD_PUSH,
   ROAD_PULL,
   ROAD_FINN_PULL,
+  ROAD_LICO_MOTION,
+  licoMotionFrames,
 } from "./road-art";
+
+function applyLicoMotion(image: Phaser.GameObjects.Image, pose: number, size: number) {
+  // Lico may join after the painter was created; register the atlas on its first use.
+  const texture = image.scene.textures.get(ROAD_LICO_MOTION);
+  if (!texture.has("0"))
+    for (const [index, [x, y, w, h]] of licoMotionFrames.entries())
+      texture.add(String(index), 0, x, y, w, h);
+  image
+    .setTexture(ROAD_LICO_MOTION, String(pose))
+    .setOrigin(0.5, 1)
+    .setScale(size * roadWalkFrame("lico", pose).scale);
+}
 
 function applyMiraPose(image: Phaser.GameObjects.Image, pose: number, size: number) {
   const kneeling = [9, 10, 14, 15].includes(pose);
@@ -17,6 +31,17 @@ function applyMiraPose(image: Phaser.GameObjects.Image, pose: number, size: numb
     .setTexture(roadSheet("mira"), String(pose))
     .setOrigin(0.5, 1)
     .setScale((size * (kneeling ? 0.72 : 0.9)) / image.frame.height);
+}
+
+function applyLicoPose(image: Phaser.GameObjects.Image, pose: number, size: number) {
+  if (pose < 4) {
+    applyLicoMotion(image, pose % 2, size);
+    return;
+  }
+  image
+    .setTexture(roadSheet("lico"))
+    .setOrigin(0.5, 1)
+    .setScale((size * 0.9) / image.frame.height);
 }
 
 function applyFinnPose(image: Phaser.GameObjects.Image, pose: string, size: number) {
@@ -32,6 +57,10 @@ export function applyHeroPose(
   pose: string,
   size: number,
 ) {
+  if (id === "lico") {
+    applyLicoPose(image, Number(pose), size);
+    return;
+  }
   if (id === "finn") {
     applyFinnPose(image, pose, size);
     return;
@@ -75,6 +104,11 @@ export function applyWorkPose(
   }[kind];
   const moving = !reduced && !state.enemies.some((enemy) => enemy.hp > 0);
   const step = moving ? Math.floor(state.time / pose.duration) % 2 : 0;
+  if (hero.id === "lico") {
+    if (kind === "push") applyLicoMotion(image, 2 + step, size);
+    else applyHeroPose(image, hero.id, "8", size);
+    return true;
+  }
   if (applyExistingWorkPose(image, hero, kind, pose.mira, step, size)) return true;
   image
     .setTexture(hero.id === "finn" ? ROAD_FINN_PULL : pose.asset, `${hero.id}-${String(step)}`)

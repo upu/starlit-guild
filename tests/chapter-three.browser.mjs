@@ -85,7 +85,7 @@ try {
   const { page, context } = await open(initial);
   assert.equal(await page.locator(".story-conversation").count(), 0);
   await page.getByRole("button", { name: "クエストを開く", exact: true }).click();
-  await page.getByRole("button", { name: "第三章", exact: true }).click();
+  await page.getByRole("combobox", { name: "クエストの章" }).selectOption("three");
   await page.locator(".quest-option").filter({ hasText: "私が用意するお昼" }).click();
   if (await page.locator(".quest-summary").count()) await page.locator(".quest-summary").click();
   await page.getByRole("button", { name: "出発", exact: true }).click();

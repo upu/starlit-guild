@@ -1,4 +1,5 @@
 import { BERNE_QUEST, STONE_RETURN_QUEST, BERNE_RESTORATION_QUEST } from "./chapter-three.ts";
+import { MOSS_TRAIL_QUEST, MERRILL_SEEDLINGS_QUEST, GUILD_FOUNDING_QUEST } from "./chapter-four.ts";
 export type StoryArt = {
   src: string;
   videoSrc?: string;
@@ -10,6 +11,34 @@ export type StoryArt = {
 
 // Reveal illustrations with the scene, rather than previewing later events.
 export const storyArt: Partial<Record<string, StoryArt>> = {
+  [MOSS_TRAIL_QUEST + "-departure"]: {
+    src: "/stories/mira-after-all-nighter.webp",
+    alt: "徹夜明けのミラを、フィンとアリアが宿の広間で心配する。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 4,
+  },
+  [MOSS_TRAIL_QUEST + "-return"]: {
+    src: "/stories/blue-cloth-alley.webp",
+    alt: "青い布の陰でアリアがレオンの腕を抱き寄せ、二人で通りをうかがう。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 4,
+  },
+  [MERRILL_SEEDLINGS_QUEST + "-departure"]: {
+    src: "/stories/lico-protects-seedlings.webp",
+    alt: "リコが苗の籠を抱え、食べようとするメリルの前に立つ。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 14,
+  },
+  [GUILD_FOUNDING_QUEST + "-return"]: {
+    src: "/stories/guild-formation.webp",
+    alt: "リンデの受付でアリアが旅団の登録書に署名し、四人が見守る。",
+    width: 1536,
+    height: 1024,
+    revealAtLine: 67,
+  },
   [BERNE_QUEST + "-departure"]: {
     src: "/stories/finn-at-breakfast.webp",
     alt: "食堂の隣の席で、頬杖をついて三人へ話しかけるフィン。",

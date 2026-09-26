@@ -1,3 +1,5 @@
+import { WALNUT_INTERLUDE } from "../lib/chapter-four.ts";
+import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
 import * as interludes from "../lib/interludes.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -57,7 +59,12 @@ function harness(name, initialProps) {
     react,
     "react/jsx-runtime": jsxRuntime,
     "next/image": { default: "img" },
-    "lucide-react": { BookOpen: "icon", ChevronRight: "arrow", Images: "icon" },
+    "lucide-react": {
+      BookOpen: "icon",
+      ChevronDown: "icon",
+      ChevronRight: "arrow",
+      Images: "icon",
+    },
     "./portrait": { Portrait: "portrait" },
     "./story-artwork": { StoryArtwork: "StoryArtwork" },
     "@/lib/game": game,
@@ -99,8 +106,8 @@ function harness(name, initialProps) {
       (n) => n.type === type || n.type?.name === type || n.props?.className === type,
     );
   const text = (node) =>
-    typeof node === "string"
-      ? node
+    typeof node === "string" || typeof node === "number"
+      ? String(node)
       : !node || typeof node !== "object"
         ? ""
         : [node.props?.children].flat(Infinity).map(text).join("");
@@ -329,6 +336,54 @@ test("memories interleave departure and ending by stage; album stays separate an
   assert.ok(album.find("img"));
   album.click("旅の手帳へ戻る");
   assert.ok(returned);
+});
+
+test("memories show only the latest available chapter, scope unread, and keep interludes first", () => {
+  const state = game.initialState(1000);
+  const quests = prologue.storyStages.map((stage) => stage.quest);
+  state.done = Object.fromEntries(quests.map((id) => [id, 1]));
+  state.story = {
+    departed: quests,
+    completed: quests,
+    read: stories.stories.map((story) => story.id),
+  };
+  const missing = stories.stories.find((story) => story.id === "glowing-moss-trail-return");
+  state.story.read = state.story.read.filter((id) => id !== missing.id);
+  let opened;
+  const h = harness("StoryLibrary", {
+    state,
+    onOpen: (story) => {
+      opened = story;
+    },
+  });
+  assert.equal(h.find("select").props.value, "four");
+  assert.equal(h.find("section").key, WALNUT_INTERLUDE);
+  assert.ok(!h.text().includes("1-1 ·"));
+  h.click("未読 1");
+  assert.equal(h.find("story-entry").key, missing.id);
+  h.find("story-entry").props.onClick();
+  assert.equal(opened.id, missing.id);
+  h.find("select").props.onChange({ currentTarget: { value: "one", closest: () => null } });
+  h.render();
+  assert.ok(h.text().includes("この章の思い出はすべて読み終えました。"));
+  assert.equal(h.find("story-entry"), undefined);
+  h.click("すべて");
+  assert.equal(h.find("section").key, prologue.prologueStages[0].quest);
+  assert.ok(!h.text().includes("4-4 ·"));
+  h.find("select").props.onChange({ currentTarget: { value: "three", closest: () => null } });
+  h.render();
+  assert.equal(h.find("section").key, LUNCH_INTERLUDE);
+});
+
+test("empty memories keep the opening hint and hide unavailable chapters", () => {
+  const state = game.initialState(1000);
+  const h = harness("StoryLibrary", { state, onOpen() {} });
+  assert.equal(h.find("select"), undefined);
+  assert.ok(h.text().includes("最初の思い出"));
+  state.story.departed.push(prologue.prologueStages[0].quest);
+  h.render();
+  assert.equal(h.find("select").props.value, "one");
+  assert.equal(h.find("select").props.children.length, 1);
 });
 
 test("banter stops after the idle exchange even with fresh arrays on every clock tick", () => {

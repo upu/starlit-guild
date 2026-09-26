@@ -1,25 +1,20 @@
-import { chapterThreeWorkFrame } from "./chapter-three-work-art.ts";
+import { MOSS_BEDS_QUEST } from "./chapter-four.ts";
 import { encounter, targetName, type Quest, type Run } from "./game.ts";
 import { movingWork } from "./chapter-road.ts";
+import { worksiteArt, type WorksiteArt } from "./road-worksite-art.ts";
+import { worksiteByLabel } from "./road-worksite-catalog.ts";
 
-export function roadWorkLook(q: Quest, run: Run) {
+export function roadWorkLook(q: Quest, run: Run): WorksiteArt & { label: string } {
   const label = targetName(q, run.node, run.nodes);
-  const third = chapterThreeWorkFrame(q.id, run.node);
-  if ((q.id === "spinning-signpost" && !movingWork(q, run)) || third === "signpost")
-    return { asset: "/animations/road/signpost-v2.webp", label, cargo: false, frame: "signpost" };
-  if (q.escortAsset) return { asset: q.escortAsset, label, cargo: false, frame: undefined };
-  if (movingWork(q, run))
-    return { asset: "/animations/road/cargo-v1.webp", label, cargo: true, frame: undefined };
-  if (third === "stonework" || third === "records")
-    return { asset: "/animations/road/berne-worksites-v1.webp", label, cargo: false, frame: third };
-  const waterway = ["old-waterway", "tower-restoration", "tower-moss-removal"].includes(q.id);
-  const moss = q.id === "forest-wetland" || (waterway && /苔|葉|籠/.test(label));
-  if (moss) return worksite("moss", label);
-  if (waterway) return worksite("waterway", label);
-  if (encounter(q, run.node) === "gather")
-    return { asset: "/animations/road/herb-v2.webp", label, cargo: false, frame: undefined };
-  return worksite("parcels", label);
+  const key = worksiteByLabel[label];
+  const art = key ? worksiteArt[key] : fallbackWorkArt(q, run);
+  const task = movingWork(q, run) ? "carry" : q.id === MOSS_BEDS_QUEST ? "inspect" : art.task;
+  return { ...art, label, task };
 }
-function worksite(frame: string, label: string) {
-  return { asset: "/animations/road/worksites-v1.webp", frame, label, cargo: false };
+
+// Compatibility for non-story quests. Every story work point is checked against the catalog.
+function fallbackWorkArt(q: Quest, run: Run): WorksiteArt {
+  if (q.escortAsset) return { asset: q.escortAsset, cargo: false, task: "inspect" };
+  if (movingWork(q, run)) return worksiteArt.cart;
+  return encounter(q, run.node) === "gather" ? worksiteArt.herb : worksiteArt.parcels;
 }

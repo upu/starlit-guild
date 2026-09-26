@@ -43,7 +43,7 @@ Sitesの実行時環境変数に `ENABLE_TEST_TOOLS=true` を設定したサイ�
 
 サーバーがページを開くたびに設定を読み、画面と操作処理の両方へ反映する。設定を変更したらSites側で実行環境への反映を完了し、ページを再読み込みする。開いたままの画面への即時切り替えは行わない。ビルド時の `VITE_*` / `NEXT_PUBLIC_*`、URLのクエリ、端末セーブの `test` フラグは有効化の設定に使わない。
 
-ローカルも初期状態では無効。必要な場合だけ `.env.example` を `.env` へコピーして `ENABLE_TEST_TOOLS=true` にし、開発サーバーを起動し直す。ローカルの `.env` とSitesの環境変数は別設定であり、ローカルでの有効化を公開先へ持ち込まない。
+`npm run dev` はテスト機能を標準で有効にする。`vite.config.ts` の開発サーバー用設定として管理するため、新しいチェックアウトでも追加設定なしで有効になる。通常モードを確認するときは `.env.example` を `.env` へコピーし、`ENABLE_TEST_TOOLS=false` にして開発サーバーを起動し直す。公開用ビルドにはこの開発用の既定値を含めず、Sitesでは実行時環境変数の設定に従う。
 
 無効化しても既存の通常・テスト記録、ファイル読み込み、クラウド復元は保持する。復元したテスト記録でも数値調整はできない。この設定はゲームが提供するテスト機能の切り替えであり、端末保存やセーブファイルの直接改造を防ぐ仕組みではない。
 
@@ -123,9 +123,11 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/dialog-layout.browser.py` 会話・ダイアログの画面幅、回転、安全領域 | Python版Playwright + ChromiumまたはWebKit。`npm run build`。生成CSSを使う独立fixture。外部サーバー不要 | `python tests/dialog-layout.browser.py --engine chromium`（WebKitは `--engine webkit`） | 成功時のケース数、失敗時の測定値を標準出力 |
 | `tests/chapter-road.browser.mjs` 道中演出・Canvas・再読み込み・画像失敗 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-road.browser.mjs` | `work/chapter-road-browser/` の画像・`results.json` |
 | `tests/chapter-three.browser.mjs` 第三章の幕間→出発・各ステージ・ショップ | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-three.browser.mjs` | `work/chapter-three-browser/` の画像・`result.json` |
-| `tests/chapter-runs.balance.mjs` 第一章〜第三章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約25秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の4件のPASS表示 |
+| `tests/chapter-four.browser.mjs` 第四章の幕間・初回出発・リコとメリルの対立・五人表示 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/chapter-four.browser.mjs` | `work/chapter-four-browser/` の画像・`result.json` |
+| `tests/chapter-runs.balance.mjs` 第一章〜第四章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約45秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の5件のPASS表示 |
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
+| `tests/road-worksites.browser.mjs` 全章の作業地点画像19種類 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/road-worksites.browser.mjs` | `work/worksite-browser/` の画像・`result.json` |
 <!-- manual-test-inventory:end -->
 
 Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合はPowerShellで `$env:PLAYWRIGHT_MODULE='C:\絶対パス\node_modules\playwright'`、`$env:CHROME_PATH='C:\絶対パス\chrome.exe'` を指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要で、`--executable` でブラウザー実行ファイルを指定できる。Pythonテストは生成CSSと `components/ui/dialog.tsx` のクラスを組み合わせた独立fixtureで、`--css` はビルドできない場合の独立fixture専用。部品fixtureの3本もゲーム全体へ接続するテストではない。

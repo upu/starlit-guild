@@ -4,13 +4,13 @@
 
 ## 第四章の一枚絵
 
-4場面の採用素材。ゲームへの接続は第四章の実装時に行う。[制作条件](chapter-four-stills.md)と[生成記録](../art-generation/chapter-four-stills.json)を参照。
+4場面の採用素材。第四章の会話とアルバムへ接続済み。[制作条件](chapter-four-stills.md)と[生成記録](../art-generation/chapter-four-stills.json)を参照。
 
-### 4-7：苗を守るリコ
+### 4-8：苗を守るリコ
 
 ![赤と黒の衣装のリコが苗の籠を抱えて道をふさぎ、食料を背負ったメリルが手を伸ばす。](../../public/stories/lico-protects-seedlings.webp)
 
-第四章4-7向けの採用素材。人物紹介を兼ねた全身構図で、右のリコが苗を守り、左のメリルが狙う。ゲームの会話・アルバムへの接続は第四章の実装時に行う。[制作条件](chapter-four-stills.md#4-7の採用画像)と[生成記録](../art-generation/chapter-four-stills.json)を参照する。
+第四章4-8の出発会話で表示。人物紹介を兼ねた全身構図で、右のリコが苗を守り、左のメリルが狙う。[制作条件](chapter-four-stills.md#4-8の採用画像)と[生成記録](../art-generation/chapter-four-stills.json)を参照する。
 
 ### 4-4：徹夜明けのミラ
 
@@ -20,7 +20,7 @@
 
 ![アリアが右手で布を広げ、左腕をレオンの右腕へ回して身を寄せ、二人で隙間をのぞく。](../../public/stories/blue-cloth-alley.webp)
 
-### 4-9：旅団結成
+### 4-10：旅団結成
 
 ![アリアが旅団の登録書へ署名し、レオン、ミラ、フィン、リコが机を囲んで見守る。](../../public/stories/guild-formation.webp)
 

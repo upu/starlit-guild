@@ -10,6 +10,7 @@ import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
 import { storyArt } from "../lib/story-art.ts";
 import { interludes } from "../lib/interludes.ts";
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
+import { chapterFourSpeakers } from "../lib/chapter-four-stories.ts";
 import { sourceForStageBanter, sourceForStory, validateStorySources } from "./script-sources.mjs";
 
 const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);
@@ -24,6 +25,7 @@ const marker = "> 自動生成ファイルです。手で編集せず、`npm run
 const names = new Map([
   ...[...heroes, ...originalCharacters].map(({ id, name }) => [id, name]),
   ...Object.entries(chapterThreeSpeakers),
+  ...Object.entries(chapterFourSpeakers),
 ]);
 const questNames = new Map(allQuests.map(({ id, name }) => [id, name]));
 
@@ -60,6 +62,11 @@ function sceneLines(story, label, document, level = "###") {
     ...(source.third
       ? [
           `IDの接続元：${sourceLink(document, "lib/chapter-three-dialogue.ts")} の \`scene()\` → ${sourceLink(document, "lib/chapter-three.ts")} の \`${story.chapter === "interlude" ? "LUNCH_INTERLUDE" : "chapterThreeStages"}\``,
+        ]
+      : []),
+    ...(source.fourth
+      ? [
+          `IDの接続元：${sourceLink(document, "lib/chapter-four-scene.ts")} の \`scene()\` → ${sourceLink(document, "lib/chapter-four.ts")} の \`${story.chapter === "interlude" ? "WALNUT_INTERLUDE" : "chapterFourStages"}\``,
         ]
       : []),
     ...(art
@@ -218,6 +225,7 @@ function renderCommonBanter() {
     ["二人で待機中", ["aria", "leon"], 6],
     ["三人で待機中", ["aria", "leon", "mira"], 8],
     ["四人で待機中", ["aria", "leon", "mira", "finn"], 8],
+    ["五人で待機中", ["aria", "leon", "mira", "finn", "lico"], 6],
   ]) {
     lines.push(
       `## ${heading}`,

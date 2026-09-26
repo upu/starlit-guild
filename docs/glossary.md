@@ -13,8 +13,9 @@
 | 第一章 | `lib/prologue.ts`（`prologueStages`） | [第一章プロット](story/story-part-1.md) | [第一章のゲーム実装](gameplay/prologue-gameplay.md) |
 | 第二章 | `lib/chapter-two.ts`（`chapterTwoStages`） | [第二章計画](story/story-part-2.md) | [第二章のゲーム実装](gameplay/chapter-two-gameplay.md) |
 | 第三章 | `lib/chapter-three.ts`（`chapterThreeStages`） | [第三章計画](story/story-part-3.md) | [第三章のゲーム実装](gameplay/chapter-three-gameplay.md) |
+| 第四章 | `lib/chapter-four.ts`（`chapterFourStages`） | [第四章計画](story/story-part-4.md) | [第四章のゲーム実装](gameplay/chapter-four-gameplay.md) |
 
-第一章から第三章を合わせたものが `storyStages`（`lib/prologue.ts`）。ステージの解放順・次の行先はこの並びで決まる。
+第一章から第四章を合わせたものが `storyStages`（`lib/prologue.ts`）。ステージの解放順・次の行先はこの並びで決まる。
 
 ## ステージとクエストID
 
@@ -49,6 +50,16 @@
 | 3-7 | 灯りのお披露目 | `garden-reception` | `RECEPTION_QUEST` | 客を迎える屋敷の庭 | `garden-reception-departure` / `garden-reception-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
 | 3-8 | 間違った荷物を戻す夜 | `keystone-night-road` | `STONE_RETURN_QUEST` | 橋へ続く夜の街道 | `keystone-night-road-departure` / `keystone-night-road-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
 | 3-9 | 戻る灯り、増える同行者 | `berne-restoration` | `BERNE_RESTORATION_QUEST` | ベルネの塔の足元 | `berne-restoration-departure` / `berne-restoration-return` | [物語](story/story-part-3.md) / [実装](gameplay/chapter-three-gameplay.md) |
+| 4-1 | 塔を直した人たちへ | `linde-requests` | `LINDE_REQUESTS_QUEST` | リンデの食堂と町 | `linde-requests-departure` / `linde-requests-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-2 | 見当違いの灯り | `lantern-detour` | `LANTERN_DETOUR_QUEST` | ブレッカへ向かう村道 | `lantern-detour-departure` / `lantern-detour-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-3 | 醸造の町ブレッカ | `brekka-arrival` | `BREKKA_ARRIVAL_QUEST` | ブレッカの町と往診先 | `brekka-arrival-departure` / `brekka-arrival-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-4 | 毎朝光る苔・一日目 | `glowing-moss-trail` | `MOSS_TRAIL_QUEST` | ブレッカの裏通り | `glowing-moss-trail-departure` / `glowing-moss-trail-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-5 | 毎朝光る苔・二日目 | `glowing-moss-trail-next-day` | `MOSS_TRAIL_SECOND_DAY_QUEST` | ブレッカの裏通り | `glowing-moss-trail-next-day-departure` / `glowing-moss-trail-next-day-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-6 | 塔のそばの苔床 | `brekka-moss-beds` | `MOSS_BEDS_QUEST` | ブレッカの塔の裏手 | `brekka-moss-beds-departure` / `brekka-moss-beds-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-7 | 消える前に | `lico-records` | `LICO_RECORDS_QUEST` | 塔の管理小屋と苔床 | `lico-records-departure` / `lico-records-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-8 | 苔は渡さない | `merrill-seedlings` | `MERRILL_SEEDLINGS_QUEST` | 塔の裏手の積み出し口 | `merrill-seedlings-departure` / `merrill-seedlings-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-9 | 光が抜ける前に | `moss-transplant` | `MOSS_TRANSPLANT_QUEST` | 塔から離れた新しい苔床 | `moss-transplant-departure` / `moss-transplant-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-10 | 同じ宛先へ | `starlit-guild-founding` | `GUILD_FOUNDING_QUEST` | ブレッカからリンデへの帰り道 | `starlit-guild-founding-departure` / `starlit-guild-founding-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 
 クエスト一覧のカードは小見出しに番号、太字に表示名を出す。ヒントは「番号 表示名 · 物語の題」の形（例：`1-4 丘の塔まで足を伸ばす · 少し見に行こう`）。物語の題（`stage.title`）はその回の読み物の見出しで、行先の名前ではない。
 
@@ -70,6 +81,8 @@
 ## 幕間
 
 「私が用意するお昼」のシーンID・選択用クエストIDは `interlude-walnut-lunch`、種類は `interlude`。2-9読了で第三章のクエスト一覧に解放し、選んで出発すると会話が始まる。戦闘・報酬・クリア数はなく、既読は通常の `story.read` に保存する。初回読了で一覧から消え、3-1が開く。思い出では2-9と3-1の間に並び、再読できる。
+
+「約束の胡桃」は `interlude-promised-walnuts`。3-9読了で第四章の一覧に解放し、初回読了で4-1が開く。戦闘・報酬・クリア数を付けず、思い出では3-9と4-1の間に置く。
 
 ## キャラクターID
 
@@ -94,9 +107,9 @@
 
 | 扱うもの | ファイル |
 | --- | --- |
-| 章のステージ定義、解放条件、次の行先 | `lib/prologue.ts`、`lib/chapter-two.ts` |
+| 章のステージ定義、解放条件、次の行先 | `lib/prologue.ts`、`lib/chapter-two.ts`、`lib/chapter-three.ts`、`lib/chapter-four.ts` |
 | クエストの数値、進行、報酬、行動 | `lib/game.ts` |
-| 物語の本文と掛け合い | `lib/prologue-stories.ts`、`lib/chapter-two-stories.ts`、`lib/stories.ts` |
+| 物語の本文と掛け合い | `lib/prologue-stories.ts`、`lib/chapter-two-stories.ts`、`lib/chapter-three-stories.ts`、`lib/chapter-four-stories.ts`、`lib/stories.ts` |
 | スチルの対応と表示行 | `lib/story-art.ts` |
 | 保存形式と検証 | `lib/save-format.ts` |
 | 仲間の基本データと絆 | `lib/roster.ts` |

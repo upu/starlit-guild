@@ -1,4 +1,5 @@
 import { chapterThreeQuests } from "./chapter-three.ts";
+import { chapterFourQuests } from "./chapter-four.ts";
 import { interludeQuests, isInterlude, interludeUnlocked } from "./interludes.ts";
 import {
   TRADE_QUEST,
@@ -215,6 +216,7 @@ export const quests: Quest[] = [
   ...chapterTwoQuests,
   ...interludeQuests,
   ...chapterThreeQuests,
+  ...chapterFourQuests,
 ] satisfies Quest[];
 export const allQuests: Quest[] = quests;
 export const availableQuests = (s: State) =>

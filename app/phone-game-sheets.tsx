@@ -229,7 +229,7 @@ function collectionItemsSheet(m: SheetModel): SheetView | null {
   if (m.sheet === "quests")
     return {
       title: "クエスト",
-      description: "行き先を選び、もう一度タップで決定。",
+      description: "",
       content: (
         <QuestPicker
           state={s}

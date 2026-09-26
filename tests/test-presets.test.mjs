@@ -16,7 +16,7 @@ test("chapter snapshots cover every implemented stage and expose each chapter en
   assert.equal(testPresets.length, chapterStates.length + 1);
   assert.deepEqual(
     testPresets.map((p) => p.name),
-    ["強くて最初から", "2章・標準", "3章・標準", "3章・クリア状態"],
+    ["強くて最初から", "2章・標準", "3章・標準", "4章・標準", "4章・クリア状態"],
   );
 });
 
@@ -65,5 +65,5 @@ test("presets preserve earned equipment and story gates, and create independent 
   const clear = testPresetState("latest-clear", 1000);
   assert.equal(pendingInterlude(clear), undefined);
   assert.ok(clear.story.read.includes("berne-restoration-return"));
-  assert.equal(clear.owned.length, 4);
+  assert.deepEqual(clear.owned, ["aria", "leon", "mira", "finn", "lico"]);
 });

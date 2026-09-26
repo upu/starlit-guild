@@ -22,6 +22,7 @@ const code = ts.transpileModule(source, {
   },
 }).outputText;
 function nodes(node) {
+  if (typeof node?.type === "function") return nodes(node.type(node.props));
   return !node || typeof node !== "object"
     ? []
     : [node, ...[node.props?.children].flat(Infinity).flatMap(nodes)];
@@ -70,7 +71,7 @@ function harness(state, selected = prologue.TRADE_QUEST) {
     "@/lib/scenery": scenery,
     "@/lib/original-characters": { originalCharacters: [] },
     "next/image": { default: "img" },
-    "lucide-react": { Check: "check", LockKeyhole: "lock" },
+    "lucide-react": { Check: "check", ChevronDown: "chevron" },
     "./sprite": { Sprite: "sprite" },
     "./quest-progression-setting": { QuestProgressionSetting: "setting" },
   };
@@ -88,6 +89,12 @@ function harness(state, selected = prologue.TRADE_QUEST) {
       selection = value;
     },
     button: (id) => all().find((node) => node.type === "button" && node.key === id),
+    chapter: () => all().find((node) => node.type === "select"),
+    option: (id) => all().find((node) => node.type === "option" && node.key === id),
+    changeChapter: (value) =>
+      all()
+        .find((node) => node.type === "select")
+        .props.onChange({ currentTarget: { value } }),
     cards: () => all().filter((node) => node.props?.className === "quest-option"),
     setting: () => all().find((node) => node.type === "setting"),
     summary: () =>
@@ -110,16 +117,16 @@ function chapterTwoState() {
 
 test("opens the selected destination chapter and filters cards; switching only previews", () => {
   const h = harness(chapterTwoState(), chapterTwo.PICNIC_QUEST);
-  assert.equal(h.button("two").props["aria-pressed"], true);
+  assert.equal(h.chapter().props.value, "two");
   assert.deepEqual(
     h.cards().map((node) => node.key),
     [chapterTwo.PICNIC_QUEST],
   );
-  h.button("one").props.onClick();
+  h.changeChapter("one");
   assert.equal(h.cards().length, 9);
   assert.equal(h.props.selected, prologue.TRADE_QUEST);
   assert.equal(h.confirmed.length, 0);
-  h.button("two").props.onClick();
+  h.changeChapter("two");
   assert.equal(h.props.selected, chapterTwo.PICNIC_QUEST);
   h.button(chapterTwo.PICNIC_QUEST).props.onClick();
   assert.deepEqual(h.confirmed, [chapterTwo.PICNIC_QUEST]);
@@ -134,7 +141,11 @@ test("opens the selected destination chapter and filters cards; switching only p
 
 test("locked chapter hides its quests; the switch writes the same persisted preference", () => {
   const h = harness(game.initialState(1000));
-  assert.equal(h.button("two").props.disabled, true);
+  assert.equal(h.option("two").props.disabled, true);
+  assert.equal(h.option("four").props.disabled, true);
+  h.changeChapter("four");
+  h.changeChapter("unknown");
+  assert.equal(h.chapter().props.value, "one");
   assert.equal(h.cards().length, 1);
   assert.equal(h.setting().props.compact, true, "the picker omits the description");
   assert.equal(h.setting().props.checked, false);
@@ -142,6 +153,7 @@ test("locked chapter hides its quests; the switch writes the same persisted pref
   assert.equal(h.setting().props.checked, true);
   assert.equal(h.props.state.autoNextQuest, true);
   h.props.ready = false;
+  assert.equal(h.chapter().props.disabled, true);
   assert.equal(h.setting().props.disabled, true);
   assert.equal(h.summary().props.disabled, true);
   h.button(prologue.TRADE_QUEST).props.onClick();

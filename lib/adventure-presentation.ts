@@ -16,6 +16,7 @@ import { isPrologueQuest, RESTORATION_QUEST } from "./prologue.ts";
 import { chapterTwoEnemyAsset, chapterTwoGolem } from "./chapter-two.ts";
 import type { Enemy } from "./combat.ts";
 import { puppetLook, puppetCue } from "./puppet-battles.ts";
+import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 
 export type AdventureInput = {
   squad: Squad;
@@ -30,7 +31,11 @@ export type AdventureIntent = "help" | "heal" | `heal:${string}`;
 const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 // Mira's map figure follows her character reference; dialogue portraits stay independent.
 export const spriteAsset = (index: number) =>
-  index === 2 ? "/animations/mira-v1.png" : originalArt(index) || "/sprites.png";
+  index === 2
+    ? "/animations/mira-v1.png"
+    : index === 4
+      ? "/animations/road/lico-standing-v1.webp"
+      : originalArt(index) || "/sprites.png";
 export const spriteFrame = (index: number) =>
   index === 2 ? "8" : spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
 type ActiveRun = NonNullable<Squad["run"]>;
@@ -122,6 +127,11 @@ function targetAsset(
   kind: ReturnType<typeof encounter> | null,
   sprite: number,
 ) {
+  const encounterNode = run.road?.ambushNode ?? run.node;
+  if (kind === "battle" && quest.id === LICO_RECORDS_QUEST && encounterNode === 14)
+    return "/animations/road/lico-standing-v1.webp";
+  if (kind === "battle" && quest.id === MERRILL_SEEDLINGS_QUEST && encounterNode === 8)
+    return "/animations/road/merrill-standing-v1.webp";
   const enemyArt = kind === "battle" ? chapterTwoEnemyAsset(quest.id, run.node) : null;
   if (enemyArt) return enemyArt;
   if (kind === "escort")
@@ -218,6 +228,8 @@ function frameTargets(
           { x: 0.73, y: 0.43 },
           { x: 0.86, y: 0.63 },
           { x: 0.72, y: 0.83 },
+          { x: 0.9, y: 0.36 },
+          { x: 0.92, y: 0.9 },
         ];
   return enemies.map((enemy, index) => {
     if (enemy.role) return puppetTarget(base, enemy, index, enemies.length, run, now);
@@ -229,7 +241,7 @@ function frameTargets(
       ...base,
       ...(multiple ? positions[index] : {}),
       id: enemy.id,
-      name,
+      ...confrontationTarget(enemy, base.asset, name),
       scale: multiple ? 0.65 : base.scale,
       hp: enemy.hp,
       maxHp: enemy.maxHp,
@@ -237,6 +249,13 @@ function frameTargets(
       value: clamp(enemy.hp / enemy.maxHp),
     };
   });
+}
+function confrontationTarget(enemy: Enemy, asset: string, name: string) {
+  if (!enemy.trick) return { name, asset };
+  return {
+    name: { mushroom: "コロタケ", merrill: "メリル", lico: "リコの仕掛け" }[enemy.trick],
+    asset: enemy.trick === "mushroom" ? "/animations/road/mushroom-v1.webp" : asset,
+  };
 }
 
 // Presentation is a read-only projection. Only lib/game advances time or awards loot.

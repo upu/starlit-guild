@@ -21,25 +21,24 @@ import {
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
+  ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
   miraFrames,
   finnFrames,
 } from "./road-art";
+import {
+  enemyAppearance,
+  enemyArrived,
+  enemyPresent,
+  enemyFacesRight,
+  enemyAngle,
+  fitEnemy,
+  enemyLabel,
+  enemyDisplayHeight,
+} from "./road-enemy-appearance";
 
 type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
 export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
-const puppetNames = { pumpety: "プティ", puppet: "人形", golem: "ゴーレム", slime: "" };
-function enemyName(enemy: RoadEnemy) {
-  if (enemy.kind !== "slime") return puppetNames[enemy.kind];
-  return enemy.boss ? "大きなスライム" : "";
-}
-const enemyFalls = (enemy: RoadEnemy) => enemy.pose === "fallen" || enemy.pose === "drag";
-function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
-  if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
-  return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
-}
-const enemySize = (enemy: RoadEnemy) =>
-  ({ puppet: 0.45, pumpety: 1, golem: 1.65, slime: enemy.boss ? 1.65 : 0.75 })[enemy.kind];
 
 export class RoadPainter {
   private backdrop: Phaser.GameObjects.Image;
@@ -97,6 +96,7 @@ export class RoadPainter {
   }
 
   private registerSheet(id: Traveller["id"]) {
+    if (id === "lico") return;
     const texture = this.scene.textures.get(roadSheet(id));
     if (id === "finn") {
       for (const [index, [x, y, w, h]] of finnFrames.entries())
@@ -106,12 +106,16 @@ export class RoadPainter {
     if (id === "mira") {
       for (const [index, [x, y, w, h]] of miraFrames.entries())
         texture.add(String(index), 0, x, y, w, h);
+    } else {
+      for (let index = 0; index < 12; index++) {
+        const frame = roadFrame(id, index);
+        texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
+      }
     }
-    for (let index = 0; index < 12; index++) {
-      if (id === "mira") continue;
-      const frame = roadFrame(id, index);
-      texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
-    }
+    this.registerWalkFrames(id);
+  }
+
+  private registerWalkFrames(id: Traveller["id"]) {
     const walk = this.scene.textures.get(roadWalkSheet(id));
     for (let index = 0; index < 4; index++)
       walk.add(String(index), 0, (index % 2) * 627, Math.floor(index / 2) * 627, 627, 627);
@@ -146,6 +150,7 @@ export class RoadPainter {
     const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
     berne.add("stonework", 0, 53, 271, 788, 433);
     berne.add("records", 0, 933, 250, 797, 468);
+    this.scene.textures.get(ROAD_LEDGER_DESK).add("ledger", 0, 15, 240, 1230, 930);
     const objects = [
       [133, 215, 497, 339],
       [798, 147, 564, 433],
@@ -273,7 +278,7 @@ export class RoadPainter {
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
     let figure = this.heroes.get(hero.id);
     if (!figure) {
-      figure = this.makeFigure(roadSheet(hero.id), "8", "");
+      figure = this.makeFigure(roadSheet(hero.id), hero.id === "lico" ? "__BASE" : "8", "");
       this.heroes.set(hero.id, figure);
     }
     const size = Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
@@ -292,43 +297,41 @@ export class RoadPainter {
       .setFlipX(hero.facing < 0)
       .setDepth(10 + hero.lane * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
-    figure.label.setVisible(false);
+    figure.label
+      .setVisible(!!hero.paralyzed)
+      .setText("麻痺")
+      .setPosition(x, y - size);
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
-  private enemyLabel(enemy: RoadEnemy) {
-    return this.look?.enemies[enemy.id]?.label || enemyName(enemy);
-  }
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
+    if (!enemyArrived(enemy, state.time, reduced)) return;
     let figure = this.enemies.get(enemy.id);
     if (!figure) {
       figure = this.makeFigure("/sprites.png", "slime", "");
       this.enemies.set(enemy.id, figure);
     }
-    const size =
-      Math.min(115, this.scene.scale.width * 0.19, this.scene.scale.height * 0.32) *
-      enemySize(enemy);
+    const size = enemyDisplayHeight(enemy, this.scene.scale.width, this.scene.scale.height);
     const x = this.screenX(enemy.x, state),
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
-    const puppet = enemy.kind !== "slime";
-    const asset = puppet ? ROAD_PUPPETS : "/sprites.png";
-    const frame = puppet ? enemy.kind : this.look?.enemies[enemy.id]?.frame || "slime";
+    const { asset, frame, character } = enemyAppearance(enemy, this.look);
+    const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(enemyFacesRight(enemy, state.heroes[0].x))
-      .setAngle(enemyFalls(enemy) ? -20 : 0)
+      .setFlipX(character ? !facesRight : facesRight)
+      .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
-    if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
+    fitEnemy(figure.image, enemy, size, this.spriteFilter, state.time, reduced);
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)
       .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
-      .setText(this.enemyLabel(enemy));
+      .setText(enemyLabel(enemy, this.look));
     if (enemy.kind !== "pumpety" && !enemy.pose)
       this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }
@@ -337,7 +340,7 @@ export class RoadPainter {
     const size = cargo
       ? Math.min(145, this.scene.scale.width * 0.3)
       : Math.min(
-          ({ waterway: 85, signpost: 44 } as Record<string, number>)[
+          ({ waterway: 85, signpost: 44, ledger: 85 } as Record<string, number>)[
             this.look?.work?.frame || ""
           ] || 65,
           this.scene.scale.width * 0.2,
@@ -398,7 +401,7 @@ export class RoadPainter {
     this.bars.clear();
     this.paintGathering(state);
     for (const [id, figure] of this.enemies) {
-      if (state.enemies.some((enemy) => enemy.id === id && (enemy.hp > 0 || enemy.pose))) continue;
+      if (enemyPresent(state, id, reduced)) continue;
       figure.image.destroy();
       figure.label.destroy();
       this.enemies.delete(id);

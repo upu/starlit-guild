@@ -8,24 +8,23 @@ import {
   type Ref,
   type SetStateAction,
 } from "react";
-import { BookOpen, ChevronRight } from "lucide-react";
 import { Portrait } from "./portrait";
 import { storyArtwork, storyArtViewer, storyTapHint } from "./story-viewers";
-import { memoryGroups } from "./story-memory-groups";
 import { useStoryGestureHandlers, type StoryGesture } from "./story-gesture-handlers";
-import { heroes, type State } from "@/lib/game";
+import { heroes } from "@/lib/game";
 import { originalCharacters } from "@/lib/original-characters";
-import {
-  availableStories,
-  stories,
-  storyProgress,
-  type Story,
-  type StoryLine,
-} from "@/lib/stories";
+import type { Story, StoryLine } from "@/lib/stories";
 import { storyArtAt } from "@/lib/story-art";
-import { hasNextBanter, nextBanter, startBanter, type BanterExchange } from "@/lib/banter-exchange";
+import {
+  hasNextBanter,
+  nextBanter,
+  startBanter,
+  retainBanter,
+  type BanterExchange,
+} from "@/lib/banter-exchange";
 import type { StoryAdvance } from "./use-story-advance";
 export { ArtViewer, StoryAlbum } from "./story-viewers";
+export { StoryLibrary } from "./story-library";
 export { memoryGroups } from "./story-memory-groups";
 const characters = [
   ...heroes,
@@ -192,90 +191,6 @@ export function StoryReader({
   );
 }
 
-function storyMemoryFilters(
-  onlyUnread: boolean,
-  setOnlyUnread: (value: boolean) => void,
-  available: Story[],
-  read: string[],
-) {
-  return (
-    <div className="memory-filters" aria-label="物語の表示">
-      <button
-        aria-pressed={!onlyUnread}
-        onClick={() => {
-          setOnlyUnread(false);
-        }}
-      >
-        すべて
-      </button>
-      <button
-        aria-pressed={onlyUnread}
-        onClick={() => {
-          setOnlyUnread(true);
-        }}
-      >
-        未読 {available.filter((st) => !read.includes(st.id)).length}
-      </button>
-    </div>
-  );
-}
-
-export function StoryLibrary({
-  state: s,
-  onOpen,
-}: {
-  state: State;
-  onOpen: (story: Story) => void;
-}) {
-  const available = availableStories(s),
-    read = storyProgress(s).read;
-  const [onlyUnread, setOnlyUnread] = useState(false);
-  const itemsToShow = available.filter((st) => !onlyUnread || !read.includes(st.id));
-  return (
-    <div className="story-library">
-      {storyMemoryFilters(onlyUnread, setOnlyUnread, available, read)}
-      {available.length === 0 ? (
-        <div className="story-empty">
-          <BookOpen />
-          <p>最初の思い出は、ふたりで「街への交易」へ出発すると開きます。</p>
-        </div>
-      ) : (
-        itemsToShow.length === 0 && <p>すべての思い出を読み終えました。</p>
-      )}
-      {memoryGroups(itemsToShow).map((group) => (
-        <section key={group.id}>
-          <h3>{group.title}</h3>
-          {group.items.map((st) => (
-            <button
-              key={st.id}
-              className="story-entry"
-              onClick={() => {
-                onOpen(st);
-              }}
-            >
-              <span>
-                <small>
-                  {st.chapter === "interlude"
-                    ? "幕間"
-                    : st.chapter === "departure"
-                      ? "出発前"
-                      : "達成後"}
-                  {!read.includes(st.id) && " · 未読"}
-                </small>
-                <b>{st.title}</b>
-              </span>
-              <ChevronRight size={18} />
-            </button>
-          ))}
-        </section>
-      ))}
-      <small>
-        {available.length} / {stories.length} の思い出。開いた話は、ここでいつでも読み返せます。
-      </small>
-    </div>
-  );
-}
-
 function scheduleBanter(
   paused: boolean,
   hasNext: boolean,
@@ -316,8 +231,18 @@ function banterLine(entry: StoryLine, key: number) {
   );
 }
 
-export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?: boolean }) {
+export function Banter({
+  lines,
+  paused = false,
+  retain = false,
+}: {
+  lines: StoryLine[];
+  paused?: boolean;
+  retain?: boolean;
+}) {
   const [exchange, setExchange] = useState(() => startBanter(lines));
+  const retained = retain ? retainBanter(exchange, lines) : exchange;
+  if (retained !== exchange) setExchange(retained);
   const dialogue = useRef<HTMLDivElement>(null);
   const followLatest = useRef(true);
   useEffect(() => {

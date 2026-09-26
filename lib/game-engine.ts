@@ -1,4 +1,6 @@
 import { isChapterThreeQuest } from "./chapter-three.ts";
+import { paralyzed, shiftConfrontationClocks } from "./chapter-four-battles.ts";
+import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
@@ -82,6 +84,8 @@ function quietStageWork(q: Quest, kind: Encounter) {
   );
 }
 function actorEventKind(q: Quest, kind: Encounter, special: boolean): GameEvent["kind"] {
+  if ([LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST].includes(q.id) && kind === "battle")
+    return "gather";
   if (isChapterThreeQuest(q.id) && kind !== "battle") return "gather";
   if (quietStageWork(q, kind)) return "gather";
   if (special) return "skill";
@@ -106,6 +110,8 @@ function stageWorkText(q: Quest, kind: Encounter, special: boolean) {
   return texts[q.id]?.[Number(special)] || null;
 }
 function actorEventText(q: Quest, kind: Encounter, hero: string, special: boolean) {
+  if (q.id === LICO_RECORDS_QUEST && kind === "battle") return "板と栓を押さえる";
+  if (q.id === MERRILL_SEEDLINGS_QUEST && kind === "battle") return "苗の籠を守る";
   const work = stageWorkText(q, kind, special);
   if (work) return work;
   if (q.id === TOWN_QUEST) return special ? "息を合わせて荷運び" : "荷札の確認・配達";
@@ -119,6 +125,21 @@ function healFromActor(s: State, sq: Squad, r: Run, hero: string, special: boole
     restored = healMember(r, target, heal);
   event(r, at, "heal", heroSkills[hero].name, restored, hero, target);
 }
+function attackPresentation(
+  r: Run,
+  q: Quest,
+  kind: Encounter,
+  hero: string,
+  special: boolean,
+  enemy?: string,
+) {
+  if (r.enemies?.some((e) => e.id === enemy && e.trick === "mushroom"))
+    return {
+      kind: special ? ("skill" as const) : ("hit" as const),
+      text: "コロタケを押し返す",
+    };
+  return { kind: actorEventKind(q, kind, special), text: actorEventText(q, kind, hero, special) };
+}
 function actorTurn(
   s: State,
   sq: Squad,
@@ -128,7 +149,7 @@ function actorTurn(
   actor: Actor,
   at: number,
 ) {
-  if (memberHealth(r, actor.hero).hp <= 0) {
+  if (memberHealth(r, actor.hero).hp <= 0 || paralyzed(actor, at)) {
     actor.nextAt += actor.period;
     return;
   }
@@ -162,11 +183,12 @@ function actorTurn(
     useSpecial = special && (!s.techniques || !["aria", "leon"].includes(hero) || !!text);
   if (special && kind === "battle" && equippedTechnique(s, hero, "active") === "leon-guard")
     r.ward += Math.ceil(totalMaxHp(r) * 0.12);
+  const action = attackPresentation(r, q, kind, hero, useSpecial, hit.enemy);
   event(
     r,
     at,
-    actorEventKind(q, kind, useSpecial),
-    heroById(hero).name + "：" + (text || actorEventText(q, kind, hero, useSpecial)),
+    action.kind,
+    heroById(hero).name + "：" + (text || action.text),
     hit.amount,
     hero,
     undefined,
@@ -271,6 +293,7 @@ function settleSquad(s: State, sq: Squad, end: number) {
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
 }
 function shiftRun(r: Run, shift: number) {
+  shiftConfrontationClocks(r, shift);
   if (r.road) {
     if (r.road.scene) r.road.scene.at += shift;
     r.road.at += shift;
@@ -289,7 +312,9 @@ function shiftRun(r: Run, shift: number) {
     actor.arrivesAt += shift;
   }
   r.events = [];
-  for (const enemy of r.enemies || []) enemy.nextAt += shift;
+  for (const enemy of r.enemies || []) {
+    enemy.nextAt += shift;
+  }
 }
 // Simulates every party up to `now`, however long that is.
 export function settle(input: State, now: number) {

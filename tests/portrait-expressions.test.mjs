@@ -64,7 +64,8 @@ test("reference characters retain eight expressions and other characters retain 
       portraits.expressionPortrait(index, "neutral").position,
     );
   }
-  for (const index of [4, 5, 6, 7, 14]) {
+  assert.equal(portraits.expressionPortrait(4, "smile")?.src, "/portraits/lico-expressions.webp");
+  for (const index of [5, 6, 7, 14]) {
     assert.equal(portraits.expressionPortrait(index, "smile"), null);
     assert.ok(
       exports
@@ -233,4 +234,40 @@ test("Merrill's appetite expressions share the atlas through named and legacy po
   ).metadata();
   assert.equal(meta.width, 1024);
   assert.equal(meta.height, 512);
+});
+
+test("authored story expressions exist for the speaker instead of silently falling back", () => {
+  for (const story of stories)
+    for (const line of story.lines) {
+      const atlas = portraits.portraitAtlases[line.speaker];
+      if (atlas && line.expression)
+        assert.ok(
+          atlas.expressions.includes(line.expression),
+          `${story.id}: ${line.speaker} / ${line.expression}`,
+        );
+    }
+});
+
+test("key emotional moments keep shouting, fatigue, embarrassment and appetite distinct", () => {
+  const examples = [
+    ["brekka-moss-beds-return", "あーーっ！", "shouting"],
+    ["merrill-seedlings-departure", "あーーっ！　それ、移す分！", "shouting"],
+    ["glowing-moss-trail-departure", "私は、まだ大丈夫よ。", "tired"],
+    ["glowing-moss-trail-departure", "付き添いまでしていただかなくても……。", "shy"],
+    ["glowing-moss-trail-return", "……もう、行った。", "shy"],
+    ["moonlit-herbs-return", "私は、まだ大丈夫よ。あと一人分、包めば――", "tired"],
+    ["waiting-households-return", "では、少しだけ……", "tired"],
+    ["sweet-blockade-return", "……それは、私の台詞よ。", "shy"],
+    ["moss-transplant-return", "……ありがとう。では、お願いするわ。", "shy"],
+    ["merrill-seedlings-departure", "……エルフの人、久しぶりに見た。あなたの耳は？", "predatory"],
+  ];
+  for (const [id, text, expression] of examples) {
+    const line = stories.find((story) => story.id === id)?.lines.find((line) => line.text === text);
+    assert.ok(line, `${id}: ${text}`);
+    assert.equal(line.expression, expression, `${id}: ${text}`);
+    assert.notEqual(
+      portraits.expressionPortrait(line.speaker, expression).position,
+      portraits.expressionPortrait(line.speaker, "neutral").position,
+    );
+  }
 });

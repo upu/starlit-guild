@@ -4,19 +4,23 @@ import { format } from "prettier";
 import { trainedChapter } from "./check-combat-balance.mjs";
 import { chapterRoute } from "./check-chapter-two-balance.mjs";
 import { chapterThreeRoute } from "./check-chapter-three-balance.mjs";
+import { chapterFourRoute } from "./check-chapter-four-balance.mjs";
 import { prologueStages } from "../lib/prologue.ts";
 import { chapterTwoStages } from "../lib/chapter-two.ts";
 import { chapterThreeStages } from "../lib/chapter-three.ts";
+import { chapterFourStages } from "../lib/chapter-four.ts";
 
 // Add each new chapter's standard route here, passing on the full earned state.
 export function generateTestPresets() {
   const first = trainedChapter(true);
   const second = chapterRoute("standard", first.state);
   const third = chapterThreeRoute(second.state);
+  const fourth = chapterFourRoute(third.state);
   return [
     [prologueStages, first],
     [chapterTwoStages, second],
     [chapterThreeStages, third],
+    [chapterFourStages, fourth],
   ].map(([stages, result], index) => {
     const state = structuredClone(result.state);
     if (

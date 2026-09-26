@@ -1,5 +1,5 @@
 // Read-only display data for the chapter battle renderer.
-export type TravellerId = "aria" | "leon" | "mira" | "finn";
+export type TravellerId = "aria" | "leon" | "mira" | "finn" | "lico";
 export type Traveller = {
   id: TravellerId;
   hp: number;
@@ -8,21 +8,36 @@ export type Traveller = {
   lane: number;
   walking: boolean;
   facing: 1 | -1;
+  paralyzed?: boolean;
 };
 export type RoadEnemy = {
-  kind: "slime" | "puppet" | "golem" | "pumpety";
+  kind: "slime" | "puppet" | "golem" | "pumpety" | "lico" | "merrill" | "mushroom";
   id: number;
   x: number;
   lane: number;
   hp: number;
   maxHp: number;
   boss: boolean;
+  action?: import("./chapter-four-battles.ts").BattleCue;
+  actionAt?: number;
+  appearsAt?: number;
   pose?: "fallen" | "retreat" | "enter" | "drag";
 };
 export type RoadEffect = {
   id: number;
   at: number;
-  kind: "arrow" | "slash" | "hurt" | "assist" | "gather" | "heal" | "magic" | "command";
+  kind:
+    | "arrow"
+    | "slash"
+    | "hurt"
+    | "assist"
+    | "gather"
+    | "heal"
+    | "magic"
+    | "command"
+    | "mushroomThrow"
+    | "song"
+    | "paralyze";
   x: number;
   lane: number;
   amount: number;
@@ -49,4 +64,4 @@ export type RoadBattle = {
   effects: RoadEffect[];
 };
 export const travellerLane = (id: TravellerId) =>
-  ({ aria: 0.54, leon: 0.82, mira: 0.68, finn: 0.43 })[id];
+  ({ aria: 0.54, leon: 0.82, mira: 0.68, finn: 0.43, lico: 0.63 })[id];

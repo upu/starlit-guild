@@ -1,4 +1,5 @@
 import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
+import { WALNUT_INTERLUDE, MOSS_BEDS_QUEST } from "../lib/chapter-four.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState, allQuests, encounter } from "../lib/game.ts";
@@ -16,6 +17,7 @@ import { roadY, roadBackdrop } from "../lib/road-layout.ts";
 function start(index, level = 30) {
   let state = testState(1000, index, level, 1000);
   if (index === 18) state = act(state, { type: "readStory", id: LUNCH_INTERLUDE }, 1000);
+  if (index === 27) state = act(state, { type: "readStory", id: WALNUT_INTERLUDE }, 1000);
   return act(
     state,
     { type: "start", id: storyStages[index].quest, value: false, readDeparture: true },
@@ -43,7 +45,7 @@ const input = (s, now = s.updatedAt) => ({
   paused: false,
 });
 
-test("all 27 scrolling stages finish unattended, roundtrip coordinates, preserve exact rewards and offline parity", () => {
+test("all scrolling stages finish unattended, roundtrip coordinates, preserve exact rewards and offline parity", () => {
   for (let index = 0; index < storyStages.length; index++) {
     const initial = start(index),
       q = allQuests.find((q) => q.id === storyStages[index].quest);
@@ -204,6 +206,62 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
     if (transporting && defended) break;
   }
   assert.ok(transporting && defended);
+});
+
+test("chapter four paperwork uses a ledger and carries documents without a freight cart", () => {
+  for (const index of [29, 33]) {
+    let state = start(index, 40);
+    const inspected = new Set();
+    const transported = new Set();
+    while (state.squads[0].run) {
+      const run = state.squads[0].run;
+      const { look, battle } = chapterRoadFrame(input(state));
+      if (look.work) {
+        if (battle.gathering.task === "carry") {
+          assert.equal(battle.gathering.task, "carry");
+          assert.equal(
+            look.work.asset,
+            index === 29
+              ? "/animations/road/cargo-v1.webp"
+              : "/animations/road/work-letters-v1.webp",
+          );
+          transported.add(run.node);
+        } else {
+          assert.equal(look.work.asset, "/animations/road/ledger-desk-v1.webp");
+          assert.equal(look.work.frame, "ledger");
+          assert.equal(battle.gathering.task, "inspect");
+          inspected.add(run.node);
+        }
+      }
+      state = settle(state, run.nextAt);
+    }
+    assert.equal(inspected.size, index === 29 ? 5 : 9);
+    assert.equal(transported.size, 5);
+  }
+});
+
+test("moss-bed survey shows moss, the waterway, and measuring tools without harvesting", () => {
+  let state = start(
+    storyStages.findIndex((stage) => stage.quest === MOSS_BEDS_QUEST),
+    40,
+  );
+  const inspected = new Set();
+  while (state.squads[0].run) {
+    const run = state.squads[0].run;
+    const { look, battle } = chapterRoadFrame(input(state));
+    assert.equal(look.work.frame, ["moss", "waterway", "__BASE"][run.node % 3]);
+    assert.equal(
+      look.work.asset,
+      run.node % 3 === 2
+        ? "/animations/road/work-route-v1.webp"
+        : "/animations/road/worksites-v1.webp",
+    );
+    assert.equal(battle.gathering.task, "inspect");
+    assert.equal(look.work.cargo, false);
+    inspected.add(run.node);
+    state = settle(state, run.nextAt);
+  }
+  assert.equal(inspected.size, 15);
 });
 
 test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {

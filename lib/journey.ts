@@ -1,5 +1,5 @@
 import { pendingInterlude } from "./interludes.ts";
-import { BERNE_QUEST, LUNCH_INTERLUDE } from "./chapter-three.ts";
+import { BERNE_QUEST } from "./chapter-three.ts";
 import { nextStage, stageEndingPending, storyStages } from "./prologue.ts";
 import { allQuests, heroes, power, encounter, type State, type Squad, type Quest } from "./game.ts";
 import { MOON_HERB_QUEST } from "./chapter-two.ts";
@@ -17,6 +17,20 @@ export type JourneyGoal = {
 };
 export function journeyHintKey(goal: JourneyGoal) {
   return goal.hintId || [goal.destination, goal.questId || "", goal.title].join(":");
+}
+function interludeGoal(s: State): JourneyGoal | null {
+  const interlude = pendingInterlude(s);
+  if (!interlude) return null;
+  const lunch = interlude.before === BERNE_QUEST;
+  return {
+    title: lunch ? "幕間 · 私が用意するお昼" : "幕間 · 約束の胡桃",
+    detail: lunch
+      ? "休みの日のお昼へ。クエストから選んで出発し、会話を読むと第三章へ進めます。"
+      : "二人で約束した胡桃の菓子を食べに行きましょう。会話を読むと第四章へ進めます。",
+    action: "クエストを開く",
+    destination: "quests",
+    questId: interlude.id,
+  };
 }
 
 function prologueGoal(s: State, sq: Squad): JourneyGoal {
@@ -36,14 +50,8 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
       action: "冒険を見守る",
       destination: "adventure",
     };
-  if (pendingInterlude(s))
-    return {
-      title: "幕間 · 私が用意するお昼",
-      detail: "休みの日のお昼へ。クエストから選んで出発し、会話を読むと第三章へ進めます。",
-      action: "クエストを開く",
-      destination: "quests",
-      questId: LUNCH_INTERLUDE,
-    };
+  const interlude = interludeGoal(s);
+  if (interlude) return interlude;
   if (stageEndingPending(s))
     return {
       title: "達成後のひと幕",
@@ -65,9 +73,9 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
     complete = !!s.done[stage.quest];
   const name = allQuests.find((q) => q.id === stage.quest)?.name ?? "";
   return {
-    title: complete ? "第三章の冒険を終えました" : `${stage.number} ${name} · ${stage.title}`,
+    title: complete ? "第四章の冒険を終えました" : `${stage.number} ${name} · ${stage.title}`,
     detail: complete
-      ? "ベルネの塔に灯りが戻り、四人で次の旅へ。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。"
+      ? "リンデに星灯りの旅団ができました。読み終えた道をもう一度歩いたり、手帳で思い出を振り返れます。"
       : "画面下の「出発」で出かけましょう。行先は隣の「クエスト」から選べます。",
     action: "クエストを開く",
     destination: "quests",
@@ -107,6 +115,12 @@ function prologueNotice(before: State, after: State): JourneyNotice | null {
   return stage ? { title: stage.arrival, description: stage.detail } : null;
 }
 export function journeyNotice(before: State, after: State): JourneyNotice | null {
+  if (!before.owned.includes("lico") && after.owned.includes("lico"))
+    return {
+      title: "リコが共闘します",
+      description:
+        "苗を守る仕事から、リコも戦いと調査に参加します。同行の約束は第四章の終わりで交わします。",
+    };
   if (!before.owned.includes("finn") && after.owned.includes("finn"))
     return {
       title: "フィンが同行します",

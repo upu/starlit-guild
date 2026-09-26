@@ -1,6 +1,7 @@
 import { storyParty } from "./story-party.ts";
 import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
+import { MERRILL_SEEDLINGS_QUEST, MOSS_TRAIL_QUEST, isChapterFourQuest } from "./chapter-four.ts";
 import { advanceQuestDestination, replayQuestDestination } from "./quest-navigation.ts";
 import {
   buyEquipment,
@@ -74,6 +75,7 @@ function startQuest(s: State, sq: Squad, a: Action) {
 }
 function recordDeparture(s: State, sq: Squad, q: Quest) {
   s.story ??= storyProgress(s);
+  if (q.id === MOSS_TRAIL_QUEST) s.story.mossTrailSplit = true;
   if (together(sq.members) && !s.story.departed.includes(q.id)) s.story.departed.push(q.id);
 }
 function readDepartureStory(s: State, q: Quest) {
@@ -81,6 +83,14 @@ function readDepartureStory(s: State, q: Quest) {
     (item) => item.quest === q.id && item.chapter === "departure",
   );
   if (story && !s.story?.read.includes(story.id)) s.story?.read.push(story.id);
+}
+function prepareChapterFourParty(s: State, q: Quest) {
+  if (isChapterThreeQuest(q.id) || isChapterFourQuest(q.id)) joinStoryFinn(s);
+  if (
+    q.id === MERRILL_SEEDLINGS_QUEST ||
+    (isChapterFourQuest(q.id) && s.done[MERRILL_SEEDLINGS_QUEST])
+  )
+    joinStoryLico(s);
 }
 function startAction(s: State, sq: Squad, a: Action, now: number) {
   if (a.id && isInterlude(a.id)) {
@@ -92,7 +102,7 @@ function startAction(s: State, sq: Squad, a: Action, now: number) {
     return;
   }
   const q = startQuest(s, sq, a);
-  if (isChapterThreeQuest(q.id)) joinStoryFinn(s);
+  prepareChapterFourParty(s, q);
   sq.members = storyParty(q.id);
   recordDeparture(s, sq, q);
   if (typeof a.value === "boolean") sq.repeat = a.value;
@@ -150,6 +160,14 @@ export function joinStoryFinn(s: State) {
   grantFinnEquipment(s);
   const party = s.squads.find((p) => p.lastQuest === BERNE_QUEST) || s.squads[0];
   if (!party.run && !party.members.includes("finn")) party.members.push("finn");
+}
+export function joinStoryLico(s: State) {
+  if (!s.owned.includes("lico")) {
+    s.owned.push("lico");
+    s.xp.lico = Math.min(...["aria", "leon", "mira", "finn"].map((id) => s.xp[id] || 0));
+  }
+  const party = s.squads[0];
+  if (!party.run && !party.members.includes("lico")) party.members.push("lico");
 }
 function stopAction(s: State, sq: Squad, _a: Action, now: number) {
   if (sq.run) sq.lastQuest ??= sq.run.quest;

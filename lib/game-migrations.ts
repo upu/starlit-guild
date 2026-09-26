@@ -1,12 +1,14 @@
 import { BERNE_QUEST, LUNCH_INTERLUDE, isChapterThreeQuest } from "./chapter-three.ts";
+import { MERRILL_SEEDLINGS_QUEST, WALNUT_INTERLUDE, isChapterFourQuest } from "./chapter-four.ts";
 import { DELIVERY_PREP_QUEST, PICNIC_QUEST } from "./chapter-two.ts";
 import { nextStage, storyStages } from "./prologue.ts";
 import { storyProgress } from "./stories.ts";
 import type { LegacySharedHealthState, LegacySharedRun, Run, State } from "./game-types.ts";
 import { initialState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
-import { joinStoryMira, joinStoryFinn } from "./game-actions.ts";
+import { joinStoryMira, joinStoryFinn, joinStoryLico } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
+import { upgradeMossTrail } from "./chapter-four-migration.ts";
 
 function upgradeSharedHealth(input: State | LegacySharedHealthState): State {
   if (input.squads.every((sq) => !sq.run || "health" in sq.run)) return input as State;
@@ -59,7 +61,7 @@ function upgradePendingDetour(input: State): State {
 }
 // Only v4 records load now; the v1-v3 migration chain went with the legacy mode.
 export function migrate(raw: State | LegacySharedHealthState): State {
-  let s = upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw)));
+  let s = upgradeMossTrail(upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw))));
   if (s.owned.includes("mira") && !s.inventory?.items["familiar-staff"]) {
     s = structuredClone(s);
     grantMiraEquipment(s);
@@ -68,6 +70,11 @@ export function migrate(raw: State | LegacySharedHealthState): State {
 }
 function addOnce(list: string[], value: string) {
   if (!list.includes(value)) list.push(value);
+}
+function completeStoryJoin(s: State, quest: string) {
+  if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+  if (quest === BERNE_QUEST) joinStoryFinn(s);
+  if (quest === MERRILL_SEEDLINGS_QUEST) joinStoryLico(s);
 }
 // Mark the first stages as departed, completed, and read, with the joins they carry.
 export function completeStoryStages(s: State, count: number) {
@@ -78,9 +85,9 @@ export function completeStoryStages(s: State, count: number) {
     addOnce(story.completed, quest);
     addOnce(story.read, quest + "-departure");
     addOnce(story.read, quest + "-return");
-    if (quest === DELIVERY_PREP_QUEST) joinStoryMira(s);
+    completeStoryJoin(s, quest);
     if (isChapterThreeQuest(quest)) addOnce(story.read, LUNCH_INTERLUDE);
-    if (quest === BERNE_QUEST) joinStoryFinn(s);
+    if (isChapterFourQuest(quest)) addOnce(story.read, WALNUT_INTERLUDE);
   }
 }
 // Test records follow the story stages.

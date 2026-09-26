@@ -8,8 +8,10 @@ import { finaleStories } from "../lib/chapter-two-finale-stories.ts";
 import { chapterThreeOpening } from "../lib/chapter-three-opening-stories.ts";
 import { chapterThreePreparation } from "../lib/chapter-three-preparation-stories.ts";
 import { chapterThreeFinale } from "../lib/chapter-three-finale-stories.ts";
+import { chapterFourSections } from "../lib/chapter-four-stories.ts";
 import { chapterTwoStages } from "../lib/chapter-two.ts";
 import { chapterThreeStages } from "../lib/chapter-three.ts";
+import { chapterFourStages } from "../lib/chapter-four.ts";
 import { prologueStages, WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST } from "../lib/prologue.ts";
 
 // Only the exporter uses this provenance map. Story objects and game saves stay unchanged.
@@ -34,9 +36,9 @@ const thirdGroups = [
 ];
 const sources = new Map();
 
-function register(story, file, hint, third = false) {
+function register(story, file, hint, third = false, fourth = false) {
   if (sources.has(story)) throw new Error(`台本の出典が重複しています: ${story.id}`);
-  sources.set(story, { file, hint, third });
+  sources.set(story, { file, hint, third, fourth });
 }
 
 for (const [file, group] of sceneGroups)
@@ -50,6 +52,22 @@ for (const [file, sections] of thirdGroups)
         `scene("${section.number === "幕間" ? "interlude" : section.number}", "${section.number === "幕間" ? "return" : story.chapter}", …)`,
         true,
       );
+function fourthSourceFile(number) {
+  const stage = Number(number.slice(2));
+  if (number === "interlude" || stage <= 3) return "lib/chapter-four-stories-1.ts";
+  if (stage <= 6) return "lib/chapter-four-stories-2.ts";
+  if (stage <= 8) return "lib/chapter-four-conflict-stories.ts";
+  return "lib/chapter-four-stories-3.ts";
+}
+for (const section of chapterFourSections)
+  for (const story of section.scenes)
+    register(
+      story,
+      fourthSourceFile(section.number),
+      `scene("${section.number}", "${story.chapter}", …)`,
+      false,
+      true,
+    );
 
 export function sourceForStory(story) {
   const source = sources.get(story);
@@ -66,6 +84,8 @@ export function validateStorySources(stories) {
 
 const waterwayQuests = new Set([WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST]);
 export function sourceForStageBanter(quest) {
+  if (chapterFourStages.some((stage) => stage.quest === quest))
+    return { file: "lib/chapter-four-banter.ts", hint: "chapterFourBanter()" };
   if (chapterThreeStages.some((stage) => stage.quest === quest))
     return {
       file: "lib/chapter-three-banter.ts",
