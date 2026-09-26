@@ -4,6 +4,7 @@ import {
   CHANGELOG_PATH,
   classifyVersionChange,
   parseVersion,
+  resolveVersionClassification,
   validateChangelogUpdate,
   validatePackageLock,
   validateVersionChange,
@@ -29,6 +30,40 @@ test("PR body must select exactly one version classification", () => {
   );
   assert.throws(
     () => classifyVersionChange("- [x] `game-change`\n- [x] `no-game-change`"),
+    /どちらか一方/,
+  );
+});
+
+test("Dependabot dependency-only PRs default to no-game-change", () => {
+  assert.equal(
+    resolveVersionClassification("Bumps next", "dependabot[bot]", [
+      "package.json",
+      "package-lock.json",
+    ]),
+    "no-game-change",
+  );
+  assert.equal(
+    resolveVersionClassification("Bumps checkout", "dependabot[bot]", [
+      ".github/workflows/lint.yml",
+    ]),
+    "no-game-change",
+  );
+  assert.throws(
+    () => resolveVersionClassification("Bumps next", "dependabot[bot]", ["app/game.tsx"]),
+    /どちらか一方/,
+  );
+  assert.throws(
+    () => resolveVersionClassification("Bumps next", "someone-else", ["package-lock.json"]),
+    /どちらか一方/,
+  );
+  assert.throws(() => resolveVersionClassification("", "dependabot[bot]", []), /どちらか一方/);
+  assert.throws(
+    () =>
+      resolveVersionClassification(
+        "- [x] `game-change`\n- [x] `no-game-change`",
+        "dependabot[bot]",
+        ["package-lock.json"],
+      ),
     /どちらか一方/,
   );
 });

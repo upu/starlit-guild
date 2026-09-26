@@ -21,6 +21,24 @@ export function classifyVersionChange(body) {
   return [...choices][0];
 }
 
+const DEPENDABOT_UPDATE_PATHS = new Set(["package.json", "package-lock.json"]);
+
+export function resolveVersionClassification(body, author, changedPaths) {
+  const hasSelection = String(body ?? "")
+    .split(/\r?\n/)
+    .some((line) => CLASSIFICATION_PATTERN.test(line));
+  if (hasSelection || author !== "dependabot[bot]") return classifyVersionChange(body);
+  if (
+    changedPaths.length > 0 &&
+    changedPaths.every(
+      (path) =>
+        DEPENDABOT_UPDATE_PATHS.has(path) || /^\.github\/workflows\/[^/]+\.ya?ml$/.test(path),
+    )
+  )
+    return "no-game-change";
+  return classifyVersionChange(body);
+}
+
 // Chapter boundaries raise the minor version, and the PR body has to ask for it explicitly.
 export function wantsMinorRelease(body) {
   return String(body ?? "")
@@ -85,6 +103,13 @@ function readJson(path) {
 function readBasePackage(baseRef) {
   return JSON.parse(execFileSync("git", ["show", `${baseRef}:package.json`], { encoding: "utf8" }));
 }
+function readChangedPaths(baseRef) {
+  return execFileSync("git", ["diff", "--name-only", baseRef, "HEAD", "--"], {
+    encoding: "utf8",
+  })
+    .split(/\r?\n/)
+    .filter(Boolean);
+}
 function readChangelog() {
   return readFileSync(new URL(`../${CHANGELOG_PATH}`, import.meta.url), "utf8");
 }
@@ -93,7 +118,12 @@ function main() {
   const baseIndex = process.argv.indexOf("--base-ref");
   const baseRef = baseIndex >= 0 ? process.argv[baseIndex + 1] : "";
   if (!baseRef) throw Error("比較元を --base-ref <commit> で指定してください。");
-  const classification = classifyVersionChange(process.env.PR_BODY);
+  const author = process.env.PR_AUTHOR;
+  const classification = resolveVersionClassification(
+    process.env.PR_BODY,
+    author,
+    author === "dependabot[bot]" ? readChangedPaths(baseRef) : [],
+  );
   const minorRelease = wantsMinorRelease(process.env.PR_BODY);
   const packageInfo = readJson(new URL("../package.json", import.meta.url));
   const lock = readJson(new URL("../package-lock.json", import.meta.url));
