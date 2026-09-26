@@ -466,8 +466,12 @@ test("after Auto-Next replays up to an unseen departure, it waits on that conver
   h.render();
   assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
   h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.api.report = { count: 3, gold: 1, xp: 1, herbs: 0, ore: 0, offline: true, capped: false };
   h.render();
   const frontier = prologue.storyStages[3].quest;
+  assert.equal(h.model.sheet, null, "the offline report is shown first");
+  h.api.report = null;
+  h.render();
   assert.equal(h.model.run, null);
   assert.equal(h.api.s.squads[0].lastQuest, frontier);
   assert.equal(h.model.quest.id, frontier, "the picker choice gives way to the saved destination");

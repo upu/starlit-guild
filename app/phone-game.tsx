@@ -108,7 +108,7 @@ function usePhoneContext(game: Game) {
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
   const auto =
-    !sheet && view === "adventure" && !returnIntent && world.ready
+    !sheet && !game.report && view === "adventure" && !returnIntent && world.ready
       ? autoDeparture(world.s, world.squad, world.choice)
       : null;
   const setQuest = (id: string) => {
