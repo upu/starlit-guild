@@ -3,7 +3,6 @@ import {
   LICO_RECORDS_QUEST,
   MERRILL_SEEDLINGS_QUEST,
   MOSS_TRANSPLANT_QUEST,
-  MOSS_BEDS_QUEST,
   isChapterFourQuest,
 } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
@@ -47,7 +46,7 @@ export type RoadLook = {
   puller: string | null;
   urban: boolean;
   destination: boolean;
-  work?: { asset: string; frame?: string; label: string; cargo: boolean };
+  work?: ReturnType<typeof roadWorkLook>;
   enemies: Record<number, { frame: string; label: string }>;
 };
 export const chapterRoadX = roadX;
@@ -273,16 +272,6 @@ function enemyLabel(frame: AdventureFrame, id: string) {
   const target = frame.targets.find((target) => target.id === id);
   return target?.cue || target?.name || "";
 }
-function workTask(
-  frame: string | undefined,
-  q: AdventureFrame["quest"],
-  run: Run,
-): NonNullable<RoadBattle["gathering"]>["task"] {
-  if (movingWork(q, run)) return "carry";
-  if (q.id === MOSS_BEDS_QUEST) return "inspect";
-  if (frame === "signpost" || frame === "records" || frame === "ledger") return "inspect";
-  return frame === "parcels" ? "pack" : "gather";
-}
 function gatheringX(
   road: Run["road"],
   q: AdventureFrame["quest"],
@@ -324,7 +313,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   if (!run || kind === "battle") return;
   look.work = roadWorkLook(frame.quest, run);
   const cargo = look.work.cargo;
-  const task = workTask(look.work.frame, frame.quest, run);
+  const task = look.work.task;
   const x = gatheringX(road, frame.quest, run, cargo, task, look.puller);
   battle.gathering = {
     kind: cargo ? "cargo" : "herb",

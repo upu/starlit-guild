@@ -1,0 +1,56 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+import { allQuests, encounter, targetName } from "../lib/game.ts";
+import { storyStages } from "../lib/prologue.ts";
+import { roadWorkLook } from "../lib/chapter-road-work-look.ts";
+import { worksiteByLabel } from "../lib/road-worksite-catalog.ts";
+
+const jobs = storyStages.flatMap((stage) => {
+  const q = allQuests.find((q) => q.id === stage.quest);
+  return Array.from({ length: 15 }, (_, node) => ({ q, run: { node, nodes: 15 } })).filter(
+    ({ run }) => encounter(q, run.node) !== "battle",
+  );
+});
+
+test("every work point in all four chapters has an explicitly reviewed, available illustration", () => {
+  const labels = new Set();
+  for (const { q, run } of jobs) {
+    const label = targetName(q, run.node, run.nodes);
+    assert.ok(worksiteByLabel[label], `Review the work icon: ${q.id} / ${label}`);
+    const look = roadWorkLook(q, run);
+    assert.ok(existsSync(`public${look.asset}`), `${label}: missing ${look.asset}`);
+    assert.equal(look.label, label);
+    labels.add(label);
+  }
+  assert.equal(jobs.length, 420);
+  assert.equal(labels.size, 104);
+  assert.deepEqual(
+    new Set(Object.keys(worksiteByLabel)),
+    labels,
+    "remove stale labels when copy changes",
+  );
+});
+
+test("survey, treatment, tracking, earthwork and small deliveries show their actual subjects", () => {
+  for (const [label, filename, task, cargo] of [
+    ["水路を埋め戻す", "work-earthwork-v1.webp", "gather", false],
+    ["灯籠を調べる", "work-lantern-v1.webp", "inspect", false],
+    ["道の草を刈る", "work-grass-v1.webp", "gather", false],
+    ["途中までの道順を記録する", "work-route-v1.webp", "inspect", false],
+    ["往診に使う湯と水を用意する", "work-medicine-v1.webp", "pack", false],
+    ["家の人から空き瓶を受け取る", "work-empty-bottles-v1.webp", "pack", false],
+    ["戻った道標の向きを確かめる", "signpost-v2.webp", "inspect", false],
+    ["日取りを確かめる", "ledger-desk-v1.webp", "inspect", false],
+    ["管理人の記録を運ぶ", "work-letters-v1.webp", "carry", false],
+    ["返事の手紙を運ぶ", "work-letters-v1.webp", "carry", false],
+    ["苗の籠を運び出す", "work-seedling-cart-v1.webp", "carry", true],
+  ]) {
+    const job = jobs.find(({ q, run }) => targetName(q, run.node, run.nodes) === label);
+    assert.ok(job, label);
+    const look = roadWorkLook(job.q, job.run);
+    assert.equal(look.asset.split("/").at(-1), filename, label);
+    assert.equal(look.task, task, label);
+    assert.equal(look.cargo, cargo, label);
+  }
+});

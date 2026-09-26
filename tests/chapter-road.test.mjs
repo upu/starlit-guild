@@ -208,7 +208,7 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
   assert.ok(transporting && defended);
 });
 
-test("chapter four paperwork uses a ledger and inspection while transport keeps its cart", () => {
+test("chapter four paperwork uses a ledger and carries documents without a freight cart", () => {
   for (const index of [29, 33]) {
     let state = start(index, 40);
     const inspected = new Set();
@@ -217,9 +217,14 @@ test("chapter four paperwork uses a ledger and inspection while transport keeps 
       const run = state.squads[0].run;
       const { look, battle } = chapterRoadFrame(input(state));
       if (look.work) {
-        if (look.work.cargo) {
+        if (battle.gathering.task === "carry") {
           assert.equal(battle.gathering.task, "carry");
-          assert.equal(look.work.asset, "/animations/road/cargo-v1.webp");
+          assert.equal(
+            look.work.asset,
+            index === 29
+              ? "/animations/road/cargo-v1.webp"
+              : "/animations/road/work-letters-v1.webp",
+          );
           transported.add(run.node);
         } else {
           assert.equal(look.work.asset, "/animations/road/ledger-desk-v1.webp");
@@ -244,11 +249,11 @@ test("moss-bed survey shows moss, the waterway, and measuring tools without harv
   while (state.squads[0].run) {
     const run = state.squads[0].run;
     const { look, battle } = chapterRoadFrame(input(state));
-    assert.equal(look.work.frame, ["moss", "waterway", "records"][run.node % 3]);
+    assert.equal(look.work.frame, ["moss", "waterway", "__BASE"][run.node % 3]);
     assert.equal(
       look.work.asset,
       run.node % 3 === 2
-        ? "/animations/road/berne-worksites-v1.webp"
+        ? "/animations/road/work-route-v1.webp"
         : "/animations/road/worksites-v1.webp",
     );
     assert.equal(battle.gathering.task, "inspect");

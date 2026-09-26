@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-26",
+  "mode": "built-in image_gen",
+  "reference": "assets/source/road/worksites-v1.png",
+  "prompt": "Create a transparent RPG map work-point sprite atlas, EXACTLY 8 separate icons in a 4 columns x 2 rows uniform grid. Image 1 is STYLE REFERENCE only: match its bold dark brown outlines, warm earthy handpainted cel shading, simple broad shapes readable at 65px. Each icon fully inside own cell with generous transparent gaps. No text, labels, borders, people, ground shadows or background. True transparent alpha. Order LEFT TO RIGHT: top row 1 a small bundle of cream handwritten envelopes tied with a red cord (letters/delivery); 2 a squat stone garden lantern with a small pale yellow light (inspect lantern); 3 a small hot-water kettle, a wooden cup and two corked medicinal glass bottles (prepare house-call medicines and hot water); 4 a parchment route map with a dotted winding path, a few footprints, a small wooden ruler and compass (tracking and surveying). Bottom row 1 a small patch of tall green weeds with a simple sickle laid beside it (clear roadside grass); 2 a short DRY dirt drainage trench half-filled with brown earth, a mound of soil and a shovel (backfill disused waterway; no running water); 3 a small wicker basket filled with damp green moss seedlings, three broad leaves visible (moss sample); 4 a side-view low wooden two-wheeled handcart loaded with THREE wicker baskets of green moss seedlings, simple rear handles pointing LEFT, no burlap sacks or barrels. Cart must read horizontally and keep whole handle inside cell. Same cozy fantasy style and few large forms for every icon. No decorative magic, no tiny lettering.",
+  "generated": "exec-c6fce981-a8d0-4783-abbd-fd4d16a98f49.png",
+  "sourcePattern": "assets/source/road/work-<name>-v1.png",
+  "outputPattern": "public/animations/road/work-<name>-v1.webp",
+  "names": [
+    "letters",
+    "lantern",
+    "medicine",
+    "route",
+    "grass",
+    "earthwork",
+    "moss-basket",
+    "seedling-cart"
+  ],
+  "cropRects": [
+    [
+      0,
+      0,
+      450,
+      450
+    ],
+    [
+      450,
+      0,
+      435,
+      450
+    ],
+    [
+      885,
+      0,
+      440,
+      450
+    ],
+    [
+      1325,
+      0,
+      449,
+      450
+    ],
+    [
+      0,
+      450,
+      450,
+      437
+    ],
+    [
+      450,
+      450,
+      435,
+      437
+    ],
+    [
+      885,
+      450,
+      400,
+      437
+    ],
+    [
+      1285,
+      450,
+      489,
+      437
+    ]
+  ],
+  "processing": "各矩形を切り出し、Sharp trim threshold10で余白を除去。原本の色と透明度を保持しroad-artパイプラインで可逆WebP化。",
+  "emptyBottles": {
+    "prompt": "Create one new small GAME SPRITE using exactly the icon style of this atlas. Subject: TWO EMPTY uncorked medicine bottles lying diagonally on a folded cream cloth. Simplified outline and flat painted colors, only two broad shading tones, bold brown outline. Absolutely NO crate, table, lighting effect, ambient glow, drop shadow, vignette, gradient, scenery or background. Entire single isolated game prop on genuinely transparent alpha, sharp clean exterior silhouette just like the letters icon in the reference. The bottles are empty, pale clear glass with no liquid and no contents. Compact horizontal composition with wide transparent margin. No text.",
+    "reference": "8種類の生成アトラス",
+    "generated": "exec-fc3fcbea-7eb1-4f89-a0f4-4c61a6b673fd.png",
+    "source": "assets/source/road/work-empty-bottles-v1.png",
+    "processing": "trim threshold10、幅512pxへ縮小。旧木箱案は不採用。"
+  }
+}

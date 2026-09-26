@@ -193,6 +193,78 @@
       "sourceBytes": 177681,
       "outputBytes": 98642
     },
+    "work-earthwork-v1.png": {
+      "sourceHash": "8887ea708fb10e989900ef4293e6c12650d5d90810c49ea0f0c4f445417fea30",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-earthwork-v1.webp",
+      "outputHash": "1f9ec6087058820639e6d187252d6534eacdbb6447ec6ebfa7195b9cc1f0e303",
+      "sourceBytes": 260064,
+      "outputBytes": 133982
+    },
+    "work-empty-bottles-v1.png": {
+      "sourceHash": "3b2787e79b2b0178fbc0cf35fed61a31d40b6ac194ee602b4a1b4e3e90fab757",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-empty-bottles-v1.webp",
+      "outputHash": "371da55fdddb6d2b7cb674cfdbbca8e289de68696bdb0be38aa27a521e76d3ec",
+      "sourceBytes": 263479,
+      "outputBytes": 153186
+    },
+    "work-grass-v1.png": {
+      "sourceHash": "68517619b9a39328f6acd8a826e0a0c72d82f5ab43da896e2890a219304f13da",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-grass-v1.webp",
+      "outputHash": "9a5c6eddd9ccfdd83194526ea1502e34199ba5d1ff904fdf3cd07a94a52b69d6",
+      "sourceBytes": 267775,
+      "outputBytes": 139822
+    },
+    "work-lantern-v1.png": {
+      "sourceHash": "a18291538c29de201198bd66f7e8955d33e5104e244b5932761b2b24f0c5f46c",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-lantern-v1.webp",
+      "outputHash": "bca778a16fc29cd8b936985ce0c7c539f740ae03ec98fa2a7589ea8f4db4b6e1",
+      "sourceBytes": 198190,
+      "outputBytes": 98018
+    },
+    "work-letters-v1.png": {
+      "sourceHash": "6a9bdd8fcec8a0d652574eacd7ad8a573fbea17d730a67f0ebcf4d9a979ba075",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-letters-v1.webp",
+      "outputHash": "90545d6a9585063f90c5475a8aeee08d6f3468f9fd20033d0e7ce762fa1767f1",
+      "sourceBytes": 196783,
+      "outputBytes": 105844
+    },
+    "work-medicine-v1.png": {
+      "sourceHash": "37535523b908d617ab5116782557d395a22b0afccba39c757d49db618cb056a0",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-medicine-v1.webp",
+      "outputHash": "b583c1589bb7b91517d1e695c01c469e49fd21be213f9001fb23a576f1bbf3fc",
+      "sourceBytes": 257891,
+      "outputBytes": 128324
+    },
+    "work-moss-basket-v1.png": {
+      "sourceHash": "8383a1cdac83272212754fcf897b5e5d25b54e20999e6b59e541c9a924b787f6",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-moss-basket-v1.webp",
+      "outputHash": "493ff83941b65d94c1847196c91886820a08f4ab873a469ec9af73327f03d73c",
+      "sourceBytes": 198494,
+      "outputBytes": 103350
+    },
+    "work-route-v1.png": {
+      "sourceHash": "520ef7dbf5675988f01298d4f536d90021fb31d4feea240707273d1d0c6468c3",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-route-v1.webp",
+      "outputHash": "d64ef21a4f2534fd5083001553cea83033e129d62d5bbad0a22bdc7af9263b54",
+      "sourceBytes": 273290,
+      "outputBytes": 145166
+    },
+    "work-seedling-cart-v1.png": {
+      "sourceHash": "bf0a4f564262630e9f19ce65f490548bf03636a53f3a7d9f80aeb9f7ad3370e5",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "work-seedling-cart-v1.webp",
+      "outputHash": "9d2086cab27f7f5d894fed8d9a2ed0c7c7bece0e793439beaffb63ac2a4ccee1",
+      "sourceBytes": 238598,
+      "outputBytes": 127058
+    },
     "worksites-v1.png": {
       "sourceHash": "a6d43f71b122d5e0b9561e61b1def358e9e7d31c3680e440584e7272e974383e",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",

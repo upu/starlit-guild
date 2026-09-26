@@ -127,6 +127,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/chapter-runs.balance.mjs` 第一章〜第四章の通し試走・章間の状態継続 | Nodeのみ。準備不要。約45秒 | `node --test tests/chapter-runs.balance.mjs` | 標準出力の5件のPASS表示 |
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
+| `tests/road-worksites.browser.mjs` 全章の作業地点画像19種類 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/road-worksites.browser.mjs` | `work/worksite-browser/` の画像・`result.json` |
 <!-- manual-test-inventory:end -->
 
 Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合はPowerShellで `$env:PLAYWRIGHT_MODULE='C:\絶対パス\node_modules\playwright'`、`$env:CHROME_PATH='C:\絶対パス\chrome.exe'` を指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要で、`--executable` でブラウザー実行ファイルを指定できる。Pythonテストは生成CSSと `components/ui/dialog.tsx` のクラスを組み合わせた独立fixtureで、`--css` はビルドできない場合の独立fixture専用。部品fixtureの3本もゲーム全体へ接続するテストではない。
