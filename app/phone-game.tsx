@@ -53,12 +53,19 @@ function hasDestination(state: State, squad: Squad, choice?: string) {
   return !!choice || !!squad.lastQuest || !!state.done[restingQuest(state, squad)];
 }
 
-function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex: number) {
+// A destination picked on screen lasts until the saved one moves (a departure or Auto-Next).
+type QuestChoice = { id: string; saved?: string };
+function currentChoice(squad: Squad, choices: Partial<Record<string, QuestChoice>>) {
+  const choice = choices[squad.id];
+  return choice && choice.saved === squad.lastQuest ? choice.id : undefined;
+}
+function phoneWorld(game: Game, questChoices: Record<string, QuestChoice>, heroIndex: number) {
   const { s, clock } = game,
     squad = s.squads[0],
     run = squad.run,
-    ready = game.ready && !game.otherTab;
-  const questId = selectedDestination(s, squad, questChoices[squad.id]),
+    ready = game.ready && !game.otherTab,
+    choice = currentChoice(squad, questChoices);
+  const questId = selectedDestination(s, squad, choice),
     unlocked = availableQuests(s),
     quest = unlocked.find((item) => item.id === questId) || unlocked[0];
   const roster = heroes.filter((hero) => s.owned.includes(hero.id)),
@@ -84,7 +91,8 @@ function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex:
     ending: pendingEnding
       ? (stories.find((story) => story.id === pendingEnding + "-return") ?? null)
       : null,
-    destinationChosen: hasDestination(s, squad, questChoices[squad.id]),
+    destinationChosen: hasDestination(s, squad, choice),
+    choice,
   };
 }
 
@@ -94,17 +102,20 @@ function usePhoneContext(game: Game) {
     [reading, setReading] = useState<Story | null>(null);
   const [view, setView] = useState("adventure"),
     [sheet, setSheet] = useState<Sheet>(null),
-    [questChoices, setQuestChoices] = useState<Record<string, string>>({}),
+    [questChoices, setQuestChoices] = useState<Record<string, QuestChoice>>({}),
     [heroIndex, setHeroIndex] = useState(0),
     [candidateQuest, setCandidateQuest] = useState(TRADE_QUEST),
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
   const auto =
     !sheet && view === "adventure" && !returnIntent && world.ready
-      ? autoDeparture(world.s, world.squad, questChoices[world.squad.id])
+      ? autoDeparture(world.s, world.squad, world.choice)
       : null;
   const setQuest = (id: string) => {
-    setQuestChoices((current) => ({ ...current, [world.squad.id]: id }));
+    setQuestChoices((current) => ({
+      ...current,
+      [world.squad.id]: { id, saved: world.squad.lastQuest },
+    }));
   };
   // Once saved, the destination follows the save, so a later Auto-Next move shows through.
   const clearQuest = () => {

@@ -516,3 +516,22 @@ test("with Auto-Next, closing the first 2-9 ending opens the interlude as the ne
   assert.equal(h.model.reading.id, chapterThree.LUNCH_INTERLUDE);
   assert.equal(h.model.pendingDeparture.id, chapterThree.LUNCH_INTERLUDE);
 });
+
+test("re-choosing the running stage does not outlive an Auto-Next move to the next destination", () => {
+  let s = { ...game.testState(1000, 3, 50, 0), autoNextQuest: true };
+  s = game.act(s, { type: "start", id: prologue.TRADE_QUEST, value: false }, 1000);
+  const h = harness(s);
+  h.model.openQuests();
+  h.render();
+  h.questButton(prologue.TRADE_QUEST).props.onClick();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.render();
+  const frontier = prologue.storyStages[3].quest;
+  assert.equal(h.model.run, null);
+  assert.equal(h.model.quest.id, frontier);
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.pendingDeparture.id, frontier);
+});
