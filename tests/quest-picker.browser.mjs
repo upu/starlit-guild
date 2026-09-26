@@ -16,11 +16,12 @@ const bundle = await build({
     contents: `
  import React,{useState} from 'react';import {createRoot} from 'react-dom/client';
  import {QuestPicker} from './app/quest-picker';import {SavePanel} from './app/save-panel';
- import {initialState,act} from './lib/game';import {storyStages} from './lib/prologue';
- const initial=initialState(1000);
- for(const {quest} of storyStages.slice(0,14)){initial.done[quest]=1;initial.story.completed.push(quest);initial.story.read.push(quest+'-return');}
+ import {initialState,testState,act} from './lib/game';import {storyStages} from './lib/prologue';
+ const latest=location.search.includes('latest');
+ const initial=latest?testState(1000,36,40,10000):initialState(1000);
+ if(!latest)for(const {quest} of storyStages.slice(0,14)){initial.done[quest]=1;initial.story.completed.push(quest);initial.story.read.push(quest+'-return');}
  function App(){
-  const [state,setState]=useState(initial),[selected,setSelected]=useState(storyStages[14].quest),[confirmed,setConfirmed]=useState('');
+  const [state,setState]=useState(initial),[selected,setSelected]=useState(latest?storyStages.at(-1).quest:storyStages[14].quest),[confirmed,setConfirmed]=useState('');
   const dispatch=a=>{setState(s=>act(s,a,s.updatedAt));return true;};
   const profile={id:'fixture',name:'表示確認',test:false,state};
   const game={s:state,ready:true,otherTab:false,profile,bundle:{sound:false,profiles:[profile],active:profile.id},dispatch,copies:[],toggleSound:()=>{}};
@@ -140,17 +141,21 @@ try {
     await page.goto(`http://127.0.0.1:${server.address().port}`);
     await page.locator(".quest-options .quest-option").first().waitFor();
     assert.equal(await page.locator(".quest-option").count(), 6);
+    const chapter = page.getByRole("combobox", { name: "クエストの章" });
+    assert.equal(await chapter.inputValue(), "two");
     assert.equal(
-      await page.getByRole("button", { name: "第二章", exact: true }).getAttribute("aria-pressed"),
-      "true",
+      await chapter.locator('option[value="four"]').evaluate((option) => option.disabled),
+      true,
     );
+    const chapterHeight = (await page.locator(".quest-chapters").boundingBox()).height;
+    assert.ok(chapterHeight >= 44 && chapterHeight <= 48);
     const preference = page.getByRole("switch", { name: "クリア後、次のステージを行先にする" });
     assert.equal(await preference.getAttribute("aria-checked"), "false");
     await checkThumb(preference);
     await preference.click();
     await checkThumb(preference);
     await page.screenshot({ path: path.join(dir, `chapter-two-${width}.png`) });
-    await page.getByRole("button", { name: "第一章", exact: true }).click();
+    await chapter.selectOption("one");
     assert.equal(await page.locator(".quest-option").count(), 9);
     await page.screenshot({ path: path.join(dir, `chapter-one-${width}.png`) });
     const detail = page.locator(".quest-summary");
@@ -211,6 +216,18 @@ try {
     const sceneryRequests = [...new Set(requests.filter((p) => p.startsWith("/scenery/")))];
     assert.ok(sceneryRequests.length > 0);
     assert.ok(sceneryRequests.every((path) => path.endsWith("-thumbnail.webp")));
+    await page.goto(`http://127.0.0.1:${server.address().port}/?latest`);
+    await chapter.waitFor();
+    assert.equal(await chapter.inputValue(), "four");
+    assert.equal(await page.locator(".quest-option").count(), 9);
+    assert.equal((await page.locator(".quest-chapters").boundingBox()).height, chapterHeight);
+    await page.screenshot({ path: path.join(dir, `chapter-four-${width}.png`) });
+    await chapter.focus();
+    await page.keyboard.press("Home");
+    await page.keyboard.press("Enter");
+    assert.equal(await chapter.inputValue(), "one");
+    assert.equal(await page.locator(".quest-option").count(), 9);
+    assert.equal(await page.locator("output").innerText(), "");
     assert.deepEqual(errors, []);
     results.push({ width, sceneryRequests, errors });
     await context.close();

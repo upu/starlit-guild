@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { questScenery } from "@/lib/scenery";
 import { storyParty } from "@/lib/story-party";
-import { Check, LockKeyhole } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { availableQuests, heroes, type State, type Quest } from "@/lib/game";
 import { storyStages, nextStage } from "@/lib/prologue";
 import { questChapters, questChapter } from "@/lib/quest-navigation";
@@ -18,28 +18,46 @@ type Props = {
   onAutoNextChange: (value: boolean) => void;
 };
 
-function chapterButton(
-  item: (typeof questChapters)[number],
-  chapter: ReturnType<typeof questChapter>,
-  unlocked: Quest[],
-  ready: boolean,
-  changeChapter: (id: ReturnType<typeof questChapter>) => void,
-) {
+function chapterOption(item: (typeof questChapters)[number], unlocked: Quest[]) {
   const available = unlocked.some((q) => questChapter(q.id) === item.id);
   if (item.id === "other" && !available) return null;
   return (
-    <button
-      type="button"
-      key={item.id}
-      disabled={!ready || !available}
-      aria-pressed={chapter === item.id}
-      onClick={() => {
-        changeChapter(item.id);
-      }}
-    >
-      {!available && <LockKeyhole size={14} />} {item.label}
-      {!available && <span className="sr-only">（未解放）</span>}
-    </button>
+    <option key={item.id} value={item.id} disabled={!available}>
+      {item.label}
+      {!available && "（未解放）"}
+    </option>
+  );
+}
+
+function ChapterSelector({
+  chapter,
+  unlocked,
+  ready,
+  onChange,
+}: {
+  chapter: ReturnType<typeof questChapter>;
+  unlocked: Quest[];
+  ready: boolean;
+  onChange: (id: ReturnType<typeof questChapter>) => void;
+}) {
+  return (
+    <label className="quest-chapters">
+      <span>章</span>
+      <span className="quest-chapter-field">
+        <select
+          aria-label="クエストの章"
+          value={chapter}
+          disabled={!ready}
+          onChange={(event) => {
+            const item = questChapters.find((item) => item.id === event.currentTarget.value);
+            if (item) onChange(item.id);
+          }}
+        >
+          {questChapters.map((item) => chapterOption(item, unlocked))}
+        </select>
+        <ChevronDown size={16} aria-hidden="true" />
+      </span>
+    </label>
   );
 }
 
@@ -114,19 +132,22 @@ export function QuestPicker({
   const next = nextStage(s).quest;
   function changeChapter(id: typeof chapter) {
     const quests = unlocked.filter((item) => questChapter(item.id) === id);
+    if (!ready || !quests.length) return;
     const candidate =
       quests.find((item) => item.id === selected) ||
       quests.find((item) => item.id === next) ||
       quests[0];
-    if (!ready) return;
     setChapter(id);
     onSelect(candidate.id);
   }
   return (
     <div className="quest-picker">
-      <div className="quest-chapters" role="group" aria-label="クエストの章">
-        {questChapters.map((item) => chapterButton(item, chapter, unlocked, ready, changeChapter))}
-      </div>
+      <ChapterSelector
+        chapter={chapter}
+        unlocked={unlocked}
+        ready={ready}
+        onChange={changeChapter}
+      />
       <div className="quest-list-scroll">
         <QuestProgressionSetting
           checked={s.autoNextQuest === true}

@@ -20,6 +20,45 @@
 .quest-summary {
   flex-shrink: 0;
 }
+.quest-chapters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ecdbb0;
+  font-size: 13px;
+}
+.quest-chapter-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.quest-chapter-field select {
+  appearance: none;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid #758058;
+  border-radius: 8px;
+  background: #223c30;
+  color: #ecdbb0;
+  font: inherit;
+  cursor: pointer;
+}
+.quest-chapter-field select:focus-visible {
+  outline: 2px solid #ffe29e;
+  outline-offset: 2px;
+}
+.quest-chapter-field select:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.quest-chapter-field > svg {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
 .quest-list-scroll {
   flex: 1;
   min-height: 0;

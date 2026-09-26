@@ -109,7 +109,7 @@ try {
   const pending = testState(Date.now(), 27, 40, 10000);
   const interlude = await open(pending);
   await interlude.page.getByRole("button", { name: "クエストを開く", exact: true }).click();
-  await interlude.page.getByRole("button", { name: "第四章", exact: true }).click();
+  await interlude.page.getByRole("combobox", { name: "クエストの章" }).selectOption("four");
   assert.equal(
     await interlude.page.locator(".quest-option").filter({ hasText: "約束の胡桃" }).count(),
     1,

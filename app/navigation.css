@@ -507,27 +507,6 @@ body {
     padding-bottom: calc(var(--game-safe-bottom) + 18px);
   }
 }
-.quest-chapters {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.quest-chapters button {
-  flex: 1;
-  min-height: 42px;
-  white-space: nowrap;
-  background: #223c30;
-  border: 1px solid #758058;
-  color: #ecdbb0;
-  padding: 8px 10px;
-}
-.quest-chapters button[aria-pressed="true"] {
-  background: #465b3e;
-  border-color: #e2c77f;
-}
-.quest-chapters button:disabled {
-  opacity: 0.5;
-}
 .quest-progression-setting {
   padding: 10px 12px;
   border: 1px solid #758058;
@@ -571,8 +550,7 @@ body {
   color: #ffe29e;
   font-size: 10px;
 }
-.quest-summary:focus-visible,
-.quest-chapters button:focus-visible {
+.quest-summary:focus-visible {
   outline: 2px solid #ffe29e;
   outline-offset: 3px;
 }
