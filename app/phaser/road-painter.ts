@@ -21,6 +21,7 @@ import {
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
+  ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
   miraFrames,
   finnFrames,
@@ -146,6 +147,7 @@ export class RoadPainter {
     const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
     berne.add("stonework", 0, 53, 271, 788, 433);
     berne.add("records", 0, 933, 250, 797, 468);
+    this.scene.textures.get(ROAD_LEDGER_DESK).add("ledger", 0, 15, 240, 1230, 930);
     const objects = [
       [133, 215, 497, 339],
       [798, 147, 564, 433],
@@ -334,7 +336,7 @@ export class RoadPainter {
     const size = cargo
       ? Math.min(145, this.scene.scale.width * 0.3)
       : Math.min(
-          ({ waterway: 85, signpost: 44 } as Record<string, number>)[
+          ({ waterway: 85, signpost: 44, ledger: 85 } as Record<string, number>)[
             this.look?.work?.frame || ""
           ] || 65,
           this.scene.scale.width * 0.2,

@@ -208,6 +208,33 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
   assert.ok(transporting && defended);
 });
 
+test("chapter four paperwork uses a ledger and inspection while transport keeps its cart", () => {
+  for (const index of [29, 32]) {
+    let state = start(index, 40);
+    const inspected = new Set();
+    const transported = new Set();
+    while (state.squads[0].run) {
+      const run = state.squads[0].run;
+      const { look, battle } = chapterRoadFrame(input(state));
+      if (look.work) {
+        if (look.work.cargo) {
+          assert.equal(battle.gathering.task, "carry");
+          assert.equal(look.work.asset, "/animations/road/cargo-v1.webp");
+          transported.add(run.node);
+        } else {
+          assert.equal(look.work.asset, "/animations/road/ledger-desk-v1.webp");
+          assert.equal(look.work.frame, "ledger");
+          assert.equal(battle.gathering.task, "inspect");
+          inspected.add(run.node);
+        }
+      }
+      state = settle(state, run.nextAt).state;
+    }
+    assert.equal(inspected.size, index === 29 ? 5 : 9);
+    assert.equal(transported.size, 5);
+  }
+});
+
 test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {
   for (const [width, height] of [
     [1280, 900],

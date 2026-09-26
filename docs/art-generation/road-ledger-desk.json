@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-26",
+  "reference": "public/animations/road/berne-worksites-v1.webp",
+  "output": "assets/source/road/ledger-desk-v1.png",
+  "runtime": "public/animations/road/ledger-desk-v1.webp",
+  "frame": { "name": "ledger", "x": 15, "y": 240, "width": 1230, "height": 930 },
+  "prompt": "Generate ONE new isolated 2D game prop sprite for a Japanese fantasy RPG, matching the soft hand-painted anime game-prop style, warm wooden colors, strong silhouette and three-quarter side view of the table on the RIGHT of the reference image. The sprite is a small wooden records desk used to investigate a merchant's purchasing records. On it: one large OPEN cream-paper bookkeeping ledger with a red-brown cover, a few loose purchase slips, a modest closed ledger stacked beside it, and a small inkwell with a quill. Suggest rows and columns using a few restrained ink strokes; no readable text or numbers. Make the open book and paper unmistakable even at a final display width of 85 pixels. Use simple chunky shapes, not excessive tiny details. Show the entire table including its short legs, centered and tightly filling most of the square canvas. Transparent alpha outside the object, no floor, cast shadow, backdrop, border, labels, characters, foliage, herbs, food, rocks, architectural diagrams, compass, ruler, duplicate prop, or second panel. This is a single paperwork desk, not a reference sheet."
+}

@@ -73,6 +73,14 @@
       "sourceBytes": 806949,
       "outputBytes": 524788
     },
+    "ledger-desk-v1.png": {
+      "sourceHash": "1c808933a32a8b07e93a3c23e309838150f49e0e8957efcd7a514f8013e23e13",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "ledger-desk-v1.webp",
+      "outputHash": "e533026047678d47ba6520555f0604d1bc5f832326b3fb1851293a5bf6283661",
+      "sourceBytes": 1251466,
+      "outputBytes": 811378
+    },
     "leon-v1.png": {
       "sourceHash": "d620987d04120a6f5522236cd064e37d9ec59a3d0d16afd2a7bfcf97795db943",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",

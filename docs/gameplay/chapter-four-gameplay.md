@@ -22,6 +22,8 @@
 
 ## 数値と確認
 
+4-3の仕入れ調査と4-6の記録照合は、帳簿と伝票を載せた机を表示し、採取時の屈み込みを使わず書類を確認する。表示条件は `lib/chapter-road-work-look.ts`、素材は `ledger-desk-v1.webp`。[生成記録](../art-generation/road-ledger-desk.json)に原本と制作条件を残す。
+
 基本値と地点の仕事は `lib/chapter-four.ts`、戦闘ランクは `lib/combat.ts`、仲間は `lib/story-party.ts` と `lib/roster.ts`、画像は `lib/story-art.ts`。リコは採取の得意な遠距離支援役で、発光試料の目くらましを演出に使う。採取道具を専用武器として確定せず、装備の追加は行わない。
 
 `node scripts/check-chapter-four-balance.mjs` は第三章の通し試走が返した状態全体を使う。3分以内に終わらない場合だけ、既読の4-1（初回の4-1以前は3-1）を5分単位で周回して再挑戦する。結果は[章ごとの戦力と到達時間](progression-balance.md#第三章から第四章への通し測定)へ記録する。これは自動シミュレーションであり、人や実機での所要時間ではない。

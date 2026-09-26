@@ -80,13 +80,17 @@ function stageRun(index, target) {
   const visible = () => {
     const run = state.squads[0].run;
     if (!run) return false;
-    if (typeof target === "number") return run.node === target;
     const frame = chapterRoadFrame({
       squad: state.squads[0],
       now: state.updatedAt,
       ready: true,
       paused: false,
     });
+    if (typeof target === "number")
+      return (
+        run.node === target &&
+        (frame.look.work?.frame !== "ledger" || frame.look.workers.length > 0)
+      );
     return frame.battle.enemies.some((enemy) => enemy.kind === target);
   };
   const targetNode = target === "lico" ? 14 : target === "merrill" ? 8 : target;
@@ -120,6 +124,8 @@ try {
 
   for (const [name, index, node] of [
     ["first-stage", 0, 0],
+    ["purchase-records", 2, 2],
+    ["record-comparison", 5, 0],
     ["lico-apparatus", 5, "lico"],
     ["lico-and-merrill", 6, "merrill"],
     ["five-companions", 7, 0],

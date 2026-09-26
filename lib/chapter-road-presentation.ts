@@ -255,7 +255,7 @@ function workTask(
   run: Run,
 ): NonNullable<RoadBattle["gathering"]>["task"] {
   if (movingWork(q, run)) return "carry";
-  if (frame === "signpost" || frame === "records") return "inspect";
+  if (frame === "signpost" || frame === "records" || frame === "ledger") return "inspect";
   return frame === "parcels" ? "pack" : "gather";
 }
 function gatheringX(
