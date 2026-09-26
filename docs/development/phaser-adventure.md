@@ -4,7 +4,7 @@ Phaser 4.2.1を追加し、冒険のマップを現在の地点に焦点を当�
 
 ## 責務
 
-- `lib/game.ts` / `app/use-local-game.ts`：進行、報酬、端末保存、バックアップ、オフライン精算の正本。変更なし。
+- `lib/game.ts` / `app/use-local-game.ts`：進行、報酬、端末保存、バックアップ、時間の精算の正本。変更なし。
 - `lib/adventure-presentation.ts`：正本の読み取り専用投影。位置、現在の敵、画像、イベントの期限、入力の意図を計算する。Phaserから保存・進行処理は呼ばない。
 - `app/map-stage.tsx`：見出し、出発、キーボード対応の手助け・回復。
 - `app/phaser-adventure.tsx` / `app/phaser/renderer-session.ts`：ブラウザーでの遅延読み込み、最新の状態・コールバックへの接続、リサイズ、非表示・メニュー中の停止、破棄、エラー時の再試行。

@@ -51,8 +51,8 @@ test("a pending detour in an older story save is forgotten and frees its explore
   assert.equal(freed.nextAt, explorer.arrivesAt, "the explorer acts again from its arrival");
   assert.ok(restored.squads[0].run.nextAt <= freed.nextAt);
   // The freed timeline reaches the same place as a save that never held a discovery.
-  const clean = settle(depart(initialState(1000)), 3601000).state,
-    resumed = settle(restored, 3601000).state;
+  const clean = settle(depart(initialState(1000)), 3601000),
+    resumed = settle(restored, 3601000);
   assert.equal(resumed.gold, clean.gold);
   assert.equal(resumed.herbs, clean.herbs);
 });
@@ -79,12 +79,12 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
   assert.deepEqual(s.story.read, [TRADE_QUEST + "-departure"]);
   s = roundtrip(s);
   const before = structuredClone(s);
-  const arrival = settle(s, 1000 + 13 * 3600000).state;
+  const arrival = settle(s, 1000 + 13 * 3600000);
   assert.equal(arrival.squads[0].run, null);
   assert.equal(arrival.done[TRADE_QUEST], 1);
   assert.equal(tradeEndingPending(roundtrip(arrival)), true);
   assert.equal(journeyNotice(before, arrival).title, "街に到着しました");
-  assert.deepEqual(settle(arrival, arrival.updatedAt).state, arrival);
+  assert.deepEqual(settle(arrival, arrival.updatedAt), arrival);
   assert.throws(() => depart(arrival), /物語/);
   const read = act(arrival, { type: "readStory", id: TRADE_QUEST + "-return" }, arrival.updatedAt);
   assert.equal(tradeEndingPending(roundtrip(read)), false);
@@ -94,7 +94,7 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
     { type: "start", id: TRADE_QUEST, readDeparture: true, value: false },
     read.updatedAt,
   );
-  const again = settle(once, read.updatedAt + 3600000).state;
+  const again = settle(once, read.updatedAt + 3600000);
   assert.equal(again.done[TRADE_QUEST], 2);
   assert.equal(again.squads[0].run, null);
   assert.equal(tradeEndingPending(again), false);
@@ -111,7 +111,7 @@ test("departure reading is atomic; offline arrival stops once and preserves its 
 
 test("trade checkpoints and explicit interruption never award an ending early", () => {
   let s = depart(initialState(1000));
-  while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt);
   assert.ok(s.gold > 60);
   assert.equal(tradeEndingPending(s), false);
   const stopped = act(s, { type: "stop" }, s.updatedAt);
@@ -132,7 +132,7 @@ test("tapping preserves transport distance, helps gathering and heals in the pro
   assert.ok(s.squads[0].run.health.aria.hp > hp);
   assert.equal(s.squads[0].run.scene, null);
   assert.ok(s.squads[0].run.events.every((e) => !e.text.includes("団長")));
-  while (s.squads[0].run.node === 0) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.node === 0) s = settle(s, s.squads[0].run.nextAt);
   target = s.squads[0].run.target;
   s = act(s, { type: "assist", mode: "strike" }, s.updatedAt);
   assert.ok(s.squads[0].run.target < target);
@@ -190,7 +190,7 @@ test("one-off quest policy forbids replay and stops even with repeat enabled", (
   storyStages.unshift({ ...storyStages[0], quest: q.id });
   try {
     const started = act(initialState(1000), { type: "start", id: q.id, value: true }, 1000);
-    const done = settle(started, 3601000).state;
+    const done = settle(started, 3601000);
     assert.equal(done.done[q.id], 1);
     assert.equal(done.squads[0].run, null);
     assert.throws(() => act(done, { type: "start", id: q.id }, done.updatedAt), /達成済み/);

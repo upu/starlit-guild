@@ -198,7 +198,7 @@ function afterTrade() {
     { type: "start", id: prologue.TRADE_QUEST, readDeparture: true },
     1000,
   );
-  s = game.settle(s, 3601000).state;
+  s = game.settle(s, 3601000);
   return game.act(s, { type: "readStory", id: prologue.TRADE_QUEST + "-return" }, s.updatedAt);
 }
 
@@ -430,7 +430,7 @@ test("reading the first ending replaces a previous UI choice, then Auto-Next ope
   s = game.settle(
     game.act(s, { type: "start", id: prologue.TRADE_QUEST, readDeparture: true }, 1000),
     3601000,
-  ).state;
+  );
   const h = harness(s);
   h.model.selectQuest(prologue.TRADE_QUEST);
   h.render();
@@ -465,13 +465,9 @@ test("after Auto-Next replays up to an unseen departure, it waits on that conver
   h.departButton().props.onClick();
   h.render();
   assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
-  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
-  h.api.report = { count: 3, gold: 1, xp: 1, herbs: 0, ore: 0, offline: true, capped: false };
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000);
   h.render();
   const frontier = prologue.storyStages[3].quest;
-  assert.equal(h.model.sheet, null, "the offline report is shown first");
-  h.api.report = null;
-  h.render();
   assert.equal(h.model.run, null);
   assert.equal(h.api.s.squads[0].lastQuest, frontier);
   assert.equal(h.model.quest.id, frontier, "the picker choice gives way to the saved destination");
@@ -509,7 +505,7 @@ test("with Auto-Next, closing the first 2-9 ending opens the interlude as the ne
   const last = prologue.storyStages[17].quest;
   let s = { ...game.testState(1000, 17, 50, 0), autoNextQuest: true };
   s = game.act(s, { type: "start", id: last, value: false, readDeparture: true }, 1000);
-  s = game.settle(s, s.updatedAt + 12 * 3600000).state;
+  s = game.settle(s, s.updatedAt + 12 * 3600000);
   const h = harness(s);
   assert.equal(h.model.ending.id, last + "-return");
   assert.equal(h.model.readStory(last + "-return"), true);
@@ -531,7 +527,7 @@ test("re-choosing the running stage does not outlive an Auto-Next move to the ne
   h.render();
   assert.equal(h.model.sheet, null);
   assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
-  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000);
   h.render();
   const frontier = prologue.storyStages[3].quest;
   assert.equal(h.model.run, null);

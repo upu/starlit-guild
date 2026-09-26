@@ -241,6 +241,8 @@ export function Banter({
   retain?: boolean;
 }) {
   const [exchange, setExchange] = useState(() => startBanter(lines));
+  const retained = retain ? retainBanter(exchange, lines) : exchange;
+  if (retained !== exchange) setExchange(retained);
   const dialogue = useRef<HTMLDivElement>(null);
   const followLatest = useRef(true);
   useEffect(() => {
@@ -250,8 +252,7 @@ export function Banter({
   const latest = useRef(lines);
   useEffect(() => {
     latest.current = lines;
-    if (retain) setExchange((current) => retainBanter(current, lines));
-  }, [lines, retain]);
+  }, [lines]);
   const line = exchange.lines.at(exchange.index);
   // Compare content, not the new array journeyBanter returns on every clock tick.
   // Exchanges already shown in this quest stay in the history instead of being appended again.

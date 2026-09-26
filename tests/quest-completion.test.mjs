@@ -86,7 +86,7 @@ const arrive = () =>
   settle(
     act(initialState(1000), { type: "start", id: TRADE_QUEST, readDeparture: true }, 1000),
     3601000,
-  ).state;
+  );
 
 test("arrival shows a clear card first and reading starts only after pressing it", () => {
   const state = arrive(),

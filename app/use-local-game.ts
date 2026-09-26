@@ -27,8 +27,8 @@ export { SAVE_KEY };
 export function useLocalGame(testToolsEnabled = false) {
   const state = useLocalGameState(),
     persistence = useLocalPersistence(state),
-    advance = useLocalAdvance(state, persistence.publish),
-    context = { ...state, ...persistence, advance },
+    clock = useLocalAdvance(state, persistence.publish),
+    context = { ...state, ...persistence, ...clock },
     backup = useBackup(state, persistence),
     refreshCopies = useRefreshCopies(state);
   useLocalGameLifecycle({ ...context, backup, refreshCopies });
@@ -50,8 +50,6 @@ export function useLocalGame(testToolsEnabled = false) {
     refreshCopies,
     backup,
     saved: state.saved,
-    report: state.report,
-    setReport: state.setReport,
     dispatch: createGameDispatch(context),
     switchProfile: createSwitchProfile(context),
     createProfile: createProfileAction(context, testToolsEnabled),

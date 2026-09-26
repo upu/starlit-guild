@@ -30,8 +30,7 @@ const quest = (run) => allQuests.find((q) => q.id === run.quest);
 
 test("a living member takes over pulling when the lead carrier falls", () => {
   let state = start(0, 12);
-  while (state.squads[0].run.phase !== "work")
-    state = settle(state, state.squads[0].run.nextAt).state;
+  while (state.squads[0].run.phase !== "work") state = settle(state, state.squads[0].run.nextAt);
   const run = state.squads[0].run;
   const q = quest(run);
   assert.equal(roadPuller(q, run), "leon");
@@ -60,8 +59,7 @@ test("a living member takes over pulling when the lead carrier falls", () => {
 
 test("four carriers share the cart's ground line and spread behind it", () => {
   let state = start(24, 12);
-  while (state.squads[0].run.phase !== "work")
-    state = settle(state, state.squads[0].run.nextAt).state;
+  while (state.squads[0].run.phase !== "work") state = settle(state, state.squads[0].run.nextAt);
   const run = state.squads[0].run;
   const frame = chapterRoadFrame({
     squad: state.squads[0],
@@ -116,7 +114,7 @@ test("transport covers the same distance at the same speed regardless of level",
         Math.abs(workPoint(quest(run), run) - 180 - (1 - fraction) * ROAD_CARRY_DISTANCE) < 1e-8,
       );
       lastFraction = fraction;
-      state = settle(state, run.nextAt).state;
+      state = settle(state, run.nextAt);
     }
     assert.equal(state.squads[0].run.node, 1);
     assert.ok(
@@ -130,7 +128,7 @@ test("transport covers the same distance at the same speed regardless of level",
 test("attacks, special hits, combinations and tapping cannot skip transport distance", () => {
   let state = start(0, 30);
   while (state.squads[0].run.target === state.squads[0].run.targetMax)
-    state = settle(state, state.squads[0].run.nextAt).state;
+    state = settle(state, state.squads[0].run.nextAt);
   const run = state.squads[0].run,
     before = run.target,
     position = workPoint(quest(run), run);
@@ -142,8 +140,8 @@ test("attacks, special hits, combinations and tapping cannot skip transport dist
   assert.equal(workPoint(quest(run), state.squads[0].run), position);
   const restored = JSON.parse(JSON.stringify(state));
   assert.deepEqual(
-    settle(restored, state.updatedAt + 3000).state,
-    JSON.parse(JSON.stringify(settle(state, state.updatedAt + 3000).state)),
+    settle(restored, state.updatedAt + 3000),
+    JSON.parse(JSON.stringify(settle(state, state.updatedAt + 3000))),
   );
 });
 

@@ -17,7 +17,7 @@ import {
   type LocalPersistence,
 } from "./local-game-state";
 
-type GameContext = LocalGameState & LocalPersistence & { advance: LocalAdvance };
+type GameContext = LocalGameState & LocalPersistence & LocalAdvance;
 
 export function createGameDispatch(context: GameContext) {
   return (action: Action, onSuccess?: (state: State) => void) => {
@@ -61,8 +61,7 @@ export function createSwitchProfile(context: GameContext) {
       return;
     context.advance(Date.now());
     bundle.active = id;
-    context.setReport(null);
-    context.advance(Date.now());
+    context.resume(Date.now());
     context.persist();
   };
 }
@@ -80,7 +79,6 @@ export function createProfileAction(context: GameContext, testToolsEnabled: bool
     bundle.profiles.push(profile);
     bundle.active = profile.id;
     context.publish(bundle);
-    context.setReport(null);
     context.persist();
     toast.success(test ? "テスト用の冒険を作りました。" : "以前の記録を残して、最初から始めます。");
   };
@@ -100,7 +98,6 @@ export function createDeleteProfile(context: GameContext) {
     if (bundle.active === id)
       bundle.active = bundle.profiles[Math.min(index, bundle.profiles.length - 1)].id;
     context.publish(bundle);
-    context.setReport(null);
     context.persist();
     toast.success(`「${deleted.name}」を削除しました。`);
     return true;
@@ -114,7 +111,6 @@ export function createAdjust(context: GameContext, testToolsEnabled: boolean) {
     profile.state = testState(Date.now(), clears, level, gold);
     context.publish(bundle);
     context.persist();
-    context.setReport(null);
     toast.success("テスト用の進行度を変更しました。");
   };
 }
@@ -130,7 +126,7 @@ export function createRestoreCopy(context: GameContext) {
     bundle.profiles.push(profile);
     bundle.active = profile.id;
     context.publish(bundle);
-    context.advance(Date.now());
+    context.resume(Date.now());
     context.persist();
     toast.success("元の記録を残し、別の記録として復元しました。");
   };
@@ -203,7 +199,7 @@ export function createTakeOver(context: GameContext) {
       );
       context.ownerRef.current = true;
       context.setOtherTab(false);
-      context.advance(Date.now());
+      context.resume(Date.now());
       context.persist();
     } catch {
       context.setError("端末の記録を確認してください。");

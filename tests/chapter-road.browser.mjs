@@ -18,14 +18,14 @@ function fixture(index, mode) {
   );
   if (["withdraw", "enter", "escape"].includes(mode)) {
     for (let i = 0; i < 15000 && s.squads[0].run?.road.scene?.kind !== mode; i++)
-      s = settle(s, s.squads[0].run.nextAt).state;
+      s = settle(s, s.squads[0].run.nextAt);
     assert.equal(s.squads[0].run.road.scene.kind, mode);
     s = settle(
       s,
       s.updatedAt +
         (s.squads[0].run.nextAt - s.updatedAt) *
           { withdraw: 0.27, enter: 0.85, escape: 0.29 }[mode],
-    ).state;
+    );
   } else if (mode === "worksite" || mode === "arrival") {
     for (let i = 0; i < 1000; i++) {
       const frame = chapterRoadFrame({
@@ -41,22 +41,22 @@ function fixture(index, mode) {
         (mode !== "arrival" || s.squads[0].run.node === s.squads[0].run.nodes - 1)
       )
         break;
-      s = settle(s, s.squads[0].run.nextAt).state;
+      s = settle(s, s.squads[0].run.nextAt);
     }
   } else if (mode === "boss" || mode.startsWith("command"))
     while ((s.squads[0].run.node < 2 || s.squads[0].run.road.scene) && s.updatedAt < now + 180000)
-      s = settle(s, s.squads[0].run.nextAt).state;
+      s = settle(s, s.squads[0].run.nextAt);
   else if (mode === "ambush" || mode === "rear")
     while (s.squads[0].run.road.ambushNode === undefined && s.updatedAt < now + 60000)
-      s = settle(s, s.squads[0].run.nextAt).state;
+      s = settle(s, s.squads[0].run.nextAt);
   if (mode.startsWith("command")) {
     for (let i = 0; i < 1500; i++) {
       const r = s.squads[0].run;
       if (r.events.some((e) => e.kind === "move" && e.enemy && e.at === s.updatedAt)) break;
-      s = settle(s, r.nextAt).state;
+      s = settle(s, r.nextAt);
     }
     const delay = mode === "command-arrival" ? 650 : 230;
-    s = settle(s, s.updatedAt + delay).state;
+    s = settle(s, s.updatedAt + delay);
     assert.ok(
       chapterRoadFrame({
         squad: s.squads[0],
@@ -74,7 +74,7 @@ function fixture(index, mode) {
     enemy.x = enemy.previousX = road.camera - 340;
     road.members.leon.x = road.members.leon.previousX = enemy.x + 55;
     road.members.leon.recoil = -45;
-    s = settle(s, s.updatedAt + 100).state;
+    s = settle(s, s.updatedAt + 100);
   }
   const id = crypto.randomUUID();
   return {

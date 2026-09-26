@@ -60,7 +60,7 @@ test("all scrolling stages finish unattended, roundtrip coordinates, preserve ex
       merged = r.road.ambushNode !== undefined;
       lastNode = r.node;
       const before = structuredClone(r.road.members);
-      s = settle(s, r.nextAt).state;
+      s = settle(s, r.nextAt);
       const next = s.squads[0].run;
       if (next && next.node !== r.node)
         for (const id of Object.keys(before))
@@ -74,7 +74,7 @@ test("all scrolling stages finish unattended, roundtrip coordinates, preserve ex
     assert.ok(Math.abs(s.xp.aria - initial.xp.aria - q.xp) < 1e-7, q.id);
     assert.equal(s.done[q.id], 1);
     assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
-    const offline = settle(initial, s.updatedAt).state;
+    const offline = settle(initial, s.updatedAt);
     assert.deepEqual({ ...s, log: [] }, { ...offline, log: [] }, q.id);
   }
 });
@@ -101,7 +101,7 @@ test("workers cooperate, split into guard and gatherer under attack and face rea
     const [a, l] = [r.road.members.aria, r.road.members.leon];
     differentPaces ||=
       a.walking && l.walking && Math.abs(a.x - a.previousX - (l.x - l.previousX)) > 0.1;
-    s = settle(s, r.nextAt).state;
+    s = settle(s, r.nextAt);
     if (cooperation && guard && rear && knockback && differentPaces) break;
   }
   assert.ok(
@@ -112,7 +112,7 @@ test("workers cooperate, split into guard and gatherer under attack and face rea
 
 test("camera follows leftward recoil and keeps a rear attacker visible, then follows the return to work", () => {
   let s = start(13, 30);
-  while (s.squads[0].run.road.ambushNode === undefined) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.road.ambushNode === undefined) s = settle(s, s.squads[0].run.nextAt);
   const run = s.squads[0].run,
     road = run.road,
     enemy = road.opponents[run.enemies[0].id];
@@ -122,7 +122,7 @@ test("camera follows leftward recoil and keeps a rear attacker visible, then fol
   road.members.leon.recoil = -45;
   const oldCamera = road.camera;
   assert.ok(chapterRoadX(enemy.x, oldCamera, 390, "puppets") < 0);
-  s = settle(s, s.updatedAt + 100).state;
+  s = settle(s, s.updatedAt + 100);
   assert.ok(s.squads[0].run.road.camera < oldCamera);
   for (const width of [320, 390, 1280]) {
     const { battle } = chapterRoadFrame(input(s, s.updatedAt + 80));
@@ -133,24 +133,24 @@ test("camera follows leftward recoil and keeps a rear attacker visible, then fol
   }
   assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
   const leftCamera = s.squads[0].run.road.camera;
-  s = settle(s, s.updatedAt + 15000).state;
+  s = settle(s, s.updatedAt + 15000);
   assert.ok(s.squads[0].run.road.camera > leftCamera);
 });
 
 test("old unfinished saves retain exact HP, clocks and rewards and adopt scrolling on next departure", () => {
   let s = start(9, 30);
   delete s.squads[0].run.road;
-  s = settle(s, 3500).state;
+  s = settle(s, 3500);
   const saved = structuredClone(s);
   assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(saved)));
-  s = settle(s, 601000).state;
+  s = settle(s, 601000);
   s = act(s, { type: "readStory", id: "hilltop-picnic-return" }, s.updatedAt);
   s = act(s, { type: "start", id: "hilltop-picnic", value: false }, s.updatedAt);
   assert.equal(s.squads[0].run.road.version, 1);
 });
 
 test("drawing is read-only, uses real individual HP and accurately targets taps at interpolated positions", () => {
-  const s = settle(start(12), 2300).state,
+  const s = settle(start(12), 2300),
     before = structuredClone(s);
   s.squads[0].run.health.leon.hp -= 7;
   const modified = structuredClone(s),
@@ -200,9 +200,9 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
     if (look.work?.cargo && roadHasEnemies(run)) {
       defended = true;
       const before = run.target;
-      state = settle(state, run.nextAt).state;
+      state = settle(state, run.nextAt);
       if (state.squads[0].run?.node === run.node) assert.equal(state.squads[0].run.target, before);
-    } else state = settle(state, run.nextAt).state;
+    } else state = settle(state, run.nextAt);
     if (transporting && defended) break;
   }
   assert.ok(transporting && defended);
@@ -228,7 +228,7 @@ test("chapter four paperwork uses a ledger and inspection while transport keeps 
           inspected.add(run.node);
         }
       }
-      state = settle(state, run.nextAt).state;
+      state = settle(state, run.nextAt);
     }
     assert.equal(inspected.size, index === 29 ? 5 : 9);
     assert.equal(transported.size, 5);
@@ -254,7 +254,7 @@ test("moss-bed survey shows moss, the waterway, and measuring tools without harv
     assert.equal(battle.gathering.task, "inspect");
     assert.equal(look.work.cargo, false);
     inspected.add(run.node);
-    state = settle(state, run.nextAt).state;
+    state = settle(state, run.nextAt);
   }
   assert.equal(inspected.size, 15);
 });

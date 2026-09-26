@@ -226,7 +226,7 @@ test("prologue guides the first quest choice before departure and keeps actions 
   const cleared = settle(
     act(fresh, { type: "start", id: "village-trade", readDeparture: true }, 1000),
     3601000,
-  ).state;
+  );
   const after = render(act(cleared, { type: "readStory", id: "village-trade-return" }, 3601000));
   assert.doesNotMatch(after, /quest-tutorial|何度でも|>クエストを選ぶ<|idle-map-note/);
 });
@@ -276,7 +276,7 @@ test("stage progress retains the completed scenery until the next departure", ()
     // Render progression with sufficient training; difficulty has its own simulations.
     if (prologueStages.indexOf(stage) >= 6)
       for (const hero of state.owned) state.xp[hero] = 30 * 19 ** 2;
-    state = settle(state, state.updatedAt + 3600000).state;
+    state = settle(state, state.updatedAt + 3600000);
     state = act(state, { type: "readStory", id: stage.quest + "-return" }, state.updatedAt);
     background =
       stage.quest === "village-trade"
@@ -317,7 +317,7 @@ test("every restored expedition location renders with finite character coordinat
       if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
     }
     if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
-    state = settle(state, state.squads[0].run.nextAt).state;
+    state = settle(state, state.squads[0].run.nextAt);
   }
   assert.equal(visited.size, 15);
 });

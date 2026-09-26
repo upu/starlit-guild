@@ -33,7 +33,7 @@ export function chapterThreeRoute(input, { shop = true } = {}) {
       state = act(result.state, { type: "stop" }, result.state.updatedAt);
       const farm = state.done[BERNE_QUEST] ? BERNE_QUEST : "mountain-entrance";
       state = act(state, { type: "start", id: farm, value: true }, state.updatedAt);
-      state = settle(state, state.updatedAt + 300000).state;
+      state = settle(state, state.updatedAt + 300000);
       state = act(state, { type: "stop" }, state.updatedAt);
       trainingSeconds += 300;
       result = measure(state, stage.quest);

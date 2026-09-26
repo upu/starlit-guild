@@ -1,7 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState } from "../lib/game.ts";
-import { confrontationTurn, paralyzed, shiftConfrontationClocks } from "../lib/chapter-four-battles.ts";
+import {
+  confrontationTurn,
+  paralyzed,
+  shiftConfrontationClocks,
+} from "../lib/chapter-four-battles.ts";
 import { chapterFourBattleBanter } from "../lib/chapter-four-battle-banter.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadActorReady, advanceChapterRoad } from "../lib/chapter-road.ts";
@@ -14,32 +18,54 @@ import { retainBanter, startBanter, nextBanter } from "../lib/banter-exchange.ts
 
 function roundtrip(state) {
   const id = "44444444-4444-4444-8444-444444444444";
-  return parseBundle(JSON.parse(JSON.stringify({ format: 4, deviceId: id, active: id,
-    profiles: [{ id, name: "duel", test: true, state }], serial: 0, sound: false, cloudAt: 0,
-  }))).profiles[0].state;
+  return parseBundle(
+    JSON.parse(
+      JSON.stringify({
+        format: 4,
+        deviceId: id,
+        active: id,
+        profiles: [{ id, name: "duel", test: true, state }],
+        serial: 0,
+        sound: false,
+        cloudAt: 0,
+      }),
+    ),
+  ).profiles[0].state;
 }
 function until(state, predicate) {
   for (let i = 0; i < 6000; i++) {
     if (predicate(state.squads[0].run)) return state;
-    state = settle(state, state.updatedAt + 100).state;
+    state = settle(state, state.updatedAt + 100);
   }
   assert.fail("encounter cue never arrived");
 }
 function start(kind) {
   let s = testState(1000, 34, 25, 10000);
-  s = act(s, { type: "start", id: kind === "lico" ? "lico-records" : "merrill-seedlings", readDeparture: true, value: false }, s.updatedAt);
-  return until(s, r => r?.enemies?.some(e => e.trick === kind && !e.actions));
+  s = act(
+    s,
+    {
+      type: "start",
+      id: kind === "lico" ? "lico-records" : "merrill-seedlings",
+      readDeparture: true,
+      value: false,
+    },
+    s.updatedAt,
+  );
+  return until(s, (r) => r?.enemies?.some((e) => e.trick === kind && !e.actions));
 }
-const frame = s => chapterRoadFrame({ squad: s.squads[0], now: s.updatedAt, ready: true, paused: false });
+const frame = (s) =>
+  chapterRoadFrame({ squad: s.squads[0], now: s.updatedAt, ready: true, paused: false });
 const noEmit = () => {};
 
 test("Merrill throws independent mushrooms, then heals allies without resurrection or exceeding the cap", () => {
-  const s = until(start("merrill"), r => r?.enemies?.[0]?.cue === "summon");
-  const r = s.squads[0].run, master = r.enemies[0], mushroom = r.enemies[1];
+  const s = until(start("merrill"), (r) => r?.enemies?.[0]?.cue === "summon");
+  const r = s.squads[0].run,
+    master = r.enemies[0],
+    mushroom = r.enemies[1];
   assert.equal(mushroom.trick, "mushroom");
   assert.ok(r.road.opponents[mushroom.id]);
   assert.equal(mushroom.nextAt, master.cueAt + 1900);
-  assert.ok(frame(s).battle.effects.some(e => e.kind === "mushroomThrow"));
+  assert.ok(frame(s).battle.effects.some((e) => e.kind === "mushroomThrow"));
   mushroom.hp = 1;
   master.hp -= 2;
   const before = master.hp;
@@ -51,27 +77,34 @@ test("Merrill throws independent mushrooms, then heals allies without resurrecti
   mushroom.hp = 0;
   const second = r.enemies[2];
   second.hp = second.maxHp - 1;
-  for (let i = 0; i < 10; i++) confrontationTurn(r, master, master.nextAt + 7200 + i * 3600, noEmit);
+  for (let i = 0; i < 10; i++)
+    confrontationTurn(r, master, master.nextAt + 7200 + i * 3600, noEmit);
   assert.equal(mushroom.hp, 0);
   assert.equal(second.hp, second.maxHp);
   assert.equal(r.enemies.length, 3);
 });
 
 test("Lico stops one actor temporarily without poison damage; movement and pair actions obey the status", () => {
-  const s = until(start("lico"), r => r?.enemies?.[0]?.cue === "paralyze");
-  const sq = s.squads[0], r = sq.run, at = s.updatedAt;
-  const affected = r.actors.filter(a => paralyzed(a, at));
+  const s = until(start("lico"), (r) => r?.enemies?.[0]?.cue === "paralyze");
+  const sq = s.squads[0],
+    r = sq.run,
+    at = s.updatedAt;
+  const affected = r.actors.filter((a) => paralyzed(a, at));
   assert.equal(affected.length, 1);
-  const actor = affected[0], q = questById(r.quest), x = r.road.members[actor.hero].x;
+  const actor = affected[0],
+    q = questById(r.quest),
+    x = r.road.members[actor.hero].x;
   assert.equal(roadActorReady(q, r, actor.hero), false);
   assert.equal(paralyzed(actor, actor.paralyzedUntil), false);
-  const health = structuredClone(r.health), events = r.events.length;
+  const health = structuredClone(r.health),
+    events = r.events.length;
   combination(s, sq, at);
   assert.equal(r.events.length, events);
   advanceChapterRoad(q, r, at + 100);
   assert.equal(r.road.members[actor.hero].x, x);
   assert.deepEqual(r.health, health);
-  const master = r.enemies[0], untilAt = actor.paralyzedUntil;
+  const master = r.enemies[0],
+    untilAt = actor.paralyzedUntil;
   for (let i = 0; i < 8; i++) confrontationTurn(r, master, at + 200 + i, noEmit);
   assert.equal(actor.paralyzedUntil, untilAt, "a guarded actor cannot be repeatedly paralyzed");
   assert.deepEqual(r.health, health, "smoke never deals poison damage");
@@ -79,23 +112,31 @@ test("Lico stops one actor temporarily without poison damage; movement and pair 
 
 test("active status, summons and action cues survive saves and deterministic advancement", () => {
   for (const kind of ["lico", "merrill"]) {
-    const s = until(start(kind), r => r?.enemies?.[0]?.actions >= 2);
+    const s = until(start(kind), (r) => r?.enemies?.[0]?.actions >= 2);
     assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
-    const saved = roundtrip(s), end = s.updatedAt + 8000;
+    const saved = roundtrip(s),
+      end = s.updatedAt + 8000;
     let fine = saved;
-    while (fine.updatedAt < end) fine = settle(fine, fine.updatedAt + 100).state;
-    assert.deepEqual(JSON.parse(JSON.stringify(fine)), JSON.parse(JSON.stringify(settle(s, end).state)));
-    const r = s.squads[0].run, master = r.enemies[0], cueAt = master.cueAt;
-    const clocks = r.actors.map(a => a.paralyzedUntil);
+    while (fine.updatedAt < end) fine = settle(fine, fine.updatedAt + 100);
+    assert.deepEqual(JSON.parse(JSON.stringify(fine)), JSON.parse(JSON.stringify(settle(s, end))));
+    const r = s.squads[0].run,
+      master = r.enemies[0],
+      cueAt = master.cueAt;
+    const clocks = r.actors.map((a) => a.paralyzedUntil);
     shiftConfrontationClocks(r, 10000);
     assert.equal(master.cueAt, cueAt + 10000);
-    r.actors.forEach((a, i) => assert.equal(a.paralyzedUntil, clocks[i] === undefined ? undefined : clocks[i] + 10000));
+    r.actors.forEach((a, i) =>
+      assert.equal(a.paralyzedUntil, clocks[i] === undefined ? undefined : clocks[i] + 10000),
+    );
     const invalid = structuredClone(saved);
     invalid.squads[0].run.enemies[0].trick = kind === "lico" ? "merrill" : "lico";
     assert.throws(() => roundtrip(invalid));
     const old = structuredClone(saved);
     for (const enemy of old.squads[0].run.enemies) {
-      delete enemy.trick; delete enemy.actions; delete enemy.cue; delete enemy.cueAt;
+      delete enemy.trick;
+      delete enemy.actions;
+      delete enemy.cue;
+      delete enemy.cueAt;
     }
     assert.doesNotThrow(() => roundtrip(old));
   }
@@ -103,19 +144,25 @@ test("active status, summons and action cues survive saves and deterministic adv
 
 test("battle lines have real portraits and short-lived enemy exchanges are retained in order", () => {
   for (const kind of ["lico", "merrill"]) {
-    const s = start(kind), r = s.squads[0].run, master = r.enemies[0];
+    const s = start(kind),
+      r = s.squads[0].run,
+      master = r.enemies[0];
     let exchange = startBanter([{ speaker: "aria", text: "道中の会話" }]);
     const expected = [];
     for (let i = 0; i < 3; i++) {
       const lines = chapterFourBattleBanter(r);
-      for (const line of lines) assert.ok(portraitAtlases[line.speaker].expressions.includes(line.expression), line.text);
+      for (const line of lines)
+        assert.ok(portraitAtlases[line.speaker].expressions.includes(line.expression), line.text);
       if (!expected.includes(lines[0].text)) expected.push(lines[0].text);
       exchange = retainBanter(exchange, lines);
       confrontationTurn(r, master, s.updatedAt + i * 3600, event);
       syncEnemyTotals(r);
     }
     for (let i = 0; i < 20; i++) exchange = nextBanter(exchange, []);
-    assert.deepEqual(exchange.history.filter(l => expected.includes(l.text)).map(l => l.text), expected);
-    assert.ok(exchange.history.some(l => l.speaker === kind));
+    assert.deepEqual(
+      exchange.history.filter((l) => expected.includes(l.text)).map((l) => l.text),
+      expected,
+    );
+    assert.ok(exchange.history.some((l) => l.speaker === kind));
   }
 });

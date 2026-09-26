@@ -174,13 +174,11 @@ test("equipment changes affect combat and preserve HP ratio without healing or r
     action(next, { type: "equip", hero: "aria", slot: "armor" }).squads[0].run.health.aria.hp,
     0,
   );
-  while (s.squads[0].run.node === 0) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.node === 0) s = settle(s, s.squads[0].run.nextAt);
   s.squads[0].run.actors.find((actor) => actor.hero === "aria").actions = 2;
   const equipped = action(s, { type: "equip", hero: "aria", slot: "weapon", id: "ash-bow" }),
     at = s.squads[0].run.actors.find((actor) => actor.hero === "aria").nextAt;
-  assert.ok(
-    settle(equipped, at).state.squads[0].run.target < settle(s, at).state.squads[0].run.target,
-  );
+  assert.ok(settle(equipped, at).squads[0].run.target < settle(s, at).squads[0].run.target);
 });
 test("save roundtrips preserve purchases and equipment while old saves retain their exact power and progress", () => {
   const old = progress(3),
@@ -219,9 +217,9 @@ test("equipped saves settle identically in one offline step and repeated live st
   let s = action(progress(3), { type: "buy", id: "leather-vest" });
   s = action(s, { type: "equip", hero: "aria", slot: "armor", id: "leather-vest" });
   s = action(s, { type: "start", id: TOWER_QUEST, readDeparture: true });
-  const bulk = settle(s, 61000).state;
+  const bulk = settle(s, 61000);
   let frames = s;
-  for (let now = 2000; now <= 61000; now += 1000) frames = settle(frames, now).state;
+  for (let now = 2000; now <= 61000; now += 1000) frames = settle(frames, now);
   // Completion log timestamps record when each settlement was observed; gameplay must match.
   const { log: liveLog, ...liveState } = frames,
     { log: offlineLog, ...offlineState } = bulk;

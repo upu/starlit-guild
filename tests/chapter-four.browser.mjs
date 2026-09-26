@@ -96,7 +96,7 @@ function stageRun(index, target) {
   const targetNode = target === "lico" ? 14 : target === "merrill" ? 8 : target;
   for (let step = 0; state.squads[0].run && !visible() && step < 20000; step++) {
     const tick = state.squads[0].run.node >= targetNode - 1 ? 1 : 100;
-    state = settle(state, state.updatedAt + tick).state;
+    state = settle(state, state.updatedAt + tick);
   }
   assert.ok(
     visible(),

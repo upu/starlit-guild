@@ -73,12 +73,12 @@ test("short stages retain full coins and XP, distinct formations and live/offlin
         r.road?.ambushNode ?? r.node,
         r.enemies.map((e) => e.role),
       );
-      s = roundtrip(settle(s, r.nextAt).state);
+      s = roundtrip(settle(s, r.nextAt));
     }
     assert.equal(s.squads[0].run, null);
     assert.equal(s.gold - initial.gold, q.gold);
     assert.ok(Math.abs(s.xp.aria - initial.xp.aria - q.xp) < 1e-8);
-    const offline = settle(initial, s.updatedAt).state;
+    const offline = settle(initial, s.updatedAt);
     assert.deepEqual({ ...s, log: [] }, { ...offline, log: [] });
     if (id === ids[0]) assert.deepEqual(seen.get(7), ["puppet", "puppet"]);
     if (id === ids[1])
@@ -235,11 +235,11 @@ test("commands, telegraphs, individual art and clocks survive saving and reduced
   const loaded = roundtrip(s);
   assert.deepEqual(loaded.squads[0].run.enemies, r.enemies);
   const end = s.updatedAt + 90000,
-    offline = settle(loaded, end).state;
+    offline = settle(loaded, end);
   let live = s;
   while (live.squads[0].run && live.squads[0].run.nextAt <= end)
-    live = roundtrip(settle(live, live.squads[0].run.nextAt).state);
-  live = settle(live, end).state;
+    live = roundtrip(settle(live, live.squads[0].run.nextAt));
+  live = settle(live, end);
   assert.deepEqual({ ...live, log: [] }, { ...offline, log: [] });
   const bad = structuredClone(s);
   bad.squads[0].run.enemies[0].role = "unknown";
@@ -266,7 +266,7 @@ test("old 15-node saves keep HP, clocks, rewards and composition until completin
       assert.equal(current.nodes, 15);
       assert.ok(current.enemies.every((enemy) => !enemy.role));
       seenLater ||= current.node > before.node;
-      s = roundtrip(settle(s, current.nextAt).state);
+      s = roundtrip(settle(s, current.nextAt));
     }
     assert.ok(seenLater);
     assert.equal(s.done[id], 1);
@@ -299,22 +299,22 @@ test("short battles recover after defeat, keep rewards on return and survive cap
   let s = ready(ids[1], 1),
     rest;
   for (let i = 0; s.updatedAt < 601000 && !rest; i++) {
-    s = settle(s, s.squads[0].run.nextAt).state;
+    s = settle(s, s.squads[0].run.nextAt);
     if (s.squads[0].run.phase === "rest") rest = roundtrip(s);
   }
   assert.ok(rest);
-  const recovered = roundtrip(settle(rest, rest.squads[0].run.nextAt).state);
+  const recovered = roundtrip(settle(rest, rest.squads[0].run.nextAt));
   assert.equal(recovered.squads[0].run.nodes, 3);
   assert.ok(recovered.squads[0].run.enemies.every((e) => e.role));
   assert.deepEqual(
     recovered.squads[0].run.enemies.map((e) => e.role),
     rest.squads[0].run.enemies.map((e) => e.role),
   );
-  const capped = roundtrip(settle(rest, rest.updatedAt + 13 * 3600000).state);
+  const capped = roundtrip(settle(rest, rest.updatedAt + 13 * 3600000));
   assert.ok(capped.squads[0].run.nextAt >= capped.updatedAt);
   s = ready(ids[0]);
   const gold = s.gold;
-  while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt);
   assert.ok(s.gold > gold);
   const stopped = roundtrip(act(s, { type: "stop" }, s.updatedAt));
   assert.equal(stopped.gold, s.gold);

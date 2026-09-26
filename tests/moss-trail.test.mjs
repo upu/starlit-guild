@@ -68,7 +68,7 @@ test("day one uses two adventurers through work, rest, resume and repeat; day tw
         );
         state = saved(state);
       }
-      state = settle(state, run.nextAt).state;
+      state = settle(state, run.nextAt);
     }
     const names = [...visits.values()];
     assert.equal(visits.size, 15);

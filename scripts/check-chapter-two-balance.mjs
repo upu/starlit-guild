@@ -28,7 +28,7 @@ export function measure(input, quest, limitMs = 180000) {
     const run = state.squads[0].run;
     if (run.nextAt > start + limitMs) break;
     const phase = run.phase;
-    state = settle(state, run.nextAt).state;
+    state = settle(state, run.nextAt);
     const next = state.squads[0].run;
     if (next?.phase === "rest" && phase !== "rest") record.rests++;
     if (next)
@@ -85,7 +85,7 @@ export function chapterRoute(preset = "standard", input) {
             : "hilltop-picnic";
       if (!state.done[farm]) break;
       state = act(state, { type: "start", id: farm, value: true }, state.updatedAt);
-      state = settle(state, state.updatedAt + 300000).state;
+      state = settle(state, state.updatedAt + 300000);
       trainingSeconds += 300;
       state = act(state, { type: "stop" }, state.updatedAt);
       result = measure(state, stage.quest);

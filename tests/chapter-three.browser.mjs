@@ -143,7 +143,7 @@ try {
                 { 0: "signpost", 1: "stonework", 2: "records", 4: "records" }[index])
       )
         break;
-      state = settle(state, state.squads[0].run.nextAt).state;
+      state = settle(state, state.squads[0].run.nextAt);
     }
     const { page, context } = await open(state);
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });

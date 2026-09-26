@@ -9,11 +9,11 @@ import { parseBundle } from "../lib/save-format.ts";
 
 const dispatch = (s, a) => act(s, a, s.updatedAt);
 const arrive = (s, id) =>
-  settle(dispatch(s, { type: "start", id, readDeparture: true }), s.updatedAt + 13 * 3600000).state;
+  settle(dispatch(s, { type: "start", id, readDeparture: true }), s.updatedAt + 13 * 3600000);
 const read = (s, id) => dispatch(s, { type: "readStory", id: id + "-return" });
 const depart = (s, id) => dispatch(s, { type: "start", id, value: false, readDeparture: true });
 function rest(s) {
-  for (let i = 0; i < 10 && s.squads[0].run; i++) s = settle(s, s.updatedAt + 12 * 3600000).state;
+  for (let i = 0; i < 10 && s.squads[0].run; i++) s = settle(s, s.updatedAt + 12 * 3600000);
   assert.equal(s.squads[0].run, null);
   return s;
 }
@@ -95,7 +95,7 @@ test("all story stages advance only after ending, cross chapters, persist and wa
 
 test("Auto-Next replays a cleared stage onward: the next stage becomes the destination and departs", () => {
   let s = depart(autoNext(storyStages.length), TRADE_QUEST);
-  while (s.done[TRADE_QUEST] < 2) s = settle(s, s.updatedAt + 60000).state;
+  while (s.done[TRADE_QUEST] < 2) s = settle(s, s.updatedAt + 60000);
   assert.equal(s.squads[0].lastQuest, RETURN_QUEST);
   assert.equal(s.squads[0].run?.quest, RETURN_QUEST);
   assert.equal(s.squads[0].repeat, false);

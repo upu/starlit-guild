@@ -32,8 +32,6 @@ import { allQuests, squadName } from "@/lib/game";
 import { resolveSheet } from "./phone-game-sheets";
 import type { Game, PhoneFrameModel } from "./phone-game-types";
 
-const fmt = (n: number) => Math.floor(n).toLocaleString("ja-JP");
-
 function PhoneHeader({ model: m }: { model: PhoneFrameModel }) {
   return (
     <header className={"phone-header" + (m.view === "adventure" ? " phone-header-overlay" : "")}>
@@ -73,7 +71,6 @@ function firstDepartureGuide(m: PhoneFrameModel): FirstDepartureGuide {
   if (
     m.sheet ||
     m.ending ||
-    m.game.report ||
     m.run ||
     storyProgress(m.state).departed.length ||
     m.state.done[TRADE_QUEST]
@@ -137,7 +134,7 @@ function adventurePrimaryAction(m: PhoneFrameModel, guide: FirstDepartureGuide) 
 }
 export function AdventureDestination({ model: m }: { model: PhoneFrameModel }) {
   const guide = firstDepartureGuide(m),
-    obscured = !!m.sheet || !!m.ending || !!m.game.report;
+    obscured = !!m.sheet || !!m.ending;
   return (
     <div className="adventure-actions" aria-label="冒険の操作">
       <button
@@ -183,7 +180,7 @@ function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
       key={(m.game.profile?.id || "") + ":" + m.squad.id + ":" + (m.run?.quest || "idle")}
       lines={m.banter}
       retain={!!m.run && !!chapterFourBattleBanter(m.run)}
-      paused={!!m.sheet || !!m.ending || !!m.game.report || !m.ready}
+      paused={!!m.sheet || !!m.ending || !m.ready}
     />
   );
 }
@@ -200,7 +197,7 @@ function AdventureTab({ model: m }: { model: PhoneFrameModel }) {
         ready={m.ready}
         onAction={m.act}
         startQuest={m.quest.id}
-        paused={!!m.sheet || !!m.returnIntent || !!m.game.report || !!m.ending}
+        paused={!!m.sheet || !!m.returnIntent || !!m.ending}
       />
       <AdventureBanter model={m} />
       <AdventureDestination model={m} />
@@ -301,7 +298,6 @@ function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
       ready={m.ready}
       onRead={() => m.readStory(ending.id)}
       onClose={() => {
-        m.game.setReport(null);
         m.setSheet(null);
       }}
     />
@@ -348,44 +344,6 @@ function ReturnDialog({ model: m }: { model: PhoneFrameModel }) {
     </AlertDialog>
   );
 }
-function ReportDialog({ model: m }: { model: PhoneFrameModel }) {
-  const report = m.game.report;
-  return (
-    <Dialog
-      open={!!report && !m.sheet && !m.ending}
-      onOpenChange={(open) => {
-        if (!open) m.game.setReport(null);
-      }}
-    >
-      <DialogContent className="phone-dialog">
-        <DialogHeader>
-          <DialogTitle>留守の間の交易</DialogTitle>
-          <DialogDescription>留守の間の冒険で集めたものです。</DialogDescription>
-        </DialogHeader>
-        {report && (
-          <>
-            <p>{report.count}件の依頼を達成</p>
-            <div className="offline-loot">
-              <span>{fmt(report.gold)} G</span>
-              <span>薬草 {report.herbs}</span>
-              <span>鉱石 {report.ore}</span>
-            </div>
-            <span>仲間の経験値 +{report.xp}</span>
-            {report.capped && <small>最大12時間分を集計しました。</small>}
-            <button
-              className="outline full"
-              onClick={() => {
-                m.game.setReport(null);
-              }}
-            >
-              冒険を見守る
-            </button>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
-  );
-}
 export function PhoneFrame({ model: m }: { model: PhoneFrameModel }) {
   return (
     <main className="phone-game prologue-game">
@@ -395,7 +353,6 @@ export function PhoneFrame({ model: m }: { model: PhoneFrameModel }) {
       <SheetDialog model={m} />
       <EndingDialog model={m} />
       <ReturnDialog model={m} />
-      <ReportDialog model={m} />
     </main>
   );
 }

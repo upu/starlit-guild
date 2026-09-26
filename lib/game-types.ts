@@ -77,15 +77,6 @@ export type LegacySharedRun = Omit<Run, "health"> & { hp: number; maxHp: number 
 export type LegacySharedHealthState = Omit<State, "squads"> & {
   squads: (Omit<Squad, "run"> & { run: LegacySharedRun | null })[];
 };
-export type Rewards = {
-  count: number;
-  gold: number;
-  xp: number;
-  herbs: number;
-  ore: number;
-  offline: boolean;
-  capped: boolean;
-};
 import type { Enemy } from "./combat.ts";
 import type { Inventory } from "./equipment.ts";
 import type { Techniques } from "./techniques.ts";

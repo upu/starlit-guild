@@ -17,7 +17,7 @@ export function chapterFourRoute(input) {
       state = act(result.state, { type: "stop" }, result.state.updatedAt);
       const farm = state.done[LINDE_REQUESTS_QUEST] ? LINDE_REQUESTS_QUEST : "berne-road";
       state = act(state, { type: "start", id: farm, value: true }, state.updatedAt);
-      state = settle(state, state.updatedAt + 300000).state;
+      state = settle(state, state.updatedAt + 300000);
       state = act(state, { type: "stop" }, state.updatedAt);
       trainingSeconds += 300;
       result = measure(state, stage.quest);
