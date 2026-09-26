@@ -145,8 +145,6 @@ export function learnTechnique(s: State, id: string) {
 export function setTechnique(s: State, hero: string, slot: TechniqueSlot, id?: string) {
   requireTechniqueAccess(s, hero);
   if (!["active", "passive"].includes(slot)) throw Error("セットする枠を確認してください。");
-  if (s.squads.some((sq) => sq.run && sq.members.includes(hero)))
-    throw Error("スキルの付け替えは帰還してから行えます。");
   const t = id ? techniqueById(id) : null;
   if (id && (!t || t.hero !== hero || t.slot !== slot || !knowsTechnique(s, id)))
     throw Error("セットするスキルを確認してください。");

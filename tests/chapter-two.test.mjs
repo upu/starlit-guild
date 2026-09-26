@@ -346,16 +346,6 @@ test("coins, levels, hero and slot are checked; learning is distinct from free e
     s.updatedAt,
   );
   assert.equal(s.gold, before - 80);
-  const away = start(s, MOON_HERB_QUEST);
-  assert.throws(
-    () =>
-      act(
-        away,
-        { type: "setTechnique", hero: "aria", techniqueSlot: "active", id: "aria-gather" },
-        away.updatedAt,
-      ),
-    /帰還/,
-  );
   const poor = { ...s, gold: 0 };
   assert.throws(
     () => act(poor, { type: "learnTechnique", id: "aria-herbs" }, poor.updatedAt),
@@ -403,6 +393,47 @@ test("second passives become learnable at level 14 after the picnic and still ne
     );
     assert.equal(techniqueMultiplier(equipped, hero, "battle", false, 1), 1.15);
   }
+});
+
+test("active and passive techniques can change during an adventure without resetting the run", () => {
+  let s = unlocked();
+  s.gold = 1000;
+  for (const id of ["aria-gather", "aria-aim"])
+    s = act(s, { type: "learnTechnique", id }, s.updatedAt);
+  s = start(s, MOON_HERB_QUEST);
+  s = roundtrip(settle(s, s.updatedAt + 10000));
+  assert.ok(s.squads[0].run);
+  const squads = structuredClone(s.squads);
+  const gold = s.gold;
+  for (const [techniqueSlot, id] of [
+    ["active", "aria-gather"],
+    ["passive", "aria-aim"],
+    ["active", undefined],
+    ["passive", undefined],
+    ["active", "aria-double"],
+  ]) {
+    s = act(s, { type: "setTechnique", hero: "aria", techniqueSlot, id }, s.updatedAt);
+    assert.equal(equippedTechnique(s, "aria", techniqueSlot), id ?? null);
+    assert.deepEqual(s.squads, squads, "HP, action counts, clocks and progress must be preserved");
+    assert.equal(s.gold, gold);
+    if (id === "aria-gather")
+      assert.equal(techniqueMultiplier(s, "aria", "gather", true, 1.65), 2.2);
+    if (id === "aria-aim") assert.equal(techniqueMultiplier(s, "aria", "battle", false, 1), 1.15);
+    if (techniqueSlot === "active" && !id)
+      assert.equal(techniqueMultiplier(s, "aria", "gather", true, 1.65), 1);
+    s = roundtrip(s);
+    assert.equal(equippedTechnique(s, "aria", techniqueSlot), id ?? null);
+    assert.deepEqual(s.squads, squads);
+  }
+  assert.equal(techniqueMultiplier(s, "aria", "battle", false, 1), 1);
+  assert.equal(techniqueMultiplier(s, "aria", "gather", true, 1.65), 1.65);
+  assert.throws(() =>
+    act(
+      s,
+      { type: "setTechnique", hero: "aria", techniqueSlot: "passive", id: "aria-herbs" },
+      s.updatedAt,
+    ),
+  );
 });
 
 test("only equipped techniques affect actions and rewards; offline and live simulation agree", () => {

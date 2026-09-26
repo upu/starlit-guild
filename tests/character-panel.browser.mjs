@@ -36,6 +36,33 @@ async function assertCharacter(page, name) {
   );
   assert.equal(await page.locator('.character-picker button[aria-pressed="true"]').count(), 1);
 }
+async function checkAdventureSkills(page, url) {
+  await page.goto(url + "/?away");
+  await assertCharacter(page, "アリア");
+  assert.equal(await page.getByText(/付け替えは帰還後/).count(), 0);
+  for (const [slot, name] of [
+    ["アクティブ", "丁寧な採取"],
+    ["パッシブ", "野草の目利き"],
+  ]) {
+    const equipped = page.getByRole("button", { name: new RegExp(slot + "スキル.*習得・セット") });
+    await equipped.click();
+    const candidate = page.getByRole("button", { name, exact: true });
+    await candidate.click();
+    await page.getByRole("button", { name: name + "を習得する", exact: true }).click();
+    await candidate.click();
+    assert.match(await equipped.getAttribute("aria-label"), new RegExp(name));
+    assert.equal(await page.getByRole("status").innerText(), "スキルをセットしました。");
+    const empty = page.getByRole("button", { name: "スキルを外す候補", exact: true });
+    await empty.click();
+    await empty.click();
+    assert.match(await equipped.getAttribute("aria-label"), /セットなし/);
+    assert.equal(await page.getByRole("status").innerText(), "スキルを外しました。");
+    await candidate.click();
+    await candidate.click();
+    assert.match(await equipped.getAttribute("aria-label"), new RegExp(name));
+    await page.getByRole("button", { name: "閉じる", exact: true }).click();
+  }
+}
 mkdirSync(dir, { recursive: true });
 const bundle = await build({
   stdin: {
@@ -44,12 +71,14 @@ const bundle = await build({
  import {CharacterPanel} from './app/equipment-panels';
  import {testState,act} from './lib/game';
  import {initialInventory} from './lib/equipment';
+ import {MOON_HERB_QUEST} from './lib/chapter-two';
  const params=new URLSearchParams(location.search);
- const initial=testState(1000,params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
+ let initial=testState(1000,params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
  initial.xp.leon+=500;
  if(params.has("max")) initial.xp.aria=72030;
+ if(params.has("away")) initial=act(initial,{type:"start",id:MOON_HERB_QUEST,readDeparture:true,value:true},initial.updatedAt);
  function App(){
   const [state,setState]=useState(initial);
   const dispatch=a=>{setState(s=>act(s,a,s.updatedAt));return true;};
@@ -137,6 +166,8 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
+    await checkAdventureSkills(page, "http://127.0.0.1:" + server.address().port);
+    await page.screenshot({ path: path.join(dir, "adventure-skills-" + width + ".png") });
     await page.goto("http://127.0.0.1:" + server.address().port);
     const picker = page.locator(".character-picker");
     await picker.waitFor();
