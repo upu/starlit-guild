@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import { adventureAction } from "@/lib/adventure-presentation";
 import { chapterRoadFrame, chapterRoadHit } from "@/lib/chapter-road-presentation";
+import { RoadMotion } from "@/lib/road-motion";
 import { RoadPainter, ROAD_BACKGROUND } from "./road-painter";
 import {
   ROAD_EFFECTS,
@@ -62,6 +63,8 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
 
 export class ChapterRoadPainter {
   private painter?: RoadPainter;
+  private motion = new RoadMotion();
+  private drawn?: ReturnType<typeof chapterRoadFrame>;
   private loading = false;
   failed = false;
   constructor(
@@ -93,7 +96,13 @@ export class ChapterRoadPainter {
     )
       return;
     const input = this.bridge.read();
-    const intent = chapterRoadHit(input, pointer, this.scene.scale.width, this.scene.scale.height);
+    const intent = chapterRoadHit(
+      input,
+      pointer,
+      this.scene.scale.width,
+      this.scene.scale.height,
+      this.drawn?.battle,
+    );
     const action = adventureAction(input, intent);
     if (action) this.bridge.act(action);
   }
@@ -119,11 +128,12 @@ export class ChapterRoadPainter {
   paint() {
     if (!this.painter || !this.ensureAssets()) return;
     const width = this.scene.scale.width;
-    const { battle, look } = chapterRoadFrame(
-      this.bridge.read(),
-      this.runtime.reduced,
-      width / Math.min(1.1, width / 800),
-    );
+    const input = this.bridge.read();
+    const frame = chapterRoadFrame(input, this.runtime.reduced, width / Math.min(1.1, width / 800));
+    const run = input.squad.run;
+    const key = `${input.squad.id}:${run?.quest ?? "idle"}:${String(run?.started)}`;
+    this.drawn = this.motion.update(frame, key, width, this.runtime.reduced);
+    const { battle, look } = this.drawn;
     this.painter.paint(battle, this.runtime.reduced, look);
   }
 }
