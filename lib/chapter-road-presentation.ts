@@ -349,8 +349,8 @@ export function chapterRoadHit(
   point: { x: number; y: number },
   width: number,
   height: number,
+  battle = chapterRoadFrame(input).battle,
 ): AdventureIntent {
-  const { battle } = chapterRoadFrame(input);
   const size = Math.min(90, width * 0.18, height * 0.34);
   const distance = (h: Traveller) =>
     Math.hypot(
