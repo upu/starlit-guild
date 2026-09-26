@@ -110,8 +110,7 @@ function StageTitleCard({
 }) {
   useImperativeHandle(advanceRef, () => ({ advance: onStart }));
   return (
-    <div className="story-reader">
-      <div className="story-art-space" />
+    <div className="story-reader stage-title-reader">
       <button
         type="button"
         className="stage-title-card"
