@@ -24,8 +24,8 @@ type LifecycleContext = Pick<
   | "setOtherTab"
   | "setError"
 > &
-  LocalPersistence & {
-    advance: LocalAdvance;
+  LocalPersistence &
+  LocalAdvance & {
     backup: () => Promise<void>;
     refreshCopies: () => Promise<void>;
   };
@@ -73,7 +73,7 @@ function loadLocalGame(context: LifecycleContext) {
     context.publish(bundle);
     setSound(bundle.sound);
     acquireLease(context);
-    context.advance(Date.now());
+    context.resume(Date.now());
     context.persist();
   } catch {
     context.setError(
@@ -93,7 +93,7 @@ function visibleHandler(context: LifecycleContext) {
   return () => {
     if (document.visibilityState === "visible") {
       acquireSafely(context);
-      context.advance(Date.now());
+      context.resume(Date.now());
       if (Date.now() - context.lastAttemptRef.current >= FIVE_MINUTES) void context.backup();
     } else context.advance(Date.now());
     context.persist();
@@ -187,6 +187,7 @@ export function useLocalGameLifecycle(context: LifecycleContext) {
     publish,
     persist,
     advance,
+    resume,
     backup,
     refreshCopies,
   } = context;
@@ -203,11 +204,13 @@ export function useLocalGameLifecycle(context: LifecycleContext) {
         publish,
         persist,
         advance,
+        resume,
         backup,
         refreshCopies,
       }),
     [
       advance,
+      resume,
       backup,
       currentRef,
       lastAttemptRef,

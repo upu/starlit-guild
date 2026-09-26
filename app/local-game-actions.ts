@@ -17,7 +17,7 @@ import {
   type LocalPersistence,
 } from "./local-game-state";
 
-type GameContext = LocalGameState & LocalPersistence & { advance: LocalAdvance };
+type GameContext = LocalGameState & LocalPersistence & LocalAdvance;
 
 export function createGameDispatch(context: GameContext) {
   return (action: Action, onSuccess?: (state: State) => void) => {
@@ -61,7 +61,7 @@ export function createSwitchProfile(context: GameContext) {
       return;
     context.advance(Date.now());
     bundle.active = id;
-    context.advance(Date.now());
+    context.resume(Date.now());
     context.persist();
   };
 }
@@ -126,7 +126,7 @@ export function createRestoreCopy(context: GameContext) {
     bundle.profiles.push(profile);
     bundle.active = profile.id;
     context.publish(bundle);
-    context.advance(Date.now());
+    context.resume(Date.now());
     context.persist();
     toast.success("元の記録を残し、別の記録として復元しました。");
   };
@@ -199,7 +199,7 @@ export function createTakeOver(context: GameContext) {
       );
       context.ownerRef.current = true;
       context.setOtherTab(false);
-      context.advance(Date.now());
+      context.resume(Date.now());
       context.persist();
     } catch {
       context.setError("端末の記録を確認してください。");

@@ -27,7 +27,7 @@ export {
   estimate,
 } from "./game-rules.ts";
 export { travelMs, heroSkills, bondKey, bondLevel } from "./game-run.ts";
-export { settle, settleOnScreen, ON_SCREEN_LIMIT } from "./game-engine.ts";
+export { settle, settleOnScreen, skipTo, ON_SCREEN_LIMIT } from "./game-engine.ts";
 export { migrate, completeStoryStages, testState } from "./game-migrations.ts";
 export { act } from "./game-actions.ts";
 export type { Action } from "./game-actions.ts";

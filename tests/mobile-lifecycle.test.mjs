@@ -295,6 +295,25 @@ test("the adventure pauses while the screen is locked and resumes where it stopp
   assert.deepEqual(after.xp, before.xp);
   assert.equal(run.quest, "village-trade");
   assert.equal(run.node, before.squads[0].run.node);
-  assert.ok(run.nextAt > 3601000 - 5000, "the run's clocks moved past the locked time");
+  assert.equal(
+    run.nextAt - before.squads[0].run.nextAt,
+    3601000 - before.updatedAt,
+    "the run's clocks moved by exactly the locked time",
+  );
   assert.equal(after.updatedAt, 3601000);
+});
+test("even a short time away is skipped, so returning never plays time off screen", () => {
+  const h = harness();
+  h.hook.dispatch({ type: "start", id: "village-trade" });
+  h.visibility("hidden");
+  const before = h.read().profiles[0].state;
+  h.setNow(before.updatedAt + 3000);
+  h.visibility("visible");
+  const after = h.read().profiles[0].state;
+  const shifted = structuredClone(before.squads[0].run);
+  assert.equal(after.updatedAt, before.updatedAt + 3000);
+  assert.equal(after.squads[0].run.nextAt - shifted.nextAt, 3000);
+  assert.equal(after.squads[0].run.hits, shifted.hits);
+  assert.deepEqual(after.squads[0].run.health, shifted.health);
+  assert.equal(after.gold, before.gold);
 });

@@ -125,18 +125,21 @@ test("every transition remains exportable, including rest and a long simulated s
   }
   assert.doesNotThrow(() => parseBundle(bundle(game.settle(s, s.updatedAt + 86400000))));
 });
-test("on screen, time beyond the limit is skipped: the run resumes exactly where it stopped", () => {
+test("time off screen is skipped whole: the run resumes exactly where it stopped", () => {
   const s = start(game.testState(1000, 3, 10, 0)),
-    away = 3600000,
-    limit = game.ON_SCREEN_LIMIT;
-  const played = game.settle(s, s.updatedAt + limit),
-    resumed = game.settleOnScreen(s, s.updatedAt + away),
-    run = resumed.squads[0].run;
-  assert.equal(resumed.updatedAt, s.updatedAt + away);
-  assert.equal(resumed.gold, played.gold, "only the on-screen seconds earn anything");
-  assert.deepEqual(resumed.xp, played.xp);
-  assert.equal(run.node, played.squads[0].run.node);
-  assert.equal(run.nextAt - played.squads[0].run.nextAt, away - limit);
-  assert.doesNotThrow(() => parseBundle(bundle(resumed)));
-  assert.deepEqual(game.settleOnScreen(s, s.updatedAt + limit), played, "ticks are unaffected");
+    away = 3600000;
+  for (const resumed of [
+    game.skipTo(s, s.updatedAt + away),
+    game.settleOnScreen(s, s.updatedAt + away),
+  ]) {
+    const run = resumed.squads[0].run;
+    assert.equal(resumed.updatedAt, s.updatedAt + away);
+    assert.equal(resumed.gold, s.gold, "nothing is earned off screen");
+    assert.deepEqual(resumed.xp, s.xp);
+    assert.equal(run.node, s.squads[0].run.node);
+    assert.equal(run.nextAt - s.squads[0].run.nextAt, away);
+    assert.doesNotThrow(() => parseBundle(bundle(resumed)));
+  }
+  const tick = s.updatedAt + game.ON_SCREEN_LIMIT;
+  assert.deepEqual(game.settleOnScreen(s, tick), game.settle(s, tick), "ticks play normally");
 });

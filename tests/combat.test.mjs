@@ -4,7 +4,6 @@ import {
   act,
   settle,
   settleOnScreen,
-  ON_SCREEN_LIMIT,
   initialState,
   testState,
   allQuests,
@@ -315,14 +314,13 @@ test("only read first-chapter stages farm automatically, earn XP offline and can
   assert.deepEqual(settle(stopped, stopped.updatedAt + 10000).done, stopped.done);
 });
 
-test("skipped time shifts stored enemy clocks by exactly the unplayed time", () => {
+test("skipped time shifts stored enemy clocks by exactly the time off screen", () => {
   const source = storyRun(15, 1),
-    played = settle(source, source.updatedAt + ON_SCREEN_LIMIT),
     resumed = settleOnScreen(source, source.updatedAt + 86400000);
-  const a = played.squads[0].run,
+  const a = source.squads[0].run,
     b = resumed.squads[0].run;
   assert.equal(a.target, b.target);
   for (let i = 0; i < a.enemies.length; i++)
-    assert.equal(b.enemies[i].nextAt - a.enemies[i].nextAt, 86400000 - ON_SCREEN_LIMIT);
+    assert.equal(b.enemies[i].nextAt - a.enemies[i].nextAt, 86400000);
   assert.doesNotThrow(() => parseBundle(bundle(resumed)));
 });

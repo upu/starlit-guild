@@ -2,7 +2,7 @@
 import { localId } from "@/lib/local-id";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
-import { initialState, settleOnScreen } from "@/lib/game";
+import { initialState, settleOnScreen, skipTo, type State } from "@/lib/game";
 import { parseBundle, type Profile, type SaveBundle } from "@/lib/save-format";
 import { journeyNotice } from "@/lib/journey";
 import { sound, soundEvents } from "@/lib/sound";
@@ -133,10 +133,13 @@ export function useLocalPersistence(state: LocalGameState) {
 }
 export type LocalPersistence = ReturnType<typeof useLocalPersistence>;
 
+// The game advances only while it is on screen. `advance` plays the time since the last tick;
+// `resume` is for coming back (load, returning to the page, switching or restoring a record)
+// and skips the time spent away, so nothing progresses off screen.
 export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence["publish"]) {
   const { currentRef, ownerRef, setClock, setError } = state;
-  return useCallback(
-    (now: number) => {
+  const update = useCallback(
+    (now: number, next: (state: State, now: number) => State) => {
       const bundle = currentRef.current;
       if (!bundle || !ownerRef.current) return;
       const profile = bundle.profiles.find((item) => item.id === bundle.active);
@@ -145,8 +148,7 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
         return;
       }
       const before = profile.state,
-        previous = before.updatedAt,
-        after = settleOnScreen(before, now);
+        after = next(before, now);
       profile.state = after;
       celebrate(before, after);
       if (document.visibilityState === "visible") {
@@ -154,7 +156,7 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
           .flatMap((squad) => squad.run?.events || [])
           .filter(
             (event) =>
-              event.at > previous &&
+              event.at > before.updatedAt &&
               now - event.at < 350 &&
               !["assist", "move", "rest"].includes(event.kind),
           );
@@ -166,6 +168,20 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
     },
     [currentRef, ownerRef, publish, setClock, setError],
   );
+  return {
+    advance: useCallback(
+      (now: number) => {
+        update(now, settleOnScreen);
+      },
+      [update],
+    ),
+    resume: useCallback(
+      (now: number) => {
+        update(now, skipTo);
+      },
+      [update],
+    ),
+  };
 }
 export type LocalAdvance = ReturnType<typeof useLocalAdvance>;
 

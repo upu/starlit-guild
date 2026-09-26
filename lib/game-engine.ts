@@ -299,12 +299,10 @@ export function settle(input: State, now: number) {
   s.updatedAt = end;
   return s;
 }
-// The game advances only while it is on screen. A longer gap since the last update (closed,
-// hidden, locked, or another record in use) is skipped: every clock moves forward by the gap,
-// so each party resumes exactly where it stopped.
-export const ON_SCREEN_LIMIT = 5000;
-export function settleOnScreen(input: State, now: number) {
-  const s = settle(input, Math.min(now, input.updatedAt + ON_SCREEN_LIMIT)),
+// Moves every clock forward to `now` without playing: time the game was not on screen.
+// Each party resumes exactly where it stopped.
+export function skipTo(input: State, now: number) {
+  const s = structuredClone(input),
     skipped = now - s.updatedAt;
   if (skipped <= 0) return s;
   for (const sq of s.squads) {
@@ -312,4 +310,10 @@ export function settleOnScreen(input: State, now: number) {
   }
   s.updatedAt = now;
   return s;
+}
+// On screen the game ticks every 200ms. A longer gap means it was not on screen even though no
+// resume was noticed (e.g. a device that slept with the page visible), so it is skipped whole.
+export const ON_SCREEN_LIMIT = 5000;
+export function settleOnScreen(input: State, now: number) {
+  return now - input.updatedAt > ON_SCREEN_LIMIT ? skipTo(input, now) : settle(input, now);
 }
