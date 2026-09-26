@@ -62,10 +62,10 @@ function prologueGoal(s: State, sq: Squad): JourneyGoal {
   if (techniquesUnlocked(s) && !s.techniques?.learned.length && !s.done[MOON_HERB_QUEST])
     return {
       hintId: "techniques-unlocked",
-      title: "技の習得・セットができるようになりました",
+      title: "スキルの習得・セットができるようになりました",
       detail:
-        "キャラクター画面で、必要レベルとコインを確かめて技を習得できます。セットすると自動で働きます。習得せず次のクエストへ進むこともできます。",
-      action: "技を見に行く",
+        "キャラクター画面で、必要レベルとコインを確かめてスキルを習得できます。セットすると自動で働きます。習得せず次のクエストへ進むこともできます。",
+      action: "スキルを見に行く",
       destination: "companions",
       questId: nextStage(s).quest,
     };
@@ -148,7 +148,7 @@ export function journeyNotice(before: State, after: State): JourneyNotice | null
 function techniqueNotice(before: State, after: State): JourneyNotice | null {
   if (!techniquesUnlocked(before) && techniquesUnlocked(after))
     return {
-      title: "技の習得・セットができるようになりました",
+      title: "スキルの習得・セットができるようになりました",
       description:
         "キャラクター画面で習得できます。習得したらセットして、次の冒険で試してみましょう。",
     };
@@ -156,7 +156,7 @@ function techniqueNotice(before: State, after: State): JourneyNotice | null {
     added = learnableTechniques(after).filter((t) => !previous.includes(t.id));
   return added.length
     ? {
-        title: "習得できる技があります",
+        title: "習得できるスキルがあります",
         description:
           added.map((t) => t.name).join("・") +
           "。キャラクター画面で必要なコインと効果を確認できます。",

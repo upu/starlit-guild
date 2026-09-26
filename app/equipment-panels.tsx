@@ -276,8 +276,8 @@ function CharacterEquipment(
 function FixedTechnique({ state, hero }: { state: State; hero: string }) {
   return (
     <section className="character-skill">
-      <div className="character-slot character-slot-fixed" aria-label="アクティブ技・変更不可">
-        <small>アクティブ技</small>
+      <div className="character-slot character-slot-fixed" aria-label="アクティブスキル・変更不可">
+        <small>アクティブ</small>
         <TechniqueIcon id={equippedTechnique(state, hero, "active") ?? hero} slot="active" />
         <b>{heroSkills[hero].name}</b>
       </div>

@@ -185,7 +185,7 @@ test("old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
   const opened = roundtrip(read(arrived, PICNIC_QUEST));
   assert.equal(techniquesUnlocked(opened), true);
   assert.equal(opened.gold, 160);
-  assert.match(journeyNotice(arrived, opened).title, /技の習得/);
+  assert.match(journeyNotice(arrived, opened).title, /スキルの習得/);
   assert.equal(nextGoal(opened).questId, MOON_HERB_QUEST);
   const end = roundtrip(finish(roundtrip(start(opened, MOON_HERB_QUEST))));
   assert.equal(end.done[MOON_HERB_QUEST], 1);
@@ -367,7 +367,7 @@ test("coins, levels, hero and slot are checked; learning is distinct from free e
     /足りません/,
   );
   const grown = { ...low, xp: { aria: 30 * 13 ** 2, leon: 0 } };
-  assert.match(journeyNotice(low, grown).title, /習得できる技/);
+  assert.match(journeyNotice(low, grown).title, /習得できるスキル/);
 });
 
 test("second passives become learnable at level 14 after the picnic and still need coins and a slot", () => {

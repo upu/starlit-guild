@@ -98,7 +98,7 @@
 | 区間 | 3地点ごとの報酬のまとまり | `reward()` の `portions` |
 | 周回 | 同じクエストを続けて走ること | `run.round` / `squad.repeat` |
 | 絆 | ペアで区間を進むと育つ値。連携技と会話が変わる | `state.friendship` / `bondLevel` |
-| 技 | レベルとコインで習得し、枠にセットする強化 | `state.techniques` |
+| スキル | レベルとコインで習得し、アクティブ・パッシブの枠にセットする強化。画面の枠ラベルは「アクティブ」「パッシブ」と略す | `state.techniques` |
 | 掛け合い | 冒険中にタップで読める短いやり取り | `journeyBanter` |
 | 思い出 | 読んだ物語とスチルの一覧画面 | `availableStories` / `storyProgress` |
 
