@@ -3,6 +3,7 @@ import {
   LICO_RECORDS_QUEST,
   MERRILL_SEEDLINGS_QUEST,
   MOSS_TRANSPLANT_QUEST,
+  MOSS_BEDS_QUEST,
   isChapterFourQuest,
 } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
@@ -255,6 +256,7 @@ function workTask(
   run: Run,
 ): NonNullable<RoadBattle["gathering"]>["task"] {
   if (movingWork(q, run)) return "carry";
+  if (q.id === MOSS_BEDS_QUEST) return "inspect";
   if (frame === "signpost" || frame === "records" || frame === "ledger") return "inspect";
   return frame === "parcels" ? "pack" : "gather";
 }

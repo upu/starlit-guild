@@ -60,7 +60,7 @@
 | 下段3番目 | `serious` | 注意を向ける真剣な顔 |
 | 下段右 | `predatory` | 食べ物候補を見定める捕食者の目と舌なめずり |
 
-`<Portrait index="merrill" expression="predatory" />` または `expressionPortrait(12, "predatory")` で共通のアトラスから取得する。未収録の表情は通常顔へ戻る。他の人物に `predatory`・`savoring`・`excited` を指定しても、その人物の通常顔になる。登場シーンと台詞ごとの表情指定は今回追加しない。
+`<Portrait index="merrill" expression="predatory" />` または `expressionPortrait(12, "predatory")` で共通のアトラスから取得する。未収録の表情は通常顔へ戻る。他の人物に `predatory`・`savoring`・`excited` を指定しても、その人物の通常顔になる。会話への接続と台詞ごとの指定は、[第四章の実装仕様](../gameplay/chapter-four-gameplay.md#数値と確認)を参照する。
 
 元シートの6表情と、追加した真剣・捕食者の目を収録する。石榴の花・緑のボブ・瞳・旅装を維持し、花は頭から生える体の一部として扱う。内蔵画像生成ツールで制作し、生成PNGをLanczos3で縮小した。最終プロンプトと参照・画像情報は[生成記録](../art-generation/merrill-expressions-generation.json)を参照。
 

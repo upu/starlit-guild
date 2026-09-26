@@ -1,5 +1,5 @@
 import { LUNCH_INTERLUDE } from "../lib/chapter-three.ts";
-import { WALNUT_INTERLUDE } from "../lib/chapter-four.ts";
+import { WALNUT_INTERLUDE, MOSS_BEDS_QUEST } from "../lib/chapter-four.ts";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState, allQuests, encounter } from "../lib/game.ts";
@@ -233,6 +233,30 @@ test("chapter four paperwork uses a ledger and inspection while transport keeps 
     assert.equal(inspected.size, index === 29 ? 5 : 9);
     assert.equal(transported.size, 5);
   }
+});
+
+test("moss-bed survey shows moss, the waterway, and measuring tools without harvesting", () => {
+  let state = start(
+    storyStages.findIndex((stage) => stage.quest === MOSS_BEDS_QUEST),
+    40,
+  );
+  const inspected = new Set();
+  while (state.squads[0].run) {
+    const run = state.squads[0].run;
+    const { look, battle } = chapterRoadFrame(input(state));
+    assert.equal(look.work.frame, ["moss", "waterway", "records"][run.node % 3]);
+    assert.equal(
+      look.work.asset,
+      run.node % 3 === 2
+        ? "/animations/road/berne-worksites-v1.webp"
+        : "/animations/road/worksites-v1.webp",
+    );
+    assert.equal(battle.gathering.task, "inspect");
+    assert.equal(look.work.cargo, false);
+    inspected.add(run.node);
+    state = settle(state, run.nextAt).state;
+  }
+  assert.equal(inspected.size, 15);
 });
 
 test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {

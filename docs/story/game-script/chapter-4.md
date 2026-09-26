@@ -913,7 +913,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`lico-records-departure`
 場所：塔の管理小屋
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "departure", …)`）
+本文の編集元：[lib/chapter-four-conflict-stories.ts](../../../lib/chapter-four-conflict-stories.ts)（`scene("4-7", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 管理人「外の灯りが届く場所を、毎晩、同じ時刻に見ている。掃除も石の点検もした。変わっていたのが、あの苔床だった」
@@ -1041,7 +1041,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`lico-records-return`
 場所：消える前に
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "return", …)`）
+本文の編集元：[lib/chapter-four-conflict-stories.ts](../../../lib/chapter-four-conflict-stories.ts)（`scene("4-7", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 煙が薄くなる。レオンは倒れかけた記録板を拾い、リコの手元へ戻す。
@@ -1108,7 +1108,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`merrill-seedlings-departure`
 場所：塔の裏手、苗の積み出し口
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-8", "departure", …)`）
+本文の編集元：[lib/chapter-four-conflict-stories.ts](../../../lib/chapter-four-conflict-stories.ts)（`scene("4-8", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/lico-protects-seedlings.webp`）
 
@@ -1225,7 +1225,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`merrill-seedlings-return`
 場所：苔は渡さない
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-8", "return", …)`）
+本文の編集元：[lib/chapter-four-conflict-stories.ts](../../../lib/chapter-four-conflict-stories.ts)（`scene("4-8", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 五人の後ろへ籠が揃った。メリルは空いた手を眺め、指先に残った苔を舐める。

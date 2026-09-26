@@ -1,3 +1,4 @@
+import type { StoryLine } from "./stories.ts";
 import type { Run } from "./game.ts";
 import {
   BLOCKADE_QUEST,
@@ -89,61 +90,66 @@ export function chapterTwoWorkload(id: string) {
     ? 2.4
     : 1;
 }
-function packingBanter(run: Run) {
+const line = (
+  speaker: string,
+  text: string,
+  expression: StoryLine["expression"] = "neutral",
+): StoryLine => ({ speaker, text, expression });
+function packingBanter(run: Run): StoryLine[] | null {
   if (run.quest !== DELIVERY_PREP_QUEST) return null;
   return [
     [
-      { speaker: "aria", text: "瓶と蜜は別々。荷札も合ってるよ。" },
-      { speaker: "leon", text: "布を間に挟もう。隣の瓶とぶつからないように。" },
+      line("aria", "瓶と蜜は別々。荷札も合ってるよ。", "smile"),
+      line("leon", "布を間に挟もう。隣の瓶とぶつからないように。", "serious"),
     ],
     [
-      { speaker: "aria", text: "蜜のお店、こっちの通りだって。" },
-      { speaker: "leon", text: "先に瓶を受け取っておく。数だけ数えておいてくれ。" },
+      line("aria", "蜜のお店、こっちの通りだって。", "smile"),
+      line("leon", "先に瓶を受け取っておく。数だけ数えておいてくれ。", "serious"),
     ],
     [
-      { speaker: "aria", text: "これで全部そろったね。" },
-      { speaker: "leon", text: "控えと突き合わせよう。足りない分は、今日のうちに。" },
+      line("aria", "これで全部そろったね。", "smile"),
+      line("leon", "控えと突き合わせよう。足りない分は、今日のうちに。", "serious"),
     ],
   ][run.node % 3];
 }
-const trioRests = [
+const trioRests: StoryLine[][] = [
   [
-    { speaker: "mira", text: "痛いのは、我慢しなくていいのよ。手を見せてね。" },
-    { speaker: "aria", text: "ミラも座って。水、三人分あるから。" },
+    line("mira", "痛いのは、我慢しなくていいのよ。手を見せてね。", "worried"),
+    line("aria", "ミラも座って。水、三人分あるから。", "smile"),
   ],
   [
-    { speaker: "leon", text: "少し休みましょう。荷物は俺が見ています。" },
-    { speaker: "mira", text: "ありがとう。その前に、ひとつだけ。包帯の数を――" },
-    { speaker: "aria", text: "それは座ってから数えよう。" },
+    line("leon", "少し休みましょう。荷物は俺が見ています。", "smile"),
+    line("mira", "ありがとう。その前に、ひとつだけ。包帯の数を――", "smile"),
+    line("aria", "それは座ってから数えよう。", "worried"),
   ],
   [
-    { speaker: "aria", text: "はあ……ちょっと、足が止まっちゃった。" },
-    { speaker: "mira", text: "深い息を、ひとつ。急がなくていいのよ。" },
-    { speaker: "leon", text: "水を回します。ミラさんの分も。" },
+    line("aria", "はあ……ちょっと、足が止まっちゃった。", "tired"),
+    line("mira", "深い息を、ひとつ。急がなくていいのよ。", "smile"),
+    line("leon", "水を回します。ミラさんの分も。", "smile"),
   ],
 ];
-function trioBanter(run: Run) {
+function trioBanter(run: Run): StoryLine[] {
   return run.phase === "rest"
     ? trioRests[run.node % trioRests.length]
     : run.quest === MOUNTAIN_QUEST
       ? [
-          { speaker: "aria", text: "この先、段差があるよ。右側なら歩きやすそう。" },
-          { speaker: "leon", text: "荷物は内側へ。俺が外を見る。" },
-          { speaker: "mira", text: "段差には手を、坂には息を。ゆっくりで大丈夫よ。" },
+          line("aria", "この先、段差があるよ。右側なら歩きやすそう。", "smile"),
+          line("leon", "荷物は内側へ。俺が外を見る。", "serious"),
+          line("mira", "段差には手を、坂には息を。ゆっくりで大丈夫よ。", "smile"),
         ]
       : run.quest === SIGNPOST_QUEST
         ? [
-            { speaker: "aria", text: "草が踏まれてる。元の道は、こっちだね。" },
-            { speaker: "mira", text: "あの木の向こうを、前の往診でも通ったわ。" },
-            { speaker: "leon", text: "道標を戻そう。荷物からは離れないで。" },
+            line("aria", "草が踏まれてる。元の道は、こっちだね。", "smile"),
+            line("mira", "あの木の向こうを、前の往診でも通ったわ。", "smile"),
+            line("leon", "道標を戻そう。荷物からは離れないで。", "serious"),
           ]
         : [
-            { speaker: "leon", text: "大きい手は俺が止める。袋の紐を見てくれ。" },
-            { speaker: "aria", text: "小さいのも来てる！　そっちへは行かせないよ。" },
-            { speaker: "mira", text: "薬箱はここに。傷は、そのままにしないでね。" },
+            line("leon", "大きい手は俺が止める。袋の紐を見てくれ。", "serious"),
+            line("aria", "小さいのも来てる！　そっちへは行かせないよ。", "serious"),
+            line("mira", "薬箱はここに。傷は、そのままにしないでね。", "serious"),
           ];
 }
-export function chapterTwoBanter(run: Run) {
+export function chapterTwoBanter(run: Run): StoryLine[] | null {
   const finale = finaleBanter(run);
   if (finale) return finale;
   if (trioQuest(run.quest)) return trioBanter(run);
@@ -151,105 +157,105 @@ export function chapterTwoBanter(run: Run) {
   if (run.quest === PICNIC_QUEST)
     return [
       [
-        { speaker: "aria", text: "今日は荷札も控えもないね。" },
-        { speaker: "leon", text: "パンの包みなら、二つある。" },
+        line("aria", "今日は荷札も控えもないね。", "smile"),
+        line("leon", "パンの包みなら、二つある。", "smile"),
       ],
       [
-        { speaker: "aria", text: "ね、あの木陰は？　街も見えるよ。" },
-        { speaker: "leon", text: "座るところが乾いてるか、見てみよう。" },
+        line("aria", "ね、あの木陰は？　街も見えるよ。", "smile"),
+        line("leon", "座るところが乾いてるか、見てみよう。", "smile"),
       ],
       [
-        { speaker: "leon", text: "ここなら布を広げられそうだ。" },
-        { speaker: "aria", text: "うん。隣に座らせてね。" },
+        line("leon", "ここなら布を広げられそうだ。", "smile"),
+        line("aria", "うん。隣に座らせてね。", "smile"),
       ],
     ][Math.min(2, Math.floor(run.node / 5))];
   if (run.quest !== MOON_HERB_QUEST) return null;
   return [
     [
-      { speaker: "aria", text: "ここ、枝が途切れてる。夜なら月が差すね。" },
-      { speaker: "leon", text: "場所を覚えておこう。最初の包みは、ここの分だ。" },
+      line("aria", "ここ、枝が途切れてる。夜なら月が差すね。", "smile"),
+      line("leon", "場所を覚えておこう。最初の包みは、ここの分だ。", "serious"),
     ],
     [
-      { speaker: "aria", text: "同じ草でも、裏の光り方が違う。こっちだけ採るね。" },
-      { speaker: "leon", text: "さっきの場所とは別に包むぞ。帰って説明できるように。" },
+      line("aria", "同じ草でも、裏の光り方が違う。こっちだけ採るね。", "smile"),
+      line("leon", "さっきの場所とは別に包むぞ。帰って説明できるように。", "serious"),
     ],
     [
-      { speaker: "leon", text: "草むらが動いた。包みを踏まれないように寄せよう。" },
-      { speaker: "aria", text: "うん。追い払ったら、葉が潰れてないか確かめよう。" },
+      line("leon", "草むらが動いた。包みを踏まれないように寄せよう。", "serious"),
+      line("aria", "うん。追い払ったら、葉が潰れてないか確かめよう。", "serious"),
     ],
   ][run.node % 3];
 }
-function puppetBanter(run: Run) {
+function puppetBanter(run: Run): StoryLine[] {
   return [
-    {
-      speaker: "aria",
-      text:
-        run.node === 2
-          ? "あの手の合図で、また動く！　人形から止めるね。"
-          : "小さいほうは包みの前に戻るね。そこを狙うよ。",
-    },
-    {
-      speaker: "leon",
-      text:
-        run.node === 0
-          ? "ああ。回り込むほうも見ておく。"
-          : "大きいのが腕を広げた。俺が外へ引きつける。",
-    },
-    {
-      speaker: "mira",
-      text:
-        run.node === 0
-          ? "薬箱はここに。深く踏み込みすぎないでね。"
-          : run.node === 1
-            ? "手の痛みが戻ったら、すぐ見せてね。"
-            : "怪我をしたら、すぐに言ってね。私が手当てするわ。",
-    },
+    line(
+      "aria",
+      run.node === 2
+        ? "あの手の合図で、また動く！　人形から止めるね。"
+        : "小さいほうは包みの前に戻るね。そこを狙うよ。",
+      "serious",
+    ),
+    line(
+      "leon",
+      run.node === 0
+        ? "ああ。回り込むほうも見ておく。"
+        : "大きいのが腕を広げた。俺が外へ引きつける。",
+      "serious",
+    ),
+    line(
+      "mira",
+      run.node === 0
+        ? "薬箱はここに。深く踏み込みすぎないでね。"
+        : run.node === 1
+          ? "手の痛みが戻ったら、すぐ見せてね。"
+          : "怪我をしたら、すぐに言ってね。私が手当てするわ。",
+      "serious",
+    ),
   ];
 }
-function finaleBanter(run: Run) {
+function finaleBanter(run: Run): StoryLine[] | null {
   if (run.quest === BLOCKADE_QUEST && run.nodes === 3) return puppetBanter(run);
   if (run.quest === HOUSE_CALLS_QUEST)
     return [
       [
-        { speaker: "aria", text: "次の包み、ここへ置くね。水も替えてきたよ。" },
-        { speaker: "mira", text: "ありがとう。診察が済んだら、お薬を確かめるわ。" },
-        { speaker: "leon", text: "空き瓶は別の袋だ。控えと合わせておこう。" },
+        line("aria", "次の包み、ここへ置くね。水も替えてきたよ。", "smile"),
+        line("mira", "ありがとう。診察が済んだら、お薬を確かめるわ。", "smile"),
+        line("leon", "空き瓶は別の袋だ。控えと合わせておこう。", "serious"),
       ],
       [
-        { speaker: "aria", text: "お湯、もう一度沸かしてくるね。" },
-        { speaker: "mira", text: "助かるわ。この家は、もう少しかかりそうなの。" },
-        { speaker: "leon", text: "桶は表に置いておきます。冷めないうちに呼んでください。" },
+        line("aria", "お湯、もう一度沸かしてくるね。", "smile"),
+        line("mira", "助かるわ。この家は、もう少しかかりそうなの。", "smile"),
+        line("leon", "桶は表に置いておきます。冷めないうちに呼んでください。", "serious"),
       ],
       [
-        { speaker: "aria", text: "この控え、次はどの家？" },
-        { speaker: "leon", text: "坂の下の二軒だ。順番はこっちで揃えておく。" },
-        { speaker: "mira", text: "ありがとう。着いたら、先に喉を診るわね。" },
+        line("aria", "この控え、次はどの家？"),
+        line("leon", "坂の下の二軒だ。順番はこっちで揃えておく。", "serious"),
+        line("mira", "ありがとう。着いたら、先に喉を診るわね。", "smile"),
       ],
     ][run.node % 3];
   if (run.quest === MEDICINE_RETURN_QUEST)
     return [
       [
-        { speaker: "aria", text: "荷車が来たよ。通れるようになって、よかったね。" },
-        { speaker: "leon", text: "ああ。草むらも見ておこう。小さい魔物はまだいる。" },
-        { speaker: "mira", text: "空き瓶を返したら、お茶にしましょう。" },
+        line("aria", "荷車が来たよ。通れるようになって、よかったね。", "smile"),
+        line("leon", "ああ。草むらも見ておこう。小さい魔物はまだいる。", "serious"),
+        line("mira", "空き瓶を返したら、お茶にしましょう。", "smile"),
       ],
       [
-        { speaker: "aria", text: "道標、ちゃんとこっち向いてる。" },
-        { speaker: "leon", text: "ああ。作業場も静かなままだ。" },
-        { speaker: "mira", text: "あの子たち、どこへ行ったのかしらね。" },
+        line("aria", "道標、ちゃんとこっち向いてる。", "smile"),
+        line("leon", "ああ。作業場も静かなままだ。", "serious"),
+        line("mira", "あの子たち、どこへ行ったのかしらね。"),
       ],
     ][run.node % 2];
   if (run.quest === BLOCKADE_QUEST)
     return run.node < 9
       ? [
-          { speaker: "aria", text: "荷物の前から、順番に止めるね。" },
-          { speaker: "leon", text: "大きい手は俺が見る。ミラさん、後ろをお願いします。" },
-          { speaker: "mira", text: "ええ。二人とも、傷はそのままにしないでね。" },
+          line("aria", "荷物の前から、順番に止めるね。", "serious"),
+          line("leon", "大きい手は俺が見る。ミラさん、後ろをお願いします。", "serious"),
+          line("mira", "ええ。二人とも、傷はそのままにしないでね。", "serious"),
         ]
       : [
-          { speaker: "aria", text: "ミラ、腕！　庇ったときに切ったでしょ。" },
-          { speaker: "leon", text: "血が出てます。先に巻いてください。" },
-          { speaker: "mira", text: "……あら。気づかなかったわ。あとで、必ず。" },
+          line("aria", "ミラ、腕！　庇ったときに切ったでしょ。", "worried"),
+          line("leon", "血が出てます。先に巻いてください。", "serious"),
+          line("mira", "……あら。気づかなかったわ。あとで、必ず。", "surprised"),
         ];
   return null;
 }

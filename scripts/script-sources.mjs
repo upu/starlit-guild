@@ -55,7 +55,8 @@ for (const [file, sections] of thirdGroups)
 function fourthSourceFile(number) {
   const stage = Number(number.slice(2));
   if (number === "interlude" || stage <= 3) return "lib/chapter-four-stories-1.ts";
-  if (stage <= 8) return "lib/chapter-four-stories-2.ts";
+  if (stage <= 6) return "lib/chapter-four-stories-2.ts";
+  if (stage <= 8) return "lib/chapter-four-conflict-stories.ts";
   return "lib/chapter-four-stories-3.ts";
 }
 for (const section of chapterFourSections)
