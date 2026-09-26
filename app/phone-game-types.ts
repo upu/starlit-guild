@@ -14,7 +14,6 @@ export type Sheet =
   | "quests"
   | "bag"
   | "shop"
-  | "journal"
   | "help"
   | "goal"
   | "advice"

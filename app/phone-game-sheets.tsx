@@ -1,5 +1,5 @@
 import type { Ref } from "react";
-import { BookOpen, ChevronRight, Heart, Lightbulb, Images } from "lucide-react";
+import { BookOpen, ChevronRight, Lightbulb, Images } from "lucide-react";
 import { equippedTechnique, techniqueById } from "@/lib/techniques";
 import { InventoryPanel } from "./equipment-panels";
 import { ShopPanel } from "./shop-panel";
@@ -19,7 +19,7 @@ function bookSheet(m: SheetModel): SheetView | null {
   if (m.sheet === "book")
     return {
       title: "旅の手帳",
-      description: "旅の記録と、手助けのヒント。",
+      description: "旅の思い出と、手助けのヒント。",
       content: (
         <div className="handbook-menu">
           <button
@@ -77,19 +77,7 @@ function memorySheet(m: SheetModel): SheetView | null {
     return {
       title: "旅の思い出",
       description: "出会いも、冒険も、帰ってきた日のことも。",
-      content: (
-        <>
-          <button
-            className="outline"
-            onClick={() => {
-              m.setSheet("journal");
-            }}
-          >
-            旅の記録
-          </button>
-          <StoryLibrary state={m.state} onOpen={m.openStory} />
-        </>
-      ),
+      content: <StoryLibrary state={m.state} onOpen={m.openStory} />,
     };
   return null;
 }
@@ -224,7 +212,7 @@ function adviceSheet(m: SheetModel): SheetView | null {
 function journeySheet(m: SheetModel) {
   return goalSheet(m) ?? adviceSheet(m);
 }
-function collectionItemsSheet(m: SheetModel): SheetView | null {
+export function collectionSheet(m: SheetModel): SheetView | null {
   const s = m.state;
   if (m.sheet === "quests")
     return {
@@ -256,44 +244,6 @@ function collectionItemsSheet(m: SheetModel): SheetView | null {
       content: <ShopPanel state={s} ready={m.ready} onAction={m.act} />,
     };
   return null;
-}
-function journalSheet(m: SheetModel): SheetView | null {
-  const s = m.state;
-  if (m.sheet === "journal")
-    return {
-      title: "旅団の足あと",
-      description: `${String(s.clears)}件達成`,
-      content: (
-        <>
-          <button
-            className="memory-link"
-            onClick={() => {
-              m.setSheet("stories");
-            }}
-          >
-            <Heart size={18} />
-            旅の思い出{m.unread > 0 && <span>未読 {m.unread}</span>}
-          </button>
-          <div className="phone-journal">
-            {s.log.map((entry, i) => (
-              <article key={`${String(entry.at)}-${String(i)}`}>
-                <time>
-                  {new Date(entry.at).toLocaleTimeString("ja-JP", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </time>
-                <p>{entry.text}</p>
-              </article>
-            ))}
-          </div>
-        </>
-      ),
-    };
-  return null;
-}
-export function collectionSheet(m: SheetModel) {
-  return collectionItemsSheet(m) ?? journalSheet(m);
 }
 function helpSheet(m: SheetModel): SheetView | null {
   if (m.sheet !== "help") return null;

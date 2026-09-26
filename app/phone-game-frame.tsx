@@ -221,14 +221,6 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
         <TabsContent value="memories" className="phone-memories">
           <div className="screen-heading">
             <h2>旅の思い出</h2>
-            <button
-              className="outline"
-              onClick={() => {
-                m.setSheet("journal");
-              }}
-            >
-              旅の記録
-            </button>
           </div>
           <StoryLibrary state={m.state} onOpen={m.openStory} />
         </TabsContent>
