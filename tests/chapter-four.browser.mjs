@@ -124,11 +124,13 @@ try {
 
   for (const [name, index, node] of [
     ["first-stage", 0, 0],
+    ["pursuit-first-day", 3, 5],
+    ["pursuit-second-day", 4, 5],
     ["purchase-records", 2, 2],
-    ["record-comparison", 5, 0],
-    ["lico-apparatus", 5, "lico"],
-    ["lico-and-merrill", 6, "merrill"],
-    ["five-companions", 7, 0],
+    ["record-comparison", 6, 0],
+    ["lico-apparatus", 6, "lico"],
+    ["lico-and-merrill", 7, "merrill"],
+    ["five-companions", 8, 0],
   ]) {
     const state = stageRun(index, node);
     if (name === "lico-and-merrill") assert.ok(state.owned.includes("lico"));

@@ -40,7 +40,7 @@ export function activeRun(sq: Squad) {
 export function initialState(now: number): State {
   return {
     version: 4,
-    story: { departed: [], completed: [], read: [] },
+    story: { departed: [], completed: [], read: [], mossTrailSplit: true },
     friendship: {},
     gold: 60,
     herbs: 0,

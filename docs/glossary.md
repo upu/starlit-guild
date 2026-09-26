@@ -53,12 +53,13 @@
 | 4-1 | 塔を直した人たちへ | `linde-requests` | `LINDE_REQUESTS_QUEST` | リンデの食堂と町 | `linde-requests-departure` / `linde-requests-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-2 | 見当違いの灯り | `lantern-detour` | `LANTERN_DETOUR_QUEST` | ブレッカへ向かう村道 | `lantern-detour-departure` / `lantern-detour-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-3 | 醸造の町ブレッカ | `brekka-arrival` | `BREKKA_ARRIVAL_QUEST` | ブレッカの町と往診先 | `brekka-arrival-departure` / `brekka-arrival-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-4 | 毎朝光る苔 | `glowing-moss-trail` | `MOSS_TRAIL_QUEST` | ブレッカの裏通り | `glowing-moss-trail-departure` / `glowing-moss-trail-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-5 | 塔のそばの苔床 | `brekka-moss-beds` | `MOSS_BEDS_QUEST` | ブレッカの塔の裏手 | `brekka-moss-beds-departure` / `brekka-moss-beds-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-6 | 消える前に | `lico-records` | `LICO_RECORDS_QUEST` | 塔の管理小屋と苔床 | `lico-records-departure` / `lico-records-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-7 | 苔は渡さない | `merrill-seedlings` | `MERRILL_SEEDLINGS_QUEST` | 塔の裏手の積み出し口 | `merrill-seedlings-departure` / `merrill-seedlings-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-8 | 光が抜ける前に | `moss-transplant` | `MOSS_TRANSPLANT_QUEST` | 塔から離れた新しい苔床 | `moss-transplant-departure` / `moss-transplant-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-9 | 同じ宛先へ | `starlit-guild-founding` | `GUILD_FOUNDING_QUEST` | ブレッカからリンデへの帰り道 | `starlit-guild-founding-departure` / `starlit-guild-founding-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-4 | 毎朝光る苔・一日目 | `glowing-moss-trail` | `MOSS_TRAIL_QUEST` | ブレッカの裏通り | `glowing-moss-trail-departure` / `glowing-moss-trail-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-5 | 毎朝光る苔・二日目 | `glowing-moss-trail-next-day` | `MOSS_TRAIL_SECOND_DAY_QUEST` | ブレッカの裏通り | `glowing-moss-trail-next-day-departure` / `glowing-moss-trail-next-day-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-6 | 塔のそばの苔床 | `brekka-moss-beds` | `MOSS_BEDS_QUEST` | ブレッカの塔の裏手 | `brekka-moss-beds-departure` / `brekka-moss-beds-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-7 | 消える前に | `lico-records` | `LICO_RECORDS_QUEST` | 塔の管理小屋と苔床 | `lico-records-departure` / `lico-records-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-8 | 苔は渡さない | `merrill-seedlings` | `MERRILL_SEEDLINGS_QUEST` | 塔の裏手の積み出し口 | `merrill-seedlings-departure` / `merrill-seedlings-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-9 | 光が抜ける前に | `moss-transplant` | `MOSS_TRANSPLANT_QUEST` | 塔から離れた新しい苔床 | `moss-transplant-departure` / `moss-transplant-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-10 | 同じ宛先へ | `starlit-guild-founding` | `GUILD_FOUNDING_QUEST` | ブレッカからリンデへの帰り道 | `starlit-guild-founding-departure` / `starlit-guild-founding-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 
 クエスト一覧のカードは小見出しに番号、太字に表示名を出す。ヒントは「番号 表示名 · 物語の題」の形（例：`1-4 丘の塔まで足を伸ばす · 少し見に行こう`）。物語の題（`stage.title`）はその回の読み物の見出しで、行先の名前ではない。
 

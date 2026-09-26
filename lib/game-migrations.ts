@@ -8,6 +8,7 @@ import { initialState, memberMaxHp, questById } from "./game-rules.ts";
 import { nextEvent } from "./game-run.ts";
 import { joinStoryMira, joinStoryFinn, joinStoryLico } from "./game-actions.ts";
 import { grantMiraEquipment } from "./equipment.ts";
+import { upgradeMossTrail } from "./chapter-four-migration.ts";
 
 function upgradeSharedHealth(input: State | LegacySharedHealthState): State {
   if (input.squads.every((sq) => !sq.run || "health" in sq.run)) return input as State;
@@ -60,7 +61,7 @@ function upgradePendingDetour(input: State): State {
 }
 // Only v4 records load now; the v1-v3 migration chain went with the legacy mode.
 export function migrate(raw: State | LegacySharedHealthState): State {
-  let s = upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw)));
+  let s = upgradeMossTrail(upgradePendingDetour(upgradePicnicRun(upgradeSharedHealth(raw))));
   if (s.owned.includes("mira") && !s.inventory?.items["familiar-staff"]) {
     s = structuredClone(s);
     grantMiraEquipment(s);

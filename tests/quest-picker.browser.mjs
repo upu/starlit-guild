@@ -18,7 +18,7 @@ const bundle = await build({
  import {QuestPicker} from './app/quest-picker';import {SavePanel} from './app/save-panel';
  import {initialState,testState,act} from './lib/game';import {storyStages} from './lib/prologue';
  const latest=location.search.includes('latest');
- const initial=latest?testState(1000,36,40,10000):initialState(1000);
+ const initial=latest?testState(1000,37,40,10000):initialState(1000);
  if(!latest)for(const {quest} of storyStages.slice(0,14)){initial.done[quest]=1;initial.story.completed.push(quest);initial.story.read.push(quest+'-return');}
  function App(){
   const [state,setState]=useState(initial),[selected,setSelected]=useState(latest?storyStages.at(-1).quest:storyStages[14].quest),[confirmed,setConfirmed]=useState('');

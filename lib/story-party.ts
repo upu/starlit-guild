@@ -5,10 +5,11 @@ import {
   MERRILL_SEEDLINGS_QUEST,
   MOSS_TRANSPLANT_QUEST,
   GUILD_FOUNDING_QUEST,
+  MOSS_TRAIL_QUEST,
 } from "./chapter-four.ts";
 
 export const storyParty = (id: string) =>
-  isChapterFourQuest(id)
+  isChapterFourQuest(id) && id !== MOSS_TRAIL_QUEST
     ? [
         "aria",
         "leon",

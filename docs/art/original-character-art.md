@@ -13,7 +13,7 @@
 
 パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。
 
-第四章4-7の横スクロール画面と人物表示は、採用リファレンスシートから作り直した同じメリルの立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+第四章4-8の横スクロール画面と人物表示は、採用リファレンスシートから作り直した同じメリルの立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
 
 ## メリルの琴とポーズ
 

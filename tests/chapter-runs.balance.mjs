@@ -104,14 +104,14 @@ test("third chapter: earned chapter-two state carries through all nine stages wi
   assert.equal(strong.record.rests, 0);
 });
 
-test("fourth chapter carries the complete third-chapter state through nine stages and a fifth companion", () => {
+test("fourth chapter carries the complete third-chapter state through ten quests and a fifth companion", () => {
   const first = trainedChapter(true);
   const second = chapterRoute("standard", first.state);
   const third = chapterThreeRoute(second.state);
   const before = structuredClone(third.state);
   const fourth = chapterFourRoute(third.state);
   assert.deepEqual(third.state, before);
-  assert.equal(fourth.records.length, 9);
+  assert.equal(fourth.records.length, 10);
   assert.ok(fourth.records.every((record) => record.cleared));
   assert.ok(fourth.state.owned.includes("lico"));
   assert.ok(fourth.state.story.read.includes("starlit-guild-founding-return"));

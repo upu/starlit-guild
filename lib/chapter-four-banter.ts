@@ -1,14 +1,21 @@
 import {
-  chapterFourStages,
   isChapterFourQuest,
+  LINDE_REQUESTS_QUEST,
+  LANTERN_DETOUR_QUEST,
+  BREKKA_ARRIVAL_QUEST,
   MOSS_TRAIL_QUEST,
-  mossTrailPhase,
+  MOSS_TRAIL_SECOND_DAY_QUEST,
+  MOSS_BEDS_QUEST,
+  LICO_RECORDS_QUEST,
+  MERRILL_SEEDLINGS_QUEST,
+  MOSS_TRANSPLANT_QUEST,
+  GUILD_FOUNDING_QUEST,
 } from "./chapter-four.ts";
 import type { Run } from "./game.ts";
 import type { StoryLine } from "./stories.ts";
 
 const routes: Record<string, StoryLine[][]> = {
-  [chapterFourStages[0].quest]: [
+  [LINDE_REQUESTS_QUEST]: [
     [
       { speaker: "aria", text: "これも「塔の人へ」だって。四人とも、塔のことで動いてるもんね。" },
       { speaker: "leon", text: "誰宛てか聞いておこう。返事を出した分にも、印が要るな。" },
@@ -20,7 +27,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "mira", text: "次は、お皿が来る前に思い出しましょうね。" },
     ],
   ],
-  [chapterFourStages[1].quest]: [
+  [LANTERN_DETOUR_QUEST]: [
     [
       { speaker: "leon", text: "村は、この道を曲がった先だ。" },
       { speaker: "aria", text: "地図にない塔って、ちょっと楽しみ。" },
@@ -32,7 +39,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "finn", text: "そういう数え方だと、急に小さくなるな。" },
     ],
   ],
-  [chapterFourStages[2].quest]: [
+  [BREKKA_ARRIVAL_QUEST]: [
     [
       { speaker: "aria", text: "樽がごろごろ通るね。全部エール？" },
       { speaker: "leon", text: "空樽を戻す荷もあるらしい。帰りも荷車が要るんだな。" },
@@ -44,7 +51,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "finn", text: "それはそれで、いい鼻だ。" },
     ],
   ],
-  [chapterFourStages[3].quest]: [
+  [MOSS_TRAIL_SECOND_DAY_QUEST]: [
     [
       { speaker: "aria", text: "この布、昨日もあった。" },
       { speaker: "leon", text: "今日は曲がらずに通る目印だな。" },
@@ -58,6 +65,8 @@ const routes: Record<string, StoryLine[][]> = {
       },
       { speaker: "mira", text: "……そうね。戻ったら、様子を聞かせていただくわ。" },
     ],
+  ],
+  [MOSS_TRAIL_QUEST]: [
     [
       { speaker: "aria", text: "荷車、角を曲がるよ。" },
       { speaker: "leon", text: "見えてる。少し間を空けてから行こう。" },
@@ -65,11 +74,11 @@ const routes: Record<string, StoryLine[][]> = {
     ],
     [
       { speaker: "aria", text: "帰り道は、あの青い布のところからだよね。" },
-      { speaker: "leon", text: "ああ。曲がり角も書いておいた。明日はここから先を確かめよう。" },
+      { speaker: "leon", text: "ああ。荷車の時刻と、ここまでの曲がり角は書けた。明日はその先だ。" },
       { speaker: "aria", text: "うん。付き合ってくれて、ありがとう。" },
     ],
   ],
-  [chapterFourStages[4].quest]: [
+  [MOSS_BEDS_QUEST]: [
     [
       { speaker: "aria", text: "溝までまっすぐ。同じ深さで掘ってる。" },
       { speaker: "leon", text: "水を残したくて、ここまで揃えたんだろうな。" },
@@ -81,7 +90,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "mira", text: "ええ。回って見るわ。" },
     ],
   ],
-  [chapterFourStages[5].quest]: [
+  [LICO_RECORDS_QUEST]: [
     [
       { speaker: "leon", text: "写しは俺が預かります。" },
       { speaker: "finn", text: "原本も、棚よりずっと見やすい所へ戻したしな。" },
@@ -96,7 +105,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "aria", text: "うん。私たちも、あの苔に助けてもらったんだし。" },
     ],
   ],
-  [chapterFourStages[6].quest]: [
+  [MERRILL_SEEDLINGS_QUEST]: [
     [
       { speaker: "aria", text: "この株で、端まで揃ったよ。" },
       { speaker: "lico", text: "右の根、少し浮いてる。そこ、押さえて。" },
@@ -108,7 +117,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "lico", text: "……蓋、もう一枚いるかな。" },
     ],
   ],
-  [chapterFourStages[7].quest]: [
+  [MOSS_TRANSPLANT_QUEST]: [
     [
       { speaker: "leon", text: "その石の先は滑ります。足を置くなら、乾いた方へ。" },
       { speaker: "lico", text: "見てる。……手帳の方を。" },
@@ -120,7 +129,7 @@ const routes: Record<string, StoryLine[][]> = {
       { speaker: "mira", text: "籠は逃げないわ。手は、今のうちに。" },
     ],
   ],
-  [chapterFourStages[8].quest]: [
+  [GUILD_FOUNDING_QUEST]: [
     [
       { speaker: "lico", text: "ベルネの石の記録、歩きながら読んでいい？" },
       { speaker: "leon", text: "次の休憩で渡します。段差を見ていてください。" },
@@ -143,21 +152,22 @@ const rests: StoryLine[][] = [
     { speaker: "leon", text: "道を確かめてから進もう。" },
   ],
 ];
-function mossTrailBanter(node: number): StoryLine[] {
-  const pool = routes[MOSS_TRAIL_QUEST];
-  const phase = mossTrailPhase(node);
-  if (phase === 0) return pool[2];
-  if (phase === 1) return pool[3];
-  return pool[node < 11 ? 1 : 0];
+function pursuitBanter(run: Run): StoryLine[] | null {
+  if (run.quest === MOSS_TRAIL_QUEST)
+    return run.phase === "rest" ? rests[1] : routes[run.quest][run.node < 10 ? 0 : 1];
+  if (run.phase !== "rest" && run.quest === MOSS_TRAIL_SECOND_DAY_QUEST)
+    return routes[run.quest][run.node < 5 ? 1 : 0];
+  return null;
 }
 export function chapterFourBanter(run: Run): StoryLine[] | null {
   if (!isChapterFourQuest(run.quest)) return null;
-  if (run.phase !== "rest" && run.quest === chapterFourStages[6].quest && run.node < 9)
+  const pursuit = pursuitBanter(run);
+  if (pursuit) return pursuit;
+  if (run.phase !== "rest" && run.quest === MERRILL_SEEDLINGS_QUEST && run.node < 9)
     return [
       { speaker: "lico", text: "苗を運ぶなら、あの籠を先に守って。" },
       { speaker: "leon", text: "道を空けます。アリア、布を頼む。" },
     ];
-  if (run.phase !== "rest" && run.quest === MOSS_TRAIL_QUEST) return mossTrailBanter(run.node);
   const pool = run.phase === "rest" ? rests : routes[run.quest];
   if (!pool.length) return null;
   return pool[Math.floor(run.node / 6) % pool.length];

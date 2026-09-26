@@ -29,7 +29,12 @@ export type Story = {
   quest?: string;
   chapter: "departure" | "return" | "interlude";
 };
-export type StoryProgress = { departed: string[]; completed: string[]; read: string[] };
+export type StoryProgress = {
+  departed: string[];
+  completed: string[];
+  read: string[];
+  mossTrailSplit?: true;
+};
 const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
   speaker: "aria",
   text,

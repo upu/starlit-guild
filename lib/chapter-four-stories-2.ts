@@ -3,7 +3,7 @@ import { scene, line, narration, type ChapterFourSection } from "./chapter-four-
 export const sectionsPart2: ChapterFourSection[] = [
   {
     number: "4-4",
-    title: "毎朝光る苔",
+    title: "毎朝光る苔・一日目",
     scenes: [
       scene("4-4", "departure", "朝になっていた", "宿の玄関広間、夜明け前", [
         narration(
@@ -24,10 +24,13 @@ export const sectionsPart2: ChapterFourSection[] = [
         ),
         narration("ミラは往診鞄の留め具を二度つまみ直した。"),
         line("mira", "……そうね。私も、先生に診ていただくわ。"),
-        line("finn", "送ってくる。二人は荷車を頼むよ。"),
+        line("finn", "先生を呼んでくるよ。今日は俺も宿に残る。二人は荷車を頼むよ。"),
+        line("mira", "付き添いまでしていただかなくても……。"),
+        line("finn", "目を離すと、その鞄を持って出ていきそうだからね。"),
+        narration("ミラが鞄から手を離す。フィンは空いた隣の椅子へ、自分の荷物を置いた。"),
         line("leon", "道順を確かめて、戻ってきます。"),
       ]),
-      scene("4-4", "return", "一日目", "毎朝光る苔", [
+      scene("4-4", "return", "持ち帰った道順", "ブレッカの裏通り", [
         narration("空籠を積んだ荷車が、醸造所の裏から出る。アリアとレオンは距離を取って歩く。"),
         line("aria", "車輪の泥にも苔がついてる。やっぱり、この荷車だね。"),
         line("leon", "分かれ道は右だな。"),
@@ -56,13 +59,33 @@ export const sectionsPart2: ChapterFourSection[] = [
         ),
         line("leon", "今の分かれ道を書いておこう。俺も、布の陰で荷車から目を離した。"),
         narration(
-          "翌朝。休養を取ったミラとフィンも、醸造所の角まで同行する。ミラは町の医者へ仕事を引き継いでから来ている。",
+          "レオンは、醸造所を出た時刻と、ここまでの曲がり角を手帳に書き込んだ。アリアは拾った苔を小さな紙に包む。",
+        ),
+        line("aria", "行き先までは分からなかったけど、出てくる時刻と、ここまでの道は分かったね。"),
+        line("leon", "ああ。明日はこの分かれ道の先を見ればいい。"),
+        line("aria", "この欠片も持って帰ろう。車輪についてた苔と、同じ葉だって確かめられたし。"),
+        narration("二人は手帳と苔の包みをしまい、青い布を目印に宿への道を戻った。"),
+      ]),
+    ],
+  },
+  {
+    number: "4-5",
+    title: "毎朝光る苔・二日目",
+    scenes: [
+      scene("4-5", "departure", "昨日の道順から", "翌朝、醸造所の角", [
+        narration(
+          "翌朝。休養を取ったミラと、一日付き添っていたフィンも醸造所の角へ来た。ミラの往診は町の医者へ引き継いである。レオンは昨日の道順を書いた手帳を開いた。",
         ),
         line(
           "mira",
           "朝は少し食べられたわ。昨日の分を取り戻そうとすると、先生に止められてしまったけれど。",
         ),
         line("finn", "寝てない分を、往診で取り戻そうとするからだよ。"),
+        line("leon", "昨日は、この時刻に荷車が出ました。分かれ道までは、道順も控えてあります。"),
+        line("aria", "今日は、その先。荷車が曲がるところを、ちゃんと見てる。"),
+        narration("醸造所の裏で車輪が鳴った。四人は手帳に記した道へ、少し間を空けて歩き出す。"),
+      ]),
+      scene("4-5", "return", "塔へ続く裏道", "ブレッカの塔の裏手", [
         narration(
           "分かれ道で、アリアは荷車が右へ曲がるのを見届けた。昨日は苔の欠片に気を取られた場所だった。",
         ),
@@ -80,10 +103,10 @@ export const sectionsPart2: ChapterFourSection[] = [
     ],
   },
   {
-    number: "4-5",
+    number: "4-6",
     title: "塔のそばの苔床",
     scenes: [
-      scene("4-5", "departure", "揃いすぎた緑", "塔の裏手", [
+      scene("4-6", "departure", "揃いすぎた緑", "塔の裏手", [
         narration(
           "地面に細い溝が走り、同じ幅の苔床が並んでいる。木札には数字と短い線が刻まれていた。",
         ),
@@ -92,7 +115,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("mira", "この小さな札は、順番かしら。"),
         line("aria", "触らないで見よう。育ててる人がいるなら、話を――"),
       ]),
-      scene("4-5", "return", "あたしの苔床", "塔のそばの苔床", [
+      scene("4-6", "return", "あたしの苔床", "塔のそばの苔床", [
         narration("同じ場所、通路から苔床を調べたあと。リコが現れる。"),
         line("lico", "あーーっ！"),
         narration("アリアが跳び上がる。低い柵の向こうで、小柄な女性が丸メガネを押し上げた。"),
@@ -156,10 +179,10 @@ export const sectionsPart2: ChapterFourSection[] = [
     ],
   },
   {
-    number: "4-6",
+    number: "4-7",
     title: "消える前に",
     scenes: [
-      scene("4-6", "departure", "三つの記録", "塔の管理小屋", [
+      scene("4-7", "departure", "三つの記録", "塔の管理小屋", [
         narration(
           "管理人「外の灯りが届く場所を、毎晩、同じ時刻に見ている。掃除も石の点検もした。変わっていたのが、あの苔床だった」",
         ),
@@ -222,7 +245,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("aria", "分かった。苔床には入らないで回る。"),
         line("finn", "栓はあっちだな。まかせとけって。割らずに閉めるくらいならさ。"),
       ]),
-      scene("4-6", "return", "あたしの数字", "消える前に", [
+      scene("4-7", "return", "あたしの数字", "消える前に", [
         narration("煙が薄くなる。レオンは倒れかけた記録板を拾い、リコの手元へ戻す。"),
         line("lico", "……そこ、順番が。"),
         line("leon", "この印が上ですか。"),
@@ -261,10 +284,10 @@ export const sectionsPart2: ChapterFourSection[] = [
     ],
   },
   {
-    number: "4-7",
+    number: "4-8",
     title: "苔は渡さない",
     scenes: [
-      scene("4-7", "departure", "食べていい方は、どれ", "塔の裏手、苗の積み出し口", [
+      scene("4-8", "departure", "食べていい方は、どれ", "塔の裏手、苗の積み出し口", [
         narration(
           "リコは苗の札を一つずつ読み、書き写している。アリアが記録の済んだ籠へ湿った布を掛けると、まだ開いている隣の籠から、小さく葉をちぎる音がした。",
         ),
@@ -305,7 +328,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("aria", "私たちが見えるように？"),
         line("lico", "苗を運べないと困るから。……布、落ちてる。掛け直して。"),
       ]),
-      scene("4-7", "return", "感想は一株分", "苔は渡さない", [
+      scene("4-8", "return", "感想は一株分", "苔は渡さない", [
         narration("五人の後ろへ籠が揃った。メリルは空いた手を眺め、指先に残った苔を舐める。"),
         line(
           "merrill",

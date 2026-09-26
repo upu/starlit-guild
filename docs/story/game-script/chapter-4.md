@@ -8,12 +8,13 @@
 - [4-1 塔を直した人たちへ](#stage-4-1)
 - [4-2 見当違いの灯り](#stage-4-2)
 - [4-3 醸造の町ブレッカ](#stage-4-3)
-- [4-4 毎朝光る苔](#stage-4-4)
-- [4-5 塔のそばの苔床](#stage-4-5)
-- [4-6 消える前に](#stage-4-6)
-- [4-7 苔は渡さない](#stage-4-7)
-- [4-8 光が抜ける前に](#stage-4-8)
-- [4-9 同じ宛先へ](#stage-4-9)
+- [4-4 毎朝光る苔・一日目](#stage-4-4)
+- [4-5 毎朝光る苔・二日目](#stage-4-5)
+- [4-6 塔のそばの苔床](#stage-4-6)
+- [4-7 消える前に](#stage-4-7)
+- [4-8 苔は渡さない](#stage-4-8)
+- [4-9 光が抜ける前に](#stage-4-9)
+- [4-10 同じ宛先へ](#stage-4-10)
 
 <a id="interlude-promised-walnuts"></a>
 
@@ -545,7 +546,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 <a id="stage-4-4"></a>
 
-## 4-4 毎朝光る苔
+## 4-4 毎朝光る苔・一日目
 
 ### 出発前：朝になっていた
 
@@ -585,7 +586,13 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 ミラ：……そうね。私も、先生に診ていただくわ。
 
-フィン：送ってくる。二人は荷車を頼むよ。
+フィン：先生を呼んでくるよ。今日は俺も宿に残る。二人は荷車を頼むよ。
+
+ミラ：付き添いまでしていただかなくても……。
+
+フィン：目を離すと、その鞄を持って出ていきそうだからね。
+
+ミラが鞄から手を離す。フィンは空いた隣の椅子へ、自分の荷物を置いた。
 
 レオン：道順を確かめて、戻ってきます。
 
@@ -594,7 +601,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 本文の編集元：[lib/chapter-four-banter.ts](../../../lib/chapter-four-banter.ts)（`chapterFourBanter()`）
 表示条件は地点と休憩状態によって変わります。
 
-#### 移動：地点1〜6
+#### 移動：地点1〜10
 
 アリア：荷車、角を曲がるよ。
 
@@ -602,46 +609,24 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 アリア：うん。今度の角は、右だね。
 
-#### 移動：地点7、8
+#### 移動：地点11〜15
 
 アリア：帰り道は、あの青い布のところからだよね。
 
-レオン：ああ。曲がり角も書いておいた。明日はここから先を確かめよう。
+レオン：ああ。荷車の時刻と、ここまでの曲がり角は書けた。明日はその先だ。
 
 アリア：うん。付き合ってくれて、ありがとう。
 
-#### 移動：地点9〜11
-
-ミラ：留守の間に、誰かいらっしゃるかもしれないわね。
-
-フィン：そのために先生へ頼んだんだろ。今戻ったら、引き継いだ先生が困るよ。
-
-ミラ：……そうね。戻ったら、様子を聞かせていただくわ。
-
-#### 移動：地点12〜15
-
-アリア：この布、昨日もあった。
-
-レオン：今日は曲がらずに通る目印だな。
-
-アリア：……覚える役には立ったでしょ。
-
-#### 休憩：地点1、2、3、4、5、6、13、14、15
-
-ミラ：一息ついて。食事と休みも、仕事のうちよ。
-
-フィン：先生の分も椅子を空けたよ。
-
-#### 休憩：地点7〜12
+#### 休憩：地点1〜15
 
 アリア：足元の苔は踏まないでね。
 
 レオン：道を確かめてから進もう。
 
-### 達成後：一日目
+### 達成後：持ち帰った道順
 
 シーンID：`glowing-moss-trail-return`
-場所：毎朝光る苔
+場所：ブレッカの裏通り
 本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-4", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/blue-cloth-alley.webp`）
@@ -682,11 +667,78 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 レオン：今の分かれ道を書いておこう。俺も、布の陰で荷車から目を離した。
 
-翌朝。休養を取ったミラとフィンも、醸造所の角まで同行する。ミラは町の医者へ仕事を引き継いでから来ている。
+レオンは、醸造所を出た時刻と、ここまでの曲がり角を手帳に書き込んだ。アリアは拾った苔を小さな紙に包む。
+
+アリア：行き先までは分からなかったけど、出てくる時刻と、ここまでの道は分かったね。
+
+レオン：ああ。明日はこの分かれ道の先を見ればいい。
+
+アリア：この欠片も持って帰ろう。車輪についてた苔と、同じ葉だって確かめられたし。
+
+二人は手帳と苔の包みをしまい、青い布を目印に宿への道を戻った。
+
+<a id="stage-4-5"></a>
+
+## 4-5 毎朝光る苔・二日目
+
+### 出発前：昨日の道順から
+
+シーンID：`glowing-moss-trail-next-day-departure`
+場所：翌朝、醸造所の角
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-5", "departure", …)`）
+IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
+
+翌朝。休養を取ったミラと、一日付き添っていたフィンも醸造所の角へ来た。ミラの往診は町の医者へ引き継いである。レオンは昨日の道順を書いた手帳を開いた。
 
 ミラ：朝は少し食べられたわ。昨日の分を取り戻そうとすると、先生に止められてしまったけれど。
 
 フィン：寝てない分を、往診で取り戻そうとするからだよ。
+
+レオン：昨日は、この時刻に荷車が出ました。分かれ道までは、道順も控えてあります。
+
+アリア：今日は、その先。荷車が曲がるところを、ちゃんと見てる。
+
+醸造所の裏で車輪が鳴った。四人は手帳に記した道へ、少し間を空けて歩き出す。
+
+### 道中の掛け合い
+
+本文の編集元：[lib/chapter-four-banter.ts](../../../lib/chapter-four-banter.ts)（`chapterFourBanter()`）
+表示条件は地点と休憩状態によって変わります。
+
+#### 移動：地点1〜5
+
+ミラ：留守の間に、誰かいらっしゃるかもしれないわね。
+
+フィン：そのために先生へ頼んだんだろ。今戻ったら、引き継いだ先生が困るよ。
+
+ミラ：……そうね。戻ったら、様子を聞かせていただくわ。
+
+#### 移動：地点6〜15
+
+アリア：この布、昨日もあった。
+
+レオン：今日は曲がらずに通る目印だな。
+
+アリア：……覚える役には立ったでしょ。
+
+#### 休憩：地点1、2、3、4、5、6、13、14、15
+
+ミラ：一息ついて。食事と休みも、仕事のうちよ。
+
+フィン：先生の分も椅子を空けたよ。
+
+#### 休憩：地点7〜12
+
+アリア：足元の苔は踏まないでね。
+
+レオン：道を確かめてから進もう。
+
+### 達成後：塔へ続く裏道
+
+シーンID：`glowing-moss-trail-next-day-return`
+場所：ブレッカの塔の裏手
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-5", "return", …)`）
+IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 分かれ道で、アリアは荷車が右へ曲がるのを見届けた。昨日は苔の欠片に気を取られた場所だった。
 
@@ -710,15 +762,15 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 ミラ：私たちはここを見せてもらいましょう。踏んでしまわないようにね。
 
-<a id="stage-4-5"></a>
+<a id="stage-4-6"></a>
 
-## 4-5 塔のそばの苔床
+## 4-6 塔のそばの苔床
 
 ### 出発前：揃いすぎた緑
 
 シーンID：`brekka-moss-beds-departure`
 場所：塔の裏手
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-5", "departure", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-6", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 地面に細い溝が走り、同じ幅の苔床が並んでいる。木札には数字と短い線が刻まれていた。
@@ -768,7 +820,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`brekka-moss-beds-return`
 場所：塔のそばの苔床
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-5", "return", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-6", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 同じ場所、通路から苔床を調べたあと。リコが現れる。
@@ -853,15 +905,15 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 リコ：塔の？　……あたしは、苔なら全部つけてるけど。
 
-<a id="stage-4-6"></a>
+<a id="stage-4-7"></a>
 
-## 4-6 消える前に
+## 4-7 消える前に
 
 ### 出発前：三つの記録
 
 シーンID：`lico-records-departure`
 場所：塔の管理小屋
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-6", "departure", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 管理人「外の灯りが届く場所を、毎晩、同じ時刻に見ている。掃除も石の点検もした。変わっていたのが、あの苔床だった」
@@ -989,7 +1041,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`lico-records-return`
 場所：消える前に
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-6", "return", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 煙が薄くなる。レオンは倒れかけた記録板を拾い、リコの手元へ戻す。
@@ -1048,15 +1100,15 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 ミラ：座って見る分にはね。
 
-<a id="stage-4-7"></a>
+<a id="stage-4-8"></a>
 
-## 4-7 苔は渡さない
+## 4-8 苔は渡さない
 
 ### 出発前：食べていい方は、どれ
 
 シーンID：`merrill-seedlings-departure`
 場所：塔の裏手、苗の積み出し口
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "departure", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-8", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/lico-protects-seedlings.webp`）
 
@@ -1173,7 +1225,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`merrill-seedlings-return`
 場所：苔は渡さない
-本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-7", "return", …)`）
+本文の編集元：[lib/chapter-four-stories-2.ts](../../../lib/chapter-four-stories-2.ts)（`scene("4-8", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 五人の後ろへ籠が揃った。メリルは空いた手を眺め、指先に残った苔を舐める。
@@ -1256,15 +1308,15 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 レオン：追いかけるのは、苗を運んでからにしてください。
 
-<a id="stage-4-8"></a>
+<a id="stage-4-9"></a>
 
-## 4-8 光が抜ける前に
+## 4-9 光が抜ける前に
 
 ### 出発前：明るいうちの記録
 
 シーンID：`moss-transplant-departure`
 場所：夕方の積み出し口
-本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-8", "departure", …)`）
+本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-9", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 リコは籠の札を確かめ、同じ番号を手帳の端へ書いた。
@@ -1380,7 +1432,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`moss-transplant-return`
 場所：新しい苔床、塔の足元、翌朝の往診先
-本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-8", "return", …)`）
+本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-9", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 新しい苔床へ最後の苗を置く。リコが手を伸ばし、アリアがその手首に乾いた布を渡した。
@@ -1433,15 +1485,15 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 ミラ：……ありがとう。では、お願いするわ。
 
-<a id="stage-4-9"></a>
+<a id="stage-4-10"></a>
 
-## 4-9 同じ宛先へ
+## 4-10 同じ宛先へ
 
 ### 出発前：持っていく記録
 
 シーンID：`starlit-guild-founding-departure`
 場所：数日後、ブレッカ
-本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-9", "departure", …)`）
+本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-10", "departure", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 
 塔の窓の紫が、前夜より少し濃く残っている。管理人は、灯りの届いた目印を記録した。
@@ -1565,7 +1617,7 @@ IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts)
 
 シーンID：`starlit-guild-founding-return`
 場所：リンデ
-本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-9", "return", …)`）
+本文の編集元：[lib/chapter-four-stories-3.ts](../../../lib/chapter-four-stories-3.ts)（`scene("4-10", "return", …)`）
 IDの接続元：[lib/chapter-four-scene.ts](../../../lib/chapter-four-scene.ts) の `scene()` → [lib/chapter-four.ts](../../../lib/chapter-four.ts) の `chapterFourStages`
 スチル定義：[lib/story-art.ts](../../../lib/story-art.ts) の `storyArt`（`/stories/guild-formation.webp`）
 

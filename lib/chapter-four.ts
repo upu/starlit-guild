@@ -5,6 +5,7 @@ export const LINDE_REQUESTS_QUEST = "linde-requests";
 export const LANTERN_DETOUR_QUEST = "lantern-detour";
 export const BREKKA_ARRIVAL_QUEST = "brekka-arrival";
 export const MOSS_TRAIL_QUEST = "glowing-moss-trail";
+export const MOSS_TRAIL_SECOND_DAY_QUEST = "glowing-moss-trail-next-day";
 export const MOSS_BEDS_QUEST = "brekka-moss-beds";
 export const LICO_RECORDS_QUEST = "lico-records";
 export const MERRILL_SEEDLINGS_QUEST = "merrill-seedlings";
@@ -44,9 +45,19 @@ const definitions = [
   ],
   [
     MOSS_TRAIL_QUEST,
-    "毎朝光る苔",
+    "毎朝光る苔・一日目",
     "ブレッカの裏通り",
-    "無理をしたミラを休ませ、二日がかりで荷車の道筋を追おう。",
+    "ミラとフィンを宿に残し、アリアとレオンで荷車の道筋を追おう。",
+    "途中までの道順を記録しました",
+    "荷車の時刻と苔の欠片を、明日の追跡につなげましょう。",
+    "town-deliveries",
+    "護衛",
+  ],
+  [
+    MOSS_TRAIL_SECOND_DAY_QUEST,
+    "毎朝光る苔・二日目",
+    "ブレッカの裏通り",
+    "昨日の道順を頼りに、四人で荷車の行き先を確かめよう。",
     "苔を運ぶ道が分かりました",
     "塔へ続く裏道を確かめましょう。",
     "town-deliveries",
@@ -104,6 +115,7 @@ const definitions = [
   ],
 ] as const;
 
+const originalIndex = (index: number) => (index > 3 ? index - 1 : index);
 export const chapterFourStages = definitions.map(([quest, title, , , arrival, detail], index) => ({
   quest,
   number: `4-${String(index + 1)}`,
@@ -120,15 +132,23 @@ export const chapterFourQuests: Quest[] = definitions.map(
     desc,
     kind,
     tier: 3,
-    need: 52 + index * 2,
+    need: 52 + originalIndex(index) * 2,
     seconds: 180,
-    gold: 420 + index * 25,
-    xp: 220 + index * 20,
+    gold: [MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST].includes(id)
+      ? 250
+      : 420 + originalIndex(index) * 25,
+    xp: [MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST].includes(id)
+      ? 140
+      : 220 + originalIndex(index) * 20,
     herbs: 0,
     ore: 0,
-    enemy: index === 5 || index === 6 ? 10 : 8,
+    enemy: id === LICO_RECORDS_QUEST || id === MERRILL_SEEDLINGS_QUEST ? 10 : 8,
     enemyName:
-      index === 5 ? "リコの光と煙の仕掛け" : index === 6 ? "苗を狙うメリル" : "街道のスライム",
+      id === LICO_RECORDS_QUEST
+        ? "リコの光と煙の仕掛け"
+        : id === MERRILL_SEEDLINGS_QUEST
+          ? "苗を狙うメリル"
+          : "街道のスライム",
     background: `/scenery/${scenery}-background.webp`,
     availability: "repeatable",
   }),
@@ -137,7 +157,9 @@ export const chapterFourQuests: Quest[] = definitions.map(
 export const isChapterFourQuest = (id: string) =>
   chapterFourStages.some((stage) => stage.quest === id);
 export const chapterFourRank = (id: string) =>
-  [32, 33, 34, 35, 35, 36, 37, 38, 39][chapterFourStages.findIndex((stage) => stage.quest === id)];
+  [32, 33, 34, 35, 35, 35, 36, 37, 38, 39][
+    chapterFourStages.findIndex((stage) => stage.quest === id)
+  ];
 
 type Work = { kind: "battle" | "escort" | "gather"; name: string };
 const jobs = (kind: Work["kind"], ...names: string[]): Work[] =>
@@ -158,8 +180,14 @@ const patterns: Partial<Record<string, Work[]>> = {
   [MOSS_TRAIL_QUEST]: jobs(
     "escort",
     "一日目の荷車を追う",
-    "一日目・青い布を目印に宿へ戻る",
+    "途中までの道順を記録する",
+    "苔の欠片を持って宿へ戻る",
+  ),
+  [MOSS_TRAIL_SECOND_DAY_QUEST]: jobs(
+    "escort",
+    "昨日の道順をたどる",
     "二日目の裏道を追う",
+    "塔へ続く道を確かめる",
   ),
   [MOSS_BEDS_QUEST]: jobs("gather", "苔床の列を数える", "水路と札を調べる", "塔からの距離を測る"),
   [LICO_RECORDS_QUEST]: [
@@ -183,8 +211,8 @@ const patterns: Partial<Record<string, Work[]>> = {
     "リンデの倉庫へ向かう",
   ),
 };
-// The fifteen waypoints advance through day one, the return trip, then day two.
-export const mossTrailPhase = (node: number) => (node < 6 ? 0 : node < 8 ? 1 : 2);
+export const isMossTrailQuest = (id: string) =>
+  [MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST].includes(id);
 
 export function chapterFourWork(id: string, node: number): Work | undefined {
   if (id === LICO_RECORDS_QUEST)
@@ -197,6 +225,7 @@ export function chapterFourWork(id: string, node: number): Work | undefined {
     return node === 8
       ? { kind: "battle", name: "メリルから苗の籠を守る" }
       : { kind: "escort", name: "苗の籠を運び出す" };
-  return patterns[id]?.[id === MOSS_TRAIL_QUEST ? mossTrailPhase(node) : node % 3];
+  return patterns[id]?.[isMossTrailQuest(id) ? Math.min(2, Math.floor(node / 5)) : node % 3];
 }
-export const chapterFourWorkload = (id: string) => (isChapterFourQuest(id) ? 2 : 1);
+export const chapterFourWorkload = (id: string) =>
+  isChapterFourQuest(id) && !isMossTrailQuest(id) ? 2 : 1;

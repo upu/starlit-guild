@@ -129,7 +129,12 @@ const storyQuests = z
   .max(quests.length)
   .refine((v) => new Set(v).size === v.length);
 const storySchema = z
-  .object({ departed: storyQuests, completed: storyQuests, read: storyIds })
+  .object({
+    departed: storyQuests,
+    completed: storyQuests,
+    read: storyIds,
+    mossTrailSplit: z.literal(true).optional(),
+  })
   .refine((v) => v.completed.every((q) => v.departed.includes(q)));
 const equipmentId = z.string().refine((id) => !!equipmentById(id));
 const inventorySchema = z.object({

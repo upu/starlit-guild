@@ -209,7 +209,7 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
 });
 
 test("chapter four paperwork uses a ledger and inspection while transport keeps its cart", () => {
-  for (const index of [29, 32]) {
+  for (const index of [29, 33]) {
     let state = start(index, 40);
     const inspected = new Set();
     const transported = new Set();

@@ -56,7 +56,8 @@
           "tower-restoration-return",
           "tower-moss-removal-departure",
           "tower-moss-removal-return"
-        ]
+        ],
+        "mossTrailSplit": true
       },
       "friendship": { "aria-leon": 225 },
       "gold": 4420,
@@ -197,7 +198,8 @@
           "waiting-households-return",
           "medicine-road-home-departure",
           "medicine-road-home-return"
-        ]
+        ],
+        "mossTrailSplit": true
       },
       "friendship": { "aria-leon": 406 },
       "gold": 12667,
@@ -386,7 +388,8 @@
           "keystone-night-road-return",
           "berne-restoration-departure",
           "berne-restoration-return"
-        ]
+        ],
+        "mossTrailSplit": true
       },
       "friendship": { "aria-leon": 491 },
       "gold": 15303,
@@ -468,6 +471,7 @@
       "lantern-detour",
       "brekka-arrival",
       "glowing-moss-trail",
+      "glowing-moss-trail-next-day",
       "brekka-moss-beds",
       "lico-records",
       "merrill-seedlings",
@@ -509,6 +513,7 @@
           "lantern-detour",
           "brekka-arrival",
           "glowing-moss-trail",
+          "glowing-moss-trail-next-day",
           "brekka-moss-beds",
           "lico-records",
           "merrill-seedlings",
@@ -547,6 +552,7 @@
           "lantern-detour",
           "brekka-arrival",
           "glowing-moss-trail",
+          "glowing-moss-trail-next-day",
           "brekka-moss-beds",
           "lico-records",
           "merrill-seedlings",
@@ -618,6 +624,8 @@
           "brekka-arrival-return",
           "glowing-moss-trail-departure",
           "glowing-moss-trail-return",
+          "glowing-moss-trail-next-day-departure",
+          "glowing-moss-trail-next-day-return",
           "brekka-moss-beds-departure",
           "brekka-moss-beds-return",
           "lico-records-departure",
@@ -628,15 +636,16 @@
           "moss-transplant-return",
           "starlit-guild-founding-departure",
           "starlit-guild-founding-return"
-        ]
+        ],
+        "mossTrailSplit": true
       },
-      "friendship": { "aria-leon": 614 },
-      "gold": 26975,
+      "friendship": { "aria-leon": 635 },
+      "gold": 28288,
       "herbs": 68,
       "ore": 0,
       "owned": ["aria", "leon", "mira", "finn", "lico"],
-      "xp": { "aria": 18846, "leon": 18846, "mira": 18846, "finn": 18846, "lico": 18318 },
-      "clears": 113,
+      "xp": { "aria": 19566, "leon": 19566, "mira": 19314, "finn": 19314, "lico": 18214 },
+      "clears": 116,
       "done": {
         "village-trade": 1,
         "evening-trade-road": 1,
@@ -665,10 +674,11 @@
         "garden-reception": 1,
         "keystone-night-road": 1,
         "berne-restoration": 1,
-        "linde-requests": 11,
+        "linde-requests": 13,
         "lantern-detour": 1,
         "brekka-arrival": 1,
         "glowing-moss-trail": 1,
+        "glowing-moss-trail-next-day": 1,
         "brekka-moss-beds": 1,
         "lico-records": 1,
         "merrill-seedlings": 1,

@@ -2,10 +2,10 @@ import { scene, line, narration, type ChapterFourSection } from "./chapter-four-
 
 export const sectionsPart3: ChapterFourSection[] = [
   {
-    number: "4-8",
+    number: "4-9",
     title: "光が抜ける前に",
     scenes: [
-      scene("4-8", "departure", "明るいうちの記録", "夕方の積み出し口", [
+      scene("4-9", "departure", "明るいうちの記録", "夕方の積み出し口", [
         narration("リコは籠の札を確かめ、同じ番号を手帳の端へ書いた。"),
         line(
           "lico",
@@ -56,7 +56,7 @@ export const sectionsPart3: ChapterFourSection[] = [
           "レオンが魔物を退ける間に、残る四人が荷を分けて車輪を戻す。アリアの確かめた道を通り、苗を先に運び切った。置いた道具はその位置を記し、作業者と取りに戻る。",
         ),
       ]),
-      scene("4-8", "return", "残すもの、戻すもの", "新しい苔床、塔の足元、翌朝の往診先", [
+      scene("4-9", "return", "残すもの、戻すもの", "新しい苔床、塔の足元、翌朝の往診先", [
         narration(
           "新しい苔床へ最後の苗を置く。リコが手を伸ばし、アリアがその手首に乾いた布を渡した。",
         ),
@@ -102,10 +102,10 @@ export const sectionsPart3: ChapterFourSection[] = [
     ],
   },
   {
-    number: "4-9",
+    number: "4-10",
     title: "同じ宛先へ",
     scenes: [
-      scene("4-9", "departure", "持っていく記録", "数日後、ブレッカ", [
+      scene("4-10", "departure", "持っていく記録", "数日後、ブレッカ", [
         narration(
           "塔の窓の紫が、前夜より少し濃く残っている。管理人は、灯りの届いた目印を記録した。",
         ),
@@ -173,7 +173,7 @@ export const sectionsPart3: ChapterFourSection[] = [
         line("aria", "その石までね。私も見る。"),
         line("finn", "二人になったよ、寄り道する方が。"),
       ]),
-      scene("4-9", "return", "名前をひとつ", "リンデ", [
+      scene("4-10", "return", "名前をひとつ", "リンデ", [
         narration(
           "倉庫の貸し手「ここなら荷の受け渡しに寄れるだろう。寝床には貸せないが、机と戸棚は使えるよ」",
         ),

@@ -1,7 +1,7 @@
 import { storyParty } from "./story-party.ts";
 import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
-import { MERRILL_SEEDLINGS_QUEST, isChapterFourQuest } from "./chapter-four.ts";
+import { MERRILL_SEEDLINGS_QUEST, MOSS_TRAIL_QUEST, isChapterFourQuest } from "./chapter-four.ts";
 import { advanceQuestDestination } from "./quest-navigation.ts";
 import {
   buyEquipment,
@@ -75,6 +75,7 @@ function startQuest(s: State, sq: Squad, a: Action) {
 }
 function recordDeparture(s: State, sq: Squad, q: Quest) {
   s.story ??= storyProgress(s);
+  if (q.id === MOSS_TRAIL_QUEST) s.story.mossTrailSplit = true;
   if (together(sq.members) && !s.story.departed.includes(q.id)) s.story.departed.push(q.id);
 }
 function readDepartureStory(s: State, q: Quest) {
