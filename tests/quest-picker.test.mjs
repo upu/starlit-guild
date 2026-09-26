@@ -136,6 +136,7 @@ test("locked chapter hides its quests; the switch writes the same persisted pref
   const h = harness(game.initialState(1000));
   assert.equal(h.button("two").props.disabled, true);
   assert.equal(h.cards().length, 1);
+  assert.equal(h.setting().props.compact, true, "the picker omits the description");
   assert.equal(h.setting().props.checked, false);
   h.setting().props.onChange(true);
   assert.equal(h.setting().props.checked, true);

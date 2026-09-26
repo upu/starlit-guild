@@ -5,10 +5,12 @@ export function QuestProgressionSetting({
   checked,
   onChange,
   disabled,
+  compact = false,
 }: {
   checked: boolean;
   onChange: (value: boolean) => void;
   disabled: boolean;
+  compact?: boolean;
 }) {
   return (
     <div className="quest-progression-setting">
@@ -21,7 +23,7 @@ export function QuestProgressionSetting({
           aria-label="Auto-Next"
         />
       </label>
-      <small>クリア後、次のステージへ自動で出発します。</small>
+      {!compact && <small>クリア後、次のステージへ自動で出発します。</small>}
     </div>
   );
 }
