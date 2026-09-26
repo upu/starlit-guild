@@ -137,7 +137,12 @@ function harness(initialState) {
   }
   function departButton() {
     return nodes(exports.AdventureDestination({ model })).find(
-      (node) => node.type === "button" && node.props.children === "出発",
+      (node) => node.type === "button" && node.props["aria-label"] === "出発",
+    );
+  }
+  function returnButton() {
+    return nodes(exports.AdventureDestination({ model })).find(
+      (node) => node.type === "button" && node.props["aria-label"] === "帰還",
     );
   }
   function guide() {
@@ -159,6 +164,7 @@ function harness(initialState) {
     render,
     api,
     departButton,
+    returnButton,
     guide,
     guideText,
     questButton,
@@ -206,6 +212,7 @@ test("choosing a destination previews it without departing; the separate button 
   assert.deepEqual(h.api.s, before);
   const depart = h.departButton();
   assert.ok(depart);
+  assert.equal(depart.props.children[0].props.src, "/ui/departure-arrow.png");
   assert.equal(depart.props.disabled, false);
   depart.props.onClick();
   h.render();
@@ -225,6 +232,11 @@ test("choosing a destination previews it without departing; the separate button 
   assert.equal(h.api.s.squads[0].run.quest, prologue.RETURN_QUEST);
   assert.ok(h.api.s.story.read.includes(prologue.RETURN_QUEST + "-departure"));
   assert.equal(h.departButton(), undefined);
+  const returning = h.returnButton();
+  assert.equal(returning.props.children[0].props.src, "/ui/return-house.png");
+  returning.props.onClick();
+  h.render();
+  assert.ok(h.model.returnIntent);
 });
 
 test("changing a running destination returns without warning and opens an unseen departure story", () => {
