@@ -42,7 +42,7 @@
 
 ## メリルの描画時の補足
 
-採用した[リファレンスシート原本](merrill-reference-sheet.png)（1448×1086px）。ユーザー提供PNGを縮小・再描画せず保存する。
+採用した[リファレンスシート原本](merrill-reference-sheet.png)（1448×1086px）は、ChatGPTで生成され、ユーザーから提供されたもの。PNGを縮小・再描画せず保存する。
 
 ![メリルの採用リファレンスシート](merrill-reference-sheet.png)
 
