@@ -46,7 +46,7 @@ test("normal blockade play projects command motions and retains masked dialogue 
   assert.ok(s.done["sweet-blockade"]);
 });
 
-test("every battle line specifies a supported portrait without exposing Pumpety's face", () => {
+test("every battle line specifies a supported masked portrait instead of the unmasked atlas", () => {
   for (const lines of Object.values(pumpetyBattleExchanges))
     for (const line of lines) {
       assert.notEqual(line.speaker, "pumpety");
