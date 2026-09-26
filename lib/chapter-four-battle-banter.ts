@@ -29,7 +29,7 @@ const merrillSummon: StoryLine[] = [
   {
     speaker: "merrill",
     expression: "smile",
-    text: "キノコさん、ちょっと手伝って。晩ごはんはあとでね。",
+    text: "コロタケたち、ちょっと手伝って。晩ごはんはあとでね。",
   },
   { speaker: "aria", expression: "surprised", text: "カバンから……動くキノコ！？" },
   { speaker: "leon", expression: "serious", text: "籠から離そう。こっちへ来い！" },
@@ -38,9 +38,9 @@ const merrillSong: StoryLine[] = [
   {
     speaker: "merrill",
     expression: "savoring",
-    text: "きのこ、ころころ、もうひと踊り♪　焦げる前には、ひと返し♪",
+    text: "コロタケ、ころころ、もうひと踊り♪　焦げる前には、ひと返し♪",
   },
-  { speaker: "lico", expression: "shouting", text: "あーーっ！　キノコ、元気になってる！" },
+  { speaker: "lico", expression: "shouting", text: "あーーっ！　コロタケ、元気になってる！" },
   { speaker: "mira", expression: "surprised", text: "歌に合わせて、傷がふさがっているわ。" },
   { speaker: "finn", expression: "mischievous", text: "いい声だが、もう一曲は遠慮したいね。" },
   { speaker: "merrill", expression: "excited", text: "まだ歌えるよ。お腹も、まだ空いてるし！" },

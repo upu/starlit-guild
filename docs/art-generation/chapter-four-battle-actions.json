@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-26",
+  "mode": "built-in image_gen",
+  "purpose": "第四章メリル戦の歌と踊り、およびカバンから投げるキノコ型モンスター。",
+  "processing": "merrill-actions の右側の演奏姿勢だけ採用。原本1774x887から left1010 top0 width764 height887を切り出し、別工程で透明余白をtrim(threshold:10)、縦512px。投擲姿勢は左右の装具が不一致のため不採用。mushroom は透明余白を除き縦256px。road-artパイプラインでWebP化。",
+  "assets": [
+    {
+      "id": "merrill-actions",
+      "prompt": "Create a TWO FRAME battle sprite sheet of the EXACT simplified chibi Merrill in the reference. Horizontal 2 columns by 1 row equal square cells, no grid. Each entire figure inside own cell with padding. Identical 2.3-head body proportions, size and feet baseline. Face RIGHT three-quarter view. Keep broad plain color shapes, minimal detail, big green bob, red flower, cream shirt, green jacket, dark shorts, boots, large food backpack and LEFT forearm wood gauntlet with 3 strings. RIGHT hand bare. LEFT CELL: reaches into backpack then throws one small round brown mushroom creature to RIGHT with her bare RIGHT arm extended, tossed mushroom just beyond hand, no motion streaks outside cell. RIGHT CELL: sings with mouth open, dances raising one knee, her bare RIGHT fingers pluck strings on the BACK of LEFT forearm gauntlet, left hand naturally holds forearm before torso. No separate harp. Clear expressive two action poses, uncomplicated clean cel-shaded game art. True transparent RGBA outside figures, opaque interiors, no backdrop or ground shadow, no text or musical notes. Exactly two Merrill figures.",
+      "ref": true,
+      "reference": "assets/source/road/merrill-standing-v1.png",
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0d93a-ee5f-7141-ae16-170fd8c05d88/exec-d08b4cf5-6dff-4df9-bda4-26c539e00740.png",
+      "source": "assets/source/road/merrill-song-v1.png",
+      "output": "public/animations/road/merrill-song-v1.webp"
+    },
+    {
+      "id": "mushroom",
+      "prompt": "One simple chibi mushroom monster battle sprite for a cozy Japanese fantasy RPG, reads at 35 pixels tall. Squat cream stem body, two stubby legs, two tiny mitten arms, round brown mushroom cap with three big cream spots, two black dot eyes and a tiny determined mouth. Facing LEFT in three-quarter view. Very bold clean brown outline, broad flat colors, ONE shadow tone, no texture or fine detail, no scenery, no ground shadow. Entire single creature centered square canvas with true transparent RGBA outside silhouette and opaque interior. Not a human, not scary, not a detailed illustration. Simple friendly-looking but feisty edible mushroom monster.",
+      "ref": false,
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0d93a-ee5f-7141-ae16-170fd8c05d88/exec-96754c77-243c-451f-8ef1-57c47c70cdd1.png",
+      "source": "assets/source/road/mushroom-v1.png",
+      "output": "public/animations/road/mushroom-v1.webp"
+    }
+  ]
+}

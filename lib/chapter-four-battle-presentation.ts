@@ -1,5 +1,10 @@
 import type { RoadBattle, RoadEffect } from "./road-view.ts";
 import type { Run } from "./game-types.ts";
+export function mushroomArrival(run: Run | null, id: string) {
+  const master = run?.enemies?.[0];
+  if (master?.cue !== "summon" || master.cueAt === undefined || id === master.id) return undefined;
+  return master.cueAt + 800;
+}
 export function confrontationEffects(run: Run | null, battle: RoadBattle): RoadEffect[] {
   if (!run || run.phase === "rest") return [];
   return (run.enemies || []).flatMap((enemy) => {
@@ -9,9 +14,9 @@ export function confrontationEffects(run: Run | null, battle: RoadBattle): RoadE
     if (!source || source.hp <= 0) return [];
     const targets =
       enemy.cue === "song"
-        ? battle.enemies.filter((e) => e.kind === "mushroom" && e.hp > 0)
+        ? battle.enemies.filter((e) => e.hp > 0)
         : enemy.cue === "summon"
-          ? battle.enemies.filter((e) => e.kind === "mushroom").slice(-1)
+          ? battle.enemies.filter((e) => e.kind === "mushroom")
           : battle.heroes.filter((h) => h.paralyzed);
     return targets.map((target, index) => ({
       id: -Math.round(cueAt) * 4 - index,

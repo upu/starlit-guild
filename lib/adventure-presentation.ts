@@ -251,7 +251,7 @@ function frameTargets(
 function confrontationTarget(enemy: Enemy, asset: string, name: string) {
   if (!enemy.trick) return { name, asset };
   return {
-    name: { mushroom: "キノコの魔物", merrill: "メリル", lico: "リコの仕掛け" }[enemy.trick],
+    name: { mushroom: "コロタケ", merrill: "メリル", lico: "リコの仕掛け" }[enemy.trick],
     asset: enemy.trick === "mushroom" ? "/animations/road/mushroom-v1.webp" : asset,
   };
 }

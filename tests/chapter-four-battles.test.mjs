@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { act, settle, testState } from "../lib/game.ts";
+import { act, settle, skipTo, testState } from "../lib/game.ts";
 import {
   confrontationTurn,
   paralyzed,
@@ -63,15 +63,18 @@ test("Merrill throws independent mushrooms, then heals allies without resurrecti
     master = r.enemies[0],
     mushroom = r.enemies[1];
   assert.equal(mushroom.trick, "mushroom");
+  assert.equal(r.enemies.length, 3, "two mushrooms appear in the same action");
+  assert.equal(r.enemies[1].nextAt, r.enemies[2].nextAt);
   assert.ok(r.road.opponents[mushroom.id]);
   assert.equal(mushroom.nextAt, master.cueAt + 1900);
-  assert.ok(frame(s).battle.effects.some((e) => e.kind === "mushroomThrow"));
+  assert.equal(frame(s).battle.effects.filter((e) => e.kind === "mushroomThrow").length, 2);
   mushroom.hp = 1;
   master.hp -= 2;
-  const before = master.hp;
+  r.enemies[2].hp = 1;
   confrontationTurn(r, master, master.nextAt, noEmit);
   assert.ok(mushroom.hp > 1);
-  assert.equal(master.hp, before);
+  assert.equal(master.hp, master.maxHp);
+  assert.ok(r.enemies[2].hp > 1, "the same song heals every living ally");
   confrontationTurn(r, master, master.nextAt + master.period, noEmit);
   assert.equal(r.enemies.length, 3);
   mushroom.hp = 0;
@@ -116,6 +119,17 @@ test("active status, summons and action cues survive saves and deterministic adv
     assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
     const saved = roundtrip(s),
       end = s.updatedAt + 8000;
+    const resumed = skipTo(saved, saved.updatedAt + 3600000);
+    assert.deepEqual(resumed.squads[0].run.health, saved.squads[0].run.health);
+    assert.deepEqual(
+      resumed.squads[0].run.enemies.map((e) => e.hp),
+      saved.squads[0].run.enemies.map((e) => e.hp),
+    );
+    assert.deepEqual(roundtrip(resumed), JSON.parse(JSON.stringify(resumed)));
+    assert.equal(
+      resumed.squads[0].run.enemies[0].cueAt,
+      saved.squads[0].run.enemies[0].cueAt + 3600000,
+    );
     let fine = saved;
     while (fine.updatedAt < end) fine = settle(fine, fine.updatedAt + 100);
     assert.deepEqual(JSON.parse(JSON.stringify(fine)), JSON.parse(JSON.stringify(settle(s, end))));
@@ -140,6 +154,13 @@ test("active status, summons and action cues survive saves and deterministic adv
     }
     assert.doesNotThrow(() => roundtrip(old));
   }
+});
+
+test("Merrill's healing actually restores an injured mushroom during ordinary play", () => {
+  const s = until(start("merrill"), (r) =>
+    r?.events.some((e) => e.text.includes("メリルの歌") && e.amount > 0),
+  );
+  assert.ok(s.squads[0].run.enemies.some((e) => e.trick === "mushroom" && e.hp > 0));
 });
 
 test("battle lines have real portraits and short-lived enemy exchanges are retained in order", () => {

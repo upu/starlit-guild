@@ -35,7 +35,7 @@ export class RoadEffects {
     this.threads.clear();
     const visible = state.effects.filter(
       (effect) =>
-        (!reduced || effect.kind === "command") &&
+        (!reduced || effect.kind === "command" || effect.kind === "song") &&
         effect.kind !== "hurt" &&
         state.time >= effect.at &&
         state.time - effect.at <
@@ -66,7 +66,10 @@ export class RoadEffects {
       endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),
       startY = roadY(effect.fromLane ?? effect.lane, this.scene.scale.height) - 28 * scale;
-    if (paintDuelEffect(sprite, effect, age, scale, startX, startY, endX, endY)) return;
+    if (
+      paintDuelEffect(this.threads, sprite, effect, age, scale, startX, startY, endX, endY, reduced)
+    )
+      return;
     if (effect.kind === "command") {
       paintCommand(
         this.threads,

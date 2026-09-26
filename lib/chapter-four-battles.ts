@@ -60,9 +60,9 @@ function cue(
     at,
     "move",
     value === "summon"
-      ? "メリルがカバンからキノコの魔物を投げた！"
+      ? "メリルがカバンからコロタケを二体投げた！"
       : value === "song"
-        ? "メリルの歌と踊りでキノコが元気を取り戻す"
+        ? "メリルの歌と踊りで敵側全員が元気を取り戻す"
         : "リコのしびれ煙で一時的に麻痺",
     amount,
     undefined,
@@ -73,31 +73,38 @@ function cue(
 function summon(r: Run, enemy: Enemy, at: number, emit: BattleEmit) {
   const enemies = r.enemies;
   if (!enemies || enemies.length >= 3 || !r.road) return false;
-  const index = enemies.length,
-    maxHp = Math.round(enemy.maxHp * 0.32);
-  const mushroom: Enemy = {
-    id: `enemy-${String(index + 1)}`,
-    trick: "mushroom",
-    hp: maxHp,
-    maxHp,
-    resistance: enemy.resistance,
-    attack: enemy.attack * 0.42,
-    period: 1900,
-    nextAt: at + 1900,
-  };
-  enemies.push(mushroom);
-  const source = r.road.opponents[enemy.id],
-    target = r.road.members[r.actors[0].hero];
-  const direction = target.x < source.x ? -1 : 1;
-  const x = source.x + direction * (75 + index * 24);
-  r.road.opponents[mushroom.id] = { x, previousX: x, recoil: 0, walking: false, facing: direction };
+  for (let index = enemies.length; index < 3; index++) {
+    const maxHp = Math.round(enemy.maxHp * 0.65);
+    const mushroom: Enemy = {
+      id: `enemy-${String(index + 1)}`,
+      trick: "mushroom",
+      hp: maxHp,
+      maxHp,
+      resistance: enemy.resistance,
+      attack: enemy.attack * 0.42,
+      period: 1900,
+      nextAt: at + 1900,
+    };
+    enemies.push(mushroom);
+    const source = r.road.opponents[enemy.id],
+      target = r.road.members[r.actors[0].hero];
+    const direction = target.x < source.x ? -1 : 1;
+    const x = source.x + direction * (75 + index * 24);
+    r.road.opponents[mushroom.id] = {
+      x,
+      previousX: x,
+      recoil: 0,
+      walking: false,
+      facing: direction,
+    };
+  }
   cue(r, enemy, at, "summon", emit);
   return true;
 }
 function sing(r: Run, enemy: Enemy, at: number, emit: BattleEmit) {
   let restored = 0;
   for (const ally of r.enemies || []) {
-    if (ally.trick !== "mushroom" || ally.hp <= 0) continue;
+    if (ally.hp <= 0) continue;
     const amount = Math.min(ally.maxHp - ally.hp, Math.ceil(ally.maxHp * 0.2));
     ally.hp += amount;
     restored += amount;

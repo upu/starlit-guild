@@ -20,6 +20,7 @@ export type RoadEnemy = {
   boss: boolean;
   action?: import("./chapter-four-battles.ts").BattleCue;
   actionAt?: number;
+  appearsAt?: number;
   pose?: "fallen" | "retreat" | "enter" | "drag";
 };
 export type RoadEffect = {

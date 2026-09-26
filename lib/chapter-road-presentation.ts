@@ -8,7 +8,7 @@ import {
 } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
 import { paralyzed } from "./chapter-four-battles.ts";
-import { confrontationEffects } from "./chapter-four-battle-presentation.ts";
+import { confrontationEffects, mushroomArrival } from "./chapter-four-battle-presentation.ts";
 import {
   adventureFrame,
   type AdventureInput,
@@ -187,6 +187,7 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
     return {
       id: index + 1,
       kind: enemy.trick || drawnEnemyKind(run, frame, enemy.role),
+      appearsAt: mushroomArrival(run, enemy.id),
       action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
       actionAt: enemy.cueAt,
       x,

@@ -11,12 +11,14 @@ const puppetNames = {
   slime: "",
   lico: "リコの仕掛け",
   merrill: "メリル",
-  mushroom: "キノコの魔物",
+  mushroom: "コロタケ",
 };
 export function enemyName(enemy: RoadEnemy) {
   if (enemy.kind !== "slime") return puppetNames[enemy.kind];
   return enemy.boss ? "大きなスライム" : "";
 }
+export const enemyLabel = (enemy: RoadEnemy, look?: RoadLook) =>
+  look?.enemies[enemy.id]?.label || enemyName(enemy);
 export const enemyFalls = (enemy: RoadEnemy) => enemy.pose === "fallen" || enemy.pose === "drag";
 export function enemyAngle(enemy: RoadEnemy, time: number, reduced: boolean) {
   if (enemyFalls(enemy)) return -20;
@@ -27,12 +29,21 @@ export function fitEnemy(
   enemy: RoadEnemy,
   size: number,
   filter: RoadSpriteFilter,
+  time: number,
+  reduced: boolean,
 ) {
   const { puppet, character } = enemyAppearance(enemy);
   if (puppet) image.setScale(size / 724).setOrigin(0.5, 0.98);
   if (character || enemy.kind === "mushroom") {
     image.setScale(size / image.frame.height).setOrigin(0.5, 1);
     filter.apply(image);
+  }
+  if (!reduced && enemy.action === "song") {
+    const turn = ((time - (enemy.actionAt ?? time)) / 900) * Math.PI * 2;
+    image.scaleX *= Math.max(0.15, Math.abs(Math.cos(turn)));
+    if (Math.cos(turn) < 0) image.toggleFlipX();
+    image.x += Math.sin(turn) * 8;
+    image.y -= Math.abs(Math.sin(turn)) * 5;
   }
 }
 export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {

@@ -10,6 +10,8 @@ import {
   MERRILL_SEEDLINGS_QUEST,
 } from "../lib/chapter-four.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
+import { chapterFourBattleBanter } from "../lib/chapter-four-battle-banter.ts";
+import { expressionPortrait } from "../lib/portrait-expressions.ts";
 
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173";
@@ -70,7 +72,8 @@ async function capture(page, name) {
 }
 
 function stageRun(index, target) {
-  let state = testState(Date.now(), 27 + index, 40, 10000);
+  const cue = ["summon", "song", "paralyze"].includes(target);
+  let state = testState(Date.now(), 27 + index, cue ? 25 : 40, 10000);
   if (index === 0) state = act(state, { type: "readStory", id: WALNUT_INTERLUDE }, state.updatedAt);
   state = act(
     state,
@@ -80,6 +83,7 @@ function stageRun(index, target) {
   const visible = () => {
     const run = state.squads[0].run;
     if (!run) return false;
+    if (cue) return run.enemies?.some((enemy) => enemy.cue === target);
     const frame = chapterRoadFrame({
       squad: state.squads[0],
       now: state.updatedAt,
@@ -109,6 +113,26 @@ function stageRun(index, target) {
   return state;
 }
 
+async function verifyBattleDialogue(page, state) {
+  const lines = chapterFourBattleBanter(state.squads[0].run);
+  assert.ok((await page.locator(".journey-banter").innerText()).includes(lines[0].text));
+  const portrait = expressionPortrait(lines[0].speaker, lines[0].expression);
+  const icon = page
+    .locator(".journey-banter .banter-line")
+    .first()
+    .locator('[style*="background-image"]');
+  assert.ok((await icon.getAttribute("style")).includes(portrait.src));
+  if (state.squads[0].run.enemies[0].cue !== "song") return;
+  await page.clock.runFor(4600);
+  const shout = page.locator(".journey-banter .banter-line").filter({ hasText: "あーーっ！" });
+  assert.ok((await shout.innerText()).includes("コロタケ"));
+  assert.ok(
+    (await shout.locator('[style*="background-image"]').getAttribute("style")).includes(
+      "100% 100%",
+    ),
+  );
+}
+
 try {
   const pending = testState(Date.now(), 27, 40, 10000);
   const interlude = await open(pending);
@@ -133,6 +157,9 @@ try {
     ["record-comparison", 6, 0],
     ["lico-apparatus", 6, "lico"],
     ["lico-and-merrill", 7, "merrill"],
+    ["lico-paralysis", 6, "paralyze"],
+    ["korotake-summon", 7, "summon"],
+    ["merrill-party-song", 7, "song"],
     ["five-companions", 8, 0],
   ]) {
     const state = stageRun(index, node);
@@ -142,6 +169,7 @@ try {
       assert.equal(state.squads[0].run.quest, MERRILL_SEEDLINGS_QUEST);
     const { page, context } = await open(state);
     await capture(page, name);
+    if (["paralyze", "summon", "song"].includes(node)) await verifyBattleDialogue(page, state);
     await context.close();
     results.push(name);
   }

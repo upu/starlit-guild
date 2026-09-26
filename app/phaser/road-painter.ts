@@ -31,7 +31,7 @@ import {
   enemyFacesRight,
   enemyAngle,
   fitEnemy,
-  enemyName,
+  enemyLabel,
   enemyDisplayHeight,
 } from "./road-enemy-appearance";
 
@@ -302,10 +302,8 @@ export class RoadPainter {
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
-  private enemyLabel(enemy: RoadEnemy) {
-    return this.look?.enemies[enemy.id]?.label || enemyName(enemy);
-  }
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
+    if (!reduced && enemy.appearsAt && state.time < enemy.appearsAt) return;
     let figure = this.enemies.get(enemy.id);
     if (!figure) {
       figure = this.makeFigure("/sprites.png", "slime", "");
@@ -326,12 +324,12 @@ export class RoadPainter {
       .setFlipX(character ? !facesRight : facesRight)
       .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
-    fitEnemy(figure.image, enemy, size, this.spriteFilter);
+    fitEnemy(figure.image, enemy, size, this.spriteFilter, state.time, reduced);
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)
       .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
-      .setText(this.enemyLabel(enemy));
+      .setText(enemyLabel(enemy, this.look));
     if (enemy.kind !== "pumpety" && !enemy.pose)
       this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
   }

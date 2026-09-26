@@ -125,6 +125,21 @@ function healFromActor(s: State, sq: Squad, r: Run, hero: string, special: boole
     restored = healMember(r, target, heal);
   event(r, at, "heal", heroSkills[hero].name, restored, hero, target);
 }
+function attackPresentation(
+  r: Run,
+  q: Quest,
+  kind: Encounter,
+  hero: string,
+  special: boolean,
+  enemy?: string,
+) {
+  if (r.enemies?.some((e) => e.id === enemy && e.trick === "mushroom"))
+    return {
+      kind: special ? ("skill" as const) : ("hit" as const),
+      text: "コロタケを押し返す",
+    };
+  return { kind: actorEventKind(q, kind, special), text: actorEventText(q, kind, hero, special) };
+}
 function actorTurn(
   s: State,
   sq: Squad,
@@ -168,11 +183,12 @@ function actorTurn(
     useSpecial = special && (!s.techniques || !["aria", "leon"].includes(hero) || !!text);
   if (special && kind === "battle" && equippedTechnique(s, hero, "active") === "leon-guard")
     r.ward += Math.ceil(totalMaxHp(r) * 0.12);
+  const action = attackPresentation(r, q, kind, hero, useSpecial, hit.enemy);
   event(
     r,
     at,
-    actorEventKind(q, kind, useSpecial),
-    heroById(hero).name + "：" + (text || actorEventText(q, kind, hero, useSpecial)),
+    action.kind,
+    heroById(hero).name + "：" + (text || action.text),
     hit.amount,
     hero,
     undefined,

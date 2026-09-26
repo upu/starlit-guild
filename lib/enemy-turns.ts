@@ -32,7 +32,7 @@ export function enemyText(q: Quest, blocked: number) {
   return "魔物の攻撃";
 }
 function strikeText(enemy: Enemy, q: Quest, blocked: number, followup: boolean) {
-  if (enemy.trick === "mushroom") return "キノコの魔物の体当たり";
+  if (enemy.trick === "mushroom") return "コロタケの体当たり";
   if (!enemy.role) return enemyText(q, blocked);
   const text = {
     puppet: "小さな人形の素早い一撃",
