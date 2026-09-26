@@ -143,9 +143,9 @@ try {
     assert.equal(await page.locator(".quest-option").count(), 6);
     const chapter = page.getByRole("combobox", { name: "クエストの章" });
     assert.equal(await chapter.inputValue(), "two");
-    assert.equal(
-      await chapter.locator('option[value="four"]').evaluate((option) => option.disabled),
-      true,
+    assert.deepEqual(
+      await chapter.locator("option").evaluateAll((options) => options.map((o) => o.value)),
+      ["one", "two"],
     );
     const chapterHeight = (await page.locator(".quest-chapters").boundingBox()).height;
     assert.ok(chapterHeight >= 44 && chapterHeight <= 48);

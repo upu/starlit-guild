@@ -18,25 +18,19 @@ type Props = {
   onAutoNextChange: (value: boolean) => void;
 };
 
-function chapterOption(item: (typeof questChapters)[number], unlocked: Quest[]) {
-  const available = unlocked.some((q) => questChapter(q.id) === item.id);
-  if (item.id === "other" && !available) return null;
-  return (
-    <option key={item.id} value={item.id} disabled={!available}>
-      {item.label}
-      {!available && "（未解放）"}
-    </option>
-  );
+// Only chapters with an unlocked quest are listed; locked chapters stay hidden.
+function openChapters(unlocked: Quest[]) {
+  return questChapters.filter((item) => unlocked.some((q) => questChapter(q.id) === item.id));
 }
 
 function ChapterSelector({
   chapter,
-  unlocked,
+  chapters,
   ready,
   onChange,
 }: {
   chapter: ReturnType<typeof questChapter>;
-  unlocked: Quest[];
+  chapters: ReturnType<typeof openChapters>;
   ready: boolean;
   onChange: (id: ReturnType<typeof questChapter>) => void;
 }) {
@@ -48,11 +42,15 @@ function ChapterSelector({
           value={chapter}
           disabled={!ready}
           onChange={(event) => {
-            const item = questChapters.find((item) => item.id === event.currentTarget.value);
+            const item = chapters.find((item) => item.id === event.currentTarget.value);
             if (item) onChange(item.id);
           }}
         >
-          {questChapters.map((item) => chapterOption(item, unlocked))}
+          {chapters.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.label}
+            </option>
+          ))}
         </select>
         <ChevronDown size={16} aria-hidden="true" />
       </span>
@@ -127,6 +125,7 @@ export function QuestPicker({
 }: Props) {
   const unlocked = availableQuests(s),
     q = unlocked.find((q) => q.id === selected) || unlocked[0];
+  const chapters = openChapters(unlocked);
   const [chapter, setChapter] = useState(() => questChapter(q.id));
   const next = nextStage(s).quest;
   function changeChapter(id: typeof chapter) {
@@ -141,12 +140,14 @@ export function QuestPicker({
   }
   return (
     <div className="quest-picker">
-      <ChapterSelector
-        chapter={chapter}
-        unlocked={unlocked}
-        ready={ready}
-        onChange={changeChapter}
-      />
+      {chapters.length > 1 && (
+        <ChapterSelector
+          chapter={chapter}
+          chapters={chapters}
+          ready={ready}
+          onChange={changeChapter}
+        />
+      )}
       <div className="quest-list-scroll">
         <QuestProgressionSetting
           checked={s.autoNextQuest === true}
