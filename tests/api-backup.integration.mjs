@@ -74,10 +74,7 @@ assert.equal((await post(a.cookie, bad)).status, 400);
 assert.equal((await post(a.cookie, save, "https://foreign.example")).status, 403);
 save = structuredClone(save);
 save.serial = 3;
-save.profiles[0].state = settle(
-  save.profiles[0].state,
-  save.profiles[0].state.updatedAt + 3600000,
-).state;
+save.profiles[0].state = settle(save.profiles[0].state, save.profiles[0].state.updatedAt + 3600000);
 assert.equal((await post(a.cookie, save)).status, 200);
 const latest = (await get(a.cookie)).data.backups[0].bundle;
 assert.ok(latest.profiles[0].state.clears > 0);

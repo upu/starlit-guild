@@ -12,6 +12,7 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
+| 0.4.14 | 2026-09-26 | 留守中の進行をなくし、冒険は画面を開いている間だけ進める（[#182](https://github.com/upu/starlit-guild/pull/182)） |
 | 0.4.13 | 2026-09-26 | Auto-Next: クリア後に次のステージへ自動で出発し、クリア済みステージからも順に進む（[#181](https://github.com/upu/starlit-guild/pull/181)） |
 | 0.4.12 | 2026-09-26 | 出発と帰還を画像アイコンに揃える（[#180](https://github.com/upu/starlit-guild/pull/180)） |
 | 0.4.11 | 2026-09-25 | 技の呼び名をスキルにし、枠ラベルを「アクティブ」「パッシブ」に短くする（[#179](https://github.com/upu/starlit-guild/pull/179)） |

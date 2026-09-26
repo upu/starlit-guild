@@ -2,7 +2,7 @@
 import { localId } from "@/lib/local-id";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "sonner";
-import { initialState, settle, type Rewards } from "@/lib/game";
+import { initialState, settleOnScreen } from "@/lib/game";
 import { parseBundle, type Profile, type SaveBundle } from "@/lib/save-format";
 import { journeyNotice } from "@/lib/journey";
 import { sound, soundEvents } from "@/lib/sound";
@@ -72,8 +72,7 @@ export function useLocalGameState() {
     [cloudBusy, setCloudBusy] = useState(false),
     [copies, setCopies] = useState<CloudCopy[]>([]),
     [otherTab, setOtherTab] = useState(false),
-    [saved, setSaved] = useState(0),
-    [report, setReport] = useState<Rewards | null>(null);
+    [saved, setSaved] = useState(0);
   const currentRef = useRef<SaveBundle | null>(null),
     tabIdRef = useRef(""),
     ownerRef = useRef(false),
@@ -97,8 +96,6 @@ export function useLocalGameState() {
     setOtherTab,
     saved,
     setSaved,
-    report,
-    setReport,
     currentRef,
     tabIdRef,
     ownerRef,
@@ -137,7 +134,7 @@ export function useLocalPersistence(state: LocalGameState) {
 export type LocalPersistence = ReturnType<typeof useLocalPersistence>;
 
 export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence["publish"]) {
-  const { currentRef, ownerRef, setClock, setError, setReport } = state;
+  const { currentRef, ownerRef, setClock, setError } = state;
   return useCallback(
     (now: number) => {
       const bundle = currentRef.current;
@@ -149,17 +146,11 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
       }
       const before = profile.state,
         previous = before.updatedAt,
-        result = settle(before, now),
-        rewards = result.rewards;
-      profile.state = result.state;
-      if (!rewards.offline) celebrate(before, profile.state);
-      if (
-        rewards.offline &&
-        (rewards.count || rewards.gold || rewards.herbs || rewards.ore || rewards.xp)
-      )
-        setReport(rewards);
+        after = settleOnScreen(before, now);
+      profile.state = after;
+      celebrate(before, after);
       if (document.visibilityState === "visible") {
-        const recent = profile.state.squads
+        const recent = after.squads
           .flatMap((squad) => squad.run?.events || [])
           .filter(
             (event) =>
@@ -168,12 +159,12 @@ export function useLocalAdvance(state: LocalGameState, publish: LocalPersistence
               !["assist", "move", "rest"].includes(event.kind),
           );
         soundEvents(recent);
-        if (rewards.count && !rewards.offline) sound("clear");
+        if (after.clears > before.clears) sound("clear");
       }
       setClock(now);
       publish(bundle);
     },
-    [currentRef, ownerRef, publish, setClock, setError, setReport],
+    [currentRef, ownerRef, publish, setClock, setError],
   );
 }
 export type LocalAdvance = ReturnType<typeof useLocalAdvance>;

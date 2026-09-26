@@ -28,7 +28,7 @@ export function simulateCombat(input, quest, limitMs = 600000) {
     for (const enemy of run.enemies || [])
       record.maxEnemyHp = Math.max(record.maxEnemyHp, enemy.maxHp);
     const phase = run.phase;
-    state = settle(state, run.nextAt).state;
+    state = settle(state, run.nextAt);
     const next = state.squads[0].run;
     if (next?.phase === "rest" && phase !== "rest") record.rests++;
     for (const event of next?.events || [])
@@ -116,7 +116,7 @@ export function trainedChapter(includeState = false) {
       state = act(result.state, { type: "stop" }, result.state.updatedAt);
       const farm = prologueStages[Math.min(index - 1, 5)].quest;
       state = act(state, { type: "start", id: farm, value: true }, state.updatedAt);
-      state = settle(state, state.updatedAt + 300000).state;
+      state = settle(state, state.updatedAt + 300000);
       trainingSeconds += 300;
       state = act(state, { type: "stop" }, state.updatedAt);
       result = simulateCombat(state, stage.quest, 180000);
@@ -146,7 +146,7 @@ export function tappedCombat(input, quest, tapsPerSecond = 8) {
   const start = state.updatedAt,
     interval = 1000 / tapsPerSecond;
   for (let at = start + interval; at <= start + 600000 && state.squads[0].run; at += interval) {
-    state = settle(state, at).state;
+    state = settle(state, at);
     if (!state.squads[0].run) break;
     state = act(
       state,

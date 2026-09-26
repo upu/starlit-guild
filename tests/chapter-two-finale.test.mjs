@@ -80,12 +80,12 @@ test("2-6 save continues through 2-9 with first-ending gates, offline parity and
         assert.equal(frame(live).target.battle, false);
         assert.equal(run.enemies?.length ?? 0, 0);
       }
-      live = settle(live, run.nextAt).state;
+      live = settle(live, run.nextAt);
     }
     assert.equal(live.squads[0].run, null);
     assert.equal(live.done[id], 1);
     assert.equal(battleCount, id === BLOCKADE_QUEST ? 3 : id === HOUSE_CALLS_QUEST ? 0 : 3);
-    const offline = roundtrip(settle(resumed, resumed.updatedAt + 13 * 3600000).state);
+    const offline = roundtrip(settle(resumed, resumed.updatedAt + 13 * 3600000));
     for (const key of ["gold", "herbs", "ore", "owned", "xp", "done", "story"])
       assert.deepEqual(offline[key], live[key]);
     assert.equal(stageEndingPending(offline), id);
@@ -100,7 +100,7 @@ test("2-6 save continues through 2-9 with first-ending gates, offline parity and
   assert.match(nextGoal(s).title, /幕間/);
   assert.doesNotMatch(nextGoal(s).detail, /準備中/);
   for (const id of stages) {
-    const repeated = roundtrip(settle(start(s, id), s.updatedAt + 3600000).state);
+    const repeated = roundtrip(settle(start(s, id), s.updatedAt + 3600000));
     assert.ok(repeated.done[id] > 1);
     assert.deepEqual(repeated.story, s.story);
     assert.deepEqual(repeated.owned, s.owned);

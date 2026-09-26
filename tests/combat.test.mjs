@@ -1,6 +1,15 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { act, settle, initialState, testState, allQuests, estimate } from "../lib/game.ts";
+import {
+  act,
+  settle,
+  settleOnScreen,
+  ON_SCREEN_LIMIT,
+  initialState,
+  testState,
+  allQuests,
+  estimate,
+} from "../lib/game.ts";
 import { journeyNotice } from "../lib/journey.ts";
 import { nextStage, stageEndingPending, storyStages } from "../lib/prologue.ts";
 import {
@@ -42,7 +51,7 @@ function storyRun(stages, level, gold = 1000) {
 function group() {
   let state = storyRun(3, 1);
   for (let i = 0; state.squads[0].run.enemies.length !== 3 && i < 1000; i++)
-    state = settle(state, state.squads[0].run.nextAt).state;
+    state = settle(state, state.squads[0].run.nextAt);
   assert.equal(state.squads[0].run.enemies.length, 3);
   return state;
 }
@@ -115,17 +124,17 @@ test("opponents have independent attack clocks and defeated opponents stop attac
   for (const actor of r.actors) actor.nextAt = r.enemyAt + 10000;
   r.nextAt = r.enemyAt;
   r.events = [];
-  const first = settle(source, r.enemyAt).state;
+  const first = settle(source, r.enemyAt);
   const hurt = first.squads[0].run.events.filter((e) => e.kind === "hurt");
   assert.equal(hurt.length, 1);
   assert.equal(hurt[0].enemy, "enemy-1");
-  const after = settle(first, r.enemies[1].nextAt).state;
+  const after = settle(first, r.enemies[1].nextAt);
   assert.equal(after.squads[0].run.events.filter((e) => e.kind === "hurt").at(-1).enemy, "enemy-2");
   const defeated = structuredClone(source),
     run = defeated.squads[0].run;
   damageEnemy(run, 9999, 99);
   run.nextAt = run.enemyAt;
-  const later = settle(defeated, r.enemies[2].nextAt).state;
+  const later = settle(defeated, r.enemies[2].nextAt);
   assert.ok(later.squads[0].run.events.some((e) => e.kind === "hurt"));
   assert.ok(later.squads[0].run.events.every((e) => e.kind !== "hurt" || e.enemy !== "enemy-1"));
 });
@@ -137,7 +146,7 @@ test("normal, special, combo and assist attacks all respect the same resistance"
   for (const event of state.squads[0].run.events)
     if (event.enemy) seen.set(event.kind, event.amount);
   while (state.updatedAt < 15500) {
-    state = settle(state, state.squads[0].run.nextAt).state;
+    state = settle(state, state.squads[0].run.nextAt);
     for (const event of state.squads[0].run.events)
       if (event.enemy && event.kind !== "hurt") seen.set(event.kind, event.amount);
   }
@@ -154,10 +163,10 @@ test("saving partially defeated groups roundtrips HP, clocks, events and offline
   assert.deepEqual(parsed, source);
   // Stop short of the clear so the comparison stays about an unfinished battle.
   const end = source.updatedAt + 30000,
-    bulk = settle(parsed, end).state;
+    bulk = settle(parsed, end);
   let live = parsed;
-  for (let now = parsed.updatedAt + 100; now < end; now += 100) live = settle(live, now).state;
-  live = settle(live, end).state;
+  for (let now = parsed.updatedAt + 100; now < end; now += 100) live = settle(live, now);
+  live = settle(live, end);
   assert.ok(live.squads[0].run);
   assert.deepEqual(live, bulk);
   assert.doesNotThrow(() => parseBundle(bundle(bulk)));
@@ -176,7 +185,7 @@ test("saved battles without a group keep exact progress and regroup at the next 
   assert.equal(parsed.squads[0].run.enemies, undefined);
   assert.deepEqual(state, before);
   state = parsed;
-  while (state.squads[0].run.node === 0) state = settle(state, state.squads[0].run.nextAt).state;
+  while (state.squads[0].run.node === 0) state = settle(state, state.squads[0].run.nextAt);
   assert.ok(state.squads[0].run.enemies.length);
   assert.doesNotThrow(() => parseBundle(bundle(state)));
 });
@@ -207,18 +216,17 @@ test("save validation rejects duplicate enemies, inconsistent totals and backwar
   assert.throws(() => parseBundle(bundle(gathering)));
 });
 
-test("rest recovery and offline caps keep every living enemy clock valid", () => {
+test("rest recovery and skipped time keep every living enemy clock valid", () => {
   const state = group();
   for (const hp of Object.values(state.squads[0].run.health)) hp.hp = 0;
-  const resting = settle(state, state.squads[0].run.nextAt).state;
+  const resting = settle(state, state.squads[0].run.nextAt);
   assert.equal(resting.squads[0].run.phase, "rest");
   assert.doesNotThrow(() => parseBundle(bundle(resting)));
-  const recovered = settle(resting, resting.squads[0].run.nextAt).state;
+  const recovered = settle(resting, resting.squads[0].run.nextAt);
   assert.ok(recovered.squads[0].run.enemies.every((e) => e.hp === e.maxHp));
   assert.doesNotThrow(() => parseBundle(bundle(recovered)));
-  const capped = settle(recovered, recovered.updatedAt + 86400000);
-  assert.equal(capped.rewards.capped, true);
-  assert.doesNotThrow(() => parseBundle(bundle(capped.state)));
+  const resumed = settleOnScreen(recovered, recovered.updatedAt + 86400000);
+  assert.doesNotThrow(() => parseBundle(bundle(resumed)));
 });
 
 test("group portraits have distinct HP, stable positions, focused effects and fit compact maps", () => {
@@ -283,7 +291,7 @@ test("rapid tapping can overcome an underleveled first-chapter finale without a 
 
 test("only read first-chapter stages farm automatically, earn XP offline and can be stopped", () => {
   let state = act(initialState(1000), { type: "start", id: "village-trade", value: true }, 1000);
-  state = settle(state, 100000).state;
+  state = settle(state, 100000);
   assert.equal(state.squads[0].run, null);
   assert.equal(state.done["village-trade"], 1);
   assert.throws(() => act(state, { type: "start", id: "village-trade" }, state.updatedAt), /物語/);
@@ -291,13 +299,12 @@ test("only read first-chapter stages farm automatically, earn XP offline and can
   const xp = state.xp.aria;
   state = act(state, { type: "start", id: "village-trade", value: true }, state.updatedAt);
   const source = structuredClone(state);
-  state = settle(state, state.updatedAt + 300000).state;
+  state = settle(state, state.updatedAt + 300000);
   assert.ok(state.squads[0].run);
   assert.ok(state.done["village-trade"] > 2);
   assert.ok(state.xp.aria > xp);
   let live = source;
-  for (let at = source.updatedAt + 1000; at <= state.updatedAt; at += 1000)
-    live = settle(live, at).state;
+  for (let at = source.updatedAt + 1000; at <= state.updatedAt; at += 1000) live = settle(live, at);
   assert.deepEqual({ ...live, log: [] }, { ...state, log: [] });
   assert.doesNotThrow(() => parseBundle(bundle(state)));
   assert.equal(journeyNotice(source, state), null);
@@ -305,19 +312,17 @@ test("only read first-chapter stages farm automatically, earn XP offline and can
   const stopped = act(state, { type: "stop" }, state.updatedAt);
   assert.equal(stopped.squads[0].run, null);
   assert.equal(stopped.xp.aria, state.xp.aria);
-  assert.deepEqual(settle(stopped, stopped.updatedAt + 10000).state.done, stopped.done);
+  assert.deepEqual(settle(stopped, stopped.updatedAt + 10000).done, stopped.done);
 });
 
-test("offline cap shifts stored enemy clocks by exactly the unprocessed time", () => {
-  const source = storyRun(15, 1);
-  const regular = settle(source, 1000 + 43200000).state,
-    capped = settle(source, 1000 + 86400000).state;
-  assert.ok(regular.squads[0].run);
-  assert.ok(capped.squads[0].run);
-  const a = regular.squads[0].run,
-    b = capped.squads[0].run;
+test("skipped time shifts stored enemy clocks by exactly the unplayed time", () => {
+  const source = storyRun(15, 1),
+    played = settle(source, source.updatedAt + ON_SCREEN_LIMIT),
+    resumed = settleOnScreen(source, source.updatedAt + 86400000);
+  const a = played.squads[0].run,
+    b = resumed.squads[0].run;
   assert.equal(a.target, b.target);
   for (let i = 0; i < a.enemies.length; i++)
-    assert.equal(b.enemies[i].nextAt - a.enemies[i].nextAt, 43200000);
-  assert.doesNotThrow(() => parseBundle(bundle(capped)));
+    assert.equal(b.enemies[i].nextAt - a.enemies[i].nextAt, 86400000 - ON_SCREEN_LIMIT);
+  assert.doesNotThrow(() => parseBundle(bundle(resumed)));
 });

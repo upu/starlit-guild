@@ -50,8 +50,6 @@ export function useLocalGame(testToolsEnabled = false) {
     refreshCopies,
     backup,
     saved: state.saved,
-    report: state.report,
-    setReport: state.setReport,
     dispatch: createGameDispatch(context),
     switchProfile: createSwitchProfile(context),
     createProfile: createProfileAction(context, testToolsEnabled),

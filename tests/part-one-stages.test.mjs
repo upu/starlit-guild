@@ -35,7 +35,7 @@ function start(s, id) {
     prepared.updatedAt,
   );
 }
-const finish = (s) => settle(s, s.updatedAt + 13 * 3600000).state;
+const finish = (s) => settle(s, s.updatedAt + 13 * 3600000);
 const read = (s, id) => act(s, { type: "readStory", id: id + "-return" }, s.updatedAt);
 function roundtrip(state) {
   const id = crypto.randomUUID();
@@ -72,7 +72,7 @@ test("1-1 through 1-9 requires each ending, stops offline and roundtrips without
     assert.equal(journeyNotice(before, s).title, stage.arrival);
     assert.throws(() => start(s, stage.quest), /物語/);
     assert.ok(availableStories(s).some((st) => st.id === stage.quest + "-return"));
-    assert.deepEqual(settle(s, s.updatedAt).state, s);
+    assert.deepEqual(settle(s, s.updatedAt), s);
     const snapshot = structuredClone(s);
     s = roundtrip(read(s, stage.quest));
     assert.equal(s.gold, snapshot.gold);
@@ -101,7 +101,7 @@ test("interruption and reload preserve progress without unlocking later stages",
     ))
       s = read(finish(start(s, stage.quest)), stage.quest);
     s = start(s, id);
-    while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt).state;
+    while (s.squads[0].run.node < 3) s = settle(s, s.squads[0].run.nextAt);
     const saved = roundtrip(s),
       resumed = finish(saved);
     assert.equal(resumed.done[id], 1);
@@ -195,7 +195,7 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
       }
       assert.ok(![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)));
     }
-    s = settle(s, run.nextAt).state;
+    s = settle(s, run.nextAt);
   }
   assert.equal(nodes.size, 15);
   assert.ok(worked);
@@ -288,7 +288,7 @@ test("waterway exploration and restoration follow fieldwork order with small bat
             );
         }
       }
-      s = settle(s, run.nextAt).state;
+      s = settle(s, run.nextAt);
     }
     assert.equal(nodes.size, 15);
     assert.ok(worked);
@@ -388,7 +388,7 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
             );
         }
       }
-      s = settle(s, run.nextAt).state;
+      s = settle(s, run.nextAt);
     }
     assert.ok(worked);
     assert.ok(damaged, "the moss lamp does not ward off monsters");
@@ -475,7 +475,7 @@ test("evening has more small encounters; town work has cargo, no battles or dama
               "delivery work never uses weapon attack poses",
             );
       }
-      s = settle(s, run.nextAt).state;
+      s = settle(s, run.nextAt);
     }
     s = read(s, id);
   }

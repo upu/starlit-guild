@@ -302,7 +302,7 @@ test("memories interleave departure and ending by stage; album stays separate an
       { type: "start", id: stage.quest, readDeparture: true },
       state.updatedAt,
     );
-    state = game.settle(state, state.updatedAt + 3600000).state;
+    state = game.settle(state, state.updatedAt + 3600000);
     state = game.act(state, { type: "readStory", id: stage.quest + "-return" }, state.updatedAt);
   }
   const h = harness("StoryLibrary", { state, onOpen: () => {} });

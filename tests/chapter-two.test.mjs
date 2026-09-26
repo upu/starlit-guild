@@ -50,7 +50,7 @@ function firstChapter() {
 }
 const start = (s, id) =>
   act(s, { type: "start", id, readDeparture: true, value: true }, s.updatedAt);
-const finish = (s) => settle(s, s.updatedAt + 13 * 3600000).state;
+const finish = (s) => settle(s, s.updatedAt + 13 * 3600000);
 const read = (s, id) => act(s, { type: "readStory", id: id + "-return" }, s.updatedAt);
 function unlocked() {
   return read(finish(start(firstChapter(), PICNIC_QUEST)), PICNIC_QUEST);
@@ -99,7 +99,7 @@ test("2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
     let live = structuredClone(away),
       healed = false;
     for (let count = 0; live.squads[0].run && count < 10000; count++) {
-      live = settle(live, live.squads[0].run.nextAt).state;
+      live = settle(live, live.squads[0].run.nextAt);
       healed ||= !!live.squads[0].run?.events.some(
         (e) => e.kind === "heal" && e.hero === "mira" && e.amount > 0,
       );
@@ -119,7 +119,7 @@ test("2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
   }
   assert.match(nextGoal(s).title, /2-7/);
   assert.equal(nextGoal(s).questId, "sweet-blockade");
-  const repeated = settle(start(s, GOLEM_QUEST), s.updatedAt + 3600000).state;
+  const repeated = settle(start(s, GOLEM_QUEST), s.updatedAt + 3600000);
   assert.ok(repeated.done[GOLEM_QUEST] > 1);
   assert.deepEqual(repeated.owned, s.owned);
   assert.deepEqual(repeated.story, s.story);
@@ -202,7 +202,7 @@ test("old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
   );
   assert.equal(availableStories(done).filter((s) => s.quest === MOON_HERB_QUEST).length, 2);
   assert.throws(() => act(done, { type: "prepareRecruitment", id: "mira" }, done.updatedAt));
-  const replay = settle(start(done, PICNIC_QUEST), done.updatedAt + 600000).state;
+  const replay = settle(start(done, PICNIC_QUEST), done.updatedAt + 600000);
   assert.ok(replay.done[PICNIC_QUEST] > 1);
   assert.ok(replay.squads[0].run);
 });
@@ -214,7 +214,7 @@ test("picnic uses ordinary weak single slimes and combat poses without gathering
   const before = s.herbs;
   let attacked = false;
   while (s.squads[0].run) {
-    s = settle(s, s.squads[0].run.nextAt).state;
+    s = settle(s, s.squads[0].run.nextAt);
     const run = s.squads[0].run;
     if (!run) break;
     assert.ok(run.events.every((e) => e.kind !== "gather"));
@@ -288,7 +288,7 @@ test("an in-progress picnic from the local gathering version loads without losin
   assert.equal(frame.target.sprite, 8);
   assert.equal(frame.target.battle, true);
   let next = loaded;
-  while (next.squads[0].run.node === 4) next = settle(next, next.squads[0].run.nextAt).state;
+  while (next.squads[0].run.node === 4) next = settle(next, next.squads[0].run.nextAt);
   assert.equal(next.squads[0].run.enemies.length, 1);
   assert.equal(next.squads[0].run.enemies[0].resistance, 0);
   assert.doesNotThrow(() => roundtrip(next));
@@ -425,18 +425,18 @@ test("only equipped techniques affect actions and rewards; offline and live simu
   assert.equal(techniqueMultiplier(equipped, "leon", "battle", true, 1.7), 1);
   const run = start(equipped, MOON_HERB_QUEST),
     end = run.updatedAt + 600000,
-    offline = settle(roundtrip(run), end).state;
+    offline = settle(roundtrip(run), end);
   let live = run;
   let sawGather = false,
     sawGuard = false;
   while (live.squads[0].run) {
-    live = settle(live, live.squads[0].run.nextAt).state;
+    live = settle(live, live.squads[0].run.nextAt);
     for (const e of live.squads[0].run?.events ?? []) {
       sawGather ||= e.text.includes("丁寧な採取");
       sawGuard ||= e.text.includes("かばう");
     }
   }
-  live = settle(live, end).state;
+  live = settle(live, end);
   assert.deepEqual({ ...roundtrip(live), log: [] }, { ...roundtrip(offline), log: [] });
   assert.equal(sawGather, true);
   assert.equal(sawGuard, true);

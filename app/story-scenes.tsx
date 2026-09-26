@@ -270,7 +270,7 @@ export function StoryLibrary({
         </section>
       ))}
       <small>
-        {available.length} / {stories.length} の思い出。留守中に開いた話も、ここに残ります。
+        {available.length} / {stories.length} の思い出。開いた話は、ここでいつでも読み返せます。
       </small>
     </div>
   );

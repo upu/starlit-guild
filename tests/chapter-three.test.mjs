@@ -30,7 +30,7 @@ test("stopped cargo recruits every living member into combat, then resumes its r
   );
   const q = questById(BERNE_QUEST);
   for (let i = 0; i < 2000 && !roadHasEnemies(s.squads[0].run); i++)
-    s = settle(s, s.squads[0].run.nextAt).state;
+    s = settle(s, s.squads[0].run.nextAt);
   const run = s.squads[0].run,
     node = run.node,
     remaining = run.target,
@@ -40,7 +40,7 @@ test("stopped cargo recruits every living member into combat, then resumes its r
   for (const id of s.squads[0].members) assert.equal(roadActionKind(q, run, id), "battle", id);
   const participants = new Set();
   for (let i = 0; i < 2000 && roadHasEnemies(s.squads[0].run); i++) {
-    s = settle(s, s.squads[0].run.nextAt).state;
+    s = settle(s, s.squads[0].run.nextAt);
     const r = s.squads[0].run;
     assert.equal(r.target, remaining, "cart waits while the party fights");
     for (const e of r.events)
@@ -50,7 +50,7 @@ test("stopped cargo recruits every living member into combat, then resumes its r
   assert.deepEqual([...participants].sort(), ["aria", "finn", "leon", "mira"]);
   assert.ok(!roadHasEnemies(s.squads[0].run));
   for (let i = 0; i < 2000 && s.squads[0].run.target >= remaining; i++)
-    s = settle(s, s.squads[0].run.nextAt).state;
+    s = settle(s, s.squads[0].run.nextAt);
   assert.equal(s.squads[0].run.node, node);
   assert.ok(s.squads[0].run.target < remaining, "remaining cargo resumes after combat");
 });
@@ -134,7 +134,7 @@ test("first departure adds Finn once at earned level, keeps older parties and su
   assert.equal(begun.xp.finn, initial.xp.mira);
   assert.equal(inventoryOf(begun).items["familiar-dagger"], 1);
   assert.equal(inventoryOf(begun).equipped.finn.weapon, "familiar-dagger");
-  const live = settle(begun, 6000).state;
+  const live = settle(begun, 6000);
   assert.deepEqual(roundtrip(live), JSON.parse(JSON.stringify(live)));
   const drawn = chapterRoadFrame({ squad: live.squads[0], now: 6000, ready: true, paused: false });
   assert.equal(drawn.battle.heroes.length, 4);

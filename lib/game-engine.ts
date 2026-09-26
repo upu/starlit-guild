@@ -33,7 +33,7 @@ import {
 import { level } from "./roster.ts";
 import { continueAutoNext } from "./game-actions.ts";
 import type { Quest } from "./game-content.ts";
-import type { Actor, Encounter, GameEvent, Rewards, Run, Squad, State } from "./game-types.ts";
+import type { Actor, Encounter, GameEvent, Run, Squad, State } from "./game-types.ts";
 import {
   activeBonds,
   activeRun,
@@ -258,22 +258,14 @@ function step(s: State, sq: Squad) {
   finishStep(r, at);
   return null;
 }
-function collectReward(rewards: Rewards, gain: ReturnType<typeof reward> | null) {
-  if (!gain) return false;
-  if (gain.finished) rewards.count++;
-  rewards.gold += gain.gold;
-  rewards.xp += gain.xp;
-  rewards.herbs += gain.herbs;
-  rewards.ore += gain.ore;
-  return gain.finished;
-}
-function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
+function settleSquad(s: State, sq: Squad, end: number) {
   let count = 0;
   while (sq.run && sq.run.nextAt <= end) {
     const quest = sq.run.quest,
       gain = step(s, sq);
-    if (collectReward(rewards, gain)) count++;
-    if (gain?.finished) continueAutoNext(s, sq, quest, gain.at);
+    if (!gain?.finished) continue;
+    count++;
+    continueAutoNext(s, sq, quest, gain.at);
   }
   if (count)
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
@@ -299,31 +291,25 @@ function shiftRun(r: Run, shift: number) {
   r.events = [];
   for (const enemy of r.enemies || []) enemy.nextAt += shift;
 }
-function applyOfflineCap(s: State, elapsed: number, capped: boolean) {
-  if (!capped) return;
-  const shift = elapsed - 43200000;
-  for (const sq of s.squads) {
-    if (sq.run) shiftRun(sq.run, shift);
-  }
-}
+// Simulates every party up to `now`, however long that is.
 export function settle(input: State, now: number) {
   const s = structuredClone(input),
-    elapsed = Math.max(0, now - s.updatedAt),
-    end = s.updatedAt + Math.min(elapsed, 43200000);
-  const rewards: Rewards = {
-    count: 0,
-    gold: 0,
-    xp: 0,
-    herbs: 0,
-    ore: 0,
-    offline: elapsed > 90000,
-    capped: elapsed > 43200000,
-  };
-  for (const sq of s.squads) settleSquad(s, sq, end, rewards);
-  applyOfflineCap(s, elapsed, rewards.capped);
-  s.updatedAt = Math.max(now, s.updatedAt);
-  rewards.gold = s.gold - input.gold;
-  rewards.herbs = s.herbs - input.herbs;
-  rewards.ore = s.ore - input.ore;
-  return { state: s, rewards };
+    end = Math.max(now, s.updatedAt);
+  for (const sq of s.squads) settleSquad(s, sq, end);
+  s.updatedAt = end;
+  return s;
+}
+// The game advances only while it is on screen. A longer gap since the last update (closed,
+// hidden, locked, or another record in use) is skipped: every clock moves forward by the gap,
+// so each party resumes exactly where it stopped.
+export const ON_SCREEN_LIMIT = 5000;
+export function settleOnScreen(input: State, now: number) {
+  const s = settle(input, Math.min(now, input.updatedAt + ON_SCREEN_LIMIT)),
+    skipped = now - s.updatedAt;
+  if (skipped <= 0) return s;
+  for (const sq of s.squads) {
+    if (sq.run) shiftRun(sq.run, skipped);
+  }
+  s.updatedAt = now;
+  return s;
 }

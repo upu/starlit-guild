@@ -83,7 +83,7 @@ test("banter responds to rest and region; friendship changes pair-specific coord
 test("finishing a stage records its ending and never leaves the run behind", () => {
   let s = start(testState(1000, 3, 8, 1000)),
     i = 0;
-  while (s.squads[0].run && i++ < 10000) s = settle(s, s.squads[0].run.nextAt).state;
+  while (s.squads[0].run && i++ < 10000) s = settle(s, s.squads[0].run.nextAt);
   assert.ok(i < 10000);
   assert.equal(s.squads[0].run, null);
   assert.ok(ids(s).some((id) => id.endsWith("-return")));
