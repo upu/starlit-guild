@@ -18,9 +18,12 @@
 }
 
 .phone-game .adventure-actions .quest-entry,
-.phone-game .adventure-actions .shop-entry {
+.phone-game .adventure-actions .shop-entry,
+.phone-game .adventure-actions .departure-button,
+.phone-game .adventure-actions .return-button {
   width: 58px;
   min-width: 58px;
+  flex-direction: column;
   gap: 0;
   padding: 0 4px;
   border: 0 !important;
@@ -32,7 +35,9 @@
   box-shadow: none !important;
 }
 
-.phone-game .adventure-actions .quest-entry {
+.phone-game .adventure-actions .quest-entry,
+.phone-game .adventure-actions .departure-button,
+.phone-game .adventure-actions .return-button {
   height: 44px;
   min-height: 44px;
   max-height: 44px;
@@ -40,14 +45,18 @@
 }
 
 .adventure-actions .quest-entry img,
-.shop-entry img {
+.shop-entry img,
+.adventure-actions .departure-button img,
+.adventure-actions .return-button img {
   width: 30px;
   height: 30px;
   flex: 0 0 30px;
 }
 
 .phone-game .adventure-actions .quest-entry span,
-.phone-game .adventure-actions .shop-entry span {
+.phone-game .adventure-actions .shop-entry span,
+.phone-game .adventure-actions .departure-button span,
+.phone-game .adventure-actions .return-button span {
   position: relative;
   z-index: 1;
   margin-top: -4px;
@@ -56,8 +65,27 @@
 
 .phone-game .adventure-actions .departure-button,
 .phone-game .adventure-actions .return-button {
-  height: 44px;
-  min-height: 44px;
+  margin-left: auto;
+  color: #e8dbb3;
+}
+
+.phone-game .adventure-actions .departure-button:focus-visible,
+.phone-game .adventure-actions .return-button:focus-visible {
+  outline: 2px solid #f0d078;
+  outline-offset: 2px;
+}
+
+.phone-game .adventure-actions .departure-button:disabled,
+.phone-game .adventure-actions .return-button:disabled {
+  opacity: 0.5;
+}
+
+.phone-game .adventure-actions .departure-button-guided {
+  border: 1px solid #f0d078 !important;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #f0d07855,
+    0 0 18px #f0d07855 !important;
 }
 
 .phone-game .adventure-actions .shop-entry-new {

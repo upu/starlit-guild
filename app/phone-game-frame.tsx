@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { House } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Dialog,
@@ -109,26 +108,29 @@ function adventurePrimaryAction(m: PhoneFrameModel, guide: FirstDepartureGuide) 
     return (
       <button
         className="outline return-button"
+        aria-label="帰還"
         disabled={!m.ready}
         onClick={() => {
           m.requestReturn("adventure");
         }}
       >
-        <House size={18} />
-        帰還
+        <Image src="/ui/return-house.png" width={32} height={32} alt="" unoptimized />
+        <span>帰還</span>
       </button>
     );
   if (!m.destinationChosen) return null;
   return (
     <button
       className={"departure-button" + (guide === "departure" ? " departure-button-guided" : "")}
+      aria-label="出発"
       aria-describedby={guide === "departure" ? "first-departure-guide" : undefined}
       disabled={!m.ready || !!m.ending || !!m.sheet}
       onClick={() => {
         m.act({ type: "start", id: m.quest.id, squad: m.squad.id });
       }}
     >
-      出発
+      <Image src="/ui/departure-boot.png" width={32} height={32} alt="" unoptimized />
+      <span>出発</span>
     </button>
   );
 }
