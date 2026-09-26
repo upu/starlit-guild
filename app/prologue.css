@@ -188,3 +188,38 @@
     height: 64px !important;
   }
 }
+.stage-title-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 0;
+  padding: 16px;
+  background: radial-gradient(ellipse at 50% 30%, #d4b76b24, transparent 70%), #152a25f5;
+  color: #f4e2b0;
+  border: 1px solid #bba26780;
+  border-radius: 10px;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+.stage-title-card > span {
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  color: #e9c77b;
+}
+.stage-title-card strong {
+  font-size: 18px;
+  font-weight: 500;
+  color: #e4ddc7;
+  overflow-wrap: anywhere;
+}
+.stage-title-card > small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 14px;
+}

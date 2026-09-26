@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useGameMusic } from "./use-game-music";
 import { useJourneyHints } from "./use-journey-hints";
 import { useInstallPrompt } from "./install-guide";
@@ -13,7 +13,14 @@ import {
   storyProgress,
   type Story,
 } from "@/lib/stories";
-import { TRADE_QUEST, isPrologueQuest, stageEndingPending, restingQuest } from "@/lib/prologue";
+import { isInterlude } from "@/lib/interludes";
+import {
+  TRADE_QUEST,
+  isPrologueQuest,
+  stageEndingPending,
+  stageUnlocked,
+  restingQuest,
+} from "@/lib/prologue";
 import { heroes, availableQuests, activeBonds } from "@/lib/game";
 import type { Action, State, Squad } from "@/lib/game";
 import type { Game, PhoneFrameModel, ReturnIntent, Sheet, SheetModel } from "./phone-game-types";
@@ -27,12 +34,17 @@ function departureStory(state: State, action: Action) {
   const target = state.squads.find((party) => party.id === action.squad) || state.squads[0];
   return storyDeparture(state, target, actionId);
 }
-// Auto-Next stops at rest only in front of an unseen departure conversation, opened next.
-function autoDeparture(state: State, squadId: string, previous?: string): Action | null {
-  const target = state.squads.find((party) => party.id === squadId),
-    id = target?.lastQuest;
-  if (!state.autoNextQuest || !target || target.run || !id || id === previous) return null;
-  return { type: "start", squad: squadId, id };
+function departable(state: State, id: string) {
+  return isInterlude(id) || (isPrologueQuest(id) && stageUnlocked(state, id));
+}
+// Auto-Next stops at rest only in front of an unseen departure conversation. The screen then
+// acts as if the departure button were pressed and waits on that conversation.
+function autoDeparture(state: State, squad: Squad, choice?: string) {
+  const id = squad.lastQuest;
+  if (!state.autoNextQuest || squad.run || !id || (choice && choice !== id)) return null;
+  if (stageEndingPending(state) || !departable(state, id)) return null;
+  const story = storyDeparture(state, squad, id);
+  return story && { story, action: startAction({ type: "start", squad: squad.id, id }) };
 }
 function selectedDestination(state: State, squad: Squad, choice?: string) {
   return squad.run?.quest || choice || squad.lastQuest || restingQuest(state, squad);
@@ -87,7 +99,10 @@ function usePhoneContext(game: Game) {
     [candidateQuest, setCandidateQuest] = useState(TRADE_QUEST),
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
-  const queuedDeparture = useRef<{ action: Action; state: State } | null>(null);
+  const auto =
+    !sheet && view === "adventure" && !returnIntent && world.ready
+      ? autoDeparture(world.s, world.squad, questChoices[world.squad.id])
+      : null;
   const setQuest = (id: string) => {
     setQuestChoices((current) => ({ ...current, [world.squad.id]: id }));
   };
@@ -113,17 +128,16 @@ function usePhoneContext(game: Game) {
     hints,
     banter,
     unread,
-    pendingDeparture,
+    pendingDeparture: auto?.action ?? pendingDeparture,
     setPendingDeparture,
-    reading,
+    reading: auto?.story ?? reading,
     setReading,
     view,
     setView,
-    sheet,
+    sheet: auto ? "story" : sheet,
     setSheet,
     setQuest,
     clearQuest,
-    queuedDeparture,
     heroIndex,
     setHeroIndex,
     candidateQuest,
@@ -158,35 +172,24 @@ function phoneStoryActions(context: PhoneContext) {
     }
     return ok;
   };
-  const queueAutoDeparture = (state: State) => {
-    const action = autoDeparture(state, context.squad.id, context.squad.lastQuest);
-    context.queuedDeparture.current = action && { action, state };
-  };
   const readStory = (id: string) =>
     context.game.dispatch({ type: "readStory", id }, (current) => {
       const next = current.squads.find((party) => party.id === context.squad.id)?.lastQuest;
       if (next && next !== context.squad.lastQuest) context.clearQuest();
-      queueAutoDeparture(current);
     });
   const finishStory = () => {
     if (!context.reading) return false;
     if (!context.pendingDeparture) return readStory(context.reading.id);
     const ok = context.game.dispatch(
       { ...context.pendingDeparture, readDeparture: true },
-      (current) => {
-        context.clearQuest();
-        queueAutoDeparture(current);
-      },
+      context.clearQuest,
     );
     if (ok) context.setPendingDeparture(null);
     return ok;
   };
   const closeStory = () => {
-    const queued = context.queuedDeparture.current;
-    context.queuedDeparture.current = null;
     context.setPendingDeparture(null);
     context.setSheet(null);
-    if (queued) act(queued.action, undefined, queued.state);
   };
   return { openStory, act, readStory, finishStory, closeStory };
 }

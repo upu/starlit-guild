@@ -105,7 +105,7 @@ function harness(initialState) {
     "./shop-panel": ui("ShopPanel"),
     "./quest-completion": ui("QuestCompletion"),
     "./map-stage": ui("MapStage"),
-    "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StoryReader"),
+    "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StageStoryReader"),
     "./story-heading": ui("StoryHeading"),
     "./sprite": ui("Sprite"),
     "./save-panel": ui("SavePanel"),
@@ -122,7 +122,11 @@ function harness(initialState) {
   Object.assign(exports, evaluateSourceModule(code, modules), {
     AdventureDestination: frameExports.AdventureDestination,
     collectionSheet: sheetExports.collectionSheet,
+    resolveSheet: sheetExports.resolveSheet,
   });
+  function storyContent() {
+    return exports.resolveSheet(model, null).content;
+  }
   function render() {
     cursor = 0;
     model = exports.PhoneGame({ game: api }).props.model;
@@ -173,6 +177,7 @@ function harness(initialState) {
     guide,
     guideText,
     questButton,
+    storyContent,
     get model() {
       return model;
     },
@@ -452,7 +457,7 @@ test("reading the first ending replaces a previous UI choice, then Auto-Next ope
   assert.equal(h.model.run.quest, prologue.RETURN_QUEST);
 });
 
-test("a stage chosen in the picker gives way to the saved destination once Auto-Next moves on", () => {
+test("after Auto-Next replays up to an unseen departure, it waits on that conversation like a pressed departure", () => {
   const s = { ...game.testState(1000, 3, 50, 0), autoNextQuest: true },
     h = harness(s);
   h.model.selectQuest(prologue.TRADE_QUEST);
@@ -465,8 +470,35 @@ test("a stage chosen in the picker gives way to the saved destination once Auto-
   const frontier = prologue.storyStages[3].quest;
   assert.equal(h.model.run, null);
   assert.equal(h.api.s.squads[0].lastQuest, frontier);
-  assert.equal(h.model.quest.id, frontier);
-  assert.ok(h.departButton());
+  assert.equal(h.model.quest.id, frontier, "the picker choice gives way to the saved destination");
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, frontier + "-departure");
+  assert.equal(h.model.pendingDeparture.id, frontier);
+  const { stage } = h.storyContent().props;
+  assert.equal(stage.number, prologue.storyStages[3].number);
+  assert.equal(stage.name, game.allQuests.find((q) => q.id === frontier).name);
+  h.model.setView("companions");
+  h.render();
+  assert.equal(h.model.sheet, null, "other screens are not interrupted");
+  h.model.setView("adventure");
+  h.render();
+  assert.equal(h.model.finishStory(), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, frontier);
+  assert.equal(h.model.squad.repeat, false);
+});
+
+test("without Auto-Next, an unseen departure waits for the departure button", () => {
+  const s = game.testState(1000, 3, 50, 0),
+    h = harness(s);
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.pendingDeparture, null);
+  h.departButton().props.onClick();
+  h.render();
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.storyContent().props.stage.number, prologue.storyStages[3].number);
 });
 
 test("with Auto-Next, closing the first 2-9 ending opens the interlude as the next departure", () => {

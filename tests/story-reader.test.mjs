@@ -461,3 +461,29 @@ test("banter uses the latest pending exchange without replaying one that was wit
   assert.ok(h.text().includes(next[0].text));
   assert.ok(!h.text().includes("一時的な会話。"));
 });
+
+test("a stage departure opens on its number and name, and a tap or outside tap starts the conversation", () => {
+  const story = stories.stories.find((st) => st.id === prologue.RETURN_QUEST + "-departure"),
+    stage = { number: "1-2", name: "帰り道" },
+    advanceRef = { current: null },
+    props = { story, ready: true, departure: true, onRead: () => true, onClose() {}, advanceRef };
+  const h = harness("StageStoryReader", { ...props, stage });
+  let tree = h.render();
+  assert.equal(tree.type.name, "StageTitleCard");
+  const card = tree.type(tree.props),
+    button = [card.props.children].flat().find((n) => n.type === "button");
+  assert.equal(button.props.className, "stage-title-card");
+  assert.deepEqual(
+    [button.props.children]
+      .flat()
+      .slice(0, 2)
+      .map((n) => n.props.children),
+    ["1-2", "帰り道"],
+  );
+  advanceRef.current.advance();
+  tree = h.render();
+  assert.equal(tree.type, h.exports.StoryReader);
+  assert.equal(tree.props.story, story);
+  assert.equal(tree.props.stage, undefined);
+  assert.equal(h.render({ ...props }).type, h.exports.StoryReader, "other stories skip the card");
+});
