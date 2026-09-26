@@ -23,6 +23,7 @@ import { QuestCompletion } from "./quest-completion";
 import { Toaster } from "@/components/ui/sonner";
 import { MapStage } from "./map-stage";
 import { Banter, StoryLibrary } from "./story-scenes";
+import { pumpetyBattleBanter } from "@/lib/pumpety-battle-banter";
 import { chapterFourBattleBanter } from "@/lib/chapter-four-battle-banter";
 import { useStoryAdvance } from "./use-story-advance";
 import { StoryHeading } from "./story-heading";
@@ -179,7 +180,7 @@ function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
     <Banter
       key={(m.game.profile?.id || "") + ":" + m.squad.id + ":" + (m.run?.quest || "idle")}
       lines={m.banter}
-      retain={!!m.run && !!chapterFourBattleBanter(m.run)}
+      retain={!!m.run && !!(chapterFourBattleBanter(m.run) || pumpetyBattleBanter(m.run))}
       paused={!!m.sheet || !!m.ending || !m.ready}
     />
   );

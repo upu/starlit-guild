@@ -27,6 +27,7 @@ export { ArtViewer, StoryAlbum } from "./story-viewers";
 export { StoryLibrary } from "./story-library";
 export { memoryGroups } from "./story-memory-groups";
 const characters = [
+  { id: "masked-pumpety", name: "カボチャ頭の少女", sprite: "masked-pumpety" as const },
   ...heroes,
   ...originalCharacters.filter((c) => !heroes.some((h) => h.id === c.id)),
 ];

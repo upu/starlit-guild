@@ -325,6 +325,16 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
   if (cargo && task === "carry") arrangeCarriers(frame, run, battle, look.puller);
   faceWorkers(battle, look, cargo, x);
 }
+function commandMotion(battle: RoadBattle, look: RoadLook) {
+  const effect = battle.effects.find((item) => item.kind === "command");
+  if (!effect) return;
+  for (const enemy of battle.enemies) {
+    if (enemy.hp <= 0) continue;
+    enemy.action = enemy.kind === "pumpety" ? "command" : "rally";
+    enemy.actionAt = effect.at;
+    if (enemy.kind === "pumpety") look.enemies[enemy.id].label = "もう一回なのよ！";
+  }
+}
 export function chapterRoadFrame(
   input: AdventureInput,
   reduced = false,
@@ -337,10 +347,7 @@ export function chapterRoadFrame(
   addWork(input, frame, battle, look);
   spreadBattleParty(battle, look.workers);
   battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
-  if (battle.effects.some((effect) => effect.kind === "command")) {
-    const master = battle.enemies.find((enemy) => enemy.kind === "pumpety");
-    if (master) look.enemies[master.id].label = "もう一回なのよ！";
-  }
+  commandMotion(battle, look);
   presentRoadScene(battle, run, input.now, reduced, worldWidth);
   return { battle, look };
 }

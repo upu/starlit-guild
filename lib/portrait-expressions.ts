@@ -22,6 +22,11 @@ export const portraitAtlases = {
   leon: standardAtlas,
   mira: standardAtlas,
   pumpety: standardAtlas,
+  "masked-pumpety": {
+    columns: 1,
+    rows: 1,
+    expressions: ["mischievous"],
+  },
   merrill: {
     columns: 4,
     rows: 2,
@@ -63,7 +68,7 @@ export function expressionPortrait(
   if (!character) return null;
   if (character === "aria" || character === "leon") return closeupPortrait(character, expression);
   const atlas = portraitAtlases[character];
-  // An expression absent from this character's atlas falls back to neutral.
+  // An absent expression falls back to the first cell, including single-image portraits.
   const cell = Math.max(
     0,
     atlas.expressions.findIndex((candidate) => candidate === expression),
@@ -72,7 +77,7 @@ export function expressionPortrait(
   return {
     src: `/portraits/${character}-expressions.webp`,
     size: `${String(atlas.columns * 100)}% ${String(atlas.rows * 100)}%`,
-    position: `${String(((cell % atlas.columns) / (atlas.columns - 1)) * 100)}% ${String((Math.floor(cell / atlas.columns) / (atlas.rows - 1)) * 100)}%`,
+    position: `${String(((cell % atlas.columns) / Math.max(1, atlas.columns - 1)) * 100)}% ${String((Math.floor(cell / atlas.columns) / Math.max(1, atlas.rows - 1)) * 100)}%`,
   };
 }
 

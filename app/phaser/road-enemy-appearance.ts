@@ -5,7 +5,7 @@ import type Phaser from "phaser";
 import type { RoadSpriteFilter } from "./road-sprite-filter";
 
 const puppetNames = {
-  pumpety: "プティ",
+  pumpety: "カボチャ頭の少女",
   puppet: "人形",
   golem: "ゴーレム",
   slime: "",
@@ -44,6 +44,14 @@ export function fitEnemy(
   if (character || enemy.kind === "mushroom") {
     image.setScale(size / image.frame.height).setOrigin(0.5, 1);
     filter.apply(image);
+  }
+  if (!reduced && (enemy.action === "command" || enemy.action === "rally")) {
+    const beat = Math.sin(
+      Math.min(1, Math.max(0, (time - (enemy.actionAt ?? time)) / 900)) * Math.PI,
+    );
+    image.y -= beat * size * (enemy.action === "command" ? 0.12 : 0.06);
+    image.scaleY *= 1 + beat * 0.07;
+    image.scaleX *= 1 - beat * 0.04;
   }
   if (!reduced && enemy.action === "song") {
     const turn = ((time - (enemy.actionAt ?? time)) / 900) * Math.PI * 2;

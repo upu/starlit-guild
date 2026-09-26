@@ -8,6 +8,8 @@
 
 ## 採用画像と表示
 
+第二章2-6のスチルで姿が見えた後の台詞と、2-7の前後会話・戦闘チャットでは `masked-pumpety` を共通Portrait APIへ渡し、[パンプキンヘッドのいたずら顔](../../public/portraits/masked-pumpety-expressions.webp) を使う。採用済み4コマの右上 `mischievous` だけを256×256pxの1枚に切り出し、第二章では全台詞に同じ顔を使う。共通APIの1列×1行として扱い、表情未指定でもこの顔を返す。40pxでも顔が分かるよう、胴体や手を入れずカボチャ頭を画面いっぱいに切り取る。少し広げた穴の奥に青緑の目元・鼻・口元がのぞき、表情と頭の傾きで気分を表す。素顔の `pumpety` と区別し、話者名は「カボチャ頭の少女」。[制作プロンプト](../art-generation/masked-pumpety-portrait.md) と [表示条件](../gameplay/chapter-two-gameplay.md#2-72-9と第二章の完結) を参照する。
+
 | 人物 | 参照 | ゲーム用画像 |
 | --- | --- | --- |
 | アリア | [シート](../characters/aria-reference-sheet.webp) | [共用の表情・上2行](../../public/portraits/aria-leon-expressions-v2.webp) |

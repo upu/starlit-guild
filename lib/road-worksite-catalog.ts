@@ -56,7 +56,7 @@ export const worksiteByLabel: Partial<Record<string, WorksiteKind>> = {
   戻った道標の向きを確かめる: "signpost",
   行き交う荷車に道を譲る: "cart",
   静かな作業場の前を通る: "route",
-  空き瓶を揺らさず運ぶ: "empty-bottles",
+  空き瓶を揺らさず運ぶ: "cart",
   往診の荷物を運ぶ: "cart",
   門へ続く道を確かめる: "signpost",
   往診先へ包みを運ぶ: "cart",

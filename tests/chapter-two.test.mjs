@@ -125,7 +125,7 @@ test("2-3 to 2-6 stop at each first ending, persist offline, heal as three and k
   assert.deepEqual(repeated.story, s.story);
 });
 
-test("delivery stages use distinct work, enemy art and reveal the hidden voice only as voice", () => {
+test("delivery stages keep the hidden voice faceless and show the masked portrait after the still", () => {
   const prep = allQuests.find((q) => q.id === DELIVERY_PREP_QUEST);
   assert.ok(Array.from({ length: 15 }, (_, i) => encounter(prep, i)).every((k) => k === "escort"));
   let s = read(finish(start(deliveryReady(), DELIVERY_PREP_QUEST)), DELIVERY_PREP_QUEST);
@@ -146,6 +146,16 @@ test("delivery stages use distinct work, enemy art and reveal the hidden voice o
   const index = st.lines.findIndex((l) => l.text.includes("ゴーレムが姿を現した"));
   assert.equal(storyArtAt(st.id, index - 1), undefined);
   assert.ok(existsSync("public" + storyArtAt(st.id, index).src));
+  assert.ok(st.lines.slice(0, index + 1).every((line) => line.speaker !== "masked-pumpety"));
+  const revealed = chapterTwoStories.find((story) => story.id === GOLEM_QUEST + "-return");
+  const masked = revealed.lines.find((line) => line.text.includes("プティには分かる"));
+  assert.equal(masked.speaker, "masked-pumpety");
+  assert.equal(masked.expression, "mischievous");
+  assert.ok(
+    chapterTwoStories
+      .filter((story) => story.quest === SIGNPOST_QUEST)
+      .every((story) => story.lines.every((line) => line.speaker !== "masked-pumpety")),
+  );
   for (const st of chapterTwoStories.filter((st) =>
     [SIGNPOST_QUEST, GOLEM_QUEST].includes(st.quest),
   ))

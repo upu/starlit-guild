@@ -1,0 +1,25 @@
+# パンプキンヘッドの会話アイコン
+
+2026-09-26、内蔵 image_gen で生成・編集。初版は `public/enemies/masked-pumpety.png` を参照した胸上の構図。小さな表示に合わせ、初版と素顔の `public/portraits/pumpety-expressions.webp` を参照して顔アップへ修正した。少し広げた穴から中の目元・口元が見えるというユーザー指定を反映。生成時は1024×1024の4コマにしたが、最終採用は右上のいたずら顔1枚。右上512×512pxを切り出し、256×256pxのWebP（quality 82、effort 6）へ縮小して `public/portraits/masked-pumpety-expressions.webp` に配置した。共通Portrait APIの1列×1行として扱い、ブラウザーの40pxチャット表示を確認する。以下は切り出し前の制作履歴。
+
+## 使用したプロンプト
+
+Edit image 1, a 2x2 pumpkin-helmet dialogue portrait atlas. Image 2 is ONLY the identity reference for the girl INSIDE the helmet: brown bangs, teal-green anime eyes, mischievous fang. Keep image 1's painterly warm orange pumpkin and green bow identity. User correction: much tighter FACE CLOSEUPS, matching other characters' face icons, readable at just 40px. Every square cell should be filled edge to edge with the pumpkin FACE: pumpkin occupies 92-100% width AND height, intentionally crop top bow and outer edges slightly. Remove ALL torso, shoulders, arms, hands, puppet controls; no bust portraits. Only small slivers of brown hair at side edges. Enlarge the two carved eye holes moderately so that a glimpse of HER REAL teal-green eyes, eyebrows and a little skin is visible recessed in shadow behind the shell. Keep visibly thick dark pumpkin rims and shadowed cavity around eyes: a girl wearing a real hollow pumpkin, NOT eyes painted on pumpkin and NOT a full human face pasted over it. The carved mouth can show a tiny glimpse of her smile/fang in shadow, but most of her human face remains concealed. Helmet remains ON in all four cells. Maintain equal aligned 2 columns x 2 rows, seamless tile layout, no borders/gutters/text. Exact row-major moods: top-left neutral attentive eyes; top-right mischievous sly smiling eyes, head slightly tilted; bottom-left surprised widened eyes; bottom-right worried slightly furrowed eyes, small head tilt. Fixed carved pumpkin grin shape stays consistent; moods from the real eyes and head angle. Consistent size and framing in ALL FOUR cells. Square 1024x1024 finished atlas.
+
+## 口元の見え方の再調整
+
+顔アップ版を編集し、口の穴の奥も目の穴と同じ程度に明るくした。黒い空洞で隠すのではなく、口元の肌・口・表情に合う八重歯を見せる。穴の縁の影でかぶり物の厚みを残す。内蔵 image_gen を使用。
+
+Targeted edit of image 1, the 2x2 closeup pumpkin helmet portrait atlas. Image 2 is identity reference ONLY for the girl underneath. KEEP the exact 2x2 grid, tight closeup framing, orange pumpkin exterior, green bow, eye openings, visible teal-green eyes, hair, lighting style, head tilts and equal cell sizes unchanged. Change ONLY what is visible INSIDE the carved MOUTH opening in EACH of the four cells. User wants the mouth area to reveal her underlying real human mouth and surrounding skin AS CLEARLY and at THE SAME BRIGHTNESS as the skin and eyes seen through the eye openings. Replace the featureless black void in the mouth openings with a recessed glimpse of her lower face: softly lit natural skin around her lips and corners of mouth, clearly visible small anime mouth, teeth and characteristic small fang where appropriate. Preserve a thin dark contact shadow around the thick pumpkin cutout rim to show the shell is worn in front of her face. Do NOT paint a huge human mouth on the pumpkin, do NOT remove the mask, do NOT make skin or teeth part of the pumpkin surface, and do NOT keep the mouth as a mostly black hole. Natural anatomy: her human mouth sits beneath her nose aligned with her human eyes. Mouth expressions in row-major order: top-left small neutral closed mouth; top-right cheeky grin with a small fang; bottom-left surprised open little O mouth; bottom-right worried uncertain small mouth with gently tense corners. Pumpkin carved mouth shape itself remains unchanged. Maintain original image dimensions, no text, no borders. The result is still a girl wearing a pumpkin helmet, with face visible through both eye and mouth holes.
+
+
+## 鼻の穴の再調整
+
+目・口に続き、4コマとも鼻の穴にも中の鼻と肌が見えるよう調整。穴の形・大きさと縁の影は維持し、ほかの構図・表情は変更しない。内蔵 image_gen を使用。
+
+Precise tiny local edit of this 2x2 pumpkin-helmet portrait atlas. Change ONLY the black triangular NOSE HOLE in EACH of the four cells. The user's request: nose hole should reveal the girl's underlying real nose and skin, just as clearly and at the same softly lit brightness as the real skin visible through the existing eye and mouth holes. Replace each black triangle interior with a small naturally recessed glimpse of the girl's skin and delicate anime nose tip/bridge. Keep the triangular hole shape and size exactly, preserve a thin dark contact shadow at its thick pumpkin rim so it still reads as a cutout in a worn shell. Nose is anatomically aligned between her existing eyes and mouth. Do not make it a large projecting nose on the pumpkin surface. Keep EVERYTHING else unchanged: identical closeup crop, 2x2 equal grid, pumpkin texture, bow, hair, eyes, mouths, expressions and face positions. No new labels or borders. ALL four nose openings must show skin, none should remain filled black.
+
+
+## 最終採用
+
+ユーザー指定で右上のいたずら顔だけを採用。再生成せず既存画像から切り出し、3つの不採用コマは配信素材から取り除いた。第二章のカボチャ姿は1枚で統一し、素顔のプティの既存表情素材は維持する。

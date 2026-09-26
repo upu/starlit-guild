@@ -40,6 +40,7 @@ test("survey, treatment, tracking, earthwork and small deliveries show their act
     ["途中までの道順を記録する", "work-route-v1.webp", "inspect", false],
     ["往診に使う湯と水を用意する", "work-medicine-v1.webp", "pack", false],
     ["家の人から空き瓶を受け取る", "work-empty-bottles-v1.webp", "pack", false],
+    ["空き瓶を揺らさず運ぶ", "cargo-v1.webp", "carry", true],
     ["戻った道標の向きを確かめる", "signpost-v2.webp", "inspect", false],
     ["日取りを確かめる", "ledger-desk-v1.webp", "inspect", false],
     ["管理人の記録を運ぶ", "work-letters-v1.webp", "carry", false],
