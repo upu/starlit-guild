@@ -18,7 +18,7 @@ export type RoadEnemy = {
   hp: number;
   maxHp: number;
   boss: boolean;
-  action?: import("./chapter-four-battles.ts").BattleCue;
+  action?: import("./chapter-four-battles.ts").BattleCue | "command" | "rally";
   actionAt?: number;
   appearsAt?: number;
   pose?: "fallen" | "retreat" | "enter" | "drag";

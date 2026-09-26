@@ -22,6 +22,11 @@ export const portraitAtlases = {
   leon: standardAtlas,
   mira: standardAtlas,
   pumpety: standardAtlas,
+  "masked-pumpety": {
+    columns: 2,
+    rows: 2,
+    expressions: ["neutral", "mischievous", "surprised", "worried"],
+  },
   merrill: {
     columns: 4,
     rows: 2,

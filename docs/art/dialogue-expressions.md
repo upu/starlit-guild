@@ -8,6 +8,8 @@
 
 ## 採用画像と表示
 
+第二章2-7の戦闘チャットでは `masked-pumpety` を共通Portrait APIへ渡し、[パンプキンヘッドの4コマ](../../public/portraits/masked-pumpety-expressions.webp) を使う。2列×2行で左上から `neutral` / `mischievous` / `surprised` / `worried`。顔の穴は黒いまま、頭と手の仕草で気分を表す。素顔の `pumpety` と区別し、話者名は「カボチャ頭の少女」。[制作プロンプト](../art-generation/masked-pumpety-portrait.md) と [表示条件](../gameplay/chapter-two-gameplay.md#2-72-9と第二章の完結) を参照する。
+
 | 人物 | 参照 | ゲーム用画像 |
 | --- | --- | --- |
 | アリア | [シート](../characters/aria-reference-sheet.webp) | [共用の表情・上2行](../../public/portraits/aria-leon-expressions-v2.webp) |

@@ -1,4 +1,5 @@
 import type { StoryLine } from "./stories.ts";
+import { pumpetyBattleBanter } from "./pumpety-battle-banter.ts";
 import type { Run } from "./game.ts";
 import {
   BLOCKADE_QUEST,
@@ -150,6 +151,8 @@ function trioBanter(run: Run): StoryLine[] {
           ];
 }
 export function chapterTwoBanter(run: Run): StoryLine[] | null {
+  const battle = pumpetyBattleBanter(run);
+  if (battle) return battle;
   const finale = finaleBanter(run);
   if (finale) return finale;
   if (trioQuest(run.quest)) return trioBanter(run);

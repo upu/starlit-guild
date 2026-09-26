@@ -11,6 +11,7 @@ import { storyArt } from "../lib/story-art.ts";
 import { interludes } from "../lib/interludes.ts";
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
 import { chapterFourSpeakers } from "../lib/chapter-four-stories.ts";
+import { pumpetyBattleExchanges } from "../lib/pumpety-battle-banter.ts";
 import { sourceForStageBanter, sourceForStory, validateStorySources } from "./script-sources.mjs";
 
 const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);
@@ -23,6 +24,7 @@ const chapterNames = new Map([
 ]);
 const marker = "> 自動生成ファイルです。手で編集せず、`npm run script:export` で更新してください。";
 const names = new Map([
+  ["masked-pumpety", "カボチャ頭の少女"],
   ...[...heroes, ...originalCharacters].map(({ id, name }) => [id, name]),
   ...Object.entries(chapterThreeSpeakers),
   ...Object.entries(chapterFourSpeakers),
@@ -120,6 +122,18 @@ function stageBanter(quest, document) {
   for (const { dialogue, conditions } of variants.values()) {
     lines.push(`#### ${describeConditions(conditions)}`, "");
     for (const line of dialogue) lines.push(formatLine(line), "");
+  }
+  if (quest === "sweet-blockade") {
+    lines.push(`戦闘中の編集元：${sourceLink(document, "lib/pumpety-battle-banter.ts")}`, "");
+    for (const [key, dialogue] of Object.entries(pumpetyBattleExchanges)) {
+      const label = {
+        opening: "少女の登場",
+        command: "追撃の命令",
+        falter: "片方の人形が止まる",
+        escape: "人形を引いて撤退",
+      }[key];
+      lines.push(`#### ${label}`, "", ...dialogue.flatMap((line) => [formatLine(line), ""]));
+    }
   }
   return lines;
 }

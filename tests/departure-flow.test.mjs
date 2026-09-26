@@ -115,6 +115,7 @@ function harness(initialState) {
     "./use-journey-hints": { useJourneyHints: () => ({}) },
     "./quest-picker": pickerExports,
     "@/lib/chapter-four-battle-banter": { chapterFourBattleBanter: () => null },
+    "@/lib/pumpety-battle-banter": { pumpetyBattleBanter: () => null },
   };
   const sheetExports = evaluateSourceModule(sheetsCode, modules);
   modules["./phone-game-sheets"] = sheetExports;

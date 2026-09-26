@@ -26,7 +26,7 @@ function fixture(index, mode) {
         (s.squads[0].run.nextAt - s.updatedAt) *
           { withdraw: 0.27, enter: 0.85, escape: 0.29 }[mode],
     );
-  } else if (mode === "worksite" || mode === "arrival") {
+  } else if (mode === "worksite" || mode === "arrival" || mode === "bottles") {
     for (let i = 0; i < 1000; i++) {
       const frame = chapterRoadFrame({
         squad: s.squads[0],
@@ -38,6 +38,7 @@ function fixture(index, mode) {
       if (
         frame.look.workers.length === s.squads[0].members.length &&
         frame.look.work &&
+        (mode !== "bottles" || frame.look.work.label === "空き瓶を揺らさず運ぶ") &&
         (mode !== "arrival" || s.squads[0].run.node === s.squads[0].run.nodes - 1)
       )
         break;
@@ -105,6 +106,7 @@ try {
     ["signpost", 13, "worksite"],
     ["rear-signpost", 13, "rear"],
     ["trio-work", 16, "worksite"],
+    ["bottles-cart", 17, "bottles"],
     ["four-cargo", 24, "worksite"],
     ["four-finn", 24, "worksite"],
     ["puppets", 15, "boss"],
@@ -133,7 +135,7 @@ try {
       await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
     if (
-      ["worksite", "arrival", "withdraw", "enter", "escape", "rear"].includes(mode) ||
+      ["worksite", "arrival", "withdraw", "enter", "escape", "rear", "bottles"].includes(mode) ||
       mode.startsWith("command")
     )
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
@@ -165,6 +167,12 @@ try {
     assert.equal(await page.locator("canvas").count(), 1);
     assert.ok(await page.evaluate(() => window.roadMipFilters > 0));
     assert.equal(await page.locator(".journey-banter").count(), 1);
+    if (mode.startsWith("command") || mode === "escape" || mode === "enter") {
+      const face = page.locator(".journey-banter .face-portrait").first();
+      const style = await face.evaluate((el) => el.getAttribute("style"));
+      assert.ok(style.includes("masked-pumpety-expressions.webp"));
+      assert.ok((await page.locator(".journey-banter").innerText()).includes("カボチャ頭の少女"));
+    }
     assert.ok(await page.locator(".map-journey progress").count());
     for (const [width, height] of ["forest", "touch"].includes(name)
       ? [
