@@ -3,8 +3,21 @@ import type { RoadBattle, RoadEffect } from "@/lib/road-view";
 import { ROAD_EFFECTS } from "./road-art";
 import { roadY } from "@/lib/road-layout";
 import { paintCommand } from "./road-command-effect";
+import { duelEffect, paintDuelEffect } from "./road-duel-effects";
 
-const frames = { arrow: 0, slash: 1, magic: 2, heal: 2, gather: 3, assist: 1, hurt: 1, command: 2 };
+const frames = {
+  arrow: 0,
+  slash: 1,
+  magic: 2,
+  heal: 2,
+  gather: 3,
+  assist: 1,
+  hurt: 1,
+  command: 2,
+  mushroomThrow: 3,
+  song: 2,
+  paralyze: 2,
+};
 
 export class RoadEffects {
   private sprites = new Map<number, Phaser.GameObjects.Image>();
@@ -25,7 +38,8 @@ export class RoadEffects {
         (!reduced || effect.kind === "command") &&
         effect.kind !== "hurt" &&
         state.time >= effect.at &&
-        state.time - effect.at < (effect.kind === "command" ? 900 : 600),
+        state.time - effect.at <
+          (duelEffect(effect.kind) ? 1800 : effect.kind === "command" ? 900 : 600),
     );
     for (const [id, sprite] of this.sprites) {
       if (visible.some((effect) => effect.id === id)) continue;
@@ -52,6 +66,7 @@ export class RoadEffects {
       endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),
       startY = roadY(effect.fromLane ?? effect.lane, this.scene.scale.height) - 28 * scale;
+    if (paintDuelEffect(sprite, effect, age, scale, startX, startY, endX, endY)) return;
     if (effect.kind === "command") {
       paintCommand(
         this.threads,

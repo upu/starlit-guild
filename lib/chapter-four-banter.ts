@@ -13,6 +13,7 @@ import {
 } from "./chapter-four.ts";
 import type { Run } from "./game.ts";
 import type { StoryLine } from "./stories.ts";
+import { chapterFourBattleBanter } from "./chapter-four-battle-banter.ts";
 
 const routes: Record<string, StoryLine[][]> = {
   [LINDE_REQUESTS_QUEST]: [
@@ -255,6 +256,8 @@ function pursuitBanter(run: Run): StoryLine[] | null {
 }
 export function chapterFourBanter(run: Run): StoryLine[] | null {
   if (!isChapterFourQuest(run.quest)) return null;
+  const battle = chapterFourBattleBanter(run);
+  if (battle) return battle;
   const pursuit = pursuitBanter(run);
   if (pursuit) return pursuit;
   if (run.phase !== "rest" && run.quest === MERRILL_SEEDLINGS_QUEST && run.node < 9)

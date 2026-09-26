@@ -1,4 +1,5 @@
 import { chapterThreeWorkload } from "./chapter-three.ts";
+import { paralyzed } from "./chapter-four-battles.ts";
 import { chapterFourWorkload } from "./chapter-four.ts";
 import { beginRoadExit, startRoadScene } from "./road-scenes.ts";
 import { questNodes } from "./puppet-battles.ts";
@@ -98,10 +99,14 @@ export function schedule(s: State, sq: Squad, r: Run, at: number) {
   }));
   r.enemyAt = at + 3700;
   for (const [index, enemy] of (r.enemies || []).entries())
-    enemy.nextAt = enemy.role ? at + 2800 + enemy.period : at + 3700 + index * 450;
+    enemy.nextAt = at + initialEnemyDelay(enemy, index);
   syncEnemyTotals(r);
   if (r.comboAt <= at) r.comboAt = at + 14500;
   r.nextAt = nextEvent(r);
+}
+function initialEnemyDelay(enemy: NonNullable<Run["enemies"]>[number], index: number) {
+  if (enemy.trick === "merrill") return 1000;
+  return enemy.role ? 2800 + enemy.period : 3700 + index * 450;
 }
 export function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): Run {
   const health = Object.fromEntries(
@@ -282,7 +287,17 @@ export function combination(s: State, sq: Squad, at: number) {
     k = roadActionKind(q, r),
     first = heroById(b.ids[0]).name,
     second = heroById(b.ids[1]).name;
-  if (b.ids.some((id) => memberHealth(r, id).hp <= 0)) return;
+  if (
+    b.ids.some(
+      (id) =>
+        memberHealth(r, id).hp <= 0 ||
+        paralyzed(
+          r.actors.find((a) => a.hero === id),
+          at,
+        ),
+    )
+  )
+    return;
   const lines = combinationLines(lv, first, second, b.lines);
   r.scene = {
     title: b.name + " · 連携 Lv." + String(lv),

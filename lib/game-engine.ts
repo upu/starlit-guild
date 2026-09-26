@@ -1,4 +1,5 @@
 import { isChapterThreeQuest } from "./chapter-three.ts";
+import { paralyzed, shiftConfrontationClocks } from "./chapter-four-battles.ts";
 import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
@@ -133,7 +134,7 @@ function actorTurn(
   actor: Actor,
   at: number,
 ) {
-  if (memberHealth(r, actor.hero).hp <= 0) {
+  if (memberHealth(r, actor.hero).hp <= 0 || paralyzed(actor, at)) {
     actor.nextAt += actor.period;
     return;
   }
@@ -284,6 +285,7 @@ function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);
 }
 function shiftRun(r: Run, shift: number) {
+  shiftConfrontationClocks(r, shift);
   if (r.road) {
     if (r.road.scene) r.road.scene.at += shift;
     r.road.at += shift;
@@ -302,7 +304,9 @@ function shiftRun(r: Run, shift: number) {
     actor.arrivesAt += shift;
   }
   r.events = [];
-  for (const enemy of r.enemies || []) enemy.nextAt += shift;
+  for (const enemy of r.enemies || []) {
+    enemy.nextAt += shift;
+  }
 }
 function applyOfflineCap(s: State, elapsed: number, capped: boolean) {
   if (!capped) return;

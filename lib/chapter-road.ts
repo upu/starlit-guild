@@ -1,4 +1,5 @@
 import type { Encounter, GameEvent, Quest, Run, Squad } from "./game.ts";
+import { paralyzed } from "./chapter-four-battles.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
 import { encounter, targetName, questById } from "./game-rules.ts";
 import { isPrologueQuest } from "./prologue.ts";
@@ -134,6 +135,13 @@ export function nearestOpponent(r: Run, hero: string) {
     )[0];
 }
 export function roadActorReady(q: Quest, r: Run, hero: string) {
+  if (
+    paralyzed(
+      r.actors.find((a) => a.hero === hero),
+      r.road?.at ?? r.nextAt,
+    )
+  )
+    return false;
   if (!r.road) return true;
   const position = r.road.members[hero];
   if (Math.abs(position.recoil) > 5) return false;
@@ -176,7 +184,13 @@ function moveMember(q: Quest, r: Run, id: string, dt: number) {
   const road = r.road;
   if (!road) return;
   const position = road.members[id];
-  if (r.health[id].hp <= 0) {
+  if (
+    r.health[id].hp <= 0 ||
+    paralyzed(
+      r.actors.find((a) => a.hero === id),
+      road.at,
+    )
+  ) {
     position.previousX = position.x;
     position.walking = false;
     return;
@@ -214,6 +228,7 @@ function moveEnemy(r: Run, enemy: Enemy, dt: number) {
   position.previousX = position.x;
   const target = roadEnemyTargets(r, enemy.id)[0];
   if (enemy.hp <= 0 || enemy.role === "puppeteer" || !target) return;
+  if (enemy.trick === "merrill") return;
   const x = road.members[target].x;
   move(position, Math.abs(x - position.x) > 52 ? x : position.x, enemy.role ? 18 : 25, dt);
 }

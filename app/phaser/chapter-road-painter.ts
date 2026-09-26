@@ -49,7 +49,11 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ...(input.squad.members.includes("lico") ? [roadSheet("lico")] : []),
       ...(input.squad.run?.quest === "lico-records" ? [roadSheet("lico")] : []),
       ...(input.squad.run?.quest === "merrill-seedlings"
-        ? ["/animations/road/merrill-standing-v1.webp"]
+        ? [
+            "/animations/road/merrill-standing-v1.webp",
+            "/animations/road/merrill-song-v1.webp",
+            "/animations/road/mushroom-v1.webp",
+          ]
         : []),
       ...(look.work ? [look.work.asset] : []),
     ]),

@@ -11,6 +11,7 @@ import { techniqueDamage } from "./techniques.ts";
 import { syncEnemyTotals, type Enemy } from "./combat.ts";
 import { roadEnemyReady, roadEnemyTargets } from "./chapter-road.ts";
 import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
+import { confrontationTurn } from "./chapter-four-battles.ts";
 
 type Emit = (
   r: Run,
@@ -31,6 +32,7 @@ export function enemyText(q: Quest, blocked: number) {
   return "魔物の攻撃";
 }
 function strikeText(enemy: Enemy, q: Quest, blocked: number, followup: boolean) {
+  if (enemy.trick === "mushroom") return "キノコの魔物の体当たり";
   if (!enemy.role) return enemyText(q, blocked);
   const text = {
     puppet: "小さな人形の素早い一撃",
@@ -80,33 +82,53 @@ function strike(
     );
   }
 }
+function inRange(r: Run, enemy: Enemy) {
+  return (
+    enemy.role === "puppeteer" ||
+    ["lico", "merrill"].includes(enemy.trick || "") ||
+    roadEnemyReady(r, enemy.id)
+  );
+}
 export function groupEnemyTurns(s: State, sq: Squad, r: Run, q: Quest, at: number, emit: Emit) {
   const enemies = r.enemies || [];
   for (const [index, enemy] of enemies.entries()) {
     if (enemy.hp <= 0 || enemy.nextAt !== at) continue;
-    if (enemy.role !== "puppeteer" && !roadEnemyReady(r, enemy.id)) {
+    if (!inRange(r, enemy)) {
       enemy.nextAt = at + 100;
       continue;
     }
     enemy.nextAt += enemy.period;
-    if (enemy.role === "puppeteer") {
-      emit(
-        r,
-        at,
-        "move",
-        "カボチャ頭の少女「もう一回なのよ！」",
-        undefined,
-        undefined,
-        undefined,
-        enemy.id,
-      );
-      enemies
-        .filter((actor) => actor.hp > 0 && actor.role !== "puppeteer")
-        .forEach((actor, i) => {
-          strike(s, sq, r, q, actor, at, i, emit, true);
-        });
-    } else strike(s, sq, r, q, enemy, at, index, emit);
+    if (confrontationTurn(r, enemy, at, emit)) continue;
+    normalTurn(s, sq, r, q, enemy, at, index, emit);
   }
   syncEnemyTotals(r);
   if (!enemies.some((enemy) => enemy.hp > 0)) r.enemyAt = at + 1450;
+}
+function normalTurn(
+  s: State,
+  sq: Squad,
+  r: Run,
+  q: Quest,
+  enemy: Enemy,
+  at: number,
+  index: number,
+  emit: Emit,
+) {
+  if (enemy.role === "puppeteer") {
+    emit(
+      r,
+      at,
+      "move",
+      "カボチャ頭の少女「もう一回なのよ！」",
+      undefined,
+      undefined,
+      undefined,
+      enemy.id,
+    );
+    (r.enemies || [])
+      .filter((actor) => actor.hp > 0 && actor.role !== "puppeteer")
+      .forEach((actor, i) => {
+        strike(s, sq, r, q, actor, at, i, emit, true);
+      });
+  } else strike(s, sq, r, q, enemy, at, index, emit);
 }

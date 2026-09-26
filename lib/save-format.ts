@@ -6,6 +6,7 @@ import { isRecord } from "./external-input.ts";
 import { equipmentById, validInventory } from "./equipment.ts";
 import { techniqueById, validTechniques } from "./techniques.ts";
 import { puppetRoles } from "./puppet-battles.ts";
+import { confrontation } from "./chapter-four-battles.ts";
 const techniqueId = z.string().refine((id) => !!techniqueById(id));
 const techniquesSchema = z.object({
   learned: z.array(techniqueId).max(8),
@@ -59,6 +60,10 @@ const enemy = z.object({
   period: count.min(200).max(5000),
   nextAt: n,
   role: z.enum(puppetRoles).optional(),
+  trick: z.enum(["lico", "merrill", "mushroom"]).optional(),
+  actions: count.optional(),
+  cue: z.enum(["summon", "song", "paralyze"]).optional(),
+  cueAt: n.optional(),
 });
 const health = z.record(hero, z.object({ hp: n, maxHp: n.min(1) }));
 const coordinate = z.number().finite().min(-10000).max(10000);
@@ -113,7 +118,15 @@ const run = z.object({
   enemies: z.array(enemy).max(3).optional(),
   actors: z
     .array(
-      z.object({ hero, actions: count, arrivesAt: n, nextAt: n, period: n.min(200).max(5000) }),
+      z.object({
+        hero,
+        actions: count,
+        arrivesAt: n,
+        nextAt: n,
+        period: n.min(200).max(5000),
+        paralyzedUntil: n.optional(),
+        paralysisGuardUntil: n.optional(),
+      }),
     )
     .min(1)
     .max(8),
@@ -216,12 +229,21 @@ type ParsedRun = z.infer<typeof run>;
 function validStoppedEnemies(run: ParsedRun, ambush: boolean) {
   return ambush || (!!run.road?.scene && validRoadScene(run));
 }
+function validConfrontationEnemies(run: ParsedRun) {
+  const duel = confrontation(run.quest, run.road?.ambushNode ?? run.node);
+  return !(run.enemies || []).some(
+    (e) =>
+      e.trick &&
+      (e.role || !duel || (e.trick !== duel && !(duel === "merrill" && e.trick === "mushroom"))),
+  );
+}
 function validEnemies(run: ParsedRun) {
   const enemies = run.enemies;
   if (!enemies) return true; // Existing battles keep their exact progress until the next node.
   const quest = quests.find((q) => q.id === run.quest);
   if (!quest) return false;
   const ambush = run.road?.ambushNode !== undefined;
+  if (!validConfrontationEnemies(run)) return false;
   if (encounter(quest, run.node) !== "battle" && !ambush) return enemies.length === 0;
   if (
     !enemies.length ||
@@ -229,17 +251,23 @@ function validEnemies(run: ParsedRun) {
     enemies.some((enemy) => enemy.hp > enemy.maxHp)
   )
     return false;
-  if (
-    !ambush &&
-    (run.target !== enemies.reduce((sum, enemy) => sum + enemy.hp, 0) ||
-      run.targetMax !== enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0))
-  )
-    return false;
+  if (!validEnemyTotals(run, enemies, ambush)) return false;
   const living = enemies.filter((enemy) => enemy.hp > 0);
   if (!living.length) return validStoppedEnemies(run, ambush);
   return (
     run.enemyAt === Math.min(...living.map((enemy) => enemy.nextAt)) &&
     (run.phase === "rest" || living.every((enemy) => enemy.nextAt >= run.nextAt))
+  );
+}
+function validEnemyTotals(
+  run: ParsedRun,
+  enemies: NonNullable<ParsedRun["enemies"]>,
+  ambush: boolean,
+) {
+  return (
+    ambush ||
+    (run.target === enemies.reduce((sum, enemy) => sum + enemy.hp, 0) &&
+      run.targetMax === enemies.reduce((sum, enemy) => sum + enemy.maxHp, 0))
   );
 }
 function validateState(s: ParsedState, ctx: z.RefinementCtx) {

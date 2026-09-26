@@ -29,7 +29,8 @@ import {
 import {
   enemyAppearance,
   enemyFacesRight,
-  enemyFalls,
+  enemyAngle,
+  fitEnemy,
   enemyName,
   enemyDisplayHeight,
 } from "./road-enemy-appearance";
@@ -294,7 +295,10 @@ export class RoadPainter {
       .setFlipX(hero.facing < 0)
       .setDepth(10 + hero.lane * 10)
       .setAlpha(hero.hp > 0 ? 1 : 0.35);
-    figure.label.setVisible(false);
+    figure.label
+      .setVisible(!!hero.paralyzed)
+      .setText("麻痺")
+      .setPosition(x, y - size);
     this.health(x, y + 4, size, hero.hp / hero.maxHp);
   }
 
@@ -312,7 +316,7 @@ export class RoadPainter {
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
-    const { asset, frame, puppet, character } = enemyAppearance(enemy, this.look);
+    const { asset, frame, character } = enemyAppearance(enemy, this.look);
     const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
@@ -320,13 +324,9 @@ export class RoadPainter {
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
       .setFlipX(character ? !facesRight : facesRight)
-      .setAngle(enemyFalls(enemy) ? -20 : 0)
+      .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
-    if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
-    if (character) {
-      figure.image.setScale(size / figure.image.frame.height).setOrigin(0.5, 1);
-      this.spriteFilter.apply(figure.image);
-    }
+    fitEnemy(figure.image, enemy, size, this.spriteFilter);
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)

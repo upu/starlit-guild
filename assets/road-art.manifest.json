@@ -105,6 +105,14 @@
       "sourceBytes": 262316,
       "outputBytes": 155436
     },
+    "merrill-song-v1.png": {
+      "sourceHash": "80467065dae75e3d48693859641e5cd037592726cab924969fbb2dc2df4dbaa0",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "merrill-song-v1.webp",
+      "outputHash": "479773cbe021e03e54397a2e1b258c9462a445b0c8f70610dec037d9d1b87063",
+      "sourceBytes": 281439,
+      "outputBytes": 165046
+    },
     "merrill-standing-v1.png": {
       "sourceHash": "1b3a923f37ebe2f31e0def09add2428e29aee72bbab07db3009fefe5cb6d5bbe",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
@@ -128,6 +136,14 @@
       "outputHash": "b6e1dc8315a97c1817dd83471260845b77a2ca9bdb1d0231a28247ad8a555f1f",
       "sourceBytes": 1582604,
       "outputBytes": 1118800
+    },
+    "mushroom-v1.png": {
+      "sourceHash": "d4c38148127cf4238e07cde7bb4a50317a8b269a003301d0de36a918e0e00f8a",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "mushroom-v1.webp",
+      "outputHash": "6a42a3c0a355cfb198288fbac58fd42592f3c8b066d2fbbb45b20a169bcc076c",
+      "sourceBytes": 65493,
+      "outputBytes": 43248
     },
     "packing-v1.png": {
       "sourceHash": "ef1178a680cf1e01c52fbf402c76b710b6f9ecf546254a5c7f2a8ec403c7ac71",

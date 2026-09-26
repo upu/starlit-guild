@@ -7,6 +7,8 @@ import {
   isChapterFourQuest,
 } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
+import { paralyzed } from "./chapter-four-battles.ts";
+import { confrontationEffects } from "./chapter-four-battle-presentation.ts";
 import {
   adventureFrame,
   type AdventureInput,
@@ -148,13 +150,26 @@ function drawnHeroes(input: AdventureInput, frame: AdventureFrame): RoadBattle["
       lane: travellerLane(member.id as TravellerId),
       walking: !!position?.walking && run?.phase !== "rest",
       facing: position?.facing || 1,
+      paralyzed: paralyzed(
+        run?.actors.find((a) => a.hero === member.id),
+        input.now,
+      ),
     };
   });
 }
 function legacyOpponents(run: Run | null, frame: AdventureFrame) {
   if (!run || !frame.target?.battle) return [];
   return [
-    { id: "enemy-1", hp: run.target, maxHp: run.targetMax, nextAt: run.enemyAt, role: undefined },
+    {
+      id: "enemy-1",
+      hp: run.target,
+      maxHp: run.targetMax,
+      nextAt: run.enemyAt,
+      role: undefined,
+      trick: undefined,
+      cue: undefined,
+      cueAt: undefined,
+    },
   ];
 }
 function drawnEnemyKind(run: Run | null, frame: AdventureFrame, role?: string) {
@@ -171,7 +186,9 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
     const x = position && run ? drawnX(position, run, input.now) : 200 + index * 65;
     return {
       id: index + 1,
-      kind: drawnEnemyKind(run, frame, enemy.role),
+      kind: enemy.trick || drawnEnemyKind(run, frame, enemy.role),
+      action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
+      actionAt: enemy.cueAt,
       x,
       lane: enemy.role === "puppeteer" ? 0.9 : [0.74, 0.57, 0.84][index],
       hp: enemy.hp,
@@ -320,7 +337,7 @@ export function chapterRoadFrame(
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
   addWork(input, frame, battle, look);
-  battle.effects = effects(run, battle);
+  battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
   if (battle.effects.some((effect) => effect.kind === "command")) {
     const master = battle.enemies.find((enemy) => enemy.kind === "pumpety");
     if (master) look.enemies[master.id].label = "もう一回なのよ！";

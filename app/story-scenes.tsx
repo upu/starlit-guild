@@ -15,7 +15,13 @@ import { heroes } from "@/lib/game";
 import { originalCharacters } from "@/lib/original-characters";
 import type { Story, StoryLine } from "@/lib/stories";
 import { storyArtAt } from "@/lib/story-art";
-import { hasNextBanter, nextBanter, startBanter, type BanterExchange } from "@/lib/banter-exchange";
+import {
+  hasNextBanter,
+  nextBanter,
+  startBanter,
+  retainBanter,
+  type BanterExchange,
+} from "@/lib/banter-exchange";
 import type { StoryAdvance } from "./use-story-advance";
 export { ArtViewer, StoryAlbum } from "./story-viewers";
 export { StoryLibrary } from "./story-library";
@@ -225,7 +231,15 @@ function banterLine(entry: StoryLine, key: number) {
   );
 }
 
-export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?: boolean }) {
+export function Banter({
+  lines,
+  paused = false,
+  retain = false,
+}: {
+  lines: StoryLine[];
+  paused?: boolean;
+  retain?: boolean;
+}) {
   const [exchange, setExchange] = useState(() => startBanter(lines));
   const dialogue = useRef<HTMLDivElement>(null);
   const followLatest = useRef(true);
@@ -236,7 +250,8 @@ export function Banter({ lines, paused = false }: { lines: StoryLine[]; paused?:
   const latest = useRef(lines);
   useEffect(() => {
     latest.current = lines;
-  }, [lines]);
+    if (retain) setExchange((current) => retainBanter(current, lines));
+  }, [lines, retain]);
   const line = exchange.lines.at(exchange.index);
   // Compare content, not the new array journeyBanter returns on every clock tick.
   // Exchanges already shown in this quest stay in the history instead of being appended again.

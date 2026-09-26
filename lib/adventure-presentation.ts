@@ -239,7 +239,7 @@ function frameTargets(
       ...base,
       ...(multiple ? positions[index] : {}),
       id: enemy.id,
-      name,
+      ...confrontationTarget(enemy, base.asset, name),
       scale: multiple ? 0.65 : base.scale,
       hp: enemy.hp,
       maxHp: enemy.maxHp,
@@ -247,6 +247,13 @@ function frameTargets(
       value: clamp(enemy.hp / enemy.maxHp),
     };
   });
+}
+function confrontationTarget(enemy: Enemy, asset: string, name: string) {
+  if (!enemy.trick) return { name, asset };
+  return {
+    name: { mushroom: "キノコの魔物", merrill: "メリル", lico: "リコの仕掛け" }[enemy.trick],
+    asset: enemy.trick === "mushroom" ? "/animations/road/mushroom-v1.webp" : asset,
+  };
 }
 
 // Presentation is a read-only projection. Only lib/game advances time or awards loot.

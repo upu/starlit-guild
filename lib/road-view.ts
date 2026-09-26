@@ -8,21 +8,35 @@ export type Traveller = {
   lane: number;
   walking: boolean;
   facing: 1 | -1;
+  paralyzed?: boolean;
 };
 export type RoadEnemy = {
-  kind: "slime" | "puppet" | "golem" | "pumpety" | "lico" | "merrill";
+  kind: "slime" | "puppet" | "golem" | "pumpety" | "lico" | "merrill" | "mushroom";
   id: number;
   x: number;
   lane: number;
   hp: number;
   maxHp: number;
   boss: boolean;
+  action?: import("./chapter-four-battles.ts").BattleCue;
+  actionAt?: number;
   pose?: "fallen" | "retreat" | "enter" | "drag";
 };
 export type RoadEffect = {
   id: number;
   at: number;
-  kind: "arrow" | "slash" | "hurt" | "assist" | "gather" | "heal" | "magic" | "command";
+  kind:
+    | "arrow"
+    | "slash"
+    | "hurt"
+    | "assist"
+    | "gather"
+    | "heal"
+    | "magic"
+    | "command"
+    | "mushroomThrow"
+    | "song"
+    | "paralyze";
   x: number;
   lane: number;
   amount: number;

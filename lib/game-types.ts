@@ -11,6 +11,8 @@ export type GameEvent = {
   enemy?: string;
 };
 export type Actor = {
+  paralyzedUntil?: number;
+  paralysisGuardUntil?: number;
   actions: number;
   hero: string;
   arrivesAt: number;

@@ -1,6 +1,8 @@
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import type { RoadEnemy } from "@/lib/road-view";
 import { ROAD_PUPPETS } from "./road-art";
+import type Phaser from "phaser";
+import type { RoadSpriteFilter } from "./road-sprite-filter";
 
 const puppetNames = {
   pumpety: "プティ",
@@ -9,12 +11,30 @@ const puppetNames = {
   slime: "",
   lico: "リコの仕掛け",
   merrill: "メリル",
+  mushroom: "キノコの魔物",
 };
 export function enemyName(enemy: RoadEnemy) {
   if (enemy.kind !== "slime") return puppetNames[enemy.kind];
   return enemy.boss ? "大きなスライム" : "";
 }
 export const enemyFalls = (enemy: RoadEnemy) => enemy.pose === "fallen" || enemy.pose === "drag";
+export function enemyAngle(enemy: RoadEnemy, time: number, reduced: boolean) {
+  if (enemyFalls(enemy)) return -20;
+  return !reduced && enemy.action ? Math.sin(time / 130) * 8 : 0;
+}
+export function fitEnemy(
+  image: Phaser.GameObjects.Image,
+  enemy: RoadEnemy,
+  size: number,
+  filter: RoadSpriteFilter,
+) {
+  const { puppet, character } = enemyAppearance(enemy);
+  if (puppet) image.setScale(size / 724).setOrigin(0.5, 0.98);
+  if (character || enemy.kind === "mushroom") {
+    image.setScale(size / image.frame.height).setOrigin(0.5, 1);
+    filter.apply(image);
+  }
+}
 export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
   if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
   return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
@@ -27,6 +47,7 @@ const enemySize = (enemy: RoadEnemy) =>
     slime: enemy.boss ? 1.65 : 0.75,
     lico: 1,
     merrill: 1,
+    mushroom: 0.42,
   })[enemy.kind];
 export function enemyDisplayHeight(enemy: RoadEnemy, width: number, height: number) {
   if (enemy.kind === "lico" || enemy.kind === "merrill")
@@ -34,9 +55,16 @@ export function enemyDisplayHeight(enemy: RoadEnemy, width: number, height: numb
   return Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);
 }
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
+  if (enemy.kind === "mushroom")
+    return {
+      asset: "/animations/road/mushroom-v1.webp",
+      frame: "__BASE",
+      puppet: false,
+      character: false,
+    };
   if (enemy.kind === "lico" || enemy.kind === "merrill")
     return {
-      asset: `/animations/road/${enemy.kind}-standing-v1.webp`,
+      asset: `/animations/road/${enemy.kind}-${enemy.action === "song" ? "song" : "standing"}-v1.webp`,
       frame: "__BASE",
       puppet: false,
       character: true,
