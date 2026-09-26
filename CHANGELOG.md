@@ -12,7 +12,8 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
-| 0.4.13 | 2026-09-26 | 第四章「苦い灯りと、名前のない旅団」を実装する（[#178](https://github.com/upu/starlit-guild/pull/178)） |
+| 0.4.14 | 2026-09-26 | 第四章「苦い灯りと、名前のない旅団」を実装する（[#178](https://github.com/upu/starlit-guild/pull/178)） |
+| 0.4.13 | 2026-09-26 | Auto-Next: クリア後に次のステージへ自動で出発し、クリア済みステージからも順に進む（[#181](https://github.com/upu/starlit-guild/pull/181)） |
 | 0.4.12 | 2026-09-26 | 出発と帰還を画像アイコンに揃える（[#180](https://github.com/upu/starlit-guild/pull/180)） |
 | 0.4.11 | 2026-09-25 | 技の呼び名をスキルにし、枠ラベルを「アクティブ」「パッシブ」に短くする（[#179](https://github.com/upu/starlit-guild/pull/179)） |
 | 0.4.10 | 2026-09-25 | アルバム一覧のタイトルを絵の上に重ねてコンパクトに表示する（[#177](https://github.com/upu/starlit-guild/pull/177)） |

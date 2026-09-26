@@ -147,6 +147,7 @@ test("locked chapter hides its quests; the switch writes the same persisted pref
   h.changeChapter("unknown");
   assert.equal(h.chapter().props.value, "one");
   assert.equal(h.cards().length, 1);
+  assert.equal(h.setting().props.compact, true, "the picker omits the description");
   assert.equal(h.setting().props.checked, false);
   h.setting().props.onChange(true);
   assert.equal(h.setting().props.checked, true);

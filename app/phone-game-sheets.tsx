@@ -5,12 +5,13 @@ import { InventoryPanel } from "./equipment-panels";
 import { ShopPanel } from "./shop-panel";
 import { QuestPicker } from "./quest-picker";
 import { SavePanel } from "./save-panel";
-import { StoryLibrary, StoryAlbum, StoryReader } from "./story-scenes";
+import { StoryLibrary, StoryAlbum, StageStoryReader } from "./story-scenes";
 import { Sprite } from "./sprite";
 import { InstallGuide } from "./install-guide";
 import { questAdvice } from "@/lib/journey";
 import { characterNotes } from "@/lib/stories";
-import { heroSkills, memberStats } from "@/lib/game";
+import { allQuests, heroSkills, memberStats } from "@/lib/game";
+import { storyStages } from "@/lib/prologue";
 import type { StoryAdvance } from "./use-story-advance";
 import type { SheetModel, SheetView } from "./phone-game-types";
 
@@ -92,18 +93,24 @@ function memorySheet(m: SheetModel): SheetView | null {
     };
   return null;
 }
+function departureStage(id?: string) {
+  const stage = storyStages.find((item) => item.quest === id),
+    quest = allQuests.find((item) => item.id === id);
+  return stage && quest ? { number: stage.number, name: quest.name } : undefined;
+}
 function readingSheet(m: SheetModel, advanceRef: Ref<StoryAdvance>): SheetView | null {
   if (m.sheet === "story" && m.reading)
     return {
       title: m.reading.title,
       description: m.reading.place,
       content: (
-        <StoryReader
+        <StageStoryReader
           key={m.reading.id}
           story={m.reading}
           ready={m.ready}
           onRead={m.finishStory}
           departure={!!m.pendingDeparture}
+          stage={departureStage(m.pendingDeparture?.id)}
           onClose={m.closeStory}
           advanceRef={advanceRef}
         />

@@ -188,3 +188,35 @@
     height: 64px !important;
   }
 }
+/* The stage title sits centred over the scene, before the conversation panel appears. */
+.phone-dialog > .story-reader.stage-title-reader {
+  grid-template-rows: minmax(0, 1fr);
+}
+.stage-title-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 0;
+  padding: 16px;
+  background: radial-gradient(ellipse 60% 22% at 50% 50%, #0d201cb8, #0d201c66 55%, transparent);
+  color: #f4e2b0;
+  border: 0;
+  text-shadow: 0 1px 6px #06120fe6;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+.stage-title-card > span {
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 34px;
+  letter-spacing: 0.08em;
+  color: #e9c77b;
+}
+.stage-title-card strong {
+  font-size: 20px;
+  font-weight: 500;
+  color: #f0e6cc;
+  overflow-wrap: anywhere;
+}

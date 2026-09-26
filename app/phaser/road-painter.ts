@@ -313,16 +313,13 @@ export class RoadPainter {
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
     const { asset, frame, puppet, character } = enemyAppearance(enemy, this.look);
+    const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(
-        character
-          ? !enemyFacesRight(enemy, state.heroes[0].x)
-          : enemyFacesRight(enemy, state.heroes[0].x),
-      )
+      .setFlipX(character ? !facesRight : facesRight)
       .setAngle(enemyFalls(enemy) ? -20 : 0)
       .setDepth(10 + enemy.lane * 10);
     if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);

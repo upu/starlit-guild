@@ -32,6 +32,7 @@ import {
   techniqueText,
 } from "./techniques.ts";
 import { level } from "./roster.ts";
+import { continueAutoNext } from "./game-actions.ts";
 import type { Quest } from "./game-content.ts";
 import type { Actor, Encounter, GameEvent, Rewards, Run, Squad, State } from "./game-types.ts";
 import {
@@ -274,7 +275,10 @@ function collectReward(rewards: Rewards, gain: ReturnType<typeof reward> | null)
 function settleSquad(s: State, sq: Squad, end: number, rewards: Rewards) {
   let count = 0;
   while (sq.run && sq.run.nextAt <= end) {
-    if (collectReward(rewards, step(s, sq))) count++;
+    const quest = sq.run.quest,
+      gain = step(s, sq);
+    if (collectReward(rewards, gain)) count++;
+    if (gain?.finished) continueAutoNext(s, sq, quest, gain.at);
   }
   if (count)
     addLog(s, `${squadName(sq)}が ${String(count)} 件の依頼を達成。報酬を受け取りました。`, end);

@@ -2,7 +2,7 @@ import { chapterThreeStories } from "./chapter-three-stories.ts";
 import { chapterFourStories } from "./chapter-four-stories.ts";
 import { chapterFourBanter } from "./chapter-four-banter.ts";
 import { chapterThreeBanter } from "./chapter-three-banter.ts";
-import { interludeUnlocked } from "./interludes.ts";
+import { interludeUnlocked, isInterlude } from "./interludes.ts";
 import type { Run, State, Squad } from "./game.ts";
 import {
   TRADE_QUEST,
@@ -103,6 +103,16 @@ export function availableStories(s: State): Story[] {
   return stories.filter((story) =>
     story.chapter === "interlude" ? interludeUnlocked(s, story.id) : storyAvailable(p, story),
   );
+}
+// The unseen conversation that opens before this party departs for `id`.
+export function departureStory(s: State, sq: Squad, id: string): Story | null {
+  if (sq.run) return null;
+  if (isInterlude(id))
+    return interludeUnlocked(s, id) && !s.story?.read.includes(id)
+      ? (stories.find((story) => story.id === id) ?? null)
+      : null;
+  if (!together(sq.members) || storyProgress(s).departed.includes(id)) return null;
+  return stories.find((story) => story.id === id + "-departure") ?? null;
 }
 export function coupleCombo(s: State, variant: number): string[] {
   const lines = [

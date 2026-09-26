@@ -5,25 +5,25 @@ export function QuestProgressionSetting({
   checked,
   onChange,
   disabled,
-  showDescription = true,
+  compact = false,
 }: {
   checked: boolean;
   onChange: (value: boolean) => void;
   disabled: boolean;
-  showDescription?: boolean;
+  compact?: boolean;
 }) {
   return (
     <div className="quest-progression-setting">
       <label className="switch-row">
-        <span>クリア後、次のステージを行先にする</span>
+        <span>Auto-Next</span>
         <Switch
           checked={checked}
           onCheckedChange={onChange}
           disabled={disabled}
-          aria-label="クリア後、次のステージを行先にする"
+          aria-label="Auto-Next"
         />
       </label>
-      {showDescription && <small>物語を読み終えると切り替わります。出発は自分で選べます。</small>}
+      {!compact && <small>クリア後、次のステージへ自動で出発します。</small>}
     </div>
   );
 }

@@ -149,10 +149,10 @@ export function QuestPicker({
       />
       <div className="quest-list-scroll">
         <QuestProgressionSetting
-          showDescription={false}
           checked={s.autoNextQuest === true}
           onChange={onAutoNextChange}
           disabled={!ready}
+          compact
         />
         <p className="departure-party">
           <span>

@@ -1,7 +1,5 @@
 "use client";
 import { useState } from "react";
-import { isInterlude, interludeUnlocked } from "@/lib/interludes";
-import { BERNE_QUEST } from "@/lib/chapter-three";
 import { useGameMusic } from "./use-game-music";
 import { useJourneyHints } from "./use-journey-hints";
 import { useInstallPrompt } from "./install-guide";
@@ -9,13 +7,20 @@ import { PhoneFrame } from "./phone-game-frame";
 import { nextGoal, type JourneyGoal } from "@/lib/journey";
 import {
   availableStories,
+  departureStory as storyDeparture,
   journeyBanter,
   stories,
   storyProgress,
-  together,
   type Story,
 } from "@/lib/stories";
-import { TRADE_QUEST, isPrologueQuest, stageEndingPending, restingQuest } from "@/lib/prologue";
+import { isInterlude } from "@/lib/interludes";
+import {
+  TRADE_QUEST,
+  isPrologueQuest,
+  stageEndingPending,
+  stageUnlocked,
+  restingQuest,
+} from "@/lib/prologue";
 import { heroes, availableQuests, activeBonds } from "@/lib/game";
 import type { Action, State, Squad } from "@/lib/game";
 import type { Game, PhoneFrameModel, ReturnIntent, Sheet, SheetModel } from "./phone-game-types";
@@ -27,16 +32,19 @@ function departureStory(state: State, action: Action) {
   const actionId = action.id;
   if (action.type !== "start" || !actionId) return null;
   const target = state.squads.find((party) => party.id === action.squad) || state.squads[0];
-  if (
-    !target.run &&
-    isInterlude(actionId) &&
-    interludeUnlocked(state, actionId) &&
-    !state.story?.read.includes(actionId)
-  )
-    return stories.find((story) => story.id === actionId) ?? null;
-  if (target.run || !together(target.members) || storyProgress(state).departed.includes(actionId))
-    return null;
-  return stories.find((story) => story.id === actionId + "-departure") ?? null;
+  return storyDeparture(state, target, actionId);
+}
+function departable(state: State, id: string) {
+  return isInterlude(id) || (isPrologueQuest(id) && stageUnlocked(state, id));
+}
+// Auto-Next stops at rest only in front of an unseen departure conversation. The screen then
+// acts as if the departure button were pressed and waits on that conversation.
+function autoDeparture(state: State, squad: Squad, choice?: string) {
+  const id = squad.lastQuest;
+  if (!state.autoNextQuest || squad.run || !id || (choice && choice !== id)) return null;
+  if (stageEndingPending(state) || !departable(state, id)) return null;
+  const story = storyDeparture(state, squad, id);
+  return story && { story, action: startAction({ type: "start", squad: squad.id, id }) };
 }
 function selectedDestination(state: State, squad: Squad, choice?: string) {
   return squad.run?.quest || choice || squad.lastQuest || restingQuest(state, squad);
@@ -45,12 +53,19 @@ function hasDestination(state: State, squad: Squad, choice?: string) {
   return !!choice || !!squad.lastQuest || !!state.done[restingQuest(state, squad)];
 }
 
-function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex: number) {
+// A destination picked on screen lasts until the saved one moves (a departure or Auto-Next).
+type QuestChoice = { id: string; saved?: string };
+function currentChoice(squad: Squad, choices: Partial<Record<string, QuestChoice>>) {
+  const choice = choices[squad.id];
+  return choice && choice.saved === squad.lastQuest ? choice.id : undefined;
+}
+function phoneWorld(game: Game, questChoices: Record<string, QuestChoice>, heroIndex: number) {
   const { s, clock } = game,
     squad = s.squads[0],
     run = squad.run,
-    ready = game.ready && !game.otherTab;
-  const questId = selectedDestination(s, squad, questChoices[squad.id]),
+    ready = game.ready && !game.otherTab,
+    choice = currentChoice(squad, questChoices);
+  const questId = selectedDestination(s, squad, choice),
     unlocked = availableQuests(s),
     quest = unlocked.find((item) => item.id === questId) || unlocked[0];
   const roster = heroes.filter((hero) => s.owned.includes(hero.id)),
@@ -76,7 +91,8 @@ function phoneWorld(game: Game, questChoices: Record<string, string>, heroIndex:
     ending: pendingEnding
       ? (stories.find((story) => story.id === pendingEnding + "-return") ?? null)
       : null,
-    destinationChosen: hasDestination(s, squad, questChoices[squad.id]),
+    destinationChosen: hasDestination(s, squad, choice),
+    choice,
   };
 }
 
@@ -86,13 +102,26 @@ function usePhoneContext(game: Game) {
     [reading, setReading] = useState<Story | null>(null);
   const [view, setView] = useState("adventure"),
     [sheet, setSheet] = useState<Sheet>(null),
-    [questChoices, setQuestChoices] = useState<Record<string, string>>({}),
+    [questChoices, setQuestChoices] = useState<Record<string, QuestChoice>>({}),
     [heroIndex, setHeroIndex] = useState(0),
     [candidateQuest, setCandidateQuest] = useState(TRADE_QUEST),
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
+  const auto =
+    !sheet && !game.report && view === "adventure" && !returnIntent && world.ready
+      ? autoDeparture(world.s, world.squad, world.choice)
+      : null;
   const setQuest = (id: string) => {
-    setQuestChoices((current) => ({ ...current, [world.squad.id]: id }));
+    setQuestChoices((current) => ({
+      ...current,
+      [world.squad.id]: { id, saved: world.squad.lastQuest },
+    }));
+  };
+  // Once saved, the destination follows the save, so a later Auto-Next move shows through.
+  const clearQuest = () => {
+    setQuestChoices((current) =>
+      Object.fromEntries(Object.entries(current).filter(([id]) => id !== world.squad.id)),
+    );
   };
   const music = useGameMusic(world.run ? "journey" : "camp", world.ready),
     goal = nextGoal(world.s, world.squad),
@@ -110,15 +139,16 @@ function usePhoneContext(game: Game) {
     hints,
     banter,
     unread,
-    pendingDeparture,
+    pendingDeparture: auto?.action ?? pendingDeparture,
     setPendingDeparture,
-    reading,
+    reading: auto?.story ?? reading,
     setReading,
     view,
     setView,
-    sheet,
+    sheet: auto ? "story" : sheet,
     setSheet,
     setQuest,
+    clearQuest,
     heroIndex,
     setHeroIndex,
     candidateQuest,
@@ -143,7 +173,10 @@ function phoneStoryActions(context: PhoneContext) {
       openStory(departure);
       return true;
     }
-    const ok = context.game.dispatch(action, onSuccess);
+    const ok = context.game.dispatch(action, (state) => {
+      if (action.type === "start") context.clearQuest();
+      onSuccess?.(state);
+    });
     if (ok && action.type === "start" && action.id?.startsWith("join-")) {
       context.setView("adventure");
       context.setSheet(null);
@@ -153,15 +186,15 @@ function phoneStoryActions(context: PhoneContext) {
   const readStory = (id: string) =>
     context.game.dispatch({ type: "readStory", id }, (current) => {
       const next = current.squads.find((party) => party.id === context.squad.id)?.lastQuest;
-      if (next && next !== context.squad.lastQuest) context.setQuest(next);
+      if (next && next !== context.squad.lastQuest) context.clearQuest();
     });
   const finishStory = () => {
     if (!context.reading) return false;
-    const ok = context.pendingDeparture
-      ? context.game.dispatch({ ...context.pendingDeparture, readDeparture: true }, () => {
-          if (context.reading?.chapter === "interlude") context.setQuest(BERNE_QUEST);
-        })
-      : readStory(context.reading.id);
+    if (!context.pendingDeparture) return readStory(context.reading.id);
+    const ok = context.game.dispatch(
+      { ...context.pendingDeparture, readDeparture: true },
+      context.clearQuest,
+    );
     if (ok) context.setPendingDeparture(null);
     return ok;
   };

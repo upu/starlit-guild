@@ -2,7 +2,7 @@ import { storyParty } from "./story-party.ts";
 import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
 import { MERRILL_SEEDLINGS_QUEST, MOSS_TRAIL_QUEST, isChapterFourQuest } from "./chapter-four.ts";
-import { advanceQuestDestination } from "./quest-navigation.ts";
+import { advanceQuestDestination, replayQuestDestination } from "./quest-navigation.ts";
 import {
   buyEquipment,
   changeEquipment,
@@ -14,7 +14,7 @@ import { damageEnemy, penetration } from "./combat.ts";
 import { isPrologueQuest, stageEndingPending, stageUnlocked } from "./prologue.ts";
 import { DELIVERY_PREP_QUEST } from "./chapter-two.ts";
 import { learnTechnique, setTechnique, type TechniqueSlot } from "./techniques.ts";
-import { availableStories, storyProgress, together } from "./stories.ts";
+import { availableStories, departureStory, storyProgress, together } from "./stories.ts";
 import { allQuests, type Quest } from "./game-content.ts";
 import type { Run, Squad, State } from "./game-types.ts";
 import { roadComplete, roadActionKind } from "./chapter-road.ts";
@@ -98,7 +98,7 @@ function startAction(s: State, sq: Squad, a: Action, now: number) {
       throw Error("この幕間には、今は出発できません。");
     if (!a.readDeparture) throw Error("幕間の会話を読み終えましょう。");
     sq.lastQuest = a.id;
-    readStoryAction(s, sq, a);
+    readStoryAction(s, sq, a, now);
     return;
   }
   const q = startQuest(s, sq, a);
@@ -111,7 +111,7 @@ function startAction(s: State, sq: Squad, a: Action, now: number) {
   if (a.readDeparture) readDepartureStory(s, q);
   addLog(s, `${squadName(sq)}が「${q.name}」に出発。`, now);
 }
-function readStoryAction(s: State, _sq: Squad, a: Action) {
+function readStoryAction(s: State, _sq: Squad, a: Action, now: number) {
   const id = a.id;
   if (!id || !availableStories(s).some((story) => story.id === id))
     throw Error("この思い出は、まだ開かれていません。");
@@ -121,7 +121,27 @@ function readStoryAction(s: State, _sq: Squad, a: Action) {
   if (s.story.read.includes(id)) return;
   s.story.read.push(id);
   if (id === DELIVERY_PREP_QUEST + "-return") joinStoryMira(s);
-  advanceQuestDestination(s, id);
+  for (const squad of advanceQuestDestination(s, id)) departNextStage(s, squad, now);
+}
+function autoDepartable(s: State, sq: Squad, id: string) {
+  return (
+    !sq.run &&
+    sq.members.length > 0 &&
+    isPrologueQuest(id) &&
+    stageUnlocked(s, id) &&
+    !stageEndingPending(s) &&
+    !departureStory(s, sq, id)
+  );
+}
+// Auto-Next departs at once, except into an unseen departure conversation the screen shows first.
+function departNextStage(s: State, sq: Squad, now: number) {
+  const id = sq.lastQuest;
+  if (!s.autoNextQuest || !id || !autoDepartable(s, sq, id)) return;
+  startAction(s, sq, { type: "start", id, value: false }, now);
+}
+// Called when a party finishes a quest; a replayed stage leads on to the one after it.
+export function continueAutoNext(s: State, sq: Squad, quest: string, now: number) {
+  if (replayQuestDestination(s, sq, quest)) departNextStage(s, sq, now);
 }
 export function joinStoryMira(s: State) {
   if (!s.owned.includes("mira")) {
@@ -206,6 +226,7 @@ function finishAssist(s: State, sq: Squad, r: Run, now: number) {
   if (!roadComplete(r)) return;
   const gain = completeNode(s, sq, questById(r.quest), now);
   if (gain) addLog(s, squadName(sq) + "が区間の報酬を確保！ +" + String(gain.gold) + " G", now);
+  if (gain?.finished) continueAutoNext(s, sq, r.quest, now);
 }
 function assistAction(s: State, sq: Squad, a: Action, now: number) {
   const r = sq.run;

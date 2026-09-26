@@ -57,6 +57,11 @@ function harness(initialState) {
     "@/lib/chapter-three": chapterThree,
     "@/lib/techniques": techniques,
     react: {
+      useRef(initial) {
+        const i = cursor++;
+        if (!(i in slots)) slots[i] = { current: initial };
+        return slots[i];
+      },
       useState(initial) {
         const i = cursor++;
         if (!(i in slots)) slots[i] = typeof initial === "function" ? initial() : initial;
@@ -100,7 +105,7 @@ function harness(initialState) {
     "./shop-panel": ui("ShopPanel"),
     "./quest-completion": ui("QuestCompletion"),
     "./map-stage": ui("MapStage"),
-    "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StoryReader"),
+    "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StageStoryReader"),
     "./story-heading": ui("StoryHeading"),
     "./sprite": ui("Sprite"),
     "./save-panel": ui("SavePanel"),
@@ -117,7 +122,11 @@ function harness(initialState) {
   Object.assign(exports, evaluateSourceModule(code, modules), {
     AdventureDestination: frameExports.AdventureDestination,
     collectionSheet: sheetExports.collectionSheet,
+    resolveSheet: sheetExports.resolveSheet,
   });
+  function storyContent() {
+    return exports.resolveSheet(model, null).content;
+  }
   function render() {
     cursor = 0;
     model = exports.PhoneGame({ game: api }).props.model;
@@ -168,6 +177,7 @@ function harness(initialState) {
     guide,
     guideText,
     questButton,
+    storyContent,
     get model() {
       return model;
     },
@@ -410,10 +420,12 @@ test("interlude waits for quest selection and departure, remains after cancel an
     assert.deepEqual(h.api.s.xp, s.xp);
     assert.deepEqual(h.api.s.done, s.done);
     assert.ok(!game.availableQuests(h.api.s).some((q) => q.id === id));
+    assert.equal(h.model.sheet, autoNextQuest ? "story" : null);
+    if (autoNextQuest) assert.equal(h.model.pendingDeparture.id, chapterThree.BERNE_QUEST);
   }
 });
 
-test("reading the first ending replaces a previous UI choice with the saved next destination without departing", () => {
+test("reading the first ending replaces a previous UI choice, then Auto-Next opens the unseen departure", () => {
   let s = game.act(game.initialState(1000), { type: "autoNextQuest", value: true }, 1000);
   s = game.settle(
     game.act(s, { type: "start", id: prologue.TRADE_QUEST, readDeparture: true }, 1000),
@@ -433,4 +445,97 @@ test("reading the first ending replaces a previous UI choice with the saved next
   assert.equal(h.api.s.squads[0].lastQuest, prologue.RETURN_QUEST);
   assert.equal(h.model.run, null);
   assert.equal(harness(h.api.s).model.quest.id, prologue.RETURN_QUEST);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, prologue.RETURN_QUEST + "-departure");
+  assert.equal(h.model.pendingDeparture.id, prologue.RETURN_QUEST);
+  assert.equal(h.model.finishStory(), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, prologue.RETURN_QUEST);
+});
+
+test("after Auto-Next replays up to an unseen departure, it waits on that conversation like a pressed departure", () => {
+  const s = { ...game.testState(1000, 3, 50, 0), autoNextQuest: true },
+    h = harness(s);
+  h.model.selectQuest(prologue.TRADE_QUEST);
+  h.render();
+  h.departButton().props.onClick();
+  h.render();
+  assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.api.report = { count: 3, gold: 1, xp: 1, herbs: 0, ore: 0, offline: true, capped: false };
+  h.render();
+  const frontier = prologue.storyStages[3].quest;
+  assert.equal(h.model.sheet, null, "the offline report is shown first");
+  h.api.report = null;
+  h.render();
+  assert.equal(h.model.run, null);
+  assert.equal(h.api.s.squads[0].lastQuest, frontier);
+  assert.equal(h.model.quest.id, frontier, "the picker choice gives way to the saved destination");
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, frontier + "-departure");
+  assert.equal(h.model.pendingDeparture.id, frontier);
+  const { stage } = h.storyContent().props;
+  assert.equal(stage.number, prologue.storyStages[3].number);
+  assert.equal(stage.name, game.allQuests.find((q) => q.id === frontier).name);
+  h.model.setView("companions");
+  h.render();
+  assert.equal(h.model.sheet, null, "other screens are not interrupted");
+  h.model.setView("adventure");
+  h.render();
+  assert.equal(h.model.finishStory(), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, frontier);
+  assert.equal(h.model.squad.repeat, false);
+});
+
+test("without Auto-Next, an unseen departure waits for the departure button", () => {
+  const s = game.testState(1000, 3, 50, 0),
+    h = harness(s);
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.pendingDeparture, null);
+  h.departButton().props.onClick();
+  h.render();
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.storyContent().props.stage.number, prologue.storyStages[3].number);
+});
+
+test("with Auto-Next, closing the first 2-9 ending opens the interlude as the next departure", () => {
+  const last = prologue.storyStages[17].quest;
+  let s = { ...game.testState(1000, 17, 50, 0), autoNextQuest: true };
+  s = game.act(s, { type: "start", id: last, value: false, readDeparture: true }, 1000);
+  s = game.settle(s, s.updatedAt + 12 * 3600000).state;
+  const h = harness(s);
+  assert.equal(h.model.ending.id, last + "-return");
+  assert.equal(h.model.readStory(last + "-return"), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.ending, null);
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, chapterThree.LUNCH_INTERLUDE);
+  assert.equal(h.model.pendingDeparture.id, chapterThree.LUNCH_INTERLUDE);
+});
+
+test("re-choosing the running stage does not outlive an Auto-Next move to the next destination", () => {
+  let s = { ...game.testState(1000, 3, 50, 0), autoNextQuest: true };
+  s = game.act(s, { type: "start", id: prologue.TRADE_QUEST, value: false }, 1000);
+  const h = harness(s);
+  h.model.openQuests();
+  h.render();
+  h.questButton(prologue.TRADE_QUEST).props.onClick();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.render();
+  const frontier = prologue.storyStages[3].quest;
+  assert.equal(h.model.run, null);
+  assert.equal(h.model.quest.id, frontier);
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.pendingDeparture.id, frontier);
 });

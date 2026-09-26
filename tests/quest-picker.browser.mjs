@@ -149,7 +149,7 @@ try {
     );
     const chapterHeight = (await page.locator(".quest-chapters").boundingBox()).height;
     assert.ok(chapterHeight >= 44 && chapterHeight <= 48);
-    const preference = page.getByRole("switch", { name: "クリア後、次のステージを行先にする" });
+    const preference = page.getByRole("switch", { name: "Auto-Next" });
     assert.equal(await preference.getAttribute("aria-checked"), "false");
     await checkThumb(preference);
     await preference.click();
@@ -200,9 +200,7 @@ try {
     await page.getByRole("button", { name: "選び直す" }).click();
     await page.getByRole("button", { name: "セーブ・設定" }).click();
     await page.getByRole("tab", { name: "設定", exact: true }).click();
-    const savedPreference = page
-      .getByRole("dialog")
-      .getByRole("switch", { name: "クリア後、次のステージを行先にする" });
+    const savedPreference = page.getByRole("dialog").getByRole("switch", { name: "Auto-Next" });
     assert.equal(await savedPreference.getAttribute("aria-checked"), "true");
     await checkThumb(savedPreference);
     await savedPreference.click();
@@ -219,7 +217,7 @@ try {
     await page.goto(`http://127.0.0.1:${server.address().port}/?latest`);
     await chapter.waitFor();
     assert.equal(await chapter.inputValue(), "four");
-    assert.equal(await page.locator(".quest-option").count(), 9);
+    assert.equal(await page.locator(".quest-option").count(), 10);
     assert.equal((await page.locator(".quest-chapters").boundingBox()).height, chapterHeight);
     await page.screenshot({ path: path.join(dir, `chapter-four-${width}.png`) });
     await chapter.focus();
