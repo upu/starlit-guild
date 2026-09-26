@@ -81,8 +81,8 @@ export function validateVersionChange(baseVersion, headVersion, classification, 
 // not merely somewhere in the file's diff.
 export function validateChangelogUpdate(baseVersion, headVersion, changelog) {
   if (baseVersion === headVersion) return false;
-  const escaped = headVersion.replace(/\./g, "\\.");
-  if (!new RegExp(`(^|[^\\d.])${escaped}([^\\d.]|$)`).test(String(changelog ?? "")))
+  const listedVersions = String(changelog ?? "").match(/(?<![\d.])\d+\.\d+\.\d+(?![\d.])/g) ?? [];
+  if (!listedVersions.includes(headVersion))
     throw Error(
       `バージョンを上げるPRでは ${CHANGELOG_PATH} へ ${headVersion} の行を追加してください。`,
     );
