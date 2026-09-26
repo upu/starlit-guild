@@ -1,3 +1,4 @@
+import * as questNavigation from "../../lib/quest-navigation.ts";
 import { compileSourceModule, evaluateSourceModule } from "./source-module.mjs";
 
 export const storySceneCompilation = compileSourceModule(
@@ -7,12 +8,13 @@ export const storySceneCompilation = compileSourceModule(
 const dependencies = [
   ["./story-viewers", "../../app/story-viewers.tsx"],
   ["./story-memory-groups", "../../app/story-memory-groups.ts"],
+  ["./story-library", "../../app/story-library.tsx"],
   ["./story-gesture-handlers", "../../app/story-gesture-handlers.ts"],
   ["@/lib/banter-exchange", "../../lib/banter-exchange.ts"],
 ].map(([id, path]) => [id, compileSourceModule(path, import.meta.url)]);
 
 export function loadStoryScenes(modules, globals = {}) {
-  const registry = { ...modules };
+  const registry = { "@/lib/quest-navigation": questNavigation, ...modules };
   for (const [id, compiled] of dependencies) {
     registry[id] = evaluateSourceModule(compiled, registry);
   }
