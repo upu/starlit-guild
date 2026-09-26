@@ -63,8 +63,10 @@ export async function optimizeScenery({ base = root, check = false, log = consol
     outputDir = path.join(base, "public/scenery");
   const manifestFile = path.join(base, "assets/scenery.manifest.json"),
     lock = path.join(base, "assets/.scenery.lock");
+  // The sharp version is left out so dependency updates alone don't regenerate committed images.
+  // Bump `pipeline` when a conversion change should replace them.
   const profiles = readProfiles(base),
-    profileHash = hash(JSON.stringify({ pipeline: 1, profiles, sharp: sharp.versions.sharp }));
+    profileHash = hash(JSON.stringify({ pipeline: 1, profiles }));
   const sources = readdirSync(sourceDir, { withFileTypes: true }).filter(
     (entry) => entry.name !== "README.md",
   );

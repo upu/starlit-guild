@@ -59,9 +59,9 @@ export async function optimizeStoryStills({ base = root, check = false, log = co
     )
       throw Error("スチルのサイズ・品質設定が不正です。");
   }
-  const profileHash = digest(
-    JSON.stringify({ pipeline: 1, profiles, sharp: sharp.versions.sharp }),
-  );
+  // The sharp version is left out so dependency updates alone don't regenerate committed images.
+  // Bump `pipeline` when a conversion change should replace them.
+  const profileHash = digest(JSON.stringify({ pipeline: 1, profiles }));
   const sources = readdirSync(sourceDir)
     .filter((name) => name !== "README.md")
     .sort();

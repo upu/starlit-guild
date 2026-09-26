@@ -17,7 +17,9 @@ const hash = (data) => createHash("sha256").update(data).digest("hex");
 const fileHash = (file) => (existsSync(file) ? hash(readFileSync(file)) : null);
 // Preserve atlas dimensions, alpha and visible pixels; no resizing or lossy edges.
 const profile = { lossless: true, effort: 6 };
-const profileHash = hash(JSON.stringify({ pipeline: 1, profile, sharp: sharp.versions.sharp }));
+// The sharp version is left out so dependency updates alone don't regenerate committed images.
+// Bump `pipeline` when a conversion change should replace them.
+const profileHash = hash(JSON.stringify({ pipeline: 1, profile }));
 
 export async function optimizeRoadArt({ base = root, check = false, log = console.log } = {}) {
   const sourceDir = path.join(base, "assets/source/road"),
