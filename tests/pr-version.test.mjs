@@ -132,6 +132,14 @@ test("a version bump has to bring a changelog line with it", () => {
     () => validateChangelogUpdate("0.2.0", "0.2.1", "| 0.2.13 | 別の版 |"),
     /CHANGELOG\.md へ 0\.2\.1 の行を追加/,
   );
+  assert.throws(
+    () => validateChangelogUpdate("0.2.0", "0.2.1", "| 10.2.1 | 別の版 |"),
+    /CHANGELOG\.md へ 0\.2\.1 の行を追加/,
+  );
+  assert.throws(
+    () => validateChangelogUpdate("0.2.0", "0.2.1|10.2.1", "| 0.2.1 | 追加 |"),
+    /CHANGELOG\.md へ 0\.2\.1\|10\.2\.1 の行を追加/,
+  );
   assert.equal(CHANGELOG_PATH, "CHANGELOG.md");
 });
 
