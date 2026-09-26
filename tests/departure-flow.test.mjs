@@ -212,7 +212,7 @@ test("choosing a destination previews it without departing; the separate button 
   assert.deepEqual(h.api.s, before);
   const depart = h.departButton();
   assert.ok(depart);
-  assert.equal(depart.props.children[0].props.src, "/ui/departure-arrow.png");
+  assert.equal(depart.props.children[0].props.src, "/ui/departure-boot.png");
   assert.equal(depart.props.disabled, false);
   depart.props.onClick();
   h.render();

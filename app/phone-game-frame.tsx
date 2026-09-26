@@ -129,7 +129,7 @@ function adventurePrimaryAction(m: PhoneFrameModel, guide: FirstDepartureGuide) 
         m.act({ type: "start", id: m.quest.id, squad: m.squad.id });
       }}
     >
-      <Image src="/ui/departure-arrow.png" width={32} height={32} alt="" unoptimized />
+      <Image src="/ui/departure-boot.png" width={32} height={32} alt="" unoptimized />
       <span>出発</span>
     </button>
   );
