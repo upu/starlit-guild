@@ -80,7 +80,7 @@
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
     "eslint-plugin-sonarjs": "^4.2.0",
-    "prettier": "3.9.7",
+    "prettier": "3.9.9",
     "react-server-dom-webpack": "19.2.6",
     "sharp": "0.34.5",
     "tailwindcss": "4.2.1",
