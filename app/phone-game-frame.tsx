@@ -257,6 +257,7 @@ export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
       }}
     >
       <DialogContent
+        {...(!description ? { "aria-describedby": undefined } : {})}
         showCloseButton={m.sheet !== "story"}
         onPointerDownOutside={conversation ? onPointerDownOutside : undefined}
         onInteractOutside={(event) => {
@@ -277,7 +278,7 @@ export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
         ) : (
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            {description && <DialogDescription>{description}</DialogDescription>}
           </DialogHeader>
         )}
         {content}

@@ -26,7 +26,7 @@ const bundle = await build({
   const profile={id:'fixture',name:'表示確認',test:false,state};
   const game={s:state,ready:true,otherTab:false,profile,bundle:{sound:false,profiles:[profile],active:profile.id},dispatch,copies:[],toggleSound:()=>{}};
   const music={preferences:{enabled:false,volume:50},scene:'camp',setEnabled:()=>{},setVolume:()=>{}};
-  return <main className="phone-game"><div className="phone-dialog quest-dialog fixture" data-slot="dialog-content"><div data-slot="dialog-header"><h2>クエスト</h2><p>行き先を選び、もう一度タップで決定。</p></div><SavePanel game={game} music={music}/>{confirmed?<button onClick={()=>setConfirmed('')}>選び直す</button>:<QuestPicker state={state} selected={selected} onSelect={setSelected} onConfirm={setConfirmed} ready onAutoNextChange={value=>dispatch({type:'autoNextQuest',value})}/>}<output>{confirmed}</output></div></main>;
+  return <main className="phone-game"><div className="phone-dialog quest-dialog fixture" data-slot="dialog-content"><div data-slot="dialog-header"><h2>クエスト</h2></div><SavePanel game={game} music={music}/>{confirmed?<button onClick={()=>setConfirmed('')}>選び直す</button>:<QuestPicker state={state} selected={selected} onSelect={setSelected} onConfirm={setConfirmed} ready onAutoNextChange={value=>dispatch({type:'autoNextQuest',value})}/>}<output>{confirmed}</output></div></main>;
  }
  createRoot(document.getElementById('root')).render(<App/>);
  `,

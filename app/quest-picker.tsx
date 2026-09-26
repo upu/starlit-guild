@@ -41,8 +41,7 @@ function ChapterSelector({
   onChange: (id: ReturnType<typeof questChapter>) => void;
 }) {
   return (
-    <label className="quest-chapters">
-      <span>章</span>
+    <div className="quest-chapters">
       <span className="quest-chapter-field">
         <select
           aria-label="クエストの章"
@@ -57,7 +56,7 @@ function ChapterSelector({
         </select>
         <ChevronDown size={16} aria-hidden="true" />
       </span>
-    </label>
+    </div>
   );
 }
 
@@ -150,6 +149,7 @@ export function QuestPicker({
       />
       <div className="quest-list-scroll">
         <QuestProgressionSetting
+          showDescription={false}
           checked={s.autoNextQuest === true}
           onChange={onAutoNextChange}
           disabled={!ready}

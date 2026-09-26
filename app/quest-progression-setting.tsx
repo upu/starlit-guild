@@ -5,10 +5,12 @@ export function QuestProgressionSetting({
   checked,
   onChange,
   disabled,
+  showDescription = true,
 }: {
   checked: boolean;
   onChange: (value: boolean) => void;
   disabled: boolean;
+  showDescription?: boolean;
 }) {
   return (
     <div className="quest-progression-setting">
@@ -21,7 +23,7 @@ export function QuestProgressionSetting({
           aria-label="クリア後、次のステージを行先にする"
         />
       </label>
-      <small>物語を読み終えると切り替わります。出発は自分で選べます。</small>
+      {showDescription && <small>物語を読み終えると切り替わります。出発は自分で選べます。</small>}
     </div>
   );
 }

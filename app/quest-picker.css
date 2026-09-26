@@ -22,8 +22,9 @@
 }
 .quest-chapters {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-self: flex-start;
+  width: 10rem;
+  max-width: 100%;
   color: #ecdbb0;
   font-size: 13px;
 }
