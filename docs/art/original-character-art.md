@@ -15,7 +15,9 @@
 
 メリルの人物表示は採用リファレンスシートから作り直した立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの通常立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の立ち絵制作記録](../art-generation/chapter-four-runtime-sprites.json) に記録する。
 
-横スクロール画面では、主人公と頭・胴・脚の比率を揃えた約2.3頭身の専用画像を使う。4-7のリコ、4-8のメリル、共闘・加入後のリコは `public/animations/road/lico-standing-v1.webp` / `merrill-standing-v1.webp`。リコの丸眼鏡・そばかす・赤黒の衣装・サンダル、メリルの石榴の花・食料の大荷物・左腕の琴のガントレットを残す。現時点では各一姿勢で、歩行・攻撃のコマ分けはない。原本は `assets/source/road/`、プロンプトと制作条件は [第四章の戦闘用画像](../art-generation/chapter-four-battle-sprites.json) を参照する。
+横スクロール画面では、主人公と頭・胴・脚の比率を揃えた約2.3頭身の専用画像を使う。4-7のリコ、4-8のメリル、共闘・加入後のリコは `public/animations/road/lico-standing-v1.webp` / `merrill-standing-v1.webp`。リコの丸眼鏡・そばかす・赤黒の衣装・サンダル、メリルの石榴の花・食料の大荷物・左腕の琴のガントレットを残す。現時点では各一姿勢で、歩行・攻撃のコマ分けはない。原本は `assets/source/road/`、初版は [第四章の戦闘用画像](../art-generation/chapter-four-battle-sprites.json)、現行版のプロンプトは [小表示向けの簡素化](../art-generation/chapter-four-battle-sprites-simple.json) を参照する。
+
+60〜80pxの小表示では、人物を見分ける輪郭・主要色・代表的な持ち物を優先する。リコは丸眼鏡・無地の赤い前掛け・緑の薬瓶、メリルは緑のボブ・大きな赤い花・茸と果実が覗く背負い袋・弦のあるガントレットを読み取れる形に整理した。細かな刺繍、金具、鎖、多数の装飾品を省き、髪は大きな束、服は広い色面と少ない影で描く。等身を下げる際は装飾密度も合わせ、実表示サイズで確認する。
 
 ## メリルの琴とポーズ
 
