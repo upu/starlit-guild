@@ -13,7 +13,9 @@
 
 パンプティの立ち絵の最終プロンプトと参照画像は [立ち絵とスチルの生成記録](../art-generation/original-character-art-v2-prompts.json) に保存する。
 
-第四章4-8の横スクロール画面と人物表示は、採用リファレンスシートから作り直した同じメリルの立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの同画面用立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の実行時立ち絵](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+メリルの人物表示は採用リファレンスシートから作り直した立ち絵を使う。以前の `public/characters/merrill.png` は制作履歴として残す。リコの通常立ち絵は `public/characters/lico-v1.png`。制作条件とハッシュは [第四章の立ち絵制作記録](../art-generation/chapter-four-runtime-sprites.json) に記録する。
+
+横スクロール画面では、主人公と頭・胴・脚の比率を揃えた約2.3頭身の専用画像を使う。4-7のリコ、4-8のメリル、共闘・加入後のリコは `public/animations/road/lico-standing-v1.webp` / `merrill-standing-v1.webp`。リコの丸眼鏡・そばかす・赤黒の衣装・サンダル、メリルの石榴の花・食料の大荷物・左腕の琴のガントレットを残す。現時点では各一姿勢で、歩行・攻撃のコマ分けはない。原本は `assets/source/road/`、プロンプトと制作条件は [第四章の戦闘用画像](../art-generation/chapter-four-battle-sprites.json) を参照する。
 
 ## メリルの琴とポーズ
 

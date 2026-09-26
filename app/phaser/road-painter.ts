@@ -318,11 +318,18 @@ export class RoadPainter {
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(enemyFacesRight(enemy, state.heroes[0].x))
+      .setFlipX(
+        character
+          ? !enemyFacesRight(enemy, state.heroes[0].x)
+          : enemyFacesRight(enemy, state.heroes[0].x),
+      )
       .setAngle(enemyFalls(enemy) ? -20 : 0)
       .setDepth(10 + enemy.lane * 10);
     if (puppet) figure.image.setScale(size / 724).setOrigin(0.5, 0.98);
-    if (character) figure.image.setScale(size / figure.image.frame.height).setOrigin(0.5, 1);
+    if (character) {
+      figure.image.setScale(size / figure.image.frame.height).setOrigin(0.5, 1);
+      this.spriteFilter.apply(figure.image);
+    }
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)

@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-26",
+  "mode": "built-in image_gen",
+  "purpose": "通常立ち絵と分けた約2.3頭身の戦闘用画像。主人公の頭・胴・脚の比率に合わせる。",
+  "processing": "生成PNGの透明余白をsharp trim(threshold:10)で除き、縦512pxへ縦横比を維持して縮小。共通road-artパイプラインで可逆WebP配信。",
+  "assets": [
+    {
+      "character": "lico",
+      "source": "assets/source/road/lico-standing-v1.png",
+      "output": "public/animations/road/lico-standing-v1.webp",
+      "references": [
+        "assets/source/road/aria-v1.png",
+        "docs/characters/lico-reference-sheet.webp"
+      ],
+      "prompt": "Use case: style-transfer. Production STARLIT-GUILD small battle sprite. Image1 is the authoritative STYLE and BODY PROPORTION reference: match exactly the big expressive head, very short torso and legs, chunky hands/feet, clean dark outlines and simple cel-painted color areas of this Aria battle sprite sheet. Image2 is CHARACTER IDENTITY AND COSTUME reference only, ignore all text and NEVER copy its adult realistic body proportions. Create ONE single complete standing battle-ready character, 3/4 view facing RIGHT. About 2.3 heads tall from skull crown to soles, head about 43% of body height, like Aria. Readable at only 65-80px tall. Full body including feet, centered in SQUARE canvas, silhouette fits inner 90%, small even transparent margin. NO sheet, NO multiple figures. Actual transparent RGBA background alpha zero outside silhouette, opaque clothing, no background glow, no ground shadow, no noise, no text, no borders. Simplify tiny decorative details into readable shapes without losing identity. Character: Lico, a short adult alchemist, tousled reddish dark brown ponytail, loose stray bangs, drooping ROUND spectacles with unmistakable thin round rims, visible freckles, sleepy pale moss-green eyes, an odd but appealing curious slight smile (not evil). Preserve deep RED practical apron, charcoal BLACK short cloak and skirt, ivory blouse, red spider-lily hair ornament, chunky brown open-toed SANDALS, herb sample satchel. Hold one round flask of green liquid in right hand, other hand relaxed near belt. Compact sturdy chibi body matching Aria, NOT long thin legs, NOT glamour beautiful heroine. Only Lico, no Aria."
+    },
+    {
+      "character": "merrill",
+      "source": "assets/source/road/merrill-standing-v1.png",
+      "output": "public/animations/road/merrill-standing-v1.webp",
+      "references": [
+        "assets/source/road/aria-v1.png",
+        "docs/characters/merrill-reference-sheet.png"
+      ],
+      "prompt": "Use case: style-transfer. Production STARLIT-GUILD small battle sprite. Image1 is the authoritative STYLE and BODY PROPORTION reference: match exactly the big expressive head, very short torso and legs, chunky hands/feet, clean dark outlines and simple cel-painted color areas of this Aria battle sprite sheet. Image2 is CHARACTER IDENTITY AND COSTUME reference only, ignore all text and NEVER copy its adult realistic body proportions. Create ONE single complete standing battle-ready character, 3/4 view facing RIGHT. About 2.3 heads tall from skull crown to soles, head about 43% of body height, like Aria. Readable at only 65-80px tall. Full body including feet, centered in SQUARE canvas, silhouette fits inner 90%, small even transparent margin. NO sheet, NO multiple figures. Actual transparent RGBA background alpha zero outside silhouette, opaque clothing, no background glow, no ground shadow, no noise, no text, no borders. Simplify tiny decorative details into readable shapes without losing identity. Character: Merrill, small dryad woman, uneven sage GREEN BOB, green eyes, friendly hungry mischievous smile, red POMEGRANATE BLOSSOM and leaves growing from head with separate red ribbon. Cream blouse, muted green short hooded jacket, dark shorts, stout short legs and chunky brown lace boots. Large FOOD STUFFED BACKPACK with readable mushroom, fruit, wrapped meat and pumpkin charm silhouettes. LEFT forearm ONLY has carved wood lyre GAUNTLET with strings over back of forearm/hand; right hand bare holding backpack strap. No separate harp. Her natural sturdy compact body must become same 2.3-head chibi proportion as Aria, not miniature realistic portrait. Only Merrill, no Aria."
+    }
+  ]
+}

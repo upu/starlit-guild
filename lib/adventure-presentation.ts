@@ -34,7 +34,7 @@ export const spriteAsset = (index: number) =>
   index === 2
     ? "/animations/mira-v1.png"
     : index === 4
-      ? "/characters/lico-v1.png"
+      ? "/animations/road/lico-standing-v1.webp"
       : originalArt(index) || "/sprites.png";
 export const spriteFrame = (index: number) =>
   index === 2 ? "8" : spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
@@ -129,9 +129,9 @@ function targetAsset(
 ) {
   const encounterNode = run.road?.ambushNode ?? run.node;
   if (kind === "battle" && quest.id === LICO_RECORDS_QUEST && encounterNode === 14)
-    return "/characters/lico-v1.png";
+    return "/animations/road/lico-standing-v1.webp";
   if (kind === "battle" && quest.id === MERRILL_SEEDLINGS_QUEST && encounterNode === 8)
-    return "/characters/merrill-v2.png";
+    return "/animations/road/merrill-standing-v1.webp";
   const enemyArt = kind === "battle" ? chapterTwoEnemyAsset(quest.id, run.node) : null;
   if (enemyArt) return enemyArt;
   if (kind === "escort")

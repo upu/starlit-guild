@@ -36,7 +36,7 @@ export function enemyDisplayHeight(enemy: RoadEnemy, width: number, height: numb
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
   if (enemy.kind === "lico" || enemy.kind === "merrill")
     return {
-      asset: enemy.kind === "lico" ? "/characters/lico-v1.png" : "/characters/merrill-v2.png",
+      asset: `/animations/road/${enemy.kind}-standing-v1.webp`,
       frame: "__BASE",
       puppet: false,
       character: true,

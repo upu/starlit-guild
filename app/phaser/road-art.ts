@@ -2,7 +2,7 @@ import type { TravellerId } from "@/lib/road-view";
 
 export const roadSheet = (id: TravellerId) =>
   id === "lico"
-    ? "/characters/lico-v1.png"
+    ? "/animations/road/lico-standing-v1.webp"
     : `/animations/road/${id}-v${id === "mira" ? "2" : "1"}.webp`;
 export const ROAD_SIGNPOST = "/animations/road/signpost-v2.webp";
 export const finnFrames = [
@@ -82,7 +82,7 @@ const walkBounds = {
   ],
 };
 export function roadWalkFrame(id: TravellerId, pose: number) {
-  if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 1536 };
+  if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 512 };
   if (id === "finn") return { originX: 0.5, originY: 1, scale: 0.9 / finnFrames[pose][3] };
   const [left, top, right, bottom] = walkBounds[id][pose];
   return { originX: (left + right) / 2 / 627, originY: bottom / 627, scale: 0.9 / (bottom - top) };

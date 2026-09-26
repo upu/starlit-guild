@@ -97,6 +97,22 @@
       "sourceBytes": 1064152,
       "outputBytes": 718790
     },
+    "lico-standing-v1.png": {
+      "sourceHash": "0eb1ea7162af44d93c3dd0f6dd7646bf1755b2ef62de98370ec4ae9e87d994e8",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "lico-standing-v1.webp",
+      "outputHash": "58ee2104d9232f4c1ec0de22d90ee8f26ea8157e37be73f42dc6810fd3f5a411",
+      "sourceBytes": 336811,
+      "outputBytes": 199828
+    },
+    "merrill-standing-v1.png": {
+      "sourceHash": "58ffe61ef1f2a7065b627392099f208e17b1272d763cfd3bccb0612f210fac75",
+      "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
+      "output": "merrill-standing-v1.webp",
+      "outputHash": "d1721d1277512f8b95a392f1638c5af177e66766c63d73118a45e2db8f94ab01",
+      "sourceBytes": 429691,
+      "outputBytes": 246298
+    },
     "mira-v2.png": {
       "sourceHash": "a38705d896c34cf6e4df9a20d9046cff11b4c579134b637eca61816fca85ee20",
       "profileHash": "c11b045aa0c8a9c622e423858843ab52b6d799a755474c4217400f5e857cdc7c",
