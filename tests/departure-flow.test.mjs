@@ -57,6 +57,11 @@ function harness(initialState) {
     "@/lib/chapter-three": chapterThree,
     "@/lib/techniques": techniques,
     react: {
+      useRef(initial) {
+        const i = cursor++;
+        if (!(i in slots)) slots[i] = { current: initial };
+        return slots[i];
+      },
       useState(initial) {
         const i = cursor++;
         if (!(i in slots)) slots[i] = typeof initial === "function" ? initial() : initial;
@@ -410,10 +415,12 @@ test("interlude waits for quest selection and departure, remains after cancel an
     assert.deepEqual(h.api.s.xp, s.xp);
     assert.deepEqual(h.api.s.done, s.done);
     assert.ok(!game.availableQuests(h.api.s).some((q) => q.id === id));
+    assert.equal(h.model.sheet, autoNextQuest ? "story" : null);
+    if (autoNextQuest) assert.equal(h.model.pendingDeparture.id, chapterThree.BERNE_QUEST);
   }
 });
 
-test("reading the first ending replaces a previous UI choice with the saved next destination without departing", () => {
+test("reading the first ending replaces a previous UI choice, then Auto-Next opens the unseen departure", () => {
   let s = game.act(game.initialState(1000), { type: "autoNextQuest", value: true }, 1000);
   s = game.settle(
     game.act(s, { type: "start", id: prologue.TRADE_QUEST, readDeparture: true }, 1000),
@@ -433,4 +440,47 @@ test("reading the first ending replaces a previous UI choice with the saved next
   assert.equal(h.api.s.squads[0].lastQuest, prologue.RETURN_QUEST);
   assert.equal(h.model.run, null);
   assert.equal(harness(h.api.s).model.quest.id, prologue.RETURN_QUEST);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, prologue.RETURN_QUEST + "-departure");
+  assert.equal(h.model.pendingDeparture.id, prologue.RETURN_QUEST);
+  assert.equal(h.model.finishStory(), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.sheet, null);
+  assert.equal(h.model.run.quest, prologue.RETURN_QUEST);
+});
+
+test("a stage chosen in the picker gives way to the saved destination once Auto-Next moves on", () => {
+  const s = { ...game.testState(1000, 3, 50, 0), autoNextQuest: true },
+    h = harness(s);
+  h.model.selectQuest(prologue.TRADE_QUEST);
+  h.render();
+  h.departButton().props.onClick();
+  h.render();
+  assert.equal(h.model.run.quest, prologue.TRADE_QUEST);
+  h.api.s = game.settle(h.api.s, h.api.s.updatedAt + 12 * 3600000).state;
+  h.render();
+  const frontier = prologue.storyStages[3].quest;
+  assert.equal(h.model.run, null);
+  assert.equal(h.api.s.squads[0].lastQuest, frontier);
+  assert.equal(h.model.quest.id, frontier);
+  assert.ok(h.departButton());
+});
+
+test("with Auto-Next, closing the first 2-9 ending opens the interlude as the next departure", () => {
+  const last = prologue.storyStages[17].quest;
+  let s = { ...game.testState(1000, 17, 50, 0), autoNextQuest: true };
+  s = game.act(s, { type: "start", id: last, value: false, readDeparture: true }, 1000);
+  s = game.settle(s, s.updatedAt + 12 * 3600000).state;
+  const h = harness(s);
+  assert.equal(h.model.ending.id, last + "-return");
+  assert.equal(h.model.readStory(last + "-return"), true);
+  h.model.closeStory();
+  h.render();
+  assert.equal(h.model.ending, null);
+  assert.equal(h.model.sheet, "story");
+  assert.equal(h.model.reading.id, chapterThree.LUNCH_INTERLUDE);
+  assert.equal(h.model.pendingDeparture.id, chapterThree.LUNCH_INTERLUDE);
 });

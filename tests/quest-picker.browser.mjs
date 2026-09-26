@@ -144,7 +144,7 @@ try {
       await page.getByRole("button", { name: "第二章", exact: true }).getAttribute("aria-pressed"),
       "true",
     );
-    const preference = page.getByRole("switch", { name: "クリア後、次のステージを行先にする" });
+    const preference = page.getByRole("switch", { name: "Auto-Next" });
     assert.equal(await preference.getAttribute("aria-checked"), "false");
     await checkThumb(preference);
     await preference.click();
@@ -195,9 +195,7 @@ try {
     await page.getByRole("button", { name: "選び直す" }).click();
     await page.getByRole("button", { name: "セーブ・設定" }).click();
     await page.getByRole("tab", { name: "設定", exact: true }).click();
-    const savedPreference = page
-      .getByRole("dialog")
-      .getByRole("switch", { name: "クリア後、次のステージを行先にする" });
+    const savedPreference = page.getByRole("dialog").getByRole("switch", { name: "Auto-Next" });
     assert.equal(await savedPreference.getAttribute("aria-checked"), "true");
     await checkThumb(savedPreference);
     await savedPreference.click();

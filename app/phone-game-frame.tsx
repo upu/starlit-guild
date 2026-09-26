@@ -299,7 +299,7 @@ function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
       onRead={() => m.readStory(ending.id)}
       onClose={() => {
         m.game.setReport(null);
-        m.setSheet(null);
+        m.closeStory();
       }}
     />
   );

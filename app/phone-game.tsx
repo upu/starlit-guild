@@ -1,7 +1,5 @@
 "use client";
-import { useState } from "react";
-import { isInterlude, interludeUnlocked } from "@/lib/interludes";
-import { BERNE_QUEST } from "@/lib/chapter-three";
+import { useRef, useState } from "react";
 import { useGameMusic } from "./use-game-music";
 import { useJourneyHints } from "./use-journey-hints";
 import { useInstallPrompt } from "./install-guide";
@@ -9,10 +7,10 @@ import { PhoneFrame } from "./phone-game-frame";
 import { nextGoal, type JourneyGoal } from "@/lib/journey";
 import {
   availableStories,
+  departureStory as storyDeparture,
   journeyBanter,
   stories,
   storyProgress,
-  together,
   type Story,
 } from "@/lib/stories";
 import { TRADE_QUEST, isPrologueQuest, stageEndingPending, restingQuest } from "@/lib/prologue";
@@ -27,16 +25,14 @@ function departureStory(state: State, action: Action) {
   const actionId = action.id;
   if (action.type !== "start" || !actionId) return null;
   const target = state.squads.find((party) => party.id === action.squad) || state.squads[0];
-  if (
-    !target.run &&
-    isInterlude(actionId) &&
-    interludeUnlocked(state, actionId) &&
-    !state.story?.read.includes(actionId)
-  )
-    return stories.find((story) => story.id === actionId) ?? null;
-  if (target.run || !together(target.members) || storyProgress(state).departed.includes(actionId))
-    return null;
-  return stories.find((story) => story.id === actionId + "-departure") ?? null;
+  return storyDeparture(state, target, actionId);
+}
+// Auto-Next stops at rest only in front of an unseen departure conversation, opened next.
+function autoDeparture(state: State, squadId: string, previous?: string): Action | null {
+  const target = state.squads.find((party) => party.id === squadId),
+    id = target?.lastQuest;
+  if (!state.autoNextQuest || !target || target.run || !id || id === previous) return null;
+  return { type: "start", squad: squadId, id };
 }
 function selectedDestination(state: State, squad: Squad, choice?: string) {
   return squad.run?.quest || choice || squad.lastQuest || restingQuest(state, squad);
@@ -91,8 +87,15 @@ function usePhoneContext(game: Game) {
     [candidateQuest, setCandidateQuest] = useState(TRADE_QUEST),
     [returnIntent, setReturnIntent] = useState<ReturnIntent | null>(null);
   const world = phoneWorld(game, questChoices, heroIndex);
+  const queuedDeparture = useRef<{ action: Action; state: State } | null>(null);
   const setQuest = (id: string) => {
     setQuestChoices((current) => ({ ...current, [world.squad.id]: id }));
+  };
+  // Once saved, the destination follows the save, so a later Auto-Next move shows through.
+  const clearQuest = () => {
+    setQuestChoices((current) =>
+      Object.fromEntries(Object.entries(current).filter(([id]) => id !== world.squad.id)),
+    );
   };
   const music = useGameMusic(world.run ? "journey" : "camp", world.ready),
     goal = nextGoal(world.s, world.squad),
@@ -119,6 +122,8 @@ function usePhoneContext(game: Game) {
     sheet,
     setSheet,
     setQuest,
+    clearQuest,
+    queuedDeparture,
     heroIndex,
     setHeroIndex,
     candidateQuest,
@@ -143,31 +148,45 @@ function phoneStoryActions(context: PhoneContext) {
       openStory(departure);
       return true;
     }
-    const ok = context.game.dispatch(action, onSuccess);
+    const ok = context.game.dispatch(action, (state) => {
+      if (action.type === "start") context.clearQuest();
+      onSuccess?.(state);
+    });
     if (ok && action.type === "start" && action.id?.startsWith("join-")) {
       context.setView("adventure");
       context.setSheet(null);
     }
     return ok;
   };
+  const queueAutoDeparture = (state: State) => {
+    const action = autoDeparture(state, context.squad.id, context.squad.lastQuest);
+    context.queuedDeparture.current = action && { action, state };
+  };
   const readStory = (id: string) =>
     context.game.dispatch({ type: "readStory", id }, (current) => {
       const next = current.squads.find((party) => party.id === context.squad.id)?.lastQuest;
-      if (next && next !== context.squad.lastQuest) context.setQuest(next);
+      if (next && next !== context.squad.lastQuest) context.clearQuest();
+      queueAutoDeparture(current);
     });
   const finishStory = () => {
     if (!context.reading) return false;
-    const ok = context.pendingDeparture
-      ? context.game.dispatch({ ...context.pendingDeparture, readDeparture: true }, () => {
-          if (context.reading?.chapter === "interlude") context.setQuest(BERNE_QUEST);
-        })
-      : readStory(context.reading.id);
+    if (!context.pendingDeparture) return readStory(context.reading.id);
+    const ok = context.game.dispatch(
+      { ...context.pendingDeparture, readDeparture: true },
+      (current) => {
+        context.clearQuest();
+        queueAutoDeparture(current);
+      },
+    );
     if (ok) context.setPendingDeparture(null);
     return ok;
   };
   const closeStory = () => {
+    const queued = context.queuedDeparture.current;
+    context.queuedDeparture.current = null;
     context.setPendingDeparture(null);
     context.setSheet(null);
+    if (queued) act(queued.action, undefined, queued.state);
   };
   return { openStory, act, readStory, finishStory, closeStory };
 }
