@@ -24,8 +24,12 @@ export const sectionsPart2: ChapterFourSection[] = [
           "worried",
         ),
         narration("ミラは往診鞄の留め具を二度つまみ直した。"),
-        line("mira", "……そうね。私も、先生に診ていただくわ。", "tired"),
-        line("finn", "先生を呼んでくるよ。今日は俺も宿に残る。二人は荷車を頼むよ。", "serious"),
+        line("mira", "……そうね。私も、町のお医者さまに診ていただくわ。", "tired"),
+        line(
+          "finn",
+          "昨日一緒に回ったお医者さんを呼んでくるよ。今日は俺も宿に残る。二人は荷車を頼むよ。",
+          "serious",
+        ),
         line("mira", "付き添いまでしていただかなくても……。", "shy"),
         line("finn", "目を離すと、その鞄を持って出ていきそうだからね。", "smile"),
         narration("ミラが鞄から手を離す。フィンは空いた隣の椅子へ、自分の荷物を置いた。"),
@@ -88,7 +92,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         ),
         line(
           "mira",
-          "朝は少し食べられたわ。昨日の分を取り戻そうとすると、先生に止められてしまったけれど。",
+          "朝は少し食べられたわ。昨日の分を取り戻そうとすると、町のお医者さまに止められてしまったけれど。",
           "shy",
         ),
         line("finn", "寝てない分を、往診で取り戻そうとするからだよ。", "worried"),
