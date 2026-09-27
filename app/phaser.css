@@ -28,8 +28,9 @@
   padding: 6px 10px;
   border: 1px solid #d9c28a9e;
   border-radius: 8px;
-  background: #142b26ed;
+  background: rgb(20 43 38 / 65%);
   color: #fff1cb;
+  text-shadow: 0 1px 3px #071b1acc;
   box-shadow: 0 2px 8px #071b1a66;
   font-size: 0.875rem;
   font-weight: 600;
