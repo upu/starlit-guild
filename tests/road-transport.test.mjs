@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { act, settle, testState, allQuests } from "../lib/game.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { damageEnemy } from "../lib/combat.ts";
-import { combination } from "../lib/game-run.ts";
+import { combination, configureTarget, schedule } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadY } from "../lib/road-layout.ts";
 import { travellerLane } from "../lib/road-view.ts";
@@ -30,11 +30,14 @@ function start(index, level) {
 }
 const quest = (run) => allQuests.find((q) => q.id === run.quest);
 
-test("five companions leave the cart formation during Merrill's ambush and resume carrying afterward", () => {
+test("legacy Merrill routes leave the cart formation during the ambush and resume afterward", () => {
   let state = start(34, 25);
+  state.squads[0].run.nodes = 15;
+  configureTarget(state.squads[0].run, quest(state.squads[0].run));
+  schedule(state, state.squads[0], state.squads[0].run, state.updatedAt);
   let defended = false,
     resumed = false;
-  while (state.squads[0].run && !resumed) {
+  while (state.squads[0].run && !resumed && state.updatedAt < 600000) {
     const run = state.squads[0].run;
     const before = structuredClone(run);
     const { battle, look } = chapterRoadFrame({

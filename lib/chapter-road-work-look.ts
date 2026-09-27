@@ -16,5 +16,5 @@ export function roadWorkLook(q: Quest, run: Run): WorksiteArt & { label: string 
 function fallbackWorkArt(q: Quest, run: Run): WorksiteArt {
   if (q.escortAsset) return { asset: q.escortAsset, cargo: false, task: "inspect" };
   if (movingWork(q, run)) return worksiteArt.cart;
-  return encounter(q, run.node) === "gather" ? worksiteArt.herb : worksiteArt.parcels;
+  return encounter(q, run.node, run.nodes) === "gather" ? worksiteArt.herb : worksiteArt.parcels;
 }

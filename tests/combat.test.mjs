@@ -65,7 +65,8 @@ test("resistance scales damage by the growth gap, respects rounding and never dr
   assert.equal(reducedDamage(20, 10000, 0), 1);
   for (const { quest } of storyStages) {
     const q = allQuests.find((item) => item.id === quest);
-    assert.ok(createEnemies(q, 0, 0)[0].maxHp < 200, quest);
+    // Merrill replaces an entire work route with one sustained boss encounter.
+    assert.ok(createEnemies(q, 0, 0)[0].maxHp < (quest === "merrill-seedlings" ? 800 : 200), quest);
   }
 });
 

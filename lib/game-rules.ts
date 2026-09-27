@@ -105,9 +105,9 @@ function standardEncounter(q: Quest, node: number): Encounter {
   if (q.kind === "護衛") return node === 1 ? "escort" : "battle";
   return "battle";
 }
-export function encounter(q: Quest, node: number): Encounter {
+export function encounter(q: Quest, node: number, nodes = questNodes(q.id)): Encounter {
   const work =
-    chapterFourWork(q.id, node) ||
+    chapterFourWork(q.id, node, nodes) ||
     chapterThreeWork(q.id, node) ||
     chapterTwoWork(q.id, node) ||
     waterwayWork(q.id, node);
@@ -131,11 +131,11 @@ function enemyTargetName(q: Quest) {
   if (q.enemy === 9) return "霧狼";
   return "スライム";
 }
-export function targetName(q: Quest, node: number, nodes = 15) {
+export function targetName(q: Quest, node: number, nodes = questNodes(q.id)) {
   const battle = puppetBattleName(q.id, node, nodes);
   if (battle) return battle;
   const work =
-    chapterFourWork(q.id, node) ||
+    chapterFourWork(q.id, node, nodes) ||
     chapterThreeWork(q.id, node) ||
     chapterTwoWork(q.id, node) ||
     waterwayWork(q.id, node);

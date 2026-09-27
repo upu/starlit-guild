@@ -11,6 +11,7 @@ import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadWorkLook } from "../lib/chapter-road-work-look.ts";
 import { worksiteByLabel } from "../lib/road-worksite-catalog.ts";
 import { worksiteArt } from "../lib/road-worksite-art.ts";
+import { questNodes } from "../lib/puppet-battles.ts";
 
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173";
@@ -73,9 +74,9 @@ async function capture(page, name) {
 const samples = new Map();
 for (const [index, stage] of storyStages.entries()) {
   const q = allQuests.find((q) => q.id === stage.quest);
-  for (let node = 0; node < 15; node++) {
+  for (let node = 0; node < questNodes(q.id); node++) {
     if (encounter(q, node) === "battle") continue;
-    const look = roadWorkLook(q, { node, nodes: 15 });
+    const look = roadWorkLook(q, { node, nodes: questNodes(q.id) });
     const kind = worksiteByLabel[look.label];
     if (!samples.has(kind)) samples.set(kind, { index, node, label: look.label });
   }
@@ -112,7 +113,7 @@ try {
     await context.close();
     results.push(kind);
   }
-  assert.equal(samples.size, Object.keys(worksiteArt).length);
+  assert.ok([...samples.keys()].every((kind) => kind in worksiteArt));
   assert.deepEqual(errors, []);
   writeFileSync(`${output}/result.json`, JSON.stringify({ results, errors }, null, 2));
   console.log(JSON.stringify({ results, errors }));

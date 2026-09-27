@@ -303,7 +303,7 @@ function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: numb
 function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {
   const run = input.squad.run,
     road = run?.road;
-  const kind = run ? encounter(frame.quest, run.node) : null;
+  const kind = run ? encounter(frame.quest, run.node, run.nodes) : null;
   if (!run || kind === "battle") return;
   look.work = roadWorkLook(frame.quest, run);
   const cargo = look.work.cargo;
@@ -381,7 +381,7 @@ export function chapterRoadActivity(input: AdventureInput) {
   const quest = adventureFrame(input).quest;
   if (run.road?.ambushNode !== undefined && roadHasEnemies(run))
     return run.target > 0 ? "作業中の仲間を護衛" : "襲ってきた敵を撃退中";
-  if (encounter(quest, run.node) === "battle") return "道を開きながら前へ";
+  if (encounter(quest, run.node, run.nodes) === "battle") return "道を開きながら前へ";
   return targetName(quest, run.node, run.nodes);
 }
 export function chapterRoadProgress(run: Run) {

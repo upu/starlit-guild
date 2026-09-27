@@ -216,7 +216,7 @@ function strikeAssist(s: State, sq: Squad, r: Run, now: number) {
       r,
       Math.max(2, Math.round(2 + stats(s, sq)[index] * 0.035)),
       power,
-      resistanceFor(q, encounter(q, r.node)),
+      resistanceFor(q, encounter(q, r.node, r.nodes)),
       undefined,
       !!r.road && roadActionKind(q, r) !== "battle",
     );

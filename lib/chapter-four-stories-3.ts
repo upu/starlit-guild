@@ -80,7 +80,7 @@ export const sectionsPart3: ChapterFourSection[] = [
         line("leon", "管理人さんが来られる道も、空いていますね。", "smile"),
         line("finn", "俺の出番は、こっちの空籠だな。返す数、合ってる？", "smile"),
         line("aria", "合ってる。今回は借りたままにしないでよ。", "mischievous"),
-        line("finn", "はいはい。おじさん、数えられてる方が働きやすいよ。", "smile"),
+        line("finn", "はいはい。返し終わったら、空っぽの荷車まで見せに来るよ。", "smile"),
         narration(
           "塔へ戻ると、作業者が石組みの奥に残る苔を剥がしていた。アリアが採り残しを探し、レオンは運び出す籠を受け取る。最後に管理人と、水が元の排水路へ流れるのを確かめる。",
         ),
@@ -199,7 +199,7 @@ export const sectionsPart3: ChapterFourSection[] = [
         narration(
           "五人は空籠と返事の手紙を積み、帰路についた。街道へ出たところで、リコが日陰の石へ目を留める。",
         ),
-        line("lico", "……それ、気になる。夕暮れまで、まだあるでしょ。", "mischievous"),
+        line("lico", "……それ、気になる。夕暮れまで、時間はまだあるでしょ。", "mischievous"),
         line("leon", "苔の瓶は、歩きながらでも見られますよ。石は、また次にしませんか。", "serious"),
         line("aria", "その石までね。私も見る。", "smile"),
         line("finn", "二人になったよ、寄り道する方が。", "smile"),

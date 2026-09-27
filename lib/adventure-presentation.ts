@@ -263,7 +263,7 @@ export function adventureFrame(input: AdventureInput, now = input.now) {
   const { squad } = input,
     run = squad.run;
   const quest = allQuests.find((q) => q.id === (run?.quest || input.startQuest)) || allQuests[0];
-  const kind = run ? encounter(quest, run.node) : null;
+  const kind = run ? encounter(quest, run.node, run.nodes) : null;
   const key = run
     ? `${squad.id}:${String(run.started)}:${quest.id}:${String(run.round)}:${String(run.node)}`
     : `${squad.id}:idle:${quest.id}`;

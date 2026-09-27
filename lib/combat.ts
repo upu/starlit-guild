@@ -77,8 +77,14 @@ export function enemyCount(q: Quest, node: number) {
   const maximum = Math.min(3, combatRank(q) + 1);
   return 1 + (Math.floor(node / 3) % maximum);
 }
-export function createEnemies(q: Quest, node: number, at: number, modern = true): Enemy[] {
-  const duel = confrontationEnemies(q.id, node, combatRank(q), at);
+export function createEnemies(
+  q: Quest,
+  node: number,
+  at: number,
+  modern = true,
+  nodes?: number,
+): Enemy[] {
+  const duel = confrontationEnemies(q.id, node, combatRank(q), at, nodes);
   if (duel) return duel;
   const formation = modern ? puppetFormation(q.id, node) : null;
   if (formation)

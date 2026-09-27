@@ -3,6 +3,7 @@ import type { Enemy } from "./combat.ts";
 export type PuppetRole = "puppet" | "golem" | "sweeper" | "puppeteer";
 export const puppetRoles = ["puppet", "golem", "sweeper", "puppeteer"] as const;
 export function questNodes(id: string) {
+  if (id === "merrill-seedlings") return 1;
   if (id === "spinning-signpost") return 9;
   return ["begging-golem", "sweet-blockade"].includes(id) ? 3 : 15;
 }

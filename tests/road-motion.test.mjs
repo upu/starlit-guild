@@ -160,7 +160,7 @@ test("a backwards snapshot clock correction keeps the previous visible position"
 });
 
 test("real gathering ambushes, victories and work-point changes never teleport companions", () => {
-  for (const stage of [3, 13, 34]) {
+  for (const stage of [3, 13, 35]) {
     let state = act(
       testState(1000, stage, 25, 1000),
       { type: "start", id: storyStages[stage].quest, value: false, readDeparture: true },

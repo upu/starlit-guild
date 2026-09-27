@@ -115,13 +115,17 @@ const routes: Record<string, StoryLine[][]> = {
       { expression: "serious", speaker: "aria", text: "うん。今度の角は、右だね。" },
     ],
     [
-      { speaker: "aria", text: "帰り道は、あの青い布のところからだよね。" },
+      {
+        expression: "serious",
+        speaker: "aria",
+        text: "荷車、また曲がった。さっきの角、覚えてる？",
+      },
       {
         expression: "smile",
         speaker: "leon",
-        text: "ああ。荷車の時刻と、ここまでの曲がり角は書けた。明日はその先だ。",
+        text: "ああ。曲がるたびに書いてる。帰りに迷わないようにな。",
       },
-      { expression: "smile", speaker: "aria", text: "うん。付き合ってくれて、ありがとう。" },
+      { expression: "smile", speaker: "aria", text: "じゃあ、私は荷車を見てるね。" },
     ],
   ],
   [MOSS_BEDS_QUEST]: [
@@ -260,6 +264,7 @@ export function chapterFourBanter(run: Run): StoryLine[] | null {
   if (battle) return battle;
   const pursuit = pursuitBanter(run);
   if (pursuit) return pursuit;
+  if (run.quest === MOSS_BEDS_QUEST && run.phase === "rest") return rests[1];
   if (run.phase !== "rest" && run.quest === MERRILL_SEEDLINGS_QUEST && run.node < 9)
     return [
       { expression: "serious", speaker: "lico", text: "苗を運ぶなら、あの籠を先に守って。" },
