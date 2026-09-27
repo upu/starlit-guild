@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import type { AdventureBridge, AdventureRenderer } from "./renderer-session";
 import { ChapterRoadPainter, chapterRoadAssets } from "./chapter-road-painter";
+import { bindAdventureResolution, syncAdventureResolution } from "./adventure-resolution";
 
 type RuntimeState = { disposed: boolean; paused: boolean; created: boolean; reduced: boolean };
 
@@ -25,6 +26,7 @@ function sceneClass(
     }
     create() {
       try {
+        bindAdventureResolution(this);
         this.painter.initialize();
       } catch (error) {
         this.painter.failed = true;
@@ -111,15 +113,10 @@ export function createAdventureGame(
   game.canvas.addEventListener("webglcontextlost", contextLost);
   return {
     resize(w, h) {
-      if (
-        !runtime.disposed &&
-        w > 0 &&
-        h > 0 &&
-        (game.scale.width !== w || game.scale.height !== h)
-      ) {
-        game.scale.resize(w, h);
-        if (runtime.created && !runtime.paused) game.scale.updateBounds();
-      }
+      if (runtime.disposed || w <= 0 || h <= 0) return;
+      if (game.scale.width !== w || game.scale.height !== h) game.scale.resize(w, h);
+      if (runtime.created) syncAdventureResolution(scene);
+      if (runtime.created && !runtime.paused) game.scale.updateBounds();
     },
     setPaused(value) {
       if (runtime.paused === value) return;

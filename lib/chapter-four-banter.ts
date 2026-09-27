@@ -99,7 +99,7 @@ const routes: Record<string, StoryLine[][]> = {
       {
         expression: "worried",
         speaker: "finn",
-        text: "そのために先生へ頼んだんだろ。今戻ったら、引き継いだ先生が困るよ。",
+        text: "そのために町のお医者さんへ頼んだんだろ。今戻ったら、引き継いだ相手が困るよ。",
       },
       {
         expression: "shy",
@@ -240,7 +240,7 @@ const routes: Record<string, StoryLine[][]> = {
 const rests: StoryLine[][] = [
   [
     { expression: "smile", speaker: "mira", text: "一息ついて。食事と休みも、仕事のうちよ。" },
-    { expression: "smile", speaker: "finn", text: "先生の分も椅子を空けたよ。" },
+    { expression: "smile", speaker: "finn", text: "ミラ先生の分も椅子を空けたよ。" },
   ],
   [
     { expression: "serious", speaker: "aria", text: "足元の苔は踏まないでね。" },
