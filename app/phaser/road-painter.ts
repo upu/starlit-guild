@@ -287,9 +287,9 @@ export class RoadPainter {
     const crouch = gathering && !reduced ? 4 + Math.sin(state.time / 280) * 2 : 0;
     const y = roadY(hero.lane, this.scene.scale.height) + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
+    const pulling = this.look?.frontCarriers.includes(hero.id) || false;
     const working =
-      this.working(hero) &&
-      applyWorkPose(figure.image, state, hero, reduced, size, hero.id === this.look?.puller);
+      this.working(hero) && applyWorkPose(figure.image, state, hero, reduced, size, pulling);
     if (!working) applyHeroPose(figure.image, hero.id, pose, size);
     this.spriteFilter.apply(figure.image);
     figure.image
