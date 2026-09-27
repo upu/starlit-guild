@@ -17,6 +17,10 @@ function fixture(index, mode) {
     { type: "start", id: storyStages[index].quest, readDeparture: true, value: false },
     now,
   );
+  if (mode === "departure") {
+    s = act(s, { type: "stop" }, now);
+    s.autoNextQuest = false;
+  }
   if (["withdraw", "enter", "escape"].includes(mode)) {
     for (let i = 0; i < 15000 && s.squads[0].run?.road.scene?.kind !== mode; i++)
       s = settle(s, s.squads[0].run.nextAt);
@@ -110,6 +114,8 @@ try {
     ["bottles-cart", 17, "bottles"],
     ["four-cargo", 24, "worksite"],
     ["night-cargo", 25, "worksite"],
+    ["trail-departure", 30, "departure"],
+    ["cargo-departure", 0, "departure"],
     ["four-finn", 24, "worksite"],
     ["five-cargo", 34, "worksite"],
     ["puppets", 15, "boss"],
@@ -167,6 +173,47 @@ try {
       await page.getByRole("button", { name: "もう一度読み込む" }).click();
     }
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
+    if (mode === "departure") {
+      for (let departure = 0; departure < 2; departure++) {
+        if (departure) {
+          await page.getByRole("button", { name: "帰還", exact: true }).click();
+          await page.getByRole("button", { name: "帰還する", exact: true }).click();
+          await page.clock.runFor(100);
+          assert.equal(await page.locator(".road-work-caption").isVisible(), false);
+        }
+        const oldChat = await page.locator(".journey-banter").elementHandle();
+        const oldCanvas = await page.locator("canvas").elementHandle();
+        await page.getByRole("button", { name: "出発", exact: true }).click();
+        let position = null;
+        for (let step = 0; step < 120; step++) {
+          await page.clock.runFor(250);
+          // Read visibility and coordinates in one frame, before the next animation tick.
+          position = await page.locator(".road-work-caption").evaluate((el) => {
+            if (!el.getClientRects().length) return null;
+            const map = el.closest(".adventure-map").getBoundingClientRect();
+            return { top: el.getBoundingClientRect().top, mapTop: map.top, mapHeight: map.height };
+          });
+          if (position) break;
+        }
+        assert.equal(
+          await oldChat.evaluate((el) => el.isConnected),
+          false,
+          "departure replaces chat",
+        );
+        assert.equal(
+          await oldCanvas.evaluate((el) => el.isConnected),
+          true,
+          "departure keeps canvas",
+        );
+        await page.screenshot({ path: `${output}/${name}-departure-${departure}.png` });
+        assert.ok(
+          position && position.top > position.mapTop + position.mapHeight * 0.4,
+          `${name}: caption stays near the work, not below the heading: ${JSON.stringify(position)}`,
+        );
+      }
+      // Keep the reached work point stable while checking several viewport sizes.
+      await page.clock.setFixedTime(new Date(await page.evaluate(() => Date.now())));
+    }
     await page.clock.runFor(mode === "worksite" ? 50 : 900);
     assert.equal(await page.locator("canvas").count(), 1);
     assert.ok(await page.evaluate(() => window.roadMipFilters > 0));
@@ -272,7 +319,7 @@ try {
         );
         assert.ok(geometry.activityBottom < geometry.chatTop);
       }
-      if (["night-cargo", "moss", "five-cargo"].includes(name)) {
+      if (["night-cargo", "moss", "five-cargo"].includes(name) || mode === "departure") {
         const caption = page.locator(".road-work-caption");
         assert.ok(await caption.isVisible(), `${name}: work caption visible`);
         const bounds = await caption.boundingBox();
@@ -341,7 +388,7 @@ try {
       await page.clock.runFor(100);
       assert.equal(await caption.count(), 1, "one caption after remount");
     }
-    results.push({ name, quest: save.profiles[0].state.squads[0].run.quest, reloaded: true });
+    results.push({ name, quest: storyStages[index].quest, reloaded: true });
     await context.close();
   }
   const removedRoute = await browser.newContext();
