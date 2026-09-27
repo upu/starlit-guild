@@ -73,9 +73,5 @@ export class RoadWorkCaption {
     const left = Math.max(8, Math.min(width - this.bounds.width - 8, x - this.bounds.width / 2));
     const y = Math.max(top, Math.min(actorTop - 14, bottom) - this.bounds.height);
     this.element.style.transform = `translate(${String(left)}px, ${String(y)}px)`;
-    this.element.style.setProperty(
-      "--caption-pointer",
-      `${String(Math.max(14, Math.min(this.bounds.width - 14, x - left)))}px`,
-    );
   }
 }

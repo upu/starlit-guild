@@ -26,27 +26,22 @@
   width: max-content;
   max-width: min(17rem, calc(100% - 16px));
   padding: 6px 10px;
-  border: 1px solid #d9c28a9e;
-  border-radius: 8px;
-  background: rgb(20 43 38 / 65%);
+  background: radial-gradient(
+    ellipse at center,
+    rgb(20 43 38 / 65%) 0%,
+    rgb(20 43 38 / 35%) 55%,
+    transparent 75%
+  );
   color: #fff1cb;
-  text-shadow: 0 1px 3px #071b1acc;
-  box-shadow: 0 2px 8px #071b1a66;
+  text-shadow:
+    0 1px 3px #071b1a,
+    0 0 6px #071b1acc;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   text-align: center;
   overflow-wrap: anywhere;
   pointer-events: none;
-}
-.road-work-caption::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: var(--caption-pointer, 50%);
-  border: 6px solid transparent;
-  border-top-color: #d9c28a;
-  transform: translateX(-50%);
 }
 .phaser-loading {
   position: absolute;
