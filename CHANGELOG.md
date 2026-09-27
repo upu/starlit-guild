@@ -12,7 +12,8 @@
 
 | 版 | 日付 | 変更 |
 | --- | --- | --- |
-| 0.4.23 | 2026-09-27 | ブレッカでの往診理由と医者の呼び分けを明確にする（[#209](https://github.com/upu/starlit-guild/pull/209)） |
+| 0.4.24 | 2026-09-27 | ブレッカでの往診理由と医者の呼び分けを明確にする（[#209](https://github.com/upu/starlit-guild/pull/209)） |
+| 0.4.23 | 2026-09-27 | スマホの冒険ミニキャラを鮮明に表示する（[#208](https://github.com/upu/starlit-guild/pull/208)） |
 | 0.4.22 | 2026-09-27 | 荷物運搬中の向きと4人以上の隊列を整える（[#207](https://github.com/upu/starlit-guild/pull/207)） |
 | 0.4.21 | 2026-09-26 | 第二章の空き瓶運搬とプティ戦の演出を整える（[#205](https://github.com/upu/starlit-guild/pull/205)） |
 | 0.4.20 | 2026-09-26 | 冒険中もスキルの付け替えと取り外しを可能にする（[#206](https://github.com/upu/starlit-guild/pull/206)） |

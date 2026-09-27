@@ -7,7 +7,8 @@ import { storyStages } from "../lib/prologue.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173",
-  output = "work/chapter-road-browser";
+  density = Number(process.env.TEST_DPR || 1),
+  output = `work/chapter-road-browser/dpr-${density}`;
 mkdirSync(output, { recursive: true });
 function fixture(index, mode) {
   const now = Date.now();
@@ -120,6 +121,7 @@ try {
     if (process.env.TEST_SCENES && !process.env.TEST_SCENES.split(",").includes(name)) continue;
     const context = await browser.newContext({
         viewport: { width: 390, height: 844 },
+        deviceScaleFactor: density,
         hasTouch: name === "touch",
         isMobile: name === "touch",
       }),
@@ -190,6 +192,34 @@ try {
       // Let ResizeObserver apply the real canvas dimensions before advancing its fake RAF clock.
       await new Promise((resolve) => setTimeout(resolve, 75));
       await page.clock.runFor(350);
+      const canvasSize = await page.locator(".phaser-canvas canvas").evaluate((canvas) => {
+        const host = canvas.parentElement;
+        const density = Math.max(1, Math.min(3, window.devicePixelRatio));
+        return {
+          actual: [canvas.width, canvas.height],
+          expected: [
+            Math.round(host.clientWidth * density),
+            Math.round(host.clientHeight * density),
+          ],
+        };
+      });
+      assert.deepEqual(canvasSize.actual, canvasSize.expected);
+      if (name === "touch") {
+        const hits = () =>
+          page.evaluate(
+            () =>
+              JSON.parse(localStorage.getItem("starlit-guild-v4")).profiles[0].state.squads[0].run
+                .hits,
+          );
+        const beforeTap = await hits();
+        const canvas = page.locator(".phaser-canvas canvas");
+        const bounds = await canvas.boundingBox();
+        const x = bounds.width * 0.6;
+        const y = bounds.height * 0.4;
+        await canvas.tap({ position: { x, y } });
+        await page.clock.runFor(250);
+        assert.equal(await hits(), beforeTap + 1);
+      }
       const layout = await page
         .locator(".phone-game")
         .evaluate((el) => ({ width: el.clientWidth, scrollWidth: el.scrollWidth }));
