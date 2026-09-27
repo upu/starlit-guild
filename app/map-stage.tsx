@@ -84,7 +84,7 @@ function mapHeading(
       <h2>{q.region}</h2>
       <span>
         {run
-          ? `${String(run.round)} 周目 · ${activity}`
+          ? activity
           : clears === 0
             ? "ふたりの小さな冒険が、ここから始まる。"
             : "支度ができたら、次の冒険へ。"}
