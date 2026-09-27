@@ -58,9 +58,7 @@ test("survey, treatment, tracking, earthwork and small deliveries show their act
 
 test("handing over requests and receiving replies leave the letters in place", () => {
   for (const label of ["依頼の手紙を渡す", "返事を受け取る"]) {
-    const job = jobs.find(
-      ({ q, run }) => targetName(q, run.node, run.nodes) === label,
-    );
+    const job = jobs.find(({ q, run }) => targetName(q, run.node, run.nodes) === label);
     assert.ok(job);
     const look = roadWorkLook(job.q, job.run);
     assert.equal(look.asset, "/animations/road/work-letters-v1.webp");
