@@ -167,9 +167,9 @@ const jobs = (kind: Work["kind"], ...names: string[]): Work[] =>
 const patterns: Partial<Record<string, Work[]>> = {
   [LINDE_REQUESTS_QUEST]: jobs(
     "escort",
-    "依頼の手紙を届ける",
+    "依頼の手紙を渡す",
     "日取りを確かめる",
-    "返事を持ち帰る",
+    "返事を受け取る",
   ),
   [LANTERN_DETOUR_QUEST]: jobs("escort", "村はずれへ案内する", "灯籠を調べる", "道の草を刈る"),
   [BREKKA_ARRIVAL_QUEST]: [
