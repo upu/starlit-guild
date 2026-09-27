@@ -43,9 +43,8 @@ export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
 export class RoadPainter {
   private backdrop: Phaser.GameObjects.Image;
   private ground: Phaser.GameObjects.Graphics;
-  private trail: Phaser.GameObjects.Graphics;
   private sizeKey = "";
-  private gathering: Figure;
+  private gathering: Phaser.GameObjects.Image;
   private effects: RoadEffects;
   private spriteFilter: RoadSpriteFilter;
   private bars: Phaser.GameObjects.Graphics;
@@ -59,10 +58,7 @@ export class RoadPainter {
     this.spriteFilter = new RoadSpriteFilter(scene);
     this.backdrop = scene.add.image(0, 0, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
     this.ground = scene.add.graphics().setDepth(1);
-    this.trail = scene.add.graphics().setDepth(2);
-    this.gathering = this.makeFigure(ROAD_HERB, "__BASE", "薬草");
-    this.gathering.image.setDepth(16).setVisible(false);
-    this.gathering.label.setVisible(false);
+    this.gathering = scene.add.image(0, 0, ROAD_HERB).setDepth(16).setVisible(false);
     this.effects = new RoadEffects(scene);
     this.strings = scene.add.graphics().setDepth(18);
     this.bars = scene.add.graphics().setDepth(30);
@@ -206,7 +202,7 @@ export class RoadPainter {
       this.sizeKey = "";
     }
     const { width, height } = this.scene.scale;
-    const key = `${String(width)}:${String(height)}:${String(this.look?.urban)}`;
+    const key = `${String(width)}:${String(height)}`;
     if (this.sizeKey !== key) {
       this.sizeKey = key;
       this.resizeScenery(width, height);
@@ -221,7 +217,6 @@ export class RoadPainter {
       reduced ? 0 : state.distance / length,
     );
     this.backdrop.setDisplaySize(view.width, view.height).setPosition(view.x, view.y);
-    this.trail.setX(reduced ? 0 : -(((state.distance * width) / 560) % width));
     const markerHeight = Math.min(125, width * 0.26, height * 0.4);
     this.destination.setDisplaySize((markerHeight * 874) / 1144, markerHeight);
     this.destination.setPosition(this.screenX(length + 100, state), roadY(0.6, height));
@@ -234,17 +229,6 @@ export class RoadPainter {
     this.backdrop.setAlpha(0.9);
     this.ground.clear();
     this.ground.fillStyle(0x132f25, 0.36).fillRect(0, 0, width, height);
-    this.trail.clear();
-    if (this.look?.urban) return;
-    for (let index = 0; index < 36; index++) {
-      const x = (index * width) / 18;
-      const y = roadY(index % 2 ? 1.05 : 0.28, height);
-      this.trail.fillStyle(index % 3 ? 0x426541 : 0xa4b478, 0.7);
-      this.trail.fillEllipse(x, y, 16 + ((index % 18) % 4) * 6, 5);
-      this.trail.lineStyle(2, 0x749a60, 0.7);
-      this.trail.lineBetween(x, y, x - 4, y - 9);
-      this.trail.lineBetween(x + 2, y, x + 6, y - 13);
-    }
   }
 
   private health(x: number, y: number, size: number, ratio: number, enemy = false) {
@@ -350,41 +334,24 @@ export class RoadPainter {
     return { size, asset, frame };
   }
 
-  private workLabel(point: NonNullable<RoadBattle["gathering"]>) {
-    if (this.look?.work) return this.look.work.label;
-    if (point.kind === "cargo")
-      return {
-        pack: "包み直し",
-        carry: "運搬中",
-        unload: "荷下ろし",
-        gather: "",
-        inspect: "確認中",
-      }[point.task];
-    return point.remaining < point.total ? "採取中" : "薬草";
-  }
-
   private paintGathering(state: RoadBattle) {
     const point = state.gathering;
-    this.gathering.image.setVisible(!!point);
-    this.gathering.label.setVisible(!!point && this.scene.scale.height >= 240);
+    // The current activity is already shown in the DOM map heading, above the chat.
+    this.gathering.setVisible(!!point);
     if (!point) return;
     const cargo = point.kind === "cargo";
     const lane = cargo ? 0.82 : 0.68;
     const x = this.screenX(point.x + 65, state),
       y = roadY(lane, this.scene.scale.height);
     const { size, asset, frame } = this.workAppearance(cargo);
-    if (this.gathering.image.texture.key !== asset || this.gathering.image.frame.name !== frame)
-      this.gathering.image.setTexture(asset, frame);
-    this.gathering.image.setOrigin(0.5, cargo || this.look?.work?.frame ? 1 : 0.92);
-    this.gathering.image
+    if (this.gathering.texture.key !== asset || this.gathering.frame.name !== frame)
+      this.gathering.setTexture(asset, frame);
+    this.gathering.setOrigin(0.5, cargo || this.look?.work?.frame ? 1 : 0.92);
+    this.gathering
       .setPosition(x, y)
-      .setScale(size / this.gathering.image.frame.width)
+      .setScale(size / this.gathering.frame.width)
       .setDepth(10 + lane * 10 - 0.1)
       .setFlipX(cargo && point.task === "carry" && !!this.look?.puller);
-    this.gathering.label
-      .setText(this.workLabel(point))
-      .setWordWrapWidth(Math.min(190, this.scene.scale.width * 0.42), true)
-      .setPosition(x, roadY(0.82, this.scene.scale.height) + 36);
     if (point.task === "carry")
       this.transportProgress(x, y + 5, size, 1 - point.remaining / point.total);
     else this.health(x, y + 5, size, point.remaining / point.total);
