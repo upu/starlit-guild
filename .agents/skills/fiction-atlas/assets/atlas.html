@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiction Atlas</title>
+<style>
+:root{color-scheme:light;--ink:#293d38;--muted:#738077;--paper:#f5f0e2;--line:#d5d3c1;--accent:#a97446}
+*{box-sizing:border-box}body{margin:0;background:#edeade;color:var(--ink);font:14px/1.65 "Yu Gothic UI","Meiryo",sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}button,select{border:1px solid var(--line);border-radius:6px;background:#faf8f0;padding:7px 11px;cursor:pointer}button:hover{background:#e4e8dc}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #a97446;outline-offset:2px}button[aria-pressed="true"]{background:var(--ink);color:white}button:disabled{opacity:.4;cursor:default}
+header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:21px 30px;border-bottom:1px solid var(--line);background:#f7f5ee}.eyebrow{font-size:10px;letter-spacing:.25em;font-weight:bold;color:var(--accent)}h1{font:500 26px/1.4 "Yu Mincho","Georgia",serif;margin:3px 0}header p{margin:0;color:var(--muted);font-size:12px}.file-actions{display:flex;flex-wrap:wrap;gap:6px}.file-actions button{font-size:12px}
+.layout{display:grid;grid-template-columns:225px minmax(0,1fr) 280px;min-height:calc(100vh - 116px)}aside{padding:22px 18px;background:#f7f5ee;overflow:auto;border-right:1px solid var(--line)}aside.right{border-right:0;border-left:1px solid var(--line)}h2{font-size:12px;letter-spacing:.12em;margin:0 0 13px}h3{font-size:19px;font-family:"Yu Mincho",serif;margin:5px 0 13px}.section{padding:0 0 21px;margin:0 0 20px;border-bottom:1px solid var(--line)}nav{display:grid;gap:6px}nav button{text-align:left;background:transparent;border-color:transparent}nav button.child{padding-left:25px}nav button.active{background:#e4e9dd;border-color:#c4cdbb;font-weight:bold}.map-no{font-size:10px;margin-right:10px;color:var(--accent)}input[type="search"]{width:100%;padding:9px;border:1px solid var(--line);border-radius:5px;background:white}#results{display:grid;gap:3px;margin-top:8px;max-height:220px;overflow:auto}#results button{text-align:left;font-size:12px}.layers label{display:block;padding:5px 0;font-size:12px}.layers input{accent-color:var(--ink);margin-right:9px}.small{font-size:12px;color:var(--muted)}.legend{font-size:12px;display:grid;gap:5px}.legend span{display:inline-block;width:25px;color:var(--accent)}
+main{min-width:0;display:flex;flex-direction:column}#map-head{padding:18px 24px 12px;display:flex;gap:14px;justify-content:space-between}#map-name{font:500 22px "Yu Mincho",serif}#map-note{font-size:12px;color:#6b796f;margin:8px 0 0;max-width:750px}.tools{display:flex;align-items:flex-start;gap:5px;flex-shrink:0}.tools button{padding:4px 10px}#canvas{height:calc(100vh - 305px);min-height:460px;overflow:hidden;margin:0 14px;position:relative;border:1px solid #c6c8b4;border-radius:3px;background:#eee8d5;box-shadow:0 7px 25px #3440380c}svg{display:block;width:100%;height:100%;touch-action:none;cursor:grab}svg.edit{cursor:crosshair}svg .place{cursor:pointer}svg .place:focus{outline:none}svg .place:focus .halo{stroke:#a97446;stroke-width:3}#notice{font-size:12px;margin:12px 24px 6px;color:#795d42}#status{font-size:12px;margin:0 24px 12px;color:#576e5c;min-height:20px}.tag{font-size:11px;border:1px solid var(--line);border-radius:20px;padding:3px 8px;display:inline-block;margin:3px 4px 8px 0}.proposal{color:#956431;border-color:#d4b791}.detail-note{white-space:pre-wrap;font-size:13px}dl{font-size:12px}dt{color:var(--muted);margin-top:12px}dd{margin:3px 0;overflow-wrap:anywhere}#source-list{padding-left:16px;font-size:12px}#source-list li{margin-bottom:12px;overflow-wrap:anywhere}#source-list code{font-size:11px;color:#796a4d}.editor label{display:block;font-size:12px;margin:10px 0}.editor input,.editor textarea,.editor select{display:block;width:100%;border:1px solid var(--line);padding:6px;background:white;border-radius:4px}.editor textarea{min-height:80px}.row{display:flex;gap:7px}.row>*{flex:1}.editor button{margin-top:8px}.hidden{display:none!important}.foot{margin-top:20px;font:10px/1.7 Georgia,serif;letter-spacing:.14em;color:#929887}.empty{padding:25px 0;color:var(--muted);font-size:13px}#route-list{padding:0;list-style:none;font-size:12px}#route-list li{margin:9px 0}.unsaved{color:#a65e27!important}
+@media(max-width:1150px){.layout{grid-template-columns:190px minmax(0,1fr)}aside.right{grid-column:1/-1;border-top:1px solid var(--line)}#detail{display:grid;grid-template-columns:1fr 1fr;gap:24px}#canvas{height:65vh}.file-actions{max-width:310px}}
+@media(max-width:700px){header{padding:16px;display:block}.file-actions{margin-top:12px;max-width:none}.layout{display:block}aside{padding:15px;border-bottom:1px solid var(--line)}aside.left{display:grid;grid-template-columns:1fr 1fr;gap:14px}.section{margin:0;padding-bottom:10px}nav{grid-template-columns:1fr 1fr}nav button,nav button.child{font-size:11px;padding:7px}.map-no{display:none}.left .secondary{display:none}#map-head{padding:16px;display:block}.tools{margin-top:12px}#canvas{margin:0 8px;min-height:350px;height:55vh}#detail{display:block}h1{font-size:24px}}
+@media print{header .file-actions,.left,.right,.tools,#status{display:none}.layout{display:block}#canvas{height:75vh;border:0}header{padding:8px}body{background:white}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">FICTION ATLAS · SETTING NOTES</div><h1 id="title"></h1><p id="subtitle"></p></div><div class="file-actions"><button id="load">JSONを開く</button><button id="save">JSONを保存</button><button id="html-save">HTMLを保存</button><button id="svg-save">SVGを書き出す</button><input id="file" type="file" accept=".json,application/json" hidden></div></header>
+<div class="layout">
+<aside class="left"><section class="section"><h2>地図帳</h2><nav id="maps" aria-label="地図を選択"></nav></section><section class="section"><h2>場所を探す</h2><input id="search" type="search" placeholder="地名・メモで検索" aria-label="地名・メモで検索"><div id="results"></div></section><section class="section layers secondary"><h2>表示するもの</h2><label><input type="checkbox" id="terrain" checked>地形</label><label><input type="checkbox" id="routes" checked>街道・道筋</label><label><input type="checkbox" id="labels" checked>地名</label><label><input type="checkbox" id="frames">詳細図の範囲</label></section><section class="legend secondary"><h2>凡例</h2><div><span>▣</span>町・街</div><div><span>⌂</span>村・集落</div><div><span>♜</span>塔</div><div><span>◇</span>その他の場所</div><div><span>┄</span>配置・道筋の案</div><p class="small">地点の存在と、地図上の配置は別々に記録しています。</p></section><div class="foot secondary">A WORLD TAKES SHAPE<br>ONE PLACE AT A TIME.</div></aside>
+<main><div id="map-head"><div><div class="eyebrow" id="map-kind"></div><div id="map-name"></div><p id="map-note"></p></div><div class="tools"><button id="zoom-in" aria-label="拡大">＋</button><button id="zoom-out" aria-label="縮小">−</button><button id="fit">全体へ戻す</button></div></div><div id="canvas"><svg id="map" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="創作用の地図"></svg></div><div id="notice"></div><div id="status" role="status" aria-live="polite"></div></main>
+<aside class="right"><section class="section"><h2>制作の道具</h2><button id="edit" aria-pressed="false">配置を編集</button> <button id="undo" disabled>元に戻す</button><p class="small" id="edit-help">地名を選ぶと設定と根拠を表示。背景をドラッグで移動、＋／−で拡大縮小。</p><button id="add" class="hidden">中央に場所を追加</button></section><div id="detail"><div class="empty">地図の記号、または検索結果から場所を選んでください。</div></div></aside>
+</div>
+<script id="atlas-data" type="application/json">__ATLAS_DATA__</script>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const NS = "http://www.w3.org/2000/svg";
+const stateNames = {established:"既存設定",proposal:"制作案",unknown:"未設定"};
+const kinds = {town:"町・街",village:"村・集落",tower:"塔",site:"場所",junction:"分かれ道",bridge:"橋"};
+let atlas = JSON.parse($("atlas-data").textContent);
+let current, box, selected = null, editing = false, dirty = false, history = [];
+const clone = value => JSON.parse(JSON.stringify(value));
+function el(tag, attrs={}, text=null) { const node=document.createElementNS(NS,tag); for(const [key,value] of Object.entries(attrs)) node.setAttribute(key,value); if(text!==null)node.textContent=text; return node; }
+function html(tag, text, className) { const node=document.createElement(tag); if(text!==undefined)node.textContent=text; if(className)node.className=className; return node; }
+function message(text) { $("status").textContent=text; $("status").classList.toggle("unsaved",dirty); }
+function remember() { history.push(clone(atlas)); if(history.length>40)history.shift(); $("undo").disabled=false; }
+function changed() { dirty=true; message("未保存の編集があります。JSONを保存し、次回はそのファイルを開いてください。"); }
+function inside(p,b=box) {return p.x>=b[0]&&p.y>=b[1]&&p.x<=b[0]+b[2]&&p.y<=b[1]+b[3];}
+function validate(data) {
+ const fail=m=>{throw new Error(m);}, isText=x=>typeof x==="string", num=x=>typeof x==="number"&&Number.isFinite(x), states=Object.keys(stateNames);
+ if(!data||data.version!==1)fail("対応していないデータ形式です。");
+ for(const key of ["title","subtitle","notice"])if(!isText(data[key]))fail(key+" が必要です。");
+ if(typeof data.north!=="boolean")fail("north が必要です。");
+ const tables={};
+ for(const group of ["maps","places","routes","terrain"]){if(!Array.isArray(data[group]))fail(group+" が必要です。"); const ids=new Map(); for(const item of data[group]){if(!item||typeof item!=="object"||typeof item.id!=="string"||!/^[a-z][a-z0-9-]*$/.test(item.id)||ids.has(item.id)||!isText(item.name)||!item.name.trim())fail(group+": IDまたは名前が不正です。");ids.set(item.id,item);}tables[group]=ids;}
+ const level=item=>{if(!Number.isInteger(item.level)||item.level<0||item.level>5)fail(item.id+": level が不正です。");};
+ const evidence=item=>{if(!states.includes(item.status)||!isText(item.note)||!Array.isArray(item.sources)||item.sources.some(s=>!s||!isText(s.ref)||!isText(s.detail)))fail(item.id+": 設定区分または根拠が不正です。");};
+ if(!tables.maps.has(data.defaultMap))fail("初期地図がありません。");
+ for(const m of data.maps){if(!Array.isArray(m.bounds)||m.bounds.length!==4||!m.bounds.every(num)||m.bounds[2]<=0||m.bounds[3]<=0||!isText(m.note))fail(m.id+": 地図範囲が不正です。");level(m);}
+ for(const m of data.maps){let item=m;const seen=new Set([m.id]);while(item.parent!=null){const parent=tables.maps.get(item.parent);if(!parent||seen.has(item.parent))fail("親地図の参照または循環が不正です。");seen.add(item.parent);const [x,y,w,h]=item.bounds,[px,py,pw,ph]=parent.bounds;if(x<px||y<py||x+w>px+pw||y+h>py+ph)fail(item.id+": 親地図の範囲外です。");item=parent;}}
+ for(const p of data.places){if(!Object.hasOwn(kinds,p.kind)||!num(p.x)||!num(p.y)||!states.includes(p.placement)||!data.maps.some(m=>m.parent==null&&inside(p,m.bounds)))fail(p.id+": 地点が不正です。");const off=p.labelOffset??[12,-12];if(!Array.isArray(off)||off.length!==2||!off.every(num)||!["start","middle","end"].includes(p.labelAnchor??"start"))fail(p.id+": ラベルが不正です。");level(p);evidence(p);if(!data.maps.some(m=>m.level>=p.level&&inside(p,m.bounds)))fail(p.id+': 表示できる地図がありません。');}
+ for(const r of data.routes){level(r);evidence(r);if(!Array.isArray(r.stops)||r.stops.length<2||r.stops.some(id=>!tables.places.has(id)||tables.places.get(id).level>r.level))fail(r.id+": 行路の参照が不正です。");}
+ for(const t of data.terrain){if(!["forest","mountain","plain","water","river","land"].includes(t.kind)||!Array.isArray(t.points)||t.points.length<(t.kind==="river"?2:3)||t.points.some(p=>!Array.isArray(p)||p.length!==2||!p.every(num)))fail(t.id+": 地形が不正です。");evidence(t);if(t.level!==undefined)level(t);}
+ return data;
+}
+function initialize(mapId) {
+ document.title=atlas.title+" | Fiction Atlas"; $("title").textContent=atlas.title; $("subtitle").textContent=atlas.subtitle; $("notice").textContent=atlas.notice;
+ $("maps").replaceChildren();
+ atlas.maps.forEach((m,i)=>{const b=html("button");b.dataset.map=m.id;b.className=m.parent?"child":"";b.append(html("span",String(i+1).padStart(2,"0"),"map-no"),document.createTextNode(m.name));b.onclick=()=>chooseMap(m.id);$("maps").append(b);});
+ chooseMap(mapId??atlas.defaultMap);search();
+}
+function chooseMap(id) {
+ current=atlas.maps.find(m=>m.id===id)??atlas.maps[0];box=[...current.bounds];
+ $("map-name").textContent=current.name;$("map-kind").textContent=current.parent?"REGIONAL NOTES":"WORLD NOTES";$("map-note").textContent=current.note;
+ for(const b of $("maps").children){b.classList.toggle("active",b.dataset.map===current.id);b.setAttribute("aria-current",b.dataset.map===current.id?"page":"false");}
+ render();
+}
+function defs(svg) {
+ const d=el("defs");
+ const grid=el("pattern",{id:"grid",width:100,height:100,patternUnits:"userSpaceOnUse"});grid.append(el("path",{d:"M 100 0 L 0 0 0 100",fill:"none",stroke:"#637a6510","stroke-width":1}));d.append(grid);
+ const forest=el("pattern",{id:"forest-pattern",width:30,height:30,patternUnits:"userSpaceOnUse"});forest.append(el("path",{d:"M 4 23 L 10 10 L 16 23 M 9 17 L 10 14 L 12 17 M 19 10 L 23 1 L 27 10",fill:"none",stroke:"#6e876e","stroke-width":.9,opacity:.5}));d.append(forest);
+ const mountains=el("pattern",{id:"mountain-pattern",width:52,height:36,patternUnits:"userSpaceOnUse"});mountains.append(el("path",{d:"M 2 31 L 18 5 L 34 31 M 18 5 L 20 20 L 26 28 M 30 31 L 40 15 L 50 31",fill:"none",stroke:"#948a70","stroke-width":1.1,opacity:.65}));d.append(mountains);
+ svg.append(d);
+}
+function drawTerrain(svg,u) {
+ if(!$("terrain").checked)return;
+ const palette={forest:["#d6debd","#9cae8a"],mountain:["#ded7bb","#b6ab88"],plain:["#e8e3bd","#c9c69e"],water:["#bdcfcd","#8caeac"],land:["#ece5ca","#b5aa8b"]};
+ for(const t of atlas.terrain){if((t.level??0)>current.level)continue;const points=t.points.map(p=>p.join(",")).join(" ");let shape;
+ if(t.kind==="river"){shape=el("polyline",{points,fill:"none",stroke:"#90b3b3","stroke-width":5*u,"stroke-linejoin":"round","stroke-linecap":"round"});}
+ else{const [fill,stroke]=palette[t.kind];shape=el("polygon",{points,fill,stroke,"stroke-width":u, "stroke-dasharray":t.status==="established"?"":`${5*u} ${5*u}`});}
+ shape.append(el("title",{},`${t.name} · ${stateNames[t.status]}\n${t.note}`));svg.append(shape);
+ if(["forest","mountain"].includes(t.kind))svg.append(el("polygon",{points,fill:`url(#${t.kind==="forest"?"forest":"mountain"}-pattern)`,"pointer-events":"none"}));
+ }
+}
+function drawFrames(svg,u) {
+ if(!$("frames").checked)return;
+ for(const m of atlas.maps.filter(m=>m.parent===current.id)) {const [x,y,w,h]=m.bounds;const g=el("g",{opacity:.75});g.append(el("rect",{x,y,width:w,height:h,fill:"none",stroke:"#9c9879","stroke-width":u,"stroke-dasharray":`${6*u} ${5*u}`}));const text=el("text",{x:x+10*u,y:y+21*u,fill:"#777b5e","font-size":11*u},m.name);g.append(text);svg.append(g);}
+}
+function drawRoutes(svg,u) {
+ if(!$("routes").checked)return;
+ const byId=new Map(atlas.places.map(p=>[p.id,p]));
+ for(const r of atlas.routes){if(r.level>current.level)continue;const points=r.stops.map(id=>byId.get(id));const proposed=r.status!=="established"||points.some(p=>p.placement!=="established");const coords=points.map(p=>`${p.x},${p.y}`).join(" ");svg.append(el("polyline",{points:coords,fill:"none",stroke:"#f8f1df","stroke-width":6*u,"stroke-linejoin":"round"}));const line=el("polyline",{points:coords,fill:"none",stroke:r.level===0?"#a8784c":"#b49772","stroke-width":r.level===0?2*u:1.4*u,"stroke-dasharray":proposed?`${6*u} ${4*u}`:"","stroke-linejoin":"round"});line.append(el("title",{},`${r.name} · 接続: ${stateNames[r.status]}\n${r.note}`));svg.append(line);}
+}
+function symbol(kind,u) {
+ const g=el("g",{fill:"#f8f1df",stroke:kind==="tower"?"#736188":"#4a6254","stroke-width":1.8*u,"stroke-linejoin":"round"});
+ if(kind==="town"){g.append(el("rect",{x:-6*u,y:-6*u,width:12*u,height:12*u}),el("rect",{x:-2*u,y:-2*u,width:4*u,height:4*u,fill:"#4a6254"}));}
+ else if(kind==="tower"){g.append(el("path",{d:`M ${-5*u} ${7*u} L ${-4*u} ${-4*u} L ${-7*u} ${-4*u} L 0 ${-11*u} L ${7*u} ${-4*u} L ${4*u} ${-4*u} L ${5*u} ${7*u} Z`}),el("path",{d:`M 0 ${-2*u} V ${3*u}`}));}
+ else if(kind==="village"){g.append(el("path",{d:`M ${-6*u} 0 L 0 ${-7*u} L ${6*u} 0 V ${6*u} H ${-6*u} Z`}));}
+ else if(kind==="bridge"){g.append(el("path",{d:`M ${-8*u} ${5*u} V ${-4*u} H ${8*u} V ${5*u} M ${-8*u} ${2*u} H ${8*u}`}));}
+ else if(kind==="junction"){g.append(el("circle",{r:3*u,fill:"#a8784c"}));}
+ else{g.append(el("path",{d:`M 0 ${-5*u} L ${5*u} 0 L 0 ${5*u} L ${-5*u} 0 Z`}));}
+ return g;
+}
+function drawPlaces(svg,u) {
+ for(const p of atlas.places){if(p.level>current.level||!inside(p))continue;const g=el("g",{transform:`translate(${p.x} ${p.y})`,class:"place",tabindex:0,role:"button","aria-label":p.name,"data-id":p.id});g.append(el("title",{},`${p.name} · 存在: ${stateNames[p.status]} / 配置: ${stateNames[p.placement]}`));g.append(el("circle",{r:14*u,fill:p.id===selected?"#cdb07c44":"transparent",stroke:p.id===selected?"#a97446":"none","stroke-width":u,class:"halo"}));g.append(symbol(p.kind,u));
+ if($("labels").checked){const [dx,dy]=p.labelOffset??[12,-12];g.append(el("text",{x:dx*u,y:dy*u,"font-size":(p.kind==="town"?17:12)*u,"font-weight":p.kind==="town"?600:400,"text-anchor":p.labelAnchor??"start",fill:p.kind==="tower"?"#675474":"#344e42",stroke:"#f3eddd","stroke-width":4*u,"paint-order":"stroke","stroke-linejoin":"round"},p.name));}
+ g.onclick=()=>selectPlace(p.id);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();selectPlace(p.id);}};svg.append(g);clampLabel(g,p,u);}
+}
+function clampLabel(g,p,u) {
+ const label=g.querySelector("text");if(!label)return;
+ const b=label.getBBox(),[x,y,w,h]=box;let dx=0,dy=0;
+ if(p.x+b.x<x+8*u)dx=x+8*u-p.x-b.x;
+ else if(p.x+b.x+b.width>x+w-8*u)dx=x+w-8*u-p.x-b.x-b.width;
+ if(p.y+b.y<y+8*u)dy=y+8*u-p.y-b.y;
+ else if(p.y+b.y+b.height>y+h-8*u)dy=y+h-8*u-p.y-b.y-b.height;
+ label.setAttribute("x",Number(label.getAttribute("x"))+dx);
+ label.setAttribute("y",Number(label.getAttribute("y"))+dy);
+}
+function furniture(svg,u) {
+ const [x,y,w,h]=box;const g=el("g",{fill:"#73765f","font-family":"Georgia, Yu Mincho, serif","pointer-events":"none"});
+ const cx=x+w-48*u,cy=y+48*u;
+ g.append(el("path",{d:`M ${cx} ${cy-18*u} L ${cx-5*u} ${cy+8*u} L ${cx} ${cy+4*u} L ${cx+5*u} ${cy+8*u} Z`,fill:"#747b64"}),el("text",{x:cx,y:cy-26*u,"text-anchor":"middle","font-size":11*u},atlas.north?"N":"N（案）"));
+ g.append(el("text",{x:x+20*u,y:y+h-20*u,"font-size":10*u},"FICTION ATLAS / "+current.name),el("text",{x:x+w-20*u,y:y+h-20*u,"font-size":10*u,"text-anchor":"end"},"配置案 · 縮尺なし"));
+ if(current.parent===null)g.append(el("text",{x:x+w/2,y:y+60*u,"font-size":19*u,"text-anchor":"middle","letter-spacing":3*u},"この先の世界は、これから。"));
+ svg.append(g);
+}
+function render() {
+ const svg=$("map"),u=current.bounds[2]/750;svg.replaceChildren();svg.setAttribute("viewBox",box.join(" "));svg.setAttribute("aria-label",current.name);svg.style.fontFamily='"Yu Gothic UI", "Meiryo", sans-serif';svg.classList.toggle("edit",editing);
+ svg.append(el("title",{},atlas.title+" / "+current.name),el("desc",{},atlas.notice+" "+current.note));defs(svg);svg.append(el("rect",{x:box[0],y:box[1],width:box[2],height:box[3],fill:"#eee8d5"}),el("rect",{x:box[0],y:box[1],width:box[2],height:box[3],fill:"url(#grid)"}));drawTerrain(svg,u);drawFrames(svg,u);drawRoutes(svg,u);drawPlaces(svg,u);furniture(svg,u);
+}
+function selectPlace(id) {selected=id;render();details();}
+function navigatePlace(id) {const p=atlas.places.find(p=>p.id===id);const suitable=atlas.maps.filter(m=>m.level>=p.level&&inside(p,m.bounds)).sort((a,b)=>a.bounds[2]*a.bounds[3]-b.bounds[2]*b.bounds[3]);if(suitable.length)chooseMap(suitable[0].id);selectPlace(id);}
+function search() {const q=$("search").value.trim().toLowerCase();$("results").replaceChildren();if(!q)return;const matches=atlas.places.filter(p=>(p.name+" "+p.note).toLowerCase().includes(q));for(const p of matches){const b=html("button",p.name);b.onclick=()=>navigatePlace(p.id);$("results").append(b);}if(!matches.length)$("results").append(html("p","見つかりませんでした。","small"));}
+function details() {
+ const area=$("detail");area.replaceChildren();const p=atlas.places.find(p=>p.id===selected);if(!p){area.append(html("div","地名を選ぶと、設定と根拠を表示します。","empty"));return;}
+ const info=html("section");info.append(html("div",kinds[p.kind],"eyebrow"),html("h3",p.name),html("span","存在："+stateNames[p.status],"tag"),html("span","配置："+stateNames[p.placement],"tag "+(p.placement!=="established"?"proposal":"")),html("p",p.note,"detail-note"));
+ const sources=html("ul");sources.id="source-list";for(const s of p.sources){const li=html("li");li.append(html("code",s.ref),html("div",s.detail));sources.append(li);}info.append(html("h2","設定の根拠"),sources);if(!p.sources.length)info.append(html("p","資料根拠はまだ登録されていません。","small"));
+ const routes=atlas.routes.filter(r=>r.stops.includes(p.id));if(routes.length){info.append(html("h2","つながる道筋"));const list=html("ul");list.id="route-list";for(const r of routes){const li=html("li",r.name+" · "+stateNames[r.status]);li.title=r.note;list.append(li);}info.append(list);}area.append(info);
+ if(editing)editor(area,p);
+}
+function editor(area,p) {
+ const form=html("form",undefined,"editor");form.append(html("h2","場所を編集"));
+ function field(label,value,type="text") {const wrap=html("label",label);const input=html(type==="textarea"?"textarea":"input");if(type!=="textarea")input.type=type;input.value=value;if(type==="number")input.step="any";wrap.append(input);form.append(wrap);return input;}
+ const name=field("名前",p.name),note=field("メモ",p.note,"textarea"),x=field("作図座標 X",p.x,"number"),y=field("作図座標 Y",p.y,"number");name.required=true;x.required=true;y.required=true;
+ const label=html("label","配置の確度"),state=html("select");for(const [value,text] of Object.entries(stateNames)){const opt=html("option",text);opt.value=value;state.append(opt);}state.value=p.placement;label.append(state);form.append(label);const apply=html("button","変更を適用");apply.type="submit";form.append(apply);
+ form.onsubmit=e=>{e.preventDefault();const px=Number(x.value),py=Number(y.value);if(!name.value.trim()||!Number.isFinite(px)||!Number.isFinite(py)||!atlas.maps.some(m=>m.parent==null&&inside({x:px,y:py},m.bounds))){message("名前と世界図の範囲内の座標を入力してください。");return;}remember();const moved=px!==p.x||py!==p.y;p.name=name.value.trim();p.note=note.value;p.x=px;p.y=py;p.placement=moved?"proposal":state.value;changed();render();details();search();};area.append(form);
+}
+function download(text,name,mime) {const url=URL.createObjectURL(new Blob([text],{type:mime}));const a=html("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function zoom(factor) {const [x,y,w,h]=box;const nw=Math.max(current.bounds[2]*.15,Math.min(current.bounds[2]*3,w*factor));const nh=h*nw/w;box=[x+(w-nw)/2,y+(h-nh)/2,nw,nh];render();}
+$("zoom-in").onclick=()=>zoom(.8);$("zoom-out").onclick=()=>zoom(1.25);$("fit").onclick=()=>chooseMap(current.id);
+for(const key of ["terrain","routes","labels","frames"])$(key).onchange=render;
+$("search").oninput=search;
+$("edit").onclick=()=>{editing=!editing;$("edit").setAttribute("aria-pressed",String(editing));$("edit").textContent=editing?"編集を終える":"配置を編集";$("add").classList.toggle("hidden",!editing);$("edit-help").textContent=editing?"地点をドラッグして移動。変更はJSON保存で持ち出せます。移動した配置は制作案になります。":"地名を選ぶと設定と根拠を表示。背景をドラッグで移動、＋／−で拡大縮小。";render();details();};
+$("add").onclick=()=>{const x=box[0]+box[2]/2,y=box[1]+box[3]/2;if(!atlas.maps.some(m=>m.parent==null&&inside({x,y},m.bounds))){message("世界図の範囲内へ戻してから追加してください。");return;}remember();let n=1;while(atlas.places.some(p=>p.id===`place-${n}`))n++;const id=`place-${n}`;atlas.places.push({id,name:"新しい場所",kind:"site",x,y,level:current.level,status:"proposal",placement:"proposal",note:"",sources:[]});changed();selectPlace(id);};
+$("undo").onclick=()=>{if(!history.length)return;atlas=history.pop();$("undo").disabled=!history.length;changed();initialize(current.id);details();};
+$("save").onclick=()=>{validate(atlas);download(JSON.stringify(atlas,null,2)+"\n","atlas.json","application/json");dirty=false;message("JSONのダウンロードを開始しました。保存先のファイルを確認してください。");};
+$("svg-save").onclick=()=>{const copy=$("map").cloneNode(true);copy.setAttribute("width","1600");copy.setAttribute("height",String(Math.round(1600*box[3]/box[2])));copy.removeAttribute("class");download(new XMLSerializer().serializeToString(copy),current.id+".svg","image/svg+xml");message("表示中の範囲をSVGに書き出しました。");};
+$("html-save").onclick=()=>{validate(atlas);const copy=document.documentElement.cloneNode(true);copy.querySelector("#atlas-data").textContent=JSON.stringify({...atlas,defaultMap:current.id}).replace(/</g,"\\u003c");download("<!doctype html>\n"+copy.outerHTML,"atlas.html","text/html");message("現在のデータを含む単独HTMLを保存しました。正本のJSONも保存してください。");};
+$("load").onclick=()=>$("file").click();
+$("file").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>10000000)throw new Error("10MB以下のJSONを選んでください。");const next=validate(JSON.parse((await file.text()).replace(/^\uFEFF/,"")));if(dirty&&!confirm("未保存の編集があります。別の地図を開きますか？"))return;remember();atlas=next;selected=null;dirty=false;$("search").value="";initialize();details();message("地図を読み込みました。元のファイルは変更していません。");}catch(error){message("読み込めません："+error.message);}finally{e.target.value="";}};
+function point(event){const p=new DOMPoint(event.clientX,event.clientY);return p.matrixTransform($("map").getScreenCTM().inverse());}
+let drag=null;
+$("map").onpointerdown=e=>{if(e.button!==0)return;const id=e.target.closest("[data-id]")?.getAttribute("data-id");if(id&&!editing)return;const start=point(e);drag={start,clientX:e.clientX,clientY:e.clientY,box:[...box],id:editing?id:null,moved:false};$("map").setPointerCapture(e.pointerId);};
+$("map").onpointermove=e=>{if(!drag)return;if(!drag.moved&&Math.hypot(e.clientX-drag.clientX,e.clientY-drag.clientY)<4)return;const p=point(e);if(drag.id){if(!drag.moved)remember();const item=atlas.places.find(p=>p.id===drag.id);if(atlas.maps.some(m=>m.parent==null&&inside(p,m.bounds))){item.x=Math.round(p.x*10)/10;item.y=Math.round(p.y*10)/10;item.placement="proposal";selected=item.id;}}else{const rect=$("map").getBoundingClientRect();const scale=Math.min(rect.width/drag.box[2],rect.height/drag.box[3]);box=[drag.box[0]-(e.clientX-drag.clientX)/scale,drag.box[1]-(e.clientY-drag.clientY)/scale,drag.box[2],drag.box[3]];}drag.moved=true;render();};
+function endDrag(){if(drag?.id&&drag.moved){changed();details();}drag=null;}
+$("map").onpointerup=endDrag;$("map").onpointercancel=endDrag;
+window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue="";}});
+$("edit").textContent="配置を編集";$("edit").setAttribute("aria-pressed","false");$("add").classList.add("hidden");$("undo").disabled=true;$("status").textContent="";$("edit-help").textContent="地名を選ぶと設定と根拠を表示。背景をドラッグで移動、＋／−で拡大縮小。";validate(atlas);initialize();details();
+</script>
+</body>
+</html>
