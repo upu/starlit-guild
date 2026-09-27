@@ -11,7 +11,11 @@ const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
   ...(expression ? { expression } : {}),
 });
 const m = (text: string): StoryLine => ({ speaker: "mira", text });
-const f = (text: string): StoryLine => ({ speaker: "finn", text });
+const f = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
+  speaker: "finn",
+  text,
+  ...(expression ? { expression } : {}),
+});
 const r = (text: string): StoryLine => ({ speaker: "lico", text });
 const quintetExchanges: StoryLine[][] = [
   [r("あの道の光、昨日より薄い。あとで比べたい。"), a("道を歩き終えてからね。私も見るよ。")],
@@ -68,7 +72,7 @@ const quartetExchanges: StoryLine[][] = [
     m("あら、私の薬箱の留め具、直してくれたの？"),
     f("引っかかってたからな。指先だけなら、まだ役に立つ。"),
     l("外した部品も、こちらへお願いします。"),
-    f("信用が細かいねえ。ほら、二つともあるよ。"),
+    f("用心深いねえ。ほら、二つともあるよ。", "mischievous"),
   ],
 ];
 // These exchanges fit any departure and reveal no later story events.
