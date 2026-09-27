@@ -19,6 +19,34 @@
 .phaser-canvas[data-status="error"] {
   visibility: hidden;
 }
+.road-work-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(17rem, calc(100% - 16px));
+  padding: 6px 10px;
+  border: 1px solid #d9c28a9e;
+  border-radius: 8px;
+  background: #142b26ed;
+  color: #fff1cb;
+  box-shadow: 0 2px 8px #071b1a66;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+.road-work-caption::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: var(--caption-pointer, 50%);
+  border: 6px solid transparent;
+  border-top-color: #d9c28a;
+  transform: translateX(-50%);
+}
 .phaser-loading {
   position: absolute;
   inset: 0;

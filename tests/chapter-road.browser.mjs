@@ -272,7 +272,40 @@ try {
         );
         assert.ok(geometry.activityBottom < geometry.chatTop);
       }
+      if (["night-cargo", "moss", "five-cargo"].includes(name)) {
+        const caption = page.locator(".road-work-caption");
+        assert.ok(await caption.isVisible(), `${name}: work caption visible`);
+        const bounds = await caption.boundingBox();
+        const map = await page.locator(".adventure-map").boundingBox();
+        assert.ok(bounds.y >= geometry.progressBottom, `${name}: below heading`);
+        assert.ok(
+          bounds.y + bounds.height + 6 < geometry.chatTop,
+          `${name} at ${width}: above chat ${JSON.stringify({ bounds, geometry })}`,
+        );
+        assert.ok(bounds.x >= map.x && bounds.x + bounds.width <= map.x + map.width);
+        assert.equal(await caption.evaluate((el) => getComputedStyle(el).pointerEvents), "none");
+        assert.ok(
+          (await page.locator(".map-heading").innerText()).includes(await caption.innerText()),
+        );
+      }
       await page.screenshot({ path: `${output}/${name}-${width}.png` });
+    }
+    if (name === "night-cargo") {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      await page.clock.runFor(500);
+      const caption = page.locator(".road-work-caption");
+      const bounds = await caption.boundingBox();
+      const hits = () =>
+        page.evaluate(
+          () =>
+            JSON.parse(localStorage.getItem("starlit-guild-v4")).profiles[0].state.squads[0].run
+              .hits,
+        );
+      const beforeTap = await hits();
+      await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+      await page.clock.runFor(250);
+      assert.equal(await hits(), beforeTap + 1, "caption passes taps to map assistance");
     }
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.clock.runFor(300);
@@ -291,6 +324,23 @@ try {
     assert.ok(after.profiles[0].state.gold >= before.profiles[0].state.gold);
     assert.ok(roadAssets.size >= 15);
     assert.ok([...roadAssets].every((asset) => asset.endsWith(".webp")));
+    if (name === "night-cargo") {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      await page.clock.runFor(500);
+      const caption = page.locator(".road-work-caption");
+      assert.ok(await caption.isVisible(), "caption remains in reduced motion after reload");
+      const bounds = await caption.boundingBox();
+      const map = await page.locator(".adventure-map").boundingBox();
+      assert.ok(bounds.x >= map.x && bounds.x + bounds.width <= map.x + map.width);
+      await page.getByRole("tab", { name: "キャラクター", exact: true }).click();
+      await page.clock.runFor(100);
+      assert.equal(await caption.count(), 0, "caption is removed with its renderer");
+      await page.getByRole("tab", { name: "冒険", exact: true }).click();
+      await page.locator('.phaser-canvas[data-status="ready"]').waitFor();
+      await page.clock.runFor(100);
+      assert.equal(await caption.count(), 1, "one caption after remount");
+    }
     results.push({ name, quest: save.profiles[0].state.squads[0].run.quest, reloaded: true });
     await context.close();
   }

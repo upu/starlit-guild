@@ -115,7 +115,10 @@ export function createAdventureGame(
     resize(w, h) {
       if (runtime.disposed || w <= 0 || h <= 0) return;
       if (game.scale.width !== w || game.scale.height !== h) game.scale.resize(w, h);
-      if (runtime.created) syncAdventureResolution(scene);
+      if (runtime.created) {
+        syncAdventureResolution(scene);
+        scene.stopMotion();
+      }
       if (runtime.created && !runtime.paused) game.scale.updateBounds();
     },
     setPaused(value) {
