@@ -37,7 +37,20 @@ export class RoadWorkCaption {
     scene.events.once("destroy", dispose);
   }
 
+  private refreshChat() {
+    // Departure/return replaces React's keyed chat while the Phaser canvas survives.
+    // A detached chat reports zero bounds and would push the caption up to the heading.
+    if (this.chat?.isConnected) return;
+    const chat = this.host.closest(".phone-adventure")?.querySelector(".journey-banter") ?? null;
+    if (chat === this.chat) return;
+    if (this.chat) this.observer.unobserve(this.chat);
+    this.chat = chat;
+    if (chat) this.observer.observe(chat);
+    this.dirty = true;
+  }
+
   private measure() {
+    this.refreshChat();
     if (!this.dirty) return;
     const host = this.host.getBoundingClientRect();
     this.bounds = {
