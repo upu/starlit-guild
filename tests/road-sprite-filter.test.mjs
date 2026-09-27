@@ -33,6 +33,7 @@ test("sprite filtering preserves the figure's size and feet, isolates poses and 
   };
   try {
     const scene = {
+      cameras: { main: { zoomX: 1, zoomY: 1 } },
       textures: {
         exists: (key) => textures.has(key),
         addCanvas(key, canvas) {
@@ -93,6 +94,21 @@ test("sprite filtering preserves the figure's size and feet, isolates poses and 
     filter.apply(makeImage());
     assert.equal(canvases.length, count);
     assert.equal(textures.size, 1);
+    scene.cameras.main.zoomX = scene.cameras.main.zoomY = 3;
+    const dense = makeImage();
+    filter.apply(dense);
+    assert.equal(textures.get(dense.texture.key).canvas.width, 512);
+    assert.deepEqual(
+      [dense.displayWidth, dense.displayHeight, dense.originX, dense.originY],
+      [72, 90, 0.46, 0.97],
+    );
+    const denseCount = canvases.length;
+    filter.apply(makeImage());
+    assert.equal(canvases.length, denseCount);
+    scene.cameras.main.zoomX = scene.cameras.main.zoomY = 1;
+    filter.apply(makeImage());
+    assert.equal(canvases.length, denseCount);
+    assert.equal(textures.size, 2);
   } finally {
     globalThis.document = previous;
   }

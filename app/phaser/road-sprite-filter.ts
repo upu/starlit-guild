@@ -9,7 +9,11 @@ export class RoadSpriteFilter {
     const frame = image.frame,
       width = image.displayWidth,
       height = image.displayHeight,
-      side = Math.max(64, Math.min(256, 2 ** Math.ceil(Math.log2(Math.max(width, height))))),
+      density = Math.max(this.scene.cameras.main.zoomX, this.scene.cameras.main.zoomY),
+      side = Math.max(
+        64,
+        Math.min(512, 2 ** Math.ceil(Math.log2(Math.max(width, height) * density))),
+      ),
       key = `road-filter:${image.texture.key}:${frame.name}:${String(side)}`;
     if (!this.scene.textures.exists(key)) this.create(key, frame, side);
     const { originX, originY } = image;
