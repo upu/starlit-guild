@@ -51,7 +51,7 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
     alt: "仕事の直前、ミラがフィンの傷ついた手を洗い、包帯を巻く。",
     width: 1536,
     height: 1024,
-    revealAtLine: 5,
+    revealAtLine: 13,
   },
   [BERNE_RESTORATION_QUEST + "-return"]: {
     src: "/stories/four-cups-of-tea.webp",
