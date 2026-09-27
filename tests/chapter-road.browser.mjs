@@ -109,6 +109,7 @@ try {
     ["trio-work", 16, "worksite"],
     ["bottles-cart", 17, "bottles"],
     ["four-cargo", 24, "worksite"],
+    ["night-cargo", 25, "worksite"],
     ["four-finn", 24, "worksite"],
     ["five-cargo", 34, "worksite"],
     ["puppets", 15, "boss"],
@@ -177,7 +178,7 @@ try {
       assert.ok((await page.locator(".journey-banter").innerText()).includes("カボチャ頭の少女"));
     }
     assert.ok(await page.locator(".map-journey progress").count());
-    for (const [width, height] of ["forest", "touch"].includes(name)
+    for (const [width, height] of ["forest", "touch", "night-cargo"].includes(name)
       ? [
           [1280, 960],
           [390, 844],
@@ -265,6 +266,12 @@ try {
       assert.ok(geometry.progressTop < 180);
       assert.ok(geometry.progressBottom > geometry.activityBottom);
       assert.ok(geometry.progressBottom < geometry.chatTop);
+      if (name === "night-cargo") {
+        assert.ok(
+          (await page.locator(".map-heading").innerText()).includes("石を載せた荷車を橋へ運ぶ"),
+        );
+        assert.ok(geometry.activityBottom < geometry.chatTop);
+      }
       await page.screenshot({ path: `${output}/${name}-${width}.png` });
     }
     await page.emulateMedia({ reducedMotion: "reduce" });
