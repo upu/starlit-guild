@@ -89,7 +89,7 @@ const road = z.object({
 const run = z.object({
   road: road.optional(),
   serial: count,
-  nodes: count.min(3).max(15),
+  nodes: count.min(1).max(15),
   ward: n,
   comboAt: n,
   scene: z
@@ -179,6 +179,7 @@ function validActors(squad: ParsedSquad) {
 function validTimeline(squad: ParsedSquad, updatedAt: number) {
   const run = squad.run;
   if (!run) return true;
+  if (run.nodes < 3 && !(run.quest === "merrill-seedlings" && run.nodes === 1)) return false;
   if (run.node >= run.nodes || run.nextAt < updatedAt) return false;
   if (run.phase !== "rest" && run.comboAt < run.nextAt) return false;
   if (run.phase !== "rest" && run.enemyAt < run.nextAt) return false;
@@ -221,8 +222,8 @@ function validRoadAmbush(run: ParsedRun) {
     !!quest &&
     road.ambushNode === run.node + 1 &&
     road.ambushNode < run.nodes &&
-    encounter(quest, run.node) !== "battle" &&
-    encounter(quest, road.ambushNode) === "battle"
+    encounter(quest, run.node, run.nodes) !== "battle" &&
+    encounter(quest, road.ambushNode, run.nodes) === "battle"
   );
 }
 type ParsedRun = z.infer<typeof run>;
@@ -230,7 +231,7 @@ function validStoppedEnemies(run: ParsedRun, ambush: boolean) {
   return ambush || (!!run.road?.scene && validRoadScene(run));
 }
 function validConfrontationEnemies(run: ParsedRun) {
-  const duel = confrontation(run.quest, run.road?.ambushNode ?? run.node);
+  const duel = confrontation(run.quest, run.road?.ambushNode ?? run.node, run.nodes);
   if ((run.enemies?.length || 0) > 3 && duel !== "merrill") return false;
   return !(run.enemies || []).some(
     (e) =>
@@ -245,7 +246,7 @@ function validEnemies(run: ParsedRun) {
   if (!quest) return false;
   const ambush = run.road?.ambushNode !== undefined;
   if (!validConfrontationEnemies(run)) return false;
-  if (encounter(quest, run.node) !== "battle" && !ambush) return enemies.length === 0;
+  if (encounter(quest, run.node, run.nodes) !== "battle" && !ambush) return enemies.length === 0;
   if (
     !enemies.length ||
     new Set(enemies.map((enemy) => enemy.id)).size !== enemies.length ||

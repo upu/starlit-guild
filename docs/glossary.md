@@ -53,7 +53,7 @@
 | 4-1 | 塔を直した人たちへ | `linde-requests` | `LINDE_REQUESTS_QUEST` | リンデの食堂と町 | `linde-requests-departure` / `linde-requests-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-2 | 見当違いの灯り | `lantern-detour` | `LANTERN_DETOUR_QUEST` | ブレッカへ向かう村道 | `lantern-detour-departure` / `lantern-detour-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-3 | 醸造の町ブレッカ | `brekka-arrival` | `BREKKA_ARRIVAL_QUEST` | ブレッカの町と往診先 | `brekka-arrival-departure` / `brekka-arrival-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
-| 4-4 | 毎朝光る苔・一日目 | `glowing-moss-trail` | `MOSS_TRAIL_QUEST` | ブレッカの裏通り | `glowing-moss-trail-departure` / `glowing-moss-trail-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
+| 4-4 | 毎朝光る苔 | `glowing-moss-trail` | `MOSS_TRAIL_QUEST` | ブレッカの裏通り | `glowing-moss-trail-departure` / `glowing-moss-trail-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-5 | 毎朝光る苔・二日目 | `glowing-moss-trail-next-day` | `MOSS_TRAIL_SECOND_DAY_QUEST` | ブレッカの裏通り | `glowing-moss-trail-next-day-departure` / `glowing-moss-trail-next-day-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-6 | 塔のそばの苔床 | `brekka-moss-beds` | `MOSS_BEDS_QUEST` | ブレッカの塔の裏手 | `brekka-moss-beds-departure` / `brekka-moss-beds-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |
 | 4-7 | 消える前に | `lico-records` | `LICO_RECORDS_QUEST` | 塔の管理小屋と苔床 | `lico-records-departure` / `lico-records-return` | [物語](story/story-part-4.md) / [実装](gameplay/chapter-four-gameplay.md) |

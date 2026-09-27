@@ -45,11 +45,11 @@ const definitions = [
   ],
   [
     MOSS_TRAIL_QUEST,
-    "毎朝光る苔・一日目",
+    "毎朝光る苔",
     "ブレッカの裏通り",
     "ミラとフィンを宿に残し、アリアとレオンで荷車の道筋を追おう。",
     "途中までの道順を記録しました",
-    "荷車の時刻と苔の欠片を、明日の追跡につなげましょう。",
+    "持ち帰った手帳と苔の欠片を確かめましょう。",
     "town-deliveries",
     "護衛",
   ],
@@ -69,7 +69,7 @@ const definitions = [
     "ブレッカの塔の裏手",
     "等間隔の苔床と掘り直された水路を調べよう。",
     "苔床の持ち主に会いました",
-    "リコの記録とミラの体調を確かめましょう。",
+    "苔床の持ち主に話を聞いてみましょう。",
     "tower-drainage-open",
     "採取",
   ],
@@ -87,7 +87,7 @@ const definitions = [
     MERRILL_SEEDLINGS_QUEST,
     "苔は渡さない",
     "塔の裏手の積み出し口",
-    "リコと一緒に苗を守り、メリルが籠へ届かないよう運ぼう。",
+    "移し替える苗を揃え、塔のそばから運び出す準備をしよう。",
     "苗を守りました",
     "一株分の感想と引き換えに、運ぶ苗を確かめましょう。",
     "forest-wetland",
@@ -174,9 +174,9 @@ const patterns: Partial<Record<string, Work[]>> = {
   ],
   [MOSS_TRAIL_QUEST]: jobs(
     "escort",
-    "一日目の荷車を追う",
-    "途中までの道順を記録する",
-    "苔の欠片を持って宿へ戻る",
+    "荷車を追う",
+    "荷車の曲がり角を記録する",
+    "車輪についた苔を確かめる",
   ),
   [MOSS_TRAIL_SECOND_DAY_QUEST]: jobs(
     "escort",
@@ -201,7 +201,7 @@ const patterns: Partial<Record<string, Work[]>> = {
   ],
   [GUILD_FOUNDING_QUEST]: jobs(
     "escort",
-    "返事の手紙を運ぶ",
+    "返事の手紙を渡す",
     "借り物を返す",
     "リンデの倉庫へ向かう",
   ),
@@ -209,15 +209,15 @@ const patterns: Partial<Record<string, Work[]>> = {
 export const isMossTrailQuest = (id: string) =>
   [MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST].includes(id);
 
-export function chapterFourWork(id: string, node: number): Work | undefined {
+export function chapterFourWork(id: string, node: number, nodes?: number): Work | undefined {
   if (id === LICO_RECORDS_QUEST)
     return node === 14
       ? { kind: "battle", name: "リコの光と煙の仕掛けを止める" }
       : node % 3 === 1
-        ? { kind: "escort", name: "管理人の記録を運ぶ" }
+        ? { kind: "escort", name: "管理人の記録を渡す" }
         : { kind: "gather", name: "注文控えと灯りの記録を照合する" };
   if (id === MERRILL_SEEDLINGS_QUEST)
-    return node === 8
+    return nodes !== 15 || node === 8
       ? { kind: "battle", name: "メリルから苗の籠を守る" }
       : { kind: "escort", name: "苗の籠を運び出す" };
   return patterns[id]?.[isMossTrailQuest(id) ? Math.min(2, Math.floor(node / 5)) : node % 3];

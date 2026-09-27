@@ -250,7 +250,6 @@ test("authored story expressions exist for the speaker instead of silently falli
 
 test("key emotional moments keep shouting, fatigue, embarrassment and appetite distinct", () => {
   const examples = [
-    ["brekka-moss-beds-return", "あーーっ！", "shouting"],
     ["merrill-seedlings-departure", "あーーっ！　それ、移す分！", "shouting"],
     ["glowing-moss-trail-departure", "私は、まだ大丈夫よ。", "tired"],
     ["glowing-moss-trail-departure", "付き添いまでしていただかなくても……。", "shy"],

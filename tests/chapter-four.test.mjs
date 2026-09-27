@@ -11,6 +11,7 @@ import {
 import { chapterFourStories } from "../lib/chapter-four-stories.ts";
 import { storyArt } from "../lib/story-art.ts";
 import { parseBundle } from "../lib/save-format.ts";
+import { questNodes } from "../lib/puppet-battles.ts";
 
 const dispatch = (state, action) => act(state, action, state.updatedAt);
 const roundtrip = (state) => {
@@ -44,13 +45,13 @@ test("fourth chapter waits for its reward-free interlude and keeps the old save 
 test("Lico's apparatus and Merrill's basket confrontation occur once in their routes", () => {
   for (const [id, at] of [
     [LICO_RECORDS_QUEST, 14],
-    [MERRILL_SEEDLINGS_QUEST, 8],
+    [MERRILL_SEEDLINGS_QUEST, 0],
   ]) {
     const quest = availableQuests(
       dispatch(testState(1000, 34, 25, 10000), { type: "readStory", id: WALNUT_INTERLUDE }),
     ).find((candidate) => candidate.id === id);
     assert.ok(quest);
-    const battles = Array.from({ length: 15 }, (_, node) => node).filter(
+    const battles = Array.from({ length: questNodes(id) }, (_, node) => node).filter(
       (node) => encounter(quest, node) === "battle",
     );
     assert.deepEqual(battles, [at]);
@@ -93,4 +94,18 @@ test("the approved fourth-chapter stills appear at their matching moments", () =
     assert.ok(scene.lines[storyArt[id].revealAtLine].text.includes(phrase), id);
   }
   assert.equal(chapterFourStories.length, 21);
+});
+
+test("Lico is unnamed until she introduces herself and the waiting quest does not reveal Merrill", () => {
+  const scene = chapterFourStories.find((s) => s.id === "brekka-moss-beds-return");
+  const introduction = scene.lines.findIndex((l) => l.text.includes("リコリス"));
+  assert.ok(introduction > 0);
+  for (const line of scene.lines.slice(0, introduction)) {
+    assert.notEqual(line.speaker, "lico");
+    assert.ok(!line.text.includes("リコ"));
+  }
+  const q = availableQuests(testState(1000, 34, 25, 10000)).find(
+    (q) => q.id === MERRILL_SEEDLINGS_QUEST,
+  );
+  assert.ok(!q.desc.includes("メリル"));
 });

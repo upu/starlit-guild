@@ -258,7 +258,7 @@ function step(s: State, sq: Squad) {
     recoverRun(s, sq, r, q, at);
     return null;
   }
-  const kind = encounter(q, r.node);
+  const kind = encounter(q, r.node, r.nodes);
   advanceChapterRoad(q, r, at);
   if (roadComplete(r)) return completeNode(s, sq, q, at);
   if (r.comboAt === at) {

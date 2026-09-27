@@ -161,7 +161,7 @@ async function verifyKorotakeEnding() {
   }
   assert.ok(
     (await page.locator(".story-narration").last().innerText()).includes(
-      "※コロタケは、このあとメリルが美味しくいただきました。",
+      "メリルは鍋を抱え、上機嫌で街道へ去っていった。",
     ),
   );
   const excited = page
@@ -211,7 +211,7 @@ try {
     ["merrill-party-song", 7, "song"],
     ["five-companions", 8, 0],
     ["lico-walking", 7, "walk"],
-    ["lico-pushing", 7, "push"],
+    ["lico-pushing", 8, "push"],
   ]) {
     const state = stageRun(index, node);
     if (name === "lico-and-merrill") assert.ok(state.owned.includes("lico"));

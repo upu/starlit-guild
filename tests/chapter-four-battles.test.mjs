@@ -9,7 +9,7 @@ import {
 import { chapterFourBattleBanter } from "../lib/chapter-four-battle-banter.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadActorReady, advanceChapterRoad } from "../lib/chapter-road.ts";
-import { combination, event } from "../lib/game-run.ts";
+import { combination, event, configureTarget, schedule } from "../lib/game-run.ts";
 import { questById } from "../lib/game-rules.ts";
 import { syncEnemyTotals } from "../lib/combat.ts";
 import { parseBundle } from "../lib/save-format.ts";
@@ -39,8 +39,8 @@ function until(state, predicate) {
   }
   assert.fail("encounter cue never arrived");
 }
-function start(kind) {
-  let s = testState(1000, 34, 25, 10000);
+function start(kind, level = 25) {
+  let s = testState(1000, 34, level, 10000);
   s = act(
     s,
     {
@@ -56,6 +56,38 @@ function start(kind) {
 const frame = (s) =>
   chapterRoadFrame({ squad: s.squads[0], now: s.updatedAt, ready: true, paused: false });
 const noEmit = () => {};
+
+test("Merrill's single fight pays the whole quest reward and old routes resume unchanged", () => {
+  for (const nodes of [1, 15]) {
+    let s = start("merrill", 40);
+    const q = questById("merrill-seedlings"),
+      sq = s.squads[0],
+      r = sq.run;
+    if (nodes === 15) {
+      r.nodes = 15;
+      r.node = 0;
+      configureTarget(r, q);
+      schedule(s, sq, r, s.updatedAt);
+    }
+    assert.equal(r.nodes, nodes);
+    assert.deepEqual(roundtrip(s), JSON.parse(JSON.stringify(s)));
+    const before = { gold: s.gold, xp: s.xp.aria, clears: s.clears };
+    const visited = new Set();
+    const started = s.updatedAt;
+    while (s.squads[0].run && s.updatedAt - started < 600000) {
+      visited.add(s.squads[0].run.node);
+      s = roundtrip(settle(s, s.updatedAt + 1000));
+    }
+    assert.equal(s.squads[0].run, null);
+    if (nodes === 1) assert.deepEqual([...visited], [0]);
+    else assert.ok(visited.has(0) && visited.has(14));
+    assert.equal(s.gold - before.gold, q.gold);
+    assert.equal(s.xp.aria - before.xp, q.xp);
+    assert.equal(s.clears - before.clears, 1);
+    assert.ok(s.story.completed.includes(q.id));
+    assert.ok(!s.story.read.includes(`${q.id}-return`));
+  }
+});
 
 test("Merrill throws independent mushrooms, then heals allies without resurrection or exceeding the cap", () => {
   const s = until(start("merrill"), (r) => r?.enemies?.[0]?.cue === "summon");

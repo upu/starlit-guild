@@ -208,7 +208,7 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
   assert.ok(transporting && defended);
 });
 
-test("chapter four paperwork uses a ledger and carries documents without a freight cart", () => {
+test("chapter four paperwork uses a ledger and hands documents over without pushing them", () => {
   for (const index of [29, 33]) {
     let state = start(index, 40);
     const inspected = new Set();
@@ -218,25 +218,24 @@ test("chapter four paperwork uses a ledger and carries documents without a freig
       const { look, battle } = chapterRoadFrame(input(state));
       if (look.work) {
         if (battle.gathering.task === "carry") {
-          assert.equal(battle.gathering.task, "carry");
-          assert.equal(
-            look.work.asset,
-            index === 29
-              ? "/animations/road/cargo-v1.webp"
-              : "/animations/road/work-letters-v1.webp",
-          );
+          assert.equal(index, 29);
+          assert.equal(look.work.asset, "/animations/road/cargo-v1.webp");
           transported.add(run.node);
         } else {
-          assert.equal(look.work.asset, "/animations/road/ledger-desk-v1.webp");
-          assert.equal(look.work.frame, "ledger");
+          assert.equal(
+            look.work.asset,
+            index === 33 && run.node % 3 === 1
+              ? "/animations/road/work-letters-v1.webp"
+              : "/animations/road/ledger-desk-v1.webp",
+          );
           assert.equal(battle.gathering.task, "inspect");
           inspected.add(run.node);
         }
       }
       state = settle(state, run.nextAt);
     }
-    assert.equal(inspected.size, index === 29 ? 5 : 9);
-    assert.equal(transported.size, 5);
+    assert.equal(inspected.size, index === 29 ? 5 : 14);
+    assert.equal(transported.size, index === 29 ? 5 : 0);
   }
 });
 

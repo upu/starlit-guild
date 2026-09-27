@@ -47,7 +47,7 @@ const merrillSong: StoryLine[] = [
 ];
 export function chapterFourBattleBanter(run: Run): StoryLine[] | null {
   if (run.phase === "rest" || !run.enemies?.some((e) => e.hp > 0)) return null;
-  const kind = confrontation(run.quest, run.road?.ambushNode ?? run.node);
+  const kind = confrontation(run.quest, run.road?.ambushNode ?? run.node, run.nodes);
   const master = run.enemies.find((e) => e.trick === kind);
   const actions = master?.actions || 0;
   if (kind === "lico") return actions > 0 ? licoSmoke : licoOpening;

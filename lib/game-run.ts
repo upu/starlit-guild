@@ -65,11 +65,13 @@ export function event(
 export function configureTarget(r: Run, q: Quest) {
   if (r.road) delete r.road.ambushNode;
   r.enemies =
-    encounter(q, r.node) === "battle" ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15) : [];
+    encounter(q, r.node, r.nodes) === "battle"
+      ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15, r.nodes)
+      : [];
   r.targetMax = Math.round(
     q.need *
       1.12 *
-      (encounter(q, r.node) === "escort" ? 1.8 : 2.3) *
+      (encounter(q, r.node, r.nodes) === "escort" ? 1.8 : 2.3) *
       chapterTwoWorkload(q.id) *
       chapterThreeWorkload(q.id) *
       chapterFourWorkload(q.id),

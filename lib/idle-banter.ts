@@ -16,14 +16,21 @@ const f = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
   text,
   ...(expression ? { expression } : {}),
 });
-const r = (text: string): StoryLine => ({ speaker: "lico", text });
+const r = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
+  speaker: "lico",
+  text,
+  ...(expression ? { expression } : {}),
+});
 const quintetExchanges: StoryLine[][] = [
   [r("あの道の光、昨日より薄い。あとで比べたい。"), a("道を歩き終えてからね。私も見るよ。")],
   [l("試料の瓶は閉めましたか。"), r("うん。……開けるときは止まる。覚えてる。")],
   [m("リコ、指先が荒れているわ。"), r("この葉の汁。痛くはないけど、先に洗う。")],
   [f("おじさんにもその薬草ソーダ、分けてくれるかい？"), r("飲む前に、材料は言う。苦いよ。")],
   [a("その石、気になる？"), r("うん。帰り道にもあるなら、印をつけておく。")],
-  [r("夕暮れまで、まだあるでしょ。"), l("寄り道は、帰りの時間を決めてからにしましょう。")],
+  [
+    r("夕暮れまで、時間はまだあるでしょ。", "mischievous"),
+    l("寄り道は、帰りの時間を決めてからにしましょう。"),
+  ],
 ];
 const quartetExchanges: StoryLine[][] = [
   [

@@ -27,7 +27,7 @@ export const roadPosition = (x: number): RoadPosition => ({
 export const roadPoint = (r: Run) => r.node * CHAPTER_ROAD_SPACING + 180;
 export function movingWork(q: Quest, r: Pick<Run, "node" | "nodes">) {
   return (
-    encounter(q, r.node) === "escort" &&
+    encounter(q, r.node, r.nodes) === "escort" &&
     (q.id === "village-trade" || /運ぶ|運び|運搬|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
   );
 }
@@ -113,7 +113,7 @@ export function roadHasEnemies(r: Run) {
   return !!r.enemies?.some((enemy) => enemy.hp > 0 && enemy.role !== "puppeteer");
 }
 export function roadActionKind(q: Quest, r: Run, hero?: string): Encounter {
-  const kind = encounter(q, r.node);
+  const kind = encounter(q, r.node, r.nodes);
   if (!r.road || kind === "battle" || !roadHasEnemies(r)) return kind;
   if (movingWork(q, r)) return "battle";
   const guard = roadGuard(r),
@@ -209,15 +209,15 @@ function ambush(q: Quest, r: Run, at: number) {
   const road = r.road;
   if (!road) return;
   if (
-    encounter(q, r.node) === "battle" ||
+    encounter(q, r.node, r.nodes) === "battle" ||
     road.ambushNode !== undefined ||
     r.node + 1 >= r.nodes ||
-    encounter(q, r.node + 1) !== "battle" ||
+    encounter(q, r.node + 1, r.nodes) !== "battle" ||
     r.target > r.targetMax * 0.7
   )
     return;
   road.ambushNode = r.node + 1;
-  r.enemies = createEnemies(q, road.ambushNode, at, r.nodes !== 15);
+  r.enemies = createEnemies(q, road.ambushNode, at, r.nodes !== 15, r.nodes);
   placeRoadEnemies(r);
   syncEnemyTotals(r);
 }

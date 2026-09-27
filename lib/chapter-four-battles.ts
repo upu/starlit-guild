@@ -16,9 +16,13 @@ export type BattleEmit = (
 ) => void;
 export const paralyzed = (actor: Actor | undefined, at: number) =>
   (actor?.paralyzedUntil ?? 0) > at;
-export function confrontation(quest: string, node: number) {
+export function confrontation(
+  quest: string,
+  node: number,
+  nodes = quest === MERRILL_SEEDLINGS_QUEST ? 1 : 15,
+) {
   if (quest === LICO_RECORDS_QUEST && node === 14) return "lico";
-  if (quest === MERRILL_SEEDLINGS_QUEST && node === 8) return "merrill";
+  if (quest === MERRILL_SEEDLINGS_QUEST && node === (nodes === 1 ? 0 : 8)) return "merrill";
   return undefined;
 }
 export function confrontationEnemies(
@@ -26,10 +30,11 @@ export function confrontationEnemies(
   node: number,
   rank: number,
   at: number,
+  nodes?: number,
 ): Enemy[] | null {
-  const trick = confrontation(quest, node);
+  const trick = confrontation(quest, node, nodes);
   if (!trick) return null;
-  const maxHp = 36 + rank * 3;
+  const maxHp = (36 + rank * 3) * (trick === "merrill" && nodes !== 15 ? 4 : 1);
   return [
     {
       id: "enemy-1",
@@ -81,7 +86,7 @@ function summon(r: Run, enemy: Enemy, at: number, emit: BattleEmit) {
       hp: maxHp,
       maxHp,
       resistance: enemy.resistance,
-      attack: enemy.attack * 0.42,
+      attack: enemy.attack * (r.nodes === 1 ? 0.2 : 0.42),
       period: 1900,
       nextAt: at + 1900,
     };
@@ -105,7 +110,10 @@ function sing(r: Run, enemy: Enemy, at: number, emit: BattleEmit) {
   let restored = 0;
   for (const ally of r.enemies || []) {
     if (ally.hp <= 0) continue;
-    const amount = Math.min(ally.maxHp - ally.hp, Math.ceil(ally.maxHp * 0.2));
+    const amount = Math.min(
+      ally.maxHp - ally.hp,
+      Math.ceil(ally.maxHp * (r.nodes === 1 ? 0.05 : 0.2)),
+    );
     ally.hp += amount;
     restored += amount;
   }

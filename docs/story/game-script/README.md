@@ -40,7 +40,7 @@
   - [4-1 塔を直した人たちへ](chapter-4.md#stage-4-1)
   - [4-2 見当違いの灯り](chapter-4.md#stage-4-2)
   - [4-3 醸造の町ブレッカ](chapter-4.md#stage-4-3)
-  - [4-4 毎朝光る苔・一日目](chapter-4.md#stage-4-4)
+  - [4-4 毎朝光る苔](chapter-4.md#stage-4-4)
   - [4-5 毎朝光る苔・二日目](chapter-4.md#stage-4-5)
   - [4-6 塔のそばの苔床](chapter-4.md#stage-4-6)
   - [4-7 消える前に](chapter-4.md#stage-4-7)

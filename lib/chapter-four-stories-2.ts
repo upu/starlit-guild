@@ -3,7 +3,7 @@ import { scene, line, narration, type ChapterFourSection } from "./chapter-four-
 export const sectionsPart2: ChapterFourSection[] = [
   {
     number: "4-4",
-    title: "毎朝光る苔・一日目",
+    title: "毎朝光る苔",
     scenes: [
       scene("4-4", "departure", "朝になっていた", "宿の玄関広間、夜明け前", [
         narration(
@@ -33,7 +33,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("mira", "付き添いまでしていただかなくても……。", "shy"),
         line("finn", "目を離すと、その鞄を持って出ていきそうだからね。", "smile"),
         narration("ミラが鞄から手を離す。フィンは空いた隣の椅子へ、自分の荷物を置いた。"),
-        line("leon", "道順を確かめて、戻ってきます。", "serious"),
+        line("leon", "荷車を追って、苔を仕入れている場所を確かめてきます。", "serious"),
       ]),
       scene("4-4", "return", "持ち帰った道順", "ブレッカの裏通り", [
         narration("空籠を積んだ荷車が、醸造所の裏から出る。アリアとレオンは距離を取って歩く。"),
@@ -44,7 +44,7 @@ export const sectionsPart2: ChapterFourSection[] = [
           "御者が振り返った。アリアはレオンの袖を引き、細い通路へ入る。干してある青い布の陰で、二人とも足を止めた。アリアは右手で布の端を少し広げ、左腕をレオンの右腕に回す。狭い陰へ収まろうと身を寄せると、髪の先が彼の肩にかかった。",
         ),
         narration(
-          "アリアが顔を上げると、すぐ近くでレオンと目が合った。二人とも通りへ目を戻すのが一拍遅れる。アリアは右手で風に膨らんだ布を押さえ直し、彼の腕を抱き寄せたまま隙間をのぞく。レオンも少し頬を熱くして、その向こうから荷車を探す。",
+          "アリアが顔を上げると、すぐ近くでレオンと目が合った。二人とも通りへ目を戻すのが一拍遅れる。アリアは右手で風に膨らんだ布を押さえ直し、彼の腕を抱き寄せたまま隙間をのぞく。レオンは何か言いかけて口を閉じ、布の向こうへ目を凝らした。",
         ),
         line("leon", "……もう、行った。", "shy"),
         narration(
@@ -139,17 +139,19 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("aria", "触らないで見よう。育ててる人がいるなら、話を――", "serious"),
       ]),
       scene("4-6", "return", "あたしの苔床", "塔のそばの苔床", [
-        narration("同じ場所、通路から苔床を調べたあと。リコが現れる。"),
-        line("lico", "あーーっ！", "shouting"),
+        narration("通路から苔床を調べていると、柵の向こうで足音がした。"),
+        narration("柵の向こうから、声が飛んだ。「あーーっ！」"),
         narration("アリアが跳び上がる。低い柵の向こうで、小柄な女性が丸メガネを押し上げた。"),
         line("aria", "な、なに！？　踏んでないよ！", "surprised"),
-        line("lico", "影。そこの札、いま影がかかってる。ちょっと右。", "serious"),
+        narration("丸メガネの女性「影。そこの札、いま影がかかってる。ちょっと右」"),
         line("leon", "こちらですか。"),
-        line("lico", "うん。……戻った。", "smile"),
-        narration("リコは札と苔を見比べ、手帳へ線を書き足す。"),
+        narration("丸メガネの女性「うん。……戻った」"),
+        narration("女性は札と苔を見比べ、手帳へ線を書き足す。"),
         line("leon", "ここの苔を育てている方ですか。"),
-        line("lico", "あたし。リコリス。リコでいい。"),
-        line("aria", "私はアリア。こっちがレオンで、ミラ。こんなに、全部？", "surprised"),
+        narration("丸メガネの女性「あたし。リコリス。リコでいい」"),
+        line("aria", "私はアリア。こっちがレオンで、ミラ。", "smile"),
+        line("aria", "あと、フィンって仲間もいるよ。今は管理人さんを探しに行ってる。", "smile"),
+        line("aria", "この苔、全部リコが育てたの？", "surprised"),
         line(
           "lico",
           "最初は端の一列だけ。塔を直した人の話、聞いたから。光る苔が塔の力を吸うって。だったら近くで増やせば、どうなるかなって。",
@@ -164,7 +166,7 @@ export const sectionsPart2: ChapterFourSection[] = [
           "水だけじゃ足りないよね！　こっちは塔から離すと遅いの。同じ水、同じ土でも。だから列を近づけて、毎晩、同じ札のところで見てる。",
           "mischievous",
         ),
-        line("aria", "ね、レオン。私たちが並べた皿みたい！", "smile"),
+        line("aria", "ね、レオン。リンデの塔で、苔を近くと遠くに置いて比べたよね！", "smile"),
         line("leon", "比べ方は似てる。でも、塔のそばをこれだけ広げたら……。", "worried"),
         line(
           "lico",
@@ -189,7 +191,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         ),
         line(
           "lico",
-          "ああ。それで使いすぎたんだ。動けるようにはなるよ。でも、動いた分の体力は使う。食べて、休まないと。",
+          "疲れに気づかないまま、動き続けちゃったんだね。体力が戻るわけじゃないよ。食べて、休まないと。",
           "serious",
         ),
         line(
@@ -202,13 +204,22 @@ export const sectionsPart2: ChapterFourSection[] = [
         ),
         line("mira", "あなたは、いつお食事を？", "worried"),
         line("lico", "この列が終わったら。朝の分を見て、次の時刻の分も採ってたから。", "neutral"),
+        line(
+          "lico",
+          "そのまま舐めるくらいなら、効き目は弱いよ。煮出して仕込むエールとは違う。",
+          "neutral",
+        ),
+        line("mira", "朝から、何回舐めたの？", "serious"),
+        narration("リコは手帳の印を数えかけ、前のページへ戻った。"),
+        line("lico", "一列につき、外側と内側。それを、時刻ごとに……。", "worried"),
+        line("mira", "少しずつでも、何度も重ねているでしょう。お食事も取らずに。", "serious"),
         narration("リコはパンへ伸ばしかけた手を止め、空欄に指を置いた。"),
         line("lico", "ここだけ明日にしたら、今日のほかの列と比べられない。あと一列。", "serious"),
         narration("リコは外側の苔を少し舐め、次に塔に近い札のそばへしゃがんだ。"),
         line("lico", "こっちの方がずっと苦い。朝に測ったときより――", "serious"),
         line("mira", "もう口に入れないで。", "serious"),
         narration(
-          "記録を書いて立ち上がろうとしたリコの膝が伸びきらず、手が柵へ掛かった。ミラが腕を支え、低い踏み台へ座らせる。",
+          "手帳を閉じたリコは、柵に手をついてもすぐには立ち上がれなかった。ミラが腕を支え、低い踏み台へ座らせる。",
         ),
         line("lico", "まだ、比べる分が。", "tired"),
         line("mira", "その前に、ひとつだけ。今のあなたの具合を見せて。", "serious"),

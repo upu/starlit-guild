@@ -142,7 +142,7 @@ export const sectionsPart1: ChapterFourSection[] = [
         line("aria", "同じ町なんだ。", "surprised"),
         line(
           "finn",
-          "あそこのエールは、昔からうまいんだ。最近は、香りがよくて後味に苦味の利いた、新しいやつが評判でね。飲むとひと仕事できるってさ。",
+          "あそこのエールは、昔からうまいんだ。最近は、香りがよくて後味に苦味の利いた、新しいやつが評判でね。飲むと疲れを忘れるってさ。",
           "smile",
         ),
         line("aria", "ずいぶん詳しいね。"),
@@ -230,7 +230,7 @@ export const sectionsPart1: ChapterFourSection[] = [
     title: "醸造の町ブレッカ",
     scenes: [
       scene("4-3", "departure", "よく効くらしい", "ブレッカの食堂", [
-        narration("店主が、指で包めるほどの小さな杯を二つ並べた。"),
+        narration("店主が、手のひらに収まる小さな杯を二つ並べた。"),
         narration(
           "店主「ミラ先生も遠くからご苦労さま。食事の前に、滋養のエールをどうだい。うちでは、この杯に一杯ずつでね」",
         ),
