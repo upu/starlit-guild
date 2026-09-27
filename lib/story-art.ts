@@ -34,7 +34,7 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
   },
   [GUILD_FOUNDING_QUEST + "-return"]: {
     src: "/stories/guild-formation.webp",
-    alt: "リンデの受付でアリアが旅団の登録書に署名し、四人が見守る。",
+    alt: "リンデの倉庫二階でアリアが旅団の登録書に署名し、四人が見守る。",
     width: 1536,
     height: 1024,
     revealAtLine: 67,

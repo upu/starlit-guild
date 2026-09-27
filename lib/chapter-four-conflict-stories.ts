@@ -5,7 +5,10 @@ export const conflictSections: ChapterFourSection[] = [
     number: "4-7",
     title: "消える前に",
     scenes: [
-      scene("4-7", "departure", "三つの記録", "塔の管理小屋", [
+      scene("4-7", "departure", "三つの記録", "塔の管理小屋から苔床へ", [
+        narration(
+          "記録が見つかったとフィンに呼ばれ、アリアとミラも管理小屋へ来た。リコは苔床で休みながら手帳を整理している。四人の前には、管理人と醸造所の商人が座っていた。",
+        ),
         narration(
           "管理人「外の灯りが届く場所を、毎晩、同じ時刻に見ている。掃除も石の点検もした。変わっていたのが、あの苔床だった」",
         ),
@@ -49,6 +52,9 @@ export const conflictSections: ChapterFourSection[] = [
         narration(
           "日付を書き写し終えると、フィンは商人へ原本を返した。商人は枚数を数えて懐へしまい、管理人に呼ばれた町の人たちの方を向く。",
         ),
+        narration(
+          "商人との話を町の人たちに任せ、管理人は四人を連れて苔床へ戻った。踏み台に座るリコの前へ灯りの記録を広げ、栽培を止めてほしいと伝える。",
+        ),
         line("lico", "暗くなった日と、増やした日。重なっただけかもしれない。", "worried"),
         narration("管理人「同じ晩に見ている。天気もここに書いてある」"),
         line(
@@ -57,13 +63,21 @@ export const conflictSections: ChapterFourSection[] = [
           "worried",
         ),
         line("leon", "では、リコさんの記録と今、重ねてください。", "serious"),
-        line("lico", "夕方の分を先に採らないと。今の光、もう同じにはならない。", "worried"),
+        narration(
+          "リコは差し出された記録を見たが、すぐに手元の浅皿へ目を戻した。採り分けた苔が並び、手帳の夕方の欄は途中までしか埋まっていない。",
+        ),
+        line(
+          "lico",
+          "夕方の分を先に測らないと。これを読んでる間にも、採った方の光が抜ける。",
+          "worried",
+        ),
         line(
           "aria",
           "その間にも、塔の外を通る人は困ってる。持っていく株だけ、先に選べない？",
           "worried",
         ),
-        line("lico", "動かしたら、続きが分からなくなる！", "serious"),
+        narration("アリアが籠を持って列の端へ回る。リコは浅皿を引き寄せ、立ち上がった。"),
+        line("lico", "待って、その列も測ってる！　動かしたら、続きが分からなくなる！", "serious"),
         narration(
           "リコが通路の前へ踏み出す。小さな装置の覆いを外すと、苔の光が磨いた板へ映り、足元の目印が見えにくくなった。苦い匂いの白い煙が低く流れる。",
         ),
@@ -73,13 +87,20 @@ export const conflictSections: ChapterFourSection[] = [
         line("aria", "分かった。苔床には入らないで回る。", "serious"),
         line("finn", "栓はあっちだな。まかせとけって。割らずに閉めるくらいならさ。", "smile"),
       ]),
-      scene("4-7", "return", "あたしの数字", "消える前に", [
+      scene("4-7", "return", "あたしの数字", "塔のそばの苔床", [
         narration("煙が薄くなる。レオンは倒れかけた記録板を拾い、リコの手元へ戻す。"),
         line("lico", "……そこ、順番が。", "worried"),
         line("leon", "この印が上ですか。", "serious"),
-        line("lico", "そう。"),
+        line("lico", "そう。", "neutral"),
+        narration(
+          "リコは戻された板から浅皿へ目を移した。苔も札も元の順に残っている。アリアは列の外へ籠を置き、両手を離した。",
+        ),
+        line("lico", "……札、抜かなかったんだ。", "surprised"),
+        line("aria", "どれを残すか、リコに聞きたいから。", "serious"),
         line("leon", "動かす前に読みましょう。リコさんの記録と、管理人さんの記録を。", "serious"),
-        narration("アリアが乾いた板を渡す。リコは二冊を広げ、自分の記録の端を指で押さえた。"),
+        narration(
+          "リコは浅皿の光を見つめ、それから手帳を膝へ引き寄せた。アリアが渡した乾いた板に二冊を広げ、自分の記録の端を指で押さえる。",
+        ),
         line(
           "lico",
           "この日、内側を一列増やした。次の晩、苔の光が増えて……塔は、こっちが落ちてる。",
@@ -152,7 +173,9 @@ export const conflictSections: ChapterFourSection[] = [
         line("lico", "それは渡さない。移す分なの。", "serious"),
         line("leon", "別の場所で育てる苗です。食べられると、やり直せません。", "serious"),
         line("merrill", "じゃあ、そっちの、地面に残ってるのは？", "excited"),
-        line("aria", "そっちも今、片づけてる途中！　勝手に食べないで。", "worried"),
+        line("aria", "渡せる分を分けるから、待って。札のついてる苗には触らないでね。", "serious"),
+        line("merrill", "じゃあ、待ってる間にこっちをひと口。柔らかそうだし", "excited"),
+        narration("また苗へ伸びた手の前に、アリアが立つ。メリルはその顔を見上げた。"),
         line("merrill", "……エルフの人、久しぶりに見た。あなたの耳は？", "predatory"),
         narration("メリルの目がアリアの耳を追う。アリアは籠を置き、両耳を手で覆った。"),
         line("aria", "もっとだめ！", "worried"),
@@ -170,7 +193,7 @@ export const conflictSections: ChapterFourSection[] = [
         line("aria", "私たちが見えるように？", "surprised"),
         line("lico", "苗を運べないと困るから。……布、落ちてる。掛け直して。", "shy"),
       ]),
-      scene("4-8", "return", "感想は一株分", "苔は渡さない", [
+      scene("4-8", "return", "感想は一株分", "塔の裏手、苗の積み出し口", [
         narration("五人の後ろへ籠が揃った。メリルは空いた手を眺め、指先に残った苔を舐める。"),
         line(
           "merrill",
