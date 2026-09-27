@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fiction Atlas · 創作地図"
+  short_description: "架空世界の世界図・地方図と地名の根拠を、編集できる地図帳として管理する"
+  default_prompt: "$fiction-atlas を使って、作品の設定資料から世界図と地方詳細図を作ってください。"

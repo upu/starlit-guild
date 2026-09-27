@@ -61,7 +61,7 @@
 
 ### シナリオ作業での確認と更新
 
-舞台や移動を扱うプロット・台本・クエストの追加変更では、次の手順を使う。Codexは汎用スキル `fiction-atlas` を使用する。読み込み先と利用できない環境での扱いは [Codexの作業手順](../../development/codex.md) を参照する。
+舞台や移動を扱うプロット・台本・クエストの追加変更では、次の手順を使う。Codexはリポジトリ内の [fiction-atlas](../../../.agents/skills/fiction-atlas/SKILL.md) を使用する。管理方針は [Codexの作業手順](../../development/codex.md) を参照する。
 
 1. **執筆・実装前に確認する。** `atlas.json` と対象の地方図・詳細図を読み、出発地・目的地・経由地、道の接続、川・橋・山越えの関係を把握する。地点の `sources` から世界観・対象章の本文へ戻り、方角・移動時間などの記述を照合する。地図の見た目だけから距離や「同日中に着く」といった条件を決めない。
 2. **既存設定と新しい案を区別する。** 同じ場所を別の名前で重複登録していないか、往路・帰路がつながるかを確認する。配置案との不一致だけで本文を変更しない。既存の確定した記述と矛盾する場合は、変更の意図を整理して設定の正本と本文を揃える。新しい配置の検討には `proposal` を使い、地図への追加だけで設定の採用を意味させない。
@@ -71,14 +71,15 @@
 
 ### ツールの場所とコマンド
 
-この地図は個人スキル **Fiction Atlas (`fiction-atlas`)** で作成した。スキル本体は個人の `~/.codex/skills/fiction-atlas/` にあり、本作の設定や固有名に依存しない。他作品には別のJSONを作る。プロジェクト専用スキルの複製ではない。
+この地図は **[Fiction Atlas (`fiction-atlas`)](../../../.agents/skills/fiction-atlas/SKILL.md)** で作成した。スキル本体・生成器・HTMLテンプレート・データ仕様・テストを `.agents/skills/fiction-atlas/` でGit管理する。内容は本作の設定や固有名に依存せず、他作品ではこのスキル一式を再利用して別のJSONを作れる。本作の地名や設定は地図データ側に置く。
 
 Python標準ライブラリのみで新規データ作成・検査・HTML生成ができる。
 
 ```text
-python <fiction-atlas>/scripts/atlas.py init new-world.json --title "別の作品"
-python <fiction-atlas>/scripts/atlas.py validate docs/story/atlas/atlas.json
-python <fiction-atlas>/scripts/atlas.py build docs/story/atlas/atlas.json --out docs/story/atlas/view/atlas.html
+python .agents/skills/fiction-atlas/scripts/atlas.py init new-world.json --title "別の作品"
+python .agents/skills/fiction-atlas/scripts/atlas.py validate docs/story/atlas/atlas.json
+python .agents/skills/fiction-atlas/scripts/atlas.py build docs/story/atlas/atlas.json --out docs/story/atlas/view/atlas.html
+python .agents/skills/fiction-atlas/scripts/test_atlas.py
 ```
 
 スキルがない環境でも、配布済みHTMLだけで閲覧、場所の編集、JSONの読み直しとHTML再保存ができる。静止図はHTMLで各地図を選び、全体表示・選択なし・地形／街道／地名ON・詳細枠OFFでSVGを書き出す。`view/` は生成物なので図やHTMLを直接修正せず、JSONと生成ツールから更新する。
