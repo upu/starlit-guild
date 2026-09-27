@@ -22,7 +22,6 @@ import {
   workPoint,
   movingWork,
   roadPuller,
-  roadWorkOffset,
   CHAPTER_ROAD_SPACING,
   ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
@@ -30,6 +29,7 @@ import type { RoadPosition } from "./chapter-road-types.ts";
 import { roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
 import { spreadBattleParty } from "./road-party-formation.ts";
+import { arrangeCarriers } from "./road-carrier-formation.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -44,6 +44,7 @@ export type RoadLook = {
   length: number;
   workers: string[];
   puller: string | null;
+  frontCarriers: string[];
   urban: boolean;
   destination: boolean;
   work?: ReturnType<typeof roadWorkLook>;
@@ -228,6 +229,7 @@ function makeBattle(input: AdventureInput, frame: AdventureFrame): RoadBattle {
 }
 function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
+  const puller = run ? roadPuller(frame.quest, run) : null;
   return {
     background: frame.background,
     destination: ![
@@ -256,7 +258,8 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
               roadActorReady(frame.quest, run, id),
           )
         : [],
-    puller: run ? roadPuller(frame.quest, run) : null,
+    puller,
+    frontCarriers: frontCarriers(run, puller),
     enemies: Object.fromEntries(
       (run?.enemies || []).map((enemy, index) => [
         index + 1,
@@ -267,6 +270,15 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
       ]),
     ),
   };
+}
+function frontCarriers(run: Run | null, puller: string | null) {
+  if (!run || !puller) return [];
+  const living = run.actors.map((actor) => actor.hero).filter((id) => run.health[id].hp > 0);
+  if (living.length < 4) return [puller];
+  const partner = ["leon", "finn", "aria", "mira"].find(
+    (id) => id !== puller && living.includes(id),
+  );
+  return partner ? [puller, partner] : [puller];
 }
 function enemyLabel(frame: AdventureFrame, id: string) {
   const target = frame.targets.find((target) => target.id === id);
@@ -282,24 +294,6 @@ function gatheringX(
 ) {
   if (!road) return 160;
   return workPoint(q, run) - (cargo && task === "carry" && puller ? 105 : 65);
-}
-function arrangeCarriers(
-  frame: AdventureFrame,
-  run: Run,
-  battle: RoadBattle,
-  puller: string | null,
-) {
-  if (!puller || roadHasEnemies(run)) return;
-  // Keep every carrier on the cart's ground line and spread pushers to its left.
-  const rear = { aria: -145, leon: -145, mira: -175, finn: -205, lico: -240 } as Record<
-    string,
-    number
-  >;
-  for (const hero of battle.heroes) {
-    const visualOffset = hero.id === puller ? 45 : rear[hero.id] || -110;
-    hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
-    hero.lane = 0.82;
-  }
 }
 function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
   for (const hero of battle.heroes) {
@@ -322,7 +316,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     remaining: run.target,
     total: run.targetMax,
   };
-  if (cargo && task === "carry") arrangeCarriers(frame, run, battle, look.puller);
+  if (cargo && task === "carry") arrangeCarriers(frame.quest, run, battle, look.frontCarriers);
   faceWorkers(battle, look, cargo, x);
 }
 function commandMotion(battle: RoadBattle, look: RoadLook) {

@@ -114,6 +114,24 @@ test("travelling explores both axes, while work, rest, scenes and reduced motion
   }
 });
 
+test("carriers keep their work pose and forward facing while the display catches up", () => {
+  const motion = new RoadMotion();
+  const initial = frame();
+  initial.look.workers = ["leon"];
+  initial.look.frontCarriers = ["leon"];
+  initial.battle.gathering = { kind: "cargo", task: "carry", x: 100, remaining: 50, total: 100 };
+  motion.update(initial, "run", 390);
+  const shifted = structuredClone(initial);
+  shifted.battle.time = 1016;
+  shifted.battle.heroes[0].x = -100;
+  shifted.battle.heroes[0].facing = -1;
+  const drawn = motion.update(shifted, "run", 390);
+  assert.ok(Math.abs(drawn.battle.heroes[0].x - shifted.battle.heroes[0].x) > 5);
+  assert.deepEqual(drawn.look.workers, ["leon"]);
+  assert.equal(drawn.battle.heroes[0].facing, 1);
+  assert.equal(shifted.battle.heroes[0].facing, -1, "drawing must not change saved facing");
+});
+
 test("new runs reset continuity, pauses cannot produce a large catch-up step", () => {
   const motion = new RoadMotion();
   const first = motion.update(frame(), "old", 390);

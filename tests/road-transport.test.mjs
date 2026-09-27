@@ -60,8 +60,12 @@ test("five companions leave the cart formation during Merrill's ambush and resum
     } else if (defended && look.workers.length === 5 && battle.gathering?.task === "carry") {
       resumed = true;
       const cartX = battle.gathering.x + 65;
-      assert.ok(battle.heroes.find((hero) => hero.id === "leon").x > cartX + 50);
-      assert.ok(battle.heroes.find((hero) => hero.id === "lico").x < cartX - 40);
+      assert.equal(look.frontCarriers.length, 2);
+      for (const id of look.frontCarriers)
+        assert.ok(battle.heroes.find((hero) => hero.id === id).x > cartX + 50);
+      const pushers = battle.heroes.filter((hero) => !look.frontCarriers.includes(hero.id));
+      assert.deepEqual(pushers.map((hero) => hero.lane).sort(), [0.68, 0.82, 0.96]);
+      assert.ok(pushers.every((hero) => hero.x < cartX - 40));
     }
     state = settle(state, run.nextAt);
   }
@@ -83,6 +87,7 @@ test("a living member takes over pulling when the lead carrier falls", () => {
     paused: false,
   });
   assert.equal(frame.look.puller, "leon");
+  assert.deepEqual(frame.look.frontCarriers, ["leon"]);
   assert.deepEqual(run.road.members.leon, before);
   run.health.leon.hp = 0;
   assert.equal(roadPuller(q, run), "aria");
@@ -94,31 +99,43 @@ test("a living member takes over pulling when the lead carrier falls", () => {
     paused: false,
   });
   assert.equal(handoff.look.puller, "aria");
+  assert.deepEqual(handoff.look.frontCarriers, ["aria"]);
   assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
 });
 
-test("four carriers share the cart's ground line and spread behind it", () => {
+test("four carriers form side-by-side pairs centered on the cart's ground line", () => {
   let state = start(24, 12);
   while (state.squads[0].run.phase !== "work") state = settle(state, state.squads[0].run.nextAt);
-  const run = state.squads[0].run;
-  const frame = chapterRoadFrame({
-    squad: state.squads[0],
-    startQuest: run.quest,
-    now: state.updatedAt,
-    ready: true,
-    paused: false,
-  });
+  let frame;
+  for (let step = 0; step < 100; step++) {
+    const run = state.squads[0].run;
+    frame = chapterRoadFrame({
+      squad: state.squads[0],
+      startQuest: run.quest,
+      now: state.updatedAt,
+      ready: true,
+      paused: false,
+    });
+    if (frame.look.workers.length === 4) break;
+    state = settle(state, run.nextAt);
+  }
+  assert.equal(frame.look.workers.length, 4);
   assert.equal(frame.battle.gathering.task, "carry");
   assert.equal(frame.battle.heroes.length, 4);
   const cartFeet = roadY(0.82, 200);
-  for (const hero of frame.battle.heroes) {
-    assert.equal(roadY(hero.lane, 200), cartFeet, hero.id);
+  assert.equal(frame.look.frontCarriers.length, 2);
+  const cartX = frame.battle.gathering.x + 65;
+  const pullers = frame.battle.heroes.filter((hero) => frame.look.frontCarriers.includes(hero.id));
+  const pushers = frame.battle.heroes.filter((hero) => !frame.look.frontCarriers.includes(hero.id));
+  assert.equal(pullers.length, 2);
+  assert.equal(pushers.length, 2);
+  for (const pair of [pullers, pushers]) {
+    assert.deepEqual(pair.map((hero) => hero.lane).sort(), [0.7, 0.94]);
+    assert.equal(pair.reduce((sum, hero) => sum + roadY(hero.lane, 200), 0) / 2, cartFeet);
+    assert.ok(Math.abs(pair[0].x - pair[1].x) <= 40);
   }
-  const pushers = frame.battle.heroes.filter((hero) => hero.id !== frame.look.puller);
-  assert.ok(
-    Math.max(...pushers.map((hero) => hero.x)) - Math.min(...pushers.map((hero) => hero.x)) >= 50,
-  );
-  assert.equal(frame.battle.heroes.find((hero) => hero.id === frame.look.puller).lane, 0.82);
+  assert.ok(pullers.every((hero) => hero.x > cartX + 50));
+  assert.ok(pushers.every((hero) => hero.x < cartX - 40));
 });
 
 test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {

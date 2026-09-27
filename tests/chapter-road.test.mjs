@@ -190,7 +190,7 @@ test("transport splits pulling and pushing, pauses for an ambush and never slash
       const cartX = battle.gathering.x + 65;
       assert.ok(look.puller);
       for (const hero of battle.heroes.filter((h) => look.workers.includes(h.id))) {
-        if (hero.id === look.puller) assert.ok(hero.x > cartX + 50);
+        if (look.frontCarriers.includes(hero.id)) assert.ok(hero.x > cartX + 50);
         else assert.ok(hero.x < cartX - 40);
       }
       assert.ok(

@@ -74,10 +74,18 @@ export class RoadMotion {
     this.at = raw.time;
     const battle = { ...raw, distance: this.camera };
     const workers = new Set(look.workers);
+    const carrying =
+      raw.gathering?.kind === "cargo" &&
+      raw.gathering.task === "carry" &&
+      !raw.enemies.some((enemy) => enemy.hp > 0);
     battle.heroes = raw.heroes.map((hero) => {
       const target = reduced ? hero : roaming(hero, raw, workers.has(hero.id));
       const drawn = this.moveHero(hero, target, battle, width, dt);
-      if (Math.abs(drawn.x - target.x) > 5 || Math.abs(drawn.lane - target.lane) > 0.02)
+      if (carrying && workers.has(hero.id)) drawn.facing = 1;
+      if (
+        !carrying &&
+        (Math.abs(drawn.x - target.x) > 5 || Math.abs(drawn.lane - target.lane) > 0.02)
+      )
         workers.delete(hero.id);
       return drawn;
     });
