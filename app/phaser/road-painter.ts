@@ -6,6 +6,7 @@ import { type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view
 
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
+import { RoadWorkCaption } from "./road-work-caption";
 import { applyHeroPose, applyWorkPose } from "./road-poses";
 import {
   roadSheet,
@@ -45,6 +46,7 @@ export class RoadPainter {
   private ground: Phaser.GameObjects.Graphics;
   private sizeKey = "";
   private gathering: Phaser.GameObjects.Image;
+  private workCaption: RoadWorkCaption;
   private effects: RoadEffects;
   private spriteFilter: RoadSpriteFilter;
   private bars: Phaser.GameObjects.Graphics;
@@ -59,6 +61,7 @@ export class RoadPainter {
     this.backdrop = scene.add.image(0, 0, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
     this.ground = scene.add.graphics().setDepth(1);
     this.gathering = scene.add.image(0, 0, ROAD_HERB).setDepth(16).setVisible(false);
+    this.workCaption = new RoadWorkCaption(scene);
     this.effects = new RoadEffects(scene);
     this.strings = scene.add.graphics().setDepth(18);
     this.bars = scene.add.graphics().setDepth(30);
@@ -334,11 +337,13 @@ export class RoadPainter {
     return { size, asset, frame };
   }
 
-  private paintGathering(state: RoadBattle) {
+  private paintGathering(state: RoadBattle, look: RoadLook) {
     const point = state.gathering;
-    // The current activity is already shown in the DOM map heading, above the chat.
     this.gathering.setVisible(!!point);
-    if (!point) return;
+    if (!point) {
+      this.workCaption.paint(state, look, 0, 0);
+      return;
+    }
     const cargo = point.kind === "cargo";
     const lane = cargo ? 0.82 : 0.68;
     const x = this.screenX(point.x + 65, state),
@@ -352,6 +357,7 @@ export class RoadPainter {
       .setScale(size / this.gathering.frame.width)
       .setDepth(10 + lane * 10 - 0.1)
       .setFlipX(cargo && point.task === "carry" && !!this.look?.puller);
+    this.workCaption.paint(state, look, x, y - this.gathering.displayHeight);
     if (point.task === "carry")
       this.transportProgress(x, y + 5, size, 1 - point.remaining / point.total);
     else this.health(x, y + 5, size, point.remaining / point.total);
@@ -366,7 +372,7 @@ export class RoadPainter {
     this.look = look;
     this.scenery(state, reduced);
     this.bars.clear();
-    this.paintGathering(state);
+    this.paintGathering(state, look);
     for (const [id, figure] of this.enemies) {
       if (enemyPresent(state, id, reduced)) continue;
       figure.image.destroy();

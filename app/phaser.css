@@ -19,6 +19,30 @@
 .phaser-canvas[data-status="error"] {
   visibility: hidden;
 }
+.road-work-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(17rem, calc(100% - 16px));
+  padding: 6px 10px;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(20 43 38 / 65%) 0%,
+    rgb(20 43 38 / 35%) 55%,
+    transparent 75%
+  );
+  color: #fff1cb;
+  text-shadow:
+    0 1px 3px #071b1a,
+    0 0 6px #071b1acc;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
 .phaser-loading {
   position: absolute;
   inset: 0;
