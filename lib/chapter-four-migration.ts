@@ -1,4 +1,4 @@
-import { MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST } from "./chapter-four.ts";
+import { MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST, MOSS_BEDS_QUEST } from "./chapter-four.ts";
 import type { State, Squad } from "./game-types.ts";
 import { nextEvent } from "./game-run.ts";
 import { storyProgress } from "./stories.ts";
@@ -37,5 +37,23 @@ export function upgradeMossTrail(input: State): State {
   (state.story ??= storyProgress(state)).mossTrailSplit = true;
   carryReadThrough(state);
   state.squads.forEach(restCompanions);
+  return state;
+}
+
+// Finn is in town during the moss-bed survey. Keep existing progress and the
+// three remaining companions' clocks and HP when resuming an older expedition.
+export function upgradeMossBedsParty(input: State): State {
+  if (!input.squads.some((sq) => sq.run?.quest === MOSS_BEDS_QUEST && sq.members.includes("finn")))
+    return input;
+  const state = structuredClone(input);
+  for (const squad of state.squads) {
+    const run = squad.run;
+    if (run?.quest !== MOSS_BEDS_QUEST || !squad.members.includes("finn")) continue;
+    squad.members = squad.members.filter((id) => id !== "finn");
+    run.actors = run.actors.filter((actor) => actor.hero !== "finn");
+    delete run.health.finn;
+    if (run.road) delete run.road.members.finn;
+    if (run.phase !== "rest") run.nextAt = nextEvent(run);
+  }
   return state;
 }

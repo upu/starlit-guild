@@ -264,6 +264,7 @@ export function chapterFourBanter(run: Run): StoryLine[] | null {
   if (battle) return battle;
   const pursuit = pursuitBanter(run);
   if (pursuit) return pursuit;
+  if (run.quest === MOSS_BEDS_QUEST && run.phase === "rest") return rests[1];
   if (run.phase !== "rest" && run.quest === MERRILL_SEEDLINGS_QUEST && run.node < 9)
     return [
       { expression: "serious", speaker: "lico", text: "苗を運ぶなら、あの籠を先に守って。" },
