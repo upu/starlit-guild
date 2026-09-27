@@ -22,7 +22,6 @@ import {
   workPoint,
   movingWork,
   roadPuller,
-  roadWorkOffset,
   CHAPTER_ROAD_SPACING,
   ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
@@ -30,6 +29,7 @@ import type { RoadPosition } from "./chapter-road-types.ts";
 import { roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
 import { spreadBattleParty } from "./road-party-formation.ts";
+import { arrangeCarriers } from "./road-carrier-formation.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -295,20 +295,6 @@ function gatheringX(
   if (!road) return 160;
   return workPoint(q, run) - (cargo && task === "carry" && puller ? 105 : 65);
 }
-function arrangeCarriers(frame: AdventureFrame, run: Run, battle: RoadBattle, front: string[]) {
-  if (!front.length || roadHasEnemies(run)) return;
-  // Keep every carrier on the cart's ground line, with pullers ahead and pushers behind.
-  const rear = battle.heroes.filter((hero) => !front.includes(hero.id));
-  for (const hero of battle.heroes) {
-    const frontIndex = front.indexOf(hero.id);
-    const visualOffset =
-      frontIndex < 0
-        ? -145 - rear.findIndex((member) => member.id === hero.id) * (rear.length > 2 ? 55 : 70)
-        : 45 + frontIndex * 80;
-    hero.x += visualOffset - roadWorkOffset(frame.quest, run, hero.id);
-    hero.lane = 0.82;
-  }
-}
 function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
   for (const hero of battle.heroes) {
     if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
@@ -330,7 +316,7 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     remaining: run.target,
     total: run.targetMax,
   };
-  if (cargo && task === "carry") arrangeCarriers(frame, run, battle, look.frontCarriers);
+  if (cargo && task === "carry") arrangeCarriers(frame.quest, run, battle, look.frontCarriers);
   faceWorkers(battle, look, cargo, x);
 }
 function commandMotion(battle: RoadBattle, look: RoadLook) {

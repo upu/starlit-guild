@@ -63,7 +63,9 @@ test("five companions leave the cart formation during Merrill's ambush and resum
       assert.equal(look.frontCarriers.length, 2);
       for (const id of look.frontCarriers)
         assert.ok(battle.heroes.find((hero) => hero.id === id).x > cartX + 50);
-      assert.ok(battle.heroes.find((hero) => hero.id === "lico").x < cartX - 40);
+      const pushers = battle.heroes.filter((hero) => !look.frontCarriers.includes(hero.id));
+      assert.deepEqual(pushers.map((hero) => hero.lane).sort(), [0.68, 0.82, 0.96]);
+      assert.ok(pushers.every((hero) => hero.x < cartX - 40));
     }
     state = settle(state, run.nextAt);
   }
@@ -101,7 +103,7 @@ test("a living member takes over pulling when the lead carrier falls", () => {
   assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
 });
 
-test("four carriers share the cart's ground line, with two ahead and two behind", () => {
+test("four carriers form side-by-side pairs centered on the cart's ground line", () => {
   let state = start(24, 12);
   while (state.squads[0].run.phase !== "work") state = settle(state, state.squads[0].run.nextAt);
   let frame;
@@ -121,20 +123,19 @@ test("four carriers share the cart's ground line, with two ahead and two behind"
   assert.equal(frame.battle.gathering.task, "carry");
   assert.equal(frame.battle.heroes.length, 4);
   const cartFeet = roadY(0.82, 200);
-  for (const hero of frame.battle.heroes) {
-    assert.equal(roadY(hero.lane, 200), cartFeet, hero.id);
-  }
   assert.equal(frame.look.frontCarriers.length, 2);
   const cartX = frame.battle.gathering.x + 65;
   const pullers = frame.battle.heroes.filter((hero) => frame.look.frontCarriers.includes(hero.id));
   const pushers = frame.battle.heroes.filter((hero) => !frame.look.frontCarriers.includes(hero.id));
   assert.equal(pullers.length, 2);
   assert.equal(pushers.length, 2);
+  for (const pair of [pullers, pushers]) {
+    assert.deepEqual(pair.map((hero) => hero.lane).sort(), [0.7, 0.94]);
+    assert.equal(pair.reduce((sum, hero) => sum + roadY(hero.lane, 200), 0) / 2, cartFeet);
+    assert.ok(Math.abs(pair[0].x - pair[1].x) <= 40);
+  }
   assert.ok(pullers.every((hero) => hero.x > cartX + 50));
   assert.ok(pushers.every((hero) => hero.x < cartX - 40));
-  assert.ok(Math.abs(pullers[0].x - pullers[1].x) >= 75);
-  assert.ok(Math.abs(pushers[0].x - pushers[1].x) >= 65);
-  assert.equal(frame.battle.heroes.find((hero) => hero.id === frame.look.puller).lane, 0.82);
 });
 
 test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {
