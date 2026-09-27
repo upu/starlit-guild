@@ -357,7 +357,12 @@ export class RoadPainter {
       .setScale(size / this.gathering.frame.width)
       .setDepth(10 + lane * 10 - 0.1)
       .setFlipX(cargo && point.task === "carry" && !!this.look?.puller);
-    this.workCaption.paint(state, look, x, y - this.gathering.displayHeight);
+    this.workCaption.paint(
+      state,
+      look,
+      x,
+      y + this.gathering.displayHeight * (1 - this.gathering.originY),
+    );
     if (point.task === "carry")
       this.transportProgress(x, y + 5, size, 1 - point.remaining / point.total);
     else this.health(x, y + 5, size, point.remaining / point.total);

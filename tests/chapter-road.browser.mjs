@@ -324,11 +324,7 @@ try {
         assert.ok(await caption.isVisible(), `${name}: work caption visible`);
         const bounds = await caption.boundingBox();
         const map = await page.locator(".adventure-map").boundingBox();
-        assert.ok(bounds.y >= geometry.progressBottom, `${name}: below heading`);
-        assert.ok(
-          bounds.y + bounds.height + 6 < geometry.chatTop,
-          `${name} at ${width}: above chat ${JSON.stringify({ bounds, geometry })}`,
-        );
+        assert.ok(bounds.y > map.y + map.height * 0.6, `${name}: below the work point`);
         assert.ok(bounds.x >= map.x && bounds.x + bounds.width <= map.x + map.width);
         assert.equal(await caption.evaluate((el) => getComputedStyle(el).pointerEvents), "none");
         assert.ok(
@@ -343,6 +339,27 @@ try {
       await page.clock.runFor(500);
       const caption = page.locator(".road-work-caption");
       const bounds = await caption.boundingBox();
+      const map = await page.locator(".adventure-map").boundingBox();
+      // UI overlays may grow, but the caption must stay attached to the work image.
+      await page.locator(".journey-banter").evaluate((el) => {
+        el.style.setProperty("height", "300px", "important");
+      });
+      await page.locator(".map-heading").evaluate((el) => {
+        el.style.paddingBottom = "200px";
+      });
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      await page.clock.runFor(500);
+      assert.equal((await page.locator(".adventure-map").boundingBox()).height, map.height);
+      assert.ok(
+        Math.abs((await caption.boundingBox()).y - bounds.y) < 1,
+        "caption ignores chat and heading sizes",
+      );
+      await page.locator(".journey-banter").evaluate((el) => el.style.removeProperty("height"));
+      await page
+        .locator(".map-heading")
+        .evaluate((el) => el.style.removeProperty("padding-bottom"));
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      await page.clock.runFor(500);
       const hits = () =>
         page.evaluate(
           () =>
