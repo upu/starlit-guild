@@ -1,3 +1,9 @@
+import {
+  consumableId,
+  consumablesSchema,
+  consumableEffectsSchema,
+  validConsumables,
+} from "./save-consumables.ts";
 import { validRoadScene } from "./road-scenes.ts";
 import { z } from "zod";
 import { heroes, allQuests as quests, migrate, encounter, type State } from "./game.ts";
@@ -87,6 +93,7 @@ const road = z.object({
   scene: z.object({ kind: z.enum(["withdraw", "enter", "escape"]), at: n }).optional(),
 });
 const run = z.object({
+  consumableEffects: consumableEffectsSchema.optional(),
   road: road.optional(),
   serial: count,
   nodes: count.min(1).max(15),
@@ -273,6 +280,7 @@ function validEnemyTotals(
   );
 }
 function validateState(s: ParsedState, ctx: z.RefinementCtx) {
+  if (!validConsumables(s)) ctx.addIssue({ code: "custom", message: "Invalid consumables" });
   if (s.techniques && !validTechniques(s.techniques, s.owned))
     ctx.addIssue({ code: "custom", message: "Invalid techniques" });
   if (s.inventory && !validInventory(s.inventory, s.owned))
@@ -292,6 +300,7 @@ const stateBase = z.object({
   autoNextQuest: z.boolean().optional(),
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
+  consumables: consumablesSchema.optional(),
   story: storySchema.optional(),
   friendship: keyedNumbers,
   gold: n,
@@ -318,7 +327,9 @@ const stateBase = z.object({
       }),
     )
     .length(1),
-  log: z.array(z.object({ text: z.string().max(500), at: n })).max(40),
+  log: z
+    .array(z.object({ text: z.string().max(500), at: n, consumable: consumableId.optional() }))
+    .max(40),
 });
 const stateSchema = stateBase.superRefine(validateState);
 export type Profile = { id: string; name: string; test: boolean; state: State };

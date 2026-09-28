@@ -1,3 +1,4 @@
+import { buyConsumable, assignConsumable } from "./consumables.ts";
 import { storyParty } from "./story-party.ts";
 import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
@@ -41,11 +42,14 @@ export type Action = {
     | "assist"
     | "sync"
     | "readStory"
+    | "buyConsumable"
+    | "assignConsumable"
     | "buy"
     | "equip"
     | "learnTechnique"
     | "setTechnique"
     | "autoNextQuest";
+  quantity?: number;
   squad?: string;
   id?: string;
   name?: string;
@@ -263,6 +267,14 @@ function setTechniqueAction(s: State, _sq: Squad, a: Action) {
   if (!a.hero || !a.techniqueSlot) throw Error("セットする仲間と枠を確認してください。");
   setTechnique(s, a.hero, a.techniqueSlot, a.id);
 }
+function buyConsumableAction(s: State, _sq: Squad, a: Action, now: number) {
+  const quantity = a.quantity ?? 1;
+  const item = buyConsumable(s, a.id || "", quantity);
+  addLog(s, `${item.name}を${String(quantity)}個購入。バッグに入れた。`, now);
+}
+function assignConsumableAction(s: State, _sq: Squad, a: Action) {
+  assignConsumable(s, a.hero || "", a.id);
+}
 const actionHandlers: Record<Action["type"], ActionHandler> = {
   autoNextQuest: autoNextQuestAction,
   learnTechnique: learnTechniqueAction,
@@ -274,6 +286,8 @@ const actionHandlers: Record<Action["type"], ActionHandler> = {
   repeat: repeatAction,
   assist: assistAction,
   buy: buyAction,
+  buyConsumable: buyConsumableAction,
+  assignConsumable: assignConsumableAction,
   equip: equipAction,
 };
 export function act(input: State, a: Action, now: number) {

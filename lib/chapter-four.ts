@@ -140,7 +140,7 @@ export const chapterFourQuests: Quest[] = definitions.map(
     xp: [MOSS_TRAIL_QUEST, MOSS_TRAIL_SECOND_DAY_QUEST].includes(id)
       ? 140
       : 220 + originalIndex(index) * 20,
-    herbs: 0,
+    herbs: 1,
     ore: 0,
     enemy: id === LICO_RECORDS_QUEST || id === MERRILL_SEEDLINGS_QUEST ? 10 : 8,
     enemyName:

@@ -1,3 +1,4 @@
+import { applyPinchConsumable } from "./consumable-effects.ts";
 import { isChapterThreeQuest } from "./chapter-three.ts";
 import { paralyzed, shiftConfrontationClocks } from "./chapter-four-battles.ts";
 import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
@@ -238,6 +239,7 @@ function enemyTurn(s: State, sq: Squad, r: Run, q: Quest, kind: Encounter, at: n
     undefined,
     target,
   );
+  applyPinchConsumable(s, r, target, damage, at, event);
 }
 function finishStep(r: Run, at: number) {
   if (Object.values(r.health).some((health) => health.hp > 0)) {

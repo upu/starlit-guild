@@ -199,7 +199,7 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
   }
   assert.equal(nodes.size, 15);
   assert.ok(worked);
-  assert.equal(s.herbs, herbs);
+  assert.equal(s.herbs, herbs + 1, "one roadside herb, not a moss harvest");
   s = roundtrip(read(s, WETLAND_QUEST));
   const before = structuredClone(s);
   assert.deepEqual(read(s, WETLAND_QUEST), before);
@@ -293,7 +293,7 @@ test("waterway exploration and restoration follow fieldwork order with small bat
     assert.equal(nodes.size, 15);
     assert.ok(worked);
     assert.ok(battled);
-    assert.equal(s.herbs, herbs);
+    assert.equal(s.herbs, herbs + 1, "one roadside herb per adventure");
     assert.equal(
       [...nodes.values()].filter((n) => n.kind === "battle").length,
       id === WATERWAY_QUEST ? 5 : id === RESTORATION_QUEST ? 3 : 2,

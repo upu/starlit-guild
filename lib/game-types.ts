@@ -22,6 +22,7 @@ export type Actor = {
 export type Scene = { title: string; lines: string[]; at: number; kind: "combo" };
 export type MemberHealth = { hp: number; maxHp: number };
 export type Run = {
+  consumableEffects?: Partial<Record<string, string>>;
   road?: import("./chapter-road-types.ts").ChapterRoad;
   serial: number;
   nodes: number;
@@ -60,6 +61,7 @@ export type State = {
   autoNextQuest?: boolean;
   techniques?: Techniques;
   inventory?: Inventory;
+  consumables?: import("./consumables.ts").Consumables;
   story?: StoryProgress;
   friendship: Record<string, number>;
   gold: number;
@@ -71,7 +73,7 @@ export type State = {
   done: Record<string, number>;
   updatedAt: number;
   squads: Squad[];
-  log: { text: string; at: number }[];
+  log: { text: string; at: number; consumable?: string }[];
 };
 export type LegacySharedRun = Omit<Run, "health"> & { hp: number; maxHp: number };
 export type LegacySharedHealthState = Omit<State, "squads"> & {

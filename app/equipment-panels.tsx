@@ -1,16 +1,15 @@
 "use client";
 import { useState } from "react";
-import { CharacterIconChoices } from "./character-icon-choices";
+import { CharacterEquipment, EquipmentSlotPanel } from "./character-loadout";
+import { ConsumableBag, ConsumableDetails } from "./consumable-panels";
 import Image from "next/image";
-import { Coins, Leaf, Gem, Shield, Swords, Package, SquareDashed, X } from "lucide-react";
+import { Coins, Gem, Shield, Swords, Package, X } from "lucide-react";
 import { heroes, memberStats, memberMaxHp, heroSkills, type State, type Action } from "@/lib/game";
 import {
   equipment,
-  equipmentById,
   inventoryOf,
   equippedBy,
   availableCopies,
-  canEquip,
   type Equipment,
   type EquipmentSlot,
 } from "@/lib/equipment";
@@ -22,7 +21,6 @@ import {
   type TechniqueSlot,
 } from "@/lib/techniques";
 import { TechniquePanel, TechniqueDetails } from "./technique-panel";
-import { ShopItemIcon } from "./shop-item-icon";
 import { TechniqueIcon } from "./technique-icon";
 import { Portrait } from "./portrait";
 import { CharacterLevel } from "./character-level";
@@ -53,7 +51,6 @@ export function ResourcesGrid({ state: s }: { state: State }) {
     <div className="inventory-grid">
       {[
         [Coins, s.gold, "お金"],
-        [Leaf, s.herbs, "薬草"],
         [Gem, s.ore, "鉱石"],
       ].map(([Icon, value, label]) => {
         const I = Icon as typeof Coins;
@@ -103,6 +100,7 @@ export function InventoryPanel({ state: s }: { state: State }) {
   return (
     <div className="bag-content">
       <ResourcesGrid state={s} />
+      <ConsumableBag state={s} />
       <EquipmentBag state={s} />
       <section className="bag-section">
         <h3>大事なもの・預かり品</h3>
@@ -141,138 +139,6 @@ function StatRow({ values }: { values: number[] }) {
     </div>
   );
 }
-function EquipmentChoice({
-  item,
-  hero,
-  slot,
-  ...props
-}: Props & { item: Equipment; hero: string; slot: EquipmentSlot }) {
-  const current = equipmentById(inventoryOf(props.state).equipped[hero]?.[slot] ?? "");
-  const worn = current?.id === item.id,
-    available = availableCopies(props.state, item.id);
-  return (
-    <article className="character-choice-detail">
-      <ShopItemIcon item={item} />
-      <span>
-        <b>{item.name}</b>
-        <span className="equipment-comparison">
-          {item.bonus.map((value, index) => {
-            const delta = value - (current?.bonus[index] ?? 0);
-            return (
-              <span key={index}>
-                {statLabels[index]} {delta > 0 ? "+" : ""}
-                {delta}
-              </span>
-            );
-          })}
-        </span>
-      </span>
-      <p>{item.description}</p>
-      <small>
-        {worn
-          ? "装備中"
-          : available > 0
-            ? "選択中のアイコンをもう一度タップで装備"
-            : equippedBy(props.state, item.id).map(heroName).join("・") + "が装備中"}
-      </small>
-    </article>
-  );
-}
-function EquipmentSlotPanel({
-  hero,
-  slot,
-  ...props
-}: Props & { hero: string; slot: EquipmentSlot }) {
-  const inventory = inventoryOf(props.state),
-    current = equipmentById(inventory.equipped[hero]?.[slot] ?? ""),
-    choices = equipment.filter(
-      (item) => item.slot === slot && canEquip(item, hero) && (inventory.items[item.id] ?? 0) > 0,
-    );
-  const [selected, setSelected] = useState(current?.id ?? "empty");
-  const item = choices.find((candidate) => candidate.id === selected);
-  function select(id: string) {
-    if (id !== selected) {
-      setSelected(id);
-      return;
-    }
-    if (!props.ready) return;
-    if (id === "empty") {
-      if (current) props.onAction({ type: "equip", hero, slot });
-      return;
-    }
-    if (id !== current?.id && availableCopies(props.state, id) > 0)
-      props.onAction({ type: "equip", hero, slot, id });
-  }
-  return (
-    <section className="character-equipment">
-      <h3>{slot === "weapon" ? "武器の付け替え" : "防具の付け替え"}</h3>
-      <CharacterIconChoices
-        label="装備の候補"
-        emptyLabel="装備を外す"
-        selected={selected}
-        onSelect={select}
-        choices={choices.map((candidate) => ({
-          id: candidate.id,
-          name: candidate.name,
-          icon: <ShopItemIcon item={candidate} />,
-          badge: current?.id === candidate.id ? "装備中" : undefined,
-        }))}
-      />
-      {item ? (
-        <EquipmentChoice {...props} item={item} hero={hero} slot={slot} />
-      ) : (
-        <div className="character-choice-detail">
-          <p>
-            {current ? "空のアイコンをもう一度タップで装備を外します。" : "何も装備していません。"}
-          </p>
-        </div>
-      )}
-      {choices.length === 0 && <p>装備できる品はまだありません。</p>}
-    </section>
-  );
-}
-
-function CharacterEquipment(
-  props: Props & {
-    hero: string;
-    slot: string | null;
-    onSlot: (slot: EquipmentSlot | null) => void;
-  },
-) {
-  const slot = props.slot;
-  const inventory = inventoryOf(props.state);
-  return (
-    <section className="character-loadout" aria-label="装備">
-      <div className="character-slots">
-        {(["weapon", "armor"] as const).map((kind) => {
-          const item = equipmentById(inventory.equipped[props.hero]?.[kind] ?? "");
-          const label = kind === "weapon" ? "武器" : "防具";
-          return (
-            <button
-              key={kind}
-              className="character-slot"
-              aria-label={`${label}・${item?.name ?? "装備なし"}・付け替える`}
-              title={item?.name ?? "装備なし"}
-              aria-expanded={slot === kind}
-              aria-controls="character-options"
-              onClick={() => {
-                props.onSlot(slot === kind ? null : kind);
-              }}
-            >
-              <small>{label}</small>
-              {item ? (
-                <ShopItemIcon item={item} />
-              ) : (
-                <SquareDashed className="empty-slot-icon" aria-hidden="true" />
-              )}
-              <b>{item?.name ?? `${label}なし`}</b>
-            </button>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
 function FixedTechnique({ state, hero }: { state: State; hero: string }) {
   return (
     <section className="character-skill">
@@ -304,7 +170,7 @@ function CharacterHeading({ state, hero }: { state: State; hero: (typeof heroes)
   );
 }
 export function CharacterPanel(props: Props) {
-  const [slot, setSlot] = useState<EquipmentSlot | TechniqueSlot | null>(null);
+  const [slot, setSlot] = useState<EquipmentSlot | TechniqueSlot | "consumable" | null>(null);
   const [selected, setSelected] = useState("aria"),
     roster = heroes.filter((hero) => props.state.owned.includes(hero.id)),
     hero = roster.find((hero) => hero.id === selected) ?? roster[0];
@@ -357,13 +223,18 @@ export function CharacterPanel(props: Props) {
 }
 
 function CharacterDetails(
-  props: Props & { hero: string; slot: EquipmentSlot | TechniqueSlot | null; onClose: () => void },
+  props: Props & {
+    hero: string;
+    slot: EquipmentSlot | TechniqueSlot | "consumable" | null;
+    onClose: () => void;
+  },
 ) {
   const { slot, hero } = props;
   if (!slot) return null;
   const equipmentSlot = slot === "weapon" || slot === "armor";
   if (
     !equipmentSlot &&
+    slot !== "consumable" &&
     (!techniquesUnlocked(props.state) ||
       !techniques.some((t) => t.hero === hero && t.slot === slot))
   )
@@ -381,6 +252,8 @@ function CharacterDetails(
       <div className="character-bottom-scroll" key={hero + slot}>
         {equipmentSlot ? (
           <EquipmentSlotPanel {...props} slot={slot} />
+        ) : slot === "consumable" ? (
+          <ConsumableDetails {...props} />
         ) : (
           <TechniqueDetails {...props} slot={slot} />
         )}

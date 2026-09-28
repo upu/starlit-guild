@@ -9,15 +9,21 @@ import {
   type Equipment,
   type EquipmentSlot,
 } from "@/lib/equipment";
+import { shopConsumables, consumableStock, type ShopConsumable } from "@/lib/consumables";
+import { ConsumableShopDetail } from "./consumable-shop-detail";
 import { Bonuses } from "./equipment-panels";
 import { ShopItemIcon } from "./shop-item-icon";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
-type Filter = EquipmentSlot;
+type Filter = EquipmentSlot | "consumable";
+type Product = Equipment | ShopConsumable;
+const stockOf = (s: State, item: Product) =>
+  "effect" in item ? consumableStock(s, item.id) : (inventoryOf(s).items[item.id] ?? 0);
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
 const filters = [
   { id: "weapon", label: "武器" },
   { id: "armor", label: "防具" },
+  { id: "consumable", label: "アイテム" },
 ] as const;
 
 function ShopDetail({
@@ -30,7 +36,7 @@ function ShopDetail({
   item: Equipment;
   onBought: (name: string) => void;
 }) {
-  const owned = inventoryOf(state).items[item.id] ?? 0;
+  const owned = stockOf(state, item);
   const shortage = Math.max(0, item.price - state.gold);
   const wearers = item.heroes
     ?.map((id) => heroes.find((hero) => hero.id === id)?.name ?? id)
@@ -81,8 +87,8 @@ function ShopGrid({
   state,
   onSelect,
 }: {
-  items: Equipment[];
-  selected?: Equipment;
+  items: Product[];
+  selected?: Product;
   state: State;
   onSelect: (id: string) => void;
 }) {
@@ -93,7 +99,7 @@ function ShopGrid({
           <button
             key={item.id}
             className="shop-slot"
-            aria-label={`${item.name}・${amount(item.price)} G・所持 ${String(inventoryOf(state).items[item.id] ?? 0)}`}
+            aria-label={`${item.name}・${amount(item.price)} G・所持 ${String(stockOf(state, item))}`}
             aria-pressed={selected?.id === item.id}
             aria-controls="shop-detail"
             title={item.name}
@@ -103,7 +109,7 @@ function ShopGrid({
           >
             <ShopItemIcon item={item} />
             <span className="shop-owned" aria-hidden="true">
-              {inventoryOf(state).items[item.id] ?? 0}
+              {stockOf(state, item)}
             </span>
           </button>
         ))}
@@ -135,7 +141,10 @@ export function ShopPanel(props: Props) {
   const [filter, setFilter] = useState<Filter>("weapon");
   const [selectedId, setSelectedId] = useState("");
   const [purchase, setPurchase] = useState({ name: "", count: 0 });
-  const items = shopItems(props.state).filter((item) => item.slot === filter);
+  const items =
+    filter === "consumable"
+      ? shopConsumables(props.state)
+      : shopItems(props.state).filter((item) => item.slot === filter);
   const selected = items.find((item) => item.id === selectedId) ?? items.at(0);
   const unlocked = shopTier(props.state) > 0;
   return (
@@ -162,8 +171,7 @@ export function ShopPanel(props: Props) {
             onSelect={setSelectedId}
           />
           {selected && (
-            <ShopDetail
-              key={selected.id}
+            <ProductDetail
               {...props}
               item={selected}
               onBought={(name) => {
@@ -185,5 +193,13 @@ export function ShopPanel(props: Props) {
         </p>
       )}
     </div>
+  );
+}
+
+function ProductDetail(props: Props & { item: Product; onBought: (name: string) => void }) {
+  return "effect" in props.item ? (
+    <ConsumableShopDetail {...props} item={props.item} />
+  ) : (
+    <ShopDetail {...props} item={props.item} />
   );
 }
