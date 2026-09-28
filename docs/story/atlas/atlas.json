@@ -523,6 +523,28 @@
       ]
     },
     {
+      "id": "old-map-path",
+      "name": "管理図にだけある細い道",
+      "kind": "junction",
+      "x": 330,
+      "y": 270,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "丘の塔の古い管理図にだけ描かれ、今の地図にはない細い道。塔の裏から森へ入り、塔の上から見ると木々の間に切れ目が続く。誰が作り、どこへ続くか、今も通れるかは未設定。第五章の制作案。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-7-また苔か",
+          "detail": "5-7（制作案）：管理図の細い線。5-9：塔の上から見た森の切れ目。"
+        }
+      ],
+      "labelOffset": [
+        -12,
+        -10
+      ],
+      "labelAnchor": "end"
+    },
+    {
       "id": "linde-warehouse",
       "name": "連絡先の倉庫二階",
       "kind": "site",
@@ -1074,6 +1096,23 @@
         {
           "ref": "../game-script/chapter-1.md",
           "detail": "1-7：塔の裏手の湿った斜面。"
+        }
+      ]
+    },
+    {
+      "id": "old-map-path-walk",
+      "name": "塔の裏から森へ（管理図の線）",
+      "stops": [
+        "linde-tower",
+        "old-map-path"
+      ],
+      "level": 2,
+      "status": "proposal",
+      "note": "管理図にある線を模式化。今も通れるか、行き先は未設定。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-7-また苔か",
+          "detail": "5-7、5-9（制作案）：管理図の細い道と森の切れ目。"
         }
       ]
     },
