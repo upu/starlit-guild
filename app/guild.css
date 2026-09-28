@@ -1,0 +1,128 @@
+.phone-guild {
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.guild-panel {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 16px 24px;
+}
+.guild-heading {
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid #8b8b5c70;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #283d32, #142c28);
+}
+.guild-heading h2 {
+  margin: 4px 0 12px;
+  color: #f6d994;
+  font-size: 24px;
+}
+.guild-heading p,
+.guild-caption {
+  color: #b6c6b7;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.guild-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.guild-section-heading h3 {
+  font-size: 18px;
+}
+.guild-section-heading span {
+  color: #d9c68c;
+  font-size: 12px;
+}
+.guild-caption {
+  margin: 8px 0 12px;
+}
+.guild-panel .story-entry {
+  min-height: 60px;
+}
+.guild-pages,
+.guild-inline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.guild-pages button {
+  flex: 1;
+  min-height: 44px;
+  padding: 8px;
+  background: #18392f;
+  color: #d5dcbc;
+  border: 1px solid #8b8b5c70;
+}
+.guild-pages button[aria-pressed="true"] {
+  background: #d1b774;
+  color: #102a26;
+  border-color: #d9c68c;
+}
+.guild-section {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+.guild-section h3 {
+  font-size: 18px;
+  margin-top: 12px;
+  color: #f6d994;
+}
+.guild-section p {
+  line-height: 1.7;
+}
+.guild-plots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.guild-plot,
+.guild-product {
+  border: 1px solid #8b8b5c70;
+  border-radius: 10px;
+  padding: 12px;
+}
+.guild-field {
+  display: grid;
+  gap: 6px;
+}
+.guild-panel select,
+.guild-panel input[type="number"] {
+  min-height: 44px;
+  width: 100%;
+  background: #102a26;
+  border: 1px solid #8b8b5c70;
+  border-radius: 8px;
+  padding: 8px;
+  color: inherit;
+}
+.guild-section button {
+  min-height: 44px;
+  padding: 8px 12px;
+}
+.guild-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 13px;
+}
+.guild-check input {
+  width: 20px;
+  height: 20px;
+}
+.guild-product {
+  display: grid;
+  gap: 8px;
+}
+.guild-supplies {
+  overflow-y: auto;
+  min-height: 0;
+}

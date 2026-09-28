@@ -7,3 +7,5 @@
 - **検証**: [形式・移行](../../../tests/game-v4.test.mjs)、[復帰・複数タブ](../../../tests/mobile-lifecycle.test.mjs)。バックアップAPIは [手動テスト](../development.md#ローカルの手動テスト) の `api-backup.integration.mjs`。
 
 - **消耗品の互換性**: [save-consumables.ts](../../../lib/save-consumables.ts) で在庫・登録・周回効果を検証する。旧v4の欠落項目は空の扱いで、読み込み時に消費しない。[消耗品テスト](../../../tests/consumables.test.mjs) を参照。
+
+- **旅団の実時刻**: `lib/guild-engine.ts` の `settleGuild` を `settle` / `skipTo` / `act` から呼ぶ。`lib/guild-production.ts` が植え付け・仕込み・完了、`lib/guild-actions.ts` が操作、`lib/guild-content.ts` が数値、`lib/save-guild.ts` が保存検証。`tests/guild.test.mjs` で留守中の進行と時計の逆行を確認する。

@@ -7,6 +7,7 @@ import { originalCharacters } from "../lib/original-characters.ts";
 import { idleBanter } from "../lib/idle-banter.ts";
 import { storyStages } from "../lib/prologue.ts";
 import { stories, journeyBanter, coupleCombo } from "../lib/stories.ts";
+import { guildStories } from "../lib/guild-stories.ts";
 import { storyArt } from "../lib/story-art.ts";
 import { interludes } from "../lib/interludes.ts";
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
@@ -288,7 +289,9 @@ export function renderScripts() {
   const byId = new Map(stories.map((story) => [story.id, story]));
   if (
     byId.size !==
-    storyStages.length * 2 + stories.filter((story) => story.chapter === "interlude").length
+    storyStages.length * 2 +
+      stories.filter((story) => story.chapter === "interlude").length +
+      guildStories.length
   ) {
     throw new Error("ステージ一覧とシーン数が一致しません");
   }
@@ -322,6 +325,19 @@ export function renderScripts() {
   }
   index.push("- [共通の掛け合い](banter.md) — 待機中と関係値別の道中・協力技", "");
   files.set("banter.md", renderCommonBanter());
+  files.set(
+    "guild.md",
+    [
+      "# 旅団の日常",
+      "",
+      marker,
+      "",
+      "4-10の終幕読了後、旅団から任意に読む会話。",
+      "",
+      ...guildStories.flatMap((story) => sceneLines(story, "日常", "guild.md", "##")),
+    ].join("\n"),
+  );
+  index.push("- [旅団の日常](guild.md) — 倉庫に立ち寄った日の会話", "");
   files.set("README.md", index.join("\n"));
   return files;
 }

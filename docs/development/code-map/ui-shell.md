@@ -2,6 +2,8 @@
 
 見た目の枠を変えるときは、まず次の2ファイルを見る。`app/layout.tsx` は両方を他の画面別 CSS の後に読み込む。
 
+旅団タブの入口は `app/phone-game-frame.tsx` → `app/guild-panel.tsx`。菜園・作業台・種と材料は `app/guild-garden.tsx` / `app/guild-workbench.tsx` / `app/guild-shop.tsx`、表示は `app/guild.css`。仕様は [旅団の拠点機能](../../gameplay/guild-base.md)、検証は `tests/guild.test.mjs` と `tests/guild.browser.mjs`。
+
 | 対象 | 正本 | 画面別の例外 |
 | --- | --- | --- |
 | 下部ナビの位置・高さ・余白・タブの見た目 | `app/phone-navigation.css` | 序章の列数も同ファイル。画面の中身は `app/navigation.css`、`app/prologue.css`、`app/equipment.css`、`app/adventure-actions.css`。 |

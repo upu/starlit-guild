@@ -31,7 +31,10 @@ const stageBlock = (content, stage) =>
 
 test("generated index links every chapter and stage, and every generated file is current", () => {
   const files = renderScripts();
-  assert.deepEqual([...files.keys()].sort(), [...chapters, "README.md", "banter.md"].sort());
+  assert.deepEqual(
+    [...files.keys()].sort(),
+    [...chapters, "README.md", "banter.md", "guild.md"].sort(),
+  );
   for (const [path, content] of files) assert.equal(readGenerated(path), content, path);
   const index = files.get("README.md");
   assert.ok(index.split("\n").length < 60);
@@ -84,7 +87,10 @@ test("chapter files keep stages in play order and place interludes before the st
 });
 
 test("each stage preserves its two scenes and every still reveal", () => {
-  assert.equal(stories.filter((st) => st.chapter !== "interlude").length, storyStages.length * 2);
+  assert.equal(
+    stories.filter((st) => st.chapter === "departure" || st.chapter === "return").length,
+    storyStages.length * 2,
+  );
   for (const stage of storyStages) {
     const file = readGenerated(chapterPath(stage));
     assert.match(file, /自動生成ファイルです。手で編集せず/);
