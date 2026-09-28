@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "STARLIT GUILD / 地図帳",
-  "subtitle": "村から街へ、灯りをたどる。第一〜第四章の設定資料",
+  "subtitle": "村から街へ、灯りをたどる。第一〜第五章の設定資料",
   "north": false,
   "notice": "存在は本文・設定資料を参照。すべての座標と地形の輪郭は制作案です。方角・実距離・移動時間を確定する地図ではありません。",
   "defaultMap": "region",
@@ -532,11 +532,36 @@
         {
           "ref": "../game-script/chapter-4.md",
           "detail": "4-10：リンデで旅団を登録し、倉庫二階を借りる。"
+        },
+        {
+          "ref": "../chapter-five-script.md#5-3-念のための受付帳",
+          "detail": "5-3（制作案）：裏の空き地を片づけ、菜園にする。"
         }
       ],
       "labelOffset": [
         12,
         -12
+      ]
+    },
+    {
+      "id": "linde-warehouse-yard",
+      "name": "倉庫裏の菜園",
+      "kind": "site",
+      "x": 484,
+      "y": 452,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "倉庫の裏の空き地。第五章の制作案で、リコの作業場所と薬草の菜園にする。家々の屋根越しに丘の塔が見えるため、光る苔は植えない。塔までの方角と距離は未設定。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-3-念のための受付帳",
+          "detail": "5-3（制作案）：倉庫裏の片づけ、菜園の始まり、丘の塔が見える。"
+        }
+      ],
+      "labelOffset": [
+        12,
+        -10
       ]
     },
     {
