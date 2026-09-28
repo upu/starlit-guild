@@ -8,7 +8,7 @@
 
 1. [用語集](../glossary.md)、[世界観と物語](world-and-story.md)、[物語・会話の制作指針](story-writing.md) で呼び名・共通設定・書き方を確認する。
 2. [キャラクター一覧](../characters/README.md) から登場人物を読む。人物を追加するときは [共通書式](../characters/_template.md) を使う。
-3. [関係性と掛け合い](../relationships/README.md) と、人物資料が案内する所属組織を読む。共通の関係は [アリアとレオン](../relationships/aria-leon.md)、組織は [マッドハロウィン](../factions/mad-halloween.md)、[紋章院](../factions/heraldry-office.md) にまとめている。
+3. [関係性と掛け合い](../relationships/README.md) と、人物資料が案内する所属組織を読む。共通の関係は [アリアとレオン](../relationships/aria-leon.md)、組織は [マッドハロウィン](../factions/mad-halloween.md)、[星章院](../factions/star-badge-office.md) にまとめている。
 4. 対象章のプロットと既存の台本を照合する。
 
 ## 章の資料
