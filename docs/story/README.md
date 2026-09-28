@@ -19,7 +19,7 @@
 | 第二章 | [第二章計画](story-part-2.md) | [第二章](game-script/chapter-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
 | 第三章 | [第三章計画](story-part-3.md) | [第三章](game-script/chapter-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
 | 第四章 | [第四章計画](story-part-4.md)・[詳細台本](chapter-four-script.md)・[道中と日常の掛け合い](chapter-four-banter.md) | [第四章](game-script/chapter-4.md) | [第四章のゲーム実装](../gameplay/chapter-four-gameplay.md) |
-| 第五章 | [第五章計画](story-part-5.md) | 未実装 | [旅団の拠点機能（設計案）](../gameplay/guild-base.md) |
+| 第五章 | [第五章計画](story-part-5.md)・[詳細台本（執筆中）](chapter-five-script.md) | 未実装 | [旅団の拠点機能（設計案）](../gameplay/guild-base.md) |
 
 ## 台本と場面の素材
 
