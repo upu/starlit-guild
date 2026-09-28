@@ -25,7 +25,7 @@ export function StartScreen({
         {/* Keep the native picture fallback so portrait art direction is selected before hydration. */}
         <img
           src="/title/starlight-towers.webp"
-          alt="星空の下、森と街道に星灯りの塔が点々と灯る風景"
+          alt="星空の下、リンデの町と丘の塔、遠くの街道に紫の灯りがともる風景"
           width={1536}
           height={1024}
           fetchPriority="high"
