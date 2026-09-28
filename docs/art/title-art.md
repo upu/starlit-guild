@@ -10,11 +10,31 @@
 
 画面の向きに合わせて背景を切り替える。タイトルと START は風景に焼き込まず、独立して配置する。キャッチコピーは表示しない。
 
+## 採用背景と設定の対応
+
+2026-09-29に、ユーザー確認済みの横・縦の修正版へ差し替えた。内蔵 imagegen の生成原本は `assets/source/title/starlight-towers.png` と `assets/source/title/starlight-towers-portrait.png` に保存。配信用は同じ寸法の WebP（sharp、quality 90、effort 6）とする。
+
+- リンデの町、交易路、畑と林、街外れの丘の塔を主景にする。塔の窓と頂部は淡い紫、家や普通のランタンは暖色とし、[塔の灯りの設定](../story/world-and-story.md#星灯りの塔制作案)と揃える。
+- 遠景に3つの小さな紫の塔の灯りを置き、遠くへ続く街道を感じさせる。塔の所在地・固有名・方角・実距離をこの絵で確定せず、ベルネやブレッカの塔とは特定しない。
+- リンデの塔は、背後に高い林の斜面を持つ丘の平場に置く。足元の湿った石組み、坂の途中の小さな石造りの排水口と細い流れを描き、出口が詰まると水が残り得る地形にする。
+- 第一章1-7・1-8の[古い排水路](../story/story-part-1.md#1-7-古い水路をたどって--地図の端に残る線)は、大部分が地面や石組みの下を通る。大きな開渠の用水路、川、堀として描かない。タイトルでは詰まりの事件そのものを再現しない。
+- 旧背景の大湖・湖上都市・険しい雪山・断崖・大きな石橋を外した。星空と静かな暮らしの雰囲気を引き継ぐ。
+
+これらは既存の場所・排水の設定に沿った背景の構図であり、[地図帳](../story/atlas/README.md)の座標・街道の接続やシナリオを変更するものではない。
+
+配信用WebPの再生成は、依存関係をインストールしたリポジトリのルートで実行する。
+
+```sh
+node --input-type=module -e "import sharp from 'sharp'; for (const name of ['starlight-towers', 'starlight-towers-portrait']) { await sharp('assets/source/title/' + name + '.png').webp({ quality: 90, effort: 6 }).toFile('public/title/' + name + '.webp'); }"
+```
+
 ## 共有リンクのカード画像
 
 `assets/source/social/x-card-background.webp` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp) のリファレンスシートを参照して内蔵 imagegen で生成した横長の原本。淡い水彩の線と塗りを保ち、三人の後ろに星空と灯りの塔を描く。文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が既存の透過ロゴを合成し、1200 × 630 PNG を `public/social/x-card.png` に1枚だけ出力する。OGPとXは同じ画像URLを参照する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。
 
-## 生成プロンプト
+## 初版の生成プロンプト（制作履歴）
+
+以下は差し替え前の制作記録。金色の塔や湖の指定は現行背景には使わない。現行版の編集プロンプトは [2026-09-29の生成記録](../art-generation/title-landscape-2026-09-29.json) を参照する。
 
 ### 横画面の風景
 
