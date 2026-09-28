@@ -23,3 +23,9 @@
 - [第二章のゲーム実装](chapter-two-gameplay.md)
 - [第三章のゲーム実装資料](chapter-three-gameplay.md)
 - [第四章のゲーム実装](chapter-four-gameplay.md)
+
+## 設計中の仕組み
+
+未実装の設計案。実装したら現行仕様へ書き直す。
+
+- [旅団の拠点機能](guild-base.md) — 第五章で導入する菜園・作業台・持ちもの枠・旅団タブ・等級
