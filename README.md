@@ -16,7 +16,7 @@
 
 ## 開発
 
-Node.js 22.13.0 以上を使用します。
+Node.js は [`.node-version`](.node-version) の版を使用します（CIも同じファイルを参照します）。
 
 ```bash
 npm run dev

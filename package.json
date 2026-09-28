@@ -4,7 +4,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=26.0.0"
   },
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",

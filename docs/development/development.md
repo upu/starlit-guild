@@ -4,7 +4,7 @@
 
 ## 開発コマンド
 
-Node.js 22.13.0 以上。
+Node.js は [`.node-version`](../../.node-version) の版を使う。GitHub Actions も同じファイルを読むため、資料には版の数字を書かない。メジャー版を上げるときは `.node-version`、`package.json` の `engines.node`、`@types/node` のメジャー版を同じPRで揃える。
 
 ```bash
 npm run dev
