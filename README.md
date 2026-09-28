@@ -16,7 +16,7 @@
 
 ## 開発
 
-Node.js は [`.node-version`](.node-version) の版を使用します（CIも同じファイルを参照します）。
+Node.js は [`package.json`](package.json) の `devEngines.runtime` に記載した版を使用します（CIも同じ欄を参照します）。
 
 ```bash
 npm run dev
