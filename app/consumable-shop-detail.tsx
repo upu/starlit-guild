@@ -1,6 +1,6 @@
 "use client";
 import type { State, Action } from "@/lib/game";
-import { consumableStock, type Consumable } from "@/lib/consumables";
+import { consumableStock, type ShopConsumable } from "@/lib/consumables";
 import { ShopItemIcon } from "./shop-item-icon";
 
 export function ConsumableShopDetail({
@@ -10,7 +10,7 @@ export function ConsumableShopDetail({
   onAction,
   onBought,
 }: {
-  item: Consumable;
+  item: ShopConsumable;
   state: State;
   ready: boolean;
   onAction: (action: Action) => boolean;

@@ -123,7 +123,7 @@ export const chapterThreeQuests: Quest[] = definitions.map(
     seconds: 180,
     gold: 260 + i * 20,
     xp: 180 + i * 15,
-    herbs: 0,
+    herbs: 1,
     ore: 0,
     enemy: 8,
     enemyName: "街道のスライム",

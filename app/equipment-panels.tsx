@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CharacterEquipment, EquipmentSlotPanel } from "./character-loadout";
 import { ConsumableBag, ConsumableDetails } from "./consumable-panels";
 import Image from "next/image";
-import { Coins, Leaf, Gem, Shield, Swords, Package, X } from "lucide-react";
+import { Coins, Gem, Shield, Swords, Package, X } from "lucide-react";
 import { heroes, memberStats, memberMaxHp, heroSkills, type State, type Action } from "@/lib/game";
 import {
   equipment,
@@ -51,7 +51,6 @@ export function ResourcesGrid({ state: s }: { state: State }) {
     <div className="inventory-grid">
       {[
         [Coins, s.gold, "お金"],
-        [Leaf, s.herbs, "薬草"],
         [Gem, s.ore, "鉱石"],
       ].map(([Icon, value, label]) => {
         const I = Icon as typeof Coins;

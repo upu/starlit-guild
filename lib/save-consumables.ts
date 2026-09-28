@@ -5,7 +5,10 @@ import type { State } from "./game-types.ts";
 export const consumableId = z.string().refine((id) => !!consumableById(id));
 export const consumablesSchema = z
   .object({
-    items: z.record(consumableId, z.number().finite().int().min(0).max(9999)),
+    items: z.record(
+      consumableId.refine((id) => id !== "herbs"),
+      z.number().finite().int().min(0).max(9999),
+    ),
     assigned: z.record(z.string(), consumableId),
   })
   .strict();

@@ -252,7 +252,8 @@ test("invalid saved counts, IDs, owners and departure effects are rejected", () 
     (s) => (s.consumables.items.salve = 10000),
     (s) => (s.consumables.items.unknown = 1),
     (s) => (s.consumables.assigned.mira = "salve"),
-    (s) => (s.consumables.assigned.aria = "herbs"),
+    (s) => (s.consumables.assigned.aria = "unknown"),
+    (s) => (s.consumables.items.herbs = 1),
     (s) => (s.squads[0].run.consumableEffects = { aria: "salve" }),
     (s) => (s.squads[0].run.consumableEffects = { mira: "travel-biscuit" }),
   ];
@@ -384,4 +385,105 @@ test("Auto-Next consumes at the next real departure after a completed stage", ()
   s = until(s, (s) => s.squads[0].run?.quest === TOWER_QUEST);
   assert.equal(consumableStock(s, "travel-biscuit"), 8);
   assert.equal(s.squads[0].run.consumableEffects.aria, "travel-biscuit");
+});
+
+test("legacy herbs become usable items without losing large balances or fractional rewards", () => {
+  const old = testState(1000, 3, 10, 1000);
+  old.herbs = 12000.75;
+  const loaded = roundtrip(old);
+  same(loaded, old);
+  assert.equal(consumableStock(loaded, "herbs"), 12000);
+  let s = assign(assign(loaded, "aria", "herbs"), "leon", "herbs");
+  s = start(s);
+  const r = s.squads[0].run;
+  r.health.aria = { hp: 10, maxHp: 100 };
+  applyPinchConsumable(s, r, "aria", 1, s.updatedAt, event);
+  assert.equal(r.health.aria.hp, 25);
+  assert.equal(s.herbs, 11999.75);
+  assert.equal(s.gold, old.gold);
+  assert.equal(s.consumables.items.herbs, undefined);
+  assert.match(consumableNotice(s, s.updatedAt), /アリアが薬草を使った/);
+  same(roundtrip(s), s);
+  assert.throws(() => buy(s, "herbs"));
+});
+
+test("herbs need one whole item, keep their assignment when empty, and resume after gathering", () => {
+  const s = start(assign(testState(1000, 3, 10, 1000), "aria", "herbs"));
+  const r = s.squads[0].run;
+  s.herbs = 0.75;
+  r.health.aria = { hp: 10, maxHp: 100 };
+  applyPinchConsumable(s, r, "aria", 1, s.updatedAt, event);
+  assert.equal(r.health.aria.hp, 10);
+  r.node = 2;
+  const gained = reward(s, s.squads[0], questById(TOWER_QUEST), s.updatedAt, false);
+  assert.ok(gained.herbs > 0);
+  const gathered = s.herbs;
+  applyPinchConsumable(s, r, "aria", 1, s.updatedAt, event);
+  assert.equal(r.health.aria.hp, 25);
+  assert.equal(s.herbs, gathered - 1);
+  assert.equal(s.consumables.assigned.aria, "herbs");
+  const removed = action(s, { type: "assignConsumable", hero: "aria" });
+  assert.equal(removed.herbs, s.herbs);
+});
+
+test("herb collection and use in a dedicated fight agree across batched, live and resumed updates", () => {
+  let s = testState(1000, 35, 25, 10000);
+  s.herbs = 30.5;
+  for (const hero of s.owned) s = assign(s, hero, "herbs");
+  s = start(s, "sweet-blockade", true);
+  s = until(s, (state) => state.squads[0].run?.enemies?.length > 0, 600000);
+  for (const actor of s.squads[0].run.actors) actor.nextAt += 10000;
+  s.squads[0].run.comboAt += 10000;
+  for (const health of Object.values(s.squads[0].run.health)) health.hp = health.maxHp * 0.4;
+  s = until(s, (state) => state.log.some((entry) => entry.consumable === "herbs"));
+  const end = s.updatedAt + 180000;
+  const batched = settle(s, end);
+  let live = s;
+  while (live.updatedAt < end) live = settleOnScreen(live, live.updatedAt + 200);
+  same(batched.squads, live.squads);
+  assert.equal(batched.herbs, live.herbs);
+  same(batched.consumables, live.consumables);
+  const resumed = settle(roundtrip(settle(s, s.updatedAt + 87000)), end);
+  same(resumed.squads, batched.squads);
+  assert.equal(resumed.herbs, batched.herbs);
+});
+
+test("ordinary adventures give one whole herb at the first reward, once per round", () => {
+  let s = testState(1000, 35, 50, 1000);
+  s.herbs = 0;
+  s = start(s, "berne-road", true);
+  s = until(s, (state) => state.herbs > 0);
+  assert.equal(s.herbs, 1);
+  assert.equal(s.squads[0].run.round, 1);
+  const restored = roundtrip(s);
+  const sq = restored.squads[0];
+  recoverRun(restored, sq, sq.run, questById("berne-road"), restored.updatedAt);
+  assert.equal(restored.herbs, 1, "resting grants nothing");
+  s = until(restored, (state) => state.squads[0].run.round === 2);
+  assert.equal(s.herbs, 1, "later rewards do not duplicate the pickup");
+  s = until(s, (state) => state.herbs > 1);
+  assert.equal(s.herbs, 2);
+  const legacy = roundtrip(s);
+  legacy.herbs = 0;
+  assert.equal(roundtrip(legacy).herbs, 0, "loading never backfills past pickups");
+});
+
+test("gathering adventures keep their original yield", () => {
+  let s = testState(1000, 4, 50, 1000);
+  s.herbs = 0;
+  s = start(s, TOWER_QUEST, true);
+  s = until(s, (state) => state.squads[0].run.round === 2);
+  assert.ok(Math.abs(s.herbs - 10) < 1e-8);
+});
+
+test("herb gathering bonuses also apply to roadside pickups and preserve the fractional balance", () => {
+  let s = testState(1000, 35, 50, 1000);
+  s.herbs = 0;
+  s = action(s, { type: "learnTechnique", id: "aria-herbs" });
+  s = action(s, { type: "setTechnique", hero: "aria", techniqueSlot: "passive", id: "aria-herbs" });
+  s = start(s, "berne-road", true);
+  s = until(s, (state) => state.herbs > 0);
+  assert.equal(s.herbs, 1.25);
+  assert.equal(consumableStock(s, "herbs"), 1);
+  same(roundtrip(s), s);
 });

@@ -216,7 +216,9 @@ export function reward(s: State, sq: Squad, q: Quest, at: number, finished: bool
         ? Math.floor(totalGold / 5)
         : Math.floor((totalGold * (part + 1)) / portions) -
           Math.floor((totalGold * part) / portions);
-  const herbs = (q.herbs / portions) * techniqueHerbs(s, sq.members),
+  // A single roadside herb arrives whole at the first reward; gathering keeps its existing yield.
+  const herbs =
+      (q.herbs === 1 ? Number(part === 0) : q.herbs / portions) * techniqueHerbs(s, sq.members),
     ore = q.ore / portions,
     xp = q.xp / portions;
   s.gold += gold;

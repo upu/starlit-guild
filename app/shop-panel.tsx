@@ -9,14 +9,14 @@ import {
   type Equipment,
   type EquipmentSlot,
 } from "@/lib/equipment";
-import { shopConsumables, consumableStock, type Consumable } from "@/lib/consumables";
+import { shopConsumables, consumableStock, type ShopConsumable } from "@/lib/consumables";
 import { ConsumableShopDetail } from "./consumable-shop-detail";
 import { Bonuses } from "./equipment-panels";
 import { ShopItemIcon } from "./shop-item-icon";
 
 type Props = { state: State; ready: boolean; onAction: (action: Action) => boolean };
 type Filter = EquipmentSlot | "consumable";
-type Product = Equipment | Consumable;
+type Product = Equipment | ShopConsumable;
 const stockOf = (s: State, item: Product) =>
   "effect" in item ? consumableStock(s, item.id) : (inventoryOf(s).items[item.id] ?? 0);
 const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");

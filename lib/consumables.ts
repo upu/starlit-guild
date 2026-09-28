@@ -5,15 +5,24 @@ export type Consumable = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   tier: number;
   effect: { timing: "pinch"; healing: number } | { timing: "departure"; experience: number };
 };
+export type ShopConsumable = Consumable & { price: number };
 export type Consumables = {
   items: Record<string, number>;
   assigned: Partial<Record<string, string>>;
 };
 export const consumables: Consumable[] = [
+  {
+    id: "herbs",
+    name: "薬草",
+    description:
+      "冒険で手に入る薬草。ダメージを受けてHPが40%以下なら、自動で1個使い、HPを15回復。倒れた人には使いません。",
+    tier: 1,
+    effect: { timing: "pinch", healing: 15 },
+  },
   {
     id: "salve",
     name: "傷薬",
@@ -42,10 +51,15 @@ export const consumables: Consumable[] = [
   },
 ];
 export const consumableById = (id: string) => consumables.find((item) => item.id === id);
-export const consumableStock = (s: State, id: string) => s.consumables?.items[id] ?? 0;
+// Keep the existing herb balance (including fractional gathering rewards) as the sole source.
+export const consumableStock = (s: State, id: string) =>
+  id === "herbs" ? Math.floor(s.herbs) : (s.consumables?.items[id] ?? 0);
 export const assignedConsumable = (s: State, hero: string) =>
   consumableById(s.consumables?.assigned[hero] ?? "");
-export const shopConsumables = (s: State) => consumables.filter((item) => item.tier <= shopTier(s));
+export const availableConsumables = (s: State) =>
+  consumables.filter((item) => item.tier <= shopTier(s));
+export const shopConsumables = (s: State) =>
+  availableConsumables(s).filter((item): item is ShopConsumable => item.price !== undefined);
 export function buyConsumable(s: State, id: string, quantity: number) {
   const item = shopConsumables(s).find((item) => item.id === id);
   if (!item) throw Error("この品はまだお店に並んでいません。");
@@ -60,7 +74,7 @@ export function buyConsumable(s: State, id: string, quantity: number) {
 export function assignConsumable(s: State, hero: string, id?: string) {
   if (!s.owned.includes(hero)) throw Error("アイテムを使うキャラクターを確認してください。");
   if (!shopTier(s)) throw Error("お店が開くとアイテムを登録できます。");
-  if (id && !shopConsumables(s).some((item) => item.id === id))
+  if (id && !availableConsumables(s).some((item) => item.id === id))
     throw Error("登録するアイテムを確認してください。");
   const bag = (s.consumables ??= { items: {}, assigned: {} });
   if (id) bag.assigned[hero] = id;
@@ -70,6 +84,11 @@ export function assignConsumable(s: State, hero: string, id?: string) {
     );
 }
 export function consume(s: State, id: string) {
+  if (id === "herbs") {
+    if (s.herbs < 1) return false;
+    s.herbs--;
+    return true;
+  }
   if (!s.consumables || consumableStock(s, id) < 1) return false;
   s.consumables.items[id]--;
   return true;

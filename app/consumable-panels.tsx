@@ -6,7 +6,7 @@ import {
   assignedConsumable,
   consumables,
   consumableStock,
-  shopConsumables,
+  availableConsumables,
   type Consumable,
 } from "@/lib/consumables";
 import { CharacterIconChoices } from "./character-icon-choices";
@@ -81,7 +81,7 @@ export function ConsumableDetails(props: Props) {
   const current = assignedConsumable(props.state, props.hero);
   const [selected, setSelected] = useState(current?.id ?? "empty");
   const [notice, setNotice] = useState("");
-  const choices = shopConsumables(props.state);
+  const choices = availableConsumables(props.state);
   const item = choices.find((item) => item.id === selected);
   function select(id: string) {
     if (id !== selected) {
@@ -131,7 +131,7 @@ export function ConsumableBag({ state }: { state: State }) {
     <section className="bag-section">
       <h3>アイテム</h3>
       {items.length === 0 ? (
-        <p>お店で購入すると、キャラクターのアイテムに登録できます。</p>
+        <p>アイテムはまだありません。</p>
       ) : (
         <div className="bag-items">
           {items.map((item) => (

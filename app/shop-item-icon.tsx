@@ -4,6 +4,14 @@ import type { Consumable } from "@/lib/consumables";
 import type { Equipment } from "@/lib/equipment";
 
 const artwork: Partial<Record<string, ReactNode>> = {
+  herbs: (
+    <>
+      <path d="M19 33V13M19 26L10 17M19 21L29 11" fill="none" stroke="#e2d69f" strokeWidth="2" />
+      <path d="M18 25C7 26 5 17 6 11C15 11 20 17 18 25Z" fill="#79ad70" stroke="#d0dda0" />
+      <path d="M21 21C19 11 27 5 35 5C35 14 30 22 21 21Z" fill="#a1c57e" stroke="#e1e4b3" />
+      <path d="M12 31L25 28M13 34L26 31" stroke="#c5a56e" strokeWidth="2" />
+    </>
+  ),
   salve: (
     <>
       <path d="M14 8H26V14L31 20V34H9V20L14 14Z" fill="#87b699" stroke="#e4d5aa" strokeWidth="2" />

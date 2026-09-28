@@ -93,7 +93,7 @@ const bundle = await build({
   const dispatch=a=>{setState(s=>act(s,a,s.updatedAt));return true;};
   window.fixtureState=state;
   if(params.has("shop")) return <main className="phone-game"><div className="phone-dialog shop-dialog fixture"><ShopPanel state={state} ready onAction={dispatch}/></div></main>;
-  if(params.has("bag")) return <main className="phone-game"><InventoryPanel state={state}/></main>;
+  if(params.has("bag")) return <main className="phone-game"><div className="phone-dialog fixture"><InventoryPanel state={state}/></div></main>;
   if(params.has("notice")) return <main className="phone-game"><div className="phone-adventure phone-adventure-running" style={{height:"100dvh"}}><Banter lines={[{text:"道を歩いている。"}]} notice={consumableNotice(state,1000)}/></div></main>;
   return <main className="phone-game"><div className="phone-tabs"><header className="phone-header">STARLIT GUILD</header><div className="phone-screen"><div data-slot="tabs-content" className="phone-characters"><CharacterPanel state={state} ready onAction={dispatch}/></div></div><nav className="phone-navigation">キャラクター</nav></div></main>;
  }
@@ -473,6 +473,7 @@ try {
 async function checkConsumables(page, url, width) {
   await page.goto(url + "/?shop");
   await page.getByRole("button", { name: "アイテム", exact: true }).click();
+  assert.equal(await page.getByRole("button", { name: /薬草・/ }).count(), 0);
   await page.getByRole("button", { name: "傷薬を10個 100 Gで購入", exact: true }).click();
   await page.waitForFunction(() => window.fixtureState.consumables.items.salve === 12);
   assert.equal(await page.evaluate(() => window.fixtureState.gold), 900);
@@ -505,9 +506,31 @@ async function checkConsumables(page, url, width) {
   await page.getByRole("button", { name: "旅のビスケット", exact: true }).click();
   assert.equal(await page.locator("body").evaluate((el) => el.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: path.join(dir, `consumable-slot-${width}.png`) });
+  const herb = page.getByRole("button", { name: "薬草", exact: true });
+  await herb.click();
+  await herb.click();
+  await page.waitForFunction(() => window.fixtureState.consumables.assigned.leon === "herbs");
+  assert.match(await page.locator(".character-choice-detail").innerText(), /HPを15回復/);
+  await page.screenshot({ path: path.join(dir, `herb-slot-${width}.png`) });
   await page.goto(url + "/?bag");
   assert.match(await page.locator(".bag-content").innerText(), /アイテム/);
   assert.match(await page.locator(".bag-content").innerText(), /薬草/);
+  assert.doesNotMatch(await page.locator(".inventory-grid").innerText(), /薬草/);
+  assert.equal(await page.locator(".bag-items h4").filter({ hasText: "薬草" }).count(), 1);
+  assert.equal(
+    await page
+      .locator(".bag-items h4, .bag-items p")
+      .evaluateAll((els) =>
+        els.every(
+          (el) =>
+            el.scrollWidth <= el.clientWidth + 1 && el.getBoundingClientRect().right <= innerWidth,
+        ),
+      ),
+    true,
+    "item names and descriptions stay inside the bag",
+  );
+  assert.equal(await page.locator("body").evaluate((el) => el.scrollWidth <= innerWidth), true);
+  await page.screenshot({ path: path.join(dir, `herb-bag-${width}.png`) });
   await page.goto(url + "/?notice");
   const notice = page.getByRole("status");
   await notice.evaluate(async (el) => {
