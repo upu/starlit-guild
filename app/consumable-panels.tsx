@@ -31,12 +31,12 @@ export function ConsumableSlot({
   return (
     <button
       className="character-slot"
-      aria-label={`持ちもの・${item?.name ?? "登録なし"}${item ? `・${count}` : ""}・付け替える`}
+      aria-label={`アイテム・${item?.name ?? "登録なし"}${item ? `・${count}` : ""}・付け替える`}
       aria-expanded={expanded}
       aria-controls="character-options"
       onClick={onClick}
     >
-      <small>持ちもの</small>
+      <small>アイテム</small>
       {item ? (
         <ShopItemIcon item={item} />
       ) : (
@@ -96,14 +96,14 @@ export function ConsumableDetails(props: Props) {
         id: id === "empty" ? undefined : id,
       })
     )
-      setNotice(id === "empty" ? "持ちものを外しました。" : "持ちものを登録しました。");
+      setNotice(id === "empty" ? "アイテムを外しました。" : "アイテムを登録しました。");
   }
   return (
     <section className="character-equipment">
-      <h3>持ちものの付け替え</h3>
+      <h3>アイテムの付け替え</h3>
       <CharacterIconChoices
-        label="持ちものの候補"
-        emptyLabel="持ちものを外す"
+        label="アイテムの候補"
+        emptyLabel="アイテムを外す"
         selected={selected}
         onSelect={select}
         choices={choices.map((item) => ({
@@ -129,9 +129,9 @@ export function ConsumableBag({ state }: { state: State }) {
   );
   return (
     <section className="bag-section">
-      <h3>消耗品</h3>
+      <h3>アイテム</h3>
       {items.length === 0 ? (
-        <p>お店で購入すると、キャラクターの持ちものに登録できます。</p>
+        <p>お店で購入すると、キャラクターのアイテムに登録できます。</p>
       ) : (
         <div className="bag-items">
           {items.map((item) => (

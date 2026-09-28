@@ -23,7 +23,7 @@ const amount = (value: number) => Math.floor(value).toLocaleString("ja-JP");
 const filters = [
   { id: "weapon", label: "武器" },
   { id: "armor", label: "防具" },
-  { id: "consumable", label: "消耗品" },
+  { id: "consumable", label: "アイテム" },
 ] as const;
 
 function ShopDetail({

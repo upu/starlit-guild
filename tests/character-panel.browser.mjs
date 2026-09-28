@@ -76,12 +76,16 @@ const bundle = await build({
  import {initialInventory} from './lib/equipment';
  import {MOON_HERB_QUEST} from './lib/chapter-two';
  const params=new URLSearchParams(location.search);
- let initial=testState(1000,params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
+ let initial=testState(1000,params.has("notice") ? 35 : params.has("locked") ? 2 : params.has("quartet") ? 19 : 14,params.has("limited") ? 1 : 20,params.has("limited") ? 100 : 1000);
  initial.inventory=initialInventory();
  Object.assign(initial.inventory.items,{'ash-bow':1,'steel-sword':1,'leather-vest':1,'gathering-coat':1});
  initial.xp.leon+=500;
  if(!params.has("locked")) initial.consumables={items:{salve:2,"travel-biscuit":1},assigned:{}};
- if(params.has("notice")) {initial=act(initial,{type:"assignConsumable",hero:"aria",id:"travel-biscuit"},1000);initial=act(initial,{type:"start",id:"town-deliveries",readDeparture:true},1000);}
+ if(params.has("notice")) {
+  initial.consumables.items["travel-biscuit"]=5;
+  for(const hero of initial.owned) initial=act(initial,{type:"assignConsumable",hero,id:"travel-biscuit"},1000);
+  initial=act(initial,{type:"start",id:"merrill-seedlings",readDeparture:true},1000);
+ }
  if(params.has("max")) initial.xp.aria=72030;
  if(params.has("away")) initial=act(initial,{type:"start",id:MOON_HERB_QUEST,readDeparture:true,value:true},initial.updatedAt);
  function App(){
@@ -90,7 +94,7 @@ const bundle = await build({
   window.fixtureState=state;
   if(params.has("shop")) return <main className="phone-game"><div className="phone-dialog shop-dialog fixture"><ShopPanel state={state} ready onAction={dispatch}/></div></main>;
   if(params.has("bag")) return <main className="phone-game"><InventoryPanel state={state}/></main>;
-  if(params.has("notice")) return <main className="phone-game"><Banter lines={[{text:"道を歩いている。"}]} notice={consumableNotice(state,1000)}/></main>;
+  if(params.has("notice")) return <main className="phone-game"><div className="phone-adventure phone-adventure-running" style={{height:"100dvh"}}><Banter lines={[{text:"道を歩いている。"}]} notice={consumableNotice(state,1000)}/></div></main>;
   return <main className="phone-game"><div className="phone-tabs"><header className="phone-header">STARLIT GUILD</header><div className="phone-screen"><div data-slot="tabs-content" className="phone-characters"><CharacterPanel state={state} ready onAction={dispatch}/></div></div><nav className="phone-navigation">キャラクター</nav></div></main>;
  }
  createRoot(document.getElementById('root')).render(<App/>);
@@ -468,20 +472,20 @@ try {
 
 async function checkConsumables(page, url, width) {
   await page.goto(url + "/?shop");
-  await page.getByRole("button", { name: "消耗品", exact: true }).click();
+  await page.getByRole("button", { name: "アイテム", exact: true }).click();
   await page.getByRole("button", { name: "傷薬を10個 100 Gで購入", exact: true }).click();
   await page.waitForFunction(() => window.fixtureState.consumables.items.salve === 12);
   assert.equal(await page.evaluate(() => window.fixtureState.gold), 900);
   await page.getByRole("button", { name: "傷薬を1個 10 Gで購入", exact: true }).click();
   await page.waitForFunction(() => window.fixtureState.consumables.items.salve === 13);
   await page.getByRole("button", { name: /旅のビスケット・/ }).click();
-  await page.getByRole("button", { name: "旅のビスケットを10個 200 Gで購入", exact: true }).click();
+  await page.getByRole("button", { name: "旅のビスケットを10個 100 Gで購入", exact: true }).click();
   await page.waitForFunction(() => window.fixtureState.consumables.items["travel-biscuit"] === 11);
   assert.match(await page.getByRole("status").innerText(), /旅のビスケット/);
   assert.equal(await page.locator("body").evaluate((el) => el.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: path.join(dir, `consumable-shop-${width}.png`) });
   await page.goto(url);
-  const slot = page.getByRole("button", { name: /持ちもの.*付け替える/ });
+  const slot = page.getByRole("button", { name: /アイテム.*付け替える/ });
   await slot.click();
   const candidate = page.getByRole("button", { name: "傷薬", exact: true });
   await candidate.click();
@@ -493,7 +497,7 @@ async function checkConsumables(page, url, width) {
   await candidate.click();
   await page.waitForFunction(() => window.fixtureState.consumables.assigned.leon === "salve");
   assert.equal(await page.evaluate(() => window.fixtureState.consumables.items.salve), 2);
-  const empty = page.getByRole("button", { name: "持ちものを外す", exact: true });
+  const empty = page.getByRole("button", { name: "アイテムを外す", exact: true });
   await empty.click();
   await empty.click();
   await page.waitForFunction(() => !window.fixtureState.consumables.assigned.leon);
@@ -502,9 +506,35 @@ async function checkConsumables(page, url, width) {
   assert.equal(await page.locator("body").evaluate((el) => el.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: path.join(dir, `consumable-slot-${width}.png`) });
   await page.goto(url + "/?bag");
-  assert.match(await page.locator(".bag-content").innerText(), /消耗品/);
+  assert.match(await page.locator(".bag-content").innerText(), /アイテム/);
   assert.match(await page.locator(".bag-content").innerText(), /薬草/);
   await page.goto(url + "/?notice");
-  assert.match(await page.getByRole("status").innerText(), /アリアが旅のビスケットを使った/);
+  const notice = page.getByRole("status");
+  await notice.evaluate(async (el) => {
+    await Promise.all(el.getAnimations().map((animation) => animation.finished));
+  });
+  assert.match(
+    await notice.innerText(),
+    /アリア・レオン・ミラ・フィン・リコが旅のビスケットを使った（5個）/,
+  );
+  assert.equal(
+    await page.evaluate(() => window.fixtureState.consumables.items["travel-biscuit"]),
+    0,
+  );
+  assert.equal(await page.locator("body").evaluate((el) => el.scrollWidth <= innerWidth), true);
+  assert.equal(
+    await notice.evaluate((el) => {
+      const box = el.getBoundingClientRect();
+      const chat = el.closest(".journey-banter").getBoundingClientRect();
+      return (
+        box.left >= chat.left &&
+        box.right <= chat.right &&
+        box.top >= chat.top &&
+        box.bottom <= chat.bottom
+      );
+    }),
+    true,
+    "all five users fit inside the chat after wrapping",
+  );
   await page.screenshot({ path: path.join(dir, `consumable-notice-${width}.png`) });
 }

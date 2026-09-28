@@ -281,12 +281,12 @@ export function Banter({
         {exchange.history.map((entry, i) =>
           banterLine(entry, exchange.turn - exchange.history.length + 1 + i),
         )}
+        {notice && (
+          <span className="banter-line consumable-notice" role="status">
+            {notice}
+          </span>
+        )}
       </span>
-      {notice && (
-        <span className="banter-line consumable-notice" role="status">
-          {notice}
-        </span>
-      )}
     </div>
   );
 }

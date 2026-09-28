@@ -17,26 +17,24 @@ export const consumables: Consumable[] = [
   {
     id: "salve",
     name: "傷薬",
-    description:
-      "被弾後、HPが40%以下なら自動で1個使い、最大HPの30%を回復。倒れた人には使いません。",
+    description: "被弾後、HPが40%以下なら自動で1個使い、HPを30回復。倒れた人には使いません。",
     price: 10,
     tier: 1,
-    effect: { timing: "pinch", healing: 0.3 },
+    effect: { timing: "pinch", healing: 30 },
   },
   {
     id: "fine-salve",
     name: "上等な傷薬",
-    description:
-      "被弾後、HPが40%以下なら自動で1個使い、最大HPの60%を回復。倒れた人には使いません。",
+    description: "被弾後、HPが40%以下なら自動で1個使い、HPを80回復。倒れた人には使いません。",
     price: 30,
     tier: 2,
-    effect: { timing: "pinch", healing: 0.6 },
+    effect: { timing: "pinch", healing: 80 },
   },
   {
     id: "travel-biscuit",
     name: "旅のビスケット",
     description: "出発時に1個使い、その人の経験値がその周回だけ10%増加。自動周回でも毎周使います。",
-    price: 20,
+    price: 10,
     tier: 1,
     effect: { timing: "departure", experience: 0.1 },
   },
@@ -58,10 +56,10 @@ export function buyConsumable(s: State, id: string, quantity: number) {
   return item;
 }
 export function assignConsumable(s: State, hero: string, id?: string) {
-  if (!s.owned.includes(hero)) throw Error("持ちものを使うキャラクターを確認してください。");
-  if (!shopTier(s)) throw Error("お店が開くと持ちものを登録できます。");
+  if (!s.owned.includes(hero)) throw Error("アイテムを使うキャラクターを確認してください。");
+  if (!shopTier(s)) throw Error("お店が開くとアイテムを登録できます。");
   if (id && !shopConsumables(s).some((item) => item.id === id))
-    throw Error("登録する持ちものを確認してください。");
+    throw Error("登録するアイテムを確認してください。");
   const bag = (s.consumables ??= { items: {}, assigned: {} });
   if (id) bag.assigned[hero] = id;
   else

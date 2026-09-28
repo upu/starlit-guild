@@ -25,21 +25,32 @@ export function applyPinchConsumable(
     health = r.health[hero];
   if (!item || item.effect.timing !== "pinch" || damage <= 0) return;
   if (health.hp <= 0 || health.hp > health.maxHp * 0.4 || !consume(s, item.id)) return;
-  const restored = healMember(r, hero, Math.ceil(health.maxHp * item.effect.healing));
-  const text = `${heroById(hero).name}が${item.name}を使った。HP +${String(Math.round(restored * 100) / 100)}`;
+  const restored = healMember(r, hero, item.effect.healing);
+  const text = `${heroById(hero).name}が${item.name}を使った。`;
   recordUse(s, item.id, text, at);
   emit(r, at, "heal", text, restored, hero, hero);
 }
 
 export function applyDepartureConsumables(s: State, sq: Squad, r: Run, at: number, emit: Emit) {
+  const users = new Map<string, { name: string; heroes: string[] }>();
   // Party order resolves competing requests for the last shared item.
   for (const hero of sq.members) {
     const item = assignedConsumable(s, hero);
     if (!item || item.effect.timing !== "departure" || !consume(s, item.id)) continue;
     (r.consumableEffects ??= {})[hero] = item.id;
-    const text = `${heroById(hero).name}が${item.name}を使った。この周回の経験値 +10%`;
-    recordUse(s, item.id, text, at);
+    const text = `${heroById(hero).name}が${item.name}を使った。`;
+    const group = users.get(item.id) ?? { name: item.name, heroes: [] };
+    group.heroes.push(heroById(hero).name);
+    users.set(item.id, group);
     emit(r, at, "move", text, undefined, hero);
+  }
+  for (const [id, group] of users) {
+    recordUse(
+      s,
+      id,
+      `${group.heroes.join("・")}が${group.name}を使った（${String(group.heroes.length)}個）。`,
+      at,
+    );
   }
 }
 
@@ -54,8 +65,7 @@ function recordUse(s: State, consumable: string, text: string, at: number) {
 export function consumableNotice(s: State, now: number) {
   return s.log
     .filter((entry) => entry.consumable && now >= entry.at && now - entry.at < 5000)
-    .slice(0, 2)
     .reverse()
     .map((entry) => entry.text)
-    .join(" ／ ");
+    .join("\n");
 }

@@ -31,7 +31,7 @@ export function ConsumableShopDetail({
           </div>
         </div>
         <p>{item.description}</p>
-        <p>購入後はキャラクター画面の「持ちもの」に登録。</p>
+        <p>購入後はキャラクター画面の「アイテム」に登録。</p>
       </div>
       <div className="shop-purchase consumable-purchase">
         {[1, 10].map((quantity) => (

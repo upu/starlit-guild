@@ -106,7 +106,7 @@ test("pinch recovery uses one item at 40%, never for zero damage or a fallen her
   assert.equal(consumableStock(s, "salve"), 8);
 });
 
-test("stronger medicine rounds up healing without exceeding maximum HP", () => {
+test("stronger medicine never exceeds maximum HP", () => {
   const s = start(assign(buy(testState(1000, 20, 20, 1000), "fine-salve"), "aria", "fine-salve"));
   const r = s.squads[0].run;
   r.health.aria = { hp: 40.4, maxHp: 101 };
@@ -129,7 +129,52 @@ test("empty stock retains assignment; replenishment and switching work during a 
   assert.equal(s.consumables.assigned.aria, "salve");
   s = assign(buy(s, "fine-salve"), "aria", "fine-salve");
   hurt(s);
-  assert.equal(s.squads[0].run.health.aria.hp, 70);
+  assert.equal(s.squads[0].run.health.aria.hp, 90);
+});
+
+test("medicine restores fixed HP at different maximum HP and costs the advertised amount", () => {
+  for (const [id, healing, price] of [
+    ["salve", 30, 10],
+    ["fine-salve", 80, 30],
+  ]) {
+    for (const maxHp of [100, 200, 400]) {
+      const s = start(assign(buy(testState(1000, 20, 20, 1000), id), "aria", id));
+      const r = s.squads[0].run;
+      r.health.aria = { hp: 10, maxHp };
+      applyPinchConsumable(s, r, "aria", 1, s.updatedAt, event);
+      assert.equal(r.health.aria.hp, 10 + healing);
+      assert.equal(s.gold, 1000 - price);
+    }
+  }
+  assert.equal(buy(testState(1000, 3, 10, 1000), "travel-biscuit", 10).gold, 900);
+});
+
+test("five departure users are all notified with the actual shared stock consumption", () => {
+  for (const stock of [5, 2]) {
+    let s = testState(1000, 35, 30, 1000);
+    s.consumables = { items: { "travel-biscuit": stock }, assigned: {} };
+    for (const hero of s.owned) s = assign(s, hero, "travel-biscuit");
+    s = start(s, "merrill-seedlings");
+    const names = ["アリア", "レオン", "ミラ", "フィン", "リコ"];
+    const notice = consumableNotice(roundtrip(s), 1000);
+    for (const [i, name] of names.entries()) assert.equal(notice.includes(name), i < stock);
+    assert.match(notice, new RegExp(`（${stock}個）`));
+    assert.doesNotMatch(notice, /経験値|10%/);
+    assert.equal(consumableStock(s, "travel-biscuit"), 0);
+    assert.equal(Object.keys(s.squads[0].run.consumableEffects).length, stock);
+    assert.equal(s.log.filter((entry) => entry.consumable).length, 1);
+  }
+});
+
+test("notices retain every recent use, including older saves with individual departure logs", () => {
+  const s = initialState(1000);
+  s.log = ["リコ", "フィン", "ミラ", "レオン", "アリア"].map((name) => ({
+    text: `${name}が旅のビスケットを使った。`,
+    at: 1000,
+    consumable: "travel-biscuit",
+  }));
+  assert.equal(consumableNotice(s, 1000).split("\n").length, 5);
+  assert.equal(consumableNotice(s, 6000), "");
 });
 
 test("departure consumes in party order and boosts only the user, surviving reassignment", () => {
