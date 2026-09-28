@@ -1,3 +1,4 @@
+import { consumableNotice } from "@/lib/consumable-effects";
 import Image from "next/image";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -170,16 +171,18 @@ export function AdventureDestination({ model: m }: { model: PhoneFrameModel }) {
   );
 }
 function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
+  const notice = consumableNotice(m.state, m.clock);
   if (!m.banter.length)
     return (
       <div className="phone-banter">
-        <p>{m.quote}</p>
+        <p role={notice ? "status" : undefined}>{notice || m.quote}</p>
       </div>
     );
   return (
     <Banter
       key={(m.game.profile?.id || "") + ":" + m.squad.id + ":" + (m.run?.quest || "idle")}
       lines={m.banter}
+      notice={notice}
       retain={!!m.run && !!(chapterFourBattleBanter(m.run) || pumpetyBattleBanter(m.run))}
       paused={!!m.sheet || !!m.ending || !m.ready}
     />

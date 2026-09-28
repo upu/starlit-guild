@@ -88,7 +88,7 @@ test("characters and shared bag expose starting equipment and trade cargo withou
   const bag = renderToStaticMarkup(createElement(InventoryPanel, { state: s }));
   for (const name of [
     "お金",
-    "薬草",
+    "アイテム",
     "鉱石",
     "アリアの村の交易品",
     "レオンの村の交易品",

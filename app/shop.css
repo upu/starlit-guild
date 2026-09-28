@@ -204,3 +204,16 @@
     padding: 4px 10px;
   }
 }
+
+.consumable-purchase {
+  flex-wrap: wrap;
+}
+.consumable-purchase button {
+  flex: 1;
+  min-width: 100px;
+  min-height: 44px;
+  padding: 8px;
+}
+.consumable-purchase > small {
+  flex-basis: 100%;
+}

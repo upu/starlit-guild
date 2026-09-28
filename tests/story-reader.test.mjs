@@ -153,7 +153,7 @@ test("story and banter portraits keep the expression of each individual line", (
   );
   const banter = harness("Banter", { lines });
   banter.tick();
-  const history = banter.find("banter-copy").props.children;
+  const history = banter.find("banter-copy").props.children.flat().filter(Boolean);
   assert.deepEqual(
     Array.from(history, (row) => row.props.children[0].props.expression),
     ["surprised", "smile"],
@@ -163,7 +163,8 @@ test("story and banter portraits keep the expression of each individual line", (
   banter.render({ lines: next });
   banter.tick();
   assert.equal(
-    banter.find("banter-copy").props.children.at(-1).props.children[0].props.expression,
+    banter.find("banter-copy").props.children.flat().filter(Boolean).at(-1).props.children[0].props
+      .expression,
     "worried",
   );
 });
@@ -425,7 +426,7 @@ test("each banter line keeps its own speaker portrait, including history and nar
   const h = harness("Banter", { lines });
   h.tick();
   h.tick();
-  const rows = h.find("banter-copy").props.children;
+  const rows = h.find("banter-copy").props.children.flat().filter(Boolean);
   assert.equal(rows.length, 3);
   assert.equal(rows[0].props.children[0].props.index, 0);
   assert.equal(rows[1].props.children[0].props.index, 1);
@@ -489,7 +490,7 @@ test("banter compares speakers as well as text and bounds genuine new history", 
     h.tick();
     assert.equal(h.timerCount(), 0);
   }
-  const entries = h.find("banter-copy").props.children;
+  const entries = h.find("banter-copy").props.children.flat().filter(Boolean);
   assert.equal(entries.length, 100);
   assert.ok(h.text().includes("発言-104"));
   assert.ok(!h.text().includes("発言-0"));

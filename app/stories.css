@@ -428,8 +428,14 @@
 }
 .journey-banter-history .banter-copy {
   width: 100%;
+  min-width: 0;
   gap: 2px;
   animation: none;
+}
+.phone-game .journey-banter-history .consumable-notice {
+  display: block;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 .phone-game .journey-banter-history .banter-line {
   align-items: center;

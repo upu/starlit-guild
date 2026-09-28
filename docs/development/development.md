@@ -121,7 +121,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | --- | --- | --- | --- |
 | `tests/quest-picker.browser.mjs` 行先選択・設定・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身が部品を組み立てて一時サーバーを起動 | `node tests/quest-picker.browser.mjs` | `work/quest-picker-browser/` の画像・`results.json` |
 | `tests/story-video.browser.mjs` 再生・停止・再視聴・代替表示 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/story-video.browser.mjs` | `work/story-video-browser/` の画像、終了表示 |
-| `tests/character-panel.browser.mjs` 人物画面・装備候補・スキル・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/character-panel.browser.mjs` | `work/character-browser/` の画像、終了表示 |
+| `tests/character-panel.browser.mjs` 人物画面・装備候補・スキル・消耗品の購入/登録/通知・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/character-panel.browser.mjs` | `work/character-browser/` の画像、終了表示 |
 | `tests/dialog-layout.browser.py` 会話・ダイアログの画面幅、回転、安全領域 | Python版Playwright + ChromiumまたはWebKit。`npm run build`。生成CSSを使う独立fixture。外部サーバー不要 | `python tests/dialog-layout.browser.py --engine chromium`（WebKitは `--engine webkit`） | 成功時のケース数、失敗時の測定値を標準出力 |
 | `tests/chapter-road.browser.mjs` 道中演出・Canvas・再読み込み・画像失敗 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-road.browser.mjs` | `work/chapter-road-browser/` の画像・`results.json` |
 | `tests/chapter-three.browser.mjs` 第三章の幕間→出発・各ステージ・ショップ | Node版Playwright + Chromium。別ターミナルで `npm run dev`。起動済みゲームに接続、ビルド不要 | `node tests/chapter-three.browser.mjs` | `work/chapter-three-browser/` の画像・`result.json` |

@@ -1,8 +1,61 @@
 import { Shield, Swords } from "lucide-react";
 import type { ReactNode } from "react";
+import type { Consumable } from "@/lib/consumables";
 import type { Equipment } from "@/lib/equipment";
 
 const artwork: Partial<Record<string, ReactNode>> = {
+  herbs: (
+    <>
+      <path d="M19 33V13M19 26L10 17M19 21L29 11" fill="none" stroke="#e2d69f" strokeWidth="2" />
+      <path d="M18 25C7 26 5 17 6 11C15 11 20 17 18 25Z" fill="#79ad70" stroke="#d0dda0" />
+      <path d="M21 21C19 11 27 5 35 5C35 14 30 22 21 21Z" fill="#a1c57e" stroke="#e1e4b3" />
+      <path d="M12 31L25 28M13 34L26 31" stroke="#c5a56e" strokeWidth="2" />
+    </>
+  ),
+  salve: (
+    <>
+      <path d="M14 8H26V14L31 20V34H9V20L14 14Z" fill="#87b699" stroke="#e4d5aa" strokeWidth="2" />
+      <path d="M13 5H27V10H13Z" fill="#c8a26a" />
+      <path d="M20 19V29M15 24H25" stroke="#fff0c5" strokeWidth="3" />
+    </>
+  ),
+  "fine-salve": (
+    <>
+      <path d="M14 8H26V14L31 20V34H9V20L14 14Z" fill="#6488b5" stroke="#f2d185" strokeWidth="2" />
+      <path d="M13 5H27V10H13Z" fill="#dfbb66" />
+      <path d="M20 18L22 22 27 24 22 26 20 31 18 26 13 24 18 22Z" fill="#fff0c5" />
+    </>
+  ),
+  "travel-biscuit": (
+    <>
+      <rect
+        x="7"
+        y="9"
+        width="24"
+        height="25"
+        rx="5"
+        fill="#b8773e"
+        stroke="#efcb8c"
+        strokeWidth="2"
+      />
+      <rect
+        x="12"
+        y="5"
+        width="23"
+        height="24"
+        rx="5"
+        fill="#dbaa65"
+        stroke="#ffe1a0"
+        strokeWidth="2"
+      />
+      <path
+        d="M18 12H20M26 12H28M18 21H20M26 21H28"
+        stroke="#966035"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </>
+  ),
   "familiar-staff": (
     <>
       <path d="M13 35L25 11" stroke="#ab83bf" strokeWidth="4" strokeLinecap="round" />
@@ -86,7 +139,7 @@ const artwork: Partial<Record<string, ReactNode>> = {
 };
 
 // Small silhouettes stay distinct at 40px; unknown items retain a slot fallback.
-export function ShopItemIcon({ item }: { item: Equipment }) {
+export function ShopItemIcon({ item }: { item: Equipment | Consumable }) {
   const family: Partial<Record<string, string>> = {
     "berne-bow": "ash-bow",
     "berne-sword": "steel-sword",
@@ -98,7 +151,11 @@ export function ShopItemIcon({ item }: { item: Equipment }) {
   };
   const art = artwork[family[item.id] ?? item.id];
   if (!art)
-    return item.slot === "weapon" ? <Swords aria-hidden="true" /> : <Shield aria-hidden="true" />;
+    return "slot" in item && item.slot === "weapon" ? (
+      <Swords aria-hidden="true" />
+    ) : (
+      <Shield aria-hidden="true" />
+    );
   return (
     <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
       {art}

@@ -217,7 +217,7 @@ test("old first-chapter save opens 2-1 without replacement; endings gate 2-2 and
   assert.ok(replay.squads[0].run);
 });
 
-test("picnic uses ordinary weak single slimes and combat poses without gathering rewards", () => {
+test("picnic uses ordinary weak single slimes and combat poses with one roadside herb", () => {
   const q = allQuests.find((q) => q.id === PICNIC_QUEST);
   assert.ok(Array.from({ length: 15 }, (_, i) => encounter(q, i)).every((k) => k === "battle"));
   let s = start(firstChapter(), PICNIC_QUEST);
@@ -246,7 +246,7 @@ test("picnic uses ordinary weak single slimes and combat poses without gathering
       attacked ||= [4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt)?.frame));
   }
   assert.equal(attacked, true);
-  assert.equal(s.herbs, before);
+  assert.equal(s.herbs, before + 1);
   assert.equal(storyArtAt(PICNIC_QUEST + "-return", Infinity), undefined);
 });
 

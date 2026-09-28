@@ -236,10 +236,12 @@ export function Banter({
   lines,
   paused = false,
   retain = false,
+  notice = "",
 }: {
   lines: StoryLine[];
   paused?: boolean;
   retain?: boolean;
+  notice?: string;
 }) {
   const [exchange, setExchange] = useState(() => startBanter(lines));
   const retained = retain ? retainBanter(exchange, lines) : exchange;
@@ -249,7 +251,7 @@ export function Banter({
   useEffect(() => {
     if (dialogue.current && followLatest.current)
       dialogue.current.scrollTop = dialogue.current.scrollHeight;
-  }, [exchange]);
+  }, [exchange, notice]);
   const latest = useRef(lines);
   useEffect(() => {
     latest.current = lines;
@@ -278,6 +280,11 @@ export function Banter({
       <span className="banter-copy">
         {exchange.history.map((entry, i) =>
           banterLine(entry, exchange.turn - exchange.history.length + 1 + i),
+        )}
+        {notice && (
+          <span className="banter-line consumable-notice" role="status">
+            {notice}
+          </span>
         )}
       </span>
     </div>
