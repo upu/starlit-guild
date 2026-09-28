@@ -103,6 +103,7 @@ function harness(initialState) {
     "./equipment-panels": ui("CharacterPanel", "InventoryPanel"),
     "./shop-entry": ui("ShopEntry"),
     "./shop-panel": ui("ShopPanel"),
+    "@/lib/consumable-effects": { consumableNotice: () => "" },
     "./quest-completion": ui("QuestCompletion"),
     "./map-stage": ui("MapStage"),
     "./story-scenes": ui("Banter", "StoryLibrary", "StoryAlbum", "StageStoryReader"),

@@ -1,3 +1,4 @@
+import { applyDepartureConsumables, consumableExperience } from "./consumable-effects.ts";
 import { chapterThreeWorkload } from "./chapter-three.ts";
 import { paralyzed } from "./chapter-four-battles.ts";
 import { chapterFourWorkload } from "./chapter-four.ts";
@@ -143,6 +144,7 @@ export function makeRun(s: State, sq: Squad, q: Quest, at: number, round = 1): R
   configureTarget(r, q);
   ensureChapterRoad(r, sq, q, at);
   schedule(s, sq, r, at);
+  applyDepartureConsumables(s, sq, r, at, event);
   return r;
 }
 export function nextEvent(r: Run) {
@@ -195,7 +197,8 @@ function finishQuest(s: State, sq: Squad, q: Quest) {
   s.done[q.id] = (s.done[q.id] || 0) + 1;
 }
 function awardExperience(s: State, sq: Squad, xp: number) {
-  for (const id of sq.members) s.xp[id] = (s.xp[id] || 0) + xp;
+  for (const id of sq.members)
+    s.xp[id] = (s.xp[id] || 0) + consumableExperience(activeRun(sq), id, xp);
 }
 function awardFriendship(s: State, sq: Squad) {
   for (const bond of activeBonds(sq.members)) {
@@ -267,7 +270,7 @@ export function completeNode(s: State, sq: Squad, q: Quest, at: number, afterSce
   if (sq.repeat && q.availability !== "once" && canRepeat) {
     const { events, scene } = r;
     sq.run = makeRun(s, sq, q, at, r.round + 1);
-    sq.run.events = events;
+    sq.run.events = [...events, ...sq.run.events].slice(-12);
     sq.run.scene = scene;
   } else sq.run = null;
   return gain;

@@ -1,3 +1,4 @@
+import { applyPinchConsumable } from "./consumable-effects.ts";
 import {
   heroes,
   stats,
@@ -80,6 +81,7 @@ function strike(
       target,
       enemy.id,
     );
+    applyPinchConsumable(s, r, target, damage, at, emit);
   }
 }
 function inRange(r: Run, enemy: Enemy) {

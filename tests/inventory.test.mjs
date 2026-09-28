@@ -15,7 +15,8 @@ const exports = evaluateSourceModule(
       },
     },
     "react/jsx-runtime": jsxRuntime,
-    "./character-icon-choices": ui("CharacterIconChoices"),
+    "./character-loadout": ui("CharacterEquipment", "EquipmentSlotPanel"),
+    "./consumable-panels": ui("ConsumableBag", "ConsumableDetails"),
     "next/image": { default: "img" },
     "lucide-react": {
       Coins: "coins",
