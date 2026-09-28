@@ -16,7 +16,7 @@
 
 ## 開発
 
-Node.js 22.13.0 以上を使用します。
+Node.js は [`package.json`](package.json) の `devEngines.runtime` に記載した版を使用します（CIも同じ欄を参照します）。
 
 ```bash
 npm run dev

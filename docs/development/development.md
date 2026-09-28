@@ -4,7 +4,9 @@
 
 ## 開発コマンド
 
-Node.js 22.13.0 以上。
+Node.js は [`package.json`](../../package.json) の `devEngines.runtime` の版を使う。GitHub Actions も同じ欄を読むため、資料には版の数字を書かない。版が合わないと `npm ci` / `npm install` が `EBADDEVENGINES` で止まる。Dependabot が `@types/node` のメジャー版を上げると `tests/node-version.test.mjs` が失敗するので、それを Node 本体を上げる合図とし、同じPRで `devEngines.runtime.version` を揃える。見送る版（LTSにならない奇数版など）は、そのPRに `@dependabot ignore this major version` とコメントして閉じる。
+
+依存パッケージのインストールスクリプトは、npm 11 以降では `package.json` の `allowScripts` に載せたものだけが実行される。新しく警告が出たら `npm install-scripts ls` で内容を確認し、必要なものだけ `npm install-scripts approve <pkg> --no-allow-scripts-pin` で追加する。
 
 ```bash
 npm run dev
