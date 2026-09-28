@@ -26,7 +26,7 @@ export function ConsumableSlot({
 }) {
   const item = assignedConsumable(state, hero);
   const stock = item ? consumableStock(state, item.id) : 0;
-  const count = stock ? `共有 ${String(stock)}個` : "在庫なし";
+  const count = stock ? `所持 ${String(stock)}個` : "在庫なし";
   const active = state.squads.some((sq) => sq.run?.consumableEffects?.[hero]);
   return (
     <button
@@ -66,7 +66,7 @@ function ConsumableChoice({
       <b>{item.name}</b>
       <p>{item.description}</p>
       <small>
-        共有在庫 {consumableStock(state, item.id)}個 ·{" "}
+        所持 {consumableStock(state, item.id)}個 ·{" "}
         {current === item.id ? "登録中" : "もう一度タップで登録"}
       </small>
       <small>
@@ -115,7 +115,7 @@ export function ConsumableDetails(props: Props) {
       />
       <div className="character-choice-detail">
         <ConsumableChoice item={item} current={current?.id} state={props.state} />
-        <small>在庫は全員で共有。なくなっても登録は残り、補充すると自動使用を再開します。</small>
+        <small>なくなっても登録は残り、補充すると自動使用を再開します。</small>
       </div>
       <p role="status">{notice}</p>
     </section>
@@ -144,11 +144,11 @@ export function ConsumableBag({ state }: { state: State }) {
                 </h4>
                 <p>{item.description}</p>
                 <small>
-                  共有在庫 ·{" "}
+                  登録：
                   {heroes
                     .filter((hero) => state.consumables?.assigned[hero.id] === item.id)
                     .map((hero) => hero.name)
-                    .join("・") || "登録なし"}
+                    .join("・") || "なし"}
                 </small>
               </div>
             </article>

@@ -25,13 +25,12 @@ export function ConsumableShopDetail({
           <div>
             <h3 id="shop-detail-name">{item.name}</h3>
             <span>
-              共有在庫 {stock}個 · {item.effect.timing === "pinch" ? "ピンチ時" : "出発時"}
+              所持 {stock}個 · {item.effect.timing === "pinch" ? "ピンチ時" : "出発時"}
               に自動使用
             </span>
           </div>
         </div>
         <p>{item.description}</p>
-        <p>購入後はキャラクター画面の「アイテム」に登録。</p>
       </div>
       <div className="shop-purchase consumable-purchase">
         {[1, 10].map((quantity) => (

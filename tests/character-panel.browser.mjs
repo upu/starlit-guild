@@ -491,7 +491,7 @@ async function checkConsumables(page, url, width) {
   await candidate.click();
   await candidate.click();
   await page.waitForFunction(() => window.fixtureState.consumables.assigned.aria === "salve");
-  assert.match(await slot.innerText(), /共有 2個/);
+  assert.match(await slot.innerText(), /所持 2個/);
   await page.getByRole("button", { name: "レオン", exact: true }).click();
   await candidate.click();
   await candidate.click();

@@ -17,7 +17,8 @@ export const consumables: Consumable[] = [
   {
     id: "salve",
     name: "傷薬",
-    description: "被弾後、HPが40%以下なら自動で1個使い、HPを30回復。倒れた人には使いません。",
+    description:
+      "ダメージを受けてHPが40%以下なら、自動で1個使い、HPを30回復。倒れた人には使いません。",
     price: 10,
     tier: 1,
     effect: { timing: "pinch", healing: 30 },
@@ -25,7 +26,8 @@ export const consumables: Consumable[] = [
   {
     id: "fine-salve",
     name: "上等な傷薬",
-    description: "被弾後、HPが40%以下なら自動で1個使い、HPを80回復。倒れた人には使いません。",
+    description:
+      "ダメージを受けてHPが40%以下なら、自動で1個使い、HPを80回復。倒れた人には使いません。",
     price: 30,
     tier: 2,
     effect: { timing: "pinch", healing: 80 },
