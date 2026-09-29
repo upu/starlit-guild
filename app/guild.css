@@ -3,67 +3,238 @@
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
+  background: #182825;
 }
 .guild-panel {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 16px 16px 24px;
+  max-width: 560px;
+  margin: auto;
 }
 .guild-heading {
-  padding: 18px;
-  margin-bottom: 20px;
-  border: 1px solid #8b8b5c70;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #283d32, #142c28);
+  padding: 12px 18px 10px;
+  background: linear-gradient(#203a35, #182825);
 }
 .guild-heading h2 {
-  margin: 4px 0 12px;
-  color: #f6d994;
-  font-size: 24px;
+  margin: 0;
+  font-family: serif;
+  font-size: 23px;
+  letter-spacing: 0.14em;
+  color: #f7dfa7;
 }
-.guild-heading p,
+.guild-heading p {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #c3c7ad;
+}
+.guild-scene {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  isolation: isolate;
+  overflow: hidden;
+  background: #674e32;
+}
+.guild-scene-art {
+  position: absolute;
+  inset: 0;
+  background: url("/guild/home-v1.webp") center / 100% 100%;
+}
+.guild-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 30px #172b2860;
+}
+.guild-location {
+  position: absolute;
+  left: 4%;
+  color: #fff0c9;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-shadow: 0 1px 3px #000;
+  background: #27342abb;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+.guild-location-loft {
+  top: 2%;
+}
+.guild-location-garden {
+  top: 57%;
+}
+.guild-scene-hint {
+  text-align: center;
+  color: #c6c9ae;
+  font-size: 11px;
+  padding: 10px;
+  margin: 0;
+}
+.guild-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 86px;
+  min-height: 48px;
+  padding: 5px 9px;
+  border: 1px solid #d4ba7b;
+  border-radius: 5px 5px 10px 10px;
+  background: linear-gradient(#354c3aed, #1c342cf2);
+  box-shadow:
+    0 3px 0 #132a25,
+    0 4px 12px #16170d66;
+  color: #ffe9b5;
+  cursor: pointer;
+}
+.guild-hotspot::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 3px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffe4a0;
+  box-shadow: 0 0 7px #eebb65;
+}
+.guild-hotspot span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.guild-hotspot small {
+  display: block;
+  color: #d7d8b8;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.guild-hotspot:hover {
+  filter: brightness(1.15);
+}
+.guild-hotspot:focus-visible {
+  outline: 3px solid #fff4c6;
+  outline-offset: 4px;
+}
+.guild-resident {
+  position: absolute;
+  width: 16%;
+  height: 13%;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+.guild-resident::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: -1%;
+  left: 16%;
+  width: 70%;
+  height: 12%;
+  border-radius: 50%;
+  background: #18241c45;
+  filter: blur(2px);
+}
+.guild-figure {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center bottom;
+}
+.guild-figure.faces-left {
+  transform: scaleX(-1);
+}
+.guild-pose {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.guild-pose-1 {
+  opacity: 0;
+}
+.is-working .guild-pose-0 {
+  animation: guild-work-a 1.4s steps(1) infinite;
+}
+.is-working .guild-pose-1 {
+  animation: guild-work-b 1.4s steps(1) infinite;
+}
+.resident-records {
+  left: 12%;
+  top: 30%;
+  width: 13%;
+  height: 11%;
+}
+.guild-work-spark {
+  position: absolute;
+  right: 0;
+  top: 45%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e5ed9b;
+  box-shadow: 0 0 7px #e5ed9b;
+  animation: guild-chat 2s infinite;
+}
+.guild-growing {
+  position: absolute;
+  width: 22%;
+  height: 9%;
+  display: flex;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+.guild-growing svg {
+  width: 34%;
+  height: 100%;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 2px 1px #24351a88);
+}
+.guild-ripe-glow {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  color: #fff0a1;
+  animation: guild-chat 3s infinite;
+}
+@keyframes guild-work-a {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes guild-work-b {
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes guild-chat {
+  0%,
+  65%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  55% {
+    opacity: 1;
+  }
+}
+.guild-detail {
+  border-color: #a29165;
+  background: #203a31;
+}
 .guild-caption {
   color: #b6c6b7;
   font-size: 13px;
   line-height: 1.7;
-}
-.guild-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.guild-section-heading h3 {
-  font-size: 18px;
-}
-.guild-section-heading span {
-  color: #d9c68c;
-  font-size: 12px;
-}
-.guild-caption {
   margin: 8px 0 12px;
 }
-.guild-panel .story-entry {
-  min-height: 60px;
-}
-.guild-pages,
 .guild-inline {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-.guild-pages button {
-  flex: 1;
-  min-height: 44px;
-  padding: 8px;
-  background: #18392f;
-  color: #d5dcbc;
-  border: 1px solid #8b8b5c70;
-}
-.guild-pages button[aria-pressed="true"] {
-  background: #d1b774;
-  color: #102a26;
-  border-color: #d9c68c;
 }
 .guild-section {
   display: grid;
@@ -93,8 +264,8 @@
   display: grid;
   gap: 6px;
 }
-.guild-panel select,
-.guild-panel input[type="number"] {
+.guild-detail select,
+.guild-detail input[type="number"] {
   min-height: 44px;
   width: 100%;
   background: #102a26;
@@ -123,6 +294,402 @@
   gap: 8px;
 }
 .guild-supplies {
-  overflow-y: auto;
   min-height: 0;
+}
+.guild-story {
+  display: grid;
+  grid-template-columns: 90px 1fr 18px;
+  gap: 8px;
+  min-height: 90px;
+  width: 100%;
+  align-items: center;
+  text-align: left;
+}
+.guild-story-cast {
+  display: flex;
+  height: 68px;
+  width: 90px;
+  align-items: end;
+}
+.guild-story-cast .guild-figure {
+  flex: 1 0 42%;
+  height: 64px;
+  margin-left: -7px;
+}
+.guild-story b {
+  font-size: 14px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .guild-scene *,
+  .guild-story * {
+    animation: none !important;
+  }
+  .guild-pose-1 {
+    opacity: 0 !important;
+  }
+  .guild-pose-0 {
+    opacity: 1 !important;
+  }
+}
+.guild-location-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  padding: 5px;
+  background: #1c3029;
+}
+.guild-location-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  min-height: 44px;
+  padding: 4px;
+  border: 1px solid #756a45;
+  border-radius: 4px;
+  color: #d5d7b3;
+  background: #263c30;
+  font-size: 11px;
+}
+.guild-location-nav button[aria-pressed="true"] {
+  background: #c3a56c;
+  color: #142b26;
+}
+.guild-home-scene .guild-scene-art {
+  background-image: url("/guild/home-v1.webp");
+}
+.garden-linde .guild-scene-art {
+  background-image: url("/guild/linde-garden-v1.webp");
+}
+.garden-brekka .guild-scene-art {
+  background-image: url("/guild/brekka-garden-v1.webp");
+}
+.hotspot-stories {
+  left: 28%;
+  top: 66%;
+}
+.hotspot-workbench {
+  left: 76%;
+  top: 21%;
+}
+.hotspot-shop {
+  left: 83%;
+  top: 73%;
+}
+.hotspot-garden {
+  left: 24%;
+  top: 89%;
+}
+.hotspot-tend {
+  left: 29%;
+  top: 64%;
+}
+.hotspot-garden-shop {
+  left: 81%;
+  top: 18%;
+}
+.guild-standing,
+.guild-strolling {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.guild-strolling {
+  opacity: 0;
+}
+.resident-workbench {
+  left: 65%;
+  top: 43%;
+}
+.resident-visitor-0 {
+  left: 18%;
+  top: 55%;
+}
+.resident-visitor-1 {
+  left: 43%;
+  top: 57%;
+}
+.resident-visitor-2 {
+  width: 14%;
+  height: 12%;
+  left: 55%;
+  top: 72%;
+}
+.resident-garden {
+  left: 48%;
+  top: 53%;
+}
+.resident-moss {
+  left: 73%;
+  top: 66%;
+}
+.guild-chatter {
+  position: absolute;
+  width: 23%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  left: 17%;
+  top: 39%;
+}
+.guild-chatter i {
+  padding: 0 6px;
+  border-radius: 10px 10px 10px 0;
+  background: #fff3d6;
+  color: #345142;
+  font: bold 14px serif;
+  box-shadow: 0 2px 4px #0003;
+  animation: guild-converse 24s infinite;
+}
+.guild-chatter i + i {
+  animation-delay: 0s;
+}
+.guild-steam {
+  position: absolute;
+  color: #fff8d6;
+  font-size: 26px;
+  transform: rotate(90deg);
+  animation: guild-chat 3s infinite;
+  pointer-events: none;
+  left: 76%;
+  top: 31%;
+}
+.guild-growing-0 {
+  left: 28%;
+  top: 52%;
+}
+.guild-growing-1 {
+  left: 70%;
+  top: 71%;
+}
+.is-moss svg {
+  transform-origin: center 85%;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 4px #a6e3b466);
+}
+.can-stroll {
+  animation: guild-route-a 24s linear infinite;
+}
+.resident-visitor-1.can-stroll {
+  animation-name: guild-route-b;
+}
+.resident-visitor-2.can-stroll {
+  animation-name: guild-route-c;
+}
+.resident-garden.can-stroll {
+  animation-name: guild-route-garden;
+}
+.resident-moss.can-stroll {
+  animation-name: guild-route-moss;
+}
+.can-stroll .guild-standing {
+  animation: guild-standing 24s steps(1) infinite;
+}
+.can-stroll .guild-strolling {
+  animation: guild-strolling 24s steps(1) infinite;
+}
+.can-stroll .guild-strolling .guild-figure {
+  animation: guild-facing 24s steps(1) infinite;
+}
+.is-walking .guild-pose-0 {
+  animation: guild-work-a 0.36s steps(1) infinite;
+}
+.is-walking .guild-pose-1 {
+  animation: guild-work-b 0.36s steps(1) infinite;
+}
+@keyframes guild-route-a {
+  0%,
+  22%,
+  100% {
+    left: 18%;
+    top: 55%;
+  }
+  38%,
+  68% {
+    left: 35%;
+    top: 73%;
+  }
+  87% {
+    left: 18%;
+    top: 55%;
+  }
+}
+@keyframes guild-route-b {
+  0%,
+  22%,
+  100% {
+    left: 43%;
+    top: 57%;
+  }
+  38%,
+  68% {
+    left: 58%;
+    top: 65%;
+  }
+  87% {
+    left: 43%;
+    top: 57%;
+  }
+}
+@keyframes guild-route-c {
+  0%,
+  22%,
+  100% {
+    left: 55%;
+    top: 72%;
+  }
+  38%,
+  68% {
+    left: 70%;
+    top: 78%;
+  }
+  87% {
+    left: 55%;
+    top: 72%;
+  }
+}
+@keyframes guild-standing {
+  0%,
+  38%,
+  87% {
+    opacity: 1;
+  }
+  22%,
+  68% {
+    opacity: 0;
+  }
+}
+@keyframes guild-strolling {
+  0%,
+  38%,
+  87% {
+    opacity: 0;
+  }
+  22%,
+  68% {
+    opacity: 1;
+  }
+}
+@keyframes guild-facing {
+  0% {
+    transform: none;
+  }
+  68% {
+    transform: scaleX(-1);
+  }
+}
+@keyframes guild-converse {
+  0%,
+  4%,
+  22%,
+  87%,
+  100% {
+    opacity: 0;
+  }
+  6%,
+  20%,
+  90%,
+  98% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guild-scene .guild-strolling {
+    opacity: 0;
+  }
+  .guild-scene .guild-standing {
+    opacity: 1;
+  }
+}
+
+.garden-linde .guild-growing-0 {
+  left: 47%;
+  top: 35%;
+  width: 28%;
+  height: 10%;
+}
+.garden-linde .guild-growing-1 {
+  left: 73%;
+  top: 64%;
+  width: 28%;
+  height: 10%;
+}
+.garden-brekka .guild-growing-0 {
+  left: 50%;
+  top: 50%;
+  width: 46%;
+  height: 12%;
+}
+.garden-linde .hotspot-tend {
+  left: 44%;
+  top: 42%;
+}
+.garden-brekka .hotspot-tend {
+  left: 48%;
+  top: 62%;
+}
+.garden-linde .resident-garden {
+  left: 73%;
+  top: 36%;
+}
+.garden-brekka .resident-moss {
+  left: 85%;
+  top: 49%;
+}
+@keyframes guild-route-garden {
+  0%,
+  22%,
+  87%,
+  100% {
+    left: 73%;
+    top: 36%;
+  }
+  30%,
+  77% {
+    left: 49%;
+    top: 45%;
+  }
+  38%,
+  68% {
+    left: 45%;
+    top: 63%;
+  }
+}
+@keyframes guild-route-moss {
+  0%,
+  22%,
+  87%,
+  100% {
+    left: 85%;
+    top: 49%;
+  }
+  30%,
+  77% {
+    left: 84%;
+    top: 35%;
+  }
+  38%,
+  68% {
+    left: 66%;
+    top: 33%;
+  }
+}
+.guild-scene button.guild-hotspot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-width: 90px;
+  gap: 0;
+  white-space: nowrap;
+}
+.guild-scene button.guild-hotspot span {
+  flex: none;
+  white-space: nowrap;
+}
+.guild-scene button.guild-hotspot small {
+  flex: none;
+  white-space: nowrap;
 }

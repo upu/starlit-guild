@@ -1,93 +1,143 @@
-import { ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { GuildGarden } from "./guild-garden";
 import { GuildWorkbench } from "./guild-workbench";
 import { GuildShop } from "./guild-shop";
+import { GuildConversations } from "./guild-conversations";
+import { GuildScene, guildPlaces, type GuildPlace } from "./guild-scene";
+import { GuildGardenScene, gardenSites, type GardenSite } from "./guild-garden-scene";
 import type { GuildProps } from "./guild-controls";
 import { guildLevel } from "@/lib/guild-content";
-import type { State } from "@/lib/game";
-import { guildUnlocked, guildStoryUnlocked } from "@/lib/guild-base";
-import { guildStories } from "@/lib/guild-stories";
+import { guildUnlocked } from "@/lib/guild-base";
 import type { Story } from "@/lib/stories";
 
-export function GuildPanel({
-  state,
-  onOpen,
-  ready,
-  onAction,
-  now,
-}: {
-  onOpen: (story: Story) => void;
-  now: number;
-} & GuildProps) {
-  const [page, setPage] = useState("garden");
-  if (!guildUnlocked(state)) return null;
-  const props = { state, ready, onAction, now };
+type PanelProps = GuildProps & { onOpen: (story: Story) => void; now: number };
+type FacilityProps = PanelProps & {
+  place: GuildPlace | null;
+  site: GardenSite;
+  onClose: () => void;
+  onRestoreFocus: () => void;
+};
+function GuildFacility({ place, site, onOpen, onClose, onRestoreFocus, ...props }: FacilityProps) {
   return (
-    <div className="guild-panel">
-      <header className="guild-heading">
-        <p>リンデ · 倉庫の二階</p>
-        <h2>星灯りの旅団</h2>
-        <p>
-          F級 · 栽培 Lv.{guildLevel(state.guild?.cultivation ?? 0)} · 加工 Lv.
-          {guildLevel(state.guild?.crafting ?? 0)}（上限3）
-        </p>
-        <p>手紙を読んで、仕事の支度をして。またここで会うための場所。</p>
-      </header>
-      <nav className="guild-pages" aria-label="旅団の施設">
-        {[
-          ["garden", "菜園"],
-          ["workbench", "作業台"],
-          ["shop", "種・材料"],
-          ["stories", "日常"],
-        ].map(([id, label]) => (
-          <button
-            key={id}
-            aria-pressed={page === id}
-            onClick={() => {
-              setPage(id);
-            }}
-          >
-            {label}
-          </button>
-        ))}
-      </nav>
-      <p className="guild-caption">
-        担当中も冒険に参加できます。同じ人は二つの仕事を兼ねられません。
-      </p>
-      {page === "garden" && <GuildGarden {...props} />}
-      {page === "workbench" && <GuildWorkbench {...props} />}
-      {page === "shop" && <GuildShop {...props} />}
-      {page === "stories" && <GuildConversations state={state} onOpen={onOpen} />}
+    <Dialog
+      open={place !== null}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+    >
+      <DialogContent
+        className="phone-dialog guild-detail"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          onRestoreFocus();
+        }}
+      >
+        <DialogHeader>
+          <DialogTitle>
+            {place === "garden" ? gardenSites[site] : place ? guildPlaces[place] : "旅団"}
+          </DialogTitle>
+          <DialogDescription>仲間と整える、次の冒険の支度。</DialogDescription>
+        </DialogHeader>
+        {place === "garden" && <GuildGarden {...props} site={site} />}
+        {place === "workbench" && <GuildWorkbench {...props} />}
+        {place === "shop" && <GuildShop {...props} />}
+        {place === "stories" && <GuildConversations state={props.state} onOpen={onOpen} />}
+      </DialogContent>
+    </Dialog>
+  );
+}
+function useGuildView(onOpen: (story: Story) => void) {
+  const [place, setPlace] = useState<GuildPlace | null>(null),
+    [view, setView] = useState<"home" | "garden">("home"),
+    [site, setSite] = useState<GardenSite>("linde");
+  const panel = useRef<HTMLDivElement>(null),
+    lastLabel = useRef("菜園"),
+    openingStory = useRef(false);
+  const visit = (next: GuildPlace) => {
+    lastLabel.current = next === "garden" ? "菜園の世話をする" : guildPlaces[next];
+    openingStory.current = false;
+    setPlace(next);
+  };
+  const read = (story: Story) => {
+    openingStory.current = true;
+    setPlace(null);
+    onOpen(story);
+  };
+  const restoreFocus = () => {
+    if (!openingStory.current)
+      panel.current
+        ?.querySelector<HTMLButtonElement>(`[aria-label="${lastLabel.current}"]`)
+        ?.focus();
+  };
+  return { place, setPlace, view, setView, site, setSite, panel, visit, read, restoreFocus };
+}
+export function GuildPanel(props: PanelProps) {
+  const { state, now } = props;
+  const { place, setPlace, view, setView, site, setSite, panel, visit, read, restoreFocus } =
+    useGuildView(props.onOpen);
+  if (!guildUnlocked(state)) return null;
+  return (
+    <div className="guild-panel" ref={panel}>
+      <GuildHeading state={state} title={view === "home" ? "星灯りの旅団" : gardenSites[site]} />
+      {view === "home" ? (
+        <GuildScene
+          state={state}
+          now={now}
+          onVisit={(next) => {
+            if (next === "garden") setView("garden");
+            else visit(next);
+          }}
+        />
+      ) : (
+        <GuildGardenScene
+          state={state}
+          now={now}
+          site={site}
+          onSite={setSite}
+          onHome={() => {
+            setView("home");
+          }}
+          onTend={() => {
+            visit("garden");
+          }}
+          onShop={() => {
+            visit("shop");
+          }}
+        />
+      )}
+      <p className="guild-scene-hint">気になる場所をタップして、仲間の仕事をのぞいてみよう。</p>
+      <GuildFacility
+        {...props}
+        place={place}
+        site={site}
+        onOpen={read}
+        onClose={() => {
+          setPlace(null);
+        }}
+        onRestoreFocus={restoreFocus}
+      />
     </div>
   );
 }
-function GuildConversations({ state, onOpen }: { state: State; onOpen: (story: Story) => void }) {
-  const available = guildStories.filter((story) => guildStoryUnlocked(state, story.id));
-  const read = state.story?.read ?? [],
-    unread = available.filter((story) => !read.includes(story.id)).length;
+
+function GuildHeading({ state, title }: { state: GuildProps["state"]; title: string }) {
   return (
-    <section aria-labelledby="guild-conversations-title">
-      <div className="guild-section-heading">
-        <h3 id="guild-conversations-title">旅団の日常</h3>
-        <span>{unread ? `未読 ${String(unread)}` : "すべて読了"}</span>
-      </div>
-      <p className="guild-caption">倉庫に立ち寄った日のひと幕。好きな話から、何度でも。</p>
-      {available.map((story) => (
-        <button
-          className="story-entry"
-          key={story.id}
-          onClick={() => {
-            onOpen(story);
-          }}
-        >
-          <span>
-            <small>{read.includes(story.id) ? "読了" : "未読"}</small>
-            <b>{story.title}</b>
-          </span>
-          <ChevronRight size={18} aria-hidden="true" />
-        </button>
-      ))}
-    </section>
+    <header className="guild-heading">
+      <h2>{title}</h2>
+      <p>
+        F級{" "}
+        <span>
+          栽培 Lv.{guildLevel(state.guild?.cultivation ?? 0)} · 加工 Lv.
+          {guildLevel(state.guild?.crafting ?? 0)}
+        </span>
+      </p>
+    </header>
   );
 }

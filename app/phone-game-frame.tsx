@@ -255,7 +255,7 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
         </TabsTrigger>
         {guildUnlocked(m.state) && (
           <TabsTrigger value="guild">
-            <Image src="/ui/return-house.png" width={32} height={32} alt="" unoptimized />
+            <Image src="/ui/guild-banner.svg" width={32} height={32} alt="" unoptimized />
             <span>旅団</span>
           </TabsTrigger>
         )}

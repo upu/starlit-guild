@@ -62,26 +62,39 @@ function Plot({ id, now, ...props }: GuildProps & { id: GuildPlotId; now: number
     </div>
   );
 }
-export function GuildGarden(props: GuildProps & { now: number }) {
+export function GuildGarden({
+  site,
+  ...props
+}: GuildProps & { now: number; site: "linde" | "brekka" }) {
   return (
     <section className="guild-section">
       <p>画面を閉じている間も育ちます。世話係がいないと収穫せず、実ったまま待ちます。</p>
       <p className="guild-caption">
         世話係がいると時間10%短縮・収穫+1。アリアとリコは25%短縮・収穫+2。担当とレベルの効果は植えるときに決まります。
       </p>
-      <h3>リンデのプランター</h3>
-      <p className="guild-caption">倉庫の裏。普通の薬草と野菜を育てます。</p>
-      <GuildRolePicker {...props} role="linde" />
-      <div className="guild-plots">
-        <Plot {...props} id="linde-1" />
-        <Plot {...props} id="linde-2" />
-      </div>
-      <h3>ブレッカの苔床</h3>
+      {site === "linde" ? (
+        <>
+          <h3>リンデのプランター</h3>
+          <p className="guild-caption">倉庫の裏。普通の薬草と野菜を育てます。</p>
+          <GuildRolePicker {...props} role="linde" />
+          <div className="guild-plots">
+            <Plot {...props} id="linde-1" />
+            <Plot {...props} id="linde-2" />
+          </div>
+        </>
+      ) : (
+        <>
+          <h3>ブレッカの苔床</h3>
+          <p className="guild-caption">
+            塔から離れた栽培所。日々の水やりは現地の人に任せ、世話係が記録と乾燥を段取りします。収穫物は乾燥苔になります。
+          </p>
+          <GuildRolePicker {...props} role="brekka" />
+          <Plot {...props} id="brekka-1" />
+        </>
+      )}
       <p className="guild-caption">
-        塔から離れた栽培所。日々の水やりは現地の人に任せ、世話係が記録と乾燥を段取りします。収穫物は乾燥苔になります。
+        担当中も冒険に参加できます。同じ人は二つの仕事を兼ねられません。
       </p>
-      <GuildRolePicker {...props} role="brekka" />
-      <Plot {...props} id="brekka-1" />
       <p className="guild-caption">
         種切れ・在庫上限では待機します。植え直しを外すと、次の収穫で止まります。
       </p>

@@ -34,7 +34,10 @@ async function open(stages = 37) {
   }, record);
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
-    if (response.status() >= 400 && /\/portraits\/|\/ui\//.test(response.url()))
+    if (
+      response.status() >= 400 &&
+      /\/portraits\/|\/ui\/|\/guild\/|\/animations\//.test(response.url())
+    )
       errors.push(response.url());
   });
   await page.goto(root);
@@ -48,7 +51,54 @@ async function stateOf(page) {
     () => JSON.parse(localStorage.getItem("starlit-guild-v4")).profiles[0].state,
   );
 }
+async function checkMotion(page) {
+  const phase = (time) =>
+    page.locator(".guild-scene").evaluate((scene, at) => {
+      for (const animation of scene.getAnimations({ subtree: true })) {
+        animation.pause();
+        animation.currentTime = at;
+      }
+    }, time);
+  const actor = page.locator(".resident-visitor-0");
+  await phase(1000);
+  const before = await actor.boundingBox();
+  await phase(7500);
+  const after = await actor.boundingBox();
+  assert.ok(
+    before && after && Math.hypot(after.x - before.x, after.y - before.y) > 15,
+    "resident walks through the room",
+  );
+  assert.equal(
+    await actor.locator(".guild-strolling").evaluate((el) => getComputedStyle(el).opacity),
+    "1",
+    "walking atlas visible while moving",
+  );
+  await capture(page, "home-walking");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  assert.equal(await actor.evaluate((el) => getComputedStyle(el).animationName), "none");
+  assert.equal(
+    await actor.locator(".guild-strolling").evaluate((el) => getComputedStyle(el).opacity),
+    "0",
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+}
 async function capture(page, name) {
+  await page.clock.runFor(350);
+  await page.locator(".guild-detail[data-state=closed]").waitFor({ state: "hidden" });
+  await page.locator(".guild-scene").evaluate(async (scene) => {
+    const background = getComputedStyle(scene.querySelector(".guild-scene-art")).backgroundImage;
+    const sources = [
+      background.slice(5, -2),
+      ...Array.from(scene.querySelectorAll("svg image"), (el) => el.getAttribute("href")),
+    ];
+    await Promise.all(
+      [...new Set(sources)].map(async (src) => {
+        const image = new Image();
+        image.src = src;
+        await image.decode();
+      }),
+    );
+  });
   await page.screenshot({ path: `${output}/${name}.png` });
   const fits = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
   assert.ok(fits, `${name}: no horizontal overflow`);
@@ -67,8 +117,17 @@ try {
   await page.getByRole("button", { name: "種・材料", exact: true }).click();
   for (const name of ["薬草の種", "ニンジンの種", "苔の胞子", "蜂蜜"])
     await page.getByRole("button", { name: `${name}を10個購入`, exact: true }).click();
+  await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "菜園", exact: true }).click();
+  await page.getByRole("button", { name: "菜園の世話をする", exact: true }).click();
   await page.getByLabel("リンデの世話係", { exact: true }).selectOption("aria");
+  await page.getByRole("button", { name: "植える", exact: true }).first().click();
+  await page.getByLabel("linde-2の作物", { exact: true }).selectOption("carrot");
+  await page.getByRole("button", { name: "植える", exact: true }).first().click();
+  await page.keyboard.press("Escape");
+  await capture(page, "linde-planted");
+  await page.getByRole("button", { name: "ブレッカの栽培所", exact: true }).click();
+  await page.getByRole("button", { name: "菜園の世話をする", exact: true }).click();
   await page.getByLabel("ブレッカの世話係", { exact: true }).selectOption("lico");
   await page.clock.runFor(250);
   assert.ok(
@@ -77,10 +136,9 @@ try {
       .locator('option[value="aria"]')
       .evaluate((option) => option.disabled),
   );
-  await page.getByRole("button", { name: "植える", exact: true }).first().click();
-  await page.getByLabel("linde-2の作物", { exact: true }).selectOption("carrot");
-  await page.getByRole("button", { name: "植える", exact: true }).first().click();
   await page.getByRole("button", { name: "植える", exact: true }).click();
+  await page.keyboard.press("Escape");
+  await capture(page, "brekka-planted");
   for (const [width, height] of [
     [320, 640],
     [390, 844],
@@ -93,6 +151,7 @@ try {
     assert.ok(nav && nav.height >= 44 && nav.y + nav.height <= height, "navigation remains usable");
   }
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
   await page.getByRole("button", { name: "作業台", exact: true }).click();
   await page.getByLabel("加工担当", { exact: true }).selectOption("mira");
   await page.getByLabel("作り方", { exact: true }).selectOption("tea");
@@ -102,6 +161,9 @@ try {
   await page.getByRole("button", { name: "加工を始める", exact: true }).click();
   const before = await stateOf(page);
   await capture(page, "workbench");
+  await page.keyboard.press("Escape");
+  await capture(page, "home-working");
+  await checkMotion(page);
   await page.clock.setFixedTime(new Date(initialAt + 6 * 3600000));
   await page.reload();
   await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
@@ -111,10 +173,12 @@ try {
   assert.ok(after.guild.materials["dried-moss"] > 0);
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
   await page.getByRole("button", { name: "日常", exact: true }).click();
-  assert.equal(await page.locator(".guild-panel .story-entry").count(), 8);
+  assert.equal(await page.locator(".guild-detail .story-entry").count(), 8);
+  await page.keyboard.press("Escape");
   for (const id of ["guild-which-finger", "guild-a-reason-to-visit"]) {
+    await page.getByRole("button", { name: "日常", exact: true }).click();
     const story = guildStories.find((item) => item.id === id);
-    await page.locator(".guild-panel .story-entry").filter({ hasText: story.title }).click();
+    await page.locator(".guild-detail .story-entry").filter({ hasText: story.title }).click();
     for (let i = 0; i < story.lines.length; i++) {
       const line = story.lines[i];
       if (line.speaker) {

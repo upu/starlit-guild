@@ -19,6 +19,7 @@ import {
   ROAD_PULL,
   ROAD_FINN_PULL,
   ROAD_PACKING,
+  packingFrames,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
@@ -163,17 +164,9 @@ export class RoadPainter {
   }
   private registerPackingArt() {
     const texture = this.scene.textures.get(ROAD_PACKING);
-    const rects = [
-      [260, 36, 305, 358],
-      [692, 38, 294, 357],
-      [240, 427, 336, 358],
-      [666, 431, 336, 355],
-      [233, 821, 337, 362],
-      [662, 824, 335, 361],
-    ];
-    for (const [row, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[row * 2 + step];
+        const [x, y, w, h] = packingFrames[id][step];
         texture.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
   }
