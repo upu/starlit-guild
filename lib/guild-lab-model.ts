@@ -1,22 +1,25 @@
-export const LAB_TILE = 64;
-export const LAB_WIDTH = 12 * LAB_TILE;
-export const LAB_HEIGHT = 9 * LAB_TILE;
+export const LAB_TILE = 32;
+export const LAB_WIDTH = 24 * LAB_TILE;
+export const LAB_HEIGHT = 18 * LAB_TILE;
+export const LAB_ACTOR_SCALE = 0.5;
+export const LAB_WALK_SPEED = 0.08 * LAB_ACTOR_SCALE;
+export const labFace = { eyes: { x: 10, y: -20 }, mouth: { x: 17, y: -7 } };
 export type LabMode = "tea" | "walk" | "work";
 export type LabPose = LabMode | "idle";
 export type Point = { x: number; y: number };
-export const labStations = { tea: { x: 224, y: 454 }, work: { x: 496, y: 316 } };
+export const labStations = { tea: { x: 272, y: 386 }, work: { x: 504, y: 204 } };
 export const labFurniture = [
-  { id: "desk", frame: 2, col: 1, row: 2, cols: 2, rows: 2 },
-  { id: "bench", frame: 1, col: 8, row: 3, cols: 3, rows: 2 },
-  { id: "table", frame: 0, col: 4, row: 5, cols: 2, rows: 2 },
-  { id: "chair", frame: 3, col: 3, row: 6, cols: 1, rows: 1 },
+  { id: "desk", frame: 2, col: 3, row: 3, cols: 2, rows: 2 },
+  { id: "bench", frame: 1, col: 16, row: 4, cols: 3, rows: 2 },
+  { id: "table", frame: 0, col: 9, row: 10, cols: 2, rows: 2 },
+  { id: "chair", frame: 3, col: 8, row: 11, cols: 1, rows: 1 },
 ] as const;
 
 export function labPath(from: Point, mode: LabMode): Point[] {
-  const target = mode === "walk" ? { x: from.x < 384 ? 656 : 112, y: 496 } : labStations[mode];
+  const target = mode === "walk" ? { x: from.x < 384 ? 656 : 112, y: 416 } : labStations[mode];
   if (Math.hypot(target.x - from.x, target.y - from.y) < 1) return [target];
   // The clear aisle below the table connects both activity points.
-  return [{ x: from.x, y: from.y }, { x: from.x, y: 496 }, { x: target.x, y: 496 }, target];
+  return [{ x: from.x, y: from.y }, { x: from.x, y: 416 }, { x: target.x, y: 416 }, target];
 }
 export function labTravel(path: Point[], distance: number) {
   let remaining = distance;
@@ -52,10 +55,33 @@ export function labFoot(time: number, offset: number) {
     ? { x: 18 - phase * 72, y: 0 }
     : { x: -18 + (phase - 0.5) * 72, y: -Math.sin((phase - 0.5) * Math.PI * 2) * 12 };
 }
-function handPosition(t: number, mode: LabPose, sip: number) {
+function handPosition(t: number, mode: LabPose) {
   if (mode === "work") return { x: 38 + Math.sin(t / 220) * 4, y: -10 + Math.cos(t / 220) * 3 };
-  if (mode === "tea") return { x: 27 - sip * 3, y: 4 - sip * 38 };
   return { x: mode === "walk" ? Math.sin((t / 900) * Math.PI * 2) * 17 : 7, y: 41 };
+}
+function rotate(point: Point, angle: number) {
+  return {
+    x: point.x * Math.cos(angle) - point.y * Math.sin(angle),
+    y: point.x * Math.sin(angle) + point.y * Math.cos(angle),
+  };
+}
+export function labTeaCup(sip: number, headAngle: number) {
+  const face = rotate(labFace.mouth, headAngle);
+  const mouth = { x: 3 + face.x, y: -91 + face.y };
+  const angle = -0.12 * sip;
+  // Contact is on the near rim; the glove holds the handle below it.
+  const rim = rotate({ x: -7, y: 2.5 }, angle);
+  const x = 28 + (mouth.x - rim.x - 28) * sip;
+  const y = -68 + (mouth.y - rim.y + 68) * sip;
+  const grip = rotate({ x: -10, y: 9 }, angle);
+  return {
+    x,
+    y,
+    angle,
+    mouth,
+    rim: { x: x + rim.x, y: y + rim.y },
+    hand: { x: x + grip.x + 18, y: y + grip.y + 80 },
+  };
 }
 function bodyMotion(t: number, walking: boolean) {
   const phase = (t / 900) * Math.PI * 2;
@@ -71,10 +97,13 @@ export function labPose(time: number, mode: LabPose, reduced: boolean) {
     mode === "tea"
       ? (1 - Math.cos(Math.min(1, Math.max(0, ((t % 8000) - 3500) / 3000)) * Math.PI * 2)) / 2
       : 0;
+  const motion = bodyMotion(t, mode === "walk");
+  const cup = labTeaCup(sip, motion.head);
   return {
-    ...bodyMotion(t, mode === "walk"),
+    ...motion,
     blink: !reduced && t % 4700 > 4510,
     sip,
-    hand: handPosition(t, mode, sip),
+    cup,
+    hand: mode === "tea" ? cup.hand : handPosition(t, mode),
   };
 }

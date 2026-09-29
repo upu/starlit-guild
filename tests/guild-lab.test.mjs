@@ -10,6 +10,9 @@ import {
   labStations,
   labFurniture,
   LAB_TILE,
+  LAB_ACTOR_SCALE,
+  LAB_WALK_SPEED,
+  labTeaCup,
 } from "../lib/guild-lab-model.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 
@@ -38,11 +41,29 @@ test("walking keeps a planted foot stationary at the actor's travel speed", () =
   for (let t = 0; t < 400; t += 20) {
     const foot = labFoot(t, 0);
     assert.equal(foot.y, 0);
-    assert.ok(Math.abs(foot.x + t * 0.08 - 18) < 0.001);
+    assert.ok(
+      Math.abs(foot.x * LAB_ACTOR_SCALE + t * LAB_WALK_SPEED - 18 * LAB_ACTOR_SCALE) < 0.001,
+    );
     assert.ok(labFoot(t, 0.5).y <= 0);
   }
   for (const mode of ["tea", "walk", "work", "idle"])
     assert.deepEqual(labPose(500, mode, true), labPose(9500, mode, true));
+});
+
+test("tea rim meets the moving mouth and the hand can reach the handle through the whole sip", () => {
+  for (let time = 0; time <= 8000; time += 20) {
+    const { cup } = labPose(time, "tea", false);
+    assert.ok(cup.rim.y >= cup.mouth.y - 0.001, "cup never rises above the mouth");
+    const angles = labJoint(cup.hand, 23, 25);
+    const angle = angles.upper + angles.lower;
+    const x = -Math.sin(angles.upper) * 23 - Math.sin(angle) * 25;
+    const y = Math.cos(angles.upper) * 23 + Math.cos(angle) * 25;
+    assert.ok(Math.hypot(x - cup.hand.x, y - cup.hand.y) < 0.001);
+  }
+  for (const head of [-0.035, 0, 0.035]) {
+    const cup = labTeaCup(1, head);
+    assert.ok(Math.hypot(cup.rim.x - cup.mouth.x, cup.rim.y - cup.mouth.y) < 0.001);
+  }
 });
 
 test("room routes finish once, snapshot their start, and use the aisle outside the table", () => {

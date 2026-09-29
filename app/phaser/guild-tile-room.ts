@@ -9,11 +9,15 @@ export class GuildTileRoom {
     visit: (mode: "tea" | "work") => void,
   ) {
     this.layer(
-      Array.from({ length: 7 }, (_, y) => Array.from({ length: 12 }, (_, x) => (x * 3 + y) % 2)),
-      64,
-      128,
+      Array.from({ length: 16 }, (_, y) => Array.from({ length: 24 }, (_, x) => (x * 3 + y) % 2)),
+      LAB_TILE,
+      LAB_TILE * 2,
     );
-    this.layer([[2, 3, 2, 2, 3, 2]], 128, 0);
+    this.layer(
+      [Array.from({ length: 12 }, (_, x) => (x === 2 || x === 8 ? 3 : 2))],
+      LAB_TILE * 2,
+      0,
+    );
     for (const item of labFurniture) {
       const x = (item.col + item.cols / 2) * LAB_TILE;
       const y = (item.row + item.rows) * LAB_TILE;
@@ -23,6 +27,7 @@ export class GuildTileRoom {
       if (!texture.has(item.id)) texture.add(item.id, 0, left, top, width, height);
       scene.add.ellipse(x, y - 9, item.cols * LAB_TILE * 0.9, 22, 0x251c14, 0.22).setDepth(y - 1);
       const image = scene.add.image(x, y, sprite.asset, item.id).setOrigin(0.5, 1);
+
       image
         .setDisplaySize(item.cols * LAB_TILE, (item.cols * LAB_TILE * height) / width)
         .setDepth(item.id === "chair" ? labStations.tea.y - 1 : y);
@@ -39,10 +44,10 @@ export class GuildTileRoom {
     const [x, y, w, h] = guildLabArt.frames[15];
     this.scene.textures.get(asset).add("mixing-cup", 0, x, y, w, h);
     this.scene.add
-      .image(524, 256, asset, "mixing-cup")
+      .image(518, 172, asset, "mixing-cup")
       .setOrigin(0.5, 1)
-      .setDisplaySize((18 * w) / h, 18)
-      .setDepth(321);
+      .setDisplaySize((9 * w) / h, 9)
+      .setDepth(193);
   }
   private layer(data: number[][], size: number, y: number) {
     const map = this.scene.make.tilemap({ data, tileWidth: 512, tileHeight: 512 });
@@ -57,8 +62,10 @@ export class GuildTileRoom {
     this.grid.clear();
     if (!show) return;
     this.grid.lineStyle(1, 0xffe7a6, 0.3);
-    for (let x = 0; x <= LAB_WIDTH; x += LAB_TILE) this.grid.lineBetween(x, 128, x, LAB_HEIGHT);
-    for (let y = 128; y <= LAB_HEIGHT; y += LAB_TILE) this.grid.lineBetween(0, y, LAB_WIDTH, y);
+    for (let x = 0; x <= LAB_WIDTH; x += LAB_TILE)
+      this.grid.lineBetween(x, LAB_TILE * 2, x, LAB_HEIGHT);
+    for (let y = LAB_TILE * 2; y <= LAB_HEIGHT; y += LAB_TILE)
+      this.grid.lineBetween(0, y, LAB_WIDTH, y);
     this.grid.lineStyle(2, 0xffb665, 0.8);
     for (const item of labFurniture)
       this.grid.strokeRect(

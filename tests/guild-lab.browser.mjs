@@ -55,7 +55,7 @@ try {
   await button(page, "寄って見る").click();
   // Pointer coordinates still match the world when the canvas is CSS-scaled and DPR=2.
   const box = await canvas.boundingBox();
-  await canvas.click({ position: { x: (320 / 768) * box.width, y: (395 / 576) * box.height } });
+  await canvas.click({ position: { x: (320 / 768) * box.width, y: (350 / 576) * box.height } });
   assert.equal(await button(page, "お茶で休憩").getAttribute("aria-pressed"), "true");
   await activity(page, "tea");
   for (const [width, height] of [
