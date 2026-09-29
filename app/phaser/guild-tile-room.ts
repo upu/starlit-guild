@@ -1,0 +1,73 @@
+import type Phaser from "phaser";
+import { guildLabArt } from "@/lib/guild-lab-art";
+import { guildRoomSprite } from "@/lib/guild-menu-model";
+import { LAB_TILE, LAB_WIDTH, LAB_HEIGHT, labFurniture, labStations } from "@/lib/guild-lab-model";
+export class GuildTileRoom {
+  private grid: Phaser.GameObjects.Graphics;
+  constructor(
+    private scene: Phaser.Scene,
+    visit: (mode: "tea" | "work") => void,
+  ) {
+    this.layer(
+      Array.from({ length: 7 }, (_, y) => Array.from({ length: 12 }, (_, x) => (x * 3 + y) % 2)),
+      64,
+      128,
+    );
+    this.layer([[2, 3, 2, 2, 3, 2]], 128, 0);
+    for (const item of labFurniture) {
+      const x = (item.col + item.cols / 2) * LAB_TILE;
+      const y = (item.row + item.rows) * LAB_TILE;
+      const sprite = guildRoomSprite("furniture-v3", item.frame);
+      const texture = scene.textures.get(sprite.asset);
+      const [left, top, width, height] = sprite.rect;
+      if (!texture.has(item.id)) texture.add(item.id, 0, left, top, width, height);
+      scene.add.ellipse(x, y - 9, item.cols * LAB_TILE * 0.9, 22, 0x251c14, 0.22).setDepth(y - 1);
+      const image = scene.add.image(x, y, sprite.asset, item.id).setOrigin(0.5, 1);
+      image
+        .setDisplaySize(item.cols * LAB_TILE, (item.cols * LAB_TILE * height) / width)
+        .setDepth(item.id === "chair" ? labStations.tea.y - 1 : y);
+      if (item.id === "table" || item.id === "bench" || item.id === "chair")
+        image.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+          visit(item.id === "bench" ? "work" : "tea");
+        });
+    }
+    this.grid = scene.add.graphics().setDepth(2000);
+    this.workCup();
+  }
+  private workCup() {
+    const asset = "/guild/leon-parts-v1.webp";
+    const [x, y, w, h] = guildLabArt.frames[15];
+    this.scene.textures.get(asset).add("mixing-cup", 0, x, y, w, h);
+    this.scene.add
+      .image(524, 256, asset, "mixing-cup")
+      .setOrigin(0.5, 1)
+      .setDisplaySize((18 * w) / h, 18)
+      .setDepth(321);
+  }
+  private layer(data: number[][], size: number, y: number) {
+    const map = this.scene.make.tilemap({ data, tileWidth: 512, tileHeight: 512 });
+    const tiles = map.addTilesetImage("room", "/guild/room-tiles-v1.webp", 512, 512);
+    if (!tiles) throw new Error("Missing room tiles");
+    map
+      .createLayer(0, tiles, 0, y)
+      .setScale(size / 512)
+      .setDepth(-1000);
+  }
+  showGrid(show: boolean) {
+    this.grid.clear();
+    if (!show) return;
+    this.grid.lineStyle(1, 0xffe7a6, 0.3);
+    for (let x = 0; x <= LAB_WIDTH; x += LAB_TILE) this.grid.lineBetween(x, 128, x, LAB_HEIGHT);
+    for (let y = 128; y <= LAB_HEIGHT; y += LAB_TILE) this.grid.lineBetween(0, y, LAB_WIDTH, y);
+    this.grid.lineStyle(2, 0xffb665, 0.8);
+    for (const item of labFurniture)
+      this.grid.strokeRect(
+        item.col * LAB_TILE,
+        item.row * LAB_TILE,
+        item.cols * LAB_TILE,
+        item.rows * LAB_TILE,
+      );
+    this.grid.lineStyle(2, 0x87f2cf, 1);
+    for (const point of Object.values(labStations)) this.grid.strokeCircle(point.x, point.y, 7);
+  }
+}
