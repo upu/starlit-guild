@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import { GuildLabController } from "./guild-lab-controller";
-import { LAB_WIDTH, LAB_HEIGHT, type LabMode, type LabPose } from "@/lib/guild-lab-model";
+import { type LabMode, type LabPose } from "@/lib/guild-lab-model";
+import { bindLabResolution, labBufferSize } from "./guild-lab-resolution";
 export type LabControls = {
   mode: LabMode;
   request: number;
@@ -24,11 +25,12 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
         failed = true;
         bridge.status("error");
       });
-      for (const name of ["room-tiles-v1", "leon-parts-v1", "furniture-v3"])
+      for (const name of ["room-tiles-v1", "leon-parts-v2", "furniture-v3"])
         this.load.image(`/guild/${name}.webp`, `/guild/${name}.webp`);
     }
     create() {
       if (failed) return;
+      bindLabResolution(this, parent);
       this.controller = new GuildLabController(this, bridge);
       bridge.status("ready");
     }
@@ -36,14 +38,16 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
       if (!document.hidden) this.controller?.update(delta, motion.matches);
     }
   }
-  // Match Phaser input space to the actual buffer; CSS scales both through the canvas bounds.
-  const density = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+  const buffer = labBufferSize(parent);
   const game = new engine.Game({
     type: engine.AUTO,
     parent,
-    width: LAB_WIDTH * density,
-    height: LAB_HEIGHT * density,
+    width: buffer.width,
+    height: buffer.height,
     backgroundColor: "#32281e",
+    // Tilemap + many filtered part textures intermittently overdraw the head in
+    // Phaser 4.2.1 Chromium WebGL. Separate texture batches preserve draw order.
+    render: { maxTextures: 1 },
     banner: false,
     audio: { noAudio: true },
     input: { keyboard: false },

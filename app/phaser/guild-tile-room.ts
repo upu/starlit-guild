@@ -1,12 +1,14 @@
 import type Phaser from "phaser";
 import { guildLabArt } from "@/lib/guild-lab-art";
 import { guildRoomSprite } from "@/lib/guild-menu-model";
+import type { GuildLabFilter } from "./guild-lab-filter";
 import { LAB_TILE, LAB_WIDTH, LAB_HEIGHT, labFurniture, labStations } from "@/lib/guild-lab-model";
 export class GuildTileRoom {
   private grid: Phaser.GameObjects.Graphics;
   constructor(
     private scene: Phaser.Scene,
     visit: (mode: "tea" | "work") => void,
+    private filter: GuildLabFilter,
   ) {
     this.layer(
       Array.from({ length: 16 }, (_, y) => Array.from({ length: 24 }, (_, x) => (x * 3 + y) % 2)),
@@ -31,6 +33,7 @@ export class GuildTileRoom {
       image
         .setDisplaySize(item.cols * LAB_TILE, (item.cols * LAB_TILE * height) / width)
         .setDepth(item.id === "chair" ? labStations.tea.y - 1 : y);
+      this.filter.add(image);
       if (item.id === "table" || item.id === "bench" || item.id === "chair")
         image.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
           visit(item.id === "bench" ? "work" : "tea");
@@ -40,22 +43,24 @@ export class GuildTileRoom {
     this.workCup();
   }
   private workCup() {
-    const asset = "/guild/leon-parts-v1.webp";
-    const [x, y, w, h] = guildLabArt.frames[15];
+    const asset = "/guild/leon-parts-v2.webp";
+    const [x, y, w, h] = guildLabArt.frames[12];
     this.scene.textures.get(asset).add("mixing-cup", 0, x, y, w, h);
-    this.scene.add
-      .image(518, 172, asset, "mixing-cup")
-      .setOrigin(0.5, 1)
-      .setDisplaySize((9 * w) / h, 9)
-      .setDepth(193);
+    this.filter.add(
+      this.scene.add
+        .image(518, 172, asset, "mixing-cup")
+        .setOrigin(0.5, 1)
+        .setDisplaySize((9 * w) / h, 9)
+        .setDepth(193),
+    );
   }
   private layer(data: number[][], size: number, y: number) {
-    const map = this.scene.make.tilemap({ data, tileWidth: 512, tileHeight: 512 });
-    const tiles = map.addTilesetImage("room", "/guild/room-tiles-v1.webp", 512, 512);
+    const map = this.scene.make.tilemap({ data, tileWidth: 128, tileHeight: 128 });
+    const tiles = map.addTilesetImage("room", "/guild/room-tiles-v1.webp", 128, 128, 2, 4);
     if (!tiles) throw new Error("Missing room tiles");
     map
       .createLayer(0, tiles, 0, y)
-      .setScale(size / 512)
+      .setScale(size / 128)
       .setDepth(-1000);
   }
   showGrid(show: boolean) {

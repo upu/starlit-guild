@@ -1,48 +1,51 @@
 import type Phaser from "phaser";
 import { guildLabArt } from "@/lib/guild-lab-art";
+import type { GuildLabFilter } from "./guild-lab-filter";
 import {
-  labFace,
+  LAB_ACTOR_SCALE,
   labFoot,
   labJoint,
   labPose,
   type LabPose,
   type Point,
 } from "@/lib/guild-lab-model";
-const ASSET = "/guild/leon-parts-v1.webp";
+const ASSET = "/guild/leon-parts-v2.webp";
 type Limb = { upper: Phaser.GameObjects.Container; lower: Phaser.GameObjects.Container };
 export class GuildCutout {
   readonly root: Phaser.GameObjects.Container;
   private body: Phaser.GameObjects.Container;
   private head: Phaser.GameObjects.Container;
   private cape: Phaser.GameObjects.Image;
-  private eyes: Phaser.GameObjects.Image;
   private shutEyes: Phaser.GameObjects.Image;
   private cup: Phaser.GameObjects.Image;
   private spoon: Phaser.GameObjects.Graphics;
   private legs: Limb[];
   private arms: Limb[];
   private joints: Phaser.GameObjects.Graphics;
-  constructor(private scene: Phaser.Scene) {
+  constructor(
+    private scene: Phaser.Scene,
+    private filter: GuildLabFilter,
+  ) {
     guildLabArt.frames.forEach(([x, y, w, h], i) =>
       scene.textures.get(ASSET).add(String(i), 0, x, y, w, h),
     );
     this.root = scene.add.container(0, 0);
     this.body = scene.add.container(0, 0);
     this.root.add(this.body);
+    this.legs = [this.limb(8, 9, 10, -43, 22, 27)];
+    this.arms = [this.limb(4, 5, 14, -81, 23, 25)];
     this.cape = this.part(3, 0, -84, 62, 0.86, 0.08);
     this.body.add(this.cape);
-    this.legs = [this.limb(8, 9, 10, -43, 22, 27), this.limb(10, 11, -9, -43, 22, 27)];
-    this.arms = [this.limb(4, 5, 17, -81, 23, 25)];
     this.body.add(this.part(2, 0, -67, 51));
+    this.legs.push(this.limb(10, 11, -9, -43, 22, 27));
     this.body.add(this.part(1, -4, -88, 19));
     this.head = scene.add.container(3, -91);
     this.head.add(this.part(0, 0, 0, 90, 0.5, 1));
-    this.eyes = this.part(12, labFace.eyes.x, labFace.eyes.y, 14);
-    this.shutEyes = this.part(13, labFace.eyes.x, labFace.eyes.y - 2, 9.5);
-    this.head.add([this.eyes, this.shutEyes, this.part(14, labFace.mouth.x, labFace.mouth.y, 2.3)]);
+    this.shutEyes = this.blinkPatch();
+    this.head.add(this.shutEyes);
     this.body.add(this.head);
     this.arms.push(this.limb(6, 7, -18, -80, 23, 25));
-    this.cup = this.part(15, 0, 0, 17, 0.5, 0);
+    this.cup = this.part(12, 0, 0, 17, 0.5, 0);
     this.body.add(this.cup);
     this.spoon = scene.add.graphics().setPosition(0, 23);
     this.spoon.lineStyle(3, 0x79502c).lineBetween(0, 0, 8, 16);
@@ -51,15 +54,22 @@ export class GuildCutout {
     this.joints = scene.add.graphics();
     this.root.add(this.joints);
   }
+  private blinkPatch() {
+    const [, , width, height] = guildLabArt.frames[0];
+    const scale = guildLabArt.head.displayHeight / height;
+    const [x, y, , patchHeight] = guildLabArt.head.blink.rect;
+    return this.part(13, (x - width / 2) * scale, (y - height) * scale, patchHeight * scale, 0, 0);
+  }
   private part(frame: number, x: number, y: number, height: number, ox = 0.5, oy = 0.5) {
     const image = this.scene.add.image(x, y, ASSET, String(frame)).setOrigin(ox, oy);
-    return image.setDisplaySize((height * image.frame.width) / image.frame.height, height);
+    image.setDisplaySize((height * image.frame.width) / image.frame.height, height);
+    return this.filter.add(image, LAB_ACTOR_SCALE);
   }
   private limb(a: number, b: number, x: number, y: number, upper: number, lower: number) {
     const top = this.scene.add.container(x, y);
     const bottom = this.scene.add.container(0, upper);
-    top.add(this.part(a, 0, -4, upper + 9, 0.5, 0));
-    bottom.add(this.part(b, 0, -5, lower + 9, 0.5, 0));
+    top.add(this.part(a, 0, -upper * 0.2, upper * 1.4, 0.5, 0));
+    bottom.add(this.part(b, 0, -lower * 0.2, lower * 1.4, 0.5, 0));
     top.add(bottom);
     this.body.add(top);
     return { upper: top, lower: bottom };
@@ -74,7 +84,6 @@ export class GuildCutout {
     this.body.y = pose.bob;
     this.head.rotation = pose.head;
     this.cape.rotation = pose.cape;
-    this.eyes.visible = !pose.blink;
     this.shutEyes.visible = pose.blink;
     this.cup.visible = mode === "tea";
     this.spoon.visible = mode === "work";

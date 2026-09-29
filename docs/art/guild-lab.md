@@ -5,9 +5,9 @@
 ## 実装
 
 - `app/guild-lab/`: 試作ページ、行動・拡大・一時停止・タイルと関節の表示。家具のタップも行動ボタンと同じ処理へ接続。
-- `app/phaser/guild-lab-game.ts` / `guild-lab-controller.ts`: Phaserの生成・破棄、活動への移動、表示時刻、カメラ。要求された移動だけ行い、到着すると休憩・作業・待機に移る。
+- `app/phaser/guild-lab-game.ts` / `guild-lab-controller.ts`: Phaserの生成・破棄、活動への移動、表示時刻、カメラ。`guild-lab-resolution.ts` は親要素のCSS寸法×DPR（上限3）へバッファを揃え、ResizeObserverとwindow resizeで追従する。Scale Managerとレンダラーを同じ寸法に揃え、CSSのタップ座標は一度だけ変換する。要求された移動だけ行い、到着すると休憩・作業・待機に移る。
 - `app/phaser/guild-tile-room.ts`: 共通32単位の床タイル、2マス四方の壁タイル、タイル寸法に合わせた家具。家具画像は既存 `furniture-v3` を使用し、床へ焼き込まない。人物と机・椅子の重なりは活動位置に合わせる。
-- `app/phaser/guild-cutout.ts`: 部位をPhaser Containerの親子関係に配置。頭・顔・胴・マント・上腕・前腕・腿・脛・カップを合成。全身の連番画像は使用せず、目だけ開閉差分。スプーンはPhaser Graphicsの小道具。
+- `app/phaser/guild-cutout.ts`: 部位をPhaser Containerの親子関係に配置。頭・顔・胴・マント・上腕・前腕・腿・脛・カップを合成。全身の連番画像は使用せず、顔は頭へ描き込み、まばたきだけ目元の差分パッチ。スプーンはPhaser Graphicsの小道具。
 - `lib/guild-lab-model.ts`: 家具の占有寸法、活動位置、通路、二関節の角度計算、接地・遊脚・飲茶の動き。`lib/guild-lab-art.ts` は素材のアルファ境界。
 
 キャラ・家具は初期試作の50%に揃え、床は24×16マス。顔の位置を補正し、カップの縁を回転中の口元へ合わせ、取っ手に手が届く角度を計算する。
@@ -18,17 +18,28 @@
 
 ## 素材と生成記録
 
-内蔵 `image_gen` のみで生成。キャラは `assets/source/road/leon-v1.png` を外見・塗りの参考にした。実際の生成指示全文は [guild-lab-prompts.json](guild-lab-prompts.json)。SharpはWebP変換・タイルセットの寸法正規化・アルファ境界測定に使用。
+内蔵 `image_gen` のみで生成。キャラは `assets/source/road/leon-v1.png` を外見・塗りの参考にした。実際の生成指示全文は [guild-lab-prompts.json](guild-lab-prompts.json)。SharpはWebP変換、縮小・縁の延長、アルファ境界測定、生成した頭同士の位置合わせと差分抽出に使用。v2は元の部品、道中のレオン、会話表情アトラスの下2行を参照し、顔の描き込みと丸く閉じた関節端を再生成した。
 
 | 原本 | 配信用 | 内容 |
 | --- | --- | --- |
-| `assets/source/guild/room-tiles-v1.png` | `public/guild/room-tiles-v1.webp` | 2×2。床2種・壁・窓付き壁。配信1024×1024、各512px |
-| `assets/source/guild/leon-parts-v1.png` | `public/guild/leon-parts-v1.webp` | 4×4の透明パーツ。頭、襟、胴、マント、左右の腕・脚、目の開閉、口、カップ。原寸lossless |
+| `assets/source/guild/room-tiles-v1.png` | `public/guild/room-tiles-v1.webp` | 2×2。床2種・壁・窓付き壁。配信264×264、各128px＋周囲2pxの延長（間隔4px） |
+| `assets/source/guild/leon-parts-v2.png` | `public/guild/leon-parts-v2.webp` | 顔を描き込んだ頭、襟、胴、マント、腕・脚、カップ、目元パッチの14フレーム。RGBA・lossless。旧単独の目と口は配信用から除去 |
+| `assets/source/guild/leon-head-open-v2.png` / `leon-head-blink-v2.png` | 上記アトラスの目元パッチ | 頭だけを切り出して閉じ目の編集を依頼。生成原本を保持 |
+
+## 差分の測定と縮小
+
+`node scripts/build-guild-lab-rig.mjs` で原本から配信用と `lib/guild-lab-art.ts` を再生成する。頭のアルファ境界で閉じ目の画像を位置合わせし、確認済みの目元領域内でRGB差24以上の範囲を求める。範囲は頭内の(128,184)、107×45px。外周3pxをフェザー処理し、目元以外は元の頭を描く。生成結果には髪などの微差もあるため、画像全体の差分は使用しない。口は注釈した口周辺の色条件で抽出した線の重心(178.556,243.889)を記録し、頭の縮尺・回転から飲茶の位置を求める。まばたき時も頭と同じ親Container内の測定座標へ配置する。
+
+`guild-lab-filter.ts` は冒険画面の `RoadSpriteFilter` をそのまま再利用する。キャラの0.5倍の親スケールとカメラ倍率を含む表示サイズから縮小段階を選び、元フレームから半分ずつ縮小したCanvasTextureをキャッシュする。倍率・画面サイズが変わったときも元のアトラスから選び直し、縮小済み画像をさらに縮小しない。家具のタップ領域も新しいフレーム寸法へ更新する。冒険画面の処理・既存テストは変更していない。Phaser 4.2.1とChromium WebGLの組み合わせでは、多数の縮小テクスチャとTilemapを混ぜた連続描画で床の矩形が頭へ重なる現象を再現したため、この試作だけ `maxTextures: 1` でテクスチャごとに描画を分ける。飲茶サイクル中の顔の画素もブラウザーテストで検査する。
+
+`node scripts/build-guild-lab-tiles.mjs` で床・壁の原本を各128pxへ縮小し、端の画素を外側2pxへ延長する。Tilemapは128px、margin 2、spacing 4として使い、隣のタイルや透明領域をサンプリングしない。
+
+奥側の腕・脚→マント→胴→手前側の脚・腕の順に重ね、関節の中心より両端を20%延長する。袖口の穴の代わりに丸い布の接続部を使用する。
 
 ## 確認
 
 `tests/guild-lab.test.mjs`: 関節の到達位置、飲茶中の口とカップの位置、接地中の滑り、経路の停止と家具回避、動きを減らす設定、素材のアルファ境界。
 
-`tests/guild-lab.browser.mjs`: 独立ブラウザーで休憩・歩行・作業・一時停止、拡大、DPR 2の家具タップ、320/390/844px、静止設定、再読み込み、素材読み込み失敗後の再試行、端末保存への書き込みがないことを確認。出力は `work/guild-lab-browser/`。スマホ実機の確認とは区別する。
+`tests/guild-lab.browser.mjs`: 独立ブラウザーで休憩・歩行・作業・一時停止、拡大、DPR 1/2/3と上限確認用4、320/390/844/1000pxでのバッファ実寸と家具タップ、静止設定、再読み込み、素材読み込み失敗後の再試行、端末保存への書き込みがないことを確認。390px・DPR3と1000px・DPR1で全体・拡大・歩行を撮影する。出力は `work/guild-lab-browser/`、修正前の比較画像は `work/lab-quality-before/`。スマホ実機の確認とは区別する。
 
 `tests/test-tools.integration.mjs` はビルド後、環境フラグ7条件で試作の200/404を確認する。Miniflare 5の `convertV4MiniflareOptions` で既存テスト設定を変換する。

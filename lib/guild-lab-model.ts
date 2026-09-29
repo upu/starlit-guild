@@ -1,9 +1,16 @@
+import { guildLabArt } from "./guild-lab-art.ts";
 export const LAB_TILE = 32;
 export const LAB_WIDTH = 24 * LAB_TILE;
 export const LAB_HEIGHT = 18 * LAB_TILE;
 export const LAB_ACTOR_SCALE = 0.5;
 export const LAB_WALK_SPEED = 0.08 * LAB_ACTOR_SCALE;
-export const labFace = { eyes: { x: 10, y: -20 }, mouth: { x: 17, y: -7 } };
+const headScale = guildLabArt.head.displayHeight / guildLabArt.frames[0][3];
+export const labFace = {
+  mouth: {
+    x: (guildLabArt.head.mouth.x - guildLabArt.frames[0][2] / 2) * headScale,
+    y: (guildLabArt.head.mouth.y - guildLabArt.frames[0][3]) * headScale,
+  },
+};
 export type LabMode = "tea" | "walk" | "work";
 export type LabPose = LabMode | "idle";
 export type Point = { x: number; y: number };

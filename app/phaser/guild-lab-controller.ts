@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import { GuildCutout } from "./guild-cutout";
 import { GuildTileRoom } from "./guild-tile-room";
+import { GuildLabFilter } from "./guild-lab-filter";
 import type { LabBridge } from "./guild-lab-game";
 import {
   LAB_WIDTH,
@@ -16,6 +17,7 @@ export class GuildLabController {
   private actor: GuildCutout;
   private room: GuildTileRoom;
   private shadow: Phaser.GameObjects.Ellipse;
+  private filter: GuildLabFilter;
   private elapsed = 0;
   private distance = 0;
   private request = -1;
@@ -25,9 +27,10 @@ export class GuildLabController {
     private scene: Phaser.Scene,
     private bridge: LabBridge,
   ) {
-    this.room = new GuildTileRoom(scene, bridge.visit);
+    this.filter = new GuildLabFilter(scene);
+    this.room = new GuildTileRoom(scene, bridge.visit, this.filter);
     this.shadow = scene.add.ellipse(0, 0, 31, 7, 0x231b15, 0.22);
-    this.actor = new GuildCutout(scene);
+    this.actor = new GuildCutout(scene, this.filter);
     this.actor.root.setPosition(labStations.tea.x, labStations.tea.y);
   }
   update(delta: number, reduced: boolean) {
@@ -51,6 +54,7 @@ export class GuildLabController {
     this.shadow.setPosition(position.x, position.y + 5).setDepth(position.y - 1);
     this.room.showGrid(controls.grid);
     this.camera(controls.close);
+    this.filter.update();
     if (activity !== this.activity) {
       this.activity = activity;
       this.bridge.activity(activity);
