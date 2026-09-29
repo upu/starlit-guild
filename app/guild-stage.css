@@ -5,87 +5,155 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #6c684a;
+  background: #20362a;
 }
-.guild-stage-floor {
+.guild-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
 }
-.guild-tea-table {
+.guild-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.guild-loading {
   position: absolute;
-  left: 15%;
-  top: 40%;
-  width: 31%;
-  height: 28%;
-  z-index: 9;
-  pointer-events: none;
-}
-.guild-tea-table > svg {
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  color: #e1d4ad;
+  background: #20362acc;
+  z-index: 30;
 }
 .guild-scene button.guild-bench-entry {
   position: absolute;
-  left: 55%;
-  top: 24%;
-  width: 42%;
+  left: 57.5%;
+  bottom: 48%;
+  width: 29%;
+  aspect-ratio: 469 / 319;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  z-index: 10;
+}
+.guild-duty-face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #e3c481;
+  border-radius: 10px;
+  background: #243b2de8;
+  color: #f6e1af;
+  box-shadow: 0 3px 8px #15251b99;
+  overflow: hidden;
+}
+.guild-bench-entry > .guild-duty-face {
+  position: absolute;
+  left: calc(50% - 22px);
+  bottom: -48px;
+}
+.guild-bench-time {
+  position: absolute;
+  top: calc(100% + 52px);
+  left: 0;
+  width: 100%;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px #000;
+  color: #fff0c4;
+  font-size: 11px;
+}
+.guild-scene button.guild-duty-marker {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  z-index: 12;
+}
+.guild-scene button.guild-live-plot {
+  position: absolute;
+  width: 36.5%;
   height: auto;
-  aspect-ratio: 180 / 115;
+  aspect-ratio: 448 / 261;
   padding: 0;
   border: 0;
   border-radius: 12px;
   background: transparent;
-  z-index: 10;
+  z-index: 5;
 }
-.guild-bench-entry:hover {
-  filter: brightness(1.06);
+.guild-live-plot > svg {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+.plot-linde-1 {
+  left: 11.25%;
+  bottom: 48.6667%;
+}
+.plot-linde-2 {
+  left: 50.75%;
+  bottom: 16.6667%;
+}
+.guild-scene button.plot-brekka-1 {
+  left: 21.5%;
+  bottom: 26%;
+  width: 49%;
+}
+.guild-scene .guild-live-plot .guild-empty-plot {
+  visibility: visible;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  left: calc(50% - 12px);
+  top: calc(45% - 12px);
+  color: #fff0ca;
+  filter: drop-shadow(0 2px 2px #302d1d);
 }
 .guild-craft-station {
   position: relative;
   width: 100%;
   height: 100%;
 }
-.guild-counter-art,
-.guild-counter-front {
+.guild-counter-art {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
+  left: 35%;
+  top: 12%;
+  width: 65%;
+  aspect-ratio: 469 / 319;
+  z-index: 3;
 }
-.guild-counter-art svg,
-.guild-counter-front svg {
+.guild-counter-art svg {
   width: 100%;
   height: 100%;
 }
-.guild-counter-front {
-  z-index: 3;
-}
 .guild-counter-worker {
   position: absolute;
-  bottom: 35%;
-  left: 2%;
-  width: 49%;
+  left: -3%;
+  bottom: 6%;
+  width: 43%;
   height: 94%;
   z-index: 2;
 }
 .guild-craft-tool {
   position: absolute;
-  left: 28%;
-  top: 8%;
-  width: 40%;
-  height: 58%;
+  left: 35%;
+  top: 17%;
+  width: 27%;
+  height: 48%;
   z-index: 4;
   overflow: visible;
 }
 .guild-craft-status {
   position: absolute;
   z-index: 5;
-  left: 18%;
+  left: 38%;
   right: 0;
-  bottom: -8px;
+  bottom: -2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,6 +169,30 @@
 .guild-craft-status svg {
   width: 24px;
   height: 24px;
+}
+.guild-figure {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.guild-figure.faces-left {
+  transform: scaleX(-1);
+}
+.guild-pose {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.guild-pose-1 {
+  opacity: 0;
+}
+.is-working .guild-pose-0 {
+  animation: guild-pose-a 1.1s steps(1) infinite;
+}
+.is-working .guild-pose-1 {
+  animation: guild-pose-b 1.1s steps(1) infinite;
 }
 .guild-pot-steam {
   opacity: 0;
@@ -118,382 +210,6 @@
 }
 .is-crafting .guild-pot-steam {
   animation: guild-steam 2s infinite;
-}
-.guild-resident {
-  position: absolute;
-  width: 17%;
-  height: 28%;
-  transform: translate(-50%, -100%);
-  pointer-events: none;
-  z-index: 8;
-}
-.guild-resident::after {
-  content: "";
-  position: absolute;
-  bottom: -1%;
-  left: 12%;
-  width: 76%;
-  height: 9%;
-  border-radius: 50%;
-  background: #25322340;
-  filter: blur(2px);
-  z-index: -1;
-}
-.guild-standing,
-.guild-strolling,
-.guild-figure {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-.guild-figure.faces-left {
-  transform: scaleX(-1);
-}
-.guild-pose {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.guild-pose-1,
-.guild-strolling {
-  opacity: 0;
-}
-.is-working .guild-pose-0 {
-  animation: guild-pose-a 1s steps(1) infinite;
-}
-.is-working .guild-pose-1 {
-  animation: guild-pose-b 1s steps(1) infinite;
-}
-.is-walking .guild-pose-0 {
-  animation: guild-pose-a 0.36s steps(1) infinite;
-}
-.is-walking .guild-pose-1 {
-  animation: guild-pose-b 0.36s steps(1) infinite;
-}
-.resident-visitor-0 {
-  left: 13%;
-  top: 63%;
-}
-.resident-visitor-1 {
-  left: 49%;
-  top: 68%;
-}
-.resident-visitor-2 {
-  left: 55%;
-  top: 86%;
-}
-.resident-visitor-3 {
-  left: 19%;
-  top: 89%;
-}
-.resident-visitor-4 {
-  left: 81%;
-  top: 83%;
-}
-.resident-garden {
-  left: 62%;
-  top: 43%;
-}
-.resident-moss {
-  left: 86%;
-  top: 58%;
-}
-.guild-chatter {
-  position: absolute;
-  left: 11%;
-  top: 33%;
-  width: 39%;
-  display: flex;
-  justify-content: space-between;
-  pointer-events: none;
-  z-index: 11;
-}
-.guild-chatter i {
-  padding: 0 7px;
-  border-radius: 9px 9px 9px 0;
-  background: #fff0ce;
-  color: #304a3b;
-  font: bold 15px serif;
-  animation: guild-converse 24s infinite;
-}
-.guild-work-spark {
-  position: absolute;
-  right: 0;
-  top: 45%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #dee9a9;
-  box-shadow: 0 0 5px #ddea9c;
-  animation: guild-steam 2s infinite;
-}
-.can-stroll {
-  animation: guild-route-a 24s linear infinite;
-}
-.resident-visitor-1.can-stroll {
-  animation-name: guild-route-b;
-}
-.resident-visitor-2.can-stroll {
-  animation-name: guild-route-c;
-}
-.resident-visitor-3.can-stroll {
-  animation-name: guild-route-d;
-}
-.resident-visitor-4.can-stroll {
-  animation-name: guild-route-e;
-}
-.resident-garden.can-stroll {
-  animation-name: guild-route-garden;
-}
-.resident-moss.can-stroll {
-  animation-name: guild-route-moss;
-}
-.can-stroll .guild-standing {
-  animation: guild-standing 24s steps(1) infinite;
-}
-.can-stroll .guild-strolling {
-  animation: guild-strolling 24s steps(1) infinite;
-}
-.can-stroll .guild-strolling .guild-figure {
-  animation: guild-facing 24s steps(1) infinite;
-}
-.guild-scene button.guild-live-plot {
-  position: absolute;
-  width: 43%;
-  height: auto;
-  aspect-ratio: 240 / 140;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 12px;
-  z-index: 5;
-}
-.guild-live-plot > svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.guild-live-plot:hover {
-  filter: brightness(1.08);
-}
-.plot-linde-1 {
-  left: 10%;
-  top: 20%;
-}
-.plot-linde-2 {
-  left: 49%;
-  top: 57%;
-}
-.guild-scene button.plot-brekka-1 {
-  left: 18%;
-  top: 33%;
-  width: 61%;
-  height: auto;
-}
-.guild-scene .guild-live-plot .guild-empty-plot {
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  left: calc(50% - 12px);
-  top: calc(45% - 12px);
-  color: #e1c388;
-  filter: drop-shadow(0 2px 2px #302d1d);
-}
-.guild-plot-meter {
-  position: absolute;
-  bottom: -24px;
-  left: -2%;
-  width: 104%;
-  padding: 4px 5px;
-  background: #263e30ed;
-  border: 1px solid #9aaa6e;
-  color: #eddfb7;
-  border-radius: 6px;
-}
-.guild-plot-meter > span {
-  display: flex;
-  justify-content: space-between;
-  gap: 3px;
-  font-size: 11px;
-  white-space: nowrap;
-}
-.guild-plot-meter small {
-  font-size: 10px;
-}
-.guild-plot-meter progress {
-  display: block;
-  appearance: none;
-  width: 100%;
-  height: 5px;
-  margin-top: 4px;
-  border: 0;
-  border-radius: 3px;
-  overflow: hidden;
-  background: #162c24;
-}
-.guild-plot-meter progress::-webkit-progress-bar {
-  background: #162c24;
-}
-.guild-plot-meter progress::-webkit-progress-value {
-  background: #c8cf77;
-}
-.guild-plot-meter progress::-moz-progress-bar {
-  background: #c8cf77;
-}
-@keyframes guild-route-a {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 13%;
-    top: 63%;
-  }
-  38%,
-  68% {
-    left: 29%;
-    top: 79%;
-  }
-}
-@keyframes guild-route-b {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 49%;
-    top: 68%;
-  }
-  38%,
-  68% {
-    left: 65%;
-    top: 80%;
-  }
-}
-@keyframes guild-route-c {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 55%;
-    top: 86%;
-  }
-  38%,
-  68% {
-    left: 43%;
-    top: 93%;
-  }
-}
-@keyframes guild-route-d {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 19%;
-    top: 89%;
-  }
-  38%,
-  68% {
-    left: 34%;
-    top: 88%;
-  }
-}
-@keyframes guild-route-e {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 81%;
-    top: 83%;
-  }
-  38%,
-  68% {
-    left: 74%;
-    top: 94%;
-  }
-}
-@keyframes guild-route-garden {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 62%;
-    top: 43%;
-  }
-  30%,
-  77% {
-    left: 41%;
-    top: 55%;
-  }
-  38%,
-  68% {
-    left: 41%;
-    top: 77%;
-  }
-}
-@keyframes guild-route-moss {
-  0%,
-  22%,
-  87%,
-  100% {
-    left: 86%;
-    top: 58%;
-  }
-  30%,
-  77% {
-    left: 86%;
-    top: 32%;
-  }
-  38%,
-  68% {
-    left: 66%;
-    top: 27%;
-  }
-}
-@keyframes guild-standing {
-  0%,
-  38%,
-  87% {
-    opacity: 1;
-  }
-  22%,
-  68% {
-    opacity: 0;
-  }
-}
-@keyframes guild-strolling {
-  0%,
-  38%,
-  87% {
-    opacity: 0;
-  }
-  22%,
-  68% {
-    opacity: 1;
-  }
-}
-@keyframes guild-facing {
-  0% {
-    transform: none;
-  }
-  68% {
-    transform: scaleX(-1);
-  }
-}
-@keyframes guild-converse {
-  0%,
-  4%,
-  22%,
-  87%,
-  100% {
-    opacity: 0;
-  }
-  6%,
-  20%,
-  90%,
-  98% {
-    opacity: 1;
-  }
 }
 @keyframes guild-pose-a {
   50% {
@@ -536,16 +252,54 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .guild-scene *,
   .guild-bench-preview * {
     animation: none !important;
   }
-  .guild-pose-1,
-  .guild-strolling {
+  .guild-pose-1 {
     opacity: 0 !important;
   }
-  .guild-pose-0,
-  .guild-standing {
+  .guild-pose-0 {
     opacity: 1 !important;
   }
+}
+.guild-plot-meter {
+  position: absolute;
+  bottom: -24px;
+  left: -2%;
+  width: 104%;
+  padding: 4px 5px;
+  background: #263e30ed;
+  border: 1px solid #9aaa6e;
+  color: #eddfb7;
+  border-radius: 6px;
+}
+.guild-plot-meter > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.guild-plot-meter small {
+  font-size: 10px;
+}
+.guild-plot-meter progress {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #162c24;
+}
+.guild-plot-meter progress::-webkit-progress-bar {
+  background: #162c24;
+}
+.guild-plot-meter progress::-webkit-progress-value {
+  background: #c8cf77;
+}
+.guild-plot-meter progress::-moz-progress-bar {
+  background: #c8cf77;
 }

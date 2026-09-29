@@ -89,7 +89,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 
 ## 実装の分担
 
-冒険の描画はPhaserを使う。キャラクター、会話、設定などはReact側で扱い、進行・保存の判定を描画ループへ重複実装しない。
+冒険と旅団の描画はPhaserを使う。キャラクター、会話、設定などはReact側で扱い、進行・保存の判定を描画ループへ重複実装しない。
 
 - [Phaser冒険画面](phaser-adventure.md) — 描画構成と検証範囲
 - [ゲームプレイ仕様](../gameplay/gameplay.md) — プレイヤーから見える現行挙動
@@ -119,7 +119,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 <!-- manual-test-inventory:start -->
 | テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
 | --- | --- | --- | --- |
-| `tests/guild.browser.mjs` 旅団ホーム・栽培地切替・歩行と動きを減らす設定・絵による購入と植え付け・担当・作業台の動作・成長表示・留守中の復帰・在室条件による自動会話と停止・表情 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/guild.browser.mjs` | `work/guild-browser/` の画像・`results.json` |
+| `tests/guild.browser.mjs` 旅団のPhaser描画・栽培地切替・歩行と動きを減らす設定・高解像度・絵による購入と植え付け・現地の担当アイコン・作業台の動作・成長表示・留守中の復帰・在室条件による自動会話と停止・表情 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/guild.browser.mjs` | `work/guild-browser/` の画像・`results.json` |
 | `tests/quest-picker.browser.mjs` 行先選択・設定・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身が部品を組み立てて一時サーバーを起動 | `node tests/quest-picker.browser.mjs` | `work/quest-picker-browser/` の画像・`results.json` |
 | `tests/story-video.browser.mjs` 再生・停止・再視聴・代替表示 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/story-video.browser.mjs` | `work/story-video-browser/` の画像、終了表示 |
 | `tests/character-panel.browser.mjs` 人物画面・装備候補・スキル・消耗品の購入/登録/通知・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/character-panel.browser.mjs` | `work/character-browser/` の画像、終了表示 |

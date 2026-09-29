@@ -84,7 +84,16 @@ export function GuildPanel(props: PanelProps) {
           }}
         />
       ) : (
-        <GuildGardenScene state={state} now={now} site={site} onSite={setSite} onPlot={visit} />
+        <GuildGardenScene
+          state={state}
+          now={now}
+          site={site}
+          onSite={setSite}
+          onPlot={visit}
+          onRoles={() => {
+            visit("roles");
+          }}
+        />
       )}
       {view === "home" && <GuildChat {...props} paused={props.paused === true || sheet !== null} />}
       <GuildToolbar
@@ -95,14 +104,8 @@ export function GuildPanel(props: PanelProps) {
         onGarden={() => {
           setView("garden");
         }}
-        onWorkbench={() => {
-          visit("workbench");
-        }}
         onShop={() => {
           visit("shop");
-        }}
-        onRoles={() => {
-          visit("roles");
         }}
       />
       <GuildFacility

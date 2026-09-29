@@ -1,7 +1,7 @@
 import type { State } from "@/lib/game";
-import { GuildResidents } from "./guild-residents";
-import { GuildStageFloor } from "./guild-stage-floor";
-import { GuildCraftStation, GuildTableArt } from "./guild-stage-props";
+import { PhaserGuild } from "./phaser-guild";
+import { GuildDutyFace } from "./guild-duty-marker";
+import { craftStatus } from "./guild-stage-props";
 export type GuildPlace = "workbench" | "shop" | "roles";
 export const guildPlaces = { workbench: "作業台", shop: "種・材料", roles: "担当" };
 export function GuildScene({
@@ -13,20 +13,18 @@ export function GuildScene({
   now: number;
   onWorkbench: () => void;
 }) {
+  const work = state.guild?.work;
   return (
     <div className="guild-scene guild-home-scene">
-      <GuildStageFloor />
-      <div className="guild-tea-table">
-        <GuildTableArt />
-      </div>
-      <GuildResidents state={state} />
+      <PhaserGuild state={state} now={now} site="home" />
       <button
         className="guild-bench-entry"
         aria-label="作業台の仕込み"
         data-guild-control="workbench"
         onClick={onWorkbench}
       >
-        <GuildCraftStation state={state} now={now} />
+        <GuildDutyFace id={state.guild?.roles.workbench} />
+        {work && <span className="guild-bench-time">{craftStatus(state, now)}</span>}
       </button>
     </div>
   );

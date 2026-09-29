@@ -1,6 +1,6 @@
 import { Coins } from "lucide-react";
 import { useState } from "react";
-import { guildProducts, guildMaterialName } from "@/lib/guild-content";
+import { guildProducts } from "@/lib/guild-content";
 import { guildStock } from "@/lib/guild-production";
 import { guildUnlocked } from "@/lib/guild-base";
 import type { GuildProps } from "./guild-controls";
@@ -53,14 +53,6 @@ export function GuildShop({ state, ready, onAction }: GuildProps) {
       <p className="guild-purchase-notice" role="status" aria-live="polite">
         {notice}
       </p>
-      <div className="guild-stock-row" aria-label="収穫物の在庫">
-        {["herbs", "carrot", "dried-moss"].map((id) => (
-          <span key={id} title={guildMaterialName(id)}>
-            <GuildItemIcon id={id} />
-            <b>{guildStock(state, id)}</b>
-          </span>
-        ))}
-      </div>
     </section>
   );
 }

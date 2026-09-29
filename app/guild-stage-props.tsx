@@ -3,45 +3,7 @@ import { GuildItemIcon } from "./guild-item-icon";
 import { guildRecipes } from "@/lib/guild-content";
 import type { State } from "@/lib/game";
 import { timeRemaining } from "./guild-controls";
-
-export function GuildTableArt() {
-  return (
-    <svg viewBox="0 0 180 120" aria-hidden="true">
-      <ellipse cx="90" cy="102" rx="77" ry="14" fill="#19272040" />
-      <path d="M35 48v52m110-52v52M64 58v51m55-51v51" stroke="#5b3d2a" strokeWidth="12" />
-      <ellipse cx="90" cy="47" rx="78" ry="31" fill="#795335" stroke="#cfac72" strokeWidth="3" />
-      <ellipse cx="90" cy="40" rx="78" ry="28" fill="#bb8b50" stroke="#705134" strokeWidth="3" />
-      <path d="M24 33h132M28 50h124M74 14v52m32-52v52" stroke="#92673e" strokeWidth="2" />
-      <ellipse cx="63" cy="38" rx="13" ry="6" fill="#d6ceb0" />
-      <path d="M54 26h16v14q-8 8-16 0Z" fill="#e3d5ad" stroke="#78694b" strokeWidth="2" />
-      <path d="M114 25h16v14q-8 8-16 0Z" fill="#93afa1" stroke="#5e7866" strokeWidth="2" />
-    </svg>
-  );
-}
-function WorkbenchArt({ front = false }: { front?: boolean }) {
-  if (front)
-    return (
-      <svg viewBox="0 0 180 115" aria-hidden="true">
-        <path
-          d="M30 64 175 48v19L30 85 10 59V46Z"
-          fill="#916237"
-          stroke="#5d422b"
-          strokeWidth="3"
-        />
-        <path d="m30 64 145-16M31 72l142-17" stroke="#d0a16a" strokeWidth="2" />
-      </svg>
-    );
-  return (
-    <svg viewBox="0 0 180 115" aria-hidden="true">
-      <ellipse cx="95" cy="101" rx="79" ry="12" fill="#14271d44" />
-      <path d="M28 52v49m132-57v57" stroke="#694a31" strokeWidth="13" />
-      <path d="M10 30 153 20 175 48 30 64Z" fill="#cda268" stroke="#755536" strokeWidth="3" />
-      <path d="M43 32h47l15 13-48 6Z" fill="#d8bc84" stroke="#937343" strokeWidth="2" />
-      <path d="M128 19h19v25h-19Z" fill="#849e86" stroke="#425d4b" strokeWidth="2" />
-      <path d="M127 18h21" stroke="#d7bd82" strokeWidth="5" />
-    </svg>
-  );
-}
+import { GuildPropImage } from "./guild-prop-image";
 export function GuildCraftStation({
   state,
   now,
@@ -64,10 +26,7 @@ export function GuildCraftStation({
         </span>
       )}
       <div className="guild-counter-art">
-        <WorkbenchArt />
-      </div>
-      <div className="guild-counter-front">
-        <WorkbenchArt front />
+        <GuildPropImage frame={1} />
       </div>
       <CraftTool recipe={recipe.id} />
       {work && (
@@ -80,7 +39,7 @@ export function GuildCraftStation({
   );
 }
 
-function craftStatus(state: State, now: number) {
+export function craftStatus(state: State, now: number) {
   const guild = state.guild;
   if (!guild?.roles.workbench) return "一時停止";
   if (!guild.work?.batch) return "材料・空き待ち";

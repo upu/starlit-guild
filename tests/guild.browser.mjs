@@ -13,7 +13,10 @@ mkdirSync(output, { recursive: true });
 const errors = [],
   results = [];
 async function open(stages = 37) {
-  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 2,
+  });
   const page = await context.newPage(),
     state = testState(Date.now(), stages, 40, 10000);
   const id = "11111111-1111-4111-8111-111111111111";
@@ -52,38 +55,22 @@ async function stateOf(page) {
   );
 }
 async function checkMotion(page) {
-  const phase = (time) =>
-    page.locator(".guild-scene").evaluate((scene, at) => {
-      for (const animation of scene.getAnimations({ subtree: true })) {
-        animation.pause();
-        animation.currentTime = at;
-      }
-    }, time);
-  const actor = page.locator(".resident-visitor-0");
-  await phase(1000);
-  const before = await actor.boundingBox();
-  await phase(7500);
-  const after = await actor.boundingBox();
-  assert.ok(
-    before && after && Math.hypot(after.x - before.x, after.y - before.y) > 15,
-    "resident walks through the room",
-  );
-  assert.equal(
-    await actor.locator(".guild-strolling").evaluate((el) => getComputedStyle(el).opacity),
-    "1",
-    "walking atlas visible while moving",
-  );
+  const canvas = page.locator(".guild-canvas canvas");
+  const before = await canvas.screenshot();
+  await page.clock.runFor(6500);
+  const after = await canvas.screenshot();
+  assert.ok(!before.equals(after), "Phaser animates residents and tools");
   await capture(page, "home-walking");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  assert.equal(await actor.evaluate((el) => getComputedStyle(el).animationName), "none");
-  assert.equal(
-    await actor.locator(".guild-strolling").evaluate((el) => getComputedStyle(el).opacity),
-    "0",
-  );
+  await page.clock.runFor(100);
+  const still = await canvas.screenshot();
+  await page.clock.runFor(1500);
+  assert.ok(still.equals(await canvas.screenshot()), "reduced motion holds the scene still");
   await page.emulateMedia({ reducedMotion: "no-preference" });
 }
 async function capture(page, name) {
   await page.clock.runFor(350);
+  await page.locator('.guild-canvas[data-status="ready"]').waitFor();
   await page.locator(".guild-detail[data-state=closed]").waitFor({ state: "hidden" });
   await page.locator(".guild-scene").evaluate(async (scene) => {
     const sources = [
@@ -155,6 +142,11 @@ try {
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
   assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
   await capture(page, "overview");
+  assert.equal(await page.locator(".guild-toolbar button").count(), 2);
+  const density = await page
+    .locator(".guild-canvas canvas")
+    .evaluate((canvas) => canvas.width / canvas.clientWidth);
+  assert.ok(Math.abs(density - 2) < 0.02, "canvas keeps device-pixel density");
   await tellStory(page, "guild-waiting-for-a-charm");
   await page.getByRole("button", { name: "種・材料", exact: true }).click();
   for (const name of ["薬草の種", "ニンジンの種", "苔の胞子", "蜂蜜"]) {
@@ -164,7 +156,7 @@ try {
   await capture(page, "shop");
   await closeDialog(page);
   await page.getByRole("button", { name: "菜園", exact: true }).click();
-  await page.getByRole("button", { name: "担当", exact: true }).click();
+  await page.getByRole("button", { name: "リンデの菜園の担当を選ぶ", exact: true }).click();
   await page.getByRole("button", { name: "リンデの世話係：アリア", exact: true }).click();
   await closeDialog(page);
   for (const [name, crop] of [
@@ -180,7 +172,7 @@ try {
   assert.equal(await page.getByRole("progressbar").count(), 2, "growth visible on the scene");
   await capture(page, "linde-planted");
   await page.getByRole("button", { name: "ブレッカの栽培所", exact: true }).click();
-  await page.getByRole("button", { name: "担当", exact: true }).click();
+  await page.getByRole("button", { name: "ブレッカの栽培所の担当を選ぶ", exact: true }).click();
   assert.ok(
     await page
       .getByRole("button", { name: "ブレッカの世話係：アリア（リンデの世話係）", exact: true })
@@ -210,7 +202,7 @@ try {
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
-  await page.getByRole("button", { name: "作業台", exact: true }).click();
+  await page.getByRole("button", { name: "作業台の仕込み", exact: true }).click();
   await page.getByRole("button", { name: "加工担当：ミラ", exact: true }).click();
   await page.getByRole("button", { name: "薬草と蜂蜜のお茶", exact: true }).click();
   await page.getByLabel("作る回数（1〜99）").fill("");
@@ -252,7 +244,7 @@ try {
     ["ブレッカの栽培所", "ブレッカの世話係"],
   ]) {
     await page.getByRole("button", { name: site, exact: true }).click();
-    await page.getByRole("button", { name: "担当", exact: true }).click();
+    await page.getByRole("button", { name: `${site}の担当を選ぶ`, exact: true }).click();
     await page.getByRole("button", { name: `${role}を外す`, exact: true }).click();
     await closeDialog(page);
   }
