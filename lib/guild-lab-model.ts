@@ -1,4 +1,5 @@
 import { guildLabArt } from "./guild-lab-art.ts";
+import { labRig } from "./guild-lab-rig.ts";
 export const LAB_TILE = 32;
 export const LAB_WIDTH = 24 * LAB_TILE;
 export const LAB_HEIGHT = 18 * LAB_TILE;
@@ -62,9 +63,23 @@ export function labFoot(time: number, offset: number) {
     ? { x: 18 - phase * 72, y: 0 }
     : { x: -18 + (phase - 0.5) * 72, y: -Math.sin((phase - 0.5) * Math.PI * 2) * 12 };
 }
+export function labLegTarget(time: number, offset: number, mode: LabPose, bob: number) {
+  if (mode === "tea") return labRig.seatedFoot;
+  const foot = mode === "walk" ? labFoot(time, offset) : { x: 2, y: 0 };
+  return { x: foot.x, y: -labRig.legs[0].joint.y + foot.y - bob };
+}
+export function labFarHand(time: number, mode: LabPose) {
+  const arm = labRig.arms[0];
+  const swing = mode === "walk" ? Math.sin((time / 900) * Math.PI * 2) * arm.walkSwing : 0;
+  return { x: arm.restHand.x + swing, y: arm.restHand.y };
+}
 function handPosition(t: number, mode: LabPose) {
   if (mode === "work") return { x: 38 + Math.sin(t / 220) * 4, y: -10 + Math.cos(t / 220) * 3 };
-  return { x: mode === "walk" ? Math.sin((t / 900) * Math.PI * 2) * 17 : 7, y: 41 };
+  const arm = labRig.arms[1];
+  return {
+    x: mode === "walk" ? Math.sin((t / 900) * Math.PI * 2) * arm.walkSwing : arm.restHand.x,
+    y: arm.restHand.y,
+  };
 }
 function rotate(point: Point, angle: number) {
   return {
@@ -74,7 +89,7 @@ function rotate(point: Point, angle: number) {
 }
 export function labTeaCup(sip: number, headAngle: number) {
   const face = rotate(labFace.mouth, headAngle);
-  const mouth = { x: 3 + face.x, y: -91 + face.y };
+  const mouth = { x: labRig.head.x + face.x, y: labRig.head.y + face.y };
   const angle = -0.12 * sip;
   // Contact is on the near rim; the glove holds the handle below it.
   const rim = rotate({ x: -7, y: 2.5 }, angle);
@@ -87,13 +102,20 @@ export function labTeaCup(sip: number, headAngle: number) {
     angle,
     mouth,
     rim: { x: x + rim.x, y: y + rim.y },
-    hand: { x: x + grip.x + 18, y: y + grip.y + 80 },
+    hand: { x: x + grip.x - labRig.arms[1].joint.x, y: y + grip.y - labRig.arms[1].joint.y },
   };
 }
-function bodyMotion(t: number, walking: boolean) {
+function bodyMotion(t: number, mode: LabPose) {
   const phase = (t / 900) * Math.PI * 2;
+  const walking = mode === "walk";
+  const [upper, lower] = labRig.legs[0].lengths;
+  const reach = (upper + lower) * labRig.stanceReach;
+  const planted = labFoot(t, t % 900 < 450 ? 0 : 0.5);
+  // Raise the hip over the planted foot without moving that foot on the floor.
+  const standing =
+    -labRig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : 4));
   return {
-    bob: walking ? -Math.abs(Math.sin(phase)) * 3 : Math.sin(t / 900) * 0.8,
+    bob: mode === "tea" ? Math.sin(t / 900) * 0.8 : standing,
     head: walking ? Math.sin(phase) * 0.025 : Math.sin(t / 1500) * 0.035,
     cape: Math.sin(t / 350) * (walking ? 0.12 : 0.025),
   };
@@ -104,7 +126,7 @@ export function labPose(time: number, mode: LabPose, reduced: boolean) {
     mode === "tea"
       ? (1 - Math.cos(Math.min(1, Math.max(0, ((t % 8000) - 3500) / 3000)) * Math.PI * 2)) / 2
       : 0;
-  const motion = bodyMotion(t, mode === "walk");
+  const motion = bodyMotion(t, mode);
   const cup = labTeaCup(sip, motion.head);
   return {
     ...motion,
@@ -112,5 +134,6 @@ export function labPose(time: number, mode: LabPose, reduced: boolean) {
     sip,
     cup,
     hand: mode === "tea" ? cup.hand : handPosition(t, mode),
+    farHand: labFarHand(t, mode),
   };
 }

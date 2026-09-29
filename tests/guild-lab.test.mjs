@@ -13,7 +13,10 @@ import {
   LAB_ACTOR_SCALE,
   LAB_WALK_SPEED,
   labTeaCup,
+  labLegTarget,
+  labFarHand,
 } from "../lib/guild-lab-model.ts";
+import { labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 
 test("cutout joints reach hand/foot targets and stay finite at unreachable positions", () => {
@@ -162,8 +165,8 @@ test("blink patch uses measured head coordinates, preserves the mouth, and tiles
   assert.ok(changed > 100);
   const cup = labTeaCup(1, 0),
     scale = displayHeight / hh;
-  assert.ok(Math.abs(cup.mouth.x - (3 + (mouth.x - hw / 2) * scale)) < 0.001);
-  assert.ok(Math.abs(cup.mouth.y - (-91 + (mouth.y - hh) * scale)) < 0.001);
+  assert.ok(Math.abs(cup.mouth.x - (labRig.head.x + (mouth.x - hw / 2) * scale)) < 0.001);
+  assert.ok(Math.abs(cup.mouth.y - (labRig.head.y + (mouth.y - hh) * scale)) < 0.001);
   const image = await sharp("public/guild/room-tiles-v1.webp").ensureAlpha().raw().toBuffer();
   for (const col of [0, 132])
     for (const row of [0, 132]) {
@@ -176,4 +179,93 @@ test("blink patch uses measured head coordinates, preserves the mouth, and tiles
         assert.deepEqual(pixel(n + 2, 131), pixel(n + 2, 129));
       }
     }
+});
+
+test("planted knees extend to 96 percent reach without sliding or leaving the floor", () => {
+  for (let t = 0; t < 900; t += 10)
+    for (const offset of [0, 0.5]) {
+      const pose = labPose(t, "walk", false);
+      const target = labLegTarget(t, offset, "walk", pose.bob);
+      const [upper, lower] = labRig.legs[0].lengths;
+      const distance = Math.hypot(target.x, target.y);
+      if ((t / 900 + offset) % 1 < 0.5) {
+        assert.ok(distance / (upper + lower) >= 0.95 && distance / (upper + lower) <= 0.97);
+        const angle = labJoint(target, upper, lower, -1);
+        assert.ok(Math.abs(angle.lower) < 0.65, "planted knee bends less than 38 degrees");
+        assert.ok(Math.abs(labRig.legs[0].joint.y + pose.bob + target.y) < 0.001);
+        const next = labLegTarget(t + 1, offset, "walk", labPose(t + 1, "walk", false).bob);
+        assert.ok(Math.abs((next.x - target.x) * LAB_ACTOR_SCALE + LAB_WALK_SPEED) < 0.001);
+      } else assert.ok(distance < (upper + lower) * 0.97, "only the swinging knee folds");
+    }
+});
+
+test("far shoulder sits inside the painted torso and its hand swings opposite the near arm", async () => {
+  const [left, top, width, height] = guildLabArt.frames[2],
+    torso = labRig.torso;
+  const arm = labRig.arms[0];
+  const scale = torso.height / height;
+  const x = Math.round(width / 2 + (arm.joint.x - torso.x) / scale);
+  const y = Math.round(height / 2 + (arm.joint.y - torso.y) / scale);
+  const pixels = await sharp("public/guild/leon-parts-v2.webp")
+    .extract({ left, top, width, height })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  // Check a visible margin around the attachment, not just a point at the edge.
+  for (let dx = -8; dx <= 8; dx++)
+    for (let dy = -8; dy <= 8; dy++) assert.ok(pixels[((y + dy) * width + x + dx) * 4 + 3] > 240);
+  assert.ok(arm.joint.x + labFarHand(0, "idle").x < 0, "idle glove rests behind the torso");
+  for (const t of [225, 675]) {
+    const near = labPose(t, "walk", false).hand.x;
+    assert.ok((labFarHand(t, "walk").x + 8) * near < 0);
+  }
+  assert.ok(labRig.head.y > -91 && labRig.head.y < labRig.scarf.y + 2);
+});
+
+test("painted hip caps stay behind the opaque coat hem while seated and throughout a stride", async () => {
+  const pixels = async (frame) => {
+    const [left, top, width, height] = guildLabArt.frames[frame];
+    return {
+      width,
+      height,
+      data: await sharp("public/guild/leon-parts-v2.webp")
+        .extract({ left, top, width, height })
+        .ensureAlpha()
+        .raw()
+        .toBuffer(),
+    };
+  };
+  const torso = await pixels(labRig.torso.frame);
+  const torsoScale = labRig.torso.height / torso.height;
+  for (const [index, leg] of labRig.legs.entries()) {
+    assert.ok(leg.layer < labRig.torso.layer);
+    const thigh = await pixels(leg.frames[0]);
+    const scale = (leg.lengths[0] * (1 + leg.overlap[0][0] + leg.overlap[0][1])) / thigh.height;
+    // The closed proximal oval occupies the first 35 source rows of each thigh.
+    const cap = [];
+    for (let row = 0; row < 35; row++)
+      for (let col = 0; col < thigh.width; col++) {
+        if (thigh.data[(row * thigh.width + col) * 4 + 3] > 200)
+          cap.push({
+            x: (col - thigh.width / 2) * scale,
+            y: row * scale - leg.lengths[0] * leg.overlap[0][0],
+          });
+      }
+    for (const mode of ["tea", "walk", "work"])
+      for (let t = 0; t < 900; t += 15) {
+        const pose = labPose(t, mode, false);
+        const target = labLegTarget(t, index / 2, mode, pose.bob);
+        const a = labJoint(target, ...leg.lengths, leg.bend).upper;
+        for (const point of cap) {
+          const x = leg.joint.x + point.x * Math.cos(a) - point.y * Math.sin(a);
+          const y = leg.joint.y + point.x * Math.sin(a) + point.y * Math.cos(a);
+          const tx = Math.round((x - labRig.torso.x) / torsoScale + torso.width / 2);
+          const ty = Math.round((y - labRig.torso.y) / torsoScale + torso.height / 2);
+          assert.ok(
+            torso.data[(ty * torso.width + tx) * 4 + 3] > 240,
+            `thigh ${index}, ${mode}, ${t}ms: hip cap covered by coat`,
+          );
+        }
+      }
+  }
 });

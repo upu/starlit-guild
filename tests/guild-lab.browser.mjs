@@ -9,12 +9,32 @@ const browser = await chromium.launch({ headless: true });
 const errors = [],
   requests = [],
   resolutions = [];
-async function start(reducedMotion = "no-preference", width = 1000, dpr = 2) {
+async function start(
+  reducedMotion = "no-preference",
+  width = 1000,
+  dpr = 2,
+  inspectJoints = false,
+) {
   const context = await browser.newContext({
     viewport: { width, height: 1000 },
     deviceScaleFactor: dpr,
     reducedMotion,
   });
+  if (inspectJoints) {
+    // Only the isolated dev-server response is altered: production keeps 1.8x
+    // and its real clock. Fixed animation times make before/after poses comparable.
+    await context.route("**/app/phaser/guild-lab-controller.ts*", async (route) => {
+      const response = await route.fetch();
+      const source = await response.text();
+      assert.ok(source.includes("close ? 1.8 : 1") && source.includes("this.elapsed += step;"));
+      await route.fulfill({
+        response,
+        body: source
+          .replace("close ? 1.8 : 1", "close ? 6 : 1")
+          .replace("this.elapsed += step;", "this.elapsed = Number(window.__labCaptureTime ?? 0);"),
+      });
+    });
+  }
   await context.addInitScript(() => localStorage.setItem("lab-save-sentinel", "untouched"));
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
@@ -54,7 +74,7 @@ async function checkAnimatedFace(page) {
     // A cheek interior remains skin throughout the tea/blink cycle. The WebGL
     // multi-texture regression replaces this area with rectangular floor tiles.
     const i =
-      (Math.round((info.height * 342) / 723) * info.width + Math.round((info.width * 488) / 964)) *
+      (Math.round((info.height * 348) / 723) * info.width + Math.round((info.width * 488) / 964)) *
       info.channels;
     assert.ok(
       data[i] > 220 && data[i + 1] > 170 && data[i + 2] > 140,
@@ -114,7 +134,43 @@ async function checkResolutionAndQuality() {
     await context.close();
   }
 }
+async function captureJoints() {
+  const { context, page } = await start("no-preference", 390, 3, true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await button(page, "寄って見る").click();
+  const capture = async (name, time) => {
+    await page.evaluate((value) => {
+      window.__labCaptureTime = value;
+    }, time);
+    await page.waitForTimeout(80);
+    await page.locator("canvas").screenshot({ path: `${output}/joints-6x-${name}.png` });
+  };
+  await capture("tea", 0);
+  await capture("sip", 5000);
+  await capture("blink", 4570);
+  await button(page, "タイルと関節を見る").click();
+  await capture("tea-debug", 0);
+  await button(page, "タイルと関節を見る").click();
+  await button(page, "作業台へ").click();
+  await activity(page, "walk");
+  await button(page, "一時停止").click();
+  for (const time of [0, 225, 450, 675]) await capture(`walk-${time}`, time);
+  await button(page, "タイルと関節を見る").click();
+  await capture("walk-debug", 225);
+  await button(page, "タイルと関節を見る").click();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await activity(page, "work");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  for (const time of [0, 345, 690]) await capture(`work-${time}`, time);
+  await button(page, "タイルと関節を見る").click();
+  await capture("work-debug", 0);
+  assert.deepEqual(await page.evaluate(() => ({ ...localStorage })), {
+    "lab-save-sentinel": "untouched",
+  });
+  await context.close();
+}
 try {
+  await captureJoints();
   await checkResolutionAndQuality();
   const { context, page } = await start();
   await page.waitForTimeout(500);
