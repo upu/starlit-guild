@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 import { testState, initialState, act, skipTo, settleOnScreen } from "../lib/game.ts";
 import { guildUnlocked } from "../lib/guild-base.ts";
 import { guildStories } from "../lib/guild-stories.ts";
+import {
+  guildHomeMembers,
+  canTellGuildStory,
+  nextGuildConversation,
+} from "../lib/guild-presence.ts";
 import { availableStories } from "../lib/stories.ts";
 import { GUILD_FOUNDING_QUEST } from "../lib/chapter-four.ts";
 import { guildLevel } from "../lib/guild-content.ts";
@@ -18,6 +23,35 @@ const buy = (s, id, quantity = 10) => action(s, "guildBuy", { id, quantity });
 const assign = (s, id, hero) => action(s, "guildAssign", { id, hero });
 const plant = (s, id = "linde-1", name = "herb") => action(s, "guildPlant", { id, name });
 const later = (s, minutes) => skipTo(s, (s.guild?.lastAt ?? s.updatedAt) + minutes * minute);
+test("home conversations require their cast at home and an unread unlocked story", () => {
+  let s = fresh();
+  assert.equal(nextGuildConversation(s).id, ordinaryStory.id);
+  assert.equal(canTellGuildStory(s, guildStories[0]), false, "first harvest has not happened");
+  s = assign(s, "workbench", "lico");
+  assert.ok(guildHomeMembers(s).includes("lico"), "workbench is in the home");
+  assert.equal(canTellGuildStory(s, ordinaryStory), true);
+  s = assign(s, "linde", "aria");
+  assert.ok(!guildHomeMembers(s).includes("aria"));
+  assert.equal(canTellGuildStory(s, ordinaryStory), false);
+  assert.notEqual(nextGuildConversation(s)?.id, ordinaryStory.id);
+  s = assign(s, "linde", undefined);
+  s = action(s, "readStory", { id: ordinaryStory.id });
+  assert.notEqual(nextGuildConversation(s)?.id, ordinaryStory.id, "read stories do not repeat");
+  s.owned = s.owned.filter((id) => id !== "lico");
+  assert.equal(canTellGuildStory(s, ordinaryStory), false, "missing members cannot speak");
+  s.story.read.push(...guildStories.map((story) => story.id));
+  assert.equal(nextGuildConversation(s), null);
+  assert.equal(nextGuildConversation(initialState(1000)), null);
+});
+
+test("first harvest conversation waits until the gardeners have returned home", () => {
+  let s = assign(assign(plant(buy(fresh(), "herb-seed")), "linde", "aria"), "brekka", "lico");
+  s = later(s, 60);
+  assert.ok(s.guild.cultivation > 0);
+  assert.equal(canTellGuildStory(s, guildStories[0]), false);
+  s = assign(assign(s, "linde", undefined), "brekka", undefined);
+  assert.equal(nextGuildConversation(s).id, "guild-first-harvest");
+});
 function roundtrip(state) {
   const id = "44444444-4444-4444-8444-444444444444";
   return parseBundle(

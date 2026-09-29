@@ -16,6 +16,7 @@ import {
   ROAD_CARGO,
   ROAD_PUPPETS,
   ROAD_PUSH,
+  pushFrames,
   ROAD_PULL,
   ROAD_FINN_PULL,
   ROAD_PACKING,
@@ -126,17 +127,9 @@ export class RoadPainter {
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
     const push = this.scene.textures.get(ROAD_PUSH);
-    const rects = [
-      [49, 31, 429, 458],
-      [567, 32, 414, 459],
-      [57, 517, 425, 461],
-      [561, 516, 421, 462],
-      [70, 1005, 438, 487],
-      [551, 1007, 434, 487],
-    ];
-    for (const [index, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[index * 2 + step];
+        const [x, y, w, h] = pushFrames[id][step];
         push.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
     const pull = this.scene.textures.get(ROAD_PULL);

@@ -1,39 +1,37 @@
 import { useRef, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GuildGarden } from "./guild-garden";
 import { GuildWorkbench } from "./guild-workbench";
 import { GuildShop } from "./guild-shop";
-import { GuildConversations } from "./guild-conversations";
+import { GuildChat } from "./guild-chat";
+import { GuildToolbar } from "./guild-toolbar";
 import { GuildScene, guildPlaces, type GuildPlace } from "./guild-scene";
 import { GuildGardenScene, gardenSites, type GardenSite } from "./guild-garden-scene";
-import type { GuildProps } from "./guild-controls";
-import { guildLevel } from "@/lib/guild-content";
+import { GuildRolePicker, type GuildProps } from "./guild-controls";
+import { guildLevel, guildPlots, type GuildPlotId } from "@/lib/guild-content";
 import { guildUnlocked } from "@/lib/guild-base";
-import type { Story } from "@/lib/stories";
+import { plotName } from "./guild-plot-view";
 
-type PanelProps = GuildProps & { onOpen: (story: Story) => void; now: number };
+type PanelProps = GuildProps & { now: number; paused?: boolean };
+type Sheet = GuildPlace | GuildPlotId;
+const isPlot = (sheet: Sheet): sheet is GuildPlotId => guildPlots.some((id) => id === sheet);
 type FacilityProps = PanelProps & {
-  place: GuildPlace | null;
+  sheet: Sheet | null;
   site: GardenSite;
   onClose: () => void;
   onRestoreFocus: () => void;
 };
-function GuildFacility({ place, site, onOpen, onClose, onRestoreFocus, ...props }: FacilityProps) {
+function GuildFacility({ sheet, site, onClose, onRestoreFocus, ...props }: FacilityProps) {
   return (
     <Dialog
-      open={place !== null}
+      open={sheet !== null}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
     >
       <DialogContent
         className="phone-dialog guild-detail"
+        aria-describedby={undefined}
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           onRestoreFocus();
@@ -41,92 +39,84 @@ function GuildFacility({ place, site, onOpen, onClose, onRestoreFocus, ...props 
       >
         <DialogHeader>
           <DialogTitle>
-            {place === "garden" ? gardenSites[site] : place ? guildPlaces[place] : "旅団"}
+            {sheet ? (isPlot(sheet) ? plotName(sheet) : guildPlaces[sheet]) : "旅団"}
           </DialogTitle>
-          <DialogDescription>仲間と整える、次の冒険の支度。</DialogDescription>
         </DialogHeader>
-        {place === "garden" && <GuildGarden {...props} site={site} />}
-        {place === "workbench" && <GuildWorkbench {...props} />}
-        {place === "shop" && <GuildShop {...props} />}
-        {place === "stories" && <GuildConversations state={props.state} onOpen={onOpen} />}
+        {sheet && isPlot(sheet) && <GuildGarden key={sheet} {...props} id={sheet} />}
+        {sheet === "workbench" && <GuildWorkbench {...props} />}
+        {sheet === "shop" && <GuildShop {...props} />}
+        {sheet === "roles" && <GuildRolePicker {...props} role={site} />}
       </DialogContent>
     </Dialog>
   );
 }
-function useGuildView(onOpen: (story: Story) => void) {
-  const [place, setPlace] = useState<GuildPlace | null>(null),
+function useGuildView() {
+  const [sheet, setSheet] = useState<Sheet | null>(null),
     [view, setView] = useState<"home" | "garden">("home"),
     [site, setSite] = useState<GardenSite>("linde");
   const panel = useRef<HTMLDivElement>(null),
-    lastLabel = useRef("菜園"),
-    openingStory = useRef(false);
-  const visit = (next: GuildPlace) => {
-    lastLabel.current = next === "garden" ? "菜園の世話をする" : guildPlaces[next];
-    openingStory.current = false;
-    setPlace(next);
-  };
-  const read = (story: Story) => {
-    openingStory.current = true;
-    setPlace(null);
-    onOpen(story);
+    lastControl = useRef<Sheet>("workbench");
+  const visit = (next: Sheet) => {
+    lastControl.current = next;
+    setSheet(next);
   };
   const restoreFocus = () => {
-    if (!openingStory.current)
-      panel.current
-        ?.querySelector<HTMLButtonElement>(`[aria-label="${lastLabel.current}"]`)
-        ?.focus();
+    panel.current
+      ?.querySelector<HTMLButtonElement>(`[data-guild-control="${lastControl.current}"]`)
+      ?.focus();
   };
-  return { place, setPlace, view, setView, site, setSite, panel, visit, read, restoreFocus };
+  return { sheet, setSheet, view, setView, site, setSite, panel, visit, restoreFocus };
 }
 export function GuildPanel(props: PanelProps) {
   const { state, now } = props;
-  const { place, setPlace, view, setView, site, setSite, panel, visit, read, restoreFocus } =
-    useGuildView(props.onOpen);
+  const { sheet, setSheet, view, setView, site, setSite, panel, visit, restoreFocus } =
+    useGuildView();
   if (!guildUnlocked(state)) return null;
   return (
-    <div className="guild-panel" ref={panel}>
+    <div className={`guild-panel guild-view-${view}`} ref={panel}>
       <GuildHeading state={state} title={view === "home" ? "星灯りの旅団" : gardenSites[site]} />
       {view === "home" ? (
         <GuildScene
           state={state}
           now={now}
-          onVisit={(next) => {
-            if (next === "garden") setView("garden");
-            else visit(next);
+          onWorkbench={() => {
+            visit("workbench");
           }}
         />
       ) : (
-        <GuildGardenScene
-          state={state}
-          now={now}
-          site={site}
-          onSite={setSite}
-          onHome={() => {
-            setView("home");
-          }}
-          onTend={() => {
-            visit("garden");
-          }}
-          onShop={() => {
-            visit("shop");
-          }}
-        />
+        <GuildGardenScene state={state} now={now} site={site} onSite={setSite} onPlot={visit} />
       )}
-      <p className="guild-scene-hint">気になる場所をタップして、仲間の仕事をのぞいてみよう。</p>
+      {view === "home" && <GuildChat {...props} paused={props.paused === true || sheet !== null} />}
+      <GuildToolbar
+        garden={view === "garden"}
+        onHome={() => {
+          setView("home");
+        }}
+        onGarden={() => {
+          setView("garden");
+        }}
+        onWorkbench={() => {
+          visit("workbench");
+        }}
+        onShop={() => {
+          visit("shop");
+        }}
+        onRoles={() => {
+          visit("roles");
+        }}
+      />
       <GuildFacility
         {...props}
-        place={place}
+        sheet={sheet}
         site={site}
-        onOpen={read}
         onClose={() => {
-          setPlace(null);
+          setSheet(null);
         }}
         onRestoreFocus={restoreFocus}
       />
     </div>
   );
 }
-
 function GuildHeading({ state, title }: { state: GuildProps["state"]; title: string }) {
   return (
     <header className="guild-heading">

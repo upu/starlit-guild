@@ -2,7 +2,7 @@
 
 見た目の枠を変えるときは、まず次の2ファイルを見る。`app/layout.tsx` は両方を他の画面別 CSS の後に読み込む。
 
-旅団タブの入口は `app/phone-game-frame.tsx` → `app/guild-panel.tsx`。菜園・作業台・種と材料は `app/guild-garden.tsx` / `app/guild-workbench.tsx` / `app/guild-shop.tsx`、見下ろすホームは `app/guild-scene.tsx`、栽培地の切替は `app/guild-garden-scene.tsx`、担当者の歩行は `app/guild-residents.tsx` / `app/guild-figure.tsx`、作物は `app/guild-plant.tsx`、日常一覧は `app/guild-conversations.tsx`。表示は `app/guild.css`。背景と配置は [旅団画面の素材](../../art/guild-scenes.md)。仕様は [旅団の拠点機能](../../gameplay/guild-base.md)、検証は `tests/guild.test.mjs` と `tests/guild.browser.mjs`。
+旅団タブの入口は `app/phone-game-frame.tsx` → `app/guild-panel.tsx`。下部の施設操作は `app/guild-toolbar.tsx`、植え付け・作業台・購入は `app/guild-garden.tsx` / `app/guild-workbench.tsx` / `app/guild-shop.tsx`。ホームは `app/guild-scene.tsx`、栽培地の切替は `app/guild-garden-scene.tsx`。床と家具は `app/guild-stage-floor.tsx` / `app/guild-stage-props.tsx`、担当者の歩行と作業は `app/guild-residents.tsx` / `app/guild-figure.tsx`、プランターと成長表示は `app/guild-plot-view.tsx`、商品画像は `app/guild-item-icon.tsx`。日常チャットは `app/guild-chat.tsx` と `lib/guild-presence.ts`。表示は `app/guild.css` / `app/guild-stage.css` / `app/guild-controls.css`。描画方針は [旅団画面の素材](../../art/guild-scenes.md)、仕様は [旅団の拠点機能](../../gameplay/guild-base.md)、検証は `tests/guild.test.mjs` と `tests/guild.browser.mjs`。
 
 | 対象 | 正本 | 画面別の例外 |
 | --- | --- | --- |

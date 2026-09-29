@@ -86,9 +86,7 @@ async function capture(page, name) {
   await page.clock.runFor(350);
   await page.locator(".guild-detail[data-state=closed]").waitFor({ state: "hidden" });
   await page.locator(".guild-scene").evaluate(async (scene) => {
-    const background = getComputedStyle(scene.querySelector(".guild-scene-art")).backgroundImage;
     const sources = [
-      background.slice(5, -2),
       ...Array.from(scene.querySelectorAll("svg image"), (el) => el.getAttribute("href")),
     ];
     await Promise.all(
@@ -104,40 +102,95 @@ async function capture(page, name) {
   assert.ok(fits, `${name}: no horizontal overflow`);
   results.push({ name, fits });
 }
+async function closeDialog(page) {
+  await page.keyboard.press("Escape");
+  await page.clock.runFor(350);
+  await page.locator(".guild-detail").waitFor({ state: "hidden" });
+}
+async function tellStory(page, id) {
+  const story = guildStories.find((item) => item.id === id);
+  for (let i = 0; i < story.lines.length; i++) {
+    const line = story.lines[i];
+    const row = page.locator(".guild-chat .banter-line").last();
+    assert.ok((await row.textContent()).includes(line.text), `${id} line ${i}`);
+    if (line.speaker) {
+      const expected = expressionPortrait(line.speaker, line.expression);
+      const actual = await row.locator('[style*="background-image"]').evaluate((el) => ({
+        position: el.style.backgroundPosition,
+        image: el.style.backgroundImage,
+      }));
+      assert.ok(actual.image.includes(expected.src));
+      const target = expected.position.split(" ").map(parseFloat);
+      assert.ok(
+        actual.position
+          .split(" ")
+          .map(parseFloat)
+          .every((n, j) => Math.abs(n - target[j]) < 0.001),
+      );
+    }
+    if (i === 1) {
+      await page.getByRole("button", { name: "種・材料", exact: true }).click();
+      await page.clock.runFor(10000);
+      assert.equal(
+        await page.locator(".guild-chat .banter-line").count(),
+        i + 1,
+        "dialog pauses chat",
+      );
+      const save = await stateOf(page);
+      assert.ok(!save.story.read.includes(id), "partial conversation stays unread");
+      await closeDialog(page);
+    }
+    if (i === story.lines.length - 1) await capture(page, id);
+    await page.clock.runFor(Math.max(3500, line.text.length * 100) + 20);
+  }
+  assert.ok((await stateOf(page)).story.read.includes(id));
+}
+let activePage;
 try {
   const locked = await open(36);
   assert.equal(await locked.page.getByRole("tab", { name: "旅団", exact: true }).count(), 0);
   await locked.context.close();
   const { page, context, initialAt } = await open();
+  activePage = page;
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
-  await page.locator(".phone-guild").evaluate((el) => {
-    el.scrollTop = 0;
-  });
+  assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
   await capture(page, "overview");
+  await tellStory(page, "guild-waiting-for-a-charm");
   await page.getByRole("button", { name: "種・材料", exact: true }).click();
-  for (const name of ["薬草の種", "ニンジンの種", "苔の胞子", "蜂蜜"])
+  for (const name of ["薬草の種", "ニンジンの種", "苔の胞子", "蜂蜜"]) {
+    await page.getByRole("button", { name, exact: true }).click();
     await page.getByRole("button", { name: `${name}を10個購入`, exact: true }).click();
-  await page.keyboard.press("Escape");
+  }
+  await capture(page, "shop");
+  await closeDialog(page);
   await page.getByRole("button", { name: "菜園", exact: true }).click();
-  await page.getByRole("button", { name: "菜園の世話をする", exact: true }).click();
-  await page.getByLabel("リンデの世話係", { exact: true }).selectOption("aria");
-  await page.getByRole("button", { name: "植える", exact: true }).first().click();
-  await page.getByLabel("linde-2の作物", { exact: true }).selectOption("carrot");
-  await page.getByRole("button", { name: "植える", exact: true }).first().click();
-  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "担当", exact: true }).click();
+  await page.getByRole("button", { name: "リンデの世話係：アリア", exact: true }).click();
+  await closeDialog(page);
+  for (const [name, crop] of [
+    ["プランター 1", "薬草"],
+    ["プランター 2", "ニンジン"],
+  ]) {
+    await page.getByRole("button", { name, exact: true }).click();
+    await page.getByRole("button", { name: crop, exact: true }).click();
+    await capture(page, `plant-${crop}`);
+    await page.getByRole("button", { name: "植える", exact: true }).click();
+    await closeDialog(page);
+  }
+  assert.equal(await page.getByRole("progressbar").count(), 2, "growth visible on the scene");
   await capture(page, "linde-planted");
   await page.getByRole("button", { name: "ブレッカの栽培所", exact: true }).click();
-  await page.getByRole("button", { name: "菜園の世話をする", exact: true }).click();
-  await page.getByLabel("ブレッカの世話係", { exact: true }).selectOption("lico");
-  await page.clock.runFor(250);
+  await page.getByRole("button", { name: "担当", exact: true }).click();
   assert.ok(
     await page
-      .getByLabel("ブレッカの世話係", { exact: true })
-      .locator('option[value="aria"]')
-      .evaluate((option) => option.disabled),
+      .getByRole("button", { name: "ブレッカの世話係：アリア（リンデの世話係）", exact: true })
+      .isDisabled(),
   );
+  await page.getByRole("button", { name: "ブレッカの世話係：リコ", exact: true }).click();
+  await closeDialog(page);
+  await page.getByRole("button", { name: "苔床", exact: true }).click();
   await page.getByRole("button", { name: "植える", exact: true }).click();
-  await page.keyboard.press("Escape");
+  await closeDialog(page);
   await capture(page, "brekka-planted");
   for (const [width, height] of [
     [320, 640],
@@ -149,21 +202,42 @@ try {
     await capture(page, `garden-${width}`);
     const nav = await page.getByRole("tab", { name: "旅団", exact: true }).boundingBox();
     assert.ok(nav && nav.height >= 44 && nav.y + nav.height <= height, "navigation remains usable");
+    const toolbar = await page.locator(".guild-toolbar").boundingBox();
+    assert.ok(
+      toolbar && toolbar.height >= 44 && toolbar.y + toolbar.height <= nav.y + 1,
+      "facility icons stay above navigation",
+    );
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
   await page.getByRole("button", { name: "作業台", exact: true }).click();
-  await page.getByLabel("加工担当", { exact: true }).selectOption("mira");
-  await page.getByLabel("作り方", { exact: true }).selectOption("tea");
+  await page.getByRole("button", { name: "加工担当：ミラ", exact: true }).click();
+  await page.getByRole("button", { name: "薬草と蜂蜜のお茶", exact: true }).click();
   await page.getByLabel("作る回数（1〜99）").fill("");
   assert.ok(await page.getByRole("button", { name: "加工を始める", exact: true }).isDisabled());
-  await page.getByLabel("材料がある限りくり返す").check();
+  await page.getByRole("button", { name: "材料がある限りくり返す", exact: true }).click();
   await page.getByRole("button", { name: "加工を始める", exact: true }).click();
   const before = await stateOf(page);
+  assert.equal(await page.locator(".guild-detail .is-crafting .guild-counter-worker").count(), 1);
+  assert.equal(
+    await page
+      .locator(".guild-detail .guild-stirring-spoon")
+      .evaluate((el) => getComputedStyle(el).animationName),
+    "guild-stir",
+  );
   await capture(page, "workbench");
-  await page.keyboard.press("Escape");
+  await closeDialog(page);
   await capture(page, "home-working");
   await checkMotion(page);
+  await page.clock.setFixedTime(new Date(initialAt + 30 * 60000));
+  await page.getByRole("button", { name: "菜園", exact: true }).click();
+  await page.getByRole("button", { name: "リンデの菜園", exact: true }).click();
+  await page.clock.runFor(1200);
+  const growth = await page
+    .getByRole("progressbar", { name: "プランター 1の成長", exact: true })
+    .evaluate((el) => el.value);
+  assert.ok(growth > 0.6 && growth < 0.7, `growth ${growth}`);
+  await capture(page, "linde-growing");
   await page.clock.setFixedTime(new Date(initialAt + 6 * 3600000));
   await page.reload();
   await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
@@ -172,41 +246,28 @@ try {
   assert.ok(after.consumables.items["guild-tea"] > 0);
   assert.ok(after.guild.materials["dried-moss"] > 0);
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
-  await page.getByRole("button", { name: "日常", exact: true }).click();
-  assert.equal(await page.locator(".guild-detail .story-entry").count(), 8);
-  await page.keyboard.press("Escape");
-  for (const id of ["guild-which-finger", "guild-a-reason-to-visit"]) {
-    await page.getByRole("button", { name: "日常", exact: true }).click();
-    const story = guildStories.find((item) => item.id === id);
-    await page.locator(".guild-detail .story-entry").filter({ hasText: story.title }).click();
-    for (let i = 0; i < story.lines.length; i++) {
-      const line = story.lines[i];
-      if (line.speaker) {
-        const expected = expressionPortrait(line.speaker, line.expression);
-        const portrait = page
-          .locator(`.dialogue-history .story-${line.speaker}`)
-          .last()
-          .locator('[style*="background-image"]');
-        const actual = await portrait.evaluate((el) => ({
-          position: el.style.backgroundPosition,
-          image: el.style.backgroundImage,
-        }));
-        assert.ok(actual.image.includes(expected.src));
-        const target = expected.position.split(" ").map(parseFloat);
-        assert.ok(
-          actual.position
-            .split(" ")
-            .map(parseFloat)
-            .every((n, index) => Math.abs(n - target[index]) < 0.001),
-          `${id} line ${i}: ${actual.position} / ${expected.position}`,
-        );
-      }
-      if (i === story.lines.length - 1) await capture(page, id);
-      await page.locator(".story-conversation").click();
-      await page.clock.runFor(200);
-    }
-    assert.ok((await stateOf(page)).story.read.includes(id));
+  await page.getByRole("button", { name: "菜園", exact: true }).click();
+  for (const [site, role] of [
+    ["リンデの菜園", "リンデの世話係"],
+    ["ブレッカの栽培所", "ブレッカの世話係"],
+  ]) {
+    await page.getByRole("button", { name: site, exact: true }).click();
+    await page.getByRole("button", { name: "担当", exact: true }).click();
+    await page.getByRole("button", { name: `${role}を外す`, exact: true }).click();
+    await closeDialog(page);
   }
+  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
+  assert.ok(
+    (await page.locator(".guild-chat").textContent()).includes(guildStories[0].lines[0].text),
+  );
+  await page.getByRole("button", { name: "菜園", exact: true }).click();
+  await page.clock.runFor(60000);
+  assert.ok(
+    !(await stateOf(page)).story.read.includes("guild-first-harvest"),
+    "leaving does not read the conversation",
+  );
+  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
+  await tellStory(page, "guild-first-harvest");
   await page.getByRole("button", { name: "旅の手帳：ヒント・思い出・アルバム・設定" }).click();
   await page.locator(".save-status").click();
   assert.equal(await page.getByText("テストプレイ", { exact: true }).count(), 1);
@@ -231,8 +292,11 @@ try {
     ),
   );
   console.log(
-    "PASS: guild unlocking, controls, roles, four viewports, offline resume, expressions and persistence",
+    "PASS: graphical guild controls, growth, presence chat, pauses, expressions, motion, four viewports, offline resume and persistence",
   );
+} catch (error) {
+  if (activePage) await activePage.screenshot({ path: `${output}/failure.png` });
+  throw error;
 } finally {
   await browser.close();
 }

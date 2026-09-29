@@ -1,5 +1,7 @@
+import { UserRound, X } from "lucide-react";
 import { heroes, type Action, type State } from "@/lib/game";
 import { guildRoles, type GuildRole } from "@/lib/guild-content";
+import { Portrait } from "./portrait";
 export type GuildProps = { state: State; ready: boolean; onAction: (action: Action) => boolean };
 export const roleNames = {
   linde: "リンデの世話係",
@@ -12,33 +14,40 @@ export function GuildRolePicker({
   onAction,
   role,
 }: GuildProps & { role: GuildRole }) {
+  const current = state.guild?.roles[role];
   return (
-    <label className="guild-field">
-      {roleNames[role]}
-      <select
-        aria-label={roleNames[role]}
-        value={state.guild?.roles[role] ?? ""}
-        disabled={!ready}
-        onChange={(event) => {
-          onAction({ type: "guildAssign", id: role, hero: event.currentTarget.value || undefined });
+    <div className="guild-role-picker" role="group" aria-label={roleNames[role]}>
+      <UserRound size={18} aria-hidden="true" />
+      {heroes
+        .filter((hero) => state.owned.includes(hero.id))
+        .map((hero) => {
+          const other = guildRoles.find((id) => id !== role && state.guild?.roles[id] === hero.id);
+          return (
+            <button
+              key={hero.id}
+              aria-label={`${roleNames[role]}：${hero.name}${other ? `（${roleNames[other]}）` : ""}`}
+              title={other ? roleNames[other] : hero.name}
+              disabled={!ready || !!other}
+              aria-pressed={current === hero.id}
+              onClick={() => {
+                onAction({ type: "guildAssign", id: role, hero: hero.id });
+              }}
+            >
+              <Portrait index={hero.sprite} size={40} />
+              <span>{hero.name}</span>
+            </button>
+          );
+        })}
+      <button
+        aria-label={`${roleNames[role]}を外す`}
+        disabled={!ready || !current}
+        onClick={() => {
+          onAction({ type: "guildAssign", id: role });
         }}
       >
-        <option value="">担当なし</option>
-        {heroes
-          .filter((hero) => state.owned.includes(hero.id))
-          .map((hero) => {
-            const other = guildRoles.find(
-              (id) => id !== role && state.guild?.roles[id] === hero.id,
-            );
-            return (
-              <option key={hero.id} value={hero.id} disabled={!!other}>
-                {hero.name}
-                {other ? `（${roleNames[other]}）` : ""}
-              </option>
-            );
-          })}
-      </select>
-    </label>
+        <X size={18} aria-hidden="true" />
+      </button>
+    </div>
   );
 }
 export function timeRemaining(readyAt: number, now: number) {

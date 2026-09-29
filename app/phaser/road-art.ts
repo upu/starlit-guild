@@ -47,6 +47,20 @@ export const ROAD_HERB = "/animations/road/herb-v2.webp";
 export const ROAD_CARGO = "/animations/road/cargo-v1.webp";
 export const ROAD_PUPPETS = "/animations/road/puppets-v1.webp";
 export const ROAD_PUSH = "/animations/road/push-v1.webp";
+export const pushFrames = {
+  aria: [
+    [49, 31, 429, 458],
+    [567, 32, 414, 459],
+  ],
+  leon: [
+    [57, 517, 425, 461],
+    [561, 516, 421, 462],
+  ],
+  mira: [
+    [70, 1005, 438, 487],
+    [551, 1007, 434, 487],
+  ],
+};
 export const ROAD_PULL = "/animations/road/pull-v1.webp";
 export const ROAD_FINN_PULL = "/animations/road/finn-pull-v1.webp";
 export const ROAD_LICO_MOTION = "/animations/road/lico-motion-v1.webp";

@@ -227,8 +227,9 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
         {guildUnlocked(m.state) && (
           <TabsContent value="guild" className="phone-guild">
             <GuildPanel
+              key={m.game.profile?.id}
               state={m.state}
-              onOpen={m.openStory}
+              paused={!!m.sheet || !!m.ending}
               ready={m.ready}
               onAction={m.act}
               now={m.clock}

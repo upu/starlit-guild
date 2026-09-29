@@ -1,3 +1,4 @@
+import { useId } from "react";
 import {
   finnFrames,
   miraFrames,
@@ -7,6 +8,7 @@ import {
   roadWalkSheet,
   walkBounds,
   licoMotionFrames,
+  pushFrames,
 } from "./phaser/road-art";
 import type { TravellerId } from "@/lib/road-view";
 
@@ -27,7 +29,31 @@ function walkPose(id: TravellerId, step: number) {
     height: 1254,
   };
 }
-function pose(id: TravellerId, working: boolean, step: number, walking: boolean) {
+function craftPose(id: TravellerId, step: number) {
+  if (id === "lico")
+    return {
+      asset: roadWalkSheet(id),
+      rect: licoMotionFrames[step + 2],
+      width: 1225,
+      height: 1284,
+    };
+  if (id === "finn")
+    return { asset: roadSheet(id), rect: finnFrames[step + 12], width: 1254, height: 1254 };
+  return {
+    asset: "/animations/road/push-v1.webp",
+    rect: pushFrames[id][step],
+    width: 1024,
+    height: 1536,
+  };
+}
+function pose(
+  id: TravellerId,
+  working: boolean,
+  step: number,
+  walking: boolean,
+  crafting: boolean,
+) {
+  if (crafting) return craftPose(id, step);
   if (walking) return walkPose(id, step);
   if (working && id !== "lico" && id !== "finn")
     return {
@@ -59,30 +85,48 @@ export function GuildFigure({
   working = false,
   facing = false,
   walking = false,
+  crafting = false,
 }: {
   id: TravellerId;
   working?: boolean;
   facing?: boolean;
   walking?: boolean;
+  crafting?: boolean;
 }) {
   return (
     <span
-      className={`guild-figure${working ? " is-working" : ""}${facing ? " faces-left" : ""}${walking ? " is-walking" : ""}`}
+      className={`guild-figure${working || crafting ? " is-working" : ""}${facing ? " faces-left" : ""}${walking ? " is-walking" : ""}`}
       aria-hidden="true"
       data-hero={id}
     >
       {[0, 1].map((step) => {
-        const frame = pose(id, working, step, walking);
-        return (
-          <svg
-            key={step}
-            className={`guild-pose guild-pose-${String(step)}`}
-            viewBox={frame.rect.join(" ")}
-          >
-            <image href={frame.asset} width={frame.width} height={frame.height} />
-          </svg>
-        );
+        const frame = pose(id, working, step, walking, crafting);
+        return <GuildPose key={step} frame={frame} step={step} />;
       })}
     </span>
+  );
+}
+
+function GuildPose({ frame, step }: { frame: ReturnType<typeof pose>; step: number }) {
+  const clip = useId();
+  const [x, y, width, height] = frame.rect;
+  return (
+    <svg
+      className={`guild-pose guild-pose-${String(step)}`}
+      viewBox={frame.rect.join(" ")}
+      preserveAspectRatio="xMidYMax meet"
+    >
+      <defs>
+        <clipPath id={clip}>
+          <rect x={x} y={y} width={width} height={height} />
+        </clipPath>
+      </defs>
+      <image
+        href={frame.asset}
+        width={frame.width}
+        height={frame.height}
+        clipPath={`url(#${clip})`}
+      />
+    </svg>
   );
 }

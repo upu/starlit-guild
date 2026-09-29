@@ -57,8 +57,7 @@ export function GuildResidents({
     );
   return (
     <div className="guild-residents">
-      <Resident id={roles.workbench} job="workbench" active={!!state.guild?.work?.batch} facing />
-      {visitors.slice(0, 3).map((id, index) => (
+      {visitors.map((id, index) => (
         <Resident key={id} id={id} job={`visitor-${String(index)}`} facing={index === 1} />
       ))}
       {visitors.length >= 2 && (
