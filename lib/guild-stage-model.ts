@@ -2,9 +2,10 @@ import type { State } from "./game.ts";
 import type { GuildPlotId } from "./guild-content.ts";
 export type GuildSite = "home" | "linde" | "brekka";
 export const guildStageLayout = {
-  bench: { x: 720, y: 390, width: 290 },
-  worker: { x: 520, y: 365 },
-  table: { x: 260, y: 520, width: 255 },
+  bench: { x: 765, y: 350, width: 330 },
+  worker: { x: 555, y: 350 },
+  table: { x: 395, y: 610, width: 330 },
+  desk: { x: 240, y: 310, width: 300 },
   plots: {
     "linde-1": { x: 295, y: 385, width: 365 },
     "linde-2": { x: 690, y: 625, width: 365 },
@@ -14,22 +15,27 @@ export const guildStageLayout = {
 export function guildStagePlots(site: GuildSite): GuildPlotId[] {
   return site === "home" ? [] : site === "linde" ? ["linde-1", "linde-2"] : ["brekka-1"];
 }
-const starts = [
-  [115, 600],
-  [460, 560],
-  [570, 675],
-  [250, 685],
-  [820, 680],
+export const guildSeats = [
+  { x: 175, y: 555, left: false },
+  { x: 610, y: 550, left: true },
+  { x: 220, y: 695, left: false },
+  { x: 565, y: 700, left: true },
+  { x: 385, y: 425, left: false },
 ];
-const ends = [
-  [230, 640],
-  [570, 630],
-  [470, 705],
-  [355, 680],
-  [755, 710],
-];
-function routeEndpoints(index: number, site: GuildSite) {
-  if (site === "home") return [starts[index % starts.length], ends[index % ends.length]];
+// Root anchors and mature plant widths stay inside the soil, above the front timber.
+export const guildCropSlots = Array.from({ length: 8 }, (_, index) => ({
+  x: 0.2 + (index % 4) * 0.2,
+  y: index < 4 ? 0.35 : 0.55,
+}));
+export function guildCropWidth(growth: number) {
+  return 0.075 + Math.max(0, Math.min(1, growth)) * 0.045;
+}
+export function guildMotion(time: number, walking: boolean, reduced: boolean) {
+  if (!walking || reduced) return { lift: 0, angle: 0 };
+  const phase = (time / 640) * Math.PI * 2;
+  return { lift: Math.abs(Math.sin(phase)) * 7, angle: Math.sin(phase) * 1.6 };
+}
+function routeEndpoints(site: GuildSite) {
   return site === "linde"
     ? [
         [555, 365],
@@ -48,7 +54,8 @@ function routeProgress(phase: number) {
   return 0;
 }
 export function guildRoute(index: number, site: GuildSite, time: number, reduced: boolean) {
-  const [a, b] = routeEndpoints(index, site);
+  if (site === "home") return { ...guildSeats[index % guildSeats.length], walking: false };
+  const [a, b] = routeEndpoints(site);
   const phase = reduced ? 0 : time % 24000,
     t = routeProgress(phase);
   const returning = phase >= 17000 && phase < 21500;
@@ -62,16 +69,29 @@ export function guildRoute(index: number, site: GuildSite, time: number, reduced
     x: from[0] + (to[0] - from[0]) * amount,
     y: from[1] + (to[1] - from[1]) * amount,
     walking,
-    left: walking
-      ? to[0] < from[0] !== returning
-      : site === "brekka" || (site === "linde" && t === 0),
+    left: walking ? to[0] < from[0] !== returning : site === "brekka" || t === 0,
   };
 }
-export function guildStagePeople(state: State, site: GuildSite) {
+export function guildStagePeople(state: State, site: GuildSite, now = state.updatedAt) {
   const roles = state.guild?.roles ?? {};
   return site === "home"
-    ? state.owned.filter((id) => !Object.values(roles).includes(id))
+    ? state.owned.filter(
+        (id) =>
+          id !== roles.linde &&
+          id !== roles.brekka &&
+          (id !== roles.workbench || !guildWorkActive(state, now)),
+      )
     : roles[site]
       ? [roles[site]]
       : [];
+}
+
+export function guildWorkActive(state: State, now: number) {
+  const work = state.guild?.work;
+  return (
+    !!state.guild?.roles.workbench &&
+    !!work?.batch &&
+    work.batch.readyAt > now &&
+    work.pausedMs === undefined
+  );
 }

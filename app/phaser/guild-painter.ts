@@ -3,157 +3,162 @@ import type { State } from "@/lib/game";
 import type { TravellerId } from "@/lib/road-view";
 import {
   guildStageLayout,
+  guildWorkActive,
   guildRoute,
   guildStagePeople,
   guildStagePlots,
+  guildSeats,
+  guildCropSlots,
+  guildCropWidth,
   type GuildSite,
 } from "@/lib/guild-stage-model";
-import {
-  guildIds,
-  guildPose,
-  guildPropsAsset,
-  guildPropFrames,
-  type GuildPoseKind,
-} from "./guild-art";
-
-export type GuildFrame = { state: State; site: GuildSite; now: number };
+import { guildIds, guildPose, guildPropsAsset, guildPropFrames } from "./guild-art";
+import { GuildSprites } from "./guild-sprites";
+import { GuildMenuPainter } from "./guild-menu-painter";
+export type GuildFrame = {
+  state: State;
+  site: GuildSite | "workbench" | "shop";
+  now: number;
+  selected?: string;
+};
 export function guildAssets() {
   return [
     ...new Set([
       ...["home", "linde", "brekka"].map((site) => `/guild/${site}-floor-v2.webp`),
+      ...["furniture-v3", "goods-v3", "tea-party-v3"].map((name) => `/guild/${name}.webp`),
       guildPropsAsset,
       ...guildIds.flatMap((id) =>
-        (["idle", "walk", "tend", "craft"] as const).map((mode) => guildPose(id, mode, 0).asset),
+        (["idle", "walk", "tend", "craft", "tea"] as const).map(
+          (mode) => guildPose(id, mode, 0).asset,
+        ),
       ),
     ]),
   ];
 }
 export class GuildPainter {
-  private objects = new Map<string, Phaser.GameObjects.Image>();
-  private tool: Phaser.GameObjects.Graphics;
+  private sprites: GuildSprites;
+  private menu: GuildMenuPainter;
+  private effects: Phaser.GameObjects.Graphics;
   private elapsed = 0;
   constructor(private scene: Phaser.Scene) {
-    this.tool = scene.add.graphics();
-  }
-  private image(key: string, asset: string, rect?: readonly number[]) {
-    const name = rect?.join("-");
-    const texture = this.scene.textures.get(asset);
-    if (name && rect && !texture.has(name))
-      texture.add(name, 0, rect[0], rect[1], rect[2], rect[3]);
-    let image = this.objects.get(key);
-    if (!image) {
-      image = this.scene.add.image(0, 0, asset, name);
-      this.objects.set(key, image);
-    }
-    image.setTexture(asset, name).setVisible(true);
-    return image;
-  }
-  private place(image: Phaser.GameObjects.Image, x: number, y: number, width: number, depth = y) {
-    const w = this.scene.scale.width,
-      h = this.scene.scale.height;
-    image
-      .setOrigin(0.5, 1)
-      .setPosition((x * w) / 1000, (y * h) / 750)
-      .setDisplaySize(
-        (width * w) / 1000,
-        ((image.frame.height / image.frame.width) * width * w) / 1000,
-      )
-      .setDepth(depth);
-  }
-  private prop(key: string, frame: number, place: { x: number; y: number; width: number }) {
-    const image = this.image(key, guildPropsAsset, guildPropFrames[frame]);
-    this.place(image, place.x, place.y, place.width);
-    return image;
-  }
-  private actor(
-    id: TravellerId,
-    mode: GuildPoseKind,
-    x: number,
-    y: number,
-    left: boolean,
-    reduced: boolean,
-  ) {
-    const frame = guildPose(
-      id,
-      mode,
-      reduced ? 0 : Math.floor(this.elapsed / (mode === "walk" ? 160 : 550)),
-    );
-    const image = this.image(`hero-${id}`, frame.asset, frame.rect);
-    this.place(image, x, y, frame.rect[2] * frame.scale * 175);
-    image.setFlipX(left);
+    this.sprites = new GuildSprites(scene);
+    this.menu = new GuildMenuPainter(this.sprites);
+    this.effects = scene.add.graphics().setDepth(1200);
   }
   paint(input: GuildFrame, delta: number, reduced: boolean) {
     this.elapsed += Math.min(delta, 100);
-    for (const object of this.objects.values()) object.setVisible(false);
-    this.tool.clear();
-    this.image("floor", `/guild/${input.site}-floor-v2.webp`)
+    this.sprites.clear();
+    this.effects.clear();
+    this.menu.clear();
+    const menu = input.site === "shop" || input.site === "workbench";
+    const floor = menu ? "home" : input.site;
+    this.sprites
+      .image("floor", `/guild/${floor}-floor-v2.webp`)
       .setOrigin(0)
       .setPosition(0, 0)
       .setDisplaySize(this.scene.scale.width, this.scene.scale.height)
       .setDepth(-1000);
     if (input.site === "home") this.home(input, reduced);
-    else this.garden(input);
-    const active =
-      input.site === "home" ||
-      guildStagePlots(input.site).some((id) => !!input.state.guild?.plots[id].batch);
-    guildStagePeople(input.state, input.site).forEach((id, index) => {
+    else if (input.site === "workbench") this.workbench(input, reduced, true);
+    else if (input.site !== "shop") this.garden(input, reduced);
+    if (menu) this.menu.paint(input, reduced);
+  }
+  private home(input: GuildFrame, reduced: boolean) {
+    this.sprites.room("desk", "furniture-v3", 2, guildStageLayout.desk);
+    this.sprites.room("table", "furniture-v3", 0, guildStageLayout.table);
+    this.workbench(input, reduced);
+    guildStagePeople(input.state, "home", input.now).forEach((id) => {
       if (!guildIds.includes(id as TravellerId)) return;
-      const point = guildRoute(index, input.site, this.elapsed, reduced || !active);
-      const mode = point.walking ? "walk" : input.site !== "home" && active ? "tend" : "idle";
-      this.actor(id as TravellerId, mode, point.x, point.y, point.left, reduced);
+      const index = guildIds.indexOf(id as TravellerId);
+      const seat = guildSeats[index];
+      this.sprites.room(
+        `chair-${id}`,
+        "furniture-v3",
+        seat.left ? 4 : 3,
+        { ...seat, y: seat.y + 30, width: 140 },
+        seat.y - 1,
+      );
+      this.sprites.actor(id as TravellerId, "tea", seat, this.elapsed + index * 1370, reduced, 160);
     });
   }
-  private home({ state, now }: GuildFrame, reduced: boolean) {
-    this.prop("table", 0, guildStageLayout.table);
-    this.prop("bench", 1, guildStageLayout.bench);
-    const id = state.guild?.roles.workbench;
-    const work = state.guild?.work;
-    const active = !!work?.batch && work.batch.readyAt > now && work.pausedMs === undefined;
-    if (id && guildIds.includes(id as TravellerId))
-      this.actor(
-        id as TravellerId,
-        active ? "craft" : "idle",
-        guildStageLayout.worker.x,
-        guildStageLayout.worker.y,
-        false,
-        reduced,
-      );
-    if (work) this.tools(work.recipe, active && !!id && !reduced);
+  private workbench({ state, now }: GuildFrame, reduced: boolean, close = false) {
+    const bench = close ? { x: 650, y: 505, width: 540 } : guildStageLayout.bench;
+    const worker = close ? { x: 275, y: 500 } : guildStageLayout.worker;
+    this.sprites.room("bench", "furniture-v3", 1, bench);
+    const active = guildWorkActive(state, now);
+    if (close || active)
+      this.workActor(state.guild?.roles.workbench, worker, active, reduced, close ? 280 : 175);
+    if (active) this.steam(close ? 455 : 660, close ? 310 : 235, reduced);
   }
-  private tools(recipe: string, active: boolean) {
+  private workActor(
+    id: string | undefined,
+    worker: { x: number; y: number },
+    active: boolean,
+    reduced: boolean,
+    height: number,
+  ) {
+    if (!id || !guildIds.includes(id as TravellerId)) return;
+    const image = this.sprites.actor(
+      id as TravellerId,
+      active ? "craft" : "idle",
+      worker,
+      this.elapsed,
+      reduced,
+      height,
+    );
+    if (active && !reduced) image.setAngle(Math.sin(this.elapsed / 330) * 1.2);
+  }
+  private steam(x: number, y: number, reduced: boolean) {
     const sx = this.scene.scale.width / 1000,
       sy = this.scene.scale.height / 750;
-    const phase = active ? Math.sin(this.elapsed / 180) : 0;
-    this.tool
-      .setPosition(595 * sx, 285 * sy)
-      .setScale(sx)
-      .setDepth(391);
-    if (recipe === "lunch") {
-      this.tool.fillStyle(0xefd7a1).fillEllipse(20, 16, 65, 32);
-      this.tool.lineStyle(12, 0xb68146).lineBetween(-8, 8 + phase * 5, 48, 8 + phase * 5);
-    } else if (recipe === "soda") {
-      this.tool.fillStyle(0x79a994).fillRoundedRect(8 + phase * 4, -20, 27, 47, 6);
-      this.tool.fillStyle(0xdcc18a).fillRect(13 + phase * 4, -26, 17, 8);
-    } else {
-      this.tool.fillStyle(0xb1b59b).fillRoundedRect(-10, 0, 57, 34, 10);
-      this.tool.fillStyle(0x617d55).fillEllipse(18, 0, 58, 18);
-      this.tool.lineStyle(5, 0xe4c696).lineBetween(18 + phase * 10, 0, 28 + phase * 8, -35);
+    for (let n = 0; n < 4; n++) {
+      const life = reduced ? 0.4 : (this.elapsed / 2600 + n / 4) % 1;
+      this.effects
+        .fillStyle(0xf9efd6, (1 - life) * 0.4)
+        .fillCircle(
+          (x + Math.sin(n + life * 5) * 8) * sx,
+          (y - life * 48) * sy,
+          (2 + life * 5) * sx,
+        );
     }
   }
-  private garden({ state, site, now }: GuildFrame) {
+  private garden(input: GuildFrame, reduced: boolean) {
+    const site = input.site as GuildSite;
     for (const id of guildStagePlots(site)) {
       const place = guildStageLayout.plots[id];
-      const bed = this.prop(id, 2, place);
-      const plot = state.guild?.plots[id],
+      const bed = this.sprites.place(
+        this.sprites.image(id, guildPropsAsset, guildPropFrames[2]),
+        place.x,
+        place.y,
+        place.width,
+      );
+      const plot = input.state.guild?.plots[id],
         batch = plot?.batch;
       if (!batch) continue;
       const growth = Math.min(
         1,
-        Math.max(0, (now - batch.startedAt) / Math.max(1, batch.readyAt - batch.startedAt)),
+        Math.max(0, (input.now - batch.startedAt) / Math.max(1, batch.readyAt - batch.startedAt)),
       );
-      const frame = plot.crop === "carrot" ? 4 : plot.crop === "moss" ? 5 : 3;
-      this.crops(id, place, bed.displayHeight, growth, frame);
+      this.crops(
+        id,
+        place,
+        bed.displayHeight,
+        growth,
+        plot.crop === "carrot" ? 4 : plot.crop === "moss" ? 5 : 3,
+      );
     }
+    const active = guildStagePlots(site).some((id) => !!input.state.guild?.plots[id].batch);
+    guildStagePeople(input.state, site).forEach((id, index) => {
+      if (!guildIds.includes(id as TravellerId)) return;
+      const point = guildRoute(index, site, this.elapsed, reduced || !active);
+      this.sprites.actor(
+        id as TravellerId,
+        point.walking ? "walk" : active ? "tend" : "idle",
+        point,
+        this.elapsed,
+        reduced,
+      );
+    });
   }
   private crops(
     id: string,
@@ -162,17 +167,19 @@ export class GuildPainter {
     growth: number,
     frame: number,
   ) {
-    for (let n = 0; n < 8; n++) {
-      const crop = this.image(`${id}-crop-${String(n)}`, guildPropsAsset, guildPropFrames[frame]);
-      const x = place.x + ((n % 4) - 1.5) * place.width * 0.19;
-      const offset = (Math.floor(n / 4) === 0 ? 0.56 : 0.34) * height;
-      this.place(
-        crop,
-        x,
-        place.y - (offset * 750) / this.scene.scale.height,
-        place.width * (0.085 + growth * 0.055),
-        place.y + 1 + n,
+    guildCropSlots.forEach((slot, n) => {
+      const crop = this.sprites.image(
+        `${id}-crop-${String(n)}`,
+        guildPropsAsset,
+        guildPropFrames[frame],
       );
-    }
+      this.sprites.place(
+        crop,
+        place.x + (slot.x - 0.5) * place.width,
+        place.y - ((1 - slot.y) * height * 750) / this.scene.scale.height,
+        place.width * guildCropWidth(growth),
+        place.y + n + 1,
+      );
+    });
   }
 }

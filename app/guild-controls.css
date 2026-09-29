@@ -124,27 +124,9 @@
   color: #d2d7a4;
   font-size: 12px;
 }
-.guild-bench-preview {
-  position: relative;
-  height: 175px;
-  margin: 12px auto 10px;
-  width: 300px;
-  max-width: 100%;
-}
-.guild-bench-preview .guild-craft-status {
-  bottom: -2px;
-}
 .guild-workshop {
   display: grid;
   gap: 10px;
-}
-.guild-recipes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-.guild-detail .guild-recipes .guild-item-tile {
-  min-height: 86px;
 }
 .guild-recipe-heading {
   display: flex;

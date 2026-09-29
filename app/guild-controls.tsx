@@ -54,3 +54,12 @@ export function timeRemaining(readyAt: number, now: number) {
   const minutes = Math.ceil(Math.max(0, readyAt - now) / 60000);
   return minutes ? `あと${String(minutes)}分` : "収穫待ち";
 }
+
+export function craftStatus(state: State, now: number) {
+  const guild = state.guild;
+  if (!guild?.roles.workbench) return "一時停止";
+  if (!guild.work?.batch) return "材料・空き待ち";
+  return guild.work.batch.readyAt <= now
+    ? "在庫の空き待ち"
+    : timeRemaining(guild.work.batch.readyAt, now);
+}

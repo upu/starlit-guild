@@ -1,4 +1,6 @@
 import { guildArtFrames } from "@/lib/guild-art-frames";
+import { guildRoomArt } from "@/lib/guild-room-art";
+import { guildRoomSprite } from "@/lib/guild-menu-model";
 import {
   miraFrames,
   packingFrames,
@@ -9,9 +11,10 @@ import {
   walkBounds,
 } from "./road-art";
 import type { TravellerId } from "@/lib/road-view";
-export type GuildPoseKind = "idle" | "walk" | "tend" | "craft";
+export type GuildPoseKind = "idle" | "walk" | "tend" | "craft" | "tea";
 export const guildIds: readonly TravellerId[] = ["aria", "leon", "mira", "finn", "lico"];
 export function guildPose(id: TravellerId, mode: GuildPoseKind, step: number) {
+  if (mode === "tea") return roomPose("tea-party-v3", guildIds.indexOf(id) * 4, 4, step);
   if (id === "finn" || id === "lico") return lifePose(id, mode, step);
   if (mode === "walk") {
     const [x, y, right, bottom] = walkBounds[id][step % 4];
@@ -36,7 +39,8 @@ export function guildPose(id: TravellerId, mode: GuildPoseKind, step: number) {
 export const guildPropsAsset = "/guild/props-v2.webp";
 export const guildPropFrames = guildArtFrames["props-v2"];
 
-function lifePose(id: "finn" | "lico", mode: GuildPoseKind, step: number) {
+function lifePose(id: "finn" | "lico", mode: Exclude<GuildPoseKind, "tea">, step: number) {
+  if (mode === "walk") return roomPose("walk-v3", id === "finn" ? 0 : 8, 8, step);
   const name = `${id}-guild-v2` as const;
   const indexes = { walk: step % 4, craft: 6 + (step % 2), tend: 5, idle: 4 };
   return {
@@ -54,5 +58,13 @@ function workPose(id: "aria" | "leon" | "mira", craft: boolean, step: number) {
     width: craft ? 1024 : 1295,
     height: craft ? 1536 : 1214,
     scale: 1 / (craft ? 475 : 390),
+  };
+}
+
+function roomPose(atlas: "tea-party-v3" | "walk-v3", start: number, count: number, step: number) {
+  const frames = guildRoomArt[atlas].frames.slice(start, start + count);
+  return {
+    ...guildRoomSprite(atlas, start + (step % count)),
+    scale: 1 / Math.max(...frames.map((frame) => frame[3])),
   };
 }

@@ -5,36 +5,17 @@ import { guildStock } from "@/lib/guild-production";
 import { consumableById } from "@/lib/consumables";
 import { GuildRolePicker, timeRemaining, type GuildProps } from "./guild-controls";
 import { GuildItemIcon } from "./guild-item-icon";
-import { GuildCraftStation } from "./guild-stage-props";
+import { GuildRecipeMenu } from "./guild-recipe-menu";
 
 export function GuildWorkbench(props: GuildProps & { now: number }) {
-  const { state, ready } = props;
+  const { state } = props;
   const [id, setId] = useState(guildRecipes[0].id),
     work = state.guild?.work;
   const recipe = guildRecipes.find((item) => item.id === (work?.recipe ?? id)) ?? guildRecipes[0];
   return (
     <section className="guild-workshop">
-      <div className="guild-bench-preview">
-        <GuildCraftStation state={state} now={props.now} recipeId={recipe.id} />
-      </div>
+      <GuildRecipeMenu {...props} selected={recipe.id} onSelect={setId} />
       <GuildRolePicker {...props} role="workbench" />
-      <div className="guild-recipes" role="group" aria-label="作り方">
-        {guildRecipes.map((item) => (
-          <button
-            key={item.id}
-            className="guild-item-tile"
-            aria-label={item.name}
-            aria-pressed={recipe.id === item.id}
-            disabled={!ready || !!work}
-            onClick={() => {
-              setId(item.id);
-            }}
-          >
-            <GuildItemIcon id={item.output} />
-            <b>{item.id === "lunch" ? "お弁当" : item.id === "tea" ? "お茶" : "ソーダ"}</b>
-          </button>
-        ))}
-      </div>
       <div className="guild-recipe-heading">
         <b>{recipe.name}</b>
         <span>

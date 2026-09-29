@@ -1,3 +1,4 @@
+import { guildCropSlots, guildCropWidth } from "@/lib/guild-stage-model";
 import { Plus } from "lucide-react";
 import { guildCrops, type GuildPlotId } from "@/lib/guild-content";
 import type { GuildPlot } from "@/lib/guild-types";
@@ -26,10 +27,11 @@ function PlantSprite({
   x: number;
   y: number;
 }) {
-  const size = 22 + growth * 16;
+  const size = 240 * guildCropWidth(growth);
   return (
     <GuildPropImage
       frame={crop === "carrot" ? 4 : crop === "moss" ? 5 : 3}
+      preserveAspectRatio="xMidYMax meet"
       x={x - size / 2}
       y={y - size}
       width={size}
@@ -50,14 +52,8 @@ export function GuildPlotArt({
     <svg viewBox="0 0 240 140" aria-hidden="true">
       <GuildPropImage frame={2} width="240" height="140" />
       {planted &&
-        Array.from({ length: 8 }, (_, n) => (
-          <PlantSprite
-            key={n}
-            crop={crop}
-            growth={growth}
-            x={48 + (n % 4) * 46}
-            y={n < 4 ? 57 : 83}
-          />
+        guildCropSlots.map((slot, n) => (
+          <PlantSprite key={n} crop={crop} growth={growth} x={240 * slot.x} y={140 * slot.y} />
         ))}
     </svg>
   );

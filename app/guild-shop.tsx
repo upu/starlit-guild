@@ -4,6 +4,8 @@ import { guildProducts } from "@/lib/guild-content";
 import { guildStock } from "@/lib/guild-production";
 import { guildUnlocked } from "@/lib/guild-base";
 import type { GuildProps } from "./guild-controls";
+import { PhaserGuild } from "./phaser-guild";
+import { guildShopSpot } from "@/lib/guild-menu-model";
 import { GuildItemIcon } from "./guild-item-icon";
 
 export function GuildShop({ state, ready, onAction }: GuildProps) {
@@ -67,23 +69,28 @@ function GuildCatalog({
   onSelect: (id: string) => void;
 }) {
   return (
-    <div className="guild-catalog" role="group" aria-label="種と材料の商品一覧">
-      {guildProducts.map((product) => (
-        <button
-          className="guild-item-tile"
-          key={product.id}
-          aria-label={product.name}
-          aria-pressed={selected === product.id}
-          onClick={() => {
-            onSelect(product.id);
-          }}
-        >
-          <GuildItemIcon id={product.id} />
-          <b>{product.name}</b>
-          <small>{product.price} G</small>
-          <span className="guild-stock">{guildStock(state, product.id)}</span>
-        </button>
-      ))}
+    <div className="guild-shelf-scene" role="group" aria-label="種と材料の商品一覧">
+      <PhaserGuild state={state} now={state.updatedAt} site="shop" selected={selected} />
+      {guildProducts.map((product, index) => {
+        const point = guildShopSpot(index);
+        return (
+          <button
+            className="guild-scene-choice guild-product-choice"
+            key={product.id}
+            style={{ left: `${String(point.x * 100)}%`, top: `${String((point.y - 0.22) * 100)}%` }}
+            aria-label={product.name}
+            aria-pressed={selected === product.id}
+            onClick={() => {
+              onSelect(product.id);
+            }}
+          >
+            <span>
+              <b>{product.name}</b>
+              <small>{product.price} G</small>
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

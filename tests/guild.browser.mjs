@@ -59,8 +59,8 @@ async function checkMotion(page) {
   const before = await canvas.screenshot();
   await page.clock.runFor(6500);
   const after = await canvas.screenshot();
-  assert.ok(!before.equals(after), "Phaser animates residents and tools");
-  await capture(page, "home-walking");
+  assert.ok(!before.equals(after), "Phaser animates tea breaks and work");
+  await capture(page, "home-tea-motion");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.clock.runFor(100);
   const still = await canvas.screenshot();
@@ -70,7 +70,8 @@ async function checkMotion(page) {
 }
 async function capture(page, name) {
   await page.clock.runFor(350);
-  await page.locator('.guild-canvas[data-status="ready"]').waitFor();
+  await page.locator('.guild-canvas[data-status="ready"]').first().waitFor();
+  await page.locator('.guild-canvas:not([data-status="ready"])').waitFor({ state: "hidden" });
   await page.locator(".guild-detail[data-state=closed]").waitFor({ state: "hidden" });
   await page.locator(".guild-scene").evaluate(async (scene) => {
     const sources = [
@@ -142,7 +143,7 @@ try {
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
   assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
   await capture(page, "overview");
-  assert.equal(await page.locator(".guild-toolbar button").count(), 2);
+  assert.equal(await page.locator(".guild-toolbar button").count(), 3);
   const density = await page
     .locator(".guild-canvas canvas")
     .evaluate((canvas) => canvas.width / canvas.clientWidth);
@@ -154,6 +155,10 @@ try {
     await page.getByRole("button", { name: `${name}を10個購入`, exact: true }).click();
   }
   await capture(page, "shop");
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.getByRole("button", { name: "蜂蜜を10個購入", exact: true }).scrollIntoViewIfNeeded();
+  await capture(page, "shop-320");
+  await page.setViewportSize({ width: 390, height: 844 });
   await closeDialog(page);
   await page.getByRole("button", { name: "菜園", exact: true }).click();
   await page.getByRole("button", { name: "リンデの菜園の担当を選ぶ", exact: true }).click();
@@ -170,6 +175,11 @@ try {
     await closeDialog(page);
   }
   assert.equal(await page.getByRole("progressbar").count(), 2, "growth visible on the scene");
+  assert.deepEqual(await page.locator(".guild-toolbar button").allTextContents(), [
+    "ホーム",
+    "菜園",
+    "種・材料",
+  ]);
   await capture(page, "linde-planted");
   await page.getByRole("button", { name: "ブレッカの栽培所", exact: true }).click();
   await page.getByRole("button", { name: "ブレッカの栽培所の担当を選ぶ", exact: true }).click();
@@ -201,7 +211,7 @@ try {
     );
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
+  await page.getByRole("button", { name: "旅団ホーム", exact: true }).click();
   await page.getByRole("button", { name: "作業台の仕込み", exact: true }).click();
   await page.getByRole("button", { name: "加工担当：ミラ", exact: true }).click();
   await page.getByRole("button", { name: "薬草と蜂蜜のお茶", exact: true }).click();
@@ -210,14 +220,19 @@ try {
   await page.getByRole("button", { name: "材料がある限りくり返す", exact: true }).click();
   await page.getByRole("button", { name: "加工を始める", exact: true }).click();
   const before = await stateOf(page);
-  assert.equal(await page.locator(".guild-detail .is-crafting .guild-counter-worker").count(), 1);
-  assert.equal(
-    await page
-      .locator(".guild-detail .guild-stirring-spoon")
-      .evaluate((el) => getComputedStyle(el).animationName),
-    "guild-stir",
+  await page.locator('.guild-recipe-scene .guild-canvas[data-status="ready"]').waitFor();
+  const workingCanvas = page.locator(".guild-recipe-scene canvas");
+  const workingBefore = await workingCanvas.screenshot();
+  await page.clock.runFor(900);
+  assert.ok(
+    !workingBefore.equals(await workingCanvas.screenshot()),
+    "workbench uses animated Phaser artwork",
   );
   await capture(page, "workbench");
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.getByRole("button", { name: "加工を中止する", exact: true }).scrollIntoViewIfNeeded();
+  await capture(page, "workbench-320");
+  await page.setViewportSize({ width: 390, height: 844 });
   await closeDialog(page);
   await capture(page, "home-working");
   await checkMotion(page);
@@ -248,7 +263,7 @@ try {
     await page.getByRole("button", { name: `${role}を外す`, exact: true }).click();
     await closeDialog(page);
   }
-  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
+  await page.getByRole("button", { name: "旅団ホーム", exact: true }).click();
   assert.ok(
     (await page.locator(".guild-chat").textContent()).includes(guildStories[0].lines[0].text),
   );
@@ -258,7 +273,7 @@ try {
     !(await stateOf(page)).story.read.includes("guild-first-harvest"),
     "leaving does not read the conversation",
   );
-  await page.getByRole("button", { name: "旅団ホームへ戻る", exact: true }).click();
+  await page.getByRole("button", { name: "旅団ホーム", exact: true }).click();
   await tellStory(page, "guild-first-harvest");
   await page.getByRole("button", { name: "旅の手帳：ヒント・思い出・アルバム・設定" }).click();
   await page.locator(".save-status").click();

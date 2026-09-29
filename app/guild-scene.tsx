@@ -1,7 +1,7 @@
 import type { State } from "@/lib/game";
 import { PhaserGuild } from "./phaser-guild";
 import { GuildDutyFace } from "./guild-duty-marker";
-import { craftStatus } from "./guild-stage-props";
+import { craftStatus } from "./guild-controls";
 export type GuildPlace = "workbench" | "shop" | "roles";
 export const guildPlaces = { workbench: "作業台", shop: "種・材料", roles: "担当" };
 export function GuildScene({

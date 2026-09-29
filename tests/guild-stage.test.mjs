@@ -2,17 +2,33 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
-import { guildRoute, guildStageLayout } from "../lib/guild-stage-model.ts";
-import { guildArtFrames } from "../lib/guild-art-frames.ts";
+import {
+  guildRoute,
+  guildStageLayout,
+  guildStagePeople,
+  guildCropSlots,
+  guildCropWidth,
+  guildMotion,
+} from "../lib/guild-stage-model.ts";
+import { guildRoomArt } from "../lib/guild-room-art.ts";
+import { testState, act } from "../lib/game.ts";
 
 test("guild routes stop at work points and reduced motion stays at the starting point", () => {
-  const start = guildRoute(0, "home", 0, false);
-  assert.equal(guildRoute(0, "home", 5000, false).walking, false);
-  assert.equal(guildRoute(0, "home", 7000, false).walking, true);
-  assert.equal(guildRoute(0, "home", 12000, false).walking, false);
-  assert.equal(guildRoute(0, "home", 19000, false).walking, true);
-  assert.deepEqual(guildRoute(0, "home", 24000, false), start);
-  assert.deepEqual(guildRoute(0, "home", 19000, true), start);
+  const start = guildRoute(0, "linde", 0, false);
+  assert.equal(guildRoute(0, "linde", 5000, false).walking, false);
+  assert.equal(guildRoute(0, "linde", 7000, false).walking, true);
+  assert.equal(guildRoute(0, "linde", 12000, false).walking, false);
+  assert.equal(guildRoute(0, "linde", 19000, false).walking, true);
+  assert.deepEqual(guildRoute(0, "linde", 24000, false), start);
+  assert.deepEqual(guildRoute(0, "linde", 19000, true), start);
+  for (let i = 0; i < 5; i++)
+    for (const time of [0, 7000, 12000, 19000, 24000]) {
+      assert.deepEqual(
+        guildRoute(i, "home", time, false),
+        guildRoute(i, "home", 0, false),
+        "free members stay at tea seats",
+      );
+    }
   for (let t = 0; t < 24000; t += 100) {
     const p = guildRoute(0, "linde", t, false);
     for (const id of ["linde-1", "linde-2"]) {
@@ -31,28 +47,57 @@ test("guild routes stop at work points and reduced motion stays at the starting 
   );
 });
 
-test("guild character atlases have four distinct walk silhouettes and preserve transparent edges", async () => {
-  for (const id of ["finn-guild-v2", "lico-guild-v2"]) {
-    const path = `public/guild/${id}.webp`,
+test("all eight walk and four tea frames are distinct with valid transparent bounds", async () => {
+  for (const [name, count] of [
+    ["walk-v3", 8],
+    ["tea-party-v3", 4],
+  ]) {
+    const sheet = guildRoomArt[name],
+      path = `public/guild/${name}.webp`,
       meta = await sharp(path).metadata();
     assert.equal(meta.hasAlpha, true);
-    assert.equal(guildArtFrames[id].length, 8);
-    const hashes = [];
-    for (const rect of guildArtFrames[id].slice(0, 4)) {
-      const [left, top, width, height] = rect;
-      assert.ok(left >= 0 && top >= 0 && left + width <= meta.width && top + height <= meta.height);
-      const feet = await sharp(path)
-        .extract({
-          left,
-          top: top + Math.floor(height * 0.7),
-          width,
-          height: height - Math.floor(height * 0.7),
-        })
-        .resize(128, 64)
-        .raw()
-        .toBuffer();
-      hashes.push(createHash("sha256").update(feet).digest("hex"));
+    for (let start = 0; start < sheet.frames.length; start += count) {
+      const hashes = [];
+      for (const [left, top, width, height] of sheet.frames.slice(start, start + count)) {
+        assert.ok(
+          width > 0 &&
+            height > 0 &&
+            left >= 0 &&
+            top >= 0 &&
+            left + width <= meta.width &&
+            top + height <= meta.height,
+        );
+        const pixels = await sharp(path)
+          .extract({ left, top, width, height })
+          .resize(64, 96)
+          .raw()
+          .toBuffer();
+        hashes.push(createHash("sha256").update(pixels).digest("hex"));
+      }
+      assert.equal(new Set(hashes).size, count, `${name}: distinct poses in each character loop`);
     }
-    assert.equal(new Set(hashes).size, 4, `${id}: walk frames must not reuse the same feet`);
   }
+});
+test("plants fit the inner soil at seedling and full size; gait moves the upper body too", () => {
+  for (const growth of [0, 0.5, 1])
+    for (const slot of guildCropSlots) {
+      const width = guildCropWidth(growth);
+      assert.ok(slot.x - width / 2 >= 0.1 && slot.x + width / 2 <= 0.9);
+      const height = (width * 448 * 409) / 441 / 261;
+      assert.ok(slot.y - height >= 0.08 && slot.y <= 0.63, "plants remain above the front timber");
+    }
+  assert.ok(guildMotion(80, true, false).lift > 0);
+  assert.notEqual(guildMotion(80, true, false).angle, guildMotion(400, true, false).angle);
+  assert.deepEqual(guildMotion(80, true, true), { lift: 0, angle: 0 });
+  assert.deepEqual(guildMotion(80, false, false), { lift: 0, angle: 0 });
+});
+test("assigned members also rest at tea when the workbench has no active batch", () => {
+  let state = testState(1000, 37, 40, 100000);
+  state = act(state, { type: "guildAssign", id: "workbench", hero: "mira" }, 1000);
+  assert.ok(guildStagePeople(state, "home").includes("mira"));
+  state = act(state, { type: "guildBuy", id: "honey", quantity: 10 }, 1000);
+  state = act(state, { type: "guildCraft", id: "tea", quantity: 1 }, 1000);
+  assert.ok(!guildStagePeople(state, "home").includes("mira"));
+  state = act(state, { type: "guildCancel" }, 1000);
+  assert.ok(guildStagePeople(state, "home").includes("mira"));
 });
