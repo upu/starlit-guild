@@ -74,7 +74,11 @@ export function labFarHand(time: number, mode: LabPose) {
   return { x: arm.restHand.x + swing, y: arm.restHand.y };
 }
 function handPosition(t: number, mode: LabPose) {
-  if (mode === "work") return { x: 38 + Math.sin(t / 220) * 4, y: -10 + Math.cos(t / 220) * 3 };
+  if (mode === "work")
+    return {
+      x: 20 - labRig.arms[1].joint.x + Math.sin(t / 220) * 4,
+      y: -90 - labRig.arms[1].joint.y + Math.cos(t / 220) * 3,
+    };
   const arm = labRig.arms[1];
   return {
     x: mode === "walk" ? Math.sin((t / 900) * Math.PI * 2) * arm.walkSwing : arm.restHand.x,
@@ -117,7 +121,7 @@ function bodyMotion(t: number, mode: LabPose) {
   return {
     bob: mode === "tea" ? Math.sin(t / 900) * 0.8 : standing,
     head: walking ? Math.sin(phase) * 0.025 : Math.sin(t / 1500) * 0.035,
-    cape: Math.sin(t / 350) * (walking ? 0.12 : 0.025),
+    cape: Math.sin(t / 350) * (walking ? labRig.cape.walkSway : 0.025),
   };
 }
 export function labPose(time: number, mode: LabPose, reduced: boolean) {

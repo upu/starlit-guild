@@ -7,7 +7,7 @@ export class GuildTileRoom {
   private grid: Phaser.GameObjects.Graphics;
   constructor(
     private scene: Phaser.Scene,
-    visit: (mode: "tea" | "work") => void,
+    visit: (mode: "tea" | "work", pointer: Phaser.Input.Pointer) => void,
     private filter: GuildLabFilter,
   ) {
     this.layer(
@@ -35,15 +35,17 @@ export class GuildTileRoom {
         .setDepth(item.id === "chair" ? labStations.tea.y - 1 : y);
       this.filter.add(image);
       if (item.id === "table" || item.id === "bench" || item.id === "chair")
-        image.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
-          visit(item.id === "bench" ? "work" : "tea");
-        });
+        image
+          .setInteractive({ useHandCursor: true })
+          .on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+            visit(item.id === "bench" ? "work" : "tea", pointer);
+          });
     }
     this.grid = scene.add.graphics().setDepth(2000);
     this.workCup();
   }
   private workCup() {
-    const asset = "/guild/leon-parts-v2.webp";
+    const asset = guildLabArt.asset;
     const [x, y, w, h] = guildLabArt.frames[12];
     this.scene.textures.get(asset).add("mixing-cup", 0, x, y, w, h);
     this.filter.add(

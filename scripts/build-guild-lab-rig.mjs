@@ -1,6 +1,5 @@
 import sharp from "sharp";
 import { writeFileSync, mkdirSync } from "node:fs";
-import { format } from "prettier";
 mkdirSync("work", { recursive: true });
 const source = "assets/source/guild/leon-parts-v2.png";
 const { data, info } = await sharp(source)
@@ -149,15 +148,7 @@ const art = {
     blink: { frame: 13, rect: patchRect, roi, changedPixels: changed },
   },
 };
-writeFileSync(
-  "lib/guild-lab-art.ts",
-  await format(
-    "// Generated measurements: node scripts/build-guild-lab-rig.mjs\nexport const guildLabArt = " +
-      JSON.stringify(art) +
-      " as const;\n",
-    { parser: "typescript", printWidth: 100 },
-  ),
-);
+writeFileSync("work/lab-base-art.json", JSON.stringify(art, null, 2));
 await sharp(opened, { raw: { width: hw, height: hh, channels: 4 } })
   .png()
   .toFile("work/lab-head-open.png");

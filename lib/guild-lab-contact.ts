@@ -1,0 +1,35 @@
+import { labRig } from "./guild-lab-rig.ts";
+import {
+  labFoot,
+  labJoint,
+  labLegTarget,
+  labPose,
+  LAB_ACTOR_SCALE,
+  type LabPose,
+} from "./guild-lab-model.ts";
+
+export function labSole(time: number, mode: LabPose, index: number) {
+  const leg = labRig.legs[index],
+    pose = labPose(time, mode, false);
+  const target = labLegTarget(time, index / 2, mode, pose.bob);
+  const angle = labJoint(target, ...leg.lengths, leg.bend);
+  const extension = leg.lengths[1] * leg.overlap[1][1];
+  return {
+    x: leg.joint.x + target.x - Math.sin(angle.upper + angle.lower) * extension,
+    y: leg.joint.y + pose.bob + target.y + Math.cos(angle.upper + angle.lower) * extension,
+  };
+}
+export function labShadow(time: number, mode: LabPose) {
+  const index = mode === "walk" && time % 900 >= 450 ? 1 : 0;
+  const sole = labSole(time, mode, index);
+  const foot = mode === "walk" ? labFoot(time, index / 2) : { x: 0 };
+  return {
+    x: sole.x * LAB_ACTOR_SCALE * 0.35,
+    y:
+      mode === "tea"
+        ? labRig.legs[0].lengths[1] * labRig.legs[0].overlap[1][1] * LAB_ACTOR_SCALE
+        : sole.y * LAB_ACTOR_SCALE,
+    width: 35 + Math.abs(foot.x) * LAB_ACTOR_SCALE * 0.35,
+    height: 3.8,
+  };
+}

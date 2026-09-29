@@ -1,12 +1,12 @@
-// Generated measurements: node scripts/build-guild-lab-rig.mjs
+// Generated: node scripts/build-guild-lab-affection.mjs
 export const guildLabArt = {
   width: 1332,
-  height: 1181,
+  height: 1340,
   frames: [
     [25, 34, 297, 268],
-    [377, 138, 271, 181],
-    [749, 117, 210, 223],
-    [1005, 116, 291, 217],
+    [360, 110, 189, 181],
+    [730, 110, 162, 223],
+    [1030, 110, 132, 217],
     [98, 404, 139, 202],
     [448, 399, 130, 214],
     [749, 393, 160, 215],
@@ -17,6 +17,15 @@ export const guildLabArt = {
     [1085, 675, 179, 213],
     [1089, 1000, 163, 118],
     [40, 1000, 107, 45],
+    [20, 1200, 122, 77],
+    [270, 1200, 122, 77],
+    [270, 1295, 42, 25],
+    [520, 1200, 122, 77],
+    [520, 1295, 42, 21],
+    [770, 1200, 122, 77],
+    [770, 1295, 37, 20],
+    [1020, 1200, 122, 77],
+    [1020, 1295, 42, 27],
   ],
   head: {
     displayHeight: 90,
@@ -27,5 +36,96 @@ export const guildLabArt = {
       roi: { x: 128, y: 184, width: 107, height: 45 },
       changedPixels: 2568,
     },
+    expressions: {
+      neutral: {
+        patches: [
+          {
+            frame: 14,
+            rect: [120, 159, 122, 77],
+            roi: [120, 159, 122, 77],
+            region: "eyes",
+            changedPixels: 2289,
+          },
+        ],
+        closedEyes: false,
+      },
+      smile: {
+        patches: [
+          {
+            frame: 15,
+            rect: [120, 159, 122, 77],
+            roi: [120, 159, 122, 77],
+            region: "eyes",
+            changedPixels: 4083,
+          },
+          {
+            frame: 16,
+            rect: [161, 236, 42, 25],
+            roi: [161, 233, 42, 28],
+            region: "mouth",
+            changedPixels: 333,
+          },
+        ],
+        closedEyes: true,
+      },
+      surprised: {
+        patches: [
+          {
+            frame: 17,
+            rect: [120, 159, 122, 77],
+            roi: [120, 159, 122, 77],
+            region: "eyes",
+            changedPixels: 2642,
+          },
+          {
+            frame: 18,
+            rect: [161, 240, 42, 21],
+            roi: [161, 233, 42, 28],
+            region: "mouth",
+            changedPixels: 123,
+          },
+        ],
+        closedEyes: false,
+      },
+      tired: {
+        patches: [
+          {
+            frame: 19,
+            rect: [120, 159, 122, 77],
+            roi: [120, 159, 122, 77],
+            region: "eyes",
+            changedPixels: 3429,
+          },
+          {
+            frame: 20,
+            rect: [161, 241, 37, 20],
+            roi: [161, 233, 42, 28],
+            region: "mouth",
+            changedPixels: 57,
+          },
+        ],
+        closedEyes: false,
+      },
+      yawn: {
+        patches: [
+          {
+            frame: 21,
+            rect: [120, 159, 122, 77],
+            roi: [120, 159, 122, 77],
+            region: "eyes",
+            changedPixels: 3294,
+          },
+          {
+            frame: 22,
+            rect: [161, 234, 42, 27],
+            roi: [161, 233, 42, 28],
+            region: "mouth",
+            changedPixels: 246,
+          },
+        ],
+        closedEyes: false,
+      },
+    },
   },
+  asset: "/guild/leon-parts-v3.webp",
 } as const;

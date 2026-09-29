@@ -30,7 +30,8 @@ async function start(
       await route.fulfill({
         response,
         body: source
-          .replace("close ? 1.8 : 1", "close ? 6 : 1")
+          .replace("close ? 1.8 : 1", "close ? 5 : 1")
+          .replace("new LabAffection()", "new LabAffection(() => 0.5)")
           .replace("this.elapsed += step;", "this.elapsed = Number(window.__labCaptureTime ?? 0);"),
       });
     });
@@ -143,7 +144,7 @@ async function captureJoints() {
       window.__labCaptureTime = value;
     }, time);
     await page.waitForTimeout(80);
-    await page.locator("canvas").screenshot({ path: `${output}/joints-6x-${name}.png` });
+    await page.locator("canvas").screenshot({ path: `${output}/joints-5x-${name}.png` });
   };
   await capture("tea", 0);
   await capture("sip", 5000);
@@ -154,7 +155,21 @@ async function captureJoints() {
   await button(page, "作業台へ").click();
   await activity(page, "walk");
   await button(page, "一時停止").click();
-  for (const time of [0, 225, 450, 675]) await capture(`walk-${time}`, time);
+  for (let time = 0; time < 900; time += 50) await capture(`walk-${time}`, time);
+  const cells = await Promise.all(
+    Array.from({ length: 18 }, async (_, n) => ({
+      input: await sharp(`${output}/joints-5x-walk-${n * 50}.png`)
+        .resize(366, 274)
+        .png()
+        .toBuffer(),
+      left: (n % 6) * 366,
+      top: Math.floor(n / 6) * 274,
+    })),
+  );
+  await sharp({ create: { width: 2196, height: 822, channels: 4, background: "#32281e" } })
+    .composite(cells)
+    .png()
+    .toFile(`${output}/walk-cycle.png`);
   await button(page, "タイルと関節を見る").click();
   await capture("walk-debug", 225);
   await button(page, "タイルと関節を見る").click();
@@ -169,7 +184,75 @@ async function captureJoints() {
   });
   await context.close();
 }
+async function checkAffection() {
+  const { context, page } = await start("no-preference", 390, 3, true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await button(page, "寄って見る").click();
+  const canvas = page.locator("canvas");
+  const time = async (value) => {
+    await page.evaluate((t) => {
+      window.__labCaptureTime = t;
+    }, value);
+    await page.waitForTimeout(100);
+  };
+  const shot = async (name) => canvas.screenshot({ path: `${output}/affection-${name}.png` });
+  await time(5000);
+  await shot("sip");
+  await time(6800);
+  assert.equal(await canvas.getAttribute("data-expression"), "smile");
+  assert.equal(await canvas.getAttribute("data-mark"), "note");
+  await shot("tea-smile");
+  await time(8200);
+  await tapWorld(page, 434, 220);
+  assert.equal(await canvas.getAttribute("data-expression"), "surprised");
+  await shot("tap-surprised");
+  assert.equal(
+    await button(page, "お茶で休憩").getAttribute("aria-pressed"),
+    "true",
+    "actor tap does not activate overlapping furniture",
+  );
+  await time(8650);
+  assert.equal(await canvas.getAttribute("data-expression"), "smile");
+  await shot("tap-smile");
+  await time(8750);
+  await tapWorld(page, 434, 220);
+  assert.equal(await canvas.getAttribute("data-expression"), "shy");
+  await shot("tap-shy");
+  await time(10000);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await button(page, "歩く").click();
+  await activity(page, "idle");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await time(25100);
+  await time(25800);
+  assert.equal(await canvas.getAttribute("data-gesture"), "stretch");
+  await shot("stretch");
+  await time(36200);
+  assert.equal(await canvas.getAttribute("data-expression"), "yawn");
+  await shot("yawn");
+  await time(38600);
+  assert.equal(await canvas.getAttribute("data-expression"), "tired");
+  await shot("sleepy");
+  await button(page, "レオンに声をかける").click();
+  assert.equal(await canvas.getAttribute("data-expression"), "surprised");
+  await shot("wake");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await time(39100);
+  assert.equal(await canvas.getAttribute("data-expression"), "smile");
+  await shot("reduced-smile");
+  const still = await canvas.screenshot();
+  await page.waitForTimeout(500);
+  assert.ok(
+    still.equals(await canvas.screenshot()),
+    "reduced reactions keep face and mark but no jumping or particles",
+  );
+  assert.deepEqual(await page.evaluate(() => ({ ...localStorage })), {
+    "lab-save-sentinel": "untouched",
+  });
+  await context.close();
+}
 try {
+  await checkAffection();
   await captureJoints();
   await checkResolutionAndQuality();
   const { context, page } = await start();
@@ -220,10 +303,19 @@ try {
     "lab-save-sentinel": "untouched",
   });
   await context.close();
-  const reduced = await start("reduce");
+  const reduced = await start("reduce", 1000, 2, true);
   await button(reduced.page, "作業台へ").click();
   await activity(reduced.page, "work");
+  // Expressions may change in reduced motion. Keep the same work expression
+  // while advancing the pose clock, so this comparison tests movement alone.
+  await reduced.page.evaluate(() => {
+    window.__labCaptureTime = 200;
+  });
+  await reduced.page.waitForTimeout(80);
   const still = await reduced.page.locator("canvas").screenshot();
+  await reduced.page.evaluate(() => {
+    window.__labCaptureTime = 800;
+  });
   await reduced.page.waitForTimeout(700);
   assert.ok(still.equals(await reduced.page.locator("canvas").screenshot()));
   await reduced.page.emulateMedia({ reducedMotion: "no-preference" });
@@ -237,11 +329,11 @@ try {
   assert.equal(await reduced.page.locator("canvas").count(), 1);
   await reduced.context.close();
   const fault = await browser.newContext();
-  await fault.route("**/guild/leon-parts-v2.webp", (route) => route.abort());
+  await fault.route("**/guild/leon-parts-v3.webp", (route) => route.abort());
   const recovery = await fault.newPage();
   await recovery.goto(`${root}/guild-lab`);
   await recovery.locator('.guild-lab-stage[data-status="error"]').waitFor();
-  await fault.unroute("**/guild/leon-parts-v2.webp");
+  await fault.unroute("**/guild/leon-parts-v3.webp");
   await button(recovery, "景色を読み直す").click();
   await recovery.locator('.guild-lab-stage[data-status="ready"]').waitFor();
   assert.equal(await recovery.locator("canvas").count(), 1, "Retry replaces the failed canvas");

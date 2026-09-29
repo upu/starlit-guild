@@ -8,6 +8,7 @@ export type LabControls = {
   paused: boolean;
   grid: boolean;
   close: boolean;
+  greet: number;
 };
 export type LabBridge = {
   read: () => LabControls;
@@ -25,7 +26,7 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
         failed = true;
         bridge.status("error");
       });
-      for (const name of ["room-tiles-v1", "leon-parts-v2", "furniture-v3"])
+      for (const name of ["room-tiles-v1", "leon-parts-v3", "furniture-v3"])
         this.load.image(`/guild/${name}.webp`, `/guild/${name}.webp`);
     }
     create() {

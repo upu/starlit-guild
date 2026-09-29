@@ -91,11 +91,11 @@ test("room routes finish once, snapshot their start, and use the aisle outside t
   }
 });
 
-test("cutout atlas has fourteen nonempty measured frames and room tiles are square", async () => {
-  const path = "public/guild/leon-parts-v2.webp";
+test("cutout atlas has twenty-three nonempty measured frames and room tiles are square", async () => {
+  const path = "public/guild/leon-parts-v3.webp";
   const meta = await sharp(path).metadata();
   assert.equal(meta.hasAlpha, true);
-  assert.equal(guildLabArt.frames.length, 14);
+  assert.equal(guildLabArt.frames.length, 23);
   for (const [index, [left, top, width, height]] of guildLabArt.frames.entries()) {
     assert.ok(left >= 0 && top >= 0 && left + width <= meta.width && top + height <= meta.height);
     const { data } = await sharp(path)
@@ -130,7 +130,7 @@ test("blink patch uses measured head coordinates, preserves the mouth, and tiles
     .ensureAlpha()
     .raw()
     .toBuffer();
-  const head = await sharp("public/guild/leon-parts-v2.webp")
+  const head = await sharp("public/guild/leon-parts-v3.webp")
     .extract({ left: hx, top: hy, width: hw, height: hh })
     .ensureAlpha()
     .raw()
@@ -142,7 +142,7 @@ test("blink patch uses measured head coordinates, preserves the mouth, and tiles
     if (source[i + 3] > 0 && [0, 1, 2].some((c) => head[i + c] !== source[i + c])) differences++;
   }
   assert.equal(differences, 0, "lossless delivery preserves visible face pixels");
-  const patch = await sharp("public/guild/leon-parts-v2.webp")
+  const patch = await sharp("public/guild/leon-parts-v3.webp")
     .extract({ left: px, top: py, width: pw, height: ph })
     .png()
     .toBuffer();
@@ -206,7 +206,7 @@ test("far shoulder sits inside the painted torso and its hand swings opposite th
   const scale = torso.height / height;
   const x = Math.round(width / 2 + (arm.joint.x - torso.x) / scale);
   const y = Math.round(height / 2 + (arm.joint.y - torso.y) / scale);
-  const pixels = await sharp("public/guild/leon-parts-v2.webp")
+  const pixels = await sharp("public/guild/leon-parts-v3.webp")
     .extract({ left, top, width, height })
     .ensureAlpha()
     .raw()
@@ -228,7 +228,7 @@ test("painted hip caps stay behind the opaque coat hem while seated and througho
     return {
       width,
       height,
-      data: await sharp("public/guild/leon-parts-v2.webp")
+      data: await sharp("public/guild/leon-parts-v3.webp")
         .extract({ left, top, width, height })
         .ensureAlpha()
         .raw()

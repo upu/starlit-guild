@@ -7,6 +7,7 @@ export type LabLimbConfig = {
   overlap: readonly [readonly [number, number], readonly [number, number]];
   front: "upper" | "lower";
   layer: number;
+  mirror?: readonly [boolean, boolean];
   bend: number;
 };
 type LabArmConfig = LabLimbConfig & { restHand: { x: number; y: number }; walkSwing: number };
@@ -32,30 +33,40 @@ export const labRig = {
   head: { x: 3, y: -85.5, layer: 7 },
   scarf: { frame: 1, x: -4, y: -85, height: 16, layer: 6 },
   torso: { frame: 2, x: 0, y: -67, height: 51, layer: 5 },
-  cape: { frame: 3, x: 0, y: -84, height: 62, originX: 0.86, originY: 0.08, layer: 3 },
+  cape: {
+    frame: 3,
+    x: -5,
+    y: -84,
+    height: 48,
+    originX: 0.78,
+    originY: 0.08,
+    layer: 3,
+    walkSway: 0.06,
+  },
   cup: { frame: 12, height: 17, layer: 9 },
   legs: [
-    { ...leg, frames: [8, 9], joint: { x: 10, y: -54 }, layer: 1 },
-    { ...leg, frames: [10, 11], joint: { x: -9, y: -54 }, layer: 4 },
+    { ...leg, frames: [8, 9], joint: { x: 4, y: -56 }, layer: 1 },
+    { ...leg, frames: [10, 11], joint: { x: -5, y: -56 }, layer: 4 },
   ] satisfies LabLimbConfig[],
   arms: [
     {
       ...arm,
       frames: [4, 5],
       joint: { x: 7, y: -83 },
-      layer: 2,
-      restHand: { x: -8, y: 39 },
-      walkSwing: -19,
+      layer: 0,
+      restHand: { x: -8, y: 28 },
+      walkSwing: -16,
     },
     {
       ...arm,
       frames: [6, 7],
-      joint: { x: -18, y: -80 },
+      joint: { x: -6, y: -84.5 },
+      mirror: [false, true],
       layer: 8,
       restHand: { x: 7, y: 41 },
       walkSwing: 17,
     },
   ] satisfies LabArmConfig[],
   stanceReach: 0.96,
-  seatedFoot: { x: 22, y: 36 },
+  seatedFoot: { x: 22, y: 38 },
 } as const;

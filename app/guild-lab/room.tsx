@@ -10,6 +10,7 @@ const initialControls: LabControls = {
   paused: false,
   grid: false,
   close: false,
+  greet: 0,
 };
 const captions = {
   tea: "椅子でお茶を飲んでいます",
@@ -70,10 +71,13 @@ function useLab() {
     setStatus("loading");
     setRetry((value) => value + 1);
   };
-  return { host, controls, status, activity, visit, toggle, restart };
+  const greet = () => {
+    setControls((c) => ({ ...c, greet: c.greet + 1 }));
+  };
+  return { host, controls, status, activity, visit, toggle, restart, greet };
 }
 export default function GuildLab() {
-  const { host, controls, status, activity, visit, toggle, restart } = useLab();
+  const { host, controls, status, activity, visit, toggle, restart, greet } = useLab();
   return (
     <main className="guild-lab">
       <div className="guild-lab-inner">
@@ -84,7 +88,7 @@ export default function GuildLab() {
           </div>
           <Link href="/">ゲームへ戻る</Link>
         </header>
-        <p>レオンと過ごす休憩時間。テーブルや作業台を押しても移動できます。</p>
+        <p>レオンと過ごす休憩時間。レオンに触れると、こちらに気づいてくれます。</p>
         <div className="guild-lab-stage" data-status={status} data-activity={activity}>
           <div ref={host} className="guild-lab-canvas" aria-hidden="true" />
           {status !== "ready" && (
@@ -103,14 +107,15 @@ export default function GuildLab() {
           activity={activity}
           visit={visit}
           toggle={toggle}
+          greet={greet}
         />
         <details>
           <summary>今回の試作について</summary>
           <p>
-            床・壁をタイルで組み、家具は共通のマス寸法で配置しています。レオンは頭・顔・腕・脚などの画像を重ね、関節の回転で動かしています。目は開閉の差分です。
+            お茶を楽しんだり、うとうとしたり。テーブルや作業台を押すと移動します。続けて触れると、ちょっと照れることも。
           </p>
           <p>
-            描画だけの試作です。冒険のセーブや生産状況には書き込みません。「動きを減らす」設定では、移動を省略して静止表示します。
+            描画だけの試作です。冒険のセーブや生産状況には書き込みません。「動きを減らす」設定でも、表情と気持ちのマークは表示します。
           </p>
         </details>
       </div>
@@ -124,6 +129,7 @@ function LabButtons({
   activity,
   visit,
   toggle,
+  greet,
 }: Omit<ReturnType<typeof useLab>, "host" | "restart">) {
   return (
     <>
@@ -142,6 +148,9 @@ function LabButtons({
         ))}
       </div>
       <div className="guild-lab-options">
+        <button disabled={status !== "ready" || controls.paused} onClick={greet}>
+          レオンに声をかける
+        </button>
         <button
           aria-pressed={controls.close}
           onClick={() => {

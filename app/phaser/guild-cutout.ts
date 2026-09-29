@@ -2,15 +2,19 @@ import type Phaser from "phaser";
 import { guildLabArt } from "@/lib/guild-lab-art";
 import { labRig, type LabLimbConfig } from "@/lib/guild-lab-rig";
 import type { GuildLabFilter } from "./guild-lab-filter";
+import { GuildLabFace } from "./guild-lab-face";
+import { GuildLabEffects } from "./guild-lab-effects";
+import type { LabFeeling } from "@/lib/guild-lab-affection";
 import {
   LAB_ACTOR_SCALE,
   labLegTarget,
   labJoint,
   labPose,
+  labTeaCup,
   type LabPose,
   type Point,
 } from "@/lib/guild-lab-model";
-const ASSET = "/guild/leon-parts-v2.webp";
+const ASSET = guildLabArt.asset;
 type Limb = {
   upper: Phaser.GameObjects.Container;
   lower: Phaser.GameObjects.Container;
@@ -21,7 +25,8 @@ export class GuildCutout {
   private body: Phaser.GameObjects.Container;
   private head: Phaser.GameObjects.Container;
   private cape: Phaser.GameObjects.Image;
-  private shutEyes: Phaser.GameObjects.Image;
+  private face: GuildLabFace;
+  private effects: GuildLabEffects;
   private cup: Phaser.GameObjects.Image;
   private spoon: Phaser.GameObjects.Graphics;
   private legs: Limb[];
@@ -53,8 +58,7 @@ export class GuildCutout {
     this.body.add(this.bodyPart(labRig.scarf));
     this.head = scene.add.container(labRig.head.x, labRig.head.y).setDepth(labRig.head.layer);
     this.head.add(this.part(0, 0, 0, guildLabArt.head.displayHeight, 0.5, 1));
-    this.shutEyes = this.blinkPatch();
-    this.head.add(this.shutEyes);
+    this.face = new GuildLabFace(scene, this.head, filter);
     this.body.add(this.head);
     this.arms.push(this.limb(labRig.arms[1]));
     this.cup = this.part(labRig.cup.frame, 0, 0, labRig.cup.height, 0.5, 0).setDepth(
@@ -68,12 +72,10 @@ export class GuildCutout {
     this.arms[1].lower.add(this.spoon);
     this.joints = scene.add.graphics();
     this.root.add(this.joints);
+    this.effects = new GuildLabEffects(scene, this.root);
   }
-  private blinkPatch() {
-    const [, , width, height] = guildLabArt.frames[0];
-    const scale = guildLabArt.head.displayHeight / height;
-    const [x, y, , patchHeight] = guildLabArt.head.blink.rect;
-    return this.part(13, (x - width / 2) * scale, (y - height) * scale, patchHeight * scale, 0, 0);
+  hit(point: Point) {
+    return this.body.getBounds().contains(point.x, point.y);
   }
   private bodyPart(config: { frame: number; x: number; y: number; height: number; layer: number }) {
     return this.part(config.frame, config.x, config.y, config.height).setDepth(config.layer);
@@ -87,8 +89,12 @@ export class GuildCutout {
     const { frames, joint, lengths, overlap, front } = config;
     const top = this.scene.add.container(joint.x, joint.y).setDepth(config.layer);
     const bottom = this.scene.add.container(0, lengths[0]);
-    const upper = this.segment(frames[0], lengths[0], overlap[0]);
-    bottom.add(this.segment(frames[1], lengths[1], overlap[1]));
+    const upper = this.segment(frames[0], lengths[0], overlap[0]).setFlipX(
+      config.mirror?.[0] ?? false,
+    );
+    bottom.add(
+      this.segment(frames[1], lengths[1], overlap[1]).setFlipX(config.mirror?.[1] ?? false),
+    );
     top.add(front === "upper" ? [bottom, upper] : [upper, bottom]);
     this.body.add(top);
     return { upper: top, lower: bottom, config };
@@ -108,23 +114,48 @@ export class GuildCutout {
     limb.upper.rotation = angles.upper;
     limb.lower.rotation = angles.lower;
   }
-  paint(time: number, mode: LabPose, reduced: boolean, debug: boolean) {
+  paint(
+    time: number,
+    mode: LabPose,
+    reduced: boolean,
+    debug: boolean,
+    feeling: LabFeeling,
+    paused: boolean,
+  ) {
     const pose = labPose(time, mode, reduced);
-    this.body.y = pose.bob;
-    this.head.rotation = pose.head;
+    this.body.y = pose.bob - feeling.jump;
+    this.body.setScale(
+      1 + feeling.squash * 0.06,
+      1 - feeling.squash * 0.08 + feeling.stretch * 0.035,
+    );
+    this.head.rotation = pose.head + feeling.look;
     this.cape.rotation = pose.cape;
-    this.shutEyes.visible = pose.blink;
+    this.face.paint(feeling, pose.blink);
     this.cup.visible = mode === "tea";
     this.spoon.visible = mode === "work";
+    const cup = labTeaCup(pose.sip, this.head.rotation);
     this.arms.forEach((arm, i) => {
-      this.aim(arm, i ? pose.hand : pose.farHand);
+      const target = i ? (mode === "tea" ? cup.hand : pose.hand) : pose.farHand;
+      this.aim(arm, {
+        x: target.x * (1 - feeling.stretch),
+        y: target.y * (1 - feeling.stretch) - 32 * feeling.stretch,
+      });
     });
-    this.cup.setPosition(pose.cup.x, pose.cup.y).setRotation(pose.cup.angle);
+    this.cup.setPosition(cup.x, cup.y).setRotation(cup.angle);
     this.spoon.rotation = -this.arms[1].upper.rotation - this.arms[1].lower.rotation;
     this.legs.forEach((leg, i) => {
       this.aim(leg, labLegTarget(reduced ? 0 : time, i / 2, mode, pose.bob));
     });
     this.debug(debug);
+    this.effects.paint(
+      time,
+      mode,
+      feeling,
+      reduced,
+      paused,
+      { x: cup.x, y: cup.y + this.body.y },
+      this.root.scaleX < 0,
+    );
   }
   private debug(show: boolean) {
     this.joints.clear();
