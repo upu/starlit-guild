@@ -5,6 +5,7 @@ import type { GuildLabFilter } from "./guild-lab-filter";
 import { GuildLabFace } from "./guild-lab-face";
 import { GuildLabEffects } from "./guild-lab-effects";
 import type { LabFeeling } from "@/lib/guild-lab-affection";
+import { labArmArtwork, LabArmMotion } from "@/lib/guild-lab-arms";
 import {
   LAB_ACTOR_SCALE,
   labLegTarget,
@@ -31,6 +32,7 @@ export class GuildCutout {
   private spoon: Phaser.GameObjects.Graphics;
   private legs: Limb[];
   private arms: Limb[];
+  private armMotion = [new LabArmMotion(), new LabArmMotion()];
   private joints: Phaser.GameObjects.Graphics;
   constructor(
     private scene: Phaser.Scene,
@@ -86,18 +88,22 @@ export class GuildCutout {
     return this.filter.add(image, LAB_ACTOR_SCALE);
   }
   private limb(config: LabLimbConfig) {
-    const { frames, joint, lengths, overlap, front } = config;
+    const { frames, joint, lengths, front } = config;
     const top = this.scene.add.container(joint.x, joint.y).setDepth(config.layer);
     const bottom = this.scene.add.container(0, lengths[0]);
-    const upper = this.segment(frames[0], lengths[0], overlap[0]).setFlipX(
-      config.mirror?.[0] ?? false,
-    );
-    bottom.add(
-      this.segment(frames[1], lengths[1], overlap[1]).setFlipX(config.mirror?.[1] ?? false),
-    );
+    const segment = (i: 0 | 1) =>
+      config.measured
+        ? this.armSegment(frames[i], lengths[i])
+        : this.segment(frames[i], lengths[i], config.overlap[i]);
+    const upper = segment(0);
+    bottom.add(segment(1));
     top.add(front === "upper" ? [bottom, upper] : [upper, bottom]);
     this.body.add(top);
     return { upper: top, lower: bottom, config };
+  }
+  private armSegment(frame: number, length: number) {
+    const art = labArmArtwork(frame, length);
+    return this.part(frame, 0, 0, art.height, art.originX, art.originY).setRotation(art.rotation);
   }
   private segment(frame: number, length: number, overlap: readonly [number, number]) {
     return this.part(
@@ -134,13 +140,10 @@ export class GuildCutout {
     this.cup.visible = mode === "tea";
     this.spoon.visible = mode === "work";
     const cup = labTeaCup(pose.sip, this.head.rotation);
-    this.arms.forEach((arm, i) => {
-      const target = i ? (mode === "tea" ? cup.hand : pose.hand) : pose.farHand;
-      this.aim(arm, {
-        x: target.x * (1 - feeling.stretch),
-        y: target.y * (1 - feeling.stretch) - 32 * feeling.stretch,
-      });
-    });
+    this.paintArms(time, mode, reduced, feeling, [
+      pose.farHand,
+      mode === "tea" ? cup.hand : pose.hand,
+    ]);
     this.cup.setPosition(cup.x, cup.y).setRotation(cup.angle);
     this.spoon.rotation = -this.arms[1].upper.rotation - this.arms[1].lower.rotation;
     this.legs.forEach((leg, i) => {
@@ -157,6 +160,31 @@ export class GuildCutout {
       this.root.scaleX < 0,
     );
   }
+  private paintArms(
+    time: number,
+    mode: LabPose,
+    reduced: boolean,
+    feeling: LabFeeling,
+    targets: Point[],
+  ) {
+    const reaction = feeling.stretch > 0 || feeling.jump > 0 || feeling.squash > 0;
+    this.arms.forEach((arm, i) => {
+      const target = targets[i];
+      const angles = this.armMotion[i].sample(
+        time,
+        mode,
+        i,
+        {
+          x: target.x * (1 - feeling.stretch),
+          y: target.y * (1 - feeling.stretch) - 32 * feeling.stretch,
+        },
+        reaction,
+        reduced,
+      );
+      arm.upper.setRotation(angles.upper).setScale(angles.scale);
+      arm.lower.rotation = angles.lower;
+    });
+  }
   private debug(show: boolean) {
     this.joints.clear();
     if (!show) return;
@@ -164,8 +192,8 @@ export class GuildCutout {
     for (const limb of [...this.arms, ...this.legs]) {
       const x = limb.upper.x,
         y = limb.upper.y + this.body.y;
-      const dx = -Math.sin(limb.upper.rotation) * limb.lower.y;
-      const dy = Math.cos(limb.upper.rotation) * limb.lower.y;
+      const dx = -Math.sin(limb.upper.rotation) * limb.lower.y * limb.upper.scaleY;
+      const dy = Math.cos(limb.upper.rotation) * limb.lower.y * limb.upper.scaleY;
       this.joints
         .lineBetween(x, y, x + dx, y + dy)
         .strokeCircle(x, y, 2)

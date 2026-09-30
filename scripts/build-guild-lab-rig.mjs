@@ -142,6 +142,15 @@ const art = {
   width: w,
   height: h,
   frames,
+  // Measured on the isolated source parts (frame-local pixels). Proximal caps
+  // are shoulder/elbow centres; distal caps are elbow or the glove's grip.
+  // Wrist landmarks are retained separately because the glove includes a hand.
+  armJoints: {
+    4: { proximal: [99, 41], distal: [46, 165] },
+    5: { proximal: [47, 39], distal: [79, 181], wrist: [71, 142] },
+    6: { proximal: [91, 52], distal: [48, 171] },
+    7: { proximal: [43, 42], distal: [75, 197], wrist: [69, 148] },
+  },
   head: {
     displayHeight: 90,
     mouth,

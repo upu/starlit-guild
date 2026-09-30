@@ -7,6 +7,7 @@ import { labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { labPose, labJoint, LAB_ACTOR_SCALE } from "../lib/guild-lab-model.ts";
 import { portraitExpressions } from "../lib/portrait-expressions.ts";
+import { labWalkingArm, labArmArtwork } from "../lib/guild-lab-arms.ts";
 
 test("tea, work arrival, yawning and waking choose familiar expression names", () => {
   const mood = new LabAffection(() => 0.5);
@@ -92,21 +93,22 @@ test("both shoulders sit in the new torso, the far glove stays above the hem, an
   const arm = labRig.arms[0],
     glove = await part(arm.frames[1]);
   assert.ok(arm.layer < labRig.legs[0].layer);
-  const h = arm.lengths[1] * (1 + arm.overlap[1][0] + arm.overlap[1][1]),
-    s = h / glove.height;
+  const art = labArmArtwork(arm.frames[1], arm.lengths[1]),
+    s = art.scale;
+  const [px, py] = guildLabArt.armJoints[arm.frames[1]].proximal;
   const hem = labRig.torso.y + labRig.torso.height / 2;
   for (let t = 0; t < 900; t += 10) {
-    const hand = labPose(t, "walk", false).farHand,
-      a = labJoint(hand, ...arm.lengths, arm.bend);
+    const a = labWalkingArm(t, 0);
     const elbow = { x: -Math.sin(a.upper) * arm.lengths[0], y: Math.cos(a.upper) * arm.lengths[0] };
     for (let row = 0; row < glove.height; row += 3)
       for (let col = 0; col < glove.width; col += 3) {
         if (glove.data[(row * glove.width + col) * 4 + 3] < 200) continue;
-        const x = (col - glove.width / 2) * s,
-          y = row * s - arm.lengths[1] * arm.overlap[1][0];
+        const x = (col - px) * s,
+          y = (row - py) * s;
+        const angle = a.upper + a.lower + art.rotation;
         const paintedY =
-          arm.joint.y + elbow.y + x * Math.sin(a.upper + a.lower) + y * Math.cos(a.upper + a.lower);
-        assert.ok(paintedY < hem - 2, `far glove stays above hem at ${t}ms`);
+          arm.joint.y + (elbow.y + x * Math.sin(angle) + y * Math.cos(angle)) * a.scale;
+        assert.ok(paintedY < hem, `far glove stays above hem at ${t}ms: ${paintedY}`);
       }
     const cape = guildLabArt.frames[labRig.cape.frame],
       width = (cape[2] / cape[3]) * labRig.cape.height;
@@ -132,16 +134,17 @@ test("the near glove keeps the thumb side upward when holding a cup or working",
   const arm = labRig.arms[1],
     glove = await part(arm.frames[1]);
   // Landmarks on the original downward-pointing glove: thumb pad and opposite side at the same distance from the wrist.
-  const thumb = { x: 35, y: 183 },
-    outerEdge = { x: 85, y: 183 };
+  const thumb = { x: glove.width - 1 - 35, y: 183 },
+    outerEdge = { x: glove.width - 1 - 85, y: 183 };
   for (const point of [thumb, outerEdge])
     assert.ok(glove.data[(point.y * glove.width + point.x) * 4 + 3] > 240);
   for (const mode of ["tea", "work"])
     for (let time = 0; time < 8000; time += 100) {
       const hand = labPose(time, mode, false).hand;
       const angles = labJoint(hand, ...arm.lengths, arm.bend);
-      const rotation = angles.upper + angles.lower;
-      const dx = (thumb.x - outerEdge.x) * (arm.mirror?.[1] ? -1 : 1);
+      const rotation =
+        angles.upper + angles.lower + labArmArtwork(arm.frames[1], arm.lengths[1]).rotation;
+      const dx = thumb.x - outerEdge.x;
       const dy = thumb.y - outerEdge.y;
       assert.ok(dx * Math.sin(rotation) + dy * Math.cos(rotation) < 0, `${mode} at ${time}ms`);
     }

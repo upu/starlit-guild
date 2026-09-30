@@ -171,6 +171,8 @@ async function captureJoints() {
     .png()
     .toFile(`${output}/walk-cycle.png`);
   await button(page, "タイルと関節を見る").click();
+  for (const time of [0, 112.5, 225, 337.5, 450, 562.5, 675, 787.5])
+    await capture(`walk-debug-${time}`, time);
   await capture("walk-debug", 225);
   await button(page, "タイルと関節を見る").click();
   await page.emulateMedia({ reducedMotion: "reduce" });

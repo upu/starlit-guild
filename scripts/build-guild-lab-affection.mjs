@@ -7,6 +7,49 @@ const art = JSON.parse(readFileSync("work/lab-base-art.json", "utf8"));
 const source = "assets/source/guild/leon-costume-v4.png";
 const meta = await sharp(source).metadata();
 const layers = [];
+// The far hand's palm faces the body; keep the same atlas cell and measured
+// joint anchors while replacing the back-of-hand drawing.
+const [fx, fy, fw, fh] = art.frames[5];
+layers.push({
+  input: await sharp({ create: { width: fw, height: fh, channels: 4, background: "#000" } })
+    .png()
+    .toBuffer(),
+  left: fx,
+  top: fy,
+  blend: "dest-out",
+});
+layers.push({
+  input: await sharp("assets/source/guild/leon-far-palm-v4.png")
+    .trim({ threshold: 20 })
+    .resize({ width: fw, height: fh, fit: "fill" })
+    .png()
+    .toBuffer(),
+  left: fx,
+  top: fy,
+});
+art.armJoints[5] = { proximal: [52, 27], distal: [74, 166], wrist: [65, 121] };
+// Reflect the near glove in the atlas, then reflect its measured landmarks.
+// Runtime joint origins must follow the artwork instead of flipping around 0.5.
+const [gx, gy, gw, gh] = art.frames[7];
+layers.push({
+  input: await sharp({ create: { width: gw, height: gh, channels: 4, background: "#000" } })
+    .png()
+    .toBuffer(),
+  left: gx,
+  top: gy,
+  blend: "dest-out",
+});
+layers.push({
+  input: await sharp("public/guild/leon-parts-v2.webp")
+    .extract({ left: gx, top: gy, width: gw, height: gh })
+    .flop()
+    .png()
+    .toBuffer(),
+  left: gx,
+  top: gy,
+});
+for (const key of ["proximal", "distal", "wrist"])
+  art.armJoints[7][key][0] = gw - 1 - art.armJoints[7][key][0];
 for (const [frame, start, end] of [
   [2, 0, 0.375],
   [1, 0.375, 0.7],

@@ -18,6 +18,128 @@ import {
 } from "../lib/guild-lab-model.ts";
 import { labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
+import { labWalkingArm, labArmArtwork, LabArmMotion } from "../lib/guild-lab-arms.ts";
+
+test("walking arms stay in shoulder limits with forward-only elbow flexion", () => {
+  for (let index = 0; index < 2; index++) {
+    const config = labRig.arms[index];
+    for (let t = 0; t < 900; t += 5) {
+      const a = labWalkingArm(t, index),
+        shoulder = (-a.upper * 180) / Math.PI,
+        elbow = (-a.lower * 180) / Math.PI;
+      assert.ok(
+        shoulder >= config.walkShoulder.back - 1e-8 &&
+          shoulder <= config.walkShoulder.forward + 1e-8,
+      );
+      assert.ok(elbow >= 5 && elbow <= 35 && a.lower <= 0);
+      if (Math.abs(shoulder - config.walkShoulder.back) < 0.2) assert.ok(elbow <= 10);
+    }
+  }
+});
+test("arm extrema coincide with diagonal foot contact and opposite arm phases", () => {
+  for (const [index, contact] of [
+    [1, 0],
+    [0, 450],
+  ]) {
+    const config = labRig.arms[index];
+    assert.equal(labFoot(contact, index ? 0 : 0.5).x, 18);
+    assert.ok(
+      Math.abs(
+        labWalkingArm(contact, index).upper + (config.walkShoulder.forward * Math.PI) / 180,
+      ) < 1e-8,
+    );
+    assert.ok(
+      Math.abs(
+        labWalkingArm(contact + 450, index).upper + (config.walkShoulder.back * Math.PI) / 180,
+      ) < 1e-8,
+    );
+  }
+  for (let t = 0; t < 900; t += 5) {
+    const normalized = labRig.arms.map(
+      (config, i) =>
+        ((-labWalkingArm(t, i).upper * 180) / Math.PI - config.walkShoulder.back) /
+        (config.walkShoulder.forward - config.walkShoulder.back),
+    );
+    assert.ok(Math.abs(normalized[0] + normalized[1] - 1) < 1e-8);
+  }
+});
+const rotateArmPoint = (p, a) => ({
+  x: p.x * Math.cos(a) - p.y * Math.sin(a),
+  y: p.x * Math.sin(a) + p.y * Math.cos(a),
+});
+const paintedJoint = (frame, length, point) => {
+  const art = labArmArtwork(frame, length),
+    [, , w, h] = guildLabArt.frames[frame];
+  return rotateArmPoint(
+    { x: (point[0] - art.originX * w) * art.scale, y: (point[1] - art.originY * h) * art.scale },
+    art.rotation,
+  );
+};
+test("measured sleeve centres meet at the elbow through a complete walking cycle", async () => {
+  for (const [index, arm] of labRig.arms.entries()) {
+    const [upper, lower] = arm.frames.map((f) => guildLabArt.armJoints[f]);
+    for (const frame of arm.frames) {
+      const [left, top, width, height] = guildLabArt.frames[frame];
+      const pixels = await sharp(`public${guildLabArt.asset}`)
+        .extract({ left, top, width, height })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      for (const p of Object.values(guildLabArt.armJoints[frame]))
+        assert.ok(
+          pixels[(p[1] * width + p[0]) * 4 + 3] > 240,
+          `frame ${frame} measured centre inside paint`,
+        );
+    }
+    const end = paintedJoint(arm.frames[0], arm.lengths[0], upper.distal);
+    const start = paintedJoint(arm.frames[1], arm.lengths[1], lower.proximal);
+    for (let t = 0; t < 900; t += 5) {
+      const a = labWalkingArm(t, index),
+        paintedEnd = rotateArmPoint(end, a.upper),
+        paintedStart = rotateArmPoint(start, a.upper + a.lower);
+      const pivot = rotateArmPoint({ x: 0, y: arm.lengths[0] }, a.upper);
+      // Convert to device pixels at the 390px/DPR3, 5x inspection magnification.
+      const error =
+        Math.hypot(
+          paintedEnd.x - pivot.x - paintedStart.x,
+          paintedEnd.y - pivot.y - paintedStart.y,
+        ) *
+        a.scale *
+        0.5 *
+        (366 / 768) *
+        3 *
+        5;
+      assert.ok(error < 1, `${t}ms: sleeve centre error ${error}px`);
+    }
+  }
+});
+test("walking settles into idle, while tea, work and reactions retain target-based IK", () => {
+  for (const index of [0, 1]) {
+    const motion = new LabArmMotion(),
+      arm = labRig.arms[index],
+      target = { x: 20, y: 30 };
+    const walk = motion.sample(410, "walk", index, target, false, false);
+    assert.deepEqual(walk, labWalkingArm(410, index));
+    assert.deepEqual(motion.sample(420, "idle", index, target, false, false), walk);
+    const end = { ...labJoint(target, ...arm.lengths, arm.bend), scale: 1 };
+    const middle = motion.sample(510, "idle", index, target, false, false);
+    assert.ok(Math.abs(middle.upper - (walk.upper + end.upper) / 2) < 1e-8);
+    const settled = motion.sample(600, "idle", index, target, false, false);
+    assert.ok(
+      Math.abs(settled.upper - end.upper) < 1e-8 && Math.abs(settled.lower - end.lower) < 1e-8,
+    );
+    for (const mode of ["tea", "work", "walk"])
+      assert.deepEqual(motion.sample(1000, mode, index, target, true, false), end);
+    assert.deepEqual(
+      motion.sample(1200, "idle", index, target, false, true),
+      labWalkingArm(0, index, true),
+    );
+    assert.deepEqual(
+      motion.sample(1800, "walk", index, target, false, true),
+      labWalkingArm(0, index, true),
+    );
+  }
+});
 
 test("cutout joints reach hand/foot targets and stay finite at unreachable positions", () => {
   for (const target of [

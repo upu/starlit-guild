@@ -27,6 +27,12 @@ export const guildLabArt = {
     [1020, 1200, 122, 77],
     [1020, 1295, 42, 27],
   ],
+  armJoints: {
+    "4": { proximal: [99, 41], distal: [46, 165] },
+    "5": { proximal: [52, 27], distal: [74, 166], wrist: [65, 121] },
+    "6": { proximal: [91, 52], distal: [48, 171] },
+    "7": { proximal: [79, 42], distal: [47, 197], wrist: [53, 148] },
+  },
   head: {
     displayHeight: 90,
     mouth: { x: 178.55555555555554, y: 243.88888888888889, bounds: [175, 243, 9, 3], pixels: 9 },
