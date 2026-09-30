@@ -32,9 +32,9 @@ export const labFurniture = [
   { id: "aria-chair", frame: 3, col: 11, row: 11, cols: 1, rows: 1 },
 ] as const;
 
-export function labPathTo(from: Point, target: Point): Point[] {
+export function labPathTo(from: Point, target: Point, aisle = 416): Point[] {
   if (Math.hypot(target.x - from.x, target.y - from.y) < 1) return [target];
-  return [{ x: from.x, y: from.y }, { x: from.x, y: 416 }, { x: target.x, y: 416 }, target];
+  return [{ x: from.x, y: from.y }, { x: from.x, y: aisle }, { x: target.x, y: aisle }, target];
 }
 export function labPath(from: Point, mode: LabMode): Point[] {
   const target = mode === "walk" ? { x: from.x < 384 ? 656 : 112, y: 416 } : labStations[mode];

@@ -24,7 +24,7 @@ export const guildLabAriaArt = {
     [540, 1350, 102, 66],
     [800, 1190, 195, 108],
     [800, 1350, 102, 66],
-    [150, 843, 502, 323],
+    [150, 843, 154, 300],
     [720, 876, 453, 263],
   ],
   armJoints: {
@@ -36,12 +36,12 @@ export const guildLabAriaArt = {
   legJoints: {
     "8": { proximal: [70, 27], distal: [128, 203] },
     "9": { proximal: [77, 31], distal: [103, 234] },
-    "10": { proximal: [64, 29], distal: [142, 215] },
-    "11": { proximal: [115, 31], distal: [73, 230] },
+    "10": { proximal: [73, 28], distal: [134, 215] },
+    "11": { proximal: [79, 30], distal: [103, 231] },
   },
   head: {
     displayHeight: 85.5,
-    neck: { center: [170, 265] },
+    neck: { center: [170, 265], chinUnder: [181.66666666666666, 316], chinPixels: 6 },
     mouth: { x: 259, y: 258, bounds: [244, 246, 30, 24] },
     blink: {
       frame: 13,
@@ -129,13 +129,14 @@ export const guildLabAriaArt = {
       neutral: { patches: [], closedEyes: false },
     },
   },
-  torso: { neck: { center: [132, 17] } },
+  torso: { neck: { center: [141.31497418244408, 25.05945945945946], source: [418, 167] } },
+  hairLock: { root: [74, 13], reviewed: { ears: 0, flowers: 0, skull: false, view: "right" } },
   extras: { backHair: 21, skirt: 22 },
   asset: "/guild/aria-parts-v1.webp",
   seams: {
     "5": { end: "top", band: [11, 35], changedPixels: 136 },
     "7": { end: "top", band: [14, 38], changedPixels: 128 },
-    "8": { end: "bottom", band: [191, 231], changedPixels: 220 },
-    "10": { end: "bottom", band: [203, 244], changedPixels: 235 },
+    "8": { end: "bottom", band: [191, 231], changedPixels: 223 },
+    "10": { end: "bottom", band: [203, 244], changedPixels: 230 },
   },
 } as const;

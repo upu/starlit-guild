@@ -26,6 +26,7 @@ import {
 } from "@/lib/guild-lab-model";
 import type { LabCharacterId } from "@/lib/guild-lab-rig";
 import { labRigs } from "@/lib/guild-lab-rig";
+import { labKeepDistance, labPairDestination } from "@/lib/guild-lab-spacing";
 
 type Resident = {
   id: LabCharacterId;
@@ -128,26 +129,15 @@ export class GuildLabController {
     }
     this.lookAt(target?.position ?? point, target);
   }
-  private detourDestination(index: number): Point {
-    if (index) return this.request % 2 ? labStations.ariaDetour : { x: 174, y: 198 };
-    return this.request % 2 ? { x: 434, y: 242 } : labStations.tea;
-  }
-  private walkDestination(index: number): Point {
-    const right = this.residents[0].position.x < 384;
-    return { x: right ? (index ? 611 : 656) : index ? 157 : 112, y: index ? 428 : 416 };
-  }
   private destination(mode: LabMode, index: number): Point {
     if (index >= 2) return { x: 120 + (index - 2) * 85, y: 485 };
-    if (mode === "tea") return index ? labStations.ariaTea : labStations.tea;
-    if (mode === "work") return index ? { x: 450, y: 228 } : labStations.work;
-    if (mode === "detour") return this.detourDestination(index);
-    return this.walkDestination(index);
+    return labPairDestination(mode, index, this.request, this.residents[0].position.x < 384);
   }
   private visitRequested(controls: LabControls) {
     if (controls.request === this.request) return;
     this.request = controls.request;
     this.residents.forEach((r, i) => {
-      r.path = labPathTo(r.actor.root, this.destination(controls.mode, i));
+      r.path = labPathTo(r.actor.root, this.destination(controls.mode, i), i === 1 ? 488 : 416);
       r.distance = i === 0 && controls.mode === "detour" && this.request % 2 ? -140 : 0;
     });
   }
@@ -211,11 +201,10 @@ export class GuildLabController {
     r: Resident,
     i: number,
     controls: LabControls,
-    step: number,
+    position: ReturnType<GuildLabController["residentPosition"]>,
     beat: ReturnType<typeof labPairBeat>,
     reduced: boolean,
   ) {
-    const position = this.residentPosition(r, i, controls, step, reduced);
     r.position = position;
     const mode = this.residentMode(i, controls, position);
     r.activity = mode;
@@ -249,9 +238,16 @@ export class GuildLabController {
     }
     this.camera(controls.close);
     const beat = labPairBeat(this.elapsed);
+    const positions = this.residents.map((r, i) =>
+      this.residentPosition(r, i, controls, step, reduced),
+    );
+    [positions[0], positions[1]] = labKeepDistance([positions[0], positions[1]]);
     this.residents.forEach((r, i) => {
-      this.renderResident(r, i, controls, step, beat, reduced);
+      this.renderResident(r, i, controls, positions[i], beat, reduced);
     });
+    this.scene.game.canvas.dataset.feet = JSON.stringify(
+      positions.slice(0, 2).map(({ x, y, moving }) => ({ x, y, moving })),
+    );
     this.share(controls.mode, reduced);
     this.room.showGrid(controls.grid);
     this.filter.update();

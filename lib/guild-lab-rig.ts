@@ -47,8 +47,21 @@ const neckOnTorso =
   torso.x + (guildLabArt.torso.neck.center[0] - torsoWidth / 2) * (torso.height / torsoFrameHeight);
 const neckWithinHead =
   (guildLabArt.head.neck.center[0] - headWidth / 2) * (headHeight / headFrameHeight);
+const neckOnTorsoY =
+  torso.y +
+  (guildLabArt.torso.neck.center[1] - torsoFrameHeight / 2) * (torso.height / torsoFrameHeight);
+const chinWithinHeadY =
+  ((guildLabArt.head.neck.chinUnder[1] - headFrameHeight) * headHeight) / headFrameHeight;
 export const labRig = {
-  head: { x: neckOnTorso - neckWithinHead, y: -85.5, layer: 7 },
+  head: { x: neckOnTorso - neckWithinHead, y: neckOnTorsoY + 6 - chinWithinHeadY, layer: 7 },
+  neckBase: {
+    x: neckOnTorso,
+    y: neckOnTorsoY + 6,
+    width: 9,
+    height: 7,
+    layer: 5.8,
+    color: 0xf5cfb0,
+  },
   scarf: { frame: 1, x: -4, y: -85, height: 16, layer: 6 },
   torso,
   cape: {
@@ -110,9 +123,28 @@ const ariaNeckOnTorso =
 const ariaNeckWithinHead =
   (guildLabAriaArt.head.neck.center[0] - ariaHeadFrame[2] / 2) *
   (ariaHeadHeight / ariaHeadFrame[3]);
+const ariaNeckOnTorsoY =
+  ariaTorso.y +
+  ((guildLabAriaArt.torso.neck.center[1] - ariaTorsoFrame[3] / 2) * ariaTorso.height) /
+    ariaTorsoFrame[3];
+const ariaChinWithinHeadY =
+  ((guildLabAriaArt.head.neck.chinUnder[1] - ariaHeadFrame[3]) * ariaHeadHeight) / ariaHeadFrame[3];
 export const ariaLabRig = {
-  head: { x: ariaNeckOnTorso - ariaNeckWithinHead, y: -84, layer: 7 },
-  scarf: { frame: 1, x: -2, y: -82, height: 15, layer: 6 },
+  head: {
+    x: ariaNeckOnTorso - ariaNeckWithinHead,
+    y: ariaNeckOnTorsoY + 4 - ariaChinWithinHeadY,
+    layer: 9,
+  },
+  neckBase: {
+    x: ariaNeckOnTorso,
+    y: ariaNeckOnTorsoY + 4,
+    width: 10,
+    height: 7,
+    layer: 5.8,
+    color: 0xf9d1b8,
+  },
+  // Torso-fixed front cape covers the shoulder, independently of arm rotation.
+  scarf: { frame: 1, x: -2, y: -78, height: 24, layer: 8.5 },
   torso: ariaTorso,
   cape: {
     frame: 3,
@@ -125,7 +157,18 @@ export const ariaLabRig = {
     walkSway: 0.05,
   },
   cup: { frame: 12, height: 17, layer: 7.5 },
-  backHair: { frame: guildLabAriaArt.extras.backHair, x: -17, y: -101, height: 73, layer: 2 },
+  backHair: {
+    frame: guildLabAriaArt.extras.backHair,
+    x: -19,
+    y: -89,
+    height: 46,
+    layer: 3.5,
+    originX:
+      guildLabAriaArt.hairLock.root[0] / guildLabAriaArt.frames[guildLabAriaArt.extras.backHair][2],
+    originY:
+      guildLabAriaArt.hairLock.root[1] / guildLabAriaArt.frames[guildLabAriaArt.extras.backHair][3],
+    sway: 0.04,
+  },
   skirt: { frame: guildLabAriaArt.extras.skirt, x: 0, y: -52, height: 24, layer: 5.5 },
   legs: [
     {

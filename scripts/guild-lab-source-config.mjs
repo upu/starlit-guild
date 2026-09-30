@@ -42,6 +42,14 @@ export const guildLabSourceConfig = {
     parts: "assets/source/guild/aria-parts-v1.png",
     head: "assets/source/guild/aria-head-front-v1.png",
     expressions: "assets/source/guild/aria-head-expressions-v1.png",
+    costumeHair: "assets/source/guild/aria-costume-hair-v2.png",
+    replacements: {
+      torso: [107, 110, 581, 555],
+      shoulderCape: [802, 129, 774, 494],
+      hairLock: [1784, 67, 309, 600],
+      // Reviewed neckline landmark on the generated torso, in source pixels.
+      neck: [418, 167],
+    },
     atlas: "public/guild/aria-parts-v1.webp",
     art: "lib/guild-lab-aria-art.ts",
   },

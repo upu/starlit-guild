@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import sharp from "sharp";
 import { mkdirSync, writeFileSync } from "node:fs";
+import { captureLabAppearance } from "./guild-lab-appearance.browser.mjs";
 const root = process.env.TEST_ROOT || "http://localhost:5174";
 const output = "work/guild-lab-browser";
 mkdirSync(output, { recursive: true });
@@ -354,6 +355,7 @@ try {
   await checkAffection();
   await captureJoints();
   await capturePairAndLoad();
+  await captureLabAppearance(browser, root, `${output}/appearance-3.2x`);
   await checkResolutionAndQuality();
   const { context, page } = await start();
   await page.waitForTimeout(500);

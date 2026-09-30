@@ -25,6 +25,11 @@ import { labRigs } from "../lib/guild-lab-rig.ts";
 import { labCharacters } from "../lib/guild-lab-characters.ts";
 import { labMouth, labPathTo } from "../lib/guild-lab-model.ts";
 import { labPairBeat, labPairFeeling, labSharingProps } from "../lib/guild-lab-pair.ts";
+import {
+  LAB_PAIR_MIN_DISTANCE,
+  labKeepDistance,
+  labPairDestination,
+} from "../lib/guild-lab-spacing.ts";
 
 test("thighs paint over boot cuffs while forearms paint over upper sleeves", () => {
   for (const leg of labRig.legs) {
@@ -449,7 +454,6 @@ test("far shoulder sits inside the painted torso and its hand swings opposite th
     const near = labPose(t, "walk", false).hand.x;
     assert.ok((labFarHand(t, "walk").x + 8) * near < 0);
   }
-  assert.ok(labRig.head.y > -91 && labRig.head.y < labRig.scarf.y + 2);
 });
 
 test("painted hip caps stay behind the opaque coat hem while seated and throughout a stride", async () => {
@@ -569,7 +573,7 @@ test("both residents use their own measured cutout and can sit without overlap",
   assert.deepEqual(Object.keys(labCharacters), ["leon", "aria"]);
   const [leon, aria] = [labCharacters.leon, labCharacters.aria];
   assert.notEqual(leon.art.asset, aria.art.asset);
-  assert.equal(aria.rig.head.y, -84);
+  assert.ok(aria.rig.head.y > -84 && aria.rig.head.y < -75);
   assert.equal(aria.rig.legs[0].front, "upper");
   assert.equal(aria.rig.arms[1].front, "lower");
   assert.ok(aria.art.head.displayHeight < leon.art.head.displayHeight);
@@ -671,4 +675,199 @@ test("sharing food follows push, take, offer, surprise, shyness, acceptance with
   assert.ok(labSharingProps(7600, false).dishX > labSharingProps(6100, false).dishX);
   assert.equal(labSharingProps(12000, false).bite.y, 352);
   assert.deepEqual(labSharingProps(17000, false).bite, { x: 294, y: 352 });
+});
+
+test("back hair is a right-facing neck lock with a measured root and no extra head features", async () => {
+  const art = guildLabAriaArt,
+    rig = labRigs.aria;
+  assert.deepEqual(art.hairLock.reviewed, { ears: 0, flowers: 0, skull: false, view: "right" });
+  const [x, y, w, h] = art.frames[art.extras.backHair];
+  assert.ok(h > w * 1.8, "a hanging lock, not a wide rear-view head");
+  const data = await sharp(`public${art.asset}`)
+    .extract({ left: x, top: y, width: w, height: h })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  const [rx, ry] = art.hairLock.root;
+  assert.ok(data[(ry * w + rx) * 4 + 3] > 200);
+  assert.equal(rig.backHair.originX, rx / w);
+  assert.equal(rig.backHair.originY, ry / h);
+  assert.ok(rig.backHair.sway >= 0.03 && rig.backHair.sway <= 0.05);
+});
+
+test("both boots point forward, measured from opaque ankle and toe bands", async () => {
+  for (const [id, { art }] of Object.entries(labCharacters)) {
+    const signs = [];
+    for (const frame of [9, 11]) {
+      const [left, top, width, height] = art.frames[frame];
+      const data = await sharp(`public${art.asset}`)
+        .extract({ left, top, width, height })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      const extent = (from, to) => {
+        let sum = 0,
+          n = 0,
+          lo = width,
+          hi = 0;
+        for (let y = Math.floor(from * height); y < Math.floor(to * height); y++)
+          for (let x = 0; x < width; x++)
+            if (data[(y * width + x) * 4 + 3] > 180) {
+              sum += x;
+              n++;
+              lo = Math.min(lo, x);
+              hi = Math.max(hi, x);
+            }
+        assert.ok(n > 100);
+        return { center: sum / n, lo, hi };
+      };
+      const ankle = extent(0.15, 0.55),
+        toe = extent(0.8, 0.97);
+      assert.ok(toe.center > ankle.center + 4, `${id} ${frame}: forward centroid`);
+      assert.ok(toe.hi - ankle.center > ankle.center - toe.lo, `${id} ${frame}: toe extends right`);
+      signs.push(Math.sign(toe.center - ankle.center));
+    }
+    assert.deepEqual(signs, [1, 1]);
+  }
+});
+
+async function partSampler(art, frame, cfg, origin = [0.5, 0.5]) {
+  const [left, top, width, height] = art.frames[frame];
+  const pixels = await sharp(`public${art.asset}`)
+    .extract({ left, top, width, height })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  const scale = cfg.height / height;
+  return (x, y, rotation = 0) => {
+    const local = rotateArmPoint({ x: x - cfg.x, y: y - cfg.y }, -rotation);
+    const px = Math.round(local.x / scale + width * origin[0]);
+    const py = Math.round(local.y / scale + height * origin[1]);
+    return px < 0 || py < 0 || px >= width || py >= height ? 0 : pixels[(py * width + px) * 4 + 3];
+  };
+}
+
+test("Aria's fixed front cape covers rotating shoulder roots above the near upper arm", async () => {
+  const { art, rig } = labCharacters.aria;
+  assert.ok(rig.cape.layer < rig.torso.layer);
+  assert.ok(rig.arms[0].layer < rig.torso.layer);
+  assert.ok(rig.scarf.layer > rig.arms[1].layer);
+  assert.ok(rig.scarf.layer < rig.head.layer);
+  const cape = await partSampler(art, rig.scarf.frame, rig.scarf);
+  for (const arm of rig.arms) {
+    const frame = arm.frames[0],
+      joints = art.armJoints[frame];
+    const [left, top, width, height] = art.frames[frame];
+    const pixels = await sharp(`public${art.asset}`)
+      .extract({ left, top, width, height })
+      .ensureAlpha()
+      .raw()
+      .toBuffer();
+    const drawing = labLimbArtwork(frame, arm.lengths[0], art);
+    for (const angle of [-1.8, -1, -0.3, 0, 0.5, 1]) {
+      for (let y = 0; y < joints.proximal[1]; y += 3)
+        for (let x = 0; x < width; x += 3) {
+          if (pixels[(y * width + x) * 4 + 3] < 220) continue;
+          const p = rotateArmPoint(
+            {
+              x: (x - joints.proximal[0]) * drawing.scale,
+              y: (y - joints.proximal[1]) * drawing.scale,
+            },
+            drawing.rotation + angle,
+          );
+          assert.ok(
+            cape(arm.joint.x + p.x, arm.joint.y + p.y) > 180,
+            `painted shoulder cap covered: ${frame} ${angle}`,
+          );
+        }
+    }
+  }
+  for (const arm of rig.arms)
+    for (let angle = -1.8; angle <= 1.8; angle += 0.05) {
+      for (const p of [
+        { x: 0, y: 0 },
+        { x: 2, y: 0 },
+        { x: -2, y: 0 },
+        { x: 0, y: 2 },
+      ]) {
+        const q = rotateArmPoint(p, angle);
+        assert.ok(cape(arm.joint.x + q.x, arm.joint.y + q.y) > 230, `covered shoulder ${angle}`);
+      }
+    }
+});
+
+test("measured chin overlaps the collar and a hidden neck base seals the maximum head rotation", async () => {
+  for (const [id, { art, rig }] of Object.entries(labCharacters)) {
+    const [, , hw, hh] = art.frames[0];
+    const scale = art.head.displayHeight / hh;
+    const collar = await partSampler(art, rig.scarf.frame, rig.scarf);
+    const torso = await partSampler(art, rig.torso.frame, rig.torso);
+    const head = await partSampler(
+      art,
+      0,
+      { ...rig.head, height: art.head.displayHeight },
+      [0.5, 1],
+    );
+    const base = rig.neckBase;
+    assert.ok(base.layer < rig.scarf.layer && base.layer < rig.head.layer);
+    assert.ok(base.width <= 10 && base.height <= 7);
+    const neckX = rig.head.x + (art.head.neck.center[0] - hw / 2) * scale;
+    assert.ok(Math.abs(neckX - base.x) < 0.001, `${id}: measured neck centre`);
+    const chinY = rig.head.y + (art.head.neck.chinUnder[1] - hh) * scale;
+    assert.ok(Math.abs(chinY - base.y) < 0.001, `${id}: chin overlaps collar bridge`);
+    for (const a of [-0.1, 0, 0.1]) {
+      for (let y = base.y - 5; y <= base.y + 5; y += 0.5) {
+        const covered =
+          head(base.x, y, a) > 180 ||
+          collar(base.x, y) > 180 ||
+          torso(base.x, y) > 180 ||
+          ((y - base.y) / (base.height / 2)) ** 2 < 1;
+        assert.ok(covered, `${id}: sealed collar at ${a},${y}`);
+      }
+      const cup = labTeaCup(1, a, rig, art);
+      assert.ok(Math.hypot(cup.rim.x - cup.mouth.x, cup.rim.y - cup.mouth.y) < 0.001);
+    }
+    // The small skin bridge must be hidden by painted head/collar at rest.
+    for (const p of [
+      { x: base.x, y: base.y },
+      { x: base.x, y: base.y - 2 },
+      { x: base.x, y: base.y + 2 },
+    ])
+      assert.ok(
+        head(p.x, p.y) > 180 || collar(p.x, p.y) > 180 || torso(p.x, p.y) > 180,
+        `${id}: hidden neck base`,
+      );
+  }
+});
+
+test("pair destinations and interrupted paths preserve minimum foot clearance in every scene", () => {
+  let positions = [
+    { ...labStations.tea, moving: false },
+    { ...labStations.ariaTea, moving: false },
+  ];
+  assert.ok(LAB_PAIR_MIN_DISTANCE >= 60);
+  for (let request = 0; request < 24; request++) {
+    const mode = ["walk", "detour", "work", "tea", "detour", "walk"][request % 6];
+    const right = positions[0].x < 384;
+    const destinations = [0, 1].map((i) => labPairDestination(mode, i, request, right));
+    assert.ok(
+      Math.hypot(destinations[0].x - destinations[1].x, destinations[0].y - destinations[1].y) >=
+        LAB_PAIR_MIN_DISTANCE,
+    );
+    const paths = positions.map((p, i) => labPathTo(p, destinations[i], i ? 488 : 416));
+    // Alternate arrivals and interrupts, sampling at about one display frame.
+    const total = request % 3 ? 1300 : 120;
+    for (let distance = 0; distance <= total; distance += 1.3) {
+      const next = paths.map((p) => labTravel(p, distance));
+      positions = labKeepDistance(next);
+      assert.ok(
+        Math.hypot(positions[0].x - positions[1].x, positions[0].y - positions[1].y) >=
+          LAB_PAIR_MIN_DISTANCE - 1e-8,
+      );
+    }
+    if (total === 1300)
+      positions.forEach((p, i) =>
+        assert.ok(Math.hypot(p.x - destinations[i].x, p.y - destinations[i].y) < 0.001),
+      );
+  }
 });

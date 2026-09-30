@@ -24,15 +24,53 @@ const bounds = [
   [447, 588, 185, 266],
   [773, 585, 183, 244],
   [1070, 588, 192, 262],
-  [150, 843, 502, 323],
+  [150, 843, 154, 300],
   [720, 876, 453, 263],
 ];
-const cell = async (rect) =>
+const originalCell = async (rect) =>
   sharp(source)
     .extract({ left: rect[0], top: rect[1], width: rect[2], height: rect[3] })
     .ensureAlpha()
     .raw()
     .toBuffer();
+const replacements = new Map();
+for (const [frame, key] of [
+  [2, "torso"],
+  [1, "shoulderCape"],
+  [12, "hairLock"],
+]) {
+  const [left, top, width, height] = config.replacements[key];
+  const [, , w, h] = bounds[frame];
+  replacements.set(
+    frame,
+    await sharp(config.costumeHair)
+      .extract({ left, top, width, height })
+      .resize(w, h)
+      .ensureAlpha()
+      .raw()
+      .toBuffer(),
+  );
+}
+// Both feet and thighs face right; the far leg reuses the same drawing darkened.
+for (const [from, to] of [
+  [8, 10],
+  [9, 11],
+]) {
+  const [, , width, height] = bounds[from];
+  const [, , w, h] = bounds[to];
+  replacements.set(
+    to,
+    await sharp(await originalCell(bounds[from]), { raw: { width, height, channels: 4 } })
+      .resize(w, h)
+      .raw()
+      .toBuffer(),
+  );
+  const far = Buffer.from(await originalCell(bounds[from]));
+  for (let p = 0; p < far.length; p += 4)
+    for (let c = 0; c < 3; c++) far[p + c] = Math.round(far[p + c] * 0.9);
+  replacements.set(from, far);
+}
+const cell = async (rect) => replacements.get(bounds.indexOf(rect)) ?? originalCell(rect);
 function bandCenter(pixels, width, height, from, to) {
   let xSum = 0,
     ySum = 0,
@@ -73,11 +111,47 @@ const art = {
     blink: null,
     expressions: {},
   },
-  torso: { neck: { center: [132, 17] } },
+  torso: {
+    neck: {
+      center: [
+        ((config.replacements.neck[0] - config.replacements.torso[0]) * bounds[2][2]) /
+          config.replacements.torso[2],
+        ((config.replacements.neck[1] - config.replacements.torso[1]) * bounds[2][3]) /
+          config.replacements.torso[3],
+      ],
+      source: config.replacements.neck,
+    },
+  },
+  hairLock: {
+    root: bandCenter(await cell(bounds[12]), bounds[12][2], bounds[12][3], 0.01, 0.06),
+    reviewed: { ears: 0, flowers: 0, skull: false, view: "right" },
+  },
   extras: { backHair: 23, skirt: 24 },
   asset: "/guild/aria-parts-v1.webp",
 };
 const layers = [];
+for (const [frame, pixels] of replacements) {
+  const [left, top, width, height] = bounds[frame];
+  const clearWidth = frame === 12 ? 502 : width;
+  const clearHeight = frame === 12 ? 323 : height;
+  layers.push({
+    input: await sharp({
+      create: { width: clearWidth, height: clearHeight, channels: 4, background: "#000" },
+    })
+      .png()
+      .toBuffer(),
+    left,
+    top,
+    blend: "dest-out",
+  });
+  layers.push({
+    input: await sharp(pixels, { raw: { width, height, channels: 4 } })
+      .png()
+      .toBuffer(),
+    left,
+    top,
+  });
+}
 art.seams = {};
 for (const [frame, end] of [
   [5, "top"],
@@ -147,6 +221,26 @@ for (const [frame, end] of [
 const [hx, hy, hw, hh] = bounds[0];
 const head = await sharp(faceSource).trim({ threshold: 20 }).resize(hw, hh).png().toBuffer();
 const headPixels = await sharp(head).ensureAlpha().raw().toBuffer();
+// Lowest painted skin band of the chin; exclude hair/outline by colour and ROI.
+const chin = [];
+for (let y = 260; y < hh; y++)
+  for (let x = 180; x < 280; x++) {
+    const p = (y * hw + x) * 4;
+    if (
+      headPixels[p + 3] > 220 &&
+      headPixels[p] > 235 &&
+      headPixels[p + 1] > 175 &&
+      headPixels[p + 1] < 225 &&
+      headPixels[p + 2] > 150 &&
+      headPixels[p + 2] < 210
+    )
+      chin.push([x, y]);
+  }
+const chinY = Math.max(...chin.map((p) => p[1]));
+const chinBand = chin.filter((p) => p[1] >= chinY - 2);
+if (chinBand.length < 3) throw Error("Missing measured Aria chin skin band");
+art.head.neck.chinUnder = [chinBand.reduce((sum, p) => sum + p[0], 0) / chinBand.length, chinY];
+art.head.neck.chinPixels = chinBand.length;
 layers.push({
   input: await sharp({ create: { width: hw, height: hh, channels: 4, background: "#000" } })
     .png()

@@ -60,11 +60,7 @@ export class GuildCutout {
     this.root.add(this.body);
     this.legs = [this.limb(this.rig.legs[0])];
     this.arms = [this.limb(this.rig.arms[0])];
-    if (character === "aria") {
-      const cfg = labCharacters.aria.rig.backHair;
-      this.backHair = this.bodyPart(cfg).setDepth(cfg.layer);
-      this.body.add(this.backHair);
-    }
+    this.addHair();
     this.cape = this.part(
       this.rig.cape.frame,
       this.rig.cape.x,
@@ -81,6 +77,10 @@ export class GuildCutout {
       this.skirt = this.bodyPart(cfg).setDepth(cfg.layer);
       this.body.add(this.skirt);
     }
+    const neck = this.rig.neckBase;
+    this.body.add(
+      scene.add.ellipse(neck.x, neck.y, neck.width, neck.height, neck.color).setDepth(neck.layer),
+    );
     this.body.add(this.bodyPart(this.rig.scarf));
     this.head = scene.add.container(this.rig.head.x, this.rig.head.y).setDepth(this.rig.head.layer);
     this.head.add(this.part(0, 0, 0, this.art.head.displayHeight, 0.5, 1));
@@ -92,13 +92,30 @@ export class GuildCutout {
     );
     this.body.add(this.cup);
     this.body.sort("depth");
-    this.spoon = scene.add.graphics().setPosition(0, 23);
-    this.spoon.lineStyle(3, 0x79502c).lineBetween(0, 0, 8, 16);
-    this.spoon.fillStyle(0xb88a50).fillEllipse(8, 16, 5, 8);
+    this.spoon = this.createSpoon();
     this.arms[1].lower.add(this.spoon);
     this.joints = scene.add.graphics();
     this.root.add(this.joints);
     this.effects = new GuildLabEffects(scene, this.root);
+  }
+  private addHair() {
+    if (this.character !== "aria") return;
+    const cfg = labCharacters.aria.rig.backHair;
+    this.backHair = this.part(
+      cfg.frame,
+      cfg.x,
+      cfg.y,
+      cfg.height,
+      cfg.originX,
+      cfg.originY,
+    ).setDepth(cfg.layer);
+    this.body.add(this.backHair);
+  }
+  private createSpoon() {
+    const spoon = this.scene.add.graphics().setPosition(0, 23);
+    spoon.lineStyle(3, 0x79502c).lineBetween(0, 0, 8, 16);
+    spoon.fillStyle(0xb88a50).fillEllipse(8, 16, 5, 8);
+    return spoon;
   }
   hit(point: Point) {
     return this.body.getBounds().contains(point.x, point.y);
@@ -167,7 +184,10 @@ export class GuildCutout {
     return pose;
   }
   private ornaments(time: number, mode: LabPose, reduced: boolean) {
-    if (this.backHair) this.backHair.rotation = reduced ? 0 : Math.sin(time / 640) * 0.025;
+    if (this.backHair)
+      this.backHair.rotation = reduced
+        ? 0
+        : Math.sin(time / 640) * labCharacters.aria.rig.backHair.sway;
     if (this.skirt)
       this.skirt.rotation = reduced ? 0 : Math.sin(time / 300) * (mode === "walk" ? 0.035 : 0.01);
   }
