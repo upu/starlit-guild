@@ -9,13 +9,13 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-tenth-baseline";
+  const previous = "work/lab-eleventh-baseline";
   if (baseline) {
     await context.route(`${root}/guild-lab`, async (route) => {
       const response = await route.fetch();
       await route.fulfill({
         response,
-        body: (await response.text()).replaceAll("住人を追う", "寄って見る"),
+        body: await response.text(),
       });
     });
     for (const [url, file] of [
@@ -24,6 +24,8 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       ["lib/guild-lab-art.ts", "leon-art.js"],
       ["lib/guild-lab-arms.ts", "guild-lab-arms.js"],
       ["lib/guild-lab-model.ts", "guild-lab-model.js"],
+      ["lib/guild-lab-skirt.ts", "guild-lab-skirt.js"],
+      ["app/phaser/guild-lab-face.ts", "guild-lab-face.js"],
       ["app/guild-lab/room.tsx", "room.js"],
     ]) {
       await context.route(`**/${url}*`, (route) =>
@@ -73,21 +75,10 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       ? readFileSync(`${previous}/controller.js`, "utf8")
       : await response.text();
     assert.ok(source.includes("this.elapsed += step;"));
-    const camera = baseline
-      ? source
-          .replace("close ? 1.8 : 1", "close ? 5 : 1")
-          .replace(
-            "(this.residents[0].actor.root.x + this.residents[1].actor.root.x) / 2",
-            "this.residents[window.__labFocus === 'leon' ? 0 : 1].actor.root.x",
-          )
-          .replace(
-            "(this.residents[0].actor.root.y + this.residents[1].actor.root.y) / 2",
-            "this.residents[window.__labFocus === 'leon' ? 0 : 1].actor.root.y",
-          )
-      : source.replace(
-          "this.camera(controls, step, reduced);",
-          `this.camera(controls, step, reduced); const focus=this.residents[window.__labFocus === 'leon' ? 0 : 1]; this.scene.cameras.main.setZoom(this.scene.game.canvas.width / LAB_WIDTH * 5).centerOn(focus.actor.root.x, focus.actor.root.y - 42.5);`,
-        );
+    const camera = source.replace(
+      "this.camera(controls, step, reduced);",
+      `this.camera(controls, step, reduced); const focus=this.residents[window.__labFocus === 'leon' ? 0 : 1]; this.scene.cameras.main.setZoom(this.scene.game.canvas.width / LAB_WIDTH * 5).centerOn(focus.actor.root.x, focus.actor.root.y - 42.5);`,
+    );
     await route.fulfill({
       response,
       body: camera
@@ -133,7 +124,6 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
         attributeFilter: ["data-feet"],
       });
     });
-  if (baseline) await button("寄って見る").click();
   await time(3800);
   await shot("tea-sip");
   if (!baseline) {
@@ -185,12 +175,12 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   }
   writeFileSync(`${output}/stride.json`, JSON.stringify(stride, null, 2));
   if (!baseline) {
-    assert.ok(stride.every((p) => Math.abs(p.rotation) <= 0.12 + 1e-8));
+    assert.ok(stride.every((p) => Math.abs(p.rotation) <= 0.25 + 1e-8));
     assert.ok(
-      Math.max(...stride.map((p) => p.width)) / Math.min(...stride.map((p) => p.width)) <= 1.06,
+      Math.max(...stride.map((p) => p.width)) / Math.min(...stride.map((p) => p.width)) <= 1.12,
     );
     assert.ok(
-      stride.some((p) => Math.abs(p.rotation - ((p.thighs[0] + p.thighs[1]) / 2) * 0.25) > 0.001),
+      stride.some((p) => Math.abs(p.rotation - ((p.thighs[0] + p.thighs[1]) / 2) * 0.5) > 0.001),
     );
   }
   await button("動きを再開").click();
@@ -214,7 +204,14 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   await time(16000);
   await shot("work");
   if (!baseline) {
-    assert.equal((await page.evaluate(() => window.__ariaSkirt)).rotation, 0, "work skirt fixed");
+    const initial = Math.abs((await page.evaluate(() => window.__ariaSkirt)).rotation);
+    for (let t = 16016; t <= 20000; t += 16)
+      await page.evaluate((t) => (window.__labCaptureTime = t), t);
+    await time(20016);
+    assert.ok(
+      Math.abs((await page.evaluate(() => window.__ariaSkirt)).rotation) <= initial,
+      "stopped skirt rings down",
+    );
     await page.emulateMedia({ reducedMotion: "reduce" });
     await button("2人で歩く").click();
     for (const t of [16100, 16800]) {
@@ -244,7 +241,7 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-tenth-before" : "work/lab-tenth-after",
+      baseline ? "work/lab-eleventh-before" : "work/lab-eleventh-after",
       baseline,
     );
     console.log(

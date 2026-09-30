@@ -30,8 +30,18 @@ export class GuildLabFace {
     head.add(this.blink);
     this.cheeks = scene.add.graphics();
     this.cheeks.fillStyle(0xf07d99, 0.32);
-    for (const x of art.asset.includes("aria") ? [205, 290] : [133, 228]) {
-      const p = this.point(x, art.asset.includes("aria") ? 243 : 237);
+    const cheeks =
+      "master" in art
+        ? art.master.cheeks.map(([x, y]) => [
+            x - art.master.parts[0].rect[0],
+            y - art.master.parts[0].rect[1],
+          ])
+        : [
+            [133, 237],
+            [228, 237],
+          ];
+    for (const [x, y] of cheeks) {
+      const p = this.point(x, y);
       this.cheeks.fillEllipse(p.x, p.y, 6, 2.5);
     }
     head.add(this.cheeks);

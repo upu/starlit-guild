@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 export async function captureLabCamera(browser, root, baseline = false) {
-  const output = `work/lab-tenth-${baseline ? "before" : "after"}`;
+  const output = baseline ? "work/lab-tenth-before" : "work/lab-eleventh-after";
   mkdirSync(output, { recursive: true });
   const results = [];
   for (const width of [320, 390, 844]) {

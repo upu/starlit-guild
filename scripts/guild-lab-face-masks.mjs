@@ -48,7 +48,7 @@ const feature = (p) =>
   (Math.max(p[0], p[1], p[2]) < 170 ||
     (p[1] > p[0] * 1.08 && p[1] > p[2] * 1.08) ||
     (p[0] > 235 && p[1] > 235 && p[2] > 235));
-function skinDomain(base, width, height) {
+function skinDomain(base, width, height, settings) {
   const seen = new Uint8Array(width * height),
     queue = [];
   const skin = (p) =>
@@ -57,7 +57,7 @@ function skinDomain(base, width, height) {
     base[p * 4 + 1] > 160 &&
     base[p * 4] - base[p * 4 + 1] > 8 &&
     base[p * 4 + 1] - base[p * 4 + 2] < 38;
-  const seed = 244 * width + 253;
+  const seed = settings ? settings.seed[1] * width + settings.seed[0] : 244 * width + 253;
   queue.push(seed);
   seen[seed] = 1;
   for (let i = 0; i < queue.length; i++)
@@ -67,10 +67,11 @@ function skinDomain(base, width, height) {
         queue.push(n);
       }
   const domain = new Uint8Array(seen.length);
-  for (let y = 170; y < 295; y++) {
+  const [x0, y0, x1, y1] = settings?.bounds ?? [150, 170, 320, 295];
+  for (let y = y0; y < y1; y++) {
     let lo = width,
       hi = 0;
-    for (let x = 150; x < 320; x++)
+    for (let x = x0; x < x1; x++)
       if (seen[y * width + x]) {
         lo = Math.min(lo, x);
         hi = Math.max(hi, x);
@@ -78,8 +79,8 @@ function skinDomain(base, width, height) {
     for (let x = lo; x <= hi; x++) domain[y * width + x] = 1;
   }
   const expanded = new Uint8Array(domain);
-  for (let y = 174; y < 290; y++)
-    for (let x = 154; x < 316; x++) {
+  for (let y = y0 + 4; y < y1 - 5; y++)
+    for (let x = x0 + 4; x < x1 - 4; x++) {
       const p = (y * width + x) * 4;
       if (base[p + 1] - base[p + 2] > 45) continue; // Painted blonde strands stay immutable.
       if (
@@ -91,11 +92,20 @@ function skinDomain(base, width, height) {
     }
   return expanded;
 }
-export function faceMask(base, aligned, width, height, region, closed) {
-  const boxes = ariaFaceRegions[region],
+export function faceMask(base, aligned, width, height, region, closed, settings) {
+  const boxes = (settings?.regions ?? ariaFaceRegions)[region],
     mask = new Uint8Array(width * height);
   let changedPixels = 0;
-  const domain = skinDomain(base, width, height);
+  const domain = skinDomain(base, width, height, settings);
+  if (settings && region === "eyes")
+    for (const [left, top, w, h] of boxes)
+      for (let y = top; y < top + h; y++)
+        for (let x = left; x < left + w; x++) {
+          const p = (y * width + x) * 4;
+          // Reviewed eye ROIs include the outer lashes. Blonde bangs remain immutable.
+          if (base[p + 3] >= 250 && !(base[p] > base[p + 1] && base[p + 1] - base[p + 2] > 45))
+            domain[y * width + x] = 1;
+        }
   for (const [left, top, w, h] of boxes)
     for (let y = top; y < top + h; y++)
       for (let x = left; x < left + w; x++) {

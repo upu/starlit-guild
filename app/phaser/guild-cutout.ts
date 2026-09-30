@@ -43,6 +43,7 @@ export class GuildCutout {
   private skirt?: Phaser.GameObjects.Image;
   private skirtMotion?: LabSkirtMotion;
   private skirtWidth = 0;
+  private skirtHeight = 0;
   private raisedForearm?: Phaser.GameObjects.Container;
   private previousMode: LabPose = "tea";
   private idleStartedAt = -Infinity;
@@ -111,15 +112,11 @@ export class GuildCutout {
   private addSkirt() {
     if (this.character !== "aria") return;
     const cfg = labCharacters.aria.rig.skirt;
-    this.skirt = this.part(
-      cfg.frame,
-      cfg.x,
-      cfg.y,
-      cfg.height,
-      0.5,
-      labArtOrigin(this.art, cfg.frame, 3, 0),
-    ).setDepth(cfg.layer);
+    this.skirt = this.part(cfg.frame, cfg.x, cfg.y, cfg.height, cfg.originX, cfg.originY).setDepth(
+      cfg.layer,
+    );
     this.skirtWidth = this.skirt.displayWidth;
+    this.skirtHeight = this.skirt.displayHeight;
     this.skirtMotion = new LabSkirtMotion(cfg);
     this.body.add(this.skirt);
   }
@@ -205,8 +202,10 @@ export class GuildCutout {
       0,
     );
   }
-  private aim(limb: Limb, target: Point) {
-    const angles = labJoint(target, ...limb.config.lengths, limb.config.bend);
+  private aim(limb: Limb, target: Point, idle = false) {
+    const bend =
+      idle && "idleBend" in limb.config ? Number(limb.config.idleBend) : limb.config.bend;
+    const angles = labJoint(target, ...limb.config.lengths, bend);
     limb.upper.rotation = angles.upper;
     limb.lower.rotation = angles.lower;
   }
@@ -283,7 +282,7 @@ export class GuildCutout {
     this.spoon.rotation = -this.arms[1].upper.rotation - this.arms[1].lower.rotation;
     const feet = this.feetMotion.sample(time, mode, pose.bob, reduced);
     this.legs.forEach((leg, i) => {
-      this.aim(leg, feet[i]);
+      this.aim(leg, feet[i], mode === "idle");
     });
     if (this.skirt && this.skirtMotion) {
       const pose = this.skirtMotion.sample(
@@ -291,10 +290,12 @@ export class GuildCutout {
         mode,
         this.legs.map((leg) => leg.upper.rotation),
         reduced,
+        feeling.jump,
       );
       this.skirt.rotation = pose.rotation;
       // Preserve the filter's chosen texture size while changing only the hem width.
       this.skirt.displayWidth = this.skirtWidth * pose.width;
+      this.skirt.displayHeight = this.skirtHeight * pose.height;
     }
     this.debug(debug);
     this.effects.paint(

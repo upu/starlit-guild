@@ -90,7 +90,7 @@ export function labLegTarget(
           x: rig.idleFeet[index].x - rig.legs[index].joint.x,
           y: rig.idleFeet[index].y,
         };
-  return { x: foot.x, y: -rig.legs[0].joint.y + foot.y - bob };
+  return { x: foot.x, y: -rig.legs[index].joint.y + foot.y - bob };
 }
 export function labFarHand(time: number, mode: LabPose, rig: LabCharacterRig = labRig) {
   const arm = rig.arms[0];
@@ -138,6 +138,16 @@ export function labTeaCup(
     hand: { x: x + grip.x - rig.arms[1].joint.x, y: y + grip.y - rig.arms[1].joint.y },
   };
 }
+function standingHeight(t: number, mode: LabPose, rig: LabCharacterRig) {
+  if (mode === "idle" && "idleBob" in rig) return rig.idleBob;
+  const walking = mode === "walk";
+  const [upper, lower] = rig.legs[0].lengths;
+  const reach = (upper + lower) * (mode === "idle" ? rig.idleReach : rig.stanceReach);
+  const planted = labFoot(t, t % 900 < 450 ? 0 : 0.5);
+  // Raise the hip over the planted foot without moving that foot on the floor.
+  const idleX = Math.min(...rig.idleFeet.map((p, i) => Math.abs(p.x - rig.legs[i].joint.x)));
+  return -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : idleX ** 2));
+}
 function bodyMotion(
   t: number,
   mode: LabPose,
@@ -145,15 +155,9 @@ function bodyMotion(
   idleFromBob: number,
   rig: LabCharacterRig,
 ) {
-  const phase = (t / 900) * Math.PI * 2;
-  const walking = mode === "walk";
-  const [upper, lower] = rig.legs[0].lengths;
-  const reach = (upper + lower) * (mode === "idle" ? rig.idleReach : rig.stanceReach);
-  const planted = labFoot(t, t % 900 < 450 ? 0 : 0.5);
-  // Raise the hip over the planted foot without moving that foot on the floor.
-  const idleX = Math.min(...rig.idleFeet.map((p, i) => Math.abs(p.x - rig.legs[i].joint.x)));
-  const standing =
-    -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : idleX ** 2));
+  const phase = (t / 900) * Math.PI * 2,
+    walking = mode === "walk",
+    standing = standingHeight(t, mode, rig);
   return {
     bob:
       mode === "tea"
