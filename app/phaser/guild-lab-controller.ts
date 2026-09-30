@@ -15,7 +15,7 @@ import type { LabBridge, LabControls } from "./guild-lab-game";
 import {
   LAB_WIDTH,
   LAB_ACTOR_SCALE,
-  LAB_WALK_SPEED,
+  labWalkSpeed,
   labPathTo,
   labStations,
   labTravel,
@@ -151,7 +151,7 @@ export class GuildLabController {
     reduced: boolean,
   ) {
     if (i >= 2) return { ...r.position, delayed: false };
-    r.distance += step * LAB_WALK_SPEED;
+    r.distance += step * labWalkSpeed(labRigs[r.id]);
     if (reduced) r.distance = Infinity;
     const delayed =
       i === 0 && controls.mode === "detour" && this.request % 2 === 1 && r.distance < 0;

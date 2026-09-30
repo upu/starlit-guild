@@ -56,8 +56,40 @@ export async function cutMaster(config) {
     const gold = master[q] > master[q + 1] && master[q + 1] - master[q + 2] > 40;
     const green = master[q + 1] > master[q] && master[q + 1] - master[q + 2] > 20;
     if ([4, 6].includes(owner[p]) && gold) owner[p] = x > 780 ? 14 : x < 550 ? 12 : 15;
-    if ([8, 10].includes(owner[p]) && (gold || green)) owner[p] = 13;
+    // The cut silhouette includes cloak folds beside the sleeve. They must stay
+    // with the cloak rather than travel backwards with the moving arm.
+    if (
+      [4, 6].includes(owner[p]) &&
+      master[q] < 150 &&
+      master[q + 1] >= master[q] - 5 &&
+      master[q + 1] - master[q + 2] > 15
+    )
+      owner[p] = y < 780 ? 1 : 3;
+    if ([8, 10].includes(owner[p])) {
+      const knee = config.parts[owner[p]].joints[1];
+      const skin =
+        master[q] > 150 &&
+        master[q] - master[q + 1] > 15 &&
+        master[q + 1] > 95 &&
+        master[q + 2] > 70;
+      if (y > knee[1] - 32 && !skin) {
+        const white = master[q] > 170 && master[q + 1] > 160 && master[q + 2] > 130;
+        owner[p] = white ? 13 : owner[p] + 1;
+      } else if (gold || green) owner[p] = 13;
+    }
     if (owner[p] === 3 && y < 790 && gold) owner[p] = x < 500 ? 12 : 15;
+    const [armX, armY, armW, armH] = config.nearArmColorCleanup.bounds;
+    if (
+      owner[p] === 3 &&
+      x >= armX &&
+      x < armX + armW &&
+      y >= armY &&
+      y < armY + armH &&
+      master[q] < 175 &&
+      master[q] > master[q + 1] * 1.12 &&
+      master[q + 1] > master[q + 2] + 8
+    )
+      owner[p] = y < config.nearArmColorCleanup.cuffY ? 6 : 7;
     if (
       [5, 7, 9, 11].includes(owner[p]) &&
       master[q + 1] >= master[q] * 0.98 &&
@@ -108,12 +140,14 @@ export async function cutMaster(config) {
           visible++;
           continue;
         }
-        const sameJoint =
-          part.name.includes("forearm") && config.parts[owner[p]]?.layer === part.layer;
+        const sameLayer = config.parts[owner[p]]?.layer === part.layer;
+        const sameJoint = part.name.includes("forearm") && sameLayer;
         if (
           owner[p] < 0 ||
           master[q + 3] < 255 ||
-          (config.parts[owner[p]].layer <= part.layer && !sameJoint)
+          (config.parts[owner[p]].layer <= part.layer &&
+            !sameJoint &&
+            !(part.fillSameLayer && sameLayer))
         )
           continue;
         const fill =

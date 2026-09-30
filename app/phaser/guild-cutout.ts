@@ -4,6 +4,7 @@ import { labLimbPaintOrder, type LabCharacterId, type LabLimbConfig } from "@/li
 import type { GuildLabFilter } from "./guild-lab-filter";
 import { GuildLabFace } from "./guild-lab-face";
 import { GuildLabEffects } from "./guild-lab-effects";
+import { GuildLabUpper } from "./guild-lab-upper";
 import type { LabFeeling } from "@/lib/guild-lab-affection";
 import { LabArmMotion } from "@/lib/guild-lab-arms";
 import { labLimbArtwork } from "@/lib/guild-lab-limbs";
@@ -27,6 +28,7 @@ type Limb = {
 export class GuildCutout {
   readonly root: Phaser.GameObjects.Container;
   private body: Phaser.GameObjects.Container;
+  private upperMotion: GuildLabUpper;
   private head: Phaser.GameObjects.Container;
   private cape: Phaser.GameObjects.Image;
   private face: GuildLabFace;
@@ -66,9 +68,10 @@ export class GuildCutout {
     });
     this.root = scene.add.container(0, 0);
     this.body = scene.add.container(0, 0);
+    this.upperMotion = new GuildLabUpper(scene, this.body, this.rig.walk.pivotY);
     this.root.add(this.body);
     this.legs = [this.limb(this.rig.legs[0])];
-    this.arms = [this.limb(this.rig.arms[0])];
+    this.arms = [this.limb(this.rig.arms[0], true)];
     this.addHair();
     this.cape = this.part(
       this.rig.cape.frame,
@@ -78,20 +81,20 @@ export class GuildCutout {
       this.rig.cape.originX,
       this.rig.cape.originY,
     ).setDepth(this.rig.cape.layer);
-    this.body.add(this.cape);
+    this.upperMotion.add(this.cape);
     this.legs.push(this.limb(this.rig.legs[1]));
-    this.body.add(this.bodyPart(this.rig.torso));
+    this.upperMotion.add(this.bodyPart(this.rig.torso));
     this.addSkirt();
     const neck = this.rig.neckBase;
-    this.body.add(
+    this.upperMotion.add(
       scene.add.ellipse(neck.x, neck.y, neck.width, neck.height, neck.color).setDepth(neck.layer),
     );
-    this.body.add(this.bodyPart(this.rig.scarf));
+    this.upperMotion.add(this.bodyPart(this.rig.scarf));
     this.head = scene.add.container(this.rig.head.x, this.rig.head.y).setDepth(this.rig.head.layer);
     this.head.add(this.part(0, 0, 0, this.art.head.displayHeight, 0.5, 1));
     this.face = new GuildLabFace(scene, this.head, filter, this.art);
-    this.body.add(this.head);
-    this.arms.push(this.limb(this.rig.arms[1]));
+    this.upperMotion.add(this.head);
+    this.arms.push(this.limb(this.rig.arms[1], true));
     this.cup = this.part(
       this.rig.cup.frame,
       0,
@@ -100,7 +103,7 @@ export class GuildCutout {
       0.5,
       labArtOrigin(this.art, this.rig.cup.frame, 3, 0),
     ).setDepth(this.rig.cup.layer);
-    this.body.add(this.cup);
+    this.upperMotion.add(this.cup);
     this.addRaisedForearm();
     this.body.sort("depth");
     this.spoon = this.createSpoon();
@@ -118,7 +121,7 @@ export class GuildCutout {
     this.skirtWidth = this.skirt.displayWidth;
     this.skirtHeight = this.skirt.displayHeight;
     this.skirtMotion = new LabSkirtMotion(cfg);
-    this.body.add(this.skirt);
+    this.upperMotion.add(this.skirt);
   }
   private addRaisedForearm() {
     if (this.character !== "aria") return;
@@ -127,7 +130,7 @@ export class GuildCutout {
       .container(0, 0, [this.measuredSegment(arm.frames[1], arm.lengths[1], arm.thickness)])
       .setDepth(labCharacters.aria.rig.cup.handLayer)
       .setVisible(false);
-    this.body.add(this.raisedForearm);
+    this.upperMotion.add(this.raisedForearm);
   }
   private addHair() {
     if (this.character !== "aria") return;
@@ -141,7 +144,7 @@ export class GuildCutout {
         cfg.originY,
       ).setDepth(cfg.layer);
       this.hairLocks.push(image);
-      this.body.add(image);
+      this.upperMotion.add(image);
     }
   }
   private createSpoon() {
@@ -164,7 +167,7 @@ export class GuildCutout {
     image.setDisplaySize((height * image.frame.width) / image.frame.height, height);
     return this.filter.add(image, LAB_ACTOR_SCALE);
   }
-  private limb(config: LabLimbConfig) {
+  private limb(config: LabLimbConfig, upperBody = false) {
     const { frames, joint, lengths, front } = config;
     const top = this.scene.add.container(joint.x, joint.y).setDepth(config.layer);
     const bottom = this.scene.add.container(0, lengths[0]);
@@ -180,7 +183,8 @@ export class GuildCutout {
     const lowerArtwork = segment(1);
     bottom.add(lowerArtwork);
     top.add(labLimbPaintOrder(front).map((part) => (part === "upper" ? upper : bottom)));
-    this.body.add(top);
+    if (upperBody) this.upperMotion.add(top);
+    else this.body.add(top);
     return { upper: top, lower: bottom, config, lowerArtwork };
   }
   private measuredSegment(frame: number, length: number, thickness: number) {
@@ -297,6 +301,7 @@ export class GuildCutout {
       this.skirt.displayWidth = this.skirtWidth * pose.width;
       this.skirt.displayHeight = this.skirtHeight * pose.height;
     }
+    this.upperMotion.paint(pose.lean);
     this.debug(debug);
     this.effects.paint(
       time,
@@ -359,15 +364,16 @@ export class GuildCutout {
     this.joints.clear();
     if (!show) return;
     this.joints.lineStyle(1, 0x78fff1, 0.9);
+    const root = this.root.getWorldTransformMatrix();
     for (const limb of [...this.arms, ...this.legs]) {
-      const x = limb.upper.x,
-        y = limb.upper.y + this.body.y;
-      const dx = -Math.sin(limb.upper.rotation) * limb.lower.y * limb.upper.scaleY;
-      const dy = Math.cos(limb.upper.rotation) * limb.lower.y * limb.upper.scaleY;
+      const upper = limb.upper.getWorldTransformMatrix();
+      const lower = limb.lower.getWorldTransformMatrix();
+      const a = root.applyInverse(upper.tx, upper.ty);
+      const b = root.applyInverse(lower.tx, lower.ty);
       this.joints
-        .lineBetween(x, y, x + dx, y + dy)
-        .strokeCircle(x, y, 2)
-        .strokeCircle(x + dx, y + dy, 2);
+        .lineBetween(a.x, a.y, b.x, b.y)
+        .strokeCircle(a.x, a.y, 2)
+        .strokeCircle(b.x, b.y, 2);
     }
   }
 }

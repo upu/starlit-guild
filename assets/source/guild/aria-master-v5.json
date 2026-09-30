@@ -283,17 +283,6 @@
         480,
         732
       ],
-      "fillImage": "assets/source/guild/aria-cape-underpaint-v5.png",
-      "fillRect": [
-        313,
-        710,
-        305,
-        365
-      ],
-      "fillSample": [
-        380,
-        970
-      ],
       "polygon": [
         [
           450,
@@ -323,20 +312,6 @@
           335,
           913
         ]
-      ],
-      "fill": [
-        [
-          510,
-          880,
-          100,
-          170
-        ]
-      ],
-      "fillCrop": [
-        690,
-        720,
-        110,
-        100
       ]
     },
     {
@@ -624,8 +599,25 @@
           956,
           35,
           35
+        ],
+        [
+          743,
+          1079,
+          42,
+          45
         ]
-      ]
+      ],
+      "fillSameLayer": true,
+      "kneeFill": {
+        "center": [
+          743,
+          1079
+        ],
+        "radius": [
+          42,
+          45
+        ]
+      }
     },
     {
       "name": "far-boot",
@@ -716,8 +708,25 @@
           956,
           36,
           38
+        ],
+        [
+          574,
+          1067,
+          43,
+          45
         ]
-      ]
+      ],
+      "fillSameLayer": true,
+      "kneeFill": {
+        "center": [
+          574,
+          1067
+        ],
+        "radius": [
+          43,
+          45
+        ]
+      }
     },
     {
       "name": "near-boot",
@@ -1151,5 +1160,14 @@
       555,
       490
     ]
+  },
+  "nearArmColorCleanup": {
+    "bounds": [
+      480,
+      815,
+      150,
+      195
+    ],
+    "cuffY": 885
   }
 }

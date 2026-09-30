@@ -76,7 +76,7 @@ const arms = [
 }));
 const legs = [limb("far-thigh", "far-boot", 1), limb("near-thigh", "near-boot", 4)].map((leg) => ({
   ...leg,
-  front: "upper" as const,
+  front: "lower" as const,
   bend: -1,
 }));
 const feet = ["far-boot", "near-boot"].map((name) => {
@@ -89,6 +89,15 @@ export const ariaLabRig = {
   neckBase: { ...world(master.neck), width: 4, height: 3, layer: 5.8, color: 0xf9d1b8 },
   scarf: drawing("front-cape"),
   torso: drawing("torso"),
+  walk: {
+    forward: 12,
+    back: 16,
+    lift: 10,
+    lean: 3,
+    headCounter: 0.35,
+    center: drawing("torso").x,
+    pivotY: (legs[0].joint.y + legs[1].joint.y) / 2,
+  },
   cape: {
     ...drawing("back-cape", root("back-cape")),
     walkSway: 0.05,

@@ -68,11 +68,23 @@ export function labJoint(target: Point, upper: number, lower: number, bend = 1) 
   const b = Math.atan2(-(target.x * ratio - end.x), target.y * ratio - end.y);
   return { upper: a, lower: b - a };
 }
-export function labFoot(time: number, offset: number) {
+export function labWalkSpeed(rig: LabCharacterRig = labRig) {
+  return ((rig.walk.forward + rig.walk.back) * LAB_ACTOR_SCALE) / 450;
+}
+export function labUpperPoint(point: Point, lean: number, rig: LabCharacterRig = labRig) {
+  const rotated = rotate({ x: point.x, y: point.y - rig.walk.pivotY }, lean);
+  return { x: rotated.x, y: rotated.y + rig.walk.pivotY };
+}
+export function labFoot(time: number, offset: number, rig: LabCharacterRig = labRig) {
   const phase = (time / 900 + offset) % 1;
+  const { forward, back, lift } = rig.walk;
+  const stride = (forward + back) * 2;
   return phase < 0.5
-    ? { x: 18 - phase * 72, y: 0 }
-    : { x: -18 + (phase - 0.5) * 72, y: -Math.sin((phase - 0.5) * Math.PI * 2) * 12 };
+    ? { x: forward - phase * stride, y: 0 }
+    : { x: -back + (phase - 0.5) * stride, y: -Math.sin((phase - 0.5) * Math.PI * 2) * lift };
+}
+function walkFootShift(rig: LabCharacterRig) {
+  return rig.walk.center - (rig.legs[0].joint.x + rig.legs[1].joint.x) / 2;
 }
 export function labLegTarget(
   time: number,
@@ -85,7 +97,10 @@ export function labLegTarget(
   const index = offset ? 1 : 0;
   const foot =
     mode === "walk"
-      ? labFoot(time, offset)
+      ? {
+          ...labFoot(time, offset, rig),
+          x: labFoot(time, offset, rig).x + walkFootShift(rig),
+        }
       : {
           x: rig.idleFeet[index].x - rig.legs[index].joint.x,
           y: rig.idleFeet[index].y,
@@ -141,12 +156,14 @@ export function labTeaCup(
 function standingHeight(t: number, mode: LabPose, rig: LabCharacterRig) {
   if (mode === "idle" && "idleBob" in rig) return rig.idleBob;
   const walking = mode === "walk";
+  const index = walking && t % 900 >= 450 ? 1 : 0;
   const [upper, lower] = rig.legs[0].lengths;
   const reach = (upper + lower) * (mode === "idle" ? rig.idleReach : rig.stanceReach);
-  const planted = labFoot(t, t % 900 < 450 ? 0 : 0.5);
+  const planted = labFoot(t, index / 2, rig);
+  const plantedX = planted.x - (rig.walk.forward - rig.walk.back) / 2;
   // Raise the hip over the planted foot without moving that foot on the floor.
   const idleX = Math.min(...rig.idleFeet.map((p, i) => Math.abs(p.x - rig.legs[i].joint.x)));
-  return -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : idleX ** 2));
+  return -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? plantedX ** 2 : idleX ** 2));
 }
 function bodyMotion(
   t: number,
@@ -159,6 +176,7 @@ function bodyMotion(
     walking = mode === "walk",
     standing = standingHeight(t, mode, rig);
   return {
+    lean: walking ? (rig.walk.lean * Math.PI) / 180 : 0,
     bob:
       mode === "tea"
         ? Math.sin(t / 900) * 0.8
@@ -185,6 +203,8 @@ export function labPose(
       ? (1 - Math.cos(Math.min(1, Math.max(0, ((t % 8000) - 3500) / 3000)) * Math.PI * 2)) / 2
       : 0;
   const motion = bodyMotion(t, mode, idleTransition, idleFromBob, rig);
+  motion.lean = reduced ? 0 : motion.lean;
+  motion.head -= motion.lean * rig.walk.headCounter;
   const cup = labTeaCup(sip, motion.head, rig, art);
   return {
     ...motion,

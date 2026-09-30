@@ -9,7 +9,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-eleventh-baseline";
+  const previous = "work/lab-twelfth-baseline";
   if (baseline) {
     await context.route(`${root}/guild-lab`, async (route) => {
       const response = await route.fetch();
@@ -20,6 +20,9 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     });
     for (const [url, file] of [
       ["lib/guild-lab-rig.ts", "rig.js"],
+      ["lib/guild-lab-aria-rig.ts", "aria-rig.js"],
+      ["lib/guild-lab-aria-master.ts", "aria-master.js"],
+      ["lib/guild-lab-contact.ts", "guild-lab-contact.js"],
       ["lib/guild-lab-aria-art.ts", "art.js"],
       ["lib/guild-lab-art.ts", "leon-art.js"],
       ["lib/guild-lab-arms.ts", "guild-lab-arms.js"],
@@ -173,6 +176,20 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     await shot(`walk-${i}`);
     stride.push(await page.evaluate(() => window.__ariaSkirt));
   }
+  for (const id of ["aria", "leon"]) {
+    await page.evaluate((id) => (window.__labFocus = id), id);
+    for (let i = 0; i < 8; i++) {
+      await time(9900 + i * 112.5);
+      await shot(`${id}-walk-${i}`);
+    }
+    await button("タイルと関節を見る").click();
+    for (let i = 0; i < 8; i++) {
+      await time(10800 + i * 112.5);
+      await shot(`${id}-walk-debug-${i}`);
+    }
+    await button("タイルと関節を見る").click();
+  }
+  await page.evaluate(() => (window.__labFocus = "aria"));
   writeFileSync(`${output}/stride.json`, JSON.stringify(stride, null, 2));
   if (!baseline) {
     assert.ok(stride.every((p) => Math.abs(p.rotation) <= 0.25 + 1e-8));
@@ -196,7 +213,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   await button("アリアが寄り道").click();
   await page.waitForTimeout(150);
   await button("アリアが寄り道").click();
-  await page.waitForTimeout(17000);
+  await page.waitForTimeout(23000);
   await time(13100);
   await shot("detour-follow");
   await button("作業台へ").click();
@@ -241,7 +258,7 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-eleventh-before" : "work/lab-eleventh-after",
+      baseline ? "work/lab-twelfth-before" : "work/lab-twelfth-after",
       baseline,
     );
     console.log(

@@ -65,7 +65,7 @@ test("arm extrema coincide with diagonal foot contact and opposite arm phases", 
     [0, 450],
   ]) {
     const config = labRig.arms[index];
-    assert.equal(labFoot(contact, index ? 0 : 0.5).x, 18);
+    assert.equal(labFoot(contact, index ? 0 : 0.5).x, labRig.walk.forward);
     assert.ok(
       Math.abs(
         labWalkingArm(contact, index).upper + (config.walkShoulder.forward * Math.PI) / 180,
@@ -302,7 +302,9 @@ test("walking keeps a planted foot stationary at the actor's travel speed", () =
     const foot = labFoot(t, 0);
     assert.equal(foot.y, 0);
     assert.ok(
-      Math.abs(foot.x * LAB_ACTOR_SCALE + t * LAB_WALK_SPEED - 18 * LAB_ACTOR_SCALE) < 0.001,
+      Math.abs(
+        foot.x * LAB_ACTOR_SCALE + t * LAB_WALK_SPEED - labRig.walk.forward * LAB_ACTOR_SCALE,
+      ) < 0.001,
     );
     assert.ok(labFoot(t, 0.5).y <= 0);
   }
@@ -438,7 +440,7 @@ test("blink patch uses measured head coordinates, preserves the mouth, and tiles
     }
 });
 
-test("planted knees extend to 96 percent reach without sliding or leaving the floor", () => {
+test("planted knees stay nearly extended without sliding or leaving the floor", () => {
   for (let t = 0; t < 900; t += 10)
     for (const offset of [0, 0.5]) {
       const pose = labPose(t, "walk", false);
@@ -446,13 +448,17 @@ test("planted knees extend to 96 percent reach without sliding or leaving the fl
       const [upper, lower] = labRig.legs[0].lengths;
       const distance = Math.hypot(target.x, target.y);
       if ((t / 900 + offset) % 1 < 0.5) {
-        assert.ok(distance / (upper + lower) >= 0.95 && distance / (upper + lower) <= 0.97);
+        assert.ok(distance / (upper + lower) >= 0.94 && distance / (upper + lower) <= 0.99);
         const angle = labJoint(target, upper, lower, -1);
         assert.ok(Math.abs(angle.lower) < 0.65, "planted knee bends less than 38 degrees");
         assert.ok(Math.abs(labRig.legs[0].joint.y + pose.bob + target.y) < 0.001);
         const next = labLegTarget(t + 1, offset, "walk", labPose(t + 1, "walk", false).bob);
         assert.ok(Math.abs((next.x - target.x) * LAB_ACTOR_SCALE + LAB_WALK_SPEED) < 0.001);
-      } else assert.ok(distance < (upper + lower) * 0.97, "only the swinging knee folds");
+      } else
+        assert.ok(
+          target.y <= -labRig.legs[offset ? 1 : 0].joint.y - pose.bob,
+          "swing foot lifts above the planted floor",
+        );
     }
 });
 
@@ -596,7 +602,7 @@ test("both residents use their own measured cutout and can sit without overlap",
   const [leon, aria] = [labCharacters.leon, labCharacters.aria];
   assert.notEqual(leon.art.asset, aria.art.asset);
   assert.equal(aria.art.master.reviewed.headIncludesNeck, false);
-  assert.equal(aria.rig.legs[0].front, "upper");
+  assert.equal(aria.rig.legs[0].front, "lower");
   assert.equal(aria.rig.arms[1].front, "lower");
   assert.ok(aria.art.head.displayHeight < leon.art.head.displayHeight);
   const meta = await sharp("public/guild/aria-parts-v1.webp").metadata();

@@ -75,6 +75,15 @@ export const labRig = {
   },
   scarf: { frame: 1, x: -4, y: -85, height: labArtHeight(guildLabArt, 1, 16), layer: 6 },
   torso,
+  walk: {
+    forward: 16,
+    back: 20,
+    lift: 11,
+    lean: 2,
+    headCounter: 0.35,
+    center: torso.x,
+    pivotY: -56,
+  },
   cape: {
     frame: 3,
     x: -5,

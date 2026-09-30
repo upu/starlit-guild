@@ -2,7 +2,7 @@ import sharp from "sharp";
 import { labCharacters } from "../lib/guild-lab-characters.ts";
 import { labLimbArtwork } from "../lib/guild-lab-limbs.ts";
 import { labIdleArm, labWalkingArm } from "../lib/guild-lab-arms.ts";
-import { labJoint, labLegTarget, labPose } from "../lib/guild-lab-model.ts";
+import { labJoint, labLegTarget, labPose, labUpperPoint } from "../lib/guild-lab-model.ts";
 
 const rotate = (x, y, a) => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
 // CPU reference of Phaser's hierarchy, using the delivered atlas and actual rig.
@@ -14,6 +14,7 @@ export async function renderMasterPose(
   const { art, rig } = labCharacters.aria,
     master = art.master;
   const { width, height } = await sharp(master.image).metadata();
+  const pose = labPose(time, mode, false, 1, 0, rig, art);
   const layers = [];
   const drawing = (cfg, rotation = 0) => {
     const frame = cfg.frame ?? 0,
@@ -27,15 +28,20 @@ export async function renderMasterPose(
           ((y - h * (cfg.originY ?? 0.5)) * cfg.height) / h,
           rotation,
         );
-        return [cfg.x + dx, cfg.y + dy];
+        const point = labUpperPoint({ x: cfg.x + dx, y: cfg.y + dy }, pose.lean, rig);
+        return [point.x, point.y];
       },
     });
   };
   drawing(rig.torso);
   drawing(rig.scarf);
-  drawing(rig.cape);
-  drawing({ ...rig.head, height: art.head.displayHeight, originY: 1 });
-  for (const hair of rig.hairLocks) drawing(hair);
+  drawing(rig.cape, mode === "walk" ? pose.cape : 0);
+  drawing(
+    { ...rig.head, height: art.head.displayHeight, originY: 1 },
+    mode === "walk" ? pose.head : 0,
+  );
+  for (const hair of rig.hairLocks)
+    drawing(hair, mode === "walk" ? Math.sin(time / 640 + hair.phase) * hair.sway : 0);
   const [, , sw, sh] = art.frames[rig.skirt.frame],
     s = rig.skirt.height / sh;
   layers.push({
@@ -47,10 +53,10 @@ export async function renderMasterPose(
         (y - sh * rig.skirt.originY) * s * skirtPose.height,
         skirtPose.rotation,
       );
-      return [rig.skirt.x + dx, rig.skirt.y + dy];
+      const point = labUpperPoint({ x: rig.skirt.x + dx, y: rig.skirt.y + dy }, pose.lean, rig);
+      return [point.x, point.y];
     },
   });
-  const pose = labPose(time, mode, false, 1, 0, rig, art);
   for (const [limbs, arms] of [
     [rig.legs, false],
     [rig.arms, true],
@@ -81,7 +87,9 @@ export async function renderMasterPose(
               (y - h * d.originY) * d.scale,
               d.rotation + a.upper + (segment ? a.lower : 0),
             );
-            return [limb.joint.x + ex + px, limb.joint.y + ey + py];
+            const point = { x: limb.joint.x + ex + px, y: limb.joint.y + ey + py };
+            const world = arms ? labUpperPoint(point, pose.lean, rig) : point;
+            return [world.x, world.y];
           },
         });
       }
@@ -95,19 +103,51 @@ export async function renderMasterPose(
       .extract({ left, top, width: w, height: h })
       .raw()
       .toBuffer();
+    layer.data = data;
+    layer.width = w;
+    layer.height = h;
+    const origin = layer.point(0, 0),
+      xx = layer.point(1, 0),
+      yy = layer.point(0, 1);
+    const ax = (xx[0] - origin[0]) / master.scale,
+      ay = (xx[1] - origin[1]) / master.scale,
+      bx = (yy[0] - origin[0]) / master.scale,
+      by = (yy[1] - origin[1]) / master.scale;
+    const ox = origin[0] / master.scale + master.origin[0],
+      oy = origin[1] / master.scale + master.origin[1],
+      det = ax * by - ay * bx;
+    const corners = [
+      [0, 0],
+      [w, 0],
+      [0, h],
+      [w, h],
+    ].map(([x, y]) => [ox + x * ax + y * bx, oy + x * ay + y * by]);
+    const minX = Math.max(0, Math.floor(Math.min(...corners.map((p) => p[0])))),
+      maxX = Math.min(width, Math.ceil(Math.max(...corners.map((p) => p[0]))));
+    const minY = Math.max(0, Math.floor(Math.min(...corners.map((p) => p[1])))),
+      maxY = Math.min(height, Math.ceil(Math.max(...corners.map((p) => p[1]))));
+    layer.sample = (world) => {
+      const dx = world.x / master.scale + master.origin[0] - ox,
+        dy = world.y / master.scale + master.origin[1] - oy;
+      const x = Math.round((dx * by - dy * bx) / det),
+        y = Math.round((dy * ax - dx * ay) / det);
+      return x < 0 || y < 0 || x >= w || y >= h
+        ? [0, 0, 0, 0]
+        : [...data.subarray((y * w + x) * 4, (y * w + x) * 4 + 4)];
+    };
     counts[layer.frame] = 0;
-    for (let y = 0; y < h; y++)
-      for (let x = 0; x < w; x++) {
-        const p = (y * w + x) * 4,
-          a = data[p + 3];
-        if (a < 180) continue;
-        const world = layer.point(x, y),
-          xx = Math.round(world[0] / master.scale + master.origin[0]),
-          yy = Math.round(world[1] / master.scale + master.origin[1]);
-        if (xx < 0 || yy < 0 || xx >= width || yy >= height) continue;
-        const q = (yy * width + xx) * 4;
+    for (let y = minY; y < maxY; y++)
+      for (let x = minX; x < maxX; x++) {
+        const dx = x - ox,
+          dy = y - oy,
+          sx = Math.round((dx * by - dy * bx) / det),
+          sy = Math.round((dy * ax - dx * ay) / det);
+        if (sx < 0 || sy < 0 || sx >= w || sy >= h) continue;
+        const p = (sy * w + sx) * 4;
+        if (data[p + 3] < 180) continue;
+        const q = (y * width + x) * 4;
         data.copy(pixels, q, p, p + 4);
-        owner[yy * width + xx] = layer.frame;
+        owner[y * width + x] = layer.frame;
         counts[layer.frame]++;
       }
   }
