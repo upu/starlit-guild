@@ -2,12 +2,13 @@ import type Phaser from "phaser";
 import { GuildLabController } from "./guild-lab-controller";
 import { type LabMode, type LabPose } from "@/lib/guild-lab-model";
 import { bindLabResolution, labBufferSize } from "./guild-lab-resolution";
+import type { LabCameraView } from "@/lib/guild-lab-camera";
 export type LabControls = {
   mode: LabMode;
   request: number;
   paused: boolean;
   grid: boolean;
-  close: boolean;
+  view: LabCameraView;
   greet: number;
 };
 export type LabBridge = {

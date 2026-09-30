@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import sharp from "sharp";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { captureLabAppearance } from "./guild-lab-appearance.browser.mjs";
+import { captureLabCamera } from "./guild-lab-camera.browser.mjs";
 const root = process.env.TEST_ROOT || "http://localhost:5174";
 const output = "work/guild-lab-browser";
 mkdirSync(output, { recursive: true });
@@ -28,11 +29,17 @@ async function start(
     await context.route("**/app/phaser/guild-lab-controller.ts*", async (route) => {
       const response = await route.fetch();
       const source = await response.text();
-      assert.ok(source.includes("close ? 1.8 : 1") && source.includes("this.elapsed += step;"));
+      assert.ok(
+        source.includes("this.camera(controls, step, reduced);") &&
+          source.includes("this.elapsed += step;"),
+      );
       await route.fulfill({
         response,
         body: source
-          .replace("close ? 1.8 : 1", "close ? 5 : 1")
+          .replace(
+            "this.camera(controls, step, reduced);",
+            `this.camera(controls, step, reduced); if(controls.view === 'residents') this.scene.cameras.main.setZoom(this.scene.game.canvas.width / LAB_WIDTH * 5).centerOn((this.residents[0].actor.root.x+this.residents[1].actor.root.x)/2,(this.residents[0].actor.root.y+this.residents[1].actor.root.y)/2-42.5);`,
+          )
           .replace("new LabAffection()", "new LabAffection(() => 0.5)")
           .replace("this.elapsed += step;", "this.elapsed = Number(window.__labCaptureTime ?? 0);"),
       });
@@ -46,11 +53,17 @@ async function start(
   });
   await page.goto(`${root}/guild-lab${query}`);
   await page.locator('.guild-lab-stage[data-status="ready"]').waitFor();
+  if (await page.getByRole("button", { name: "部屋全体", exact: true }).count())
+    await page.getByRole("button", { name: "部屋全体", exact: true }).click();
   return { context, page };
 }
 const activity = (page, name) =>
   page.locator(`.guild-lab-stage[data-activity="${name}"]`).waitFor({ timeout: 30000 });
-const button = (page, name) => page.getByRole("button", { name, exact: true });
+const button = (page, name) =>
+  page.getByRole("button", {
+    name: name === "寄って見る" ? /^(部屋全体|住人を追う)$/ : name,
+    exact: true,
+  });
 async function checkBuffer(page, dpr) {
   await page.waitForFunction(
     (density) => {
@@ -67,7 +80,13 @@ async function checkBuffer(page, dpr) {
 async function tapWorld(page, x, y) {
   const canvas = page.locator("canvas"),
     box = await canvas.boundingBox();
-  await canvas.click({ position: { x: (x / 768) * box.width, y: (y / 576) * box.height } });
+  const camera = JSON.parse(await canvas.getAttribute("data-camera"));
+  await canvas.click({
+    position: {
+      x: ((x - camera.x) * camera.zoom * box.width) / 768 + box.width / 2,
+      y: ((y - camera.y) * camera.zoom * box.width) / 768 + box.height / 2,
+    },
+  });
 }
 async function checkAnimatedFace(page) {
   for (let n = 0; n < 16; n++) {
@@ -132,7 +151,7 @@ async function checkResolutionAndQuality() {
     await activity(page, "idle");
     await button(page, "寄って見る").click();
     // The close camera follows both residents at the left aisle stop.
-    await tapWorld(page, 384 + (310 - 134.5) * 1.8, 288 + (350 - 379.5) * 1.8);
+    await tapWorld(page, 310, 350);
     await activity(page, "tea");
     await context.close();
   }
@@ -356,6 +375,7 @@ try {
   await captureJoints();
   await capturePairAndLoad();
   await captureLabAppearance(browser, root, `${output}/aria-appearance-5x`);
+  await captureLabCamera(browser, root);
   await checkResolutionAndQuality();
   const { context, page } = await start();
   await page.waitForTimeout(500);

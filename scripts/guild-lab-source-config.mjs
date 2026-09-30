@@ -40,19 +40,14 @@ export const guildLabSourceConfig = {
   },
   aria: {
     parts: "assets/source/guild/aria-parts-v1.png",
-    head: "assets/source/guild/aria-head-front-v1.png",
-    expressions: "assets/source/guild/aria-head-expressions-v1.png",
-    costumeHair: "assets/source/guild/aria-costume-hair-v2.png",
+    head: "assets/source/guild/aria-head-neckless-v4.png",
+    headExpression: (name) => `assets/source/guild/aria-head-${name}-v4.png`,
+    costumeHair: "assets/source/guild/aria-costume-locks-v4.png",
     backCape: "assets/source/guild/aria-back-cape-v3.png",
     farPalm: "assets/source/guild/aria-far-palm-v3.png",
     nearGlove: { flip: true, thumb: [121, 190], outerEdge: [161, 190] },
-    replacements: {
-      torso: [107, 110, 581, 555],
-      shoulderCape: [802, 129, 774, 494],
-      hairLock: [1784, 67, 309, 600],
-      // Reviewed neckline landmark on the generated torso, in source pixels.
-      neck: [418, 167],
-    },
+    // Reviewed neckline landmark on the matched v4 torso, in source pixels.
+    costumeNeck: [365, 171],
     atlas: "public/guild/aria-parts-v1.webp",
     art: "lib/guild-lab-aria-art.ts",
   },

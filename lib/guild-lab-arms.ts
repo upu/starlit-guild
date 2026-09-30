@@ -4,6 +4,14 @@ import { labLimbArtwork } from "./guild-lab-limbs.ts";
 
 export const labArmArtwork = labLimbArtwork;
 export type LabArmAngles = { upper: number; lower: number; scale: number };
+export function labIdleArm(index: number, rig: LabCharacterRig = labRig): LabArmAngles {
+  const config = rig.arms[index].idleAngles;
+  return {
+    upper: (-config.shoulder * Math.PI) / 180,
+    lower: (-config.elbow * Math.PI) / 180,
+    scale: config.scale,
+  };
+}
 export function labWalkingArm(
   time: number,
   index: number,
@@ -46,9 +54,11 @@ export class LabArmMotion {
     reduced: boolean,
   ) {
     const arm = this.rig.arms[index];
-    const direct = (mode === "walk" && !reaction) || (reduced && mode === "idle");
+    const direct = (mode === "walk" || mode === "idle") && !reaction;
     let angles = direct
-      ? labWalkingArm(time, index, reduced, this.rig)
+      ? mode === "idle"
+        ? labIdleArm(index, this.rig)
+        : labWalkingArm(time, index, reduced, this.rig)
       : { ...labJoint(target, arm.lengths[0], arm.lengths[1], arm.bend), scale: 1 };
     if (this.previous === "walk" && mode === "idle" && !reduced) {
       this.from = this.last;

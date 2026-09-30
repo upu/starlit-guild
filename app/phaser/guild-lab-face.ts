@@ -58,7 +58,7 @@ export class GuildLabFace {
       const selected = key === "shy" ? (patch.region === "eyes" ? "neutral" : "smile") : key;
       patch.image.visible = patch.key === selected;
     }
-    this.blink.visible = blink && key !== "smile";
+    this.blink.visible = blink && key !== "smile" && key !== "yawn";
     this.cheeks.visible = feeling.blush;
   }
 }

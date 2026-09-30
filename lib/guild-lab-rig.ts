@@ -1,5 +1,6 @@
 import { guildLabArt } from "./guild-lab-art.ts";
 import { guildLabAriaArt } from "./guild-lab-aria-art.ts";
+import { labArtHeight, labArtOrigin } from "./guild-lab-art-layout.ts";
 
 // Leon's attachment points and painted overlaps, in unscaled body coordinates.
 export type LabLimbConfig = {
@@ -25,6 +26,7 @@ type LabArmConfig = LabLimbConfig & {
   walkShoulder: { forward: number; back: number };
   walkElbow: { forward: number; back: number };
   walkScale: number;
+  idleAngles: { shoulder: number; elbow: number; scale: number };
 };
 const leg = {
   lengths: [22, 27],
@@ -41,8 +43,14 @@ const arm = {
 export const labLimbPaintOrder = (front: LabLimbConfig["front"]) =>
   front === "upper" ? (["lower", "upper"] as const) : (["upper", "lower"] as const);
 
-const torso = { frame: 2, x: 0, y: -67, height: 51, layer: 5 } as const;
-const headHeight = 90;
+const torso = {
+  frame: 2,
+  x: 0,
+  y: -67,
+  height: labArtHeight(guildLabArt, 2, 51),
+  layer: 5,
+} as const;
+const headHeight = guildLabArt.head.displayHeight;
 const [headWidth, headFrameHeight] = guildLabArt.frames[0].slice(2);
 const [torsoWidth, torsoFrameHeight] = guildLabArt.frames[torso.frame].slice(2);
 const neckOnTorso =
@@ -64,19 +72,19 @@ export const labRig = {
     layer: 5.8,
     color: 0xf5cfb0,
   },
-  scarf: { frame: 1, x: -4, y: -85, height: 16, layer: 6 },
+  scarf: { frame: 1, x: -4, y: -85, height: labArtHeight(guildLabArt, 1, 16), layer: 6 },
   torso,
   cape: {
     frame: 3,
     x: -5,
     y: -84,
-    height: 48,
-    originX: 0.78,
-    originY: 0.08,
+    height: labArtHeight(guildLabArt, 3, 48),
+    originX: labArtOrigin(guildLabArt, 3, 2, 0.78),
+    originY: labArtOrigin(guildLabArt, 3, 3, 0.08),
     layer: 3,
     walkSway: 0.06,
   },
-  cup: { frame: 12, height: 17, layer: 7.5 },
+  cup: { frame: 12, height: labArtHeight(guildLabArt, 12, 17), layer: 7.5 },
   legs: [
     { ...leg, frames: [8, 9], joint: { x: 4, y: -56 }, layer: 1 },
     { ...leg, frames: [10, 11], joint: { x: -5, y: -56 }, layer: 4 },
@@ -92,6 +100,7 @@ export const labRig = {
       walkShoulder: { forward: 10, back: -5 },
       walkElbow: { forward: 20, back: 7 },
       walkScale: 0.68,
+      idleAngles: { shoulder: 10, elbow: 10, scale: 0.86 },
     },
     {
       ...arm,
@@ -103,11 +112,16 @@ export const labRig = {
       walkShoulder: { forward: 25, back: -10 },
       walkElbow: { forward: 28, back: 7 },
       walkScale: 1,
+      idleAngles: { shoulder: 5, elbow: 10, scale: 1 },
     },
   ] satisfies LabArmConfig[],
   stanceReach: 0.96,
   idleReach: 0.99,
   idleSettleMs: 180,
+  idleFeet: [
+    { x: -3.5, y: 0 },
+    { x: 4.5, y: 0 },
+  ],
   soleExtension: 0.12,
   armSettleMs: 180,
   seatedFoot: { x: 22, y: 38 },
@@ -117,7 +131,13 @@ export const labRig = {
 const ariaHeadHeight = guildLabAriaArt.head.displayHeight;
 const ariaHeadFrame = guildLabAriaArt.frames[0];
 const ariaTorsoFrame = guildLabAriaArt.frames[2];
-const ariaTorso = { frame: 2, x: 0, y: -65, height: 48, layer: 5 } as const;
+const ariaTorso = {
+  frame: 2,
+  x: 0,
+  y: -65,
+  height: labArtHeight(guildLabAriaArt, 2, 48),
+  layer: 5,
+} as const;
 const ariaNeckOnTorso =
   ariaTorso.x +
   (guildLabAriaArt.torso.neck.center[0] - ariaTorsoFrame[2] / 2) *
@@ -131,39 +151,61 @@ const ariaNeckOnTorsoY =
     ariaTorsoFrame[3];
 const ariaChinWithinHeadY =
   ((guildLabAriaArt.head.neck.chinUnder[1] - ariaHeadFrame[3]) * ariaHeadHeight) / ariaHeadFrame[3];
+const ariaHairLocks = guildLabAriaArt.hairLocks.map((lock, i) => {
+  const frame = guildLabAriaArt.frames[lock.frame];
+  return {
+    frame: lock.frame,
+    x: [-16, -19, -5][i],
+    y: [-88, -89, -86][i],
+    height: labArtHeight(guildLabAriaArt, lock.frame, [43, 46, 36][i]),
+    layer: [2.5, 8.75, 8.6][i],
+    originX: lock.root[0] / frame[2],
+    originY: lock.root[1] / frame[3],
+    sway: [0.03, 0.04, 0.025][i],
+    phase: i * 0.8,
+  };
+});
 export const ariaLabRig = {
   head: {
     x: ariaNeckOnTorso - ariaNeckWithinHead,
-    y: ariaNeckOnTorsoY + 8 - ariaChinWithinHeadY,
+    y: ariaNeckOnTorsoY + 12 - ariaChinWithinHeadY,
     layer: 9,
   },
   neckBase: {
     x: ariaNeckOnTorso,
-    y: ariaNeckOnTorsoY + 8,
+    y: ariaNeckOnTorsoY + 12,
     width: 6,
     height: 4,
     layer: 5.8,
     color: 0xf9d1b8,
   },
   // Torso-fixed front cape covers the shoulder, independently of arm rotation.
-  scarf: { frame: 1, x: -2, y: -78, height: 24, layer: 8.5 },
+  scarf: { frame: 1, x: -2, y: -78, height: labArtHeight(guildLabAriaArt, 1, 32), layer: 8.5 },
   torso: ariaTorso,
   cape: {
     frame: 3,
     x: -8,
     y: -82,
-    height: 41,
-    originX: 0.76,
-    originY: 0.1,
+    height: labArtHeight(guildLabAriaArt, 3, 41),
+    originX: labArtOrigin(guildLabAriaArt, 3, 2, 0.76),
+    originY: labArtOrigin(guildLabAriaArt, 3, 3, 0.1),
     layer: 3,
     walkSway: 0.05,
   },
-  cup: { frame: 12, height: 17, layer: 7.5, raisedLayer: 9.1, handLayer: 9.2 },
+  cup: {
+    frame: 12,
+    height: labArtHeight(guildLabAriaArt, 12, 17),
+    layer: 7.5,
+    raisedLayer: 9.1,
+    handLayer: 9.2,
+    restingHandLayer: 8.65,
+  },
+  hairLocks: ariaHairLocks,
   backHair: {
     frame: guildLabAriaArt.extras.backHair,
     x: -19,
     y: -89,
-    height: 46,
+    height: labArtHeight(guildLabAriaArt, guildLabAriaArt.extras.backHair, 46),
     layer: 8.75,
     originX:
       guildLabAriaArt.hairLock.root[0] / guildLabAriaArt.frames[guildLabAriaArt.extras.backHair][2],
@@ -175,7 +217,7 @@ export const ariaLabRig = {
     frame: guildLabAriaArt.extras.skirt,
     x: 0,
     y: -64,
-    height: 24,
+    height: labArtHeight(guildLabAriaArt, guildLabAriaArt.extras.skirt, 24),
     layer: 5.5,
     follow: 0.25,
     maxRotation: 0.12,
@@ -207,31 +249,37 @@ export const ariaLabRig = {
       lengths: [22, 24] as const,
       thickness: 1.3,
       frames: [4, 5] as const,
-      joint: { x: 6, y: -78 },
+      joint: { x: 5, y: -79 },
       layer: 0,
       restHand: { x: -7, y: 27 },
       walkSwing: -14,
       walkShoulder: { forward: 9, back: -5 },
       walkElbow: { forward: 20, back: 7 },
       walkScale: 0.66,
+      idleAngles: { shoulder: 10, elbow: 10, scale: 0.86 },
     },
     {
       ...arm,
       lengths: [22, 24] as const,
       thickness: 1.3,
       frames: [6, 7] as const,
-      joint: { x: -8, y: -80 },
+      joint: { x: -6, y: -80 },
       layer: 8,
       restHand: { x: 7, y: 39 },
       walkSwing: 16,
       walkShoulder: { forward: 24, back: -10 },
       walkElbow: { forward: 28, back: 7 },
       walkScale: 1,
+      idleAngles: { shoulder: 5, elbow: 10, scale: 1 },
     },
   ] satisfies LabArmConfig[],
   stanceReach: 0.96,
   idleReach: 0.99,
   idleSettleMs: 180,
+  idleFeet: [
+    { x: -3.5, y: 0 },
+    { x: 4.5, y: 0 },
+  ],
   soleExtension: 0.12,
   armSettleMs: 180,
   seatedFoot: { x: 21, y: 36 },

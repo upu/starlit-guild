@@ -9,7 +9,7 @@ const initialControls: LabControls = {
   request: 0,
   paused: false,
   grid: false,
-  close: false,
+  view: "auto",
   greet: 0,
 };
 const captions = {
@@ -22,10 +22,10 @@ const captions = {
 function useLab() {
   const host = useRef<HTMLDivElement>(null);
   const [controls, setControls] = useState<LabControls>(initialControls);
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const { status, setStatus, retry, restart } = useLabStatus();
   const [activity, setActivity] = useState<LabPose>("tea");
-  const [retry, setRetry] = useState(0);
   const latest = useRef(controls);
+  const narrow = useNarrowScreen();
   useEffect(() => {
     latest.current = controls;
   }, [controls]);
@@ -64,21 +64,44 @@ function useLab() {
       disposed = true;
       game?.destroy();
     };
-  }, [retry]);
+  }, [retry, setStatus]);
+  const close = controls.view === "residents" || (controls.view === "auto" && narrow);
   const toggle = (key: "paused" | "grid" | "close") => {
-    setControls((c) => ({ ...c, [key]: !c[key] }));
-  };
-  const restart = () => {
-    setStatus("loading");
-    setRetry((value) => value + 1);
+    setControls((c) =>
+      key === "close" ? { ...c, view: close ? "room" : "residents" } : { ...c, [key]: !c[key] },
+    );
   };
   const greet = () => {
     setControls((c) => ({ ...c, greet: c.greet + 1 }));
   };
-  return { host, controls, status, activity, visit, toggle, restart, greet };
+  return { host, controls, close, status, activity, visit, toggle, restart, greet };
+}
+function useLabStatus() {
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [retry, setRetry] = useState(0);
+  const restart = () => {
+    setStatus("loading");
+    setRetry((value) => value + 1);
+  };
+  return { status, setStatus, retry, restart };
+}
+function useNarrowScreen() {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const query = matchMedia("(max-width: 599px)");
+    const sync = () => {
+      setNarrow(query.matches);
+    };
+    sync();
+    query.addEventListener("change", sync);
+    return () => {
+      query.removeEventListener("change", sync);
+    };
+  }, []);
+  return narrow;
 }
 export default function GuildLab() {
-  const { host, controls, status, activity, visit, toggle, restart, greet } = useLab();
+  const { host, controls, close, status, activity, visit, toggle, restart, greet } = useLab();
   return (
     <main className="guild-lab">
       <div className="guild-lab-inner">
@@ -104,6 +127,7 @@ export default function GuildLab() {
         </div>
         <LabButtons
           controls={controls}
+          close={close}
           status={status}
           activity={activity}
           visit={visit}
@@ -126,6 +150,7 @@ export default function GuildLab() {
 
 function LabButtons({
   controls,
+  close,
   status,
   activity,
   visit,
@@ -153,12 +178,12 @@ function LabButtons({
           レオンに声をかける
         </button>
         <button
-          aria-pressed={controls.close}
+          aria-pressed={close}
           onClick={() => {
             toggle("close");
           }}
         >
-          寄って見る
+          {close ? "部屋全体" : "住人を追う"}
         </button>
         <button
           aria-pressed={controls.paused}

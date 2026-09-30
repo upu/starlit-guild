@@ -82,7 +82,14 @@ export function labLegTarget(
   rig: LabCharacterRig = labRig,
 ) {
   if (mode === "tea") return rig.seatedFoot;
-  const foot = mode === "walk" ? labFoot(time, offset) : { x: 2, y: 0 };
+  const index = offset ? 1 : 0;
+  const foot =
+    mode === "walk"
+      ? labFoot(time, offset)
+      : {
+          x: rig.idleFeet[index].x - rig.legs[index].joint.x,
+          y: rig.idleFeet[index].y,
+        };
   return { x: foot.x, y: -rig.legs[0].joint.y + foot.y - bob };
 }
 export function labFarHand(time: number, mode: LabPose, rig: LabCharacterRig = labRig) {
@@ -144,7 +151,9 @@ function bodyMotion(
   const reach = (upper + lower) * (mode === "idle" ? rig.idleReach : rig.stanceReach);
   const planted = labFoot(t, t % 900 < 450 ? 0 : 0.5);
   // Raise the hip over the planted foot without moving that foot on the floor.
-  const standing = -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : 4));
+  const idleX = Math.min(...rig.idleFeet.map((p, i) => Math.abs(p.x - rig.legs[i].joint.x)));
+  const standing =
+    -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? planted.x ** 2 : idleX ** 2));
   return {
     bob:
       mode === "tea"

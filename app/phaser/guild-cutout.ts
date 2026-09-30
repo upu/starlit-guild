@@ -8,9 +8,10 @@ import type { LabFeeling } from "@/lib/guild-lab-affection";
 import { LabArmMotion } from "@/lib/guild-lab-arms";
 import { labLimbArtwork } from "@/lib/guild-lab-limbs";
 import { LabSkirtMotion } from "@/lib/guild-lab-skirt";
+import { LabFeetMotion } from "@/lib/guild-lab-feet";
+import { labArtOrigin } from "@/lib/guild-lab-art-layout";
 import {
   LAB_ACTOR_SCALE,
-  labLegTarget,
   labJoint,
   labPose,
   labTeaCup,
@@ -38,7 +39,7 @@ export class GuildCutout {
   private joints: Phaser.GameObjects.Graphics;
   private art;
   private rig;
-  private backHair?: Phaser.GameObjects.Image;
+  private hairLocks: Phaser.GameObjects.Image[] = [];
   private skirt?: Phaser.GameObjects.Image;
   private skirtMotion?: LabSkirtMotion;
   private skirtWidth = 0;
@@ -47,6 +48,7 @@ export class GuildCutout {
   private idleStartedAt = -Infinity;
   private lastBob = 0;
   private idleFromBob = 0;
+  private feetMotion;
   constructor(
     private scene: Phaser.Scene,
     private filter: GuildLabFilter,
@@ -55,6 +57,7 @@ export class GuildCutout {
     const profile = labCharacters[character];
     this.art = profile.art;
     this.rig = profile.rig;
+    this.feetMotion = new LabFeetMotion(this.rig);
     this.armMotion = [new LabArmMotion(this.rig), new LabArmMotion(this.rig)];
     this.art.frames.forEach(([x, y, w, h], i) => {
       const texture = scene.textures.get(this.art.asset);
@@ -77,13 +80,7 @@ export class GuildCutout {
     this.body.add(this.cape);
     this.legs.push(this.limb(this.rig.legs[1]));
     this.body.add(this.bodyPart(this.rig.torso));
-    if (character === "aria") {
-      const cfg = labCharacters.aria.rig.skirt;
-      this.skirt = this.part(cfg.frame, cfg.x, cfg.y, cfg.height, 0.5, 0).setDepth(cfg.layer);
-      this.skirtWidth = this.skirt.displayWidth;
-      this.skirtMotion = new LabSkirtMotion(cfg);
-      this.body.add(this.skirt);
-    }
+    this.addSkirt();
     const neck = this.rig.neckBase;
     this.body.add(
       scene.add.ellipse(neck.x, neck.y, neck.width, neck.height, neck.color).setDepth(neck.layer),
@@ -94,9 +91,14 @@ export class GuildCutout {
     this.face = new GuildLabFace(scene, this.head, filter, this.art);
     this.body.add(this.head);
     this.arms.push(this.limb(this.rig.arms[1]));
-    this.cup = this.part(this.rig.cup.frame, 0, 0, this.rig.cup.height, 0.5, 0).setDepth(
-      this.rig.cup.layer,
-    );
+    this.cup = this.part(
+      this.rig.cup.frame,
+      0,
+      0,
+      this.rig.cup.height,
+      0.5,
+      labArtOrigin(this.art, this.rig.cup.frame, 3, 0),
+    ).setDepth(this.rig.cup.layer);
     this.body.add(this.cup);
     this.addRaisedForearm();
     this.body.sort("depth");
@@ -105,6 +107,21 @@ export class GuildCutout {
     this.joints = scene.add.graphics();
     this.root.add(this.joints);
     this.effects = new GuildLabEffects(scene, this.root);
+  }
+  private addSkirt() {
+    if (this.character !== "aria") return;
+    const cfg = labCharacters.aria.rig.skirt;
+    this.skirt = this.part(
+      cfg.frame,
+      cfg.x,
+      cfg.y,
+      cfg.height,
+      0.5,
+      labArtOrigin(this.art, cfg.frame, 3, 0),
+    ).setDepth(cfg.layer);
+    this.skirtWidth = this.skirt.displayWidth;
+    this.skirtMotion = new LabSkirtMotion(cfg);
+    this.body.add(this.skirt);
   }
   private addRaisedForearm() {
     if (this.character !== "aria") return;
@@ -117,16 +134,18 @@ export class GuildCutout {
   }
   private addHair() {
     if (this.character !== "aria") return;
-    const cfg = labCharacters.aria.rig.backHair;
-    this.backHair = this.part(
-      cfg.frame,
-      cfg.x,
-      cfg.y,
-      cfg.height,
-      cfg.originX,
-      cfg.originY,
-    ).setDepth(cfg.layer);
-    this.body.add(this.backHair);
+    for (const cfg of labCharacters.aria.rig.hairLocks) {
+      const image = this.part(
+        cfg.frame,
+        cfg.x,
+        cfg.y,
+        cfg.height,
+        cfg.originX,
+        cfg.originY,
+      ).setDepth(cfg.layer);
+      this.hairLocks.push(image);
+      this.body.add(image);
+    }
   }
   private createSpoon() {
     const spoon = this.scene.add.graphics().setPosition(0, 23);
@@ -136,6 +155,9 @@ export class GuildCutout {
   }
   hit(point: Point) {
     return this.body.getBounds().contains(point.x, point.y);
+  }
+  bounds() {
+    return this.body.getBounds();
   }
   private bodyPart(config: { frame: number; x: number; y: number; height: number; layer: number }) {
     return this.part(config.frame, config.x, config.y, config.height).setDepth(config.layer);
@@ -211,10 +233,10 @@ export class GuildCutout {
     return pose;
   }
   private ornaments(time: number, reduced: boolean) {
-    if (this.backHair)
-      this.backHair.rotation = reduced
-        ? 0
-        : Math.sin(time / 640) * labCharacters.aria.rig.backHair.sway;
+    this.hairLocks.forEach((hair, i) => {
+      const cfg = labCharacters.aria.rig.hairLocks[i];
+      hair.rotation = reduced ? 0 : Math.sin(time / 640 + cfg.phase) * cfg.sway;
+    });
   }
   private nearHand(
     mode: LabPose,
@@ -259,8 +281,9 @@ export class GuildCutout {
     this.cup.setPosition(cup.x, cup.y).setRotation(cup.angle);
     this.paintRaisedForearm(mode === "tea" && pose.sip > 0.4 && reach < 1);
     this.spoon.rotation = -this.arms[1].upper.rotation - this.arms[1].lower.rotation;
+    const feet = this.feetMotion.sample(time, mode, pose.bob, reduced);
     this.legs.forEach((leg, i) => {
-      this.aim(leg, labLegTarget(reduced ? 0 : time, i / 2, mode, pose.bob, this.rig));
+      this.aim(leg, feet[i]);
     });
     if (this.skirt && this.skirtMotion) {
       const pose = this.skirtMotion.sample(
@@ -293,9 +316,8 @@ export class GuildCutout {
       this.body.sort("depth");
     }
     const arm = this.arms[1];
-    arm.lowerArtwork.visible = !raised;
-    this.raisedForearm.setVisible(raised);
-    if (!raised) return;
+    arm.lowerArtwork.visible = false;
+    this.raisedForearm.setVisible(true).setDepth(raised ? cfg.handLayer : cfg.restingHandLayer);
     // Keep the joint hierarchy as the pose source. Only the raised forearm's
     // drawing crosses in front of the face; the shoulder stays under the cape.
     const length = arm.lower.y * arm.upper.scaleY;

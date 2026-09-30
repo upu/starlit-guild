@@ -3,6 +3,7 @@ import sharp from "sharp";
 import { readFileSync, writeFileSync } from "node:fs";
 import { format } from "prettier";
 import { guildLabSourceConfig } from "./guild-lab-source-config.mjs";
+import { addFramePadding } from "./guild-lab-frame-padding.mjs";
 const config = guildLabSourceConfig.leon;
 
 const art = JSON.parse(readFileSync("work/lab-base-art.json", "utf8"));
@@ -273,7 +274,7 @@ writeFileSync(
   config.art,
   await format(
     "// Generated: node scripts/build-guild-lab-affection.mjs\nexport const guildLabArt = " +
-      JSON.stringify(art) +
+      JSON.stringify(addFramePadding(art)) +
       " as const;\n",
     { parser: "typescript", printWidth: 100 },
   ),

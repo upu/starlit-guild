@@ -16,7 +16,6 @@ import {
   LAB_WIDTH,
   LAB_ACTOR_SCALE,
   LAB_WALK_SPEED,
-  LAB_HEIGHT,
   labPathTo,
   labStations,
   labTravel,
@@ -27,6 +26,7 @@ import {
 import type { LabCharacterId } from "@/lib/guild-lab-rig";
 import { labRigs } from "@/lib/guild-lab-rig";
 import { labKeepDistance, labPairDestination } from "@/lib/guild-lab-spacing";
+import { LabCameraFollow, labCameraZoom } from "@/lib/guild-lab-camera";
 
 type Resident = {
   id: LabCharacterId;
@@ -50,6 +50,8 @@ export class GuildLabController {
   private activity: LabPose = "tea";
   private greeted = 0;
   private actorCount: number;
+  private cameraFollow = new LabCameraFollow();
+  private cameraZoom = 0;
   constructor(
     private scene: Phaser.Scene,
     private bridge: LabBridge,
@@ -236,7 +238,6 @@ export class GuildLabController {
       this.greeted = controls.greet;
       this.residents[0].affection.tap(this.elapsed);
     }
-    this.camera(controls.close);
     const beat = labPairBeat(this.elapsed);
     const positions = this.residents.map((r, i) =>
       this.residentPosition(r, i, controls, step, reduced),
@@ -245,6 +246,7 @@ export class GuildLabController {
     this.residents.forEach((r, i) => {
       this.renderResident(r, i, controls, positions[i], beat, reduced);
     });
+    this.camera(controls, step, reduced);
     this.scene.game.canvas.dataset.feet = JSON.stringify(
       positions.slice(0, 2).map(({ x, y, moving }) => ({ x, y, moving })),
     );
@@ -273,15 +275,30 @@ export class GuildLabController {
     this.plate.setPosition(props.dishX, 356);
     if (props.bite) this.bite.setPosition(props.bite.x, props.bite.y).setVisible(true);
   }
-  private camera(close: boolean) {
-    const density = this.scene.game.canvas.width / LAB_WIDTH;
-    this.scene.cameras.main.setZoom(density * (close ? 1.8 : 1));
-    this.scene.cameras.main.centerOn(
-      close ? (this.residents[0].actor.root.x + this.residents[1].actor.root.x) / 2 : LAB_WIDTH / 2,
-      close
-        ? (this.residents[0].actor.root.y + this.residents[1].actor.root.y) / 2 -
-            85 * LAB_ACTOR_SCALE
-        : LAB_HEIGHT / 2,
+  private camera(controls: LabControls, step: number, reduced: boolean) {
+    const canvas = this.scene.game.canvas;
+    const density = canvas.width / LAB_WIDTH;
+    const zoom = labCameraZoom(window.innerWidth, controls.view);
+    const center = this.cameraFollow.sample(
+      this.residents.map((r) => r.position),
+      zoom,
+      step,
+      reduced || this.cameraZoom !== zoom,
+    );
+    this.cameraZoom = zoom;
+    this.scene.cameras.main.setZoom(density * zoom).centerOn(center.x, center.y);
+    canvas.dataset.camera = JSON.stringify({ ...center, zoom, width: canvas.clientWidth });
+    canvas.dataset.residentBounds = JSON.stringify(
+      this.residents.slice(0, 2).map((r) => {
+        const bounds = r.actor.bounds();
+        return {
+          x: bounds.x,
+          y: bounds.y,
+          width: bounds.width,
+          height: bounds.height,
+          cssHeight: (bounds.height * zoom * canvas.clientWidth) / LAB_WIDTH,
+        };
+      }),
     );
   }
 }

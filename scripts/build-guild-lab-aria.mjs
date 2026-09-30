@@ -3,11 +3,13 @@ import { writeFileSync } from "node:fs";
 import { format } from "prettier";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { guildLabSourceConfig } from "./guild-lab-source-config.mjs";
+import { isolatedParts, fitPadded } from "./guild-lab-image-tools.mjs";
+import { registerHead, faceMask, ariaFaceRegions } from "./guild-lab-face-masks.mjs";
+import { addFramePadding } from "./guild-lab-frame-padding.mjs";
 
 const config = guildLabSourceConfig.aria;
 const source = config.parts;
 const faceSource = config.head;
-const expressionsSource = config.expressions;
 const output = config.atlas;
 // Connected-component bounds reviewed against the transparent generated sheet.
 // Order follows the same semantic slots as Leon; 13/14 are back hair and skirt.
@@ -34,18 +36,32 @@ const originalCell = async (rect) =>
     .raw()
     .toBuffer();
 const replacements = new Map();
-for (const [frame, key] of [
-  [2, "torso"],
-  [1, "shoulderCape"],
-  [12, "hairLock"],
+const costumeParts = await isolatedParts(config.costumeHair);
+if (costumeParts.length !== 5) throw Error("Expected a torso/cape pair and three isolated locks");
+function fittedLandmark(part, point, width, height) {
+  const scale = Math.min((width - 12) / part.width, (height - 12) / part.height);
+  const w = Math.round(part.width * scale),
+    h = Math.round(part.height * scale);
+  return [
+    ((point[0] - part.rect[0]) * w) / part.width + (width - w) / 2,
+    ((point[1] - part.rect[1]) * h) / part.height + (height - h) / 2,
+  ];
+}
+for (const [frame, index] of [
+  [2, 0],
+  [1, 1],
+  [12, 3],
 ]) {
-  const [left, top, width, height] = config.replacements[key];
   const [, , w, h] = bounds[frame];
+  const part = costumeParts[index];
+  const input = await sharp(part.pixels, {
+    raw: { width: part.width, height: part.height, channels: 4 },
+  })
+    .png()
+    .toBuffer();
   replacements.set(
     frame,
-    await sharp(config.costumeHair)
-      .extract({ left, top, width, height })
-      .resize(w, h)
+    await sharp(await fitPadded(input, w, h))
       .ensureAlpha()
       .raw()
       .toBuffer(),
@@ -58,7 +74,10 @@ for (const [frame, file] of [
   const [, , w, h] = bounds[frame];
   replacements.set(
     frame,
-    await sharp(file).trim({ threshold: 20 }).resize(w, h).ensureAlpha().raw().toBuffer(),
+    await sharp(await fitPadded(file, w, h))
+      .ensureAlpha()
+      .raw()
+      .toBuffer(),
   );
 }
 // Flip only the near forearm artwork, before measuring its joint centres.
@@ -92,7 +111,7 @@ for (const [from, to] of [
   replacements.set(from, far);
 }
 const cell = async (rect) => replacements.get(bounds.indexOf(rect)) ?? originalCell(rect);
-function bandCenter(pixels, width, height, from, to) {
+function bandCenter(pixels, width, height, from, to, minimum = 100) {
   let xSum = 0,
     ySum = 0,
     count = 0;
@@ -104,7 +123,7 @@ function bandCenter(pixels, width, height, from, to) {
       ySum += y;
       count++;
     }
-  if (count < 100) throw Error("Missing painted joint band");
+  if (count < minimum) throw Error(`Missing painted joint band ${width}x${height}: ${count}`);
   return [Math.round(xSum / count), Math.round(ySum / count)];
 }
 const joints = async (frame) => {
@@ -115,10 +134,18 @@ const joints = async (frame) => {
     distal: bandCenter(pixels, width, height, 0.82, 0.95),
   };
 };
+function hairRoot(pixels, width, height) {
+  let top = height;
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < width; x++)
+      if (pixels[(y * width + x) * 4 + 3] > 180) top = Math.min(top, y);
+  return bandCenter(pixels, width, height, (top + 2) / height, (top + 14) / height, 20);
+}
 const art = {
   width: 1332,
-  height: 1530,
+  height: 1900,
   frames: bounds.slice(0, 12),
+  sourceCells: bounds.slice(0, 12),
   armJoints: Object.fromEntries(
     await Promise.all([4, 5, 6, 7].map(async (i) => [i, await joints(i)])),
   ),
@@ -127,24 +154,19 @@ const art = {
   ),
   head: {
     displayHeight: 85.5,
-    neck: { center: [170, 265] },
-    mouth: { x: 259, y: 258, bounds: [244, 246, 30, 24] },
+    neck: { center: [183, 280] },
+    mouth: { x: 253, y: 268, bounds: [244, 260, 24, 16] },
     blink: null,
     expressions: {},
   },
   torso: {
     neck: {
-      center: [
-        ((config.replacements.neck[0] - config.replacements.torso[0]) * bounds[2][2]) /
-          config.replacements.torso[2],
-        ((config.replacements.neck[1] - config.replacements.torso[1]) * bounds[2][3]) /
-          config.replacements.torso[3],
-      ],
-      source: config.replacements.neck,
+      center: fittedLandmark(costumeParts[0], config.costumeNeck, bounds[2][2], bounds[2][3]),
+      source: config.costumeNeck,
     },
   },
   hairLock: {
-    root: bandCenter(await cell(bounds[12]), bounds[12][2], bounds[12][3], 0.01, 0.06),
+    root: hairRoot(await cell(bounds[12]), bounds[12][2], bounds[12][3]),
     reviewed: { ears: 0, flowers: 0, skull: false, view: "right" },
   },
   backCape: { reviewed: { flowers: 0, knots: 0, frontClasp: false } },
@@ -154,31 +176,13 @@ const art = {
     outerEdge: [nearW - 1 - config.nearGlove.outerEdge[0], config.nearGlove.outerEdge[1]],
   },
   extras: { backHair: 23, skirt: 24 },
+  costume: {
+    parts: costumeParts.map((p) => ({ rect: p.rect, pixels: p.count })),
+    matchedPair: true,
+  },
   asset: "/guild/aria-parts-v1.webp",
 };
-const layers = [];
-for (const [frame, pixels] of replacements) {
-  const [left, top, width, height] = bounds[frame];
-  const clearWidth = frame === 12 ? 502 : width;
-  const clearHeight = frame === 12 ? 323 : height;
-  layers.push({
-    input: await sharp({
-      create: { width: clearWidth, height: clearHeight, channels: 4, background: "#000" },
-    })
-      .png()
-      .toBuffer(),
-    left,
-    top,
-    blend: "dest-out",
-  });
-  layers.push({
-    input: await sharp(pixels, { raw: { width, height, channels: 4 } })
-      .png()
-      .toBuffer(),
-    left,
-    top,
-  });
-}
+const contents = new Map();
 art.seams = {};
 for (const [frame, end] of [
   [5, "top"],
@@ -186,7 +190,7 @@ for (const [frame, end] of [
   [8, "bottom"],
   [10, "bottom"],
 ]) {
-  const [left, top, width, height] = bounds[frame];
+  const [, , width, height] = bounds[frame];
   const pixels = Buffer.from(await cell(bounds[frame]));
   const original = Buffer.from(pixels);
   const anchor = end === "top" ? art.armJoints[frame].proximal[1] : art.legJoints[frame].distal[1];
@@ -232,21 +236,11 @@ for (const [frame, end] of [
     const alpha = 0.45 + 0.55 * Math.max(0, Math.min(1, progress));
     for (let x = 0; x < width; x++) pixels[at(x, y) + 3] = Math.round(pixels[at(x, y) + 3] * alpha);
   }
-  const clear = await sharp({ create: { width, height, channels: 4, background: "#000" } })
-    .png()
-    .toBuffer();
-  layers.push({ input: clear, left, top, blend: "dest-out" });
-  layers.push({
-    input: await sharp(pixels, { raw: { width, height, channels: 4 } })
-      .png()
-      .toBuffer(),
-    left,
-    top,
-  });
   art.seams[frame] = { end, band: [first, last], changedPixels };
+  replacements.set(frame, pixels);
 }
-const [hx, hy, hw, hh] = bounds[0];
-const head = await sharp(faceSource).trim({ threshold: 20 }).resize(hw, hh).png().toBuffer();
+const [, , hw, hh] = bounds[0];
+const head = await fitPadded(faceSource, hw, hh);
 const headPixels = await sharp(head).ensureAlpha().raw().toBuffer();
 // Lowest painted skin band of the chin; exclude hair/outline by colour and ROI.
 const chin = [];
@@ -268,85 +262,104 @@ const chinBand = chin.filter((p) => p[1] >= chinY - 2);
 if (chinBand.length < 3) throw Error("Missing measured Aria chin skin band");
 art.head.neck.chinUnder = [chinBand.reduce((sum, p) => sum + p[0], 0) / chinBand.length, chinY];
 art.head.neck.chinPixels = chinBand.length;
-layers.push({
-  input: await sharp({ create: { width: hw, height: hh, channels: 4, background: "#000" } })
-    .png()
-    .toBuffer(),
-  left: hx,
-  top: hy,
-  blend: "dest-out",
-});
-layers.push({ input: head, left: hx, top: hy });
+const ear = [];
+for (let y = 200; y < 260; y++)
+  for (let x = 70; x < 145; x++) {
+    const p = (y * hw + x) * 4;
+    if (
+      headPixels[p + 3] > 220 &&
+      headPixels[p] > 235 &&
+      headPixels[p + 1] > 150 &&
+      headPixels[p + 1] < 225 &&
+      headPixels[p + 2] > 130 &&
+      headPixels[p + 2] < 210
+    )
+      ear.push([x, y]);
+  }
+const earY = Math.max(...ear.map((p) => p[1]));
+const earBand = ear.filter((p) => p[1] >= earY - 2);
+if (earBand.length < 3) throw Error("Missing Aria ear attachment band");
+art.head.neck.earUnder = [earBand.reduce((sum, p) => sum + p[0], 0) / earBand.length, earY];
+art.head.neck.center = art.head.neck.chinUnder.map((v, i) => (v + art.head.neck.earUnder[i]) / 2);
+art.head.neck.visibleNeck = false;
+const lips = [];
+for (let y = 256; y < 281; y++)
+  for (let x = 230; x < 277; x++) {
+    const p = (y * hw + x) * 4;
+    if (
+      headPixels[p + 3] > 220 &&
+      headPixels[p] < 210 &&
+      headPixels[p] - headPixels[p + 1] > 25 &&
+      headPixels[p + 1] < 155
+    )
+      lips.push([x, y]);
+  }
+if (lips.length < 3) throw Error("Missing Aria mouth line");
+art.head.mouth.x = lips.reduce((sum, p) => sum + p[0], 0) / lips.length;
+art.head.mouth.y = lips.reduce((sum, p) => sum + p[1], 0) / lips.length;
+art.head.mouth.pixels = lips.length;
+contents.set(0, head);
 // Reuse the same tea cup drawing so the shared rim/grip calculation stays honest.
-const [cx, cy, cw, ch] = guildLabArt.frames[12];
+const cp = guildLabArt.framePadding;
+const cupFrame = guildLabArt.frames[12];
+const [cx, cy, cw, ch] = [
+  cupFrame[0] + cp,
+  cupFrame[1] + cp,
+  cupFrame[2] - 2 * cp,
+  cupFrame[3] - 2 * cp,
+];
 const cup = await sharp(`public${guildLabArt.asset}`)
   .extract({ left: cx, top: cy, width: cw, height: ch })
   .png()
   .toBuffer();
 art.frames.push([1110, 1180, cw, ch]);
-layers.push({ input: cup, left: 1110, top: 1180 });
+contents.set(12, cup);
 
-const eyeRoi = [120, 132, 195, 108];
-const mouthRoi = [194, 232, 102, 66];
-const expressionImage = await sharp(expressionsSource).metadata();
-const panelWidth = expressionImage.width / 4;
 for (const [index, key] of ["smile", "surprised", "tired", "yawn"].entries()) {
-  const panel = await sharp(expressionsSource)
-    .extract({
-      left: Math.round(panelWidth * index),
-      top: 0,
-      width: Math.round(panelWidth),
-      height: expressionImage.height,
-    })
-    .png()
-    .toBuffer();
-  const aligned = await sharp(panel)
-    .trim({ threshold: 20 })
-    .resize(hw, hh)
-    .ensureAlpha()
-    .raw()
-    .toBuffer();
+  const aligned = await registerHead(config.headExpression(key), headPixels, hw, hh);
   const patches = [];
-  for (const [region, rect, y] of [
-    ["eyes", eyeRoi, 1190],
-    ["mouth", mouthRoi, 1350],
+  for (const [region, y] of [
+    ["eyes", 1190],
+    ["mouth", 1350],
   ]) {
-    const [x, ry, width, height] = rect;
-    let changedPixels = 0;
-    for (let py = ry; py < ry + height; py++)
-      for (let px = x; px < x + width; px++) {
-        const p = (py * hw + px) * 4;
-        if (Math.max(...[0, 1, 2, 3].map((c) => Math.abs(headPixels[p + c] - aligned[p + c]))) > 24)
-          changedPixels++;
-      }
-    if (changedPixels < 50) throw Error(`Missing Aria ${key} ${region} difference`);
-    const pixels = await sharp(aligned, { raw: { width: hw, height: hh, channels: 4 } })
-      .extract({ left: x, top: ry, width, height })
-      .raw()
-      .toBuffer();
-    for (let py = 0; py < height; py++)
-      for (let px = 0; px < width; px++) {
-        const edge = Math.min(px, py, width - 1 - px, height - 1 - py);
-        pixels[(py * width + px) * 4 + 3] *= Math.min(1, edge / 6);
-      }
+    const patch = faceMask(
+      headPixels,
+      aligned.pixels,
+      hw,
+      hh,
+      region,
+      key === "smile" || key === "yawn",
+    );
+    const { pixels, rect, ...measurement } = patch;
+    const width = rect[2],
+      height = rect[3];
     const frame = art.frames.length;
     const left = 20 + index * 260;
-    layers.push({
-      input: await sharp(pixels, { raw: { width, height, channels: 4 } })
+    contents.set(
+      frame,
+      await sharp(pixels, { raw: { width, height, channels: 4 } })
         .png()
         .toBuffer(),
-      left,
-      top: y,
-    });
+    );
     art.frames.push([left, y, width, height]);
-    patches.push({ frame, rect, roi: rect, region, changedPixels });
+    patches.push({ frame, rect, roi: rect, region, ...measurement, alignment: aligned.alignment });
   }
-  art.head.expressions[key] = { patches, closedEyes: key === "smile" };
+  art.head.expressions[key] = { patches, closedEyes: key === "smile" || key === "yawn" };
+  await sharp(head)
+    .composite(
+      patches.map((p) => ({
+        input: contents.get(p.frame),
+        left: p.rect[0],
+        top: p.rect[1],
+      })),
+    )
+    .png()
+    .toFile(`work/aria-face-${key}.png`);
 }
 art.head.blink = {
   frame: art.head.expressions.smile.patches[0].frame,
-  rect: eyeRoi,
-  roi: eyeRoi,
+  rect: art.head.expressions.smile.patches[0].rect,
+  roi: art.head.expressions.smile.patches[0].rect,
   changedPixels: art.head.expressions.smile.patches[0].changedPixels,
 };
 art.head.expressions.neutral = { patches: [], closedEyes: false };
@@ -354,18 +367,91 @@ art.head.expressions.neutral = { patches: [], closedEyes: false };
 // the expression patches, while the rig only cares about the indexed values.
 art.extras.backHair = art.frames.length;
 art.frames.push(bounds[12]);
+contents.set(
+  art.extras.backHair,
+  await sharp(await cell(bounds[12]), {
+    raw: { width: bounds[12][2], height: bounds[12][3], channels: 4 },
+  })
+    .png()
+    .toBuffer(),
+);
 art.extras.skirt = art.frames.length;
 art.frames.push(bounds[13]);
-const base = await sharp(source)
-  .extend({ bottom: art.height - 1181, background: { r: 0, g: 0, b: 0, alpha: 0 } })
-  .png()
-  .toBuffer();
-await sharp(base).composite(layers).webp({ lossless: true }).toFile(output);
+contents.set(
+  art.extras.skirt,
+  await sharp(await originalCell(bounds[13]), {
+    raw: { width: bounds[13][2], height: bounds[13][3], channels: 4 },
+  })
+    .png()
+    .toBuffer(),
+);
+art.hairLocks = [];
+for (const [name, index, left] of [
+  ["far", 2, 20],
+  ["front", 4, 300],
+]) {
+  const part = costumeParts[index],
+    width = 154,
+    height = 300;
+  const input = await sharp(part.pixels, {
+    raw: { width: part.width, height: part.height, channels: 4 },
+  })
+    .png()
+    .toBuffer();
+  const fitted = await fitPadded(input, width, height);
+  const root = hairRoot(await sharp(fitted).ensureAlpha().raw().toBuffer(), width, height);
+  const frame = art.frames.length;
+  art.frames.push([left, 1570, width, height]);
+  contents.set(frame, fitted);
+  art.hairLocks.push({ name, frame, root, source: part.rect });
+}
+art.hairLocks.splice(1, 0, {
+  name: "back",
+  frame: art.extras.backHair,
+  root: art.hairLock.root,
+  source: costumeParts[3].rect,
+});
+art.head.faceRegions = ariaFaceRegions;
+// Pack independently extracted cells; expanding the original sheet's head frame
+// would otherwise include the next row's upper arm in its transparent gutter.
+let x = 4,
+  y = 4,
+  rowHeight = 0;
+const packed = [];
+for (let frame = 0; frame < art.frames.length; frame++) {
+  const [, , width, height] = art.frames[frame];
+  if (x + width + 8 > art.width) {
+    x = 4;
+    y += rowHeight + 12;
+    rowHeight = 0;
+  }
+  const input =
+    contents.get(frame) ??
+    (await sharp(await cell(bounds[frame]), { raw: { width, height, channels: 4 } })
+      .png()
+      .toBuffer());
+  packed.push({ input, left: x + 4, top: y + 4 });
+  art.frames[frame] = [x + 4, y + 4, width, height];
+  x += width + 12;
+  rowHeight = Math.max(rowHeight, height);
+}
+art.height = y + rowHeight + 12;
+await sharp({
+  create: {
+    width: art.width,
+    height: art.height,
+    channels: 4,
+    background: { r: 0, g: 0, b: 0, alpha: 0 },
+  },
+})
+  .composite(packed)
+  .webp({ lossless: true })
+  .toFile(output);
 writeFileSync(
   config.art,
   await format(
     "// Generated: node scripts/build-guild-lab-aria.mjs\nexport const guildLabAriaArt = " +
-      JSON.stringify(art) +
+      JSON.stringify(addFramePadding(art)) +
       " as const;\n",
     { parser: "typescript", printWidth: 100 },
   ),

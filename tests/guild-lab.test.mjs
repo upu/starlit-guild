@@ -18,7 +18,7 @@ import {
 } from "../lib/guild-lab-model.ts";
 import { labLimbPaintOrder, labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
-import { labWalkingArm, labArmArtwork, LabArmMotion } from "../lib/guild-lab-arms.ts";
+import { labWalkingArm, labIdleArm, labArmArtwork, LabArmMotion } from "../lib/guild-lab-arms.ts";
 import { labLimbArtwork } from "../lib/guild-lab-limbs.ts";
 import { LabSkirtMotion } from "../lib/guild-lab-skirt.ts";
 import { guildLabAriaArt } from "../lib/guild-lab-aria-art.ts";
@@ -138,6 +138,7 @@ test("measured sleeve centres meet at the elbow through a complete walking cycle
   }
 });
 test("foreground forearm caps fade into upper sleeves without changing the glove", async () => {
+  const padding = guildLabArt.framePadding;
   for (const frame of [5, 7]) {
     const [left, top, width, height] = guildLabArt.frames[frame];
     const seam = guildLabArt.armSeams[frame];
@@ -147,13 +148,32 @@ test("foreground forearm caps fade into upper sleeves without changing the glove
       frame === 5
         ? await sharp("assets/source/guild/leon-far-palm-v4.png")
             .trim({ threshold: 20 })
-            .resize({ width, height, fit: "fill" })
+            .resize({ width: width - padding * 2, height: height - padding * 2, fit: "fill" })
+            .extend({
+              left: padding,
+              right: padding,
+              top: padding,
+              bottom: padding,
+              background: { r: 0, g: 0, b: 0, alpha: 0 },
+            })
             .ensureAlpha()
             .raw()
             .toBuffer()
         : await sharp("public/guild/leon-parts-v2.webp")
-            .extract({ left, top, width, height })
+            .extract({
+              left: left + padding,
+              top: top + padding,
+              width: width - 2 * padding,
+              height: height - 2 * padding,
+            })
             .flop()
+            .extend({
+              left: padding,
+              right: padding,
+              top: padding,
+              bottom: padding,
+              background: { r: 0, g: 0, b: 0, alpha: 0 },
+            })
             .ensureAlpha()
             .raw()
             .toBuffer();
@@ -167,6 +187,7 @@ test("foreground forearm caps fade into upper sleeves without changing the glove
       outside = 0;
     for (let y = 0; y < height; y++)
       for (let x = 0; x < width; x++) {
+        if (x < padding || y < padding || x >= width - padding || y >= height - padding) continue;
         const p = (y * width + x) * 4;
         assert.ok(after[p + 3] <= before[p + 3], `frame ${frame} alpha at ${x},${y}`);
         if (after[p + 3] < before[p + 3]) {
@@ -235,7 +256,7 @@ test("walking settles into idle, while tea, work and reactions retain target-bas
     const walk = motion.sample(410, "walk", index, target, false, false);
     assert.deepEqual(walk, labWalkingArm(410, index));
     assert.deepEqual(motion.sample(420, "idle", index, target, false, false), walk);
-    const end = { ...labJoint(target, ...arm.lengths, arm.bend), scale: 1 };
+    const end = labIdleArm(index);
     const middle = motion.sample(510, "idle", index, target, false, false);
     assert.ok(Math.abs(middle.upper - (walk.upper + end.upper) / 2) < 1e-8);
     const settled = motion.sample(600, "idle", index, target, false, false);
@@ -243,11 +264,11 @@ test("walking settles into idle, while tea, work and reactions retain target-bas
       Math.abs(settled.upper - end.upper) < 1e-8 && Math.abs(settled.lower - end.lower) < 1e-8,
     );
     for (const mode of ["tea", "work", "walk"])
-      assert.deepEqual(motion.sample(1000, mode, index, target, true, false), end);
-    assert.deepEqual(
-      motion.sample(1200, "idle", index, target, false, true),
-      labWalkingArm(0, index, true),
-    );
+      assert.deepEqual(motion.sample(1000, mode, index, target, true, false), {
+        ...labJoint(target, ...arm.lengths, arm.bend),
+        scale: 1,
+      });
+    assert.deepEqual(motion.sample(1200, "idle", index, target, false, true), labIdleArm(index));
     assert.deepEqual(
       motion.sample(1800, "walk", index, target, false, true),
       labWalkingArm(0, index, true),
@@ -574,7 +595,10 @@ test("both residents use their own measured cutout and can sit without overlap",
   assert.deepEqual(Object.keys(labCharacters), ["leon", "aria"]);
   const [leon, aria] = [labCharacters.leon, labCharacters.aria];
   assert.notEqual(leon.art.asset, aria.art.asset);
-  assert.ok(aria.rig.head.y > -76 && aria.rig.head.y < -72);
+  assert.ok(
+    aria.rig.head.y > leon.rig.head.y,
+    "Aria's shorter fitted head is attached by its measured chin",
+  );
   assert.equal(aria.rig.legs[0].front, "upper");
   assert.equal(aria.rig.arms[1].front, "lower");
   assert.ok(aria.art.head.displayHeight < leon.art.head.displayHeight);
@@ -956,7 +980,19 @@ test("Aria widens limbs perpendicular to the bones and keeps thighs as wide as b
     .raw()
     .toBuffer();
   const source = await sharp("assets/source/guild/aria-parts-v1.png")
-    .extract({ left, top, width, height })
+    .extract({
+      left: art.sourceCells[8][0],
+      top: art.sourceCells[8][1],
+      width: art.sourceCells[8][2],
+      height: art.sourceCells[8][3],
+    })
+    .extend({
+      left: art.framePadding,
+      right: art.framePadding,
+      top: art.framePadding,
+      bottom: art.framePadding,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
     .raw()
     .toBuffer();
   let skin = 0;
@@ -975,7 +1011,11 @@ test("waist-fixed skirt follows thighs with bounded lag and freezes seated or wi
   const rig = labRigs.aria,
     motion = new LabSkirtMotion(rig.skirt);
   assert.equal(
-    rig.skirt.y + rig.skirt.height / 2,
+    rig.skirt.y +
+      (rig.skirt.height *
+        (guildLabAriaArt.frames[rig.skirt.frame][3] - guildLabAriaArt.framePadding * 2)) /
+        guildLabAriaArt.frames[rig.skirt.frame][3] /
+        2,
     -52,
     "resting silhouette is preserved at waist pivot",
   );
