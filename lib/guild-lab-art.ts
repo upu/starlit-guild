@@ -35,6 +35,7 @@ export const guildLabArt = {
   },
   head: {
     displayHeight: 90,
+    neck: { earUnder: [107, 239], chinUnder: [198, 263], center: [152.5, 251] },
     mouth: { x: 178.55555555555554, y: 243.88888888888889, bounds: [175, 243, 9, 3], pixels: 9 },
     blink: {
       frame: 13,
@@ -133,5 +134,10 @@ export const guildLabArt = {
       },
     },
   },
+  armSeams: {
+    "5": { proximal: [52, 27], maxY: 42, fadeStartY: 9, edgeRadius: 5, changedPixels: 755 },
+    "7": { proximal: [79, 42], maxY: 57, fadeStartY: 24, edgeRadius: 5, changedPixels: 962 },
+  },
+  torso: { neck: { collarBounds: [53, 120], center: [86.5, 15], scanRows: [0, 30], pixels: 928 } },
   asset: "/guild/leon-parts-v3.webp",
 } as const;

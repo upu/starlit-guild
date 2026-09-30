@@ -7,6 +7,78 @@ const art = JSON.parse(readFileSync("work/lab-base-art.json", "utf8"));
 const source = "assets/source/guild/leon-costume-v4.png";
 const meta = await sharp(source).metadata();
 const layers = [];
+// A foreground cutout must not carry a black contour along the cap that sits
+// on top of the upper sleeve. Repaint only dark perimeter pixels in the
+// measured elbow-side band using nearby opaque ivory sleeve pixels. Fade the
+// cap into the upper sleeve; leave the glove and all pixels below the band intact.
+async function softenElbowCap(input, width, height, proximal) {
+  const pixels = await sharp(input).ensureAlpha().raw().toBuffer();
+  const original = Buffer.from(pixels);
+  const edgeRadius = 5;
+  const maxY = proximal[1] + 15;
+  const fadeStartY = Math.max(0, proximal[1] - 18);
+  let changedPixels = 0;
+  const at = (x, y) => (y * width + x) * 4;
+  for (let y = 0; y <= maxY; y++)
+    for (let x = 0; x < width; x++) {
+      const p = at(x, y);
+      if (original[p + 3] <= 8) continue;
+      if ((original[p] + original[p + 1] + original[p + 2]) / 3 >= 175) continue;
+      let perimeter = false;
+      for (let dy = -edgeRadius; dy <= edgeRadius && !perimeter; dy++)
+        for (let dx = -edgeRadius; dx <= edgeRadius; dx++) {
+          const nx = x + dx,
+            ny = y + dy;
+          if (nx < 0 || nx >= width || ny < 0 || ny >= height || original[at(nx, ny) + 3] < 64) {
+            perimeter = true;
+            break;
+          }
+        }
+      if (!perimeter) continue;
+      let nearest = -1,
+        distance = Infinity;
+      for (let dy = -15; dy <= 15; dy++)
+        for (let dx = -15; dx <= 15; dx++) {
+          const nx = x + dx,
+            ny = y + dy;
+          if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
+          const q = at(nx, ny);
+          if (
+            original[q + 3] < 235 ||
+            original[q] < 190 ||
+            original[q + 1] < 175 ||
+            original[q + 2] < 145
+          )
+            continue;
+          const d = dx * dx + dy * dy;
+          if (d < distance) {
+            nearest = q;
+            distance = d;
+          }
+        }
+      if (nearest < 0) continue;
+      pixels[p] = original[nearest];
+      pixels[p + 1] = original[nearest + 1];
+      pixels[p + 2] = original[nearest + 2];
+      changedPixels++;
+    }
+  for (let y = 0; y <= maxY; y++) {
+    const progress = Math.max(0, Math.min(1, (y - fadeStartY) / (maxY - fadeStartY)));
+    const opacity = progress * progress * (3 - 2 * progress);
+    for (let x = 0; x < width; x++) {
+      const p = at(x, y);
+      pixels[p + 3] = Math.round(original[p + 3] * opacity);
+    }
+  }
+  if (changedPixels < 50) throw Error("Elbow outline was not found");
+  return {
+    input: await sharp(pixels, { raw: { width, height, channels: 4 } })
+      .png()
+      .toBuffer(),
+    measurement: { proximal, maxY, fadeStartY, edgeRadius, changedPixels },
+  };
+}
+art.armSeams = {};
 // The far hand's palm faces the body; keep the same atlas cell and measured
 // joint anchors while replacing the back-of-hand drawing.
 const [fx, fy, fw, fh] = art.frames[5];
@@ -18,16 +90,23 @@ layers.push({
   top: fy,
   blend: "dest-out",
 });
-layers.push({
-  input: await sharp("assets/source/guild/leon-far-palm-v4.png")
+art.armJoints[5] = { proximal: [52, 27], distal: [74, 166], wrist: [65, 121] };
+const farForearm = await softenElbowCap(
+  await sharp("assets/source/guild/leon-far-palm-v4.png")
     .trim({ threshold: 20 })
     .resize({ width: fw, height: fh, fit: "fill" })
     .png()
     .toBuffer(),
+  fw,
+  fh,
+  art.armJoints[5].proximal,
+);
+layers.push({
+  input: farForearm.input,
   left: fx,
   top: fy,
 });
-art.armJoints[5] = { proximal: [52, 27], distal: [74, 166], wrist: [65, 121] };
+art.armSeams[5] = farForearm.measurement;
 // Reflect the near glove in the atlas, then reflect its measured landmarks.
 // Runtime joint origins must follow the artwork instead of flipping around 0.5.
 const [gx, gy, gw, gh] = art.frames[7];
@@ -39,17 +118,20 @@ layers.push({
   top: gy,
   blend: "dest-out",
 });
-layers.push({
-  input: await sharp("public/guild/leon-parts-v2.webp")
+for (const key of ["proximal", "distal", "wrist"])
+  art.armJoints[7][key][0] = gw - 1 - art.armJoints[7][key][0];
+const nearForearm = await softenElbowCap(
+  await sharp("public/guild/leon-parts-v2.webp")
     .extract({ left: gx, top: gy, width: gw, height: gh })
     .flop()
     .png()
     .toBuffer(),
-  left: gx,
-  top: gy,
-});
-for (const key of ["proximal", "distal", "wrist"])
-  art.armJoints[7][key][0] = gw - 1 - art.armJoints[7][key][0];
+  gw,
+  gh,
+  art.armJoints[7].proximal,
+);
+layers.push({ input: nearForearm.input, left: gx, top: gy });
+art.armSeams[7] = nearForearm.measurement;
 for (const [frame, start, end] of [
   [2, 0, 0.375],
   [1, 0.375, 0.7],
@@ -64,6 +146,33 @@ for (const [frame, start, end] of [
     .toBuffer();
   const input = await sharp(region).trim({ threshold: 20 }).resize({ height }).png().toBuffer();
   const size = await sharp(input).metadata();
+  if (frame === 2) {
+    // The pale stand collar identifies the neck opening on the final sideways
+    // torso, after its crop and resize. Use its horizontal bounds, not a hand-
+    // adjusted character offset.
+    const pixels = await sharp(input).ensureAlpha().raw().toBuffer();
+    let leftmost = size.width,
+      rightmost = -1,
+      count = 0;
+    for (let y = 0; y < 30; y++)
+      for (let x = 0; x < size.width; x++) {
+        const p = (y * size.width + x) * 4;
+        const [r, g, b, alpha] = pixels.subarray(p, p + 4);
+        if (alpha <= 220 || r <= 180 || g <= 160 || b <= 125 || r <= g || g <= b) continue;
+        leftmost = Math.min(leftmost, x);
+        rightmost = Math.max(rightmost, x);
+        count++;
+      }
+    if (count < 100) throw Error("Missing painted torso collar");
+    art.torso = {
+      neck: {
+        collarBounds: [leftmost, rightmost],
+        center: [(leftmost + rightmost) / 2, 15],
+        scanRows: [0, 30],
+        pixels: count,
+      },
+    };
+  }
   const x = [0, 360, 730, 1030][frame],
     y = 110;
   art.frames[frame] = [x, y, size.width, height];

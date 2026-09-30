@@ -16,9 +16,20 @@ import {
   labLegTarget,
   labFarHand,
 } from "../lib/guild-lab-model.ts";
-import { labRig } from "../lib/guild-lab-rig.ts";
+import { labLimbPaintOrder, labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { labWalkingArm, labArmArtwork, LabArmMotion } from "../lib/guild-lab-arms.ts";
+
+test("thighs paint over boot cuffs while forearms paint over upper sleeves", () => {
+  for (const leg of labRig.legs) {
+    assert.equal(leg.front, "upper");
+    assert.deepEqual(labLimbPaintOrder(leg.front), ["lower", "upper"]);
+  }
+  for (const arm of labRig.arms) {
+    assert.equal(arm.front, "lower");
+    assert.deepEqual(labLimbPaintOrder(arm.front), ["upper", "lower"]);
+  }
+});
 
 test("walking arms stay in shoulder limits with forward-only elbow flexion", () => {
   for (let index = 0; index < 2; index++) {
@@ -85,9 +96,10 @@ test("measured sleeve centres meet at the elbow through a complete walking cycle
         .ensureAlpha()
         .raw()
         .toBuffer();
-      for (const p of Object.values(guildLabArt.armJoints[frame]))
+      for (const [name, p] of Object.entries(guildLabArt.armJoints[frame]))
         assert.ok(
-          pixels[(p[1] * width + p[0]) * 4 + 3] > 240,
+          pixels[(p[1] * width + p[0]) * 4 + 3] >
+            (name === "proximal" && guildLabArt.armSeams[frame] ? 120 : 240),
           `frame ${frame} measured centre inside paint`,
         );
     }
@@ -112,6 +124,96 @@ test("measured sleeve centres meet at the elbow through a complete walking cycle
       assert.ok(error < 1, `${t}ms: sleeve centre error ${error}px`);
     }
   }
+});
+test("foreground forearm caps fade into upper sleeves without changing the glove", async () => {
+  for (const frame of [5, 7]) {
+    const [left, top, width, height] = guildLabArt.frames[frame];
+    const seam = guildLabArt.armSeams[frame];
+    assert.deepEqual(seam.proximal, guildLabArt.armJoints[frame].proximal);
+    assert.ok(seam.changedPixels > 500);
+    const before =
+      frame === 5
+        ? await sharp("assets/source/guild/leon-far-palm-v4.png")
+            .trim({ threshold: 20 })
+            .resize({ width, height, fit: "fill" })
+            .ensureAlpha()
+            .raw()
+            .toBuffer()
+        : await sharp("public/guild/leon-parts-v2.webp")
+            .extract({ left, top, width, height })
+            .flop()
+            .ensureAlpha()
+            .raw()
+            .toBuffer();
+    const after = await sharp("public/guild/leon-parts-v3.webp")
+      .extract({ left, top, width, height })
+      .ensureAlpha()
+      .raw()
+      .toBuffer();
+    let brightened = 0,
+      faded = 0,
+      outside = 0;
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++) {
+        const p = (y * width + x) * 4;
+        assert.ok(after[p + 3] <= before[p + 3], `frame ${frame} alpha at ${x},${y}`);
+        if (after[p + 3] < before[p + 3]) {
+          assert.ok(y <= seam.maxY, `frame ${frame} fade outside elbow at ${x},${y}`);
+          faded++;
+        }
+        if (before[p + 3] < 240) continue;
+        const difference = [0, 1, 2].some((c) => after[p + c] !== before[p + c]);
+        if (!difference) continue;
+        if (y > seam.maxY) outside++;
+        else if (after[p] + after[p + 1] + after[p + 2] > before[p] + before[p + 1] + before[p + 2])
+          brightened++;
+      }
+    assert.ok(brightened > 250, `frame ${frame} elbow cap becomes sleeve-colored`);
+    assert.ok(faded > 2000, `frame ${frame} elbow cap blends into the upper sleeve`);
+    assert.ok(outside < 10, `frame ${frame} glove remains unchanged beyond the elbow`);
+  }
+});
+
+test("measured head neck is centred above the final torso collar", async () => {
+  const { neck, displayHeight } = guildLabArt.head;
+  assert.deepEqual(neck.center, [
+    (neck.earUnder[0] + neck.chinUnder[0]) / 2,
+    (neck.earUnder[1] + neck.chinUnder[1]) / 2,
+  ]);
+  const [hx, hy, hw, hh] = guildLabArt.frames[0];
+  const [tx, ty, tw, th] = guildLabArt.frames[labRig.torso.frame];
+  const head = await sharp("public/guild/leon-parts-v3.webp")
+    .extract({ left: hx, top: hy, width: hw, height: hh })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  for (const [x, y] of [neck.earUnder, neck.chinUnder]) assert.ok(head[(y * hw + x) * 4 + 3] > 200);
+  const torso = await sharp("public/guild/leon-parts-v3.webp")
+    .extract({ left: tx, top: ty, width: tw, height: th })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  const [minX, maxX] = guildLabArt.torso.neck.collarBounds;
+  assert.ok(minX < maxX && guildLabArt.torso.neck.pixels > 500);
+  for (const x of [minX, maxX]) {
+    let found = false;
+    for (let y = 0; y < 30; y++) {
+      const p = (y * tw + x) * 4;
+      if (torso[p + 3] > 220 && torso[p] > 180 && torso[p + 1] > 160) found = true;
+    }
+    assert.ok(found, `collar edge at ${x}`);
+  }
+  const neckWorldX = labRig.head.x + (neck.center[0] - hw / 2) * (displayHeight / hh);
+  const collarWorldX =
+    labRig.torso.x + (guildLabArt.torso.neck.center[0] - tw / 2) * (labRig.torso.height / th);
+  assert.ok(Math.abs(neckWorldX - collarWorldX) < 0.001);
+  assert.ok(labRig.head.x >= -1 && labRig.head.x <= 0.5);
+  assert.ok(
+    Math.hypot(
+      labTeaCup(1, 0).rim.x - labTeaCup(1, 0).mouth.x,
+      labTeaCup(1, 0).rim.y - labTeaCup(1, 0).mouth.y,
+    ) < 0.001,
+  );
 });
 test("walking settles into idle, while tea, work and reactions retain target-based IK", () => {
   for (const index of [0, 1]) {

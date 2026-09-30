@@ -1,3 +1,5 @@
+import { guildLabArt } from "./guild-lab-art.ts";
+
 // Leon's attachment points and painted overlaps, in unscaled body coordinates.
 export type LabLimbConfig = {
   frames: readonly [number, number];
@@ -27,7 +29,7 @@ const leg = {
     [0.025, 0.2],
     [0.04, 0.12],
   ],
-  front: "lower",
+  front: "upper",
   bend: -1,
 } as const;
 const arm = {
@@ -36,10 +38,21 @@ const arm = {
   measured: true,
   bend: 1,
 } as const;
+export const labLimbPaintOrder = (front: LabLimbConfig["front"]) =>
+  front === "upper" ? (["lower", "upper"] as const) : (["upper", "lower"] as const);
+
+const torso = { frame: 2, x: 0, y: -67, height: 51, layer: 5 } as const;
+const headHeight = 90;
+const [headWidth, headFrameHeight] = guildLabArt.frames[0].slice(2);
+const [torsoWidth, torsoFrameHeight] = guildLabArt.frames[torso.frame].slice(2);
+const neckOnTorso =
+  torso.x + (guildLabArt.torso.neck.center[0] - torsoWidth / 2) * (torso.height / torsoFrameHeight);
+const neckWithinHead =
+  (guildLabArt.head.neck.center[0] - headWidth / 2) * (headHeight / headFrameHeight);
 export const labRig = {
-  head: { x: 3, y: -85.5, layer: 7 },
+  head: { x: neckOnTorso - neckWithinHead, y: -85.5, layer: 7 },
   scarf: { frame: 1, x: -4, y: -85, height: 16, layer: 6 },
-  torso: { frame: 2, x: 0, y: -67, height: 51, layer: 5 },
+  torso,
   cape: {
     frame: 3,
     x: -5,

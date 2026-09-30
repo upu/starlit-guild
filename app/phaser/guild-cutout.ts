@@ -1,6 +1,6 @@
 import type Phaser from "phaser";
 import { guildLabArt } from "@/lib/guild-lab-art";
-import { labRig, type LabLimbConfig } from "@/lib/guild-lab-rig";
+import { labLimbPaintOrder, labRig, type LabLimbConfig } from "@/lib/guild-lab-rig";
 import type { GuildLabFilter } from "./guild-lab-filter";
 import { GuildLabFace } from "./guild-lab-face";
 import { GuildLabEffects } from "./guild-lab-effects";
@@ -97,7 +97,7 @@ export class GuildCutout {
         : this.segment(frames[i], lengths[i], config.overlap[i]);
     const upper = segment(0);
     bottom.add(segment(1));
-    top.add(front === "upper" ? [bottom, upper] : [upper, bottom]);
+    top.add(labLimbPaintOrder(front).map((part) => (part === "upper" ? upper : bottom)));
     this.body.add(top);
     return { upper: top, lower: bottom, config };
   }

@@ -124,6 +124,20 @@ const mouth = {
   bounds: [mx0, my0, mx1 - mx0 + 1, my1 - my0 + 1],
   pixels: count,
 };
+// Landmarks reviewed on the 297x268 head crop: underside of the ear and the
+// rear edge of the chin. Their midpoint is the hidden neck attachment, not
+// the centre of the visible face or hair silhouette.
+const earUnder = [107, 239];
+const chinUnder = [198, 263];
+const neck = {
+  earUnder,
+  chinUnder,
+  center: [(earUnder[0] + chinUnder[0]) / 2, (earUnder[1] + chinUnder[1]) / 2],
+};
+for (const [x, y] of [earUnder, chinUnder]) {
+  const i = (y * hw + x) * 4;
+  if (opened[i + 3] < 200) throw Error("Head neck landmark fell outside the art");
+}
 const clear = await sharp({
   create: { width: 1000, height: h - 950, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } },
 })
@@ -153,6 +167,7 @@ const art = {
   },
   head: {
     displayHeight: 90,
+    neck,
     mouth,
     blink: { frame: 13, rect: patchRect, roi, changedPixels: changed },
   },
