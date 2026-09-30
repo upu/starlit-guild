@@ -51,6 +51,27 @@ for (const [frame, key] of [
       .toBuffer(),
   );
 }
+for (const [frame, file] of [
+  [3, config.backCape],
+  [5, config.farPalm],
+]) {
+  const [, , w, h] = bounds[frame];
+  replacements.set(
+    frame,
+    await sharp(file).trim({ threshold: 20 }).resize(w, h).ensureAlpha().raw().toBuffer(),
+  );
+}
+// Flip only the near forearm artwork, before measuring its joint centres.
+const [, , nearW, nearH] = bounds[7];
+replacements.set(
+  7,
+  await sharp(await originalCell(bounds[7]), {
+    raw: { width: nearW, height: nearH, channels: 4 },
+  })
+    .flop()
+    .raw()
+    .toBuffer(),
+);
 // Both feet and thighs face right; the far leg reuses the same drawing darkened.
 for (const [from, to] of [
   [8, 10],
@@ -67,7 +88,7 @@ for (const [from, to] of [
   );
   const far = Buffer.from(await originalCell(bounds[from]));
   for (let p = 0; p < far.length; p += 4)
-    for (let c = 0; c < 3; c++) far[p + c] = Math.round(far[p + c] * 0.9);
+    for (let c = 0; c < 3; c++) far[p + c] = Math.round(far[p + c] * [0.95, 0.9, 0.86][c]);
   replacements.set(from, far);
 }
 const cell = async (rect) => replacements.get(bounds.indexOf(rect)) ?? originalCell(rect);
@@ -125,6 +146,12 @@ const art = {
   hairLock: {
     root: bandCenter(await cell(bounds[12]), bounds[12][2], bounds[12][3], 0.01, 0.06),
     reviewed: { ears: 0, flowers: 0, skull: false, view: "right" },
+  },
+  backCape: { reviewed: { flowers: 0, knots: 0, frontClasp: false } },
+  nearGlove: {
+    mirrored: config.nearGlove.flip,
+    thumb: [nearW - 1 - config.nearGlove.thumb[0], config.nearGlove.thumb[1]],
+    outerEdge: [nearW - 1 - config.nearGlove.outerEdge[0], config.nearGlove.outerEdge[1]],
   },
   extras: { backHair: 23, skirt: 24 },
   asset: "/guild/aria-parts-v1.webp",

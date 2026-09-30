@@ -355,7 +355,7 @@ try {
   await checkAffection();
   await captureJoints();
   await capturePairAndLoad();
-  await captureLabAppearance(browser, root, `${output}/appearance-3.2x`);
+  await captureLabAppearance(browser, root, `${output}/aria-appearance-5x`);
   await checkResolutionAndQuality();
   const { context, page } = await start();
   await page.waitForTimeout(500);

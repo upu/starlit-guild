@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
-import { mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { LAB_PAIR_MIN_DISTANCE } from "../lib/guild-lab-spacing.ts";
 
 export async function captureLabAppearance(browser, root, output, baseline = false) {
@@ -9,10 +9,9 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-eighth-baseline";
+  const previous = "work/lab-ninth-baseline";
   if (baseline) {
     for (const [url, file] of [
-      ["app/phaser/guild-cutout.ts", "cutout.js"],
       ["lib/guild-lab-rig.ts", "rig.js"],
       ["lib/guild-lab-aria-art.ts", "art.js"],
     ]) {
@@ -27,6 +26,31 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       route.fulfill({ contentType: "image/webp", body: readFileSync(`${previous}/aria.webp`) }),
     );
   }
+  await context.route("**/app/phaser/guild-cutout.ts*", async (route) => {
+    const response = await route.fetch();
+    const source = baseline ? readFileSync(`${previous}/cutout.js`, "utf8") : await response.text();
+    assert.ok(source.includes("this.debug(debug);"));
+    await route.fulfill({
+      response,
+      body: source.replace(
+        "this.debug(debug);",
+        `
+      this.debug(debug);
+      if (this.character === "aria") window.__ariaSkirt = {
+        rotation: this.skirt.rotation, width: this.skirt.displayWidth,
+        thighs: this.legs.map(leg => leg.upper.rotation),
+        cup: { visible: this.cup.visible, depth: this.cup.depth },
+        hand: this.raisedForearm?.visible ? (() => {
+          const source = this.arms[1].lower.getWorldTransformMatrix();
+          const drawing = this.raisedForearm.getWorldTransformMatrix();
+          return { error: Math.hypot(source.tx - drawing.tx, source.ty - drawing.ty),
+            depth: this.raisedForearm.depth };
+        })() : null
+      };
+    `,
+      ),
+    });
+  });
   await context.route("**/app/phaser/guild-lab-controller.ts*", async (route) => {
     const response = await route.fetch();
     const source = baseline
@@ -36,7 +60,15 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     await route.fulfill({
       response,
       body: source
-        .replace("close ? 1.8 : 1", "close ? 3.2 : 1")
+        .replace("close ? 1.8 : 1", "close ? 5 : 1")
+        .replace(
+          "(this.residents[0].actor.root.x + this.residents[1].actor.root.x) / 2",
+          "this.residents[1].actor.root.x",
+        )
+        .replace(
+          "(this.residents[0].actor.root.y + this.residents[1].actor.root.y) / 2",
+          "this.residents[1].actor.root.y",
+        )
         .replace("this.elapsed += step;", "this.elapsed = Number(window.__labCaptureTime ?? 0);")
         .replace("new LabAffection()", "new LabAffection(() => 0.5)"),
     });
@@ -80,19 +112,46 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       });
     });
   await button("寄って見る").click();
-  await time(5000);
+  await time(3800);
   await shot("tea-sip");
+  if (!baseline) {
+    const cup = (await page.evaluate(() => window.__ariaSkirt)).cup;
+    assert.ok(cup.visible && cup.depth > 9, "raised cup remains visible in front of Aria's face");
+    const hand = (await page.evaluate(() => window.__ariaSkirt)).hand;
+    assert.ok(
+      hand && hand.error < 0.001 && hand.depth > cup.depth,
+      "raised glove shares the original elbow and covers the handle",
+    );
+  }
   await time(6100);
   await shot("tea");
-  await button("レオンに声をかける").click();
+  if (!baseline)
+    assert.equal((await page.evaluate(() => window.__ariaSkirt)).rotation, 0, "seated skirt fixed");
+  const canvasSize = await page.locator("canvas").boundingBox();
+  await page
+    .locator("canvas")
+    .click({ position: { x: canvasSize.width / 2, y: canvasSize.height * 0.42 } });
   await time(6550);
   await shot("tap");
   await button("2人で歩く").click();
   await page.waitForTimeout(1600);
   await button("一時停止").click();
+  for (let t = 8100; t < 9000; t += 50) await time(t);
+  const stride = [];
   for (let i = 0; i < 8; i++) {
     await time(9000 + i * 112.5);
     await shot(`walk-${i}`);
+    stride.push(await page.evaluate(() => window.__ariaSkirt));
+  }
+  writeFileSync(`${output}/stride.json`, JSON.stringify(stride, null, 2));
+  if (!baseline) {
+    assert.ok(stride.every((p) => Math.abs(p.rotation) <= 0.12 + 1e-8));
+    assert.ok(
+      Math.max(...stride.map((p) => p.width)) / Math.min(...stride.map((p) => p.width)) <= 1.06,
+    );
+    assert.ok(
+      stride.some((p) => Math.abs(p.rotation - ((p.thighs[0] + p.thighs[1]) / 2) * 0.25) > 0.001),
+    );
   }
   await button("動きを再開").click();
   await button("アリアが寄り道").click();
@@ -105,6 +164,19 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   await page.waitForTimeout(17000);
   await time(16000);
   await shot("work");
+  if (!baseline) {
+    assert.equal((await page.evaluate(() => window.__ariaSkirt)).rotation, 0, "work skirt fixed");
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await button("2人で歩く").click();
+    for (const t of [16100, 16800]) {
+      await time(t);
+      assert.equal(
+        (await page.evaluate(() => window.__ariaSkirt)).rotation,
+        0,
+        "reduced skirt fixed",
+      );
+    }
+  }
   if (!baseline) {
     await clearance();
     assert.ok(
@@ -123,11 +195,11 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-eighth-before" : "work/lab-eighth-after",
+      baseline ? "work/lab-ninth-before" : "work/lab-ninth-after",
       baseline,
     );
     console.log(
-      "PASS: 3.2x pair tea, sip, tap, stride, detour and work; clearance and isolated storage",
+      "PASS: Aria-centred 5x tea, sip, tap, stride, detour and work; clearance and isolated storage",
     );
   } finally {
     await browser.close();

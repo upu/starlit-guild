@@ -22,9 +22,25 @@
   },
   "ariaAppearanceV2": {
     "costumeHairSheet": "Use case: game character cutout asset sheet. Reference image 1 is Aria's existing transparent part atlas; reference image 2 is her head and defines the EXACT three-quarter RIGHT-facing angle and painterly chibi style. Create ONE replacement costume-and-hair sheet with THREE isolated parts in a single horizontal row on true transparent background and wide transparent gutters: LEFT an armless, headless, legless torso in the SAME right-facing three-quarter angle as her head (white blouse, brown corset belts, green trim, no puffed sleeves, no visible skin neck); CENTER a green FRONT shoulder cape/wrap covering BOTH shoulder roots, matching the gold leaf embroidery and small white flower of the existing neck cape, viewed from the same right-facing angle. It drapes across the upper chest and rounded near shoulder and has no arms attached. Its neckline is shallow, so a big chibi chin can overlap it; RIGHT ONLY a narrow flowing blond HAIR LOCK hanging vertically from the back of the neck down toward mid-back, same three-quarter RIGHT view, small curls at bottom, narrow root at top. NO skull or round crown, NO ears, NO flowers or leaves, NO braid around a head, NO face or neck skin in this hair lock. It is a suspended swinging lock, not a rear-view head. Match the original warm blond hair shading and ink outline. Keep all three parts separate and fully visible. No other character parts, no feet, no labels, no guides, no ground, no shadows, no backdrop. Do NOT redraw or include the head. High-quality painted anime game cutouts matching existing art.",
-    "references": ["assets/source/guild/aria-parts-v1.png", "assets/source/guild/aria-head-front-v1.png"],
+    "references": [
+      "assets/source/guild/aria-parts-v1.png",
+      "assets/source/guild/aria-head-front-v1.png"
+    ],
     "output": "assets/source/guild/aria-costume-hair-v2.png",
     "review": "Hair lock contains no ear, flower, skull or braid crown. Torso and shoulder wrap match the head's right-facing angle. Head and facial patches were not regenerated. Both thighs and boots reuse the right-facing source parts; far leg is darkened only."
+  },
+  "ariaAppearanceV3": {
+    "backCape": "Use case: precise-object-edit. Asset: transparent cutout rear cape for Aria, a small anime fantasy game character. Edit target: provided green rear cape. Remove ONLY the white flower clasp and the tied knot/ribbon at the upper right. Replace these with continuous green cloth folds. This is the cape's BACK, with no front fastening, no flowers, no bow, no brooch. Preserve the entire outer silhouette, three-quarter right-facing view, gold hem and gold leaf embroidery, existing black outline thickness, painted cel shading and colors. One isolated cape, no character, no text, no additional objects. Actual transparent background.",
+    "farPalm": "Use case: precise-object-edit. Asset: Aria's FAR forearm cutout for a right-facing anime chibi fantasy character, viewed from her left side. Edit target: provided white puffed sleeve cuff and brown leather glove. Change ONLY the hand's view: the far hand should show the PALM side toward the viewer, not the embroidered back of the hand. A relaxed gently curled hand, four curled finger pads with simple creases, anatomically correct thumb on the opposite side to the near hand. Keep exact downward-diagonal bone direction, same elbow at upper left and wrist/hand at lower right, same length, same cuff silhouette, brown glove with gold leaf trim and buckle. Warm painted cel shading and dark outline matching source. No extra fingers. Single isolated forearm, no arm above cuff, no face, no text. Actual transparent background.",
+    "references": {
+      "backCape": "work/aria-part-3.png (frame 3 from 765c1a2 atlas)",
+      "farPalm": "work/aria-part-5.png (frame 5 from 765c1a2 atlas)"
+    },
+    "outputs": [
+      "assets/source/guild/aria-back-cape-v3.png",
+      "assets/source/guild/aria-far-palm-v3.png"
+    ],
+    "review": "Back cape: no white flower or tied knot; far glove: palm pad and four curled finger pads. Near glove uses a deterministic horizontal flip of original frame 7, then both joint centres are remeasured. Limbs use rig thickness: arms 1.30, thighs 1.35, boots 1.25, with original lengths and bone endpoints preserved. Head and expression artwork unchanged. Neck bridge remains sealed through +/-0.17 rad head rotation."
   },
   "teaPropsV1": {
     "table": "Edit this isolated illustrated round wooden tea table asset. Remove ONLY the central plate of cookies and fill the exposed tabletop with matching wood grain. Preserve the table silhouette, wood color and highlights, legs, teapot, and both teacups at their exact same positions and scale. Preserve all transparent pixels outside the table. Do not add any background, people, words or new objects. This will be used as the same table with the cookie plate drawn separately. Reference: the table frame of public/guild/furniture-v3.webp. Output: assets/source/guild/lab-table-v1.png.",

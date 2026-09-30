@@ -9,6 +9,8 @@ export type LabLimbConfig = {
   front: "upper" | "lower";
   layer: number;
   bend: number;
+  // Width perpendicular to the measured bone; bone length and pivots stay fixed.
+  thickness?: number | readonly [number, number];
 } & (
   | { measured: true }
   | {
@@ -132,14 +134,14 @@ const ariaChinWithinHeadY =
 export const ariaLabRig = {
   head: {
     x: ariaNeckOnTorso - ariaNeckWithinHead,
-    y: ariaNeckOnTorsoY + 4 - ariaChinWithinHeadY,
+    y: ariaNeckOnTorsoY + 8 - ariaChinWithinHeadY,
     layer: 9,
   },
   neckBase: {
     x: ariaNeckOnTorso,
-    y: ariaNeckOnTorsoY + 4,
-    width: 10,
-    height: 7,
+    y: ariaNeckOnTorsoY + 8,
+    width: 6,
+    height: 4,
     layer: 5.8,
     color: 0xf9d1b8,
   },
@@ -156,24 +158,36 @@ export const ariaLabRig = {
     layer: 3,
     walkSway: 0.05,
   },
-  cup: { frame: 12, height: 17, layer: 7.5 },
+  cup: { frame: 12, height: 17, layer: 7.5, raisedLayer: 9.1, handLayer: 9.2 },
   backHair: {
     frame: guildLabAriaArt.extras.backHair,
     x: -19,
     y: -89,
     height: 46,
-    layer: 3.5,
+    layer: 8.75,
     originX:
       guildLabAriaArt.hairLock.root[0] / guildLabAriaArt.frames[guildLabAriaArt.extras.backHair][2],
     originY:
       guildLabAriaArt.hairLock.root[1] / guildLabAriaArt.frames[guildLabAriaArt.extras.backHair][3],
     sway: 0.04,
   },
-  skirt: { frame: guildLabAriaArt.extras.skirt, x: 0, y: -52, height: 24, layer: 5.5 },
+  skirt: {
+    frame: guildLabAriaArt.extras.skirt,
+    x: 0,
+    y: -64,
+    height: 24,
+    layer: 5.5,
+    follow: 0.25,
+    maxRotation: 0.12,
+    maxWidth: 1.06,
+    spring: 110,
+    damping: 13,
+  },
   legs: [
     {
       ...leg,
       lengths: [21, 26] as const,
+      thickness: [1.35, 1.25] as const,
       frames: [8, 9] as const,
       joint: { x: 4, y: -53 },
       layer: 1,
@@ -181,6 +195,7 @@ export const ariaLabRig = {
     {
       ...leg,
       lengths: [21, 26] as const,
+      thickness: [1.35, 1.25] as const,
       frames: [10, 11] as const,
       joint: { x: -5, y: -53 },
       layer: 4,
@@ -190,6 +205,7 @@ export const ariaLabRig = {
     {
       ...arm,
       lengths: [22, 24] as const,
+      thickness: 1.3,
       frames: [4, 5] as const,
       joint: { x: 6, y: -78 },
       layer: 0,
@@ -202,6 +218,7 @@ export const ariaLabRig = {
     {
       ...arm,
       lengths: [22, 24] as const,
+      thickness: 1.3,
       frames: [6, 7] as const,
       joint: { x: -8, y: -80 },
       layer: 8,

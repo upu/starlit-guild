@@ -43,6 +43,9 @@ export const guildLabSourceConfig = {
     head: "assets/source/guild/aria-head-front-v1.png",
     expressions: "assets/source/guild/aria-head-expressions-v1.png",
     costumeHair: "assets/source/guild/aria-costume-hair-v2.png",
+    backCape: "assets/source/guild/aria-back-cape-v3.png",
+    farPalm: "assets/source/guild/aria-far-palm-v3.png",
+    nearGlove: { flip: true, thumb: [121, 190], outerEdge: [161, 190] },
     replacements: {
       torso: [107, 110, 581, 555],
       shoulderCape: [802, 129, 774, 494],
