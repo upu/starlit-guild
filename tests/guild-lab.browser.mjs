@@ -14,6 +14,7 @@ async function start(
   width = 1000,
   dpr = 2,
   inspectJoints = false,
+  query = "",
 ) {
   const context = await browser.newContext({
     viewport: { width, height: 1000 },
@@ -42,7 +43,7 @@ async function start(
   page.on("request", (request) => {
     if (/\/api\/(save|backup)/.test(request.url())) requests.push(request.url());
   });
-  await page.goto(`${root}/guild-lab`);
+  await page.goto(`${root}/guild-lab${query}`);
   await page.locator('.guild-lab-stage[data-status="ready"]').waitFor();
   return { context, page };
 }
@@ -107,30 +108,30 @@ async function checkResolutionAndQuality() {
       );
       await tapWorld(page, 320, 350);
       await activity(page, "tea");
-      assert.equal(await button(page, "お茶で休憩").getAttribute("aria-pressed"), "true");
+      assert.equal(await button(page, "2人でお茶").getAttribute("aria-pressed"), "true");
       if ((width === 390 && dpr === 3) || (width === 1000 && dpr === 1)) {
         await page.locator("canvas").screenshot({ path: `${output}/${width}-${dpr}-room.png` });
         await button(page, "寄って見る").click();
         await page.locator("canvas").screenshot({ path: `${output}/${width}-${dpr}-close.png` });
         await page.emulateMedia({ reducedMotion: "no-preference" });
         if (dpr === 1) await checkAnimatedFace(page);
-        await button(page, "歩く").click();
+        await button(page, "2人で歩く").click();
         await activity(page, "walk");
         await page.waitForTimeout(1200);
         await page.locator("canvas").screenshot({ path: `${output}/${width}-${dpr}-walk.png` });
         await page.emulateMedia({ reducedMotion: "reduce" });
-        await button(page, "お茶で休憩").click();
+        await button(page, "2人でお茶").click();
         await activity(page, "tea");
         await button(page, "寄って見る").click();
       }
     }
     await button(page, "作業台へ").click();
     await activity(page, "work");
-    await button(page, "歩く").click();
+    await button(page, "2人で歩く").click();
     await activity(page, "idle");
     await button(page, "寄って見る").click();
-    // At the left aisle stop, the table is close to the zoomed viewport's right edge.
-    await tapWorld(page, 384 + (310 - 112) * 1.8, 288 + (350 - (416 - 42.5)) * 1.8);
+    // The close camera follows both residents at the left aisle stop.
+    await tapWorld(page, 384 + (310 - 134.5) * 1.8, 288 + (350 - 379.5) * 1.8);
     await activity(page, "tea");
     await context.close();
   }
@@ -201,15 +202,15 @@ async function checkAffection() {
   await time(5000);
   await shot("sip");
   await time(6800);
-  assert.equal(await canvas.getAttribute("data-expression"), "smile");
-  assert.equal(await canvas.getAttribute("data-mark"), "note");
-  await shot("tea-smile");
+  assert.equal(await canvas.getAttribute("data-expression"), "neutral");
+  assert.equal(await canvas.getAttribute("data-mark"), "thought");
+  await shot("tea-sharing");
   await time(8200);
-  await tapWorld(page, 434, 220);
+  await canvas.click({ position: { x: 75, y: 150 } });
   assert.equal(await canvas.getAttribute("data-expression"), "surprised");
   await shot("tap-surprised");
   assert.equal(
-    await button(page, "お茶で休憩").getAttribute("aria-pressed"),
+    await button(page, "2人でお茶").getAttribute("aria-pressed"),
     "true",
     "actor tap does not activate overlapping furniture",
   );
@@ -217,12 +218,12 @@ async function checkAffection() {
   assert.equal(await canvas.getAttribute("data-expression"), "smile");
   await shot("tap-smile");
   await time(8750);
-  await tapWorld(page, 434, 220);
+  await canvas.click({ position: { x: 75, y: 150 } });
   assert.equal(await canvas.getAttribute("data-expression"), "shy");
   await shot("tap-shy");
   await time(10000);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await button(page, "歩く").click();
+  await button(page, "2人で歩く").click();
   await activity(page, "idle");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await time(25100);
@@ -253,9 +254,106 @@ async function checkAffection() {
   });
   await context.close();
 }
+async function capturePairAndLoad() {
+  const { context, page } = await start("no-preference", 390, 3, true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await button(page, "寄って見る").click();
+  const canvas = page.locator("canvas");
+  for (const [name, time, beat] of [
+    ["tea", 0, "sip"],
+    ["push", 6500, "push"],
+    ["take", 8500, "take"],
+    ["offer", 12000, "offer"],
+    ["surprised", 13800, "surprised"],
+    ["shy", 15000, "shy"],
+    ["accept", 17000, "accept"],
+  ]) {
+    await page.evaluate((value) => {
+      window.__labCaptureTime = value;
+    }, time);
+    await page.waitForTimeout(120);
+    assert.equal(await canvas.getAttribute("data-beat"), beat);
+    await canvas.screenshot({ path: `${output}/pair-5x-${name}.png` });
+  }
+  await page.evaluate(() => {
+    window.__labCaptureTime = 8500;
+  });
+  await page.waitForTimeout(100);
+  await canvas.click({ position: { x: 290, y: 150 } });
+  assert.equal(await canvas.getAttribute("data-tapped"), "aria");
+  assert.equal(await canvas.getAttribute("data-aria-expression"), "surprised");
+  assert.notEqual(await canvas.getAttribute("data-expression"), "surprised");
+  await canvas.screenshot({ path: `${output}/pair-5x-aria-tap-during-share.png` });
+  await page.evaluate(() => {
+    window.__labCaptureTime = 21000;
+  });
+  await page.waitForTimeout(100);
+  await canvas.click({ position: { x: 290, y: 150 } });
+  assert.equal(await canvas.getAttribute("data-aria-expression"), "surprised");
+  await canvas.screenshot({ path: `${output}/pair-5x-aria-tap.png` });
+  await page.evaluate(() => {
+    window.__labCaptureTime = 24000;
+  });
+  await page.waitForTimeout(100);
+  await canvas.click({ position: { x: 95, y: 150 } });
+  await page.evaluate(() => {
+    window.__labCaptureTime = 24250;
+  });
+  await page.waitForTimeout(100);
+  assert.equal(await canvas.getAttribute("data-tapped"), "leon");
+  assert.equal(await canvas.getAttribute("data-expression"), "surprised");
+  assert.notEqual(await canvas.getAttribute("data-aria-expression"), "surprised");
+  assert.equal(await canvas.getAttribute("data-aria-mark"), "none");
+  await canvas.screenshot({ path: `${output}/pair-5x-leon-tap.png` });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await button(page, "アリアが寄り道").click();
+  await page.waitForTimeout(120);
+  assert.equal(await canvas.getAttribute("data-aria-mark"), "notice");
+  await canvas.screenshot({ path: `${output}/pair-5x-detour.png` });
+  await context.close();
+
+  const load = [];
+  for (const count of [2, 4, 8]) {
+    const sample = await start(
+      "no-preference",
+      390,
+      3,
+      false,
+      count === 2 ? "" : `?actors=${count}`,
+    );
+    const target = sample.page.locator("canvas");
+    await sample.page.waitForTimeout(500);
+    const frames = [];
+    for (let n = 0; n < 40; n++) {
+      frames.push(
+        await target.evaluate((element) => ({
+          drawCalls: Number(element.dataset.drawCalls),
+          frameMs: Number(element.dataset.frameMs),
+        })),
+      );
+      await sample.page.waitForTimeout(35);
+    }
+    const median = (key) => frames.map((frame) => frame[key]).sort((a, b) => a - b)[20];
+    const p95 = (key) => frames.map((frame) => frame[key]).sort((a, b) => a - b)[38];
+    assert.ok(median("drawCalls") > 0);
+    load.push({
+      actors: count,
+      drawCalls: { median: median("drawCalls"), p95: p95("drawCalls") },
+      frameMs: { median: median("frameMs"), p95: p95("frameMs") },
+    });
+    await target.screenshot({ path: `${output}/load-${count}.png` });
+    await sample.context.close();
+  }
+  assert.ok(
+    load[0].drawCalls.median < load[1].drawCalls.median &&
+      load[1].drawCalls.median < load[2].drawCalls.median,
+  );
+  writeFileSync(`${output}/load-results.json`, JSON.stringify(load, null, 2));
+}
 try {
   await checkAffection();
   await captureJoints();
+  await capturePairAndLoad();
   await checkResolutionAndQuality();
   const { context, page } = await start();
   await page.waitForTimeout(500);
@@ -286,7 +384,7 @@ try {
   // Pointer coordinates still match the world when the canvas is CSS-scaled and DPR=2.
   const box = await canvas.boundingBox();
   await canvas.click({ position: { x: (320 / 768) * box.width, y: (350 / 576) * box.height } });
-  assert.equal(await button(page, "お茶で休憩").getAttribute("aria-pressed"), "true");
+  assert.equal(await button(page, "2人でお茶").getAttribute("aria-pressed"), "true");
   await activity(page, "tea");
   for (const [width, height] of [
     [320, 640],
@@ -298,7 +396,7 @@ try {
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
       true,
     );
-    await button(page, "歩く").scrollIntoViewIfNeeded();
+    await button(page, "2人で歩く").scrollIntoViewIfNeeded();
     await page.screenshot({ path: `${output}/room-${width}.png` });
   }
   assert.deepEqual(await page.evaluate(() => ({ ...localStorage })), {

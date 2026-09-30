@@ -5,9 +5,11 @@ import { LabAffection } from "../lib/guild-lab-affection.ts";
 import { labShadow, labSole } from "../lib/guild-lab-contact.ts";
 import { labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
+import { guildLabAriaArt } from "../lib/guild-lab-aria-art.ts";
 import { labPose, labJoint, LAB_ACTOR_SCALE } from "../lib/guild-lab-model.ts";
 import { portraitExpressions } from "../lib/portrait-expressions.ts";
 import { labWalkingArm, labArmArtwork } from "../lib/guild-lab-arms.ts";
+import { labLookDirection } from "../lib/guild-lab-pair.ts";
 
 test("tea, work arrival, yawning and waking choose familiar expression names", () => {
   const mood = new LabAffection(() => 0.5);
@@ -26,6 +28,39 @@ test("tea, work arrival, yawning and waking choose familiar expression names", (
   assert.equal(mood.sample(42500, false).expression, "neutral");
   for (const t of [5000, 39000, 39500])
     assert.ok(portraitExpressions.includes(mood.sample(t, true).expression));
+});
+
+test("Aria's edited face patches stay within the head and share Leon's expression keys", () => {
+  const head = guildLabAriaArt.frames[0];
+  for (const key of ["neutral", "smile", "surprised", "tired", "yawn"]) {
+    const expression = guildLabAriaArt.head.expressions[key];
+    assert.ok(expression);
+    for (const patch of expression.patches) {
+      const [x, y, width, height] = patch.rect;
+      assert.ok(x >= 0 && y >= 0 && x + width <= head[2] && y + height <= head[3]);
+      assert.deepEqual(guildLabAriaArt.frames[patch.frame].slice(2), [width, height]);
+    }
+  }
+  assert.ok(
+    guildLabAriaArt.head.blink.rect[1] + guildLabAriaArt.head.blink.rect[3] <
+      guildLabAriaArt.head.mouth.bounds[1],
+  );
+});
+
+test("tapping one resident turns the other toward them without copying the reaction", () => {
+  const aria = new LabAffection(() => 0.5),
+    leon = new LabAffection(() => 0.5);
+  aria.tap(1000);
+  leon.lookAt(1000, 1);
+  assert.equal(aria.reacting(1000), true);
+  assert.equal(aria.reacting(3400), false);
+  assert.equal(leon.reacting(1100), false);
+  assert.equal(aria.sample(1100, false).expression, "surprised");
+  assert.equal(leon.sample(1100, false).expression, "neutral");
+  assert.ok(leon.sample(1100, false).look > 0);
+  assert.equal(leon.sample(1100, true).look, 0);
+  assert.ok(labLookDirection(272, 369, false) > 0);
+  assert.ok(labLookDirection(369, 272, true) > 0);
 });
 test("touches vary, repeat touches blush, and reduced motion preserves expression without movement", () => {
   const mood = new LabAffection(() => 0.5);

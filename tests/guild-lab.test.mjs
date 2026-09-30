@@ -19,6 +19,12 @@ import {
 import { labLimbPaintOrder, labRig } from "../lib/guild-lab-rig.ts";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { labWalkingArm, labArmArtwork, LabArmMotion } from "../lib/guild-lab-arms.ts";
+import { labLimbArtwork } from "../lib/guild-lab-limbs.ts";
+import { guildLabAriaArt } from "../lib/guild-lab-aria-art.ts";
+import { labRigs } from "../lib/guild-lab-rig.ts";
+import { labCharacters } from "../lib/guild-lab-characters.ts";
+import { labMouth, labPathTo } from "../lib/guild-lab-model.ts";
+import { labPairBeat, labPairFeeling, labSharingProps } from "../lib/guild-lab-pair.ts";
 
 test("thighs paint over boot cuffs while forearms paint over upper sleeves", () => {
   for (const leg of labRig.legs) {
@@ -464,15 +470,15 @@ test("painted hip caps stay behind the opaque coat hem while seated and througho
   for (const [index, leg] of labRig.legs.entries()) {
     assert.ok(leg.layer < labRig.torso.layer);
     const thigh = await pixels(leg.frames[0]);
-    const scale = (leg.lengths[0] * (1 + leg.overlap[0][0] + leg.overlap[0][1])) / thigh.height;
+    const art = labLimbArtwork(leg.frames[0], leg.lengths[0]);
     // The closed proximal oval occupies the first 35 source rows of each thigh.
     const cap = [];
     for (let row = 0; row < 35; row++)
       for (let col = 0; col < thigh.width; col++) {
         if (thigh.data[(row * thigh.width + col) * 4 + 3] > 200)
           cap.push({
-            x: (col - thigh.width / 2) * scale,
-            y: row * scale - leg.lengths[0] * leg.overlap[0][0],
+            x: (col - art.originX * thigh.width) * art.scale,
+            y: (row - art.originY * thigh.height) * art.scale,
           });
       }
     for (const mode of ["tea", "walk", "work"])
@@ -492,4 +498,177 @@ test("painted hip caps stay behind the opaque coat hem while seated and througho
         }
       }
   }
+});
+
+test("painted knee centres remain joined through sitting and the entire stride", () => {
+  for (const leg of labRig.legs) {
+    assert.equal(leg.measured, true);
+    const upperArt = labLimbArtwork(leg.frames[0], leg.lengths[0]);
+    const lowerArt = labLimbArtwork(leg.frames[1], leg.lengths[1]);
+    const upperJoint = guildLabArt.legJoints[leg.frames[0]].distal;
+    const lowerJoint = guildLabArt.legJoints[leg.frames[1]].proximal;
+    for (const mode of ["tea", "walk"])
+      for (let t = 0; t < 900; t += 5) {
+        const pose = labPose(t, mode, false);
+        const angles = labJoint(labLegTarget(t, 0, mode, pose.bob), ...leg.lengths, leg.bend);
+        const upper = rotateArmPoint(
+          {
+            x:
+              (upperJoint[0] - upperArt.originX * guildLabArt.frames[leg.frames[0]][2]) *
+              upperArt.scale,
+            y:
+              (upperJoint[1] - upperArt.originY * guildLabArt.frames[leg.frames[0]][3]) *
+              upperArt.scale,
+          },
+          angles.upper + upperArt.rotation,
+        );
+        const lower = rotateArmPoint(
+          {
+            x:
+              (lowerJoint[0] - lowerArt.originX * guildLabArt.frames[leg.frames[1]][2]) *
+              lowerArt.scale,
+            y:
+              (lowerJoint[1] - lowerArt.originY * guildLabArt.frames[leg.frames[1]][3]) *
+              lowerArt.scale,
+          },
+          angles.upper + angles.lower + lowerArt.rotation,
+        );
+        const knee = rotateArmPoint({ x: 0, y: leg.lengths[0] }, angles.upper);
+        assert.ok(Math.hypot(upper.x - knee.x - lower.x, upper.y - knee.y - lower.y) < 1);
+      }
+  }
+});
+
+test("idle stance extends the knee and settles its hip height over 180 ms", () => {
+  assert.equal(labRig.idleReach, 0.99);
+  assert.equal(labRig.idleSettleMs, 180);
+  const walk = labPose(0, "walk", false).bob;
+  const start = labPose(0, "idle", false, 0, walk).bob;
+  const middle = labPose(0, "idle", false, 0.5, walk).bob;
+  const end = labPose(0, "idle", false, 1, walk).bob;
+  assert.ok(Math.abs(start - walk) < 0.001);
+  assert.ok(Math.min(start, end) < middle && middle < Math.max(start, end));
+  const target = labLegTarget(0, 0, "idle", end);
+  const angles = labJoint(target, ...labRig.legs[0].lengths, -1);
+  assert.ok(Math.abs(angles.lower) < 0.36);
+});
+
+test("shoulders clear the scarf and cup sits between the torso and near glove", () => {
+  assert.equal(labRig.arms[0].joint.y, -80);
+  assert.equal(labRig.arms[1].joint.y, -81);
+  assert.ok(labRig.torso.layer < labRig.cup.layer);
+  assert.ok(labRig.cup.layer < labRig.arms[1].layer);
+  for (const sip of [0, 0.5, 1]) {
+    const cup = labTeaCup(sip, 0);
+    const target = labJoint(cup.hand, ...labRig.arms[1].lengths, labRig.arms[1].bend);
+    assert.ok(Number.isFinite(target.upper) && Number.isFinite(target.lower));
+  }
+});
+
+test("both residents use their own measured cutout and can sit without overlap", async () => {
+  assert.deepEqual(Object.keys(labCharacters), ["leon", "aria"]);
+  const [leon, aria] = [labCharacters.leon, labCharacters.aria];
+  assert.notEqual(leon.art.asset, aria.art.asset);
+  assert.equal(aria.rig.head.y, -84);
+  assert.equal(aria.rig.legs[0].front, "upper");
+  assert.equal(aria.rig.arms[1].front, "lower");
+  assert.ok(aria.art.head.displayHeight < leon.art.head.displayHeight);
+  const meta = await sharp("public/guild/aria-parts-v1.webp").metadata();
+  assert.equal(meta.hasAlpha, true);
+  for (const [left, top, width, height] of aria.art.frames)
+    assert.ok(left >= 0 && top >= 0 && left + width <= meta.width && top + height <= meta.height);
+  for (const frame of [5, 7, 8, 10]) {
+    const seam = aria.art.seams[frame];
+    assert.ok(seam.changedPixels > 100);
+    assert.ok(seam.band[0] < seam.band[1]);
+  }
+  assert.ok(labStations.ariaTea.x - labStations.tea.x > 80);
+  const walkTargets = [
+    { x: 656, y: 416 },
+    { x: 611, y: 428 },
+  ];
+  assert.ok(
+    Math.hypot(walkTargets[0].x - walkTargets[1].x, walkTargets[0].y - walkTargets[1].y) > 44,
+  );
+  assert.deepEqual(labPathTo(labStations.ariaTea, walkTargets[1]).at(-1), walkTargets[1]);
+});
+
+test("Aria's painted joints and tea rim use her measured profile", () => {
+  const rig = labRigs.aria;
+  for (const limb of [...rig.arms, ...rig.legs]) {
+    const upper = labLimbArtwork(limb.frames[0], limb.lengths[0], guildLabAriaArt);
+    const lower = labLimbArtwork(limb.frames[1], limb.lengths[1], guildLabAriaArt);
+    const upperEnd =
+      limb.frames[0] < 8
+        ? guildLabAriaArt.armJoints[limb.frames[0]].distal
+        : guildLabAriaArt.legJoints[limb.frames[0]].distal;
+    const lowerStart =
+      limb.frames[1] < 8
+        ? guildLabAriaArt.armJoints[limb.frames[1]].proximal
+        : guildLabAriaArt.legJoints[limb.frames[1]].proximal;
+    const up = rotateArmPoint(
+      {
+        x: (upperEnd[0] - upper.originX * guildLabAriaArt.frames[limb.frames[0]][2]) * upper.scale,
+        y: (upperEnd[1] - upper.originY * guildLabAriaArt.frames[limb.frames[0]][3]) * upper.scale,
+      },
+      upper.rotation,
+    );
+    const lo = rotateArmPoint(
+      {
+        x:
+          (lowerStart[0] - lower.originX * guildLabAriaArt.frames[limb.frames[1]][2]) * lower.scale,
+        y:
+          (lowerStart[1] - lower.originY * guildLabAriaArt.frames[limb.frames[1]][3]) * lower.scale,
+      },
+      lower.rotation,
+    );
+    assert.ok(Math.hypot(up.x, up.y - limb.lengths[0]) < 0.001);
+    assert.ok(Math.hypot(lo.x, lo.y) < 0.001);
+  }
+  for (const [id, profile] of Object.entries(labCharacters)) {
+    const cup = labTeaCup(1, 0, profile.rig, profile.art);
+    assert.ok(Math.hypot(cup.rim.x - cup.mouth.x, cup.rim.y - cup.mouth.y) < 0.001, id);
+    const mouth = labMouth(profile.art);
+    assert.ok(Math.abs(cup.mouth.x - profile.rig.head.x - mouth.x) < 0.001);
+  }
+});
+
+test("sharing food follows push, take, offer, surprise, shyness, acceptance without a heart", () => {
+  const times = [0, 6100, 8100, 11100, 13600, 14500, 16500];
+  assert.deepEqual(times.map(labPairBeat), [
+    "sip",
+    "push",
+    "take",
+    "offer",
+    "surprised",
+    "shy",
+    "accept",
+  ]);
+  const original = {
+    expression: "neutral",
+    yawn: false,
+    mark: null,
+    blush: false,
+    jump: 0,
+    stretch: 0,
+    squash: 0,
+    look: 0,
+    gesture: "none",
+    markAge: 0,
+  };
+  const aria = labPairFeeling(original, "aria", "take", false);
+  assert.equal(aria.expression, "smile");
+  assert.equal(aria.mark, "note");
+  assert.equal(labPairFeeling({ ...original, look: 0.06 }, "aria", "take", false).look, 0.06);
+  const leon = labPairFeeling(original, "leon", "shy", false);
+  assert.equal(leon.blush, true);
+  assert.equal(leon.mark, "thought");
+  for (const time of times) {
+    const beat = labPairBeat(time);
+    for (const id of ["leon", "aria"])
+      assert.notEqual(labPairFeeling(original, id, beat, true).mark, "heart");
+  }
+  assert.ok(labSharingProps(7600, false).dishX > labSharingProps(6100, false).dishX);
+  assert.equal(labSharingProps(12000, false).bite.y, 352);
+  assert.deepEqual(labSharingProps(17000, false).bite, { x: 294, y: 352 });
 });

@@ -20,29 +20,46 @@ export class GuildTileRoom {
       LAB_TILE * 2,
       0,
     );
-    for (const item of labFurniture) {
-      const x = (item.col + item.cols / 2) * LAB_TILE;
-      const y = (item.row + item.rows) * LAB_TILE;
-      const sprite = guildRoomSprite("furniture-v3", item.frame);
-      const texture = scene.textures.get(sprite.asset);
-      const [left, top, width, height] = sprite.rect;
-      if (!texture.has(item.id)) texture.add(item.id, 0, left, top, width, height);
-      scene.add.ellipse(x, y - 9, item.cols * LAB_TILE * 0.9, 22, 0x251c14, 0.22).setDepth(y - 1);
-      const image = scene.add.image(x, y, sprite.asset, item.id).setOrigin(0.5, 1);
-
-      image
-        .setDisplaySize(item.cols * LAB_TILE, (item.cols * LAB_TILE * height) / width)
-        .setDepth(item.id === "chair" ? labStations.tea.y - 1 : y);
-      this.filter.add(image);
-      if (item.id === "table" || item.id === "bench" || item.id === "chair")
-        image
-          .setInteractive({ useHandCursor: true })
-          .on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-            visit(item.id === "bench" ? "work" : "tea", pointer);
-          });
-    }
+    for (const item of labFurniture) this.furniture(item, visit);
     this.grid = scene.add.graphics().setDepth(2000);
     this.workCup();
+  }
+  private furniture(
+    item: (typeof labFurniture)[number],
+    visit: (mode: "tea" | "work", pointer: Phaser.Input.Pointer) => void,
+  ) {
+    const scene = this.scene;
+    const x = (item.col + item.cols / 2) * LAB_TILE;
+    const y = (item.row + item.rows) * LAB_TILE;
+    const sprite = guildRoomSprite("furniture-v3", item.frame);
+    const texture = scene.textures.get(sprite.asset);
+    const [left, top, width, height] = sprite.rect;
+    if (!texture.has(item.id)) texture.add(item.id, 0, left, top, width, height);
+    scene.add.ellipse(x, y - 9, item.cols * LAB_TILE * 0.9, 22, 0x251c14, 0.22).setDepth(y - 1);
+    const image = scene.add
+      .image(
+        x,
+        y,
+        item.id === "table" ? "/guild/lab-table-v1.webp" : sprite.asset,
+        item.id === "table" ? undefined : item.id,
+      )
+      .setOrigin(0.5, 1);
+
+    image
+      .setDisplaySize(item.cols * LAB_TILE, (item.cols * LAB_TILE * height) / width)
+      .setDepth(item.id === "chair" || item.id === "aria-chair" ? labStations.tea.y - 1 : y);
+    this.filter.add(image);
+    if (
+      item.id === "table" ||
+      item.id === "bench" ||
+      item.id === "chair" ||
+      item.id === "aria-chair"
+    )
+      image
+        .setInteractive({ useHandCursor: true })
+        .on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+          visit(item.id === "bench" ? "work" : "tea", pointer);
+        });
   }
   private workCup() {
     const asset = guildLabArt.asset;

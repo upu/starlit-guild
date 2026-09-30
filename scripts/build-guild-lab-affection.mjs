@@ -2,9 +2,11 @@ import "./build-guild-lab-rig.mjs";
 import sharp from "sharp";
 import { readFileSync, writeFileSync } from "node:fs";
 import { format } from "prettier";
+import { guildLabSourceConfig } from "./guild-lab-source-config.mjs";
+const config = guildLabSourceConfig.leon;
 
 const art = JSON.parse(readFileSync("work/lab-base-art.json", "utf8"));
-const source = "assets/source/guild/leon-costume-v4.png";
+const source = config.costume;
 const meta = await sharp(source).metadata();
 const layers = [];
 // A foreground cutout must not carry a black contour along the cap that sits
@@ -90,9 +92,9 @@ layers.push({
   top: fy,
   blend: "dest-out",
 });
-art.armJoints[5] = { proximal: [52, 27], distal: [74, 166], wrist: [65, 121] };
+art.armJoints[5] = structuredClone(config.affection.farForearmJoints);
 const farForearm = await softenElbowCap(
-  await sharp("assets/source/guild/leon-far-palm-v4.png")
+  await sharp(config.farPalm)
     .trim({ threshold: 20 })
     .resize({ width: fw, height: fh, fit: "fill" })
     .png()
@@ -121,7 +123,7 @@ layers.push({
 for (const key of ["proximal", "distal", "wrist"])
   art.armJoints[7][key][0] = gw - 1 - art.armJoints[7][key][0];
 const nearForearm = await softenElbowCap(
-  await sharp("public/guild/leon-parts-v2.webp")
+  await sharp(config.baseAtlas)
     .extract({ left: gx, top: gy, width: gw, height: gh })
     .flop()
     .png()
@@ -132,11 +134,7 @@ const nearForearm = await softenElbowCap(
 );
 layers.push({ input: nearForearm.input, left: gx, top: gy });
 art.armSeams[7] = nearForearm.measurement;
-for (const [frame, start, end] of [
-  [2, 0, 0.375],
-  [1, 0.375, 0.7],
-  [3, 0.7, 1],
-]) {
+for (const [frame, start, end] of config.affection.costumeFrames) {
   const height = art.frames[frame][3];
   const left = Math.round(meta.width * start),
     right = Math.round(meta.width * end);
@@ -173,7 +171,7 @@ for (const [frame, start, end] of [
       },
     };
   }
-  const x = [0, 360, 730, 1030][frame],
+  const x = config.affection.frameX[frame],
     y = 110;
   art.frames[frame] = [x, y, size.width, height];
   layers.push({ input, left: x, top: y });
@@ -181,12 +179,12 @@ for (const [frame, start, end] of [
 const clear = await sharp({ create: { width: 982, height: 350, channels: 4, background: "#000" } })
   .png()
   .toBuffer();
-const base = await sharp("public/guild/leon-parts-v2.webp")
+const base = await sharp(config.baseAtlas)
   .composite([{ input: clear, left: 350, top: 0, blend: "dest-out" }])
   .png()
   .toBuffer();
 const [hx, hy, hw, hh] = art.frames[0];
-const opened = await sharp("assets/source/guild/leon-parts-v2.png")
+const opened = await sharp(config.parts)
   .extract({ left: hx, top: hy, width: hw, height: hh })
   .ensureAlpha()
   .raw()
@@ -194,10 +192,10 @@ const opened = await sharp("assets/source/guild/leon-parts-v2.png")
 const expressions = {};
 // Reviewed face regions exclude the silhouette, hair and ear. Alpha-bounds
 // registration matches the generated heads to the unchanged original head.
-const regions = { eyes: [120, 159, 122, 77], mouth: [161, 233, 42, 28] };
+const regions = config.affection.faceRegions;
 for (const [index, key] of ["neutral", "smile", "surprised", "tired", "yawn"].entries()) {
   const name = key === "neutral" ? "normal" : key;
-  const aligned = await sharp(`assets/source/guild/leon-head-${name}-v3.png`)
+  const aligned = await sharp(config.headExpression(name))
     .trim({ threshold: 20 })
     .resize(hw, hh)
     .ensureAlpha()
@@ -256,7 +254,7 @@ for (const [index, key] of ["neutral", "smile", "surprised", "tired", "yawn"].en
     .png()
     .toFile(`work/lab-face-${key}.png`);
 }
-art.height = 1340;
+art.height = config.affection.atlasHeight;
 art.asset = "/guild/leon-parts-v3.webp";
 art.head.expressions = expressions;
 const rendered = await sharp(base)
@@ -270,9 +268,9 @@ for (let row = 0; row < hh; row++)
   opened.copy(rendered, ((hy + row) * art.width + hx) * 4, row * hw * 4, (row + 1) * hw * 4);
 await sharp(rendered, { raw: { width: art.width, height: art.height, channels: 4 } })
   .webp({ lossless: true })
-  .toFile("public/guild/leon-parts-v3.webp");
+  .toFile(config.atlas);
 writeFileSync(
-  "lib/guild-lab-art.ts",
+  config.art,
   await format(
     "// Generated: node scripts/build-guild-lab-affection.mjs\nexport const guildLabArt = " +
       JSON.stringify(art) +

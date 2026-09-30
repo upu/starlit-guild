@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { LabMode, LabPose } from "@/lib/guild-lab-model";
 import type { LabControls, createGuildLabGame } from "../phaser/guild-lab-game";
-const labels = { tea: "お茶で休憩", walk: "歩く", work: "作業台へ" };
+const labels = { tea: "2人でお茶", walk: "2人で歩く", work: "作業台へ", detour: "アリアが寄り道" };
 const initialControls: LabControls = {
   mode: "tea",
   request: 0,
@@ -13,10 +13,11 @@ const initialControls: LabControls = {
   greet: 0,
 };
 const captions = {
-  tea: "椅子でお茶を飲んでいます",
+  tea: "2人でお茶を飲んでいます",
   work: "作業台で手を動かしています",
   walk: "通路を歩いています",
   idle: "目的地に着きました",
+  detour: "アリアが気になるものを見つけました",
 };
 function useLab() {
   const host = useRef<HTMLDivElement>(null);
@@ -88,7 +89,7 @@ export default function GuildLab() {
           </div>
           <Link href="/">ゲームへ戻る</Link>
         </header>
-        <p>レオンと過ごす休憩時間。レオンに触れると、こちらに気づいてくれます。</p>
+        <p>レオンとアリアが過ごす休憩時間。2人のしぐさや、ささやかなやり取りを試せます。</p>
         <div className="guild-lab-stage" data-status={status} data-activity={activity}>
           <div ref={host} className="guild-lab-canvas" aria-hidden="true" />
           {status !== "ready" && (
@@ -112,7 +113,7 @@ export default function GuildLab() {
         <details>
           <summary>今回の試作について</summary>
           <p>
-            お茶を楽しんだり、うとうとしたり。テーブルや作業台を押すと移動します。続けて触れると、ちょっと照れることも。
+            お茶を楽しんだり、気になるものへ寄り道したり。キャラやテーブル、作業台にも触れられます。
           </p>
           <p>
             描画だけの試作です。冒険のセーブや生産状況には書き込みません。「動きを減らす」設定でも、表情と気持ちのマークは表示します。
@@ -133,7 +134,7 @@ function LabButtons({
 }: Omit<ReturnType<typeof useLab>, "host" | "restart">) {
   return (
     <>
-      <div className="guild-lab-actions" role="group" aria-label="レオンの行動">
+      <div className="guild-lab-actions" role="group" aria-label="旅団の行動">
         {(Object.keys(labels) as LabMode[]).map((mode) => (
           <button
             key={mode}

@@ -1,7 +1,15 @@
 import sharp from "sharp";
 import { writeFileSync, mkdirSync } from "node:fs";
+import { guildLabSourceConfig } from "./guild-lab-source-config.mjs";
+const character = process.argv[2] ?? "leon";
+if (!(character in guildLabSourceConfig)) throw Error(`Unknown guild lab character: ${character}`);
+if (character === "aria") {
+  await import("./build-guild-lab-aria.mjs");
+  process.exit(0);
+}
+const config = guildLabSourceConfig.leon;
 mkdirSync("work", { recursive: true });
-const source = "assets/source/guild/leon-parts-v2.png";
+const source = config.parts;
 const { data, info } = await sharp(source)
   .ensureAlpha()
   .raw()
@@ -51,7 +59,7 @@ for (let i = 0; i < w * h; i++) {
 const rects = cells.map(([x, y, r, b]) => [x, y, r - x + 1, b - y + 1]);
 const [hx, hy, hw, hh] = rects[0];
 // Alpha-bounds registration removes the generator's change of canvas size.
-const closed = await sharp("assets/source/guild/leon-head-blink-v2.png")
+const closed = await sharp(config.blink)
   .trim({ threshold: 20 })
   .resize(hw, hh)
   .ensureAlpha()
@@ -63,7 +71,12 @@ const opened = await sharp(source)
   .raw()
   .toBuffer();
 // Reviewed eye-only region, in source-atlas pixels. Exclude hair, brows and mouth.
-const roi = { x: 153 - hx, y: 218 - hy, width: 107, height: 45 };
+const roi = {
+  x: config.rig.eyeRegion.atlasX - hx,
+  y: config.rig.eyeRegion.atlasY - hy,
+  width: config.rig.eyeRegion.width,
+  height: config.rig.eyeRegion.height,
+};
 let left = hw,
   top = hh,
   right = 0,
@@ -104,8 +117,8 @@ let mx0 = hw,
   count = 0,
   sx = 0,
   sy = 0;
-for (let y = 271 - hy; y < 285 - hy; y++)
-  for (let x = 195 - hx; x < 222 - hx; x++) {
+for (let y = config.rig.mouthRegion.y0 - hy; y < config.rig.mouthRegion.y1 - hy; y++)
+  for (let x = config.rig.mouthRegion.x0 - hx; x < config.rig.mouthRegion.x1 - hx; x++) {
     const i = (y * hw + x) * 4;
     if (opened[i] < 180 && opened[i + 1] < 120 && opened[i + 2] < 105 && opened[i + 3] > 240) {
       mx0 = Math.min(mx0, x);
@@ -127,8 +140,7 @@ const mouth = {
 // Landmarks reviewed on the 297x268 head crop: underside of the ear and the
 // rear edge of the chin. Their midpoint is the hidden neck attachment, not
 // the centre of the visible face or hair silhouette.
-const earUnder = [107, 239];
-const chinUnder = [198, 263];
+const { earUnder, chinUnder } = config.rig.neck;
 const neck = {
   earUnder,
   chinUnder,
@@ -150,7 +162,7 @@ const clean = await sharp(source)
 await sharp(clean)
   .composite([{ input: patch, left: 40, top: 1000 }])
   .webp({ lossless: true })
-  .toFile("public/guild/leon-parts-v2.webp");
+  .toFile(config.baseAtlas);
 const frames = [...rects.slice(0, 12), rects[15], [40, 1000, patchRect[2], patchRect[3]]];
 const art = {
   width: w,
@@ -159,19 +171,26 @@ const art = {
   // Measured on the isolated source parts (frame-local pixels). Proximal caps
   // are shoulder/elbow centres; distal caps are elbow or the glove's grip.
   // Wrist landmarks are retained separately because the glove includes a hand.
-  armJoints: {
-    4: { proximal: [99, 41], distal: [46, 165] },
-    5: { proximal: [47, 39], distal: [79, 181], wrist: [71, 142] },
-    6: { proximal: [91, 52], distal: [48, 171] },
-    7: { proximal: [43, 42], distal: [75, 197], wrist: [69, 148] },
-  },
+  armJoints: structuredClone(config.rig.armJoints),
+  // Reviewed on the isolated leg cells. The distal boot landmark is the
+  // painted ankle/sole contact, rather than the forward toe of the boot.
+  legJoints: structuredClone(config.rig.legJoints),
   head: {
-    displayHeight: 90,
+    displayHeight: config.rig.headHeight,
     neck,
     mouth,
     blink: { frame: 13, rect: patchRect, roi, changedPixels: changed },
   },
 };
+for (const [frame, joints] of Object.entries(art.legJoints)) {
+  const [left, top, width, height] = rects[Number(frame)];
+  for (const point of [joints.proximal, joints.distal]) {
+    if (point[0] < 0 || point[0] >= width || point[1] < 0 || point[1] >= height)
+      throw Error(`Leg frame ${frame} joint outside the frame`);
+    const pixel = ((top + point[1]) * w + left + point[0]) * 4;
+    if (data[pixel + 3] < 100) throw Error(`Leg frame ${frame} joint outside the painted part`);
+  }
+}
 writeFileSync("work/lab-base-art.json", JSON.stringify(art, null, 2));
 await sharp(opened, { raw: { width: hw, height: hh, channels: 4 } })
   .png()

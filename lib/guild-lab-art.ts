@@ -33,6 +33,12 @@ export const guildLabArt = {
     "6": { proximal: [91, 52], distal: [48, 171] },
     "7": { proximal: [79, 42], distal: [47, 197], wrist: [53, 148] },
   },
+  legJoints: {
+    "8": { proximal: [60, 26], distal: [59, 188] },
+    "9": { proximal: [61, 31], distal: [88, 200] },
+    "10": { proximal: [68, 28], distal: [68, 190] },
+    "11": { proximal: [63, 31], distal: [89, 198] },
+  },
   head: {
     displayHeight: 90,
     neck: { earUnder: [107, 239], chinUnder: [198, 263], center: [152.5, 251] },

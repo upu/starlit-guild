@@ -62,6 +62,9 @@ export class LabAffection {
     this.since = time;
     this.schedule(time);
   }
+  reacting(time: number) {
+    return time - this.touched < 2400;
+  }
   lookAt(time: number, direction: number) {
     this.looked = time;
     this.lookDirection = Math.max(-1, Math.min(1, direction));

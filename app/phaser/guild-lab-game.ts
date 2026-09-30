@@ -16,6 +16,37 @@ export type LabBridge = {
   status: (value: "loading" | "ready" | "error") => void;
   activity: (value: LabPose) => void;
 };
+function countDrawCalls(game: Phaser.Game) {
+  // maxTextures: 1 makes actual WebGL submissions the useful load metric.
+  const renderer = game.renderer as Phaser.Renderer.WebGL.WebGLRenderer;
+  const gl = Reflect.get(renderer, "gl") as WebGLRenderingContext | undefined;
+  let draws = 0;
+  if (gl) {
+    const arrays = gl.drawArrays.bind(gl);
+    const elements = gl.drawElements.bind(gl);
+    try {
+      gl.drawArrays = (...args: Parameters<typeof gl.drawArrays>) => {
+        draws++;
+        arrays(...args);
+      };
+      gl.drawElements = (...args: Parameters<typeof gl.drawElements>) => {
+        draws++;
+        elements(...args);
+      };
+    } catch {
+      /* A restricted context still renders; metric reports zero. */
+    }
+  }
+  Object.assign(game, {
+    labDrawMetrics: {
+      take: () => {
+        const value = draws;
+        draws = 0;
+        return gl ? value : -1;
+      },
+    },
+  });
+}
 export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engine: typeof Phaser) {
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   let failed = false;
@@ -26,7 +57,15 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
         failed = true;
         bridge.status("error");
       });
-      for (const name of ["room-tiles-v1", "leon-parts-v3", "furniture-v3"])
+      for (const name of [
+        "room-tiles-v1",
+        "leon-parts-v3",
+        "aria-parts-v1",
+        "furniture-v3",
+        "lab-table-v1",
+        "lab-cookie-plate-v1",
+        "lab-cookie-v1",
+      ])
         this.load.image(`/guild/${name}.webp`, `/guild/${name}.webp`);
     }
     create() {
@@ -56,6 +95,7 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
     scale: { mode: engine.Scale.NONE, expandParent: false },
     scene: new LabScene(),
   });
+  countDrawCalls(game);
   const lost = () => {
     bridge.status("error");
   };
