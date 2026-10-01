@@ -9,7 +9,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-thirteenth-baseline";
+  const previous = "work/lab-fourteenth-baseline";
   if (baseline) {
     await context.route(`${root}/guild-lab`, async (route) => {
       const response = await route.fetch();
@@ -19,6 +19,8 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       });
     });
     for (const [url, file] of [
+      ["app/phaser/guild-lab-single-legs.ts", "single-leg-drawing.js"],
+      ["lib/guild-lab-single-legs.ts", "single-leg-model.js"],
       ["lib/guild-lab-rig.ts", "rig.js"],
       ["lib/guild-lab-aria-rig.ts", "aria-rig.js"],
       ["lib/guild-lab-aria-master.ts", "aria-master.js"],
@@ -67,6 +69,10 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
           const drawing = this.raisedForearm.getWorldTransformMatrix();
           return { error: Math.hypot(source.tx - drawing.tx, source.ty - drawing.ty),
             depth: this.raisedForearm.depth };
+        })() : this.bentArms?.active(1) ? (() => {
+          const actual=this.bentArms.contact(1);
+          const expected=this.arms[1].lower.getWorldTransformMatrix().transformPoint(0,this.rig.arms[1].lengths[1]);
+          return {error:Math.hypot(actual.x-expected.x,actual.y-expected.y),depth:9.2};
         })() : null
       };
     `,
@@ -259,7 +265,7 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-thirteenth-before" : "work/lab-thirteenth-after",
+      baseline ? "work/lab-fourteenth-before" : "work/lab-fourteenth-after",
       baseline,
     );
     console.log(

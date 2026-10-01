@@ -4,6 +4,7 @@ import type { LabCharacterArt } from "@/lib/guild-lab-characters";
 import type { LabCharacterRig } from "@/lib/guild-lab-rig";
 import type { LabPose } from "@/lib/guild-lab-model";
 import { LAB_ACTOR_SCALE } from "@/lib/guild-lab-model";
+import { labLimbArtwork } from "@/lib/guild-lab-limbs";
 import type { GuildLabFilter } from "./guild-lab-filter";
 
 export class GuildLabSingleLegs {
@@ -20,13 +21,18 @@ export class GuildLabSingleLegs {
   ) {
     if (rig.legStyle !== "single") return;
     for (const cfg of rig.singleLegs) {
-      const image = scene.add
-        .image(0, 0, art.asset, String(cfg.frame))
-        .setOrigin(cfg.originX, cfg.originY);
-      image.setDisplaySize((cfg.height * image.frame.width) / image.frame.height, cfg.height);
-      image.rotation = -cfg.paintedAngle;
-      filter.add(image, LAB_ACTOR_SCALE);
-      const pivot = scene.add.container(cfg.x, cfg.y, [image]).setDepth(cfg.layer);
+      const images = [cfg.frame, cfg.bentFrame].map((frame) => {
+        const d = labLimbArtwork(frame, cfg.length, art);
+        const image = scene.add
+          .image(0, 0, art.asset, String(frame))
+          .setOrigin(d.originX, d.originY);
+        image
+          .setDisplaySize((d.height * image.frame.width) / image.frame.height, d.height)
+          .setRotation(d.rotation);
+        filter.add(image, LAB_ACTOR_SCALE);
+        return image;
+      });
+      const pivot = scene.add.container(cfg.x, cfg.y, images).setDepth(cfg.layer);
       body.add(pivot);
       this.parts.push(pivot);
     }
@@ -43,6 +49,9 @@ export class GuildLabSingleLegs {
       const cfg = this.rig.legStyle === "single" ? this.rig.singleLegs[i] : null;
       if (!cfg) return;
       const pose = labSingleLeg(time, i, mode, bob, reduced, this.rig);
+      part.list.forEach((child, j) =>
+        (child as Phaser.GameObjects.Image).setVisible(j === (pose.bent ? 1 : 0)),
+      );
       part
         .setVisible(mode !== "tea")
         .setPosition(cfg.x, cfg.y + pose.lift)

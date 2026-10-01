@@ -1,0 +1,12 @@
+{
+  "reference": "assets/source/road/leon-v1.png",
+  "method": "Compose the existing cutout paintings once as a standing reference, using the road idle stance: separated planted feet and nearly straight knees. Preserve head, torso, arms and garment paintings.",
+  "hip": [[7,-56],[-7,-56]],
+  "foot": [[10,0],[-10,0]],
+  "reach": 0.998,
+  "image": "assets/source/guild/leon-stand-v6.png",
+  "scale": 0.2,
+  "origin": [300,820],
+  "width": 600,
+  "height": 900
+}

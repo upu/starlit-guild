@@ -5,6 +5,8 @@ import type { GuildLabFilter } from "./guild-lab-filter";
 import { GuildLabFace } from "./guild-lab-face";
 import { GuildLabEffects } from "./guild-lab-effects";
 import { GuildLabSingleLegs } from "./guild-lab-single-legs";
+import { GuildLabBentArms } from "./guild-lab-bent-arms";
+import { drawLabJoints } from "./guild-lab-joints";
 import { GuildLabUpper } from "./guild-lab-upper";
 import type { LabFeeling } from "@/lib/guild-lab-affection";
 import { LabArmMotion } from "@/lib/guild-lab-arms";
@@ -15,6 +17,7 @@ import { labArtOrigin } from "@/lib/guild-lab-art-layout";
 import {
   LAB_ACTOR_SCALE,
   labJoint,
+  labHip,
   labPose,
   labTeaCup,
   type LabPose,
@@ -31,6 +34,7 @@ export class GuildCutout {
   private body: Phaser.GameObjects.Container;
   private upperMotion: GuildLabUpper;
   private singleLegs!: GuildLabSingleLegs;
+  private bentArms: GuildLabBentArms;
   private head: Phaser.GameObjects.Container;
   private cape: Phaser.GameObjects.Image;
   private face: GuildLabFace;
@@ -64,10 +68,7 @@ export class GuildCutout {
     this.rig = profile.rig;
     this.feetMotion = new LabFeetMotion(this.rig);
     this.armMotion = [new LabArmMotion(this.rig), new LabArmMotion(this.rig)];
-    this.art.frames.forEach(([x, y, w, h], i) => {
-      const texture = scene.textures.get(this.art.asset);
-      if (!texture.has(String(i))) texture.add(String(i), 0, x, y, w, h);
-    });
+    this.registerFrames();
     this.root = scene.add.container(0, 0);
     this.body = scene.add.container(0, 0);
     this.upperMotion = new GuildLabUpper(scene, this.body, this.rig.walk.pivotY);
@@ -85,7 +86,7 @@ export class GuildCutout {
     ).setDepth(this.rig.cape.layer);
     this.upperMotion.add(this.cape);
     this.legs.push(this.limb(this.rig.legs[1]));
-    this.addSingleLegs();
+    this.singleLegs = new GuildLabSingleLegs(scene, this.body, filter, this.rig, this.art);
     this.upperMotion.add(this.bodyPart(this.rig.torso));
     this.addSkirt();
     const neck = this.rig.neckBase;
@@ -98,6 +99,7 @@ export class GuildCutout {
     this.face = new GuildLabFace(scene, this.head, filter, this.art);
     this.upperMotion.add(this.head);
     this.arms.push(this.limb(this.rig.arms[1], true));
+    this.bentArms = new GuildLabBentArms(scene, this.upperMotion, filter, this.art, this.rig);
     this.cup = this.part(
       this.rig.cup.frame,
       0,
@@ -114,14 +116,11 @@ export class GuildCutout {
     this.root.add(this.joints);
     this.effects = new GuildLabEffects(scene, this.root);
   }
-  private addSingleLegs() {
-    this.singleLegs = new GuildLabSingleLegs(
-      this.scene,
-      this.body,
-      this.filter,
-      this.rig,
-      this.art,
-    );
+  private registerFrames() {
+    this.art.frames.forEach(([x, y, w, h], i) => {
+      const texture = this.scene.textures.get(this.art.asset);
+      if (!texture.has(String(i))) texture.add(String(i), 0, x, y, w, h);
+    });
   }
   private addSkirt() {
     if (this.character !== "aria") return;
@@ -311,7 +310,12 @@ export class GuildCutout {
   }
   private paintLegs(time: number, mode: LabPose, bob: number, reduced: boolean, jump: number) {
     const feet = this.feetMotion.sample(time, mode, bob, reduced);
+    const p = reduced
+      ? 1
+      : Math.max(0, Math.min(1, (time - this.idleStartedAt) / this.rig.idleSettleMs));
     this.legs.forEach((leg, i) => {
+      const hip = labHip(i, mode, this.rig, p * p * (3 - 2 * p));
+      leg.upper.setPosition(hip.x, hip.y);
       this.aim(leg, feet[i], mode === "idle");
       leg.upper.visible = this.rig.legStyle !== "single" || mode === "tea";
     });
@@ -342,7 +346,9 @@ export class GuildCutout {
     }
     const arm = this.arms[1];
     arm.lowerArtwork.visible = false;
-    this.raisedForearm.setVisible(true).setDepth(raised ? cfg.handLayer : cfg.restingHandLayer);
+    this.raisedForearm
+      .setVisible(!this.bentArms.active(1))
+      .setDepth(raised ? cfg.handLayer : cfg.restingHandLayer);
     // Keep the joint hierarchy as the pose source. Only the raised forearm's
     // drawing crosses in front of the face; the shoulder stays under the cape.
     const length = arm.lower.y * arm.upper.scaleY;
@@ -378,22 +384,14 @@ export class GuildCutout {
       arm.upper.setRotation(angles.upper).setScale(angles.scale);
       arm.lower.rotation = angles.lower;
     });
+    this.bentArms.paint(this.arms, mode === "tea" && this.cup.visible);
   }
   private debug(show: boolean) {
     this.joints.clear();
     if (!show) return;
-    this.joints.lineStyle(1, 0x78fff1, 0.9);
     const root = this.root.getWorldTransformMatrix();
-    for (const limb of [...this.arms, ...this.legs].filter((p) => p.upper.visible)) {
-      const upper = limb.upper.getWorldTransformMatrix();
-      const lower = limb.lower.getWorldTransformMatrix();
-      const a = root.applyInverse(upper.tx, upper.ty);
-      const b = root.applyInverse(lower.tx, lower.ty);
-      this.joints
-        .lineBetween(a.x, a.y, b.x, b.y)
-        .strokeCircle(a.x, a.y, 2)
-        .strokeCircle(b.x, b.y, 2);
-    }
+    drawLabJoints(this.joints, root, [...this.arms, ...this.legs]);
     this.singleLegs.debug(this.joints, root);
+    this.bentArms.debug(this.joints, root);
   }
 }

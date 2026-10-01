@@ -1,0 +1,10 @@
+{
+  "image": "assets/source/guild/aria-bent-limbs-v6-legs.png",
+  "parts": [
+    {"name":"near-arm-gentle","kind":"arm","side":1,"cell":[0,0,512,512],"root":[143,98],"hinge":[208,311],"end":[304,356]},
+    {"name":"near-arm-folded","kind":"arm","side":1,"cell":[512,0,512,512],"root":[632,221],"hinge":[754,288],"end":[793,168]},
+    {"name":"far-arm-folded","kind":"arm","side":0,"cell":[1024,0,512,512],"root":[1137,92],"hinge":[1218,264],"end":[1352,211]},
+    {"name":"far-leg-bent","kind":"leg","side":0,"cell":[0,512,512,512],"root":[225,545],"hinge":[247,648],"end":[233,864]},
+    {"name":"near-leg-bent","kind":"leg","side":1,"cell":[512,512,512,512],"root":[781,545],"hinge":[803,648],"end":[789,864]}
+  ]
+}

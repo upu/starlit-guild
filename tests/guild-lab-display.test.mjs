@@ -314,15 +314,13 @@ test("idle arms bend forward and some of the far palm remains visible in front o
   }
 });
 
-test("three hair roots stay behind the head with front lock behind the near glove", async () => {
+test("three hair roots stay behind the head and outside the front cape", async () => {
   const { art, rig } = labCharacters.aria;
   assert.equal(rig.hairLocks.length, 3);
   assert.equal(art.costume.matchedPair, true);
-  assert.ok(rig.hairLocks[0].layer < rig.cape.layer);
+  assert.ok(rig.cape.layer < rig.arms[0].layer && rig.arms[0].layer < rig.hairLocks[0].layer);
   assert.ok(rig.hairLocks[1].layer > rig.scarf.layer);
-  assert.ok(
-    rig.hairLocks[2].layer > rig.scarf.layer && rig.hairLocks[2].layer < rig.cup.restingHandLayer,
-  );
+  assert.ok(rig.hairLocks[2].layer > rig.scarf.layer && rig.scarf.layer > rig.cup.restingHandLayer);
   assert.equal(new Set(rig.hairLocks.map((h) => h.phase)).size, 3);
   assert.ok(rig.hairLocks.every((h) => h.layer < rig.head.layer && h.sway <= 0.04));
   for (const rotation of [-0.17, 0, 0.17]) {

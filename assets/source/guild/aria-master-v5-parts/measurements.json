@@ -64,6 +64,7 @@
         595
       ]
     ],
+    "sourceLayer": 9,
     "frame": 0,
     "rect": [
       308,
@@ -73,8 +74,8 @@
     ],
     "visible": 232936,
     "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "sealedPixels": 0,
+    "localJoints": null
   },
   {
     "name": "front-cape",
@@ -161,6 +162,7 @@
         35
       ]
     ],
+    "sourceLayer": 8.5,
     "frame": 1,
     "rect": [
       434,
@@ -170,8 +172,8 @@
     ],
     "visible": 36253,
     "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "sealedPixels": 0,
+    "localJoints": null
   },
   {
     "name": "torso",
@@ -224,21 +226,22 @@
         54
       ]
     ],
+    "sourceLayer": 5,
     "frame": 2,
     "rect": [
-      576,
-      700,
-      257,
-      193
+      478,
+      684,
+      355,
+      226
     ],
     "visible": 21239,
-    "added": 4272,
-    "localJoints": null,
-    "sourceAdded": 9655
+    "added": 32917,
+    "sealedPixels": 0,
+    "localJoints": null
   },
   {
     "name": "back-cape",
-    "layer": 3,
+    "layer": -1,
     "root": [
       480,
       732
@@ -273,17 +276,18 @@
         913
       ]
     ],
+    "sourceLayer": 3,
     "frame": 3,
     "rect": [
       335,
-      782,
+      724,
       498,
-      292
+      366
     ],
     "visible": 23732,
-    "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "added": 41221,
+    "sealedPixels": 6,
+    "localJoints": null
   },
   {
     "name": "far-upper-arm",
@@ -328,15 +332,17 @@
         45
       ]
     ],
+    "sourceLayer": 0,
     "frame": 4,
     "rect": [
       746,
       733,
-      116,
-      140
+      125,
+      163
     ],
     "visible": 3358,
-    "added": 2679,
+    "added": 5917,
+    "sealedPixels": 7,
     "localJoints": {
       "proximal": [
         43,
@@ -346,8 +352,7 @@
         69,
         133
       ]
-    },
-    "sourceAdded": 3072
+    }
   },
   {
     "name": "far-forearm",
@@ -424,6 +429,7 @@
         27
       ]
     ],
+    "sourceLayer": 0,
     "frame": 5,
     "rect": [
       776,
@@ -432,7 +438,8 @@
       172
     ],
     "visible": 6129,
-    "added": 31,
+    "added": 157,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         39,
@@ -442,8 +449,7 @@
         97,
         138
       ]
-    },
-    "sourceAdded": 157
+    }
   },
   {
     "name": "near-upper-arm",
@@ -496,15 +502,17 @@
         39
       ]
     ],
+    "sourceLayer": 8,
     "frame": 6,
     "rect": [
       464,
       703,
       167,
-      190
+      201
     ],
     "visible": 12747,
-    "added": 1412,
+    "added": 6548,
+    "sealedPixels": 3,
     "localJoints": {
       "proximal": [
         83,
@@ -514,8 +522,7 @@
         88,
         152
       ]
-    },
-    "sourceAdded": 3478
+    }
   },
   {
     "name": "near-forearm",
@@ -588,6 +595,7 @@
         30
       ]
     ],
+    "sourceLayer": 8,
     "frame": 7,
     "rect": [
       472,
@@ -597,6 +605,7 @@
     ],
     "visible": 13448,
     "added": 0,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         80,
@@ -606,8 +615,7 @@
         68,
         155
       ]
-    },
-    "sourceAdded": 0
+    }
   },
   {
     "name": "far-thigh",
@@ -669,6 +677,7 @@
         45
       ]
     },
+    "sourceLayer": 1,
     "frame": 8,
     "rect": [
       673,
@@ -677,7 +686,8 @@
       218
     ],
     "visible": 3167,
-    "added": 9624,
+    "added": 9691,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         67,
@@ -687,8 +697,7 @@
         70,
         152
       ]
-    },
-    "sourceAdded": 9691
+    }
   },
   {
     "name": "far-boot",
@@ -733,6 +742,7 @@
         24
       ]
     ],
+    "sourceLayer": 1,
     "frame": 9,
     "rect": [
       669,
@@ -742,6 +752,7 @@
     ],
     "visible": 24558,
     "added": 0,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         74,
@@ -751,8 +762,7 @@
         100,
         163
       ]
-    },
-    "sourceAdded": 0
+    }
   },
   {
     "name": "near-thigh",
@@ -818,6 +828,7 @@
         45
       ]
     },
+    "sourceLayer": 4,
     "frame": 10,
     "rect": [
       517,
@@ -826,7 +837,8 @@
       209
     ],
     "visible": 6692,
-    "added": 9087,
+    "added": 9240,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         133,
@@ -836,8 +848,7 @@
         57,
         143
       ]
-    },
-    "sourceAdded": 9240
+    }
   },
   {
     "name": "near-boot",
@@ -906,6 +917,7 @@
         24
       ]
     ],
+    "sourceLayer": 4,
     "frame": 11,
     "rect": [
       504,
@@ -915,6 +927,7 @@
     ],
     "visible": 25814,
     "added": 2,
+    "sealedPixels": 0,
     "localJoints": {
       "proximal": [
         70,
@@ -924,8 +937,7 @@
         86,
         175
       ]
-    },
-    "sourceAdded": 2
+    }
   },
   {
     "name": "back-hair",
@@ -1026,6 +1038,7 @@
         35
       ]
     ],
+    "sourceLayer": 8.75,
     "frame": 12,
     "rect": [
       232,
@@ -1035,12 +1048,12 @@
     ],
     "visible": 59413,
     "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "sealedPixels": 0,
+    "localJoints": null
   },
   {
     "name": "skirt",
-    "layer": 5.5,
+    "layer": 4.8,
     "polygon": [
       [
         553,
@@ -1103,21 +1116,22 @@
         30
       ]
     ],
+    "sourceLayer": 5.5,
     "frame": 13,
     "rect": [
-      573,
+      513,
       863,
-      291,
+      351,
       205
     ],
     "visible": 29316,
-    "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "added": 5004,
+    "sealedPixels": 9,
+    "localJoints": null
   },
   {
     "name": "far-hair",
-    "layer": 2.5,
+    "layer": 0.5,
     "root": [
       838,
       592
@@ -1200,6 +1214,7 @@
         30
       ]
     ],
+    "sourceLayer": 2.5,
     "frame": 14,
     "rect": [
       784,
@@ -1209,8 +1224,8 @@
     ],
     "visible": 24630,
     "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "sealedPixels": 0,
+    "localJoints": null
   },
   {
     "name": "front-hair",
@@ -1293,6 +1308,7 @@
         23
       ]
     ],
+    "sourceLayer": 8.6,
     "frame": 15,
     "rect": [
       548,
@@ -1302,7 +1318,7 @@
     ],
     "visible": 10400,
     "added": 0,
-    "localJoints": null,
-    "sourceAdded": 0
+    "sealedPixels": 0,
+    "localJoints": null
   }
 ]

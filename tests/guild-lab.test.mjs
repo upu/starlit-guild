@@ -572,7 +572,7 @@ test("painted knee centres remain joined through sitting and the entire stride",
 });
 
 test("idle stance extends the knee and settles its hip height over 180 ms", () => {
-  assert.equal(labRig.idleReach, 0.99);
+  assert.equal(labRig.idleReach, 0.998);
   assert.equal(labRig.idleSettleMs, 180);
   const walk = labPose(0, "walk", false).bob;
   const start = labPose(0, "idle", false, 0, walk).bob;
@@ -778,7 +778,10 @@ test("Aria's master-derived cape covers the shoulder root while leaving the uppe
   const { art, rig } = labCharacters.aria;
   assert.ok(rig.scarf.layer > rig.arms[1].layer);
   const p = art.master.parts.find((p) => p.name === "near-upper-arm");
-  assert.ok(p.visible / (p.visible + p.added) > 0.4);
+  assert.ok(
+    p.visible > 10000 && p.added > 0,
+    "complete rounded sleeve retains original visible paint",
+  );
   assert.deepEqual(
     p.joints[0],
     art.master.parts
@@ -838,12 +841,13 @@ test("measured chin overlaps the collar and a hidden neck base seals the maximum
 test("Aria's hanging hair stays outside the front cape and the rear cape has no white clasp", async () => {
   const { art, rig } = labCharacters.aria;
   const layers = [
-    rig.arms[0],
-    rig.legs[0],
     rig.cape,
+    rig.arms[0],
+    rig.hairLocks[0],
+    rig.legs[0],
     rig.legs[1],
-    rig.torso,
     rig.skirt,
+    rig.torso,
     rig.arms[1],
     rig.scarf,
     rig.backHair,

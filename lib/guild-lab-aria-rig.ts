@@ -84,6 +84,11 @@ const feet = ["far-boot", "near-boot"].map((name) => {
   if (!("joints" in p)) throw Error("Missing measured foot");
   return world(p.joints[1]);
 });
+const bentLegFrame = (side: number) => {
+  const variant = art.variants.find((v) => v.kind === "leg" && v.side === side);
+  if (!variant) throw Error("Missing painted swing leg");
+  return variant.frame;
+};
 export const ariaLabRig = {
   legStyle: "single",
   singleLegs: ["far-leg", "near-leg"].map((name) => {
@@ -97,6 +102,7 @@ export const ariaLabRig = {
       forward: 15,
       back: 19,
       lift: 4,
+      bentFrame: bentLegFrame(name === "far-leg" ? 0 : 1),
     };
   }),
   head: { ...world([headRect[0] + headRect[2] / 2, headRect[1] + headRect[3]]), layer: 9 },
@@ -109,7 +115,7 @@ export const ariaLabRig = {
     lift: 10,
     lean: 3,
     headCounter: 0.35,
-    center: drawing("torso").x,
+    center: world(master.waist).x,
     pivotY: (legs[0].joint.y + legs[1].joint.y) / 2,
   },
   cape: {
@@ -122,7 +128,7 @@ export const ariaLabRig = {
     layer: 7.5,
     raisedLayer: 9.1,
     handLayer: 9.2,
-    restingHandLayer: 8.65,
+    restingHandLayer: 8.05,
   },
   hairLocks,
   backHair: { ...hairLocks[1] },

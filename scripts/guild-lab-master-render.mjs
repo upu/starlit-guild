@@ -1,10 +1,18 @@
 import sharp from "sharp";
-import { withoutUnderpaint } from "./guild-lab-underpaint.mjs";
 import { labSingleLeg } from "../lib/guild-lab-single-legs.ts";
 import { labCharacters } from "../lib/guild-lab-characters.ts";
 import { labLimbArtwork } from "../lib/guild-lab-limbs.ts";
-import { labIdleArm, labWalkingArm } from "../lib/guild-lab-arms.ts";
-import { labJoint, labLegTarget, labPose, labUpperPoint } from "../lib/guild-lab-model.ts";
+import { LabArmMotion } from "../lib/guild-lab-arms.ts";
+import {
+  labJoint,
+  labHip,
+  labLegTarget,
+  labPose,
+  labTeaCup,
+  labUpperPoint,
+} from "../lib/guild-lab-model.ts";
+import { labBentArm } from "../lib/guild-lab-bent-arms.ts";
+import { leonLabStance } from "../lib/guild-lab-leon-stance.ts";
 
 const frameCache = new Map();
 const rotate = (x, y, a) => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
@@ -15,10 +23,23 @@ export async function renderMasterPose(
   skirtPose = { rotation: 0, width: 1, height: 1 },
   options = {},
 ) {
-  const { art, rig } = labCharacters.aria,
-    master = art.master;
-  const { width, height } = await sharp(master.image).metadata();
-  const pose = labPose(time, mode, false, 1, 0, rig, art);
+  const { art, rig } = labCharacters[options.character ?? "aria"],
+    master = art.master ?? leonLabStance;
+  const { width, height } = "width" in master ? master : await sharp(master.image).metadata();
+  const pose = labPose(
+    time,
+    mode,
+    false,
+    1,
+    0,
+    rig,
+    art,
+    options.animate && options.character !== "leon" && mode === "tea" ? 1200 : 0,
+  );
+  const feeling = { look: 0, jump: 0, squash: 0, stretch: 0, ...options.feeling };
+  pose.head += feeling.look;
+  const cup = labTeaCup(pose.sip, pose.head, rig, art);
+  if (mode === "tea") pose.hand = cup.hand;
   const layers = [];
   const drawing = (cfg, rotation = 0) => {
     const frame = cfg.frame ?? 0,
@@ -44,38 +65,42 @@ export async function renderMasterPose(
     { ...rig.head, height: art.head.displayHeight, originY: 1 },
     mode === "walk" || options.animate ? pose.head : 0,
   );
-  for (const hair of rig.hairLocks)
+  for (const hair of rig.hairLocks ?? [])
     drawing(
       hair,
       mode === "walk" || options.animate ? Math.sin(time / 640 + hair.phase) * hair.sway : 0,
     );
-  const [, , sw, sh] = art.frames[rig.skirt.frame],
-    s = rig.skirt.height / sh;
-  layers.push({
-    frame: rig.skirt.frame,
-    layer: rig.skirt.layer,
-    point: (x, y) => {
-      const [dx, dy] = rotate(
-        (x - sw * rig.skirt.originX) * s * skirtPose.width,
-        (y - sh * rig.skirt.originY) * s * skirtPose.height,
-        skirtPose.rotation,
-      );
-      const point = labUpperPoint({ x: rig.skirt.x + dx, y: rig.skirt.y + dy }, pose.lean, rig);
-      return [point.x, point.y];
-    },
-  });
+  if (rig.skirt) {
+    const [, , sw, sh] = art.frames[rig.skirt.frame],
+      s = rig.skirt.height / sh;
+    layers.push({
+      frame: rig.skirt.frame,
+      layer: rig.skirt.layer,
+      point: (x, y) => {
+        const [dx, dy] = rotate(
+          (x - sw * rig.skirt.originX) * s * skirtPose.width,
+          (y - sh * rig.skirt.originY) * s * skirtPose.height,
+          skirtPose.rotation,
+        );
+        const point = labUpperPoint({ x: rig.skirt.x + dx, y: rig.skirt.y + dy }, pose.lean, rig);
+        return [point.x, point.y];
+      },
+    });
+  }
   for (const [limbs, arms] of [
     [rig.legs, false],
     [rig.arms, true],
   ])
     for (const [i, limb] of limbs.entries()) {
+      const joint = arms ? limb.joint : labHip(i, mode, rig);
       if (!arms && rig.legStyle === "single" && mode !== "tea") {
         const cfg = rig.singleLegs[i],
           leg = labSingleLeg(time, i, mode, pose.bob, false, rig),
-          d = labLimbArtwork(cfg.frame, cfg.length, art),
-          [, , w, h] = art.frames[cfg.frame];
+          frame = leg.bent ? cfg.bentFrame : cfg.frame,
+          d = labLimbArtwork(frame, cfg.length, art),
+          [, , w, h] = art.frames[frame];
         layers.push({
-          frame: cfg.frame,
+          frame,
           layer: cfg.layer,
           point: (x, y) => {
             const [sx, sy] = rotate(
@@ -89,17 +114,44 @@ export async function renderMasterPose(
         });
         continue;
       }
+      const target = i ? pose.hand : pose.farHand;
       const a = arms
-        ? mode === "walk"
-          ? labWalkingArm(time, i, false, rig)
-          : mode === "tea" || mode === "work"
-            ? labJoint(i ? pose.hand : pose.farHand, ...limb.lengths, limb.bend)
-            : labIdleArm(i, rig)
+        ? new LabArmMotion(rig).sample(
+            time,
+            mode,
+            i,
+            {
+              x: target.x * (1 - feeling.stretch),
+              y: target.y * (1 - feeling.stretch) - 32 * feeling.stretch,
+            },
+            Boolean(feeling.jump || feeling.squash || feeling.stretch),
+            false,
+          )
         : labJoint(
             labLegTarget(time, i / 2, mode, pose.bob, rig),
             ...limb.lengths,
             mode === "idle" ? limb.idleBend : limb.bend,
           );
+      const bent = arms ? labBentArm(art, i, a.upper, a.lower, limb.lengths, a.scale ?? 1) : null;
+      if (bent) {
+        const v = bent.variant;
+        const scale =
+          ((limb.lengths[0] + limb.lengths[1]) * bent.scale) /
+          Math.hypot(v.end[0] - v.root[0], v.end[1] - v.root[1]);
+        const point = (x, y) => {
+          const [dx, dy] = rotate((x - v.root[0]) * scale, (y - v.root[1]) * scale, bent.rotation);
+          const world = labUpperPoint(
+            { x: limb.joint.x + dx, y: limb.joint.y + dy },
+            pose.lean,
+            rig,
+          );
+          return [world.x, world.y];
+        };
+        layers.push({ frame: v.frame, layer: limb.layer, point });
+        if (i === 1 && mode === "tea")
+          layers.push({ frame: v.forearmFrame, layer: rig.cup.handLayer, point });
+        continue;
+      }
       for (const segment of [0, 1]) {
         const frame = limb.frames[segment],
           [, , w, h] = art.frames[frame],
@@ -116,7 +168,11 @@ export async function renderMasterPose(
               (y - h * d.originY) * d.scale,
               d.rotation + a.upper + (segment ? a.lower : 0),
             );
-            const point = { x: limb.joint.x + ex + px, y: limb.joint.y + ey + py };
+            const scale = a.scale ?? 1;
+            const point = {
+              x: joint.x + (ex + px) * scale,
+              y: joint.y + (ey + py) * scale,
+            };
             const world = arms ? labUpperPoint(point, pose.lean, rig) : point;
             return [world.x, world.y];
           },
@@ -127,14 +183,21 @@ export async function renderMasterPose(
     owner = new Int16Array(width * height).fill(-1),
     counts = {};
   for (const layer of layers.sort((a, b) => a.layer - b.layer)) {
+    const placed = layer.point;
+    layer.point = (x, y) => {
+      const p = placed(x, y);
+      return [
+        p[0] * (1 + feeling.squash * 0.06),
+        p[1] * (1 - feeling.squash * 0.08 + feeling.stretch * 0.035) + pose.bob - feeling.jump,
+      ];
+    };
     const [left, top, w, h] = art.frames[layer.frame];
-    const cacheKey = layer.frame + ":" + Boolean(options.hideUnderpaint);
+    const cacheKey = art.asset + ":" + layer.frame;
     if (!frameCache.has(cacheKey)) {
       let pixels = await sharp("public" + art.asset)
         .extract({ left, top, width: w, height: h })
         .raw()
         .toBuffer();
-      if (options.hideUnderpaint) pixels = await withoutUnderpaint(art, layer.frame, pixels);
       frameCache.set(cacheKey, pixels);
     }
     let data = frameCache.get(cacheKey);

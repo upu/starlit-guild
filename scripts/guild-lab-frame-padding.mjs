@@ -15,6 +15,9 @@ export function addFramePadding(art, padding = 4) {
   for (const group of [art.armJoints, art.legJoints])
     for (const joint of Object.values(group))
       for (const key of Object.keys(joint)) joint[key] = point(joint[key]);
+  if (art.variants)
+    for (const variant of art.variants)
+      for (const key of ["root", "hinge", "end"]) variant[key] = point(variant[key]);
   for (const key of ["center", "earUnder", "chinUnder"])
     if (art.head.neck[key]) art.head.neck[key] = point(art.head.neck[key]);
   art.head.displayHeight *= art.frames[0][3] / original[0][3];

@@ -2,11 +2,13 @@ import { guildLabArt } from "./guild-lab-art.ts";
 import { ariaLabRig } from "./guild-lab-aria-rig.ts";
 export { ariaLabRig } from "./guild-lab-aria-rig.ts";
 import { labArtHeight, labArtOrigin } from "./guild-lab-art-layout.ts";
+import { leonLabStance } from "./guild-lab-leon-stance.ts";
 
 // Leon's attachment points and painted overlaps, in unscaled body coordinates.
 export type LabLimbConfig = {
   frames: readonly [number, number];
   joint: { x: number; y: number };
+  idleJoint?: { x: number; y: number };
   lengths: readonly [number, number];
   front: "upper" | "lower";
   layer: number;
@@ -97,8 +99,14 @@ export const labRig = {
   },
   cup: { frame: 12, height: labArtHeight(guildLabArt, 12, 17), layer: 7.5 },
   legs: [
-    { ...leg, frames: [8, 9], joint: { x: 4, y: -56 }, layer: 1 },
-    { ...leg, frames: [10, 11], joint: { x: -5, y: -56 }, layer: 4 },
+    { ...leg, frames: [8, 9], joint: { x: 4, y: -56 }, idleJoint: leonLabStance.hips[0], layer: 1 },
+    {
+      ...leg,
+      frames: [10, 11],
+      joint: { x: -5, y: -56 },
+      idleJoint: leonLabStance.hips[1],
+      layer: 4,
+    },
   ] satisfies LabLimbConfig[],
   arms: [
     {
@@ -127,12 +135,9 @@ export const labRig = {
     },
   ] satisfies LabArmConfig[],
   stanceReach: 0.96,
-  idleReach: 0.99,
+  idleReach: leonLabStance.reach,
   idleSettleMs: 180,
-  idleFeet: [
-    { x: 4.5, y: 0 },
-    { x: -4.5, y: 0 },
-  ],
+  idleFeet: leonLabStance.feet,
   soleExtension: 0.12,
   armSettleMs: 180,
   seatedFoot: { x: 22, y: 38 },

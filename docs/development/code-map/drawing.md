@@ -11,4 +11,6 @@
 
 作業ポイントの説明札は [作業画像の下端への追従](../../../app/phaser/road-work-caption.ts) を参照。
 
+旅団の部品合成試作は [制作・検証手順](../../art/guild-lab.md) → [合成](../../../app/phaser/guild-cutout.ts)、[曲げた腕](../../../app/phaser/guild-lab-bent-arms.ts)、[一続きの脚](../../../app/phaser/guild-lab-single-legs.ts)。位置・角度は [キャラ別設定](../../../lib/guild-lab-characters.ts)、立ち姿は [レオンの基準](../../../lib/guild-lab-leon-stance.ts)。[完成絵との照合](../../../tests/guild-lab-master.test.mjs)、[描いた裏と透明穴](../../../tests/guild-lab-completed-paint.test.mjs)、[歩行](../../../tests/guild-lab-walking.test.mjs) と拡大画像を合わせて確認する。
+
 作業ポイントの画像は [全作業文の対応](../../../lib/road-worksite-catalog.ts) → [素材と動作](../../../lib/road-worksite-art.ts) → [表示](../../../lib/chapter-road-work-look.ts)。[全章の点検記録](../../art/worksite-audit.md) と [未登録検査](../../../tests/road-worksites.test.mjs)、`tests/road-worksites.browser.mjs` で追加漏れと小表示を確認する。

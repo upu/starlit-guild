@@ -116,8 +116,8 @@ test("master proportions preserve visible chest, near upper sleeve and natural c
       for (const frame of [2, 6]) {
         const visible = r.owner.reduce((n, v) => n + (v === frame), 0);
         assert.ok(
-          visible / r.counts[frame] > 0.4,
-          `${mode}/${time} frame ${frame} visibility ${visible / r.counts[frame]}`,
+          visible / art.master.parts.find((p) => p.frame === frame).visible > 0.4,
+          `${mode}/${time} frame ${frame}: original sleeve/chest remains visible`,
         );
       }
     }

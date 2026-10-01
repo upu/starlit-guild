@@ -1,6 +1,8 @@
 import sharp from "sharp";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fitPadded } from "./guild-lab-image-tools.mjs";
+import { completedPaint } from "./guild-lab-completed-paint.mjs";
+import { sealPaintCavities } from "./guild-lab-coverage.mjs";
 
 export const inPolygon = (x, y, polygon) => {
   let inside = false;
@@ -22,7 +24,7 @@ export async function cutMaster(config) {
   const owner = new Int16Array(width * height).fill(-1);
   const byDepth = config.parts
     .map((part, frame) => ({ ...part, frame }))
-    .sort((a, b) => a.layer - b.layer);
+    .sort((a, b) => (a.sourceLayer ?? a.layer) - (b.sourceLayer ?? b.layer));
   for (let y = 0; y < height; y++)
     for (let x = 0; x < width; x++) {
       const p = y * width + x;
@@ -109,6 +111,7 @@ export async function cutMaster(config) {
   mkdirSync(dir, { recursive: true });
   const parts = [];
   for (const [frame, part] of config.parts.entries()) {
+    const complete = await completedPaint(config, part.name);
     const pixels = Buffer.alloc(master.length),
       fills = Buffer.alloc(master.length);
     const croppedFill = part.fillCrop
@@ -137,6 +140,29 @@ export async function cutMaster(config) {
       for (let x = 0; x < width; x++) {
         const p = y * width + x,
           q = p * 4;
+        if (owner[p] === frame && !complete) {
+          master.copy(pixels, q, q, q + 4);
+          visible++;
+          continue;
+        }
+        if (complete && master[q + 3] >= 245 && inPolygon(x, y, complete.polygon)) {
+          const [cx, cy, cw, ch] = complete.rect,
+            xx = x - cx,
+            yy = y - cy;
+          if (xx >= 0 && yy >= 0 && xx < cw && yy < ch) {
+            const u = (yy * cw + xx) * 4;
+            if (complete.pixels[u + 3] >= 180) {
+              complete.pixels.copy(pixels, q, u, u + 3);
+              pixels[q + 3] = 255;
+              if (owner[p] === frame) visible++;
+              else {
+                pixels.copy(fills, q, q, q + 4);
+                added++;
+              }
+              continue;
+            }
+          }
+        }
         if (owner[p] === frame) {
           master.copy(pixels, q, q, q + 4);
           visible++;
@@ -147,7 +173,8 @@ export async function cutMaster(config) {
         if (
           owner[p] < 0 ||
           master[q + 3] < 255 ||
-          (config.parts[owner[p]].layer <= part.layer &&
+          ((config.parts[owner[p]].sourceLayer ?? config.parts[owner[p]].layer) <=
+            (part.sourceLayer ?? part.layer) &&
             !sameJoint &&
             !(part.fillSameLayer && sameLayer))
         )
@@ -200,6 +227,7 @@ export async function cutMaster(config) {
         pixels.copy(fills, q, q, q + 4);
         added++;
       }
+    const sealedPixels = complete ? sealPaintCavities(pixels, width, height) : 0;
     let left = width,
       top = height,
       right = 0,
@@ -233,6 +261,7 @@ export async function cutMaster(config) {
       image,
       visible,
       added,
+      sealedPixels,
       localJoints: part.joints
         ? { proximal: local(part.joints[0]), distal: local(part.joints[1]) }
         : null,

@@ -105,7 +105,7 @@ test("Aria's seated jointed legs retain front boot cuffs and filled knee sockets
   }
 });
 
-test("single legs keep a fixed painted knee, asymmetric hip swings and the support centre under the body", async () => {
+test("complete leg paintings switch only during swing and keep the support centre under the body", async () => {
   const { rig, art } = labCharacters.aria;
   assert.equal(rig.legStyle, "single");
   assert.equal(labCharacters.leon.rig.legStyle, "jointed");
@@ -119,6 +119,7 @@ test("single legs keep a fixed painted knee, asymmetric hip swings and the suppo
         p.rotation >= (-15 * Math.PI) / 180 - 1e-8 && p.rotation <= (19 * Math.PI) / 180 + 1e-8,
       );
       const planted = (t / 900 + i / 2) % 1 < 0.5;
+      assert.equal(p.bent, !planted);
       if (planted) {
         assert.equal(p.lift, 0);
         assert.ok(Math.abs(cfg.y + pose.bob + Math.cos(p.rotation) * cfg.length * p.scaleY) < 1e-6);
@@ -127,7 +128,11 @@ test("single legs keep a fixed painted knee, asymmetric hip swings and the suppo
       assert.equal(labSingleLeg(t, i, "walk", pose.bob, true, rig).rotation, cfg.paintedAngle);
     }
     const r = await renderMasterPose("walk", t);
-    assert.ok(r.layers.some((p) => p.frame === rig.singleLegs[0].frame));
+    for (let i = 0; i < 2; i++) {
+      const cfg = rig.singleLegs[i],
+        p = labSingleLeg(t, i, "walk", pose.bob, false, rig);
+      assert.ok(r.layers.some((layer) => layer.frame === (p.bent ? cfg.bentFrame : cfg.frame)));
+    }
     assert.ok(!r.layers.some((p) => [8, 9, 10, 11].includes(p.frame)));
   }
   assert.ok(Math.abs(support.reduce((n, x) => n + x, 0) / support.length - rig.walk.center) < 4);
@@ -138,10 +143,11 @@ test("single legs keep a fixed painted knee, asymmetric hip swings and the suppo
   assert.ok(!seated.layers.some((p) => p.frame === rig.singleLegs[0].frame));
 });
 
-test("rear-cloak supplemental oval is absent and dark cloak paint is not carried on the upper sleeve", async () => {
+test("rear cloak uses completed painted lining and cloak fragments cannot travel on a sleeve", async () => {
   const { art } = labCharacters.aria;
   const config = JSON.parse(readFileSync("assets/source/guild/aria-master-v5.json", "utf8"));
-  assert.equal(art.master.parts.find((p) => p.name === "back-cape").added, 0);
+  assert.ok(art.master.parts.find((p) => p.name === "back-cape").added > 0);
+  assert.equal(config.completedPaint.image, "assets/source/guild/aria-completed-clothes-v6.png");
   assert.equal(config.parts.find((p) => p.name === "back-cape").fill, undefined);
   const rendered = await renderMasterPose();
   for (const frame of [4, 6]) {

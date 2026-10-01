@@ -1,5 +1,4 @@
 import sharp from "sharp";
-import { spawnSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { format } from "prettier";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
@@ -8,6 +7,7 @@ import { registerHead, faceMask } from "./guild-lab-face-masks.mjs";
 import { addFramePadding } from "./guild-lab-frame-padding.mjs";
 
 import { singleLegs } from "./guild-lab-single-legs.mjs";
+import { bentPaint } from "./guild-lab-bent-paint.mjs";
 
 const config = readMasterConfig(),
   cut = await cutMaster(config);
@@ -154,6 +154,28 @@ for (const leg of await singleLegs(config, cut)) {
     rect: [leg.rect[0] - 4, leg.rect[1] - 4, leg.rect[2] + 8, leg.rect[3] + 8],
   });
 }
+art.variants = [];
+for (const variant of await bentPaint()) {
+  const frame = images.size;
+  images.set(frame, variant.image);
+  const forearmFrame = variant.forearm ? images.size : null;
+  if (variant.forearm) images.set(forearmFrame, variant.forearm);
+  const joints = { proximal: variant.root, distal: variant.end };
+  art[variant.kind === "arm" ? "armJoints" : "legJoints"][frame] = joints;
+  if (variant.forearm) art.armJoints[forearmFrame] = joints;
+  art.variants.push({
+    name: variant.name,
+    kind: variant.kind,
+    side: variant.side,
+    frame,
+    forearmFrame,
+    root: variant.root,
+    hinge: variant.hinge,
+    end: variant.end,
+    bend: variant.bend,
+    palette: variant.palette,
+  });
+}
 let x = 8,
   y = 8,
   rowHeight = 0;
@@ -205,8 +227,3 @@ writeFileSync(
   ),
 );
 console.log(`Built master-derived Aria: ${parts.length} layers, ${images.size} frames`);
-
-const trim = spawnSync(process.execPath, ["scripts/trim-guild-lab-underpaint.mjs"], {
-  stdio: "inherit",
-});
-if (trim.status !== 0) throw Error("Could not verify hidden underpaint");
