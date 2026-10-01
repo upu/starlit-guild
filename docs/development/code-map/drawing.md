@@ -13,4 +13,6 @@
 
 旅団の部品合成試作は [制作・検証手順](../../art/guild-lab.md) → [合成](../../../app/phaser/guild-cutout.ts)、[曲げた腕](../../../app/phaser/guild-lab-bent-arms.ts)、[一続きの脚](../../../app/phaser/guild-lab-single-legs.ts)、[足首](../../../app/phaser/guild-lab-feet.ts)、[スカートの表裏](../../../app/phaser/guild-lab-skirts.ts)。位置・角度は [キャラ別設定](../../../lib/guild-lab-characters.ts)、立ち姿は [完成絵からの設定](../../../lib/guild-lab-leon-rig.ts)。[完成絵との照合](../../../tests/guild-lab-master.test.mjs)、[描いた裏と透明穴](../../../tests/guild-lab-completed-paint.test.mjs)、[歩行](../../../tests/guild-lab-walking.test.mjs)、[足首・元画素・素材の所有](../../../tests/guild-lab-ankles.test.mjs) と拡大画像を合わせて確認する。
 
+奥の手とカップを持つ前腕の層は [前腕の共有変換](../../../app/phaser/guild-lab-forearms.ts)。[全動作のひじ・奥の手・共通素材検査](../../../tests/guild-lab-finishing.test.mjs)、[色の検査](../../../scripts/guild-lab-material-audit.mjs)、[市松模様の部品見本帳](../../../scripts/guild-lab-swatchbook.mjs) も参照する。レオンの切り分け境界は [素材の所有](../../../scripts/guild-lab-leon-ownership.mjs) と原画設定の測定点に置く。
+
 作業ポイントの画像は [全作業文の対応](../../../lib/road-worksite-catalog.ts) → [素材と動作](../../../lib/road-worksite-art.ts) → [表示](../../../lib/chapter-road-work-look.ts)。[全章の点検記録](../../art/worksite-audit.md) と [未登録検査](../../../tests/road-worksites.test.mjs)、`tests/road-worksites.browser.mjs` で追加漏れと小表示を確認する。

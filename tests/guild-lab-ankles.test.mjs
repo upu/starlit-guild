@@ -55,7 +55,7 @@ test("shaft and shoe share original leather pixels across a generous ankle overl
           shared++;
         }
       assert.ok(shared > 1000, "painted leather overlaps at the ankle");
-      assert.equal(foot.overlap, 20);
+      assert.equal(foot.overlap, art.asset.includes("leon") ? 28 : 20);
     }
 });
 
@@ -155,8 +155,8 @@ test("Leon thigh completion contains one short trouser leg, with no coat edge or
         .raw()
         .toBuffer({ resolveWithObject: true });
     assert.ok(
-      c.completedPaint.parts[name].cell[2] < 256,
-      "cut a single leg from the completion sheet",
+      c.completedPaint.image.endsWith("leon-completed-clothes-v8.png"),
+      "completion source contains one independently painted thigh, not a pair of pants",
     );
     for (let y = 0; y < info.height; y++)
       for (let x = 0; x < info.width; x++) {

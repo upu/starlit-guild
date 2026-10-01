@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { inPolygon } from "./guild-lab-master-layers.mjs";
 import { completedPaint } from "./guild-lab-completed-paint.mjs";
+import { leonMaterialOwner, roundedLimb } from "./guild-lab-leon-ownership.mjs";
 
 export async function cutLeonMaster(config) {
   const { data: master, info } = await sharp(config.image)
@@ -47,6 +48,27 @@ export async function cutLeonMaster(config) {
       if ([8, 10].includes(owner[p]) && r > g * 1.23 && g > b * 1.18) owner[p] = x < 550 ? 11 : 9;
     }
   mkdirSync(config.directory, { recursive: true });
+  for (let p = 0; p < owner.length; p++)
+    if (owner[p] >= 0)
+      owner[p] = leonMaterialOwner(
+        owner[p],
+        p % width,
+        Math.floor(p / width),
+        master.subarray(p * 4, p * 4 + 3),
+      );
+  for (let p = 0; p < owner.length; p++) {
+    const x = p % width,
+      y = Math.floor(p / width),
+      f = owner[p];
+    if (f === 4 && y < 785) owner[p] = 2;
+    if ([5, 7].includes(f) && !inPolygon(x, y, config.materialSeams.forearms[f === 7 ? 1 : 0]))
+      owner[p] = y < 966 ? (f === 7 ? 6 : 4) : y > 1130 ? (f === 7 ? 10 : 8) : 2;
+    if (f === 1 && !inPolygon(x, y, config.materialSeams.frontCape))
+      owner[p] = y < 660 ? 0 : x < 480 ? 6 : 2;
+    if (f === 6 && !inPolygon(x, y, config.materialSeams.nearUpper)) owner[p] = x < 340 ? 3 : 2;
+    if (owner[p] >= 0)
+      owner[p] = leonMaterialOwner(owner[p], x, y, master.subarray(p * 4, p * 4 + 3));
+  }
   const parts = [];
   for (const [frame, part] of config.parts.entries()) {
     const complete = await completedPaint(config, part.name),
@@ -57,23 +79,37 @@ export async function cutLeonMaster(config) {
       for (let x = 0; x < width; x++) {
         const p = y * width + x,
           q = p * 4;
-        if (owner[p] === frame) {
+        const closedBacking =
+          ([8, 10].includes(frame) && y < 1115) ||
+          (frame === 6 && y > 935) ||
+          (frame === 4 && y > 946);
+        if ([8, 10].includes(frame) && y > part.joints[1][1]) {
+          const [kx, ky] = part.joints[1],
+            radius = frame === 10 ? 73 : 65;
+          if (((x - kx) / radius) ** 2 + ((y - ky) / 12) ** 2 > 1) continue;
+        }
+        if (owner[p] === frame && !closedBacking) {
           master.copy(pixels, q, q, q + 4);
           visible++;
           continue;
         }
-        if (!complete || !master[q + 3] || !inPolygon(x, y, complete.polygon) || owner[p] < 0)
-          continue;
         if (
-          (config.parts[owner[p]].sourceLayer ?? config.parts[owner[p]].layer) <
-          (part.sourceLayer ?? part.layer)
+          !complete ||
+          !master[q + 3] ||
+          (!inPolygon(x, y, complete.polygon) && ![4, 6, 8, 10].includes(frame)) ||
+          owner[p] < 0
         )
           continue;
+        if (config.parts[owner[p]].layer < part.layer) continue;
         const xx = x - complete.rect[0],
           yy = y - complete.rect[1];
         if (xx < 0 || yy < 0 || xx >= complete.rect[2] || yy >= complete.rect[3]) continue;
         const u = (yy * complete.rect[2] + xx) * 4;
         if (complete.pixels[u + 3] < 180) continue;
+        // Complete backing cells already contain one garment each. Master seam
+        // coordinates must not clip their round caps (those seams are occlusions).
+        if ([8, 10].includes(frame) && !roundedLimb(x, y, part.joints, frame === 10 ? 73 : 65))
+          continue;
         complete.pixels.copy(pixels, q, u, u + 3);
         pixels[q + 3] = 255;
         added++;
@@ -82,6 +118,38 @@ export async function cutLeonMaster(config) {
       y0 = height,
       x1 = 0,
       y1 = 0;
+    // Remove disconnected seam dust. These pixels are not part of a closed
+    // painted limb; keeping them would make little coat/outline fragments travel.
+    const seen = new Uint8Array(width * height),
+      components = [];
+    for (let p = 0; p < seen.length; p++) {
+      if (seen[p] || !pixels[p * 4 + 3]) continue;
+      const group = [p];
+      seen[p] = 1;
+      for (let k = 0; k < group.length; k++) {
+        const at = group[k],
+          xx = at % width,
+          yy = Math.floor(at / width);
+        for (let dy = -1; dy <= 1; dy++)
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = xx + dx,
+              ny = yy + dy,
+              n = ny * width + nx;
+            if (nx < 0 || ny < 0 || nx >= width || ny >= height || seen[n] || !pixels[n * 4 + 3])
+              continue;
+            seen[n] = 1;
+            group.push(n);
+          }
+      }
+      components.push(group);
+    }
+    const largest = Math.max(...components.map((g) => g.length));
+    for (const group of components) {
+      const collar =
+        frame === 2 && group.every((p) => Math.floor(p / width) < 760 && p % width > 480);
+      if (frame !== 0 && !collar && group.length < largest * 0.02)
+        for (const p of group) pixels[p * 4 + 3] = 0;
+    }
     for (let y = 0; y < height; y++)
       for (let x = 0; x < width; x++)
         if (pixels[(y * width + x) * 4 + 3]) {

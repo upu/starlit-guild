@@ -69,6 +69,13 @@ export class LabAffection {
     this.looked = time;
     this.lookDirection = Math.max(-1, Math.min(1, direction));
   }
+  stretch(time: number) {
+    this.since = time;
+    this.touched = -Infinity;
+    this.gesture = "stretch";
+    this.gestureAt = time;
+    this.schedule(time);
+  }
   private schedule(time: number) {
     this.nextIdle = time + 10000 + this.random() * 10000;
   }

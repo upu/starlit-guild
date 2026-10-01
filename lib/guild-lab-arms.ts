@@ -3,7 +3,36 @@ import { labJoint, type LabPose, type Point } from "./guild-lab-model.ts";
 import { labLimbArtwork } from "./guild-lab-limbs.ts";
 
 export const labArmArtwork = labLimbArtwork;
+function targetArm(target: Point, index: number, rig: LabCharacterRig) {
+  const arm = rig.arms[index];
+  const angles = { ...labJoint(target, ...arm.lengths, arm.bend), scale: 1 };
+  if (angles.lower <= 0 && angles.lower >= (-arm.elbowLimit * Math.PI) / 180) return angles;
+  const beta = Math.min(Math.acos(Math.cos(angles.lower)), (arm.elbowLimit * Math.PI) / 180);
+  const [upper, lower] = arm.lengths;
+  const distance = Math.hypot(upper + lower * Math.cos(beta), lower * Math.sin(beta));
+  return {
+    upper:
+      Math.atan2(-target.x, target.y) +
+      Math.atan2(lower * Math.sin(beta), upper + lower * Math.cos(beta)),
+    lower: -beta,
+    scale: Math.min(1, Math.hypot(target.x, target.y) / distance),
+  };
+}
 export type LabArmAngles = { upper: number; lower: number; scale: number };
+export function labStretchArm(
+  base: LabArmAngles,
+  index: number,
+  amount: number,
+  rig: LabCharacterRig = labRig,
+): LabArmAngles {
+  const config = rig.arms[index].stretchAngles,
+    t = Math.max(0, Math.min(1, amount));
+  return {
+    upper: base.upper + ((-config.shoulder * Math.PI) / 180 - base.upper) * t,
+    lower: base.lower + ((-config.elbow * Math.PI) / 180 - base.lower) * t,
+    scale: base.scale + (1 - base.scale) * t,
+  };
+}
 export function labIdleArm(index: number, rig: LabCharacterRig = labRig): LabArmAngles {
   const config = rig.arms[index].idleAngles;
   return {
@@ -52,20 +81,22 @@ export class LabArmMotion {
     target: Point,
     reaction: boolean,
     reduced: boolean,
+    stretch = 0,
   ) {
-    const arm = this.rig.arms[index];
     const direct = (mode === "walk" || mode === "idle") && !reaction;
     let angles = direct
       ? mode === "idle"
         ? labIdleArm(index, this.rig)
         : labWalkingArm(time, index, reduced, this.rig)
-      : { ...labJoint(target, arm.lengths[0], arm.lengths[1], arm.bend), scale: 1 };
+      : targetArm(target, index, this.rig);
     if (this.previous === "walk" && mode === "idle" && !reduced) {
       this.from = this.last;
       this.settledAt = time;
     }
     if (mode === "idle" && !reaction && !reduced && this.from)
       angles = this.settle(time, angles, this.from);
+    if (stretch > 0 && !reduced)
+      angles = labStretchArm(labIdleArm(index, this.rig), index, stretch, this.rig);
     this.previous = mode;
     this.last = angles;
     return angles;

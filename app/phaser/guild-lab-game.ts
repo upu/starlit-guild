@@ -10,6 +10,7 @@ export type LabControls = {
   grid: boolean;
   view: LabCameraView;
   greet: number;
+  stretch?: number;
 };
 export type LabBridge = {
   read: () => LabControls;

@@ -73,6 +73,9 @@ const arms = [
   walkShoulder: { forward: i ? 24 : 9, back: i ? -10 : -5 },
   walkElbow: { forward: 28, back: 7 },
   walkScale: 1,
+  forearmLayer: i ? 8.05 : 5.1,
+  stretchAngles: { shoulder: i ? 162 : 152, elbow: 15 },
+  elbowLimit: 150,
 }));
 const legs = [limb("far-thigh", "far-boot", 1), limb("near-thigh", "near-boot", 4)].map((leg) => ({
   ...leg,

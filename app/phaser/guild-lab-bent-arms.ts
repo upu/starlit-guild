@@ -75,10 +75,15 @@ export class GuildLabBentArms {
     for (const part of this.parts.filter((p) => p.side === index)) {
       const visible = pose?.variant.frame === part.frame;
       part.body.setVisible(visible);
-      part.front.setVisible(visible && raised && index === 1);
+      const cfg = this.rig.arms[index];
+      const foreground = "forearmLayer" in cfg ? cfg.forearmLayer : undefined;
+      part.front.setVisible(visible && ((raised && index === 1) || foreground !== undefined));
       if (!pose) continue;
       part.body.setRotation(pose.rotation).setScale(pose.scale);
-      part.front.setRotation(pose.rotation).setScale(pose.scale).setDepth(9.2);
+      part.front
+        .setRotation(pose.rotation)
+        .setScale(pose.scale)
+        .setDepth(raised && index === 1 ? 9.2 : (foreground ?? cfg.layer));
     }
   }
   private points(index: number) {

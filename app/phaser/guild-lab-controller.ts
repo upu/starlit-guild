@@ -49,6 +49,8 @@ export class GuildLabController {
   private request = -1;
   private activity: LabPose = "tea";
   private greeted = 0;
+  private stretched = 0;
+  private previewStretch = false;
   private actorCount: number;
   private cameraFollow = new LabCameraFollow();
   private cameraZoom = 0;
@@ -137,6 +139,7 @@ export class GuildLabController {
   }
   private visitRequested(controls: LabControls) {
     if (controls.request === this.request) return;
+    this.previewStretch = false;
     this.request = controls.request;
     this.residents.forEach((r, i) => {
       r.path = labPathTo(r.actor.root, this.destination(controls.mode, i), i === 1 ? 488 : 416);
@@ -165,6 +168,7 @@ export class GuildLabController {
     controls: LabControls,
     position: { moving: boolean; delayed: boolean },
   ): LabPose {
+    if (this.previewStretch) return "idle";
     if (i >= 2 || (controls.mode === "walk" && !position.moving)) return "idle";
     if (position.moving) return "walk";
     if (controls.mode !== "detour") return controls.mode;
@@ -181,6 +185,7 @@ export class GuildLabController {
   ): LabFeeling {
     const feeling = r.affection.sample(this.elapsed, reduced);
     if (r.affection.reacting(this.elapsed) || position.moving || i >= 2) return feeling;
+    if (this.previewStretch) return feeling;
     if (controls.mode === "tea") return labPairFeeling(feeling, r.id, beat, reduced);
     if (controls.mode !== "detour") return feeling;
     if (i === 1) return { ...feeling, expression: "surprised", mark: "notice" };
@@ -218,7 +223,7 @@ export class GuildLabController {
     r.affection.enter(mode, this.elapsed);
     const feeling = this.residentFeeling(r, i, controls, position, beat, reduced);
     const hand =
-      i < 2 && controls.mode === "tea" && !position.moving && !reduced
+      i < 2 && controls.mode === "tea" && !position.moving && !reduced && !this.previewStretch
         ? labPairHand(r.id, beat, this.elapsed)
         : null;
     r.actor.paint(this.elapsed, mode, reduced, controls.grid, feeling, controls.paused, hand);
@@ -234,6 +239,16 @@ export class GuildLabController {
     this.visitRequested(controls);
     const step = controls.paused ? 0 : Math.min(delta, 100);
     this.elapsed += step;
+    if ((controls.stretch ?? 0) !== this.stretched) {
+      this.stretched = controls.stretch ?? 0;
+      this.previewStretch = true;
+      for (const r of this.residents) {
+        r.path = [r.position];
+        r.distance = 0;
+        r.affection.enter("idle", this.elapsed);
+        r.affection.stretch(this.elapsed);
+      }
+    }
     if (controls.greet !== this.greeted) {
       this.greeted = controls.greet;
       this.residents[0].affection.tap(this.elapsed);
@@ -250,7 +265,7 @@ export class GuildLabController {
     this.scene.game.canvas.dataset.feet = JSON.stringify(
       positions.slice(0, 2).map(({ x, y, moving }) => ({ x, y, moving })),
     );
-    this.share(controls.mode, reduced);
+    this.share(this.previewStretch ? "walk" : controls.mode, reduced);
     this.room.showGrid(controls.grid);
     this.filter.update();
     this.scene.game.canvas.dataset.beat = controls.mode === "tea" ? beat : "none";

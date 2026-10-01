@@ -140,12 +140,10 @@ export async function renderMasterPose(
             time,
             mode,
             i,
-            {
-              x: target.x * (1 - feeling.stretch),
-              y: target.y * (1 - feeling.stretch) - 32 * feeling.stretch,
-            },
-            Boolean(feeling.jump || feeling.squash || feeling.stretch),
+            target,
+            Boolean(feeling.jump || feeling.squash),
             false,
+            feeling.stretch,
           )
         : labJoint(
             labLegTarget(time, i / 2, mode, pose.bob, rig),
@@ -177,8 +175,12 @@ export async function renderMasterPose(
           return [world.x, world.y];
         };
         layers.push({ frame: v.frame, layer: limb.layer, point });
-        if (i === 1 && mode === "tea")
-          layers.push({ frame: v.forearmFrame, layer: rig.cup.handLayer, point });
+        if ((i === 1 && mode === "tea") || "forearmLayer" in limb)
+          layers.push({
+            frame: v.forearmFrame,
+            layer: i === 1 && mode === "tea" ? rig.cup.handLayer : limb.forearmLayer,
+            point,
+          });
         continue;
       }
       for (const segment of [0, 1]) {
@@ -190,7 +192,11 @@ export async function renderMasterPose(
         layers.push({
           frame,
           layer:
-            arms && i === 1 && segment === 1 ? rig.cup.restingHandLayer : limb.layer + order * 0.01,
+            arms && segment === 1 && "forearmLayer" in limb
+              ? limb.forearmLayer
+              : arms && i === 1 && segment === 1
+                ? rig.cup.restingHandLayer
+                : limb.layer + order * 0.01,
           point: (x, y) => {
             const [px, py] = rotate(
               (x - w * d.originX) * d.scale,

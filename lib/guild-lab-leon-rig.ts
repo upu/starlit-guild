@@ -61,6 +61,8 @@ const arms = [
   walkShoulder: { forward: i ? 25 : 10, back: i ? -10 : -5 },
   walkElbow: { forward: 28, back: 7 },
   walkScale: 1,
+  stretchAngles: { shoulder: i ? 162 : 152, elbow: 15 },
+  elbowLimit: 150,
 }));
 const head = part("head"),
   cape = part("back-cape");
@@ -68,7 +70,7 @@ export const leonLabRig = {
   legStyle: "jointed",
   head: { ...world([head.rect[0] + head.rect[2] / 2, head.rect[1] + head.rect[3]]), layer: 9 },
   neckBase: { ...world(master.neck), width: 5, height: 3, layer: 5.8, color: 0xf5c6a8 },
-  torso: draw("torso"),
+  torso: draw("torso", [master.waist[0], (master.collar[1] + master.waist[1]) / 2]),
   scarf: draw("front-cape"),
   cape: { ...draw("back-cape", "root" in cape ? cape.root : undefined), walkSway: 0.05 },
   walk: {
@@ -96,7 +98,7 @@ export const leonLabRig = {
     height: art.frames[f.frame][3] * s,
     originX: f.root[0] / art.frames[f.frame][2],
     originY: f.root[1] / art.frames[f.frame][3],
-    layer: legs[i].layer + 0.01,
+    layer: legs[i].layer - 0.01,
     sole: ((f.sole[0][1] + f.sole[1][1]) / 2 - f.point[1]) * s,
     paintedSlope: Math.atan2(f.sole[1][1] - f.sole[0][1], f.sole[1][0] - f.sole[0][0]),
   })),

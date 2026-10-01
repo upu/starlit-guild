@@ -387,11 +387,18 @@ test("planted knees stay nearly extended without sliding or leaving the floor", 
     }
 });
 
-test("far shoulder has painted backing and its arm swings opposite the near arm", async () => {
-  const torso = await partSampler(guildLabArt, labRig.torso.frame, labRig.torso);
-  const scarf = await partSampler(guildLabArt, labRig.scarf.frame, labRig.scarf);
-  const p = labRig.arms[0].joint;
-  assert.ok(torso(p.x, p.y) > 180 || scarf(p.x, p.y) > 180);
+test("far shoulder has a closed painted cap and its arm swings opposite the near arm", async () => {
+  // The completed standing master exposes a blue shoulder cap. Its measured
+  // centre belongs to the upper arm, rather than to the scarf or torso.
+  const frame = labRig.arms[0].frames[0];
+  const [left, top, width, height] = guildLabArt.frames[frame];
+  const pixels = await sharp(`public${guildLabArt.asset}`)
+    .extract({ left, top, width, height })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  const [x, y] = guildLabArt.armJoints[frame].proximal;
+  assert.ok(pixels[(Math.round(y) * width + Math.round(x)) * 4 + 3] > 180);
   for (let t = 0; t < 900; t += 10) {
     const a = labWalkingArm(t, 0),
       b = labWalkingArm(t, 1);
@@ -633,7 +640,7 @@ test("both boots point forward, measured from opaque ankle and toe bands", async
   }
 });
 
-async function partSampler(art, frame, cfg, origin = [0.5, 0.5]) {
+async function partSampler(art, frame, cfg, origin = [cfg.originX ?? 0.5, cfg.originY ?? 0.5]) {
   const [left, top, width, height] = art.frames[frame];
   const pixels = await sharp(`public${art.asset}`)
     .extract({ left, top, width, height })

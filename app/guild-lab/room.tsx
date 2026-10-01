@@ -74,7 +74,10 @@ function useLab() {
   const greet = () => {
     setControls((c) => ({ ...c, greet: c.greet + 1 }));
   };
-  return { host, controls, close, status, activity, visit, toggle, restart, greet };
+  const stretch = () => {
+    setControls((c) => ({ ...c, stretch: (c.stretch ?? 0) + 1 }));
+  };
+  return { host, controls, close, status, activity, visit, toggle, restart, greet, stretch };
 }
 function useLabStatus() {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
@@ -101,7 +104,8 @@ function useNarrowScreen() {
   return narrow;
 }
 export default function GuildLab() {
-  const { host, controls, close, status, activity, visit, toggle, restart, greet } = useLab();
+  const { host, controls, close, status, activity, visit, toggle, restart, greet, stretch } =
+    useLab();
   return (
     <main className="guild-lab">
       <div className="guild-lab-inner">
@@ -133,6 +137,7 @@ export default function GuildLab() {
           visit={visit}
           toggle={toggle}
           greet={greet}
+          stretch={stretch}
         />
         <details>
           <summary>今回の試作について</summary>
@@ -156,6 +161,7 @@ function LabButtons({
   visit,
   toggle,
   greet,
+  stretch,
 }: Omit<ReturnType<typeof useLab>, "host" | "restart">) {
   return (
     <>
@@ -177,34 +183,49 @@ function LabButtons({
         <button disabled={status !== "ready" || controls.paused} onClick={greet}>
           レオンに声をかける
         </button>
-        <button
-          aria-pressed={close}
-          onClick={() => {
-            toggle("close");
-          }}
-        >
-          {close ? "部屋全体" : "住人を追う"}
+        <button disabled={status !== "ready" || controls.paused} onClick={stretch}>
+          伸びを試す
         </button>
-        <button
-          aria-pressed={controls.paused}
-          onClick={() => {
-            toggle("paused");
-          }}
-        >
-          {controls.paused ? "動きを再開" : "一時停止"}
-        </button>
-        <button
-          aria-pressed={controls.grid}
-          onClick={() => {
-            toggle("grid");
-          }}
-        >
-          タイルと関節を見る
-        </button>
+        <LabViewButtons controls={controls} close={close} toggle={toggle} />
       </div>
       <p className="guild-lab-caption" aria-live="polite">
         {captions[activity]}
       </p>
+    </>
+  );
+}
+
+function LabViewButtons({
+  controls,
+  close,
+  toggle,
+}: Pick<ReturnType<typeof useLab>, "controls" | "close" | "toggle">) {
+  return (
+    <>
+      <button
+        aria-pressed={close}
+        onClick={() => {
+          toggle("close");
+        }}
+      >
+        {close ? "部屋全体" : "住人を追う"}
+      </button>
+      <button
+        aria-pressed={controls.paused}
+        onClick={() => {
+          toggle("paused");
+        }}
+      >
+        {controls.paused ? "動きを再開" : "一時停止"}
+      </button>
+      <button
+        aria-pressed={controls.grid}
+        onClick={() => {
+          toggle("grid");
+        }}
+      >
+        タイルと関節を見る
+      </button>
     </>
   );
 }
