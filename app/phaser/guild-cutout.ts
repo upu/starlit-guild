@@ -7,11 +7,12 @@ import { GuildLabEffects } from "./guild-lab-effects";
 import { GuildLabSingleLegs } from "./guild-lab-single-legs";
 import { GuildLabBentArms } from "./guild-lab-bent-arms";
 import { drawLabJoints } from "./guild-lab-joints";
+import { GuildLabFeet } from "./guild-lab-feet";
+import { GuildLabSkirts } from "./guild-lab-skirts";
 import { GuildLabUpper } from "./guild-lab-upper";
 import type { LabFeeling } from "@/lib/guild-lab-affection";
 import { LabArmMotion } from "@/lib/guild-lab-arms";
 import { labLimbArtwork } from "@/lib/guild-lab-limbs";
-import { LabSkirtMotion } from "@/lib/guild-lab-skirt";
 import { LabFeetMotion } from "@/lib/guild-lab-feet";
 import { labArtOrigin } from "@/lib/guild-lab-art-layout";
 import {
@@ -49,9 +50,8 @@ export class GuildCutout {
   private rig;
   private hairLocks: Phaser.GameObjects.Image[] = [];
   private skirt?: Phaser.GameObjects.Image;
-  private skirtMotion?: LabSkirtMotion;
-  private skirtWidth = 0;
-  private skirtHeight = 0;
+  private skirts!: GuildLabSkirts;
+  private shoes: GuildLabFeet;
   private raisedForearm?: Phaser.GameObjects.Container;
   private previousMode: LabPose = "tea";
   private idleStartedAt = -Infinity;
@@ -87,6 +87,7 @@ export class GuildCutout {
     this.upperMotion.add(this.cape);
     this.legs.push(this.limb(this.rig.legs[1]));
     this.singleLegs = new GuildLabSingleLegs(scene, this.body, filter, this.rig, this.art);
+    this.shoes = new GuildLabFeet(scene, this.body, filter, this.rig, this.art);
     this.upperMotion.add(this.bodyPart(this.rig.torso));
     this.addSkirt();
     const neck = this.rig.neckBase;
@@ -123,22 +124,16 @@ export class GuildCutout {
     });
   }
   private addSkirt() {
-    if (this.character !== "aria") return;
-    const cfg = labCharacters.aria.rig.skirt;
-    this.skirt = this.part(cfg.frame, cfg.x, cfg.y, cfg.height, cfg.originX, cfg.originY).setDepth(
-      cfg.layer,
+    this.skirts = new GuildLabSkirts(this.rig, this.upperMotion, (cfg) =>
+      this.part(cfg.frame, cfg.x, cfg.y, cfg.height, cfg.originX, cfg.originY).setDepth(cfg.layer),
     );
-    this.skirtWidth = this.skirt.displayWidth;
-    this.skirtHeight = this.skirt.displayHeight;
-    this.skirtMotion = new LabSkirtMotion(cfg);
-    this.upperMotion.add(this.skirt);
+    this.skirt = this.skirts.front;
   }
   private addRaisedForearm() {
-    if (this.character !== "aria") return;
-    const arm = labCharacters.aria.rig.arms[1];
+    const arm = this.rig.arms[1];
     this.raisedForearm = this.scene.add
       .container(0, 0, [this.measuredSegment(arm.frames[1], arm.lengths[1], arm.thickness)])
-      .setDepth(labCharacters.aria.rig.cup.handLayer)
+      .setDepth(this.rig.cup.handLayer)
       .setVisible(false);
     this.upperMotion.add(this.raisedForearm);
   }
@@ -310,35 +305,27 @@ export class GuildCutout {
   }
   private paintLegs(time: number, mode: LabPose, bob: number, reduced: boolean, jump: number) {
     const feet = this.feetMotion.sample(time, mode, bob, reduced);
-    const p = reduced
-      ? 1
-      : Math.max(0, Math.min(1, (time - this.idleStartedAt) / this.rig.idleSettleMs));
     this.legs.forEach((leg, i) => {
-      const hip = labHip(i, mode, this.rig, p * p * (3 - 2 * p));
+      const hip = labHip(i, mode, this.rig);
       leg.upper.setPosition(hip.x, hip.y);
       this.aim(leg, feet[i], mode === "idle");
       leg.upper.visible = this.rig.legStyle !== "single" || mode === "tea";
     });
     const singleAngles = this.singleLegs.paint(time, mode, bob, reduced);
-    if (this.skirt && this.skirtMotion) {
-      const pose = this.skirtMotion.sample(
-        time,
-        mode,
-        singleAngles.length && mode !== "tea"
-          ? singleAngles
-          : this.legs.map((leg) => leg.upper.rotation),
-        reduced,
-        jump,
-      );
-      this.skirt.rotation = pose.rotation;
-      // Preserve the filter's chosen texture size while changing only the hem width.
-      this.skirt.displayWidth = this.skirtWidth * pose.width;
-      this.skirt.displayHeight = this.skirtHeight * pose.height;
-    }
+    this.skirts.paint(
+      time,
+      mode,
+      singleAngles.length && mode !== "tea"
+        ? singleAngles
+        : this.legs.map((leg) => leg.upper.rotation),
+      reduced,
+      jump,
+    );
+    this.shoes.paint(time, mode, reduced, this.legs, this.singleLegs.parts);
   }
   private paintRaisedForearm(raised: boolean) {
     if (!this.raisedForearm) return;
-    const cfg = labCharacters.aria.rig.cup;
+    const cfg = this.rig.cup;
     const depth = raised ? cfg.raisedLayer : cfg.layer;
     if (this.cup.depth !== depth) {
       this.cup.setDepth(depth);

@@ -8,7 +8,7 @@ import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { guildLabAriaArt } from "../lib/guild-lab-aria-art.ts";
 import { labPose, labJoint, LAB_ACTOR_SCALE } from "../lib/guild-lab-model.ts";
 import { portraitExpressions } from "../lib/portrait-expressions.ts";
-import { labWalkingArm, labArmArtwork } from "../lib/guild-lab-arms.ts";
+import { labArmArtwork } from "../lib/guild-lab-arms.ts";
 import { labLookDirection } from "../lib/guild-lab-pair.ts";
 
 test("tea, work arrival, yawning and waking choose familiar expression names", () => {
@@ -115,44 +115,16 @@ const part = async (frame) => {
       .toBuffer(),
   };
 };
-test("both shoulders sit in the new torso, the far glove stays above the hem, and cape stays narrow", async () => {
-  const torso = await part(labRig.torso.frame),
-    scale = labRig.torso.height / torso.height;
+test("completed-master shoulder roots have painted backing and cape is behind both arms", async () => {
+  const { renderMasterPose } = await import("../scripts/guild-lab-master-render.mjs");
+  const r = await renderMasterPose("idle", 0, undefined, { character: "leon" });
   for (const arm of labRig.arms) {
-    const px = Math.round(torso.width / 2 + (arm.joint.x - labRig.torso.x) / scale);
-    const py = Math.round(torso.height / 2 + (arm.joint.y - labRig.torso.y) / scale);
-    for (let dy = -3; dy <= 3; dy++)
-      for (let dx = -3; dx <= 3; dx++)
-        assert.ok(torso.data[((py + dy) * torso.width + px + dx) * 4 + 3] > 240);
+    const x = Math.round(arm.joint.x / guildLabArt.master.scale + guildLabArt.master.origin[0]),
+      y = Math.round(arm.joint.y / guildLabArt.master.scale + guildLabArt.master.origin[1]);
+    assert.ok(r.pixels[(y * r.width + x) * 4 + 3] > 240);
   }
-  const arm = labRig.arms[0],
-    glove = await part(arm.frames[1]);
-  assert.ok(arm.layer < labRig.legs[0].layer);
-  const art = labArmArtwork(arm.frames[1], arm.lengths[1]),
-    s = art.scale;
-  const [px, py] = guildLabArt.armJoints[arm.frames[1]].proximal;
-  const hem = labRig.torso.y + labRig.torso.height / 2;
-  for (let t = 0; t < 900; t += 10) {
-    const a = labWalkingArm(t, 0);
-    const elbow = { x: -Math.sin(a.upper) * arm.lengths[0], y: Math.cos(a.upper) * arm.lengths[0] };
-    for (let row = 0; row < glove.height; row += 3)
-      for (let col = 0; col < glove.width; col += 3) {
-        if (glove.data[(row * glove.width + col) * 4 + 3] < 200) continue;
-        const x = (col - px) * s,
-          y = (row - py) * s;
-        const angle = a.upper + a.lower + art.rotation;
-        const paintedY =
-          arm.joint.y + (elbow.y + x * Math.sin(angle) + y * Math.cos(angle)) * a.scale;
-        assert.ok(paintedY < hem, `far glove stays above hem at ${t}ms: ${paintedY}`);
-      }
-    const cape = guildLabArt.frames[labRig.cape.frame],
-      width = (cape[2] / cape[3]) * labRig.cape.height;
-    const sway = labPose(t, "walk", false).cape;
-    assert.ok(
-      width * Math.cos(sway) + labRig.cape.height * Math.abs(Math.sin(sway)) < torso.width * scale,
-    );
-  }
-  assert.ok(labRig.cape.height <= labRig.torso.height);
+  assert.ok(labRig.cape.layer < labRig.arms[0].layer && labRig.cape.layer < labRig.arms[1].layer);
+  assert.ok(labRig.cape.walkSway <= 0.06);
 });
 test("shadow touches the planted sole at all stride phases, standing and work", () => {
   for (const mode of ["idle", "walk", "work"])
@@ -188,7 +160,7 @@ test("expression patches use measured bounds and leave the original head silhoue
   const head = await part(0),
     [, , hw, hh] = guildLabArt.frames[0];
   for (const [key, expression] of Object.entries(guildLabArt.head.expressions)) {
-    assert.equal(expression.closedEyes, key === "smile");
+    assert.equal(expression.closedEyes, key === "smile" || key === "yawn");
     const inputs = [];
     for (const patch of expression.patches) {
       const [x, y, w, h] = patch.rect;

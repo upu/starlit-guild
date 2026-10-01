@@ -23,6 +23,21 @@ async function start(
     deviceScaleFactor: dpr,
     reducedMotion,
   });
+  await context.route("**/app/phaser/guild-cutout.ts*", async (route) => {
+    const response = await route.fetch();
+    await route.fulfill({
+      response,
+      body: (await response.text()).replace(
+        "this.debug(debug);",
+        `this.debug(debug);
+        if (this.character === 'leon') {
+          const p=this.art.master.parts[0], c=this.art.master.cheeks[0], s=this.art.master.scale;
+          window.__labCheek=this.head.getWorldTransformMatrix().transformPoint(
+            (c[0]-p.rect[0]-p.rect[2]/2)*s,(c[1]-p.rect[1]-p.rect[3])*s);
+        }`,
+      ),
+    });
+  });
   if (inspectJoints) {
     // Only the isolated dev-server response is altered: production keeps 1.8x
     // and its real clock. Fixed animation times make before/after poses comparable.
@@ -95,9 +110,13 @@ async function checkAnimatedFace(page) {
     const { data, info } = await sharp(png).raw().toBuffer({ resolveWithObject: true });
     // A cheek interior remains skin throughout the tea/blink cycle. The WebGL
     // multi-texture regression replaces this area with rectangular floor tiles.
-    const i =
-      (Math.round((info.height * 348) / 723) * info.width + Math.round((info.width * 488) / 964)) *
-      info.channels;
+    const { cheek, camera } = await page.evaluate(() => ({
+      cheek: window.__labCheek,
+      camera: JSON.parse(document.querySelector("canvas").dataset.camera),
+    }));
+    const x = Math.round(((cheek.x - camera.x) * camera.zoom * info.width) / 768 + info.width / 2);
+    const y = Math.round(((cheek.y - camera.y) * camera.zoom * info.width) / 768 + info.height / 2);
+    const i = (y * info.width + x) * info.channels;
     assert.ok(
       data[i] > 220 && data[i + 1] > 170 && data[i + 2] > 140,
       `face is intact in animation sample ${n}`,
@@ -451,11 +470,11 @@ try {
   assert.equal(await reduced.page.locator("canvas").count(), 1);
   await reduced.context.close();
   const fault = await browser.newContext();
-  await fault.route("**/guild/leon-parts-v3.webp", (route) => route.abort());
+  await fault.route("**/guild/leon-parts-v4.webp", (route) => route.abort());
   const recovery = await fault.newPage();
   await recovery.goto(`${root}/guild-lab`);
   await recovery.locator('.guild-lab-stage[data-status="error"]').waitFor();
-  await fault.unroute("**/guild/leon-parts-v3.webp");
+  await fault.unroute("**/guild/leon-parts-v4.webp");
   await button(recovery, "景色を読み直す").click();
   await recovery.locator('.guild-lab-stage[data-status="ready"]').waitFor();
   assert.equal(await recovery.locator("canvas").count(), 1, "Retry replaces the failed canvas");

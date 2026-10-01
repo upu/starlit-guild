@@ -9,7 +9,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-fourteenth-baseline";
+  const previous = "work/lab-fifteenth-baseline";
   if (baseline) {
     await context.route(`${root}/guild-lab`, async (route) => {
       const response = await route.fetch();
@@ -18,21 +18,10 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
         body: await response.text(),
       });
     });
-    for (const [url, file] of [
-      ["app/phaser/guild-lab-single-legs.ts", "single-leg-drawing.js"],
-      ["lib/guild-lab-single-legs.ts", "single-leg-model.js"],
-      ["lib/guild-lab-rig.ts", "rig.js"],
-      ["lib/guild-lab-aria-rig.ts", "aria-rig.js"],
-      ["lib/guild-lab-aria-master.ts", "aria-master.js"],
-      ["lib/guild-lab-contact.ts", "guild-lab-contact.js"],
-      ["lib/guild-lab-aria-art.ts", "art.js"],
-      ["lib/guild-lab-art.ts", "leon-art.js"],
-      ["lib/guild-lab-arms.ts", "guild-lab-arms.js"],
-      ["lib/guild-lab-model.ts", "guild-lab-model.js"],
-      ["lib/guild-lab-skirt.ts", "guild-lab-skirt.js"],
-      ["app/phaser/guild-lab-face.ts", "guild-lab-face.js"],
-      ["app/guild-lab/room.tsx", "room.js"],
-    ]) {
+    const snapshots = JSON.parse(readFileSync(`${previous}/modules.json`, "utf8"));
+    for (const { path: url, file } of snapshots.filter(
+      (p) => !["app/phaser/guild-cutout.ts", "app/phaser/guild-lab-controller.ts"].includes(p.path),
+    )) {
       await context.route(`**/${url}*`, (route) =>
         route.fulfill({
           contentType: "text/javascript",
@@ -40,20 +29,24 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
         }),
       );
     }
-    await context.route("**/guild/aria-parts-v1.webp", (route) =>
-      route.fulfill({ contentType: "image/webp", body: readFileSync(`${previous}/aria.webp`) }),
-    );
+
+    for (const id of ["aria", "leon"])
+      await context.route(`**/guild/${id}-parts-v1.webp`, (route) =>
+        route.fulfill({ contentType: "image/webp", body: readFileSync(`${previous}/${id}.webp`) }),
+      );
   }
   await context.route("**/app/phaser/guild-cutout.ts*", async (route) => {
     const response = await route.fetch();
-    const source = baseline ? readFileSync(`${previous}/cutout.js`, "utf8") : await response.text();
+    const source = baseline
+      ? readFileSync(`${previous}/app_phaser_guild-cutout.ts.js`, "utf8")
+      : await response.text();
     assert.ok(source.includes("this.debug(debug);"));
     await route.fulfill({
       response,
       body: source
         .replace(
           "this.face.paint(feeling, pose.blink);",
-          `this.face.paint(this.character === "aria" && window.__labExpression ? {...feeling, expression:window.__labExpression,yawn:false}: feeling, window.__labBlink ?? pose.blink);`,
+          `this.face.paint(this.character === (window.__labExpressionCharacter ?? "aria") && window.__labExpression ? {...feeling, expression:window.__labExpression,yawn:false}: feeling, window.__labBlink ?? pose.blink);`,
         )
         .replace(
           "this.debug(debug);",
@@ -61,6 +54,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       this.debug(debug);
       if (this.character === "aria") window.__ariaSkirt = {
         rotation: this.skirt.rotation, width: this.skirt.displayWidth,
+        backRotation: this.skirts?.back?.rotation,
         thighs: this.singleLegs?.parts.length && this.singleLegs.parts[0].visible ? this.singleLegs.parts.map(leg => leg.rotation) : this.legs.map(leg => leg.upper.rotation),
         mode,
         cup: { visible: this.cup.visible, depth: this.cup.depth },
@@ -82,7 +76,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   await context.route("**/app/phaser/guild-lab-controller.ts*", async (route) => {
     const response = await route.fetch();
     const source = baseline
-      ? readFileSync(`${previous}/controller.js`, "utf8")
+      ? readFileSync(`${previous}/app_phaser_guild-lab-controller.ts.js`, "utf8")
       : await response.text();
     assert.ok(source.includes("this.elapsed += step;"));
     const camera = source.replace(
@@ -147,6 +141,14 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   }
   await time(6100);
   await shot("tea");
+  for (const id of ["aria", "leon"]) {
+    await page.evaluate((id) => (window.__labFocus = id), id);
+    await time(id === "leon" ? 5000 : 3800);
+    await shot(`${id}-tea-sip`);
+    await time(6100);
+    await shot(`${id}-tea`);
+  }
+  await page.evaluate(() => (window.__labFocus = "aria"));
   for (const expression of ["neutral", "smile", "surprised", "tired", "yawn"]) {
     await page.evaluate((value) => {
       window.__labExpression = value;
@@ -185,13 +187,17 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   }
   for (const id of ["aria", "leon"]) {
     await page.evaluate((id) => (window.__labFocus = id), id);
-    for (let i = 0; i < 8; i++) {
-      await time(9900 + i * 112.5);
+    for (let i = 0; i < 16; i++) {
+      await time(9900 + i * 56.25);
       await shot(`${id}-walk-${i}`);
     }
-    await button("タイルと関節を見る").click();
     for (let i = 0; i < 8; i++) {
-      await time(10800 + i * 112.5);
+      await time(10280 + i * 20);
+      await shot(`${id}-swap-${i}`);
+    }
+    await button("タイルと関節を見る").click();
+    for (let i = 0; i < 16; i++) {
+      await time(10800 + i * 56.25);
       await shot(`${id}-walk-debug-${i}`);
     }
     await button("タイルと関節を見る").click();
@@ -200,6 +206,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   writeFileSync(`${output}/stride.json`, JSON.stringify(stride, null, 2));
   if (!baseline) {
     assert.ok(stride.every((p) => Math.abs(p.rotation) <= 0.25 + 1e-8));
+    assert.ok(stride.every((p) => Math.abs(p.rotation - p.backRotation) <= 0.06 + 1e-8));
     assert.ok(
       Math.max(...stride.map((p) => p.width)) / Math.min(...stride.map((p) => p.width)) <= 1.12,
     );
@@ -265,7 +272,7 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-fourteenth-before" : "work/lab-fourteenth-after",
+      baseline ? "work/lab-fifteenth-before" : "work/lab-fifteenth-after",
       baseline,
     );
     console.log(

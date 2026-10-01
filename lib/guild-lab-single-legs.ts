@@ -15,7 +15,7 @@ export function labSingleLeg(
   const idle = {
     rotation: cfg.paintedAngle,
     lift: 0,
-    scaleY: (-cfg.y - bob) / (Math.cos(cfg.paintedAngle) * cfg.length),
+    scaleY: (cfg.ankleY - cfg.y - bob) / (Math.cos(cfg.paintedAngle) * cfg.length),
     bent: false,
   };
   if (reduced || mode !== "walk") return idle;
@@ -28,6 +28,6 @@ export function labSingleLeg(
   const rotation = (degrees * Math.PI) / 180;
   const lift = swing ? -Math.sin((phase - 0.5) * Math.PI * 2) * cfg.lift : 0;
   // Match the existing body bob with a small axial adjustment; never bend the cuff.
-  const scaleY = (-cfg.y - bob) / (Math.cos(rotation) * cfg.length);
+  const scaleY = (-rig.feet[index].sole - cfg.y - bob) / (Math.cos(rotation) * cfg.length);
   return { rotation, lift, scaleY, bent: swing };
 }

@@ -7,10 +7,15 @@ import { registerHead, faceMask } from "./guild-lab-face-masks.mjs";
 import { addFramePadding } from "./guild-lab-frame-padding.mjs";
 
 import { singleLegs } from "./guild-lab-single-legs.mjs";
-import { bentPaint } from "./guild-lab-bent-paint.mjs";
+import { pixelBends } from "./guild-lab-pixel-bends.mjs";
+import { repairAriaMaterials } from "./guild-lab-materials.mjs";
+import { splitMasterFeet } from "./guild-lab-foot-paint.mjs";
+import { skirtLining } from "./guild-lab-skirt-lining.mjs";
 
 const config = readMasterConfig(),
   cut = await cutMaster(config);
+await repairAriaMaterials(config, cut);
+const feet = await splitMasterFeet(config, cut);
 const index = (i) => (i < 12 ? i : i + 1);
 const images = new Map(cut.parts.map((p) => [index(p.frame), p.image]));
 const parts = cut.parts.map((p) => ({ ...p, frame: index(p.frame) }));
@@ -155,7 +160,7 @@ for (const leg of await singleLegs(config, cut)) {
   });
 }
 art.variants = [];
-for (const variant of await bentPaint()) {
+for (const variant of await pixelBends(config, cut)) {
   const frame = images.size;
   images.set(frame, variant.image);
   const forearmFrame = variant.forearm ? images.size : null;
@@ -173,9 +178,36 @@ for (const variant of await bentPaint()) {
     hinge: variant.hinge,
     end: variant.end,
     bend: variant.bend,
-    palette: variant.palette,
+    repairedPixels: variant.repairedPixels,
+    sharedSource: variant.sharedSource,
   });
 }
+art.feet = feet.map((f) => {
+  const frame = images.size;
+  images.set(frame, f.image);
+  return { frame, root: f.root, rect: f.rect, sole: f.sole, point: f.point, overlap: f.overlap };
+});
+const backRect = [510, 865, 355, 170],
+  backFrame = images.size;
+images.set(
+  backFrame,
+  await skirtLining(
+    await sharp("assets/source/guild/aria-skirt-back-v7.png")
+      .trim({ threshold: 30 })
+      .resize(backRect[2], backRect[3], { fit: "fill" })
+      .png()
+      .toBuffer(),
+    backRect,
+  ),
+);
+art.master.parts.push({
+  name: "skirt-back",
+  frame: backFrame,
+  layer: 0.75,
+  visible: 0,
+  added: backRect[2] * backRect[3],
+  rect: [backRect[0] - 4, backRect[1] - 4, backRect[2] + 8, backRect[3] + 8],
+});
 let x = 8,
   y = 8,
   rowHeight = 0;

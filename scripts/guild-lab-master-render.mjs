@@ -13,6 +13,7 @@ import {
 } from "../lib/guild-lab-model.ts";
 import { labBentArm } from "../lib/guild-lab-bent-arms.ts";
 import { leonLabStance } from "../lib/guild-lab-leon-stance.ts";
+import { labAnkle } from "../lib/guild-lab-ankles.ts";
 
 const frameCache = new Map();
 const rotate = (x, y, a) => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
@@ -41,6 +42,20 @@ export async function renderMasterPose(
   const cup = labTeaCup(pose.sip, pose.head, rig, art);
   if (mode === "tea") pose.hand = cup.hand;
   const layers = [];
+  const shoe = (i, ankle) => {
+    const cfg = rig.feet[i],
+      [, , w, h] = art.frames[cfg.frame],
+      s = cfg.height / h;
+    const rotation = labAnkle(time, i, mode).angle - (mode === "walk" ? cfg.paintedSlope : 0);
+    layers.push({
+      frame: cfg.frame,
+      layer: cfg.layer,
+      point: (x, y) => {
+        const [dx, dy] = rotate((x - w * cfg.originX) * s, (y - h * cfg.originY) * s, rotation);
+        return [ankle[0] + dx, ankle[1] + dy];
+      },
+    });
+  };
   const drawing = (cfg, rotation = 0) => {
     const frame = cfg.frame ?? 0,
       [, , w, h] = art.frames[frame];
@@ -86,6 +101,7 @@ export async function renderMasterPose(
         return [point.x, point.y];
       },
     });
+    drawing(rig.skirtBack, skirtPose.rotation);
   }
   for (const [limbs, arms] of [
     [rig.legs, false],
@@ -112,6 +128,10 @@ export async function renderMasterPose(
             return [cfg.x + dx, cfg.y + leg.lift + dy];
           },
         });
+        shoe(i, [
+          cfg.x - Math.sin(leg.rotation) * cfg.length * leg.scaleY,
+          cfg.y + leg.lift + Math.cos(leg.rotation) * cfg.length * leg.scaleY,
+        ]);
         continue;
       }
       const target = i ? pose.hand : pose.farHand;
@@ -133,6 +153,15 @@ export async function renderMasterPose(
             mode === "idle" ? limb.idleBend : limb.bend,
           );
       const bent = arms ? labBentArm(art, i, a.upper, a.lower, limb.lengths, a.scale ?? 1) : null;
+      if (!arms)
+        shoe(i, [
+          joint.x -
+            Math.sin(a.upper) * limb.lengths[0] -
+            Math.sin(a.upper + a.lower) * limb.lengths[1],
+          joint.y +
+            Math.cos(a.upper) * limb.lengths[0] +
+            Math.cos(a.upper + a.lower) * limb.lengths[1],
+        ]);
       if (bent) {
         const v = bent.variant;
         const scale =

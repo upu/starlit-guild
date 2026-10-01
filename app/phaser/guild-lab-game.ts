@@ -60,7 +60,7 @@ export function createGuildLabGame(parent: HTMLElement, bridge: LabBridge, engin
       });
       for (const name of [
         "room-tiles-v1",
-        "leon-parts-v3",
+        "leon-parts-v4",
         "aria-parts-v1",
         "furniture-v3",
         "lab-table-v1",

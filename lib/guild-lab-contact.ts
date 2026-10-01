@@ -1,8 +1,8 @@
 import { labRig, type LabCharacterRig } from "./guild-lab-rig.ts";
 import { labSingleLeg } from "./guild-lab-single-legs.ts";
+import { labAnkle } from "./guild-lab-ankles.ts";
 import {
   labFoot,
-  labJoint,
   labLegTarget,
   labPose,
   LAB_ACTOR_SCALE,
@@ -15,19 +15,22 @@ export function labSole(time: number, mode: LabPose, index: number, rig: LabChar
   if (rig.legStyle === "single" && mode !== "tea") {
     const cfg = rig.singleLegs[index],
       single = labSingleLeg(time, index, mode, pose.bob, false, rig),
-      length = cfg.length + leg.lengths[1] * rig.soleExtension;
+      length = cfg.length;
     return {
       x: cfg.x - Math.sin(single.rotation) * length * single.scaleY,
-      y: cfg.y + pose.bob + single.lift + Math.cos(single.rotation) * length * single.scaleY,
+      y:
+        cfg.y +
+        pose.bob +
+        single.lift +
+        Math.cos(single.rotation) * length * single.scaleY +
+        rig.feet[index].sole * Math.cos(labAnkle(time, index, mode).angle),
     };
   }
   const target = labLegTarget(time, index / 2, mode, pose.bob, rig);
-  const bend = mode === "idle" && "idleBend" in leg ? leg.idleBend : leg.bend;
-  const angle = labJoint(target, leg.lengths[0], leg.lengths[1], bend);
-  const extension = leg.lengths[1] * rig.soleExtension;
+  const extension = rig.feet[index].sole;
   return {
-    x: leg.joint.x + target.x - Math.sin(angle.upper + angle.lower) * extension,
-    y: leg.joint.y + pose.bob + target.y + Math.cos(angle.upper + angle.lower) * extension,
+    x: leg.joint.x + target.x - Math.sin(labAnkle(time, index, mode).angle) * extension,
+    y: leg.joint.y + pose.bob + target.y + Math.cos(labAnkle(time, index, mode).angle) * extension,
   };
 }
 export function labShadow(time: number, mode: LabPose, rig: LabCharacterRig = labRig) {

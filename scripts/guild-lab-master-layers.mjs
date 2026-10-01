@@ -3,6 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fitPadded } from "./guild-lab-image-tools.mjs";
 import { completedPaint } from "./guild-lab-completed-paint.mjs";
 import { sealPaintCavities } from "./guild-lab-coverage.mjs";
+import { bareSkin } from "./guild-lab-materials.mjs";
 
 export const inPolygon = (x, y, polygon) => {
   let inside = false;
@@ -101,6 +102,14 @@ export async function cutMaster(config) {
       master[q] < 150
     )
       owner[p] = 3;
+  }
+  for (let p = 0; p < owner.length; p++) {
+    const x = p % width,
+      y = Math.floor(p / width);
+    // Exposed thighs below the reviewed frill, not pink cloth shadows.
+    const thigh = (x > 550 && x < 687 && y > 997) || (x > 692 && x < 783 && y > 1013);
+    if (owner[p] === 13 && thigh && bareSkin(...master.subarray(p * 4, p * 4 + 4)))
+      owner[p] = x < 690 ? 10 : 8;
   }
   const under = await sharp(config.underpaint.image)
     .resize(width, height)

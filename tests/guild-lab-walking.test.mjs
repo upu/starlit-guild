@@ -35,7 +35,7 @@ test("each gait keeps a short front stride, the contact centre under the chest a
       );
       assert.ok(Math.abs((next.x - target.x) * LAB_ACTOR_SCALE + labWalkSpeed(rig)) < 1e-6);
       assert.ok(
-        Math.abs(leg.joint.y + pose.bob + target.y) < 1e-6,
+        Math.abs(leg.joint.y + pose.bob + target.y + rig.feet[index].sole) < 1e-6,
         "planted bone endpoint stays at floor",
       );
       const joint = labJoint(target, ...leg.lengths, leg.bend);
@@ -122,7 +122,11 @@ test("complete leg paintings switch only during swing and keep the support centr
       assert.equal(p.bent, !planted);
       if (planted) {
         assert.equal(p.lift, 0);
-        assert.ok(Math.abs(cfg.y + pose.bob + Math.cos(p.rotation) * cfg.length * p.scaleY) < 1e-6);
+        assert.ok(
+          Math.abs(
+            cfg.y + pose.bob + Math.cos(p.rotation) * cfg.length * p.scaleY + rig.feet[i].sole,
+          ) < 1e-6,
+        );
         support.push(cfg.x - Math.sin(p.rotation) * cfg.length * p.scaleY);
       }
       assert.equal(labSingleLeg(t, i, "walk", pose.bob, true, rig).rotation, cfg.paintedAngle);

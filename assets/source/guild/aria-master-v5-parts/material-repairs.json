@@ -1,0 +1,68 @@
+{
+  "repairs": [
+    {
+      "name": "back-hair",
+      "rect": [
+        232,
+        488,
+        311,
+        494
+      ],
+      "source": "aria-cleanup-v7.png",
+      "cell": [
+        640,
+        0
+      ],
+      "paintHeight": 494,
+      "material": "blond hair only"
+    },
+    {
+      "name": "front-hair",
+      "rect": [
+        548,
+        540,
+        135,
+        303
+      ],
+      "source": "aria-cleanup-v7.png",
+      "cell": [
+        0,
+        640
+      ],
+      "paintHeight": 303,
+      "material": "blond hair only"
+    },
+    {
+      "name": "far-hair",
+      "rect": [
+        784,
+        555,
+        168,
+        430
+      ],
+      "source": "aria-cleanup-v7.png",
+      "cell": [
+        640,
+        640
+      ],
+      "paintHeight": 430,
+      "material": "blond hair only"
+    },
+    {
+      "name": "skirt",
+      "rect": [
+        513,
+        863,
+        351,
+        205
+      ],
+      "source": "aria-cleanup-v7.png",
+      "cell": [
+        0,
+        0
+      ],
+      "paintHeight": 170,
+      "material": "cloth, leather belt, gold ornaments"
+    }
+  ]
+}

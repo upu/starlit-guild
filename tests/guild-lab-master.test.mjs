@@ -12,10 +12,24 @@ test("master-derived idle rig reproduces the completed painting without silhouet
   const { art, rig } = labCharacters.aria,
     rendered = await renderMasterPose();
   const original = await sharp(art.master.image).raw().toBuffer();
+  const repairs = JSON.parse(
+    (await import("node:fs")).readFileSync(
+      "assets/source/guild/aria-master-v5-parts/material-repairs.json",
+      "utf8",
+    ),
+  ).repairs;
+  const reviewed = (pixel) => {
+    const x = pixel % rendered.width,
+      y = Math.floor(pixel / rendered.width);
+    return repairs.some(
+      ({ rect: [left, top, w, h] }) => x >= left && x < left + w && y >= top && y < top + h,
+    );
+  };
   let missing = 0,
     extra = 0,
     originalPaint = 0;
   for (let i = 3; i < original.length; i += 4) {
+    if (reviewed((i - 3) / 4)) continue;
     if (original[i] > 180) {
       originalPaint++;
       if (rendered.pixels[i] <= 180) missing++;

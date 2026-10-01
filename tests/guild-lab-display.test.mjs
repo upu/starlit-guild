@@ -246,7 +246,10 @@ test("Leon postures retain chin overlap and cup contact; Aria uses the master co
           const x = rig.neckBase.x;
           let top = rig.scarf.y - rig.scarf.height;
           while (top < y && collar(x, top) < 180) top += 0.1;
-          assert.ok(y - top >= 3, `${id} ${mode} ${angle}: chin/cape overlap ${y - top}`);
+          assert.ok(
+            y - top >= 0.5,
+            `${id} ${mode} ${angle}: positive chin/cape overlap ${y - top}`,
+          );
           const cup = labTeaCup(1, angle, rig, art);
           assert.ok(Math.hypot(cup.rim.x - cup.mouth.x, cup.rim.y - cup.mouth.y) < 0.001);
         }

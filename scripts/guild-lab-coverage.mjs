@@ -33,9 +33,11 @@ export function transparentHoles({ pixels, width, height }, bounds = [0, 0, widt
 }
 
 /** Seal tiny raster-cut cavities using the nearest surrounding painted shading. */
-export function sealPaintCavities(pixels, width, height) {
+export function sealPaintCavities(pixels, width, height, maxPixels = 16) {
   let sealed = 0;
-  for (const hole of transparentHoles({ pixels, width, height }).filter((h) => h.pixels <= 16)) {
+  for (const hole of transparentHoles({ pixels, width, height }).filter(
+    (h) => h.pixels <= maxPixels,
+  )) {
     const [left, top, w, h] = hole.rect;
     for (let y = top; y < top + h; y++)
       for (let x = left; x < left + w; x++) {

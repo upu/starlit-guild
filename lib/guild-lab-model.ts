@@ -86,13 +86,8 @@ export function labFoot(time: number, offset: number, rig: LabCharacterRig = lab
 function walkFootShift(rig: LabCharacterRig) {
   return rig.walk.center - (rig.legs[0].joint.x + rig.legs[1].joint.x) / 2;
 }
-export function labHip(index: number, mode: LabPose, rig: LabCharacterRig = labRig, settled = 1) {
-  const leg = rig.legs[index];
-  if (mode !== "idle" || !("idleJoint" in leg)) return leg.joint;
-  return {
-    x: leg.joint.x + (leg.idleJoint.x - leg.joint.x) * settled,
-    y: leg.joint.y + (leg.idleJoint.y - leg.joint.y) * settled,
-  };
+export function labHip(index: number, _mode: LabPose, rig: LabCharacterRig = labRig) {
+  return rig.legs[index].joint;
 }
 export function labLegTarget(
   time: number,
@@ -108,6 +103,7 @@ export function labLegTarget(
     mode === "walk"
       ? {
           ...labFoot(time, offset, rig),
+          y: labFoot(time, offset, rig).y - rig.feet[index].sole,
           x: labFoot(time, offset, rig).x + walkFootShift(rig),
         }
       : {
@@ -150,8 +146,9 @@ export function labTeaCup(
   const angle = -0.12 * sip;
   // Contact is on the near rim; the glove holds the handle below it.
   const rim = rotate({ x: -7, y: 2.5 }, angle);
-  const x = 28 + (mouth.x - rim.x - 28) * sip;
-  const y = -68 + (mouth.y - rim.y + 68) * sip;
+  const rest = "rest" in rig.cup ? rig.cup.rest : { x: 28, y: -68 };
+  const x = rest.x + (mouth.x - rim.x - rest.x) * sip;
+  const y = rest.y + (mouth.y - rim.y - rest.y) * sip;
   const grip = rotate(rig.teaGrip, angle);
   return {
     x,
@@ -166,13 +163,18 @@ function standingHeight(t: number, mode: LabPose, rig: LabCharacterRig) {
   if (mode === "idle" && "idleBob" in rig) return rig.idleBob;
   const walking = mode === "walk";
   const index = walking && t % 900 >= 450 ? 1 : 0;
-  const [upper, lower] = rig.legs[0].lengths;
+  const leg = rig.legs[index];
+  const [upper, lower] = leg.lengths;
   const reach = (upper + lower) * (mode === "idle" ? rig.idleReach : rig.stanceReach);
   const planted = labFoot(t, index / 2, rig);
-  const plantedX = planted.x - (rig.walk.forward - rig.walk.back) / 2;
+  const plantedX = planted.x + walkFootShift(rig);
   // Raise the hip over the planted foot without moving that foot on the floor.
   const idleX = Math.min(...rig.idleFeet.map((p, i) => Math.abs(p.x - labHip(i, "idle", rig).x)));
-  return -rig.legs[0].joint.y - Math.sqrt(reach * reach - (walking ? plantedX ** 2 : idleX ** 2));
+  return (
+    -leg.joint.y -
+    rig.feet[index].sole -
+    Math.sqrt(reach * reach - (walking ? plantedX ** 2 : idleX ** 2))
+  );
 }
 function bodyMotion(
   t: number,
