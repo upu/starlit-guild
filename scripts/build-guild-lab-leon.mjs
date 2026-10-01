@@ -120,7 +120,15 @@ for (const [key, cell] of [
 art.feet = feet.map((f) => {
   const frame = images.size;
   images.set(frame, f.image);
-  return { frame, root: f.root, rect: f.rect, sole: f.sole, point: f.point, overlap: f.overlap };
+  return {
+    frame,
+    root: f.root,
+    rect: f.rect,
+    sole: f.sole,
+    point: f.point,
+    overlap: f.overlap,
+    shaftBounds: f.shaftBounds,
+  };
 });
 let x = 8,
   y = 8,

@@ -352,6 +352,7 @@ export const guildLabArt = {
       ],
       point: [663, 1408],
       overlap: 28,
+      shaftBounds: [585, 700],
     },
     {
       frame: 24,
@@ -363,6 +364,7 @@ export const guildLabArt = {
       ],
       point: [435, 1430],
       overlap: 28,
+      shaftBounds: [379, 488],
     },
   ],
 } as const;

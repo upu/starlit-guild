@@ -84,6 +84,18 @@ test("shaft covers the shoe and both painted ankle pivots coincide during push-o
       const shaft = art.master.parts.find((p) => p.name === (i ? "near-boot" : "far-boot"));
       assert.ok(rig.feet[i].layer < rig.legs[i].layer);
       assert.deepEqual(art.legJoints[shaft.frame].distal, foot.root);
+      const [left, top, width, height] = art.frames[shaft.frame];
+      const pixels = await sharp(`public${art.asset}`)
+        .extract({ left, top, width, height })
+        .raw()
+        .toBuffer();
+      for (let y = Math.ceil(foot.root[1] - foot.overlap); y < height; y++)
+        for (let x = 0; x < width; x++)
+          if (pixels[(y * width + x) * 4 + 3] > 180)
+            assert.ok(
+              x + shaft.rect[0] >= foot.shaftBounds[0] && x + shaft.rect[0] <= foot.shaftBounds[1],
+              "toe pixels must belong only to the independently rotated shoe",
+            );
       const shoe = render.layers.find((l) => l.frame === foot.frame);
       const point = shoe.point(...foot.root);
       assert.ok(point.every(Number.isFinite));
