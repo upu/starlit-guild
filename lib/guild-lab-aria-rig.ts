@@ -85,6 +85,20 @@ const feet = ["far-boot", "near-boot"].map((name) => {
   return world(p.joints[1]);
 });
 export const ariaLabRig = {
+  legStyle: "single",
+  singleLegs: ["far-leg", "near-leg"].map((name) => {
+    const p = part(name);
+    if (!("joints" in p)) throw Error("Missing single-leg landmarks");
+    const [hip, foot] = p.joints;
+    return {
+      ...drawing(name, hip),
+      length: Math.hypot(foot[0] - hip[0], foot[1] - hip[1]) * scale,
+      paintedAngle: angle(hip, foot),
+      forward: 15,
+      back: 19,
+      lift: 4,
+    };
+  }),
   head: { ...world([headRect[0] + headRect[2] / 2, headRect[1] + headRect[3]]), layer: 9 },
   neckBase: { ...world(master.neck), width: 4, height: 3, layer: 5.8, color: 0xf9d1b8 },
   scarf: drawing("front-cape"),

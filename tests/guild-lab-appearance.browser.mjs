@@ -9,7 +9,7 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
     viewport: { width: 390, height: 1000 },
     deviceScaleFactor: 3,
   });
-  const previous = "work/lab-twelfth-baseline";
+  const previous = "work/lab-thirteenth-baseline";
   if (baseline) {
     await context.route(`${root}/guild-lab`, async (route) => {
       const response = await route.fetch();
@@ -59,7 +59,8 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
       this.debug(debug);
       if (this.character === "aria") window.__ariaSkirt = {
         rotation: this.skirt.rotation, width: this.skirt.displayWidth,
-        thighs: this.legs.map(leg => leg.upper.rotation),
+        thighs: this.singleLegs?.parts.length && this.singleLegs.parts[0].visible ? this.singleLegs.parts.map(leg => leg.rotation) : this.legs.map(leg => leg.upper.rotation),
+        mode,
         cup: { visible: this.cup.visible, depth: this.cup.depth },
         hand: this.raisedForearm?.visible ? (() => {
           const source = this.arms[1].lower.getWorldTransformMatrix();
@@ -202,11 +203,11 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   }
   await button("動きを再開").click();
   await page.locator('.guild-lab-stage[data-activity="idle"]').waitFor({ timeout: 30000 });
-  await time(10500);
+  await time(12500);
   await button("タイルと関節を見る").click();
   await shot("aria-idle-debug");
   await page.evaluate(() => (window.__labFocus = "leon"));
-  await time(10500);
+  await time(12500);
   await shot("leon-idle-debug");
   await page.evaluate(() => (window.__labFocus = "aria"));
   await button("タイルと関節を見る").click();
@@ -217,13 +218,13 @@ export async function captureLabAppearance(browser, root, output, baseline = fal
   await time(13100);
   await shot("detour-follow");
   await button("作業台へ").click();
-  await page.waitForTimeout(17000);
+  await page.waitForFunction(() => window.__ariaSkirt?.mode === "work", null, { timeout: 30000 });
+  await page.locator('.guild-lab-stage[data-activity="work"]').waitFor({ timeout: 30000 });
   await time(16000);
   await shot("work");
   if (!baseline) {
     const initial = Math.abs((await page.evaluate(() => window.__ariaSkirt)).rotation);
-    for (let t = 16016; t <= 20000; t += 16)
-      await page.evaluate((t) => (window.__labCaptureTime = t), t);
+    for (let t = 16100; t <= 20000; t += 100) await time(t);
     await time(20016);
     assert.ok(
       Math.abs((await page.evaluate(() => window.__ariaSkirt)).rotation) <= initial,
@@ -258,7 +259,7 @@ if (process.argv[1].endsWith("guild-lab-appearance.browser.mjs")) {
     await captureLabAppearance(
       browser,
       process.env.TEST_ROOT || "http://localhost:5174",
-      baseline ? "work/lab-twelfth-before" : "work/lab-twelfth-after",
+      baseline ? "work/lab-thirteenth-before" : "work/lab-thirteenth-after",
       baseline,
     );
     console.log(

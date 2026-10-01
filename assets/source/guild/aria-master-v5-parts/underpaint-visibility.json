@@ -1,0 +1,113 @@
+{
+  "poses": 280,
+  "report": [
+    {
+      "name": "head",
+      "frame": 0,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "front-cape",
+      "frame": 1,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "torso",
+      "frame": 2,
+      "removed": 5383,
+      "kept": 4272
+    },
+    {
+      "name": "back-cape",
+      "frame": 3,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "far-upper-arm",
+      "frame": 4,
+      "removed": 393,
+      "kept": 2679
+    },
+    {
+      "name": "far-forearm",
+      "frame": 5,
+      "removed": 126,
+      "kept": 31
+    },
+    {
+      "name": "near-upper-arm",
+      "frame": 6,
+      "removed": 2066,
+      "kept": 1412
+    },
+    {
+      "name": "near-forearm",
+      "frame": 7,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "far-thigh",
+      "frame": 8,
+      "removed": 67,
+      "kept": 9624
+    },
+    {
+      "name": "far-boot",
+      "frame": 9,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "near-thigh",
+      "frame": 10,
+      "removed": 153,
+      "kept": 9087
+    },
+    {
+      "name": "near-boot",
+      "frame": 11,
+      "removed": 0,
+      "kept": 2
+    },
+    {
+      "name": "back-hair",
+      "frame": 13,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "skirt",
+      "frame": 14,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "far-hair",
+      "frame": 15,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "front-hair",
+      "frame": 16,
+      "removed": 0,
+      "kept": 0
+    },
+    {
+      "name": "far-leg",
+      "frame": 25,
+      "removed": 0,
+      "kept": 2162
+    },
+    {
+      "name": "near-leg",
+      "frame": 26,
+      "removed": 0,
+      "kept": 2182
+    }
+  ]
+}

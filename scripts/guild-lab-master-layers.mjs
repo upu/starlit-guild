@@ -77,6 +77,8 @@ export async function cutMaster(config) {
         owner[p] = white ? 13 : owner[p] + 1;
       } else if (gold || green) owner[p] = 13;
     }
+    if (owner[p] === 3 && !(x >= 343 && x <= 530 && y >= 790 && y <= 1065))
+      owner[p] = x < 350 && y > 900 ? 12 : x < 490 && y < 790 ? 1 : y > 870 ? 13 : 2;
     if (owner[p] === 3 && y < 790 && gold) owner[p] = x < 500 ? 12 : 15;
     const [armX, armY, armW, armH] = config.nearArmColorCleanup.bounds;
     if (
@@ -158,8 +160,6 @@ export async function cutMaster(config) {
         if (!fill) continue;
         if (sameJoint) {
           master.copy(pixels, q, q, q + 4);
-          pixels.copy(fills, q, q, q + 4);
-          added++;
           continue;
         }
         if (filled) {
@@ -179,8 +179,6 @@ export async function cutMaster(config) {
         }
         if (part.name.includes("hair")) {
           master.copy(pixels, q, q, q + 4);
-          pixels.copy(fills, q, q, q + 4);
-          added++;
           continue;
         }
         if (part.fillSample) {

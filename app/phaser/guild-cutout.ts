@@ -4,6 +4,7 @@ import { labLimbPaintOrder, type LabCharacterId, type LabLimbConfig } from "@/li
 import type { GuildLabFilter } from "./guild-lab-filter";
 import { GuildLabFace } from "./guild-lab-face";
 import { GuildLabEffects } from "./guild-lab-effects";
+import { GuildLabSingleLegs } from "./guild-lab-single-legs";
 import { GuildLabUpper } from "./guild-lab-upper";
 import type { LabFeeling } from "@/lib/guild-lab-affection";
 import { LabArmMotion } from "@/lib/guild-lab-arms";
@@ -29,6 +30,7 @@ export class GuildCutout {
   readonly root: Phaser.GameObjects.Container;
   private body: Phaser.GameObjects.Container;
   private upperMotion: GuildLabUpper;
+  private singleLegs!: GuildLabSingleLegs;
   private head: Phaser.GameObjects.Container;
   private cape: Phaser.GameObjects.Image;
   private face: GuildLabFace;
@@ -83,6 +85,7 @@ export class GuildCutout {
     ).setDepth(this.rig.cape.layer);
     this.upperMotion.add(this.cape);
     this.legs.push(this.limb(this.rig.legs[1]));
+    this.addSingleLegs();
     this.upperMotion.add(this.bodyPart(this.rig.torso));
     this.addSkirt();
     const neck = this.rig.neckBase;
@@ -107,10 +110,18 @@ export class GuildCutout {
     this.addRaisedForearm();
     this.body.sort("depth");
     this.spoon = this.createSpoon();
-    this.arms[1].lower.add(this.spoon);
     this.joints = scene.add.graphics();
     this.root.add(this.joints);
     this.effects = new GuildLabEffects(scene, this.root);
+  }
+  private addSingleLegs() {
+    this.singleLegs = new GuildLabSingleLegs(
+      this.scene,
+      this.body,
+      this.filter,
+      this.rig,
+      this.art,
+    );
   }
   private addSkirt() {
     if (this.character !== "aria") return;
@@ -151,6 +162,7 @@ export class GuildCutout {
     const spoon = this.scene.add.graphics().setPosition(0, 23);
     spoon.lineStyle(3, 0x79502c).lineBetween(0, 0, 8, 16);
     spoon.fillStyle(0xb88a50).fillEllipse(8, 16, 5, 8);
+    this.arms[1].lower.add(spoon);
     return spoon;
   }
   hit(point: Point) {
@@ -284,23 +296,7 @@ export class GuildCutout {
     this.cup.setPosition(cup.x, cup.y).setRotation(cup.angle);
     this.paintRaisedForearm(mode === "tea" && pose.sip > 0.4 && reach < 1);
     this.spoon.rotation = -this.arms[1].upper.rotation - this.arms[1].lower.rotation;
-    const feet = this.feetMotion.sample(time, mode, pose.bob, reduced);
-    this.legs.forEach((leg, i) => {
-      this.aim(leg, feet[i], mode === "idle");
-    });
-    if (this.skirt && this.skirtMotion) {
-      const pose = this.skirtMotion.sample(
-        time,
-        mode,
-        this.legs.map((leg) => leg.upper.rotation),
-        reduced,
-        feeling.jump,
-      );
-      this.skirt.rotation = pose.rotation;
-      // Preserve the filter's chosen texture size while changing only the hem width.
-      this.skirt.displayWidth = this.skirtWidth * pose.width;
-      this.skirt.displayHeight = this.skirtHeight * pose.height;
-    }
+    this.paintLegs(time, mode, pose.bob, reduced, feeling.jump);
     this.upperMotion.paint(pose.lean);
     this.debug(debug);
     this.effects.paint(
@@ -312,6 +308,29 @@ export class GuildCutout {
       { x: cup.x, y: cup.y + this.body.y },
       this.root.scaleX < 0,
     );
+  }
+  private paintLegs(time: number, mode: LabPose, bob: number, reduced: boolean, jump: number) {
+    const feet = this.feetMotion.sample(time, mode, bob, reduced);
+    this.legs.forEach((leg, i) => {
+      this.aim(leg, feet[i], mode === "idle");
+      leg.upper.visible = this.rig.legStyle !== "single" || mode === "tea";
+    });
+    const singleAngles = this.singleLegs.paint(time, mode, bob, reduced);
+    if (this.skirt && this.skirtMotion) {
+      const pose = this.skirtMotion.sample(
+        time,
+        mode,
+        singleAngles.length && mode !== "tea"
+          ? singleAngles
+          : this.legs.map((leg) => leg.upper.rotation),
+        reduced,
+        jump,
+      );
+      this.skirt.rotation = pose.rotation;
+      // Preserve the filter's chosen texture size while changing only the hem width.
+      this.skirt.displayWidth = this.skirtWidth * pose.width;
+      this.skirt.displayHeight = this.skirtHeight * pose.height;
+    }
   }
   private paintRaisedForearm(raised: boolean) {
     if (!this.raisedForearm) return;
@@ -365,7 +384,7 @@ export class GuildCutout {
     if (!show) return;
     this.joints.lineStyle(1, 0x78fff1, 0.9);
     const root = this.root.getWorldTransformMatrix();
-    for (const limb of [...this.arms, ...this.legs]) {
+    for (const limb of [...this.arms, ...this.legs].filter((p) => p.upper.visible)) {
       const upper = limb.upper.getWorldTransformMatrix();
       const lower = limb.lower.getWorldTransformMatrix();
       const a = root.applyInverse(upper.tx, upper.ty);
@@ -375,5 +394,6 @@ export class GuildCutout {
         .strokeCircle(a.x, a.y, 2)
         .strokeCircle(b.x, b.y, 2);
     }
+    this.singleLegs.debug(this.joints, root);
   }
 }

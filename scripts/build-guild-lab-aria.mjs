@@ -1,10 +1,13 @@
 import sharp from "sharp";
+import { spawnSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { format } from "prettier";
 import { guildLabArt } from "../lib/guild-lab-art.ts";
 import { cutMaster, readMasterConfig } from "./guild-lab-master-layers.mjs";
 import { registerHead, faceMask } from "./guild-lab-face-masks.mjs";
 import { addFramePadding } from "./guild-lab-frame-padding.mjs";
+
+import { singleLegs } from "./guild-lab-single-legs.mjs";
 
 const config = readMasterConfig(),
   cut = await cutMaster(config);
@@ -136,6 +139,21 @@ for (const key of ["smile", "surprised", "tired", "yawn"]) {
     .toFile(`work/aria-face-${key}.png`);
 }
 art.head.blink = { ...art.head.expressions.smile.patches[0] };
+for (const leg of await singleLegs(config, cut)) {
+  const frame = images.size;
+  images.set(frame, leg.image);
+  const local = (p) => p.map((v, i) => v - leg.rect[i]);
+  art.legJoints[frame] = { proximal: local(leg.joints[0]), distal: local(leg.joints[1]) };
+  art.master.parts.push({
+    name: leg.name,
+    frame,
+    layer: leg.layer,
+    visible: leg.visible,
+    added: leg.added,
+    joints: leg.joints,
+    rect: [leg.rect[0] - 4, leg.rect[1] - 4, leg.rect[2] + 8, leg.rect[3] + 8],
+  });
+}
 let x = 8,
   y = 8,
   rowHeight = 0;
@@ -187,3 +205,8 @@ writeFileSync(
   ),
 );
 console.log(`Built master-derived Aria: ${parts.length} layers, ${images.size} frames`);
+
+const trim = spawnSync(process.execPath, ["scripts/trim-guild-lab-underpaint.mjs"], {
+  stdio: "inherit",
+});
+if (trim.status !== 0) throw Error("Could not verify hidden underpaint");

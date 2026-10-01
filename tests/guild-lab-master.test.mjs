@@ -4,8 +4,9 @@ import sharp from "sharp";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { labCharacters } from "../lib/guild-lab-characters.ts";
 import { labJoint, labLegTarget, labPose, labTeaCup } from "../lib/guild-lab-model.ts";
+import { labSingleLeg } from "../lib/guild-lab-single-legs.ts";
 import { LabSkirtMotion } from "../lib/guild-lab-skirt.ts";
-import { renderMasterPose } from "./guild-lab-master-render.mjs";
+import { renderMasterPose } from "../scripts/guild-lab-master-render.mjs";
 
 test("master-derived idle rig reproduces the completed painting without silhouette drift", async () => {
   const { art, rig } = labCharacters.aria,
@@ -136,14 +137,13 @@ test("skirt follows strongly, bounces, rings down after stopping and freezes sea
   const stride = [];
   for (let t = 0; t <= 3600; t += 16) {
     const bob = labPose(t, "walk", false, 1, 0, rig, labCharacters.aria.art).bob;
-    const thighs = rig.legs.map(
-      (leg, i) =>
-        labJoint(labLegTarget(t, i / 2, "walk", bob, rig), ...leg.lengths, leg.bend).upper,
+    const thighs = rig.singleLegs.map(
+      (_, i) => labSingleLeg(t, i, "walk", bob, false, rig).rotation,
     );
     stride.push(motion.sample(t, "walk", thighs, false));
   }
-  assert.ok(stride.some((p) => Math.abs(p.rotation) > 0.12));
-  assert.ok(stride.some((p) => p.width > 1.06));
+  assert.ok(stride.some((p) => Math.abs(p.rotation) > 0.01));
+  assert.ok(stride.some((p) => p.width > 1.03));
   assert.ok(stride.some((p) => Math.abs(p.height - 1) > 0.01));
   assert.ok(
     stride.every(

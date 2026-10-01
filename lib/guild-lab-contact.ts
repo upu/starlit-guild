@@ -1,4 +1,5 @@
 import { labRig, type LabCharacterRig } from "./guild-lab-rig.ts";
+import { labSingleLeg } from "./guild-lab-single-legs.ts";
 import {
   labFoot,
   labJoint,
@@ -11,6 +12,15 @@ import {
 export function labSole(time: number, mode: LabPose, index: number, rig: LabCharacterRig = labRig) {
   const leg = rig.legs[index],
     pose = labPose(time, mode, false, 1, 0, rig);
+  if (rig.legStyle === "single" && mode !== "tea") {
+    const cfg = rig.singleLegs[index],
+      single = labSingleLeg(time, index, mode, pose.bob, false, rig),
+      length = cfg.length + leg.lengths[1] * rig.soleExtension;
+    return {
+      x: cfg.x - Math.sin(single.rotation) * length * single.scaleY,
+      y: cfg.y + pose.bob + single.lift + Math.cos(single.rotation) * length * single.scaleY,
+    };
+  }
   const target = labLegTarget(time, index / 2, mode, pose.bob, rig);
   const bend = mode === "idle" && "idleBend" in leg ? leg.idleBend : leg.bend;
   const angle = labJoint(target, leg.lengths[0], leg.lengths[1], bend);

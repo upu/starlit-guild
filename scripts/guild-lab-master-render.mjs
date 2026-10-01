@@ -1,15 +1,19 @@
 import sharp from "sharp";
+import { withoutUnderpaint } from "./guild-lab-underpaint.mjs";
+import { labSingleLeg } from "../lib/guild-lab-single-legs.ts";
 import { labCharacters } from "../lib/guild-lab-characters.ts";
 import { labLimbArtwork } from "../lib/guild-lab-limbs.ts";
 import { labIdleArm, labWalkingArm } from "../lib/guild-lab-arms.ts";
 import { labJoint, labLegTarget, labPose, labUpperPoint } from "../lib/guild-lab-model.ts";
 
+const frameCache = new Map();
 const rotate = (x, y, a) => [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
 // CPU reference of Phaser's hierarchy, using the delivered atlas and actual rig.
 export async function renderMasterPose(
   mode = "idle",
   time = 0,
   skirtPose = { rotation: 0, width: 1, height: 1 },
+  options = {},
 ) {
   const { art, rig } = labCharacters.aria,
     master = art.master;
@@ -35,13 +39,16 @@ export async function renderMasterPose(
   };
   drawing(rig.torso);
   drawing(rig.scarf);
-  drawing(rig.cape, mode === "walk" ? pose.cape : 0);
+  drawing(rig.cape, mode === "walk" || options.animate ? pose.cape : 0);
   drawing(
     { ...rig.head, height: art.head.displayHeight, originY: 1 },
-    mode === "walk" ? pose.head : 0,
+    mode === "walk" || options.animate ? pose.head : 0,
   );
   for (const hair of rig.hairLocks)
-    drawing(hair, mode === "walk" ? Math.sin(time / 640 + hair.phase) * hair.sway : 0);
+    drawing(
+      hair,
+      mode === "walk" || options.animate ? Math.sin(time / 640 + hair.phase) * hair.sway : 0,
+    );
   const [, , sw, sh] = art.frames[rig.skirt.frame],
     s = rig.skirt.height / sh;
   layers.push({
@@ -62,10 +69,32 @@ export async function renderMasterPose(
     [rig.arms, true],
   ])
     for (const [i, limb] of limbs.entries()) {
+      if (!arms && rig.legStyle === "single" && mode !== "tea") {
+        const cfg = rig.singleLegs[i],
+          leg = labSingleLeg(time, i, mode, pose.bob, false, rig),
+          d = labLimbArtwork(cfg.frame, cfg.length, art),
+          [, , w, h] = art.frames[cfg.frame];
+        layers.push({
+          frame: cfg.frame,
+          layer: cfg.layer,
+          point: (x, y) => {
+            const [sx, sy] = rotate(
+              (x - w * d.originX) * d.scale,
+              (y - h * d.originY) * d.scale,
+              d.rotation,
+            );
+            const [dx, dy] = rotate(sx, sy * leg.scaleY, leg.rotation);
+            return [cfg.x + dx, cfg.y + leg.lift + dy];
+          },
+        });
+        continue;
+      }
       const a = arms
         ? mode === "walk"
           ? labWalkingArm(time, i, false, rig)
-          : labIdleArm(i, rig)
+          : mode === "tea" || mode === "work"
+            ? labJoint(i ? pose.hand : pose.farHand, ...limb.lengths, limb.bend)
+            : labIdleArm(i, rig)
         : labJoint(
             labLegTarget(time, i / 2, mode, pose.bob, rig),
             ...limb.lengths,
@@ -99,10 +128,25 @@ export async function renderMasterPose(
     counts = {};
   for (const layer of layers.sort((a, b) => a.layer - b.layer)) {
     const [left, top, w, h] = art.frames[layer.frame];
-    const data = await sharp(`public${art.asset}`)
-      .extract({ left, top, width: w, height: h })
-      .raw()
-      .toBuffer();
+    const cacheKey = layer.frame + ":" + Boolean(options.hideUnderpaint);
+    if (!frameCache.has(cacheKey)) {
+      let pixels = await sharp("public" + art.asset)
+        .extract({ left, top, width: w, height: h })
+        .raw()
+        .toBuffer();
+      if (options.hideUnderpaint) pixels = await withoutUnderpaint(art, layer.frame, pixels);
+      frameCache.set(cacheKey, pixels);
+    }
+    let data = frameCache.get(cacheKey);
+
+    if (options.tintParts) {
+      data = Buffer.from(data);
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = (layer.frame * 71 + 60) % 255;
+        data[i + 1] = (layer.frame * 113 + 100) % 255;
+        data[i + 2] = (layer.frame * 149 + 150) % 255;
+      }
+    }
     layer.data = data;
     layer.width = w;
     layer.height = h;
@@ -126,11 +170,15 @@ export async function renderMasterPose(
       maxX = Math.min(width, Math.ceil(Math.max(...corners.map((p) => p[0]))));
     const minY = Math.max(0, Math.floor(Math.min(...corners.map((p) => p[1])))),
       maxY = Math.min(height, Math.ceil(Math.max(...corners.map((p) => p[1]))));
-    layer.sample = (world) => {
+    layer.sourceAt = (world) => {
       const dx = world.x / master.scale + master.origin[0] - ox,
         dy = world.y / master.scale + master.origin[1] - oy;
       const x = Math.round((dx * by - dy * bx) / det),
         y = Math.round((dy * ax - dx * ay) / det);
+      return [x, y];
+    };
+    layer.sample = (world) => {
+      const [x, y] = layer.sourceAt(world);
       return x < 0 || y < 0 || x >= w || y >= h
         ? [0, 0, 0, 0]
         : [...data.subarray((y * w + x) * 4, (y * w + x) * 4 + 4)];

@@ -64,6 +64,7 @@ const neckOnTorsoY =
 const chinWithinHeadY =
   ((guildLabArt.head.neck.chinUnder[1] - headFrameHeight) * headHeight) / headFrameHeight;
 export const labRig = {
+  legStyle: "jointed",
   head: { x: neckOnTorso - neckWithinHead, y: neckOnTorsoY + 6 - chinWithinHeadY, layer: 7 },
   neckBase: {
     x: neckOnTorso,

@@ -11,11 +11,13 @@ import {
   labWalkSpeed,
   LAB_ACTOR_SCALE,
 } from "../lib/guild-lab-model.ts";
+import { labSingleLeg } from "../lib/guild-lab-single-legs.ts";
 import { labShadow, labSole } from "../lib/guild-lab-contact.ts";
-import { renderMasterPose } from "./guild-lab-master-render.mjs";
+import { renderMasterPose } from "../scripts/guild-lab-master-render.mjs";
 
 test("each gait keeps a short front stride, the contact centre under the chest and no planted sliding", () => {
   for (const { rig, art } of Object.values(labCharacters)) {
+    if (rig.legStyle === "single") continue;
     assert.ok(rig.walk.forward < rig.walk.back);
     const contacts = [],
       chests = [];
@@ -72,11 +74,11 @@ test("waist-forward upper body keeps legs on the ground and resets outside walki
   }
 });
 
-test("Aria boot cuffs paint in front and both knee sockets stay filled throughout walking, tea and idle", async () => {
+test("Aria's seated jointed legs retain front boot cuffs and filled knee sockets", async () => {
   const { rig, art } = labCharacters.aria;
   assert.ok(rig.legs.every((leg) => leg.front === "lower"));
   assert.ok(labCharacters.leon.rig.legs.every((leg) => leg.front === "upper"));
-  for (const mode of ["walk", "tea", "idle"]) {
+  for (const mode of ["tea"]) {
     for (let t = 0; t < (mode === "walk" ? 900 : 1); t += 25) {
       const rendered = await renderMasterPose(mode, t),
         pose = labPose(t, mode, false, 1, 0, rig, art);
@@ -101,6 +103,39 @@ test("Aria boot cuffs paint in front and both knee sockets stay filled throughou
       }
     }
   }
+});
+
+test("single legs keep a fixed painted knee, asymmetric hip swings and the support centre under the body", async () => {
+  const { rig, art } = labCharacters.aria;
+  assert.equal(rig.legStyle, "single");
+  assert.equal(labCharacters.leon.rig.legStyle, "jointed");
+  const support = [];
+  for (let t = 0; t < 900; t += 25) {
+    const pose = labPose(t, "walk", false, 1, 0, rig, art);
+    for (let i = 0; i < 2; i++) {
+      const p = labSingleLeg(t, i, "walk", pose.bob, false, rig),
+        cfg = rig.singleLegs[i];
+      assert.ok(
+        p.rotation >= (-15 * Math.PI) / 180 - 1e-8 && p.rotation <= (19 * Math.PI) / 180 + 1e-8,
+      );
+      const planted = (t / 900 + i / 2) % 1 < 0.5;
+      if (planted) {
+        assert.equal(p.lift, 0);
+        assert.ok(Math.abs(cfg.y + pose.bob + Math.cos(p.rotation) * cfg.length * p.scaleY) < 1e-6);
+        support.push(cfg.x - Math.sin(p.rotation) * cfg.length * p.scaleY);
+      }
+      assert.equal(labSingleLeg(t, i, "walk", pose.bob, true, rig).rotation, cfg.paintedAngle);
+    }
+    const r = await renderMasterPose("walk", t);
+    assert.ok(r.layers.some((p) => p.frame === rig.singleLegs[0].frame));
+    assert.ok(!r.layers.some((p) => [8, 9, 10, 11].includes(p.frame)));
+  }
+  assert.ok(Math.abs(support.reduce((n, x) => n + x, 0) / support.length - rig.walk.center) < 4);
+  const a = await renderMasterPose("idle", 0);
+  assert.ok(a.layers.some((p) => p.frame === rig.singleLegs[1].frame));
+  const seated = await renderMasterPose("tea", 0);
+  assert.ok(seated.layers.some((p) => p.frame === 9));
+  assert.ok(!seated.layers.some((p) => p.frame === rig.singleLegs[0].frame));
 });
 
 test("rear-cloak supplemental oval is absent and dark cloak paint is not carried on the upper sleeve", async () => {
