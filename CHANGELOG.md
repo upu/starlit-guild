@@ -10,7 +10,7 @@
 
 ## 0.5.x（第五章の開発）
 
-- 0.5.3: 旅団の菜園・作業台と日常会話を追加する (#237)
+- 0.5.3: ドット絵調の旅団ホームと家具配置・菜園・日常を追加する (#239)
 
 - 0.5.2: スタート画面の塔の紫の灯りとリンデ周辺の地形を修正する（#238）
 
@@ -132,3 +132,4 @@
 | 0.1.2 | 2026-09-11 | fix: avoid installed iOS viewport inset bug（`3fd8921`） |
 | 0.1.1 | 2026-09-11 | fix: pin mobile navigation to viewport（`8f1cf84`） |
 | 0.1.0 | 2026-09-10 | Build Starlit Guild idle RPG with durable player saves（`8511871`・最初のコミット） |
+
