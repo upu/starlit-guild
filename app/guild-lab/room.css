@@ -1,0 +1,116 @@
+.guild-lab {
+  height: 100dvh;
+  overflow: auto;
+  background: radial-gradient(ellipse at top, #304637, #10261f);
+  color: #eee0ba;
+  padding: 24px 16px 40px;
+}
+.guild-lab-inner {
+  max-width: 1000px;
+  margin: auto;
+}
+.guild-lab header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.guild-lab h1 {
+  margin: 4px 0 12px;
+  font-size: clamp(22px, 3vw, 34px);
+}
+.guild-lab p {
+  line-height: 1.7;
+  margin: 8px 0 16px;
+}
+.guild-lab small {
+  color: #bea979;
+}
+.guild-lab a {
+  font-size: 13px;
+  color: #f5d891;
+  text-decoration: underline;
+  flex-shrink: 0;
+}
+.guild-lab-stage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 2px solid #a48550;
+  border-radius: 16px;
+  box-shadow: 0 14px 30px #07140c77;
+}
+.guild-lab-canvas,
+.guild-lab-canvas canvas {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  inset: 0;
+  display: block;
+}
+.guild-lab-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #18362ae8;
+}
+.guild-lab-actions,
+.guild-lab-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.guild-lab-actions button {
+  flex: 1;
+  padding: 12px 8px;
+  background: #3b5038;
+  color: #f3dfb2;
+  border: 1px solid #998455;
+  border-radius: 8px;
+  min-height: 44px;
+}
+.guild-lab-actions button[aria-pressed="true"],
+.guild-lab-options button[aria-pressed="true"] {
+  color: #fff1c1;
+  border-color: #eac27e;
+  background: #62522e;
+}
+.guild-lab-options button {
+  padding: 8px 12px;
+  min-height: 44px;
+  border: 1px solid #71816a;
+  border-radius: 8px;
+  background: #233e30;
+  color: #cdd6b8;
+  font-size: 13px;
+}
+.guild-lab-caption {
+  color: #d1c293;
+  font-size: 14px;
+}
+.guild-lab details {
+  border-top: 1px solid #536044;
+  padding-top: 16px;
+  font-size: 13px;
+}
+.guild-lab summary {
+  cursor: pointer;
+  min-height: 36px;
+}
+@media (max-width: 500px) {
+  .guild-lab {
+    padding: 16px 10px 32px;
+  }
+  .guild-lab header {
+    align-items: flex-start;
+  }
+  .guild-lab-actions,
+  .guild-lab-options {
+    gap: 6px;
+  }
+  .guild-lab-options button {
+    padding: 6px 8px;
+  }
+}

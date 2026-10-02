@@ -1,0 +1,112 @@
+.home-room {
+  color: #ead9b0;
+  width: 100%;
+}
+.home-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 13;
+  overflow: hidden;
+  border: 2px solid #977645;
+  border-radius: 10px;
+  background: #38291e;
+  box-shadow: 0 8px 24px #0004;
+}
+.home-canvas {
+  position: absolute;
+  inset: 0;
+}
+.home-canvas canvas {
+  display: block;
+  image-rendering: pixelated;
+  touch-action: manipulation;
+}
+.home-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #193127e8;
+}
+.home-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.home-room button,
+.home-room select {
+  font: inherit;
+  color: #f6e5b8;
+  background: #304737;
+  border: 1px solid #8e855c;
+  border-radius: 6px;
+  padding: 8px 10px;
+  min-height: 40px;
+}
+.home-room button:focus-visible,
+.home-room select:focus-visible {
+  outline: 2px solid #ffe6aa;
+  outline-offset: 2px;
+}
+.home-room button[aria-pressed="true"] {
+  background: #77613a;
+}
+.home-room button:disabled {
+  opacity: 0.4;
+}
+.home-caption,
+.home-editor p {
+  font-size: 12px;
+  margin: 6px 2px;
+  min-height: 1.6em;
+}
+.home-catalog {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0 10px;
+}
+.home-catalog button {
+  flex: 0 0 86px;
+  font-size: 11px;
+}
+.home-furniture-preview {
+  display: block;
+  width: 64px;
+  height: 46px;
+  background: center / contain no-repeat;
+  image-rendering: pixelated;
+  margin: 0 auto 5px;
+}
+.home-editor {
+  padding: 8px;
+  border: 1px solid #7c744d;
+  border-radius: 8px;
+  background: #192f25;
+}
+.home-editor label {
+  font-size: 13px;
+}
+.home-editor select {
+  max-width: 65%;
+}
+.guild-pixel-facility,
+.guild-pixel-plots button {
+  border: 1px solid #8e855c;
+  border-radius: 6px;
+  background: #304737;
+  color: #f6e5b8;
+  padding: 8px 10px;
+  min-height: 40px;
+  font-size: 12px;
+}
+.guild-pixel-plots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.guild-pixel-plots span {
+  display: block;
+  color: #c4d39b;
+}

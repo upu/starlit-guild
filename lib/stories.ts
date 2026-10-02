@@ -1,4 +1,6 @@
 import { chapterThreeStories } from "./chapter-three-stories.ts";
+import { guildStories } from "./guild-stories.ts";
+import { guildStoryUnlocked } from "./guild-base.ts";
 import { chapterFourStories } from "./chapter-four-stories.ts";
 import { chapterFourBanter } from "./chapter-four-banter.ts";
 import { chapterThreeBanter } from "./chapter-three-banter.ts";
@@ -27,7 +29,7 @@ export type Story = {
   place: string;
   lines: StoryLine[];
   quest?: string;
-  chapter: "departure" | "return" | "interlude";
+  chapter: "departure" | "return" | "interlude" | "guild";
 };
 export type StoryProgress = {
   departed: string[];
@@ -52,6 +54,7 @@ export const stories: Story[] = [
   ...chapterTwoStories,
   ...chapterThreeStories,
   ...chapterFourStories,
+  ...guildStories,
 ];
 
 export const characterNotes: Partial<Record<string, { habit: string }>> = {
@@ -101,7 +104,11 @@ function storyAvailable(progress: StoryProgress, story: Story) {
 export function availableStories(s: State): Story[] {
   const p = storyProgress(s);
   return stories.filter((story) =>
-    story.chapter === "interlude" ? interludeUnlocked(s, story.id) : storyAvailable(p, story),
+    story.chapter === "guild"
+      ? guildStoryUnlocked(s, story.id)
+      : story.chapter === "interlude"
+        ? interludeUnlocked(s, story.id)
+        : storyAvailable(p, story),
   );
 }
 // The unseen conversation that opens before this party departs for `id`.

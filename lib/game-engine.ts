@@ -1,4 +1,5 @@
 import { applyPinchConsumable } from "./consumable-effects.ts";
+import { settleGuild } from "./guild-engine.ts";
 import { isChapterThreeQuest } from "./chapter-three.ts";
 import { paralyzed, shiftConfrontationClocks } from "./chapter-four-battles.ts";
 import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
@@ -322,6 +323,7 @@ function shiftRun(r: Run, shift: number) {
 export function settle(input: State, now: number) {
   const s = structuredClone(input),
     end = Math.max(now, s.updatedAt);
+  settleGuild(s, now);
   for (const sq of s.squads) settleSquad(s, sq, end);
   s.updatedAt = end;
   return s;
@@ -331,6 +333,7 @@ export function settle(input: State, now: number) {
 export function skipTo(input: State, now: number) {
   const s = structuredClone(input),
     skipped = now - s.updatedAt;
+  settleGuild(s, now);
   if (skipped <= 0) return s;
   for (const sq of s.squads) {
     if (sq.run) shiftRun(sq.run, skipped);

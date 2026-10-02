@@ -16,9 +16,11 @@ import {
   ROAD_CARGO,
   ROAD_PUPPETS,
   ROAD_PUSH,
+  pushFrames,
   ROAD_PULL,
   ROAD_FINN_PULL,
   ROAD_PACKING,
+  packingFrames,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
@@ -125,17 +127,9 @@ export class RoadPainter {
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
     const push = this.scene.textures.get(ROAD_PUSH);
-    const rects = [
-      [49, 31, 429, 458],
-      [567, 32, 414, 459],
-      [57, 517, 425, 461],
-      [561, 516, 421, 462],
-      [70, 1005, 438, 487],
-      [551, 1007, 434, 487],
-    ];
-    for (const [index, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[index * 2 + step];
+        const [x, y, w, h] = pushFrames[id][step];
         push.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
     const pull = this.scene.textures.get(ROAD_PULL);
@@ -163,17 +157,9 @@ export class RoadPainter {
   }
   private registerPackingArt() {
     const texture = this.scene.textures.get(ROAD_PACKING);
-    const rects = [
-      [260, 36, 305, 358],
-      [692, 38, 294, 357],
-      [240, 427, 336, 358],
-      [666, 431, 336, 355],
-      [233, 821, 337, 362],
-      [662, 824, 335, 361],
-    ];
-    for (const [row, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[row * 2 + step];
+        const [x, y, w, h] = packingFrames[id][step];
         texture.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
   }

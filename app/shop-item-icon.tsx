@@ -4,6 +4,48 @@ import type { Consumable } from "@/lib/consumables";
 import type { Equipment } from "@/lib/equipment";
 
 const artwork: Partial<Record<string, ReactNode>> = {
+  "guild-lunch": (
+    <>
+      <rect
+        x="5"
+        y="12"
+        width="30"
+        height="23"
+        rx="5"
+        fill="#ae784a"
+        stroke="#efcb8c"
+        strokeWidth="2"
+      />
+      <path d="M5 21H35M20 12V35" stroke="#efcb8c" strokeWidth="2" />
+      <ellipse cx="13" cy="17" rx="5" ry="3" fill="#e9c47c" />
+      <path d="M26 17L31 27 24 31Z" fill="#e99945" />
+      <path d="M27 15L24 8M29 16L32 10" stroke="#a4c98b" strokeWidth="3" />
+    </>
+  ),
+  "guild-tea": (
+    <>
+      <path
+        d="M7 16H29V27Q28 35 18 35Q8 35 7 27Z"
+        fill="#bdd4b1"
+        stroke="#f0dba7"
+        strokeWidth="2"
+      />
+      <path
+        d="M29 18H34Q39 27 29 28M11 10Q7 6 12 3M22 10Q18 6 23 3"
+        fill="none"
+        stroke="#d6d8b7"
+        strokeWidth="2"
+      />
+    </>
+  ),
+  "guild-soda": (
+    <>
+      <path d="M15 4H25V13L30 18V35H10V18L15 13Z" fill="#648f71" stroke="#e2dcad" strokeWidth="2" />
+      <path d="M15 3H25M10 23H30" stroke="#caba82" strokeWidth="3" />
+      <circle cx="17" cy="28" r="2" fill="#dae9a5" />
+      <circle cx="24" cy="19" r="2" fill="#dae9a5" />
+    </>
+  ),
   herbs: (
     <>
       <path d="M19 33V13M19 26L10 17M19 21L29 11" fill="none" stroke="#e2d69f" strokeWidth="2" />
