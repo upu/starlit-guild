@@ -132,4 +132,3 @@
 | 0.1.2 | 2026-09-11 | fix: avoid installed iOS viewport inset bug（`3fd8921`） |
 | 0.1.1 | 2026-09-11 | fix: pin mobile navigation to viewport（`8f1cf84`） |
 | 0.1.0 | 2026-09-10 | Build Starlit Guild idle RPG with durable player saves（`8511871`・最初のコミット） |
-
