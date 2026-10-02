@@ -102,6 +102,14 @@ try {
       await page.evaluate(() => window.__home.life.residents.every((r) => r.pose === "tea")),
     );
     await page.locator(".home-stage").screenshot({ path: `${output}/tea-${width}.png` });
+    const seated = await page.evaluate(() => {
+      const c = window.__home;
+      const r = c.life.residents.find((r) => r.seat === 4);
+      const image = c.art.images.get(`r-${r.id}`);
+      return { x: image.x, y: image.y - 30 };
+    });
+    await clickWorld(page, seated.x, seated.y);
+    assert.match(await page.locator(".home-caption").innerText(), /リコ.*笑顔/);
     await page.getByRole("button", { name: "リンデの菜園", exact: true }).click();
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);

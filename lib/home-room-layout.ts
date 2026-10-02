@@ -63,6 +63,9 @@ export const cellPoint = (cell: Cell): Cell => ({
   x: (cell.x + 0.5) * ROOM.tile,
   y: (cell.y + 0.5) * ROOM.tile,
 });
+// The far chair is tucked under the tabletop. Its approach cell stays outside
+// the solid footprint; chair, seated sprite and hit testing share this offset.
+export const teaSeatOffset = (seat: number) => (seat === 4 ? 32 : 0);
 export function withinRoom(cell: Cell) {
   return cell.x >= 0 && cell.x < ROOM.columns && cell.y >= 3 && cell.y < ROOM.rows;
 }

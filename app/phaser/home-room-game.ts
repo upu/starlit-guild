@@ -1,5 +1,5 @@
 import type Phaser from "phaser";
-import { HomeLife, type RoomActivity } from "@/lib/home-room-life";
+import { HomeLife, residentDisplayPosition, type RoomActivity } from "@/lib/home-room-life";
 import { residentIds, type ResidentId } from "@/lib/home-actor";
 import {
   ROOM,
@@ -82,9 +82,10 @@ export class HomeRoomController {
       this.editTap(pointer, input);
       return;
     }
-    const person = [...this.life.residents]
-      .reverse()
-      .find((r) => Math.abs(r.x - point.x) < 20 && point.y <= r.y + 5 && point.y >= r.y - 62);
+    const person = [...this.life.residents].reverse().find((r) => {
+      const p = residentDisplayPosition(r);
+      return Math.abs(p.x - point.x) < 20 && point.y <= p.y + 5 && point.y >= p.y - 62;
+    });
     if (person) this.life.greet(person.id);
     else {
       const f = this.itemAt(point.x, point.y, input);

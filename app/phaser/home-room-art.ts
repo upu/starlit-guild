@@ -4,11 +4,12 @@ import {
   furnitureCatalog,
   furnitureSpots,
   cellPoint,
+  teaSeatOffset,
   type Furniture,
   type RoomSite,
 } from "@/lib/home-room-layout";
 import { residentFrame } from "@/lib/home-actor";
-import type { Resident } from "@/lib/home-room-life";
+import { residentDisplayPosition, type Resident } from "@/lib/home-room-life";
 
 export const homeAsset = (name: string) => `/home-pixel/${name}.webp`;
 export class HomeRoomArt {
@@ -86,7 +87,9 @@ export class HomeRoomArt {
   }
   private chairs(item: Furniture) {
     for (let i = 0; i < 6; i++) {
-      const { x, y } = cellPoint(furnitureSpots(item)[i]);
+      const point = cellPoint(furnitureSpots(item)[i]);
+      const x = point.x,
+        y = point.y + teaSeatOffset(i);
       this.image(
         `chair-${item.id}-${String(i)}`,
         homeAsset(i % 2 === 0 ? "prop-1" : "prop-2"),
@@ -116,6 +119,7 @@ export class HomeRoomArt {
       .fillRoundedRect(x + 1, bottom + 4, (width - 2) * Math.max(0.02, growth), 4, 1);
   }
   resident(r: Resident, time: number, reduced: boolean) {
+    r = { ...r, ...residentDisplayPosition(r) };
     const greeting = time < r.greetUntil;
     const pose = greeting && r.pose !== "tea" ? "wave" : r.pose;
     const frame = residentFrame(pose, time + r.phase, reduced);

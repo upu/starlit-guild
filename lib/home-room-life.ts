@@ -4,6 +4,7 @@ import {
   roomPath,
   furnitureSpots,
   blockedCells,
+  teaSeatOffset,
   type Cell,
   type Furniture,
 } from "./home-room-layout.ts";
@@ -24,6 +25,9 @@ export type Resident = {
   greetUntil: number;
   cycle: number;
 };
+export function residentDisplayPosition(r: Resident) {
+  return { x: r.x, y: r.y + (r.pose === "tea" ? teaSeatOffset(r.seat) : 0) };
+}
 const furniturePoses: Partial<Record<Furniture["kind"], ResidentPose>> = {
   table: "tea",
   bench: "craft",
