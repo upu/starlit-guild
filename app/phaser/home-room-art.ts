@@ -8,7 +8,13 @@ import {
   type Furniture,
   type RoomSite,
 } from "@/lib/home-room-layout";
-import { residentArt, residentAnimation, residentHand } from "@/lib/home-actor";
+import {
+  residentArt,
+  residentAnimation,
+  residentHand,
+  residentScale,
+  residentSolePadding,
+} from "@/lib/home-actor";
 import { homeFloor, gardenScenery } from "@/lib/home-room-scenery";
 import { residentDisplayPosition, type Resident } from "@/lib/home-room-life";
 
@@ -106,8 +112,8 @@ export class HomeRoomArt {
         `chair-${item.id}-${String(i)}`,
         homeAsset(i % 2 === 0 ? "prop-1" : "prop-2"),
         x,
-        y + 6,
-        28,
+        y + 6 * residentScale,
+        28 * residentScale,
         y - 1,
       );
     }
@@ -146,12 +152,12 @@ export class HomeRoomArt {
       `r-${r.id}`,
       homeAsset(action ? `${r.id}-actions` : r.id),
       r.x,
-      y + 4 * heightScale,
+      y + residentSolePadding * heightScale,
       residentArt.displayCell,
       r.y + 1,
       frame,
     );
-    // Scale around the painted sole (16 texture pixels above the cell bottom),
+    // Scale around the painted sole, independently of the delivery resolution,
     // so the head rises/falls without making a planted boot hop off the floor.
     image.setDisplaySize(residentArt.displayCell, residentArt.displayCell * heightScale);
     // Back-view tools have authored handedness: Lico left, the others right.
@@ -168,8 +174,8 @@ export class HomeRoomArt {
     this.image(
       `emote-${r.id}`,
       homeAsset(`icons-${String(frame)}`),
-      r.x + 19,
-      r.y - 57 - (reduced ? 0 : Math.sin(time / 450) * 1.2),
+      r.x + 19 * residentScale,
+      r.y - 57 * residentScale - (reduced ? 0 : Math.sin(time / 450) * 1.2),
       symbol === "…" ? 16 : 11,
       2100,
     );
@@ -181,15 +187,25 @@ export class HomeRoomArt {
     if (pose === "tea")
       this.marks
         .fillStyle(0xfff6df, (1 - phase) * 0.7)
-        .fillCircle(r.x + sign * 8, r.y - 25 - phase * 15, 1.2);
+        .fillCircle(r.x + sign * 8 * residentScale, r.y - (25 + phase * 15) * residentScale, 1.2);
     if (pose === "craft" && time % 880 < 160)
       this.marks
         .fillStyle(0xf3cb74, 0.8)
-        .fillRect(r.x + (residentHand(r.id) === "left" ? -15 : 15), r.y - 38, 2, 2);
+        .fillRect(
+          r.x + (residentHand(r.id) === "left" ? -15 : 15) * residentScale,
+          r.y - 38 * residentScale,
+          2,
+          2,
+        );
     if (pose === "garden")
       this.marks
         .fillStyle(0x89bdd1, 0.9)
-        .fillRect(r.x + sign * (20 + phase * 8), r.y - 20 + phase * 18, 1, 3);
+        .fillRect(
+          r.x + sign * (20 + phase * 8) * residentScale,
+          r.y + (-20 + phase * 18) * residentScale,
+          1,
+          3,
+        );
   }
   grid(items: Furniture[], selected?: string, ghost?: Furniture, error = false) {
     this.marks.lineStyle(0.6, 0xfde3aa, 0.25);

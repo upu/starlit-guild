@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
+import { residentArt, residentHeight } from "../lib/home-actor.ts";
 const root = process.env.TEST_ROOT || "http://localhost:5173";
 const output = "work/pixel-home";
 mkdirSync(output, { recursive: true });
@@ -62,7 +63,7 @@ try {
       .locator("canvas")
       .evaluate((c) => ({ width: c.width, css: c.clientWidth, dpr: devicePixelRatio }));
     assert.equal(size.width, Math.round(size.css * Math.min(3, dpr)));
-    sizes.push({ viewport: width, ...size, characterHeight: (60 * size.css) / 384 });
+    sizes.push({ viewport: width, ...size, characterHeight: (residentHeight * size.css) / 384 });
     assert.equal(await page.evaluate(() => window.__home.life.residents.length), 5);
     await page.getByRole("button", { name: "一時停止", exact: true }).click();
     const t = await page.evaluate(() => window.__home.life.time);
@@ -146,40 +147,48 @@ try {
         window.__home.art.furniture = () => {};
       });
       for (let frame = 0; frame < 8; frame++) {
-        const actual = await page.evaluate((frame) => {
-          const c = window.__home;
-          c.life.residents.forEach((r, i) => {
-            Object.assign(r, {
-              x: 40 + i * 76,
-              y: 298,
-              left: false,
-              rear: false,
-              pose: "walk",
-              walkDistance: frame * 3,
-              greetUntil: 0,
-              path: [],
+        const actual = await page.evaluate(
+          ({ frame, art }) => {
+            const c = window.__home;
+            c.life.residents.forEach((r, i) => {
+              Object.assign(r, {
+                x: 40 + i * 76,
+                y: 298,
+                left: false,
+                rear: false,
+                pose: "walk",
+                walkDistance: frame * 3,
+                greetUntil: 0,
+                path: [],
+              });
             });
-          });
-          c.update(0);
-          return c.life.residents.map((r) => {
-            const image = c.art.images.get(`r-${r.id}`);
-            return {
-              frame: image.frame.name,
-              pixels: image.frame.width,
-              width: image.displayWidth,
-              height: image.displayHeight,
-              sole: image.y - image.displayHeight * (16 / 320),
-            };
-          });
-        }, frame);
+            c.update(0);
+            return c.life.residents.map((r) => {
+              const image = c.art.images.get(`r-${r.id}`);
+              return {
+                frame: image.frame.name,
+                pixels: image.frame.width,
+                width: image.displayWidth,
+                height: image.displayHeight,
+                sole: image.y - image.displayHeight * ((art.cell - art.foot) / art.cell),
+              };
+            });
+          },
+          { frame, art: residentArt },
+        );
         for (const image of actual) {
           assert.equal(image.frame, frame);
-          assert.equal(image.pixels, 320);
-          assert.equal(image.width, 80);
+          assert.equal(image.pixels, residentArt.cell);
+          assert.equal(image.width, residentArt.displayCell);
           assert.ok(Math.abs(image.sole - 298) < 1e-6, "weight transfer keeps the sole planted");
-          assert.ok(image.height >= 77.2 && image.height <= 80);
-          if (frame === 0) assert.ok(image.height < 78, "contact lowers the head");
-          if (frame === 2) assert.equal(image.height, 80, "passing leg lifts the body");
+          assert.ok(
+            image.height >= residentArt.displayCell * 0.965 &&
+              image.height <= residentArt.displayCell,
+          );
+          if (frame === 0)
+            assert.ok(image.height < residentArt.displayCell * 0.975, "contact lowers the head");
+          if (frame === 2)
+            assert.equal(image.height, residentArt.displayCell, "passing leg lifts the body");
         }
         const capture = await page.locator(".home-stage").screenshot();
         const { width: w, height: h } = await sharp(capture).metadata();

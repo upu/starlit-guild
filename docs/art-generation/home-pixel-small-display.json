@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "prompt": "Use case: style-transfer.\nCreate an edited production sprite sheet, 1536x1024 transparent RGBA, four columns and two rows of eight whole-body Leon walking poses.\nImage 1 is the exact style target A: look closely at Leon beside the table. Image 2 is the edit target and the exact 8 pose layout and character identity to preserve.\nChange ONLY the rendering language to deliberate small-game pixel art matching image 1. Each character should look authored on an approximately 60-72-pixel-tall sprite grid, enlarged with crisp square pixels to this sheet size. Thick dark-brown stepped contour, solid readable connected color clusters, 3-4 warm tones per material. Broad angular hair locks; simple expressive eyes. Reduce the tiny individual hair lines, stippling, fine embroidery texture, smooth painted gradients and subpixel detail of image 2. Do not create jagged noise by degrading a smooth illustration: redraw coherent pixel clusters. Keep the same natural cute proportions as the A room character, not a squat two-head baby and not a tall illustration.\nPreserve all eight walking poses, their leg and arm positions, uniform head size, brown spiky hair, red scarf/cape, blue coat, cream edging, single silver shoulder armor, brown gloves and boots. No new costume details. All face right, same three-quarter view. Keep each complete character centered in its corresponding 384x512 cell with generous transparent gutters and feet on the same baseline per row. No text, labels, grid, floor, ground shadow, backdrop or glow. Actual transparent background. The result must visibly read as pixel art at small size and at 2x nearest enlargement.",
+  "references": [
+    "C:/Users/spitz/AppData/Local/Temp/codex-clipboard-cbb5584c-75b6-4cc7-a15d-9e87f892f3c5.png",
+    "assets/source/home-pixel/leon-walk-v4.png"
+  ],
+  "output": "exec-52a5739c-c073-4f01-8601-e4c30f1077fc.png",
+  "attempts": 1,
+  "adopted": false,
+  "reason": "細かな塗りが残り、生活コマとの絵柄も変わるため不採用。既存の全5人の原本を維持し、配信画像を96px高・表示を48単位高へそろえ、拡大時はNEARESTで表示する。新しい原本画像はGitへ追加しない。"
+}

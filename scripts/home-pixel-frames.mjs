@@ -110,7 +110,7 @@ export async function packFrames(frames) {
     const center = deliveredBox.left + deliveredHead.left + deliveredHead.width / 2;
     const left = Math.round(size / 2 - center),
       top = Math.round(headY - deliveredBox.top - deliveredHead.top);
-    if (left < 4 || top < 4 || left + width >= size - 4 || top + height >= size - 4)
+    if (left < 4 || top < 4 || left + width > size - 4 || top + height > size - 4)
       throw Error(`Sprite ${i} exceeds padded cell: ${left},${top},${width},${height}`);
     composite.push({
       input: resized,

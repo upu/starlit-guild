@@ -1,6 +1,6 @@
 import type Phaser from "phaser";
 import { HomeLife, residentDisplayPosition, type RoomActivity } from "@/lib/home-room-life";
-import { residentArt, residentIds, type ResidentId } from "@/lib/home-actor";
+import { residentArt, residentHeight, residentIds, type ResidentId } from "@/lib/home-actor";
 import {
   ROOM,
   layoutError,
@@ -76,7 +76,9 @@ export class HomeRoomController {
     }
     const person = [...this.life.residents].reverse().find((r) => {
       const p = residentDisplayPosition(r);
-      return Math.abs(p.x - point.x) < 20 && point.y <= p.y + 5 && point.y >= p.y - 62;
+      return (
+        Math.abs(p.x - point.x) < 20 && point.y <= p.y + 5 && point.y >= p.y - residentHeight - 2
+      );
     });
     if (person) this.life.greet(person.id);
     else {
@@ -134,7 +136,7 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
       if (!failed) {
         for (const id of residentIds)
           for (const suffix of ["", "-actions"])
-            this.textures.get(homeAsset(id + suffix)).setFilter(engine.Textures.FilterMode.LINEAR);
+            this.textures.get(homeAsset(id + suffix)).setFilter(engine.Textures.FilterMode.NEAREST);
         this.controller = new HomeRoomController(this, bridge);
         bridge.status("ready");
       }

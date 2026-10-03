@@ -159,7 +159,12 @@ test("registered walk heads do not jump with a lifted foot or a moving cape", as
       for (let f = 0; f < (suffix ? 6 : 8); f++) {
         const cell = await image
           .clone()
-          .extract({ left: (f % 4) * 320, top: Math.floor(f / 4) * 320, width: 320, height: 320 })
+          .extract({
+            left: (f % 4) * residentArt.cell,
+            top: Math.floor(f / 4) * residentArt.cell,
+            width: residentArt.cell,
+            height: residentArt.cell,
+          })
           .png()
           .toBuffer();
         const box = await spriteBounds(cell);
@@ -168,11 +173,14 @@ test("registered walk heads do not jump with a lifted foot or a moving cape", as
         tops.push(box.top + head.top);
       }
       assert.ok(
-        Math.max(...centers) - Math.min(...centers) <= 4,
+        ((Math.max(...centers) - Math.min(...centers)) * residentArt.displayCell) /
+          residentArt.cell <=
+          1,
         `${id}${suffix} head horizontal jitter ${centers}`,
       );
       assert.ok(
-        Math.max(...tops) - Math.min(...tops) <= 2,
+        ((Math.max(...tops) - Math.min(...tops)) * residentArt.displayCell) / residentArt.cell <=
+          0.5,
         `${id}${suffix} head vertical jitter ${tops}`,
       );
     }
@@ -202,24 +210,29 @@ test("all five rear steps exchange the lower planted foot", async () => {
     const centers = [];
     for (const frame of [0, 3]) {
       const { data } = await sharp(`public/home-pixel/${id}-actions.webp`)
-        .extract({ left: frame * 320, top: 0, width: 320, height: 320 })
+        .extract({
+          left: frame * residentArt.cell,
+          top: 0,
+          width: residentArt.cell,
+          height: residentArt.cell,
+        })
         .ensureAlpha()
         .raw()
         .toBuffer({ resolveWithObject: true });
       let pixels = 0,
         xSum = 0;
       // Feet at the floor; exclude coat/skirt and the raised sole.
-      for (let y = 292; y < 308; y++)
-        for (let x = 0; x < 320; x++)
-          if (data[(y * 320 + x) * 4 + 3] > 96) {
+      for (let y = residentArt.foot - 5; y < residentArt.foot + 2; y++)
+        for (let x = 0; x < residentArt.cell; x++)
+          if (data[(y * residentArt.cell + x) * 4 + 3] > 96) {
             pixels++;
             xSum += x;
           }
-      assert.ok(pixels > 50);
+      assert.ok(pixels > 8);
       centers.push(xSum / pixels);
     }
     assert.ok(
-      Math.abs(centers[1] - centers[0]) > 15,
+      (Math.abs(centers[1] - centers[0]) * residentArt.displayCell) / residentArt.cell > 3,
       `${id} must alternate planted legs: ${centers}`,
     );
   }

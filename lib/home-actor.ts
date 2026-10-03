@@ -1,8 +1,12 @@
 export const residentIds = ["leon", "aria", "mira", "finn", "lico"] as const;
 export type ResidentId = (typeof residentIds)[number];
-// Texture pixels are independent of world/display size. Keep the painted face
-// intact at desktop and high-DPR sizes instead of reducing it to 60 source pixels.
-export const residentArt = { cell: 320, height: 240, foot: 304, displayCell: 80, frames: 16 };
+// Filter the source once to a shared pixel grid; enlarge without smoothing.
+// Keep two texture pixels per displayed pixel so small faces remain readable.
+export const residentArt = { cell: 128, height: 96, foot: 120, displayCell: 64, frames: 16 };
+export const residentHeight = (residentArt.height / residentArt.cell) * residentArt.displayCell;
+export const residentSolePadding =
+  ((residentArt.cell - residentArt.foot) / residentArt.cell) * residentArt.displayCell;
+export const residentScale = residentHeight / 60;
 export const residentActions = { frames: 12, rearWalkFrames: 6 };
 export const residentHand = (id: ResidentId) => (id === "lico" ? "left" : "right");
 export const walkFrame = (distance: number, reduced = false) =>
