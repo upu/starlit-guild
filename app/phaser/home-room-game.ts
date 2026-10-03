@@ -1,6 +1,6 @@
 import type Phaser from "phaser";
 import { HomeLife, residentDisplayPosition, type RoomActivity } from "@/lib/home-room-life";
-import { residentIds, type ResidentId } from "@/lib/home-actor";
+import { residentArt, residentIds, type ResidentId } from "@/lib/home-actor";
 import {
   ROOM,
   layoutError,
@@ -135,15 +135,12 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
         failed = true;
         bridge.status("error");
       });
-      for (const id of residentIds)
-        this.load.spritesheet(homeAsset(id), homeAsset(id), { frameWidth: 80, frameHeight: 80 });
-      for (let i = 0; i < 12; i++)
-        this.load.image(homeAsset(`prop-${String(i)}`), homeAsset(`prop-${String(i)}`));
-      for (let i = 0; i < 6; i++)
-        this.load.image(homeAsset(`tile-${String(i)}`), homeAsset(`tile-${String(i)}`));
+      preloadHomeAssets(this);
     }
     create() {
       if (!failed) {
+        for (const id of residentIds)
+          this.textures.get(homeAsset(id)).setFilter(engine.Textures.FilterMode.LINEAR);
         this.controller = new HomeRoomController(this, bridge);
         bridge.status("ready");
       }
@@ -182,6 +179,17 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
       game.destroy(true);
     },
   };
+}
+function preloadHomeAssets(scene: Phaser.Scene) {
+  for (const id of residentIds)
+    scene.load.spritesheet(homeAsset(id), homeAsset(id), {
+      frameWidth: residentArt.cell,
+      frameHeight: residentArt.cell,
+    });
+  for (let i = 0; i < 12; i++)
+    scene.load.image(homeAsset(`prop-${String(i)}`), homeAsset(`prop-${String(i)}`));
+  for (let i = 0; i < 6; i++)
+    scene.load.image(homeAsset(`tile-${String(i)}`), homeAsset(`tile-${String(i)}`));
 }
 function attachHomeCanvas(game: Phaser.Game, parent: HTMLElement, lost: () => void) {
   function resize() {

@@ -13,7 +13,7 @@ import {
 } from "../lib/home-room-layout.ts";
 import { homeLayoutSchema } from "../lib/home-room-schema.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
-import { residentIds, residentFrame } from "../lib/home-actor.ts";
+import { residentArt, residentIds, residentFrame, walkFrame } from "../lib/home-actor.ts";
 import { testState, act } from "../lib/game.ts";
 import { guildSchema } from "../lib/save-guild.ts";
 
@@ -86,22 +86,28 @@ test("all five atlases have complete transparent frames and useful motion", asyn
   for (const id of residentIds) {
     const image = sharp(`public/home-pixel/${id}.webp`),
       meta = await image.metadata();
-    assert.equal(meta.width, 320);
-    assert.equal(meta.height, 240);
+    const size = residentArt.cell;
+    assert.equal(meta.width, size * 4);
+    assert.equal(meta.height, size * 4);
     assert.ok(meta.hasAlpha);
-    for (let frame = 0; frame < 12; frame++) {
+    for (let frame = 0; frame < residentArt.frames; frame++) {
       const { data, info } = await image
         .clone()
-        .extract({ left: (frame % 4) * 80, top: Math.floor(frame / 4) * 80, width: 80, height: 80 })
+        .extract({
+          left: (frame % 4) * size,
+          top: Math.floor(frame / 4) * size,
+          width: size,
+          height: size,
+        })
         .raw()
         .toBuffer({ resolveWithObject: true });
       let opaque = 0,
         border = 0;
-      for (let y = 0; y < 80; y++)
-        for (let x = 0; x < 80; x++) {
-          const alpha = data[(y * 80 + x) * info.channels + 3];
+      for (let y = 0; y < size; y++)
+        for (let x = 0; x < size; x++) {
+          const alpha = data[(y * size + x) * info.channels + 3];
           if (alpha > 96) opaque++;
-          if ((x === 0 || x === 79 || y === 0 || y === 79) && alpha > 96) border++;
+          if ((x === 0 || x === size - 1 || y === 0 || y === size - 1) && alpha > 96) border++;
         }
       assert.ok(opaque > 150, `${id} frame ${frame}`);
       assert.equal(border, 0, `${id} clipped ${frame}`);
@@ -109,4 +115,29 @@ test("all five atlases have complete transparent frames and useful motion", asyn
   }
   assert.notEqual(residentFrame("craft", 0, false), residentFrame("craft", 500, false));
   assert.equal(residentFrame("walk", 1500, true), residentFrame("walk", 0, true));
+});
+
+test("eight walk phases follow travelled distance, stopping for greetings and rest", () => {
+  assert.deepEqual(
+    Array.from({ length: 8 }, (_, i) => walkFrame(i * 3)),
+    [0, 1, 2, 3, 4, 5, 6, 7],
+  );
+  assert.equal(walkFrame(24), 0);
+  assert.equal(walkFrame(21, true), 0);
+  const life = new HomeLife();
+  life.sync([...residentIds], defaultHome, "auto", false);
+  life.sync([...residentIds], defaultHome, "tea", false);
+  const moving = life.residents.find((r) => r.path.length);
+  assert.ok(moving);
+  const start = { x: moving.x, y: moving.y, distance: moving.walkDistance };
+  life.tick(33, defaultHome, false);
+  assert.ok(
+    Math.abs(
+      moving.walkDistance - start.distance - Math.hypot(moving.x - start.x, moving.y - start.y),
+    ) < 1e-8,
+  );
+  life.greet(moving.id);
+  const distance = moving.walkDistance;
+  life.tick(33, defaultHome, false);
+  assert.equal(moving.walkDistance, distance);
 });

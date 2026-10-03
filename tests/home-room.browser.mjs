@@ -136,6 +136,57 @@ try {
         )
         .png()
         .toFile(`${output}/walk-contact-sheet.png`);
+      const walkFrames = [];
+      for (let frame = 0; frame < 8; frame++) {
+        const actual = await page.evaluate((frame) => {
+          const c = window.__home;
+          c.life.residents.forEach((r, i) => {
+            Object.assign(r, {
+              x: 40 + i * 76,
+              y: 180,
+              left: false,
+              pose: "walk",
+              walkDistance: frame * 3,
+              greetUntil: 0,
+              path: [],
+            });
+          });
+          c.update(0);
+          return c.life.residents.map((r) => {
+            const image = c.art.images.get(`r-${r.id}`);
+            return {
+              frame: image.frame.name,
+              pixels: image.frame.width,
+              width: image.displayWidth,
+            };
+          });
+        }, frame);
+        for (const image of actual) {
+          assert.equal(image.frame, frame);
+          assert.equal(image.pixels, 320);
+          assert.equal(image.width, 80);
+        }
+        const capture = await page.locator(".home-stage").screenshot();
+        const { width: w, height: h } = await sharp(capture).metadata();
+        walkFrames.push(
+          await sharp(capture)
+            .extract({
+              left: 0,
+              top: Math.round((h * 100) / 312),
+              width: w,
+              height: Math.round((h * 84) / 312),
+            })
+            .png()
+            .toBuffer(),
+        );
+      }
+      const row = await sharp(walkFrames[0]).metadata();
+      await sharp({
+        create: { width: row.width, height: row.height * 8, channels: 4, background: "#233529" },
+      })
+        .composite(walkFrames.map((input, n) => ({ input, left: 0, top: n * row.height })))
+        .png()
+        .toFile(`${output}/walk-eight-poses.png`);
     }
     assert.equal(
       await page.evaluate(() => Object.keys(localStorage).filter((k) => /starlit/.test(k)).length),

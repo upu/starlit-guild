@@ -24,6 +24,7 @@ export type Resident = {
   phase: number;
   greetUntil: number;
   cycle: number;
+  walkDistance: number;
 };
 export function residentDisplayPosition(r: Resident) {
   return { x: r.x, y: r.y + (r.pose === "tea" ? teaSeatOffset(r.seat) : 0) };
@@ -54,6 +55,7 @@ function createResident(id: ResidentId, index: number): Resident {
     phase: index * 870,
     greetUntil: 0,
     cycle: 0,
+    walkDistance: 0,
   };
 }
 function faceFurniture(r: Resident, item?: Furniture) {
@@ -67,6 +69,7 @@ function walkStep(r: Resident, delta: number) {
   const distance = Math.hypot(dx, dy),
     step = Math.min(delta, 80) * 0.029;
   if (Math.abs(dx) > 0.1) r.left = dx < 0;
+  r.walkDistance += Math.min(distance, step);
   if (distance <= step) {
     r.x = next.x;
     r.y = next.y;

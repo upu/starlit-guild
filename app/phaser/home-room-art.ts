@@ -8,7 +8,7 @@ import {
   type Furniture,
   type RoomSite,
 } from "@/lib/home-room-layout";
-import { residentFrame } from "@/lib/home-actor";
+import { residentArt, residentAnimation } from "@/lib/home-actor";
 import { residentDisplayPosition, type Resident } from "@/lib/home-room-life";
 
 export const homeAsset = (name: string) => `/home-pixel/${name}.webp`;
@@ -122,10 +122,17 @@ export class HomeRoomArt {
     r = { ...r, ...residentDisplayPosition(r) };
     const greeting = time < r.greetUntil;
     const pose = greeting && r.pose !== "tea" ? "wave" : r.pose;
-    const frame = residentFrame(pose, time + r.phase, reduced);
-    const bob = !reduced && pose === "walk" ? Math.sin((time / 160) * Math.PI) * 0.6 : 0;
+    const { frame, bob } = residentAnimation(pose, time + r.phase, r.walkDistance, reduced);
     const y = r.y + (pose === "tea" ? -1 : 0);
-    const image = this.image(`r-${r.id}`, homeAsset(r.id), r.x, y + bob + 4, 80, r.y + 1, frame);
+    const image = this.image(
+      `r-${r.id}`,
+      homeAsset(r.id),
+      r.x,
+      y + bob + 4,
+      residentArt.displayCell,
+      r.y + 1,
+      frame,
+    );
     image.setFlipX(r.left);
     if (greeting) this.bubble(r, "♥", time, reduced);
     else if (pose === "tea" && (time + r.phase) % 13000 < 3500) this.bubble(r, "♪", time, reduced);
