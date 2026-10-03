@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import sharp from "sharp";
 import { headBounds, spriteBounds } from "../scripts/home-pixel-frames.mjs";
+import { walkSourceName } from "../scripts/home-walk-frames.mjs";
 import {
   defaultHome,
   furnitureSpots,
@@ -264,7 +265,7 @@ test("all five rear steps exchange the lower planted foot", async () => {
 test("source row gutters do not cut the next walk frame's hair", async () => {
   for (const id of residentIds)
     for (const half of ["a", "b"]) {
-      const source = readFileSync(`assets/source/home-pixel/${id}-walk-v9-${half}.png`);
+      const source = readFileSync(`assets/source/home-pixel/${walkSourceName(id, half)}`);
       const { data } = await sharp(source)
         .extract({ left: 0, top: 512, width: 1536, height: 1 })
         .ensureAlpha()

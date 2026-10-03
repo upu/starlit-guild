@@ -6,7 +6,7 @@ import { readFrame } from "./home-pixel-frames.mjs";
 export async function readWalkFrames(source, name) {
   const frames = [];
   for (const half of ["a", "b"]) {
-    const image = await readFile(new URL(`${name}-walk-v9-${half}.png`, source));
+    const image = await readFile(new URL(walkSourceName(name, half), source));
     for (let i = 0; i < 4; i++) {
       frames.push(
         await readFrame(image, {
@@ -19,4 +19,9 @@ export async function readWalkFrames(source, name) {
     }
   }
   return frames;
+}
+
+export function walkSourceName(name, half) {
+  const version = half === "b" && ["mira", "finn"].includes(name) ? 10 : 9;
+  return `${name}-walk-v${version}-${half}.png`;
 }

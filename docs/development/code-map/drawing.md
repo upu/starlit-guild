@@ -18,4 +18,4 @@
 
 歩行の制作見本は [見本の姿勢](../../../lib/home-walk-study.ts) → [比較ページ](../../../app/guild-lab/walk-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/walk-study/pilot.tsx)。制作ガイドにだけ関節描画を使い、ゲーム内の全身コマ切替は維持する。検査は `tests/home-walk-study.test.mjs` / `tests/home-walk-study.browser.mjs`。
 
-歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。[読み取り](../../../scripts/home-walk-frames.mjs) → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。
+歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。ミラ・フィンの後半だけは色味と頭身を合わせた `*-walk-v10-b.png` を使う。[読み取り](../../../scripts/home-walk-frames.mjs) の `walkSourceName` → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。2人の頭幅・髪色の回帰検査は `tests/home-walk-identity.test.mjs`。
