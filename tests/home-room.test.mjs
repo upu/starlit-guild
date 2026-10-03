@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import sharp from "sharp";
+import { headBounds, spriteBounds } from "../scripts/home-pixel-frames.mjs";
 import {
   defaultHome,
   furnitureSpots,
@@ -13,7 +14,15 @@ import {
 } from "../lib/home-room-layout.ts";
 import { homeLayoutSchema } from "../lib/home-room-schema.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
-import { residentArt, residentIds, residentFrame, walkFrame } from "../lib/home-actor.ts";
+import {
+  residentArt,
+  residentIds,
+  residentFrame,
+  walkFrame,
+  residentAnimation,
+  residentHand,
+} from "../lib/home-actor.ts";
+import { homeFloor, gardenScenery } from "../lib/home-room-scenery.ts";
 import { testState, act } from "../lib/game.ts";
 import { guildSchema } from "../lib/save-guild.ts";
 
@@ -44,6 +53,9 @@ test("room arrangement survives schema and never replaces materials, crops or in
   assert.deepEqual(s.guild.home, defaultHome);
   assert.ok(guildSchema.safeParse(s.guild).success);
   assert.equal(original.guild?.home, undefined);
+  const oldSideDesk = defaultHome.map((f) => (f.id === "bench" ? { ...f, y: 11 } : f));
+  assert.ok(homeLayoutSchema.safeParse(oldSideDesk).success);
+  assert.equal(layoutError(oldSideDesk), "家具までの通路を空けてください");
   assert.equal(s.gold, original.gold);
   assert.deepEqual(s.guild.materials, original.guild.materials);
   assert.deepEqual(s.guild.plots, original.guild.plots);
@@ -82,39 +94,101 @@ test("idle life makes companions respond to each other and does not continuously
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
-  assert.equal(Object.keys(manifest).length, 23);
-  for (const id of residentIds) {
-    const image = sharp(`public/home-pixel/${id}.webp`),
-      meta = await image.metadata();
-    const size = residentArt.cell;
-    assert.equal(meta.width, size * 4);
-    assert.equal(meta.height, size * 4);
-    assert.ok(meta.hasAlpha);
-    for (let frame = 0; frame < residentArt.frames; frame++) {
-      const { data, info } = await image
-        .clone()
-        .extract({
-          left: (frame % 4) * size,
-          top: Math.floor(frame / 4) * size,
-          width: size,
-          height: size,
-        })
-        .raw()
-        .toBuffer({ resolveWithObject: true });
-      let opaque = 0,
-        border = 0;
-      for (let y = 0; y < size; y++)
-        for (let x = 0; x < size; x++) {
-          const alpha = data[(y * size + x) * info.channels + 3];
-          if (alpha > 96) opaque++;
-          if ((x === 0 || x === size - 1 || y === 0 || y === size - 1) && alpha > 96) border++;
-        }
-      assert.ok(opaque > 150, `${id} frame ${frame}`);
-      assert.equal(border, 0, `${id} clipped ${frame}`);
+  assert.equal(Object.keys(manifest).length, 41);
+  for (const id of residentIds)
+    for (const suffix of ["", "-actions"]) {
+      const image = sharp(`public/home-pixel/${id}${suffix}.webp`),
+        meta = await image.metadata();
+      const size = residentArt.cell;
+      assert.equal(meta.width, size * 4);
+      assert.equal(meta.height, size * (suffix ? 3 : 4));
+      assert.ok(meta.hasAlpha);
+      for (let frame = 0; frame < (suffix ? 12 : residentArt.frames); frame++) {
+        const { data, info } = await image
+          .clone()
+          .extract({
+            left: (frame % 4) * size,
+            top: Math.floor(frame / 4) * size,
+            width: size,
+            height: size,
+          })
+          .raw()
+          .toBuffer({ resolveWithObject: true });
+        let opaque = 0,
+          border = 0;
+        for (let y = 0; y < size; y++)
+          for (let x = 0; x < size; x++) {
+            const alpha = data[(y * size + x) * info.channels + 3];
+            if (alpha > 96) opaque++;
+            if ((x === 0 || x === size - 1 || y === 0 || y === size - 1) && alpha > 96) border++;
+          }
+        assert.ok(opaque > 150, `${id} frame ${frame}`);
+        assert.equal(border, 0, `${id} clipped ${frame}`);
+      }
     }
-  }
   assert.notEqual(residentFrame("craft", 0, false), residentFrame("craft", 500, false));
   assert.equal(residentFrame("walk", 1500, true), residentFrame("walk", 0, true));
+});
+
+test("work approaches the front of a desk, rear walking follows route direction", () => {
+  const life = new HomeLife();
+  life.sync([...residentIds], defaultHome, "auto", false);
+  for (const r of life.residents.filter((r) => ["craft", "paper"].includes(r.pose))) {
+    const f = defaultHome.find((f) => f.id === r.furniture);
+    assert.deepEqual(r.spot, { x: f.x + 1, y: f.y + 2 });
+    assert.equal(r.rear, true);
+  }
+  const r = life.residents[0];
+  Object.assign(r, { x: 36, y: 300, pose: "walk", path: [{ x: 1, y: 11 }], greetUntil: 0 });
+  life.tick(33, defaultHome, false);
+  assert.equal(r.rear, true);
+  r.path = [{ x: 2, y: 12 }];
+  life.tick(33, defaultHome, false);
+  assert.equal(r.rear, false);
+  assert.equal(residentHand("lico"), "left");
+  for (const id of residentIds.filter((id) => id !== "lico"))
+    assert.equal(residentHand(id), "right");
+});
+
+test("registered walk heads do not jump with a lifted foot or a moving cape", async () => {
+  for (const id of residentIds)
+    for (const suffix of ["", "-actions"]) {
+      const image = sharp(`public/home-pixel/${id}${suffix}.webp`);
+      const centers = [],
+        tops = [];
+      for (let f = 0; f < (suffix ? 6 : 8); f++) {
+        const cell = await image
+          .clone()
+          .extract({ left: (f % 4) * 320, top: Math.floor(f / 4) * 320, width: 320, height: 320 })
+          .png()
+          .toBuffer();
+        const box = await spriteBounds(cell);
+        const head = await headBounds(await sharp(cell).extract(box).png().toBuffer());
+        centers.push(box.left + head.left + head.width / 2);
+        tops.push(box.top + head.top);
+        assert.equal(residentAnimation("walk", f * 100, f * 3, false, !!suffix).bob, 0);
+      }
+      assert.ok(
+        Math.max(...centers) - Math.min(...centers) <= 4,
+        `${id}${suffix} head horizontal jitter ${centers}`,
+      );
+      assert.ok(
+        Math.max(...tops) - Math.min(...tops) <= 2,
+        `${id}${suffix} head vertical jitter ${tops}`,
+      );
+    }
+});
+
+test("new action loops freeze with reduced motion and the two gardens have distinct scenery", () => {
+  for (const pose of ["tea", "craft", "paper", "walk"]) {
+    assert.deepEqual(
+      residentAnimation(pose, 100, 2, true, true),
+      residentAnimation(pose, 9400, 81, true, true),
+    );
+    assert.equal(residentAnimation(pose, 100, 2, false, true).action, true);
+  }
+  assert.notDeepEqual(homeFloor("linde", 0, 6), homeFloor("brekka", 0, 6));
+  assert.notDeepEqual(gardenScenery.linde, gardenScenery.brekka);
 });
 
 test("eight walk phases follow travelled distance, stopping for greetings and rest", () => {

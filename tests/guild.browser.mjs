@@ -54,6 +54,18 @@ async function stateOf(page) {
     () => JSON.parse(localStorage.getItem("starlit-guild-v4")).profiles[0].state,
   );
 }
+async function reloadGame(page, at) {
+  await page.reload();
+  // Reinstall the fixed wall time in the new document. A fixed clock also
+  // cannot expire the old document's ownership lease, so use the normal resume
+  // control in this isolated test profile instead of waiting for a lease timer.
+  await page.clock.setFixedTime(new Date(at));
+  assert.equal(await page.evaluate(() => Date.now()), at);
+  await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
+  const resume = page.getByRole("button", { name: "ここで続ける", exact: true });
+  if (await resume.isVisible()) await resume.click();
+  await page.clock.runFor(250);
+}
 async function checkMotion(page) {
   const canvas = page.locator(".home-canvas canvas");
   const before = await canvas.screenshot();
@@ -246,8 +258,7 @@ try {
   assert.ok(growth > 0.6 && growth < 0.7, `growth ${growth}`);
   await capture(page, "linde-growing");
   await page.clock.setFixedTime(new Date(initialAt + 6 * 3600000));
-  await page.reload();
-  await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
+  await reloadGame(page, initialAt + 6 * 3600000);
   const after = await stateOf(page);
   assert.ok(after.guild.cultivation > before.guild.cultivation);
   assert.ok(after.consumables.items["guild-tea"] > 0);
@@ -279,8 +290,7 @@ try {
   await page.locator(".save-status").click();
   assert.equal(await page.getByText("テストプレイ", { exact: true }).count(), 1);
   const saved = await stateOf(page);
-  await page.reload();
-  await page.getByRole("button", { name: "冒険を始める", exact: true }).click();
+  await reloadGame(page, initialAt + 6 * 3600000);
   const loaded = await stateOf(page);
   assert.deepEqual(loaded.guild, saved.guild);
   assert.deepEqual(loaded.consumables, saved.consumables);

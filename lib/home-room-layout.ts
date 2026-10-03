@@ -81,7 +81,6 @@ export function furnitureSpots(item: Furniture): Cell[] {
       [2, h],
     ].map(([x, y]) => ({ x: item.x + x, y: item.y + y }));
   if (item.kind === "plot") return [{ x: item.x + w, y: item.y + h - 1 }];
-  if (item.kind === "bench" || item.kind === "desk") return [{ x: item.x - 1, y: item.y + h - 1 }];
   return [{ x: item.x + Math.floor(w / 2), y: item.y + h }];
 }
 export function roomPath(start: Cell, end: Cell, items: Furniture[]): Cell[] | null {
@@ -109,7 +108,7 @@ function reconstructPath(end: Cell, parents: Map<string, Cell | null>) {
   }
   return path.slice(1);
 }
-export function layoutError(items: Furniture[]): string | null {
+export function layoutError(items: Furniture[], legacyAccess = false): string | null {
   if (items.length > 24 || new Set(items.map((f) => f.id)).size !== items.length)
     return "家具が多すぎます";
   if (items.flatMap(furnitureCells).some((cell) => !withinRoom(cell)))
@@ -123,9 +122,17 @@ export function layoutError(items: Furniture[]): string | null {
   const door = { x: 8, y: 12 };
   if (occupied.has(cellKey(door))) return "入口を空けてください";
   const usable = items.filter((f) => ["table", "bench", "desk", "plot"].includes(f.kind));
-  if (usable.some((f) => furnitureSpots(f).some((cell) => !roomPath(door, cell, items))))
+  if (usable.some((f) => !accessibleFurniture(f, items, door, legacyAccess)))
     return "家具までの通路を空けてください";
   return null;
+}
+
+function accessibleFurniture(item: Furniture, items: Furniture[], door: Cell, legacy: boolean) {
+  if (furnitureSpots(item).every((cell) => roomPath(door, cell, items))) return true;
+  // Earlier saves allowed side access to desks. Keep those saves readable;
+  // newly arranged layouts still require a clear approach in front of the desk.
+  if (!legacy || !["bench", "desk"].includes(item.kind)) return false;
+  return !!roomPath(door, { x: item.x - 1, y: item.y + furnitureCatalog[item.kind].h - 1 }, items);
 }
 
 function neighboringCells(cell: Cell): Cell[] {

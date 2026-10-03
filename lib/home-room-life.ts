@@ -15,6 +15,7 @@ export type Resident = {
   x: number;
   y: number;
   left: boolean;
+  rear: boolean;
   pose: ResidentPose;
   path: Cell[];
   spot?: Cell;
@@ -48,6 +49,7 @@ function createResident(id: ResidentId, index: number): Resident {
     id,
     ...cellPoint({ x: 1 + index * 2, y: 12 }),
     left: false,
+    rear: false,
     pose: "idle",
     path: [],
     seat: 0,
@@ -69,6 +71,7 @@ function walkStep(r: Resident, delta: number) {
   const distance = Math.hypot(dx, dy),
     step = Math.min(delta, 80) * 0.029;
   if (Math.abs(dx) > 0.1) r.left = dx < 0;
+  r.rear = Math.abs(dy) > Math.abs(dx) && dy < 0;
   r.walkDistance += Math.min(distance, step);
   if (distance <= step) {
     r.x = next.x;
@@ -165,6 +168,7 @@ export class HomeLife {
     r.pose = r.path.length ? "walk" : poseFor(target.item);
     r.until = this.time + 32000 + index * 4700;
     r.left = faceFurniture(r, target.item);
+    r.rear = r.pose === "craft" || r.pose === "paper";
   }
   private rest(r: Resident, furniture: Furniture[], index: number, immediate: boolean) {
     const cell = { x: 2 + index * 2, y: 4 },
@@ -200,6 +204,7 @@ export class HomeLife {
     const item = furniture.find((f) => f.id === r.furniture);
     r.pose = poseFor(item);
     r.left = faceFurniture(r, item);
+    r.rear = r.pose === "craft" || r.pose === "paper";
     r.until = this.time + 32000 + r.phase * 3;
     if (item)
       this.event = `${residentNames[r.id]}が${arrivalText[item.kind] ?? "ひと息ついています"}。`;

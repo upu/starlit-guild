@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { residentArt } from "../lib/home-actor.ts";
+import { spriteBounds as bounds, readFrame, packFrames, rowCuts } from "./home-pixel-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const source = new URL("assets/source/home-pixel/", root);
@@ -31,76 +32,80 @@ async function emit(name, buffer) {
     if (!(await readFile(path)).equals(buffer)) throw Error(`Stale pixel delivery: ${name}`);
   } else await writeFile(path, buffer);
 }
-async function bounds(buffer) {
-  const { data, info } = await sharp(buffer)
-    .ensureAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  let left = info.width,
-    top = info.height,
-    right = 0,
-    bottom = 0;
-  for (let y = 0; y < info.height; y++)
-    for (let x = 0; x < info.width; x++) {
-      if (data[(y * info.width + x) * 4 + 3] < 96) continue;
-      left = Math.min(left, x);
-      top = Math.min(top, y);
-      right = Math.max(right, x);
-      bottom = Math.max(bottom, y);
-    }
-  if (right <= left) throw Error("Empty sprite");
-  return { left, top, width: right - left + 1, height: bottom - top + 1 };
-}
+const anchors = {};
 for (const name of names) {
   const original = await readFile(new URL(`${name}-v1.png`, source));
   const walking = await readFile(new URL(`${name}-walk-v2.png`, source));
   const frames = [];
   for (let i = 0; i < residentArt.frames; i++) {
-    const index = i < 8 ? i : i - 4;
-    const rows = i < 8 ? 2 : 3;
-    const top = Math.floor((Math.floor(index / 4) * 1024) / rows),
-      bottom = Math.floor(((Math.floor(index / 4) + 1) * 1024) / rows);
-    const cell = await sharp(i < 8 ? walking : original)
-      .extract({ left: (index % 4) * 384, top, width: 384, height: bottom - top })
+    const index = i < 8 ? i : i - 4,
+      rows = i < 8 ? 2 : 3;
+    const top = Math.floor((Math.floor(index / 4) * 1024) / rows);
+    const bottom = Math.floor(((Math.floor(index / 4) + 1) * 1024) / rows);
+    frames.push(
+      await readFrame(i < 8 ? walking : original, {
+        left: (index % 4) * 384,
+        top,
+        width: 384,
+        height: bottom - top,
+      }),
+    );
+  }
+  const atlas = await packFrames(frames);
+  anchors[name] = atlas.anchors;
+  await emit(`${name}.webp`, atlas.image);
+  const actionSource = await readFile(new URL(`${name}-actions-v1.png`, source));
+  const cuts = await rowCuts(actionSource, 3),
+    actions = [];
+  for (let i = 0; i < 12; i++) {
+    // Leon's generator placed six walkers on row one; record this source layout.
+    const row = name === "leon" ? (i < 6 ? 0 : i < 10 ? 1 : 2) : Math.floor(i / 4);
+    const col = name === "leon" ? (i < 6 ? i : i < 10 ? i - 6 : i - 10) : i % 4;
+    const edges =
+      name === "leon" && row === 0
+        ? [0, 314, 587, 840, 1080, 1310, 1536]
+        : [0, 384, 768, 1152, 1536];
+    actions.push(
+      await readFrame(actionSource, {
+        left: edges[col],
+        top: cuts[row],
+        width: edges[col + 1] - edges[col],
+        height: cuts[row + 1] - cuts[row],
+      }),
+    );
+  }
+  const actionAtlas = await packFrames(actions);
+  anchors[`${name}-actions`] = actionAtlas.anchors;
+  await emit(`${name}-actions.webp`, actionAtlas.image);
+}
+await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
+for (const sheet of ["icons", "decor"]) {
+  const buffer = await readFile(new URL(`${sheet}-v1.png`, source));
+  for (let i = 0; i < 6; i++) {
+    // Decorations have uneven generated columns, with clear gutters at 582/1024.
+    const edges = sheet === "decor" ? [0, 582, 1024, 1536] : [0, 512, 1024, 1536];
+    const cell = await sharp(buffer)
+      .extract({
+        left: edges[i % 3],
+        top: Math.floor(i / 3) * 512,
+        width: edges[(i % 3) + 1] - edges[i % 3],
+        height: 512,
+      })
       .png()
       .toBuffer();
-    frames.push({ cell, box: await bounds(cell) });
+    const box = await bounds(cell);
+    await emit(
+      `${sheet}-${i}.webp`,
+      await sharp(cell)
+        .extract(box)
+        .resize({
+          width: sheet === "icons" ? 96 : Math.round(box.width / 2),
+          kernel: sheet === "icons" ? "nearest" : "lanczos3",
+        })
+        .webp({ lossless: true })
+        .toBuffer(),
+    );
   }
-  const idleScale = residentArt.height / frames[8].box.height;
-  const walkHeights = frames
-    .slice(0, 8)
-    .map((f) => f.box.height)
-    .sort((a, b) => a - b);
-  const walkScale = residentArt.height / ((walkHeights[3] + walkHeights[4]) / 2);
-  const size = residentArt.cell;
-  const composite = [];
-  for (let i = 0; i < frames.length; i++) {
-    const { cell, box } = frames[i];
-    const scale = i < 8 ? walkScale : idleScale;
-    const width = Math.round(box.width * scale),
-      height = Math.round(box.height * scale);
-    const image = await sharp(cell)
-      .extract(box)
-      .resize(width, height, { kernel: "lanczos3" })
-      .png()
-      .toBuffer();
-    composite.push({
-      input: image,
-      left:
-        (i % 4) * size +
-        (i < 8
-          ? Math.round((size - 384 * scale) / 2 + box.left * scale)
-          : Math.floor((size - width) / 2)),
-      top: Math.floor(i / 4) * size + residentArt.foot - height,
-    });
-  }
-  const atlas = await sharp({
-    create: { width: size * 4, height: size * 4, channels: 4, background: "#00000000" },
-  })
-    .composite(composite)
-    .webp({ lossless: true })
-    .toBuffer();
-  await emit(`${name}.webp`, atlas);
 }
 const props = await readFile(new URL("furniture-v1.png", source));
 for (let i = 0; i < regions.length; i++) {

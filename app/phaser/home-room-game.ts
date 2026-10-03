@@ -110,7 +110,8 @@ export class HomeRoomController {
       this.life.tick(delta, input.furniture, reduced);
     this.art.begin();
     this.art.background(input.site);
-    for (const item of input.furniture) this.art.furniture(item, input.growth[item.id]);
+    for (const item of input.furniture)
+      this.art.furniture(item, input.growth[item.id], this.life.residents, input.site);
     for (const person of this.life.residents) this.art.resident(person, this.life.time, reduced);
     if (input.editing) {
       const candidate = this.ghost
@@ -140,7 +141,8 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
     create() {
       if (!failed) {
         for (const id of residentIds)
-          this.textures.get(homeAsset(id)).setFilter(engine.Textures.FilterMode.LINEAR);
+          for (const suffix of ["", "-actions"])
+            this.textures.get(homeAsset(id + suffix)).setFilter(engine.Textures.FilterMode.LINEAR);
         this.controller = new HomeRoomController(this, bridge);
         bridge.status("ready");
       }
@@ -182,14 +184,18 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
 }
 function preloadHomeAssets(scene: Phaser.Scene) {
   for (const id of residentIds)
-    scene.load.spritesheet(homeAsset(id), homeAsset(id), {
-      frameWidth: residentArt.cell,
-      frameHeight: residentArt.cell,
-    });
+    for (const suffix of ["", "-actions"])
+      scene.load.spritesheet(homeAsset(id + suffix), homeAsset(id + suffix), {
+        frameWidth: residentArt.cell,
+        frameHeight: residentArt.cell,
+      });
   for (let i = 0; i < 12; i++)
     scene.load.image(homeAsset(`prop-${String(i)}`), homeAsset(`prop-${String(i)}`));
   for (let i = 0; i < 6; i++)
     scene.load.image(homeAsset(`tile-${String(i)}`), homeAsset(`tile-${String(i)}`));
+  for (const sheet of ["icons", "decor"])
+    for (let i = 0; i < 6; i++)
+      scene.load.image(homeAsset(`${sheet}-${String(i)}`), homeAsset(`${sheet}-${String(i)}`));
 }
 function attachHomeCanvas(game: Phaser.Game, parent: HTMLElement, lost: () => void) {
   function resize() {

@@ -72,7 +72,7 @@ try {
     await clickWorld(page, r.x, r.y - 30);
     assert.match(await page.locator(".home-caption").innerText(), /笑顔/);
     // Empty center of workbench, away from its resident.
-    await clickWorld(page, 12.7 * 24, 4 * 24);
+    await clickWorld(page, 13.7 * 24, 4 * 24);
     assert.equal(
       await page
         .getByRole("button", { name: "道具の手入れ", exact: true })
@@ -114,6 +114,10 @@ try {
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);
     await page.locator(".home-stage").screenshot({ path: `${output}/garden-${width}.png` });
+    await page.getByRole("button", { name: "塔の栽培所", exact: true }).click();
+    await page.locator('.home-room[data-status="ready"]').waitFor();
+    await page.waitForTimeout(300);
+    await page.locator(".home-stage").screenshot({ path: `${output}/brekka-${width}.png` });
     await page.getByRole("button", { name: "動きを減らす", exact: true }).click();
     await page.waitForTimeout(100);
     const reduced = await page.evaluate(() => window.__home.life.time);
@@ -137,14 +141,18 @@ try {
         .png()
         .toFile(`${output}/walk-contact-sheet.png`);
       const walkFrames = [];
+      await page.evaluate(() => {
+        window.__home.art.furniture = () => {};
+      });
       for (let frame = 0; frame < 8; frame++) {
         const actual = await page.evaluate((frame) => {
           const c = window.__home;
           c.life.residents.forEach((r, i) => {
             Object.assign(r, {
               x: 40 + i * 76,
-              y: 180,
+              y: 298,
               left: false,
+              rear: false,
               pose: "walk",
               walkDistance: frame * 3,
               greetUntil: 0,
@@ -172,7 +180,7 @@ try {
           await sharp(capture)
             .extract({
               left: 0,
-              top: Math.round((h * 100) / 312),
+              top: Math.round((h * 218) / 312),
               width: w,
               height: Math.round((h * 84) / 312),
             })
@@ -187,6 +195,7 @@ try {
         .composite(walkFrames.map((input, n) => ({ input, left: 0, top: n * row.height })))
         .png()
         .toFile(`${output}/walk-eight-poses.png`);
+      await captureNewActions(page);
     }
     assert.equal(
       await page.evaluate(() => Object.keys(localStorage).filter((k) => /starlit/.test(k)).length),
@@ -207,4 +216,86 @@ try {
   console.log("PASS pixel home", sizes);
 } finally {
   await browser.close();
+}
+
+async function captureNewActions(page) {
+  const captures = [];
+  const cases = [
+    ...Array.from({ length: 6 }, (_, i) => ({ pose: "walk", distance: i * 4, time: 0 })),
+    { pose: "tea", distance: 0, time: 1000 },
+    { pose: "tea", distance: 0, time: 4800 },
+    { pose: "craft", distance: 0, time: 0 },
+    { pose: "craft", distance: 0, time: 500 },
+    { pose: "paper", distance: 0, time: 0 },
+    { pose: "paper", distance: 0, time: 1200 },
+  ];
+  for (const sample of cases) {
+    const images = await page.evaluate((sample) => {
+      const c = window.__home;
+      c.life.time = sample.time;
+      c.life.residents.forEach((r, i) =>
+        Object.assign(r, {
+          x: 40 + i * 76,
+          y: 298,
+          rear: true,
+          left: true,
+          pose: sample.pose,
+          walkDistance: sample.distance,
+          phase: 0,
+          seat: 0,
+          greetUntil: 0,
+          path: [],
+        }),
+      );
+      c.update(0);
+      return c.life.residents.map((r) => {
+        const image = c.art.images.get(`r-${r.id}`);
+        return { id: r.id, texture: image.texture.key, flip: image.flipX, frame: image.frame.name };
+      });
+    }, sample);
+    for (const image of images) {
+      assert.equal(image.texture, `/home-pixel/${image.id}-actions.webp`);
+      if (sample.pose !== "tea")
+        assert.equal(image.flip, false, "work/rear sprites must never swap hands");
+    }
+    const capture = await page.locator(".home-stage").screenshot();
+    const { width, height } = await sharp(capture).metadata();
+    captures.push(
+      await sharp(capture)
+        .extract({
+          left: 0,
+          top: Math.round((height * 218) / 312),
+          width,
+          height: Math.round((height * 84) / 312),
+        })
+        .png()
+        .toBuffer(),
+    );
+  }
+  const row = await sharp(captures[0]).metadata();
+  await sharp({
+    create: {
+      width: row.width,
+      height: row.height * captures.length,
+      channels: 4,
+      background: "#233529",
+    },
+  })
+    .composite(captures.map((input, n) => ({ input, left: 0, top: n * row.height })))
+    .png()
+    .toFile(`${output}/rear-chair-work-poses.png`);
+  // A loop as well as a contact sheet, for judging position changes over time.
+  const front = await sharp(`${output}/walk-eight-poses.png`)
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  await sharp(front.data, {
+    raw: {
+      width: front.info.width,
+      height: front.info.height,
+      channels: front.info.channels,
+      pageHeight: front.info.height / 8,
+    },
+  })
+    .webp({ loop: 0, delay: 100, lossless: true })
+    .toFile(`${output}/walk-aligned-loop.webp`);
 }

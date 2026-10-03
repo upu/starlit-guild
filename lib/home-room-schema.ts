@@ -17,7 +17,7 @@ export const homeLayoutSchema = z
   )
   .max(24)
   .superRefine((items, context) => {
-    const message = layoutError(items);
+    const message = layoutError(items, true);
     if (message) context.addIssue({ code: z.ZodIssueCode.custom, message });
     for (const kind of ["table", "bench", "desk"])
       if (!items.some((item) => item.kind === kind))
