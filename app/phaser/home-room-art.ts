@@ -134,7 +134,7 @@ export class HomeRoomArt {
     r = { ...r, ...residentDisplayPosition(r) };
     const greeting = time < r.greetUntil;
     const pose = greeting && ["idle", "walk", "garden"].includes(r.pose) ? "wave" : r.pose;
-    const { frame, bob, action } = residentAnimation(
+    const { frame, heightScale, action } = residentAnimation(
       pose,
       time + r.phase,
       r.walkDistance,
@@ -146,11 +146,14 @@ export class HomeRoomArt {
       `r-${r.id}`,
       homeAsset(action ? `${r.id}-actions` : r.id),
       r.x,
-      y + bob + 4,
+      y + 4 * heightScale,
       residentArt.displayCell,
       r.y + 1,
       frame,
     );
+    // Scale around the painted sole (16 texture pixels above the cell bottom),
+    // so the head rises/falls without making a planted boot hop off the floor.
+    image.setDisplaySize(residentArt.displayCell, residentArt.displayCell * heightScale);
     // Back-view tools have authored handedness: Lico left, the others right.
     // Never mirror a work frame or its tool would change hands.
     image.setFlipX((pose === "tea" || !action) && r.left);

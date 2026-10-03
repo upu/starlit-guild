@@ -166,6 +166,8 @@ try {
               frame: image.frame.name,
               pixels: image.frame.width,
               width: image.displayWidth,
+              height: image.displayHeight,
+              sole: image.y - image.displayHeight * (16 / 320),
             };
           });
         }, frame);
@@ -173,6 +175,10 @@ try {
           assert.equal(image.frame, frame);
           assert.equal(image.pixels, 320);
           assert.equal(image.width, 80);
+          assert.ok(Math.abs(image.sole - 298) < 1e-6, "weight transfer keeps the sole planted");
+          assert.ok(image.height >= 77.2 && image.height <= 80);
+          if (frame === 0) assert.ok(image.height < 78, "contact lowers the head");
+          if (frame === 2) assert.equal(image.height, 80, "passing leg lifts the body");
         }
         const capture = await page.locator(".home-stage").screenshot();
         const { width: w, height: h } = await sharp(capture).metadata();

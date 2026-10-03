@@ -17,12 +17,16 @@ export function residentAnimation(
   const action =
     pose === "tea" || pose === "craft" || pose === "paper" || (pose === "walk" && rear);
   const t = reduced ? 0 : time;
+  // Two weight transfers per stride. Compress gently on contact and recover
+  // as the planted leg passes under the body; distance keeps this in step.
+  const heightScale =
+    pose === "walk" && !reduced ? 1 - 0.0175 * (1 + Math.cos((distance / 12) * Math.PI * 2)) : 1;
   if (action) {
-    return { frame: actionFrame(pose, t, reduced ? 0 : distance), bob: 0, action: true };
+    return { frame: actionFrame(pose, t, reduced ? 0 : distance), heightScale, action: true };
   }
   return {
     frame: pose === "walk" ? walkFrame(distance, reduced) : residentFrame(pose, time, reduced),
-    bob: 0,
+    heightScale,
     action: false,
   };
 }

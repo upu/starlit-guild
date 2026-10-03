@@ -166,7 +166,6 @@ test("registered walk heads do not jump with a lifted foot or a moving cape", as
         const head = await headBounds(await sharp(cell).extract(box).png().toBuffer());
         centers.push(box.left + head.left + head.width / 2);
         tops.push(box.top + head.top);
-        assert.equal(residentAnimation("walk", f * 100, f * 3, false, !!suffix).bob, 0);
       }
       assert.ok(
         Math.max(...centers) - Math.min(...centers) <= 4,
@@ -177,6 +176,25 @@ test("registered walk heads do not jump with a lifted foot or a moving cape", as
         `${id}${suffix} head vertical jitter ${tops}`,
       );
     }
+});
+
+test("walking transfers weight twice per stride without idle or clock-driven pulsing", () => {
+  for (const rear of [false, true]) {
+    const scale = (distance, time = 0) =>
+      residentAnimation("walk", time, distance, false, rear).heightScale;
+    assert.ok(scale(0) < scale(6));
+    assert.equal(scale(0), scale(12));
+    assert.equal(scale(12), scale(24));
+    assert.equal(scale(6), scale(18));
+    for (let d = 0; d < 24; d += 0.1) {
+      assert.ok(scale(d) >= 0.965 && scale(d) <= 1);
+      assert.ok(Math.abs(scale(d + 0.1) - scale(d)) < 0.001);
+      assert.equal(scale(d), scale(d, 9000));
+      assert.equal(residentAnimation("walk", 9000, d, true, rear).heightScale, 1);
+    }
+  }
+  for (const pose of ["idle", "wave", "tea", "craft", "paper", "garden"])
+    assert.equal(residentAnimation(pose, 9000, 12, false).heightScale, 1);
 });
 
 test("new action loops freeze with reduced motion and the two gardens have distinct scenery", () => {

@@ -34,8 +34,10 @@ async function emit(name, buffer) {
 }
 const anchors = {};
 for (const name of names) {
-  const original = await readFile(new URL(`${name}-v1.png`, source));
-  const walking = await readFile(new URL(`${name}-walk-v2.png`, source));
+  const restyled = name === "mira" || name === "lico";
+  const version = restyled ? 2 : 1;
+  const original = await readFile(new URL(`${name}-v${version}.png`, source));
+  const walking = await readFile(new URL(`${name}-walk-v${version + 1}.png`, source));
   const frames = [];
   for (let i = 0; i < residentArt.frames; i++) {
     const index = i < 8 ? i : i - 4,
@@ -54,7 +56,7 @@ for (const name of names) {
   const atlas = await packFrames(frames);
   anchors[name] = atlas.anchors;
   await emit(`${name}.webp`, atlas.image);
-  const actionSource = await readFile(new URL(`${name}-actions-v1.png`, source));
+  const actionSource = await readFile(new URL(`${name}-actions-v${version}.png`, source));
   const cuts = await rowCuts(actionSource, 3),
     actions = [];
   for (let i = 0; i < 12; i++) {
