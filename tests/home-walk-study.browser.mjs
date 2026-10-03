@@ -61,6 +61,16 @@ try {
   for (const id of residentIds) {
     await page.locator(".walk-residents button").filter({ hasText: residentNames[id] }).click();
     await page.locator(`.walk-pilot-pair[data-resident="${id}"]`).waitFor();
+    // The same selected resident must appear in every simultaneous phase tile.
+    assert.equal(await page.locator(".walk-pilot-sheet button").count(), 8);
+    await page.locator(".walk-pilot-sheet button").nth(6).click();
+    await waitFrame(7);
+    assert.equal(await page.getByRole("button", { name: "再生", exact: true }).count(), 1);
+    const sheetTextures = await page
+      .locator(".walk-pilot-sheet .walk-pilot-sprite")
+      .evaluateAll((nodes) => nodes.map((el) => el.style.backgroundImage));
+    assert.ok(sheetTextures.every((texture) => texture.includes(`/home-pixel/${id}.webp`)));
+    await page.locator(".walk-pilot-sheet").screenshot({ path: `${out}/${id}-all-phases.png` });
     const images = [];
     for (let frame = 0; frame < 8; frame++) {
       await page.locator(".walk-sheet button").nth(frame).click();

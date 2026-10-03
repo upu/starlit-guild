@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import sharp from "sharp";
-import { headBounds, spriteBounds, rowCuts } from "../scripts/home-pixel-frames.mjs";
+import { headBounds, spriteBounds } from "../scripts/home-pixel-frames.mjs";
 import {
   defaultHome,
   furnitureSpots,
@@ -262,16 +262,23 @@ test("all five rear steps exchange the lower planted foot", async () => {
 });
 
 test("source row gutters do not cut the next walk frame's hair", async () => {
-  for (const id of residentIds) {
-    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v8.png`);
-    const cuts = await rowCuts(source, 2);
-    const { data } = await sharp(source)
-      .extract({ left: 0, top: cuts[1], width: 1536, height: 1 })
-      .ensureAlpha()
-      .raw()
-      .toBuffer({ resolveWithObject: true });
-    for (let x = 0; x < 1536; x++) assert.ok(data[x * 4 + 3] < 96, `${id} row gutter`);
-  }
+  for (const id of residentIds)
+    for (const half of ["a", "b"]) {
+      const source = readFileSync(`assets/source/home-pixel/${id}-walk-v9-${half}.png`);
+      const { data } = await sharp(source)
+        .extract({ left: 0, top: 512, width: 1536, height: 1 })
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      for (let x = 0; x < 1536; x++) assert.ok(data[x * 4 + 3] < 96, `${id}/${half} row gutter`);
+      const column = await sharp(source)
+        .extract({ left: 768, top: 0, width: 1, height: 1024 })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      for (let y = 0; y < 1024; y++)
+        assert.ok(column[y * 4 + 3] < 96, `${id}/${half} column gutter`);
+    }
 });
 
 test("new action loops freeze with reduced motion and the two gardens have distinct scenery", () => {

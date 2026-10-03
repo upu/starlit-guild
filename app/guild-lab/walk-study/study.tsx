@@ -122,7 +122,7 @@ export default function WalkStudy() {
         {p.frame + 1} / 8：{walkStudyLabels[p.frame]}
       </p>
       <Sheet p={p} />
-      <WalkPilot frame={p.frame} />
+      <WalkPilot frame={p.frame} select={p.select} />
       <p>
         見本の色や人形の絵柄はゲームには使いません。仲間の比較には、旅団と同じ画像・コマ順・体の上下動を使っています。
       </p>

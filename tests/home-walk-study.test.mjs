@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { walkStudyPose } from "../lib/home-walk-study.ts";
 import sharp from "sharp";
+import { residentIds } from "../lib/home-actor.ts";
 test("walk reference swaps both arms, returns through neutral, and loops without a jump", () => {
   const handX = (f, s) => {
     const p = walkStudyPose(f)[s];
@@ -32,6 +33,41 @@ test("planted feet stay level and move back at a fixed pace during support", () 
     assert.ok(Math.abs(samples[i].ankle.x - samples[i - 1].ankle.x + 4) < 1e-9);
   }
   assert.ok(walkStudyPose(6).near.ankle.y < samples[0].ankle.y);
+});
+
+test("every delivered return step brings the boots together before the next contact", async () => {
+  for (const id of residentIds) {
+    const widths = [];
+    for (const frame of [4, 7]) {
+      // Actual rendered boots, below the skirt/coat: this failed when frame 8
+      // was another wide contact pose instead of the returning near leg.
+      const data = await sharp(`public/home-pixel/${id}.webp`)
+        .extract({
+          left: (frame % 4) * 128,
+          top: Math.floor(frame / 4) * 128 + 99,
+          width: 128,
+          height: 24,
+        })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      let left = 128,
+        right = -1;
+      for (let y = 0; y < 24; y++)
+        for (let x = 0; x < 128; x++) {
+          if (data[(y * 128 + x) * 4 + 3] > 160) {
+            left = Math.min(left, x);
+            right = Math.max(right, x);
+          }
+        }
+      assert.ok(right > left, `${id}: missing boots at ${frame + 1}`);
+      widths.push(right - left + 1);
+    }
+    assert.ok(
+      widths[1] < widths[0] * 0.75,
+      `${id}: frame 8 is still a wide contact pose: ${widths}`,
+    );
+  }
 });
 
 test("Aria's far glove leaves the forward position during the opposite half-stride", async () => {

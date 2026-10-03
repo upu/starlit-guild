@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { residentAnimation, residentIds, residentNames, type ResidentId } from "@/lib/home-actor";
 import { WalkFigure } from "./figure";
+import { walkStudyLabels } from "@/lib/home-walk-study";
 
 function Sprite({ id, frame }: { id: ResidentId; frame: number }) {
   const pose = residentAnimation("walk", 0, frame * 3, false);
@@ -19,7 +20,7 @@ function Sprite({ id, frame }: { id: ResidentId; frame: number }) {
   );
 }
 
-export function WalkPilot({ frame }: { frame: number }) {
+export function WalkPilot({ frame, select }: { frame: number; select: (frame: number) => void }) {
   const [id, setId] = useState<ResidentId>("leon");
   return (
     <section className="walk-pilot">
@@ -47,7 +48,28 @@ export function WalkPilot({ frame }: { frame: number }) {
         </div>
         <Sprite id={id} frame={frame} />
       </div>
-      <p>腕の前後の交代を共通にしています。歩幅や関節の位置には、見本との違いが残ります。</p>
+      <div className="walk-pilot-sheet" aria-label={`${residentNames[id]}の全8コマ比較`}>
+        {walkStudyLabels.map((label, i) => (
+          <button
+            key={i}
+            aria-pressed={i === frame}
+            onClick={() => {
+              select(i);
+            }}
+          >
+            <span>
+              {i + 1}. {label}
+            </span>
+            <div className="walk-pilot-frame">
+              <WalkFigure frame={i} />
+              <Sprite id={id} frame={i} />
+            </div>
+          </button>
+        ))}
+      </div>
+      <p>
+        5〜6コマは手前の足が後ろ、7〜8コマはその足を持ち上げて前へ運びます。足の重なりも見比べてください。
+      </p>
     </section>
   );
 }

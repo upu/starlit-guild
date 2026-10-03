@@ -17,3 +17,5 @@
 作業ポイントの画像は [全作業文の対応](../../../lib/road-worksite-catalog.ts) → [素材と動作](../../../lib/road-worksite-art.ts) → [表示](../../../lib/chapter-road-work-look.ts)。[全章の点検記録](../../art/worksite-audit.md) と [未登録検査](../../../tests/road-worksites.test.mjs)、`tests/road-worksites.browser.mjs` で追加漏れと小表示を確認する。
 
 歩行の制作見本は [見本の姿勢](../../../lib/home-walk-study.ts) → [比較ページ](../../../app/guild-lab/walk-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/walk-study/pilot.tsx)。制作ガイドにだけ関節描画を使い、ゲーム内の全身コマ切替は維持する。検査は `tests/home-walk-study.test.mjs` / `tests/home-walk-study.browser.mjs`。
+
+歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。[読み取り](../../../scripts/home-walk-frames.mjs) → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。

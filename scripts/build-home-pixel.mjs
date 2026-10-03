@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { residentArt } from "../lib/home-actor.ts";
 import { spriteBounds as bounds, readFrame, packFrames, rowCuts } from "./home-pixel-frames.mjs";
+import { readWalkFrames } from "./home-walk-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const source = new URL("assets/source/home-pixel/", root);
@@ -40,17 +41,14 @@ for (const name of names) {
   const original = await readFile(
     new URL(`${name}-v${name === "lico" ? 4 : restyled ? 3 : 1}.png`, source),
   );
-  const walking = await readFile(new URL(`${name}-walk-v8.png`, source));
-  const walkingCuts = await rowCuts(walking, 2),
-    originalCuts = await rowCuts(original, 3);
-  const frames = [];
-  for (let i = 0; i < residentArt.frames; i++) {
-    const index = i < 8 ? i : i - 4,
-      cuts = i < 8 ? walkingCuts : originalCuts;
-    const top = cuts[Math.floor(index / 4)];
-    const bottom = cuts[Math.floor(index / 4) + 1];
+  const originalCuts = await rowCuts(original, 3);
+  const frames = await readWalkFrames(source, name);
+  for (let i = 8; i < residentArt.frames; i++) {
+    const index = i - 4;
+    const top = originalCuts[Math.floor(index / 4)];
+    const bottom = originalCuts[Math.floor(index / 4) + 1];
     frames.push(
-      await readFrame(i < 8 ? walking : original, {
+      await readFrame(original, {
         left: (index % 4) * 384,
         top,
         width: 384,
