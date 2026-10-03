@@ -10,10 +10,12 @@ import {
   roomPath,
   blockedCells,
   cellKey,
+  cellPoint,
   layoutError,
 } from "../lib/home-room-layout.ts";
 import { homeLayoutSchema } from "../lib/home-room-schema.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
+import { teaChairPosition, residentDisplayPosition } from "../lib/home-room-presentation.ts";
 import {
   residentArt,
   residentIds,
@@ -91,6 +93,28 @@ test("idle life makes companions respond to each other and does not continuously
   assert.match(life.event, /笑い合/);
   assert.ok(life.residents.every((r) => !r.path.length));
   assert.equal(roomPath({ x: 8, y: 12 }, { x: 3, y: 8 }, defaultHome), null);
+});
+
+test("compact tea seating keeps occupied/empty chairs aligned after moving a table", () => {
+  const life = new HomeLife();
+  life.sync([...residentIds], defaultHome, "tea", false);
+  const table = defaultHome[0];
+  const moved = { ...table, x: table.x + 2, y: table.y - 1 };
+  const seats = [];
+  for (let seat = 0; seat < 6; seat++) {
+    const r = { ...life.residents[0], seat, ...cellPoint(furnitureSpots(table)[seat]) };
+    const chair = teaChairPosition(table, seat);
+    assert.deepEqual(residentDisplayPosition(r, [table]), chair);
+    const relocated = { ...r, ...cellPoint(furnitureSpots(moved)[seat]) };
+    const target = residentDisplayPosition(relocated, [moved]);
+    assert.ok(Math.abs(target.x - chair.x - 48) < 1e-8);
+    assert.ok(Math.abs(target.y - chair.y + 24) < 1e-8);
+    seats.push(chair);
+    assert.deepEqual(residentDisplayPosition({ ...r, pose: "walk" }, [table]), { x: r.x, y: r.y });
+  }
+  for (let i = 0; i < seats.length; i++)
+    for (let j = i + 1; j < seats.length; j++)
+      assert.ok(Math.hypot(seats[i].x - seats[j].x, seats[i].y - seats[j].y) > 30);
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
@@ -240,7 +264,7 @@ test("all five rear steps exchange the lower planted foot", async () => {
 
 test("source row gutters do not cut the next walk frame's hair", async () => {
   for (const id of residentIds) {
-    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v4.png`);
+    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v5.png`);
     const cuts = await rowCuts(source, 2);
     const { data } = await sharp(source)
       .extract({ left: 0, top: cuts[1], width: 1536, height: 1 })

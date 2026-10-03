@@ -35,10 +35,12 @@ async function emit(name, buffer) {
 const anchors = {};
 for (const name of names) {
   const restyled = name === "mira" || name === "lico";
-  const version = restyled ? 2 : 1;
-  // Original overnight artwork remains the style master; only Mira/Lico contours change.
-  const original = await readFile(new URL(`${name}-v${restyled ? 3 : 1}.png`, source));
-  const walking = await readFile(new URL(`${name}-walk-v4.png`, source));
+  const version = name === "lico" ? 3 : restyled ? 2 : 1;
+  // Original overnight artwork remains the style master; retakes refine contours and Lico hair.
+  const original = await readFile(
+    new URL(`${name}-v${name === "lico" ? 4 : restyled ? 3 : 1}.png`, source),
+  );
+  const walking = await readFile(new URL(`${name}-walk-v5.png`, source));
   const walkingCuts = await rowCuts(walking, 2),
     originalCuts = await rowCuts(original, 3);
   const frames = [];
@@ -80,7 +82,9 @@ for (const name of names) {
     );
   }
   {
-    const rear = await readFile(new URL(`${name}-rear-walk-v3.png`, source));
+    const rear = await readFile(
+      new URL(`${name}-rear-walk-v${name === "lico" ? 4 : 3}.png`, source),
+    );
     for (let i = 0; i < 6; i++)
       actions[i] = await readFrame(rear, {
         left: (i % 3) * 512,

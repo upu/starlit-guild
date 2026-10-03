@@ -1,5 +1,6 @@
 import type Phaser from "phaser";
-import { HomeLife, residentDisplayPosition, type RoomActivity } from "@/lib/home-room-life";
+import { HomeLife, type RoomActivity } from "@/lib/home-room-life";
+import { residentDisplayPosition } from "@/lib/home-room-presentation";
 import { residentArt, residentHeight, residentIds, type ResidentId } from "@/lib/home-actor";
 import {
   ROOM,
@@ -75,7 +76,7 @@ export class HomeRoomController {
       return;
     }
     const person = [...this.life.residents].reverse().find((r) => {
-      const p = residentDisplayPosition(r);
+      const p = residentDisplayPosition(r, input.furniture);
       return (
         Math.abs(p.x - point.x) < 20 && point.y <= p.y + 5 && point.y >= p.y - residentHeight - 2
       );
@@ -106,7 +107,8 @@ export class HomeRoomController {
     this.art.background(input.site);
     for (const item of input.furniture)
       this.art.furniture(item, input.growth[item.id], this.life.residents, input.site);
-    for (const person of this.life.residents) this.art.resident(person, this.life.time, reduced);
+    for (const person of this.life.residents)
+      this.art.resident(person, this.life.time, reduced, input.furniture);
     if (input.editing) {
       const candidate = this.ghost
         ? [...input.furniture.filter((f) => f.id !== this.ghost?.id), this.ghost]

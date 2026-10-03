@@ -1,13 +1,5 @@
 import type Phaser from "phaser";
-import {
-  ROOM,
-  furnitureCatalog,
-  furnitureSpots,
-  cellPoint,
-  teaSeatOffset,
-  type Furniture,
-  type RoomSite,
-} from "@/lib/home-room-layout";
+import { ROOM, furnitureCatalog, type Furniture, type RoomSite } from "@/lib/home-room-layout";
 import {
   residentArt,
   residentAnimation,
@@ -16,7 +8,12 @@ import {
   residentSolePadding,
 } from "@/lib/home-actor";
 import { homeFloor, gardenScenery } from "@/lib/home-room-scenery";
-import { residentDisplayPosition, type Resident } from "@/lib/home-room-life";
+import type { Resident } from "@/lib/home-room-life";
+import {
+  homeFurnitureScale,
+  residentDisplayPosition,
+  teaChairPosition,
+} from "@/lib/home-room-presentation";
 
 export const homeAsset = (name: string) => `/home-pixel/${name}.webp`;
 export class HomeRoomArt {
@@ -91,12 +88,13 @@ export class HomeRoomArt {
       y = bottom,
       depth = bottom - 4;
     if (item.kind === "table") {
-      width = 132;
+      width = 132 * homeFurnitureScale;
       y = bottom - 11;
-      depth = bottom - 39;
+      depth = bottom - 39 * homeFurnitureScale;
       this.chairs(item, residents);
     }
     if (item.kind === "rug") depth = -800;
+    if (item.kind === "bench" || item.kind === "desk") width *= homeFurnitureScale;
     if (item.kind === "bookcase") width = 55;
     this.image(`f-${item.id}`, homeAsset(`prop-${String(data.frame)}`), x, y, width, depth);
     if (item.kind === "plot" && growth !== undefined) this.crops(item, growth, bottom, site);
@@ -105,9 +103,7 @@ export class HomeRoomArt {
     for (let i = 0; i < 6; i++) {
       if (residents.some((r) => r.pose === "tea" && r.furniture === item.id && r.seat === i))
         continue;
-      const point = cellPoint(furnitureSpots(item)[i]);
-      const x = point.x,
-        y = point.y + teaSeatOffset(i);
+      const { x, y } = teaChairPosition(item, i);
       this.image(
         `chair-${item.id}-${String(i)}`,
         homeAsset(i % 2 === 0 ? "prop-1" : "prop-2"),
@@ -136,8 +132,8 @@ export class HomeRoomArt {
       .fillStyle(0xbacf78)
       .fillRoundedRect(x + 1, bottom + 4, (width - 2) * Math.max(0.02, growth), 4, 1);
   }
-  resident(r: Resident, time: number, reduced: boolean) {
-    r = { ...r, ...residentDisplayPosition(r) };
+  resident(r: Resident, time: number, reduced: boolean, furniture: Furniture[]) {
+    r = { ...r, ...residentDisplayPosition(r, furniture) };
     const greeting = time < r.greetUntil;
     const pose = greeting && ["idle", "walk", "garden"].includes(r.pose) ? "wave" : r.pose;
     const { frame, heightScale, action } = residentAnimation(
