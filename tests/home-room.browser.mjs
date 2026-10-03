@@ -68,6 +68,7 @@ try {
     const t = await page.evaluate(() => window.__home.life.time);
     await page.waitForTimeout(150);
     assert.equal(await page.evaluate(() => window.__home.life.time), t);
+    await checkZoom(page, width, dpr);
     const r = await page.evaluate(() => window.__home.life.residents[0]);
     await clickWorld(page, r.x, r.y - 30);
     assert.match(await page.locator(".home-caption").innerText(), /笑顔/);
@@ -224,6 +225,81 @@ try {
   await browser.close();
 }
 
+async function cameraState(page) {
+  return page.evaluate(() => {
+    const c = window.__home.scene.cameras.main;
+    return {
+      zoom: c.zoom,
+      center: c.getWorldPoint(c.width / 2, c.height / 2),
+      start: c.getWorldPoint(0, 0),
+      end: c.getWorldPoint(c.width, c.height),
+      event: window.__home.life.event,
+    };
+  });
+}
+async function checkZoom(page, width, dpr) {
+  const before = await cameraState(page);
+  await page.getByRole("button", { name: "拡大する", exact: true }).click();
+  await page.waitForTimeout(100);
+  assert.equal((await cameraState(page)).zoom, before.zoom * 2);
+  await page.locator("canvas").scrollIntoViewIfNeeded();
+  const rect = await page.locator("canvas").boundingBox();
+  const x = rect.x + rect.width / 2,
+    y = rect.y + rect.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + rect.width * 0.2, y + rect.height * 0.15, { steps: 8 });
+  await page.mouse.up();
+  await page.waitForTimeout(100);
+  const panned = await cameraState(page);
+  assert.ok(panned.center.x < before.center.x - 30);
+  assert.ok(panned.center.y < before.center.y - 20);
+  assert.equal(panned.event, before.event, "drag is not a furniture or resident tap");
+  await page.locator(".home-stage").press("Home");
+  await page.waitForTimeout(80);
+  if (width === 390) await touchPan(page, x, y, rect.width);
+  await page.locator(".home-stage").press("Home");
+  for (let i = 0; i < 12; i++) await page.locator(".home-stage").press("ArrowRight");
+  await page.waitForTimeout(80);
+  const edge = await cameraState(page);
+  assert.ok(edge.start.x >= -0.1 && edge.end.x <= 384.1, JSON.stringify(edge));
+  assert.ok(edge.start.y >= -0.1 && edge.end.y <= 312.1);
+  await page.locator(".home-stage").screenshot({ path: `${output}/zoom-${width}-dpr${dpr}.png` });
+  // The same bench remains tappable after both magnification and camera panning.
+  const box = await page.locator("canvas").boundingBox();
+  await page.mouse.click(
+    box.x + ((13.7 * 24 - edge.start.x) / (edge.end.x - edge.start.x)) * box.width,
+    box.y + ((4 * 24 - edge.start.y) / (edge.end.y - edge.start.y)) * box.height,
+  );
+  await page.waitForTimeout(100);
+  assert.equal(
+    await page
+      .getByRole("button", { name: "道具の手入れ", exact: true })
+      .getAttribute("aria-pressed"),
+    "true",
+    "furniture taps follow the panned, magnified camera",
+  );
+  await page.getByRole("button", { name: "部屋全体", exact: true }).click();
+  await page.waitForTimeout(100);
+  assert.equal((await cameraState(page)).zoom, before.zoom);
+}
+async function touchPan(page, x, y, width) {
+  const cdp = await page.context().newCDPSession(page);
+  const before = await cameraState(page);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+  for (let i = 1; i <= 8; i++)
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchMove",
+      touchPoints: [{ x: x - width * 0.025 * i, y }],
+    });
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await page.waitForTimeout(100);
+  const after = await cameraState(page);
+  assert.ok(after.center.x > before.center.x + 30, "touch swipes pan the room");
+  assert.equal(after.event, before.event);
+  await cdp.detach();
+}
+
 async function captureNewActions(page) {
   const captures = [];
   const cases = [
@@ -290,6 +366,20 @@ async function captureNewActions(page) {
     .composite(captures.map((input, n) => ({ input, left: 0, top: n * row.height })))
     .png()
     .toFile(`${output}/rear-chair-work-poses.png`);
+  const rear = await sharp(`${output}/rear-chair-work-poses.png`)
+    .extract({ left: 0, top: 0, width: row.width, height: row.height * 6 })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  await sharp(rear.data, {
+    raw: {
+      width: row.width,
+      height: row.height * 6,
+      channels: rear.info.channels,
+      pageHeight: row.height,
+    },
+  })
+    .webp({ loop: 0, delay: 138, lossless: true })
+    .toFile(`${output}/rear-walk-loop.webp`);
   // A loop as well as a contact sheet, for judging position changes over time.
   const front = await sharp(`${output}/walk-eight-poses.png`)
     .raw()

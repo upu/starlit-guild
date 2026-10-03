@@ -20,7 +20,8 @@ export type HomeRoomProps = {
 export function HomeRoom(props: HomeRoomProps) {
   const editor = useFurniture(props);
   const [paused, setPaused] = useState(false),
-    [reduced, setReduced] = useState(false);
+    [reduced, setReduced] = useState(false),
+    [zoomed, setZoomed] = useState(false);
   const { host, status, message, retry } = useHomeRoom(
     {
       site: props.site,
@@ -30,6 +31,7 @@ export function HomeRoom(props: HomeRoomProps) {
       mode: props.mode ?? "auto",
       paused,
       reduced,
+      zoomed,
       editing: editor.draft !== null,
       selected: editor.selected,
       adding: editor.adding,
@@ -45,19 +47,14 @@ export function HomeRoom(props: HomeRoomProps) {
   );
   return (
     <section className="home-room" aria-label="小さな旅団ホーム" data-status={status}>
-      <div className="home-stage">
-        <div className="home-canvas" ref={host} aria-hidden="true" />
-        {status !== "ready" && (
-          <div className="home-loading" role="status">
-            {status === "error" ? <button onClick={retry}>景色を読み直す</button> : "部屋を支度中…"}
-          </div>
-        )}
-      </div>
+      <HomeStage host={host} status={status} retry={retry} zoomed={zoomed} />
       <RoomControls
         paused={paused}
         setPaused={setPaused}
         reduced={reduced}
         setReduced={setReduced}
+        zoomed={zoomed}
+        setZoomed={setZoomed}
         edit={props.onLayout && props.site === "home" && !editor.draft ? editor.edit : undefined}
       />
       {editor.draft ? (
@@ -71,21 +68,60 @@ export function HomeRoom(props: HomeRoomProps) {
   );
 }
 
+function HomeStage({
+  host,
+  status,
+  retry,
+  zoomed,
+}: {
+  host: React.RefObject<HTMLDivElement | null>;
+  status: string;
+  retry: () => void;
+  zoomed: boolean;
+}) {
+  return (
+    <div
+      className={`home-stage${zoomed ? " is-zoomed" : ""}`}
+      tabIndex={zoomed ? 0 : undefined}
+      aria-label={zoomed ? "拡大した部屋。スワイプか矢印キーで移動、Homeキーで中央へ" : "部屋全体"}
+    >
+      <div className="home-canvas" ref={host} aria-hidden="true" />
+      {status !== "ready" && (
+        <div className="home-loading" role="status">
+          {status === "error" ? <button onClick={retry}>景色を読み直す</button> : "部屋を支度中…"}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function RoomControls({
   paused,
   setPaused,
   reduced,
   setReduced,
+  zoomed,
+  setZoomed,
   edit,
 }: {
   paused: boolean;
   setPaused: (value: boolean) => void;
   reduced: boolean;
   setReduced: (value: boolean) => void;
+  zoomed: boolean;
+  setZoomed: (value: boolean) => void;
   edit?: () => void;
 }) {
   return (
     <div className="home-controls">
+      <button
+        aria-pressed={zoomed}
+        onClick={() => {
+          setZoomed(!zoomed);
+        }}
+      >
+        {zoomed ? "部屋全体" : "拡大する"}
+      </button>
       {edit && <button onClick={edit}>家具を置く・動かす</button>}
       <button
         aria-pressed={paused}

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import sharp from "sharp";
-import { headBounds, spriteBounds } from "../scripts/home-pixel-frames.mjs";
+import { headBounds, spriteBounds, rowCuts } from "../scripts/home-pixel-frames.mjs";
 import {
   defaultHome,
   furnitureSpots,
@@ -195,6 +195,47 @@ test("walking transfers weight twice per stride without idle or clock-driven pul
   }
   for (const pose of ["idle", "wave", "tea", "craft", "paper", "garden"])
     assert.equal(residentAnimation(pose, 9000, 12, false).heightScale, 1);
+});
+
+test("all five rear steps exchange the lower planted foot", async () => {
+  for (const id of residentIds) {
+    const centers = [];
+    for (const frame of [0, 3]) {
+      const { data } = await sharp(`public/home-pixel/${id}-actions.webp`)
+        .extract({ left: frame * 320, top: 0, width: 320, height: 320 })
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      let pixels = 0,
+        xSum = 0;
+      // Feet at the floor; exclude coat/skirt and the raised sole.
+      for (let y = 292; y < 308; y++)
+        for (let x = 0; x < 320; x++)
+          if (data[(y * 320 + x) * 4 + 3] > 96) {
+            pixels++;
+            xSum += x;
+          }
+      assert.ok(pixels > 50);
+      centers.push(xSum / pixels);
+    }
+    assert.ok(
+      Math.abs(centers[1] - centers[0]) > 15,
+      `${id} must alternate planted legs: ${centers}`,
+    );
+  }
+});
+
+test("source row gutters do not cut the next walk frame's hair", async () => {
+  for (const id of residentIds) {
+    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v4.png`);
+    const cuts = await rowCuts(source, 2);
+    const { data } = await sharp(source)
+      .extract({ left: 0, top: cuts[1], width: 1536, height: 1 })
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    for (let x = 0; x < 1536; x++) assert.ok(data[x * 4 + 3] < 96, `${id} row gutter`);
+  }
 });
 
 test("new action loops freeze with reduced motion and the two gardens have distinct scenery", () => {

@@ -21,6 +21,14 @@
   image-rendering: pixelated;
   touch-action: manipulation;
 }
+.home-stage.is-zoomed canvas {
+  touch-action: none;
+  cursor: grab;
+}
+.home-stage:focus-visible {
+  outline: 2px solid #ffe6aa;
+  outline-offset: 2px;
+}
 .home-loading {
   position: absolute;
   inset: 0;

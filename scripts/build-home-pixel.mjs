@@ -36,14 +36,17 @@ const anchors = {};
 for (const name of names) {
   const restyled = name === "mira" || name === "lico";
   const version = restyled ? 2 : 1;
-  const original = await readFile(new URL(`${name}-v${version}.png`, source));
-  const walking = await readFile(new URL(`${name}-walk-v${version + 1}.png`, source));
+  // Original overnight artwork remains the style master; only Mira/Lico contours change.
+  const original = await readFile(new URL(`${name}-v${restyled ? 3 : 1}.png`, source));
+  const walking = await readFile(new URL(`${name}-walk-v4.png`, source));
+  const walkingCuts = await rowCuts(walking, 2),
+    originalCuts = await rowCuts(original, 3);
   const frames = [];
   for (let i = 0; i < residentArt.frames; i++) {
     const index = i < 8 ? i : i - 4,
-      rows = i < 8 ? 2 : 3;
-    const top = Math.floor((Math.floor(index / 4) * 1024) / rows);
-    const bottom = Math.floor(((Math.floor(index / 4) + 1) * 1024) / rows);
+      cuts = i < 8 ? walkingCuts : originalCuts;
+    const top = cuts[Math.floor(index / 4)];
+    const bottom = cuts[Math.floor(index / 4) + 1];
     frames.push(
       await readFrame(i < 8 ? walking : original, {
         left: (index % 4) * 384,
@@ -75,6 +78,16 @@ for (const name of names) {
         height: cuts[row + 1] - cuts[row],
       }),
     );
+  }
+  {
+    const rear = await readFile(new URL(`${name}-rear-walk-v3.png`, source));
+    for (let i = 0; i < 6; i++)
+      actions[i] = await readFrame(rear, {
+        left: (i % 3) * 512,
+        top: Math.floor(i / 3) * 512,
+        width: 512,
+        height: 512,
+      });
   }
   const actionAtlas = await packFrames(actions);
   anchors[`${name}-actions`] = actionAtlas.anchors;
@@ -112,11 +125,14 @@ for (const sheet of ["icons", "decor"]) {
 const props = await readFile(new URL("furniture-v1.png", source));
 for (let i = 0; i < regions.length; i++) {
   const [left, top, width, height] = regions[i];
-  const cell = await sharp(props).extract({ left, top, width, height }).png().toBuffer();
+  const cell =
+    i === 0
+      ? await readFile(new URL("table-v2.png", source))
+      : await sharp(props).extract({ left, top, width, height }).png().toBuffer();
   const box = await bounds(cell);
   const image = await sharp(cell)
     .extract(box)
-    .resize({ width: Math.round(box.width / 2), kernel: "nearest" })
+    .resize({ width: i === 0 ? 450 : Math.round(box.width / 2), kernel: "nearest" })
     .webp({ lossless: true })
     .toBuffer();
   await emit(`prop-${i}.webp`, image);

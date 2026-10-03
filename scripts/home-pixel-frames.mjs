@@ -96,17 +96,24 @@ export async function packFrames(frames) {
     const scale = residentArt.height / f.box.height;
     const width = Math.round(f.box.width * scale),
       height = Math.round(f.box.height * scale);
-    const center = f.head.left + f.head.width / 2;
-    const left = Math.round(size / 2 - center * scale),
-      top = Math.round(headY - f.head.top * scale);
+    const resized = await sharp(f.cell)
+      .extract(f.box)
+      .resize(width, height, { kernel: "lanczos3" })
+      .png()
+      .toBuffer();
+    // Filtering can disconnect a one-pixel flower/hair edge. Register the actual
+    // delivered silhouette, not only the high-resolution source measurement.
+    const deliveredBox = await spriteBounds(resized);
+    const deliveredHead = await headBounds(
+      await sharp(resized).extract(deliveredBox).png().toBuffer(),
+    );
+    const center = deliveredBox.left + deliveredHead.left + deliveredHead.width / 2;
+    const left = Math.round(size / 2 - center),
+      top = Math.round(headY - deliveredBox.top - deliveredHead.top);
     if (left < 4 || top < 4 || left + width >= size - 4 || top + height >= size - 4)
       throw Error(`Sprite ${i} exceeds padded cell: ${left},${top},${width},${height}`);
     composite.push({
-      input: await sharp(f.cell)
-        .extract(f.box)
-        .resize(width, height, { kernel: "lanczos3" })
-        .png()
-        .toBuffer(),
+      input: resized,
       left: (i % 4) * size + left,
       top: Math.floor(i / 4) * size + top,
     });
@@ -135,7 +142,8 @@ export async function rowCuts(source, rows) {
     const expected = Math.round((info.height * row) / rows);
     let best = expected,
       bestCount = Infinity;
-    for (let y = expected - 18; y <= expected + 18; y++) {
+    const radius = Math.round((info.height / rows) * 0.15);
+    for (let y = expected - radius; y <= expected + radius; y++) {
       let count = 0;
       for (let x = 0; x < info.width; x++) if (data[(y * info.width + x) * 4 + 3] >= 96) count++;
       const score = count * 100 + Math.abs(y - expected);

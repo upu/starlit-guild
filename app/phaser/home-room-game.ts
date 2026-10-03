@@ -9,6 +9,7 @@ import {
   type RoomSite,
 } from "@/lib/home-room-layout";
 import { HomeRoomArt, homeAsset } from "./home-room-art";
+import { HomeRoomView } from "./home-room-view";
 export type HomeFrame = {
   site: RoomSite;
   furniture: Furniture[];
@@ -21,6 +22,7 @@ export type HomeFrame = {
   growth: Record<string, number>;
   reduced: boolean;
   working?: ResidentId;
+  zoomed: boolean;
 };
 export type HomeBridge = {
   read: () => HomeFrame;
@@ -33,6 +35,7 @@ export type HomeBridge = {
 export class HomeRoomController {
   readonly life = new HomeLife();
   private art: HomeRoomArt;
+  private view: HomeRoomView;
   private ghost?: Furniture;
   private lastMessage = "";
   constructor(
@@ -40,23 +43,14 @@ export class HomeRoomController {
     private bridge: HomeBridge,
   ) {
     this.art = new HomeRoomArt(scene);
-    scene.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-      this.tap(pointer);
-    });
-    scene.input.on("pointermove", (pointer: Phaser.Input.Pointer) => {
-      this.preview(pointer);
-    });
-  }
-  private point(pointer: Phaser.Input.Pointer) {
-    // The room can scroll inside a panel without a window resize. Phaser's cached
-    // canvas bounds may then be stale; convert the event using its current bounds.
-    const event = pointer.event;
-    const contact = "changedTouches" in event ? event.changedTouches[0] : event;
-    const canvas = this.scene.game.canvas,
-      bounds = canvas.getBoundingClientRect();
-    return this.scene.cameras.main.getWorldPoint(
-      ((contact.clientX - bounds.left) * canvas.width) / bounds.width,
-      ((contact.clientY - bounds.top) * canvas.height) / bounds.height,
+    this.view = new HomeRoomView(
+      scene,
+      (point) => {
+        this.tap(point);
+      },
+      (point) => {
+        this.preview(point);
+      },
     );
   }
   private itemAt(x: number, y: number, input: HomeFrame) {
@@ -65,21 +59,19 @@ export class HomeRoomController {
       return x >= f.x * 24 && x < (f.x + w) * 24 && y >= f.y * 24 && y < (f.y + h) * 24;
     });
   }
-  private preview(pointer: Phaser.Input.Pointer) {
+  private preview(p: { x: number; y: number }) {
     const input = this.bridge.read();
     const item = input.adding ?? input.furniture.find((f) => f.id === input.selected);
     if (!input.editing || !item) {
       this.ghost = undefined;
       return;
     }
-    const p = this.point(pointer);
     this.ghost = { ...item, x: Math.floor(p.x / 24), y: Math.floor(p.y / 24) };
   }
-  private tap(pointer: Phaser.Input.Pointer) {
-    const input = this.bridge.read(),
-      point = this.point(pointer);
+  private tap(point: { x: number; y: number }) {
+    const input = this.bridge.read();
     if (input.editing) {
-      this.editTap(pointer, input);
+      this.editTap(point, input);
       return;
     }
     const person = [...this.life.residents].reverse().find((r) => {
@@ -92,19 +84,19 @@ export class HomeRoomController {
       if (f) this.bridge.use(f.id);
     }
   }
-  private editTap(pointer: Phaser.Input.Pointer, input: HomeFrame) {
-    this.preview(pointer);
+  private editTap(p: { x: number; y: number }, input: HomeFrame) {
+    this.preview(p);
     if (this.ghost) {
       this.bridge.place(this.ghost);
       return;
     }
-    const p = this.point(pointer),
-      item = this.itemAt(p.x, p.y, input);
+    const item = this.itemAt(p.x, p.y, input);
     if (item) this.bridge.select(item.id);
   }
   update(delta: number) {
     const input = this.bridge.read(),
       reduced = input.reduced || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.view.update(input.zoomed);
     this.life.sync(input.members, input.furniture, input.mode, reduced, input.working);
     if (!input.paused && !input.editing && !document.hidden)
       this.life.tick(delta, input.furniture, reduced);
@@ -148,10 +140,6 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
       }
     }
     update(_time: number, delta: number) {
-      this.cameras.main
-        .setSize(game.canvas.width, game.canvas.height)
-        .setZoom(Math.min(game.canvas.width / ROOM.width, game.canvas.height / ROOM.height))
-        .centerOn(ROOM.width / 2, ROOM.height / 2);
       if (!disposed && !failed) this.controller?.update(delta);
     }
   }
@@ -207,11 +195,6 @@ function attachHomeCanvas(game: Phaser.Game, parent: HTMLElement, lost: () => vo
     game.canvas.style.width = `${String(parent.clientWidth)}px`;
     game.canvas.style.height = `${String(parent.clientHeight)}px`;
     game.scale.updateBounds();
-    for (const scene of game.scene.getScenes(true)) {
-      scene.cameras.main
-        .setZoom(Math.min(width / ROOM.width, height / ROOM.height))
-        .centerOn(ROOM.width / 2, ROOM.height / 2);
-    }
   }
 
   const observer = new ResizeObserver(resize);

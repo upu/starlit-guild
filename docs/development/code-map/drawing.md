@@ -11,7 +11,7 @@
 
 作業ポイントの説明札は [作業画像の下端への追従](../../../app/phaser/road-work-caption.ts) を参照。
 
-旅団は [全身コマのドット絵調描画](../../../app/phaser/home-room-art.ts)。[動作](../../../lib/home-actor.ts)、[生活と経路](../../../lib/home-room-life.ts)、[マス配置](../../../lib/home-room-layout.ts)、[制作記録](../../art/guild-lab.md) を参照。部位を切り離す合成試作は廃止した。
+旅団は [全身コマのドット絵調描画](../../../app/phaser/home-room-art.ts)。[拡大・パン・タップ](../../../app/phaser/home-room-view.ts)、[動作](../../../lib/home-actor.ts)、[生活と経路](../../../lib/home-room-life.ts)、[マス配置](../../../lib/home-room-layout.ts)、[制作記録](../../art/guild-lab.md) を参照。部位を切り離す合成試作は廃止した。
 
 
 作業ポイントの画像は [全作業文の対応](../../../lib/road-worksite-catalog.ts) → [素材と動作](../../../lib/road-worksite-art.ts) → [表示](../../../lib/chapter-road-work-look.ts)。[全章の点検記録](../../art/worksite-audit.md) と [未登録検査](../../../tests/road-worksites.test.mjs)、`tests/road-worksites.browser.mjs` で追加漏れと小表示を確認する。
