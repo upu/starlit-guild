@@ -70,7 +70,11 @@ try {
       .locator(".walk-pilot-sheet .walk-pilot-sprite")
       .evaluateAll((nodes) => nodes.map((el) => el.style.backgroundImage));
     assert.ok(sheetTextures.every((texture) => texture.includes(`/home-pixel/${id}.webp`)));
-    await page.locator(".walk-pilot-sheet").screenshot({ path: `${out}/${id}-all-phases.png` });
+    await page.locator(".walk-pilot-sheet").screenshot({
+      path: `${out}/${id}-all-phases.png`,
+      // Keep the sticky playback bar out of the full-height contact sheet.
+      style: ".walk-controls { visibility: hidden !important; }",
+    });
     const images = [];
     for (let frame = 0; frame < 8; frame++) {
       await page.locator(".walk-sheet button").nth(frame).click();
