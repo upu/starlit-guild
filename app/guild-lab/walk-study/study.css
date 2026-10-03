@@ -41,6 +41,11 @@
   height: auto;
 }
 .walk-controls {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #233529;
+  padding: 8px 0;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
@@ -48,7 +53,8 @@
   margin-top: 16px;
 }
 .walk-controls button,
-.walk-sheet button {
+.walk-sheet button,
+.walk-residents button {
   color: #f5e4c2;
   border: 1px solid #a28e64;
   border-radius: 6px;
@@ -66,7 +72,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
-.walk-sheet button[aria-pressed="true"] {
+.walk-sheet button[aria-pressed="true"],
+.walk-residents button[aria-pressed="true"] {
   border-color: #ffe299;
   background: #4a5541;
 }
@@ -91,8 +98,8 @@
   width: 256px;
   height: 256px;
   flex-shrink: 0;
-  background-image: url("/home-pixel/walk-study-leon.webp");
-  background-size: 400% 200%;
+  background-size: 400% 400%;
+  transform-origin: center bottom;
   image-rendering: pixelated;
 }
 @media (max-width: 600px) {
@@ -111,6 +118,24 @@
   font-size: 12px;
   display: block;
   min-height: 36px;
+}
+.walk-residents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.walk-residents button {
+  display: block;
+  padding: 4px;
+}
+.walk-residents .walk-pilot-sprite {
+  width: 64px;
+  height: 64px;
+}
+.walk-residents span {
+  font-size: 12px;
 }
 @media (max-width: 600px) {
   .walk-study {

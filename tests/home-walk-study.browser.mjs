@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mkdirSync } from "node:fs";
 import { chromium } from "playwright";
 import sharp from "sharp";
+import { residentIds, residentNames, residentAnimation } from "../lib/home-actor.ts";
 
 const out = "work/pixel-home/walk-study";
 mkdirSync(out, { recursive: true });
@@ -57,6 +58,36 @@ try {
     )
     .png()
     .toFile(`${out}/guide-sheet.png`);
+  for (const id of residentIds) {
+    await page.locator(".walk-residents button").filter({ hasText: residentNames[id] }).click();
+    await page.locator(`.walk-pilot-pair[data-resident="${id}"]`).waitFor();
+    const images = [];
+    for (let frame = 0; frame < 8; frame++) {
+      await page.locator(".walk-sheet button").nth(frame).click();
+      await waitFrame(frame + 1);
+      const style = await page.locator(".walk-pilot-pair .walk-pilot-sprite").getAttribute("style");
+      assert.ok(style.includes(`/home-pixel/${id}.webp`), "use the real home atlas");
+      assert.ok(
+        style.includes(
+          `translateY(${(residentAnimation("walk", 0, frame * 3, false).bob / 64) * 100}%)`,
+        ),
+      );
+      images.push(await page.locator(".walk-pilot-pair").screenshot());
+    }
+    const { width, height } = await sharp(images[0]).metadata();
+    await sharp({
+      create: { width: width * 2, height: height * 4, channels: 4, background: "#233529" },
+    })
+      .composite(
+        images.map((input, i) => ({
+          input,
+          left: (i % 2) * width,
+          top: Math.floor(i / 2) * height,
+        })),
+      )
+      .png()
+      .toFile(`${out}/${id}-comparison.png`);
+  }
   for (const width of [320, 390, 1000]) {
     await page.setViewportSize({ width, height: 1100 });
     const fits = await page.locator(".walk-study").evaluate((el) => {

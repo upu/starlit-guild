@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "reason": "ユーザー指摘の画質劣化・横長の顔を修正。見た目の参照は採用済み元絵、v7はポーズだけ。生成原本は無加工でv8として保存。表示側の縦つぶしも廃止。",
+  "calls": 9,
+  "selected": 5,
+  "records": [
+    {
+      "id": "aria-guide",
+      "prompt": "Use case: game sprite animation, fresh pixel-art redraw FROM THE ORIGINAL APPROVED ART.\nReference 1 is the ONLY visual/style/identity master: Aria, the golden-haired elf in a green leaf-embroidered cape, cream puff sleeves, brown corset/gloves, short cream layered skirt, bare thighs, brown gold-laced boots. Reference 2 is ONLY a colored mannequin defining the eight chronological walking poses, not color or anatomy.\nCreate a new clean 1536x1024 transparent RGBA sheet, exactly 4 columns x 2 rows of 8 complete Aria walking frames, reading left-to-right then bottom row. Each cell384x512; generous transparent gutters and consistent character scale.\nCRITICAL QUALITY: match reference1's visibly PIXEL-ART clustered shading and fine dark-brown stepped contours. No smooth glossy anime rendering, no thick black contour, no blurred texture, no noisy tiny highlights. Crisp compact warm-colored pixel clusters, same gentle muted palette and simplified detail density as reference1. Character will display only48pixels tall. Head/face must remain the original narrow three-quarter right-facing face, NOT a wide circular squashy face. Keep eye spacing modest, cheeks taper to small chin; do NOT enlarge eyes or widen cheeks. Closed mouth gentle smile. Same head proportions and exact face throughout all8frames; use original first-frame head as master, only vertical gait translation, never squashing. Short relaxed steps, no high stepping or running.\nPose reference orange limbs are NEAR side, blue FAR side. Apply corresponding8poses to her OWN limbs. Near arm back1, back2, down3, slightlyforward4, forward5, returning6, down7, back8. Far arm opposite; hidden behind torso/cape in4/5/6, NOT permanently held forward at belly. Hands stay low below belt, elbows nearly straight. Near foot forward1; farfoot passes3/4 then landsforward5; nearfoot passes7/8. Near/far legs must genuinely alternate. Keep both feet near body, match modest mannequin stride.\nNo copying mannequin appearance, no other character. No background/color matte/floor/shadow/text/labels/grid. True transparency. Preserve costume and original PIXEL artwork style above all.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9b638a28-2990-48fb-9794-824e5d27a80b.png",
+      "adopted": false,
+      "reason": "画風は戻ったが奥の手が全コマで隠れすぎた"
+    },
+    {
+      "id": "aria",
+      "prompt": "Fresh eight-frame ARIA PIXEL ART walk sprite sheet. Reference1 is the sole ART STYLE and face/costume master. Reference2 is ONLY the exact eight BODY POSES to follow (its glossy anime rendering is rejected; do not copy its colors/line style or face shape). Repaint those same8poses using reference1's crisp pixel clusters and finer dark-brown contour.\nCanvas1536x1024 RGBA,4columns2rows,transparent,fullbodyeachcell,consistent scale. Preserve reference2's NEAR/FAR ARM and LEG ordering in every cell: far hand visible in front-low in1/2/8, disappears behind torso4/5/6. Near hand back1/2/8,down3/7,forward4/5/6. Legs alternate, far leg lifted in4,near leg lifted in7. Keep step lengths modest and hands below belt. Do not lose far arm completely across all8cells.\nFace must be reference1's FIRST top-left face: closed tiny mouth, green eyes moderately spaced, cheeks tapered towards chin, compact NARROW three-quarter rightward face. Do NOT copy wide, smiling open-mouth round face of reference2. Keep face identical across8frames. Pixel cluster art, NO glossy gradients/black outlines/no noise/dither. Preserve reference1 pale cream skin, gold hair,flower,elf ears,green cape,brown corset/gloves,lacedbrownboots. No altered jewelry, no enlarged eyes, no enlarged head. Original small indoor sprite style, relaxed tiny steps, nothighstepping. Clean true transparency, NO background/floor/shadow/grid/text.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-walk-v7.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-cbc8edd1-dce1-46fa-a08c-651331d0dd97.png",
+      "adopted": true,
+      "reason": "元絵の塗りと閉じた口へ戻り、奥の手が中盤で隠れる。歩幅の差は残る"
+    },
+    {
+      "id": "leon",
+      "prompt": "Fresh eight-frame LEON PIXEL ART walk sprite sheet. Reference1 is the sole ART STYLE,face,costume master. Reference2 is ONLY the exact eight BODY POSES to follow: its repeatedly edited rendering is rejected, never copy its distorted face, altered outline/shading or costume.\nRepaint reference2's same8poses with reference1's clean compact PIXEL CLUSTERS, controlled fine dark-brown outline, matte simple shadows. No smooth glossy anime rendering, no heavy black borders, no muddiness, no fine dithering or speckled noise. Crisp small indoor game sprite. brown spiky hair, red scarf/cape, blue tunic and brown belts, cream sleeves and silver near shoulder plate, brown gloves and plain brown boots. Preserve character identity and all ORIGINAL costume features from reference1, no other-character features.\nFACE: maintain reference1's top-left face, but cheeks about8% narrower if needed: subtly tapered toward chin, modest eye spacing, not broad round/squashed face. Head consistent across all8frames, no horizontal expansion, no vertical compression. Closed relaxed mouth, no big toothy grin. Keep original head/body proportion, small48px display intended.\nCanvas1536x1024 true transparent RGBA, exactly4columns2rows of8complete full bodies with equal scale and clear gutters. Reference2 defines chronological near/far limb ordering. Near arm back1/2,down3,forward4/5,returning6,down7,back8; far arm opposite and hidden4/5/6, visible forward LOW1/2/8. Hands below belt, elbows mostlystraight, not raised in front of chest. Nearlegforward1, farlegpasses3/4 and forward5,nearlegpasses7/8. Relaxed small stride, no run or high knee. Preserve opposite near/far arms and feet; do not repeat same leg forward. Never mirror whole character: all face three-quarter screen-right. No background/color matte/floor/shadow/text/labels/grid. ",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-v7.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-812aa797-2c0f-451d-97db-12a18a1718c4.png",
+      "adopted": false,
+      "reason": "2コマ目の腕が前へ戻った"
+    },
+    {
+      "id": "mira",
+      "prompt": "Fresh eight-frame MIRA PIXEL ART walk sprite sheet. Reference1 is the sole ART STYLE,face,costume master. Reference2 is ONLY the exact eight BODY POSES to follow: its repeatedly edited rendering is rejected, never copy its distorted face, altered outline/shading or costume.\nRepaint reference2's same8poses with reference1's clean compact PIXEL CLUSTERS, controlled fine dark-brown outline, matte simple shadows. No smooth glossy anime rendering, no heavy black borders, no muddiness, no fine dithering or speckled noise. Crisp small indoor game sprite. lilac bundled braided hair, crescent/white flower/navy bow, tired HALF-LIDDED eyes with gentle under-eye shadows, cream dress and wide cream sleeves with navy lining and gold embroidery, brown pouches and mostly CLOSED brown lace-up open-toe boots (only toes visible, no open gladiator straps). Preserve character identity and all ORIGINAL costume features from reference1, no other-character features.\nFACE: maintain reference1's top-left face, but cheeks about8% narrower if needed: subtly tapered toward chin, modest eye spacing, not broad round/squashed face. Head consistent across all8frames, no horizontal expansion, no vertical compression. Closed relaxed mouth, no big toothy grin. Keep original head/body proportion, small48px display intended.\nCanvas1536x1024 true transparent RGBA, exactly4columns2rows of8complete full bodies with equal scale and clear gutters. Reference2 defines chronological near/far limb ordering. Near arm back1/2,down3,forward4/5,returning6,down7,back8; far arm opposite and hidden4/5/6, visible forward LOW1/2/8. Hands below belt, elbows mostlystraight, not raised in front of chest. Nearlegforward1, farlegpasses3/4 and forward5,nearlegpasses7/8. Relaxed small stride, no run or high knee. Preserve opposite near/far arms and feet; do not repeat same leg forward. Never mirror whole character: all face three-quarter screen-right. No background/color matte/floor/shadow/text/labels/grid. ",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-v3.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v7.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-bfb9f6e9-cf2e-41e2-bac4-c5d4e725e082.png",
+      "adopted": true,
+      "reason": "元絵の顔・服・塗りを基準に戻した。細かな陰影は完全に元と同一ではない"
+    },
+    {
+      "id": "finn",
+      "prompt": "Fresh eight-frame FINN PIXEL ART walk sprite sheet. Reference1 is the sole ART STYLE,face,costume master. Reference2 is ONLY the exact eight BODY POSES to follow: its repeatedly edited rendering is rejected, never copy its distorted face, altered outline/shading or costume.\nRepaint reference2's same8poses with reference1's clean compact PIXEL CLUSTERS, controlled fine dark-brown outline, matte simple shadows. No smooth glossy anime rendering, no heavy black borders, no muddiness, no fine dithering or speckled noise. Crisp small indoor game sprite. brown hair tied back, relaxed narrow eyes and wry calm smile, dark muted olive long coat with ochre edging, cream open-neck shirt,brown trousers and PLAIN brown leather boots with no gold motifs. Preserve character identity and all ORIGINAL costume features from reference1, no other-character features.\nFACE: maintain reference1's top-left face, but cheeks about8% narrower if needed: subtly tapered toward chin, modest eye spacing, not broad round/squashed face. Head consistent across all8frames, no horizontal expansion, no vertical compression. Closed relaxed mouth, no big toothy grin. Keep original head/body proportion, small48px display intended.\nCanvas1536x1024 true transparent RGBA, exactly4columns2rows of8complete full bodies with equal scale and clear gutters. Reference2 defines chronological near/far limb ordering. Near arm back1/2,down3,forward4/5,returning6,down7,back8; far arm opposite and hidden4/5/6, visible forward LOW1/2/8. Hands below belt, elbows mostlystraight, not raised in front of chest. Nearlegforward1, farlegpasses3/4 and forward5,nearlegpasses7/8. Relaxed small stride, no run or high knee. Preserve opposite near/far arms and feet; do not repeat same leg forward. Never mirror whole character: all face three-quarter screen-right. No background/color matte/floor/shadow/text/labels/grid. ",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v7.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-bf2af284-441d-498e-a47f-db4f02ed0616.png",
+      "adopted": true,
+      "reason": "元絵の顔・服・塗りを基準に戻した。細かな陰影は完全に元と同一ではない"
+    },
+    {
+      "id": "lico",
+      "prompt": "Fresh eight-frame LICO PIXEL ART walk sprite sheet. Reference1 is the sole ART STYLE,face,costume master. Reference2 is ONLY the exact eight BODY POSES to follow: its repeatedly edited rendering is rejected, never copy its distorted face, altered outline/shading or costume.\nRepaint reference2's same8poses with reference1's clean compact PIXEL CLUSTERS, controlled fine dark-brown outline, matte simple shadows. No smooth glossy anime rendering, no heavy black borders, no muddiness, no fine dithering or speckled noise. Crisp small indoor game sprite. auburn ponytail tied at BACK of head not side, green eyes and round glasses, charcoal/red short cape with NO added gold cape motif, red layered skirt with cream frill, cream sleeves and hands, dark open-toe sandals; original ribbons and gold belt accessories. Preserve character identity and all ORIGINAL costume features from reference1, no other-character features.\nFACE: maintain reference1's top-left face, but cheeks about8% narrower if needed: subtly tapered toward chin, modest eye spacing, not broad round/squashed face. Head consistent across all8frames, no horizontal expansion, no vertical compression. Closed relaxed mouth, no big toothy grin. Keep original head/body proportion, small48px display intended.\nCanvas1536x1024 true transparent RGBA, exactly4columns2rows of8complete full bodies with equal scale and clear gutters. Reference2 defines chronological near/far limb ordering. Near arm back1/2,down3,forward4/5,returning6,down7,back8; far arm opposite and hidden4/5/6, visible forward LOW1/2/8. Hands below belt, elbows mostlystraight, not raised in front of chest. Nearlegforward1, farlegpasses3/4 and forward5,nearlegpasses7/8. Relaxed small stride, no run or high knee. Preserve opposite near/far arms and feet; do not repeat same leg forward. Never mirror whole character: all face three-quarter screen-right. No background/color matte/floor/shadow/text/labels/grid. ",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-v4.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v7.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-52c18675-7780-4ebf-bd49-52a95e62f24a.png",
+      "adopted": false,
+      "reason": "脚を通すコマが弱く同じ開脚が繰り返された"
+    },
+    {
+      "id": "leon-precise",
+      "prompt": "Precise STYLE and FACE edit only. Reference1 is the exact EDIT TARGET eight-frame walking sheet. FREEZE all eight body poses, arm directions, elbows,hands,leg overlap,feet,cape silhouettes and costume design exactly as reference1. Do NOT replace poses using reference2. Every foot and hand must stay in the same place; do not turn all frames into same-leg-forward.\nReference2 is ONLY the older approved art STYLE and facial identity. Change reference1's rendering to match reference2's crisp compact pixel art clusters, matte shading, fine dark brown outlines. Remove glossy anime polish, muddy detail, thick black outlines and noisy small highlights. Keep controlled clear pixel steps and same colors. Face is too broad: narrow cheek area and eye spacing about8%, subtly taper chin, no giant eyes. No vertical face squashing. Same headshape all8frames. Keep silver shoulder armor and all outfit features exactly.\nNo other changes!8frames remain4columns2rows1536x1024 RGBA,actualtransparent background,no text/grid/floor/shadow.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-v7.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-c0b6496e-7ed5-4073-b6d2-5ca6477128ad.png",
+      "adopted": true,
+      "reason": "元の小さな顔と画風へ寄せ、腕の前後交代を保持"
+    },
+    {
+      "id": "lico-precise",
+      "prompt": "Precise STYLE and FACE edit only. Reference1 is the exact EDIT TARGET eight-frame walking sheet. FREEZE all eight body poses, arm directions, elbows,hands,leg overlap,feet,cape silhouettes and costume design exactly as reference1. Do NOT replace poses using reference2. Every foot and hand must stay in the same place; do not turn all frames into same-leg-forward.\nReference2 is ONLY the older approved art STYLE and facial identity. Change reference1's rendering to match reference2's crisp compact pixel art clusters, matte shading, fine dark brown outlines. Remove glossy anime polish, muddy detail, thick black outlines and noisy small highlights. Keep controlled clear pixel steps and same colors. Face is too broad: narrow cheek area and eye spacing about8%, subtly taper chin, no giant eyes. No vertical face squashing. Same headshape all8frames. Keep glasses, rear ponytail and dress exactly.\nNo other changes!8frames remain4columns2rows1536x1024 RGBA,actualtransparent background,no text/grid/floor/shadow.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v7.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-v4.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-312c5251-180b-4314-8021-775b96eb5fae.png",
+      "adopted": true,
+      "reason": "頬の幅と輪郭を調整し、3・7コマの足を通す姿勢を保持。振幅は小さい"
+    },
+    {
+      "id": "leon-guide",
+      "prompt": "Create LEON's clean PIXEL ART eight-frame walk, 1536x1024 transparent RGBA,4columns2rows. Image1 gives ONLY character appearance: spiky brown hair, narrow cheek/short chin cute face,red scarf/cape,bluecoat,cream sleeves,silver near shoulder plate,browngloves,trousers/boots. COPY its compact stepped dark-brown pixel contours and matte pixel-cluster shadows, never glossy anime art. Narrow face, modest eye spacing, original head proportion. Do NOT use image1's old walking poses.\nImage2 is the EXACT eight-pose sequence to dress as Leon. Orange is near arm/leg; blue is far arm/leg. Keep the near arm in frame2 (top row second) BEHIND the body: shoulder plate below ear, elbow down-left, hand just left of hip, not across chest and not extended right! Reference2 poses must be followed in all8cells. Nearhand farthestback1,stillback2,down3,slightlyforward4,forward5,returning6,down7,back8. Far hand opposite, disappears behind torso4/5/6. Hand always belowbelt, elbows mostlystraight.\nNearlegforward1,farlegpassing3 thenforward4/5; nearlegpassing7 thenforward8. No huge strides or high knees. ALL8 faces three-quarter RIGHT, same headscale, no squash, smallclosed smile. Dress the mannequin in Leon costume with proper NEAR silver shoulder, normal proportions, no mannequin colors/shapes visible. Clean pixel sprite deliberate compact pixelclusters, no blurrydetail or dither. Uniform cells384x512,generous transparent gutters,fullbodyeachcell,no background/matte/text/floor/shadow/grid.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b44ed008-85f7-45ba-a555-aa54b135ee50.png",
+      "adopted": false,
+      "reason": "8コマ目の腕が前に戻った"
+    }
+  ]
+}

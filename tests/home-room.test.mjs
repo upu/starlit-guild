@@ -118,7 +118,7 @@ test("compact tea seating keeps occupied/empty chairs aligned after moving a tab
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
-  assert.equal(Object.keys(manifest).length, 42);
+  assert.equal(Object.keys(manifest).length, 41);
   for (const id of residentIds)
     for (const suffix of ["", "-actions"]) {
       const image = sharp(`public/home-pixel/${id}${suffix}.webp`),
@@ -210,23 +210,22 @@ test("registered walk heads do not jump with a lifted foot or a moving cape", as
     }
 });
 
-test("walking transfers weight twice per stride without idle or clock-driven pulsing", () => {
+test("walking rises on the pixel grid without deforming the face or pulsing at rest", () => {
   for (const rear of [false, true]) {
     const scale = (distance, time = 0) =>
-      residentAnimation("walk", time, distance, false, rear).heightScale;
-    assert.ok(scale(0) < scale(6));
+      residentAnimation("walk", time, distance, false, rear).bob;
+    assert.ok(scale(0) > scale(6));
     assert.equal(scale(0), scale(12));
     assert.equal(scale(12), scale(24));
     assert.equal(scale(6), scale(18));
     for (let d = 0; d < 24; d += 0.1) {
-      assert.ok(scale(d) >= 0.965 && scale(d) <= 1);
-      assert.ok(Math.abs(scale(d + 0.1) - scale(d)) < 0.001);
+      assert.ok(scale(d) === 0 || scale(d) === -0.5);
       assert.equal(scale(d), scale(d, 9000));
-      assert.equal(residentAnimation("walk", 9000, d, true, rear).heightScale, 1);
+      assert.equal(residentAnimation("walk", 9000, d, true, rear).bob, 0);
     }
   }
   for (const pose of ["idle", "wave", "tea", "craft", "paper", "garden"])
-    assert.equal(residentAnimation(pose, 9000, 12, false).heightScale, 1);
+    assert.equal(residentAnimation(pose, 9000, 12, false).bob, 0);
 });
 
 test("all five rear steps exchange the lower planted foot", async () => {
@@ -264,7 +263,7 @@ test("all five rear steps exchange the lower planted foot", async () => {
 
 test("source row gutters do not cut the next walk frame's hair", async () => {
   for (const id of residentIds) {
-    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v6.png`);
+    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v8.png`);
     const cuts = await rowCuts(source, 2);
     const { data } = await sharp(source)
       .extract({ left: 0, top: cuts[1], width: 1536, height: 1 })

@@ -21,16 +21,19 @@ export function residentAnimation(
   const action =
     pose === "tea" || pose === "craft" || pose === "paper" || (pose === "walk" && rear);
   const t = reduced ? 0 : time;
-  // Two weight transfers per stride. Compress gently on contact and recover
-  // as the planted leg passes under the body; distance keeps this in step.
-  const heightScale =
-    pose === "walk" && !reduced ? 1 - 0.0175 * (1 + Math.cos((distance / 12) * Math.PI * 2)) : 1;
+  // Preserve face proportions. Whole-sprite vertical compression made cheeks
+  // look wider and resampled the pixel grid every tick. A half-pixel rise at
+  // passing is one delivery pixel, with the contact pose on the floor.
+  const bob =
+    pose === "walk" && !reduced
+      ? -Math.round((1 - Math.cos((distance / 12) * Math.PI * 2)) / 2) * 0.5
+      : 0;
   if (action) {
-    return { frame: actionFrame(pose, t, reduced ? 0 : distance), heightScale, action: true };
+    return { frame: actionFrame(pose, t, reduced ? 0 : distance), bob, action: true };
   }
   return {
     frame: pose === "walk" ? walkFrame(distance, reduced) : residentFrame(pose, time, reduced),
-    heightScale,
+    bob,
     action: false,
   };
 }

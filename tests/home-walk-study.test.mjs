@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { walkStudyPose } from "../lib/home-walk-study.ts";
+import sharp from "sharp";
 test("walk reference swaps both arms, returns through neutral, and loops without a jump", () => {
   const handX = (f, s) => {
     const p = walkStudyPose(f)[s];
@@ -31,4 +32,31 @@ test("planted feet stay level and move back at a fixed pace during support", () 
     assert.ok(Math.abs(samples[i].ankle.x - samples[i - 1].ankle.x + 4) < 1e-9);
   }
   assert.ok(walkStudyPose(6).near.ankle.y < samples[0].ankle.y);
+});
+
+test("Aria's far glove leaves the forward position during the opposite half-stride", async () => {
+  const visible = [];
+  for (let frame = 0; frame < 8; frame++) {
+    // Measured delivered-atlas region in front of the waist. This is the far
+    // glove in the contact pose, not the nearer glove crossing the skirt.
+    const { data } = await sharp("public/home-pixel/aria.webp")
+      .extract({
+        left: (frame % 4) * 128 + 81,
+        top: Math.floor(frame / 4) * 128 + 75,
+        width: 22,
+        height: 19,
+      })
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    let brown = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const [r, g, b, a] = data.subarray(i, i + 4);
+      if (a > 160 && r > 45 && r < 180 && r > g * 1.2 && g > b * 1.1) brown++;
+    }
+    visible.push(brown);
+  }
+  assert.ok(visible[0] > 20 && visible[7] > 20, `forward glove missing: ${visible}`);
+  for (const f of [3, 4, 5])
+    assert.ok(visible[f] < 16, `far glove stuck forward at ${f}: ${visible}`);
 });

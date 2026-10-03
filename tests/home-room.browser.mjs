@@ -180,15 +180,14 @@ try {
           assert.equal(image.frame, frame);
           assert.equal(image.pixels, residentArt.cell);
           assert.equal(image.width, residentArt.displayCell);
-          assert.ok(Math.abs(image.sole - 298) < 1e-6, "weight transfer keeps the sole planted");
           assert.ok(
-            image.height >= residentArt.displayCell * 0.965 &&
-              image.height <= residentArt.displayCell,
+            image.sole >= 297.5 && image.sole <= 298,
+            "rise is limited to one texture pixel",
           );
-          if (frame === 0)
-            assert.ok(image.height < residentArt.displayCell * 0.975, "contact lowers the head");
+          assert.equal(image.height, image.width, "walking never squashes the face");
+          if (frame === 0) assert.equal(image.sole, 298, "contact returns to the floor");
           if (frame === 2)
-            assert.equal(image.height, residentArt.displayCell, "passing leg lifts the body");
+            assert.equal(image.sole, 297.5, "passing leg lifts by one texture pixel");
         }
         const capture = await page.locator(".home-stage").screenshot();
         const { width: w, height: h } = await sharp(capture).metadata();
