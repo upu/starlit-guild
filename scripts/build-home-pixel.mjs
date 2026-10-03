@@ -40,7 +40,7 @@ for (const name of names) {
   const original = await readFile(
     new URL(`${name}-v${name === "lico" ? 4 : restyled ? 3 : 1}.png`, source),
   );
-  const walking = await readFile(new URL(`${name}-walk-v5.png`, source));
+  const walking = await readFile(new URL(`${name}-walk-v6.png`, source));
   const walkingCuts = await rowCuts(walking, 2),
     originalCuts = await rowCuts(original, 3);
   const frames = [];

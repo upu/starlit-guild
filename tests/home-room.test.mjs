@@ -264,7 +264,7 @@ test("all five rear steps exchange the lower planted foot", async () => {
 
 test("source row gutters do not cut the next walk frame's hair", async () => {
   for (const id of residentIds) {
-    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v5.png`);
+    const source = readFileSync(`assets/source/home-pixel/${id}-walk-v6.png`);
     const cuts = await rowCuts(source, 2);
     const { data } = await sharp(source)
       .extract({ left: 0, top: cuts[1], width: 1536, height: 1 })
