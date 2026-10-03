@@ -41,6 +41,14 @@ try {
       value === "true" ? 200 : 404,
       "Prototype follows the server capability",
     );
+    const study = await worker.dispatchFetch(
+      "http://localhost/guild-lab/walk-study?ENABLE_TEST_TOOLS=true",
+    );
+    assert.equal(
+      study.status,
+      value === "true" ? 200 : 404,
+      "Walk study follows the server capability",
+    );
     console.log(
       `PASS: ENABLE_TEST_TOOLS=${JSON.stringify(value) ?? "unset"} => ${match[1]}, no-store`,
     );

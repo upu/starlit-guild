@@ -118,7 +118,7 @@ test("compact tea seating keeps occupied/empty chairs aligned after moving a tab
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
-  assert.equal(Object.keys(manifest).length, 41);
+  assert.equal(Object.keys(manifest).length, 42);
   for (const id of residentIds)
     for (const suffix of ["", "-actions"]) {
       const image = sharp(`public/home-pixel/${id}${suffix}.webp`),

@@ -98,6 +98,24 @@ for (const name of names) {
   await emit(`${name}-actions.webp`, actionAtlas.image);
 }
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
+// Isolated authoring pilot, never used by the home residents.
+{
+  const pilot = await readFile(new URL("leon-walk-study-v1.png", source));
+  const cuts = await rowCuts(pilot, 2),
+    frames = [];
+  for (let i = 0; i < 8; i++) {
+    const row = Math.floor(i / 4);
+    frames.push(
+      await readFrame(pilot, {
+        left: (i % 4) * 384,
+        top: cuts[row],
+        width: 384,
+        height: cuts[row + 1] - cuts[row],
+      }),
+    );
+  }
+  await emit("walk-study-leon.webp", (await packFrames(frames)).image);
+}
 for (const sheet of ["icons", "decor"]) {
   const buffer = await readFile(new URL(`${sheet}-v1.png`, source));
   for (let i = 0; i < 6; i++) {
