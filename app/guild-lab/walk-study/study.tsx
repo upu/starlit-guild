@@ -104,6 +104,8 @@ export default function WalkStudy() {
   return (
     <main className="walk-study" data-ready={ready}>
       <Link href="/guild-lab">旅団ホームの試作へ戻る</Link>
+      {" ／ "}
+      <Link href="/guild-lab/tea-study">お茶と会話の見本へ</Link>
       <h1>みんなの歩行見本</h1>
       <p>オレンジが手前の手足、青が奥の手足。腕は足と逆に振り、真下を通って戻ります。</p>
       <div className="walk-live">
