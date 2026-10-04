@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { residentArt } from "../lib/home-actor.ts";
 import { spriteBounds as bounds, readFrame, packFrames, rowCuts } from "./home-pixel-frames.mjs";
 import { readWalkFrames } from "./home-walk-frames.mjs";
+import { buildWorkAtlas } from "./home-work-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const source = new URL("assets/source/home-pixel/", root);
@@ -110,6 +111,9 @@ for (const name of names) {
   const teaAtlas = await packFrames(tea);
   anchors[`${name}-tea`] = teaAtlas.anchors;
   await emit(`${name}-tea.webp`, teaAtlas.image);
+  const workAtlas = await buildWorkAtlas(source, name);
+  anchors[`${name}-work`] = workAtlas.anchors;
+  await emit(`${name}-work.webp`, workAtlas.image);
 }
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
 for (const sheet of ["icons", "decor"]) {

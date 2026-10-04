@@ -1,6 +1,7 @@
+import { residentWork } from "./home-actor.ts";
 // Drawing reference only; no production rewards, character state or save access.
 export type WorkPoint = { x: number; y: number };
-export const workStudy = { duration: 1600, step: 400, phases: 4 };
+export const workStudy = { ...residentWork, phases: residentWork.frames };
 export const workLabels = ["手を伸ばす", "手元を動かす", "身を寄せる", "戻す"];
 export const workSupport = { x: 124, y: 98 };
 const keys = [

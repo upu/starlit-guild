@@ -4,7 +4,6 @@ import {
   residentArt,
   residentAnimation,
   residentAtlas,
-  residentHand,
   residentScale,
   residentSolePadding,
 } from "@/lib/home-actor";
@@ -184,15 +183,6 @@ export class HomeRoomArt {
       this.marks
         .fillStyle(0xfff6df, (1 - phase) * 0.7)
         .fillCircle(r.x + sign * 8 * residentScale, r.y - (25 + phase * 15) * residentScale, 1.2);
-    if (pose === "craft" && time % 880 < 160)
-      this.marks
-        .fillStyle(0xf3cb74, 0.8)
-        .fillRect(
-          r.x + (residentHand(r.id) === "left" ? -15 : 15) * residentScale,
-          r.y - 38 * residentScale,
-          2,
-          2,
-        );
     if (pose === "garden")
       this.marks
         .fillStyle(0x89bdd1, 0.9)

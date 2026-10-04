@@ -10,6 +10,14 @@ export const residentScale = residentHeight / 60;
 export const residentActions = { frames: 12, rearWalkFrames: 6 };
 // Four poses per authored direction; do not mirror the drinking hand.
 export const residentTea = { frames: 8, poses: 4, duration: 8000, step: 2000 };
+export const residentWork = { frames: 4, duration: 1600, step: 400 };
+export const workFrame = (time: number, reduced = false) =>
+  reduced
+    ? 0
+    : Math.floor(
+        (((time % residentWork.duration) + residentWork.duration) % residentWork.duration) /
+          residentWork.step,
+      );
 export const teaFrame = (time: number, left = false, reduced = false) =>
   (reduced
     ? 0
@@ -27,6 +35,7 @@ export function residentAtlas(
 ) {
   if (pose === "tea")
     return { name: `${id}-tea`, frame: frame + (left ? residentTea.poses : 0), flip: false };
+  if (pose === "craft") return { name: `${id}-work`, frame, flip: false };
   return { name: action ? `${id}-actions` : id, frame, flip: !action && left };
 }
 export const walkFrame = (distance: number, reduced = false) =>
@@ -64,7 +73,7 @@ function actionFrame(pose: ResidentPose, time: number, distance: number) {
     case "tea":
       return teaFrame(time);
     case "craft":
-      return 8 + (Math.floor(time / 440) % 2);
+      return workFrame(time);
     default:
       return 10 + (Math.floor(time / 1100) % 2);
   }

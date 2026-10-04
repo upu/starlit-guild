@@ -18,7 +18,7 @@
 
 歩行の制作見本は [見本の姿勢](../../../lib/home-walk-study.ts) → [比較ページ](../../../app/guild-lab/walk-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/walk-study/pilot.tsx)。制作ガイドにだけ関節描画を使い、ゲーム内の全身コマ切替は維持する。検査は `tests/home-walk-study.test.mjs` / `tests/home-walk-study.browser.mjs`。
 
-作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/guild-lab/work-study/figure.tsx) → [再生と4姿勢](../../../app/guild-lab/work-study/study.tsx)。道具に依存しない共通動作を確認する段階で、5人の実素材は未変更。お茶と [再生処理](../../../app/guild-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
+作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/guild-lab/work-study/figure.tsx) → [再生と4姿勢](../../../app/guild-lab/work-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/work-study/residents.tsx)。[作業コマ生成](../../../scripts/home-work-frames.mjs) で同じ縮尺と足元を揃え、旅団と同じ `*-work.webp`・4姿勢の時刻を使う。お茶と [再生処理](../../../app/guild-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
 
 お茶・会話の制作見本は [座位とカップの軌跡](../../../lib/home-tea-study.ts) → [2人と家具の描画](../../../app/guild-lab/tea-study/figure.tsx) → [再生・姿勢一覧](../../../app/guild-lab/tea-study/study.tsx) → [5人の左右向き比較](../../../app/guild-lab/tea-study/residents.tsx)。旅団と同じお茶アトラスと4姿勢の時刻を使い、利き手を反転せず切り替える。検査は `tests/home-tea-study.test.mjs` / `tests/home-tea-study.browser.mjs`。
 

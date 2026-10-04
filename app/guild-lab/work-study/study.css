@@ -17,3 +17,49 @@
 .work-sheet svg {
   max-height: 240px;
 }
+.work-resident-sprite {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.work-resident-scene {
+  position: relative;
+  width: 128px;
+  height: 100px;
+}
+.work-resident-bench {
+  position: absolute;
+  width: 72px;
+  height: 65px;
+  left: 49px;
+  bottom: 27px;
+  background: url("/home-pixel/prop-4.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
+}
+.work-resident-scene > .work-resident-sprite {
+  position: absolute;
+  left: 32px;
+  bottom: 6px;
+}
+.work-resident-live {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: 16px;
+}
+.work-resident-large {
+  width: 256px;
+  height: 200px;
+}
+.work-resident-large > .work-resident-scene {
+  transform: scale(2);
+  transform-origin: top left;
+}
+.work-resident-sheet .work-resident-sprite {
+  width: 128px;
+  height: 128px;
+}

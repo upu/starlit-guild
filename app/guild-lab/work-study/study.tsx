@@ -5,6 +5,7 @@ import { workLabels, workPhase, workStudy } from "@/lib/home-work-study";
 import { useStudyPlayer } from "../study-player";
 import { Controls, type WorkPlayer } from "./controls";
 import WorkFigure from "./figure";
+import WorkResidents from "./residents";
 const subscribe = () => () => undefined;
 const clientReady = () => true;
 const serverReady = () => false;
@@ -106,6 +107,7 @@ export default function WorkStudy() {
       </div>
       <Preview p={p} left={left} smooth={smooth} />
       <Controls p={p} />
+      <WorkResidents time={p.time} still={p.still} select={p.select} />
       <h2>作業の4つの姿勢</h2>
       <Frames p={p} left={left} />
       <p className="tea-note">

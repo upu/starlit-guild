@@ -45,6 +45,29 @@ try {
       .screenshot({ path: `${out}/${left ? "left" : "right"}-poses.png` });
   }
   await page.getByLabel("滑らかにつなぐ").check();
+  for (const id of ["レオン", "アリア", "ミラ", "フィン", "リコ"]) {
+    await page.getByRole("button", { name: id, exact: true }).click();
+    const actor = await page.locator(".work-resident-live").getAttribute("data-resident");
+    assert.equal(
+      await page.locator(".work-resident-live").getAttribute("data-hand"),
+      id === "リコ" ? "left" : "right",
+    );
+    for (let i = 0; i < 4; i++) {
+      await page.locator(".work-resident-sheet button").nth(i).click();
+      assert.equal(await time(), String(i * 400));
+      assert.equal(
+        await page
+          .locator(".work-resident-live .work-resident-sprite")
+          .first()
+          .getAttribute("data-frame"),
+        String(i),
+      );
+      await page
+        .locator(".work-resident-live")
+        .screenshot({ path: `${out}/${actor}-${i + 1}.png` });
+    }
+    await page.locator(".work-resident-sheet").screenshot({ path: `${out}/${actor}-poses.png` });
+  }
   await page.getByLabel("動きをゆっくり追う").fill("650");
   assert.equal(await time(), "650");
   await page.getByLabel("動きを減らす", { exact: true }).check();
