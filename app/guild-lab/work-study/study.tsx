@@ -71,6 +71,7 @@ export default function WorkStudy() {
         <Link href="/guild-lab">旅団ホームへ</Link>
         <Link href="/guild-lab/walk-study">歩行の見本へ</Link>
         <Link href="/guild-lab/tea-study">お茶の見本へ</Link>
+        <Link href="/guild-lab/garden-study">菜園の見本へ</Link>
       </nav>
       <small>動きの共通見本 / 作業台</small>
       <h1>台に向かって、手を動かす。</h1>

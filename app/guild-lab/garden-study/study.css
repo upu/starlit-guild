@@ -1,0 +1,13 @@
+.garden-live {
+  max-width: 680px;
+  margin-inline: auto;
+}
+.garden-small {
+  width: 90px;
+  background: #e9dfc9;
+  border-radius: 6px;
+}
+.garden-study button[aria-pressed="true"] {
+  border-color: #ffd785;
+  box-shadow: 0 0 0 2px #ffd785;
+}

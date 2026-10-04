@@ -20,6 +20,8 @@
 
 作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/guild-lab/work-study/figure.tsx) → [再生と4姿勢](../../../app/guild-lab/work-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/work-study/residents.tsx)。[作業コマ生成](../../../scripts/home-work-frames.mjs) で同じ縮尺と足元を揃え、旅団と同じ `*-work.webp`・4姿勢の時刻を使う。お茶と [再生処理](../../../app/guild-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
 
+菜園の制作見本は [2種類の4姿勢](../../../lib/home-garden-study.ts) → [無地モデルと植物](../../../app/guild-lab/garden-study/figure.tsx) → [再生・左右・小表示](../../../app/guild-lab/garden-study/study.tsx)。既存の再生処理を共有し、5人の素材・本編・保存には未接続。検査は `tests/home-garden-study.test.mjs` / `tests/home-garden-study.browser.mjs`。
+
 お茶・会話の制作見本は [座位とカップの軌跡](../../../lib/home-tea-study.ts) → [2人と家具の描画](../../../app/guild-lab/tea-study/figure.tsx) → [再生・姿勢一覧](../../../app/guild-lab/tea-study/study.tsx) → [5人の左右向き比較](../../../app/guild-lab/tea-study/residents.tsx)。旅団と同じお茶アトラスと4姿勢の時刻を使い、利き手を反転せず切り替える。検査は `tests/home-tea-study.test.mjs` / `tests/home-tea-study.browser.mjs`。
 
 歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。ミラ・フィンの後半だけは色味と頭身を合わせた `*-walk-v10-b.png` を使う。[読み取り](../../../scripts/home-walk-frames.mjs) の `walkSourceName` → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。2人の頭幅・髪色の回帰検査は `tests/home-walk-identity.test.mjs`。
