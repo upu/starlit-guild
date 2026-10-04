@@ -140,6 +140,41 @@ function harness(name, initialProps) {
   };
 }
 
+test("automatic conversation completes after the final dwell, pauses, and reports read only once", () => {
+  let read = 0;
+  const props = {
+    lines: [
+      { speaker: "aria", text: "最初の発言" },
+      { speaker: "leon", text: "最後の返事" },
+    ],
+    onComplete: () => {
+      read++;
+    },
+  };
+  const h = harness("Banter", props);
+  h.tick();
+  assert.equal(read, 0, "revealing the final line is not completion");
+  h.render({ ...props, paused: true });
+  assert.equal(h.timerCount(), 0);
+  h.render(props);
+  h.visibility(true);
+  assert.equal(h.timerCount(), 0);
+  h.visibility(false);
+  h.render({
+    ...props,
+    onComplete: () => {
+      read += 2;
+    },
+  });
+  h.tick();
+  assert.equal(read, 2, "uses the latest callback");
+  h.visibility(true);
+  h.visibility(false);
+  h.render({ ...props, paused: true });
+  h.render(props);
+  assert.equal(h.timerCount(), 0, "visibility and clock updates never mark the same story twice");
+});
+
 test("story and banter portraits keep the expression of each individual line", () => {
   const lines = [
     { speaker: "aria", text: "見つけた！", expression: "surprised" },

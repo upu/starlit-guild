@@ -1,0 +1,66 @@
+{
+  "tool": "image_gen__imagegen",
+  "purpose": "Match Mira and Lico outline and shading to Leon; retain Mira's tired kindness.",
+  "records": [
+    {
+      "id": "mira",
+      "source": "assets/source/home-pixel/mira-walk-v3.png",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Mira must visibly look gently tired but kind: heavier lowered upper eyelids, soft muted gray-lavender under-eye shadows (not blush), pale complexion, small warm closed-mouth smile. Maintain readable open eyes, not angry or ill. Shoulders relaxed, without changing arm or leg poses. Keep lavender hair, flower/crescent/navy bow, white/navy/gold robes exactly the same. This is the WALK cycle: exactly EIGHT frames, 4 columns x 2 rows, in the existing order. Do not change the leg/arm gestures or flip any frame.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v2.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "attempts": 1
+    },
+    {
+      "id": "mira",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Mira must visibly look gently tired but kind: heavier lowered upper eyelids, soft muted gray-lavender under-eye shadows (not blush), pale complexion, small warm closed-mouth smile. Maintain readable open eyes, not angry or ill. Shoulders relaxed, without changing arm or leg poses. Keep lavender hair, flower/crescent/navy bow, white/navy/gold robes exactly the same. This sheet must preserve EXACTLY 12 poses in the original 4 columns by 3 rows. Do not reorder them. In the idle pose (row 2 column 1) slightly relax the shoulders and tilt her head a tiny amount; distinctly HALF-LOWERED sleepy upper eyelids and muted lavender UNDER-EYE SHADOWS, her expression says she has been taking care of everyone all day but is still kind. Avoid rosy cheek blush. The wave remains a small warm smile with sleepy, gently closed eyes. Wherever the face is visible, emphasize her characteristic gray-lavender under-eye shadows and lowered heavy eyelids, visible even as a small sprite. Fatigue, not anger or sadness.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "source": "assets/source/home-pixel/mira-v2.png",
+      "attempts": 1
+    },
+    {
+      "id": "mira",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Mira must visibly look gently tired but kind: heavier lowered upper eyelids, soft muted gray-lavender under-eye shadows (not blush), pale complexion, small warm closed-mouth smile. Maintain readable open eyes, not angry or ill. Shoulders relaxed, without changing arm or leg poses. Keep lavender hair, flower/crescent/navy bow, white/navy/gold robes exactly the same. This sheet must preserve EXACTLY 12 poses in the original 4 columns by 3 rows. Do not reorder them. First six are rear walking, next two seated on a chair with ONE HAND holding the cup and the other resting on the lap, last four rear-facing hammer and quill. Tools must stay in the RIGHT (viewer RIGHT) hand in both working frames, NEVER swap hands. Keep actual chair sitting, feet below knees. Wherever the face is visible, emphasize her characteristic gray-lavender under-eye shadows and lowered heavy eyelids, visible even as a small sprite. Fatigue, not anger or sadness.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-actions-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "source": "assets/source/home-pixel/mira-actions-v2.png",
+      "attempts": 1
+    },
+    {
+      "id": "lico",
+      "source": "assets/source/home-pixel/lico-walk-v3.png",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Keep Lico's green eyes and round glasses, lively friendly face, reddish brown hair, flower knot ornament, red/black outfit. Do not make her tired. This is the WALK cycle: exactly EIGHT frames, 4 columns x 2 rows, in the existing order. Do not change the leg/arm gestures or flip any frame.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v2.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "attempts": 1
+    },
+    {
+      "id": "lico",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Keep Lico's green eyes and round glasses, lively friendly face, reddish brown hair, flower knot ornament, red/black outfit. Do not make her tired. This sheet must preserve EXACTLY 12 poses in the original 4 columns by 3 rows. Do not reorder them. In the idle pose (row 2 column 1) preserve her friendly alert expression.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "source": "assets/source/home-pixel/lico-v2.png",
+      "attempts": 1
+    },
+    {
+      "id": "lico",
+      "prompt": "Edit IMAGE 1 only. IMAGE 2 (Leon) is exclusively the LINE WEIGHT AND PIXEL-PAINT STYLE reference, NOT the character identity. Preserve every figure, pose, frame ordering, position, dimensions, proportions, clothing design, colors, hand holding each item, chair, and transparent silhouette layout of IMAGE 1. Output 1536x1024 transparent RGBA, exactly the same grid. Match Leon's bold clean dark brown outer contour, stronger compact interior lines, clearly separated shadow masses and warm, crisp pixel-painted rendering. Reduce the fine wispy double outlines and overly smooth delicate illustration shading. Aim for the same contour thickness RELATIVE TO HEAD SIZE as Leon, not a heavy sticker border. Keep the original palette and all identity details. No background, ground, shadow, text, panels, glow, new props, or extra characters. Do not introduce per-frame differences in head size or outline thickness. Keep Lico's green eyes and round glasses, lively friendly face, reddish brown hair, flower knot ornament, red/black outfit. Do not make her tired. This sheet must preserve EXACTLY 12 poses in the original 4 columns by 3 rows. Do not reorder them. First six are rear walking, next two seated on a chair with ONE HAND holding the cup and the other resting on the lap, last four rear-facing hammer and quill. Tools must stay in the LEFT (viewer LEFT) hand in both working frames, NEVER swap hands. Keep actual chair sitting, feet below knees.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-actions-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "source": "assets/source/home-pixel/lico-actions-v2.png",
+      "attempts": 1
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import {
   type SetStateAction,
 } from "react";
 import { Portrait } from "./portrait";
+import { useBanterCompletion } from "./use-banter-completion";
 import { storyArtwork, storyArtViewer, storyTapHint } from "./story-viewers";
 import { useStoryGestureHandlers, type StoryGesture } from "./story-gesture-handlers";
 import { heroes } from "@/lib/game";
@@ -237,11 +238,15 @@ export function Banter({
   paused = false,
   retain = false,
   notice = "",
+  label = "道中の掛け合い",
+  onComplete,
 }: {
   lines: StoryLine[];
   paused?: boolean;
   retain?: boolean;
   notice?: string;
+  label?: string;
+  onComplete?: () => void;
 }) {
   const [exchange, setExchange] = useState(() => startBanter(lines));
   const retained = retain ? retainBanter(exchange, lines) : exchange;
@@ -260,6 +265,7 @@ export function Banter({
   // Compare content, not the new array journeyBanter returns on every clock tick.
   // Exchanges already shown in this quest stay in the history instead of being appended again.
   const hasNext = hasNextBanter(exchange, lines);
+  useBanterCompletion(exchange, paused, onComplete);
   useEffect(
     () => scheduleBanter(paused, hasNext, line, latest, setExchange),
     [exchange, paused, line, hasNext],
@@ -270,12 +276,11 @@ export function Banter({
       ref={dialogue}
       className="journey-banter journey-banter-history"
       onScroll={(event) => {
-        const el = event.currentTarget;
-        followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
+        followBanterScroll(event.currentTarget, followLatest);
       }}
       role="region"
       tabIndex={0}
-      aria-label="道中の掛け合い"
+      aria-label={label}
     >
       <span className="banter-copy">
         {exchange.history.map((entry, i) =>
@@ -289,4 +294,8 @@ export function Banter({
       </span>
     </div>
   );
+}
+
+function followBanterScroll(el: HTMLDivElement, followLatest: { current: boolean }) {
+  followLatest.current = el.scrollHeight - el.scrollTop - el.clientHeight < 8;
 }

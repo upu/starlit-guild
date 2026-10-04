@@ -47,6 +47,20 @@ export const ROAD_HERB = "/animations/road/herb-v2.webp";
 export const ROAD_CARGO = "/animations/road/cargo-v1.webp";
 export const ROAD_PUPPETS = "/animations/road/puppets-v1.webp";
 export const ROAD_PUSH = "/animations/road/push-v1.webp";
+export const pushFrames = {
+  aria: [
+    [49, 31, 429, 458],
+    [567, 32, 414, 459],
+  ],
+  leon: [
+    [57, 517, 425, 461],
+    [561, 516, 421, 462],
+  ],
+  mira: [
+    [70, 1005, 438, 487],
+    [551, 1007, 434, 487],
+  ],
+};
 export const ROAD_PULL = "/animations/road/pull-v1.webp";
 export const ROAD_FINN_PULL = "/animations/road/finn-pull-v1.webp";
 export const ROAD_LICO_MOTION = "/animations/road/lico-motion-v1.webp";
@@ -58,6 +72,20 @@ export const licoMotionFrames = [
   [738, 656, 415, 604],
 ];
 export const ROAD_PACKING = "/animations/road/packing-v1.webp";
+export const packingFrames = {
+  aria: [
+    [260, 36, 305, 358],
+    [692, 38, 294, 357],
+  ],
+  leon: [
+    [240, 427, 336, 358],
+    [666, 431, 336, 355],
+  ],
+  mira: [
+    [233, 821, 337, 362],
+    [662, 824, 335, 361],
+  ],
+};
 export const ROAD_DESTINATION = "/animations/road/destination-v1.webp";
 export const ROAD_WORKSITES = "/animations/road/worksites-v1.webp";
 export const ROAD_BERNE_WORKSITES = "/animations/road/berne-worksites-v1.webp";
@@ -71,7 +99,7 @@ export const roadWalkSheet = (id: TravellerId) =>
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.
-const walkBounds = {
+export const walkBounds = {
   aria: [
     [116, 89, 566, 597],
     [65, 89, 493, 602],

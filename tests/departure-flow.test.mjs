@@ -3,6 +3,7 @@ import * as interludes from "../lib/interludes.ts";
 import * as navigation from "../lib/quest-navigation.ts";
 import * as chapterThree from "../lib/chapter-three.ts";
 import { test } from "node:test";
+import * as guildBase from "../lib/guild-base.ts";
 import assert from "node:assert/strict";
 import * as jsxRuntime from "react/jsx-runtime";
 import * as game from "../lib/game.ts";
@@ -102,6 +103,8 @@ function harness(initialState) {
     "@/components/ui/sonner": ui("Toaster"),
     "./equipment-panels": ui("CharacterPanel", "InventoryPanel"),
     "./shop-entry": ui("ShopEntry"),
+    "./guild-panel": ui("GuildPanel"),
+    "@/lib/guild-base": guildBase,
     "./shop-panel": ui("ShopPanel"),
     "@/lib/consumable-effects": { consumableNotice: () => "" },
     "./quest-completion": ui("QuestCompletion"),

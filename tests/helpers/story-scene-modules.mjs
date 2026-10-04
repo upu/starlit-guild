@@ -6,6 +6,7 @@ export const storySceneCompilation = compileSourceModule(
   import.meta.url,
 );
 const dependencies = [
+  ["./use-banter-completion", "../../app/use-banter-completion.ts"],
   ["./story-viewers", "../../app/story-viewers.tsx"],
   ["./story-memory-groups", "../../app/story-memory-groups.ts"],
   ["./story-library", "../../app/story-library.tsx"],
@@ -16,7 +17,7 @@ const dependencies = [
 export function loadStoryScenes(modules, globals = {}) {
   const registry = { "@/lib/quest-navigation": questNavigation, ...modules };
   for (const [id, compiled] of dependencies) {
-    registry[id] = evaluateSourceModule(compiled, registry);
+    registry[id] = evaluateSourceModule(compiled, registry, globals);
   }
   return evaluateSourceModule(storySceneCompilation, registry, globals);
 }

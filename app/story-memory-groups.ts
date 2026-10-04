@@ -10,7 +10,7 @@ export function memoryGroups(items: Story[]) {
   ];
   const journey = [...new Set(questIds)].flatMap((id) => {
     const entries = items
-      .filter((st) => st.quest === id)
+      .filter((st) => st.quest === id && st.chapter !== "guild")
       .sort((a, b) => Number(a.chapter === "return") - Number(b.chapter === "return"));
     const stage = storyStages.find((stage) => stage.quest === id),
       quest = allQuests.find((q) => q.id === id);
@@ -34,5 +34,7 @@ export function memoryGroups(items: Story[]) {
       items: scenes,
     });
   }
+  const guild = items.filter((story) => story.chapter === "guild");
+  if (guild.length) journey.push({ id: "guild", title: "旅団の日常", items: guild });
   return journey;
 }

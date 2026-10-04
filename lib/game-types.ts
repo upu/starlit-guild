@@ -62,6 +62,7 @@ export type State = {
   techniques?: Techniques;
   inventory?: Inventory;
   consumables?: import("./consumables.ts").Consumables;
+  guild?: import("./guild-types.ts").GuildState;
   story?: StoryProgress;
   friendship: Record<string, number>;
   gold: number;
