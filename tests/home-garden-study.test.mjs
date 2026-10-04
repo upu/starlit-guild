@@ -56,7 +56,7 @@ test("all residents use the four watering poses without mirroring, freezing both
           frame,
           flip: false,
         });
-      assert.equal(gardenWater(id, time, { x: 30, y: -25 }).length, frame === 2 ? 6 : 0);
+      assert.equal(gardenWater(id, time, { x: 30, y: -25 }).length, frame === 2 ? 5 : 0);
       assert.equal(gardenWater(id, time, { x: 30, y: -25 }, true).length, 0);
       assert.equal(residentAnimation("garden", time, 0, true).frame, 0);
       assert.equal(gardenFrame(time), Math.floor(gardenPhase(time)));
@@ -77,7 +77,7 @@ test("garden approach follows authored hand without crossing crops; legacy right
         root = gardenRoot(gardenPlantings(plot, 0, site), id),
         target = { x: root.x - display.x, y: root.y - display.y };
       for (let t = 1200; t < 1800; t += 30)
-        for (const drop of gardenWater(id, t, target)) {
+        for (const drop of gardenWater(id, t, target).flatMap((stream) => stream.points)) {
           const x = display.x + drop.x,
             y = display.y + drop.y;
           assert.ok(x > plot.x * 24 + 3 && x < (plot.x + 4) * 24 - 3);
@@ -147,6 +147,17 @@ test("water lands at the authored roots as plots move and crops grow, with a sho
         assert.ok(distance({ x: last.x + foot.x, y: last.y + foot.y }, root) < 1e-8);
         assert.ok(last.y > first.y, "water falls toward the plant rather than climbing");
         assert.ok(id === "lico" ? last.x < first.x : last.x > first.x);
+        const shower = gardenWater(id, 1350, target);
+        for (const stream of shower) {
+          assert.ok(distance(stream.points[0], first) < 0.5, "jets start inside the rose");
+          assert.ok(distance(stream.points.at(-1), last) < 2, "spray stays around the root");
+          assert.ok(stream.points.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y)));
+        }
+        assert.ok(
+          distance(shower[0].points[0], shower.at(-1).points[0]) <
+            distance(shower[0].points.at(-1), shower.at(-1).points.at(-1)),
+          "the shower widens toward the plant",
+        );
         const moved = gardenRoot(
           gardenPlantings({ ...plot, x: plot.x + 2, y: plot.y + 1 }, growth, site),
           id,

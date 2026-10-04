@@ -58,8 +58,8 @@ try {
         String(i),
       );
       assert.equal(
-        await page.locator(".garden-resident-live .garden-resident-water rect").count(),
-        i === 2 ? 12 : 0,
+        await page.locator(".garden-resident-live .garden-resident-water [data-stream]").count(),
+        i === 2 ? 10 : 0,
       );
       if (i === 2) {
         const landing = await page
@@ -70,9 +70,10 @@ try {
               x = Number(root.getAttribute("cx")),
               y = Number(root.getAttribute("cy")) - 1;
             return Math.min(
-              ...[...svg.querySelectorAll("[data-drop]")].map((p) =>
-                Math.hypot(Number(p.getAttribute("x")) - x, Number(p.getAttribute("y")) - y),
-              ),
+              ...[...svg.querySelectorAll("[data-stream]")].map((p) => {
+                const end = p.points.getItem(p.points.numberOfItems - 1);
+                return Math.hypot(end.x - x, end.y - y);
+              }),
             );
           });
         assert.ok(landing < 3, `${id}: water reaches the root in the actual preview`);

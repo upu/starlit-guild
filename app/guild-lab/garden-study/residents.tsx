@@ -34,7 +34,7 @@ function Scene({ id, time, still }: { id: ResidentId; time: number; still: boole
       "linde",
     ),
     root = gardenRoot(plants, id),
-    drops = gardenWater(id, time, { x: root.x - foot, y: root.y - 90 - offset.y }, still);
+    streams = gardenWater(id, time, { x: root.x - foot, y: root.y - 90 - offset.y }, still);
   return (
     <div className="garden-resident-scene" data-left={left}>
       <span className="garden-resident-plot" style={{ left: left ? 60 : 68 }} />
@@ -58,18 +58,18 @@ function Scene({ id, time, still }: { id: ResidentId; time: number; still: boole
           fill="#324e40"
           opacity={gardenWetness(time, still) * 0.6}
         />
-        {drops.map((p, i) => (
-          <rect
-            data-drop="true"
+        {streams.map((stream, i) => (
+          <polyline
+            data-stream="true"
             key={i}
-            x={foot + p.x}
-            y={90 + offset.y + p.y}
-            width="1"
-            height="1.5"
-            fill="#b6e3ee"
+            points={stream.points.map((p) => [foot + p.x, 90 + offset.y + p.y].join(",")).join(" ")}
+            fill="none"
+            stroke="#b6e3ee"
+            strokeWidth="0.45"
+            strokeOpacity={stream.alpha}
           />
         ))}
-        {drops.length > 0 && (
+        {streams.length > 0 && (
           <path
             data-splash="true"
             d={`M${String(root.x - 1.5)} ${String(root.y - 0.5)}h1 M${String(root.x + 1)} ${String(root.y - 1)}h1`}

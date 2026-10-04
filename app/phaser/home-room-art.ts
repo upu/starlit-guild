@@ -196,11 +196,17 @@ export class HomeRoomArt {
     if (!plants) return;
     const root = gardenRoot(plants, r.id),
       target = { x: root.x - r.x, y: root.y - r.y },
-      drops = gardenWater(r.id, time, target);
+      streams = gardenWater(r.id, time, target);
     this.marks.fillStyle(0x324e40, gardenWetness(time) * 0.6).fillEllipse(root.x, root.y + 1, 6, 2);
-    for (const drop of drops)
-      this.marks.fillStyle(0xb6e3ee, 0.95).fillRect(r.x + drop.x, r.y + drop.y, 1, 1.5);
-    if (drops.length)
+    for (const stream of streams) {
+      this.marks.lineStyle(0.45, 0xb6e3ee, stream.alpha).beginPath();
+      stream.points.forEach((p, i) => {
+        if (i === 0) this.marks.moveTo(r.x + p.x, r.y + p.y);
+        else this.marks.lineTo(r.x + p.x, r.y + p.y);
+      });
+      this.marks.strokePath();
+    }
+    if (streams.length)
       this.marks
         .fillStyle(0xb6e3ee, 0.8)
         .fillRect(root.x - 1.5, root.y - 0.5, 1, 1)

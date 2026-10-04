@@ -70,8 +70,17 @@ export function gardenWetness(time: number, reduced = false) {
 }
 export function gardenWater(id: ResidentId, time: number, target: Cell, reduced = false) {
   if (reduced || gardenFrame(time) !== 2) return [];
-  return [0, 1, 2, 3, 4, 5].map((i) => {
-    const t = ((((time % 600) + 600) % 600) / 600 + i / 6) % 1;
-    return gardenWaterPoint(id, target, t);
+  const tip = gardenSpouts[id],
+    length = Math.hypot(target.x - tip.x, target.y - tip.y),
+    normal = { x: -(target.y - tip.y) / length, y: (target.x - tip.x) / length };
+  // Five fine, unbroken jets fan out from the rose; no detached square drops.
+  return [-2, -1, 0, 1, 2].map((lane) => {
+    const points = Array.from({ length: 9 }, (_, i) => {
+      const t = i / 8,
+        p = gardenWaterPoint(id, target, t),
+        spread = lane * (0.22 + t * 0.7);
+      return { x: p.x + normal.x * spread, y: p.y + normal.y * spread };
+    });
+    return { points, alpha: 0.55 + Math.sin(time / 100 - lane) * 0.15 };
   });
 }
