@@ -19,6 +19,8 @@
 検査は `tests/home-tea-study.test.mjs` / `tests/home-tea-study.browser.mjs`。
 姿勢一覧と320/390/844/1000pxの画像は `work/pixel-home/tea-study/`。ブラウザー確認とスマホ実機は区別する。
 
+ミラのお茶は、採用済みの顔アップを基準に、頬だけでなくこめかみ・目の幅と間隔・あごを含む顔全体を細め、目と眉の位置を上げた。眠たげなまぶたを残し、左右各4コマの原本と共通の配信アトラスへ反映する。頭全体の縮小や実行時の変形は行わない。[指示全文・参照・採否](../art-generation/home-pixel-tea-mira-face.json)。
+
 ### 配信用素材
 
 - 原本：`assets/source/home-pixel/`。内蔵 image_gen で5人、家具、床の7枚と、歩行専用の5枚、椅子と後ろ姿の5枚、感情マーク・菜園小物の2枚を生成。指示全文は [生成記録](../art-generation/home-pixel.json) 、[歩行の生成記録](../art-generation/home-pixel-walk-v2.json)、[着席・後ろ姿・小物の生成記録](../art-generation/home-pixel-actions.json)。原本は保存し、配信用だけを生成する。
