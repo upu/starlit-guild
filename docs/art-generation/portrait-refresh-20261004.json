@@ -1,0 +1,799 @@
+{
+  "date": "2026-10-04",
+  "operation": "crop and resize approved PNG masters; no image generation or repainting",
+  "cellSize": 256,
+  "resize": "Pillow Lanczos",
+  "webp": {
+    "quality": 82,
+    "method": 6
+  },
+  "gridRemoval": "Measured per-source separator lines excluded by sourceBox coordinates; no new zoom or cell reordering.",
+  "background": "Opaque source background preserved; no recoloring.",
+  "validation": {
+    "expressions": 58,
+    "displaySizes": [40, 72],
+    "component": "app/portrait.tsx",
+    "atlasDefinitions": "lib/portrait-expressions.ts",
+    "result": "All expression keys and cell positions match. Browser-rendered previews inspected for eyes, mouths, clipping and neighboring-cell contamination.",
+    "sourceIdentity": "All seven Library identities, versions, filenames, byte counts and SHA-256 verified.",
+    "maskedPumpety": "unchanged"
+  },
+  "sharedOutput": {
+    "path": "public/portraits/aria-leon-expressions-v2.webp",
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "rows": [
+      "aria",
+      "aria",
+      "leon",
+      "leon"
+    ],
+    "bytes": 210974
+  },
+  "characters": [
+    {
+      "name": "アリア",
+      "file": "aria-expressions-original-based-v4.png",
+      "cols": 4,
+      "rows": 2,
+      "count": 8,
+      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・得意げ",
+      "library_file_id": "libfile_92f940a3780081918a24865a2ee5f9a0",
+      "review_status": "accepted original-based direction",
+      "library_version": 1,
+      "file_id": "file_00000000c2d081f5bcf12cd7ab571bc0",
+      "sourceSha256": "82de1452ca2a5bdfeefa03d86881028d7b869df94a21501da5491fea302ee3c3",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "output": "public/portraits/aria-expressions.webp",
+      "outputDimensions": [
+        1024,
+        512
+      ],
+      "outputBytes": 119562,
+      "decodedPsnrDb": 34.22,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            440,
+            440
+          ],
+          "resizedPixelSha256": "d007e308373da352474b94bc8be8ba63b52f6f582bec148226f000d94f7f890e"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            447,
+            0,
+            885,
+            440
+          ],
+          "resizedPixelSha256": "6b25d841a50f4a63f6df5ab3e4afa7c2597828e56a275a3196faff3245fad726"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            891,
+            0,
+            1328,
+            440
+          ],
+          "resizedPixelSha256": "19a8dd0d86a254e7e23338d57f564999b40de83e56e97e273d68a58eda7fe74c"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            1335,
+            0,
+            1774,
+            440
+          ],
+          "resizedPixelSha256": "1fc2a87e69602cbe3bcc835bf70b57172c5ede9fe37d016cb81da9ebe580a614"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            0,
+            446,
+            440,
+            887
+          ],
+          "resizedPixelSha256": "d9edb176ed83cf5a896869ad5c8b353981bd060253c243aa5ac309ef5b0a4c2d"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            447,
+            446,
+            885,
+            887
+          ],
+          "resizedPixelSha256": "fa51f24d71fa07b5d0ea21803082edf573559d65e02a69cd79319844329bc659"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            891,
+            446,
+            1328,
+            887
+          ],
+          "resizedPixelSha256": "6ae39ca96233c9cf29a8844761fe1e406b0bfd59f043329a43329b1e8116cbb5"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            1335,
+            446,
+            1774,
+            887
+          ],
+          "resizedPixelSha256": "0a598ddb51ed982a3ea0ef6deb6f8467e7cefe61ffd1c4020bdef142323a4fcd"
+        }
+      ]
+    },
+    {
+      "name": "レオン",
+      "file": "leon-expressions-original-based-v4.png",
+      "cols": 4,
+      "rows": 2,
+      "count": 8,
+      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・ニヤリ",
+      "library_file_id": "libfile_3ac2d403a1b0819190c86d0600fb86c1",
+      "review_status": "accepted original-based direction",
+      "library_version": 1,
+      "file_id": "file_00000000284c81f59085924d25cf43dd",
+      "sourceSha256": "054860ffb7531471a07fcee7d52c7552bf71387f20f0c1944a53eadc98937ab8",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "output": "public/portraits/leon-expressions.webp",
+      "outputDimensions": [
+        1024,
+        512
+      ],
+      "outputBytes": 90116,
+      "decodedPsnrDb": 36.02,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            440,
+            435
+          ],
+          "resizedPixelSha256": "4c05136ba66823eaca1066eba09bcd35fec2eac84ac227d4791c57ba65ec419e"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            445,
+            0,
+            882,
+            435
+          ],
+          "resizedPixelSha256": "f29840aede7e3241eb8a80b7717bd41dadf6a0445579856a9cfca3a4bbea6350"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            888,
+            0,
+            1328,
+            435
+          ],
+          "resizedPixelSha256": "9bb2d7bb2f6f3352262b6229fdb27e8cac22c4e1d6dc143c1bc6af1e931959d6"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            1334,
+            0,
+            1774,
+            435
+          ],
+          "resizedPixelSha256": "e7c791a351bfad5d9234b635784c4598d8635fb85476284df0f569c60a32d8f5"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            0,
+            440,
+            440,
+            887
+          ],
+          "resizedPixelSha256": "aadc77143e552838f24b3b71319765181b8ab4fe79eed1a53c405c4b736711e9"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            445,
+            440,
+            882,
+            887
+          ],
+          "resizedPixelSha256": "e4d34d43e2a79f2d33b65d6a2f9030aef8c9605a2d2fcaa33f6cee88cdbc1547"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            888,
+            440,
+            1328,
+            887
+          ],
+          "resizedPixelSha256": "d988d06700334a5dd27ca260f8b869399c0cd71d89d19c730a69edbe1126aa61"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            1334,
+            440,
+            1774,
+            887
+          ],
+          "resizedPixelSha256": "ec83c6ac8d807a5e30f558aeaa6f26d64186c968272b21029a3649cf6dabb629"
+        }
+      ]
+    },
+    {
+      "name": "ミラ",
+      "file": "mira-expressions-original-based-v11.png",
+      "cols": 4,
+      "rows": 2,
+      "count": 8,
+      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・ニヤリ",
+      "library_file_id": "libfile_efd34308a0d481919c6824ab8a4c6e52",
+      "review_status": "accepted original-based direction",
+      "library_version": 4,
+      "file_id": "file_000000002ab8822fa1e2fdbb1ae9c399",
+      "sourceSha256": "37145e8deab3328d8eeef1b1c128131f0a120db26b9933ab0c63e3c5cec3c3b8",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "output": "public/portraits/mira-expressions.webp",
+      "outputDimensions": [
+        1024,
+        512
+      ],
+      "outputBytes": 101220,
+      "decodedPsnrDb": 35.66,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            442,
+            442
+          ],
+          "resizedPixelSha256": "b9f44740f8b7bc15c00fc502294c4fdb9f2386e523dfc9cac0056baf2425c7ff"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            445,
+            0,
+            885,
+            442
+          ],
+          "resizedPixelSha256": "444a7c7514725efb62729f494c65c3d0fcb0e130bac2e085a5654cfd2ff23be5"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            889,
+            0,
+            1328,
+            442
+          ],
+          "resizedPixelSha256": "69f9ec4b1800d0a49492c883c46ecaeefb0bcf5606bb959920383d75a75a7ccd"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            1332,
+            0,
+            1774,
+            442
+          ],
+          "resizedPixelSha256": "eb08dd1e33f281529babf8775b3f963ba7104a8091d6d32b3eb1c64e55c5e858"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            0,
+            445,
+            442,
+            887
+          ],
+          "resizedPixelSha256": "89573491bd102df633d3406952d8c3909c13161a8a32114f1a1b1008c180c953"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            445,
+            445,
+            885,
+            887
+          ],
+          "resizedPixelSha256": "6b551bab08a87298f13c194de9d9d0c3bbce7b6db5afbb2e8ddcf8ab147a4dfe"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            889,
+            445,
+            1328,
+            887
+          ],
+          "resizedPixelSha256": "73dbd671e0d101a88ee2ce02cbc1fbd3eb71c20d1ae3cfce11f1278dde21f8a6"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            1332,
+            445,
+            1774,
+            887
+          ],
+          "resizedPixelSha256": "bccb88cfc0cbb6d251d1c18c752ed4860dd6652bb0e25fe1f131e3295da44036"
+        }
+      ]
+    },
+    {
+      "name": "フィン",
+      "file": "finn-expressions-original-based-v4.png",
+      "cols": 3,
+      "rows": 3,
+      "count": 9,
+      "order": "通常・笑顔・驚き<br>困り・真剣・照れ<br>疲れ・ニヤリ・思案",
+      "library_file_id": "libfile_171144d8455c8191b32be925ef8e01ab",
+      "review_status": "new original-based review candidate",
+      "library_version": 1,
+      "file_id": "file_00000000bb2481f7bc7442a8131b5b4e",
+      "sourceSha256": "fbd750bc09a0b0fbee4c653bae723682b38b606221bedb55a26414c110cf27bb",
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "output": "public/portraits/finn-expressions.webp",
+      "outputDimensions": [
+        768,
+        768
+      ],
+      "outputBytes": 103740,
+      "decodedPsnrDb": 36.11,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            416,
+            416
+          ],
+          "resizedPixelSha256": "7a6daadc29dc77e2c1a62169a872675c8c996aef14040abf98c4879faf6bb240"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            420,
+            0,
+            834,
+            416
+          ],
+          "resizedPixelSha256": "312408f639763397ba53c920635d7be11663d60971f36abcb0a5a99526797308"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            838,
+            0,
+            1254,
+            416
+          ],
+          "resizedPixelSha256": "1cf52fb81f1cda5a7806f98b4934d5b13640bc2d2e98e4df555449f6c8cc4b81"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            0,
+            420,
+            416,
+            834
+          ],
+          "resizedPixelSha256": "59faad8307dfcb401ce0740f0903552c2376369b13c8bbfd515ecdfc99c1bad3"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            420,
+            420,
+            834,
+            834
+          ],
+          "resizedPixelSha256": "e5812fd4db4d78321cd65f15bed4675d1006edb832d9b512199a64e5e82bfb86"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            838,
+            420,
+            1254,
+            834
+          ],
+          "resizedPixelSha256": "b39714a02cb6ed5f8aadc9fdb97eb193a02512f8f7f2fd6c359c20f952a959bd"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            0,
+            838,
+            416,
+            1254
+          ],
+          "resizedPixelSha256": "e363071f9de0c25fe9b719904298e4740b62498c5a570edb753a076537c0ae5f"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            420,
+            838,
+            834,
+            1254
+          ],
+          "resizedPixelSha256": "e4b7afc1b63da3f433054c9f6dfb837c47ccfab6b12cccfd84579cf0098f47d7"
+        },
+        {
+          "expression": "thoughtful",
+          "sourceBox": [
+            838,
+            838,
+            1254,
+            1254
+          ],
+          "resizedPixelSha256": "36c8528719ef908fd256dc60d26bef0d84218fddcf0da182df3d558bd5526eff"
+        }
+      ]
+    },
+    {
+      "name": "リコ",
+      "file": "lico-expressions-original-based-v4.png",
+      "cols": 3,
+      "rows": 3,
+      "count": 9,
+      "order": "通常・笑顔・驚き<br>困り・真剣・照れ<br>疲れ・怪しい笑み・叫び",
+      "library_file_id": "libfile_aa05057e7084819189d82a19f5497241",
+      "review_status": "new original-based review candidate",
+      "library_version": 1,
+      "file_id": "file_00000000700481f59554aa8419555932",
+      "sourceSha256": "abe57f695a812d68794b40ac9ad09ae116e2d924b505a339c98604b27f690636",
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "output": "public/portraits/lico-expressions.webp",
+      "outputDimensions": [
+        768,
+        768
+      ],
+      "outputBytes": 150200,
+      "decodedPsnrDb": 33.82,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            416,
+            415
+          ],
+          "resizedPixelSha256": "3a33ea5ed79448ca7ccb8ca0cc022c126d1d4224ee36bbeb513735f51cfc7104"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            420,
+            0,
+            834,
+            415
+          ],
+          "resizedPixelSha256": "b6bc28c7b6af5151f9a752f98aec4c30b51a58bda6a32798f837cd0b30a31994"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            838,
+            0,
+            1254,
+            415
+          ],
+          "resizedPixelSha256": "93467a545cc6772a5702197eb55fd7ffa620f6e28a09a8c2d2f8931b4f695a27"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            0,
+            420,
+            416,
+            833
+          ],
+          "resizedPixelSha256": "bcf2b132a2de3a0f21d54e4e4574abcfddf08872607281cca1b212c8de567c42"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            420,
+            420,
+            834,
+            833
+          ],
+          "resizedPixelSha256": "eeb966dfe4a1f61439c710f79debe6225da0a4fc7fa013cad25953c5efafa846"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            838,
+            420,
+            1254,
+            833
+          ],
+          "resizedPixelSha256": "6c835c4104f68289093b13677a2623d09b3ed3b3e4b325803191b36b761b3c73"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            0,
+            838,
+            416,
+            1254
+          ],
+          "resizedPixelSha256": "5a04376ec05dcb65a576abc0ccb2484aa1cc845490cf4fb56daf5f922bf44c91"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            420,
+            838,
+            834,
+            1254
+          ],
+          "resizedPixelSha256": "2af37dbb605a573f97c14245f7c237fb00c2a9d7cb7ba2c0ea43abfe67f1995a"
+        },
+        {
+          "expression": "shouting",
+          "sourceBox": [
+            838,
+            838,
+            1254,
+            1254
+          ],
+          "resizedPixelSha256": "2ce80c93ea414f230cf675417c99568104a6574290d0bea29eef2f0f886a5c0e"
+        }
+      ]
+    },
+    {
+      "name": "メリル",
+      "file": "merrill-expressions-original-based-v4.png",
+      "cols": 4,
+      "rows": 2,
+      "count": 8,
+      "order": "通常・笑顔・驚き・ニヤリ<br>味わう・期待・真剣・捕食者の目",
+      "library_file_id": "libfile_beaab457b1008191aca3c891151756ec",
+      "review_status": "new original-based review candidate",
+      "library_version": 1,
+      "file_id": "file_000000005d4481f5baf61dd190d090c2",
+      "sourceSha256": "884384301d36125c3497f94c0fd658a32f65d1a12b251fd79d0d641d9bf04a70",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "output": "public/portraits/merrill-expressions.webp",
+      "outputDimensions": [
+        1024,
+        512
+      ],
+      "outputBytes": 101660,
+      "decodedPsnrDb": 35.09,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            442,
+            442
+          ],
+          "resizedPixelSha256": "34400b88a89ee09f027504b187904117b40d8ef7ed792e75a5ceda4f310eac14"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            445,
+            0,
+            885,
+            442
+          ],
+          "resizedPixelSha256": "48b66cd9f24c083865a6dc3b299265f4b79cbeb89cf5e9e065952c4b12e00f03"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            889,
+            0,
+            1329,
+            442
+          ],
+          "resizedPixelSha256": "af2a23c713c441e6be6ce21d42623630d42b2c89baf4b156a98fbaf60871aa19"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            1332,
+            0,
+            1774,
+            442
+          ],
+          "resizedPixelSha256": "e7a52c6f4db107240bc3d512b6b31d283dd6d2f7606cb781d7a710b5cfadd5b2"
+        },
+        {
+          "expression": "savoring",
+          "sourceBox": [
+            0,
+            445,
+            442,
+            887
+          ],
+          "resizedPixelSha256": "e2499cfdab61a01ec41a8f543ab89baf4b27d5b8db3e812671704ec9ef93152c"
+        },
+        {
+          "expression": "excited",
+          "sourceBox": [
+            445,
+            445,
+            885,
+            887
+          ],
+          "resizedPixelSha256": "4c17063ac596f1b29b12fe7b8a9e9a5616d6033c2c71b7d9f3a625e0f2cbabfd"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            889,
+            445,
+            1329,
+            887
+          ],
+          "resizedPixelSha256": "2082d4e04e7a2007b5f12a7670bf1acd638df39fd23780d25aa1693ad98b15e7"
+        },
+        {
+          "expression": "predatory",
+          "sourceBox": [
+            1332,
+            445,
+            1774,
+            887
+          ],
+          "resizedPixelSha256": "15f8838cde6d22c0d251c7468b0589c3edd7ed8a36fecfe6fcb7c2cdbdcdfccd"
+        }
+      ]
+    },
+    {
+      "name": "プティ",
+      "file": "pumpety-expressions-original-based-v6.png",
+      "cols": 4,
+      "rows": 2,
+      "count": 8,
+      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・ニヤリ",
+      "library_file_id": "libfile_f9785b2df2a08191be86a09770537000",
+      "review_status": "new original-based review candidate",
+      "library_version": 1,
+      "file_id": "file_000000009bdc81fd8ec9ccc86c8bcb4c",
+      "sourceSha256": "18c9806bebd2b1f0b3c40a7de51319a4799c3ec0ab665269b7cf85a43e298028",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "output": "public/portraits/pumpety-expressions.webp",
+      "outputDimensions": [
+        1024,
+        512
+      ],
+      "outputBytes": 114564,
+      "decodedPsnrDb": 34.72,
+      "cells": [
+        {
+          "expression": "neutral",
+          "sourceBox": [
+            0,
+            0,
+            441,
+            441
+          ],
+          "resizedPixelSha256": "6de7727037023e640e36ab41ba94c74f10e92ab2e9008d4aedc7c11a9e547a8b"
+        },
+        {
+          "expression": "smile",
+          "sourceBox": [
+            446,
+            0,
+            884,
+            441
+          ],
+          "resizedPixelSha256": "0494ff4fd3e9b8f8ef69be6848fc1b80da594ebae5d7d1755d997ebc51bfccfe"
+        },
+        {
+          "expression": "surprised",
+          "sourceBox": [
+            890,
+            0,
+            1327,
+            441
+          ],
+          "resizedPixelSha256": "e5c20837e7fe32e8a46d6a32b03ede7f38985e68a4019bde7f3bf72cfcd51156"
+        },
+        {
+          "expression": "worried",
+          "sourceBox": [
+            1333,
+            0,
+            1774,
+            441
+          ],
+          "resizedPixelSha256": "a94e37777ada9d8e71aaa474b98de2de28040feb9a50e01268da41d835279434"
+        },
+        {
+          "expression": "serious",
+          "sourceBox": [
+            0,
+            446,
+            441,
+            887
+          ],
+          "resizedPixelSha256": "9de64b40392f239975a43a7c8f75b859fb22c0dc69cc9a9cf1783290338969cb"
+        },
+        {
+          "expression": "shy",
+          "sourceBox": [
+            446,
+            446,
+            884,
+            887
+          ],
+          "resizedPixelSha256": "a62a458bc27df69ecf77c507c04969542a33f271e0d4772eabecadef5b6a2df8"
+        },
+        {
+          "expression": "tired",
+          "sourceBox": [
+            890,
+            446,
+            1327,
+            887
+          ],
+          "resizedPixelSha256": "441bc7d8410be27836f56e04cde642cd1d7a9a3439660a2e356902b99f4114a5"
+        },
+        {
+          "expression": "mischievous",
+          "sourceBox": [
+            1333,
+            446,
+            1774,
+            887
+          ],
+          "resizedPixelSha256": "bd2b3a20de2c128791cea672d05b84b507d5289c69262260550b8f9be52b5053"
+        }
+      ]
+    }
+  ]
+}
