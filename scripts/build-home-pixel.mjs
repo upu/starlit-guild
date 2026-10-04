@@ -94,6 +94,22 @@ for (const name of names) {
   const actionAtlas = await packFrames(actions);
   anchors[`${name}-actions`] = actionAtlas.anchors;
   await emit(`${name}-actions.webp`, actionAtlas.image);
+  const tea = [];
+  for (const direction of ["right", "left"]) {
+    const sheet = await readFile(new URL(`${name}-tea-v1-${direction}.png`, source));
+    for (let i = 0; i < 4; i++)
+      tea.push(
+        await readFrame(sheet, {
+          left: (i % 2) * 768,
+          top: Math.floor(i / 2) * 512,
+          width: 768,
+          height: 512,
+        }),
+      );
+  }
+  const teaAtlas = await packFrames(tea);
+  anchors[`${name}-tea`] = teaAtlas.anchors;
+  await emit(`${name}-tea.webp`, teaAtlas.image);
 }
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
 for (const sheet of ["icons", "decor"]) {

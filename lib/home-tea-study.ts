@@ -1,6 +1,13 @@
-// Production sprites stay untouched. This is the shared drawing reference.
+import { residentTea } from "./home-actor.ts";
+// The drawing reference and delivered sprites share the four-pose timeline.
 export type TeaPoint = { x: number; y: number };
-export const teaStudy = { duration: 8000, phases: 4, step: 2000, height: 84, tableY: -34 };
+export const teaStudy = {
+  duration: residentTea.duration,
+  phases: residentTea.poses,
+  step: residentTea.step,
+  height: 84,
+  tableY: -34,
+};
 export const teaLabels = [
   "テーブルの高さで構える",
   "片手で持ち上げる",

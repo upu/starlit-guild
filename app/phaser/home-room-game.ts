@@ -137,7 +137,7 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
     create() {
       if (!failed) {
         for (const id of residentIds)
-          for (const suffix of ["", "-actions"])
+          for (const suffix of ["", "-actions", "-tea"])
             this.textures.get(homeAsset(id + suffix)).setFilter(engine.Textures.FilterMode.NEAREST);
         this.controller = new HomeRoomController(this, bridge);
         bridge.status("ready");
@@ -176,7 +176,7 @@ export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: 
 }
 function preloadHomeAssets(scene: Phaser.Scene) {
   for (const id of residentIds)
-    for (const suffix of ["", "-actions"])
+    for (const suffix of ["", "-actions", "-tea"])
       scene.load.spritesheet(homeAsset(id + suffix), homeAsset(id + suffix), {
         frameWidth: residentArt.cell,
         frameHeight: residentArt.cell,

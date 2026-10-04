@@ -312,8 +312,7 @@ async function captureNewActions(page) {
   const captures = [];
   const cases = [
     ...Array.from({ length: 6 }, (_, i) => ({ pose: "walk", distance: i * 4, time: 0 })),
-    { pose: "tea", distance: 0, time: 1000 },
-    { pose: "tea", distance: 0, time: 4800 },
+    ...[0, 2000, 4000, 6000].map((time) => ({ pose: "tea", distance: 0, time })),
     { pose: "craft", distance: 0, time: 0 },
     { pose: "craft", distance: 0, time: 500 },
     { pose: "paper", distance: 0, time: 0 },
@@ -344,9 +343,12 @@ async function captureNewActions(page) {
       });
     }, sample);
     for (const image of images) {
-      assert.equal(image.texture, `/home-pixel/${image.id}-actions.webp`);
-      if (sample.pose !== "tea")
-        assert.equal(image.flip, false, "work/rear sprites must never swap hands");
+      assert.equal(
+        image.texture,
+        `/home-pixel/${image.id}-${sample.pose === "tea" ? "tea" : "actions"}.webp`,
+      );
+      assert.equal(image.flip, false, "tea/work/rear sprites must never swap hands");
+      if (sample.pose === "tea") assert.equal(Number(image.frame), 4 + sample.time / 2000);
     }
     const capture = await page.locator(".home-stage").screenshot();
     const { width, height } = await sharp(capture).metadata();

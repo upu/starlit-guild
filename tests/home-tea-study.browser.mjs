@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mkdirSync } from "node:fs";
 import { chromium } from "playwright";
 import { teaStudy } from "../lib/home-tea-study.ts";
+import { residentIds, residentNames, residentHand } from "../lib/home-actor.ts";
 const out = "work/pixel-home/tea-study";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -31,6 +32,27 @@ try {
     await page.locator(".tea-live").screenshot({ path: `${out}/pose-${i + 1}.png` });
   }
   await page.locator(".tea-sheet").screenshot({ path: `${out}/all-poses.png` });
+  for (const id of residentIds) {
+    await page.getByRole("button", { name: residentNames[id], exact: true }).click();
+    assert.equal(
+      await page.locator(".tea-resident-live").getAttribute("data-hand"),
+      residentHand(id),
+    );
+    for (const left of [false, true]) {
+      if (left) await page.getByRole("button", { name: "右向き", exact: true }).click();
+      for (let i = 0; i < 4; i++) {
+        await page.locator(".tea-resident-sheet button").nth(i).click();
+        assert.equal(
+          await page.locator(".tea-resident-large span").getAttribute("data-frame"),
+          String(i + (left ? 4 : 0)),
+        );
+      }
+      await page
+        .locator(".tea-residents")
+        .screenshot({ path: `${out}/${id}-${left ? "left" : "right"}.png` });
+    }
+    await page.getByRole("button", { name: "左向き", exact: true }).click();
+  }
   await page.getByLabel("動きをゆっくり追う").fill("4000");
   assert.equal(await time(), "4000");
   await page.getByLabel("動きを減らす").check();

@@ -3,6 +3,7 @@ import { ROOM, furnitureCatalog, type Furniture, type RoomSite } from "@/lib/hom
 import {
   residentArt,
   residentAnimation,
+  residentAtlas,
   residentHand,
   residentScale,
   residentSolePadding,
@@ -144,19 +145,20 @@ export class HomeRoomArt {
       r.rear,
     );
     const y = r.y + (pose === "tea" ? -1 : 0);
+    const atlas = residentAtlas(r.id, pose, frame, action, r.left);
     const image = this.image(
       `r-${r.id}`,
-      homeAsset(action ? `${r.id}-actions` : r.id),
+      homeAsset(atlas.name),
       r.x,
       y + residentSolePadding + bob,
       residentArt.displayCell,
       r.y + 1,
-      frame,
+      atlas.frame,
     );
     image.setDisplaySize(residentArt.displayCell, residentArt.displayCell);
     // Back-view tools have authored handedness: Lico left, the others right.
     // Never mirror a work frame or its tool would change hands.
-    image.setFlipX((pose === "tea" || !action) && r.left);
+    image.setFlipX(atlas.flip);
     if (greeting) this.bubble(r, "♥", time, reduced);
     else if (pose === "tea" && (time + r.phase) % 13000 < 3500) this.bubble(r, "♪", time, reduced);
     else if (pose === "paper" && (time + r.phase) % 16000 < 4000)

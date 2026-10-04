@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { teaLabels, teaPhase, teaStudy } from "@/lib/home-tea-study";
 import TeaFigure from "./figure";
 import { useTeaPlayer } from "./player";
+import TeaResidents from "./residents";
 const subscribe = () => () => undefined;
 const clientReady = () => true;
 const serverReady = () => false;
@@ -105,6 +106,7 @@ export default function TeaStudy() {
         <TeaFigure time={p.time} guides={p.guides} />
       </div>
       <Controls p={p} />
+      <TeaResidents time={p.time} still={p.still} select={p.select} />
       <p className="tea-phase" data-time={Math.round(p.time)}>
         左の人：{teaLabels[Math.floor(teaPhase(p.time))]} ／ 右の人：
         {teaLabels[Math.floor(teaPhase(p.time + teaStudy.duration / 2))]}
@@ -132,7 +134,7 @@ export default function TeaStudy() {
       <p>左の人を基準に並べています。選ぶと、その姿勢で止まります。</p>
       <PhaseSheet p={p} />
       <p className="tea-note">
-        オレンジが手前、青が奥の手足。腰は座面、足裏は床に置き、もう片方の手はひざ元へ。向かい合わせの2人は鏡像のため、利き手は異なります。5人の素材を描く前の動きの見本です。
+        見本のオレンジが手前、青が奥の手足。腰は座面、足裏は床に置き、もう片方の手はひざ元へ。見本の2人は鏡像ですが、仲間の絵は左右向きそれぞれで利き手を保っています。
       </p>
     </main>
   );

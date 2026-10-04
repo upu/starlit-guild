@@ -109,6 +109,48 @@
   font-size: 14px;
   color: #c6c7ac;
 }
+.tea-resident-sprite {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.tea-resident-live {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.tea-resident-large .tea-resident-sprite {
+  width: 256px;
+  height: 256px;
+}
+.tea-resident-sheet {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.tea-resident-sheet button {
+  display: grid;
+  justify-items: center;
+  color: inherit;
+  background: #2d473b;
+  border: 1px solid #8e9169;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+.tea-resident-sheet .tea-resident-sprite {
+  width: 128px;
+  height: 128px;
+}
+.tea-residents button[aria-pressed="true"] {
+  border-color: #ffd785;
+  box-shadow: 0 0 0 2px #ffd785;
+}
 @media (max-width: 480px) {
   .tea-sheet {
     grid-template-columns: 1fr;

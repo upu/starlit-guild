@@ -8,7 +8,27 @@ export const residentSolePadding =
   ((residentArt.cell - residentArt.foot) / residentArt.cell) * residentArt.displayCell;
 export const residentScale = residentHeight / 60;
 export const residentActions = { frames: 12, rearWalkFrames: 6 };
+// Four poses per authored direction; do not mirror the drinking hand.
+export const residentTea = { frames: 8, poses: 4, duration: 8000, step: 2000 };
+export const teaFrame = (time: number, left = false, reduced = false) =>
+  (reduced
+    ? 0
+    : Math.floor(
+        (((time % residentTea.duration) + residentTea.duration) % residentTea.duration) /
+          residentTea.step,
+      )) + (left ? residentTea.poses : 0);
 export const residentHand = (id: ResidentId) => (id === "lico" ? "left" : "right");
+export function residentAtlas(
+  id: ResidentId,
+  pose: ResidentPose,
+  frame: number,
+  action: boolean,
+  left: boolean,
+) {
+  if (pose === "tea")
+    return { name: `${id}-tea`, frame: frame + (left ? residentTea.poses : 0), flip: false };
+  return { name: action ? `${id}-actions` : id, frame, flip: !action && left };
+}
 export const walkFrame = (distance: number, reduced = false) =>
   reduced ? 0 : Math.floor(distance / 3) % 8;
 export function residentAnimation(
@@ -42,7 +62,7 @@ function actionFrame(pose: ResidentPose, time: number, distance: number) {
     case "walk":
       return Math.floor(distance / 4) % residentActions.rearWalkFrames;
     case "tea":
-      return 6 + (time % 6400 > 4200 ? 1 : 0);
+      return teaFrame(time);
     case "craft":
       return 8 + (Math.floor(time / 440) % 2);
     default:

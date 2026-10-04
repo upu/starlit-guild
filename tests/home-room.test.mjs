@@ -119,16 +119,20 @@ test("compact tea seating keeps occupied/empty chairs aligned after moving a tab
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
-  assert.equal(Object.keys(manifest).length, 41);
+  assert.equal(Object.keys(manifest).length, 46);
   for (const id of residentIds)
-    for (const suffix of ["", "-actions"]) {
+    for (const suffix of ["", "-actions", "-tea"]) {
       const image = sharp(`public/home-pixel/${id}${suffix}.webp`),
         meta = await image.metadata();
       const size = residentArt.cell;
       assert.equal(meta.width, size * 4);
-      assert.equal(meta.height, size * (suffix ? 3 : 4));
+      assert.equal(meta.height, size * (suffix === "-tea" ? 2 : suffix ? 3 : 4));
       assert.ok(meta.hasAlpha);
-      for (let frame = 0; frame < (suffix ? 12 : residentArt.frames); frame++) {
+      for (
+        let frame = 0;
+        frame < (suffix === "-tea" ? 8 : suffix ? 12 : residentArt.frames);
+        frame++
+      ) {
         const { data, info } = await image
           .clone()
           .extract({
