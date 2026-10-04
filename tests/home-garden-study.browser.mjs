@@ -44,6 +44,27 @@ try {
       .locator(".garden-sheet")
       .screenshot({ path: `${out}/water-${left ? "left" : "right"}-poses.png` });
   }
+  for (const name of ["レオン", "アリア", "ミラ", "フィン", "リコ"]) {
+    await page.getByRole("button", { name, exact: true }).click();
+    const id = await page.locator(".garden-resident-live").getAttribute("data-resident");
+    for (let i = 0; i < 4; i++) {
+      await page.locator(".garden-resident-sheet button").nth(i).click();
+      assert.equal(await time(), String(i * 600));
+      assert.equal(
+        await page
+          .locator(".garden-resident-live .garden-resident-sprite")
+          .first()
+          .getAttribute("data-frame"),
+        String(i),
+      );
+      assert.equal(
+        await page.locator(".garden-resident-live .garden-resident-water rect").count(),
+        i === 2 ? 6 : 0,
+      );
+      await page.locator(".garden-resident-live").screenshot({ path: `${out}/${id}-${i + 1}.png` });
+    }
+    await page.locator(".garden-resident-sheet").screenshot({ path: `${out}/${id}-poses.png` });
+  }
   assert.deepEqual(
     await page
       .locator(".garden-live [data-layer]")

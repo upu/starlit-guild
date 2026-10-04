@@ -18,9 +18,9 @@
 
 歩行の制作見本は [見本の姿勢](../../../lib/home-walk-study.ts) → [比較ページ](../../../app/guild-lab/walk-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/walk-study/pilot.tsx)。制作ガイドにだけ関節描画を使い、ゲーム内の全身コマ切替は維持する。検査は `tests/home-walk-study.test.mjs` / `tests/home-walk-study.browser.mjs`。
 
-作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/guild-lab/work-study/figure.tsx) → [再生と4姿勢](../../../app/guild-lab/work-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/work-study/residents.tsx)。[作業コマ生成](../../../scripts/home-work-frames.mjs) で同じ縮尺と足元を揃え、旅団と同じ `*-work.webp`・4姿勢の時刻を使う。お茶と [再生処理](../../../app/guild-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
+作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/guild-lab/work-study/figure.tsx) → [再生と4姿勢](../../../app/guild-lab/work-study/study.tsx) → [5人の実素材比較](../../../app/guild-lab/work-study/residents.tsx)。[作業コマ生成](../../../scripts/home-work-frames.mjs) で同じ縮尺と足元を揃え、旅団と同じ `*-work.webp`・4姿勢の時刻を使う。事務机も同じ4コマを共用し、比較ページで台を切り替えられる。お茶と [再生処理](../../../app/guild-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
 
-菜園の制作見本は [水やりの4姿勢](../../../lib/home-garden-study.ts) → [無地モデルと植物](../../../app/guild-lab/garden-study/figure.tsx) → [再生・左右・小表示](../../../app/guild-lab/garden-study/study.tsx)。既存の再生処理を共有し、5人の素材・本編・保存には未接続。検査は `tests/home-garden-study.test.mjs` / `tests/home-garden-study.browser.mjs`。
+菜園の制作見本は [水やりの4姿勢](../../../lib/home-garden-study.ts) → [無地モデルと植物](../../../app/guild-lab/garden-study/figure.tsx) → [再生・左右・小表示](../../../app/guild-lab/garden-study/study.tsx)。[5人の実素材比較](../../../app/guild-lab/garden-study/residents.tsx) と旅団で `*-garden.webp`、[注ぎ口と水滴](../../../lib/home-garden-water.ts) を共用する。作業と共通の配信生成で足元を揃える。保存・生産の判定は既存処理のまま。検査は `tests/home-garden-study.test.mjs` / `tests/home-garden-study.browser.mjs`。
 
 お茶・会話の制作見本は [座位とカップの軌跡](../../../lib/home-tea-study.ts) → [2人と家具の描画](../../../app/guild-lab/tea-study/figure.tsx) → [再生・姿勢一覧](../../../app/guild-lab/tea-study/study.tsx) → [5人の左右向き比較](../../../app/guild-lab/tea-study/residents.tsx)。旅団と同じお茶アトラスと4姿勢の時刻を使い、利き手を反転せず切り替える。検査は `tests/home-tea-study.test.mjs` / `tests/home-tea-study.browser.mjs`。
 

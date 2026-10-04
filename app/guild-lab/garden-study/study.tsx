@@ -5,6 +5,7 @@ import { gardenLabels, gardenPhase, gardenStudy } from "@/lib/home-garden-study"
 import { useStudyPlayer } from "../study-player";
 import Controls, { type GardenPlayer } from "./controls";
 import GardenFigure from "./figure";
+import GardenResidents from "./residents";
 const subscribe = () => () => undefined;
 const clientReady = () => true;
 const serverReady = () => false;
@@ -26,10 +27,11 @@ export default function GardenStudy() {
       <Options left={left} setLeft={setLeft} smooth={smooth} setSmooth={setSmooth} />
       <Preview p={p} props={props} />
       <Controls p={p} />
+      <GardenResidents time={p.time} still={p.still} select={p.select} />
       <h2>水やりの4つの姿勢</h2>
       <Frames p={p} props={props} />
       <p className="tea-note">
-        足を地面につけたまま、植物の根元へ水を注ぎます。左利きは菜園も含め反対側から見た見本です。5人の絵は、この動きを確認してから制作します。
+        足を地面につけたまま、植物の根元へ水を注ぎます。左利きは菜園も含め反対側から見た見本です。
       </p>
     </main>
   );

@@ -7,7 +7,7 @@ import {
   type Cell,
   type Furniture,
 } from "./home-room-layout.ts";
-import { residentNames, type ResidentId, type ResidentPose } from "./home-actor.ts";
+import { residentNames, residentHand, type ResidentId, type ResidentPose } from "./home-actor.ts";
 export type RoomActivity = "auto" | "tea" | "craft" | "paper" | "garden";
 export type Resident = {
   id: ResidentId;
@@ -35,7 +35,7 @@ const furniturePoses: Partial<Record<Furniture["kind"], ResidentPose>> = {
 const arrivalText: Partial<Record<Furniture["kind"], string>> = {
   table: "お茶の席に加わりました",
   desk: "依頼の手紙を整理しています",
-  plot: "苗の様子を見ています",
+  plot: "苗の根元へ水を注いでいます",
   bench: "道具を手入れしています",
 };
 const activityKind = { tea: "table", craft: "bench", paper: "desk", garden: "plot" };
@@ -58,7 +58,7 @@ function createResident(id: ResidentId, index: number): Resident {
 }
 function faceFurniture(r: Resident, item?: Furniture) {
   if (item?.kind === "table") return r.seat % 2 === 1;
-  return item?.kind === "plot";
+  return item?.kind === "plot" && residentHand(r.id) === "left";
 }
 function walkStep(r: Resident, delta: number) {
   const next = cellPoint(r.path[0]),
@@ -117,10 +117,11 @@ export class HomeLife {
       this.choose(r, furniture, index, first || reduced);
     }
   }
-  private available(item: Furniture) {
+  private available(item: Furniture, id: ResidentId) {
     const reserved = new Set(this.residents.flatMap((r) => (r.spot ? [cellKey(r.spot)] : [])));
     return furnitureSpots(item)
       .map((cell, seat) => ({ cell, seat }))
+      .filter(({ seat }) => item.kind !== "plot" || seat === (residentHand(id) === "left" ? 0 : 1))
       .filter(({ cell }) => !reserved.has(cellKey(cell)));
   }
   private candidates(furniture: Furniture[], index: number, r: Resident) {
@@ -141,7 +142,7 @@ export class HomeLife {
         : [],
     );
     for (const item of this.candidates(furniture, index + r.cycle, r)) {
-      for (const { cell, seat } of this.available(item)) {
+      for (const { cell, seat } of this.available(item, r.id)) {
         const route = roomPath(start, cell, [...furniture, ...reserved]);
         if (route) return { item, cell, seat, route };
       }

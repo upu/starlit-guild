@@ -80,7 +80,11 @@ export function furnitureSpots(item: Furniture): Cell[] {
       [2, -1],
       [2, h],
     ].map(([x, y]) => ({ x: item.x + x, y: item.y + y }));
-  if (item.kind === "plot") return [{ x: item.x + w, y: item.y + h - 1 }];
+  if (item.kind === "plot")
+    return [
+      { x: item.x + w, y: item.y + h - 1 },
+      { x: item.x - 1, y: item.y + h - 1 },
+    ];
   return [{ x: item.x + Math.floor(w / 2), y: item.y + h }];
 }
 export function roomPath(start: Cell, end: Cell, items: Furniture[]): Cell[] | null {
@@ -129,6 +133,7 @@ export function layoutError(items: Furniture[], legacyAccess = false): string | 
 
 function accessibleFurniture(item: Furniture, items: Furniture[], door: Cell, legacy: boolean) {
   if (furnitureSpots(item).every((cell) => roomPath(door, cell, items))) return true;
+  if (legacy && item.kind === "plot") return !!roomPath(door, furnitureSpots(item)[0], items);
   // Earlier saves allowed side access to desks. Keep those saves readable;
   // newly arranged layouts still require a clear approach in front of the desk.
   if (!legacy || !["bench", "desk"].includes(item.kind)) return false;

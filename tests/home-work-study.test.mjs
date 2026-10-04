@@ -101,3 +101,18 @@ test("four-pose reference and interpolated loop share their key poses and wrap c
   }
   assert.ok(workStudyPose(800).lean > workStudyPose(0).lean, "upper body follows the hands");
 });
+test("paperwork reuses all four work frames with authored handedness and desk placement", () => {
+  for (const id of residentIds)
+    for (let frame = 0; frame < 4; frame++) {
+      assert.equal(residentAnimation("paper", frame * 400, 0, false).frame, frame);
+      assert.deepEqual(
+        residentAtlas(id, "paper", frame, true, true),
+        residentAtlas(id, "craft", frame, true, true),
+      );
+      const resident = { id, pose: "paper", furniture: "desk", x: 168, y: 132 };
+      assert.deepEqual(
+        residentDisplayPosition(resident, [{ id: "desk", kind: "desk", x: 6, y: 3 }]),
+        { x: id === "lico" ? 176 : 160, y: 124 },
+      );
+    }
+});

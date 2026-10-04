@@ -1,6 +1,7 @@
 // Art direction only: no resident state, rewards, or save access.
+import { residentGarden } from "./home-actor.ts";
 export type GardenPoint = { x: number; y: number };
-export const gardenStudy = { frames: 4, step: 600, duration: 2400 };
+export const gardenStudy = residentGarden;
 export const gardenLabels = ["構える", "傾ける", "根元へ注ぐ", "起こす"];
 const poses = [
   { lean: 0, handX: 117, handY: 99, tilt: -10, pour: 0 },

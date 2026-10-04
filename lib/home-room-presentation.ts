@@ -15,6 +15,11 @@ export const workBenchOffset = (id: ResidentId) => ({
   x: residentHand(id) === "left" ? 8 : -8,
   y: -8,
 });
+// Reach over the side rim so the spout points into the soil, not at the front board.
+export const gardenOffset = (id: ResidentId) => ({
+  x: residentHand(id) === "left" ? -2 : 2,
+  y: -8,
+});
 export function teaChairPosition(item: Furniture, seat: number) {
   const point = cellPoint(furnitureSpots(item)[seat]);
   const x = (item.x + furnitureCatalog.table.w / 2) * 24;
@@ -25,7 +30,14 @@ export function teaChairPosition(item: Furniture, seat: number) {
   };
 }
 export function residentDisplayPosition(r: Resident, furniture: Furniture[]) {
-  if (r.pose === "craft" && furniture.some((f) => f.id === r.furniture && f.kind === "bench")) {
+  if (r.pose === "garden" && furniture.some((f) => f.id === r.furniture && f.kind === "plot")) {
+    const offset = gardenOffset(r.id);
+    return { x: r.x + offset.x, y: r.y + offset.y };
+  }
+  if (
+    ["craft", "paper"].includes(r.pose) &&
+    furniture.some((f) => f.id === r.furniture && ["bench", "desk"].includes(f.kind))
+  ) {
     const offset = workBenchOffset(r.id);
     return { x: r.x + offset.x, y: r.y + offset.y };
   }

@@ -767,6 +767,84 @@
       "height": 95
     }
   ],
+  "leon-garden": [
+    {
+      "source": {
+        "left": 276,
+        "top": 24,
+        "width": 335,
+        "height": 463
+      },
+      "head": {
+        "left": 29,
+        "top": 0,
+        "width": 236,
+        "height": 176
+      },
+      "scale": 0.2064516129032258,
+      "left": 36,
+      "top": 24,
+      "width": 69,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 186,
+        "top": 23,
+        "width": 361,
+        "height": 465
+      },
+      "head": {
+        "left": 35,
+        "top": 0,
+        "width": 236,
+        "height": 177
+      },
+      "scale": 0.2064516129032258,
+      "left": 35,
+      "top": 24,
+      "width": 75,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 270,
+        "top": 29,
+        "width": 344,
+        "height": 446
+      },
+      "head": {
+        "left": 58,
+        "top": 0,
+        "width": 240,
+        "height": 170
+      },
+      "scale": 0.2064516129032258,
+      "left": 34,
+      "top": 28,
+      "width": 71,
+      "height": 92
+    },
+    {
+      "source": {
+        "left": 187,
+        "top": 22,
+        "width": 341,
+        "height": 456
+      },
+      "head": {
+        "left": 28,
+        "top": 0,
+        "width": 239,
+        "height": 174
+      },
+      "scale": 0.2064516129032258,
+      "left": 35,
+      "top": 26,
+      "width": 70,
+      "height": 94
+    }
+  ],
   "aria": [
     {
       "source": {
@@ -1532,6 +1610,84 @@
       "left": 42,
       "top": 26,
       "width": 59,
+      "height": 94
+    }
+  ],
+  "aria-garden": [
+    {
+      "source": {
+        "left": 309,
+        "top": 24,
+        "width": 348,
+        "height": 469
+      },
+      "head": {
+        "left": 12,
+        "top": 0,
+        "width": 230,
+        "height": 179
+      },
+      "scale": 0.2046908315565032,
+      "left": 41,
+      "top": 24,
+      "width": 71,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 231,
+        "top": 24,
+        "width": 340,
+        "height": 469
+      },
+      "head": {
+        "left": 10,
+        "top": 0,
+        "width": 232,
+        "height": 179
+      },
+      "scale": 0.2046908315565032,
+      "left": 41,
+      "top": 24,
+      "width": 70,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 306,
+        "top": 30,
+        "width": 324,
+        "height": 446
+      },
+      "head": {
+        "left": 9,
+        "top": 0,
+        "width": 251,
+        "height": 170
+      },
+      "scale": 0.2046908315565032,
+      "left": 41,
+      "top": 29,
+      "width": 66,
+      "height": 91
+    },
+    {
+      "source": {
+        "left": 231,
+        "top": 22,
+        "width": 346,
+        "height": 459
+      },
+      "head": {
+        "left": 10,
+        "top": 0,
+        "width": 232,
+        "height": 175
+      },
+      "scale": 0.2046908315565032,
+      "left": 41,
+      "top": 26,
+      "width": 71,
       "height": 94
     }
   ],
@@ -2303,6 +2459,84 @@
       "height": 96
     }
   ],
+  "mira-garden": [
+    {
+      "source": {
+        "left": 308,
+        "top": 13,
+        "width": 334,
+        "height": 483
+      },
+      "head": {
+        "left": 10,
+        "top": 0,
+        "width": 252,
+        "height": 184
+      },
+      "scale": 0.19834710743801653,
+      "left": 38,
+      "top": 24,
+      "width": 66,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 183,
+        "top": 13,
+        "width": 340,
+        "height": 484
+      },
+      "head": {
+        "left": 13,
+        "top": 0,
+        "width": 256,
+        "height": 184
+      },
+      "scale": 0.19834710743801653,
+      "left": 39,
+      "top": 24,
+      "width": 67,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 296,
+        "top": 14,
+        "width": 364,
+        "height": 477
+      },
+      "head": {
+        "left": 22,
+        "top": 0,
+        "width": 261,
+        "height": 182
+      },
+      "scale": 0.19834710743801653,
+      "left": 36,
+      "top": 25,
+      "width": 72,
+      "height": 95
+    },
+    {
+      "source": {
+        "left": 179,
+        "top": 13,
+        "width": 337,
+        "height": 484
+      },
+      "head": {
+        "left": 11,
+        "top": 0,
+        "width": 260,
+        "height": 184
+      },
+      "scale": 0.19834710743801653,
+      "left": 38,
+      "top": 24,
+      "width": 67,
+      "height": 96
+    }
+  ],
   "finn": [
     {
       "source": {
@@ -3071,6 +3305,84 @@
       "height": 94
     }
   ],
+  "finn-garden": [
+    {
+      "source": {
+        "left": 331,
+        "top": 13,
+        "width": 297,
+        "height": 487
+      },
+      "head": {
+        "left": 9,
+        "top": 0,
+        "width": 242,
+        "height": 186
+      },
+      "scale": 0.1971252566735113,
+      "left": 40,
+      "top": 24,
+      "width": 59,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 172,
+        "top": 18,
+        "width": 318,
+        "height": 482
+      },
+      "head": {
+        "left": 11,
+        "top": 0,
+        "width": 244,
+        "height": 184
+      },
+      "scale": 0.1971252566735113,
+      "left": 41,
+      "top": 25,
+      "width": 63,
+      "height": 95
+    },
+    {
+      "source": {
+        "left": 329,
+        "top": 18,
+        "width": 321,
+        "height": 462
+      },
+      "head": {
+        "left": 23,
+        "top": 0,
+        "width": 251,
+        "height": 176
+      },
+      "scale": 0.1971252566735113,
+      "left": 40,
+      "top": 29,
+      "width": 63,
+      "height": 91
+    },
+    {
+      "source": {
+        "left": 172,
+        "top": 13,
+        "width": 291,
+        "height": 471
+      },
+      "head": {
+        "left": 0,
+        "top": 0,
+        "width": 243,
+        "height": 179
+      },
+      "scale": 0.1971252566735113,
+      "left": 41,
+      "top": 27,
+      "width": 57,
+      "height": 93
+    }
+  ],
   "lico": [
     {
       "source": {
@@ -3836,6 +4148,84 @@
       "left": 25,
       "top": 25,
       "width": 64,
+      "height": 95
+    }
+  ],
+  "lico-garden": [
+    {
+      "source": {
+        "left": 251,
+        "top": 18,
+        "width": 371,
+        "height": 471
+      },
+      "head": {
+        "left": 106,
+        "top": 0,
+        "width": 225,
+        "height": 179
+      },
+      "scale": 0.20382165605095542,
+      "left": 14,
+      "top": 24,
+      "width": 76,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 161,
+        "top": 18,
+        "width": 365,
+        "height": 471
+      },
+      "head": {
+        "left": 98,
+        "top": 0,
+        "width": 227,
+        "height": 179
+      },
+      "scale": 0.20382165605095542,
+      "left": 15,
+      "top": 24,
+      "width": 74,
+      "height": 96
+    },
+    {
+      "source": {
+        "left": 270,
+        "top": 13,
+        "width": 361,
+        "height": 457
+      },
+      "head": {
+        "left": 79,
+        "top": 0,
+        "width": 226,
+        "height": 174
+      },
+      "scale": 0.20382165605095542,
+      "left": 17,
+      "top": 27,
+      "width": 74,
+      "height": 93
+    },
+    {
+      "source": {
+        "left": 149,
+        "top": 13,
+        "width": 377,
+        "height": 467
+      },
+      "head": {
+        "left": 105,
+        "top": 0,
+        "width": 229,
+        "height": 178
+      },
+      "scale": 0.20382165605095542,
+      "left": 12,
+      "top": 25,
+      "width": 77,
       "height": 95
     }
   ]

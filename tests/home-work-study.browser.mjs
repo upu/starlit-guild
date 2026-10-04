@@ -68,6 +68,9 @@ try {
     }
     await page.locator(".work-resident-sheet").screenshot({ path: `${out}/${actor}-poses.png` });
   }
+  await page.getByRole("button", { name: "事務机で比較", exact: true }).click();
+  assert.equal(await page.locator(".work-resident-live").getAttribute("data-furniture"), "desk");
+  await page.locator(".work-resident-live").screenshot({ path: `${out}/desk-comparison.png` });
   await page.getByLabel("動きをゆっくり追う").fill("650");
   assert.equal(await time(), "650");
   await page.getByLabel("動きを減らす", { exact: true }).check();

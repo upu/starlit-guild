@@ -11,6 +11,14 @@ export const residentActions = { frames: 12, rearWalkFrames: 6 };
 // Four poses per authored direction; do not mirror the drinking hand.
 export const residentTea = { frames: 8, poses: 4, duration: 8000, step: 2000 };
 export const residentWork = { frames: 4, duration: 1600, step: 400 };
+export const residentGarden = { frames: 4, duration: 2400, step: 600 };
+export const gardenFrame = (time: number, reduced = false) =>
+  reduced
+    ? 0
+    : Math.floor(
+        (((time % residentGarden.duration) + residentGarden.duration) % residentGarden.duration) /
+          residentGarden.step,
+      );
 export const workFrame = (time: number, reduced = false) =>
   reduced
     ? 0
@@ -35,7 +43,8 @@ export function residentAtlas(
 ) {
   if (pose === "tea")
     return { name: `${id}-tea`, frame: frame + (left ? residentTea.poses : 0), flip: false };
-  if (pose === "craft") return { name: `${id}-work`, frame, flip: false };
+  if (pose === "craft" || pose === "paper") return { name: `${id}-work`, frame, flip: false };
+  if (pose === "garden") return { name: `${id}-garden`, frame, flip: false };
   return { name: action ? `${id}-actions` : id, frame, flip: !action && left };
 }
 export const walkFrame = (distance: number, reduced = false) =>
@@ -48,7 +57,11 @@ export function residentAnimation(
   rear = false,
 ) {
   const action =
-    pose === "tea" || pose === "craft" || pose === "paper" || (pose === "walk" && rear);
+    pose === "tea" ||
+    pose === "craft" ||
+    pose === "paper" ||
+    pose === "garden" ||
+    (pose === "walk" && rear);
   const t = reduced ? 0 : time;
   // Preserve face proportions. Whole-sprite vertical compression made cheeks
   // look wider and resampled the pixel grid every tick. A half-pixel rise at
@@ -73,7 +86,10 @@ function actionFrame(pose: ResidentPose, time: number, distance: number) {
     case "tea":
       return teaFrame(time);
     case "craft":
+    case "paper":
       return workFrame(time);
+    case "garden":
+      return gardenFrame(time);
     default:
       return 10 + (Math.floor(time / 1100) % 2);
   }

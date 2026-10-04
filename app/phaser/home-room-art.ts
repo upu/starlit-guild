@@ -9,6 +9,7 @@ import {
 } from "@/lib/home-actor";
 import { homeFloor, gardenScenery } from "@/lib/home-room-scenery";
 import type { Resident } from "@/lib/home-room-life";
+import { gardenWater } from "@/lib/home-garden-water";
 import {
   homeFurnitureScale,
   residentDisplayPosition,
@@ -151,7 +152,8 @@ export class HomeRoomArt {
       r.x,
       y + residentSolePadding + bob,
       residentArt.displayCell,
-      r.y + 1,
+      // The gardener stands beside the box; the can reaches over its side rim.
+      r.y + (pose === "garden" ? 25 : 1),
       atlas.frame,
     );
     image.setDisplaySize(residentArt.displayCell, residentArt.displayCell);
@@ -184,14 +186,8 @@ export class HomeRoomArt {
         .fillStyle(0xfff6df, (1 - phase) * 0.7)
         .fillCircle(r.x + sign * 8 * residentScale, r.y - (25 + phase * 15) * residentScale, 1.2);
     if (pose === "garden")
-      this.marks
-        .fillStyle(0x89bdd1, 0.9)
-        .fillRect(
-          r.x + sign * (20 + phase * 8) * residentScale,
-          r.y + (-20 + phase * 18) * residentScale,
-          1,
-          3,
-        );
+      for (const drop of gardenWater(r.id, time + r.phase))
+        this.marks.fillStyle(0x89bdd1, 0.9).fillRect(r.x + drop.x, r.y + drop.y, 1, 2);
   }
   grid(items: Furniture[], selected?: string, ghost?: Furniture, error = false) {
     this.marks.lineStyle(0.6, 0xfde3aa, 0.25);

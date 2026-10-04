@@ -5,8 +5,8 @@ import { readFrame, spriteBounds } from "./home-pixel-frames.mjs";
 
 // Keep the authored lean: one scale for all four poses, registered at the boots.
 // Registering the crown instead would cancel the head's movement toward the work.
-export async function buildWorkAtlas(source, name) {
-  const sheet = await readFile(new URL(`${name}-work-v1.png`, source));
+export async function buildWorkAtlas(source, name, action = "work") {
+  const sheet = await readFile(new URL(`${name}-${action}-v1.png`, source));
   const frames = [];
   for (let i = 0; i < 4; i++)
     frames.push(

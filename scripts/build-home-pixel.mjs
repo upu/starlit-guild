@@ -114,6 +114,9 @@ for (const name of names) {
   const workAtlas = await buildWorkAtlas(source, name);
   anchors[`${name}-work`] = workAtlas.anchors;
   await emit(`${name}-work.webp`, workAtlas.image);
+  const gardenAtlas = await buildWorkAtlas(source, name, "garden");
+  anchors[`${name}-garden`] = gardenAtlas.anchors;
+  await emit(`${name}-garden.webp`, gardenAtlas.image);
 }
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
 for (const sheet of ["icons", "decor"]) {

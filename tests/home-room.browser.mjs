@@ -7,6 +7,7 @@ const root = process.env.TEST_ROOT || "http://localhost:5173";
 const output = "work/pixel-home";
 mkdirSync(output, { recursive: true });
 mkdirSync(`${output}/work-study`, { recursive: true });
+mkdirSync(`${output}/garden-study`, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const failures = [],
   sizes = [];
@@ -84,7 +85,10 @@ try {
     );
     await fastForward(page, 30000);
     await page.locator(".home-stage").screenshot({ path: `${output}/home-${width}-dpr${dpr}.png` });
-    if (width === 390) await captureWorkbench(page);
+    if (width === 390) {
+      await captureWorkbench(page);
+      await captureWorkbench(page, "desk");
+    }
     await page.getByRole("button", { name: "家具を置く・動かす" }).click();
     await page.getByLabel("動かす家具").selectOption("fern");
     await page.getByRole("button", { name: "←に1マス" }).click();
@@ -118,6 +122,7 @@ try {
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);
     await page.locator(".home-stage").screenshot({ path: `${output}/garden-${width}.png` });
+    if (width === 390) await captureGarden(page);
     await page.getByRole("button", { name: "塔の栽培所", exact: true }).click();
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);
@@ -346,7 +351,7 @@ async function captureNewActions(page) {
     for (const image of images) {
       assert.equal(
         image.texture,
-        `/home-pixel/${image.id}-${sample.pose === "tea" ? "tea" : sample.pose === "craft" ? "work" : "actions"}.webp`,
+        `/home-pixel/${image.id}-${sample.pose === "tea" ? "tea" : ["craft", "paper"].includes(sample.pose) ? "work" : "actions"}.webp`,
       );
       assert.equal(image.flip, false, "tea/work/rear sprites must never swap hands");
       if (sample.pose === "tea") assert.equal(Number(image.frame), 4 + sample.time / 2000);
@@ -408,7 +413,7 @@ async function captureNewActions(page) {
     .toFile(`${output}/walk-aligned-loop.webp`);
 }
 
-async function captureWorkbench(page) {
+async function captureWorkbench(page, kind = "bench") {
   await page.evaluate(() => {
     const c = window.__home;
     window.__workSnapshot = { residents: c.life.residents, time: c.life.time };
@@ -418,10 +423,22 @@ async function captureWorkbench(page) {
       const pictures = [];
       for (let frame = 0; frame < 4; frame++) {
         const shown = await page.evaluate(
-          ({ id, frame }) => {
+          ({ id, frame, kind }) => {
             const c = window.__home;
             const worker = window.__workSnapshot.residents.find((r) => r.pose === "craft");
-            c.life.residents = [{ ...worker, id, phase: 0, greetUntil: 0 }];
+            const item = c.bridge.read().furniture.find((f) => f.kind === kind);
+            c.life.residents = [
+              {
+                ...worker,
+                id,
+                phase: 0,
+                greetUntil: 0,
+                furniture: item.id,
+                pose: kind === "desk" ? "paper" : "craft",
+                x: (item.x + 1.5) * 24,
+                y: (item.y + 2.5) * 24,
+              },
+            ];
             c.life.time = frame * 400;
             c.update(0);
             const sprite = c.art.images.get(`r-${id}`);
@@ -431,7 +448,7 @@ async function captureWorkbench(page) {
               flip: sprite.flipX,
             };
           },
-          { id, frame },
+          { id, frame, kind },
         );
         assert.deepEqual(shown, { texture: `/home-pixel/${id}-work.webp`, frame, flip: false });
         const image = await page.locator(".home-stage").screenshot();
@@ -439,7 +456,7 @@ async function captureWorkbench(page) {
         pictures.push(
           await sharp(image)
             .extract({
-              left: Math.round((width * 255) / 384),
+              left: Math.round((width * (kind === "desk" ? 135 : 255)) / 384),
               top: Math.round((height * 60) / 312),
               width: Math.round((width * 105) / 384),
               height: Math.round((height * 85) / 312),
@@ -458,13 +475,92 @@ async function captureWorkbench(page) {
           })),
         )
         .png()
-        .toFile(`${output}/work-study/${id}-in-room.png`);
+        .toFile(`${output}/work-study/${id}-${kind}-in-room.png`);
     }
   } finally {
     await page.evaluate(() => {
       const c = window.__home;
       Object.assign(c.life, window.__workSnapshot);
       delete window.__workSnapshot;
+      c.update(0);
+    });
+  }
+}
+
+async function captureGarden(page) {
+  const ids = ["leon", "aria", "mira", "finn", "lico"];
+  await page.evaluate(() => {
+    const c = window.__home;
+    window.__gardenSnapshot = { residents: c.life.residents, time: c.life.time };
+  });
+  try {
+    for (const id of ids) {
+      const pictures = [];
+      for (let frame = 0; frame < 4; frame++) {
+        const shown = await page.evaluate(
+          ({ id, frame }) => {
+            const c = window.__home,
+              item = c.bridge.read().furniture.find((f) => f.kind === "plot");
+            c.life.residents = [
+              {
+                ...window.__gardenSnapshot.residents[0],
+                id,
+                phase: 0,
+                greetUntil: 0,
+                pose: "garden",
+                furniture: item.id,
+                path: [],
+                left: id === "lico",
+                x: (item.x + (id === "lico" ? 4.5 : -0.5)) * 24,
+                y: (item.y + 1.5) * 24,
+              },
+            ];
+            c.life.time = frame * 600;
+            c.update(0);
+            const image = c.art.images.get(`r-${id}`);
+            return {
+              texture: image.texture.key,
+              frame: Number(image.frame.name),
+              flip: image.flipX,
+              plot: item,
+            };
+          },
+          { id, frame },
+        );
+        assert.equal(shown.texture, `/home-pixel/${id}-garden.webp`);
+        assert.equal(shown.frame, frame);
+        assert.equal(shown.flip, false);
+        const image = await page.locator(".home-stage").screenshot();
+        const { width, height } = await sharp(image).metadata();
+        pictures.push(
+          await sharp(image)
+            .extract({
+              left: Math.round((width * (shown.plot.x * 24 - 36)) / 384),
+              top: Math.round((height * ((shown.plot.y + 2) * 24 - 85)) / 312),
+              width: Math.round((width * 168) / 384),
+              height: Math.round((height * 104) / 312),
+            })
+            .resize(504, 312, { kernel: "nearest" })
+            .png()
+            .toBuffer(),
+        );
+      }
+      await sharp({ create: { width: 1008, height: 624, channels: 4, background: "#233529" } })
+        .composite(
+          pictures.map((input, i) => ({
+            input,
+            left: (i % 2) * 504,
+            top: Math.floor(i / 2) * 312,
+          })),
+        )
+        .png()
+        .toFile(`${output}/garden-study/${id}-in-room.png`);
+    }
+  } finally {
+    await page.evaluate(() => {
+      const c = window.__home;
+      Object.assign(c.life, window.__gardenSnapshot);
+      delete window.__gardenSnapshot;
       c.update(0);
     });
   }
