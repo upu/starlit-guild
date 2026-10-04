@@ -96,6 +96,7 @@ export default function TeaStudy() {
       <nav>
         <Link href="/guild-lab">旅団ホームへ</Link>
         <Link href="/guild-lab/walk-study">歩行の見本へ</Link>
+        <Link href="/guild-lab/work-study">作業台の見本へ</Link>
       </nav>
       <small>動きの共通見本 / お茶と会話</small>
       <h1>ひと息ついて、隣の仲間と。</h1>

@@ -1,0 +1,19 @@
+.work-live {
+  max-width: 640px;
+  margin-inline: auto;
+}
+.work-small {
+  width: 93px;
+  background: #e9dfc9;
+  border-radius: 6px;
+}
+.work-study button[aria-pressed="true"] {
+  border-color: #ffd785;
+  box-shadow: 0 0 0 2px #ffd785;
+}
+.work-sheet {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.work-sheet svg {
+  max-height: 240px;
+}
