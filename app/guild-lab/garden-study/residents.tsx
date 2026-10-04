@@ -8,7 +8,7 @@ import {
   type ResidentId,
 } from "@/lib/home-actor";
 import { gardenLabels, gardenStudy } from "@/lib/home-garden-study";
-import { gardenWater } from "@/lib/home-garden-water";
+import { gardenPlantings, gardenRoot, gardenWater, gardenWetness } from "@/lib/home-garden-water";
 import { gardenOffset } from "@/lib/home-room-presentation";
 function Sprite({ id, frame }: { id: ResidentId; frame: number }) {
   return (
@@ -27,31 +27,55 @@ function Sprite({ id, frame }: { id: ResidentId; frame: number }) {
 function Scene({ id, time, still }: { id: ResidentId; time: number; still: boolean }) {
   const left = residentHand(id) === "left",
     offset = gardenOffset(id),
-    foot = (left ? 168 : 56) + offset.x;
+    foot = (left ? 168 : 56) + offset.x,
+    plants = gardenPlantings(
+      { id: "sample", kind: "plot", x: (left ? 60 : 68) / 24, y: 54 / 24 },
+      0,
+      "linde",
+    ),
+    root = gardenRoot(plants, id),
+    drops = gardenWater(id, time, { x: root.x - foot, y: root.y - 90 - offset.y }, still);
   return (
     <div className="garden-resident-scene" data-left={left}>
       <span className="garden-resident-plot" style={{ left: left ? 60 : 68 }} />
-      {[0, 1].map((i) => (
+      {plants.map((plant, i) => (
         <span
           key={i}
           className="garden-resident-crop"
-          style={{ left: (left ? 74 : 82) + i * 38 }}
+          style={{ left: plant.x - plant.width / 2, bottom: 112 - plant.y, width: plant.width }}
         />
       ))}
       <div className="garden-resident-person" style={{ left: foot - 32, bottom: 18 - offset.y }}>
         <Sprite id={id} frame={gardenFrame(time, still)} />
       </div>
       <svg viewBox="0 0 224 112" aria-hidden="true" className="garden-resident-water">
-        {gardenWater(id, time, still).map((p, i) => (
+        <ellipse
+          data-root="true"
+          cx={root.x}
+          cy={root.y + 1}
+          rx="3"
+          ry="1"
+          fill="#324e40"
+          opacity={gardenWetness(time, still) * 0.6}
+        />
+        {drops.map((p, i) => (
           <rect
+            data-drop="true"
             key={i}
             x={foot + p.x}
             y={90 + offset.y + p.y}
             width="1"
-            height="2"
-            fill="#89bdd1"
+            height="1.5"
+            fill="#b6e3ee"
           />
         ))}
+        {drops.length > 0 && (
+          <path
+            data-splash="true"
+            d={`M${String(root.x - 1.5)} ${String(root.y - 0.5)}h1 M${String(root.x + 1)} ${String(root.y - 1)}h1`}
+            stroke="#b6e3ee"
+          />
+        )}
       </svg>
     </div>
   );

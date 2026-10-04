@@ -59,8 +59,25 @@ try {
       );
       assert.equal(
         await page.locator(".garden-resident-live .garden-resident-water rect").count(),
-        i === 2 ? 6 : 0,
+        i === 2 ? 12 : 0,
       );
+      if (i === 2) {
+        const landing = await page
+          .locator(".garden-resident-water")
+          .first()
+          .evaluate((svg) => {
+            const root = svg.querySelector("[data-root]"),
+              x = Number(root.getAttribute("cx")),
+              y = Number(root.getAttribute("cy")) - 1;
+            return Math.min(
+              ...[...svg.querySelectorAll("[data-drop]")].map((p) =>
+                Math.hypot(Number(p.getAttribute("x")) - x, Number(p.getAttribute("y")) - y),
+              ),
+            );
+          });
+        assert.ok(landing < 3, `${id}: water reaches the root in the actual preview`);
+        assert.equal(await page.locator(".garden-resident-live [data-splash]").count(), 2);
+      }
       await page.locator(".garden-resident-live").screenshot({ path: `${out}/${id}-${i + 1}.png` });
     }
     await page.locator(".garden-resident-sheet").screenshot({ path: `${out}/${id}-poses.png` });

@@ -2,7 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { gardenPose, gardenPhase, gardenStudy } from "../lib/home-garden-study.ts";
 import { residentIds, residentAnimation, residentAtlas, gardenFrame } from "../lib/home-actor.ts";
-import { gardenSpouts, gardenWater } from "../lib/home-garden-water.ts";
+import {
+  gardenSpouts,
+  gardenWater,
+  gardenWaterPoint,
+  gardenPlantings,
+  gardenRoot,
+  gardenWetness,
+} from "../lib/home-garden-water.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
 import { residentDisplayPosition } from "../lib/home-room-presentation.ts";
 import { roomFurniture, furnitureSpots, cellPoint, layoutError } from "../lib/home-room-layout.ts";
@@ -49,8 +56,8 @@ test("all residents use the four watering poses without mirroring, freezing both
           frame,
           flip: false,
         });
-      assert.equal(gardenWater(id, time).length, frame === 2 ? 3 : 0);
-      assert.equal(gardenWater(id, time, true).length, 0);
+      assert.equal(gardenWater(id, time, { x: 30, y: -25 }).length, frame === 2 ? 6 : 0);
+      assert.equal(gardenWater(id, time, { x: 30, y: -25 }, true).length, 0);
       assert.equal(residentAnimation("garden", time, 0, true).frame, 0);
       assert.equal(gardenFrame(time), Math.floor(gardenPhase(time)));
     }
@@ -66,9 +73,11 @@ test("garden approach follows authored hand without crossing crops; legacy right
       assert.equal(r.pose, "garden");
       assert.deepEqual({ x: r.x, y: r.y }, cellPoint(furnitureSpots(plot)[id === "lico" ? 0 : 1]));
       assert.equal(r.left, id === "lico");
-      const display = residentDisplayPosition(r, furniture);
+      const display = residentDisplayPosition(r, furniture),
+        root = gardenRoot(gardenPlantings(plot, 0, site), id),
+        target = { x: root.x - display.x, y: root.y - display.y };
       for (let t = 1200; t < 1800; t += 30)
-        for (const drop of gardenWater(id, t)) {
+        for (const drop of gardenWater(id, t, target)) {
           const x = display.x + drop.x,
             y = display.y + drop.y;
           assert.ok(x > plot.x * 24 + 3 && x < (plot.x + 4) * 24 - 3);
@@ -121,4 +130,32 @@ test("watering originals remain transparent with planted soles and measured spou
       assert.ok(pixels[(512 * 1536 + x) * 4 + 3] < 96, "clear row gutter");
     assert.equal(record.calls.filter((c) => c.id === id && c.accepted).length, 1);
   }
+});
+
+test("water lands at the authored roots as plots move and crops grow, with a short wet-soil response", () => {
+  for (const site of ["linde", "brekka"])
+    for (const growth of [0, 0.69, 0.7, 1])
+      for (const id of residentIds) {
+        const plot = roomFurniture(site)[0],
+          root = gardenRoot(gardenPlantings(plot, growth, site), id),
+          p = cellPoint(furnitureSpots(plot)[id === "lico" ? 0 : 1]),
+          foot = residentDisplayPosition({ id, pose: "garden", furniture: plot.id, ...p }, [plot]),
+          target = { x: root.x - foot.x, y: root.y - foot.y };
+        const first = gardenWaterPoint(id, target, 0),
+          last = gardenWaterPoint(id, target, 1);
+        assert.deepEqual(first, { x: gardenSpouts[id].x, y: gardenSpouts[id].y });
+        assert.ok(distance({ x: last.x + foot.x, y: last.y + foot.y }, root) < 1e-8);
+        assert.ok(last.y > first.y, "water falls toward the plant rather than climbing");
+        assert.ok(id === "lico" ? last.x < first.x : last.x > first.x);
+        const moved = gardenRoot(
+          gardenPlantings({ ...plot, x: plot.x + 2, y: plot.y + 1 }, growth, site),
+          id,
+        );
+        assert.ok(distance(moved, { x: root.x + 48, y: root.y + 24 }) < 1e-8);
+      }
+  assert.equal(gardenWetness(600), 0);
+  assert.equal(gardenWetness(1200), 1);
+  assert.ok(gardenWetness(2100) > 0 && gardenWetness(2100) < 1);
+  assert.equal(gardenWetness(2400), 0);
+  assert.equal(gardenWetness(1200, true), 0);
 });

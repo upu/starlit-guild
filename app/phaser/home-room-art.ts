@@ -9,7 +9,7 @@ import {
 } from "@/lib/home-actor";
 import { homeFloor, gardenScenery } from "@/lib/home-room-scenery";
 import type { Resident } from "@/lib/home-room-life";
-import { gardenWater } from "@/lib/home-garden-water";
+import { gardenPlantings, gardenRoot, gardenWater, gardenWetness } from "@/lib/home-garden-water";
 import {
   homeFurnitureScale,
   residentDisplayPosition,
@@ -20,12 +20,14 @@ export const homeAsset = (name: string) => `/home-pixel/${name}.webp`;
 export class HomeRoomArt {
   private images = new Map<string, Phaser.GameObjects.Image>();
   private used = new Set<string>();
+  private plants = new Map<string, ReturnType<typeof gardenPlantings>>();
   readonly marks: Phaser.GameObjects.Graphics;
   constructor(private scene: Phaser.Scene) {
     this.marks = scene.add.graphics().setDepth(2000);
   }
   begin() {
     this.used.clear();
+    this.plants.clear();
     this.marks.clear();
   }
   image(
@@ -116,13 +118,15 @@ export class HomeRoomArt {
     }
   }
   private crops(item: Furniture, growth: number, bottom: number, site: RoomSite) {
-    for (let i = 0; i < 2; i++) {
+    const plants = gardenPlantings(item, growth, site);
+    this.plants.set(item.id, plants);
+    for (const [i, plant] of plants.entries()) {
       this.image(
         `crop-${item.id}-${String(i)}`,
-        homeAsset(site === "brekka" ? "decor-5" : growth >= 0.7 ? "decor-4" : "prop-7"),
-        (item.x + 1.2 + i * 1.6) * 24,
-        bottom - 29,
-        site === "brekka" ? 22 + growth * 18 : 30,
+        homeAsset(plant.texture),
+        plant.x,
+        plant.y,
+        plant.width,
         bottom + 1,
       );
     }
@@ -185,9 +189,22 @@ export class HomeRoomArt {
       this.marks
         .fillStyle(0xfff6df, (1 - phase) * 0.7)
         .fillCircle(r.x + sign * 8 * residentScale, r.y - (25 + phase * 15) * residentScale, 1.2);
-    if (pose === "garden")
-      for (const drop of gardenWater(r.id, time + r.phase))
-        this.marks.fillStyle(0x89bdd1, 0.9).fillRect(r.x + drop.x, r.y + drop.y, 1, 2);
+    if (pose === "garden") this.water(r, time + r.phase);
+  }
+  private water(r: Resident, time: number) {
+    const plants = r.furniture ? this.plants.get(r.furniture) : undefined;
+    if (!plants) return;
+    const root = gardenRoot(plants, r.id),
+      target = { x: root.x - r.x, y: root.y - r.y },
+      drops = gardenWater(r.id, time, target);
+    this.marks.fillStyle(0x324e40, gardenWetness(time) * 0.6).fillEllipse(root.x, root.y + 1, 6, 2);
+    for (const drop of drops)
+      this.marks.fillStyle(0xb6e3ee, 0.95).fillRect(r.x + drop.x, r.y + drop.y, 1, 1.5);
+    if (drops.length)
+      this.marks
+        .fillStyle(0xb6e3ee, 0.8)
+        .fillRect(root.x - 1.5, root.y - 0.5, 1, 1)
+        .fillRect(root.x + 1, root.y - 1, 1, 1);
   }
   grid(items: Furniture[], selected?: string, ghost?: Furniture, error = false) {
     this.marks.lineStyle(0.6, 0xfde3aa, 0.25);

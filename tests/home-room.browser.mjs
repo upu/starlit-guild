@@ -122,11 +122,15 @@ try {
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);
     await page.locator(".home-stage").screenshot({ path: `${output}/garden-${width}.png` });
-    if (width === 390) await captureGarden(page);
+    if (width === 390) {
+      await captureGarden(page);
+      await captureGarden(page, 1, "-mature");
+    }
     await page.getByRole("button", { name: "塔の栽培所", exact: true }).click();
     await page.locator('.home-room[data-status="ready"]').waitFor();
     await page.waitForTimeout(300);
     await page.locator(".home-stage").screenshot({ path: `${output}/brekka-${width}.png` });
+    if (width === 390) await captureGarden(page, 0, "-moss");
     await page.getByRole("button", { name: "動きを減らす", exact: true }).click();
     await page.waitForTimeout(100);
     const reduced = await page.evaluate(() => window.__home.life.time);
@@ -487,8 +491,8 @@ async function captureWorkbench(page, kind = "bench") {
   }
 }
 
-async function captureGarden(page) {
-  const ids = ["leon", "aria", "mira", "finn", "lico"];
+async function captureGarden(page, plotIndex = 0, variant = "") {
+  const ids = variant ? ["leon", "lico"] : ["leon", "aria", "mira", "finn", "lico"];
   await page.evaluate(() => {
     const c = window.__home;
     window.__gardenSnapshot = { residents: c.life.residents, time: c.life.time };
@@ -498,9 +502,9 @@ async function captureGarden(page) {
       const pictures = [];
       for (let frame = 0; frame < 4; frame++) {
         const shown = await page.evaluate(
-          ({ id, frame }) => {
+          ({ id, frame, plotIndex }) => {
             const c = window.__home,
-              item = c.bridge.read().furniture.find((f) => f.kind === "plot");
+              item = c.bridge.read().furniture.filter((f) => f.kind === "plot")[plotIndex];
             c.life.residents = [
               {
                 ...window.__gardenSnapshot.residents[0],
@@ -525,7 +529,7 @@ async function captureGarden(page) {
               plot: item,
             };
           },
-          { id, frame },
+          { id, frame, plotIndex },
         );
         assert.equal(shown.texture, `/home-pixel/${id}-garden.webp`);
         assert.equal(shown.frame, frame);
@@ -554,7 +558,7 @@ async function captureGarden(page) {
           })),
         )
         .png()
-        .toFile(`${output}/garden-study/${id}-in-room.png`);
+        .toFile(`${output}/garden-study/${id}${variant}-in-room.png`);
     }
   } finally {
     await page.evaluate(() => {
