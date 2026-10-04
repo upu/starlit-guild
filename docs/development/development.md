@@ -135,7 +135,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/home-walk-study.browser.mjs` 共通歩行見本の再生・停止・コマ送り・小表示・5人の同期比較 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-walk-study.browser.mjs` | `work/pixel-home/walk-study/` の見本一覧・5人の比較・画面画像 |
 | `tests/home-tea-study.browser.mjs` お茶と会話の共通見本・片手の飲茶・座位・再生停止・姿勢送り・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-tea-study.browser.mjs` | `work/pixel-home/tea-study/` の4姿勢と320/390/844/1000px画像。スマホ実機とは別 |
 | `tests/home-work-study.browser.mjs` 作業台の共通見本・5人の実素材・左右の手・4姿勢・再生停止・補間・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-work-study.browser.mjs` | `work/pixel-home/work-study/` の左右4姿勢・5人の台との比較・320/390/844/1000px画像。スマホ実機とは別 |
-| `tests/home-garden-study.browser.mjs` 菜園の共通見本・水やりと観察・左右4姿勢・再生停止・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-garden-study.browser.mjs` | `work/pixel-home/garden-study/` の左右4姿勢・320/390/844/1000px画像。保存への書込なし。スマホ実機とは別 |
+| `tests/home-garden-study.browser.mjs` 菜園の共通見本・水やり・左右4姿勢・再生停止・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-garden-study.browser.mjs` | `work/pixel-home/garden-study/` の左右4姿勢・320/390/844/1000px画像。保存への書込なし。スマホ実機とは別 |
 <!-- manual-test-inventory:end -->
 
 Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合はPowerShellで `$env:PLAYWRIGHT_MODULE='C:\絶対パス\node_modules\playwright'`、`$env:CHROME_PATH='C:\絶対パス\chrome.exe'` を指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要で、`--executable` でブラウザー実行ファイルを指定できる。Pythonテストは生成CSSと `components/ui/dialog.tsx` のクラスを組み合わせた独立fixtureで、`--css` はビルドできない場合の独立fixture専用。部品fixtureの3本もゲーム全体へ接続するテストではない。

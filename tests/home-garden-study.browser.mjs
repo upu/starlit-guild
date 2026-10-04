@@ -23,34 +23,26 @@ try {
   assert.equal(await time(), "1800");
   await page.getByRole("button", { name: "次の姿勢", exact: true }).click();
   assert.equal(await time(), "0");
-  for (const action of ["water", "inspect"]) {
+  assert.equal(await page.getByRole("button", { name: "植物を見る", exact: true }).count(), 0);
+  for (const left of [false, true]) {
     await page
-      .getByRole("button", { name: action === "water" ? "水やり" : "植物を見る", exact: true })
+      .getByRole("button", { name: left ? "左利き（リコ）" : "右利き", exact: true })
       .click();
-    assert.equal(await time(), "0");
-    for (const left of [false, true]) {
+    assert.equal(
+      await page.locator(".garden-phase").getAttribute("data-hand"),
+      left ? "left" : "right",
+    );
+    for (let i = 0; i < 4; i++) {
+      await page.locator(".garden-sheet button").nth(i).click();
+      assert.equal(await time(), String(i * 600));
+      assert.equal(await page.locator(".garden-live [data-water]").count(), i === 2 ? 1 : 0);
       await page
-        .getByRole("button", { name: left ? "左利き（リコ）" : "右利き", exact: true })
-        .click();
-      assert.equal(
-        await page.locator(".garden-phase").getAttribute("data-hand"),
-        left ? "left" : "right",
-      );
-      for (let i = 0; i < 4; i++) {
-        await page.locator(".garden-sheet button").nth(i).click();
-        assert.equal(await time(), String(i * 600));
-        assert.equal(
-          await page.locator(".garden-live [data-water]").count(),
-          action === "water" && i === 2 ? 1 : 0,
-        );
-        await page
-          .locator(".garden-live")
-          .screenshot({ path: `${out}/${action}-${left ? "left" : "right"}-${i + 1}.png` });
-      }
-      await page
-        .locator(".garden-sheet")
-        .screenshot({ path: `${out}/${action}-${left ? "left" : "right"}-poses.png` });
+        .locator(".garden-live")
+        .screenshot({ path: `${out}/water-${left ? "left" : "right"}-${i + 1}.png` });
     }
+    await page
+      .locator(".garden-sheet")
+      .screenshot({ path: `${out}/water-${left ? "left" : "right"}-poses.png` });
   }
   assert.deepEqual(
     await page
@@ -68,7 +60,6 @@ try {
   const paused = await time();
   await page.waitForTimeout(150);
   assert.equal(await time(), paused);
-  await page.getByRole("button", { name: "水やり", exact: true }).click();
   await page.getByLabel("動きをゆっくり追う").fill("1200");
   assert.equal(await page.locator(".garden-live [data-water]").count(), 1);
   await page.getByLabel("動きを減らす", { exact: true }).check();
@@ -94,7 +85,7 @@ try {
   assert.equal(await page.evaluate(() => window.studyWrites), 0);
   assert.deepEqual(errors, []);
   console.log(
-    "Garden study: both actions, both hands, 4 poses, playback, reduced motion, 4 widths, no save writes PASS",
+    "Garden study: watering only, both hands, 4 poses, playback, reduced motion, 4 widths, no save writes PASS",
   );
 } finally {
   await browser.close();

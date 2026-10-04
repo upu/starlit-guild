@@ -1,4 +1,4 @@
-import { gardenPose, type GardenAction, type GardenPoint } from "@/lib/home-garden-study";
+import { gardenPose, type GardenPoint } from "@/lib/home-garden-study";
 type Pose = ReturnType<typeof gardenPose>;
 const ink = "#493e32";
 function Limb({
@@ -43,19 +43,11 @@ function Plants() {
 function Body({ p }: { p: Pose }) {
   return (
     <>
-      <Limb
-        points={[{ x: 96, y: 115 + p.crouch }, { x: 94 - p.crouch, y: 134 }, p.feet[1]]}
-        color="#58aabd"
-        width={10}
-      />
+      <Limb points={[{ x: 96, y: 115 }, { x: 94, y: 134 }, p.feet[1]]} color="#58aabd" width={10} />
       <path d="M94 148 L106 144 L113 150 L99 155 L92 153 Z" fill="#58aabd" stroke={ink} />
-      <Limb
-        points={[{ x: 83, y: 118 + p.crouch }, { x: 78 - p.crouch, y: 138 }, p.feet[0]]}
-        color="#ec9551"
-        width={11}
-      />
+      <Limb points={[{ x: 83, y: 118 }, { x: 78, y: 138 }, p.feet[0]]} color="#ec9551" width={11} />
       <path d="M72 153 L84 150 L94 156 L78 161 L71 159 Z" fill="#ec9551" stroke={ink} />
-      <g transform={`translate(0 ${String(p.crouch)})`} stroke={ink} strokeWidth="1.6">
+      <g stroke={ink} strokeWidth="1.6">
         <path
           d={`M${String(76 + p.lean)} ${String(78 + p.lean * 0.6)} Q${String(89 + p.lean)} ${String(73 + p.lean * 0.6)} ${String(103 + p.lean)} ${String(82 + p.lean * 0.6)} L105 115 Q94 123 79 119 Z`}
           fill="#c7b48f"
@@ -107,26 +99,24 @@ function Can({ p, still }: { p: Pose; still: boolean }) {
   );
 }
 export default function GardenFigure({
-  action,
   time,
   left = false,
   smooth = false,
   guides = false,
   still = false,
 }: {
-  action: GardenAction;
   time: number;
   left?: boolean;
   smooth?: boolean;
   guides?: boolean;
   still?: boolean;
 }) {
-  const p = gardenPose(action, time, smooth);
+  const p = gardenPose(time, smooth);
   return (
     <svg
       viewBox="0 0 240 180"
       role="img"
-      aria-label={`${left ? "左" : "右"}利きの菜園の${action === "water" ? "水やり" : "植物を見る"}見本`}
+      aria-label={`${left ? "左" : "右"}利きの菜園の水やり見本`}
     >
       <path d="M22 163 H120" stroke="#bbaa88" />
       <g transform={left ? "translate(240 0) scale(-1 1)" : undefined}>
@@ -134,9 +124,9 @@ export default function GardenFigure({
         <g data-layer="far-arm">
           <Limb
             points={[
-              { x: 81 + p.lean, y: 83 + p.crouch + p.lean * 0.6 },
-              { x: 106, y: 101 + p.crouch },
-              { x: 110, y: 113 + p.crouch },
+              { x: 81 + p.lean, y: 83 + p.lean * 0.6 },
+              { x: 106, y: 101 },
+              { x: 110, y: 113 },
             ]}
             color="#58aabd"
           />
@@ -144,7 +134,7 @@ export default function GardenFigure({
         <g data-layer="body">
           <Body p={p} />
         </g>
-        {action === "water" && <Can p={p} still={still} />}
+        <Can p={p} still={still} />
         <g data-layer="near-arm">
           <Limb points={[p.shoulder, p.elbow, p.hand]} color="#ec9551" />
           <circle cx={p.hand.x} cy={p.hand.y} r="4" fill="#ec9551" stroke={ink} />
