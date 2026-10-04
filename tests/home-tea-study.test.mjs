@@ -1,11 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { teaStudyPose, teaPair } from "../lib/home-tea-study.ts";
+import { teaStudyPose, teaPair, teaStudy, teaLabels } from "../lib/home-tea-study.ts";
 
 test("tea stays seated with feet on the floor, a free lap hand and fixed limb lengths", () => {
   const base = teaStudyPose(0);
+  assert.equal(teaLabels.length, 4);
+  assert.equal(base.cup.y + 6, teaStudy.tableY, "lowered cup sits at table height");
   for (let t = 0; t <= 16000; t += 20) {
     const p = teaStudyPose(t);
+    assert.ok(p.cup.y + 6 <= teaStudy.tableY, "cup never lowers toward the lap");
     for (const key of ["hip", "knee", "ankle", "restingHand", "shoulder"])
       assert.deepEqual(p[key], base[key]);
     assert.equal(p.hip.y, p.knee.y);

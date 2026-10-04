@@ -1,15 +1,11 @@
 // Production sprites stay untouched. This is the shared drawing reference.
 export type TeaPoint = { x: number; y: number };
-export const teaStudy = { duration: 16000, phases: 8, step: 2000, height: 84 };
+export const teaStudy = { duration: 8000, phases: 4, step: 2000, height: 84, tableY: -34 };
 export const teaLabels = [
-  "ひざ元でカップを持つ",
+  "テーブルの高さで構える",
   "片手で持ち上げる",
   "ひと口飲む",
   "ゆっくり下ろす",
-  "ほっとひと息",
-  "相手へ目を向ける",
-  "笑顔でうなずく",
-  "静かに聞く",
 ];
 const ease = (t: number) => {
   const v = Math.max(0, Math.min(1, t));
@@ -35,11 +31,11 @@ function elbow(shoulder: TeaPoint, hand: TeaPoint): TeaPoint {
 export function teaStudyPose(time: number) {
   const phase = teaPhase(time);
   const lift = ease(phase - 1) * (1 - ease(phase - 3));
-  const cup = mix({ x: 20, y: -30 }, { x: 19, y: -57 }, lift);
+  // Bottom of the lowered cup is level with the tabletop, never the lap.
+  const cup = mix({ x: 20, y: teaStudy.tableY - 6 }, { x: 19, y: -57 }, lift);
   const hand = { x: cup.x - 8, y: cup.y + 1 };
   const shoulder = { x: -3, y: -46 };
-  const look = ease(phase - 5) * (1 - ease(phase - 7));
-  const nod = phase >= 6 && phase < 7 ? Math.sin((phase - 6) * Math.PI) ** 2 * 4 : 0;
+  const reaction = teaReaction(time);
   return {
     phase,
     cup,
@@ -51,11 +47,16 @@ export function teaStudyPose(time: number) {
     knee: { x: 17, y: -27 },
     ankle: { x: 17, y: -3 },
     restingHand: { x: 4, y: -28 },
-    look,
-    nod,
-    smile: (phase >= 4 && phase < 5) || (phase >= 6 && phase < 7),
+    ...reaction,
     drinking: phase >= 2 && phase < 3,
   };
+}
+// A reaction overlays the held-cup pose; it is not another drinking frame.
+export function teaReaction(time: number) {
+  const phase = teaPhase(time);
+  const responding = phase < 1;
+  const amount = responding ? Math.sin(phase * Math.PI) ** 2 : 0;
+  return { look: amount, nod: amount * 4, smile: responding };
 }
 export function teaPair(time: number) {
   return [teaStudyPose(time), teaStudyPose(time + teaStudy.duration / 2)] as const;

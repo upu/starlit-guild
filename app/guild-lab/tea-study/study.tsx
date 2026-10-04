@@ -99,7 +99,7 @@ export default function TeaStudy() {
       <small>動きの共通見本 / お茶と会話</small>
       <h1>ひと息ついて、隣の仲間と。</h1>
       <p>
-        片手でひと口、カップを下ろしてほっとひと息。向かいの仲間は、少し遅れて笑顔とうなずきで応えます。
+        テーブルの高さで構える→持ち上げる→飲む→下ろす、の4つ。笑顔やうなずきは、構えている間の別の反応として重ねます。
       </p>
       <div className="tea-live">
         <TeaFigure time={p.time} guides={p.guides} />
@@ -107,14 +107,14 @@ export default function TeaStudy() {
       <Controls p={p} />
       <p className="tea-phase" data-time={Math.round(p.time)}>
         左の人：{teaLabels[Math.floor(teaPhase(p.time))]} ／ 右の人：
-        {teaLabels[Math.floor(teaPhase(p.time + 8000))]}
+        {teaLabels[Math.floor(teaPhase(p.time + teaStudy.duration / 2))]}
       </p>
       <label className="tea-timeline">
         動きをゆっくり追う
         <input
           type="range"
           min="0"
-          max="15999"
+          max={teaStudy.duration - 1}
           step="20"
           value={p.time}
           onChange={(e) => {
@@ -128,7 +128,7 @@ export default function TeaStudy() {
         </div>
         <p>ゲーム内に近い大きさ（人物の高さ約48px）</p>
       </section>
-      <h2>8つの姿勢</h2>
+      <h2>飲む動きは4つ</h2>
       <p>左の人を基準に並べています。選ぶと、その姿勢で止まります。</p>
       <PhaseSheet p={p} />
       <p className="tea-note">

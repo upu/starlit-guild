@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdirSync } from "node:fs";
 import { chromium } from "playwright";
+import { teaStudy } from "../lib/home-tea-study.ts";
 const out = "work/pixel-home/tea-study";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -13,7 +14,7 @@ try {
   const saved = await page.evaluate(() => JSON.stringify(localStorage));
   const time = () => page.locator(".tea-phase").getAttribute("data-time");
   await page.getByRole("button", { name: "前の姿勢", exact: true }).click();
-  assert.equal(await time(), "14000");
+  assert.equal(await time(), String(teaStudy.duration - teaStudy.step));
   await page.getByRole("button", { name: "次の姿勢", exact: true }).click();
   assert.equal(await time(), "0");
   await page.getByRole("button", { name: "再生", exact: true }).click();
@@ -23,7 +24,8 @@ try {
   await page.waitForTimeout(200);
   assert.equal(await time(), stopped);
   await page.getByLabel("関節と座面").check();
-  for (let i = 0; i < 8; i++) {
+  assert.equal(await page.locator(".tea-sheet button").count(), 4);
+  for (let i = 0; i < teaStudy.phases; i++) {
     await page.locator(".tea-sheet button").nth(i).click();
     assert.equal(await time(), String((i + 0.5) * 2000));
     await page.locator(".tea-live").screenshot({ path: `${out}/pose-${i + 1}.png` });
