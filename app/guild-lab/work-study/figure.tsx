@@ -63,11 +63,17 @@ function Body({ p }: { p: Pose }) {
     </>
   );
 }
-function Hands({ p, guides }: { p: Pose; guides: boolean }) {
+function FarArm({ p }: { p: Pose }) {
   return (
     <>
       <Limb points={[{ x: 81 + p.lean, y: 82 }, { x: 108, y: 94 }, p.support]} color="#58aabd" />
       <circle cx={p.support.x} cy={p.support.y} r="4" fill="#58aabd" stroke={ink} />
+    </>
+  );
+}
+function NearArm({ p, guides }: { p: Pose; guides: boolean }) {
+  return (
+    <>
       <Limb points={[p.shoulder, p.elbow, p.hand]} color="#ec9551" />
       <circle cx={p.hand.x} cy={p.hand.y} r="4" fill="#ec9551" stroke={ink} />
       {guides && (
@@ -102,8 +108,9 @@ export default function WorkFigure({
       <path d="M20 155 H224" stroke="#bbaa88" />
       <g transform={left ? "translate(240 0) scale(-1 1)" : undefined}>
         <Bench />
+        <FarArm p={p} />
         <Body p={p} />
-        <Hands p={p} guides={guides} />
+        <NearArm p={p} guides={guides} />
       </g>
     </svg>
   );

@@ -73,7 +73,9 @@ export default function WorkStudy() {
       </nav>
       <small>動きの共通見本 / 作業台</small>
       <h1>台に向かって、手を動かす。</h1>
-      <p>手を伸ばす→手元を動かす→身を寄せる→戻す。よく動かす手はオレンジ、添える手は青です。</p>
+      <p>
+        手を伸ばす→手元を動かす→身を寄せる→戻す。手前の腕はオレンジ、体の向こう側の腕は水色です。
+      </p>
       <div className="tea-controls">
         <button
           aria-pressed={!left}
