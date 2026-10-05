@@ -73,7 +73,7 @@
 
 ## 第一章1-6
 
-森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](../art-generation/stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](../art-generation/stage-1-6-closeup-art.json) に保存した。
+森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15のユーザー提供画像をもとに、2026-10-05に最新のアリア設定画へ合わせて描き直した。肩〜鎖骨丈の毛量を抑えた金髪と花飾りの反対側の淡い紫の一房を反映し、フードをかぶって二つの器を顔へ近づける動作、木漏れ日と石壁、苔を見比べる表情を維持する。苔の同一性を断定する発光演出は追加しない。背景は [1-6の制作記録](../art-generation/stage-1-6-art.json)、以前の採用画像は [制作履歴](../art-generation/stage-1-6-closeup-art.json)、今回の更新は [更新記録](../art-generation/forest-moss-refresh-20261005.json) を参照。
 
 - `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。

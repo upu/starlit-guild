@@ -47,17 +47,17 @@
       }
     },
     "forest-moss-aria.png": {
-      "sourceHash": "0f4b5f185e52a75332317ef75ce2c8cfa7c2b7c49f46740e597e6967385d0637",
-      "sourceBytes": 3064032,
+      "sourceHash": "b1a85d78be82ba736c33cdafe2835838a7a33ba9cb72e0aa836d420f0cbd5c37",
+      "sourceBytes": 2623858,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "1164f9acc7ca2f6304bc7bc700cdb28b5aaf7c4279030537e527c0c8b0d762b7",
-          "bytes": 272812
+          "hash": "9136ed417e338b5579b00da66164fc8305cf65475dfdd112a777d00bbdf129cd",
+          "bytes": 228534
         },
         "thumbnail": {
-          "hash": "a30363c5bad8f187e1b0d0ac044543c3f6f22a1b6db63b664bdbf5951c6d7d58",
-          "bytes": 23762
+          "hash": "c1a4beb6c129cdd88add2baa73fa1932331ea2260a497dd037c56d3343caee46",
+          "bytes": 21924
         }
       }
     },
