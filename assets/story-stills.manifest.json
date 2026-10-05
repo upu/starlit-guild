@@ -77,17 +77,17 @@
       }
     },
     "guild-formation.png": {
-      "sourceHash": "32e9ed2abf8a696c9b171d3df2f19693f93ae0d31b9e545aa5545a1919a27e4b",
-      "sourceBytes": 2649437,
+      "sourceHash": "074c0f6013a71c367dc1e991f17f4acce309b4bcd650235c09fdeaa6ffb4acc8",
+      "sourceBytes": 2591066,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "b0b0d7a8ab78d021b56870ba669b2750ca6bfc7f8da5ac8021072a64e37230a8",
-          "bytes": 267378
+          "hash": "784379900aee9dabca82b1bf924fc2caca424fb8c1de7f3809cef4199e581bd8",
+          "bytes": 253314
         },
         "thumbnail": {
-          "hash": "a352510dec8e2b64002a78628da6e6b43079d9e205065cced2aed1a96cd9b844",
-          "bytes": 23078
+          "hash": "06c75e767a58729d74e55a457036ddaae7bfaa8fb7343f23718a05fddb1f8a4d",
+          "bytes": 22402
         }
       }
     },
