@@ -197,17 +197,17 @@
       }
     },
     "tower-moss-discovery.png": {
-      "sourceHash": "bd2fb5d56ba1eb15f3322b9621bb8c399fc3e3d2638fe91b2160beae319c9510",
-      "sourceBytes": 2578332,
+      "sourceHash": "4fceab9c8fef2feef1f3e58a7dd80cc77e4ee0df34a08d03491fd2975154901e",
+      "sourceBytes": 2418655,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "75e19abbc277c160011ed5546dcde181db4e54e5fcf8c9a7efd4939b41d1dfcb",
-          "bytes": 222864
+          "hash": "09a12939e6ab6629597a5a1661d77bf8933b8fe86cab1048a9efcd7184858946",
+          "bytes": 201238
         },
         "thumbnail": {
-          "hash": "5ad35090d0d8edf1bd7f507cdc5371b85c46f97b5ddd32f4a81a80787e78457a",
-          "bytes": 17322
+          "hash": "f09711728bce298d6cc08aca45e02ae2f4ea9aa582b99f4e2aa0f3feebc20def",
+          "bytes": 17294
         }
       }
     },

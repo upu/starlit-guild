@@ -10,27 +10,16 @@
   "gridRemoval": "Measured per-source separator lines excluded by sourceBox coordinates; no new zoom or cell reordering.",
   "background": "Opaque source background preserved; no recoloring.",
   "validation": {
-    "expressions": 58,
-    "displaySizes": [40, 72],
+    "expressions": 42,
+    "displaySizes": [
+      40,
+      72
+    ],
     "component": "app/portrait.tsx",
     "atlasDefinitions": "lib/portrait-expressions.ts",
     "result": "All expression keys and cell positions match. Browser-rendered previews inspected for eyes, mouths, clipping and neighboring-cell contamination.",
-    "sourceIdentity": "All seven Library identities, versions, filenames, byte counts and SHA-256 verified.",
+    "sourceIdentity": "Five adopted Library masters verified. Merrill and Pumpety portraits restored to pre-PR images on 2026-10-05.",
     "maskedPumpety": "unchanged"
-  },
-  "sharedOutput": {
-    "path": "public/portraits/aria-leon-expressions-v2.webp",
-    "dimensions": [
-      1024,
-      1024
-    ],
-    "rows": [
-      "aria",
-      "aria",
-      "leon",
-      "leon"
-    ],
-    "bytes": 210974
   },
   "characters": [
     {
@@ -582,218 +571,14 @@
           "resizedPixelSha256": "2ce80c93ea414f230cf675417c99568104a6574290d0bea29eef2f0f886a5c0e"
         }
       ]
-    },
-    {
-      "name": "メリル",
-      "file": "merrill-expressions-original-based-v4.png",
-      "cols": 4,
-      "rows": 2,
-      "count": 8,
-      "order": "通常・笑顔・驚き・ニヤリ<br>味わう・期待・真剣・捕食者の目",
-      "library_file_id": "libfile_beaab457b1008191aca3c891151756ec",
-      "review_status": "new original-based review candidate",
-      "library_version": 1,
-      "file_id": "file_000000005d4481f5baf61dd190d090c2",
-      "sourceSha256": "884384301d36125c3497f94c0fd658a32f65d1a12b251fd79d0d641d9bf04a70",
-      "sourceDimensions": [
-        1774,
-        887
-      ],
-      "output": "public/portraits/merrill-expressions.webp",
-      "outputDimensions": [
-        1024,
-        512
-      ],
-      "outputBytes": 101660,
-      "decodedPsnrDb": 35.09,
-      "cells": [
-        {
-          "expression": "neutral",
-          "sourceBox": [
-            0,
-            0,
-            442,
-            442
-          ],
-          "resizedPixelSha256": "34400b88a89ee09f027504b187904117b40d8ef7ed792e75a5ceda4f310eac14"
-        },
-        {
-          "expression": "smile",
-          "sourceBox": [
-            445,
-            0,
-            885,
-            442
-          ],
-          "resizedPixelSha256": "48b66cd9f24c083865a6dc3b299265f4b79cbeb89cf5e9e065952c4b12e00f03"
-        },
-        {
-          "expression": "surprised",
-          "sourceBox": [
-            889,
-            0,
-            1329,
-            442
-          ],
-          "resizedPixelSha256": "af2a23c713c441e6be6ce21d42623630d42b2c89baf4b156a98fbaf60871aa19"
-        },
-        {
-          "expression": "mischievous",
-          "sourceBox": [
-            1332,
-            0,
-            1774,
-            442
-          ],
-          "resizedPixelSha256": "e7a52c6f4db107240bc3d512b6b31d283dd6d2f7606cb781d7a710b5cfadd5b2"
-        },
-        {
-          "expression": "savoring",
-          "sourceBox": [
-            0,
-            445,
-            442,
-            887
-          ],
-          "resizedPixelSha256": "e2499cfdab61a01ec41a8f543ab89baf4b27d5b8db3e812671704ec9ef93152c"
-        },
-        {
-          "expression": "excited",
-          "sourceBox": [
-            445,
-            445,
-            885,
-            887
-          ],
-          "resizedPixelSha256": "4c17063ac596f1b29b12fe7b8a9e9a5616d6033c2c71b7d9f3a625e0f2cbabfd"
-        },
-        {
-          "expression": "serious",
-          "sourceBox": [
-            889,
-            445,
-            1329,
-            887
-          ],
-          "resizedPixelSha256": "2082d4e04e7a2007b5f12a7670bf1acd638df39fd23780d25aa1693ad98b15e7"
-        },
-        {
-          "expression": "predatory",
-          "sourceBox": [
-            1332,
-            445,
-            1774,
-            887
-          ],
-          "resizedPixelSha256": "15f8838cde6d22c0d251c7468b0589c3edd7ed8a36fecfe6fcb7c2cdbdcdfccd"
-        }
-      ]
-    },
-    {
-      "name": "プティ",
-      "file": "pumpety-expressions-original-based-v6.png",
-      "cols": 4,
-      "rows": 2,
-      "count": 8,
-      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・ニヤリ",
-      "library_file_id": "libfile_f9785b2df2a08191be86a09770537000",
-      "review_status": "new original-based review candidate",
-      "library_version": 1,
-      "file_id": "file_000000009bdc81fd8ec9ccc86c8bcb4c",
-      "sourceSha256": "18c9806bebd2b1f0b3c40a7de51319a4799c3ec0ab665269b7cf85a43e298028",
-      "sourceDimensions": [
-        1774,
-        887
-      ],
-      "output": "public/portraits/pumpety-expressions.webp",
-      "outputDimensions": [
-        1024,
-        512
-      ],
-      "outputBytes": 114564,
-      "decodedPsnrDb": 34.72,
-      "cells": [
-        {
-          "expression": "neutral",
-          "sourceBox": [
-            0,
-            0,
-            441,
-            441
-          ],
-          "resizedPixelSha256": "6de7727037023e640e36ab41ba94c74f10e92ab2e9008d4aedc7c11a9e547a8b"
-        },
-        {
-          "expression": "smile",
-          "sourceBox": [
-            446,
-            0,
-            884,
-            441
-          ],
-          "resizedPixelSha256": "0494ff4fd3e9b8f8ef69be6848fc1b80da594ebae5d7d1755d997ebc51bfccfe"
-        },
-        {
-          "expression": "surprised",
-          "sourceBox": [
-            890,
-            0,
-            1327,
-            441
-          ],
-          "resizedPixelSha256": "e5c20837e7fe32e8a46d6a32b03ede7f38985e68a4019bde7f3bf72cfcd51156"
-        },
-        {
-          "expression": "worried",
-          "sourceBox": [
-            1333,
-            0,
-            1774,
-            441
-          ],
-          "resizedPixelSha256": "a94e37777ada9d8e71aaa474b98de2de28040feb9a50e01268da41d835279434"
-        },
-        {
-          "expression": "serious",
-          "sourceBox": [
-            0,
-            446,
-            441,
-            887
-          ],
-          "resizedPixelSha256": "9de64b40392f239975a43a7c8f75b859fb22c0dc69cc9a9cf1783290338969cb"
-        },
-        {
-          "expression": "shy",
-          "sourceBox": [
-            446,
-            446,
-            884,
-            887
-          ],
-          "resizedPixelSha256": "a62a458bc27df69ecf77c507c04969542a33f271e0d4772eabecadef5b6a2df8"
-        },
-        {
-          "expression": "tired",
-          "sourceBox": [
-            890,
-            446,
-            1327,
-            887
-          ],
-          "resizedPixelSha256": "441bc7d8410be27836f56e04cde642cd1d7a9a3439660a2e356902b99f4114a5"
-        },
-        {
-          "expression": "mischievous",
-          "sourceBox": [
-            1333,
-            446,
-            1774,
-            887
-          ],
-          "resizedPixelSha256": "bd2b3a20de2c128791cea672d05b84b507d5289c69262260550b8f9be52b5053"
-        }
-      ]
     }
-  ]
+  ],
+  "revision": {
+    "date": "2026-10-05",
+    "ariaLeon": "Separate 4x2 atlases through common API; shared atlas removed.",
+    "preservedPortraits": [
+      "merrill",
+      "pumpety"
+    ]
+  }
 }
