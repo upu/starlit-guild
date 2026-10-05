@@ -138,7 +138,9 @@
 - 表示：`moonlit-herbs-return` の第7行（0始まりで6）、ミラの膝が折れる行から。2-1のお昼には画像を置かない。
 - 画像確認：倒れたミラをレオンが支え、アリアが荷物をどけて近くへ寄る。三人の外見、支える動作、作りかけの薬のある仕事場を確認した。
 
-最終プロンプト：
+2026-10-05に三人の最新設定画へ合わせて描き直した。ミラは薄紫の編み込みのまとめ髪、血色の薄さと目元の疲労、軽いローブと治療用ポーチを反映する。アリアは肩〜鎖骨丈の金髪と正面から見て左側の薄紫の一房、レオンは短い片肩マントと背嚢を描く。倒れたミラを支える動作、仕事場と表示開始位置は維持する。[更新記録](../art-generation/mira-collapse-refresh-20261005.json)を参照。
+
+初版のプロンプト（更新前の制作履歴）：
 
 ```text
 Create one landscape 1536x1024 illustration-story still for STARLIT GUILD, using these three sheets ONLY as character appearance references, not layouts or text. Painterly anime fantasy RPG scene, delicate textured painting and soft afternoon window light, muted natural colors. Interior of a modest healer's workroom with wooden desk, paper-wrapped herbs and unfinished medicine parcels. Exact narrative instant: Mira (lavender hair, white/lavender moon-motif healer robes, herb pouch) has actually fainted from exhaustion while standing up; her knees have buckled, eyes closed and body limp, and Leon (brown hair, blue tunic, leather armor, red scarf) kneels urgently catching and supporting her upper torso and shoulders before she falls. Aria (long blonde hair, elf ears, green eyes, white flower hair ornament, forest green cloak) has rushed to their side and is crouching close, one hand moving a bag off the floor, looking anxiously at Mira and calling her name. All three fully clothed, non-romantic rescue scene, physically credible arms and weight support. Mira central; all faces and support gesture clearly readable in the middle portion of landscape. Background only herbs, parcels, wooden furniture, no extra people, no modern medical equipment, no glow magic, no blood, no comic panels, no letters or typography, no border. Retain distinctive reference costumes and faces.

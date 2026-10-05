@@ -36,7 +36,7 @@
 
 ![倒れたミラをレオンが支え、アリアが駆け寄る](../../public/stories/mira-collapse.webp)
 
-`moonlit-herbs-return` の倒れる行から表示。制作条件は [スチル制作記録](story-art.md#第二章2-2ミラが倒れる) を参照。
+`moonlit-herbs-return` の倒れる行から表示。2026-10-05に最新設定画へ合わせ、ミラの薄紫のまとめ髪と疲れた顔、アリアの短い髪、レオンの短いマントを更新した。[更新記録](../art-generation/mira-collapse-refresh-20261005.json)と[スチル制作記録](story-art.md#第二章2-2ミラが倒れる)を参照。
 
 ### 2-6：もう一人の山賊
 

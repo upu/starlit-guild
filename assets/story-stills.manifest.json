@@ -137,17 +137,17 @@
       }
     },
     "mira-collapse.png": {
-      "sourceHash": "12001c04708068f17a9816064b63f0b0e2f972c11738c50912813156b0b35f46",
-      "sourceBytes": 3024970,
+      "sourceHash": "0aaf8caf1fb1406a7842731fcb5485088615a33721b75143ac4353dca13f698d",
+      "sourceBytes": 2725938,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "bb294c80c862d6877032270c895c74ab534128738e3ef4971cdd1fc90910c653",
-          "bytes": 314810
+          "hash": "d513c4aebd792ccc87a7ac424a83403d041a0609ac662f9d57516fce960f27dc",
+          "bytes": 268764
         },
         "thumbnail": {
-          "hash": "9ce60f34177d1154059582665f93955bec8cc37a0299b4e53f4680ad44f37dc0",
-          "bytes": 24562
+          "hash": "da96a81e57f6d2d96ed6f0f39869ae275c83f1d14afec6c7fc7e4d42e5b1876a",
+          "bytes": 22650
         }
       }
     },
