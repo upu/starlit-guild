@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-05",
+  "tool": "built-in image_gen",
+  "operation": "edit original twilight still with latest character back views",
+  "source": "assets/source/stories/tower-light-restored.png",
+  "references": [
+    "docs/characters/aria-reference-sheet.webp",
+    "docs/characters/leon-reference-sheet.webp"
+  ],
+  "scene": "tower-moss-removal-return",
+  "revealAtLine": 6,
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "prompt": "Edit target image 1, STARLIT-GUILD chapter 1-9 '灯りの戻る丘', one 1536x1024 landscape still. Images 2 Aria and 3 Leon are latest CANONICAL character reference sheets. Preserve the entire original landscape and composition: indigo-blue twilight clouds and stars, distant lakeside town and bridge on left, mountains, modest cylindrical stone tower upper center-right, winding unlit road, stone ledges, vegetation, moss basket and wooden scraper. Tower window retains ONLY VERY FAINT MUTED LAVENDER light, no white core, rays, halo, bloom or glowing road. Preserve exactly two companions sitting closely shoulder-to-shoulder at lower center, entirely seen FROM BEHIND and facing the tower, small relative to landscape, no faces/profiles, no embrace or new story action. Update their character designs to match reference sheets' BACK VIEW: Aria on left has SHORT LOW-VOLUME blonde hair ending at shoulders/collarbone, airy broad locks and a small half-up braid with white flowers/feathers. REMOVE old waist-length flowing hair and long hanging braid completely. Her connected green hood remains DOWN on back of green gold-trimmed cloak, keep lowered-hood design and elf ears. A single pale lavender lock only if naturally visible from this rear angle, on the character's correct side matching reference, do not force a front face into view. Leon on right: simple side-swept brown hair in broad locks, BLUE tunic, shoulder armor, SHORT NEAT ONE-SHOULDER RED MANTLE ending high on back rather than full long red cape. Match latest equipment. His large brown backpack, rolled cream blanket and practical travel luggage may rest immediately beside his right on ledge/ground while he sits, do not place bulky backpack between companions or alter their closeness; no unnecessary duplicate luggage. Keep character rendering delicate, softly colored and simplified, integrated into original tranquil twilight scenery, not overly glossy. Preserve poses and scale; maintain visible bent legs/boots. Do not redesign geography, town, tower, sky, lighting, composition, moss props or vegetation. No extra people, no labels, no text/watermark. Output only edited illustration.",
+  "review": "Rear-facing seated pair, short Aria hair and half-up flowers, lowered hood, short one-shoulder Leon mantle, backpack beside pair verified. Original twilight landscape and faint lavender window retained."
+}
