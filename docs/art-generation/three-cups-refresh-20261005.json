@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-05",
+  "tool": "built-in image_gen",
+  "operation": "redraw existing comic chibi still with latest character references",
+  "source": "assets/source/stories/three-cups-of-tea.png",
+  "scene": "medicine-road-home-return",
+  "revealAtLine": 11,
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "references": [
+    "docs/characters/aria-reference-sheet.webp",
+    "docs/characters/leon-reference-sheet.webp",
+    "docs/characters/mira-reference-sheet.webp"
+  ],
+  "bytes": 2822833,
+  "sha256": "95ff7e893def948fb165fbd99f51ed7183bfedebe81bd16a59bf7a274214e8cd",
+  "review": "Comic chibi proportions preserved. Aria short blonde hair with viewer-left lavender lock and opposite flower, playful smile while pushing memo away. Leon simpler side-swept brown hair and short shoulder mantle, smiling with cup. Mira compact braided lavender updo, tired eye shadows and embarrassed side glance, free hand reaching toward memo. Exactly three cups, unchanged workroom and reveal line verified."
+}

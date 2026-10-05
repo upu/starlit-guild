@@ -167,17 +167,17 @@
       }
     },
     "three-cups-of-tea.png": {
-      "sourceHash": "fbe8d40a0e6bb163695f396badba1fea8a1fc91ade61d3fb6bb46dda6f865fce",
-      "sourceBytes": 2792592,
+      "sourceHash": "95ff7e893def948fb165fbd99f51ed7183bfedebe81bd16a59bf7a274214e8cd",
+      "sourceBytes": 2822833,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "694b34f52fd50ee11f89baeedd5ecf4f7eed2af5254c754f106ed33690912caf",
-          "bytes": 315180
+          "hash": "db2a8f0a35c3c23ef745853d33c89876b30a4569bf33cdf16db641ca2421093f",
+          "bytes": 326220
         },
         "thumbnail": {
-          "hash": "64a22bd38f7ce0593b6388b55c790e870c4b5cca32b719ee287f9fa7fed29938",
-          "bytes": 29422
+          "hash": "76d2e7a92fc232a26b55cab154a024a5a36b76bba1ad3452709b7135dff61c33",
+          "bytes": 29684
         }
       }
     },
