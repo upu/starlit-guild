@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen",
+  "operation": "complete fresh regeneration: slightly open neckline, remove cloak pendants, matte hair matching chapter 4-10",
+  "references": [
+    {
+      "path": "docs/characters/aria-reference-sheet.webp",
+      "sha256": "4e45bc17510e3360a1a160f9cbc1cc16f3b92c981d049b7a9677bcdc90473264"
+    },
+    {
+      "path": "assets/source/stories/guild-formation.png",
+      "sha256": "074c0f6013a71c367dc1e991f17f4acce309b4bcd650235c09fdeaa6ffb4acc8"
+    }
+  ],
+  "prompt": "Freshly REGENERATE an entire clean high-quality ARIA character reference sheet from scratch. Image1 is ONLY the latest character identity, costume construction and sheet layout guide. Image2 is ONLY the HAIR MATERIAL reference: use the matte, diffuse low-contrast blonde hair of the leftmost elf Aria in chapter4-10; do not copy other people/story scene. No localized patching, filtering or preserving old pixels. Single native1536x1024 or greater3:2landscape, opaque ivory, fine sage frame, no text/labels. Same organized3fullbody front/side/rear views LEFT,3x3 head-and-shoulder expression studies CENTER, hair/eye/ornament and plain hood back closeups RIGHT, outfit/equipment studies BOTTOM. Keep recognizable friendly lively elf face, green eyes/pointed ears, body proportions and size, SHORT shoulder/collarbone low-volume ash-blonde soft loose waves, one pale lavender front lock wearerRIGHT/viewerLEFT frontal, white daisy/feathers/leaves opposite wearerLEFT/viewerRIGHT. Small half-up braid ONLY BACK, no frontal/crown/temple braid. Same bright approachable expressions, not new identity. THREE USER CHANGES, consistent in ALL fullbody/portraits/detail panels: 1 Slightly MORE OPEN WHITE BLOUSE NECKLINE. Lower and gently widen the white lace scoop neckline a SMALL amount compared with image1, about2-3cm, showing collarbones and a little more upper chest, naturally relaxed open neckline. Keep opaque white gathered blouse/lace edge, same natural bust size/body/anatomy and corset, no exaggerated proportions or dramatic plunge, no pose change. Cape collar flower clasp remains. Exactly ONE brown leather diagonal strap from wearerLEFT shoulder/viewerRIGHT down to wearerRIGHT waist/viewerLEFT, uniform-width connected shoulder-to-waist, modest buckle aligned on strap. No second crossed strap, mysterious short leather tab/triangle/stub or floating line on white blouse. The lower neckline is visible in every relevant face/body/chest detail. 2 REMOVE ALL SWINGING METAL ORNAMENTS attached to green cloak/robe. Image1 has gold hanging teardrop/diamond ornaments and little chain/rod/tassel attachments at cloak edge tips, hem corners around hips/knees and behind. Remove EVERY such hanging pendant from cloak front/side/back, hem/shoulders, and costume detail studies. Finish cape edges with simple sewn green fabric hems and restrained gold piping/FRONT botanical embroidery. No dangling charms, chains, metal drops, tassels, pendant connectors, beads or suspended hardware from garment edge; no pointed gold weights left at tips. Do not depict removed pendants as separate equipment samples. Keep practical belt buckles, functional leather pouches, the round compass on waist belt, white hairflower, front collar flower clasp and useful bow/quiver hardware; only cloak attached hanging decorations are removed. BACK cloak and hood stay plain sage/olive green fabric with soft folds, no gold plant embroidery or back badge; front edge motifs okay. 3 HAIR MUST VISIBLY MATCH MATTE MATERIAL OF image2 Aria. Image1 has bright white ribbon-like highlight streaks and shiny grooved strand shading. Replace with soft opaque ash-blonde color washes and broad faint low-contrast diffuse light, no bright white strand-shaped light stripes, sharp specular bands on crown/forelocks, polished/plastic/wet or metallic gleam. Significantly FEWER hair interior grooves and individual highlighted strands, broad natural softly shaded locks with finer airy silhouette edges. No overall blur, crisp face/eyes/hair silhouette/equipment drawing. Lavender lock also matte. Hair back/side/frontal/detail portraits ALL same subdued shine. Delicate fine anime fantasy linework with muted sage/ivory/brown/lavender, fresh crisp readable native drawing, soft even light and restrained matte paint. Preserve practical brown waist corset/belts, white/green layered skirt, gloves/guards, knee-high brown boots, bow/quiver, tasteful original equipment; do not add new outfits/characters/ornaments. All3fullbody views complete with feet, all9face studies clear different cheerful/neutral/side/laugh/worry/surprise/determined expressions, coherent anatomy, no extra limbs. No labels/watermarks. Entirely fresh recreated sheet with slightly open neckline, ornament-free CLOAK hem, matte hair and correct one strap.",
+  "referenceCommit": "0622684a58e7ea1d2abff46272464dc7e5ee2321",
+  "source": "assets/source/characters/aria-reference-sheet.png",
+  "target": "docs/characters/aria-reference-sheet.webp",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "output": [
+    {
+      "path": "assets/source/characters/aria-reference-sheet.png",
+      "bytes": 2663248,
+      "sha256": "d3ce6290565182b89ad4ad474cef44eeca8065a32b5510bcc89f69f8de94cee2"
+    },
+    {
+      "path": "docs/characters/aria-reference-sheet.webp",
+      "bytes": 1844196,
+      "sha256": "d717b32ae00e358a51eaee771de90f5aa9a8cb79dae8a18147200fb17b55c5ee"
+    }
+  ],
+  "encoding": {
+    "webp": "lossless",
+    "resizing": false,
+    "decodedPixelsIdentical": true
+  },
+  "review": "Entire sheet freshly regenerated. Slightly lower/wider white lace neckline consistent across front, side and bust/chest studies. No hanging gold metal drops, chains or pendant connectors attached to cloak hem. Hair uses soft matte ash-blonde colors with much weaker white highlight streaks, matching chapter 4-10 Aria. Single continuous diagonal chest strap, short hairstyle, viewer-left lavender lock opposite flower, hidden front/rear-only half-up braid, green eyes, elf ears and practical equipment maintained. Plain broad green cloak back and hood inspected."
+}
