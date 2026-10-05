@@ -68,6 +68,8 @@
 
 ![ミラがフィンの右手に薄い包帯を巻き、フィンが照れたように笑って見守る。](../../public/stories/mira-tends-finn.webp)
 
+`keystone-night-road-departure` の手当ての行から表示。2026-10-05に最新設定画へ合わせ、フィンの簡素な毛束と低い結び髪、ミラのまとめ髪と疲労のにじむ目元を更新した。右手の指を動かせる薄い包帯と、二人の表情・動作を保つ。[更新記録](../art-generation/mira-tends-finn-refresh-20261005.json)を参照。
+
 ### 3-9：四人のお茶
 
 ![塔に灯りが戻った夕方、アリアとレオンが話し、フィンが目を閉じて笑う。傍らでは青白い顔のミラがお茶を注いでいる。](../../public/stories/four-cups-of-tea.webp)

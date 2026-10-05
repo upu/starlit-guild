@@ -152,17 +152,17 @@
       }
     },
     "mira-tends-finn.png": {
-      "sourceHash": "48599b14fb9d1506298481daff982616d9a6ac78a98ca08c99f05fec6db35db5",
-      "sourceBytes": 2700365,
+      "sourceHash": "422e1bbbc323b9909a61f2f3ad0b8c72ee3a19ef1979df3e743086d0e3541450",
+      "sourceBytes": 2700964,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "9bb946d4b2b76b73ebef7f7595beef3123a7ce7229d69edf4ccad8a3ed4e626a",
-          "bytes": 232424
+          "hash": "2ac06e4b5da433bb827c5dbddd10891fd812e7aa0ed562337cdf194ba27f79fe",
+          "bytes": 244394
         },
         "thumbnail": {
-          "hash": "55c6db2b035604a984c3f3b62e861c0c5cc0b359145c52e0864148ed97fc76fc",
-          "bytes": 18346
+          "hash": "7ad5b85102860ab1a686a82f0a29e0a67f98f94324a63247e7f10bf14ec6b629",
+          "bytes": 18860
         }
       }
     },
