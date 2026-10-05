@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-05",
+  "tool": "built-in image_gen",
+  "operation": "edit existing trade handover still using latest Aria and Leon sheets",
+  "source": "assets/source/stories/village-trade-handover.png",
+  "references": [
+    "docs/characters/aria-reference-sheet.webp",
+    "docs/characters/leon-reference-sheet.webp"
+  ],
+  "scene": "village-trade-return",
+  "revealAtLine": 0,
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "prompt": "Edit image 1, STARLIT-GUILD stage 1-1 village-trade-handover, single landscape 1536x1024 illustration. Images 2 Aria and 3 Leon are latest canonical character sheets; use them for face identities, costumes and pale soft simplified drawing style. Preserve original scene and exact composition: cheerful elf Aria on left, Leon in center, friendly middle-aged shopkeeper on right across a wooden shop counter. Aria hands over a cloth-lined basket of village herbs and small white flowers, Leon holds a cloth-wrapped rope-tied parcel. Preserve all hands/props and handover action, shopkeeper face and costume, baskets, jars, paper on counter, open shop entrance and town street. Update ONLY Aria and Leon appearance and rendering: Aria SHORT LOW-VOLUME blonde hair ending at shoulder/collarbone, no long hair below chest, ONE pale lavender lock on VIEWER-LEFT side of her face near visible pointed ear (as user corrected previous forest still), green eyes, hood UP with white flower/feather ornament, lively energetic open-eyed smiling face, approachable and eagerly talking about village produce. Leon new sheet's slightly longer facial outline and straight nose, simple side-swept brown hair with broad locks, warm friendly brown eyes, blue tunic and shoulder armor, neat SHORT ONE-SHOULDER red mantle and star clasp rather than huge red wrap. His overprepared large backpack and rolled blanket visible behind shoulder if framing permits, do not obstruct handover. Match latest reference sheets' gentle pale colors, simplified large shapes and restrained fine lines; soften orange cast and busy strand details while preserving sunny welcoming merchant shop. Do not beautify into generic unrelated faces. Do not add people, change hand positions, replace goods, alter dialogue action, add text or watermarks. No panels, labels, typography. Output only revised story still.",
+  "review": "Short blonde hair, viewer-left lavender lock and energetic expression verified. Leon face, short mantle, backpack and rolled blanket updated. Merchant, goods, hands and composition preserved."
+}

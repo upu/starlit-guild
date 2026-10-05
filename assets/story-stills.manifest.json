@@ -212,17 +212,17 @@
       }
     },
     "village-trade-handover.png": {
-      "sourceHash": "6cd9e7604ea35dd87065f640bc7f2cceaefec49a52c75a76f744d0e09751e8db",
-      "sourceBytes": 2712857,
+      "sourceHash": "b0479293d97e727015a5bdbd66bc952468c94fe095fb95c660ad62be91b93765",
+      "sourceBytes": 2605224,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "3be46269666c42b405240abfaad133d3f1b7b51c9734efe2e8148836bf093dd1",
-          "bytes": 271280
+          "hash": "f067b4c9858f740b25fd01bb4aa3a531da8ed680cf134e591ba6466e817cef26",
+          "bytes": 261560
         },
         "thumbnail": {
-          "hash": "1ddbb1f9de9e30eef8756fe7726d497b27b99cbb005d8041281a6c79e2bba758",
-          "bytes": 24496
+          "hash": "b6b3dba193335d08b6327c2c439bedb0f1ff9b1fa5d91bafb2ae1d45ac452dd4",
+          "bytes": 24252
         }
       }
     }
