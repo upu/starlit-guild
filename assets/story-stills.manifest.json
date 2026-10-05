@@ -182,17 +182,17 @@
       }
     },
     "tower-light-restored.png": {
-      "sourceHash": "488e3584fcaf248bca1a4e1547b66a07a93a459290d6bd9e51dd4cde8da1f8fe",
-      "sourceBytes": 2754141,
+      "sourceHash": "f1bbebf9e1fd6027cb2aa3cf4d5982c68fe9cc56a3b5efea3c5590fc845fdf57",
+      "sourceBytes": 3061161,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "b550398fa2e215a5321901a285eb8767e6ef9ff0b9c67422d3d8128d55d07af7",
-          "bytes": 283260
+          "hash": "0c3aee72f8cf9329825ec100970493ff90fefac7981e1c9c4af2e97e23a01820",
+          "bytes": 347100
         },
         "thumbnail": {
-          "hash": "f8f95f0041dccb92702b2b109051732f4b509a9dfb78eb84789fc197eae4746b",
-          "bytes": 25532
+          "hash": "0b7ce19cc47fd5662c7374a4f0b00b472ded81020d999b36e73351c726bfd533",
+          "bytes": 25888
         }
       }
     },
