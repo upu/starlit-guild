@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen",
+  "operation": "fresh whole-sheet recreation with tiny central rear braid",
+  "references": [
+    {
+      "path": "docs/characters/aria-reference-sheet.webp",
+      "sha256": "d717b32ae00e358a51eaee771de90f5aa9a8cb79dae8a18147200fb17b55c5ee"
+    }
+  ],
+  "prompt": "Generate a completely FRESH clean ARIA reference sheet from scratch using supplied sheet ONLY as identity/clothing/layout reference. This is a complete recreation, not localized editing, filtering or repainting old pixels. Single native1536x1024 or greater3:2landscape, opaque ivory background/fine sage botanical frame/no text. Keep same3fullbody front/side/rear views LEFT,3x3head/shoulder expressions CENTER, hair/eye/cloak/material studies RIGHT, costume/equipment details BOTTOM. Same recognizable energetic friendly elf face, green eyes/pointed ears, same natural slender proportions and practical green/white/brown costume. MAIN USER CHANGE: greatly REDUCE BRAID SIZE and coverage, appropriate for short shoulder/collarbone-length low-volume hair. Current thick woven ear-to-ear band wrapping back head is WRONG. In REAR fullbody and REAR hair closeup, replace ALL that large horizontal thick crown-like braid with normal loose softly wavy blonde hair. Only at MIDDLE of BACK head, gather TWO VERY SMALL THIN locks from nearby rear hair (not all the side hair) and make a tiny narrow SHORT braid at central joining point, just about3cm long and3-4mm thick, about pencil-thin, occupying only middle15-20percent of rear head width. Narrow short simple central half-up braid, barely a little detail, not chunky rope. Rest of hair is loose airy short broad wavy locks. Do NOT build an ear-to-ear braid/headband, perimeter wreath/halo or thick horizontal band. No braid crossing crown/temples/ears, no front braid, no long plait down back or dangling past shoulders, no extra hair volume or hairstyle lengthening. FRONT and SIDE views and all facial studies should show loose natural short hair with central rear braid hidden or nearly invisible. Rear closeup makes tiny central construction clearly understandable. Same single pale lavender FRONT lock anatomicalRIGHT/viewerLEFT frontal, white daisy/feathers/leaves anatomicalLEFT/viewerRIGHT frontal on opposite side. Keep natural correct side when viewed from rear, do not add duplicate flowers. PRESERVE previous approvals throughout allpanels: softly matte ash-blonde hair with broad subtle diffuse highlights and few internal lines, no sharp white strands or glossy/metallic/plastic shine. Same slightly lower/wider white lace blouse neckline revealing collarbones/little upper chest, same bust/body and opaque cloth, don't close neckline or enlarge chest. ExactlyONE broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT to wearerRIGHT waist/viewerLEFT, uniformconnected strip withalignedbuckle, no X, extra narrow leather stub/triangle/floating strap on blouse. Hood DOWN; green cloak BACK and hood BACK plain green with folds, restrained gold botanical embroidery confined to FRONT edges/forward panels. CLOAK has absolutelyNO gold dangling metal pendants/chains/tassels/beads/weights at edge tips/hem corners; simple stitchedfabric hems only, do not reintroduce removed hanging hardware. Keep useful compass at waist, belt buckles/pouches, frontcollar flower clasp, fullfinger gloves/wrist guards, kneehigh boots and bow/quiver. No new outfits/accessories or removed useful equipment. Same cheerful/neutral/side/happy/eyes-closed/laugh/worried/surprised/determined face-study variety. Fresh fine crisp delicate fantasy anime drawing with gentle muted sage/ivory/brown/lavender and soft even light, restrained matte paint. Don't blur outlines/faces or make noisy strokes. Complete clear unclipped bodies/feet/bow and readable detailpanels, coherent anatomy/no extra fingers/people/no watermarks or typography. Complete fresh regenerated sheet. Tiny SHORT CENTRAL REAR BRAID ONLY; remove entire broad ear-to-ear woven band.",
+  "referenceCommit": "6adf728d73c0810af688d1c03c28a282e2a19eff",
+  "source": "assets/source/characters/aria-reference-sheet.png",
+  "target": "docs/characters/aria-reference-sheet.webp",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "output": [
+    {
+      "path": "assets/source/characters/aria-reference-sheet.png",
+      "bytes": 2593547,
+      "sha256": "d8e3b8c20ee64f2c27213aee8d0283b4eea20c0b1a581055e9f66ccd661b1a8b"
+    },
+    {
+      "path": "docs/characters/aria-reference-sheet.webp",
+      "bytes": 1815188,
+      "sha256": "6e1db136581a82b5f23fac0abd945cf16ea84e9e2b1913ef21a1785d4184166a"
+    }
+  ],
+  "encoding": {
+    "webp": "lossless",
+    "resizing": false,
+    "decodedPixelsIdentical": true
+  },
+  "review": "Entire sheet freshly regenerated. Rear full figure and rear hair study have much thinner small strands meeting in a tiny short central half-up braid; previous thick broad woven band removed. Short low-volume hair remains loose around it, with no conspicuous front braid. Matte subdued highlights, open neckline, one continuous chest strap, cloak without hanging metal ornaments, plain broad cloak/hood back and useful equipment retained."
+}
