@@ -15,15 +15,19 @@
   "prompt": "Edit image 1, STARLIT-GUILD chapter 1-6 still '同じかもしれない', landscape 1536x1024. Image 2 is the latest canonical Aria reference sheet, use it as primary character identity and pale drawing-style reference. Preserve image 1's scene and composition: Aria alone in a sun-dappled forest beside a mossy stone wall, lifting TWO small round wooden bowls containing two ordinary moss samples close to her face and thoughtfully comparing them, one bowl in each gloved hand. Keep thoughtful curious expression, pointed ears, green eyes, lowered gaze toward the samples, forest and stone-wall geometry, warm gentle daylight. Update her hairstyle to short LOW-VOLUME blonde hair ending shoulder to collarbone, no long strands below chest, loose broad simplified locks and half-up braid. Keep the original hood UP, green hood with gold botanical embroidery and white flower/feather ornament on viewer-left side. One narrow pale lavender hair strand MUST be on the OPPOSITE side from the flower, viewer-right temple/cheek, falling no farther than collarbone. Match new sheet's face, muted green cloak, ivory blouse and brown gloves. Simplify dense strand linework and tiny ornamental detail, use reference's soft pale colors and restrained fine lines. Do not add glowing magic, sparkles or bright light to moss; this scene does not prove the two mosses are identical. Keep hands anatomically correct and both bowls fully clear, no added people or props. No panels, labels, typography, watermark. Output only the revised single landscape illustration.",
   "preserved": [
     "two moss bowls raised beside face",
-    "thoughtful comparison",
     "hood up",
     "sun-dappled forest and mossy stone wall",
     "ordinary moss without magical glow"
   ],
   "changes": [
     "short low-volume blonde hair",
-    "single pale lavender lock opposite flower",
-    "latest face and softer simplified rendering"
+    "single pale lavender lock on viewer-left per user correction",
+    "bright lively green-eyed expression and enthusiastic smile"
   ],
-  "review": "Inspected short hair, opposite-side lavender lock, both bowls and gloves, hood, non-glowing moss and preserved forest composition."
+  "review": "Final appearance follows direct user corrections; prior opposite-flower placement instructions are superseded.",
+  "correction": {
+    "date": "2026-10-05",
+    "prompt": "Edit this exact landscape Aria forest moss comparison illustration with TWO requested corrections. 1. Her purple/lavender hair lock is on the WRONG SIDE. REMOVE ALL purple from the VIEWER-RIGHT side of her face (right edge in the picture) and restore that hair to blonde. Move the SINGLE pale lavender lock to the VIEWER-LEFT side of her face (left edge in the picture), near her left cheek and the visible ear BELOW the flower. Keep the flower/feather ornament and hood unmoved. This user correction overrides any previous opposite-flower-side instruction. Do not mirror the whole picture. 2. Make Aria MUCH MORE CHEERFUL, lively, energetic and full of curiosity (元気はつらつ). Open her green eyes brightly with a lively glint, lift eyebrows in animated curiosity, add a clear enthusiastic natural open-mouth smile with lifted cheeks; she is delighted by her discovery and eagerly compares the moss, not shy, sleepy, wistful or melancholy. Keep her eyes directed at the moss samples rather than viewer. Keep the same face identity, short shoulder/collarbone blonde hair, all other colors, forest backdrop, mossy stone walls, hood UP, costume, TWO wooden bowls and gloved hands at their original locations and natural anatomy. Preserve original composition and soft pale detailed illustration style. Moss remains ordinary without magical glow. No text, symbols, extra objects or characters. Output a single 1536x1024 landscape.",
+    "review": "Lavender lock moved to viewer-left per user correction; cheerful open-eyed smile added. Both bowls, hood and forest composition retained."
+  }
 }
