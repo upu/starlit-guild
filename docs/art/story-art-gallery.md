@@ -74,6 +74,8 @@
 
 ![塔に灯りが戻った夕方、アリアとレオンが話し、フィンが目を閉じて笑う。傍らでは青白い顔のミラがお茶を注いでいる。](../../public/stories/four-cups-of-tea.webp)
 
+`berne-restoration-return` の食堂での会話から表示。2026-10-05に四人の最新設定画へ更新した。アリアの前からほぼ見えない編み込みと短い髪、レオンの短い片肩マント、フィンの低い結び髪、ミラのまとめ髪を反映する。四つのカップ、フィンの右手の包帯・左手の指輪、目を閉じた笑いとミラが注ぐ動作を保つ。[更新記録](../art-generation/four-cups-refresh-20261005.json)を参照。
+
 ## 第四章
 
 [制作条件](chapter-four-stills.md)と[生成記録](../art-generation/chapter-four-stills.json)を参照。
