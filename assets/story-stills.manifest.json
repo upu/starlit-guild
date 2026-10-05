@@ -17,17 +17,17 @@
       }
     },
     "blue-cloth-alley.png": {
-      "sourceHash": "234b89d9942368214a57dcdf8ed8c5aff120edd49a8709024a27743a02f1c850",
-      "sourceBytes": 2593760,
+      "sourceHash": "41010dfa6f48bbe11ae05efe3e08d7bff626cdd09ee02fe2e8e4d934f8a82d57",
+      "sourceBytes": 2382057,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "9c99f0133f007ba481c8dd7893b3a75f0e15c29ae2e0115a2eac1bea86d4a12b",
-          "bytes": 218612
+          "hash": "a70d6f053359b0fb83a07ef656c681131d8f2aeacd2320213744a9343a2e1474",
+          "bytes": 185620
         },
         "thumbnail": {
-          "hash": "53f6df322ec4d6c3cece72e39d03b296832acd5fe44f87a052fcac753fdbcdf5",
-          "bytes": 14562
+          "hash": "bf2a932bdb586faaab187b4d6535f07f1b15be3000bb95011b7a340e5452e260",
+          "bytes": 13500
         }
       }
     },
@@ -122,17 +122,17 @@
       }
     },
     "mira-after-all-nighter.png": {
-      "sourceHash": "187333722ad119c8a2ad0159e62e265d1acde468fcdda64f4852a6aefffd8c30",
-      "sourceBytes": 3156868,
+      "sourceHash": "a92598317e59d32931d011d74ed67f555fa2155da14b5c20665a54b0a7e7edd1",
+      "sourceBytes": 2897650,
       "profileHash": "586ea0b90f70428293eb3c83889c81381fbdfb5ef7d5b84005f1f7395a4ec0cb",
       "outputs": {
         "detail": {
-          "hash": "2e3454af82df35a7d5bf856c6686ac08d21fe13eba46c6f3571382eb68b828ad",
-          "bytes": 355766
+          "hash": "b7d4abad9fb0ac8f5a517edc3ebdc082a1b9ddbbaed37c90b6d9044d3fdec11b",
+          "bytes": 310428
         },
         "thumbnail": {
-          "hash": "a7e9d6261aa4952e27198517035b62a121c85a5526e76a57241cbe06419e6a9a",
-          "bytes": 25434
+          "hash": "2667343172993c1b44622edc45ad0d086fcb740c5bb25ea7886142c6cd4c7307",
+          "bytes": 23286
         }
       }
     },
