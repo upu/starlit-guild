@@ -11,7 +11,18 @@ import {
   ROAD_FINN_PULL,
   ROAD_LICO_MOTION,
   licoMotionFrames,
+  ROAD_ARIA_WORK,
+  ARIA_CELL,
+  ARIA_BASELINE,
+  ARIA_STANDING_HEIGHT,
 } from "./road-art";
+
+function applyAriaPose(image: Phaser.GameObjects.Image, asset: string, pose: number, size: number) {
+  image
+    .setTexture(asset, String(pose))
+    .setOrigin(0.5, ARIA_BASELINE / ARIA_CELL)
+    .setScale((size * 0.9) / ARIA_STANDING_HEIGHT);
+}
 
 function applyLicoMotion(image: Phaser.GameObjects.Image, pose: number, size: number) {
   // Lico may join after the painter was created; register the atlas on its first use.
@@ -57,6 +68,10 @@ export function applyHeroPose(
   pose: string,
   size: number,
 ) {
+  if (id === "aria") {
+    applyAriaPose(image, roadSheet(id), Number(pose), size);
+    return;
+  }
   if (id === "lico") {
     applyLicoPose(image, Number(pose), size);
     return;
@@ -125,6 +140,10 @@ function applyExistingWorkPose(
   step: number,
   size: number,
 ) {
+  if (hero.id === "aria") {
+    applyAriaWorkPose(image, kind, step, size);
+    return true;
+  }
   if (kind === "pull") return false;
   if (hero.id === "finn") {
     applyHeroPose(image, hero.id, String((kind === "push" ? 12 : 14) + step), size);
@@ -133,4 +152,14 @@ function applyExistingWorkPose(
   if (hero.id !== "mira") return false;
   applyMiraPose(image, mira + step, size);
   return true;
+}
+
+function applyAriaWorkPose(
+  image: Phaser.GameObjects.Image,
+  kind: "pack" | "push" | "pull",
+  step: number,
+  size: number,
+) {
+  if (kind === "push") applyAriaPose(image, roadSheet("aria"), 14 + step, size);
+  else applyAriaPose(image, ROAD_ARIA_WORK, (kind === "pack" ? 2 : 0) + step, size);
 }

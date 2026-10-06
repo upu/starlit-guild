@@ -5,6 +5,7 @@ import { nextStage } from "../lib/prologue.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
 import { heroAnimation, heroSheets } from "../lib/hero-animation.ts";
 import { readFileSync } from "node:fs";
+import sharp from "sharp";
 
 // A stage the trio travels together, so Mira has her own actor on the map.
 function scene(now = 5000) {
@@ -30,11 +31,32 @@ const pose = (input, now = input.now, id = "aria", reduced = false) => {
 
 test("approved sheets have RGBA pixels and exact 384px square frames", () => {
   for (const id of ["aria", "leon"]) {
-    const png = readFileSync(new URL(`../public/animations/${id}-v1.png`, import.meta.url));
+    const png = readFileSync(new URL(`../public${heroSheets[id].asset}`, import.meta.url));
     assert.equal(png.subarray(1, 4).toString(), "PNG");
     assert.equal(png.readUInt32BE(16), 1536);
     assert.equal(png.readUInt32BE(20), 1152);
     assert.equal(png[25], 6, "PNG must contain real RGBA, not a painted checkerboard");
+  }
+});
+
+test("Aria's adventure slots retain walking, archery, blink and hurt semantics from the shared mini art", async () => {
+  const main = sharp("assets/source/road/aria-v2.png"),
+    legacy = sharp(`public${heroSheets.aria.asset}`);
+  const order = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 11, 13];
+  const extract = (source, pose) =>
+    source
+      .clone()
+      .extract({ left: (pose % 4) * 384, top: Math.floor(pose / 4) * 384, width: 384, height: 384 })
+      .ensureAlpha()
+      .raw()
+      .toBuffer();
+  for (const [slot, pose] of order.entries())
+    assert.deepEqual(await extract(legacy, slot), await extract(main, pose));
+  const still = await sharp("public/characters/aria-mini-v2.webp").ensureAlpha().raw().toBuffer();
+  const idle = await extract(main, 8);
+  for (let p = 0; p < idle.length; p += 4) {
+    assert.equal(still[p + 3], idle[p + 3]);
+    if (idle[p + 3]) assert.ok(still.subarray(p, p + 3).equals(idle.subarray(p, p + 3)));
   }
 });
 

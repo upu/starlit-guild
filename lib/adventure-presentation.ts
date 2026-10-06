@@ -31,11 +31,13 @@ export type AdventureIntent = "help" | "heal" | `heal:${string}`;
 const clamp = (value: number, min = 0, max = 1) => Math.max(min, Math.min(max, value));
 // Mira's map figure follows her character reference; dialogue portraits stay independent.
 export const spriteAsset = (index: number) =>
-  index === 2
-    ? "/animations/mira-v1.png"
-    : index === 4
-      ? "/animations/road/lico-standing-v1.webp"
-      : originalArt(index) || "/sprites.png";
+  index === 0
+    ? "/characters/aria-mini-v2.webp"
+    : index === 2
+      ? "/animations/mira-v1.png"
+      : index === 4
+        ? "/animations/road/lico-standing-v1.webp"
+        : originalArt(index) || "/sprites.png";
 export const spriteFrame = (index: number) =>
   index === 2 ? "8" : spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
 type ActiveRun = NonNullable<Squad["run"]>;

@@ -9,7 +9,7 @@ type HeroSheet = {
   frames?: readonly (readonly [number, number, number, number])[];
 };
 export const heroSheets: Partial<Record<string, HeroSheet>> = {
-  aria: { asset: "/animations/aria-v1.png", columns: 4, rows: 3, ready: true },
+  aria: { asset: "/animations/aria-v2.png", columns: 4, rows: 3, ready: true },
   leon: { asset: "/animations/leon-v1.png", columns: 4, rows: 3, ready: true },
   // Native artwork has irregular gutters. Read each whole pose and anchor its feet,
   // rather than cutting feet and the casting staff at an assumed equal-cell border.

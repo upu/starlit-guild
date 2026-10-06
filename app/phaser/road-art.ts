@@ -3,7 +3,11 @@ import type { TravellerId } from "@/lib/road-view";
 export const roadSheet = (id: TravellerId) =>
   id === "lico"
     ? "/animations/road/lico-standing-v1.webp"
-    : `/animations/road/${id}-v${id === "mira" ? "2" : "1"}.webp`;
+    : `/animations/road/${id}-v${id === "mira" || id === "aria" ? "2" : "1"}.webp`;
+export const ROAD_ARIA_WORK = "/animations/road/aria-work-v1.webp";
+export const ARIA_CELL = 384;
+export const ARIA_BASELINE = 346;
+export const ARIA_STANDING_HEIGHT = 312;
 export const ROAD_SIGNPOST = "/animations/road/signpost-v2.webp";
 export const finnFrames = [
   [26, 14, 260, 325],
@@ -65,19 +69,13 @@ export const ROAD_LEDGER_DESK = "/animations/road/ledger-desk-v1.webp";
 export const roadWalkSheet = (id: TravellerId) =>
   id === "lico"
     ? ROAD_LICO_MOTION
-    : id === "finn"
+    : id === "finn" || id === "aria"
       ? roadSheet(id)
       : `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.
 const walkBounds = {
-  aria: [
-    [116, 89, 566, 597],
-    [65, 89, 493, 602],
-    [114, 43, 575, 541],
-    [76, 40, 499, 544],
-  ],
   leon: [
     [83, 83, 549, 621],
     [55, 82, 509, 623],
@@ -92,6 +90,8 @@ const walkBounds = {
   ],
 };
 export function roadWalkFrame(id: TravellerId, pose: number) {
+  if (id === "aria")
+    return { originX: 0.5, originY: ARIA_BASELINE / ARIA_CELL, scale: 0.9 / ARIA_STANDING_HEIGHT };
   if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 629 };
   if (id === "finn") return { originX: 0.5, originY: 1, scale: 0.9 / finnFrames[pose][3] };
   const [left, top, right, bottom] = walkBounds[id][pose];
@@ -100,14 +100,23 @@ export function roadWalkFrame(id: TravellerId, pose: number) {
 
 // Keep the generated pixels intact; variable rectangles preserve extended weapons.
 export function roadFrame(id: TravellerId, pose: number) {
+  if (id === "aria")
+    return {
+      left: (pose % 4) * ARIA_CELL,
+      top: Math.floor(pose / 4) * ARIA_CELL,
+      width: ARIA_CELL,
+      height: ARIA_CELL,
+      originX: 0.5,
+      originY: ARIA_BASELINE / ARIA_CELL,
+    };
   const row = Math.floor(pose / 4),
     column = pose % 4;
   const tops = [0, 376, 738],
     bottoms = [376, 738, 1086];
   let left = column * 362,
     right = left + 362;
-  if (id !== "aria" && row === 1 && column === 2) right = 1144;
-  if (id !== "aria" && row === 1 && column === 3) left = 1144;
+  if (row === 1 && column === 2) right = 1144;
+  if (row === 1 && column === 3) left = 1144;
   const top = tops[row],
     height = bottoms[row] - top;
   return {

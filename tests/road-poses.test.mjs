@@ -11,8 +11,8 @@ const { applyHeroPose, applyWorkPose } = evaluateSourceModule(
   compileSourceModule("../app/phaser/road-poses.ts", import.meta.url),
   { "./road-art": art },
 );
-function image() {
-  const frames = new Map();
+function image(initial = []) {
+  const frames = new Map(initial.map((name) => [name, { name, width: 384, height: 384 }]));
   const texture = {
     has: (name) => frames.has(name),
     add: (name, source, x, y, width, height) => frames.set(name, { name, width, height }),
@@ -48,6 +48,89 @@ test("Lico's late-loaded motion sheet animates walking and returns to her standi
     applyHeroPose(sprite, "lico", String(pose), 90);
     assert.equal(sprite.key, art.roadSheet("lico"));
     assert.equal(sprite.frame.name, "__BASE");
+  }
+});
+
+test("Aria keeps her scale and foot anchor across main and work sheets, including paused work", () => {
+  const sprite = image(Array.from({ length: 16 }, (_, i) => String(i)));
+  applyHeroPose(sprite, "aria", "8", 90);
+  const scale = sprite.scale,
+    origin = sprite.origin;
+  for (let pose = 0; pose < 16; pose++) {
+    applyHeroPose(sprite, "aria", String(pose), 90);
+    assert.equal(sprite.key, art.roadSheet("aria"));
+    assert.equal(sprite.frame.name, String(pose));
+    assert.equal(sprite.scale, scale);
+    assert.deepEqual(sprite.origin, origin);
+  }
+  const state = { gathering: { kind: "cargo", task: "carry" }, time: 220, enemies: [] };
+  for (const [task, pulling, reduced, enemies, key, frame] of [
+    ["carry", false, false, [], art.roadSheet("aria"), "15"],
+    ["carry", true, false, [], art.ROAD_ARIA_WORK, "1"],
+    ["carry", true, true, [], art.ROAD_ARIA_WORK, "0"],
+    ["carry", true, false, [{ hp: 1 }], art.ROAD_ARIA_WORK, "0"],
+    ["pack", false, false, [], art.ROAD_ARIA_WORK, "3"],
+    ["unload", false, true, [], art.ROAD_ARIA_WORK, "2"],
+  ]) {
+    assert.equal(
+      applyWorkPose(
+        sprite,
+        {
+          ...state,
+          time: task === "pack" ? 750 : 220,
+          enemies,
+          gathering: { ...state.gathering, task },
+        },
+        { id: "aria" },
+        reduced,
+        90,
+        pulling,
+      ),
+      true,
+    );
+    assert.equal(sprite.key, key);
+    assert.equal(sprite.frame.name, frame);
+    assert.equal(sprite.scale, scale);
+    assert.deepEqual(sprite.origin, origin);
+  }
+});
+
+test("Aria's twenty normalized poses have real alpha, intact transparent margins and distinct steps", async () => {
+  for (const [asset, columns, rows] of [
+    [art.roadSheet("aria"), 4, 4],
+    [art.ROAD_ARIA_WORK, 2, 2],
+  ]) {
+    const source = sharp(`public${asset}`);
+    const meta = await source.metadata();
+    assert.equal(meta.hasAlpha, true);
+    assert.equal(meta.width, columns * art.ARIA_CELL);
+    assert.equal(meta.height, rows * art.ARIA_CELL);
+    const frames = [];
+    for (let pose = 0; pose < columns * rows; pose++) {
+      const pixels = await source
+        .clone()
+        .extract({
+          left: (pose % columns) * art.ARIA_CELL,
+          top: Math.floor(pose / columns) * art.ARIA_CELL,
+          width: art.ARIA_CELL,
+          height: art.ARIA_CELL,
+        })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      for (let p = 0; p < art.ARIA_CELL; p++) {
+        for (const offset of [
+          p,
+          p * art.ARIA_CELL,
+          p * art.ARIA_CELL + art.ARIA_CELL - 1,
+          (art.ARIA_CELL - 1) * art.ARIA_CELL + p,
+        ])
+          assert.equal(pixels[offset * 4 + 3], 0);
+      }
+      frames.push(pixels);
+    }
+    assert.notDeepEqual(frames[0], frames[1]);
+    assert.notDeepEqual(frames.at(-2), frames.at(-1));
   }
 });
 

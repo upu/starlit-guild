@@ -142,7 +142,7 @@ try {
         roadAssets.add(new URL(request.url()).pathname);
     });
     if (name === "cargo")
-      await page.route("**/animations/road/aria-v1.webp", (route) => route.abort());
+      await page.route("**/animations/road/aria-v2.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
     if (
       ["worksite", "arrival", "withdraw", "enter", "escape", "rear", "bottles"].includes(mode) ||
@@ -169,7 +169,7 @@ try {
     await page.clock.runFor(100);
     if (name === "cargo") {
       await page.getByRole("button", { name: "もう一度読み込む" }).waitFor();
-      await page.unroute("**/animations/road/aria-v1.webp");
+      await page.unroute("**/animations/road/aria-v2.webp");
       await page.getByRole("button", { name: "もう一度読み込む" }).click();
     }
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });

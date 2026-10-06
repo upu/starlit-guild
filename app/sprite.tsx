@@ -23,7 +23,8 @@ export function Sprite({
         aria-hidden="true"
       />
     );
-  const art = originalArt(index);
+  const custom = originalArt(index);
+  const art = index === 0 ? "/characters/aria-mini-v2.webp" : custom;
   return (
     <span
       className={`sprite ${className}`}
@@ -36,10 +37,14 @@ export function Sprite({
               backgroundSize: "contain",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              backgroundColor: "#172720",
-              border: "1px solid #9e8655",
-              borderRadius: "12%",
-              boxSizing: "border-box" as const,
+              ...(custom
+                ? {
+                    backgroundColor: "#172720",
+                    border: "1px solid #9e8655",
+                    borderRadius: "12%",
+                    boxSizing: "border-box" as const,
+                  }
+                : {}),
               imageRendering: "auto" as const,
             }
           : {
