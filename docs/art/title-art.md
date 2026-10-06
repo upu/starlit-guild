@@ -30,7 +30,9 @@ node --input-type=module -e "import sharp from 'sharp'; for (const name of ['sta
 
 ## 共有リンクのカード画像
 
-`assets/source/social/x-card-background.webp` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp) のリファレンスシートを参照して内蔵 imagegen で生成した横長の原本。淡い水彩の線と塗りを保ち、三人の後ろに星空と灯りの塔を描く。文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が既存の透過ロゴを合成し、1200 × 630 PNG を `public/social/x-card.png` に1枚だけ出力する。OGPとXは同じ画像URLを参照する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。
+`assets/source/social/x-card-background.png` は、[アリア](../characters/aria-reference-sheet.webp)・[レオン](../characters/leon-reference-sheet.webp)・[ミラ](../characters/mira-reference-sheet.webp)・[フィン](../characters/finn-reference-sheet.webp)・[リコ](../characters/lico-reference-sheet.webp) の最新リファレンスシートを参照して内蔵 imagegen で再生成した横長のPNG原本。2026-10-06に、アリアの短い髪・目立たない後頭部の編み込み・胸元・光沢を抑えた塗り、レオンの短いマントと背嚢、ミラのまとめ髪へ揃えた。淡い水彩の線・塗りを引き継ぎ、フィン・ミラ・レオン・アリア・リコの五人を少し小さな上半身の構図で並べる。顔の重なりを避け、ロゴは人物にかからない左上の星空へ移す。背景は現行タイトルのリンデ周辺の町・丘・紫に灯る塔の方向性へ揃える。プロンプト・参照画像・採用原本は[再生成記録](../art-generation/social-card-refresh-20261006.json)を参照。
+
+文字を生成画像へ焼き込まず、`scripts/generate-social-card.mjs` が既存の透過ロゴを合成し、1200 × 630 PNG を `public/social/x-card.png` に1枚だけ出力する。OGPとXは同じ画像URLを参照する。更新後は `npm run social-card:generate`、整合性確認は `npm run social-card:check` を使う。カードはゲーム画面には表示しない。旧WebP原本はGitの履歴に残し、現行の生成処理はPNG原本だけを使う。
 
 ## 初版の生成プロンプト（制作履歴）
 

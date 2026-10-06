@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
     url: new URL("/social/x-card.png", siteUrl),
     width: 1200,
     height: 630,
-    alt: "星灯りの夜空を背景に並ぶアリア、レオン、ミラと、星灯りの旅団のロゴ",
+    alt: "星灯りの夜空を背景に並ぶフィン、ミラ、レオン、アリア、リコと、星灯りの旅団のロゴ",
   };
 
   return {
