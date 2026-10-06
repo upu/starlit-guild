@@ -10,7 +10,7 @@
   "gridRemoval": "Measured per-source separator lines excluded by sourceBox coordinates; no new zoom or cell reordering.",
   "background": "Opaque source background preserved; no recoloring.",
   "validation": {
-    "expressions": 42,
+    "expressions": 34,
     "displaySizes": [
       40,
       72
@@ -18,116 +18,10 @@
     "component": "app/portrait.tsx",
     "atlasDefinitions": "lib/portrait-expressions.ts",
     "result": "All expression keys and cell positions match. Browser-rendered previews inspected for eyes, mouths, clipping and neighboring-cell contamination.",
-    "sourceIdentity": "Five adopted Library masters verified. Merrill and Pumpety portraits restored to pre-PR images on 2026-10-05.",
+    "sourceIdentity": "Four adopted Library masters verified. Merrill and Pumpety portraits retain pre-PR images. Aria final master is recorded separately.",
     "maskedPumpety": "unchanged"
   },
   "characters": [
-    {
-      "name": "アリア",
-      "file": "aria-expressions-original-based-v4.png",
-      "cols": 4,
-      "rows": 2,
-      "count": 8,
-      "order": "通常・笑顔・驚き・困り<br>真剣・照れ・疲れ・得意げ",
-      "library_file_id": "libfile_92f940a3780081918a24865a2ee5f9a0",
-      "review_status": "accepted original-based direction",
-      "library_version": 1,
-      "file_id": "file_00000000c2d081f5bcf12cd7ab571bc0",
-      "sourceSha256": "82de1452ca2a5bdfeefa03d86881028d7b869df94a21501da5491fea302ee3c3",
-      "sourceDimensions": [
-        1774,
-        887
-      ],
-      "output": "public/portraits/aria-expressions.webp",
-      "outputDimensions": [
-        1024,
-        512
-      ],
-      "outputBytes": 119562,
-      "decodedPsnrDb": 34.22,
-      "cells": [
-        {
-          "expression": "neutral",
-          "sourceBox": [
-            0,
-            0,
-            440,
-            440
-          ],
-          "resizedPixelSha256": "d007e308373da352474b94bc8be8ba63b52f6f582bec148226f000d94f7f890e"
-        },
-        {
-          "expression": "smile",
-          "sourceBox": [
-            447,
-            0,
-            885,
-            440
-          ],
-          "resizedPixelSha256": "6b25d841a50f4a63f6df5ab3e4afa7c2597828e56a275a3196faff3245fad726"
-        },
-        {
-          "expression": "surprised",
-          "sourceBox": [
-            891,
-            0,
-            1328,
-            440
-          ],
-          "resizedPixelSha256": "19a8dd0d86a254e7e23338d57f564999b40de83e56e97e273d68a58eda7fe74c"
-        },
-        {
-          "expression": "worried",
-          "sourceBox": [
-            1335,
-            0,
-            1774,
-            440
-          ],
-          "resizedPixelSha256": "1fc2a87e69602cbe3bcc835bf70b57172c5ede9fe37d016cb81da9ebe580a614"
-        },
-        {
-          "expression": "serious",
-          "sourceBox": [
-            0,
-            446,
-            440,
-            887
-          ],
-          "resizedPixelSha256": "d9edb176ed83cf5a896869ad5c8b353981bd060253c243aa5ac309ef5b0a4c2d"
-        },
-        {
-          "expression": "shy",
-          "sourceBox": [
-            447,
-            446,
-            885,
-            887
-          ],
-          "resizedPixelSha256": "fa51f24d71fa07b5d0ea21803082edf573559d65e02a69cd79319844329bc659"
-        },
-        {
-          "expression": "tired",
-          "sourceBox": [
-            891,
-            446,
-            1328,
-            887
-          ],
-          "resizedPixelSha256": "6ae39ca96233c9cf29a8844761fe1e406b0bfd59f043329a43329b1e8116cbb5"
-        },
-        {
-          "expression": "mischievous",
-          "sourceBox": [
-            1335,
-            446,
-            1774,
-            887
-          ],
-          "resizedPixelSha256": "0a598ddb51ed982a3ea0ef6deb6f8467e7cefe61ffd1c4020bdef142323a4fcd"
-        }
-      ]
-    },
     {
       "name": "レオン",
       "file": "leon-expressions-original-based-v4.png",
@@ -579,6 +473,7 @@
     "preservedPortraits": [
       "merrill",
       "pumpety"
-    ]
+    ],
+    "ariaFinal": "docs/art-generation/aria-final-design-alignment-20261006.json"
   }
 }

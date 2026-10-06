@@ -16,7 +16,9 @@
       },
       "outputSha256": "5cec256de4d3eda8e9cbd2b152c3cc346cfd3e647a6f854669c8ddfe5e33e590",
       "bytes": 2467922,
-      "review": "Herb parcel, trade goods, shopkeeper and hands retained; hood stays up, open neckline and one strap, hidden far-side flower opposite lavender lock."
+      "review": "Herb parcel, trade goods, shopkeeper and hands retained; hood stays up, open neckline and one strap, hidden far-side flower opposite lavender lock.",
+      "scene": "village-trade-return",
+      "revealAtLine": 0
     },
     {
       "name": "tower-moss-discovery",
@@ -26,7 +28,8 @@
       "inputSha256": "4fceab9c8fef2feef1f3e58a7dd80cc77e4ee0df34a08d03491fd2975154901e",
       "outputSha256": "9b70e049c406a86c113f9286e1a71f46eba9d3392dba8fc157ddc69d94dab7ad",
       "bytes": 2403765,
-      "review": "Purple lock moved opposite flower, no front braid; matte hair, open neckline and one strap. Wooden bowl, hands and faint moss glow retained."
+      "review": "Purple lock moved opposite flower, no front braid; matte hair, open neckline and one strap. Wooden bowl, hands and faint moss glow retained.",
+      "scene": "tower-road-return"
     },
     {
       "name": "forest-moss-aria",
@@ -36,7 +39,9 @@
       "inputSha256": "7c00248e6aeecd9048f7b0ad3d3ec608295fa209fd80e6a4f3c02725985dadf2",
       "outputSha256": "eb5d63b2cabaa79c143e96872fdeffec93f65662a03b920529c3ef1174755eda",
       "bytes": 2556389,
-      "review": "Two bowls, raised hands and energetic smile retained; hood up, no front crown braid, flower opposite lavender, open blouse and one strap."
+      "review": "Two bowls, raised hands and energetic smile retained; hood up, no front crown braid, flower opposite lavender, open blouse and one strap.",
+      "scene": "forest-wetland-return",
+      "revealAtLine": 5
     },
     {
       "name": "tower-light-restored",
@@ -46,7 +51,9 @@
       "inputSha256": "f1bbebf9e1fd6027cb2aa3cf4d5982c68fe9cc56a3b5efea3c5590fc845fdf57",
       "outputSha256": "30f080872fb4572ee50fbb920139edf9f346992e3fadec73c56f6457b2660aac",
       "bytes": 2905520,
-      "review": "Distant rear hair has slim half-up strands joining tiny central braid, plain cloak back. Landscape, violet tower light, seated pair and backpack retained."
+      "review": "Distant rear hair has slim half-up strands joining tiny central braid, plain cloak back. Landscape, violet tower light, seated pair and backpack retained.",
+      "scene": "tower-moss-removal-return",
+      "revealAtLine": 6
     },
     {
       "name": "mira-collapse",
@@ -56,7 +63,9 @@
       "inputSha256": "0aaf8caf1fb1406a7842731fcb5485088615a33721b75143ac4353dca13f698d",
       "outputSha256": "26a877ba94b43f65dc9d5846691d0b68337255c99aced3ba24298e6d5a15dd18",
       "bytes": 2649597,
-      "review": "Aria worried crouching pose retained with lower neckline, one strap and matte hair; no cloak pendants. Mira supported by Leon, hands and figures retained."
+      "review": "Aria worried crouching pose retained with lower neckline, one strap and matte hair; no cloak pendants. Mira supported by Leon, hands and figures retained.",
+      "scene": "moonlit-herbs-return",
+      "revealAtLine": 6
     },
     {
       "name": "three-cups-of-tea",
@@ -66,7 +75,9 @@
       "inputSha256": "b5a1e7de88a31a1f37a6676f4a9ab4a77aa56f2f7a53e01fc73aab1855d68a7c",
       "outputSha256": "17c0f488336848dce50846d33d1242ee9b410edd63e7622fa84dbe2d48e46cf0",
       "bytes": 2725116,
-      "review": "Chibi style, playful fang grin, three cups and memo-pushing hand retained; matte hair and one strap, no conspicuous front braid."
+      "review": "Chibi style, playful fang grin, three cups and memo-pushing hand retained; matte hair and one strap, no conspicuous front braid.",
+      "scene": "medicine-road-home-return",
+      "revealAtLine": 11
     },
     {
       "name": "four-cups-of-tea",
@@ -76,7 +87,9 @@
       "inputSha256": "4a33d19a1b7b6dea5d2fc74ddc534a48af1f7cb38c4da7d0ed12c8ebd6df4e42",
       "outputSha256": "3c2b4ae1b1c74e4cf9a90ce2c179e632691ca46c3edd6c091e4e92dcaf24bc3c",
       "bytes": 2543221,
-      "review": "Four people/cups, closed-eye laughing Finn, right bandage/left rings and Mira pouring retained; Aria matte hair and one continuous strap."
+      "review": "Four people/cups, closed-eye laughing Finn, right bandage/left rings and Mira pouring retained; Aria matte hair and one continuous strap.",
+      "scene": "berne-restoration-return",
+      "revealAtLine": 5
     },
     {
       "name": "mira-after-all-nighter",
@@ -86,7 +99,9 @@
       "inputSha256": "a92598317e59d32931d011d74ed67f555fa2155da14b5c20665a54b0a7e7edd1",
       "outputSha256": "b53eaa563d2207c3211cae47be419a8086d5a4f86a12caa9ab5cde578840d6c8",
       "bytes": 2786924,
-      "review": "Aria worried face and both chair-gripping hands retained; cloak pendants removed, one chest strap and matte hair. Finn and tired focused Mira retained."
+      "review": "Aria worried face and both chair-gripping hands retained; cloak pendants removed, one chest strap and matte hair. Finn and tired focused Mira retained.",
+      "scene": "glowing-moss-trail-departure",
+      "revealAtLine": 4
     },
     {
       "name": "blue-cloth-alley",
@@ -100,7 +115,9 @@
       },
       "outputSha256": "c840baafc56a98fa74ceb6a8b046093208efc41179db947cb68eb2b887769f05",
       "bytes": 2337751,
-      "review": "One chest strap corrected to left shoulder/right waist; Aria right hand holds cloth, left arm wraps Leon right arm, correct glove orientation and both silver plates retained."
+      "review": "One chest strap corrected to left shoulder/right waist; Aria right hand holds cloth, left arm wraps Leon right arm, correct glove orientation and both silver plates retained.",
+      "scene": "glowing-moss-trail-return",
+      "revealAtLine": 4
     }
   ],
   "unchangedVerified": [
