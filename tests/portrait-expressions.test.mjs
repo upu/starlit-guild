@@ -46,11 +46,9 @@ test("reference characters retain eight expressions and other characters retain 
       const portrait = exports.Portrait({ index, expression, size: 72 });
       assert.equal(
         portrait.props.style.backgroundImage,
-        index < 2
-          ? "url(/portraits/aria-leon-expressions-v2.webp)"
-          : `url(/portraits/${name}-expressions.webp)`,
+        `url(/portraits/${name}-expressions.webp)`,
       );
-      assert.equal(portrait.props.style.backgroundSize, index < 2 ? "400% 400%" : "400% 200%");
+      assert.equal(portrait.props.style.backgroundSize, "400% 200%");
       positions.add(portrait.props.style.backgroundPosition);
     }
     assert.equal(positions.size, 8);
@@ -99,10 +97,12 @@ test("chat and story sizes share close-ups with distinct speakers and expression
       const compact = exports.Portrait({ index, expression, size: 40 });
       assert.equal(
         compact.props.style.backgroundImage,
-        "url(/portraits/aria-leon-expressions-v2.webp)",
+        `url(/portraits/${index === 0 ? "aria" : "leon"}-expressions.webp)`,
       );
-      assert.equal(compact.props.style.backgroundSize, "400% 400%");
-      positions.add(compact.props.style.backgroundPosition);
+      assert.equal(compact.props.style.backgroundSize, "400% 200%");
+      positions.add(
+        `${compact.props.style.backgroundImage}:${compact.props.style.backgroundPosition}`,
+      );
       assert.equal(
         exports.Portrait({ index, expression }).props.style.backgroundImage,
         compact.props.style.backgroundImage,
@@ -122,9 +122,10 @@ test("chat and story sizes share close-ups with distinct speakers and expression
       exports.Portrait({ index, size: 72 }).props.style.backgroundImage,
     );
   const meta = await sharp(
-    readFileSync(new URL("../public/portraits/aria-leon-expressions-v2.webp", import.meta.url)),
+    readFileSync(new URL("../public/portraits/aria-expressions.webp", import.meta.url)),
   ).metadata();
-  assert.equal(meta.width, meta.height);
+  assert.equal(meta.width, 1024);
+  assert.equal(meta.height, 512);
   assert.ok(meta.width >= 1024);
 });
 

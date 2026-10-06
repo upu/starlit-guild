@@ -2,7 +2,31 @@
 
 案内：[人物画像](character-images.md)
 
-## ミラと山道
+現在のアリア・ミラは以下の更新版を使用する。置き換え済みの旧アリア・旧ミラの道中・歩行画像と12コマPNGは、原本・配信用とも整理して削除した。旧版の説明は制作履歴であり、当時の画像はGitコミット `f0615cf` 以前を参照する。レオンと共用の作業画像は引き続き使用する。
+
+## 2026-10-06のアリアの更新
+
+アリアだけを最終設定画へ合わせて再生成した。短い髪・淡い紫の一房と反対側の花飾り、正面に出ない小さな編み込み、胸元の一本のストラップ、吊り飾りのないマント、つやを抑えた髪を反映する。通常姿勢の[ミニキャラ原本](../../assets/source/characters/aria-mini-reference.png)を基準にした。
+
+道中では[通常動作16コマ](../../public/animations/road/aria-v2.webp)と[引き手・荷造り4コマ](../../public/animations/road/aria-work-v1.webp)を使う。通常動作の順は歩行4、射撃4、待機、採取2、被弾、瞬き、被弾、押し手2。共用の運搬画像からアリア専用画像へ切り替え、他キャラの原本は維持する。別の冒険表示には、同じ原本から歩行4・射撃4・待機2・被弾2を並べた[12コマPNG](../../public/animations/aria-v2.png)を使う。
+
+生成原本は `assets/source/animations/`、道中の配信用原本は `assets/source/road/` に保存する。`node scripts/prepare-aria-animation.mjs` で人物全体と淡い輪郭を切り出し、全コマを384pxセル・足元346pxへ整列する。頭と胴が動作ごとに拡大しないよう、各シート内は同じ倍率を使う。その後 `npm run road-art:optimize` でロスレスWebPを生成する。プロンプト、切り出し・整列座標、ハッシュ、検証は[今回の制作記録](../art-generation/aria-mini-refresh-20261006.json)を参照。
+
+実際のPhaserと姿勢切り替え部品を使い、20コマの小表示・連続再生・停止を確認した。ゲーム全体の通し確認とスマホ実機確認は未実施。以下は旧版と他キャラの制作履歴。
+
+キャラ紹介・必殺演出・冒険画像の待機用表示にも、同じ待機コマから切り出した[静止ミニキャラ](../../public/characters/aria-mini-v2.webp)を使う。`public/sprites.png` の他キャラは変更しない。
+
+## 2026-10-06のミラの更新
+
+最新設定画の薄い灰紫のまとめ髪・重いまぶたと疲れた目元・軽いローブ・月の杖へ合わせ、組み込み `image_gen` でミニキャラを描き起こした。長く下ろした髪と厚いブーツを、編み上げた後頭部の小さなまとめ髪と足首の細いサンダルへ更新する。
+
+道中は[通常16コマ](../../public/animations/road/mira-v3.webp)と[引き手・荷造り4コマ](../../public/animations/road/mira-work-v1.webp)を使用する。通常コマの順は歩行4・詠唱4・待機・採取2・被弾・瞬き・被弾・押し手2。詠唱は攻撃と回復で共用する。共用の引き手素材から専用画像へ切り替え、運搬中もまとめ髪を維持する。
+
+`node scripts/prepare-mira-animation.mjs` で生成原本の人物全体と淡い輪郭を切り出し、384pxセル・足元346pxへ整列する。整列処理はアリアと共通の `scripts/prepare-mini-animation.mjs` を使い、各シート内は同じ倍率を保つ。その後 `npm run road-art:optimize` でロスレスWebPを生成する。別の冒険表示の[12コマPNG](../../public/animations/mira-v3.png)と、キャラ紹介・必殺演出の[静止ミニキャラ](../../public/characters/mira-mini-v3.webp)にも同じ原本を使う。
+
+プロンプト・生成原本・整列座標・ハッシュ・検証は[制作記録](../art-generation/mira-mini-refresh-20261006.json)を参照。以下のミラの説明は旧版の制作履歴。
+
+## ミラと山道（旧版）
 
 ミラは `docs/characters/mira-reference-sheet.webp` を人物の正本、既存の二人の動作画像を画風の参考に、組み込み `image_gen` で制作。採用した `public/animations/mira-v1.png` は1448×1086のRGBA PNGで、歩行4コマ、攻撃・回復の詠唱4コマ、待機・瞬き2コマ、被弾2コマを収録する。細かな塗りの揺れが縮小時に粗く見えたため、輪郭と色面を整理した修正版を採用した。
 
@@ -16,7 +40,7 @@
 
 既存の `public/sprites.png` を参照し、組み込み `image_gen` で各1枚を生成。CLI/APIは使用していない。
 
-## 現在の状態
+## アリア・レオン旧版の制作・採用記録
 
 生成原本は `outputs/hero-animation/aria-generated.png` と `outputs/hero-animation/leon-generated.png` に保存。どちらも1448×1086、RGBで市松模様が焼き込まれているため、`scripts/prepare-hero-animation.mjs` で透過・整列し、以下のRGBA PNGを採用する。
 

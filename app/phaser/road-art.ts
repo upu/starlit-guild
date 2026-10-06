@@ -3,7 +3,12 @@ import type { TravellerId } from "@/lib/road-view";
 export const roadSheet = (id: TravellerId) =>
   id === "lico"
     ? "/animations/road/lico-standing-v1.webp"
-    : `/animations/road/${id}-v${id === "mira" ? "2" : "1"}.webp`;
+    : `/animations/road/${id}-v${id === "mira" ? "3" : id === "aria" ? "2" : "1"}.webp`;
+export const ROAD_ARIA_WORK = "/animations/road/aria-work-v1.webp";
+export const ROAD_MIRA_WORK = "/animations/road/mira-work-v1.webp";
+export const MINI_CELL = 384;
+export const MINI_BASELINE = 346;
+export const MINI_STANDING_HEIGHT = 312;
 export const ROAD_SIGNPOST = "/animations/road/signpost-v2.webp";
 export const finnFrames = [
   [26, 14, 260, 325],
@@ -22,25 +27,6 @@ export const finnFrames = [
   [333, 950, 287, 291],
   [641, 950, 280, 291],
   [960, 950, 277, 291],
-];
-// Tight native rectangles; casting holds its raised pose before returning to idle.
-export const miraFrames = [
-  [31, 43, 275, 282],
-  [333, 40, 276, 283],
-  [643, 39, 274, 286],
-  [959, 38, 271, 285],
-  [24, 353, 267, 283],
-  [327, 344, 280, 294],
-  [327, 344, 280, 294],
-  [32, 653, 262, 284],
-  [32, 653, 262, 284],
-  [338, 679, 269, 255],
-  [641, 675, 240, 251],
-  [960, 667, 251, 267],
-  [26, 950, 264, 274],
-  [333, 950, 264, 273],
-  [640, 955, 275, 264],
-  [954, 954, 259, 265],
 ];
 export const ROAD_EFFECTS = "/animations/road/effects-v2.webp";
 export const ROAD_HERB = "/animations/road/herb-v2.webp";
@@ -93,33 +79,23 @@ export const ROAD_LEDGER_DESK = "/animations/road/ledger-desk-v1.webp";
 export const roadWalkSheet = (id: TravellerId) =>
   id === "lico"
     ? ROAD_LICO_MOTION
-    : id === "finn"
+    : id === "finn" || id === "aria" || id === "mira"
       ? roadSheet(id)
-      : `/animations/road/${id}-walk-v${id === "mira" ? "3" : "2"}.webp`;
+      : `/animations/road/${id}-walk-v2.webp`;
 
 // The generator varies the transparent margins. Align the feet and visible height,
 // rather than letting alternate rows jump vertically during playback.
 export const walkBounds = {
-  aria: [
-    [116, 89, 566, 597],
-    [65, 89, 493, 602],
-    [114, 43, 575, 541],
-    [76, 40, 499, 544],
-  ],
   leon: [
     [83, 83, 549, 621],
     [55, 82, 509, 623],
     [109, 46, 550, 572],
     [68, 47, 509, 571],
   ],
-  mira: [
-    [87, 57, 602, 589],
-    [38, 57, 541, 592],
-    [85, 33, 605, 560],
-    [35, 31, 544, 565],
-  ],
 };
 export function roadWalkFrame(id: TravellerId, pose: number) {
+  if (id === "aria" || id === "mira")
+    return { originX: 0.5, originY: MINI_BASELINE / MINI_CELL, scale: 0.9 / MINI_STANDING_HEIGHT };
   if (id === "lico") return { originX: 0.5, originY: 1, scale: 0.9 / 629 };
   if (id === "finn") return { originX: 0.5, originY: 1, scale: 0.9 / finnFrames[pose][3] };
   const [left, top, right, bottom] = walkBounds[id][pose];
@@ -128,14 +104,23 @@ export function roadWalkFrame(id: TravellerId, pose: number) {
 
 // Keep the generated pixels intact; variable rectangles preserve extended weapons.
 export function roadFrame(id: TravellerId, pose: number) {
+  if (id === "aria" || id === "mira")
+    return {
+      left: (pose % 4) * MINI_CELL,
+      top: Math.floor(pose / 4) * MINI_CELL,
+      width: MINI_CELL,
+      height: MINI_CELL,
+      originX: 0.5,
+      originY: MINI_BASELINE / MINI_CELL,
+    };
   const row = Math.floor(pose / 4),
     column = pose % 4;
   const tops = [0, 376, 738],
     bottoms = [376, 738, 1086];
   let left = column * 362,
     right = left + 362;
-  if (id !== "aria" && row === 1 && column === 2) right = 1144;
-  if (id !== "aria" && row === 1 && column === 3) left = 1144;
+  if (row === 1 && column === 2) right = 1144;
+  if (row === 1 && column === 3) left = 1144;
   const top = tops[row],
     height = bottoms[row] - top;
   return {

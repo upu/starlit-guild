@@ -2,7 +2,8 @@ import { guildArtFrames } from "@/lib/guild-art-frames";
 import { guildRoomArt } from "@/lib/guild-room-art";
 import { guildRoomSprite } from "@/lib/guild-menu-model";
 import {
-  miraFrames,
+  MINI_CELL,
+  MINI_STANDING_HEIGHT,
   packingFrames,
   pushFrames,
   roadFrame,
@@ -16,6 +17,17 @@ export const guildIds: readonly TravellerId[] = ["aria", "leon", "mira", "finn",
 export function guildPose(id: TravellerId, mode: GuildPoseKind, step: number) {
   if (mode === "tea") return roomPose("tea-party-v3", guildIds.indexOf(id) * 4, 4, step);
   if (id === "finn" || id === "lico") return lifePose(id, mode, step);
+  if (id === "aria" || id === "mira") {
+    const pose = mode === "walk" ? step % 4 : mode === "idle" ? 8 : 9 + (step % 2);
+    const frame = roadFrame(id, pose);
+    return {
+      asset: roadSheet(id),
+      rect: [frame.left, frame.top, frame.width, frame.height],
+      width: MINI_CELL * 4,
+      height: MINI_CELL * 4,
+      scale: 1 / MINI_STANDING_HEIGHT,
+    };
+  }
   if (mode === "walk") {
     const [x, y, right, bottom] = walkBounds[id][step % 4];
     return {
@@ -30,10 +42,10 @@ export function guildPose(id: TravellerId, mode: GuildPoseKind, step: number) {
   const frame = roadFrame(id, 8);
   return {
     asset: roadSheet(id),
-    rect: id === "mira" ? miraFrames[8] : [frame.left, frame.top, frame.width, frame.height],
-    width: id === "mira" ? 1254 : 1448,
-    height: id === "mira" ? 1254 : 1086,
-    scale: 1 / (id === "mira" ? 285 : 350),
+    rect: [frame.left, frame.top, frame.width, frame.height],
+    width: 1448,
+    height: 1086,
+    scale: 1 / 350,
   };
 }
 export const guildPropsAsset = "/guild/props-v2.webp";

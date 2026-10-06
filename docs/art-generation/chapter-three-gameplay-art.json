@@ -20,5 +20,11 @@
       "source": "assets/source/scenery/riverside-manor.png",
       "prompt": "Use case: stylized-concept. Create polished cozy fantasy JRPG side-scrolling background, landscape 1536x1024. The working courtyard garden of a lived-in small manor across a river from an old stone-paved town. Late afternoon golden soft daylight, gentle watercolor anime painting with fine detailed edges, restrained ochre, sage green, muted terracotta and cream. Upper half: stone manor wall and arched kitchen doorway on left, trimmed hedges with garden work passage, potted flowers and a cloth-covered low display pedestal on right, river bridge glimpsed behind wall, no monumental palace. A few plain wooden crates and neatly folded cloth at edges. Lower 40% is clear continuous horizontal level paved garden walkway for four chibi characters, no obstacles in foreground path, no strong depth perspective in lower walking lane. No people or characters, no text or signs, no HUD, no modern things, no giant gemstones. Designed as reusable background for moving pots, preparations and reconnaissance, welcoming atmosphere rather than a dungeon."
     }
-  ]
+  ],
+  "retiredCharacterArt": {
+    "date": "2026-10-06",
+    "note": "Old Aria and Mira character sprites were removed after replacement. Other assets in this record remain unchanged.",
+    "current": "docs/art/hero-animation-art.md",
+    "historicalCommit": "f0615cf38bf5b7f0576740deec3e2f29374dd2f9"
+  }
 }

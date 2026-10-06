@@ -1,5 +1,7 @@
 # スチル制作記録
 
+2026-10-06に、アリアの最終設定画へ顔アイコン8表情と更新済みスチル9枚を揃えた。胸元の開きと一本のストラップ、吊り飾りを除いたマント、小さな編み込み、つやを抑えた髪の塗りを反映する。4-10は既存の採用版を確認し、維持する。[仕上げの生成・検証記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
+
 案内：[アート・音](README.md)
 
 ## 配信用 WebP の生成
@@ -17,9 +19,9 @@
 | 原本（`assets/source/stories/`） | 場面 | 採用版 |
 | --- | --- | --- |
 | `lico-protects-seedlings.png` | 4-8・苗を守るリコ | 全身構図01。リコは赤・黒の衣装、メリルの脚に厚みを持たせた版 |
-| `mira-after-all-nighter.png` | 4-4・徹夜明けのミラ | 構図02の屋内版・新規生成v3。髪と服の乱れ、心配する二人の表情 |
-| `blue-cloth-alley.png` | 4-4・青い布の陰 | v13。右手で布、左腕でレオンの右腕を抱き寄せる。淡い髪と両肩の防具 |
-| `guild-formation.png` | 4-10・旅団結成 | 構図04。署名するアリアを四人が囲む |
+| `mira-after-all-nighter.png` | 4-4・徹夜明けのミラ | 構図02を保った2026-10-05更新版。新しいまとめ髪の乱れ、服の皺、心配する二人の表情 |
+| `blue-cloth-alley.png` | 4-4・青い布の陰 | v13の構図を保った2026-10-05更新版。短い髪・片肩マント、右手で布、左腕でレオンの右腕を抱き寄せる |
+| `guild-formation.png` | 4-10・旅団結成 | 構図04を保った2026-10-05更新版。最新設定画に合わせた五人がアリアの署名を囲む |
 
 ゲームの会話・アルバムへの表示登録は第四章の本編実装時に行う。現時点ではシーンID・表示行を割り当てない。
 
@@ -35,6 +37,10 @@
 
 お茶会の採用版は、設定資料から新規生成した絵にアリアとレオンの顔立ちを合わせたもの。フィンは右手に包帯、左手に指輪をつける。制作ツールは組み込み `image_gen`、モデル識別子は返されていない。
 
+2026-10-05に3-8の手当てを最新設定画へ合わせて更新した。フィンは大きな毛束で簡素にまとめた茶髪と低い位置の結び髪、日焼け・無精髭・垂れ目と気の抜けた笑みを保つ。ミラは薄紫の編み込みのまとめ髪、目元の疲労、軽いローブと治療用ポーチを反映する。右手へ薄く包帯を巻く動作、背景と表示開始位置は維持する。[更新記録](../art-generation/mira-tends-finn-refresh-20261005.json)を参照。
+
+同日に3-9の四人のお茶も最新設定画へ更新した。アリアは前から編み込みがほぼ見えない短い金髪と正面から見て左側の薄紫の一房、レオンは簡素な毛束と短い片肩マント、フィンは低い結び髪と中年らしい顔立ち、ミラはまとめ髪と疲労のにじむ目元・襟とリボンを反映する。フィンの目を閉じた笑い、右手の薄い包帯・左手の二つの指輪、ミラが注ぐ動作、四つのカップと背景・表示開始位置を保つ。[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
+
 ## 第二章2-8・2-9：薬の配達と三人のお茶
 
 組み込み `image_gen` で各1536×1024の画像を制作。アリア・レオン・ミラのリファレンスシートを外見・衣装の参照に使い、文字なしの一枚絵にした。モデル識別子は返されていない。最終プロンプトは [生成記録](../art-generation/chapter-two-finale-art.json) に保存。
@@ -43,6 +49,8 @@
 - `assets/source/stories/three-cups-of-tea.png`：`medicine-road-home-return` の0始まり11行目、ミラがカップを受け取り一口飲む行から表示。ミラは空いた手を往診のメモへ伸ばし、アリアが紙をそっと遠ざける。レオンはカップを持って笑う。大きな頭と小さな体、誇張した表情のコミカルなデフォルメ画にし、同じ机に三人と三つのカップを置く。休んでも仕事を増やしかける癖を小さな仕草で見せる。対応する地の文もこの動作へ合わせた。
 
 両画像を目視し、人物の外見、匙での服薬とお茶の最初の一口、三人の席とカップ数、不要な文字の不在を確認。読了後は共通アルバムから閲覧できる。
+
+2026-10-05に2-9のお茶だけを最新設定画へ合わせて更新した。大きな頭と小さな体、仕事のメモへ手を伸ばすミラ、紙を遠ざけるアリア、笑うレオンのコミカルなやり取りを保つ。アリアは短い金髪と正面から見て左側の薄紫の一房、ミラは薄紫の編み込みのまとめ髪と目元の疲労、レオンは簡素な横流しの髪と短い片肩マントを反映する。[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。2-6・2-8の画像は今回差し替えない。
 
 ## 第二章2-6：大小の人形
 
@@ -56,7 +64,7 @@
 
 組み込み image_gen で1536×1024の初版を生成。採用画像は2026-09-17にユーザー提供のフードを下ろした版をもとに、塔の窓の灯りを淡い紫へ編集し、`assets/source/stories/tower-light-restored.png` へ保存した。`tower-moss-removal-return` の0始まり6行目、塔に淡い紫の光がともる瞬間から表示する。読了後はアルバムでも鑑賞できる。1-8には一枚絵を追加せず、水路の修理までに分けた。
 
-二人は寄り添って座り、正面の塔を向く後ろ姿。採用画像ではアリアのフードを下ろし、長い金髪と花飾りを見せる。塔の窓には弱い紫の灯りがともる。
+二人は寄り添って座り、正面の塔を向く後ろ姿。2026-10-05に最新設定画へ合わせ、全体を新しく描き直した版を採用した。アリアは肩〜鎖骨丈の金髪・小さな編み込みと花飾り、下ろしたフードを見せる。マントとフードの背面は無地の緑にし、レオンの背面にも胸用のバッジを置かない。短い片肩マントと、横に置いた背嚢・巻き毛布を描く。塔の窓の弱い紫の灯り、二人の距離と表示開始位置を維持する。[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
 
 初版と差し替え時のプロンプト、採用画像の出典とハッシュは [制作記録](../art-generation/stage-1-9-art.json) に保存する。モデル識別子はツールから返されていない。画像の確認とブラウザ・実機確認は区別する。
 
@@ -71,9 +79,13 @@
 - 1-8終幕には一枚絵を置かず、水路が戻った状態を背景と会話で見せる。
 - 採用背景は1536×1024。組み込みimage_genを使用し、既存の塔の風景を参照した。プロンプト原文と目視確認は [制作記録](stage-1-7-1-8-art.md) を参照。
 
+## 第一章1-1：交易品の受け渡し
+
+2026-10-05に `village-trade-handover.png` を最新のアリア・レオン設定画に合わせて描き直した。アリアの短い金髪と画面左側の紫の一房、明るく元気な笑顔、レオンの長めの顔立ち・短い片肩マント・背嚢と巻き毛布を反映する。店主・交易品・薬草を渡す動作・店先の構図は維持。`village-trade-return` の最初の行から表示し、読了後はアルバムで鑑賞できる。台詞と表示条件は変更しない。[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
+
 ## 第一章1-6
 
-森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15にユーザー提供の1536×1024 PNGへ無加工で差し替えた。背景は [1-6の制作記録](../art-generation/stage-1-6-art.json)、採用スチルの出典とハッシュは [採用画像の記録](../art-generation/stage-1-6-closeup-art.json) に保存した。
+森の湿地背景は組み込み `image_gen` で制作。苔を比較するスチルは2026-09-15のユーザー提供画像をもとに、2026-10-05に最新のアリア設定画へ合わせて描き直した。肩〜鎖骨丈の毛量を抑えた金髪と、ユーザー修正に従った画面左側の淡い紫の一房を反映し、フードをかぶって二つの器を顔へ近づける動作、木漏れ日と石壁、苔を見比べる場面を維持し、目を明るく開いた元気な笑顔へ修正する。苔の同一性を断定する発光演出は追加しない。背景は [1-6の制作記録](../art-generation/stage-1-6-art.json)、以前の採用画像は [制作履歴](../art-generation/stage-1-6-closeup-art.json)、今回の更新は [更新記録](../art-generation/aria-final-design-alignment-20261006.json) を参照。
 
 - `assets/source/scenery/forest-wetland.png`：1-6の一覧・冒険背景。午後の木陰、湿った石と根、浅い水辺、人物が歩く地面を描く。塔や光る苔は置かない。
 - `public/stories/forest-moss-aria.webp`：`forest-wetland-return` の0起点5行目、アリアが二つの入れ物を顔の近くまで持ち上げて見比べる動作から表示。読了後はアルバムで鑑賞できる。
@@ -96,6 +108,12 @@
 会話は一行送りのため、絵の表示条件は3行ごとのページ境界に縛らない。絵は光る苔を手に取る以前には見せない。
 
 4枚を画像で確認。背景の昼夜、二人の髪・目・耳・衣装、木べらと入れ物、文字や透かしがないことを確認した。苔は羽状の小葉を持つ描写で、1-5の葉の並びへの見覚えと揃える。画像の確認とゲーム画面でのブラウザ操作検証は区別する。
+
+### 最新設定画への更新（2026-10-05）
+
+ユーザーが確認した描き直しを `assets/source/stories/tower-moss-discovery.png` へ採用した。アリアの肩〜鎖骨丈の髪と花飾りの反対側の淡い紫の一房、レオンの長めの顔立ち・短い片肩マント・背嚢と巻き毛布を更新。二人が木の器の苔をのぞく構図、木べら、塔の外の日陰、弱い発光は維持する。紫の一房の側を単独編集で修正し、ユーザーが方向を承認した。配信用WebPとアルバム縮小画像を再生成。台詞と表示開始位置は変更しない。
+
+[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
 
 ### 発見場面のアップへの改訂（2026-09-16）
 
@@ -128,7 +146,9 @@
 - 表示：`moonlit-herbs-return` の第7行（0始まりで6）、ミラの膝が折れる行から。2-1のお昼には画像を置かない。
 - 画像確認：倒れたミラをレオンが支え、アリアが荷物をどけて近くへ寄る。三人の外見、支える動作、作りかけの薬のある仕事場を確認した。
 
-最終プロンプト：
+2026-10-05に三人の最新設定画へ合わせて描き直した。ミラは薄紫の編み込みのまとめ髪、血色の薄さと目元の疲労、軽いローブと治療用ポーチを反映する。アリアは肩〜鎖骨丈の金髪と正面から見て左側の薄紫の一房、レオンは短い片肩マントと背嚢を描く。倒れたミラを支える動作、仕事場と表示開始位置は維持する。[更新記録](../art-generation/aria-final-design-alignment-20261006.json)を参照。
+
+初版のプロンプト（更新前の制作履歴）：
 
 ```text
 Create one landscape 1536x1024 illustration-story still for STARLIT GUILD, using these three sheets ONLY as character appearance references, not layouts or text. Painterly anime fantasy RPG scene, delicate textured painting and soft afternoon window light, muted natural colors. Interior of a modest healer's workroom with wooden desk, paper-wrapped herbs and unfinished medicine parcels. Exact narrative instant: Mira (lavender hair, white/lavender moon-motif healer robes, herb pouch) has actually fainted from exhaustion while standing up; her knees have buckled, eyes closed and body limp, and Leon (brown hair, blue tunic, leather armor, red scarf) kneels urgently catching and supporting her upper torso and shoulders before she falls. Aria (long blonde hair, elf ears, green eyes, white flower hair ornament, forest green cloak) has rushed to their side and is crouching close, one hand moving a bag off the floor, looking anxiously at Mira and calling her name. All three fully clothed, non-romantic rescue scene, physically credible arms and weight support. Mira central; all faces and support gesture clearly readable in the middle portion of landscape. Background only herbs, parcels, wooden furniture, no extra people, no modern medical equipment, no glow magic, no blood, no comic panels, no letters or typography, no border. Retain distinctive reference costumes and faces.

@@ -24,5 +24,11 @@
     ],
     "supersededBy": "road-simple-signpost.json"
   },
-  "distribution": "Lossless WebP via road-art:optimize; native images retained. The renderer caches isolated small figure frames with smooth downsampling and mipmapped filtering."
+  "distribution": "Lossless WebP via road-art:optimize; native images retained. The renderer caches isolated small figure frames with smooth downsampling and mipmapped filtering.",
+  "retiredCharacterArt": {
+    "date": "2026-10-06",
+    "note": "Old Aria and Mira character sprites were removed after replacement. Other assets in this record remain unchanged.",
+    "current": "docs/art/hero-animation-art.md",
+    "historicalCommit": "f0615cf38bf5b7f0576740deec3e2f29374dd2f9"
+  }
 }

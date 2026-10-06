@@ -91,7 +91,7 @@ export const storyArt: Partial<Record<string, StoryArt>> = {
   },
   "tower-moss-removal-return": {
     src: "/stories/tower-light-restored.webp",
-    alt: "夕暮れの丘で、フードを下ろしたアリアとレオンが石垣に寄り添って座り、正面の塔を見上げる後ろ姿。アリアの長い金髪と花飾りが見え、塔の窓には淡い紫の光がともる。",
+    alt: "夕暮れの丘で、フードを下ろしたアリアとレオンが石垣に寄り添って座り、正面の塔を見上げる後ろ姿。アリアの肩までの金髪と花飾りが見え、塔の窓には淡い紫の光がともる。",
     width: 1536,
     height: 1024,
     revealAtLine: 6,
