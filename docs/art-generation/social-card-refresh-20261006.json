@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen",
+  "operation": "fresh five-person sharing-card background recreation from latest character references",
+  "referenceCommit": "d0112efd12f431848035c5903ba51bce4268d681",
+  "references": [
+    {
+      "path": "docs/characters/aria-reference-sheet.webp",
+      "sha256": "6e1db136581a82b5f23fac0abd945cf16ea84e9e2b1913ef21a1785d4184166a"
+    },
+    {
+      "path": "docs/characters/leon-reference-sheet.webp",
+      "sha256": "1bf51a11eeb731f857968a24c1b839e3e0059b436a9f70f416fc71638db39b64"
+    },
+    {
+      "path": "docs/characters/mira-reference-sheet.webp",
+      "sha256": "52c560424c3962637f95c8b4109d5e42c2667821483468cc9c07bb2c00164005"
+    },
+    {
+      "path": "docs/characters/finn-reference-sheet.webp",
+      "sha256": "3db049902c54fc22a00815521467b171da97d550a72c9cee9b3d329f28c569b5"
+    },
+    {
+      "path": "docs/characters/lico-reference-sheet.webp",
+      "sha256": "34762dfb0f3265819a9195cc85d240fa8e98be22f34e9adcc5e39be923ecaf81"
+    }
+  ],
+  "prompt": "Use case: stylized-concept.\nAsset type: final Japanese fantasy RPG Open Graph / X sharing card BACKGROUND, landscape approx1536x806 (1200x630ratio), opaque.\nPrimary request: draw a completely FRESH illustration of all FIVE party members from scratch. References1-5 are authoritative latest Aria/Leon/Mira/Finn/Lico character sheets. No sheet panels.\nComposition/framing: five characters as relaxed friendly party grouped in shallow staggered BUST/UPPER-WAIST portrait, not full bodies, not tiny distant figures. Slightly smaller than a three-character poster but ALL FIVE FACES must stay LARGE/readable in a300px-wide sharing preview, facewidth about10-13%canvas. Use entire horizontal width for group. EXACT LEFT-TO-RIGHT ORDER: FINN at x11%, MIRA at30%, LEON at49%, ARIA at68%, LICO at87%. Finn/Leon slightly taller/backrow, three women slightly lower/front. Keep allfiveheads separate/uncovered, natural subtle overlap of shoulders only, no severe head overlap. Highest heads start around y34%, women's hair crowns aroundy42-47%. Bodies softly crop at waist/bottomedge. Leave TOP LEFT rectangle x0-31%, y0-32% as quiet dark STARLIT SKY completely free of people/staff/decorations, for a separately composited existing title logo. NO text/lettering/logo/watermark anywhere. This is an inviting character poster, cozy party bond, spontaneous individual expressions, not stiff passport lineup.\nAria(ref1): cheerful bright ENERGETIC elf girl, wide lively green eyes, joyful open smile, pointedears. Shoulder/collarbone SHORT low-volume softly wavy MATTE ashblondehair. Single pale lavender frontlock anatomicalRIGHT/viewerLEFT frontal, white daisy/feather/leaves opposite anatomicalLEFT/viewerRIGHT. Tiny pencil-thin SHORT braid onlyatCENTERREAR half-up, nearly invisiblefront. NOfront/crown/ear-to-ear thickbraid, NOlonghair. White blouse slightlylower/widerneckline asref, onecontinuous broad brown strap wearerLEFTshoulder→RIGHTwaist, no Xor stray leather stub. Green hood DOWN/cloak plainback/frontedgeembroidered, NO hangingmetalweights. Bow/quiver subtly visible below/behindshoulder, not above logozone.\nLeon(ref2): longer naturalface/straightnose, simplyside-swept short brownhair, calmapproachable smile, blue/leathertravelwear, modestmetalshoulderguard, short neatredONE-SHOULDERcloak, oneFRONTclasp only. Packedleatherbackpack andcreamrolledblanket modestlyvisible behindshoulders, nobackbadges. Hairmatte andbroadsoftlocks, not giant spikyhair, not huge piledredscarf.\nMira(ref3): slenderADULThealer, heavylids andsoftpurpleundereyes, tiredgentlesmallsmile. Mutedpalegreylavenderhair incompactBRAIDEDUPDO, lightloosewisps justtoneck, NOlongloose/trailinghair. Crescentwhiteflowerornament, white/lavenderopaquehealerrrobe andmedicalbeltpouch. Crescentstaff heldverticallyatx39% awayfromlogo, nevercoveringfaces.\nFinn(ref4): forty-somethingmale, tannedskin, subtleeyewrinkles/stubble, relaxeddroopinggreyvioleteyes andcasualcrookedcarefreegrin. Wavydarkbrownbroadlockshair tiedlooselyinLOWshortponytail, sidefringe. Worncharcoal/olivecoat withrestrainedoldgoldedge andochrelining, ivoryopenneckshirt, fewaccessories/cheapring. Charmingslightlyshiftymiddleagedman, notoldcaricature/notyoungprince. NOlargebackpackorheavyarmor.\nLico(ref5): shortyoungADULTfemalealchemist, ordinaryapproachableoddlook, plentiful visiblefreckles, low/slippingperfectlyROUNDthinglasses, pale mossyellowgreeneyes. Messydarkreddishbrown/plumbrownhair SHORT low-mediumponytail, redspiderlilyornament. CrimsonworkAPRON,charcoaloutergarment/skirt, ivoryblouse, smallpracticaldarkleatherpouches. NOTsagegreenmainclothing. Holding ONEsmall softlygreen-glowingherbalglasssampleflask atchest belowface, lookingatit withpeculiar endearing asymmetrical crookedgrin, onecornerraised; curious/quirky, notvillain/horror/perfectmodelbeauty. Herface/glasses/freckles fullyreadable.\nBackdrop: atmospheric soft ruralvillage warmwindows/woodedhills/ONEsmallmodestoldstonestarlighttower glowingPALEPURPLE in the game's current rural title-art direction, quiet starrymidnightblue sky. Scenerysecondary, no lakecity/giantcastle/snowymountains/goldtower. Noaddedplot event or geography.\nStyle: fresh crisp delicatefantasyanimefine-line illustration withsoftmutedwatercolorplanes, harmonious mattehair withbroadsubtle diffusehighlights andFEWinternallines, NOsharpwhiteglossstreaks/plasticshine. Keepfivecharacters' distinctivefacialtraits andcostumes. Balancedanatomy, onlyfivepeople, correctnaturalhands,noextrafingers/limbs. EntirelyFRESHfullyrenderedhighqualitynativeillustration. Output ONLYone finished full-bleed scene without text or logo.\nCRITICAL FINAL LAYOUT OVERRIDE: make characters modestly smaller, NOT giant faces filling all canvas. The WHOLE top LEFT rectangular area x0-32% AND y0-36% MUST be empty uninterrupted dark starry sky, a generously tall logo safe space (reserved for a340x202logo on1200x630delivery). FINN's ENTIRE hair/forehead must start BELOW y38%, his face center aroundy57%; absolutely NO Finn hair, raised elbow, arm, staff or decoration into upper-left safe rectangle. MIRA crown belowy43%, facecenter57%. LEON can start at y23% only in CENTER x43-59%, facecenter43%. ARIA crowny41%, facecenter56%, LICO crowny43%, facecenter58%. Group occupies LOWER two-thirds as compact clear chest-up portraits. Faceswidth9-11%canvas, notoversized. Leave small side margins; don'tclipFinn's faceorLico'sface atouteredges. Mira's staff placedbetweenMiraandLeon atx39%, entirelyOUTSIDEleft32%logo zone. FIVElargeenoughdistinctfaces; upperLEFT36%heightisALLSKY. Keep all previous latest hairstyles/traits and plain matte hair from refs, Aria energetic, Lico quirky crookedgrin and ROUNDglasses/freckles, Finnmiddle-agedunshavenloosegrin. Do not renderlogo/text.",
+  "source": "assets/source/social/x-card-background.png",
+  "target": "public/social/x-card.png",
+  "generation": "node scripts/generate-social-card.mjs",
+  "composition": {
+    "charactersLeftToRight": [
+      "finn",
+      "mira",
+      "leon",
+      "aria",
+      "lico"
+    ],
+    "framing": "five slightly smaller upper-body portraits with separate readable faces",
+    "logo": {
+      "width": 340,
+      "left": 12,
+      "top": 8
+    },
+    "cardDimensions": [
+      1200,
+      630
+    ]
+  },
+  "review": "Aria: short low-volume matte hair, lavender lock viewer-left and flower viewer-right, front braid hidden, lively open smile, one connected chest strap. Leon: calm face, short red cloak, visible packed backpack and blanket. Mira: compact braided updo and subdued tired expression. Finn: tanned middle-aged face, stubble, relaxed crooked grin and loose low ponytail, worn dark coat. Lico: visible freckles and round glasses, short messy ponytail, red-black apron and quirky crooked grin with green herbal sample. Upper-left sky reserved for existing logo; rural town and pale purple tower. Only adopted PNG source and generated card are retained; abandoned three-person and crowded five-person trials are not committed.",
+  "output": [
+    {
+      "path": "assets/source/social/x-card-background.png",
+      "bytes": 2626517,
+      "sha256": "b45dc98fee722a12592571162a51254b47121df6b457d642c2f412088b9a5e1f",
+      "dimensions": [
+        1731,
+        909
+      ]
+    },
+    {
+      "path": "public/social/x-card.png",
+      "bytes": 2088589,
+      "sha256": "4187e9e20889c481bfa44371d0787ec2c35954cdf5ee0e6008c951636a077ffb",
+      "dimensions": [
+        1200,
+        630
+      ]
+    }
+  ],
+  "encoding": {
+    "source": "native generated PNG, no resizing",
+    "target": "1200x630 PNG with existing logo, compressionLevel 9"
+  }
+}
