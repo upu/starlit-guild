@@ -14,3 +14,5 @@
 下部ナビの最終的な高さは `--game-nav-height` に従う。固定配置と画面下部の予約領域は同じ変数を参照する。短い画面の画像サイズやラベル調整は残し、高さ指定だけは複数ファイルで競合させない。通常ダイアログと物語ダイアログでは配置が異なるため、物語のルールを共通枠へ移さない。
 
 関連検証は `tests/game-viewport.test.mjs`、`tests/dialog-position.test.mjs`、`tests/story-dialog.test.mjs` と、ビルド済み CSS を使う `tests/dialog-layout.browser.py`。ブラウザーの幅・高さ・安全領域を変えて確認する。スマホ実機の確認とは区別する。
+
+旅団本編の施設＋・担当アイコンは `app/home-room-markers.tsx`、座標は `lib/home-room-markers.ts`。`app/home-room.tsx` の虫眼鏡は本編・試作共通で、停止・動きを減らすボタンは試作の `studyControls` だけに表示する。

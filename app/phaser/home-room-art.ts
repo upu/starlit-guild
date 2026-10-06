@@ -14,6 +14,7 @@ import { gardenPlantings, gardenRoot, gardenWater, gardenWetness } from "@/lib/h
 import {
   homeFurnitureScale,
   residentDisplayPosition,
+  residentDisplayCell,
   teaChairPosition,
 } from "@/lib/home-room-presentation";
 
@@ -74,9 +75,9 @@ export class HomeRoomArt {
       }
     if (site === "home") this.image("notice", homeAsset("prop-10"), 205, 66, 95, -900);
     else
-      for (const item of gardenScenery[site])
+      for (const [index, item] of gardenScenery[site].entries())
         this.image(
-          `scenery-${String(item.frame)}`,
+          `scenery-${String(index)}`,
           homeAsset(`decor-${String(item.frame)}`),
           item.x,
           item.y,
@@ -141,7 +142,7 @@ export class HomeRoomArt {
   resident(r: Resident, time: number, reduced: boolean, furniture: Furniture[]) {
     r = { ...r, ...residentDisplayPosition(r, furniture) };
     const greeting = time < r.greetUntil;
-    const social = homeSocialCue(r, time, reduced);
+    const social = homeSocialCue(r, time);
     const pose =
       (greeting && ["idle", "walk", "garden"].includes(r.pose)) || social?.wave ? "wave" : r.pose;
     const { frame, bob, action } = residentAnimation(
@@ -153,27 +154,27 @@ export class HomeRoomArt {
     );
     const y = r.y + (pose === "tea" ? -1 : 0);
     const atlas = residentAtlas(r.id, pose, frame, action, r.left);
+    const displayCell = residentDisplayCell(r);
     const image = this.image(
       `r-${r.id}`,
       homeAsset(atlas.name),
       r.x,
-      y + residentSolePadding + bob,
-      residentArt.displayCell,
+      y + (residentSolePadding * displayCell) / residentArt.displayCell + bob,
+      displayCell,
       // The gardener stands beside the box; the can reaches over its side rim.
       r.y + (pose === "garden" ? 25 : 1),
       atlas.frame,
     );
-    image.setDisplaySize(residentArt.displayCell, residentArt.displayCell);
+    image.setDisplaySize(displayCell, displayCell);
     // Back-view tools have authored handedness: Lico left, the others right.
     // Never mirror a work frame or its tool would change hands.
     image.setFlipX(atlas.flip);
-    if (social) image.setAngle(social.angle * (r.left ? -1 : 1));
     this.residentBubble(r, pose, time, reduced);
     this.effects(r, pose, time, reduced);
   }
   private residentBubble(r: Resident, pose: string, time: number, reduced: boolean) {
     const greeting = time < r.greetUntil;
-    const social = homeSocialCue(r, time, reduced);
+    const social = homeSocialCue(r, time);
     if (greeting) this.bubble(r, "♥", time, reduced);
     else if (social?.symbol) this.bubble(r, social.symbol, time, reduced);
     else if (!social && pose === "tea" && (time + r.phase) % 13000 < 3500)
@@ -183,23 +184,25 @@ export class HomeRoomArt {
   }
   private bubble(r: Resident, symbol: string, time: number, reduced: boolean) {
     const frame = symbol === "♪" ? 0 : symbol === "♥" ? 1 : 2;
+    const scale = (residentScale * residentDisplayCell(r)) / residentArt.displayCell;
     this.image(
       `emote-${r.id}`,
       homeAsset(`icons-${String(frame)}`),
-      r.x + 19 * residentScale,
-      r.y - 57 * residentScale - (reduced ? 0 : Math.sin(time / 450) * 1.2),
+      r.x + 19 * scale,
+      r.y - 57 * scale - (reduced ? 0 : Math.sin(time / 450) * 1.2),
       symbol === "…" ? 16 : 11,
       2100,
     );
   }
   private effects(r: Resident, pose: string, time: number, reduced: boolean) {
     if (reduced) return;
+    const scale = (residentScale * residentDisplayCell(r)) / residentArt.displayCell;
     const sign = r.left ? -1 : 1,
       phase = ((time + r.phase) % 1800) / 1800;
     if (pose === "tea")
       this.marks
         .fillStyle(0xfff6df, (1 - phase) * 0.7)
-        .fillCircle(r.x + sign * 8 * residentScale, r.y - (25 + phase * 15) * residentScale, 1.2);
+        .fillCircle(r.x + sign * 8 * scale, r.y - (25 + phase * 15) * scale, 1.2);
     if (pose === "garden") this.water(r, time + r.phase);
   }
   private water(r: Resident, time: number) {

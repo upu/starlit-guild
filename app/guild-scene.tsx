@@ -6,7 +6,7 @@ import { residentIds } from "@/lib/home-actor";
 import { roomFurniture } from "@/lib/home-room-layout";
 import { GuildWorkbenchCard } from "./guild-facility-card";
 export type GuildPlace = "workbench" | "shop" | "roles";
-export const guildPlaces = { workbench: "作業台", shop: "種・材料", roles: "担当" };
+export const guildPlaces = { workbench: "作業台", shop: "ショップ", roles: "担当" };
 export function GuildScene({
   state,
   now,
@@ -17,6 +17,7 @@ export function GuildScene({
   onWorkbench: () => void;
 }) {
   const members = residentIds.filter((id) => guildHomeMembers(state).includes(id));
+  const furniture = roomFurniture("home", state.guild?.home);
   const working = guildWorkActive(state, now)
     ? residentIds.find((id) => id === state.guild?.roles.workbench)
     : undefined;
@@ -27,13 +28,16 @@ export function GuildScene({
         members={members}
         layout={state.guild?.home}
         working={working}
+        markers={furniture
+          .filter((item) => item.kind === "bench")
+          .map((item) => ({
+            id: item.id,
+            control: "workbench",
+            label: "作業台の仕込み",
+            hero: state.guild?.roles.workbench,
+          }))}
         onUse={(id) => {
-          if (
-            roomFurniture("home", state.guild?.home).some(
-              (item) => item.id === id && item.kind === "bench",
-            )
-          )
-            onWorkbench();
+          if (furniture.some((item) => item.id === id && item.kind === "bench")) onWorkbench();
         }}
       />
       <GuildWorkbenchCard state={state} now={now} onOpen={onWorkbench} />

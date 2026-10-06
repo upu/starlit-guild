@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import { HomeLife, type RoomActivity } from "@/lib/home-room-life";
-import { residentDisplayPosition } from "@/lib/home-room-presentation";
+import { residentDisplayPosition, residentDisplayCell } from "@/lib/home-room-presentation";
+import { homeMarkerPoint } from "@/lib/home-room-markers";
 import { residentArt, residentHeight, residentIds, type ResidentId } from "@/lib/home-actor";
 import {
   ROOM,
@@ -77,8 +78,11 @@ export class HomeRoomController {
     }
     const person = [...this.life.residents].reverse().find((r) => {
       const p = residentDisplayPosition(r, input.furniture);
+      const ratio = residentDisplayCell(r) / residentArt.displayCell;
       return (
-        Math.abs(p.x - point.x) < 20 && point.y <= p.y + 5 && point.y >= p.y - residentHeight - 2
+        Math.abs(p.x - point.x) < 20 * ratio &&
+        point.y <= p.y + 5 &&
+        point.y >= p.y - residentHeight * ratio - 2
       );
     });
     if (person) this.life.greet(person.id);
@@ -100,6 +104,7 @@ export class HomeRoomController {
     const input = this.bridge.read(),
       reduced = input.reduced || matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.view.update(input.zoomed);
+    this.markers(input.furniture);
     this.life.sync(input.members, input.furniture, input.mode, reduced, input.working);
     if (!input.paused && !input.editing && !document.hidden)
       this.life.tick(delta, input.furniture, reduced);
@@ -120,6 +125,24 @@ export class HomeRoomController {
       this.lastMessage = this.life.event;
       this.bridge.message(this.lastMessage);
     }
+  }
+  private markers(items: Furniture[]) {
+    const canvas = this.scene.game.canvas;
+    const camera = this.scene.cameras.main;
+    const corner = camera.getWorldPoint(0, 0);
+    const scale = (camera.zoom * canvas.clientWidth) / canvas.width;
+    canvas.parentElement?.parentElement
+      ?.querySelectorAll<HTMLElement>("[data-home-marker]")
+      .forEach((button) => {
+        const point = homeMarkerPoint(items, button.dataset.homeMarker ?? "");
+        const x = point ? (point.x - corner.x) * scale : -100;
+        const y = point ? (point.y - corner.y) * scale : -100;
+        const visible =
+          x >= 22 && x <= canvas.clientWidth - 22 && y >= 22 && y <= canvas.clientHeight - 22;
+        button.style.visibility = visible ? "visible" : "hidden";
+        button.style.left = `${String(x)}px`;
+        button.style.top = `${String(y)}px`;
+      });
   }
 }
 export function createHomeRoom(parent: HTMLElement, bridge: HomeBridge, engine: typeof Phaser) {

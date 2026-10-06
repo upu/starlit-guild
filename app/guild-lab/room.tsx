@@ -43,6 +43,7 @@ export default function GuildLab() {
           ))}
         </div>
         <HomeRoom
+          studyControls
           key={site}
           site={site}
           members={[...residentIds]}

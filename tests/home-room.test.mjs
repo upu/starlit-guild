@@ -17,7 +17,12 @@ import {
 import { homeLayoutSchema } from "../lib/home-room-schema.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
 import { homeSocialCue } from "../lib/home-room-social.ts";
-import { teaChairPosition, residentDisplayPosition } from "../lib/home-room-presentation.ts";
+import {
+  teaChairPosition,
+  residentDisplayPosition,
+  residentDisplayCell,
+} from "../lib/home-room-presentation.ts";
+import { homeMarkerPoint } from "../lib/home-room-markers.ts";
 import {
   residentArt,
   residentIds,
@@ -29,6 +34,31 @@ import {
 import { homeFloor, gardenScenery } from "../lib/home-room-scenery.ts";
 import { testState, act } from "../lib/game.ts";
 import { guildSchema } from "../lib/save-guild.ts";
+
+test("seating preserves the standing head width without resizing between tea frames", () => {
+  const anchors = JSON.parse(readFileSync("public/home-pixel/anchors.json", "utf8"));
+  for (const id of residentIds) {
+    const idle = anchors[id][8];
+    const standing = (idle.head.width * idle.scale * residentArt.displayCell) / residentArt.cell;
+    for (const left of [false, true]) {
+      const cell = residentDisplayCell({ id, pose: "tea", left });
+      const frames = anchors[`${id}-tea`].slice(left ? 4 : 0, left ? 8 : 4);
+      const mean = frames.reduce((sum, f) => sum + f.head.width * f.scale, 0) / 4;
+      assert.ok(
+        Math.abs((mean * cell) / residentArt.cell / standing - 1) < 0.02,
+        `${id}/${left}: mean head size`,
+      );
+    }
+  }
+});
+
+test("furniture markers follow the actual saved object, including moved workbenches", () => {
+  const bench = defaultHome.find((f) => f.kind === "bench");
+  const before = homeMarkerPoint(defaultHome, bench.id);
+  const moved = defaultHome.map((f) => (f.id === bench.id ? { ...f, x: f.x - 2, y: f.y + 1 } : f));
+  assert.deepEqual(homeMarkerPoint(moved, bench.id), { x: before.x - 48, y: before.y + 24 });
+  assert.equal(homeMarkerPoint(defaultHome, "removed"), null);
+});
 
 test("tea arrival listens, replies, then sits; reduced motion and taps interrupt safely", () => {
   const life = new HomeLife();
@@ -45,7 +75,10 @@ test("tea arrival listens, replies, then sits; reduced motion and taps interrupt
   assert.equal(homeSocialCue(host, start + 1700).symbol, null);
   assert.equal(homeSocialCue(guest, start + 1700).symbol, "♥");
   assert.equal(homeSocialCue(guest, start + 1700).wave, true);
-  assert.equal(homeSocialCue(guest, start + 1700, true).angle, 0);
+  for (let elapsed = 0; elapsed < 3600; elapsed += 100) {
+    assert.equal(homeSocialCue(guest, start + elapsed).angle, 0);
+    assert.equal(homeSocialCue(host, start + elapsed).angle, 0);
+  }
   const still = structuredClone(life.residents);
   life.tick(80, defaultHome, true);
   assert.deepEqual(life.residents, still);

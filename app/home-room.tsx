@@ -1,5 +1,8 @@
 "use client";
 import { useState } from "react";
+import { ZoomIn, ZoomOut } from "lucide-react";
+import type { HomeMarker } from "@/lib/home-room-markers";
+import { HomeRoomMarkers } from "./home-room-markers";
 import type { Furniture, RoomSite } from "@/lib/home-room-layout";
 import type { ResidentId } from "@/lib/home-actor";
 import type { RoomActivity } from "@/lib/home-room-life";
@@ -16,6 +19,8 @@ export type HomeRoomProps = {
   onLayout?: (items: Furniture[]) => boolean | undefined;
   onUse?: (id: string) => void;
   working?: ResidentId;
+  markers?: HomeMarker[];
+  studyControls?: boolean;
 };
 export function HomeRoom(props: HomeRoomProps) {
   const editor = useFurniture(props);
@@ -47,16 +52,19 @@ export function HomeRoom(props: HomeRoomProps) {
   );
   return (
     <section className="home-room" aria-label="小さな旅団ホーム" data-status={status}>
-      <HomeStage host={host} status={status} retry={retry} zoomed={zoomed} />
-      <RoomControls
-        paused={paused}
-        setPaused={setPaused}
-        reduced={reduced}
-        setReduced={setReduced}
-        zoomed={zoomed}
-        setZoomed={setZoomed}
-        edit={props.onLayout && props.site === "home" && !editor.draft ? editor.edit : undefined}
-      />
+      <HomeStage host={host} status={status} retry={retry} zoomed={zoomed}>
+        <HomeRoomMarkers markers={props.markers ?? []} onUse={props.onUse} />
+        <HomeZoomButton zoomed={zoomed} setZoomed={setZoomed} />
+      </HomeStage>
+      {props.studyControls && (
+        <RoomControls
+          paused={paused}
+          setPaused={setPaused}
+          reduced={reduced}
+          setReduced={setReduced}
+          edit={props.onLayout && props.site === "home" && !editor.draft ? editor.edit : undefined}
+        />
+      )}
       {editor.draft ? (
         <HomeRoomEditor {...editor} />
       ) : (
@@ -68,16 +76,40 @@ export function HomeRoom(props: HomeRoomProps) {
   );
 }
 
+function HomeZoomButton({
+  zoomed,
+  setZoomed,
+}: {
+  zoomed: boolean;
+  setZoomed: (v: boolean) => void;
+}) {
+  return (
+    <button
+      className="home-zoom"
+      aria-label={zoomed ? "部屋全体" : "拡大する"}
+      title={zoomed ? "部屋全体" : "拡大する"}
+      aria-pressed={zoomed}
+      onClick={() => {
+        setZoomed(!zoomed);
+      }}
+    >
+      {zoomed ? <ZoomOut /> : <ZoomIn />}
+    </button>
+  );
+}
+
 function HomeStage({
   host,
   status,
   retry,
   zoomed,
+  children,
 }: {
   host: React.RefObject<HTMLDivElement | null>;
   status: string;
   retry: () => void;
   zoomed: boolean;
+  children: React.ReactNode;
 }) {
   return (
     <div
@@ -86,6 +118,7 @@ function HomeStage({
       aria-label={zoomed ? "拡大した部屋。スワイプか矢印キーで移動、Homeキーで中央へ" : "部屋全体"}
     >
       <div className="home-canvas" ref={host} aria-hidden="true" />
+      {status === "ready" && children}
       {status !== "ready" && (
         <div className="home-loading" role="status">
           {status === "error" ? <button onClick={retry}>景色を読み直す</button> : "部屋を支度中…"}
@@ -100,28 +133,16 @@ function RoomControls({
   setPaused,
   reduced,
   setReduced,
-  zoomed,
-  setZoomed,
   edit,
 }: {
   paused: boolean;
   setPaused: (value: boolean) => void;
   reduced: boolean;
   setReduced: (value: boolean) => void;
-  zoomed: boolean;
-  setZoomed: (value: boolean) => void;
   edit?: () => void;
 }) {
   return (
     <div className="home-controls">
-      <button
-        aria-pressed={zoomed}
-        onClick={() => {
-          setZoomed(!zoomed);
-        }}
-      >
-        {zoomed ? "部屋全体" : "拡大する"}
-      </button>
       {edit && <button onClick={edit}>家具を置く・動かす</button>}
       <button
         aria-pressed={paused}

@@ -19,20 +19,19 @@ export function beginHomeExchange(
   for (const person of [host, guest]) person.until = Math.max(person.until, now + 6500);
 }
 // Respond after a short listening beat; never bounce both people in unison.
-export function homeSocialCue(r: Resident, now: number, reduced = false) {
+export function homeSocialCue(r: Resident, now: number) {
   const exchange = r.exchange;
   if (!exchange || now >= exchange.until) return null;
   const elapsed = now - exchange.startedAt;
   const replying = elapsed >= 1300 && elapsed < 2400;
   const active = exchange.role === "host" ? elapsed < 1000 : replying;
   const together = elapsed >= 2700;
-  const local = elapsed - (exchange.role === "guest" ? 1300 : 0);
   let symbol = together ? "♪" : null;
   if (active) symbol = exchange.role === "host" ? "♪" : "♥";
   return {
     symbol,
     wave: exchange.kind === "welcome" && exchange.role === "guest" && active,
-    angle: reduced || !active ? 0 : Math.sin(Math.min(1, local / 900) * Math.PI) * 2,
+    angle: 0,
   };
 }
 export function cancelHomeExchange(residents: Resident[], id: Resident["id"]) {

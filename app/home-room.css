@@ -16,6 +16,47 @@
   position: absolute;
   inset: 0;
 }
+.home-room .home-zoom {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: #20382ee8;
+}
+.home-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.home-room .home-marker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+}
+.home-marker .guild-duty-face {
+  width: 36px;
+  height: 36px;
+  border-width: 1px;
+  border-radius: 7px;
+}
+.guild-panel .home-stage {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+}
 .home-canvas canvas {
   display: block;
   image-rendering: pixelated;

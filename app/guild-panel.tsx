@@ -140,9 +140,6 @@ export function GuildPanel(props: PanelProps) {
           site={v.site}
           onSite={v.setSite}
           onPlot={v.visit}
-          onRoles={() => {
-            v.visit("roles");
-          }}
         />
       )}
       {v.view === "home" && (

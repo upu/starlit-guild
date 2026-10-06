@@ -7,13 +7,12 @@ export function homeFloor(site: RoomSite, x: number, y: number) {
 }
 // Scenery stays behind the non-walkable north edge. Usable plots still use the
 // shared tile occupancy and tap model; these decorations never block a route.
+const boundary = [42, 142, 242, 342].map((x) => ({ frame: 3, x, y: 58, width: 104 }));
 export const gardenScenery = {
-  linde: [
-    { frame: 0, x: 100, y: 72, width: 120 },
-    { frame: 1, x: 293, y: 72, width: 62 },
-  ],
+  linde: [...boundary, { frame: 1, x: 302, y: 72, width: 48 }],
   brekka: [
-    { frame: 2, x: 102, y: 73, width: 80 },
-    { frame: 3, x: 284, y: 72, width: 136 },
+    ...boundary,
+    { frame: 2, x: 90, y: 72, width: 80 },
+    { frame: 1, x: 302, y: 72, width: 48 },
   ],
 };

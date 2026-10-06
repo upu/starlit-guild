@@ -88,10 +88,15 @@ async function captureSocial(page) {
         c.update(0);
         return c.life.residents.map((r) => ({
           pose: r.pose,
+          angle: c.art.images.get(`r-${r.id}`).angle,
           visible: c.art.images.get(`emote-${r.id}`)?.visible ?? false,
         }));
       },
       { time: start + elapsed },
+    );
+    assert.ok(
+      state.every((r) => r.angle === 0),
+      "greetings never rotate pixel sprites",
     );
     if (name !== "seated") {
       assert.deepEqual(

@@ -5,8 +5,13 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { testState } from "../lib/game.ts";
 import { guildStories } from "../lib/guild-stories.ts";
 import { expressionPortrait } from "../lib/portrait-expressions.ts";
+import sharp from "sharp";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
-const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
+// Full Chromium avoids headless-shell compositing black bands on clipped WebGL canvases.
+const browser = await chromium.launch({
+  channel: "chromium",
+  executablePath: process.env.CHROME_PATH,
+});
 const root = process.env.TEST_ROOT || "http://localhost:5173";
 const output = "work/guild-browser";
 mkdirSync(output, { recursive: true });
@@ -16,6 +21,14 @@ async function open(stages = 37) {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
     deviceScaleFactor: 2,
+  });
+  await context.route("**/app/phaser/home-room-game.ts*", async (route) => {
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      "this.art = new HomeRoomArt(scene);",
+      "this.art = new HomeRoomArt(scene); window.__home = this;",
+    );
+    await route.fulfill({ response, body });
   });
   const page = await context.newPage(),
     state = testState(Date.now(), stages, 40, 10000);
@@ -97,10 +110,66 @@ async function capture(page, name) {
       }),
     );
   });
-  await page.screenshot({ path: `${output}/${name}.png` });
+  const screenshot = await page.screenshot({ path: `${output}/${name}.png` });
+  if (!(await page.locator(".guild-detail").count())) {
+    await checkMarkerPositions(page);
+    const canvas = await page.locator(".home-canvas canvas").boundingBox();
+    if (canvas.y >= 0 && canvas.y + 40 < page.viewportSize().height) {
+      const dpr = await page.evaluate(() => devicePixelRatio);
+      const stats = await sharp(screenshot)
+        .extract({
+          left: Math.round((canvas.x + canvas.width * 0.25) * dpr),
+          top: Math.round((canvas.y + 30) * dpr),
+          width: 10,
+          height: 10,
+        })
+        .stats();
+      assert.ok(
+        stats.channels.slice(0, 3).some((c) => c.mean > 15),
+        `${name}: scene top is painted`,
+      );
+    }
+  }
   const fits = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
   assert.ok(fits, `${name}: no horizontal overflow`);
   results.push({ name, fits });
+}
+async function checkMarkerPositions(page) {
+  const positions = await page.evaluate(() => {
+    const c = window.__home,
+      canvas = c.scene.game.canvas,
+      rect = canvas.getBoundingClientRect();
+    return [...document.querySelectorAll(".home-marker")]
+      .filter((b) => getComputedStyle(b).visibility === "visible")
+      .map((b) => {
+        const r = b.getBoundingClientRect(),
+          world = c.scene.cameras.main.getWorldPoint(
+            ((r.x + r.width / 2 - rect.x) * canvas.width) / rect.width,
+            ((r.y + r.height / 2 - rect.y) * canvas.height) / rect.height,
+          );
+        const item = c.bridge.read().furniture.find((f) => f.id === b.dataset.homeMarker);
+        const picture = c.art.images.get(`f-${item.id}`);
+        return { dx: world.x - picture.x, dy: world.y - (picture.y - 24) };
+      });
+  });
+  assert.ok(
+    positions.every((p) => Math.abs(p.dx) < 1 && Math.abs(p.dy) < 1),
+    "markers stay on furniture after resize/zoom/pan",
+  );
+}
+async function checkMarkerZoom(page) {
+  await page.getByRole("button", { name: "拡大する", exact: true }).click();
+  await page.clock.runFor(150);
+  await page.locator(".home-stage").focus();
+  for (const key of ["ArrowRight", "ArrowRight", "ArrowRight", "ArrowUp", "ArrowUp"])
+    await page.keyboard.press(key);
+  await page.clock.runFor(150);
+  await checkMarkerPositions(page);
+  await page.getByRole("button", { name: "作業台の仕込み", exact: true }).click();
+  await page.locator(".guild-detail").waitFor();
+  await closeDialog(page);
+  await page.getByRole("button", { name: "部屋全体", exact: true }).click();
+  await page.clock.runFor(150);
 }
 async function closeDialog(page) {
   await page.keyboard.press("Escape");
@@ -129,7 +198,7 @@ async function tellStory(page, id) {
       );
     }
     if (i === 1) {
-      await page.getByRole("button", { name: "種・材料", exact: true }).click();
+      await page.getByRole("button", { name: "ショップ", exact: true }).click();
       await page.clock.runFor(10000);
       assert.equal(
         await page.locator(".guild-chat .banter-line").count(),
@@ -154,15 +223,20 @@ try {
   activePage = page;
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
   assert.equal(await page.getByRole("button", { name: "家具を置く・動かす" }).count(), 0);
+  assert.equal(await page.getByRole("button", { name: "一時停止", exact: true }).count(), 0);
+  assert.equal(await page.getByRole("button", { name: "動きを減らす", exact: true }).count(), 0);
   assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
   await capture(page, "overview");
+  assert.equal(await page.locator(".home-zoom svg").count(), 1);
+  assert.equal(await page.locator(".home-zoom").textContent(), "");
+  await checkMarkerZoom(page);
   assert.equal(await page.locator(".guild-toolbar button").count(), 3);
   const density = await page
     .locator(".home-canvas canvas")
     .evaluate((canvas) => canvas.width / canvas.clientWidth);
   assert.ok(Math.abs(density - 2) < 0.02, "canvas keeps device-pixel density");
   await tellStory(page, "guild-waiting-for-a-charm");
-  await page.getByRole("button", { name: "種・材料", exact: true }).click();
+  await page.getByRole("button", { name: "ショップ", exact: true }).click();
   for (const name of ["薬草の種", "ニンジンの種", "苔の胞子", "蜂蜜"]) {
     await page.getByRole("button", { name, exact: true }).click();
     await page.getByRole("button", { name: `${name}を10個購入`, exact: true }).click();
@@ -174,7 +248,7 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   await closeDialog(page);
   await page.getByRole("button", { name: "菜園", exact: true }).click();
-  await page.getByRole("button", { name: "リンデの菜園の担当を選ぶ", exact: true }).click();
+  await page.getByRole("button", { name: "プランター 1", exact: true }).click();
   await page.getByRole("button", { name: "リンデの世話係：アリア", exact: true }).click();
   await closeDialog(page);
   for (const [name, crop] of [
@@ -203,11 +277,11 @@ try {
   assert.deepEqual(await page.locator(".guild-toolbar button").allTextContents(), [
     "ホーム",
     "菜園",
-    "種・材料",
+    "ショップ",
   ]);
   await capture(page, "linde-planted");
   await page.getByRole("button", { name: "ブレッカの栽培所", exact: true }).click();
-  await page.getByRole("button", { name: "ブレッカの栽培所の担当を選ぶ", exact: true }).click();
+  await page.getByRole("button", { name: "苔床", exact: true }).click();
   assert.ok(
     await page
       .getByRole("button", { name: "ブレッカの世話係：アリア（リンデの世話係）", exact: true })
@@ -227,6 +301,11 @@ try {
   ]) {
     await page.setViewportSize({ width, height });
     await capture(page, `garden-${width}`);
+    const widths = await page.evaluate(() => [
+      document.querySelector(".guild-panel").clientWidth,
+      document.querySelector(".phone-guild").clientWidth,
+    ]);
+    assert.ok(Math.abs(widths[0] - widths[1]) <= 1, "guild uses the full game frame width");
     const nav = await page.getByRole("tab", { name: "旅団", exact: true }).boundingBox();
     assert.ok(nav && nav.height >= 44 && nav.y + nav.height <= height, "navigation remains usable");
     const toolbar = await page.locator(".guild-toolbar").boundingBox();
@@ -292,7 +371,9 @@ try {
     ["ブレッカの栽培所", "ブレッカの世話係"],
   ]) {
     await page.getByRole("button", { name: site, exact: true }).click();
-    await page.getByRole("button", { name: `${site}の担当を選ぶ`, exact: true }).click();
+    await page
+      .getByRole("button", { name: site === "リンデの菜園" ? "プランター 1" : "苔床", exact: true })
+      .click();
     await page.getByRole("button", { name: `${role}を外す`, exact: true }).click();
     await closeDialog(page);
   }

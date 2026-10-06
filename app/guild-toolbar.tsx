@@ -21,9 +21,9 @@ export function GuildToolbar({
         <GuildItemIcon id="herb-seed" />
         <span>菜園</span>
       </button>
-      <button data-guild-control="shop" onClick={onShop} aria-label="種・材料">
+      <button data-guild-control="shop" onClick={onShop} aria-label="ショップ">
         <Image src="/ui/shop-stall.png" width={32} height={32} alt="" unoptimized />
-        <span>種・材料</span>
+        <span>ショップ</span>
       </button>
     </nav>
   );
