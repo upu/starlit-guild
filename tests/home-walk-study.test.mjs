@@ -75,9 +75,10 @@ test("Aria's far glove leaves the forward position during the opposite half-stri
   for (let frame = 0; frame < 8; frame++) {
     // Measured delivered-atlas region in front of the waist. This is the far
     // glove in the contact pose, not the nearer glove crossing the skirt.
+    // Short-hair refresh: the re-registered glove begins at x=79 (formerly 81).
     const { data } = await sharp("public/home-pixel/aria.webp")
       .extract({
-        left: (frame % 4) * 128 + 81,
+        left: (frame % 4) * 128 + 79,
         top: Math.floor(frame / 4) * 128 + 75,
         width: 22,
         height: 19,
