@@ -153,6 +153,14 @@
       "sourceBytes": 2281719,
       "outputBytes": 1703038
     },
+    "mira-v3.png": {
+      "sourceHash": "49968db1efb240774beacf86ed8abf276c31b5bfe677ce7ee02e21f8c8ad3b7d",
+      "profileHash": "d712965570d3f226be50acdc0e623e1a25851b8124f5ecd5653e7ff771c1d9d8",
+      "output": "mira-v3.webp",
+      "outputHash": "5b1030a8594cd1313d0f5ba00d5daedb410d9378729050d04bbda0dbc8c95e34",
+      "sourceBytes": 2775583,
+      "outputBytes": 1755618
+    },
     "mira-walk-v3.png": {
       "sourceHash": "2e40107a7e2ec98c8fe7a0ac94afc707913ccb93b038a7168f7f4b37de9feeda",
       "profileHash": "d712965570d3f226be50acdc0e623e1a25851b8124f5ecd5653e7ff771c1d9d8",
@@ -160,6 +168,14 @@
       "outputHash": "b6e1dc8315a97c1817dd83471260845b77a2ca9bdb1d0231a28247ad8a555f1f",
       "sourceBytes": 1582604,
       "outputBytes": 1118800
+    },
+    "mira-work-v1.png": {
+      "sourceHash": "3107cd57ccd2c11d384795206dbf0737c273295df5f23ba7a1f8c44628443392",
+      "profileHash": "d712965570d3f226be50acdc0e623e1a25851b8124f5ecd5653e7ff771c1d9d8",
+      "output": "mira-work-v1.webp",
+      "outputHash": "09f62661ab7e5ee2e258ee59aa9a80d1269e6f31025363fb444a2ab6d734c46c",
+      "sourceBytes": 651107,
+      "outputBytes": 388534
     },
     "mushroom-v1.png": {
       "sourceHash": "d4c38148127cf4238e07cde7bb4a50317a8b269a003301d0de36a918e0e00f8a",

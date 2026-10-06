@@ -34,12 +34,12 @@ export const spriteAsset = (index: number) =>
   index === 0
     ? "/characters/aria-mini-v2.webp"
     : index === 2
-      ? "/animations/mira-v1.png"
+      ? "/characters/mira-mini-v3.webp"
       : index === 4
         ? "/animations/road/lico-standing-v1.webp"
         : originalArt(index) || "/sprites.png";
 export const spriteFrame = (index: number) =>
-  index === 2 ? "8" : spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
+  spriteAsset(index) === "/sprites.png" ? String(index) : undefined;
 type ActiveRun = NonNullable<Squad["run"]>;
 function recentEvents(run: ActiveRun | null, now: number) {
   return run

@@ -18,6 +18,7 @@ import {
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
   ROAD_ARIA_WORK,
+  ROAD_MIRA_WORK,
   roadSheet,
   roadWalkSheet,
 } from "./road-art";
@@ -45,6 +46,7 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_LEDGER_DESK,
       ROAD_SIGNPOST,
       ROAD_ARIA_WORK,
+      ROAD_MIRA_WORK,
       ...(["aria", "leon", "mira", "finn"] as const).flatMap((id) => [
         roadSheet(id),
         roadWalkSheet(id),

@@ -14,7 +14,17 @@
 
 キャラ紹介・必殺演出・冒険画像の待機用表示にも、同じ待機コマから切り出した[静止ミニキャラ](../../public/characters/aria-mini-v2.webp)を使う。`public/sprites.png` の他キャラは変更しない。
 
-## ミラと山道
+## 2026-10-06のミラの更新
+
+最新設定画の薄い灰紫のまとめ髪・重いまぶたと疲れた目元・軽いローブ・月の杖へ合わせ、組み込み `image_gen` でミニキャラを描き起こした。長く下ろした髪と厚いブーツを、編み上げた後頭部の小さなまとめ髪と足首の細いサンダルへ更新する。
+
+道中は[通常16コマ](../../public/animations/road/mira-v3.webp)と[引き手・荷造り4コマ](../../public/animations/road/mira-work-v1.webp)を使用する。通常コマの順は歩行4・詠唱4・待機・採取2・被弾・瞬き・被弾・押し手2。詠唱は攻撃と回復で共用する。共用の引き手素材から専用画像へ切り替え、運搬中もまとめ髪を維持する。
+
+`node scripts/prepare-mira-animation.mjs` で生成原本の人物全体と淡い輪郭を切り出し、384pxセル・足元346pxへ整列する。整列処理はアリアと共通の `scripts/prepare-mini-animation.mjs` を使い、各シート内は同じ倍率を保つ。その後 `npm run road-art:optimize` でロスレスWebPを生成する。別の冒険表示の[12コマPNG](../../public/animations/mira-v3.png)と、キャラ紹介・必殺演出の[静止ミニキャラ](../../public/characters/mira-mini-v3.webp)にも同じ原本を使う。
+
+プロンプト・生成原本・整列座標・ハッシュ・検証は[制作記録](../art-generation/mira-mini-refresh-20261006.json)を参照。以下のミラの説明は旧版の制作履歴。
+
+## ミラと山道（旧版）
 
 ミラは `docs/characters/mira-reference-sheet.webp` を人物の正本、既存の二人の動作画像を画風の参考に、組み込み `image_gen` で制作。採用した `public/animations/mira-v1.png` は1448×1086のRGBA PNGで、歩行4コマ、攻撃・回復の詠唱4コマ、待機・瞬き2コマ、被弾2コマを収録する。細かな塗りの揺れが縮小時に粗く見えたため、輪郭と色面を整理した修正版を採用した。
 

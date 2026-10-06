@@ -1,4 +1,8 @@
 import { originalArt } from "@/lib/original-characters";
+const miniArt: Partial<Record<number, string>> = {
+  0: "/characters/aria-mini-v2.webp",
+  2: "/characters/mira-mini-v3.webp",
+};
 export function Sprite({
   index,
   size = 72,
@@ -24,7 +28,7 @@ export function Sprite({
       />
     );
   const custom = originalArt(index);
-  const art = index === 0 ? "/characters/aria-mini-v2.webp" : custom;
+  const art = miniArt[index] ?? custom;
   return (
     <span
       className={`sprite ${className}`}

@@ -30,7 +30,7 @@ const pose = (input, now = input.now, id = "aria", reduced = false) => {
 };
 
 test("approved sheets have RGBA pixels and exact 384px square frames", () => {
-  for (const id of ["aria", "leon"]) {
+  for (const id of ["aria", "leon", "mira"]) {
     const png = readFileSync(new URL(`../public${heroSheets[id].asset}`, import.meta.url));
     assert.equal(png.subarray(1, 4).toString(), "PNG");
     assert.equal(png.readUInt32BE(16), 1536);
@@ -39,26 +39,38 @@ test("approved sheets have RGBA pixels and exact 384px square frames", () => {
   }
 });
 
-test("Aria's adventure slots retain walking, archery, blink and hurt semantics from the shared mini art", async () => {
-  const main = sharp("assets/source/road/aria-v2.png"),
-    legacy = sharp(`public${heroSheets.aria.asset}`);
-  const order = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 11, 13];
-  const extract = (source, pose) =>
-    source
-      .clone()
-      .extract({ left: (pose % 4) * 384, top: Math.floor(pose / 4) * 384, width: 384, height: 384 })
+for (const [id, version] of [
+  ["aria", 2],
+  ["mira", 3],
+])
+  test(`${id}'s adventure slots retain walking, attack, blink and hurt semantics from the shared mini art`, async () => {
+    const main = sharp(`assets/source/road/${id}-v${version}.png`),
+      legacy = sharp(`public${heroSheets[id].asset}`);
+    const order = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 11, 13];
+    const extract = (source, pose) =>
+      source
+        .clone()
+        .extract({
+          left: (pose % 4) * 384,
+          top: Math.floor(pose / 4) * 384,
+          width: 384,
+          height: 384,
+        })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+    for (const [slot, pose] of order.entries())
+      assert.deepEqual(await extract(legacy, slot), await extract(main, pose));
+    const still = await sharp(`public/characters/${id}-mini-v${version}.webp`)
       .ensureAlpha()
       .raw()
       .toBuffer();
-  for (const [slot, pose] of order.entries())
-    assert.deepEqual(await extract(legacy, slot), await extract(main, pose));
-  const still = await sharp("public/characters/aria-mini-v2.webp").ensureAlpha().raw().toBuffer();
-  const idle = await extract(main, 8);
-  for (let p = 0; p < idle.length; p += 4) {
-    assert.equal(still[p + 3], idle[p + 3]);
-    if (idle[p + 3]) assert.ok(still.subarray(p, p + 3).equals(idle.subarray(p, p + 3)));
-  }
-});
+    const idle = await extract(main, 8);
+    for (let p = 0; p < idle.length; p += 4) {
+      assert.equal(still[p + 3], idle[p + 3]);
+      if (idle[p + 3]) assert.ok(still.subarray(p, p + 3).equals(idle.subarray(p, p + 3)));
+    }
+  });
 
 test("idle blink is brief and reduced motion keeps eyes open", () => {
   const { input } = scene();
@@ -88,19 +100,6 @@ test("walking cycles use actual limb frames and settle into breathing when arriv
   assert.ok(Number(pose(input, 5600).frame) >= 8);
 });
 
-test("Mira pose rectangles fit the native RGBA sheet and retain walk feet beyond equal row cuts", () => {
-  const png = readFileSync(new URL("../public/animations/mira-v1.png", import.meta.url)),
-    width = png.readUInt32BE(16),
-    height = png.readUInt32BE(20);
-  assert.equal(png[25], 6);
-  assert.equal(heroSheets.mira.frames.length, 12);
-  for (const [x, y, w, h] of heroSheets.mira.frames) {
-    assert.ok(x >= 0 && y >= 0 && x + w <= width && y + h <= height);
-    assert.ok(w <= 420 && h <= 378);
-  }
-  assert.ok(heroSheets.mira.frames[0][1] + heroSheets.mira.frames[0][3] > height / 3);
-});
-
 test("Mira walks with her own sheet and casts for healing as well as attacks", () => {
   const { input, run } = scene();
   run.actors.find((actor) => actor.hero === "mira").arrivesAt = 5600;
@@ -108,7 +107,7 @@ test("Mira walks with her own sheet and casts for healing as well as attacks", (
     [5000, 5150, 5300, 5450].map((t) => Number(pose(input, t, "mira").frame)).sort(),
     [0, 1, 2, 3],
   );
-  assert.equal(pose(input, 5600, "mira").asset, "/animations/mira-v1.png");
+  assert.equal(pose(input, 5600, "mira").asset, "/animations/mira-v3.png");
   event(run, 5700, "heal", "mira", "leon");
   assert.deepEqual(
     [5700, 5863, 6025, 6188].map((t) => pose(input, t, "mira").frame),
