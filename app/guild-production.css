@@ -1,0 +1,128 @@
+.guild-facility-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 70px;
+  padding: 10px;
+  border: 1px solid #a28b58;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #443b28, #263e30);
+  color: #f1ddb1;
+  text-align: left;
+}
+.guild-facility-card > svg {
+  width: 42px;
+  height: 42px;
+  flex: none;
+}
+.guild-facility-card > .lucide {
+  width: 18px;
+}
+.guild-facility-card .guild-duty-face {
+  flex: none;
+}
+.guild-facility-copy {
+  display: grid;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.guild-facility-copy b {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.guild-facility-copy small,
+.guild-facility-copy > span {
+  font-size: 11px;
+  color: #c4cea7;
+}
+.guild-production-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 6px 8px 10px;
+}
+.guild-plot-card {
+  gap: 6px;
+  padding: 8px;
+}
+.guild-plot-card > svg {
+  width: 32px;
+  height: 42px;
+}
+.guild-garden-duty {
+  grid-column: 1 / -1;
+  min-height: 62px;
+}
+.guild-pixel-home > .guild-facility-card {
+  width: calc(100% - 16px);
+  margin: 0 8px 10px;
+}
+.guild-facility-card progress,
+.guild-work-status progress {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 5px;
+  background: #162b23;
+}
+.guild-facility-card progress::-webkit-progress-bar,
+.guild-work-status progress::-webkit-progress-bar {
+  background: #162b23;
+}
+.guild-facility-card progress::-webkit-progress-value,
+.guild-work-status progress::-webkit-progress-value {
+  background: #c4cc7b;
+}
+.guild-facility-card progress::-moz-progress-bar,
+.guild-work-status progress::-moz-progress-bar {
+  background: #c4cc7b;
+}
+.guild-facility-copy progress {
+  margin: 4px 0;
+}
+.guild-output-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #a59159;
+  border-radius: 8px;
+  padding: 8px;
+  background: #3d4530;
+}
+.guild-output-preview > svg {
+  width: 48px;
+  height: 48px;
+  flex: none;
+}
+.guild-output-preview > span {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+.guild-output-preview small,
+.guild-production-note {
+  font-size: 11px;
+  color: #c3ccaa;
+}
+.guild-production-note {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+.guild-detail .guild-supply-link,
+.guild-detail .guild-return {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #a38e59;
+  border-radius: 8px;
+  color: #efd59a;
+  background: #304736;
+}
+.guild-detail .guild-supply-link {
+  width: 100%;
+}

@@ -8,6 +8,7 @@ import {
   type Furniture,
 } from "./home-room-layout.ts";
 import { residentNames, residentHand, type ResidentId, type ResidentPose } from "./home-actor.ts";
+import { beginHomeExchange, cancelHomeExchange, type HomeExchange } from "./home-room-social.ts";
 export type RoomActivity = "auto" | "tea" | "craft" | "paper" | "garden";
 export type Resident = {
   id: ResidentId;
@@ -25,6 +26,8 @@ export type Resident = {
   greetUntil: number;
   cycle: number;
   walkDistance: number;
+  exchange?: HomeExchange;
+  seatingUntil?: number;
 };
 const furniturePoses: Partial<Record<Furniture["kind"], ResidentPose>> = {
   table: "tea",
@@ -107,6 +110,9 @@ export class HomeLife {
     for (const resident of this.residents) {
       resident.spot = undefined;
       resident.furniture = undefined;
+      resident.exchange = undefined;
+      resident.seatingUntil = undefined;
+      resident.greetUntil = 0;
     }
     for (const [index, r] of this.residents.entries()) {
       r.furniture = undefined;
@@ -188,6 +194,16 @@ export class HomeLife {
   }
   private updateResident(r: Resident, index: number, delta: number, furniture: Furniture[]) {
     if (this.time < r.greetUntil) return;
+    if (r.seatingUntil) {
+      if (this.time < r.seatingUntil) return;
+      r.seatingUntil = undefined;
+      r.pose = "tea";
+      r.left = faceFurniture(
+        r,
+        furniture.find((item) => item.id === r.furniture),
+      );
+      r.phase = -this.time;
+    }
     if (r.path.length) {
       walkStep(r, delta);
       if (!r.path.length) this.arrive(r, furniture);
@@ -202,24 +218,46 @@ export class HomeLife {
     r.pose = poseFor(item);
     r.left = faceFurniture(r, item);
     r.rear = r.pose === "craft" || r.pose === "paper";
-    r.until = this.time + 32000 + r.phase * 3;
+    r.until = this.time + 32000 + this.residents.indexOf(r) * 4700;
     if (item)
       this.event = `${residentNames[r.id]}が${arrivalText[item.kind] ?? "ひと息ついています"}。`;
+    if (item?.kind === "table") this.welcome(r);
+  }
+  private welcome(guest: Resident) {
+    const host = this.residents.find(
+      (r) =>
+        r.id !== guest.id &&
+        r.furniture === guest.furniture &&
+        r.pose === "tea" &&
+        this.time >= r.greetUntil &&
+        (!r.exchange || this.time >= r.exchange.until),
+    );
+    if (!host) return;
+    beginHomeExchange(host, guest, this.time, "welcome");
+    guest.pose = "idle";
+    guest.seatingUntil = this.time + 3600;
+    guest.left = host.x < guest.x;
+    this.event = `${residentNames[host.id]}が${residentNames[guest.id]}をお茶の席に迎えています。`;
   }
   private social() {
     this.socialAt = this.time + 17000;
-    const seated = this.residents.filter((r) => r.pose === "tea");
+    const seated = this.residents.filter(
+      (r) =>
+        r.pose === "tea" &&
+        this.time >= r.greetUntil &&
+        (!r.exchange || this.time >= r.exchange.until),
+    );
     if (seated.length < 2) return;
     const a = seated[Math.floor(this.time / 17000) % seated.length];
     const b = seated.find((r) => r.id !== a.id && r.furniture === a.furniture);
     if (!b) return;
-    a.greetUntil = this.time + 2200;
-    b.greetUntil = this.time + 3400;
+    beginHomeExchange(a, b, this.time, "chat");
     this.event = `${residentNames[a.id]}と${residentNames[b.id]}が、お茶を片手に笑い合っています。`;
   }
   greet(id: ResidentId) {
     const r = this.residents.find((person) => person.id === id);
     if (!r) return;
+    cancelHomeExchange(this.residents, id);
     r.greetUntil = this.time + 2800;
     this.event = `${residentNames[id]}がこちらに気づいて、笑顔を返しました。`;
   }

@@ -53,6 +53,60 @@ async function fastForward(page, ms) {
     c.update(0);
   }, ms);
 }
+async function captureSocial(page) {
+  const original = await page.evaluate(() => {
+    const c = window.__home;
+    const saved = {
+      residents: structuredClone(c.life.residents),
+      time: c.life.time,
+      event: c.life.event,
+    };
+    c.life.residents = c.life.residents.slice(0, 2);
+    for (const r of c.life.residents) {
+      r.exchange = undefined;
+      r.greetUntil = 0;
+    }
+    const guest = c.life.residents[1];
+    guest.pose = "walk";
+    guest.path = [guest.spot];
+    c.life.tick(33, c.bridge.read().furniture, false);
+    c.update(0);
+    return saved;
+  });
+  const start = await page.evaluate(() => window.__home.life.time);
+  for (const [name, elapsed, hostVisible, guestVisible] of [
+    ["welcome", 450, true, false],
+    ["reply", 1750, false, true],
+    ["together", 2850, true, true],
+    ["seated", 3700, false, false],
+  ]) {
+    const state = await page.evaluate(
+      ({ time }) => {
+        const c = window.__home;
+        while (c.life.time < time)
+          c.life.tick(Math.min(33, time - c.life.time), c.bridge.read().furniture, false);
+        c.update(0);
+        return c.life.residents.map((r) => ({
+          pose: r.pose,
+          visible: c.art.images.get(`emote-${r.id}`)?.visible ?? false,
+        }));
+      },
+      { time: start + elapsed },
+    );
+    if (name !== "seated") {
+      assert.deepEqual(
+        state.map((r) => r.visible),
+        [hostVisible, guestVisible],
+      );
+      assert.equal(state[1].pose, "idle");
+    } else assert.ok(state.every((r) => r.pose === "tea"));
+    await page.locator(".home-stage").screenshot({ path: `${output}/social-${name}.png` });
+  }
+  await page.evaluate((saved) => {
+    Object.assign(window.__home.life, saved);
+    window.__home.update(0);
+  }, original);
+}
 try {
   for (const [width, dpr] of [
     [320, 1],
@@ -110,6 +164,7 @@ try {
       await page.evaluate(() => window.__home.life.residents.every((r) => r.pose === "tea")),
     );
     await page.locator(".home-stage").screenshot({ path: `${output}/tea-${width}.png` });
+    if (width === 390) await captureSocial(page);
     const seated = await page.evaluate(() => {
       const c = window.__home;
       const r = c.life.residents.find((r) => r.seat === 4);
@@ -422,6 +477,7 @@ async function captureWorkbench(page, kind = "bench") {
     const c = window.__home;
     window.__workSnapshot = { residents: c.life.residents, time: c.life.time };
   });
+
   try {
     for (const id of ["leon", "aria", "mira", "finn", "lico"]) {
       const pictures = [];

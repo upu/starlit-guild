@@ -9,6 +9,7 @@ import {
 } from "@/lib/home-actor";
 import { homeFloor, gardenScenery } from "@/lib/home-room-scenery";
 import type { Resident } from "@/lib/home-room-life";
+import { homeSocialCue } from "@/lib/home-room-social";
 import { gardenPlantings, gardenRoot, gardenWater, gardenWetness } from "@/lib/home-garden-water";
 import {
   homeFurnitureScale,
@@ -140,10 +141,12 @@ export class HomeRoomArt {
   resident(r: Resident, time: number, reduced: boolean, furniture: Furniture[]) {
     r = { ...r, ...residentDisplayPosition(r, furniture) };
     const greeting = time < r.greetUntil;
-    const pose = greeting && ["idle", "walk", "garden"].includes(r.pose) ? "wave" : r.pose;
+    const social = homeSocialCue(r, time, reduced);
+    const pose =
+      (greeting && ["idle", "walk", "garden"].includes(r.pose)) || social?.wave ? "wave" : r.pose;
     const { frame, bob, action } = residentAnimation(
       pose,
-      time + r.phase,
+      social && pose === "tea" ? 0 : time + r.phase,
       r.walkDistance,
       reduced,
       r.rear,
@@ -164,11 +167,19 @@ export class HomeRoomArt {
     // Back-view tools have authored handedness: Lico left, the others right.
     // Never mirror a work frame or its tool would change hands.
     image.setFlipX(atlas.flip);
+    if (social) image.setAngle(social.angle * (r.left ? -1 : 1));
+    this.residentBubble(r, pose, time, reduced);
+    this.effects(r, pose, time, reduced);
+  }
+  private residentBubble(r: Resident, pose: string, time: number, reduced: boolean) {
+    const greeting = time < r.greetUntil;
+    const social = homeSocialCue(r, time, reduced);
     if (greeting) this.bubble(r, "♥", time, reduced);
-    else if (pose === "tea" && (time + r.phase) % 13000 < 3500) this.bubble(r, "♪", time, reduced);
+    else if (social?.symbol) this.bubble(r, social.symbol, time, reduced);
+    else if (!social && pose === "tea" && (time + r.phase) % 13000 < 3500)
+      this.bubble(r, "♪", time, reduced);
     else if (pose === "paper" && (time + r.phase) % 16000 < 4000)
       this.bubble(r, "…", time, reduced);
-    this.effects(r, pose, time, reduced);
   }
   private bubble(r: Resident, symbol: string, time: number, reduced: boolean) {
     const frame = symbol === "♪" ? 0 : symbol === "♥" ? 1 : 2;

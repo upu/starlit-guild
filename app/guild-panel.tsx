@@ -20,8 +20,25 @@ type FacilityProps = PanelProps & {
   site: GardenSite;
   onClose: () => void;
   onRestoreFocus: () => void;
+  onShop: () => void;
+  onBack?: () => void;
 };
-function GuildFacility({ sheet, site, onClose, onRestoreFocus, ...props }: FacilityProps) {
+function GuildFacility({
+  sheet,
+  site,
+  onClose,
+  onRestoreFocus,
+  onShop,
+  onBack,
+  ...props
+}: FacilityProps) {
+  const [choices, setChoices] = useState<Record<string, string>>({});
+  const selection = {
+    selected: sheet ? choices[sheet] : undefined,
+    onSelect: (id: string) => {
+      if (sheet) setChoices((previous) => ({ ...previous, [sheet]: id }));
+    },
+  };
   return (
     <Dialog
       open={sheet !== null}
@@ -42,8 +59,15 @@ function GuildFacility({ sheet, site, onClose, onRestoreFocus, ...props }: Facil
             {sheet ? (isPlot(sheet) ? plotName(sheet) : guildPlaces[sheet]) : "旅団"}
           </DialogTitle>
         </DialogHeader>
-        {sheet && isPlot(sheet) && <GuildGarden key={sheet} {...props} id={sheet} />}
-        {sheet === "workbench" && <GuildWorkbench {...props} />}
+        {sheet && isPlot(sheet) && (
+          <GuildGarden key={sheet} {...props} {...selection} id={sheet} onShop={onShop} />
+        )}
+        {sheet === "workbench" && <GuildWorkbench {...props} {...selection} onShop={onShop} />}
+        {sheet === "shop" && onBack && (
+          <button className="guild-return" onClick={onBack}>
+            ← 仕込みに戻る
+          </button>
+        )}
         {sheet === "shop" && <GuildShop {...props} />}
         {sheet === "roles" && <GuildRolePicker {...props} role={site} />}
       </DialogContent>
@@ -52,11 +76,13 @@ function GuildFacility({ sheet, site, onClose, onRestoreFocus, ...props }: Facil
 }
 function useGuildView() {
   const [sheet, setSheet] = useState<Sheet | null>(null),
+    [shopReturn, setShopReturn] = useState<Sheet | null>(null),
     [view, setView] = useState<"home" | "garden">("home"),
     [site, setSite] = useState<GardenSite>("linde");
   const panel = useRef<HTMLDivElement>(null),
     lastControl = useRef<Sheet>("workbench");
   const visit = (next: Sheet) => {
+    setShopReturn(null);
     lastControl.current = next;
     setSheet(next);
   };
@@ -65,59 +91,85 @@ function useGuildView() {
       ?.querySelector<HTMLButtonElement>(`[data-guild-control="${lastControl.current}"]`)
       ?.focus();
   };
-  return { sheet, setSheet, view, setView, site, setSite, panel, visit, restoreFocus };
+  const openShop = () => {
+    setShopReturn(sheet);
+    setSheet("shop");
+  };
+  const back = shopReturn
+    ? () => {
+        setSheet(shopReturn);
+        setShopReturn(null);
+      }
+    : undefined;
+  return {
+    sheet,
+    setSheet,
+    view,
+    setView,
+    site,
+    setSite,
+    panel,
+    visit,
+    restoreFocus,
+    openShop,
+    back,
+  };
 }
 export function GuildPanel(props: PanelProps) {
   const { state, now } = props;
-  const { sheet, setSheet, view, setView, site, setSite, panel, visit, restoreFocus } =
-    useGuildView();
+  const { panel, ...v } = useGuildView();
   if (!guildUnlocked(state)) return null;
   return (
-    <div className={`guild-panel guild-view-${view}`} ref={panel}>
-      <GuildHeading state={state} title={view === "home" ? "星灯りの旅団" : gardenSites[site]} />
-      {view === "home" ? (
+    <div className={`guild-panel guild-view-${v.view}`} ref={panel}>
+      <GuildHeading
+        state={state}
+        title={v.view === "home" ? "星灯りの旅団" : gardenSites[v.site]}
+      />
+      {v.view === "home" ? (
         <GuildScene
           state={state}
           now={now}
-          onAction={props.onAction}
-          ready={props.ready}
           onWorkbench={() => {
-            visit("workbench");
+            v.visit("workbench");
           }}
         />
       ) : (
         <GuildGardenScene
           state={state}
           now={now}
-          site={site}
-          onSite={setSite}
-          onPlot={visit}
+          site={v.site}
+          onSite={v.setSite}
+          onPlot={v.visit}
           onRoles={() => {
-            visit("roles");
+            v.visit("roles");
           }}
         />
       )}
-      {view === "home" && <GuildChat {...props} paused={props.paused === true || sheet !== null} />}
+      {v.view === "home" && (
+        <GuildChat {...props} paused={props.paused === true || v.sheet !== null} />
+      )}
       <GuildToolbar
-        garden={view === "garden"}
+        garden={v.view === "garden"}
         onHome={() => {
-          setView("home");
+          v.setView("home");
         }}
         onGarden={() => {
-          setView("garden");
+          v.setView("garden");
         }}
         onShop={() => {
-          visit("shop");
+          v.visit("shop");
         }}
       />
       <GuildFacility
         {...props}
-        sheet={sheet}
-        site={site}
+        sheet={v.sheet}
+        site={v.site}
         onClose={() => {
-          setSheet(null);
+          v.setSheet(null);
         }}
-        onRestoreFocus={restoreFocus}
+        onRestoreFocus={v.restoreFocus}
+        onShop={v.openShop}
+        onBack={v.back}
       />
     </div>
   );

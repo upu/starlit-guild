@@ -16,6 +16,7 @@ import {
 } from "../lib/home-room-layout.ts";
 import { homeLayoutSchema } from "../lib/home-room-schema.ts";
 import { HomeLife } from "../lib/home-room-life.ts";
+import { homeSocialCue } from "../lib/home-room-social.ts";
 import { teaChairPosition, residentDisplayPosition } from "../lib/home-room-presentation.ts";
 import {
   residentArt,
@@ -28,6 +29,50 @@ import {
 import { homeFloor, gardenScenery } from "../lib/home-room-scenery.ts";
 import { testState, act } from "../lib/game.ts";
 import { guildSchema } from "../lib/save-guild.ts";
+
+test("tea arrival listens, replies, then sits; reduced motion and taps interrupt safely", () => {
+  const life = new HomeLife();
+  life.sync(["leon", "aria"], defaultHome, "tea", false);
+  const [host, guest] = life.residents;
+  guest.pose = "walk";
+  guest.path = [guest.spot];
+  life.tick(33, defaultHome, false);
+  const start = life.time;
+  assert.equal(guest.pose, "idle");
+  assert.equal(host.exchange.peer, guest.id);
+  assert.equal(homeSocialCue(host, start + 450).symbol, "♪");
+  assert.equal(homeSocialCue(guest, start + 450).symbol, null);
+  assert.equal(homeSocialCue(host, start + 1700).symbol, null);
+  assert.equal(homeSocialCue(guest, start + 1700).symbol, "♥");
+  assert.equal(homeSocialCue(guest, start + 1700).wave, true);
+  assert.equal(homeSocialCue(guest, start + 1700, true).angle, 0);
+  const still = structuredClone(life.residents);
+  life.tick(80, defaultHome, true);
+  assert.deepEqual(life.residents, still);
+  for (let n = 0; n < 46; n++) life.tick(80, defaultHome, false);
+  assert.equal(guest.pose, "tea");
+  assert.equal(guest.seatingUntil, undefined);
+  assert.equal(homeSocialCue(guest, life.time), null);
+  assert.ok(guest.until > life.time + 20000, "finishing a greeting does not trigger another trip");
+  for (let n = 0; n < 60; n++) life.tick(80, defaultHome, false);
+  assert.equal(host.exchange.kind, "chat");
+  life.greet("aria");
+  assert.ok(life.residents.every((r) => !r.exchange));
+  assert.ok(guest.greetUntil > life.time);
+  life.sync(["leon"], defaultHome, "tea", false);
+  assert.equal(life.residents[0].exchange, undefined);
+});
+
+test("a lone arrival does not greet an absent partner", () => {
+  const life = new HomeLife();
+  life.sync(["aria"], defaultHome, "tea", false);
+  const guest = life.residents[0];
+  guest.pose = "walk";
+  guest.path = [guest.spot];
+  life.tick(33, defaultHome, false);
+  assert.equal(guest.pose, "tea");
+  assert.equal(guest.exchange, undefined);
+});
 
 test("six accessible seats, legal rooms and reversible furniture edits", () => {
   assert.equal(layoutError(defaultHome), null);

@@ -153,6 +153,7 @@ try {
   const { page, context, initialAt } = await open();
   activePage = page;
   await page.getByRole("tab", { name: "旅団", exact: true }).click();
+  assert.equal(await page.getByRole("button", { name: "家具を置く・動かす" }).count(), 0);
   assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
   await capture(page, "overview");
   assert.equal(await page.locator(".guild-toolbar button").count(), 3);
@@ -182,6 +183,18 @@ try {
   ]) {
     await page.getByRole("button", { name, exact: true }).click();
     await page.getByRole("button", { name: crop, exact: true }).click();
+    await page.getByRole("button", { name: "種を買う", exact: true }).click();
+    await page.getByRole("button", { name: "← 仕込みに戻る", exact: true }).click();
+    assert.equal(
+      await page.getByRole("button", { name: crop, exact: true }).getAttribute("aria-pressed"),
+      "true",
+    );
+    assert.equal(
+      await page
+        .getByRole("button", { name: "リンデの世話係：アリア", exact: true })
+        .getAttribute("aria-pressed"),
+      "true",
+    );
     await capture(page, `plant-${crop}`);
     await page.getByRole("button", { name: "植える", exact: true }).click();
     await closeDialog(page);
@@ -227,6 +240,15 @@ try {
   await page.getByRole("button", { name: "作業台の仕込み", exact: true }).click();
   await page.getByRole("button", { name: "加工担当：ミラ", exact: true }).click();
   await page.getByRole("button", { name: "薬草と蜂蜜のお茶", exact: true }).click();
+  await page.getByRole("button", { name: "材料を買う", exact: true }).click();
+  await page.getByRole("button", { name: "← 仕込みに戻る", exact: true }).click();
+  assert.equal(
+    await page
+      .getByRole("button", { name: "薬草と蜂蜜のお茶", exact: true })
+      .getAttribute("aria-pressed"),
+    "true",
+  );
+  assert.match(await page.locator(".guild-output-preview").innerText(), /完成すると自動で在庫へ/);
   await page.getByLabel("作る回数（1〜99）").fill("");
   assert.ok(await page.getByRole("button", { name: "加工を始める", exact: true }).isDisabled());
   await page.getByRole("button", { name: "材料がある限りくり返す", exact: true }).click();

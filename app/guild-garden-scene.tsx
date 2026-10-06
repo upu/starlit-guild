@@ -3,7 +3,10 @@ import { guildPlots, guildCrops, type GuildPlotId } from "@/lib/guild-content";
 import { residentIds } from "@/lib/home-actor";
 import { HomeRoom } from "./home-room";
 import { plotGrowth, plotName } from "./guild-plot-view";
-import { timeRemaining } from "./guild-controls";
+import { heroes } from "@/lib/game";
+import { gardenStatus } from "@/lib/guild-ui-status";
+import { GuildDutyFace } from "./guild-duty-marker";
+import { GuildItemIcon } from "./guild-item-icon";
 export type GardenSite = "linde" | "brekka";
 export const gardenSites = { linde: "リンデの菜園", brekka: "ブレッカの栽培所" };
 export function GuildGardenScene({
@@ -59,7 +62,6 @@ export function GuildGardenScene({
         now={now}
         onPlot={onPlot}
         onRoles={onRoles}
-        assigned={members.length > 0}
         site={site}
       />
     </>
@@ -72,7 +74,6 @@ function GardenButtons({
   now,
   onPlot,
   onRoles,
-  assigned,
   site,
 }: {
   plots: GuildPlotId[];
@@ -80,45 +81,68 @@ function GardenButtons({
   now: number;
   onPlot: (id: GuildPlotId) => void;
   onRoles: () => void;
-  assigned: boolean;
   site: GardenSite;
 }) {
   return (
-    <div className="guild-pixel-plots">
+    <div className="guild-production-cards">
       {plots.map((id) => {
         const plot = state.guild?.plots[id],
           crop = guildCrops.find((c) => c.id === plot?.crop);
         return (
           <button
             key={id}
+            className="guild-facility-card guild-plot-card"
             data-guild-control={id}
             aria-label={plotName(id)}
             onClick={() => {
               onPlot(id);
             }}
           >
-            {plotName(id)} · {crop?.name ?? "＋ 植える"}
-            {plot?.batch && (
-              <span>
-                <progress
-                  aria-label={`${plotName(id)}の成長`}
-                  value={plotGrowth(plot, now)}
-                  max={1}
-                />
-                {Math.floor(plotGrowth(plot, now) * 100)}% ·{" "}
-                {timeRemaining(plot.batch.readyAt, now)}
-              </span>
-            )}
+            <GuildItemIcon id={crop?.output ?? (site === "brekka" ? "moss-spore" : "herb-seed")} />
+            <span className="guild-facility-copy">
+              <small>{plotName(id)}</small>
+              <b>{crop?.name ?? "＋ 植える"}</b>
+              <small>{gardenStatus(state, id, now)}</small>
+              {plot?.batch && (
+                <span>
+                  <progress
+                    aria-label={`${plotName(id)}の成長`}
+                    value={plotGrowth(plot, now)}
+                    max={1}
+                  />
+                  {Math.floor(plotGrowth(plot, now) * 100)}% · 収穫 ×{plot.batch.quantity}
+                </span>
+              )}
+            </span>
           </button>
         );
       })}
-      <button
-        data-guild-control="roles"
-        aria-label={`${gardenSites[site]}の担当を選ぶ`}
-        onClick={onRoles}
-      >
-        {assigned ? "担当を変更" : "＋"}
-      </button>
+      <GardenDuty state={state} site={site} onRoles={onRoles} />
     </div>
+  );
+}
+
+function GardenDuty({
+  state,
+  site,
+  onRoles,
+}: {
+  state: State;
+  site: GardenSite;
+  onRoles: () => void;
+}) {
+  return (
+    <button
+      data-guild-control="roles"
+      className="guild-facility-card guild-garden-duty"
+      aria-label={`${gardenSites[site]}の担当を選ぶ`}
+      onClick={onRoles}
+    >
+      <GuildDutyFace id={state.guild?.roles[site]} />
+      <span className="guild-facility-copy">
+        <b>{heroes.find((h) => h.id === state.guild?.roles[site])?.name ?? "＋"}</b>
+        <small>{state.guild?.roles[site] ? "担当を変更" : "担当：未選択"}</small>
+      </span>
+    </button>
   );
 }

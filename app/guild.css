@@ -1,6 +1,7 @@
 @import "./guild-stage.css";
 @import "./guild-controls.css";
 @import "./guild-menu.css";
+@import "./guild-production.css";
 .phone-guild {
   height: 100%;
   min-height: 0;
