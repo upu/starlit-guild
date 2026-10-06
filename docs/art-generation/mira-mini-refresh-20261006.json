@@ -1,0 +1,421 @@
+{
+  "date": "2026-10-06",
+  "mode": "built-in image_gen",
+  "references": [
+    "docs/characters/mira-reference-sheet.webp",
+    "public/animations/road/aria-v2.webp"
+  ],
+  "prompts": {
+    "main": "Use case: stylized-concept\nAsset type: production transparent animation atlas for STARLIT-GUILD, Mira the adult moon healer.\nInput image 1 is Mira's latest CHARACTER AND COSTUME REFERENCE ONLY. Input image 2 is the new Aria atlas, STYLE / CHIBI PROPORTIONS ONLY; don't draw Aria or green outfits.\nGenerate a brand-new polished chibi Mira animation sheet, exactly 16 full-body drawings in 4 columns and 4 rows. Approx. 2.2 heads tall, oversized head and small compact body matching Aria's scale, clean readable outlines and broad soft matte painted color areas suitable for 90px game display.\nIDENTITY: muted pale grey-lavender hair gathered into a compact BRAIDED UPDO at back of head, with short loose face framing wisps only. NO long loose hair, flowing ponytail, long braid or waist length hair. Soft tired grey-violet eyes, heavy upper eyelids, subtle grey-violet shadows under eyes (not red blush), pale complexion, patient gentle faint smile even when tired. Preserve approachable adult healer persona, not lively child.\nCOSTUME: white opaque bodice, small dark blue neck ribbon, light white and pale blue-lavender off shoulder outer robe with modest gold motifs, brown waist medical pouches. Light layered robe, small visible sandal feet with dark straps, no bulky boots. White flowers and golden crescent moon hair ornament matching reference. Gold crescent topped staff with pale lavender orb and white flowers; simplify tiny hanging ornaments for readability. Hair and cloth have gentle matte shading, no glossy stripe highlights.\nAll figures face RIGHT in consistent three-quarter side view. Identical head size and body proportions across all 16 drawings; distinct hand and leg poses. Every staff, robe, hand, foot must be fully inside its own cell, separated with generous transparent gutters. Staff put aside in gathering and work frames, not floating. NO large magical effects.\nExact reading order:\nRow1: four walk cycle frames holding staff: forward contact, passing, opposite contact, opposite passing, alternate legs and robe swing visibly.\nRow2: four casting/healing frames: ready with staff, raise staff, extend staff toward right, return from cast; distinct arm/staff angle differences.\nRow3: col1 neutral idle with gentle tired eyes open; col2 kneel to collect herbs; col3 second kneeling herb pose placing leaves into pouch; col4 recoil/hurt leaning back, surprised eyes.\nRow4: col1 brief closed eye idle blink (same pose as idle); col2 recover from hurt; col3 lean forward push cargo hands extending RIGHT, palms forward, NO cart; col4 second push stride hands still forward, different leg position.\nReal transparent alpha background. No checkerboard graphic, no labels/text/numbers/grid, no ground/shadow, no glow, detached particles or separate objects. Exactly16 individual Mira figures. Square atlas.",
+    "work": "Use case: stylized-concept\nAsset type: transparent work animation atlas for STARLIT-GUILD Mira.\nInput image 1: Mira's new chibi atlas is the EXACT character / chibi proportions / outfit / matte painted style reference. Input image 2: current full size reference explains compact braided updo and medical outfit. Generate NEW drawings, exactly FOUR figures in a 2x2 square sheet with real transparent alpha.\nMatch the first reference's 2.2 heads tall compact chibi scale, same oversized head and tiny compact body in all4 poses. Mira has pale muted grey-lavender compact braided updo behind head, ONLY small short face framing wisps, NO long loose hair or ponytail. Crescent/white flower ornament, tired grey-violet eyes, heavy upper eyelids, soft grey-purple shadows under eyes, pale complexion, gentle weary expression. White opaque bodice, dark blue neck ribbon, light white/pale blue-lavender robe with sparse gold motifs, brown waist medical pouches, tiny dark strap sandals. Matte soft hair, no brilliant hair stripes. Work poses without staff.\nView always3/4 facing RIGHT. Exact reading order: top left pulls cargo walking forward to RIGHT while BOTH arms reach BACKWARD toward LEFT and grip a short horizontal cart handle entering from left (no cart body); top right alternating pull stride, both hands still toward LEFT, opposite leg forward. Bothpullposes samehead/torsoheight as mainatlas walking; no stretching body.\nBottom left kneeling and arranging small medical supplies into a cloth parcel at knee level; bottom right second kneeling packing pose tying parcel. Ensure small expressive compact kneeling figures and SAME head size as standing ones.\nEach figure fully isolated in its own quadrant with at least8percent transparent padding, no clipping of hair, cloth, hands, handle, toes. Real transparency, no floor/shadow, checkerboard drawing, labels/text/grid, magical effects or extra floating objects. EXACTLY4 individually drawn complete Mira figures."
+  },
+  "generated": {
+    "main": "C:/Users/spitz/.codex/generated_images/01a10a4b-8393-7db0-a17c-d6830355aa87/exec-abc8a870-d92c-43fd-8d13-b5a985a36441.png",
+    "work": "C:/Users/spitz/.codex/generated_images/01a10a4b-8393-7db0-a17c-d6830355aa87/exec-40729e07-4a36-4f0f-a63a-01273d494408.png"
+  },
+  "preparation": {
+    "script": "scripts/prepare-mira-animation.mjs",
+    "cell": 384,
+    "baseline": 346,
+    "main": {
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "outputDimensions": [
+        1536,
+        1536
+      ],
+      "scale": 0.9777777777777777,
+      "frames": [
+        {
+          "index": 0,
+          "sourceBox": {
+            "left": 47,
+            "top": 6,
+            "width": 279,
+            "height": 318
+          },
+          "width": 273,
+          "height": 311,
+          "left": 56,
+          "top": 35
+        },
+        {
+          "index": 1,
+          "sourceBox": {
+            "left": 369,
+            "top": 1,
+            "width": 244,
+            "height": 325
+          },
+          "width": 239,
+          "height": 318,
+          "left": 73,
+          "top": 28
+        },
+        {
+          "index": 2,
+          "sourceBox": {
+            "left": 658,
+            "top": 0,
+            "width": 260,
+            "height": 324
+          },
+          "width": 254,
+          "height": 317,
+          "left": 65,
+          "top": 29
+        },
+        {
+          "index": 3,
+          "sourceBox": {
+            "left": 994,
+            "top": 0,
+            "width": 245,
+            "height": 330
+          },
+          "width": 240,
+          "height": 323,
+          "left": 72,
+          "top": 23
+        },
+        {
+          "index": 4,
+          "sourceBox": {
+            "left": 49,
+            "top": 323,
+            "width": 286,
+            "height": 322
+          },
+          "width": 280,
+          "height": 315,
+          "left": 52,
+          "top": 31
+        },
+        {
+          "index": 5,
+          "sourceBox": {
+            "left": 334,
+            "top": 314,
+            "width": 293,
+            "height": 325
+          },
+          "width": 286,
+          "height": 318,
+          "left": 49,
+          "top": 28
+        },
+        {
+          "index": 6,
+          "sourceBox": {
+            "left": 640,
+            "top": 328,
+            "width": 360,
+            "height": 317
+          },
+          "width": 352,
+          "height": 310,
+          "left": 16,
+          "top": 36
+        },
+        {
+          "index": 7,
+          "sourceBox": {
+            "left": 994,
+            "top": 323,
+            "width": 244,
+            "height": 317
+          },
+          "width": 239,
+          "height": 310,
+          "left": 73,
+          "top": 36
+        },
+        {
+          "index": 8,
+          "sourceBox": {
+            "left": 46,
+            "top": 630,
+            "width": 262,
+            "height": 310
+          },
+          "width": 256,
+          "height": 303,
+          "left": 64,
+          "top": 43
+        },
+        {
+          "index": 9,
+          "sourceBox": {
+            "left": 331,
+            "top": 640,
+            "width": 268,
+            "height": 307
+          },
+          "width": 262,
+          "height": 300,
+          "left": 61,
+          "top": 46
+        },
+        {
+          "index": 10,
+          "sourceBox": {
+            "left": 610,
+            "top": 642,
+            "width": 278,
+            "height": 296
+          },
+          "width": 272,
+          "height": 289,
+          "left": 56,
+          "top": 57
+        },
+        {
+          "index": 11,
+          "sourceBox": {
+            "left": 925,
+            "top": 628,
+            "width": 314,
+            "height": 312
+          },
+          "width": 307,
+          "height": 305,
+          "left": 39,
+          "top": 41
+        },
+        {
+          "index": 12,
+          "sourceBox": {
+            "left": 45,
+            "top": 931,
+            "width": 261,
+            "height": 309
+          },
+          "width": 255,
+          "height": 302,
+          "left": 65,
+          "top": 44
+        },
+        {
+          "index": 13,
+          "sourceBox": {
+            "left": 347,
+            "top": 935,
+            "width": 235,
+            "height": 295
+          },
+          "width": 230,
+          "height": 288,
+          "left": 77,
+          "top": 58
+        },
+        {
+          "index": 14,
+          "sourceBox": {
+            "left": 658,
+            "top": 934,
+            "width": 262,
+            "height": 301
+          },
+          "width": 256,
+          "height": 294,
+          "left": 64,
+          "top": 52
+        },
+        {
+          "index": 15,
+          "sourceBox": {
+            "left": 978,
+            "top": 930,
+            "width": 242,
+            "height": 310
+          },
+          "width": 237,
+          "height": 303,
+          "left": 74,
+          "top": 43
+        }
+      ]
+    },
+    "work": {
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "outputDimensions": [
+        768,
+        768
+      ],
+      "scale": 0.5089722675367048,
+      "frames": [
+        {
+          "index": 0,
+          "sourceBox": {
+            "left": 80,
+            "top": 17,
+            "width": 517,
+            "height": 626
+          },
+          "width": 263,
+          "height": 319,
+          "left": 61,
+          "top": 27
+        },
+        {
+          "index": 1,
+          "sourceBox": {
+            "left": 684,
+            "top": 19,
+            "width": 522,
+            "height": 628
+          },
+          "width": 266,
+          "height": 320,
+          "left": 59,
+          "top": 26
+        },
+        {
+          "index": 2,
+          "sourceBox": {
+            "left": 95,
+            "top": 659,
+            "width": 499,
+            "height": 579
+          },
+          "width": 254,
+          "height": 295,
+          "left": 65,
+          "top": 51
+        },
+        {
+          "index": 3,
+          "sourceBox": {
+            "left": 720,
+            "top": 658,
+            "width": 448,
+            "height": 568
+          },
+          "width": 228,
+          "height": 289,
+          "left": 78,
+          "top": 57
+        }
+      ]
+    },
+    "legacyOrder": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      12,
+      11,
+      13
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "assets/source/animations/mira-v3-generated.png",
+      "sha256": "347f4ab2a8bdcc73dd671e2a0e49dc7f9d5dcd4d4dff501767223dc71018cd4a",
+      "bytes": 2412051,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha": true
+    },
+    {
+      "path": "assets/source/animations/mira-work-v1-generated.png",
+      "sha256": "e3acafc4aeecd9aa00f15bf1573c284068db1433fe0b110eed66022d106acab9",
+      "bytes": 1860247,
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha": true
+    },
+    {
+      "path": "assets/source/road/mira-v3.png",
+      "sha256": "49968db1efb240774beacf86ed8abf276c31b5bfe677ce7ee02e21f8c8ad3b7d",
+      "bytes": 2775583,
+      "dimensions": [
+        1536,
+        1536
+      ],
+      "alpha": true
+    },
+    {
+      "path": "assets/source/road/mira-work-v1.png",
+      "sha256": "3107cd57ccd2c11d384795206dbf0737c273295df5f23ba7a1f8c44628443392",
+      "bytes": 651107,
+      "dimensions": [
+        768,
+        768
+      ],
+      "alpha": true
+    },
+    {
+      "path": "public/animations/road/mira-v3.webp",
+      "sha256": "5b1030a8594cd1313d0f5ba00d5daedb410d9378729050d04bbda0dbc8c95e34",
+      "bytes": 1755618,
+      "dimensions": [
+        1536,
+        1536
+      ],
+      "alpha": true
+    },
+    {
+      "path": "public/animations/road/mira-work-v1.webp",
+      "sha256": "09f62661ab7e5ee2e258ee59aa9a80d1269e6f31025363fb444a2ab6d734c46c",
+      "bytes": 388534,
+      "dimensions": [
+        768,
+        768
+      ],
+      "alpha": true
+    },
+    {
+      "path": "public/animations/mira-v3.png",
+      "sha256": "7f5f06e5eb439f111225c2cc806201f4f639da0a8547e190a025a7cebff8f02e",
+      "bytes": 2110192,
+      "dimensions": [
+        1536,
+        1152
+      ],
+      "alpha": true
+    },
+    {
+      "path": "public/characters/mira-mini-v3.webp",
+      "sha256": "241fcd3df7996283540f461a62c8d8981e29f45798591cc9404717334b0860e8",
+      "bytes": 101120,
+      "dimensions": [
+        384,
+        384
+      ],
+      "alpha": true
+    }
+  ],
+  "validation": {
+    "unitTests": 366,
+    "checked": [
+      "real alpha and transparent cell margins for all 20 poses",
+      "fixed foot origin and uniform scale across all main/work frames",
+      "alternate steps, reduced motion and enemy interruption freeze",
+      "12 adventure slots retain exact shared RGBA pose pixels",
+      "idle static WebP retains identical visible RGBA pixels",
+      "Aria regeneration through the shared helper is byte-identical to ce630f4",
+      "actual Phaser renderer at 90px / live cycles at 130px, all 20 poses loaded, play/stop, no browser warnings/errors",
+      "all pre-existing managed images unchanged from ce630f4"
+    ],
+    "notPerformed": [
+      "full game playthrough",
+      "physical smartphone check"
+    ],
+    "saveData": "not accessed or modified"
+  }
+}

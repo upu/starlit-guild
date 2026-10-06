@@ -24,7 +24,9 @@ import {
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  miraFrames,
+  ROAD_ARIA_WORK,
+  MINI_CELL,
+  ROAD_MIRA_WORK,
   finnFrames,
 } from "./road-art";
 import {
@@ -102,16 +104,16 @@ export class RoadPainter {
         texture.add(String(index), 0, x, y, w, h);
       return;
     }
-    if (id === "mira") {
-      for (const [index, [x, y, w, h]] of miraFrames.entries())
-        texture.add(String(index), 0, x, y, w, h);
-    } else {
-      for (let index = 0; index < 12; index++) {
-        const frame = roadFrame(id, index);
-        texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
-      }
+    this.registerMainFrames(id);
+    if (id !== "aria" && id !== "mira") this.registerWalkFrames(id);
+  }
+
+  private registerMainFrames(id: Traveller["id"]) {
+    const texture = this.scene.textures.get(roadSheet(id));
+    for (let index = 0; index < (id === "aria" || id === "mira" ? 16 : 12); index++) {
+      const frame = roadFrame(id, index);
+      texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
     }
-    this.registerWalkFrames(id);
   }
 
   private registerWalkFrames(id: Traveller["id"]) {
@@ -124,6 +126,8 @@ export class RoadPainter {
     this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 470, 340, 370, 605);
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
+    this.registerMiniWorkArt(ROAD_ARIA_WORK);
+    this.registerMiniWorkArt(ROAD_MIRA_WORK);
     const push = this.scene.textures.get(ROAD_PUSH);
     const rects = [
       [49, 31, 429, 458],
@@ -176,6 +180,19 @@ export class RoadPainter {
         const [x, y, w, h] = rects[row * 2 + step];
         texture.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
+  }
+
+  private registerMiniWorkArt(asset: string) {
+    const texture = this.scene.textures.get(asset);
+    for (let index = 0; index < 4; index++)
+      texture.add(
+        String(index),
+        0,
+        (index % 2) * MINI_CELL,
+        Math.floor(index / 2) * MINI_CELL,
+        MINI_CELL,
+        MINI_CELL,
+      );
   }
 
   private makeFigure(asset: string, frame: string, name: string): Figure {

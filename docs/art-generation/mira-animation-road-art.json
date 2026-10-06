@@ -41,5 +41,11 @@
     "animation": "public/animations/mira-v1.png",
     "animationSource": "exec-c8ddf079-691c-4587-a4cf-a4ef0a4c245d.png",
     "background": "public/stages/mountain-road.png"
+  },
+  "retiredCharacterArt": {
+    "date": "2026-10-06",
+    "note": "Old Aria and Mira character sprites were removed after replacement. Other assets in this record remain unchanged.",
+    "current": "docs/art/hero-animation-art.md",
+    "historicalCommit": "f0615cf38bf5b7f0576740deec3e2f29374dd2f9"
   }
 }
