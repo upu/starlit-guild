@@ -35,19 +35,20 @@ import { homeFloor, gardenScenery } from "../lib/home-room-scenery.ts";
 import { testState, act } from "../lib/game.ts";
 import { guildSchema } from "../lib/save-guild.ts";
 
-test("seating preserves the standing head width without resizing between tea frames", () => {
+test("seated full-body height stays equal across characters, directions and all tea frames", () => {
   const anchors = JSON.parse(readFileSync("public/home-pixel/anchors.json", "utf8"));
+  const target =
+    (anchors["leon-tea"][0].height *
+      residentDisplayCell({ id: "leon", pose: "tea", left: false })) /
+    residentArt.cell;
   for (const id of residentIds) {
-    const idle = anchors[id][8];
-    const standing = (idle.head.width * idle.scale * residentArt.displayCell) / residentArt.cell;
     for (const left of [false, true]) {
       const cell = residentDisplayCell({ id, pose: "tea", left });
-      const frames = anchors[`${id}-tea`].slice(left ? 4 : 0, left ? 8 : 4);
-      const mean = frames.reduce((sum, f) => sum + f.head.width * f.scale, 0) / 4;
-      assert.ok(
-        Math.abs((mean * cell) / residentArt.cell / standing - 1) < 0.02,
-        `${id}/${left}: mean head size`,
-      );
+      for (const frame of anchors[id + "-tea"].slice(left ? 4 : 0, left ? 8 : 4))
+        assert.ok(
+          Math.abs((frame.height * cell) / residentArt.cell - target) <= 1,
+          id + ": equal tea height",
+        );
     }
   }
 });

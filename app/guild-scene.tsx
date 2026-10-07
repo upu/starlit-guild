@@ -4,7 +4,6 @@ import { guildHomeMembers } from "@/lib/guild-presence";
 import { guildWorkActive } from "@/lib/guild-stage-model";
 import { residentIds } from "@/lib/home-actor";
 import { roomFurniture } from "@/lib/home-room-layout";
-import { GuildWorkbenchCard } from "./guild-facility-card";
 export type GuildPlace = "workbench" | "shop" | "roles";
 export const guildPlaces = { workbench: "作業台", shop: "ショップ", roles: "担当" };
 export function GuildScene({
@@ -40,7 +39,6 @@ export function GuildScene({
           if (furniture.some((item) => item.id === id && item.kind === "bench")) onWorkbench();
         }}
       />
-      <GuildWorkbenchCard state={state} now={now} onOpen={onWorkbench} />
     </div>
   );
 }

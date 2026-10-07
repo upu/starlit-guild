@@ -56,10 +56,6 @@
   grid-column: 1 / -1;
   min-height: 62px;
 }
-.guild-pixel-home > .guild-facility-card {
-  width: calc(100% - 16px);
-  margin: 0 8px 10px;
-}
 .guild-facility-card progress,
 .guild-work-status progress {
   display: block;

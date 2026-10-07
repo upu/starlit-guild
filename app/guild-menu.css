@@ -3,8 +3,7 @@
   box-shadow: inset 0 3px #d9b979;
   color: #ffe4ad;
 }
-.guild-shelf-scene,
-.guild-recipe-scene {
+.guild-shelf-scene {
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -19,8 +18,29 @@
 .guild-shelf-scene {
   aspect-ratio: 0.95;
 }
-.guild-recipe-scene {
-  aspect-ratio: 4 / 3;
+.guild-recipes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.guild-detail button.guild-recipe-choice {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-height: 80px;
+  padding: 8px;
+  border: 1px solid #8e855c;
+  border-radius: 8px;
+  background: #304737;
+  color: #f6e5b8;
+}
+.guild-recipe-choice > svg {
+  width: 40px;
+  height: 40px;
+}
+.guild-detail .guild-recipe-choice[aria-pressed="true"] {
+  border-color: #ffe6a0;
+  background: #66502d;
 }
 .guild-detail button.guild-scene-choice {
   position: absolute;
@@ -39,11 +59,6 @@
 .guild-detail button.guild-product-choice {
   width: 26%;
   height: 29.5%;
-}
-.guild-detail button.guild-recipe-choice {
-  width: 27%;
-  height: 29%;
-  bottom: 1%;
 }
 .guild-scene-choice > span {
   display: grid;

@@ -5,5 +5,10 @@ export function homeMarkerPoint(items: Furniture[], id: string) {
   const item = items.find((f) => f.id === id);
   if (!item) return null;
   const size = furnitureCatalog[item.kind];
-  return { x: (item.x + size.w / 2) * 24, y: (item.y + size.h) * 24 - 24 };
+  // The worker stands in front of the bench. Keep the entry on its far-right
+  // corner, leaving the head and hands visible below the tabletop.
+  return {
+    x: (item.x + size.w / 2) * 24 + (item.kind === "bench" ? 40 : 0),
+    y: (item.y + size.h) * 24 - (item.kind === "bench" ? 48 : 24),
+  };
 }

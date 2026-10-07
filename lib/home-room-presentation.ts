@@ -8,19 +8,11 @@ import {
 import type { Resident } from "./home-room-life.ts";
 import { residentHand, residentArt, type ResidentId } from "./home-actor.ts";
 
-// Head widths measured from public/home-pixel/anchors.json: idle, right tea,
-// left tea (four-pose mean). Chair height must not determine a person's size.
-export const residentHeadWidths: Record<ResidentId, readonly [number, number, number]> = {
-  leon: [52.98, 49.7, 49.5],
-  aria: [58.85, 48.4, 45.88],
-  mira: [61.07, 51.15, 51.8],
-  finn: [54.07, 53.73, 52.6],
-  lico: [52.57, 48.1, 43.15],
-};
 export function residentDisplayCell(r: Pick<Resident, "id" | "pose" | "left">) {
-  if (r.pose !== "tea") return residentArt.displayCell;
-  const widths = residentHeadWidths[r.id];
-  return Math.round((residentArt.displayCell * widths[0]) / widths[r.left ? 2 : 1] / 2) * 2;
+  // Tea sheets already share a full-body height. Matching individual face widths
+  // enlarged narrow faces (especially left-facing Aria/Lico) and their bodies.
+  // Keep Leon's accepted tea size for every character, direction and seat.
+  return r.pose === "tea" ? 68 : residentArt.displayCell;
 }
 
 // The saved footprint and approach cells stay stable. Draw the smaller table

@@ -84,7 +84,9 @@ export class HomeRoomView {
       dy = event.clientY - drag.y;
     drag.moved ||= Math.hypot(dx, dy) > 7;
     if (!this.zoomed || !drag.moved) return;
-    const scale = ROOM.width / this.scene.game.canvas.getBoundingClientRect().width / 2;
+    const canvas = this.scene.game.canvas;
+    const scale =
+      canvas.width / canvas.getBoundingClientRect().width / this.scene.cameras.main.zoom;
     this.center = { x: drag.center.x - dx * scale, y: drag.center.y - dy * scale };
     this.scene.game.canvas.style.cursor = "grabbing";
     this.sync();

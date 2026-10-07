@@ -61,8 +61,13 @@ export class HomeRoomArt {
     return image;
   }
   background(site: RoomSite) {
-    for (let y = 0; y < ROOM.rows; y++)
-      for (let x = 0; x < ROOM.columns; x++) {
+    // Extend scenery into the spare viewport area without stretching the room,
+    // its furniture or people. Occupancy and paths keep the saved 16x13 grid.
+    const camera = this.scene.cameras.main;
+    const start = camera.getWorldPoint(0, 0);
+    const end = camera.getWorldPoint(camera.width, camera.height);
+    for (let y = Math.floor(start.y / ROOM.tile) - 1; y <= Math.ceil(end.y / ROOM.tile); y++)
+      for (let x = Math.floor(start.x / ROOM.tile) - 1; x <= Math.ceil(end.x / ROOM.tile); x++) {
         const { tile, tint } = homeFloor(site, x, y);
         this.image(
           `floor-${String(x)}-${String(y)}`,

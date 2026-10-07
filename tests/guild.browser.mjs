@@ -112,6 +112,15 @@ async function capture(page, name) {
   });
   const screenshot = await page.screenshot({ path: `${output}/${name}.png` });
   if (!(await page.locator(".guild-detail").count())) {
+    const overflows = await page
+      .locator(".phone-guild, .guild-panel, .home-room")
+      .evaluateAll((elements) =>
+        elements.map((el) => ({ name: el.className, extra: el.scrollHeight - el.clientHeight })),
+      );
+    assert.ok(
+      overflows.every((el) => el.extra <= 1),
+      `${name}: guild fits without page scrolling ${JSON.stringify(overflows)}`,
+    );
     await checkMarkerPositions(page);
     const canvas = await page.locator(".home-canvas canvas").boundingBox();
     if (canvas.y >= 0 && canvas.y + 40 < page.viewportSize().height) {
@@ -149,7 +158,10 @@ async function checkMarkerPositions(page) {
           );
         const item = c.bridge.read().furniture.find((f) => f.id === b.dataset.homeMarker);
         const picture = c.art.images.get(`f-${item.id}`);
-        return { dx: world.x - picture.x, dy: world.y - (picture.y - 24) };
+        return {
+          dx: world.x - (picture.x + (item.kind === "bench" ? 40 : 0)),
+          dy: world.y - (picture.y - (item.kind === "bench" ? 48 : 24)),
+        };
       });
   });
   assert.ok(
@@ -226,7 +238,17 @@ try {
   assert.equal(await page.getByRole("button", { name: "一時停止", exact: true }).count(), 0);
   assert.equal(await page.getByRole("button", { name: "動きを減らす", exact: true }).count(), 0);
   assert.equal(await page.getByRole("button", { name: "日常", exact: true }).count(), 0);
+  assert.equal(await page.getByRole("button", { name: "加工の詳細", exact: true }).count(), 0);
   await capture(page, "overview");
+  for (const [width, height] of [
+    [320, 640],
+    [844, 390],
+    [1280, 960],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await capture(page, `home-${width}`);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.locator(".home-zoom svg").count(), 1);
   assert.equal(await page.locator(".home-zoom").textContent(), "");
   await checkMarkerZoom(page);
@@ -333,14 +355,8 @@ try {
   await page.getByRole("button", { name: "材料がある限りくり返す", exact: true }).click();
   await page.getByRole("button", { name: "加工を始める", exact: true }).click();
   const before = await stateOf(page);
-  await page.locator('.guild-recipe-scene .guild-canvas[data-status="ready"]').waitFor();
-  const workingCanvas = page.locator(".guild-recipe-scene canvas");
-  const workingBefore = await workingCanvas.screenshot();
-  await page.clock.runFor(900);
-  assert.ok(
-    !workingBefore.equals(await workingCanvas.screenshot()),
-    "workbench uses animated Phaser artwork",
-  );
+  assert.equal(await page.locator(".guild-workshop canvas").count(), 0);
+  assert.equal(await page.locator(".guild-recipes .guild-recipe-choice").count(), 3);
   await capture(page, "workbench");
   await page.setViewportSize({ width: 320, height: 640 });
   await page.getByRole("button", { name: "加工を中止する", exact: true }).scrollIntoViewIfNeeded();
