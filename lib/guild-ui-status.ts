@@ -1,5 +1,6 @@
 import type { State } from "./game-types.ts";
 import type { GuildBatch } from "./guild-types.ts";
+import type { HomeMarkerStatus } from "./home-room-markers.ts";
 import {
   guildCrops,
   guildRecipes,
@@ -56,4 +57,15 @@ export function workStatus(state: State, now: number) {
   if (recipe && Object.entries(recipe.ingredients).some(([id, n]) => guildStock(state, id) < n))
     return "材料待ち";
   return "在庫の空き待ち";
+}
+
+export function workbenchMarkerStatus(state: State, now: number): HomeMarkerStatus | undefined {
+  const work = state.guild?.work;
+  if (!work && !state.guild?.roles.workbench) return undefined;
+  const status = workStatus(state, now);
+  return {
+    text: status === "材料待ち" ? "材料不足" : status,
+    warning: !!work && (!work.batch || !state.guild?.roles.workbench || work.batch.readyAt <= now),
+    progress: work?.batch ? workProgress(state, now) : undefined,
+  };
 }

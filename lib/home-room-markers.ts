@@ -1,6 +1,13 @@
 import { furnitureCatalog, type Furniture } from "./home-room-layout.ts";
 
-export type HomeMarker = { id: string; control: string; label: string; hero?: string };
+export type HomeMarkerStatus = { text: string; warning: boolean; progress?: number };
+export type HomeMarker = {
+  id: string;
+  control: string;
+  label: string;
+  hero?: string;
+  status?: HomeMarkerStatus;
+};
 export function homeMarkerPoint(items: Furniture[], id: string) {
   const item = items.find((f) => f.id === id);
   if (!item) return null;

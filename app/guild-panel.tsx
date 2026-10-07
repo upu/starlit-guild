@@ -8,7 +8,7 @@ import { GuildToolbar } from "./guild-toolbar";
 import { GuildScene, guildPlaces, type GuildPlace } from "./guild-scene";
 import { GuildGardenScene, gardenSites, type GardenSite } from "./guild-garden-scene";
 import { GuildRolePicker, type GuildProps } from "./guild-controls";
-import { guildLevel, guildPlots, type GuildPlotId } from "@/lib/guild-content";
+import { guildPlots, type GuildPlotId } from "@/lib/guild-content";
 import { guildUnlocked } from "@/lib/guild-base";
 import { plotName } from "./guild-plot-view";
 
@@ -121,10 +121,7 @@ export function GuildPanel(props: PanelProps) {
   if (!guildUnlocked(state)) return null;
   return (
     <div className={`guild-panel guild-view-${v.view}`} ref={panel}>
-      <GuildHeading
-        state={state}
-        title={v.view === "home" ? "星灯りの旅団" : gardenSites[v.site]}
-      />
+      <GuildHeading title={v.view === "home" ? "星灯りの旅団" : gardenSites[v.site]} />
       {v.view === "home" ? (
         <GuildScene
           state={state}
@@ -171,17 +168,11 @@ export function GuildPanel(props: PanelProps) {
     </div>
   );
 }
-function GuildHeading({ state, title }: { state: GuildProps["state"]; title: string }) {
+function GuildHeading({ title }: { title: string }) {
   return (
     <header className="guild-heading">
       <h2>{title}</h2>
-      <p>
-        F級{" "}
-        <span>
-          栽培 Lv.{guildLevel(state.guild?.cultivation ?? 0)} · 加工 Lv.
-          {guildLevel(state.guild?.crafting ?? 0)}
-        </span>
-      </p>
+      <p>F級</p>
     </header>
   );
 }

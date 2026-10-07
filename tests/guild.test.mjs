@@ -12,7 +12,12 @@ import { availableStories } from "../lib/stories.ts";
 import { GUILD_FOUNDING_QUEST } from "../lib/chapter-four.ts";
 import { guildLevel } from "../lib/guild-content.ts";
 import { guildStock } from "../lib/guild-production.ts";
-import { gardenStatus, workStatus, workProgress } from "../lib/guild-ui-status.ts";
+import {
+  gardenStatus,
+  workStatus,
+  workProgress,
+  workbenchMarkerStatus,
+} from "../lib/guild-ui-status.ts";
 import { availableConsumables, consumableStock } from "../lib/consumables.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { portraitAtlases } from "../lib/portrait-expressions.ts";
@@ -24,6 +29,49 @@ const buy = (s, id, quantity = 10) => action(s, "guildBuy", { id, quantity });
 const assign = (s, id, hero) => action(s, "guildAssign", { id, hero });
 const plant = (s, id = "linde-1", name = "herb") => action(s, "guildPlant", { id, name });
 const later = (s, minutes) => skipTo(s, (s.guild?.lastAt ?? s.updatedAt) + minutes * minute);
+
+test("workbench marker distinguishes shortages, active progress, paused work and finished orders", () => {
+  let s = fresh();
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
+  s = assign(s, "workbench", "mira");
+  assert.deepEqual(workbenchMarkerStatus(s, s.updatedAt), {
+    text: "作るものを選ぶ",
+    warning: false,
+    progress: undefined,
+  });
+  s.herbs = 2;
+  s = action(s, "guildCraft", { id: "tea", quantity: 1 });
+  assert.deepEqual(workbenchMarkerStatus(s, s.updatedAt), {
+    text: "材料不足",
+    warning: true,
+    progress: undefined,
+  });
+  s = buy(s, "honey", 1);
+  assert.ok(s.guild.work.batch, "buying the missing material resumes the queued order");
+  const batch = { ...s.guild.work.batch };
+  const halfway = (batch.startedAt + batch.readyAt) / 2;
+  assert.equal(workbenchMarkerStatus(s, halfway).progress, 0.5);
+  assert.equal(
+    workbenchMarkerStatus(s, halfway).warning,
+    false,
+    "consumed ingredients are not a shortage during work",
+  );
+  s = skipTo(s, halfway);
+  s = assign(s, "workbench", undefined);
+  const paused = workbenchMarkerStatus(s, halfway + 3600000);
+  assert.equal(paused.text, "一時停止・担当待ち");
+  assert.equal(paused.warning, true);
+  assert.equal(paused.progress, 0.5);
+  s = assign(s, "workbench", "mira");
+  s.consumables = { items: { "guild-tea": 9999 }, assigned: {} };
+  s = later(s, 30);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).text, "在庫の空き待ち");
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).progress, 1);
+  s.consumables.items["guild-tea"] = 0;
+  s = later(s, 1);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).progress, undefined);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).warning, false);
+});
 
 test("Linde's unreleased second plot cannot plant or restart, but its old crop is harvested once", () => {
   let s = assign(plant(buy(fresh(), "herb-seed")), "linde", "aria");

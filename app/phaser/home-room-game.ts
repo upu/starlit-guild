@@ -142,6 +142,14 @@ export class HomeRoomController {
         button.style.visibility = visible ? "visible" : "hidden";
         button.style.left = `${String(x)}px`;
         button.style.top = `${String(y)}px`;
+        // Keep the status readable at the left edge while panning the room.
+        button.style.setProperty("--status-shift", `${String(Math.max(0, 142 - x))}px`);
+        const statusHeight =
+          button.querySelector<HTMLElement>(".home-marker-status")?.offsetHeight ?? 0;
+        button.style.setProperty(
+          "--status-top",
+          `${String(Math.max(-8, 26 + statusHeight - y))}px`,
+        );
       });
   }
 }

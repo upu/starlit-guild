@@ -4,6 +4,7 @@ import { guildHomeMembers } from "@/lib/guild-presence";
 import { guildWorkActive } from "@/lib/guild-stage-model";
 import { residentIds } from "@/lib/home-actor";
 import { roomFurniture } from "@/lib/home-room-layout";
+import { workbenchMarkerStatus } from "@/lib/guild-ui-status";
 export type GuildPlace = "workbench" | "shop" | "roles";
 export const guildPlaces = { workbench: "作業台", shop: "ショップ", roles: "担当" };
 export function GuildScene({
@@ -34,6 +35,7 @@ export function GuildScene({
             control: "workbench",
             label: "作業台の仕込み",
             hero: state.guild?.roles.workbench,
+            status: workbenchMarkerStatus(state, now),
           }))}
         onUse={(id) => {
           if (furniture.some((item) => item.id === id && item.kind === "bench")) onWorkbench();
