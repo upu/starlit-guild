@@ -26,17 +26,15 @@ export function HomeRoomMarkers({
             )}
           </button>
           {marker.status && (
-            <div
-              id={`home-status-${marker.id}`}
-              className={`home-marker-status${marker.status.warning ? " is-warning" : ""}`}
-            >
-              <span>{marker.status.text}</span>
-              {marker.status.progress !== undefined && (
-                <>
-                  <progress aria-label="作業台の進み具合" value={marker.status.progress} max={1} />
-                  <small>{Math.floor(marker.status.progress * 100)}%</small>
-                </>
-              )}
+            <span id={`home-status-${marker.id}`} className="sr-only">
+              {marker.status.text}
+            </span>
+          )}
+          {marker.status?.progress !== undefined && (
+            <div className="home-marker-status">
+              {!marker.status.warning && <span aria-hidden="true">{marker.status.text}</span>}
+              <progress aria-label="作業台の進み具合" value={marker.status.progress} max={1} />
+              <small>{Math.floor(marker.status.progress * 100)}%</small>
             </div>
           )}
         </div>

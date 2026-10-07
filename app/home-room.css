@@ -82,10 +82,6 @@
   line-height: 1.4;
   text-align: center;
 }
-.home-marker-status.is-warning {
-  color: #ffe09a;
-  border-color: #dcaf54;
-}
 .home-marker-status progress {
   display: block;
   width: 100%;

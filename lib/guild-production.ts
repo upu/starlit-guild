@@ -77,5 +77,8 @@ export function finishWork(s: State, guild: GuildState) {
   guild.crafting = Math.min(10, guild.crafting + 1);
   delete work.batch;
   if (work.remaining !== null) work.remaining--;
-  if (work.remaining === 0) delete guild.work;
+  if (work.remaining === 0) {
+    delete guild.work;
+    delete guild.roles.workbench;
+  }
 }

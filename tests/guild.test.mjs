@@ -34,11 +34,7 @@ test("workbench marker distinguishes shortages, active progress, paused work and
   let s = fresh();
   assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
   s = assign(s, "workbench", "mira");
-  assert.deepEqual(workbenchMarkerStatus(s, s.updatedAt), {
-    text: "作るものを選ぶ",
-    warning: false,
-    progress: undefined,
-  });
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
   s.herbs = 2;
   s = action(s, "guildCraft", { id: "tea", quantity: 1 });
   assert.deepEqual(workbenchMarkerStatus(s, s.updatedAt), {
@@ -69,8 +65,8 @@ test("workbench marker distinguishes shortages, active progress, paused work and
   assert.equal(workbenchMarkerStatus(s, s.updatedAt).progress, 1);
   s.consumables.items["guild-tea"] = 0;
   s = later(s, 1);
-  assert.equal(workbenchMarkerStatus(s, s.updatedAt).progress, undefined);
-  assert.equal(workbenchMarkerStatus(s, s.updatedAt).warning, false);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
+  assert.equal(s.guild.roles.workbench, undefined);
 });
 
 test("Linde's unreleased second plot cannot plant or restart, but its old crop is harvested once", () => {
@@ -246,8 +242,21 @@ test("crafting charges per batch, pauses without a worker, and completes a finit
   s = later(s, 6.25);
   assert.equal(consumableStock(s, "guild-tea"), 1);
   assert.equal(guildStock(s, "honey"), 8);
+  assert.equal(s.guild.roles.workbench, "mira", "keep the worker between ordered batches");
   s = later(s, 9);
   assert.equal(consumableStock(s, "guild-tea"), 2);
+  assert.equal(s.guild.work, undefined);
+  assert.equal(s.guild.roles.workbench, undefined, "release the worker after the final batch");
+  assert.equal(roundtrip(s).guild.roles.workbench, undefined);
+});
+test("finite orders release only the workbench member during offline settlement", () => {
+  let s = assign(assign(buy(fresh(), "honey"), "linde", "aria"), "workbench", "mira");
+  s.herbs = 100;
+  s = action(s, "guildCraft", { id: "tea", quantity: 2 });
+  s = later(roundtrip(s), 600);
+  assert.equal(consumableStock(s, "guild-tea"), 2);
+  assert.equal(s.guild.roles.workbench, undefined);
+  assert.equal(s.guild.roles.linde, "aria");
   assert.equal(s.guild.work, undefined);
 });
 test("repeat crafting resumes on material purchase and caps levels; cancel consumes only the started batch", () => {
@@ -257,6 +266,11 @@ test("repeat crafting resumes on material purchase and caps levels; cancel consu
   s = later(s, 100);
   assert.equal(consumableStock(s, "guild-tea"), 1);
   assert.equal(s.guild.work.batch, undefined);
+  assert.equal(
+    s.guild.roles.workbench,
+    "leon",
+    "repeat orders keep their member while waiting for materials",
+  );
   s = buy(s, "honey");
   assert.ok(s.guild.work.batch);
   s = later(s, 500);

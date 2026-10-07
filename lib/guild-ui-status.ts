@@ -61,11 +61,11 @@ export function workStatus(state: State, now: number) {
 
 export function workbenchMarkerStatus(state: State, now: number): HomeMarkerStatus | undefined {
   const work = state.guild?.work;
-  if (!work && !state.guild?.roles.workbench) return undefined;
+  if (!work) return undefined;
   const status = workStatus(state, now);
   return {
     text: status === "材料待ち" ? "材料不足" : status,
-    warning: !!work && (!work.batch || !state.guild?.roles.workbench || work.batch.readyAt <= now),
-    progress: work?.batch ? workProgress(state, now) : undefined,
+    warning: !work.batch || !state.guild?.roles.workbench || work.batch.readyAt <= now,
+    progress: work.batch ? workProgress(state, now) : undefined,
   };
 }
