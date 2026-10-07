@@ -254,16 +254,6 @@
   display: grid;
   gap: 14px;
 }
-.guild-plot-preview {
-  width: 260px;
-  max-width: 100%;
-  height: 150px;
-  margin: auto;
-}
-.guild-plot-preview svg {
-  width: 100%;
-  height: 100%;
-}
 .guild-seeds {
   display: flex;
   justify-content: center;

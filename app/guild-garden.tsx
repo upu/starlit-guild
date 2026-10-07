@@ -4,7 +4,7 @@ import { guildStock } from "@/lib/guild-production";
 import { GuildRolePicker, type GuildProps } from "./guild-controls";
 import { gardenStatus } from "@/lib/guild-ui-status";
 import { GuildItemIcon } from "./guild-item-icon";
-import { GuildPlotArt, plotGrowth } from "./guild-plot-view";
+import { plotGrowth } from "./guild-plot-view";
 
 type GardenProps = GuildProps & {
   id: GuildPlotId;
@@ -22,9 +22,6 @@ export function GuildGarden({ id, now, onShop, selected, onSelect, ...props }: G
     guildCrops.find((item) => item.id === (plot?.batch ? plot.crop : selection)) ?? crops[0];
   return (
     <section className="guild-planting">
-      <div className="guild-plot-preview">
-        <GuildPlotArt crop={plot?.crop} growth={plotGrowth(plot, now)} planted={!!plot?.batch} />
-      </div>
       <GuildRolePicker {...props} role={plotRole(id)} />
       {plot?.batch ? (
         <div className="guild-growing-status">
