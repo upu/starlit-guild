@@ -103,6 +103,9 @@
 .phone-game.prologue-game .phone-navigation {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.phone-game.prologue-game .phone-navigation.guild-navigation {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .prologue-game .phone-navigation [data-slot="tabs-trigger"] {
   flex: 1;
 }

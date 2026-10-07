@@ -11,4 +11,19 @@
 
 作業ポイントの説明札は [作業画像の下端への追従](../../../app/phaser/road-work-caption.ts) を参照。
 
+旅団は [全身コマのドット絵調描画](../../../app/phaser/home-room-art.ts)。[拡大・パン・タップ](../../../app/phaser/home-room-view.ts)、[動作](../../../lib/home-actor.ts)、[生活と経路](../../../lib/home-room-life.ts)、[マス配置](../../../lib/home-room-layout.ts)、[制作記録](../../art/guild-lab.md) を参照。部位を切り離す合成試作は廃止した。
+
+
 作業ポイントの画像は [全作業文の対応](../../../lib/road-worksite-catalog.ts) → [素材と動作](../../../lib/road-worksite-art.ts) → [表示](../../../lib/chapter-road-work-look.ts)。[全章の点検記録](../../art/worksite-audit.md) と [未登録検査](../../../tests/road-worksites.test.mjs)、`tests/road-worksites.browser.mjs` で追加漏れと小表示を確認する。
+
+歩行の制作見本は [見本の姿勢](../../../lib/home-walk-study.ts) → [比較ページ](../../../app/sprite-lab/walk/study.tsx) → [5人の実素材比較](../../../app/sprite-lab/walk/pilot.tsx)。制作ガイドにだけ関節描画を使い、ゲーム内の全身コマ切替は維持する。検査は `tests/home-walk-study.test.mjs` / `tests/home-walk-study.browser.mjs`。
+
+作業台の制作見本は [手元と上半身の動き](../../../lib/home-work-study.ts) → [無地モデルと台](../../../app/sprite-lab/work/figure.tsx) → [再生と4姿勢](../../../app/sprite-lab/work/study.tsx) → [5人の実素材比較](../../../app/sprite-lab/work/residents.tsx)。[作業コマ生成](../../../scripts/home-work-frames.mjs) で同じ縮尺と足元を揃え、旅団と同じ `*-work.webp`・4姿勢の時刻を使う。事務机も同じ4コマを共用し、比較ページで台を切り替えられる。お茶と [再生処理](../../../app/sprite-lab/study-player.ts) を共有する。検査は `tests/home-work-study.test.mjs` / `tests/home-work-study.browser.mjs`。
+
+菜園の制作見本は [水やりの4姿勢](../../../lib/home-garden-study.ts) → [無地モデルと植物](../../../app/sprite-lab/garden/figure.tsx) → [再生・左右・小表示](../../../app/sprite-lab/garden/study.tsx)。[5人の実素材比較](../../../app/sprite-lab/garden/residents.tsx) と旅団で `*-garden.webp`、[注ぎ口と水滴](../../../lib/home-garden-water.ts) を共用する。作業と共通の配信生成で足元を揃える。保存・生産の判定は既存処理のまま。検査は `tests/home-garden-study.test.mjs` / `tests/home-garden-study.browser.mjs`。
+
+お茶・会話の制作見本は [座位とカップの軌跡](../../../lib/home-tea-study.ts) → [2人と家具の描画](../../../app/sprite-lab/tea/figure.tsx) → [再生・姿勢一覧](../../../app/sprite-lab/tea/study.tsx) → [5人の左右向き比較](../../../app/sprite-lab/tea/residents.tsx)。旅団と同じお茶アトラスと4姿勢の時刻を使い、利き手を反転せず切り替える。検査は `tests/home-tea-study.test.mjs` / `tests/home-tea-study.browser.mjs`。
+
+歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。ミラ・フィンの後半だけは色味と頭身を合わせた `*-walk-v10-b.png` を使う。[読み取り](../../../scripts/home-walk-frames.mjs) の `walkSourceName` → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。2人の頭幅・髪色の回帰検査は `tests/home-walk-identity.test.mjs`。
+
+施設アイコンは [座標と型](../../../lib/home-room-markers.ts) → [React操作](../../../app/home-room-markers.tsx) → `app/phaser/home-room-game.ts` のカメラ投影。着席時の頭幅合わせと椅子・道具の位置は [表示寸法](../../../lib/home-room-presentation.ts)。実画面の幅・担当・拡大は `tests/guild.browser.mjs`、茶席の反応と回転なしの確認は `tests/home-room.browser.mjs`。

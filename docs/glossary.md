@@ -86,6 +86,8 @@
 
 ## キャラクターID
 
+旅団の日常はシーン種類 `guild`、IDは `guild-waiting-for-a-charm`、`guild-readable-labels`、`guild-which-finger`、`guild-a-better-sales-pitch`、`guild-a-cup-at-the-desk`、`guild-a-reason-to-visit`、`guild-the-second-shelf`。初収穫後の追加会話は `guild-first-harvest`。クエストを追加せず、思い出の章分類には4-10の `starlit-guild-founding` を参照する。本文は [旅団のゲーム内台本](story/game-script/guild.md)、解放と実装状況は [第五章](gameplay/chapter-five-gameplay.md) を参照する。
+
 人物の名前・別名・IDは [キャラクター一覧](characters/README.md) が正本。ここには写さない。個別資料は `docs/characters/<キャラID>.md`。
 
 ## よく出る言葉

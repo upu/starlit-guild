@@ -1,6 +1,6 @@
 {
   "name": "starlit-guild",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": true,
   "license": "UNLICENSED",
   "devEngines": {
@@ -13,8 +13,8 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
-    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
+    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize",
+    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --hostname 0.0.0.0 --port 5173",
     "build": "vinext build",
@@ -42,7 +42,9 @@
     "social-card:generate": "node scripts/generate-social-card.mjs",
     "social-card:check": "node scripts/generate-social-card.mjs --check",
     "presets:generate": "node scripts/generate-test-presets.mjs",
-    "presets:check": "node scripts/generate-test-presets.mjs --check"
+    "presets:check": "node scripts/generate-test-presets.mjs --check",
+    "home-art:optimize": "node scripts/build-home-pixel.mjs",
+    "home-art:check": "node scripts/build-home-pixel.mjs --check"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

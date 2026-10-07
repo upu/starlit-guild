@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "referenceModel": "lib/home-walk-study.ts",
+  "records": [
+    {
+      "name": "leon",
+      "prompt": "Use case: precise-object-edit. Asset: LEON eight-frame walking sprite sheet for a tiny indoor pixel-style RPG, 1536x1024 RGBA, 4 columns by 2 rows in chronological order.\nInput1 is the EDIT TARGET and exact costume/face/style. Input2 is the APPROVED MOTION reference only. Keep input1's character, dark brown outline, detailed but compact pixel-like shading, narrowed face, proportions, red scarf/cape, blue coat, cream sleeves, silver shoulder pad, brown gloves/trousers/boots. Change only limb poses to better follow input2.\nMain corrections: in frame4 (top right), move NEAR forearm/hand gently forward below belt height, not straight down. In frames5 and6 (bottom left and second), shorten the split stance substantially: far boot in front almost directly beneath the face, near boot behind almost beneath the cape attachment, no lunging. Frame5 near arm modestly forward and nearly straight, hand alongside upper thigh; frame6 halfway returning to neutral. Far arm swings opposite: forward in frames1/2/8, hidden behind torso in4/5/6, down in3/7. No hand stays extended at the belly. Near hand rearward1, less rearward2, straight down3, slightly forward4, most forward5, less forward6, down7, rearward8.\nKeep frame-to-frame head scale and face EXACTLY consistent. Preserve both boots' brown materials and correctly alternating near/far legs. Do not copy orange/cyan mannequin colors. Don't enlarge limbs or simplify costume. Preserve all8 full-body cells, generous transparent gutters. Small relaxed gait, no high knees or running. Exact same canvas layout. No background, floor, shadow, text, grid or guide lines. TRUE TRANSPARENT BACKGROUND.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-study-v1.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png"
+      ],
+      "rejectedReason": "5コマ目が接地姿勢から中立へ変化したため、このままでは未採用",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-5645b18e-8786-458c-9c20-9f130e21c3c7.png",
+      "adopted": false,
+      "reason": "5コマ目が中立姿勢に戻った"
+    },
+    {
+      "name": "leon-retake",
+      "prompt": "Edit target reference1. Change ONLY the bottom-left frame (frame5) and bottom-row second frame (frame6). Restore these two poses from the corresponding bottom-left and bottom-second frames of reference2: the NEAR arm with silver shoulder plate is swung FORWARD, hand in front of the belt but LOWER than belt; NEAR leg points BACK with boot behind, FAR leg steps FORWARD with boot in front. These are the opposite step to frame1. Do not collapse frame5 into a neutral standing pose! Make the split between feet approximately 85% as wide as reference2. In frame6 bring the hand and rear foot partway back toward vertical. Keep shoulders upright, hand below belt, elbow only slightly bent. Leave all other six frames exactly as reference1. Preserve head, face, costume, cape, colors, style, proportions and all transparent gutters. Full eight-frame 4x2 sprite sheet,1536x1024,true transparent RGBA,no background.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-5645b18e-8786-458c-9c20-9f130e21c3c7.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-study-v1.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+      "adopted": true,
+      "reason": "前後の腕の交代と足を通す姿勢を確認。歩幅は見本より広い"
+    },
+    {
+      "name": "aria",
+      "prompt": "Use case: precise-object-edit. Redraw ONLY the walking arm and leg poses in reference1 (ARIA). Preserve her face, narrower cheek shape, golden hair and flower, elf ears, green cape, short white skirt, brown gloves, gold-laced boots, exact outlines/shading, proportions and head scale. Same1536x1024 transparent 4x2eight-frame sprite sheet.\nReference2 is the accepted walk MOTION, not appearance. Its orange limbs mean near arm/leg and blue limbs mean far arm/leg. Match the corresponding pose in every cell using ARIA'S OWN skin/clothes, never orange/blue.\nCrucial: her FAR HAND currently stays in front of her belly in nearly all frames. Remove this stuck-forward pose. Far arm swings FORWARD LOW in frames1/2, straight down3, BACK BEHIND torso/cape and NOT VISIBLE in4/5/6, down7, returning forward8. Near arm swings oppositely: behind hip1, slightly behind2, down3, slightly forward4, maximum forward5, returning6, down7, back8. Hands stay below belt; elbows almost straight. No fist raised to chest, no permanently held-out fist.\nLegs must actually alternate: NEAR leg forward in1/2 and FAR leg behind. In5/6 FAR leg forward and NEAR leg behind; near thigh crosses in front of far thigh but points backward, boot behind. Frame3 far foot passing/lifting,4 far foot moving forward;7 near foot passing/lifting,8 near foot moving forward. Quiet small indoor steps, no skipping, lunging, high knees. Keep normal thigh/boot anatomy. Slight cape follow-through only. Same scale and head alignment throughout. Preserve original art style, do not turn into a mannequin. Eight complete full bodies, equal cells, clear gutters, TRUE transparent background, no floor/shadow/text/grid/markers.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-walk-v6.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-1f67bf63-c404-4e6c-ab4d-ea3641044aaf.png",
+      "adopted": false,
+      "reason": "奥の腕は改善したが脚を通す姿勢が弱い"
+    },
+    {
+      "name": "aria-retake",
+      "prompt": "Identity replacement / animation pose transfer. Reference1 is the MASTER WALK SHEET. Keep its eight limb poses and relative near/far leg overlap EXACTLY. Replace the boy in every frame with ARIA from reference2. Reference2 defines only her face, body proportions, costume, materials and line/shading style, NOT the leg poses. Important: the reference2 legs are wrong, always the same leg forward. Do not copy their poses.\nDraw Aria's elf ears, golden hair and white flower, green leaf-embroidered cape, puffed cream sleeves, brown corset/gloves, short layered white skirt, exposed thighs and laced brown boots. Same face/proportions as reference2, not Leon. No red cape or shoulder armor. Arms are the master poses with her own sleeves/gloves. Near arm forward means far arm hidden behind torso.\nCopy reference1's actual LEFT-RIGHT alternating leg geometry: frame1 NEAR thigh slopes down-right and near boot in FRONT; frame5 NEAR thigh slopes down-left to the BACK with visible front side of thigh crossing over FAR leg that steps forward. Frame4 far knee lifted IN FRONT of near leg, frame7 near knee bent with heel raised behind. Shorten reference1's biggest stride a little for her smaller body. Do not mirror entire character: all faces point screen-right. Keep8frames4x2,1536x1024,transparent RGBA,clear gutters,full bodies,no background/text/floor/shadow.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-1f67bf63-c404-4e6c-ab4d-ea3641044aaf.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e45cbe86-fe47-45c5-838b-34843a4c0245.png",
+      "adopted": true,
+      "reason": "奥の手が隠れる中盤、足を通す3・4・7コマを確認"
+    },
+    {
+      "name": "mira",
+      "prompt": "Use case: identity-preserve / pose transfer. Reference1 is the MASTER eight-frame walk; reference2 is MIRA's exact appearance/style. Replace Leon in EVERY corresponding frame of reference1 with Mira from reference2, preserving the master limb poses and alternating legs. Do not copy reference2's old leg poses which incorrectly repeat one leg. 1536x1024,4 columns2rows8 chronological full-body frames,real transparent RGBA.\nKeep Mira's tired half-lidded eyes and gentle smile, muted lilac braided/bundled hair, crescent+white flower+navy bow, pale skin, white dress and gold-patterned wide white sleeves with navy lining, brown belt/pouches, sandal boots, original narrowed face/proportions, thick dark-brown outlines and pixel-like painted shading. No Leon costume or orange/blue mannequin colors. Her sleeve shape follows lowered arms; hands stay at hip/thigh level, never reaching in front of chest.\nNear arm back1/2, down3, forward4/5, returning6, down7,back8. Far arm inverse, hidden BEHIND torso in4/5/6, visible forward-low1/2/8. Feet: near forward1 then supports2/3/4 while FAR knee passes forward in3/4; FAR leg forward5 then supports6/7/8 while NEAR foot passes in7/8. Copy reference1's knee overlap and foot order, not just wiggle the same front foot. Relaxed small strides, Mira slightly subdued but SAME phase sequence. No high running knees. Do not change the head/face shape, outfit proportions or character height frame-to-frame. No floor/shadow/text/grid/background. Generous transparent gutters.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-d5de6293-08ce-4b7d-9564-dd0e00aa6b0c.png",
+      "adopted": false,
+      "reason": "レオンのコート裾・靴の装飾が混入"
+    },
+    {
+      "name": "finn",
+      "prompt": "Identity-preserving animation pose transfer. Reference1 = MASTER WALK POSES only, reference2 = FINN, the only source for ALL face/hair/clothes/style. Draw Finn in the eight corresponding limb poses of reference1. Exact1536x1024 transparent RGBA sheet4columns2rows8frames. Keep Finn's brown tied-back hair, mature lazy half-lidded face/stubble/gold earring, long olive-brown coat with embroidered gold hem, open cream shirt, brown pants/boots/belt. Preserve reference2's face width, proportions, dark outline weight, painted pixel-like rendering. No Leon blue coat/armor/cape/scarf. No new accessories.\nCorrect alternating arm/leg cycle, not the old repeated leg poses in reference2. Near arm back1,less back2,down3,forward4,most forward5,returning6,down7,back8; FAR arm inverse, hidden behind torso4/5/6 and low forward1/2/8. Hands stay near hips and upper thighs, no chest-height reaching/punching; elbows relaxed almost straight. Near leg forward1/2,then supports while far foot passes3/4; FAR leg forward5/6 while near thigh extends backward, near foot passing7/8. Copy the master's knee overlap and foot order. Small steps with gentle head bob, not running. Same exact scale/head size and calm expression everyframe. Full bodies with empty gutters. No text/grid/floor/shadow/background. Real transparent alpha.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ae3edd99-3d2d-4958-8d06-a0b2a90e9d11.png",
+      "adopted": false,
+      "reason": "ブーツにレオンの金の紋が混入"
+    },
+    {
+      "name": "lico",
+      "prompt": "Animation identity-preserving pose transfer. Reference1 is ONLY the master eight walk POSES. Reference2 is LICO and the ONLY source of character design: face, tied-back central ponytail (not side ponytail), auburn hair, green eyes, glasses, red cape/dress with cream trim, cream puffed sleeves, black-brown bodice, green herb ornament at belt, strapped open-toe sandals. Preserve reference2 EXACT design, outline thickness, narrow cheek shape, proportions and pixel-like paint. No costume pieces from reference1; no blue coat, gold boot decorations, leather boots, silver armor or red scarf.\nReplace person in each pose of reference1 with Lico. The old reference2 leg poses repeat incorrectly; use master near/far alternating limbs. Near arm behind1/2, down3, forward-low4/5, returning6,down7,behind8. Far arm inverse, goes BEHIND body and invisible4/5/6. Hands below belt, relaxed almost-straight elbows, not held up at chest. Near foot forward1/2; far leg passes and advances3/4; FAR foot forward5/6 while NEAR leg clearly points backward; near foot passes7/8. Preserve left/right limb anatomy, no mirroring whole character. All8 face screen-right. Modest small indoor stride, no running/high knees. Her central back ponytail gently follows, never moves to side of head. Same head size and scale across8. Exact1536x1024 transparent RGBA4x2,8 full bodies,clear gutters,no text/floor/shadow/background/grid.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-d16d4e54-a674-47ff-aa0b-abffc2edf6e2.png",
+      "adopted": false,
+      "reason": "マントにレオンの金の紋、6・7コマの腕の順が崩れた"
+    },
+    {
+      "name": "mira-retake",
+      "prompt": "Precise costume correction only. Edit reference1 MIRA eight-frame sprite sheet. Keep ALL limb positions and poses, every face/hair/head size, every cell placement unchanged. Restore ONLY these mistaken costume details to reference2: remove the navy-blue triangular COAT TAILS with thick cream border near waist/hips that came from another character (especially frames4/5/6). Replace with MIRA'S own white layered dress and its folds under her sleeves. Preserve her separate long white/gold robe with navy LINING in back; do not delete real robe. Remove the tiny gold flower/star motifs and broad solid gold cuff that incorrectly appeared on boots: sandals have reference2's simple brown straps, exposed toes, slim straps around calf, no golden flower motifs. All existing pose silhouettes/feet directions stay unchanged. Never copy reference2's poses.1536x1024 transparent RGBA4x2,no background/floor/shadows/text.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-d5de6293-08ce-4b7d-9564-dd0e00aa6b0c.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ae51d701-d303-43b0-98b3-8ab39202c3aa.png",
+      "adopted": false,
+      "reason": "コート裾は解消したが靴の覆う範囲が変化"
+    },
+    {
+      "name": "finn-retake",
+      "prompt": "Edit reference1 (FINN). ONE tiny correction only: remove the little gold flower/star emblems that appeared on the front of his brown boots. The boots must be plain brown leather with broad brown folded cuff, seam and stitching as in reference2. Do NOT change any limb pose, foot position, costume silhouette, face/hair, line style, scale, cell layout or colors elsewhere. Eight frames4x2,1536x1024,real transparent background. Keep all8 complete full-body frames.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ae3edd99-3d2d-4958-8d06-a0b2a90e9d11.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0e8ddadc-e1ac-4a48-b2fd-04b517d654c1.png",
+      "adopted": true,
+      "reason": "ブーツの金の紋を除去し、腕の順を維持"
+    },
+    {
+      "name": "lico-retake",
+      "prompt": "Precise corrections to LICO sprite sheet reference1. Preserve all eight cells, faces/head scale/hair/ponytail, line style, red dress, sandals and current leg poses. Two corrections:\n1. Remove the GOLD STAR motif from the red cape: it was accidentally borrowed from another character. Restore reference2's red-and-dark patterned fabric with narrow gold edging, no gold star emblem, allframes.\n2. Bottom-row second frame(frame6): NEAR arm must still be slightly forward, hand just in front of hip and below belt, returning from bottom-left frame5. It must NOT already swing backward. FAR hand hidden behind torso. Bottom-row third(frame7): both arms pass down; near hand hangs beside hip, far hand is nearly occluded by body and only a tiny edge at lower side may show, not held forward. Bottom-row fourth(frame8) far hand may swing forward again.\nDo not alter other poses. Hands always empty, relaxed. No extra costume changes.1536x1024,4x2eight full-body frames,true transparent RGBA,no ground/shadow/text/grid/background.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-d16d4e54-a674-47ff-aa0b-abffc2edf6e2.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ace437fd-352d-431f-bd48-91a7e798e155.png",
+      "adopted": true,
+      "reason": "紋を除去、6・7コマの腕の戻りを修正"
+    },
+    {
+      "name": "mira-footwear",
+      "prompt": "Change ONLY Mira's footwear in reference1 to match reference2's original footwear. Reference1 now incorrectly has thin gladiator straps and almost fully bare shins. Reference2 has dark brown leather sandal-BOOTS: mostly solid brown boot shafts with small diamond/lacing openings, small toe opening, low brown soles. Copy precisely that coverage and laced leather pattern from reference2 onto each currently posed leg in reference1. No gold flower emblems, no broad golden boot cuff. Preserve ALL8 exact limb poses/positions and everything above the knees in reference1, including corrected white dress, tired face, hair, sleeve shapes. Do not bring back any navy-blue coat tails with cream border.1536x1024,4x2whole-body sprites,true transparent RGBA,no other changes.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ae51d701-d303-43b0-98b3-8ab39202c3aa.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v6.png"
+      ],
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f52cc8a4-0ab7-4be3-b541-578fcc666c06.png",
+      "adopted": true,
+      "reason": "白いドレスと本来のサンダルブーツへ戻し、腕の順を維持"
+    }
+  ],
+  "selected": {
+    "leon": {
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9e811ea1-e431-4c1f-a718-51f502d43f33.png",
+      "source": "assets/source/home-pixel/leon-walk-v7.png"
+    },
+    "aria": {
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e45cbe86-fe47-45c5-838b-34843a4c0245.png",
+      "source": "assets/source/home-pixel/aria-walk-v7.png"
+    },
+    "mira": {
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f52cc8a4-0ab7-4be3-b541-578fcc666c06.png",
+      "source": "assets/source/home-pixel/mira-walk-v7.png"
+    },
+    "finn": {
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0e8ddadc-e1ac-4a48-b2fd-04b517d654c1.png",
+      "source": "assets/source/home-pixel/finn-walk-v7.png"
+    },
+    "lico": {
+      "generated": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-ace437fd-352d-431f-bd48-91a7e798e155.png",
+      "source": "assets/source/home-pixel/lico-walk-v7.png"
+    }
+  },
+  "notes": [
+    "生成11回、最終5枚を採用。旧v6と比較専用の旧レオン試作はwork/pixel-home/unused-retakesへ移動。過去指示の参照パスは生成時点を記録。",
+    "見本と全関節の位置は完全一致していない。歩幅や衣装による遮蔽には差があり、比較ページで継続確認できる。",
+    "背面歩行、待機、茶、作業の画像は変更しない。配信の下2段8コマは不透明・半透明の色とalphaが一致。透明画素のRGBだけに圧縮差がある。actions画像はバイト一致。"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "tool": "image_gen__imagegen",
+  "date": "2026-10-04",
+  "approvedReference": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-6a707dc8-3efb-4778-b7be-e4f9c5b73285.png",
+  "scope": "Mira tea only; narrower full face and higher eyes/eyebrows. Hair/head outer size retained; sleepy eyelids.",
+  "calls": [
+    {
+      "direction": "right",
+      "prompt": "画像1の中央『目元を少し上へ』のミラの顔がユーザー採用済みの正本です。この中央の顔を画像2のお茶の4コマ全てに反映してください。顔の細い輪郭、こめかみからあごまで細めた顔の横幅、上へ移した目と眉の位置を正確に引き継ぐ。頬だけではなく目の幅・目の間隔も含めた顔全体が細い。画像2の旧顔の丸く横に広がった形を残さない。目の開きは画像1中央よりほんの少し重たい上まぶたにして、紫の瞳・薄い灰紫の目の下の影・穏やかな微笑みを保つ。鼻と口は画像1中央の配置。頭や髪全体は縮小しない。画像2の髪の外形、衣装、装飾、椅子、脚、4つのお茶の姿勢、右手でカップを持つこと、左手が膝の上にあることは維持。全4コマで同じ顔・頭のサイズと顔の比率にする。3コマ目だけは目を閉じて飲むが、閉じ目も新しい高めの目の位置。出力は画像2と同じ1536x1024、2列2行、透明RGBAスプライトシート。背景・後光・影・文字はなし。比較図は作らず実際に使う全身4コマの絵を出す。",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-6a707dc8-3efb-4778-b7be-e4f9c5b73285.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png"
+      ],
+      "output": "exec-b45a45e7-694e-4fb8-899a-3376302c08e6.png",
+      "accepted": true,
+      "reason": "Accepted after visual inspection of source and packed browser display."
+    },
+    {
+      "direction": "left",
+      "prompt": "画像1中央『目元を少し上へ』がユーザー採用済みのミラの顔。画像2の左向きのお茶4コマへその顔を反映する。画像3は右向きの反映済みシートで、左右で同じ人物にする。画像2の頬だけでなく、こめかみ・目の幅・目の間隔・頬・あごまで顔全体の肌色領域を細め、目と眉の位置を高めにして、画像1中央のすっきりした少し年上らしい顔にする。髪全体を縮めず、顔の縦の長さは保つ。重い半目気味の紫の瞳、薄い灰紫の目の下の影、穏やかな表情を残す。全4コマ同じ顔と頭サイズ。3コマ目の閉じ目も新しい高めの位置。左向き、髪の外形・髪飾り・衣装・椅子・脚・ポーズは画像2を維持。右手（奥側、体の画面左側）がカップの左側の取っ手を持ち、左手（手前、画面右側）は膝に置いたまま。利き手を入れ替えない。1536x1024、2列2行、完全透明RGBA。比較図でなくゲーム用4コマ。背景・後光・影・文字なし。",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-6a707dc8-3efb-4778-b7be-e4f9c5b73285.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b45a45e7-694e-4fb8-899a-3376302c08e6.png"
+      ],
+      "output": "exec-81e13ea6-75e8-4867-b076-9bd2e5e17dde.png",
+      "accepted": false,
+      "reason": "Rejected: generated right-facing instead of left-facing."
+    },
+    {
+      "direction": "left",
+      "revision": "preserve-left",
+      "prompt": "Edit IMAGE1 only: this is a LEFT-FACING four-pose tea sprite sheet. KEEP EVERY CHARACTER FACING SCREEN LEFT. Hair ornament is on SCREEN RIGHT of head, chair back is on SCREEN RIGHT of body, toes point LEFT. Do not flip the source. Replace only facial proportions with the approved CENTRAL lavender-haired face in IMAGE2: narrower face from temples through eyes, cheeks and chin; slightly higher eye and eyebrow line, small tapered chin. Preserve the same head/hair outer size. Keep sleepy violet half-lidded eyes and faint tired shadows. The new face must be drawn facing LEFT, exactly the same perspective as IMAGE1, not the direction of image2. Keep body, cup holding hand, clothes and all4 poses as IMAGE1. Cup is held with the FAR anatomical right hand on SCREEN LEFT, cup handle is at screen left of cup; NEAR anatomical left hand rests on knee SCREEN RIGHT. All4 have same slim facial geometry and higher eye placement. Third sipping pose closes eyes at the new higher eye line. 1536x1024 2x2 RGBA transparent sprite sheet. No background, text, halo or shadow. Strong priority LEFT FACING, preserve source poses; no right-facing people.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-6a707dc8-3efb-4778-b7be-e4f9c5b73285.png"
+      ],
+      "output": "exec-98cdb2b0-9bce-4f49-a52b-a178a5cdd194.png",
+      "accepted": true,
+      "reason": "Accepted after visual inspection of source and packed browser display."
+    }
+  ],
+  "destinations": [
+    "assets/source/home-pixel/mira-tea-v1-right.png",
+    "assets/source/home-pixel/mira-tea-v1-left.png"
+  ],
+  "retakes": 1,
+  "validation": {
+    "sources": "1536x1024 RGBA; originals copied without image postprocessing; existing build packs delivery.",
+    "screenshots": "work/pixel-home/tea-study/mira-right.png and mira-left.png",
+    "before": "work/pixel-home/mira-face-before/",
+    "limits": "Minor frame-to-frame hair/costume differences remain; physical phone not tested. Numerical tests do not substitute for visual acceptance."
+  }
+}

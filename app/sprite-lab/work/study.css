@@ -1,0 +1,65 @@
+.work-live {
+  max-width: 640px;
+  margin-inline: auto;
+}
+.work-small {
+  width: 93px;
+  background: #e9dfc9;
+  border-radius: 6px;
+}
+.work-study button[aria-pressed="true"] {
+  border-color: #ffd785;
+  box-shadow: 0 0 0 2px #ffd785;
+}
+.work-sheet {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.work-sheet svg {
+  max-height: 240px;
+}
+.work-resident-sprite {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.work-resident-scene {
+  position: relative;
+  width: 128px;
+  height: 100px;
+}
+.work-resident-bench {
+  position: absolute;
+  width: 72px;
+  height: 65px;
+  left: 49px;
+  bottom: 27px;
+  background: url("/home-pixel/prop-4.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
+}
+.work-resident-scene > .work-resident-sprite {
+  position: absolute;
+  left: 32px;
+  bottom: 6px;
+}
+.work-resident-live {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: 16px;
+}
+.work-resident-large {
+  width: 256px;
+  height: 200px;
+}
+.work-resident-large > .work-resident-scene {
+  transform: scale(2);
+  transform-origin: top left;
+}
+.work-resident-sheet .work-resident-sprite {
+  width: 128px;
+  height: 128px;
+}

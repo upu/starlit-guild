@@ -1,0 +1,321 @@
+{
+  "tool": "image_gen__imagegen",
+  "date": "2026-10-04",
+  "scope": "Four tea poses per direction for five residents. Source PNGs preserved unmodified.",
+  "clarification": "顔を小さく means lifting cheek/jaw contours, not scaling the whole head. First global shrinking was a misinterpretation; subsequent prompts target cheeks. Generated images can still drift outside requested local edits.",
+  "calls": [
+    {
+      "id": "leon",
+      "prompt": "Create a production sprite sheet for STARLIT-GUILD. Exactly FOUR whole-body seated tea sprites in a strict 2 columns x 2 rows grid, 1536x1024 transparent RGBA. Each cell is 768x512, no borders/numbers/text. Identical scale, head size, face shape, colors, outfit, chair and foot baseline in all four cells, 48px clear padding. Crisp warm pixel-art-like small RPG sprites, dark brown clean outlines and restrained painted pixel shading matching reference 1. Not vector, not smooth oversized anime faces. Preserve the narrow cheeks and head/body proportions of reference 1. Reference 2 is ONLY the seated chair posture/costume detail reference; ignore its other actions and poses. Camera is 3/4 front facing screen RIGHT, gently looking down from above, BOTH eyes readable, NOT pure side profile, NOT straight front. Same angle in all cells. A wooden dining chair with muted green cushion belongs in every frame. Sit politely with pelvis ON the seat, thighs near horizontal, knees bent 90 degrees, shins down, BOTH feet planted, never sitting on the floor. Chair, head, torso, legs and free hand stay in exactly the same places across all frames. ONLY the drinking arm and cup move. Cup held by handle in one hand only, other hand visibly resting on the lap. No saucer, no spoon, no table, no extra cup, no steam, no shadows, no glow or background pixels.\nRead-order frames: 1 top-left: hold teacup at TABLETOP height (cup bottom level with upper waist/lower ribs, clearly ABOVE lap and knees). Elbow bent. Open eyes, relaxed slight smile. 2 top-right: raise cup partway from table-height to mouth, rim still below chin, SAME hand and unchanged chair/head/body. 3 bottom-left: take a small sip with cup RIM touching lips, not nose or eyes, gentle half-closed eyes, no head-size/shape changes. 4 bottom-right: LOWER cup back halfway toward table-height, slightly lower than frame 2 and a soft content expression. All four distinct, loop back to frame 1. The white porcelain teacup with a small green leaf emblem must be identical in size, color and handle side in every frame. Do NOT alter clothing colors between frames. No held object changes hands. Background alpha zero everywhere outside the four character+chair silhouettes.\nCharacter: LEON, reference character exactly: spiky brown hair, brown eyes, blue/cream tunic, silver shoulder armor, red scarf/cape, brown gloves and boots. Drink with HIS RIGHT HAND, the NEAR arm on screen-left of his chest, just as the seated pose in reference 2. Far LEFT hand rests on his lap. No sword.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-v9-a.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-actions-v1.png"
+      ]
+    },
+    {
+      "id": "aria",
+      "prompt": "Create a production sprite sheet for STARLIT-GUILD. Exactly FOUR whole-body seated tea sprites in a strict 2 columns x 2 rows grid, 1536x1024 transparent RGBA. Each cell is 768x512, no borders/numbers/text. Identical scale, head size, face shape, colors, outfit, chair and foot baseline in all four cells, 48px clear padding. Crisp warm pixel-art-like small RPG sprites, dark brown clean outlines and restrained painted pixel shading matching reference 1. Not vector, not smooth oversized anime faces. Preserve the narrow cheeks and head/body proportions of reference 1. Reference 2 is ONLY the seated chair posture/costume detail reference; ignore its other actions and poses. Camera is 3/4 front facing screen RIGHT, gently looking down from above, BOTH eyes readable, NOT pure side profile, NOT straight front. Same angle in all cells. A wooden dining chair with muted green cushion belongs in every frame. Sit politely with pelvis ON the seat, thighs near horizontal, knees bent 90 degrees, shins down, BOTH feet planted, never sitting on the floor. Chair, head, torso, legs and free hand stay in exactly the same places across all frames. ONLY the drinking arm and cup move. Cup held by handle in one hand only, other hand visibly resting on the lap. No saucer, no spoon, no table, no extra cup, no steam, no shadows, no glow or background pixels.\nRead-order frames: 1 top-left: hold teacup at TABLETOP height (cup bottom level with upper waist/lower ribs, clearly ABOVE lap and knees). Elbow bent. Open eyes, relaxed slight smile. 2 top-right: raise cup partway from table-height to mouth, rim still below chin, SAME hand and unchanged chair/head/body. 3 bottom-left: take a small sip with cup RIM touching lips, not nose or eyes, gentle half-closed eyes, no head-size/shape changes. 4 bottom-right: LOWER cup back halfway toward table-height, slightly lower than frame 2 and a soft content expression. All four distinct, loop back to frame 1. The white porcelain teacup with a small green leaf emblem must be identical in size, color and handle side in every frame. Do NOT alter clothing colors between frames. No held object changes hands. Background alpha zero everywhere outside the four character+chair silhouettes.\nCharacter: ARIA exactly from references: blonde elf, green eyes, white flower/leaf hair ornament, braided crown and controlled medium-back hair, green gold-leaf cape, cream puff sleeves, brown corset/gloves, white ruffle skirt, brown lace-up boots. Drink with HER RIGHT HAND, the NEAR arm on screen-left of her chest. Far LEFT hand stays visibly on lap. Preserve small narrow face, do not widen cheeks.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-walk-v9-a.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-actions-v1.png"
+      ]
+    },
+    {
+      "id": "mira",
+      "prompt": "Create a production sprite sheet for STARLIT-GUILD. Exactly FOUR whole-body seated tea sprites in a strict 2 columns x 2 rows grid, 1536x1024 transparent RGBA. Each cell is 768x512, no borders/numbers/text. Identical scale, head size, face shape, colors, outfit, chair and foot baseline in all four cells, 48px clear padding. Crisp warm pixel-art-like small RPG sprites, dark brown clean outlines and restrained painted pixel shading matching reference 1. Not vector, not smooth oversized anime faces. Preserve the narrow cheeks and head/body proportions of reference 1. Reference 2 is ONLY the seated chair posture/costume detail reference; ignore its other actions and poses. Camera is 3/4 front facing screen RIGHT, gently looking down from above, BOTH eyes readable, NOT pure side profile, NOT straight front. Same angle in all cells. A wooden dining chair with muted green cushion belongs in every frame. Sit politely with pelvis ON the seat, thighs near horizontal, knees bent 90 degrees, shins down, BOTH feet planted, never sitting on the floor. Chair, head, torso, legs and free hand stay in exactly the same places across all frames. ONLY the drinking arm and cup move. Cup held by handle in one hand only, other hand visibly resting on the lap. No saucer, no spoon, no table, no extra cup, no steam, no shadows, no glow or background pixels.\nRead-order frames: 1 top-left: hold teacup at TABLETOP height (cup bottom level with upper waist/lower ribs, clearly ABOVE lap and knees). Elbow bent. Open eyes, relaxed slight smile. 2 top-right: raise cup partway from table-height to mouth, rim still below chin, SAME hand and unchanged chair/head/body. 3 bottom-left: take a small sip with cup RIM touching lips, not nose or eyes, gentle half-closed eyes, no head-size/shape changes. 4 bottom-right: LOWER cup back halfway toward table-height, slightly lower than frame 2 and a soft content expression. All four distinct, loop back to frame 1. The white porcelain teacup with a small green leaf emblem must be identical in size, color and handle side in every frame. Do NOT alter clothing colors between frames. No held object changes hands. Background alpha zero everywhere outside the four character+chair silhouettes.\nCharacter: MIRA exactly from references: pale lavender tied/braided hair, crescent moon/white flower/navy ribbon ornament, tired drooping upper eyelids and soft gray-violet under-eye shadows, pale skin, gentle mature sleepy smile. White/gold robe with navy lining, white layered dress, brown belt/pouch, lace-up brown sandal boots. Keep DARK BROWN outline thickness equal to other characters, do not make her pale thin-line art. Preserve the tired eyes even when smiling. Drink with HER RIGHT HAND, the NEAR arm on screen-left of her chest. Far LEFT hand visibly rests on lap.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v9-a.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-actions-v2.png"
+      ]
+    },
+    {
+      "id": "finn",
+      "prompt": "Create a production sprite sheet for STARLIT-GUILD. Exactly FOUR whole-body seated tea sprites in a strict 2 columns x 2 rows grid, 1536x1024 transparent RGBA. Each cell is 768x512, no borders/numbers/text. Identical scale, head size, face shape, colors, outfit, chair and foot baseline in all four cells, 48px clear padding. Crisp warm pixel-art-like small RPG sprites, dark brown clean outlines and restrained painted pixel shading matching reference 1. Not vector, not smooth oversized anime faces. Preserve the narrow cheeks and head/body proportions of reference 1. Reference 2 is ONLY the seated chair posture/costume detail reference; ignore its other actions and poses. Camera is 3/4 front facing screen RIGHT, gently looking down from above, BOTH eyes readable, NOT pure side profile, NOT straight front. Same angle in all cells. A wooden dining chair with muted green cushion belongs in every frame. Sit politely with pelvis ON the seat, thighs near horizontal, knees bent 90 degrees, shins down, BOTH feet planted, never sitting on the floor. Chair, head, torso, legs and free hand stay in exactly the same places across all frames. ONLY the drinking arm and cup move. Cup held by handle in one hand only, other hand visibly resting on the lap. No saucer, no spoon, no table, no extra cup, no steam, no shadows, no glow or background pixels.\nRead-order frames: 1 top-left: hold teacup at TABLETOP height (cup bottom level with upper waist/lower ribs, clearly ABOVE lap and knees). Elbow bent. Open eyes, relaxed slight smile. 2 top-right: raise cup partway from table-height to mouth, rim still below chin, SAME hand and unchanged chair/head/body. 3 bottom-left: take a small sip with cup RIM touching lips, not nose or eyes, gentle half-closed eyes, no head-size/shape changes. 4 bottom-right: LOWER cup back halfway toward table-height, slightly lower than frame 2 and a soft content expression. All four distinct, loop back to frame 1. The white porcelain teacup with a small green leaf emblem must be identical in size, color and handle side in every frame. Do NOT alter clothing colors between frames. No held object changes hands. Background alpha zero everywhere outside the four character+chair silhouettes.\nCharacter: FINN exactly from references: tousled brown hair with short low ponytail, half-lidded brown eyes, gold ear ornament, relaxed slightly mischievous smile, olive brown long coat with gold trim, open white collar, brown pants and boots. Preserve narrow face and consistent brown/olive colors, no hue or head-size jumps. Drink with HIS RIGHT HAND, the NEAR arm on screen-left of his chest, never switch hands. Far LEFT hand stays visibly on lap.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v9-a.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-actions-v1.png"
+      ]
+    },
+    {
+      "id": "lico",
+      "prompt": "Create a production sprite sheet for STARLIT-GUILD. Exactly FOUR whole-body seated tea sprites in a strict 2 columns x 2 rows grid, 1536x1024 transparent RGBA. Each cell is 768x512, no borders/numbers/text. Identical scale, head size, face shape, colors, outfit, chair and foot baseline in all four cells, 48px clear padding. Crisp warm pixel-art-like small RPG sprites, dark brown clean outlines and restrained painted pixel shading matching reference 1. Not vector, not smooth oversized anime faces. Preserve the narrow cheeks and head/body proportions of reference 1. Reference 2 is ONLY the seated chair posture/costume detail reference; ignore its other actions and poses. Camera is 3/4 front facing screen RIGHT, gently looking down from above, BOTH eyes readable, NOT pure side profile, NOT straight front. Same angle in all cells. A wooden dining chair with muted green cushion belongs in every frame. Sit politely with pelvis ON the seat, thighs near horizontal, knees bent 90 degrees, shins down, BOTH feet planted, never sitting on the floor. Chair, head, torso, legs and free hand stay in exactly the same places across all frames. ONLY the drinking arm and cup move. Cup held by handle in one hand only, other hand visibly resting on the lap. No saucer, no spoon, no table, no extra cup, no steam, no shadows, no glow or background pixels.\nRead-order frames: 1 top-left: hold teacup at TABLETOP height (cup bottom level with upper waist/lower ribs, clearly ABOVE lap and knees). Elbow bent. Open eyes, relaxed slight smile. 2 top-right: raise cup partway from table-height to mouth, rim still below chin, SAME hand and unchanged chair/head/body. 3 bottom-left: take a small sip with cup RIM touching lips, not nose or eyes, gentle half-closed eyes, no head-size/shape changes. 4 bottom-right: LOWER cup back halfway toward table-height, slightly lower than frame 2 and a soft content expression. All four distinct, loop back to frame 1. The white porcelain teacup with a small green leaf emblem must be identical in size, color and handle side in every frame. Do NOT alter clothing colors between frames. No held object changes hands. Background alpha zero everywhere outside the four character+chair silhouettes.\nCharacter: LICO exactly from references: auburn hair tied into a REAR LOW PONYTAIL at the back of head, NOT side ponytail; round gold glasses with green eyes, red flower ornament, red/brown cape and skirt, cream sleeves, brown corset belt with little green vial, dark strap sandals. Same dark brown outline thickness as others. IMPORTANT: she is LEFT-HANDED, unlike other characters. Her FAR LEFT HAND (screen-right side of chest in this 3/4 right-facing view) holds the teacup HANDLE ON ITS RIGHT SIDE in every frame, exactly as seated Lico in reference 2. Her near RIGHT forearm lies across her lap and never touches the cup. Keep left elbow and wrist attached naturally, never switch hands.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-walk-v9-a.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-actions-v3.png"
+      ]
+    },
+    {
+      "id": "mira",
+      "prompt": "Edit the first reference tea sheet. References 2 and 3 (Leon and Aria tea sheets) are the USER APPROVED FACE SIZE masters. Keep the first character's identity, costume, chair, seated body proportions, four tea arm poses and fixed drinking hand, color and small pixel-art texture. The face and whole head including hair in reference 1 are TOO LARGE relative to the body/chair. Reduce that head uniformly about 15 percent, preserving its aspect ratio and all facial features, and keep the face cheeks/jaw area the same size as Leon/Aria at matching chair/body scale. Do not shrink the torso, arms, legs, chair, or cup. Reattach smaller head naturally at collar with no visible long neck. Exactly the same face/head size in all four frames; do not stretch horizontally. Preserve the same face angle, both eyes visible, 3/4 facing RIGHT. Do not redesign anything else. Four 2x2 cells 1536x1024 transparent RGBA, no labels, background, halo or shadows. Preserve clear margins; same baseline each row. Frame 1 cup at tabletop/upper waist height, frame 2 raising, frame 3 sip at lips, frame 4 lowering. Same one-handed grip throughout. This is a targeted head size correction, not a new character design.\nMira retains sleepy lavender eyes with soft under-eye shadows, moon/flower hair ornament, lavender tied hair, white/navy/gold robe. Cup remains in her near anatomical RIGHT hand; far LEFT hand remains on her lap.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-3e468429-bc0a-4bf9-b8b0-0b8eb412d72a.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-ffebe9ea-4f10-4812-b360-637e52e35af7.png"
+      ],
+      "revision": "smaller-head"
+    },
+    {
+      "id": "finn",
+      "prompt": "Edit the first reference tea sheet. References 2 and 3 (Leon and Aria tea sheets) are the USER APPROVED FACE SIZE masters. Keep the first character's identity, costume, chair, seated body proportions, four tea arm poses and fixed drinking hand, color and small pixel-art texture. The face and whole head including hair in reference 1 are TOO LARGE relative to the body/chair. Reduce that head uniformly about 15 percent, preserving its aspect ratio and all facial features, and keep the face cheeks/jaw area the same size as Leon/Aria at matching chair/body scale. Do not shrink the torso, arms, legs, chair, or cup. Reattach smaller head naturally at collar with no visible long neck. Exactly the same face/head size in all four frames; do not stretch horizontally. Preserve the same face angle, both eyes visible, 3/4 facing RIGHT. Do not redesign anything else. Four 2x2 cells 1536x1024 transparent RGBA, no labels, background, halo or shadows. Preserve clear margins; same baseline each row. Frame 1 cup at tabletop/upper waist height, frame 2 raising, frame 3 sip at lips, frame 4 lowering. Same one-handed grip throughout. This is a targeted head size correction, not a new character design.\nFinn retains tousled brown low-ponytail hair, narrow relaxed half-lidded eyes, slim cheek outline, olive brown coat and white collar. Cup remains in his near anatomical RIGHT hand; far LEFT hand on lap. No palette changes across frames.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-7d96df2b-4971-410c-ad7e-38da1f8c69bd.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-ffebe9ea-4f10-4812-b360-637e52e35af7.png"
+      ],
+      "revision": "smaller-head"
+    },
+    {
+      "id": "lico",
+      "prompt": "Edit the first reference tea sheet. References 2 and 3 (Leon and Aria tea sheets) are the USER APPROVED FACE SIZE masters. Keep the first character's identity, costume, chair, seated body proportions, four tea arm poses and fixed drinking hand, color and small pixel-art texture. The face and whole head including hair in reference 1 are TOO LARGE relative to the body/chair. Reduce that head uniformly about 15 percent, preserving its aspect ratio and all facial features, and keep the face cheeks/jaw area the same size as Leon/Aria at matching chair/body scale. Do not shrink the torso, arms, legs, chair, or cup. Reattach smaller head naturally at collar with no visible long neck. Exactly the same face/head size in all four frames; do not stretch horizontally. Preserve the same face angle, both eyes visible, 3/4 facing RIGHT. Do not redesign anything else. Four 2x2 cells 1536x1024 transparent RGBA, no labels, background, halo or shadows. Preserve clear margins; same baseline each row. Frame 1 cup at tabletop/upper waist height, frame 2 raising, frame 3 sip at lips, frame 4 lowering. Same one-handed grip throughout. This is a targeted head size correction, not a new character design.\nLico retains gold round glasses, green eyes, auburn REAR low ponytail (not side ponytail), red outfit, small mischievous expression. Cup remains in her FAR anatomical LEFT hand on screen-right, handle RIGHT of cup; her NEAR RIGHT hand rests on lap. Never switch hands. Keep her dark outline weight comparable to Leon and Aria.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-f773335b-9eb4-4363-90d6-6521a3536024.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-ffebe9ea-4f10-4812-b360-637e52e35af7.png"
+      ],
+      "revision": "smaller-head"
+    },
+    {
+      "id": "leon",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nLEON is RIGHT-HANDED. In this new LEFT-facing 3/4 view, use his FAR RIGHT arm to hold cup at screen-left of his chest. His NEAR LEFT arm (silver pauldron at screen-right of the body) rests on lap. This is NOT simply flipping the original image: far drinking arm, near lap arm. Keep original approved head/face size.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png"
+      ],
+      "direction": "left"
+    },
+    {
+      "id": "leon",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nCRITICAL ARM ANATOMY, ALL FOUR FRAMES: LEON drinks with the FAR RIGHT arm. Draw the FAR elbow on the LEFT edge of the torso, far forearm rising on the LEFT edge of the cup, far right glove holding the handle to the LEFT of the cup. The NEAR LEFT arm is on the RIGHT of the torso and descends from the silver shoulder armor to the lap; its glove is permanently FLAT ON THE KNEE in every frame, including sipping. EXACTLY TWO ARMS AND TWO HANDS. Do not put any hand at the right side of the cup. The entire NEAR LEFT ARM/hand must be identical in all 4 frames. Only far-right-arm raises. No duplicate ghost hand. This is not a mirror. Head/face must remain original approved size.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png"
+      ],
+      "direction": "left",
+      "revision": "hand-fix"
+    },
+    {
+      "id": "aria",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nARIA: blonde elf, green cape gold leaves, white skirt, gloves/boots, exactly same costume. CRITICAL ARM ANATOMY ALL FOUR FRAMES: drink with anatomical RIGHT arm, which is FAR arm in this LEFT-facing 3/4 view. Draw far elbow on LEFT edge of torso, far forearm rising on LEFT edge of cup, right hand holding handle LEFT of cup. NEAR LEFT arm is on RIGHT of torso, descending to lap, its hand permanently resting flat on knee in every frame, including sipping. EXACTLY TWO hands. Near lap arm/hand identical all frames. Only FAR drinking arm moves. Not a mirror. No extra ghost hands.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-ffebe9ea-4f10-4812-b360-637e52e35af7.png"
+      ],
+      "direction": "left"
+    },
+    {
+      "id": "mira",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nMIRA: retain this newly approved SMALLER face/head size relative to body, no enlargement. Sleepy lavender eyes, gray-violet under-eye shadows, gentle tired smile, white/navy/gold outfit, lavender tied hair. CRITICAL ARM ANATOMY ALL FOUR FRAMES: drink with anatomical RIGHT arm, which is FAR arm in this LEFT-facing 3/4 view. Draw far elbow on LEFT edge of torso, far forearm rising on LEFT edge of cup, right hand holding handle LEFT of cup. NEAR LEFT arm is on RIGHT of torso, descending to lap, its hand permanently resting flat on knee in every frame, including sipping. EXACTLY TWO hands. Near lap arm/hand identical all frames. Only FAR drinking arm moves. Not a mirror. No extra ghost hands.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-bf3962a3-461e-4e46-aab4-18b31f63875e.png"
+      ],
+      "direction": "left"
+    },
+    {
+      "id": "finn",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nFINN: retain corrected smaller head, narrow cheeks, half-lidded eyes and exact olive/brown colors, short brown low ponytail. Brown coat/white collar. CRITICAL ARM ANATOMY ALL FOUR FRAMES: drink with anatomical RIGHT arm, which is FAR arm in this LEFT-facing 3/4 view. Draw far elbow on LEFT edge of torso, far forearm rising on LEFT edge of cup, right hand holding handle LEFT of cup. NEAR LEFT arm is on RIGHT of torso, descending to lap, its hand permanently resting flat on knee in every frame, including sipping. EXACTLY TWO hands. Near lap arm/hand identical all frames. Only FAR drinking arm moves. Not a mirror. No extra ghost hands.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-0d375d66-cafa-4c1b-848b-201d0ad3d110.png"
+      ],
+      "direction": "left"
+    },
+    {
+      "id": "lico",
+      "prompt": "Create the opposite VIEW of this exact four-frame seated tea sprite sheet, not a mirrored image. Same identity, same small face/head size, same hair shape, same costume, same pixel-art-like dark-brown outlines and colors. Face and body now 3/4 toward SCREEN LEFT, both eyes still visible, not pure profile, gently viewed from above. Chair also turns left. Head/chair/body/feet stay identical within all four frames. Keep same four poses: upper-left holding cup at tabletop/lower-rib height, upper-right lifting below chin, lower-left sipping at lips, lower-right lowering to middle height. Same tea cup with green leaf motif, same correctly bent seated legs and feet resting on ground. Anatomical handedness MUST NOT be mirrored: the actual same arm remains the drinking arm. Other hand on lap. 1536x1024, 2 columns x 2 rows, 48px clear padding per cell, genuine transparent RGBA outside character+chair silhouettes. No table/background/text/grid/shadow/glow. Preserve small face size and uniform color/head size all frames, no extra decorations. No cup near lap or forehead.\nLICO retains corrected SMALL face, gold round glasses, green eyes, auburn rear low ponytail, red outfit. She drinks with anatomical LEFT hand, now the NEAR arm in this LEFT-facing view. NEAR LEFT elbow on screen-RIGHT torso, hand holds handle on RIGHT side of cup in ALL frames. FAR RIGHT hand remains on her lap at screen-left side of the knees. Exactly two arms/hands. Only NEAR left drinking arm moves; far lap arm never moves or touches cup.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-fa2043ba-ec69-4283-b3d6-9e0357ff6b17.png"
+      ],
+      "direction": "left"
+    },
+    {
+      "id": "finn",
+      "prompt": "Use image 1 ONLY for Finn's character identity, small head size, hair, clothes and colors. Use image 2 for EXACT body/arm poses, chair, direction and hand assignment in all four frames. Replace Leon in image 2 with Finn in image 1. Preserve image 2 far arm drinking and near arm on lap across ALL four frames, no swapping. Finn faces LEFT 3/4. Near arm on right side of torso stays on his knee. Far arm on left of torso lifts the cup, far hand remains LEFT of cup. Keep Finn's reduced small head size, half-lidded eyes, brown low ponytail, olive brown coat, white collar, brown boots; NO Leon scarf/armor/colors or gold chest motif. 1536x1024 transparent RGBA sprite sheet 2x2. Four frames hold at table height, raising, sipping, lowering. Identical face size, color, chair, body/feet between all frames; only far drinking arm moves. No background, halo, shadow, labels or table.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-0d375d66-cafa-4c1b-848b-201d0ad3d110.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-4073cf04-70a6-4c5b-8720-c0ecc58ee9ed.png"
+      ],
+      "direction": "left",
+      "revision": "hand-fix"
+    },
+    {
+      "id": "lico",
+      "prompt": "Edit this exact sheet only. Keep everything except which hand holds the cup. In ALL FOUR pictures SWITCH HER CUP TO THE OTHER HAND. The sleeve at the RIGHT edge of the image (near shoulder) must connect to a forearm bent up toward the cup; the hand grips the cup handle on the RIGHT of the cup. The sleeve on the LEFT of the torso connects downward to the hand on the lap. Her near left arm on screen RIGHT does the drinking, her far right arm on screen LEFT rests on lap. The current image does the opposite, fix this. ALL FOUR frames same drinking hand, including sip. Keep LEFT-facing direction, unchanged small face/head size, glasses, rear ponytail, red outfit, chair, legs, colors. Preserve cup heights: 1 waist/table-height, 2 halfway raised, 3 at lips, 4 lowering. Exactly two hands. 1536x1024, 2x2, transparent background. No other changes.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-59451c63-1d7f-4b14-849a-9099ffb2b876.png"
+      ],
+      "direction": "left",
+      "revision": "hand-fix"
+    },
+    {
+      "id": "finn",
+      "prompt": "Correct only hand assignment in this sheet. KEEP character facing LEFT exactly as pictured. TOP-RIGHT frame has the CORRECT FAR arm holding cup and NEAR arm resting on lap. Make the other THREE frames use that SAME arm assignment as TOP-RIGHT. Near sleeve on screen-RIGHT of torso descends to lap, with near hand flat on knee, unchanged in ALL four frames. Far sleeve at screen-LEFT of torso bends upward, hand to LEFT of cup holding left handle. Do not mirror or turn Finn, do not enlarge head, do not change face/hair/body/olive coat/brown boots/chair/colors. 1 cup at table height, 2 halfway raised (keep correct), 3 sipping, 4 lowering. Only far arm and cup move. Exactly two hands, no ghost limbs. 1536x1024 2x2 transparent RGBA no background or shadow.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-abea2c28-75b3-45d0-9493-6fef1e096ded.png"
+      ],
+      "direction": "left",
+      "revision": "hand-fix-2"
+    },
+    {
+      "id": "mira",
+      "direction": "left",
+      "revision": "lift-cheeks-not-shrink-head",
+      "prompt": "Edit only the lower face contours of Mira in this exact four-frame tea sheet. User clarification: 'smaller face' does NOT mean shrink the head or hair. It means lift the drooping round cheeks upward, especially near the ear (around x31.6%, y17.2% of full sheet in top-left frame), making the cheek-to-chin silhouette compact and gently tapered instead of wide round pouch-like cheeks. Keep skull, hair volume, ears, eyes, upper face, face angle, head placement and body size EXACTLY unchanged. Gently raise the lower cheek curve toward the ear and bring the jawline inward slightly in ALL FOUR frames; no sharp adult chin, keep approachable chibi identity. Preserve tired heavy eyelids and soft violet under-eye shadows. Preserve all clothing, colors, chair, body, arms, cup heights and handedness exactly: far right hand holds cup on screen LEFT, near left hand rests on knee in all four frames. No global shrinking, no horizontal/vertical squash, no redesign, no lighting/style changes. Same 1536x1024 transparent RGBA 2x2 sprite sheet. No opaque background, no shadow, no halo, no text. This is a local cheek/jaw correction only.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-64f03182-cbff-463f-b5a2-85b90b2fff3d.png"
+      ]
+    },
+    {
+      "id": "finn",
+      "direction": "left",
+      "revision": "pose-template-first",
+      "prompt": "Edit IMAGE 1 (the LEFT-facing elf tea pose sheet) by replacing the elf with FINN from IMAGE 2. The edit TARGET is image 1; copy its LEFT-facing seated pose and two arm positions EXACTLY, cell by cell. Image 2 supplies ONLY character identity and clothing, not direction or pose. Result must face SCREEN LEFT like image 1, not right. Finn: adult chibi man, tousled brown low-ponytail hair, gold earring, half-lidded eyes, narrow gently tapered cheeks, olive-brown long coat, open white collar, brown trousers and boots. Match image2 small head dimensions, no round swollen cheeks. Remove ALL elf features: no pointed ears, blonde hair, flowers, green cape, skirt or gloves. For all FOUR frames preserve image1 far arm on screen LEFT holding handle LEFT of cup, and near arm on screen RIGHT resting on lap. Cup must be visibly held, never floating. Only far drinking arm moves; near arm stays on lap in EVERY cell. Four poses hold at tabletop height, raise, sip, lower. Same head shape/size, chair/body/feet/color in all four. 1536x1024 RGBA transparent, 2x2 full-body frames, no background/halo/shadow/text/grid. Warm dark brown outlines and compact pixel-art-like shading matching image2. Preserve image1 exact hand assignment and LEFT facing camera above all.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-20cafa27-7d50-474a-bb45-1ef0cf84ec8e.png",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-0d375d66-cafa-4c1b-848b-201d0ad3d110.png"
+      ]
+    },
+    {
+      "id": "leon",
+      "direction": "left",
+      "revision": "costume-fix",
+      "prompt": "Precise local edit of this LEON tea sprite sheet. Keep all four LEFT-facing seated poses, head, face size, chair, tea cup and FAR RIGHT drinking hand exactly unchanged. Fix ONLY the blue chest tunic decoration: REMOVE the invented branching golden tree motif on the chest. Restore Leon's simple blue tunic with TWO diagonal brown leather belt straps with gold buckles and a small gold star ornament, like his established costume. Red neck scarf/cape and near silver shoulder armor unchanged. No other new decoration. Preserve same pixel-art-like dark brown outlines, palette, all four cup heights and poses. 1536x1024 transparent RGBA 2x2, no background/halo/shadow/text.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-4073cf04-70a6-4c5b-8720-c0ecc58ee9ed.png"
+      ]
+    },
+    {
+      "id": "mira",
+      "direction": "left",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Precise local edit, ONLY Mira's cheeks/jaw in all four frames. The previous subtle change was insufficient: user explicitly wants cheeks lifted MUCH MORE. Preserve head/hair/skull size and location, eyes/eyebrows/ears and upper face EXACTLY. Do not scale the head or entire face. Remove the low hanging rounded cheek pouch. At this 1536x1024 size, lift the LOWER CHEEK OUTLINE by approximately 14-18 pixels near each ear, tapering toward a chin raised about 10-12 pixels. The jaw should rise sharply yet smoothly toward the earlobe, rather than hanging in a broad U shape. Make skin face area below eyes significantly shallower and less wide, with gently tapered sides. Move tiny mouth up just enough to stay above new chin. Keep friendly chibi softness, not pointy adult chin. No chin sitting near collar: compact cheeks tucked UP toward eyes/ear. No visible long neck: existing scarf/hair can overlap behind jaw without moving body. Both open-eye poses and closed-eye sipping pose must share EXACTLY the new raised cheek/jaw silhouette. Preserve sleepy eyelids, tired gray-violet eye shadows. EVERYTHING ELSE unchanged: lavender hair, hair accessory, chair/body/clothes, cup heights, far-right-hand holding cup LEFT of torso, near left hand on lap, colors and outline weight. Four 2x2 sprites LEFT-facing, 1536x1024 transparent RGBA, no background/shadow/halo/text. This must be a clearly visible stronger CHEEK LIFT, not a small head shrink, not narrower hair.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-64f03182-cbff-463f-b5a2-85b90b2fff3d.png"
+      ]
+    },
+    {
+      "id": "mira",
+      "direction": "right",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Precise-object-edit. IMAGE 1 is target: Mira RIGHT-facing four-frame tea sheet. IMAGE 2 is reference ONLY for lifted-cheek jawline. Edit ONLY lower cheek/jaw outline in image1 to match the COMPACT raised cheeks of image2. Lift lower cheek outline by ~14 pixels at this 1536x1024 scale, raise chin ~10 pixels; cheek contour rises toward ear instead of drooping in a broad U. Mouth follows upward slightly. DO NOT shrink head/hair/skull, alter eyes, change pose/direction, or make pointed adult chin. All four faces have same compact cheek shape. Preserve image1 head location, whole hairstyle, tired violet eyes/shadows, costume, chair/body/feet, skin color, cup heights and hand assignment. Near RIGHT hand holds cup in ALL frames, far LEFT stays on lap. Camera remains RIGHT facing as image1. 1536x1024 2x2 transparent RGBA. No background/shadow/halo/text. No other changes.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-bf3962a3-461e-4e46-aab4-18b31f63875e.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-35001952-f1db-4f60-98c1-9f22ef631780.png"
+      ]
+    },
+    {
+      "id": "lico",
+      "direction": "right",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Local cheek/jaw correction ONLY on Lico in this four-frame RIGHT-facing tea sheet. Do not shrink the head. Preserve exact hair/skull volume, glasses, eyes, ears, upper face and head position. Lift the low rounded cheek contour UP toward the earlobe by ~12-15 pixels at 1536x1024 scale and tuck the jaw inward slightly; raise chin ~8-10px and mouth slightly to match. Her lower face should be compact rather than wide and pouch-like, no long drooping cheeks. Clearly visible cheek lift, not a subtle overall scale change. Keep friendly small smile and same face contour across all four frames. All other pixels/design unchanged as closely as possible: rear ponytail, red clothes, chair/body/legs, colors, outline thickness, tea poses. FAR LEFT hand on screen RIGHT grips cup handle in ALL FOUR frames, near RIGHT hand stays on lap. Keep right-facing 3/4 view. 1536x1024 transparent RGBA 2x2 four whole body sprites, no background/halo/shadow/text.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-fa2043ba-ec69-4283-b3d6-9e0357ff6b17.png"
+      ]
+    },
+    {
+      "id": "lico",
+      "direction": "left",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Local cheek/jaw correction ONLY on Lico in this LEFT-facing four-frame tea sheet. Preserve head/hair/skull size, head position, eyes, ears and round glasses EXACTLY. Lift lower cheek curve toward earlobe ~12-15px, tuck jaw inward slightly, raise chin ~8-10px at 1536x1024 scale. Mouth moves up slightly. Compact lifted cheeks, no wide drooping cheek pouches. Not whole-head shrinking. Keep same new face outline in every frame. All else unchanged: rear ponytail, red outfit, chair/body/feet, colors, cup positions. NEAR LEFT arm on screen RIGHT is drinking in ALL four frames, hand on RIGHT of cup. FAR RIGHT hand on screen LEFT rests on lap in all frames. Do not swap hands, do not turn around. 1536x1024 transparent RGBA 2x2, no background/shadow/halo/text, no other changes.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-581ef3ad-f73c-401d-9d1e-7fa05e57b18e.png"
+      ]
+    },
+    {
+      "id": "finn",
+      "direction": "right",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Edit ONLY lower face contour in all four FINN tea frames. User wants cheeks lifted up, NOT entire head reduced. Preserve exact hair/skull size, eyes, brows, ear, head placement. Make cheeks less wide/round and raise the sagging lower cheek-to-jaw curve toward the ears about 12-15 pixels at full 1536x1024 size; chin rises about 8 pixels. Keep small friendly mischievous smile slightly raised with new jaw. Gently tapered compact lower face, not broad U-shaped cheeks, not pointed adult chin. All four frames same face shape. Do not touch body/costume/chair/feet/cup poses/colors/dark-brown outline weight. RIGHT-facing 3/4 view maintained. Near anatomical RIGHT hand on screen LEFT raises cup; far LEFT hand remains on lap throughout. Four 2x2 full-body sprites on genuine transparent RGBA background, 1536x1024, no background/halo/shadow/text. Only local cheeks/jaw change.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-0d375d66-cafa-4c1b-848b-201d0ad3d110.png"
+      ]
+    },
+    {
+      "id": "finn",
+      "direction": "left",
+      "revision": "stronger-cheek-lift",
+      "prompt": "Precise local edit of Finn's lower cheek/jaw contours ONLY. Keep LEFT-facing four tea poses exactly. User wants cheeks lifted UP, NOT the whole head scaled. Keep hair/skull/eye/ear dimensions and positions. Lift low rounded cheek curves toward earlobes ~12px and chin ~8px at 1536x1024 size, tuck outer jaw in gently, move mouth slightly up. Friendly compact gently tapered lower face, no wide hanging cheeks, no sharp adult chin. Same new face shape all four frames. Preserve ALL other appearance, colors, outfit, chair, feet, cup heights. Critical: FAR RIGHT hand on screen LEFT holds handle LEFT of cup in EVERY frame, NEAR LEFT hand on screen RIGHT stays resting on knee. No hand swaps, no floating cup. 2x2 sheet 1536x1024 transparent RGBA, no background/halo/shadow/text.",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-d59869ac-7c2b-4abd-b832-71d86dad19a6.png"
+      ]
+    }
+  ],
+  "selected": [
+    {
+      "id": "leon",
+      "direction": "right",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1b4de352-3a84-49c6-a1d8-9f336e264b11.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-tea-v1-right.png",
+      "sha256": "8dfb3b865b383deb7909544229dbe7a1e6f296f92fb01d20834936828a243264",
+      "originalMatches": true
+    },
+    {
+      "id": "leon",
+      "direction": "left",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-cc624f14-0f70-4f24-a61e-664c646f0c8d.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-tea-v1-left.png",
+      "sha256": "40e0f7648bd376b38d2e188d5b6a3ba37f733f0b436ec768d5244f4a6fcc60f4",
+      "originalMatches": true
+    },
+    {
+      "id": "aria",
+      "direction": "right",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-ffebe9ea-4f10-4812-b360-637e52e35af7.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-tea-v1-right.png",
+      "sha256": "79a259dfcd54c63e2dae85074124d9de04141b4bf100d88667cd35b04f36a760",
+      "originalMatches": true
+    },
+    {
+      "id": "aria",
+      "direction": "left",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-20cafa27-7d50-474a-bb45-1ef0cf84ec8e.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-tea-v1-left.png",
+      "sha256": "7505de7bff1d057283753feecc6ab96d4cf425f85f595e81aae5c313dd4ebc3f",
+      "originalMatches": true
+    },
+    {
+      "id": "mira",
+      "direction": "right",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-dbb1a37d-45c9-4714-ba8e-233dc5c54dba.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png",
+      "sha256": "64b8802e72ed0ce03a18765e29627aeb3736dc2f7cd849810a9a3bf891f37c2e",
+      "originalMatches": true
+    },
+    {
+      "id": "mira",
+      "direction": "left",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-35001952-f1db-4f60-98c1-9f22ef631780.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png",
+      "sha256": "8043b107c215410e4478b0a42457622d63bc0567b38ac148a5afb3b50c9acbc0",
+      "originalMatches": true
+    },
+    {
+      "id": "finn",
+      "direction": "right",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-cd99184a-ef2d-4dbf-9508-627dd9843496.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-tea-v1-right.png",
+      "sha256": "6ac0c2304008ade5cf44112d29768a5ba8ce4bfab98c05951187f0065055d07f",
+      "originalMatches": true
+    },
+    {
+      "id": "finn",
+      "direction": "left",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-d4668120-a646-4479-a8cb-5c728a77dd55.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-tea-v1-left.png",
+      "sha256": "eaa7a54c4913c0cfe4419ea7aba2e1a1266333729fc4f9d8a03fcb81cd3f8839",
+      "originalMatches": true
+    },
+    {
+      "id": "lico",
+      "direction": "right",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-bc66c1fa-8371-4fa5-9de4-7e4e20997cf2.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-tea-v1-right.png",
+      "sha256": "5cf8edc70c628923ac064dfc56f5335637b07a76ee2747c2dc754c3190604188",
+      "originalMatches": true
+    },
+    {
+      "id": "lico",
+      "direction": "left",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-e6f56419-3f42-4c5f-89c6-5cd3b9b0a929.png",
+      "destination": "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-tea-v1-left.png",
+      "sha256": "3e71772fd5c9baa58a3f75a2da71b74c14d6ec6750dba75512e609d31569532f",
+      "originalMatches": true
+    }
+  ],
+  "review": "Rejected candidates include large heads, hand swaps, floating cups, wrong direction and invented Leon chest motif. Latest cheek candidates selected for in-app comparison; contour preference still user-reviewed. Left/right are authored separately, no runtime mirror."
+}

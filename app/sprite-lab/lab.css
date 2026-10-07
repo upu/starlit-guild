@@ -1,0 +1,133 @@
+.sprite-lab-shell {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: #f3e1b3;
+  background: #142d27;
+}
+.sprite-lab-shell > main {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow-y: auto;
+}
+.sprite-lab-header,
+.sprite-lab-navigation {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+.sprite-lab-header {
+  justify-content: space-between;
+  align-items: center;
+}
+.sprite-lab-header > a {
+  font-size: 20px;
+}
+.sprite-lab-header > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+}
+.sprite-lab-shell a:focus-visible {
+  outline: 2px solid #ffe6aa;
+  outline-offset: 4px;
+}
+.sprite-lab-navigation {
+  border-bottom: 1px solid #637056;
+  padding-top: 0;
+}
+.sprite-lab-navigation a {
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+.sprite-lab-navigation a[aria-current="page"] {
+  background: #465340;
+  color: #fff0c0;
+}
+.sprite-lab-index {
+  max-width: 1000px;
+  margin: auto;
+  padding: 32px 20px;
+}
+.sprite-lab-index h1 {
+  font-size: 28px;
+  margin: 8px 0 16px;
+}
+.sprite-lab-index p {
+  line-height: 1.8;
+}
+.sprite-lab-eyebrow {
+  color: #c4cba5;
+  font-size: 13px;
+}
+.sprite-lab-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.sprite-lab-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #223b31;
+  border: 1px solid #687452;
+  border-radius: 10px;
+}
+.sprite-lab-card:hover {
+  background: #304738;
+}
+.sprite-lab-card h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.sprite-lab-card p {
+  font-size: 14px;
+  color: #d1d0b7;
+}
+.sprite-lab-preview {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.sprite-lab-open {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #e8c77a;
+}
+.sprite-lab-note {
+  font-size: 13px;
+  color: #c4cba5;
+}
+@media (max-width: 650px) {
+  .sprite-lab-cards {
+    grid-template-columns: 1fr;
+  }
+  .sprite-lab-header,
+  .sprite-lab-navigation {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 6px;
+  }
+  .sprite-lab-index {
+    padding: 24px 12px;
+  }
+  .sprite-lab-card {
+    gap: 10px;
+    padding: 12px;
+  }
+  .sprite-lab-card h2 {
+    font-size: 18px;
+  }
+}

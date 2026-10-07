@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "calls": 6,
+  "selected": 2,
+  "records": [
+    {
+      "id": "Mira",
+      "prompt": "Edit input1 ONLY, which contains FOUR existing Mira walking frames5,6,7,8 in2x2 layout. Input2 is the exact color and head identity reference, frames1,2,3,4 of SAME animation. This is a strict continuity retouch, NOT new animation.\nPreserve EVERY shoulder/elbow/hand/hip/knee/boot position, limb silhouette, clothing shape, cloth folds, frame layout, body scale and transparent padding of input1. Do not alter pose or create different legs.\nCorrect head size relative to body: TOP LEFT and TOP RIGHT heads are too large after full-height normalization. Reduce ONLY each head (hair skull, face, ear, bun, ornaments) uniformly about9%, anchored at chin/neck attachment, reconnect hair naturally. BOTTOM LEFT and BOTTOM RIGHT reduce only head about4%. Do not narrow/squash faces; isotropic head size adjustment. This must give same head-to-full-body ratio as input2 first character. Preserve tired heavy eyelids, modest face/cheek width, eye spacing and expression.\nMatch input2 colors EXACTLY throughout all four: same muted gray-lilac hair and shading, same pale warm skin, same ivory white robe and dull gold trim, same navy lining and brown boots. Especially do not let any frame turn brighter, grayer, pinker or more saturated. Match input2 clean pixel clusters and darkbrown outline density. No extra texture/noise or redesigned details.\nOutput1536x1024 transparent RGBA, preserve all4fullbody sprites and original positions. Absolutely no background, glow, shadow, opaque matte, labels or grid. All empty space alpha0. Head size and color corrections ONLY.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v9-b.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-walk-v9-a.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-dfc27e9b-66b4-4ab7-9d72-53a941c575c9.png",
+      "adopted": true,
+      "reason": "頭幅の拡大を抑え、後半の髪・衣装の明るさを前半へ近づけた",
+      "saved": "assets/source/home-pixel/mira-walk-v10-b.png",
+      "sha256": "5b0ed81ae59bc9cdef79a0d2e0dd53c1a708ef8115da956a94b76b8372cdedea"
+    },
+    {
+      "id": "Finn",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v9-b.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v9-a.png"
+      ],
+      "transparent_background": true,
+      "prompt": "Strict animation continuity retouch. Edit input1 (Finn walking frames5-8 in2x2) to match input2 (Finn frames1-4) color and head size. Preserve EXACT original4body poses, all hands/elbows/hips/knees/feet positions, leg overlaps, stride timing, body and clothing outlines, frame positions and scale. Do not redraw or change poses.\nInput1 hair/coat are duller darker brown than input2. Match ALLfour sprites to input2: same warm chestnut hair with same brightness/highlights, same muted olive coat, ochre trim, cream shirt, warm skin, brown trousers/boots. Same pixelcluster edges, no new noise/texture/details.\nTOP LEFT and TOP RIGHT head ONLY: reduce entire skull hair face ear ponytail uniformly5% anchored at chin/neck; BOTTOM LEFT keepheadsize; BOTTOM RIGHT enlargehead2%. Faces remain narrow taperedcheeks and tired sly smile, NOT horizontallyround. Reference1st character input2 for stable head-to-fullheight proportion. Keep head angle/expression/eye spacing consistent with input2. Absolutely preserve all lowerbody/limb geometry.\nReturn1536x1024 transparent RGBA same2x2. No shadows/glow/background/matte/labels/grid. All empty space fullytransparent alpha0.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b8c1bb16-7fa9-4453-9ea9-4e496ad366a2.png",
+      "adopted": false,
+      "reason": "髪が明るいオレンジ寄りになり不採用"
+    },
+    {
+      "id": "FinnFix",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b8c1bb16-7fa9-4453-9ea9-4e496ad366a2.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v9-a.png"
+      ],
+      "transparent_background": true,
+      "prompt": "Precise recolor of input1 to input2; no new drawing or poses. Input1 hair became far too orange/light. Change ONLY hair in all4sprites to the DARK muted reddish-brown of input2. Main midtone target RGB(136,81,61), darkchestnut; not orange/copper. Reduce its current brightness substantially (currentmidtone~172,103,75). Keep corresponding highlights/shadows proportional and identical acrossall4. Match skin, olivecoat, ochretrim, brownpants/boots to input2 without brighter saturation. Do not add brush grain.\nKeep every limb/body contour, pose, garment/detail and all4placements EXACTLY as input1. ONLY TOP LEFT head may also be scaled down isotropically3% anchored at chin. Other3heads retain current size. Small taperedface, eyes and expression unchanged. Transparent background alpha0, same1536x1024,2x2. No haze/glow/shadow/background.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f4de9c51-f58b-482e-b0e6-ffe309f8764c.png",
+      "adopted": false,
+      "reason": "髪と肌・シャツの明るさの差が残り不採用"
+    },
+    {
+      "id": "FinnColor",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f4de9c51-f58b-482e-b0e6-ffe309f8764c.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-walk-v9-a.png"
+      ],
+      "transparent_background": true,
+      "prompt": "COLOR MATCH ONLY, no shapes or geometry changes. The four sprites of input1 are still lighter/pinker than input2. Bring their ENTIRE palette down to the exact muted color range of input2. Hair target midtone RGB(140,83,62) not current(150,93,73). Skin must be the same muted beige as input2, not bright peach. Cream shirt and white sleeve cuffs must be the same dim cream as input2, NOT bright white. Coat and pants subtly darker, as input2. Keep original dark outlines and existing shadow detail. All four must look lit by exactly the same light and exposure as input2. This is an animation frame set, even a small color flash is unacceptable.\nPreserve all shapes, pixels of silhouettes, head dimensions, facial features, clothes design and every limb pose of input1 absolutely. NO reshaping/redrawing, only matching colors. Same1536x1024, four sprites same positions. Fully transparent background, alpha0 in empty space. No haze, shadow, glow, text or marks.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e7cf982b-620d-4aff-84f5-341fbcf63a83.png",
+      "adopted": false,
+      "reason": "髪が灰色寄りで赤成分の差が残り不採用"
+    },
+    {
+      "id": "FinnWarm",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e7cf982b-620d-4aff-84f5-341fbcf63a83.png"
+      ],
+      "transparent_background": true,
+      "prompt": "Tiny localized color calibration ONLY on the brown HAIR of all four sprites. Hair is now slightly too neutral/gray: add approximately10 to the red channel (on0-255scale) in hair midtones, leaving green and blue essentially unchanged. Target muted reddish chestnut, measured hair midtone RGB142,86,66. NOT lighter orange, NOT copper, not brighter highlights. Preserve original lighting/linework; no new grain. Leave skin, shirt, coat, pants, boots and all other colors exactly unchanged. Preserve all shapes, head size, face, poses, every hand/foot position, layout and transparency exactly. Same1536x1024 RGBA. Transparent gutters alpha0, no background/glow/shadow/text. This is solely a subtle warmer red shift inside the existing hair mask.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9660c764-cc5a-4bea-bdc9-18f26b1b78a7.png",
+      "adopted": false,
+      "reason": "5コマ目の頭幅が再び広がったため不採用"
+    },
+    {
+      "id": "FinnFinal",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9660c764-cc5a-4bea-bdc9-18f26b1b78a7.png"
+      ],
+      "transparent_background": true,
+      "prompt": "Two MINUTE fixes only to this four-sprite sheet. 1) TOP LEFT ONLY: shrink his head uniformly4% around the chin attachment. Other3heads MUST NOT change size. Do not move any shoulder or hand or legs. 2) ALLfour HAIR only: preserve red/brightness, slightly reduce green by3 and blue by6 (0-255range). It should be slightly less pale/pink and more dark chestnut. Main hair midtone nearRGB142,86,64. Do not change skin/clothing palette.\nKeep all other image details and geometry exactly. Preserve all limb positions, head expression, costume, sheetlayout. Same1536x1024 RGBA fully transparent, absolutely no glow/background/shadow. No new texture or editing of other elements.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0f31873d-370c-4046-b694-a000e32afd57.png",
+      "adopted": true,
+      "reason": "頭幅を54〜55pxへそろえ、髪色の前後半の差を軽減。画素の完全一致ではない",
+      "saved": "assets/source/home-pixel/finn-walk-v10-b.png",
+      "sha256": "fad4b86885b4b410cef003eb0998561f6d7bce680dd5d8cdb369a75bb0f566a9"
+    }
+  ]
+}

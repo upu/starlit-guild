@@ -1,0 +1,78 @@
+.garden-live {
+  max-width: 680px;
+  margin-inline: auto;
+}
+.garden-small {
+  width: 90px;
+  background: #e9dfc9;
+  border-radius: 6px;
+}
+.garden-study button[aria-pressed="true"] {
+  border-color: #ffd785;
+  box-shadow: 0 0 0 2px #ffd785;
+}
+.garden-resident-sprite {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.garden-resident-scene {
+  position: relative;
+  width: 224px;
+  height: 112px;
+}
+.garden-resident-plot {
+  position: absolute;
+  bottom: 10px;
+  width: 96px;
+  height: 80px;
+  background: url("/home-pixel/prop-6.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
+}
+.garden-resident-person {
+  position: absolute;
+  bottom: 18px;
+}
+.garden-resident-water {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.garden-resident-live {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+.garden-resident-large {
+  width: 448px;
+  height: 224px;
+}
+.garden-resident-large > .garden-resident-scene {
+  transform: scale(2);
+  transform-origin: top left;
+}
+.garden-resident-sheet .garden-resident-sprite {
+  width: 128px;
+  height: 128px;
+}
+@media (max-width: 520px) {
+  .garden-resident-large {
+    width: 280px;
+    height: 140px;
+  }
+  .garden-resident-large > .garden-resident-scene {
+    transform: scale(1.25);
+  }
+}
+
+.garden-resident-crop {
+  position: absolute;
+  bottom: 39px;
+  width: 30px;
+  height: 30px;
+  background: url("/home-pixel/prop-7.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
+}

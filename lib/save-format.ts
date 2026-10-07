@@ -6,6 +6,7 @@ import {
 } from "./save-consumables.ts";
 import { validRoadScene } from "./road-scenes.ts";
 import { z } from "zod";
+import { guildSchema, validGuild } from "./save-guild.ts";
 import { heroes, allQuests as quests, migrate, encounter, type State } from "./game.ts";
 import { stories } from "./stories.ts";
 import { isRecord } from "./external-input.ts";
@@ -280,6 +281,7 @@ function validEnemyTotals(
   );
 }
 function validateState(s: ParsedState, ctx: z.RefinementCtx) {
+  if (!validGuild(s)) ctx.addIssue({ code: "custom", message: "Invalid guild" });
   if (!validConsumables(s)) ctx.addIssue({ code: "custom", message: "Invalid consumables" });
   if (s.techniques && !validTechniques(s.techniques, s.owned))
     ctx.addIssue({ code: "custom", message: "Invalid techniques" });
@@ -301,6 +303,7 @@ const stateBase = z.object({
   techniques: techniquesSchema.optional(),
   inventory: inventorySchema.optional(),
   consumables: consumablesSchema.optional(),
+  guild: guildSchema.optional(),
   story: storySchema.optional(),
   friendship: keyedNumbers,
   gold: n,

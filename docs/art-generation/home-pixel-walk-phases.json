@@ -1,0 +1,272 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "calls": 21,
+  "selected": 10,
+  "approach": "8コマまとめ生成を不採用にし、1〜4/5〜8を各2×2で描画。脚の前後・後半の通過姿勢と頬幅を修正。原本は無加工保存。採否は全8コマの目視を含む。",
+  "records": [
+    {
+      "id": "finn-full-rejected",
+      "prompt": "Use case: sketch-to-render / pixel game animation. Input1 is the EXACT 8-frame walk pose template. Input2 is Finn's CHARACTER DESIGN ONLY; ignore all its poses.\nDress each of the eight mannequins of input1 as Finn. Preserve the precise limb pose and silhouette geometry of the corresponding mannequin, especially bottom row. Output 1536x1024 transparent RGBA, 4 columns by 2 rows, eight whole-body sprites. All facing three-quarter right. Compact crisp pixel-art clusters, matte shading, thin dark-brown pixel outlines matching input2; no smooth glossy anime or granular noise.\nFinn: brown tousled tied-back hair, sly sleepy eyes, gold earring, olive-brown long coat with ochre edging, open cream shirt, brown trousers and plain leather boots. Hands empty. Face MUST be visibly narrower than input2: reduce fleshy cheek width and eye spacing 15%, keep cranial height, tapered small chin, cheek contour not a broad horizontal oval; do not squash vertically. Same stable head in every frame.\nOrange template limbs=NEAR the viewer, cyan=FAR. Render NEAR limbs in normal costume color, FAR limbs subtly darker; never swap identities. NEAR thigh emerges screen-left hip and occludes far thigh where crossing. Follow JOINT LOCATIONS, not just a generic walk.\nFrame1 near foot forward, far foot behind, near hand behind hip.\nFrame2 near planted foot closer under body, far foot still behind, near hand behind hip.\nFrame3 near planted foot under torso, far foot lifts behind and passes, both hands down.\nFrame4 near foot remains planted BEHIND torso, far knee and foot swing FORWARD lifted, near hand forward.\nFrame5 far foot lands FORWARD; near foot BEHIND; near arm forward. Do NOT draw the near foot forward in this cell.\nFrame6 far foot planted forward, near foot at REARMOST position with near toe touching ground behind; near arm returning. Absolutely NOT a duplicate of frame2.\nFrame7 far leg supports body, near knee bends and near boot lifts BEHIND body; near hand down. Both feet close together, no wide straddle.\nFrame8 far foot planted under torso, near boot swings FORWARD but still lifted and close to the far shin; near arm back. Feet almost overlap. Do NOT put a fully stretched near leg far forward yet; that is next frame1.\nUse the template's small stride, relaxed nearly straight elbows and low hands. No chest-height arms. Keep every foot contact/airborne state and NEAR/FAR overlap exactly like input1. Head and costume uniform across8. Full bodies with generous transparent cell gutters. No template colors, no mannequin, no floor, shadow, matte, text, grid.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-v1.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-9801acdf-55b8-4df7-9753-65ff77c1ba0b.png",
+      "adopted": false,
+      "reason": "奥手がほぼ隠れ、8コマの近腕が前へ戻り、青い見本色も混入"
+    },
+    {
+      "id": "finn-b",
+      "prompt": "Precise pose-template rendering. Create FOUR full-body pixel-art Finn sprites, exactly2columns x2rows on1536x1024 transparent canvas. First input is the four EXACT silhouettes to dress. Second input ONLY shows Finn appearance, IGNORE its limb poses. These are walk frames5,6,7,8, NOT a full cycle, do not create a generic walkcycle. Retain template joint positions literally.\nNEAR limbs orange in template belong to side nearest viewer. FAR blue belongs to side behind body. Both trousers and boots brown in finished picture, FAR subtly darker. NEAR leg starts at LEFT hip and always overlaps the far thigh. \nTOP LEFT(frame5): visible near thigh runs DOWN-LEFT, near knee left, near boot behind/LEFT. Far thigh runs DOWN-RIGHT, far boot ahead/RIGHT, with its thigh partially occluded by near thigh. Near hand FORWARD.\nTOP RIGHT(frame6): near leg still back-left, almoststraight, near toe on groundleft. Far foot supports aheadright; near arm somewhat forward. Again near leg must point LEFT not right.\nBOTTOM LEFT(frame7): far leg supports almostvertical rightofcenter. Near thigh drops vertical then bent knee brings lifted near boot to left of far ankle. Near arm vertical down. This is not an open walking stride.\nBOTTOM RIGHT(frame8): feet almost coincide. Far foot onfloor. Near knee forward(right), near boot lifted just in front of far ankle, lowerlegs overlap. Near hand behind(left)hip, NOT ahead of belly, do not lift near knee high.\nEach head neck shoulder hip hand knee ankle should align with corresponding template. Narrow face with tapering cheeks and modest eye spacing, face height NOT flattened, slightly taller than wide cheek area. Stable head and scale acrossfour, tired sly smiling Finn face fromsecondinput. Brown tousledhair tiedbehind, smallgold earring, cream openneckshirt, olivebrown coat with ochreedge, brown pants plainboots. All3/4rightfacing. Compact crisp matte PIXEL ART with darkbrown stepped outlines, not glossy anime. No mannequin colors, no labels,no background,no shadow,no texture haze. Distinct accurate4poses more important than embellishment.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-5-8.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-v1.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b1a97e53-cb8a-4d61-b0a0-c994aa5f6692.png",
+      "adopted": true,
+      "reason": "5〜6で近脚が後ろ、7で持ち上げ、8で前へ運ぶ形を確認",
+      "saved": "assets/source/home-pixel/finn-walk-v9-b.png",
+      "sha256": "28e3690f2c8498839480dc3693a4d0f775d3a04928b2c06b8eb613c10b13456e"
+    },
+    {
+      "id": "finn-a",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as finn. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nFinn: brown tousled tied-back hair, sleepy sly eyes, gold earring, muted olive brown longcoat with ochre edging, cream open-neck shirt, brown trousers and PLAIN brown leather boots. Empty bare hands.\nThese are frames1,2,3,4 only:\nTOP LEFT(frame1): near thigh extends down-right from LEFT hip crossing in FRONT of darker far thigh. Nearboot forwardright and planted; farfoot behindleft. Nearhand behindleft of hip, farhand low infront.\nTOP RIGHT(frame2): near foot planted closer under body, farfoot behindleft, nearhand still behindleft, farhand returns.\nBOTTOM LEFT(frame3): nearleg planted nearlyvertical underbody, far knee bent and far boot slightly lifted just behind near ankle. Nearhand verticaldown by thigh.\nBOTTOM RIGHT(frame4): near foot planted behindleft of torso, far knee swings forwardright with foot lifted a little (NOT highknee). Nearhand slightlyforward but low. Near shin visibly overlaps far shin if crossing.\nNear=orange template; far=cyan template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-1-4.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-b1a97e53-cb8a-4d61-b0a0-c994aa5f6692.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-45eeaeb4-5d89-4dd5-b458-285b06a8ac57.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "aria-b",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as aria. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nAria: blonde braidedhair with whiteflower/leaves and elfears, green eyes, green leafembroidered cape, cream puffsleeves, browncorset and gloves, short creamruffled skirt and green waistpanels, barethighs, brown goldlaced boots. Emptyhands.\nThese are frames5,6,7,8 only, NOT a full walkcycle:\nTOP LEFT(frame5): near thigh DOWN-LEFT from LEFT hip, near knee left, near boot BEHIND/LEFT. Far thigh DOWN-RIGHT, far boot FORWARD/RIGHT, far upperthigh partially hidden by near thigh. Nearhand FORWARD low.\nTOP RIGHT(frame6): near leg still BACK-LEFT almost straight, toe touching ground; farfoot planted aheadright. Nearhand returning but still forward. Nearfoot NOT forward.\nBOTTOM LEFT(frame7): farleg supports nearlyvertical rightofcenter, near thigh vertical then knee bends bringing near boot BEHIND LEFT of far ankle and slightly OFFground. Nearhand straightdown. Feet close.\nBOTTOM RIGHT(frame8): feet almost coincide. Farfoot onfloor underbody. Nearknee forwardright, near boot raised just in FRONT of far ankle but still close, legs overlap. Nearhand BACK LEFT ofhip. No spreadstride, no highknee. Next frame1 will put nearfoot fullyforward.\nNear=orange template; far=cyan template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-5-8.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-v1.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-c6fbdd37-993e-4312-b88d-fff37b0eca26.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "finn-a-fix",
+      "prompt": "Precise localized correction of this FOUR-frame sprite sheet. In BOTTOM RIGHT ONLY, recolor the blue far trouser leg to exactly the same warm dark brown cloth as other trouser legs. Move the NEAR arm (left shoulder) slightly forward: elbow below shoulder, hand just to right of its shoulder beneath belt, very modest forward swing. Keep far lifted leg pose and all other limbs in all4 cells EXACTLY. Preserve all faces, narrower cheek proportions, hair, costume, decoration, all four poses, size, placement, rendering and complete transparent background unchanged. Same1536x1024,2columns2rows. Do not introduce any other colors or objects. Do not change leg positions. No text/shadow/background.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-45eeaeb4-5d89-4dd5-b458-285b06a8ac57.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-d34452b9-f443-4642-91ff-0fa80dafa91a.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/finn-walk-v9-a.png",
+      "sha256": "89ee14c02bd7cefe8edecb8c9b4f41b460ec77b793aff0d8ce4919118053f85e"
+    },
+    {
+      "id": "aria-b-fix",
+      "prompt": "Precise localized correction of this FOUR-frame sprite sheet. Recolor ALL the cyan/blue visible thigh skin areas to warm pale SKIN matching her near thigh, slightly shaded. No blue stockings. In top row two cells ONLY, near hand must be slightlyforward of near shoulder and low below belt, elbow nearlystraight. Preserve ALL8 leg positions/overlaps exactly: top row nearlegleftbehind farlegrightahead; bottomleft nearboot liftedleftbehind; bottomright nearboot passesinfront. Preserve all faces, narrower cheek proportions, hair, costume, decoration, all four poses, size, placement, rendering and complete transparent background unchanged. Same1536x1024,2columns2rows. Do not introduce any other colors or objects. Do not change leg positions. No text/shadow/background.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-c6fbdd37-993e-4312-b88d-fff37b0eca26.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-a4582f6e-207a-4106-a71c-9e978240ee4f.png",
+      "adopted": false,
+      "reason": "8コマ目の奥の手が隠れすぎていたため局所修正へ"
+    },
+    {
+      "id": "leon-b",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as leon. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nLeon: spiky brownhair, red scarf and short red cape, blue tunic cream edging, brown crossedbelts and waistbelt, silver NEAR shoulderarmor, cream sleeves, browngloves, darkbrown trousers and plain brownboots. Emptyhands.\nThese are frames5,6,7,8 only, NOT a full walkcycle:\nTOP LEFT(frame5): near thigh DOWN-LEFT from LEFT hip, near knee left, near boot BEHIND/LEFT. Far thigh DOWN-RIGHT, far boot FORWARD/RIGHT, far upperthigh partially hidden by near thigh. Nearhand FORWARD low.\nTOP RIGHT(frame6): near leg still BACK-LEFT almost straight, toe touching ground; farfoot planted aheadright. Nearhand returning but still forward. Nearfoot NOT forward.\nBOTTOM LEFT(frame7): farleg supports nearlyvertical rightofcenter, near thigh vertical then knee bends bringing near boot BEHIND LEFT of far ankle and slightly OFFground. Nearhand straightdown. Feet close.\nBOTTOM RIGHT(frame8): feet almost coincide. Farfoot onfloor underbody. Nearknee forwardright, near boot raised just in FRONT of far ankle but still close, legs overlap. Nearhand BACK LEFT ofhip. No spreadstride, no highknee. Next frame1 will put nearfoot fullyforward.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. Use original costume/skin colors only, no flat template paint. No background,shadow,labels,grid,matte,haze.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-5-8.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-v1.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-2c1c2dbd-72f0-4a40-9b6a-2dd618320f5b.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "mira-b",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as mira. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nMira: grey-lilac hair gathered behind, crescent and white flower and navy bow, tired half-lidded eyes with gentle undereye shadows, creamdress goldtrim, widecream sleeves with navylining, brownbelt/pouches, brown open-toe lacedboots. Emptyhands, no hair chains.\nThese are frames5,6,7,8 only, NOT a full walkcycle:\nTOP LEFT(frame5): near thigh DOWN-LEFT from LEFT hip, near knee left, near boot BEHIND/LEFT. Far thigh DOWN-RIGHT, far boot FORWARD/RIGHT, far upperthigh partially hidden by near thigh. Nearhand FORWARD low.\nTOP RIGHT(frame6): near leg still BACK-LEFT almost straight, toe touching ground; farfoot planted aheadright. Nearhand returning but still forward. Nearfoot NOT forward.\nBOTTOM LEFT(frame7): farleg supports nearlyvertical rightofcenter, near thigh vertical then knee bends bringing near boot BEHIND LEFT of far ankle and slightly OFFground. Nearhand straightdown. Feet close.\nBOTTOM RIGHT(frame8): feet almost coincide. Farfoot onfloor underbody. Nearknee forwardright, near boot raised just in FRONT of far ankle but still close, legs overlap. Nearhand BACK LEFT ofhip. No spreadstride, no highknee. Next frame1 will put nearfoot fullyforward.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. Use original costume/skin colors only, no flat template paint. No background,shadow,labels,grid,matte,haze.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-5-8.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-v3.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f9bab389-d8c0-4353-a3fc-bdcd16943fca.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "lico-b",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as lico. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nLico: auburn ponytail tied at BACK ofhead, greeneyes and roundglasses, charcoal/red cape NO goldpattern, cream sleeves, red shortlayered skirt with creamfrill, belt accessories, barehands, dark opentoe sandals.\nThese are frames5,6,7,8 only, NOT a full walkcycle:\nTOP LEFT(frame5): near thigh DOWN-LEFT from LEFT hip, near knee left, near boot BEHIND/LEFT. Far thigh DOWN-RIGHT, far boot FORWARD/RIGHT, far upperthigh partially hidden by near thigh. Nearhand FORWARD low.\nTOP RIGHT(frame6): near leg still BACK-LEFT almost straight, toe touching ground; farfoot planted aheadright. Nearhand returning but still forward. Nearfoot NOT forward.\nBOTTOM LEFT(frame7): farleg supports nearlyvertical rightofcenter, near thigh vertical then knee bends bringing near boot BEHIND LEFT of far ankle and slightly OFFground. Nearhand straightdown. Feet close.\nBOTTOM RIGHT(frame8): feet almost coincide. Farfoot onfloor underbody. Nearknee forwardright, near boot raised just in FRONT of far ankle but still close, legs overlap. Nearhand BACK LEFT ofhip. No spreadstride, no highknee. Next frame1 will put nearfoot fullyforward.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. Use original costume/skin colors only, no flat template paint. No background,shadow,labels,grid,matte,haze.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-5-8.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-v4.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-04b25e1e-5fec-414b-97fa-0b0d4b04efb8.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "aria-a",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as aria. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nAria: blonde braidedhair with whiteflower/leaves and elfears, green eyes, green leafembroidered cape, cream puffsleeves, browncorset and gloves, short creamruffled skirt and green waistpanels, barethighs, brown goldlaced boots. Emptyhands.\nThese are frames1,2,3,4 only:\nTOP LEFT(frame1): near thigh extends down-right from LEFT hip crossing in FRONT of darker far thigh. Nearboot forwardright and planted; farfoot behindleft. Nearhand behindleft of hip, farhand low infront.\nTOP RIGHT(frame2): near foot planted closer under body, farfoot behindleft, nearhand still behindleft, farhand returns.\nBOTTOM LEFT(frame3): nearleg planted nearlyvertical underbody, far knee bent and far boot slightly lifted just behind near ankle. Nearhand verticaldown by thigh.\nBOTTOM RIGHT(frame4): near foot planted behindleft of torso, far knee swings forwardright with foot lifted a little (NOT highknee). Nearhand slightlyforward but low. Near shin visibly overlaps far shin if crossing.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.\nBoth thighs must be warm pale SKIN, not stockings. No blue anywhere. Keep same head size, proportions, line weight and costume as input2.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-1-4.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-a4582f6e-207a-4106-a71c-9e978240ee4f.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-50a699b9-28ee-47d5-a3ae-2a7019a072f5.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/aria-walk-v9-a.png",
+      "sha256": "a5c6eb1e39680f6aa44889d9eb4df2efa4b4f43e88120eac058071e2592f404b"
+    },
+    {
+      "id": "leon-b-fix",
+      "prompt": "Finish incomplete rendering ONLY in this 4-frame transparent sprite sheet. BOTTOM ROW both cells: the pale tan near thigh must be dark grey-brown TROUSERS matching the top-row pants, with natural cloth folds and brown outline. No exposed skin on his legs. Top-row boots should remain exactly unchanged. Do NOT move or rotate any leg or foot, do not change which leg is NEAR (screenleft hip) and FAR. Keep original4poses, allhead/face/hair/arms/torso/cape/skirt pixels unchanged. This is a costume paint completion not newanimation. Same1536x1024 transparent RGBA,2x2 layout, no text/background/shadow. Compact matte pixelart, no glossy/smooth anime.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-2c1c2dbd-72f0-4a40-9b6a-2dd618320f5b.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-712ae0bc-f9e7-45ed-aaad-fb3256f4ddad.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/leon-walk-v9-b.png",
+      "sha256": "42959d70deba45b07219ce38479b909a987f8ebc2d689d2ece53bdbc91221edc"
+    },
+    {
+      "id": "mira-b-fix",
+      "prompt": "Finish incomplete rendering ONLY in this 4-frame transparent sprite sheet. TOP RIGHT near leg (left/rear leg) is an unfinished flat mannequin shape. Finish it as Mira's leg: small pale bare thigh, brown lace-up open-toe leather boot with gold eyelets and visible toes, matching the top-left near leg's design. KEEP its extended back-left pose and planted left foot exactly, not a copy of another pose. Do NOT move or rotate any leg or foot, do not change which leg is NEAR (screenleft hip) and FAR. Keep original4poses, allhead/face/hair/arms/torso/cape/skirt pixels unchanged. This is a costume paint completion not newanimation. Same1536x1024 transparent RGBA,2x2 layout, no text/background/shadow. Compact matte pixelart, no glossy/smooth anime.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-f9bab389-d8c0-4353-a3fc-bdcd16943fca.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e9630d4e-fee6-442a-86b8-ea9a3553564e.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/mira-walk-v9-b.png",
+      "sha256": "7f3accd1c4948b8d6ea409086d66f64094b967967e84a987df32db33af6f21e9"
+    },
+    {
+      "id": "lico-b-fix",
+      "prompt": "Finish incomplete rendering ONLY in this 4-frame transparent sprite sheet. ALL FOUR frames have unfinished flat tan/grey mannequin legs. Finish BOTH legs as Lico's natural pale skin with gentle warm shadows, delicate pixel contours, dark crisscross open-toe sandals and exposed toes. Match her reference costume, no grey tights, no featureless skin boots. KEEP all hip knee ankle and sole locations EXACTLY. Especially top-row near legs point back-left, bottomleftnear boot liftsbehind, bottomrightnear boot passes infront. Do NOT move or rotate any leg or foot, do not change which leg is NEAR (screenleft hip) and FAR. Keep original4poses, allhead/face/hair/arms/torso/cape/skirt pixels unchanged. This is a costume paint completion not newanimation. Same1536x1024 transparent RGBA,2x2 layout, no text/background/shadow. Compact matte pixelart, no glossy/smooth anime.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-04b25e1e-5fec-414b-97fa-0b0d4b04efb8.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-afa2bb36-2d33-4131-80fe-97f189b0e020.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/lico-walk-v9-b.png",
+      "sha256": "24f38a2295a20959231a7069c482c938d0a69c776fffa8db1e3235c4ebb488e5"
+    },
+    {
+      "id": "leon-a",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as leon. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nLeon: spiky brownhair, red scarf and short red cape, blue tunic cream edging, brown crossedbelts and waistbelt, silver NEAR shoulderarmor, cream sleeves, browngloves, darkbrown trousers and plain brownboots. Emptyhands.\nThese are frames1,2,3,4 only:\nTOP LEFT(frame1): near thigh extends down-right from LEFT hip crossing in FRONT of darker far thigh. Nearboot forwardright and planted; farfoot behindleft. Nearhand behindleft of hip, farhand low infront.\nTOP RIGHT(frame2): near foot planted closer under body, farfoot behindleft, nearhand still behindleft, farhand returns.\nBOTTOM LEFT(frame3): nearleg planted nearlyvertical underbody, far knee bent and far boot slightly lifted just behind near ankle. Nearhand verticaldown by thigh.\nBOTTOM RIGHT(frame4): near foot planted behindleft of torso, far knee swings forwardright with foot lifted a little (NOT highknee). Nearhand slightlyforward but low. Near shin visibly overlaps far shin if crossing.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.\nComplete and fully render EVERY limb in the costume material of input2. No flat mannequin legs or unpainted limbs! Leon wears dark trousers over entire legs; women have pale bare thighs and fully rendered matching footwear. Keep face narrower, same headscale, same face and body proportions as input2. Do not change costume.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-1-4.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-712ae0bc-f9e7-45ed-aaad-fb3256f4ddad.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e61c63ab-e7db-42d3-a709-bf80842e45f8.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "mira-a",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as mira. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nMira: grey-lilac hair gathered behind, crescent and white flower and navy bow, tired half-lidded eyes with gentle undereye shadows, creamdress goldtrim, widecream sleeves with navylining, brownbelt/pouches, brown open-toe lacedboots. Emptyhands, no hair chains.\nThese are frames1,2,3,4 only:\nTOP LEFT(frame1): near thigh extends down-right from LEFT hip crossing in FRONT of darker far thigh. Nearboot forwardright and planted; farfoot behindleft. Nearhand behindleft of hip, farhand low infront.\nTOP RIGHT(frame2): near foot planted closer under body, farfoot behindleft, nearhand still behindleft, farhand returns.\nBOTTOM LEFT(frame3): nearleg planted nearlyvertical underbody, far knee bent and far boot slightly lifted just behind near ankle. Nearhand verticaldown by thigh.\nBOTTOM RIGHT(frame4): near foot planted behindleft of torso, far knee swings forwardright with foot lifted a little (NOT highknee). Nearhand slightlyforward but low. Near shin visibly overlaps far shin if crossing.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.\nComplete and fully render EVERY limb in the costume material of input2. No flat mannequin legs or unpainted limbs! Leon wears dark trousers over entire legs; women have pale bare thighs and fully rendered matching footwear. Keep face narrower, same headscale, same face and body proportions as input2. Do not change costume.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-1-4.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e9630d4e-fee6-442a-86b8-ea9a3553564e.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0bddec9d-8ba5-465d-89d0-4a8e00eb68d0.png",
+      "adopted": false,
+      "reason": "見本の色・未描画の脚・腕の位置のいずれかが残ったため部分修正へ"
+    },
+    {
+      "id": "lico-a",
+      "prompt": "Dress the EXACT four mannequin poses in input1 as lico. Input1 fixes every shoulder/elbow/hand/hip/knee/ankle position and NEAR/FAR overlap. Input2 provides ONLY costume, colors and compact PIXEL ART style, ignore its poses. Produce1536x1024 true transparent RGBA,2columns2rows,4wholebody figures evenly centered with64pxgutters. Not8frames. Do not draw text or guidecolors.\nLico: auburn ponytail tied at BACK ofhead, greeneyes and roundglasses, charcoal/red cape NO goldpattern, cream sleeves, red shortlayered skirt with creamfrill, belt accessories, barehands, dark opentoe sandals.\nThese are frames1,2,3,4 only:\nTOP LEFT(frame1): near thigh extends down-right from LEFT hip crossing in FRONT of darker far thigh. Nearboot forwardright and planted; farfoot behindleft. Nearhand behindleft of hip, farhand low infront.\nTOP RIGHT(frame2): near foot planted closer under body, farfoot behindleft, nearhand still behindleft, farhand returns.\nBOTTOM LEFT(frame3): nearleg planted nearlyvertical underbody, far knee bent and far boot slightly lifted just behind near ankle. Nearhand verticaldown by thigh.\nBOTTOM RIGHT(frame4): near foot planted behindleft of torso, far knee swings forwardright with foot lifted a little (NOT highknee). Nearhand slightlyforward but low. Near shin visibly overlaps far shin if crossing.\nNear=light beige template; far=dark brown template. Render far limbs slightly darker but samecostume, near limbs overlap far. Small relaxedsteps matching templateexactly. Elbows mostlystraight, hands belowbelt, no chestheight reaching. SAME compact matte pixelclusters and fine darkbrown steppedoutlines asinput2; no glossy anime, thickoutline or blurry noise. FACE: visibly narrow cheek contour, modesteye spacing, tapered chin, not horizontalroundoval. Keep face height; reduce cheekwidth about15% vsoriginal. Never squash vertically. Head stable samepixelscale across4. Preserve costume and head/body proportion. No background,shadow,labels,grid,matte,haze.\nComplete and fully render EVERY limb in the costume material of input2. No flat mannequin legs or unpainted limbs! Leon wears dark trousers over entire legs; women have pale bare thighs and fully rendered matching footwear. Keep face narrower, same headscale, same face and body proportions as input2. Do not change costume.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/phase-guide-neutral-1-4.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-afa2bb36-2d33-4131-80fe-97f189b0e020.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-496351ad-8368-498f-8246-f161dfb1fbfb.png",
+      "adopted": true,
+      "reason": "4コマの脚の前後交代を目視。関節の完全一致は保証せず、全8コマで再確認",
+      "saved": "assets/source/home-pixel/lico-walk-v9-a.png",
+      "sha256": "1ab3842e5948523da1ec5b449c7c61f0596e3e613f3dc5886a9b200b3182fdb6"
+    },
+    {
+      "id": "leon-a-fix",
+      "prompt": "Precise localized correction, FOUR sprites on1536x1024 transparent RGBA in2x2grid. TOP RIGHT cell ONLY: near arm with silver shoulderarmor is incorrectly in FRONT. Rotate it back slightly so the glove is LEFT of its shoulder/hip, just like TOP LEFT glove but a little nearer to vertical. Elbow almoststraight. The near glove must NOT cover the cream front-coattail. Keep FAR arm, legs, all otherthree poses unchanged. Preserve costume, faces, hair, all other bodyparts, allpixelart texture and transparent background EXACTLY. No newprops/text/shadows.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-e61c63ab-e7db-42d3-a709-bf80842e45f8.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-cc7b993c-cb12-47c5-b3de-19eee194f825.png",
+      "adopted": true,
+      "reason": "2コマの手前腕を後ろへ修正",
+      "saved": "assets/source/home-pixel/leon-walk-v9-a.png",
+      "sha256": "94452c87e875076b4c44cc6f973b1cb09b7a27e31c6bbd31217575b2a17a26da"
+    },
+    {
+      "id": "mira-a-fix",
+      "prompt": "Precise localized correction, FOUR sprites on1536x1024 transparent RGBA in2x2grid. BOTTOM RIGHT cell ONLY: far raised thigh between skirt and boot is dark brown mannequin paint. Repaint that thigh as pale warm skin with gentle shadows, matching other thighs. Do NOT move it. No other changes. Preserve costume, faces, hair, all other bodyparts, allpixelart texture and transparent background EXACTLY. No newprops/text/shadows.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0bddec9d-8ba5-465d-89d0-4a8e00eb68d0.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-82827ab1-4710-4af0-ac07-b8b02b922094.png",
+      "adopted": false,
+      "reason": "4コマの奥脚が消えたため不採用"
+    },
+    {
+      "id": "mira-a-restore",
+      "prompt": "Edit ONLY the BOTTOM RIGHT sprite in image1. Its FAR leg has accidentally disappeared. Restore the raised FAR leg exactly as visible in BOTTOM RIGHT of image2: thigh reaches forward RIGHT from under skirt, knee bent right, shin downward, open-toe brown laced boot lifted at the right of supporting leg. Use image2 leg silhouette and boot details EXACTLY, but the exposed thigh above boot must be pale skin (not dark grey). This is a small skin color correction, NOT removal of leg. Keep supporting near leg, arms, body, face and all other three sprites unchanged. Same 1536x1024 2x2 transparent RGBA sprite sheet. Do not change pose or erase any limb. No background.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-82827ab1-4710-4af0-ac07-b8b02b922094.png",
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-0bddec9d-8ba5-465d-89d0-4a8e00eb68d0.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-472531c8-0407-42aa-b5d0-fd87b9df020c.png",
+      "adopted": true,
+      "reason": "4コマの奥脚と肌色を復元",
+      "saved": "assets/source/home-pixel/mira-walk-v9-a.png",
+      "sha256": "6a7adaa89b40e76bea45b2f57448128a50bfbf1177e78a65f0e66880a7b5bdf9"
+    },
+    {
+      "id": "aria-b-hand",
+      "prompt": "Localized edit ONLY of BOTTOM RIGHT Aria in this four-frame 2x2 sheet. Her FAR arm is wrongly invisible. Show the far cream sleeve and brown gloved hand swinging gently FORWARD and DOWN from the shoulder on the screen-right side, emerging beside the front/right edge of her waist/skirt. The far glove should be clearly separate from the torso silhouette in front, approximately at canvas (1260, 815), below belt level, relaxed elbow, not lifted to chest. It is the FAR arm behind torso, not the near arm: keep NEAR arm hanging slightly BACK on LEFT side exactly as now. Preserve BOTH legs and boots positions and overlaps exactly, they are correct passing pose. Do not touch ANY pixels of other three sprites or her head/face/hair/body/cape/skirt/legs. Same1536x1024 transparent RGBA. Small modest arm swing, matching original glove rendering and line thickness. No extra hands or props, no text/shadow/background.",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-a4582f6e-207a-4106-a71c-9e978240ee4f.png"
+      ],
+      "transparent_background": true,
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-12d901d6-4ebb-4a89-abce-17a7bf24806c.png",
+      "adopted": false,
+      "reason": "余白に半透明の背景が残ったため不採用、image_genで透明化"
+    },
+    {
+      "id": "aria-b-alpha",
+      "referenced_image_paths": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-12d901d6-4ebb-4a89-abce-17a7bf24806c.png"
+      ],
+      "transparent_background": true,
+      "prompt": "Remove ONLY the entire brown/black background and glow from this image, replacing it with absolute transparency alpha=0. This is a game sprite sheet: retain exactly all four characters, every body/limb pose, face, clothing, colors, size and positions, especially the visible forward far brown glove on the BOTTOM RIGHT character. No ground shadows, no colored haze anywhere. Completely empty transparent gutters between sprites and transparent corners. Do not paint a black or checkered backdrop. Output1536x1024 RGBA. Do not redraw the characters, only remove background.",
+      "output": "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-074cc6da-df59-4e6e-8b68-65a9ed3ada81.png",
+      "adopted": true,
+      "reason": "8コマ目の奥の手を保ち、余白に残った半透明の背景を除去",
+      "saved": "assets/source/home-pixel/aria-walk-v9-b.png",
+      "sha256": "499cf14e1052b842498818b5ca0c439d920de16604488f4fc3af555cfeaa2acd"
+    }
+  ]
+}

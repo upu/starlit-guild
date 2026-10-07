@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-04",
+  "tool": "image_gen__imagegen",
+  "supersedes": "015d9cf Mira tea face",
+  "scope": "Narrow the entire face more noticeably, including eyes and spacing; keep raised eye line and outer hair size.",
+  "calls": [
+    {
+      "direction": "right",
+      "prompt": "顔を大幅に細くする局所編集。添付のミラのお茶4コマで、肌色の顔全体を現在の横幅の70%程度にしてください。こめかみから目、頬、あごまで全体的に横方向だけ細める。目も横幅を狭く、左右の目の間隔も詰める。顔の縦の長さと高めの目の高さは変えない。頭・髪の外周の大きさは変えず、狭くした顔の左右には紫の横髪を自然に続ける。今の丸顔・横長の目を残さない。明確に細い卵形の顔、小さな先細りのあご。眠たげな紫の目、重いまぶた、薄い目の下の影、やさしい小さな微笑みは維持。全4コマに同じ新しい細い顔を適用。3コマ目は目を閉じて飲む。衣装・体・手・椅子・カップ・ポーズ・右向きはすべて元のまま。顔以外の大きさを変えない。1536x1024の2列2行スプライトシート、完全透明RGBA、背景や後光や文字なし。過去の微修正では不十分だったので、顔全体がはっきり細くなった差を出してください。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png"
+      ],
+      "output": "exec-d24ea2f8-4f10-49e5-ba2d-68566dfb11a7.png",
+      "destination": "assets/source/home-pixel/mira-tea-v1-right.png",
+      "accepted": true
+    },
+    {
+      "direction": "left",
+      "prompt": "画像の左向きミラのお茶4コマについて、顔全体をさらに細くしてください。肌色の顔全体の横幅を現在の約70%にするイメージで、こめかみ・目の横幅・目の間隔・頬・あごをまとめて狭く。顔の縦の長さは保ち、高めの目と眉の位置も維持。丸顔ではなく、はっきり細い卵形と小さなあご。狭めた顔の左右を自然な紫の横髪でつなぐ。髪全体・頭の外形は縮めない。紫の瞳と重い眠たげな上まぶた、薄い目の下の影、穏やかな微笑みを維持。全4コマ同じ新しい顔、3コマ目は高い位置の閉じ目。全員画面左向きのまま、髪飾りは画面右、椅子の背は画面右、つま先は左。体・服・椅子・カップ・ポーズはそのまま。奥の右手が画面左でカップを持ち、手前の左手は画面右の膝に置く。手を入れ替えない。1536x1024、2列2行の透明RGBA。文字・背景・後光・影は描かない。前回の微調整では細さが足りなかったため、顔の横幅がはっきり変わるようにする。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png"
+      ],
+      "output": "exec-3315a4bf-1357-4767-a2c8-528bc35a3c4a.png",
+      "destination": "assets/source/home-pixel/mira-tea-v1-left.png",
+      "accepted": true
+    }
+  ],
+  "retakes": 0,
+  "notes": "70% is prompt guidance, not a measured result. Generated originals kept unchanged. Existing atlas builder supplies delivery. Visual checks required; physical phone not checked."
+}
