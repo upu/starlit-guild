@@ -63,9 +63,23 @@ export function workbenchMarkerStatus(state: State, now: number): HomeMarkerStat
   const work = state.guild?.work;
   if (!work) return undefined;
   const status = workStatus(state, now);
+  const warning = !work.batch || !state.guild?.roles.workbench || work.batch.readyAt <= now;
+  const seconds = work.batch
+    ? Math.max(0, Math.ceil((work.pausedMs ?? work.batch.readyAt - now) / 1000))
+    : undefined;
+  const remaining =
+    seconds === undefined
+      ? undefined
+      : `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
   return {
-    text: status === "材料待ち" ? "材料不足" : status,
-    warning: !work.batch || !state.guild?.roles.workbench || work.batch.readyAt <= now,
+    text:
+      !warning && remaining !== undefined
+        ? `残り ${remaining}`
+        : status === "材料待ち"
+          ? "材料不足"
+          : status,
+    warning,
     progress: work.batch ? workProgress(state, now) : undefined,
+    ...(remaining !== undefined ? { remaining } : {}),
   };
 }

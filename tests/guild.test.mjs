@@ -45,6 +45,16 @@ test("workbench marker distinguishes shortages, active progress, paused work and
   s = buy(s, "honey", 1);
   assert.ok(s.guild.work.batch, "buying the missing material resumes the queued order");
   const batch = { ...s.guild.work.batch };
+  for (const [milliseconds, label] of [
+    [120001, "02:01"],
+    [60001, "01:01"],
+    [60000, "01:00"],
+    [1, "00:01"],
+    [0, "00:00"],
+    [-1000, "00:00"],
+  ]) {
+    assert.equal(workbenchMarkerStatus(s, batch.readyAt - milliseconds).remaining, label);
+  }
   const halfway = (batch.startedAt + batch.readyAt) / 2;
   assert.equal(workbenchMarkerStatus(s, halfway).progress, 0.5);
   assert.equal(
@@ -58,6 +68,7 @@ test("workbench marker distinguishes shortages, active progress, paused work and
   assert.equal(paused.text, "一時停止・担当待ち");
   assert.equal(paused.warning, true);
   assert.equal(paused.progress, 0.5);
+  assert.equal(paused.remaining, "04:08", "paused countdown stays frozen too");
   s = assign(s, "workbench", "mira");
   s.consumables = { items: { "guild-tea": 9999 }, assigned: {} };
   s = later(s, 30);

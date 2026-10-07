@@ -1,6 +1,11 @@
 import { furnitureCatalog, type Furniture } from "./home-room-layout.ts";
 
-export type HomeMarkerStatus = { text: string; warning: boolean; progress?: number };
+export type HomeMarkerStatus = {
+  text: string;
+  warning: boolean;
+  progress?: number;
+  remaining?: string;
+};
 export type HomeMarker = {
   id: string;
   control: string;

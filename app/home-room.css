@@ -31,7 +31,8 @@
   background: transparent;
   box-shadow: none;
 }
-.home-zoom svg {
+.home-zoom svg,
+.home-marker .guild-duty-face > svg {
   width: 28px;
   height: 28px;
   color: #ffe5a1;
@@ -90,6 +91,7 @@
   font-weight: 700;
   line-height: 1.4;
   text-align: center;
+  font-variant-numeric: tabular-nums;
   text-shadow:
     -1px -1px #302417,
     0 -1px #302417,
@@ -124,8 +126,10 @@
 .home-marker .guild-duty-face {
   width: 36px;
   height: 36px;
-  border-width: 1px;
-  border-radius: 7px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 .guild-panel .home-stage {
   border-left: 0;

@@ -32,9 +32,8 @@ export function HomeRoomMarkers({
           )}
           {marker.status?.progress !== undefined && (
             <div className="home-marker-status">
-              {!marker.status.warning && <span aria-hidden="true">{marker.status.text}</span>}
+              <span aria-hidden="true">{marker.status.remaining}</span>
               <progress aria-label="作業台の進み具合" value={marker.status.progress} max={1} />
-              <small>{Math.floor(marker.status.progress * 100)}%</small>
             </div>
           )}
         </div>
