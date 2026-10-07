@@ -8,7 +8,7 @@
 
 1. [用語集](../glossary.md)、[世界観と物語](world-and-story.md)、[物語・会話の制作指針](story-writing.md) で呼び名・共通設定・書き方を確認する。
 2. [キャラクター一覧](../characters/README.md) から登場人物を読む。人物を追加するときは [共通書式](../characters/_template.md) を使う。
-3. [関係性と掛け合い](../relationships/README.md) と、人物資料が案内する所属組織を読む。共通の関係は [アリアとレオン](../relationships/aria-leon.md)、組織は [マッドハロウィン](../factions/mad-halloween.md)、[紋章院](../factions/heraldry-office.md) にまとめている。
+3. [関係性と掛け合い](../relationships/README.md) と、人物資料が案内する所属組織を読む。共通の関係は [アリアとレオン](../relationships/aria-leon.md)、組織は [マッドハロウィン](../factions/mad-halloween.md)、[星章院](../factions/star-badge-office.md) にまとめている。
 4. 対象章のプロットと既存の台本を照合する。
 
 ## 本編の全体構想
@@ -23,7 +23,7 @@
 | 第二章 | [第二章計画](story-part-2.md) | [第二章](game-script/chapter-2.md) | [第二章のゲーム実装](../gameplay/chapter-two-gameplay.md) |
 | 第三章 | [第三章計画](story-part-3.md) | [第三章](game-script/chapter-3.md) | [第三章のゲーム実装資料](../gameplay/chapter-three-gameplay.md) |
 | 第四章 | [第四章計画](story-part-4.md)・[詳細台本](chapter-four-script.md)・[道中と日常の掛け合い](chapter-four-banter.md) | [第四章](game-script/chapter-4.md) | [第四章のゲーム実装](../gameplay/chapter-four-gameplay.md) |
-| 第五章 | [第五章計画](story-part-5.md) | 未実装 | [旅団の拠点機能（設計案）](../gameplay/guild-base.md) |
+| 第五章 | [第五章計画](story-part-5.md)・[詳細台本](chapter-five-script.md) | 未実装 | [旅団の拠点機能（設計案）](../gameplay/guild-base.md) |
 
 ## 台本と場面の素材
 

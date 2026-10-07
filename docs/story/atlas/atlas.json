@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "STARLIT GUILD / 地図帳",
-  "subtitle": "村から街へ、灯りをたどる。第一〜第四章の設定資料",
+  "subtitle": "村から街へ、灯りをたどる。第一〜第五章の設定資料",
   "north": false,
   "notice": "存在は本文・設定資料を参照。すべての座標と地形の輪郭は制作案です。方角・実距離・移動時間を確定する地図ではありません。",
   "defaultMap": "region",
@@ -226,11 +226,15 @@
       "level": 1,
       "status": "established",
       "placement": "proposal",
-      "note": "街の外れの丘にある最初の塔。正式な塔名ではなく地図用の説明名。",
+      "note": "街の外れの丘にある最初の塔。正式な塔名ではなく地図用の説明名。第五章の制作案では、上部に光の取り込み口があり、そこから交易路と待ち合わせの分かれ道を見下ろせる。",
       "sources": [
         {
           "ref": "../game-script/chapter-1.md",
           "detail": "1-4、1-7〜1-9：丘の塔と排水の復旧。"
+        },
+        {
+          "ref": "../chapter-five-script.md#5-9-また苔か",
+          "detail": "5-8〜5-11（制作案）：光の取り込み口の鳥の巣。塔の上から交易路と待ち合わせの分かれ道が見える。"
         }
       ],
       "labelOffset": [
@@ -519,6 +523,28 @@
       ]
     },
     {
+      "id": "old-map-path",
+      "name": "管理図にだけある細い道",
+      "kind": "junction",
+      "x": 330,
+      "y": 270,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "丘の塔の古い管理図にだけ描かれ、今の地図にはない細い道。塔の裏から森へ入り、塔の上から見ると木々の間に切れ目が続く。誰が作り、どこへ続くか、今も通れるかは未設定。第五章の制作案。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-9-また苔か",
+          "detail": "5-9（制作案）：管理図の細い線。5-11：塔の上から見た森の切れ目。"
+        }
+      ],
+      "labelOffset": [
+        -12,
+        -10
+      ],
+      "labelAnchor": "end"
+    },
+    {
       "id": "linde-warehouse",
       "name": "連絡先の倉庫二階",
       "kind": "site",
@@ -532,12 +558,80 @@
         {
           "ref": "../game-script/chapter-4.md",
           "detail": "4-10：リンデで旅団を登録し、倉庫二階を借りる。"
+        },
+        {
+          "ref": "../chapter-five-script.md#5-5-念のための受付帳",
+          "detail": "5-5（制作案）：裏の空き地を片づけ、菜園にする。"
         }
       ],
       "labelOffset": [
         12,
         -12
       ]
+    },
+    {
+      "id": "linde-warehouse-yard",
+      "name": "倉庫裏の菜園",
+      "kind": "site",
+      "x": 484,
+      "y": 452,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "倉庫の裏の空き地。第五章の制作案で、リコの作業場所と薬草の菜園にする。家々の屋根越しに丘の塔が見えるため、光る苔は植えない。塔までの方角と距離は未設定。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-5-念のための受付帳",
+          "detail": "5-5（制作案）：倉庫裏の片づけ、菜園の始まり、丘の塔が見える。"
+        }
+      ],
+      "labelOffset": [
+        12,
+        -10
+      ]
+    },
+    {
+      "id": "linde-east-well",
+      "name": "東の外れの井戸",
+      "kind": "site",
+      "x": 505,
+      "y": 505,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "リンデの東の外れの井戸。坂の畑の縁に植えた彼岸花の球根が雨で土から出て、その毒が染みて水が苦くなる。第五章の制作案。町内の正確な位置は未設定。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-2-苦い井戸",
+          "detail": "5-2（制作案）：リコが水の味で毒と当たりをつけ、彼岸花を抜く。5-4・5-5：水を届け、家族を診る。花を井戸から離して植え直し、試し液で確かめる。"
+        }
+      ],
+      "labelOffset": [
+        12,
+        16
+      ]
+    },
+    {
+      "id": "linde-herb-market",
+      "name": "リンデの薬草市",
+      "kind": "site",
+      "x": 380,
+      "y": 535,
+      "level": 2,
+      "status": "proposal",
+      "placement": "proposal",
+      "note": "乾かした根や束ねた葉を売る店が並ぶ通り。フィンの顔なじみが多い。第五章の制作案。町内の位置は作図上の案。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-3-薬草市",
+          "detail": "5-3（制作案）：ミラの見立てとフィンの値切り、旅団の名前での後払い。"
+        }
+      ],
+      "labelOffset": [
+        -12,
+        12
+      ],
+      "labelAnchor": "end"
     },
     {
       "id": "linde-dining",
@@ -1045,6 +1139,23 @@
         {
           "ref": "../game-script/chapter-1.md",
           "detail": "1-7：塔の裏手の湿った斜面。"
+        }
+      ]
+    },
+    {
+      "id": "old-map-path-walk",
+      "name": "塔の裏から森へ（管理図の線）",
+      "stops": [
+        "linde-tower",
+        "old-map-path"
+      ],
+      "level": 2,
+      "status": "proposal",
+      "note": "管理図にある線を模式化。今も通れるか、行き先は未設定。",
+      "sources": [
+        {
+          "ref": "../chapter-five-script.md#5-9-また苔か",
+          "detail": "5-9、5-11（制作案）：管理図の細い道と森の切れ目。"
         }
       ]
     },
