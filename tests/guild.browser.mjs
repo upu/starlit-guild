@@ -159,8 +159,8 @@ async function checkMarkerPositions(page) {
         const item = c.bridge.read().furniture.find((f) => f.id === b.dataset.homeMarker);
         const picture = c.art.images.get(`f-${item.id}`);
         return {
-          dx: world.x - (picture.x + (item.kind === "bench" ? 40 : 0)),
-          dy: world.y - (picture.y - (item.kind === "bench" ? 48 : 24)),
+          dx: world.x - (picture.x + (item.kind === "bench" ? 40 : 48)),
+          dy: world.y - (picture.y - (item.kind === "bench" ? 48 : 60)),
         };
       });
   });
@@ -270,13 +270,12 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   await closeDialog(page);
   await page.getByRole("button", { name: "菜園", exact: true }).click();
+  assert.equal(await page.getByRole("button", { name: "プランター 2", exact: true }).count(), 0);
+  assert.equal(await page.locator(".guild-plot-card").count(), 1);
   await page.getByRole("button", { name: "プランター 1", exact: true }).click();
   await page.getByRole("button", { name: "リンデの世話係：アリア", exact: true }).click();
   await closeDialog(page);
-  for (const [name, crop] of [
-    ["プランター 1", "薬草"],
-    ["プランター 2", "ニンジン"],
-  ]) {
+  for (const [name, crop] of [["プランター 1", "薬草"]]) {
     await page.getByRole("button", { name, exact: true }).click();
     await page.getByRole("button", { name: crop, exact: true }).click();
     await page.getByRole("button", { name: "種を買う", exact: true }).click();
@@ -295,7 +294,11 @@ try {
     await page.getByRole("button", { name: "植える", exact: true }).click();
     await closeDialog(page);
   }
-  assert.equal(await page.getByRole("progressbar").count(), 2, "growth visible on the scene");
+  assert.equal(
+    await page.getByRole("progressbar").count(),
+    1,
+    "single planter growth visible on the scene",
+  );
   assert.deepEqual(await page.locator(".guild-toolbar button").allTextContents(), [
     "ホーム",
     "菜園",

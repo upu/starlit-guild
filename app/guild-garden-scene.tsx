@@ -1,5 +1,5 @@
 import type { State } from "@/lib/game";
-import { guildPlots, guildCrops, type GuildPlotId } from "@/lib/guild-content";
+import { guildPlots, openGuildPlots, guildCrops, type GuildPlotId } from "@/lib/guild-content";
 import { residentIds } from "@/lib/home-actor";
 import { HomeRoom } from "./home-room";
 import { plotGrowth, plotName } from "./guild-plot-view";
@@ -20,7 +20,9 @@ export function GuildGardenScene({
   onSite: (site: GardenSite) => void;
   onPlot: (id: GuildPlotId) => void;
 }) {
-  const plots = guildPlots.filter((id) => id.startsWith(site));
+  const plots = guildPlots.filter(
+    (id) => id.startsWith(site) && (openGuildPlots.includes(id) || state.guild?.plots[id].batch),
+  );
   const members = residentIds.filter((id) => id === state.guild?.roles[site]);
   const growth = Object.fromEntries(
     plots
@@ -47,12 +49,14 @@ export function GuildGardenScene({
         site={site}
         members={members}
         growth={growth}
-        markers={plots.map((id) => ({
-          id,
-          control: id,
-          label: plotName(id),
-          hero: state.guild?.roles[site],
-        }))}
+        markers={plots
+          .filter((id) => openGuildPlots.includes(id))
+          .map((id) => ({
+            id,
+            control: id,
+            label: plotName(id),
+            hero: state.guild?.roles[site],
+          }))}
         onUse={(id) => {
           const plot = plots.find((p) => p === id);
           if (plot) onPlot(plot);

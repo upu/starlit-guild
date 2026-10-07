@@ -1,5 +1,5 @@
 import type { State } from "./game.ts";
-import type { GuildPlotId } from "./guild-content.ts";
+import { openGuildPlots, type GuildPlotId } from "./guild-content.ts";
 export type GuildSite = "home" | "linde" | "brekka";
 export const guildStageLayout = {
   bench: { x: 765, y: 350, width: 330 },
@@ -13,7 +13,7 @@ export const guildStageLayout = {
   },
 };
 export function guildStagePlots(site: GuildSite): GuildPlotId[] {
-  return site === "home" ? [] : site === "linde" ? ["linde-1", "linde-2"] : ["brekka-1"];
+  return openGuildPlots.filter((id) => id.startsWith(site));
 }
 export const guildSeats = [
   { x: 175, y: 555, left: false },

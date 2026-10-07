@@ -36,10 +36,7 @@ export function roomFurniture(site: RoomSite, home?: Furniture[]): Furniture[] {
   if (site === "home") return home ?? defaultHome;
   const plots: Furniture[] =
     site === "linde"
-      ? [
-          { id: "linde-1", kind: "plot", x: 2, y: 6 },
-          { id: "linde-2", kind: "plot", x: 9, y: 9 },
-        ]
+      ? [{ id: "linde-1", kind: "plot", x: 2, y: 6 }]
       : [{ id: "brekka-1", kind: "plot", x: 6, y: 7 }];
   return [...plots, { id: "garden-fern", kind: "plant", x: 13, y: 4 }];
 }

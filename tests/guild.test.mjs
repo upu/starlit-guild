@@ -25,6 +25,25 @@ const assign = (s, id, hero) => action(s, "guildAssign", { id, hero });
 const plant = (s, id = "linde-1", name = "herb") => action(s, "guildPlant", { id, name });
 const later = (s, minutes) => skipTo(s, (s.guild?.lastAt ?? s.updatedAt) + minutes * minute);
 
+test("Linde's unreleased second plot cannot plant or restart, but its old crop is harvested once", () => {
+  let s = assign(plant(buy(fresh(), "herb-seed")), "linde", "aria");
+  assert.throws(() => plant(s, "linde-2"));
+  assert.throws(() => action(s, "guildReplant", { id: "linde-2", value: true }));
+  s.guild.plots["linde-2"] = s.guild.plots["linde-1"];
+  s.guild.plots["linde-1"] = {};
+  s = roundtrip(s);
+  const seeds = guildStock(s, "herb-seed"),
+    herbs = s.herbs;
+  const quantity = s.guild.plots["linde-2"].batch.quantity;
+  s = later(assign(s, "linde", undefined), 120);
+  assert.ok(s.guild.plots["linde-2"].batch, "keep the crop until its caretaker returns");
+  s = later(assign(s, "linde", "aria"), 600);
+  assert.equal(s.herbs, herbs + quantity);
+  assert.equal(guildStock(s, "herb-seed"), seeds, "no hidden replanting consumes seeds");
+  assert.deepEqual(s.guild.plots["linde-2"], {});
+  assert.deepEqual(roundtrip(s).guild, s.guild);
+});
+
 test("facility summaries explain seed shortages, harvesting and paused work without changing saves", () => {
   let s = plant(buy(fresh(), "herb-seed", 1));
   const batch = s.guild.plots["linde-1"].batch;

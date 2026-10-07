@@ -4,6 +4,7 @@ import {
   guildCrops,
   guildRecipes,
   guildLevel,
+  openGuildPlots,
   plotRole,
   GUILD_STOCK_CAP,
   type GuildPlotId,
@@ -16,6 +17,7 @@ export function takeMaterial(s: State, guild: GuildState, id: string, count: num
   else guild.materials[id] = (guild.materials[id] ?? 0) - count;
 }
 export function startPlant(s: State, guild: GuildState, id: GuildPlotId, at: number) {
+  if (!openGuildPlots.includes(id)) return;
   const plot = guild.plots[id],
     crop = guildCrops.find((item) => item.id === plot.crop);
   if (!crop || plot.batch || guildStock(s, crop.seed) < 1) return;
@@ -64,6 +66,7 @@ export function harvest(s: State, guild: GuildState, id: GuildPlotId) {
   else guild.materials[crop.output] = guildStock(s, crop.output) + plot.batch.quantity;
   guild.cultivation = Math.min(10, guild.cultivation + 1);
   delete plot.batch;
+  if (!openGuildPlots.includes(id)) guild.plots[id] = {};
 }
 export function finishWork(s: State, guild: GuildState) {
   const work = guild.work,

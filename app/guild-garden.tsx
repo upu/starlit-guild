@@ -1,5 +1,5 @@
 import { Repeat, Clock3 } from "lucide-react";
-import { guildCrops, plotRole, type GuildPlotId } from "@/lib/guild-content";
+import { guildCrops, openGuildPlots, plotRole, type GuildPlotId } from "@/lib/guild-content";
 import { guildStock } from "@/lib/guild-production";
 import { GuildRolePicker, type GuildProps } from "./guild-controls";
 import { gardenStatus } from "@/lib/guild-ui-status";
@@ -35,7 +35,7 @@ export function GuildGarden({ id, now, onShop, selected, onSelect, ...props }: G
             {gardenStatus(state, id, now)} · 収穫 ×{plot.batch.quantity}
           </span>
         </div>
-      ) : (
+      ) : openGuildPlots.includes(id) ? (
         <>
           <SeedChoice {...props} id={id} selection={selection} onSelect={onSelect} />
           <div className="guild-growing-status">
@@ -55,8 +55,14 @@ export function GuildGarden({ id, now, onShop, selected, onSelect, ...props }: G
             植える
           </button>
         </>
+      ) : (
+        <p className="guild-production-note">このプランターの栽培は終了しました。</p>
       )}
-      <ReplantToggle {...props} id={id} />
+      {openGuildPlots.includes(id) ? (
+        <ReplantToggle {...props} id={id} />
+      ) : (
+        <p className="guild-production-note">以前の栽培分です。今回の収穫で終了します。</p>
+      )}
       <p className="guild-production-note">育った作物は担当が自動で収穫し、在庫に入れます。</p>
       <button className="guild-supply-link" onClick={onShop}>
         種を買う

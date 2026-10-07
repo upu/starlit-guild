@@ -4,6 +4,8 @@ export const guildRoles = ["linde", "brekka", "workbench"] as const;
 export type GuildRole = (typeof guildRoles)[number];
 export const guildPlots = ["linde-1", "linde-2", "brekka-1"] as const;
 export type GuildPlotId = (typeof guildPlots)[number];
+// Keep historical IDs readable in saves; expanding cultivation is not released yet.
+export const openGuildPlots: readonly GuildPlotId[] = ["linde-1", "brekka-1"];
 export const plotRole = (id: GuildPlotId): GuildRole => (id === "brekka-1" ? "brekka" : "linde");
 export const guildProducts = [
   { id: "herb-seed", name: "薬草の種", price: 5 },

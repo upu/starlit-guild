@@ -5,6 +5,7 @@ import { initialGuild, type GuildState } from "./guild-types.ts";
 import {
   guildRoles,
   guildPlots,
+  openGuildPlots,
   guildProducts,
   guildCrops,
   guildRecipes,
@@ -47,7 +48,7 @@ function pauseWork(guild: GuildState, hero?: string) {
   }
 }
 function plant(s: State, guild: GuildState, action: Action) {
-  const id = guildPlots.find((plot) => plot === action.id),
+  const id = openGuildPlots.find((plot) => plot === action.id),
     crop = guildCrops.find((item) => item.id === action.name);
   if (!id || !crop || crop.role !== plotRole(id))
     throw Error("この畑に植える作物を確認してください。");
@@ -82,7 +83,7 @@ export function guildAction(s: State, _squad: Squad, action: Action, now: number
   else if (action.type === "guildCraft") craft(s, guild, action);
   else if (action.type === "guildReplant") {
     const id = guildPlots.find((plot) => plot === action.id);
-    if (!id) throw Error("畑を確認してください。");
+    if (!id || !openGuildPlots.includes(id)) throw Error("畑を確認してください。");
     guild.plots[id].replant = action.value !== false;
   } else if (action.type === "guildCancel") delete guild.work;
   settleGuild(s, guild.lastAt);

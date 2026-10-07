@@ -53,7 +53,7 @@ export default function GuildLab() {
             return true;
           }}
           mode={mode}
-          growth={{ "linde-1": 0.28, "linde-2": 0.85, "brekka-1": 0.6 }}
+          growth={{ "linde-1": 0.28, "brekka-1": 0.6 }}
           onUse={(id) => {
             setMode(
               id === "bench"

@@ -184,7 +184,10 @@ try {
     await page.locator(".home-stage").screenshot({ path: `${output}/garden-${width}.png` });
     if (width === 390) {
       await captureGarden(page);
-      await captureGarden(page, 1, "-mature");
+      await page.evaluate(() => {
+        window.__home.bridge.read().growth["linde-1"] = 0.85;
+      });
+      await captureGarden(page, 0, "-mature");
     }
     await page.getByRole("button", { name: "塔の栽培所", exact: true }).click();
     await page.locator('.home-room[data-status="ready"]').waitFor();

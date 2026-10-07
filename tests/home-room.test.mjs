@@ -61,6 +61,18 @@ test("furniture markers follow the actual saved object, including moved workbenc
   assert.equal(homeMarkerPoint(defaultHome, "removed"), null);
 });
 
+test("each garden starts with one plot and its marker leaves the soil visible", () => {
+  for (const site of ["linde", "brekka"]) {
+    const items = roomFurniture(site);
+    const plots = items.filter((f) => f.kind === "plot");
+    assert.equal(plots.length, 1);
+    const plot = plots[0],
+      point = homeMarkerPoint(items, plot.id);
+    assert.equal(point.x, (plot.x + 4) * 24);
+    assert.ok(point.y < plot.y * 24, "marker sits above the right edge, outside the soil");
+  }
+});
+
 test("tea arrival listens, replies, then sits; reduced motion and taps interrupt safely", () => {
   const life = new HomeLife();
   life.sync(["leon", "aria"], defaultHome, "tea", false);
