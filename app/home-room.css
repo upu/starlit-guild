@@ -131,6 +131,15 @@
   background: transparent;
   box-shadow: none;
 }
+.home-marker .guild-duty-face:has(> svg) {
+  border-radius: 50%;
+  background: #203b2fed;
+  box-shadow: 0 1px 3px #1e170b80;
+}
+.home-marker .guild-duty-face > svg {
+  width: 24px;
+  height: 24px;
+}
 .guild-panel .home-stage {
   border-left: 0;
   border-right: 0;
