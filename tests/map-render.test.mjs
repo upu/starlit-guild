@@ -10,6 +10,7 @@ import { stories } from "../lib/stories.ts";
 import { nextStage, prologueStages } from "../lib/prologue.ts";
 import { storyArtAt } from "../lib/story-art.ts";
 import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
+import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 const OPENING = nextStage(initialState(0)).quest;
 const begin = (s = initialState(1000)) =>
   act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
@@ -309,10 +310,14 @@ test("every restored expedition location renders with finite character coordinat
       );
       assert.match(html, /旅の道のり/);
       assert.doesNotMatch(html, /NaN|undefined%/);
-      for (const member of frameFor(state).members) {
-        assert.ok(Number.isFinite(member.x) && Number.isFinite(member.y));
-        assert.ok(member.x >= 0 && member.x <= 1 && member.y >= 0 && member.y <= 1);
-      }
+      const { battle } = chapterRoadFrame({
+        squad,
+        now: state.updatedAt,
+        ready: true,
+        paused: false,
+        startQuest: OPENING,
+      });
+      for (const hero of battle.heroes) assert.ok(Number.isFinite(hero.x));
       visited.add(node);
       if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
     }

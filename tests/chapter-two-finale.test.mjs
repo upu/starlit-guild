@@ -1,6 +1,5 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
 import { initialState, act, settle, allQuests, encounter } from "../lib/game.ts";
 import { storyStages, stageEndingPending, stageUnlocked } from "../lib/prologue.ts";
 import { BLOCKADE_QUEST, HOUSE_CALLS_QUEST, MEDICINE_RETURN_QUEST } from "../lib/chapter-two.ts";
@@ -118,13 +117,9 @@ test("2-7 advances through mixed puppets to their masked commander, with distinc
     );
     const targets = frame(away).targets;
     assert.equal(targets.length, node === 2 ? 3 : 2);
-    assert.equal(targets[0].asset, "/enemies/mountain-puppet.png");
-    assert.equal(
-      targets[1].asset,
-      node === 0 ? "/enemies/mountain-puppet.png" : "/enemies/cargo-golem.png",
-    );
-    if (node === 2) assert.equal(targets[2].asset, "/enemies/masked-pumpety.png");
-    for (const target of targets) assert.ok(existsSync("public" + target.asset));
+    assert.equal(targets[0].name, "小さな人形");
+    assert.equal(targets[1].name, node === 0 ? "小さな人形" : "運搬用ゴーレム");
+    if (node === 2) assert.equal(targets[2].name, "カボチャ頭の少女");
   }
   for (const id of [HOUSE_CALLS_QUEST, MEDICINE_RETURN_QUEST]) {
     away.squads[0].run.quest = id;

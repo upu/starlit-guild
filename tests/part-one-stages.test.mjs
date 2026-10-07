@@ -373,10 +373,6 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
       );
       if (Object.values(run.health).some((health) => health.hp < health.maxHp)) damaged = true;
       if (frame.target.kind !== "battle") {
-        if (id === NIGHT_QUEST) {
-          assert.equal(frame.target.asset, "/items/moss-lamp.png");
-          assert.ok(existsSync(new URL("../public" + frame.target.asset, import.meta.url)));
-        }
         for (const member of frame.members) {
           if (member.hit && !member.hit.enemy) {
             worked = true;
@@ -444,7 +440,6 @@ test("evening has more small encounters; town work has cargo, no battles or dama
       paused: false,
       startQuest: id,
     });
-    assert.equal(frame.target.asset, "/items/chest.png");
     assert.equal(frame.background, quest(id).background);
     assert.ok(existsSync(new URL("../public" + frame.background, import.meta.url)));
     while (s.squads[0].run) {

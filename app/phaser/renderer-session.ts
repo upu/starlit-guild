@@ -2,6 +2,12 @@ import type { Action } from "@/lib/game";
 import type { AdventureInput } from "@/lib/adventure-presentation";
 
 export type RendererStatus = "loading" | "ready" | "error";
+export type RuntimeState = {
+  disposed: boolean;
+  paused: boolean;
+  created: boolean;
+  reduced: boolean;
+};
 export type AdventureBridge = {
   read: () => AdventureInput;
   act: (action: Action) => void;

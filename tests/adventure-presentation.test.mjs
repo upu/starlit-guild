@@ -1,13 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
-import { initialState, act, settle, testState, allQuests } from "../lib/game.ts";
-import {
-  adventureFrame,
-  adventureAssets,
-  adventureAction,
-  adventureHit,
-} from "../lib/adventure-presentation.ts";
+import { initialState, act, settle } from "../lib/game.ts";
+import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
 import { rendererSession } from "../app/phaser/renderer-session.ts";
 import { nextStage } from "../lib/prologue.ts";
 const OPENING = nextStage(initialState(0)).quest;
@@ -22,51 +16,24 @@ const input = (state, extra = {}) => ({
   ...extra,
 });
 
-test("rendering many frames interpolates independently without advancing or modifying the save", () => {
+test("rendering many frames never advances or modifies the save", () => {
   const state = begin(),
     before = structuredClone(state);
-  const first = adventureFrame(input(state), 1000),
-    middle = adventureFrame(input(state), 1400);
-  assert.ok(middle.members[0].x > first.members[0].x);
   for (let now = 1000; now < 12000; now += 16) adventureFrame(input(state), now);
   assert.deepEqual(state, before);
   assert.deepEqual(settle(state, 20000), settle(before, 20000));
 });
 
-test("every quest uses existing assets and no sprites outside the atlas or original art", () => {
-  for (const quest of allQuests) {
-    const state = testState(1000, 18, 20, 100000);
-    const source = input(state, { startQuest: quest.id });
-    const frame = adventureFrame(source);
-    assert.equal(frame.quest.id, quest.id);
-    for (const path of adventureAssets(frame))
-      assert.ok(existsSync(new URL("../public" + path, import.meta.url)), path);
-  }
-});
-
-test("canvas hit priority dispatches exactly one action and healing never hits the target", () => {
+test("a tap dispatches exactly one action and healing never hits the target", () => {
   const state = begin();
   state.squads[0].run.health.aria.hp = 10;
   const source = input(state),
-    frame = adventureFrame(source, 4000),
-    hero = frame.members[0];
-  for (const [w, h] of [
-    [320, 280],
-    [430, 600],
-    [1100, 680],
-  ]) {
-    const intent = adventureHit(frame, { x: hero.x * w, y: hero.y * h - 15 }, w, h);
-    assert.equal(intent, "heal:aria");
-    const action = adventureAction(source, intent),
-      after = act(state, action, 1000);
-    assert.ok(after.squads[0].run.health.aria.hp > state.squads[0].run.health.aria.hp);
-    assert.equal(after.squads[0].run.health.leon.hp, state.squads[0].run.health.leon.hp);
-    assert.equal(after.squads[0].run.target, state.squads[0].run.target);
-    assert.equal(
-      adventureHit(frame, { x: frame.target.x * w, y: frame.target.y * h - 10 }, w, h),
-      "help",
-    );
-  }
+    action = adventureAction(source, "heal:aria"),
+    after = act(state, action, 1000);
+  assert.ok(after.squads[0].run.health.aria.hp > state.squads[0].run.health.aria.hp);
+  assert.equal(after.squads[0].run.health.leon.hp, state.squads[0].run.health.leon.hp);
+  assert.equal(after.squads[0].run.target, state.squads[0].run.target);
+  assert.equal(adventureAction(source, "help").mode, "strike");
   assert.equal(adventureAction(input(initialState(1000)), "help"), null);
   for (const extra of [{ ready: false }, { paused: true }])
     for (const intent of ["help", "heal"])

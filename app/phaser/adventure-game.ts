@@ -1,9 +1,7 @@
 import type Phaser from "phaser";
-import type { AdventureBridge, AdventureRenderer } from "./renderer-session";
+import type { AdventureBridge, AdventureRenderer, RuntimeState } from "./renderer-session";
 import { ChapterRoadPainter, chapterRoadAssets } from "./chapter-road-painter";
 import { bindAdventureResolution, syncAdventureResolution } from "./adventure-resolution";
-
-type RuntimeState = { disposed: boolean; paused: boolean; created: boolean; reduced: boolean };
 
 function sceneClass(
   engine: typeof Phaser,

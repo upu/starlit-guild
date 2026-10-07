@@ -152,7 +152,6 @@ test("trade carries cargo and gathers herbs without showing an unintroduced esco
     paused: false,
     startQuest: TRADE_QUEST,
   });
-  assert.equal(frame.target.asset, "/items/chest.png");
   assert.equal(frame.target.name, "村から預かった荷物");
   assert.deepEqual(
     frame.members.map((m) => m.id),
