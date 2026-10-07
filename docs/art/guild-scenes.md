@@ -32,7 +32,7 @@
 
 ### 生活・店舗用の追加素材
 
-原本は `assets/source/guild/`、配信は `public/guild/`。すべて内蔵 `image_gen` による透明PNGをlossless WebPへ変換し、透明部分からコマ境界を測定した。旧 `props-v2` は土の床と作物、旧フィン・リコ素材は世話・加工・待機に使う。
+原本は `assets/source/guild/`、配信は `public/guild/`。すべて内蔵 `image_gen` による透明PNGをlossless WebPへ変換し、透明部分からコマ境界を測定した。`props-v2` は商品アイコンで使用する。旧フィン・リコの旅団素材は削除済みで、ホームの住人は `public/home-pixel/` の全身コマを使う。
 
 | 原本 .png / 配信 .webp | 内容 |
 | --- | --- |

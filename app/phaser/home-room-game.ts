@@ -12,6 +12,7 @@ import {
 } from "@/lib/home-room-layout";
 import { HomeRoomArt, homeAsset } from "./home-room-art";
 import { HomeRoomView } from "./home-room-view";
+import { homeStaticFrames } from "@/lib/home-room-scenery";
 export type HomeFrame = {
   site: RoomSite;
   furniture: Furniture[];
@@ -212,12 +213,8 @@ function preloadHomeAssets(scene: Phaser.Scene) {
         frameWidth: residentArt.cell,
         frameHeight: residentArt.cell,
       });
-  for (let i = 0; i < 12; i++)
-    scene.load.image(homeAsset(`prop-${String(i)}`), homeAsset(`prop-${String(i)}`));
-  for (let i = 0; i < 6; i++)
-    scene.load.image(homeAsset(`tile-${String(i)}`), homeAsset(`tile-${String(i)}`));
-  for (const sheet of ["icons", "decor"])
-    for (let i = 0; i < 6; i++)
+  for (const [sheet, frames] of Object.entries(homeStaticFrames))
+    for (const i of frames)
       scene.load.image(homeAsset(`${sheet}-${String(i)}`), homeAsset(`${sheet}-${String(i)}`));
 }
 function attachHomeCanvas(game: Phaser.Game, parent: HTMLElement, lost: () => void) {

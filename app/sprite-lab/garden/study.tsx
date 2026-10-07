@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useState, useSyncExternalStore } from "react";
 import { gardenLabels, gardenPhase, gardenStudy } from "@/lib/home-garden-study";
 import { useStudyPlayer } from "../study-player";
@@ -17,10 +16,6 @@ export default function GardenStudy() {
   const props = { time: p.time, left, smooth, guides: p.guides, still: p.still };
   return (
     <main className="tea-study garden-study" data-ready={ready}>
-      <nav>
-        <Link href="/guild-lab">旅団ホームへ</Link>
-        <Link href="/guild-lab/work-study">作業台の見本へ</Link>
-      </nav>
       <small>動きの共通見本 / 菜園</small>
       <h1>植物の根元へ、そっと水を注ぐ。</h1>
       <p>手前の腕はオレンジ、体の向こう側の腕は水色です。</p>

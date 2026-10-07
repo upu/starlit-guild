@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
 import { walkStudyLabels } from "@/lib/home-walk-study";
 import { WalkFigure } from "./figure";
 import { WalkPilot } from "./pilot";
@@ -103,9 +102,6 @@ export default function WalkStudy() {
   const ready = useSyncExternalStore(subscribe, clientReady, serverReady);
   return (
     <main className="walk-study" data-ready={ready}>
-      <Link href="/guild-lab">旅団ホームの試作へ戻る</Link>
-      {" ／ "}
-      <Link href="/guild-lab/tea-study">お茶と会話の見本へ</Link>
       <h1>みんなの歩行見本</h1>
       <p>オレンジが手前の手足、青が奥の手足。腕は足と逆に振り、真下を通って戻ります。</p>
       <div className="walk-live">

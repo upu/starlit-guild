@@ -12,7 +12,7 @@ dist/
 .vinext/
 .wrangler/
 .sites-runtime/
-work/
+/work/
 public/
 assets/
 

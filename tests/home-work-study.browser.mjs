@@ -8,7 +8,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1000, height: 1100 } }),
     errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/guild-lab/work-study`);
+  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/sprite-lab/work`);
   await page.locator('.work-study[data-ready="true"]').waitFor();
   const saved = await page.evaluate(() => JSON.stringify(localStorage));
   const time = () => page.locator(".work-phase").getAttribute("data-time");

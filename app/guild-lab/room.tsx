@@ -121,10 +121,8 @@ function LabHeading() {
     <header>
       <div>
         <small>星灯りの旅団 / ちいさな暮らし</small>
-        <h1>おかえり、旅団ホームへ</h1>
-        <Link href="/guild-lab/walk-study">共通の歩行見本を見る</Link>
-        {" ／ "}
-        <Link href="/guild-lab/tea-study">お茶と会話の見本を見る</Link>
+        <h1>部屋・家具配置の試作</h1>
+        <Link href="/sprite-lab">ドット絵見本帳へ</Link>
       </div>
       <Link href="/">ゲームへ戻る</Link>
     </header>

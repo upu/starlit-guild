@@ -1,7 +1,8 @@
 import sharp from "sharp";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile, readdir } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { residentArt } from "../lib/home-actor.ts";
+import { homeStaticFrames } from "../lib/home-room-scenery.ts";
 import { spriteBounds as bounds, readFrame, packFrames, rowCuts } from "./home-pixel-frames.mjs";
 import { readWalkFrames } from "./home-walk-frames.mjs";
 import { buildWorkAtlas } from "./home-work-frames.mjs";
@@ -121,7 +122,7 @@ for (const name of names) {
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
 for (const sheet of ["icons", "decor"]) {
   const buffer = await readFile(new URL(`${sheet}-v1.png`, source));
-  for (let i = 0; i < 6; i++) {
+  for (const i of homeStaticFrames[sheet]) {
     // Decorations have uneven generated columns, with clear gutters at 582/1024.
     const edges = sheet === "decor" ? [0, 582, 1024, 1536] : [0, 512, 1024, 1536];
     const cell = await sharp(buffer)
@@ -148,7 +149,7 @@ for (const sheet of ["icons", "decor"]) {
   }
 }
 const props = await readFile(new URL("furniture-v1.png", source));
-for (let i = 0; i < regions.length; i++) {
+for (const i of homeStaticFrames.prop) {
   const [left, top, width, height] = regions[i];
   const cell =
     i === 0
@@ -163,7 +164,7 @@ for (let i = 0; i < regions.length; i++) {
   await emit(`prop-${i}.webp`, image);
 }
 const tiles = await readFile(new URL("tiles-v1.png", source));
-for (let i = 0; i < 6; i++) {
+for (const i of homeStaticFrames.tile) {
   const image = await sharp(tiles)
     .extract({ left: (i % 3) * 512, top: Math.floor(i / 3) * 512, width: 512, height: 512 })
     .resize(48, 48, { kernel: "nearest" })
@@ -172,6 +173,10 @@ for (let i = 0; i < 6; i++) {
   await emit(`tile-${i}.webp`, image);
 }
 if (check) {
+  const extra = (await readdir(output)).filter(
+    (name) => name !== "manifest.json" && !Object.hasOwn(manifest, name),
+  );
+  if (extra.length) throw Error(`Unused pixel delivery files: ${extra.join(", ")}`);
   const recorded = JSON.parse(await readFile(new URL("manifest.json", output), "utf8"));
   if (JSON.stringify(recorded) !== JSON.stringify(manifest))
     throw Error("Stale home-pixel manifest");

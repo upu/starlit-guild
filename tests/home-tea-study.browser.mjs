@@ -10,7 +10,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1000, height: 1300 } });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/guild-lab/tea-study`);
+  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/sprite-lab/tea`);
   await page.locator('.tea-study[data-ready="true"]').waitFor();
   const saved = await page.evaluate(() => JSON.stringify(localStorage));
   const time = () => page.locator(".tea-phase").getAttribute("data-time");

@@ -132,6 +132,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
 | `tests/road-worksites.browser.mjs` 全章の作業地点画像19種類 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/road-worksites.browser.mjs` | `work/worksite-browser/` の画像・`result.json` |
+| `tests/sprite-lab.browser.mjs` ドット絵見本帳の入口・比較ページの移動・旧URL転送 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/sprite-lab.browser.mjs` | `work/pixel-home/sprite-lab/` の320/390/1000px画像。保存への書込なし。スマホ実機とは別 |
 | `tests/home-walk-study.browser.mjs` 共通歩行見本の再生・停止・コマ送り・小表示・5人の同期比較 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-walk-study.browser.mjs` | `work/pixel-home/walk-study/` の見本一覧・5人の比較・画面画像 |
 | `tests/home-tea-study.browser.mjs` お茶と会話の共通見本・片手の飲茶・座位・再生停止・姿勢送り・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-tea-study.browser.mjs` | `work/pixel-home/tea-study/` の4姿勢と320/390/844/1000px画像。スマホ実機とは別 |
 | `tests/home-work-study.browser.mjs` 作業台の共通見本・5人の実素材・左右の手・4姿勢・再生停止・補間・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-work-study.browser.mjs` | `work/pixel-home/work-study/` の左右4姿勢・5人の作業台・事務机との比較・320/390/844/1000px画像。スマホ実機とは別 |

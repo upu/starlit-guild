@@ -1,14 +1,7 @@
 import { env } from "cloudflare:workers";
-import { notFound } from "next/navigation";
-import WorkStudy from "./study";
-import "../tea-study/study.css";
-import "./study.css";
+import { notFound, redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
-export const metadata = {
-  title: "作業台の見本 | 星灯りの旅団",
-  robots: { index: false, follow: false },
-};
 export default function Page() {
   if (env.ENABLE_TEST_TOOLS !== "true") notFound();
-  return <WorkStudy />;
+  redirect("/sprite-lab/work");
 }

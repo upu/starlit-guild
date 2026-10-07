@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import sharp from "sharp";
 import { headBounds, spriteBounds } from "../scripts/home-pixel-frames.mjs";
 import { walkSourceName } from "../scripts/home-walk-frames.mjs";
@@ -210,7 +210,14 @@ test("compact tea seating keeps occupied/empty chairs aligned after moving a tab
 });
 test("all five atlases have complete transparent frames and useful motion", async () => {
   const manifest = JSON.parse(readFileSync("public/home-pixel/manifest.json", "utf8"));
-  assert.equal(Object.keys(manifest).length, 56);
+  assert.equal(Object.keys(manifest).length, 51);
+  assert.deepEqual(
+    readdirSync("public/home-pixel")
+      .filter((name) => name !== "manifest.json")
+      .sort(),
+    Object.keys(manifest).sort(),
+    "No retired deliveries remain outside the manifest",
+  );
   for (const id of residentIds)
     for (const suffix of ["", "-actions", "-tea", "-work", "-garden"]) {
       const image = sharp(`public/home-pixel/${id}${suffix}.webp`),

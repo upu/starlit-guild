@@ -16,7 +16,7 @@ try {
       return set.apply(this, args);
     };
   });
-  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/guild-lab/garden-study`);
+  await page.goto(`${process.env.TEST_ROOT ?? "http://localhost:5173"}/sprite-lab/garden`);
   await page.locator('.garden-study[data-ready="true"]').waitFor();
   const time = () => page.locator(".garden-phase").getAttribute("data-time");
   await page.getByRole("button", { name: "前の姿勢", exact: true }).click();

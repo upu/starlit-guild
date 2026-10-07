@@ -41,14 +41,28 @@ try {
       value === "true" ? 200 : 404,
       "Prototype follows the server capability",
     );
-    const study = await worker.dispatchFetch(
-      "http://localhost/guild-lab/walk-study?ENABLE_TEST_TOOLS=true",
-    );
-    assert.equal(
-      study.status,
-      value === "true" ? 200 : 404,
-      "Walk study follows the server capability",
-    );
+    for (const path of ["", "/walk", "/tea", "/work", "/garden"]) {
+      const study = await worker.dispatchFetch(
+        `http://localhost/sprite-lab${path}?ENABLE_TEST_TOOLS=true`,
+      );
+      assert.equal(
+        study.status,
+        value === "true" ? 200 : 404,
+        `Sprite lab ${path} follows the server capability`,
+      );
+    }
+    for (const motion of ["walk", "tea", "work", "garden"]) {
+      const legacy = await worker.dispatchFetch(
+        `http://localhost/guild-lab/${motion}-study?ENABLE_TEST_TOOLS=true`,
+        { redirect: "manual" },
+      );
+      assert.equal(
+        legacy.status,
+        value === "true" ? 307 : 404,
+        "Legacy routes preserve the capability gate",
+      );
+      if (value === "true") assert.equal(legacy.headers.get("location"), `/sprite-lab/${motion}`);
+    }
     console.log(
       `PASS: ENABLE_TEST_TOOLS=${JSON.stringify(value) ?? "unset"} => ${match[1]}, no-store`,
     );
