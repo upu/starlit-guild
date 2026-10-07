@@ -138,11 +138,14 @@ try {
     page.on("pageerror", (e) => errors.push(e.message));
     const roadAssets = new Set();
     page.on("request", (request) => {
-      if (request.url().includes("/animations/road/"))
+      if (
+        request.url().includes("/animations/road/") ||
+        request.url().includes("/adventure-pixel/")
+      )
         roadAssets.add(new URL(request.url()).pathname);
     });
     if (name === "cargo")
-      await page.route("**/animations/road/aria-v2.webp", (route) => route.abort());
+      await page.route("**/adventure-pixel/aria.webp", (route) => route.abort());
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
     if (
       ["worksite", "arrival", "withdraw", "enter", "escape", "rear", "bottles"].includes(mode) ||
@@ -169,7 +172,7 @@ try {
     await page.clock.runFor(100);
     if (name === "cargo") {
       await page.getByRole("button", { name: "もう一度読み込む" }).waitFor();
-      await page.unroute("**/animations/road/aria-v2.webp");
+      await page.unroute("**/adventure-pixel/aria.webp");
       await page.getByRole("button", { name: "もう一度読み込む" }).click();
     }
     await page.locator('.phaser-canvas[data-status="ready"]').waitFor({ timeout: 60000 });
@@ -386,7 +389,10 @@ try {
     const after = await page.evaluate(() => JSON.parse(localStorage.getItem("starlit-guild-v4")));
     assert.equal(after.active, save.active);
     assert.ok(after.profiles[0].state.gold >= before.profiles[0].state.gold);
-    assert.ok(roadAssets.size >= 15);
+    for (const id of ["aria", "leon", "mira", "finn"])
+      assert.ok(roadAssets.has(`/adventure-pixel/${id}.webp`), `${id}: new adventure art loaded`);
+    if (save.profiles[0].state.squads[0].members.includes("lico"))
+      assert.ok(roadAssets.has("/adventure-pixel/lico.webp"), "Lico: joining art loaded");
     assert.ok([...roadAssets].every((asset) => asset.endsWith(".webp")));
     if (name === "night-cargo") {
       await page.setViewportSize({ width: 390, height: 844 });

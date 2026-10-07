@@ -8,20 +8,14 @@ import {
   ROAD_HERB,
   ROAD_CARGO,
   ROAD_PUPPETS,
-  ROAD_PUSH,
-  ROAD_PULL,
-  ROAD_FINN_PULL,
-  ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  ROAD_ARIA_WORK,
-  ROAD_MIRA_WORK,
   roadSheet,
-  roadWalkSheet,
 } from "./road-art";
+import { adventureHeroAsset } from "@/lib/adventure-hero-art";
 import type { AdventureBridge } from "./renderer-session";
 import type { RuntimeState } from "./adventure-painter-figures";
 
@@ -36,22 +30,13 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_HERB,
       ROAD_CARGO,
       ROAD_PUPPETS,
-      ROAD_PUSH,
-      ROAD_PULL,
-      ROAD_FINN_PULL,
-      ROAD_PACKING,
       ROAD_DESTINATION,
       ROAD_WORKSITES,
       ROAD_BERNE_WORKSITES,
       ROAD_LEDGER_DESK,
       ROAD_SIGNPOST,
-      ROAD_ARIA_WORK,
-      ROAD_MIRA_WORK,
-      ...(["aria", "leon", "mira", "finn"] as const).flatMap((id) => [
-        roadSheet(id),
-        roadWalkSheet(id),
-      ]),
-      ...(input.squad.members.includes("lico") ? [roadSheet("lico"), roadWalkSheet("lico")] : []),
+      ...(["aria", "leon", "mira", "finn"] as const).map(adventureHeroAsset),
+      ...(input.squad.members.includes("lico") ? [adventureHeroAsset("lico")] : []),
       ...(input.squad.run?.quest === "lico-records" ? [roadSheet("lico")] : []),
       ...(input.squad.run?.quest === "merrill-seedlings"
         ? [

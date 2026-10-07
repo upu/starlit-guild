@@ -61,5 +61,8 @@ jobs:
       - name: Check generated guild home art
         run: npm run home-art:check
 
+      - name: Check generated adventure pixel art
+        run: npm run adventure-art:check
+
       - name: Run unit tests
         run: node --test tests/*.test.mjs

@@ -193,7 +193,9 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
         worked = true;
         assert.equal(member.hit.kind, "gather");
       }
-      assert.ok(![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)));
+      assert.ok(
+        ![10, 11, 12, 13].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
+      );
     }
     s = settle(s, run.nextAt);
   }
@@ -284,7 +286,7 @@ test("waterway exploration and restoration follow fieldwork order with small bat
           }
           if (!member.hit?.enemy)
             assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
+              ![10, 11, 12, 13].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
             );
         }
       }
@@ -384,7 +386,7 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
           }
           if (!member.hit?.enemy)
             assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
+              ![10, 11, 12, 13].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
             );
         }
       }
@@ -471,7 +473,7 @@ test("evening has more small encounters; town work has cargo, no battles or dama
         for (const member of current.members)
           if (!member.hit?.enemy)
             assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, current, s.updatedAt).frame)),
+              ![10, 11, 12, 13].includes(Number(heroAnimation(member, current, s.updatedAt).frame)),
               "delivery work never uses weapon attack poses",
             );
       }

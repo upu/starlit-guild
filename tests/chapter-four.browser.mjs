@@ -29,7 +29,9 @@ async function open(state) {
   page.on("response", (response) => {
     if (
       response.status() >= 400 &&
-      /\/scenery\/|\/animations\/|\/portraits\/|\/characters\/|\/stories\//.test(response.url())
+      /\/scenery\/|\/animations\/|\/adventure-pixel\/|\/portraits\/|\/characters\/|\/stories\//.test(
+        response.url(),
+      )
     )
       errors.push(`${response.status()} ${response.url()}`);
   });

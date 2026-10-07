@@ -1,4 +1,5 @@
 import type Phaser from "phaser";
+import { adventureHeroArt } from "@/lib/adventure-hero-art";
 import {
   adventureFrame,
   adventureAssets,
@@ -112,6 +113,7 @@ export class AdventurePainter {
       const texture = this.scene.textures.get(asset);
       if (texture.has("0")) continue;
       registerHeroFrames(texture, sheet);
+      texture.setFilter(this.engine.Textures.FilterMode.NEAREST);
     }
   }
   private ensureAssets(frame: AdventureFrame) {
@@ -173,7 +175,7 @@ export class AdventurePainter {
     const animated = !!pose,
       bob = memberBob(member, now, index, this.runtime.reduced, animated);
     const front = ["melee", "rogue", "tank"].includes(member.role),
-      attacking = !pose || (Number(pose.frame) >= 4 && Number(pose.frame) <= 7);
+      attacking = !pose || (Number(pose.frame) >= 10 && Number(pose.frame) <= 13);
     const lunge = memberLunge(member, size, this.runtime.reduced, front, attacking),
       angle = memberAngle(member, now, index, this.runtime.reduced, animated, front);
     return {
@@ -223,11 +225,12 @@ export class AdventurePainter {
       ? heroAnimation(member, frame, now, this.runtime.reduced)
       : null;
     if (pose) figure.image.setTexture(pose.asset, pose.frame);
-    const artSize = pose ? size * 1.12 : size,
+    const artSize = pose ? (size * 0.9 * adventureHeroArt.cell) / adventureHeroArt.height : size,
       motion = this.memberMotion(member, now, size, index, pose);
     figure.image
       .setPosition(motion.x, motion.y)
       .setDisplaySize(artSize, artSize)
+      .setOrigin(0.5, pose ? adventureHeroArt.foot / adventureHeroArt.cell : 0.9)
       .setAngle(motion.angle)
       .setDepth(10 + member.y * 10)
       .setAlpha(frame.phase === "rest" || member.down ? 0.55 : 1);
