@@ -87,7 +87,6 @@ function HomeZoomButton({
     <button
       className="home-zoom"
       aria-label={zoomed ? "部屋全体" : "拡大する"}
-      title={zoomed ? "部屋全体" : "拡大する"}
       aria-pressed={zoomed}
       onClick={() => {
         setZoomed(!zoomed);

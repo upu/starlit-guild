@@ -16,7 +16,7 @@
   position: absolute;
   inset: 0;
 }
-.home-room .home-zoom {
+.home-room .home-zoom[aria-pressed] {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -26,7 +26,18 @@
   width: 44px;
   height: 44px;
   padding: 8px;
-  background: #20382ee8;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.home-zoom svg {
+  width: 28px;
+  height: 28px;
+  color: #ffe5a1;
+  stroke-width: 2.5;
+  filter: drop-shadow(1px 0 #382719) drop-shadow(-1px 0 #382719) drop-shadow(0 1px #382719)
+    drop-shadow(0 -1px #382719);
 }
 .home-markers {
   position: absolute;
@@ -73,14 +84,21 @@
   top: var(--status-top, -8px);
   transform: translate(var(--status-shift, 0px), -100%);
   width: 112px;
-  padding: 5px 7px;
-  border: 1px solid #9c925e;
-  border-radius: 5px;
-  background: #20382ef2;
-  color: #f4e6c0;
+  padding: 0 7px;
+  color: #fff0ca;
   font-size: 11px;
+  font-weight: 700;
   line-height: 1.4;
   text-align: center;
+  text-shadow:
+    -1px -1px #302417,
+    0 -1px #302417,
+    1px -1px #302417,
+    -1px 0 #302417,
+    1px 0 #302417,
+    -1px 1px #302417,
+    0 1px #302417,
+    1px 1px #302417;
 }
 .home-marker-status progress {
   display: block;
@@ -88,8 +106,9 @@
   height: 6px;
   margin-top: 3px;
   appearance: none;
-  border: 0;
-  border-radius: 3px;
+  border: 1px solid #392c1d;
+  border-radius: 0;
+  box-shadow: 0 1px #e0c585;
   overflow: hidden;
   background: #14281f;
 }
