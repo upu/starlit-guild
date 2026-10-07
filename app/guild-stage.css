@@ -1,0 +1,157 @@
+.guild-scene {
+  flex: 1 0 auto;
+  aspect-ratio: 6 / 5;
+  min-height: 260px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #20362a;
+}
+.guild-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.guild-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.guild-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  color: #e1d4ad;
+  background: #20362acc;
+  z-index: 30;
+}
+.guild-scene button.guild-bench-entry {
+  position: absolute;
+  left: 60%;
+  bottom: 53.3333%;
+  width: 33%;
+  aspect-ratio: 512 / 434;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  z-index: 10;
+}
+.guild-duty-face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #e3c481;
+  border-radius: 10px;
+  background: #243b2de8;
+  color: #f6e1af;
+  box-shadow: 0 3px 8px #15251b99;
+  overflow: hidden;
+}
+.guild-bench-entry > .guild-duty-face {
+  position: absolute;
+  left: calc(50% - 22px);
+  bottom: -48px;
+}
+.guild-bench-time {
+  position: absolute;
+  top: calc(100% + 52px);
+  left: 0;
+  width: 100%;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px #000;
+  color: #fff0c4;
+  font-size: 11px;
+}
+.guild-scene button.guild-duty-marker {
+  position: absolute;
+  right: 6%;
+  bottom: 2%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  z-index: 12;
+}
+.guild-scene button.guild-live-plot {
+  position: absolute;
+  width: 36.5%;
+  height: auto;
+  aspect-ratio: 448 / 261;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  z-index: 5;
+}
+.guild-live-plot > svg {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+.plot-linde-1 {
+  left: 11.25%;
+  bottom: 48.6667%;
+}
+.plot-linde-2 {
+  left: 50.75%;
+  bottom: 16.6667%;
+}
+.guild-scene button.plot-brekka-1 {
+  left: 21.5%;
+  bottom: 26%;
+  width: 49%;
+}
+.guild-scene .guild-live-plot .guild-empty-plot {
+  visibility: visible;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  left: calc(50% - 12px);
+  top: calc(45% - 12px);
+  color: #fff0ca;
+  filter: drop-shadow(0 2px 2px #302d1d);
+}
+.guild-plot-meter {
+  position: absolute;
+  bottom: -24px;
+  left: -2%;
+  width: 104%;
+  padding: 4px 5px;
+  background: #263e30ed;
+  border: 1px solid #9aaa6e;
+  color: #eddfb7;
+  border-radius: 6px;
+}
+.guild-plot-meter > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.guild-plot-meter small {
+  font-size: 10px;
+}
+.guild-plot-meter progress {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #162c24;
+}
+.guild-plot-meter progress::-webkit-progress-bar {
+  background: #162c24;
+}
+.guild-plot-meter progress::-webkit-progress-value {
+  background: #c8cf77;
+}
+.guild-plot-meter progress::-moz-progress-bar {
+  background: #c8cf77;
+}

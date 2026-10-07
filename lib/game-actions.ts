@@ -1,4 +1,7 @@
 import { buyConsumable, assignConsumable } from "./consumables.ts";
+import { guildAction } from "./guild-actions.ts";
+import type { Furniture } from "./home-room-layout.ts";
+import { settleGuild } from "./guild-engine.ts";
 import { storyParty } from "./story-party.ts";
 import { isInterlude, interludeUnlocked } from "./interludes.ts";
 import { isChapterThreeQuest, BERNE_QUEST } from "./chapter-three.ts";
@@ -42,6 +45,13 @@ export type Action = {
     | "assist"
     | "sync"
     | "readStory"
+    | "guildBuy"
+    | "guildAssign"
+    | "guildPlant"
+    | "guildCraft"
+    | "guildCancel"
+    | "guildReplant"
+    | "guildArrange"
     | "buyConsumable"
     | "assignConsumable"
     | "buy"
@@ -50,6 +60,7 @@ export type Action = {
     | "setTechnique"
     | "autoNextQuest";
   quantity?: number;
+  furniture?: Furniture[];
   squad?: string;
   id?: string;
   name?: string;
@@ -276,6 +287,13 @@ function assignConsumableAction(s: State, _sq: Squad, a: Action) {
   assignConsumable(s, a.hero || "", a.id);
 }
 const actionHandlers: Record<Action["type"], ActionHandler> = {
+  guildBuy: guildAction,
+  guildAssign: guildAction,
+  guildPlant: guildAction,
+  guildCraft: guildAction,
+  guildCancel: guildAction,
+  guildReplant: guildAction,
+  guildArrange: guildAction,
   autoNextQuest: autoNextQuestAction,
   learnTechnique: learnTechniqueAction,
   setTechnique: setTechniqueAction,
@@ -297,6 +315,7 @@ export function act(input: State, a: Action, now: number) {
   const handlers = actionHandlers as Partial<Record<string, ActionHandler>>,
     handler = Object.prototype.hasOwnProperty.call(handlers, a.type) ? handlers[a.type] : undefined;
   if (!handler) throw Error("操作を確認してください。");
+  settleGuild(s, now);
   handler(s, sq, a, now);
   return s;
 }

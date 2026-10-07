@@ -66,7 +66,6 @@ export function expressionPortrait(
 ) {
   const character = typeof index === "number" ? portraitCharacters[index] : index;
   if (!character) return null;
-  if (character === "aria" || character === "leon") return closeupPortrait(character, expression);
   const atlas = portraitAtlases[character];
   // An absent expression falls back to the first cell, including single-image portraits.
   const cell = Math.max(
@@ -78,16 +77,5 @@ export function expressionPortrait(
     src: `/portraits/${character}-expressions.webp`,
     size: `${String(atlas.columns * 100)}% ${String(atlas.rows * 100)}%`,
     position: `${String(((cell % atlas.columns) / Math.max(1, atlas.columns - 1)) * 100)}% ${String((Math.floor(cell / atlas.columns) / Math.max(1, atlas.rows - 1)) * 100)}%`,
-  };
-}
-
-// Shared close-ups for chat, story dialogue and character portraits.
-function closeupPortrait(character: "aria" | "leon", expression: PortraitExpression) {
-  const cell =
-    Math.max(0, standardAtlas.expressions.indexOf(expression)) + (character === "leon" ? 8 : 0);
-  return {
-    src: "/portraits/aria-leon-expressions-v2.webp",
-    size: "400% 400%",
-    position: `${String(((cell % 4) / 3) * 100)}% ${String((Math.floor(cell / 4) / 3) * 100)}%`,
   };
 }

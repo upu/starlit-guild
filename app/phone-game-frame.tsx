@@ -1,4 +1,6 @@
 import { consumableNotice } from "@/lib/consumable-effects";
+import { guildUnlocked } from "@/lib/guild-base";
+import { GuildPanel } from "./guild-panel";
 import Image from "next/image";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -222,6 +224,18 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
       <div className="phone-screen">
         <AdventureTab model={m} />
         <CompanionsTab model={m} />
+        {guildUnlocked(m.state) && (
+          <TabsContent value="guild" className="phone-guild">
+            <GuildPanel
+              key={m.game.profile?.id}
+              state={m.state}
+              paused={!!m.sheet || !!m.ending}
+              ready={m.ready}
+              onAction={m.act}
+              now={m.clock}
+            />
+          </TabsContent>
+        )}
         <TabsContent value="memories" className="phone-memories">
           <div className="screen-heading">
             <h2>旅の思い出</h2>
@@ -229,7 +243,9 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
           <StoryLibrary state={m.state} onOpen={m.openStory} />
         </TabsContent>
       </div>
-      <TabsList className="phone-navigation">
+      <TabsList
+        className={"phone-navigation" + (guildUnlocked(m.state) ? " guild-navigation" : "")}
+      >
         <TabsTrigger value="adventure">
           <Image src="/ui/adventure-compass.png" width={32} height={32} alt="" unoptimized />
           <span>冒険</span>
@@ -238,6 +254,12 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
           <Image src="/ui/characters-silhouette.png" width={32} height={32} alt="" unoptimized />
           <span>キャラクター</span>
         </TabsTrigger>
+        {guildUnlocked(m.state) && (
+          <TabsTrigger value="guild">
+            <Image src="/ui/guild-banner.svg" width={32} height={32} alt="" unoptimized />
+            <span>旅団</span>
+          </TabsTrigger>
+        )}
       </TabsList>
     </Tabs>
   );

@@ -1,4 +1,8 @@
 import { originalArt } from "@/lib/original-characters";
+const miniArt: Partial<Record<number, string>> = {
+  0: "/characters/aria-mini-v2.webp",
+  2: "/characters/mira-mini-v3.webp",
+};
 export function Sprite({
   index,
   size = 72,
@@ -23,7 +27,8 @@ export function Sprite({
         aria-hidden="true"
       />
     );
-  const art = originalArt(index);
+  const custom = originalArt(index);
+  const art = miniArt[index] ?? custom;
   return (
     <span
       className={`sprite ${className}`}
@@ -36,10 +41,14 @@ export function Sprite({
               backgroundSize: "contain",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              backgroundColor: "#172720",
-              border: "1px solid #9e8655",
-              borderRadius: "12%",
-              boxSizing: "border-box" as const,
+              ...(custom
+                ? {
+                    backgroundColor: "#172720",
+                    border: "1px solid #9e8655",
+                    borderRadius: "12%",
+                    boxSizing: "border-box" as const,
+                  }
+                : {}),
               imageRendering: "auto" as const,
             }
           : {

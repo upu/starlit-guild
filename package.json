@@ -1,6 +1,6 @@
 {
   "name": "starlit-guild",
-  "version": "0.5.3",
+  "version": "0.5.6",
   "private": true,
   "license": "UNLICENSED",
   "devEngines": {
@@ -13,8 +13,8 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
-    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize",
+    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize",
+    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --hostname 0.0.0.0 --port 5173",
     "build": "vinext build",
@@ -42,10 +42,12 @@
     "social-card:generate": "node scripts/generate-social-card.mjs",
     "social-card:check": "node scripts/generate-social-card.mjs --check",
     "presets:generate": "node scripts/generate-test-presets.mjs",
-    "presets:check": "node scripts/generate-test-presets.mjs --check"
+    "presets:check": "node scripts/generate-test-presets.mjs --check",
+    "home-art:optimize": "node scripts/build-home-pixel.mjs",
+    "home-art:check": "node scripts/build-home-pixel.mjs --check"
   },
   "dependencies": {
-    "@base-ui/react": "^1.7.0",
+    "@base-ui/react": "^1.8.0",
     "@hookform/resolvers": "^5.7.1",
     "@shadcn/react": "^0.3.0",
     "class-variance-authority": "0.7.1",
@@ -65,7 +67,7 @@
     "react-dom": "19.3.0",
     "react-hook-form": "^7.88.0",
     "react-resizable-panels": "^4.12.2",
-    "recharts": "^3.8.0",
+    "recharts": "^3.10.1",
     "sonner": "^2.0.8",
     "tailwind-merge": "3.6.0",
     "vaul": "^1.1.2",
@@ -86,11 +88,11 @@
     "eslint-plugin-sonarjs": "^4.2.1",
     "prettier": "3.9.9",
     "react-server-dom-webpack": "19.3.0",
-    "sharp": "0.35.4",
+    "sharp": "0.35.5",
     "tailwindcss": "4.2.1",
     "tw-animate-css": "^1.4.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.68.0",
+    "typescript-eslint": "8.71.0",
     "vinext": "1.0.0-beta.11",
     "vite": "8.3.1",
     "wrangler": "4.141.0"

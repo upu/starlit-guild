@@ -1,0 +1,57 @@
+{
+  "tool": "image_gen__imagegen",
+  "date": "2026-10-04",
+  "scope": "Finn and Lico tea faces narrowed using current Mira as proportion reference. Hair/head outer size, individual expressions, four poses and handedness preserved.",
+  "calls": [
+    {
+      "id": "finn",
+      "direction": "right",
+      "prompt": "画像1のフィンのお茶4コマで、顔全体の横幅をはっきり細める。画像2のミラは顔の細さだけの基準。ミラの髪・顔つき・服は移さない。フィンのこめかみ・目の横幅と間隔・頬・あごをまとめて現在の約75%の幅にするイメージ。頬だけでなく顔全体の肌色領域を細い卵形に。顔の縦の長さと目の高さは維持。髪と頭全体の外形・大きさは縮めず、狭めた顔の左右を茶色の横髪で自然につなぐ。フィンの茶色の半目、余裕のあるいたずらっぽい微笑み、眉・鼻・男性らしさは保つ。全4コマ同じ新しい顔の比率、3コマ目は閉じ目。画像1の右向き、髪・後ろのポニーテール・耳飾り・衣装・椅子・脚・カップ・4つの姿勢は維持。手前の右手（体の画面左側）がカップを持ち、奥の左手は膝。1536x1024、2列2行の完全透明RGBAスプライト。背景・後光・文字なし。人物はフィンだけ。顔の幅が元より明確に細くなること。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-118f7824-1411-49d0-8332-c997cda028cb.png",
+      "destination": "assets/source/home-pixel/finn-tea-v1-right.png",
+      "accepted": true
+    },
+    {
+      "id": "finn",
+      "direction": "left",
+      "prompt": "画像1のフィンの左向きお茶4コマで顔全体の横幅を細める。画像2は顔の細さだけの参考、ミラの髪や衣装や瞳は移さない。フィンの肌色の顔をこめかみから目・頬・あごまで現在の横幅の75%程度を目安にまとめて狭くする。目の横幅と間隔も詰める。縦の長さ、目の高さ、茶色の半目と余裕のあるいたずらっぽい笑みを維持。全4コマ同じ細い卵形の顔と小さなあごにする。3コマ目だけ閉じ目。頭・髪の外周の大きさは維持し、顔の左右の横髪を自然につなぐ。必ず画像1の左向き維持、髪飾りと耳は画面右、椅子の背も画面右、つま先は左。元の服・ポニーテール・体・手・椅子・カップ・4姿勢は変えない。奥の右手（画面左）がカップを持ち、手前の左手（画面右）は膝。1536x1024の2列2行、透明RGBA、背景・後光・文字なし。顔を変えるだけで体や頭を縮めない。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-tea-v1-left.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-c0c548b8-6d0f-4ce3-b87a-6891c44aba8a.png",
+      "destination": "assets/source/home-pixel/finn-tea-v1-left.png",
+      "accepted": true
+    },
+    {
+      "id": "lico",
+      "direction": "right",
+      "prompt": "画像1のリコのお茶4コマの顔全体を細める。画像2ミラは顔の細さのみの基準。肌色の顔の横幅を現在の約75%にするイメージで、こめかみ・目の横幅と間隔・頬・あごをまとめて狭く、すっきり細い卵形と小さなあご。顔の縦の長さ・目の高さは維持。リコの緑の目、金色の丸眼鏡、やさしい知的な笑みを保ち、眼鏡も新しい目の間隔と顔幅に合うよう横方向を調整する。眼鏡を消さない。赤茶の髪・後ろのポニーテール・花飾りと、頭全体の外形や大きさは変えない。顔の左右の横髪を自然につなぐ。全4コマ同じ顔・眼鏡・頭の大きさ、3コマ目は閉じ目。リコの衣装と体・椅子・足・カップ・4つのポーズは元のまま。画面右向き維持。リコは左利きで、奥の左手（画面右側）がカップの右側の取っ手を持ち、手前の右手（画面左側）は膝に置く。この手の配置を変えない。ミラの顔つきや衣装や髪は移さない。1536x1024の2列2行、完全透明RGBAスプライト。背景・後光・文字なし。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-7aa90d91-4a4e-427d-88a6-fe92e9caa781.png",
+      "destination": "assets/source/home-pixel/lico-tea-v1-right.png",
+      "accepted": true
+    },
+    {
+      "id": "lico",
+      "direction": "left",
+      "prompt": "画像1のリコの左向きお茶4コマで、顔全体を細める。画像2ミラは細さの基準だけ。リコの肌色の顔を、こめかみ・目の横幅と間隔・頬・あごまでまとめて現在の約75%の横幅を目安に狭く、細い卵形と小さなあごへ。顔の縦の長さと目の高さは維持。緑の目と金色の丸眼鏡と優しい笑みを保ち、眼鏡の幅とブリッジの間隔は狭くした顔に自然に合わせる。髪全体・頭の外周の大きさは変えない。赤茶の髪、後ろのポニーテール、花飾り、衣装、体、足、椅子、カップ、4ポーズは画像1を維持。全4コマ同じ細い顔、3コマ目だけ閉じ目。必ず画面左向き維持。椅子の背と花飾りは画面右。リコは左利きで、手前の左手（体の画面右側）がカップの右側の取っ手を持ち、奥の右手は膝に置く。手は入れ替えない。ミラの衣装・瞳・髪や表情は移さない。1536x1024の2列2行、透明RGBA、背景・後光・文字なし。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-tea-v1-left.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-left.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-694a7aa1-cf1b-4d42-9a8c-d92c5d879918.png",
+      "destination": "assets/source/home-pixel/lico-tea-v1-left.png",
+      "accepted": true
+    }
+  ],
+  "retakes": 0,
+  "notes": "Prompt percentage is guidance, not measured output. Original PNGs copied without processing, packed using existing build. Small inter-frame rendering variations remain. Physical phone not tested."
+}

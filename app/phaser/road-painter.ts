@@ -16,15 +16,19 @@ import {
   ROAD_CARGO,
   ROAD_PUPPETS,
   ROAD_PUSH,
+  pushFrames,
   ROAD_PULL,
   ROAD_FINN_PULL,
   ROAD_PACKING,
+  packingFrames,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  miraFrames,
+  ROAD_ARIA_WORK,
+  MINI_CELL,
+  ROAD_MIRA_WORK,
   finnFrames,
 } from "./road-art";
 import {
@@ -102,16 +106,16 @@ export class RoadPainter {
         texture.add(String(index), 0, x, y, w, h);
       return;
     }
-    if (id === "mira") {
-      for (const [index, [x, y, w, h]] of miraFrames.entries())
-        texture.add(String(index), 0, x, y, w, h);
-    } else {
-      for (let index = 0; index < 12; index++) {
-        const frame = roadFrame(id, index);
-        texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
-      }
+    this.registerMainFrames(id);
+    if (id !== "aria" && id !== "mira") this.registerWalkFrames(id);
+  }
+
+  private registerMainFrames(id: Traveller["id"]) {
+    const texture = this.scene.textures.get(roadSheet(id));
+    for (let index = 0; index < (id === "aria" || id === "mira" ? 16 : 12); index++) {
+      const frame = roadFrame(id, index);
+      texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
     }
-    this.registerWalkFrames(id);
   }
 
   private registerWalkFrames(id: Traveller["id"]) {
@@ -124,18 +128,12 @@ export class RoadPainter {
     this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 470, 340, 370, 605);
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
     this.registerPackingArt();
+    this.registerMiniWorkArt(ROAD_ARIA_WORK);
+    this.registerMiniWorkArt(ROAD_MIRA_WORK);
     const push = this.scene.textures.get(ROAD_PUSH);
-    const rects = [
-      [49, 31, 429, 458],
-      [567, 32, 414, 459],
-      [57, 517, 425, 461],
-      [561, 516, 421, 462],
-      [70, 1005, 438, 487],
-      [551, 1007, 434, 487],
-    ];
-    for (const [index, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[index * 2 + step];
+        const [x, y, w, h] = pushFrames[id][step];
         push.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
     const pull = this.scene.textures.get(ROAD_PULL);
@@ -163,19 +161,24 @@ export class RoadPainter {
   }
   private registerPackingArt() {
     const texture = this.scene.textures.get(ROAD_PACKING);
-    const rects = [
-      [260, 36, 305, 358],
-      [692, 38, 294, 357],
-      [240, 427, 336, 358],
-      [666, 431, 336, 355],
-      [233, 821, 337, 362],
-      [662, 824, 335, 361],
-    ];
-    for (const [row, id] of ["aria", "leon", "mira"].entries())
+    for (const id of ["aria", "leon", "mira"] as const)
       for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = rects[row * 2 + step];
+        const [x, y, w, h] = packingFrames[id][step];
         texture.add(`${id}-${String(step)}`, 0, x, y, w, h);
       }
+  }
+
+  private registerMiniWorkArt(asset: string) {
+    const texture = this.scene.textures.get(asset);
+    for (let index = 0; index < 4; index++)
+      texture.add(
+        String(index),
+        0,
+        (index % 2) * MINI_CELL,
+        Math.floor(index / 2) * MINI_CELL,
+        MINI_CELL,
+        MINI_CELL,
+      );
   }
 
   private makeFigure(asset: string, frame: string, name: string): Figure {

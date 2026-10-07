@@ -89,7 +89,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 
 ## 実装の分担
 
-冒険の描画はPhaserを使う。キャラクター、会話、設定などはReact側で扱い、進行・保存の判定を描画ループへ重複実装しない。
+冒険と旅団の描画はPhaserを使う。キャラクター、会話、設定などはReact側で扱い、進行・保存の判定を描画ループへ重複実装しない。
 
 - [Phaser冒険画面](phaser-adventure.md) — 描画構成と検証範囲
 - [ゲームプレイ仕様](../gameplay/gameplay.md) — プレイヤーから見える現行挙動
@@ -114,11 +114,13 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 
 ### ローカルの手動テスト
 
-以下の9本は `node --test tests/*.test.mjs` の対象外。変更した機能に合う行だけローカルで実行する。PR前の共通検証は [コード品質](#コード品質) に従う。CIの `npm run manual-tests:check` はこの一覧と実在ファイルの一致だけを検査し、ブラウザーテストや章の通し試走を実行しない。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）を済ませる。
+以下の手動テストは `node --test tests/*.test.mjs` の対象外。変更した機能に合う行だけローカルで実行する。PR前の共通検証は [コード品質](#コード品質) に従う。CIの `npm run manual-tests:check` はこの一覧と実在ファイルの一致だけを検査し、ブラウザーテストや章の通し試走を実行しない。リポジトリのルートで `npm run install:ci`（または通常の依存関係のインストール）を済ませる。
 
 <!-- manual-test-inventory:start -->
 | テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
 | --- | --- | --- | --- |
+| `tests/guild.browser.mjs` 旅団のPhaser描画・椅子での飲茶と歩行・栽培地切替・動きを減らす設定・高解像度・商品棚と作業台メニュー・植え付け・固定順の下部バー・現地の担当アイコン・作業台の動作・成長表示・留守中の復帰・在室条件による自動会話と停止・表情 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/guild.browser.mjs` | `work/guild-browser/` の画像・`results.json` |
+| `tests/home-room.browser.mjs` ドット絵調の5人・茶席・作業・菜園・家具配置・静止・再試行 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `$env:TEST_ROOT='http://localhost:5173'; node tests/home-room.browser.mjs` | `work/pixel-home/` の320/390/844/1000px画像、歩行コマ一覧、寸法記録。スマホ実機とは別 |
 | `tests/quest-picker.browser.mjs` 行先選択・設定・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身が部品を組み立てて一時サーバーを起動 | `node tests/quest-picker.browser.mjs` | `work/quest-picker-browser/` の画像・`results.json` |
 | `tests/story-video.browser.mjs` 再生・停止・再視聴・代替表示 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/story-video.browser.mjs` | `work/story-video-browser/` の画像、終了表示 |
 | `tests/character-panel.browser.mjs` 人物画面・装備候補・スキル・消耗品の購入/登録/通知・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身の部品fixtureと一時サーバー | `node tests/character-panel.browser.mjs` | `work/character-browser/` の画像、終了表示 |
@@ -130,6 +132,11 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | `tests/test-tools.integration.mjs` テスト機能の環境変数切り替え | Nodeのみ。`npm run build`。テスト自身が一時ローカルWorkerを起動 | `node tests/test-tools.integration.mjs` | 標準出力の7条件のPASS表示 |
 | `tests/api-backup.integration.mjs` バックアップAPIの往復・隔離・不正入力 | Nodeのみ。`npm run build` → ローカルD1初期化 → 別ターミナルで `npm start` | `$env:TEST_ROOT='http://127.0.0.1:8787'; node tests/api-backup.integration.mjs` | 標準出力のPASS表示、ローカルD1（`.wrangler/state`） |
 | `tests/road-worksites.browser.mjs` 全章の作業地点画像19種類 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/road-worksites.browser.mjs` | `work/worksite-browser/` の画像・`result.json` |
+| `tests/sprite-lab.browser.mjs` ドット絵見本帳の入口・比較ページの移動・旧URL転送 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/sprite-lab.browser.mjs` | `work/pixel-home/sprite-lab/` の320/390/1000px画像。保存への書込なし。スマホ実機とは別 |
+| `tests/home-walk-study.browser.mjs` 共通歩行見本の再生・停止・コマ送り・小表示・5人の同期比較 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-walk-study.browser.mjs` | `work/pixel-home/walk-study/` の見本一覧・5人の比較・画面画像 |
+| `tests/home-tea-study.browser.mjs` お茶と会話の共通見本・片手の飲茶・座位・再生停止・姿勢送り・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-tea-study.browser.mjs` | `work/pixel-home/tea-study/` の4姿勢と320/390/844/1000px画像。スマホ実機とは別 |
+| `tests/home-work-study.browser.mjs` 作業台の共通見本・5人の実素材・左右の手・4姿勢・再生停止・補間・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-work-study.browser.mjs` | `work/pixel-home/work-study/` の左右4姿勢・5人の作業台・事務机との比較・320/390/844/1000px画像。スマホ実機とは別 |
+| `tests/home-garden-study.browser.mjs` 菜園の共通見本・5人の水やり・左右4姿勢・再生停止・減らす設定 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `node tests/home-garden-study.browser.mjs` | `work/pixel-home/garden-study/` の左右4姿勢・5人の水やりと菜園・320/390/844/1000px画像。保存への書込なし。スマホ実機とは別 |
 <!-- manual-test-inventory:end -->
 
 Node版Playwrightは通常の依存関係には含まれない。必要なときだけ `npm install --no-save --package-lock=false playwright` と `npx playwright install chromium` で用意する。既に別の場所へ入れた場合はPowerShellで `$env:PLAYWRIGHT_MODULE='C:\絶対パス\node_modules\playwright'`、`$env:CHROME_PATH='C:\絶対パス\chrome.exe'` を指定できる。Python版は別途 `python -m pip install playwright` と `python -m playwright install chromium webkit` が必要で、`--executable` でブラウザー実行ファイルを指定できる。Pythonテストは生成CSSと `components/ui/dialog.tsx` のクラスを組み合わせた独立fixtureで、`--css` はビルドできない場合の独立fixture専用。部品fixtureの3本もゲーム全体へ接続するテストではない。

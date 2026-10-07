@@ -9,30 +9,9 @@ type HeroSheet = {
   frames?: readonly (readonly [number, number, number, number])[];
 };
 export const heroSheets: Partial<Record<string, HeroSheet>> = {
-  aria: { asset: "/animations/aria-v1.png", columns: 4, rows: 3, ready: true },
+  aria: { asset: "/animations/aria-v2.png", columns: 4, rows: 3, ready: true },
   leon: { asset: "/animations/leon-v1.png", columns: 4, rows: 3, ready: true },
-  // Native artwork has irregular gutters. Read each whole pose and anchor its feet,
-  // rather than cutting feet and the casting staff at an assumed equal-cell border.
-  mira: {
-    asset: "/animations/mira-v1.png",
-    columns: 4,
-    rows: 3,
-    ready: true,
-    frames: [
-      [28, 32, 330, 342],
-      [389, 32, 331, 344],
-      [751, 32, 331, 342],
-      [1114, 32, 328, 344],
-      [30, 397, 323, 326],
-      [374, 398, 378, 325],
-      [746, 408, 394, 315],
-      [1125, 396, 317, 328],
-      [36, 746, 320, 327],
-      [399, 749, 320, 324],
-      [750, 755, 312, 318],
-      [1120, 751, 319, 322],
-    ],
-  },
+  mira: { asset: "/animations/mira-v3.png", columns: 4, rows: 3, ready: true },
 };
 
 export function heroAnimation(

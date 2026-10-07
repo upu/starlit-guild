@@ -1,0 +1,87 @@
+{
+  "tool": "image_gen__imagegen",
+  "date": "2026-10-04",
+  "scope": "Five residents' tool-independent work animation. Four whole-body rear-three-quarter poses; right hand except Lico left. Original PNGs copied unprocessed. Fixed common scale and sole anchors for delivery.",
+  "calls": [
+    {
+      "id": "leon",
+      "prompt": "用途: STARLIT-GUILD 旅団ホームの全身4コマ作業アニメーション。1536x1024 PNG、2列×2行、各セル768x512。各セルに同一人物の全身を1体、高さ約420px、足裏は各セルのy=470、人物の中心x=350。四辺に32px以上の透明余白。完全透明RGBA、背景色・床・影・後光・グロー・文字・枠線・椅子・机・道具・材料は一切描かない。既存の小さなドット絵調の濃い茶輪郭と素朴な塗り、線の太さ、色を保つ。顔を横長にせず、頭と身体の大きさ、髪色と衣装を4コマで完全に統一。参照1は衣装と後ろ姿、参照2は採用された顔の細さと画風、参照3は動きと重なり順だけのガイド。参照の背景の光は移さない。\nカメラ: 少し上から斜め後ろ、人物は画面右上の見えない台に向かう。真横や正面ではなく、後頭部と背中が主に見え、頬は細く少しだけ見える。両足は立って地面に固定、膝を曲げず足踏みしない。両手は腰より少し上の見えない天板の高さへ伸ばす。奥の腕は胴の向こうに隠し、その前腕と手先だけが胴の右側から出る。手前腕を胸の前で横断させない。手を握らず小さく自然に指を曲げて、何も持たず作業する。肩・ひじは自然につながる。\nコマ順: 左上1=台へ両手を伸ばす基準姿勢。右上2=主に動かす手を少し奥へ、肩も少し前へ。左下3=その手を少し手前へ戻しながら、上半身と頭を3度ほど前に寄せ集中する。右下4=手と上半身が基準に近く戻る。動きは控えめだが各コマの手の位置は明確に違う。反対の手はほぼ同じ位置で添える。固定された頭の大きさ・足・全身スケールでループを作る。金槌を振り上げる、殴る、拳を出す、空中で腕を振る動きではない。\nレオン: 赤茶色の尖った髪、赤いマフラーと短い金模様のマント、紺青の上着、生成り袖、銀の肩当て、茶革の手袋とブーツ。右利き。右手（画面右側でよく見える側）が主に動く。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-rear-walk-v3.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/work-study/right-poses.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-1336c00a-0594-4031-8121-6caa2d374561.png",
+      "destination": "assets/source/home-pixel/leon-work-v1.png",
+      "accepted": true
+    },
+    {
+      "id": "aria",
+      "prompt": "用途: STARLIT-GUILD 旅団ホームの全身4コマ作業アニメーション。1536x1024 PNG、2列×2行、各セル768x512。各セルに同一人物の全身を1体、高さ約420px、足裏は各セルのy=470、人物の中心x=350。四辺に32px以上の透明余白。完全透明RGBA、背景色・床・影・後光・グロー・文字・枠線・椅子・机・道具・材料は一切描かない。既存の小さなドット絵調の濃い茶輪郭と素朴な塗り、線の太さ、色を保つ。顔を横長にせず、頭と身体の大きさ、髪色と衣装を4コマで完全に統一。参照1は衣装と後ろ姿、参照2は採用された顔の細さと画風、参照3は動きと重なり順だけのガイド。参照の背景の光は移さない。\nカメラ: 少し上から斜め後ろ、人物は画面右上の見えない台に向かう。真横や正面ではなく、後頭部と背中が主に見え、頬は細く少しだけ見える。両足は立って地面に固定、膝を曲げず足踏みしない。両手は腰より少し上の見えない天板の高さへ伸ばす。奥の腕は胴の向こうに隠し、その前腕と手先だけが胴の右側から出る。手前腕を胸の前で横断させない。手を握らず小さく自然に指を曲げて、何も持たず作業する。肩・ひじは自然につながる。\nコマ順: 左上1=台へ両手を伸ばす基準姿勢。右上2=主に動かす手を少し奥へ、肩も少し前へ。左下3=その手を少し手前へ戻しながら、上半身と頭を3度ほど前に寄せ集中する。右下4=手と上半身が基準に近く戻る。動きは控えめだが各コマの手の位置は明確に違う。反対の手はほぼ同じ位置で添える。固定された頭の大きさ・足・全身スケールでループを作る。金槌を振り上げる、殴る、拳を出す、空中で腕を振る動きではない。\nアリア: 金髪の編み込みと背中中ほどまでの後ろ髪、白い花と葉の飾り、エルフ耳、緑の金葉模様マント、生成り半袖、茶コルセット、白フリルスカート、茶革手袋、編上ブーツ。髪で作業する腕を完全に隠さない。右利き、画面右に見える右手が主に動く。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-rear-walk-v3.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/work-study/right-poses.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-64cb6e08-387b-488f-920a-eec94dcc3002.png",
+      "destination": "assets/source/home-pixel/aria-work-v1.png",
+      "accepted": false
+    },
+    {
+      "id": "mira",
+      "prompt": "用途: STARLIT-GUILD 旅団ホームの全身4コマ作業アニメーション。1536x1024 PNG、2列×2行、各セル768x512。各セルに同一人物の全身を1体、高さ約420px、足裏は各セルのy=470、人物の中心x=350。四辺に32px以上の透明余白。完全透明RGBA、背景色・床・影・後光・グロー・文字・枠線・椅子・机・道具・材料は一切描かない。既存の小さなドット絵調の濃い茶輪郭と素朴な塗り、線の太さ、色を保つ。顔を横長にせず、頭と身体の大きさ、髪色と衣装を4コマで完全に統一。参照1は衣装と後ろ姿、参照2は採用された顔の細さと画風、参照3は動きと重なり順だけのガイド。参照の背景の光は移さない。\nカメラ: 少し上から斜め後ろ、人物は画面右上の見えない台に向かう。真横や正面ではなく、後頭部と背中が主に見え、頬は細く少しだけ見える。両足は立って地面に固定、膝を曲げず足踏みしない。両手は腰より少し上の見えない天板の高さへ伸ばす。奥の腕は胴の向こうに隠し、その前腕と手先だけが胴の右側から出る。手前腕を胸の前で横断させない。手を握らず小さく自然に指を曲げて、何も持たず作業する。肩・ひじは自然につながる。\nコマ順: 左上1=台へ両手を伸ばす基準姿勢。右上2=主に動かす手を少し奥へ、肩も少し前へ。左下3=その手を少し手前へ戻しながら、上半身と頭を3度ほど前に寄せ集中する。右下4=手と上半身が基準に近く戻る。動きは控えめだが各コマの手の位置は明確に違う。反対の手はほぼ同じ位置で添える。固定された頭の大きさ・足・全身スケールでループを作る。金槌を振り上げる、殴る、拳を出す、空中で腕を振る動きではない。\nミラ: 灰紫のまとめ髪と月と白花と紺リボン、白金の衣装と紺の裏地、広い袖、茶ベルト、サンダルブーツ。疲れた重いまぶた、大人らしい細い顔と高い目を、見えるわずかな横顔にも保つ。後頭部の大きさを変えない。右利き、画面右側の右手が主に動く。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-rear-walk-v3.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/mira-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/work-study/right-poses.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-9e7e328e-1ebb-47e1-b7a1-e0e5a3ff0792.png",
+      "destination": "assets/source/home-pixel/mira-work-v1.png",
+      "accepted": true
+    },
+    {
+      "id": "finn",
+      "prompt": "用途: STARLIT-GUILD 旅団ホームの全身4コマ作業アニメーション。1536x1024 PNG、2列×2行、各セル768x512。各セルに同一人物の全身を1体、高さ約420px、足裏は各セルのy=470、人物の中心x=350。四辺に32px以上の透明余白。完全透明RGBA、背景色・床・影・後光・グロー・文字・枠線・椅子・机・道具・材料は一切描かない。既存の小さなドット絵調の濃い茶輪郭と素朴な塗り、線の太さ、色を保つ。顔を横長にせず、頭と身体の大きさ、髪色と衣装を4コマで完全に統一。参照1は衣装と後ろ姿、参照2は採用された顔の細さと画風、参照3は動きと重なり順だけのガイド。参照の背景の光は移さない。\nカメラ: 少し上から斜め後ろ、人物は画面右上の見えない台に向かう。真横や正面ではなく、後頭部と背中が主に見え、頬は細く少しだけ見える。両足は立って地面に固定、膝を曲げず足踏みしない。両手は腰より少し上の見えない天板の高さへ伸ばす。奥の腕は胴の向こうに隠し、その前腕と手先だけが胴の右側から出る。手前腕を胸の前で横断させない。手を握らず小さく自然に指を曲げて、何も持たず作業する。肩・ひじは自然につながる。\nコマ順: 左上1=台へ両手を伸ばす基準姿勢。右上2=主に動かす手を少し奥へ、肩も少し前へ。左下3=その手を少し手前へ戻しながら、上半身と頭を3度ほど前に寄せ集中する。右下4=手と上半身が基準に近く戻る。動きは控えめだが各コマの手の位置は明確に違う。反対の手はほぼ同じ位置で添える。固定された頭の大きさ・足・全身スケールでループを作る。金槌を振り上げる、殴る、拳を出す、空中で腕を振る動きではない。\nフィン: くすんだ茶髪と後頭部で束ねた低いポニーテール、くたびれた灰オリーブの金縁コート、白シャツ袖口、茶ズボン・ブーツ。細い顔。右利き、画面右側の右手が主に動く。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-rear-walk-v3.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/finn-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/work-study/right-poses.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-c1de7b40-81b9-4a7c-9651-98aabbf5b08a.png",
+      "destination": "assets/source/home-pixel/finn-work-v1.png",
+      "accepted": true
+    },
+    {
+      "id": "lico",
+      "prompt": "用途: STARLIT-GUILD 旅団ホームの全身4コマ作業アニメーション。1536x1024 PNG、2列×2行、各セル768x512。各セルに同一人物の全身を1体、高さ約420px、足裏は各セルのy=470、人物の中心x=350。四辺に32px以上の透明余白。完全透明RGBA、背景色・床・影・後光・グロー・文字・枠線・椅子・机・道具・材料は一切描かない。既存の小さなドット絵調の濃い茶輪郭と素朴な塗り、線の太さ、色を保つ。顔を横長にせず、頭と身体の大きさ、髪色と衣装を4コマで完全に統一。参照1は衣装と後ろ姿、参照2は採用された顔の細さと画風、参照3は動きと重なり順だけのガイド。参照の背景の光は移さない。\nカメラ: 少し上から斜め後ろ、人物は画面右上の見えない台に向かう。真横や正面ではなく、後頭部と背中が主に見え、頬は細く少しだけ見える。両足は立って地面に固定、膝を曲げず足踏みしない。両手は腰より少し上の見えない天板の高さへ伸ばす。奥の腕は胴の向こうに隠し、その前腕と手先だけが胴の右側から出る。手前腕を胸の前で横断させない。手を握らず小さく自然に指を曲げて、何も持たず作業する。肩・ひじは自然につながる。\nコマ順: 左上1=台へ両手を伸ばす基準姿勢。右上2=主に動かす手を少し奥へ、肩も少し前へ。左下3=その手を少し手前へ戻しながら、上半身と頭を3度ほど前に寄せ集中する。右下4=手と上半身が基準に近く戻る。動きは控えめだが各コマの手の位置は明確に違う。反対の手はほぼ同じ位置で添える。固定された頭の大きさ・足・全身スケールでループを作る。金槌を振り上げる、殴る、拳を出す、空中で腕を振る動きではない。\nリコ: 赤茶色の髪、ポニーテールは必ず後頭部から背中へ下ろす（横結び禁止）、丸眼鏡、赤の花飾り、赤黒の衣装、白い膨らみ袖、赤黒スカート、腰の小瓶、サンダル。細い顔。唯一左利き。カメラを他4人と反対側に置き、画面左上の台へ向かう斜め後ろ姿。手前に見える左手が主に動き、奥の右腕は胴に隠れて先だけ見える。参照3の右利きガイドを左右逆に解釈する。",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-rear-walk-v4.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/lico-tea-v1-right.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/work-study/right-poses.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-4935f3da-ddfd-4b7d-9662-2ee0d31688c2.png",
+      "destination": "assets/source/home-pixel/lico-work-v1.png",
+      "accepted": false
+    },
+    {
+      "id": "aria",
+      "prompt": "この透明の4コマ画像のアリアについて、右上の2コマ目の腕だけを修正する。上側に伸びている白い袖と茶手袋の腕を消す（奥側の腕は身体と髪の向こうに隠れる）。下側の、他の3コマと同じ肩から出る手前の右腕だけを、1コマ目より20pxほど前（画面右）へ伸ばす。腕は2本しかない、手前に見える白袖は1本、奥腕の袖を手前腕に重ねない。左上・左下・右下の3コマは一切変更しない。全4コマの頭・髪・耳・衣装・色・大きさ・足・位置を維持する。1536x1024、2列2行、完全透明RGBA、背景や光は追加しない。机・道具も描かない。",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-64cb6e08-387b-488f-920a-eec94dcc3002.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-fbdf6bf4-26b6-4aef-bbb9-d0b9c7e08b36.png",
+      "destination": "assets/source/home-pixel/aria-work-v1.png",
+      "accepted": true
+    },
+    {
+      "id": "lico",
+      "prompt": "この透明のリコ4コマ画像で、奥側の右手だけを直す。全4コマで、人物の画面右端、ポニーテールの右横・腰の上に出ている肌色の手を完全に消す。そこは髪と赤黒の服の自然な輪郭だけにする。奥の右腕は体の向こう側を通って前（画面左上）の台へ伸びており、胴と髪で完全に隠れて見えなくてよい。画面左に見える、白い袖の手前の左腕と左手はそのまま、4つの位置を維持する。後ろ向きの顔・頭・髪・後ろポニーテール・服・色・脚・足・4コマ構成・位置と大きさを一切変えない。1536x1024、2列2行、完全透明RGBA、背景色・光・机・道具なし。",
+      "refs": [
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-4935f3da-ddfd-4b7d-9662-2ee0d31688c2.png"
+      ],
+      "output": "C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-0f017fed-16ab-48e0-8d6e-09bea7dd2fa4.png",
+      "destination": "assets/source/home-pixel/lico-work-v1.png",
+      "accepted": true
+    }
+  ]
+}

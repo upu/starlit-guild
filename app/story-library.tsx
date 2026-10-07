@@ -47,11 +47,13 @@ function memoryEntries(items: Story[], read: string[], onOpen: (story: Story) =>
         >
           <span>
             <small>
-              {story.chapter === "interlude"
-                ? "幕間"
-                : story.chapter === "departure"
-                  ? "出発前"
-                  : "達成後"}
+              {story.chapter === "guild"
+                ? "日常"
+                : story.chapter === "interlude"
+                  ? "幕間"
+                  : story.chapter === "departure"
+                    ? "出発前"
+                    : "達成後"}
               {!read.includes(story.id) && " · 未読"}
             </small>
             <b>{story.title}</b>

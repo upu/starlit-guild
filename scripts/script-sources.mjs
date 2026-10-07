@@ -1,4 +1,5 @@
 import { earlyPrologueStories } from "../lib/prologue-early-stories.ts";
+import { guildStories } from "../lib/guild-stories.ts";
 import { latePrologueStories } from "../lib/prologue-late-stories.ts";
 import { waterwayStories } from "../lib/waterway-stories.ts";
 import { towerFinaleStories } from "../lib/tower-finale-stories.ts";
@@ -16,6 +17,7 @@ import { prologueStages, WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST } from ".
 
 // Only the exporter uses this provenance map. Story objects and game saves stay unchanged.
 const sceneGroups = [
+  ["lib/guild-stories.ts", guildStories],
   ["lib/prologue-early-stories.ts", earlyPrologueStories],
   ["lib/prologue-late-stories.ts", latePrologueStories],
   ["lib/waterway-stories.ts", waterwayStories],

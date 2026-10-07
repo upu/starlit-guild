@@ -1,0 +1,304 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen",
+  "referenceCommit": "f24937dde4ed1ea0e9f5c4bd98558137e5289f1b",
+  "reference": "docs/characters/aria-reference-sheet.webp",
+  "portraitPrompt": "Generate a fresh ARIA portrait expression atlas, image1 oldatlas as exact close-up face crop/expression/order/layout guide ONLY, image2 finalAria reference as identity/mattehair/clothing source ONLY. Complete newlydrawn 4columns x2rows atlas of EIGHT SQUARE closeupface cells, aspect2:1 ideally2048x1024 or1536x768 native. No separators/gridline/text/frame; opaque warm ivory backgrounds samecellcolor. Upperrow LEFTtoRIGHT neutral softclosedmouth / smile eyesclosedbroadjoy / surprised widenedeyes smallO mouth / worried raisedinnerbrows saduncertainmouth. Lowerrow serious firmbrows determinedclosedmouth / shy downslightlyturnedeyes blushsmallmouth / tired droopinghalf-lids smallpartedmouth / mischievous friendly confident playfullyraisedbrow/onecornermouth, NOT sinister. Preserve strong readable distinctions and originalAria face proportions/identity/eyes-mouth balance, originalactual closeup scale: facefills cell, head/hair/flower maycrop atedges, neck/collar justloweredge, no wholebust miniature! SAME facialangle/headposition acrossatlas wherepossible. Greeneyes, pointedelfears, shortash-blonde airy low-volume shoulder/collarbonehair, singlepalelavenderlock VIEWERLEFT opposite whiteflowerfeathers VIEWERRIGHT. No braidedcrown/temple/headband, tinyrearcentralhalf-uphidden frontal. Match finalsheet hair MATTE softopaque ashblonde washes, broadweakdiffusehighlights and FEWER internalstrandlines, no sharphighlightwhitebands/stripes/shinyplasticmetallicgleam. Keep crispfineface/eyes/edges notblur or overalldim. Loweredge clothes ifvisible: plain greencloakback, frontflowerclasp and restrainedfronttrim, a little moreopen whiteblouselaceneckline, ONE logical diagonalstrap onlyno crossedstub, no danglingmetalcloakdecor. Don'texpandcrop to showbust justto display clothes; this is faceicon and facefill shouldremain. Delicate originalfriendlyenergetic fantasyanimedrawing, lightmutedcolors, individualnaturalemotionappropriateforeverylabelabove. No othercharacters,newaccessories, duplicatedheads, extralimbs, watermarks, words or addedgrid. EXACT4x2 eightcells in definedorder, onlyatlasoutput.",
+  "stills": [
+    {
+      "name": "village-trade-handover",
+      "stage": "1-1",
+      "source": "assets/source/stories/village-trade-handover.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep shopkeeper/right man, Leon, every arm/hand, herb parcel and traded goods/table. Aria cheerful hood UP remains; outside/broad hood plain green, gold motifs only narrow front rim/cape front edges. Output only complete updated single landscape still.",
+      "inputSha256": "b0479293d97e727015a5bdbd66bc952468c94fe095fb95c660ad62be91b93765",
+      "correction": {
+        "prompt": "Localized ARIA HAIR ORNAMENT SIDE correction ONLY, same1536x1024 current village trade illustration. Aria leftmost elf with hoodUP and lavender lock atpictureLEFT of face nearx=330,y=330..455. Her daisy/feathers on SAME pictureLEFT nearx=250,y=255 is wrong. REMOVE that entire old left daisy/feathers/leaves from greenhood rim, reconstruct plain green and normalblondehair there. Put a SINGLE SMALL partially visible daisy/feathers on OPPOSITE side, ARIA anatomicalLEFT, near her FAR pictureRIGHT temple/hoodrim x=477..497,y=255..292, tucked NATURALLY underfarhoodrim. Her headlooksRIGHT, so ornament may be MOSTLY HIDDEN behind far side of head/hood, a very small visible tip/partialflower is fine and preferred to incorrect left flower. No mirroredleftflower, no duplicate ornaments, no flower nextto purplelock. Keep lavender atpictureLEFT exactly, keep allhairshape/mattecolor, eyes/face/expression/headangle/hoodplainback/fronttrim, singlecheststrap/openneckline and everyhand/parcel/shopkeeper/Leon/environment/light/crop EXACTLYunchanged. Keep collarflower atcenterneck unchanged (not the hairflower). No newbody/objects/text. Output complete corrected illustration."
+      },
+      "outputSha256": "5cec256de4d3eda8e9cbd2b152c3cc346cfd3e647a6f854669c8ddfe5e33e590",
+      "bytes": 2467922,
+      "review": "Herb parcel, trade goods, shopkeeper and hands retained; hood stays up, open neckline and one strap, hidden far-side flower opposite lavender lock.",
+      "scene": "village-trade-return",
+      "revealAtLine": 0
+    },
+    {
+      "name": "tower-moss-discovery",
+      "stage": "1-4",
+      "source": "assets/source/stories/tower-moss-discovery.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep faintly mint-glowing moss in wooden container, restrained glow/daylight, Aria/Leon faces and gloved hands supporting/handling container. Hood DOWN. Flower at Aria viewer-RIGHT temple, lavender on viewer-LEFT opposite; do not keep mirrored flower of old still. Output only complete updated single landscape still. IMPORTANT explicit sides: old hairflower x390,y250 is wrong; removeoldflower/braid from near pictureLEFT ear, put lavender frontlock there on viewerLEFT cheek nearx400..450,y360..520. Put SINGLE whiteflower/feathers on OPPOSITE FAR viewerRIGHT temple nearx690..730,y235..300, can be partiallyhidden towardLeon. Never bothpurple andflower same side. Only Aria neckline open a little and one / connected strap; remove \\ segment from blouse.",
+      "inputSha256": "4fceab9c8fef2feef1f3e58a7dd80cc77e4ee0df34a08d03491fd2975154901e",
+      "outputSha256": "9b70e049c406a86c113f9286e1a71f46eba9d3392dba8fc157ddc69d94dab7ad",
+      "bytes": 2403765,
+      "review": "Purple lock moved opposite flower, no front braid; matte hair, open neckline and one strap. Wooden bowl, hands and faint moss glow retained.",
+      "scene": "tower-road-return"
+    },
+    {
+      "name": "forest-moss-aria",
+      "stage": "1-6",
+      "source": "assets/source/stories/forest-moss-aria.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Aria energetic bright open smile, hood UP, exactly two small wooden bowls/moss specimens at face level, both lifted hands unchanged. Hood outside/broad top/back plain green, narrow face-rim gold trim only. Preserve weak moss daylight visibility. Output only complete updated single landscape still. IMPORTANT old hairflower x535,y140 on hoodLEFT is wrong; removeoldflower andold thickwoven crown braid nearx600..730,y260. Lavender lock staysatviewerLEFT cheek nearx650,y400. Put singlewhiteflower opposite at FAR viewerRIGHT hoodrim/temple nearx950,y200..280, partiallyhiddenunderhoodfine. Hoodoutsideandtopplain green no floralpanel; goldtrimonlyface rim. Don't change two bowls/handanatomy.",
+      "inputSha256": "7c00248e6aeecd9048f7b0ad3d3ec608295fa209fd80e6a4f3c02725985dadf2",
+      "outputSha256": "eb5d63b2cabaa79c143e96872fdeffec93f65662a03b920529c3ef1174755eda",
+      "bytes": 2556389,
+      "review": "Two bowls, raised hands and energetic smile retained; hood up, no front crown braid, flower opposite lavender, open blouse and one strap.",
+      "scene": "forest-wetland-return",
+      "revealAtLine": 5
+    },
+    {
+      "name": "tower-light-restored",
+      "stage": "1-9",
+      "source": "assets/source/stories/tower-light-restored.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep wide very distant dusk landscape, two companions seated seen from BEHIND lower-left/center, restored tower faint violetwindowglow, backpack/blanket BESIDE Leon to right, nopeopleadded. Only visible Aria rear braid is reduced to fine two small locks joining tiny central short half-up, no ear-to-ear chunky band; plain green cape/hood back. Chest not visible so don't invent frontal torso or re-angle head. Output only complete updated single landscape still. Make changes to distant Aria head only aroundx=600..710,y=500..606: existing thick braidband/flowercenter becomes smallfine half-up matchingref; don't alter landscape or seatedbodypositions.",
+      "inputSha256": "f1bbebf9e1fd6027cb2aa3cf4d5982c68fe9cc56a3b5efea3c5590fc845fdf57",
+      "outputSha256": "30f080872fb4572ee50fbb920139edf9f346992e3fadec73c56f6457b2660aac",
+      "bytes": 2905520,
+      "review": "Distant rear hair has slim half-up strands joining tiny central braid, plain cloak back. Landscape, violet tower light, seated pair and backpack retained.",
+      "scene": "tower-moss-removal-return",
+      "revealAtLine": 6
+    },
+    {
+      "name": "mira-collapse",
+      "stage": "2-2",
+      "source": "assets/source/stories/mira-collapse.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep collapsing Mira supported by Leon, Aria crouching/worried beside her, every hand/body support and existing adult proportions. Mira/Leon hair/clothes/faces unchanged. Don't shift breasts/body size. Only Aria neckline/one strap/no dangling cloak hardware/matte hair. Output only complete updated single landscape still.",
+      "inputSha256": "0aaf8caf1fb1406a7842731fcb5485088615a33721b75143ac4353dca13f698d",
+      "outputSha256": "26a877ba94b43f65dc9d5846691d0b68337255c99aced3ba24298e6d5a15dd18",
+      "bytes": 2649597,
+      "review": "Aria worried crouching pose retained with lower neckline, one strap and matte hair; no cloak pendants. Mira supported by Leon, hands and figures retained.",
+      "scene": "moonlit-herbs-return",
+      "revealAtLine": 6
+    },
+    {
+      "name": "three-cups-of-tea",
+      "stage": "2-9",
+      "source": "assets/source/stories/three-cups-of-tea.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: KEEP COMICAL CHIBI STYLE, exact facial expressions Aria mischievous friendly fang smile, Leon laughs, exhausted Mira reaches for memo that Aria pushes away. Preserve comic symbols existing, THREE cups precisely, pot/paper placement/arms hands. Don't turn them into adult-proportion portrait or photorealistic. Aria one simple cheststrap and open blouse collar consistent chibi simplification, matte hair. Output only complete updated single landscape still. Emphasize Aria hair as opaque matte beige broadlowcontrastlocks, no sharpwhite specularstripes and no visiblebraid. Keep exact cheekyfanggrin/eyes and handpushingmemo. Do not blurMira/Leon.",
+      "inputSha256": "b5a1e7de88a31a1f37a6676f4a9ab4a77aa56f2f7a53e01fc73aab1855d68a7c",
+      "outputSha256": "17c0f488336848dce50846d33d1242ee9b410edd63e7622fa84dbe2d48e46cf0",
+      "bytes": 2725116,
+      "review": "Chibi style, playful fang grin, three cups and memo-pushing hand retained; matte hair and one strap, no conspicuous front braid.",
+      "scene": "medicine-road-home-return",
+      "revealAtLine": 11
+    },
+    {
+      "name": "four-cups-of-tea",
+      "stage": "3-9",
+      "source": "assets/source/stories/four-cups-of-tea.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep FOUR people and FOUR cups: Finn holds1, table3. Finn eyesCLOSED laughing, RIGHT hand bandaged and LEFT fingers rings unchanged. Mira pouring with samehands, Leon/Aria expressions and poses allunchanged. Only Aria finish, not othercharacters. Output only complete updated single landscape still.",
+      "inputSha256": "4a33d19a1b7b6dea5d2fc74ddc534a48af1f7cb38c4da7d0ed12c8ebd6df4e42",
+      "outputSha256": "3c2b4ae1b1c74e4cf9a90ce2c179e632691ca46c3edd6c091e4e92dcaf24bc3c",
+      "bytes": 2543221,
+      "review": "Four people/cups, closed-eye laughing Finn, right bandage/left rings and Mira pouring retained; Aria matte hair and one continuous strap.",
+      "scene": "berne-restoration-return",
+      "revealAtLine": 5
+    },
+    {
+      "name": "mira-after-all-nighter",
+      "stage": "4-4 departure",
+      "source": "assets/source/stories/mira-after-all-nighter.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep tired focused Mira with partly loose updo/creased clothes and awkwardcollar taking memo, Finn/Aria worried faces, chairgrasp and bodyposes, exactly3people. Aria narrowed anxious green eyes never broad merry grin; ONLY Aria hair/clothing details adjusted. Output only complete updated single landscape still. Important: dangling diamonds at Aria RIGHT lowercapeedge x1380,y800..915 and underleftcapetip x1210,y1000 are cloak ornaments remove, but DO NOT removeMira necklaces or goldgear. Aria HAIR onlyfine matte, preserve existing worriedopenmouth. Keep legitimate front goldembroidery onedge strip, plainback.",
+      "inputSha256": "a92598317e59d32931d011d74ed67f555fa2155da14b5c20665a54b0a7e7edd1",
+      "outputSha256": "b53eaa563d2207c3211cae47be419a8086d5a4f86a12caa9ab5cde578840d6c8",
+      "bytes": 2786924,
+      "review": "Aria worried face and both chair-gripping hands retained; cloak pendants removed, one chest strap and matte hair. Finn and tired focused Mira retained.",
+      "scene": "glowing-moss-trail-departure",
+      "revealAtLine": 4
+    },
+    {
+      "name": "blue-cloth-alley",
+      "stage": "4-4 return",
+      "source": "assets/source/stories/blue-cloth-alley.png",
+      "prompt": "Use case identity-preserve. Update image1 current adopted STARLIT-GUILD story still to match image2 FINAL ARIA reference sheet. Image1 is scene/composition/edit target; image2 Aria identity and CLOTHING CONSTRUCTION / MATTE HAIR reference only. Re-render Aria with fresh crisp native linework preserving current face/identity/expression and pose; preserve whole complete illustration dimensions1536x1024,camera/crop/background/lighting and ALL OTHER characters. User final corrections: Aria short shoulder/collarbone low-volume pale ash-blonde naturally airy hair, matte soft broad diffuse highlights matching latestsheet, significantly weaken sharp WHITE HAIR STREAKS and shiny striated strand grooves; retain clear fine outlines, no globalblur/dimming. ONE pale lavender front lock anatomicalRIGHT/viewerLEFT frontal, whiteflower/feathers anatomicalLEFT/viewerRIGHT opposite lavender, not mirrored. NO visible thick front/crown/temple braid or braidedheadband. If actual rearhead visible, tiny thin fewlocks joining a small SHORT CENTRAL half-up, not chunky ear-to-ear band; if front view braidhidden. Blouse WHITE opaque with slightly lower/wider softly gathered lace scoopneckline as image2, same body/bust/skin proportion and pose. ExactlyONE uniform broad brown diagonal strap from wearerLEFT shoulder/viewerRIGHT toward wearerRIGHTwaist/viewerLEFT, logically connected with modest buckle aligned WITHstrap. Remove extra X-crossing narrow belt/triangle/leatherstub/floating segment across whiteblouse. Keep legitimate cloakcollar fasteners/clasp, corset/waistbelts. REMOVE cloak/robe attached dangling metal drops/diamond/teardrop ornaments, chains/weights/tassels on edge tips/hemcorners in visible crop; plain sewn fabric hem. Keep useful waistcompass, actualfunctional buckles/pouches/quiver, do NOT add props. Visible cloak/hood broad BACK plain sagegreen, gold floral motifs only narrow FRONTedge/forwardpanel; frontside goldtrim remains. Do not change silhouette/length or unexpectedly replace costume. Preserve allhands/anatomy/props, otherpeople faces/hair/costumes/expressions. Maintain adopted sceneart style even if chibi, warmth/environment and narrative moment, crispclear rendering with soft colors. No addedpeople/limbs/labels/textwatermark/newpanels, no invented fronttorso where rear viewonly. SCENE INVARIANTS: Keep TWO hidingpeople, blue diagonal hanging laundry, farleft street slit/cart, waist-up tight fullyclothed poses. Aria anatomicalRIGHT hand pictureLEFT holds cloth; LEFT arm loops LeonRIGHT arm, glove wrist pictureRIGHT and fingertips pointingLEFT. BOTH Leon silver shoulderplates, shortredmantle, gazesbothleftslit, closeness/faces/handsunchanged. Output only complete updated single landscape still. Absolutelypreserve handwrap orientation, no nearpauldronerasure, no chest/body/arm repositioning. Keep exactfullyclothed silhouette and camera. Hairmattewithsoftlowcontrast light, no sharpwhitestripes/crownplait; removeextra opposingleather \\ acrossAria chest leavingone / strap (viewerscreenorientation).",
+      "inputSha256": "41010dfa6f48bbe11ae05efe3e08d7bff626cdd09ee02fe2e8e4d934f8a82d57",
+      "correction": {
+        "prompt": "Precisely localized CHEST STRAP correction ONLY on ARIA in this current blue-cloth hiding still,1536x1024. Keep ALL faces/hair/mattepaint/body proportions/openneckline/poses/bluecloth/hands/Leonarmor/environment unchanged. Current SINGLE broad diagonal leather belt across Aria white blouse has WRONG DIRECTION: it runs from upper pictureLEFT nearx=775,y=562 DOWN toward pictureRIGHT x=852,y=698. REMOVE that entire WRONG diagonal belt and its two buckles on white blouse, restore seamless opaque gatheredwhiteblouse and naturalfolds. Correct construction is ONE continuous uniform brown leather strap from ARIA anatomicalLEFT shoulder/pictureRIGHT side, starts under near silver shoulderplate at x=880,y=555, diagonally DOWN LEFT toward her anatomicalRIGHT waist/pictureLEFT atx=708,y=710. Its direction on screen is /, NOT \\. One modest buckle aligned ON corrected / strap nearx=790,y=643. This strap should emerge believably from under her green cloak/Leon's pauldron on upperright, and attach to her corset atlowerleft. No X, opposing second belt, leatherstub, floating segment or extra buckle. Preserve horizontal cape collarfasteners and center daisy clasp atx=838,y=516; don't remove them or turnthemintoextra chestbelt. Keep Aria RIGHT glove holding bluecloth left, LEFT arm hugging LeonRIGHT sleeve and exact leftgloveorientation, TWO silver shoulderplates and exact headangles. Opaque clothes, same torso shape andmodestbody, noexposureincrease. No otherchanges or propadditions, no text. Complete corrected illustration.",
+        "request": "Reverse the single chest strap to canonical anatomical left shoulder-to-right waist; preserve hands and armor."
+      },
+      "outputSha256": "c840baafc56a98fa74ceb6a8b046093208efc41179db947cb68eb2b887769f05",
+      "bytes": 2337751,
+      "review": "One chest strap corrected to left shoulder/right waist; Aria right hand holds cloth, left arm wraps Leon right arm, correct glove orientation and both silver plates retained.",
+      "scene": "glowing-moss-trail-return",
+      "revealAtLine": 4
+    }
+  ],
+  "unchangedVerified": [
+    {
+      "name": "guild-formation",
+      "reason": "Existing accepted matte hair and one chest strap already satisfy visible final design; no rear braid or hanging cloak ornaments visible."
+    }
+  ],
+  "referenceSha256": "6e1db136581a82b5f23fac0abd945cf16ea84e9e2b1913ef21a1785d4184166a",
+  "preservedAssets": [
+    {
+      "path": "assets/source/stories/guild-formation.png",
+      "sha256": "074c0f6013a71c367dc1e991f17f4acce309b4bcd650235c09fdeaa6ffb4acc8"
+    },
+    {
+      "path": "assets/source/stories/begging-dolls.png",
+      "sha256": "fffe79c45d8f5a2be3e1feb6f1463ddc791dc2012ee249b6ffc9e580ecb54eda"
+    },
+    {
+      "path": "assets/source/stories/medicine-delivered.png",
+      "sha256": "759da2a730d02c90277b39b79223b1e747dc3bf695764079d3a8dd70c270edc9"
+    },
+    {
+      "path": "assets/source/stories/finn-at-breakfast.png",
+      "sha256": "14c509f987d70fddc42767798bc769e1dda6143ae794e25d7821218d7588d322"
+    },
+    {
+      "path": "assets/source/stories/lico-protects-seedlings.png",
+      "sha256": "4f15c0dd59c53e9bb84dab2c804d7ea47ce2289e91e032da37af41680b85b2d3"
+    }
+  ],
+  "preservedPortraits": [
+    {
+      "path": "public/portraits/leon-expressions.webp",
+      "sha256": "ee890fd0e95fa91485ad335c0aedf7ed55350c5b81c3e3885966063ef43d842a"
+    },
+    {
+      "path": "public/portraits/mira-expressions.webp",
+      "sha256": "5e6783032e3439759f20f719c4398e044e945f3d3dd08f8fb3c07b9bff80cc1a"
+    },
+    {
+      "path": "public/portraits/finn-expressions.webp",
+      "sha256": "65c450273e8c3c08ba4a511b6bf4a1272d0f11c68f1a2f0cedc2e87dba6abc72"
+    },
+    {
+      "path": "public/portraits/lico-expressions.webp",
+      "sha256": "c32bf770734bc6066e63e8a1e7b8b859fea27e614c8e02ca9f07348b49465353"
+    },
+    {
+      "path": "public/portraits/merrill-expressions.webp",
+      "sha256": "e815c9c3a396e9ef9f6753247a3f03ecc3aff6da24846d0171fa0a02c79ff572"
+    },
+    {
+      "path": "public/portraits/pumpety-expressions.webp",
+      "sha256": "77478efa3f12f38bc3a79e1465f4b62fab78bc7596184f6b77d33fcbe0d5d05f"
+    },
+    {
+      "path": "public/portraits/masked-pumpety-expressions.webp",
+      "sha256": "1ddb370694ce763afa981d17022e83de2a0b7bfacb244586a0462d2c8e43b876"
+    }
+  ],
+  "portrait": {
+    "source": "assets/source/characters/aria-expressions.png",
+    "output": "public/portraits/aria-expressions.webp",
+    "sourceDimensions": [
+      1774,
+      887
+    ],
+    "outputDimensions": [
+      1024,
+      512
+    ],
+    "inputSha256": "8dd3cc25ab95b46a5215179e78c50439575c55ba9871b25e5c71ea27f57111be",
+    "sourceSha256": "ad5c9865facfa569648551f50005eae7bfc6b51f11d1505516751ffbb7ba0e28",
+    "outputSha256": "04fd83944a9b33aa19b0c8b30e036624e05d685e236ec8dfcde7dcf20a05622f",
+    "bytes": 105120,
+    "cells": [
+      {
+        "expression": "neutral",
+        "sourceBox": [
+          0,
+          0,
+          444,
+          444
+        ]
+      },
+      {
+        "expression": "smile",
+        "sourceBox": [
+          444,
+          0,
+          887,
+          444
+        ]
+      },
+      {
+        "expression": "surprised",
+        "sourceBox": [
+          887,
+          0,
+          1331,
+          444
+        ]
+      },
+      {
+        "expression": "worried",
+        "sourceBox": [
+          1331,
+          0,
+          1774,
+          444
+        ]
+      },
+      {
+        "expression": "serious",
+        "sourceBox": [
+          0,
+          444,
+          444,
+          887
+        ]
+      },
+      {
+        "expression": "shy",
+        "sourceBox": [
+          444,
+          444,
+          887,
+          887
+        ]
+      },
+      {
+        "expression": "tired",
+        "sourceBox": [
+          887,
+          444,
+          1331,
+          887
+        ]
+      },
+      {
+        "expression": "mischievous",
+        "sourceBox": [
+          1331,
+          444,
+          1774,
+          887
+        ]
+      }
+    ],
+    "webp": {
+      "quality": 82,
+      "effort": 6
+    },
+    "correction": {
+      "prompt": "Precise material-only correction to supplied current fresh ARIA8expression atlas (image1), image2 finalreference haircolor/material target. Preserve EXACT image1 celllayout1774x8874x2, all faces/eyes/noses/mouths/headangles/expressions/ornaments/clothes/ivorybackground and every outline. Change ONLY HAIR PAINT across ALL8cells. At top/crown/upperright of each cell there are large harsh WHITE glossy glare strips; remove those white streaks completely and replace with soft MATTE ashbeige-blonde base and broad very faint diffuse highlights, matching darker quieter haircolor of image2. Also remove thin white specular streaks on lavender forelock, keep lavendercolor. Hair should look dry softopaque matte anime paint, NO shiny brightwhite bands, NO wet/oily/metallic/plastic shine, no polished highcontrast internalgrooves. General blonde base muted beige#bca696 and gentle light#d1bdac, shadows mutedtaupe, restrained lowcontrast (color guide, don't flatten to solidcolor). Need visibly softer than image1; crown must NOT have glowing white rectangular patches or thin glossystripes near flower. Keep airy delicate finest silhouettewisps naturally paler atedge, no blurred faces/globalfilter or darkenedscene. Maintain same hair shape/volume/strandplacement/length and sidepositions purpleleft, floweroppositeright, no frontbraid. Fine crisp black/softbrown outline and clearsoftcolor. ALL OTHER parts pixelsascloseaspossible and faceemotionsidentical. Don'tcreategridlines/text/newcharacters. Complete atlas only.",
+      "request": "Suppress remaining sharp white crown highlights across all eight cells."
+    },
+    "review": "Eight close-up expressions retain original order and distinct emotions; sharp white crown shine reduced to matte beige wash, lavender opposite flower, no front braid."
+  },
+  "validation": {
+    "portraitDisplaySizes": [
+      40,
+      72
+    ],
+    "preservedSceneRegistration": true,
+    "preservedExpressionKeys": true,
+    "stillsUpdated": 9,
+    "portraitsUpdated": 8,
+    "preservedAssetHashesConfirmed": true,
+    "integratedSourceHashesConfirmed": true,
+    "portraitVisualReview": "Actual Portrait component checked in browser at 40px and 72px: all eight expressions readable, matte hair and opposite lavender/flower sides, no neighboring cell bleed.",
+    "targetedUnitTests": {
+      "passed": 18,
+      "failed": 0,
+      "files": [
+        "tests/portrait-expressions.test.mjs",
+        "tests/story-art.test.mjs",
+        "tests/export-script.test.mjs"
+      ]
+    },
+    "stillFreshnessCheck": "15 sources and 30 generated WebP assets current"
+  }
+}

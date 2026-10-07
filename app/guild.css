@@ -1,0 +1,242 @@
+@import "./guild-stage.css";
+@import "./guild-controls.css";
+@import "./guild-menu.css";
+@import "./guild-production.css";
+.phone-guild {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: #1a3028;
+}
+.guild-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.guild-pixel-home,
+.guild-panel > .home-room {
+  flex: 1;
+  min-height: 0;
+}
+.guild-pixel-home {
+  display: flex;
+}
+.guild-panel .home-room {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.guild-panel .home-stage {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+.guild-panel .home-caption {
+  flex: none;
+  margin: 4px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.guild-production-cards {
+  flex: none;
+}
+.guild-heading {
+  flex: none;
+  padding: 9px 14px 7px;
+  background: #20382f;
+}
+.guild-heading h2 {
+  font: 20px serif;
+  letter-spacing: 0.1em;
+  color: #f3dbab;
+  margin: 0;
+}
+.guild-heading p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #bec6a5;
+  margin: 3px 0 0;
+}
+.guild-location-nav {
+  flex: none;
+  display: flex;
+  gap: 4px;
+  padding: 4px 8px;
+}
+.guild-location-nav button {
+  min-height: 44px;
+  flex: 1;
+  padding: 5px;
+  font-size: 12px;
+  background: #2e4939;
+  color: #d7d9b7;
+  border: 1px solid #787d52;
+  border-radius: 5px;
+}
+.guild-location-nav button[aria-pressed="true"] {
+  background: #bda66d;
+  color: #20352b;
+}
+.guild-toolbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex: none;
+  align-items: stretch;
+  min-height: 52px;
+  border-top: 1px solid #778158;
+  background: #20382e;
+}
+.guild-toolbar button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  min-height: 52px;
+  padding: 5px;
+  border: 0;
+  border-right: 1px solid #62734b55;
+  background: transparent;
+  color: #e0cca0;
+  font-size: 12px;
+  border-radius: 0;
+}
+.guild-toolbar button > svg,
+.guild-toolbar img {
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+.guild-toolbar button:hover {
+  background: #375342;
+}
+.guild-chat {
+  flex: none;
+  height: 160px;
+  min-height: 0;
+  background: #1b3029;
+  border-top: 1px solid #bba16c66;
+}
+.guild-chat .journey-banter {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 10px 12px;
+  overflow-y: auto;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 13px;
+}
+.guild-chat .banter-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.guild-chat .banter-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 40px;
+}
+.guild-chat .banter-message {
+  color: #efe8cf;
+  line-height: 1.65;
+}
+.guild-chat .banter-message b {
+  color: #e6c58c;
+}
+.guild-chat-quiet {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #a9b89b;
+  font-size: 12px;
+}
+.guild-detail {
+  background: #20392e;
+  border-color: #ae9b68;
+}
+.guild-detail .guild-section {
+  margin: 0;
+}
+.guild-panel button:focus-visible,
+.guild-detail button:focus-visible {
+  outline: 2px solid #fff1b9;
+  outline-offset: 3px;
+}
+@media (max-height: 700px) {
+  .guild-chat {
+    height: 120px;
+  }
+  .guild-heading h2 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 600px) and (max-height: 500px) {
+  .guild-panel.guild-view-home {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-rows: auto minmax(0, 1fr) 52px;
+  }
+  .guild-heading {
+    grid-column: 1 / 3;
+  }
+  .guild-pixel-home {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    min-height: 0;
+    aspect-ratio: auto;
+    overflow: hidden;
+  }
+  .guild-chat,
+  .guild-location-nav {
+    grid-column: 2;
+    grid-row: 2;
+    height: 100%;
+  }
+  .guild-location-nav {
+    align-items: start;
+  }
+  .guild-toolbar {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .guild-toolbar button {
+    font-size: 11px;
+  }
+  .guild-panel.guild-view-garden {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) 52px;
+  }
+  .guild-view-garden > .home-room {
+    grid-column: 1;
+    grid-row: 2 / 5;
+  }
+  .guild-view-garden .guild-production-cards {
+    grid-column: 2;
+    grid-row: 3;
+    overflow-y: auto;
+    align-content: start;
+    grid-auto-rows: max-content;
+  }
+  .guild-view-garden .guild-facility-copy {
+    gap: 2px;
+    line-height: 1.3;
+  }
+  .guild-view-garden .guild-toolbar {
+    grid-row: 4;
+  }
+}

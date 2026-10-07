@@ -1,0 +1,422 @@
+{
+  "date": "2026-10-06",
+  "tool": "built-in image_gen",
+  "reference": "docs/characters/aria-reference-sheet.webp",
+  "referenceCommit": "cc7d97fd2a728a358b8858ce8e79898f36bcfcab",
+  "prompts": {
+    "base-prompt": "Use case: stylized-concept. Asset type: production transparent miniature game character master, STARLIT-GUILD Aria ONLY.\nInput1 latest final Aria reference: character identity/outfit/material reference. Input2 old Aria mini walk atlas: ONLY head/body proportions, line weight and small game sprite style reference, NOT old hair/outfit.\nGenerate one newly drawn full-body Aria, about2.3heads tall like old game sprites, oversized clear face/head with tiny sturdy torso and legs; NOT tall fashion figure, NOT generic elf. Energetic friendly green-eyed elf looking and facing pictureRIGHT in slight3/4side view, natural wide cheerful openmouth. Stand firmly, both boots visible, bow held lowered in one glove, quiver connected on back. Full visible silhouette comfortably centered on real transparent alpha, no floor/shadow/glow/checkerboard/backdrop/text.\nLATEST IDENTITY: shoulder/collarbone length low-volume MATTE muted ash-beige-blonde hair ending around shoulders, no long trailing hair; single pale lavender forelock on anatomicalRIGHT (viewerLEFT frontal), single white daisy with brownfeathers on anatomicalLEFT (opposite). In right-facing3/4, lavender is near-visible, flower farther side partiallyvisible. NO big braided crown/headband/temple braid, only tinythin short halfup behindhead mostly hidden. Hood DOWN resting at back, plain darksage-green hood/cape back; gold botanical pattern simplified to few clear marks on FRONT narrowedges only. Do not move flower onto hood.\nOUTFIT use latestref: whiteopaque softly ruffled blouse with comfortably open neckline, whiteflowerclasp at collar, green frontpanels and split green cape with plainback, leathercorset and useful waistpouches/compass, tall brownlaceboots, browngloves. ExactlyONE diagonal connected leather strap anatomicalLEFT shoulder toRIGHT waist, no X/leftover strap. No dangling metals/chains/teardropweights on cape. Simplify ruffles/goldlace into clean readable color shapes at60-100px; do NOT copy intricacy at miniature scale. Preserve modest opaque costume and chibi natural proportions. Dress hem justabove boots with leggap so stepping reads.\nPAINT: game chibi delicate warm-dark outlines, flat soft muted colored areas and restrained broaddiffuse matte light. No harsh white shiny crownstripes or hairgrooves/plasticgleam. Short airy irregular hairwisps and cheekexpression, bright lively attitude; proportions match existing party cast. Keep bow slender wooden longbow/greenbrown silhouette and normal arrows on quiver. Exactly one character and ordinary pair of arms/legs/ears. PNG RGBA true transparentbackground, no scenes, labels or grid. Native portrait composition full body with padding all edges.\n",
+    "base-correction": "Use case: precise-object-edit. Image1 generated Aria mini master edit target, image2 latest final sheet hair identity reference. Keep entire image1 chibi proportions, cheerful openmouth and greeneyes,3/4pictureRIGHT pose, all arms/boots/bow/quiver, single cheststrap, clothing/compass and real transparentalpha unchanged. Correct ONLY hair ornaments and near-temple braid.\nImage1 has lavenderlock on near-side pictureLEFT of face and a LARGEflower on same near-side pictureLEFT of crown (x540,y295), which is WRONG. REMOVE that entire near-left daisy/brownfeathers/leaves, reconstruct normal loose matte short blondehair. REMOVE visible horizontal braided band at near-left temple x410..520,y300..370, replace with unbraided loose small strands. No visible braid/headband on front/temple.\nWhite daisy and brownfeathers belong to opposite FAR-side anatomicalLEFT of Aria's head. Because she facespictureRIGHT, that location is near UPPER pictureRIGHT edge of head (x825,y255), mostly hidden behind her far crown. Put just one SMALL partlyoccluded white daisy with brownfeather tips peeking at farupperRIGHT side, NOT on nearleft, NOT besidepurplelock. It may be subtle/mostlyhidden for correct3/4, no secondflower. Keep small collarflower atneck unchanged; that's different fromhairflower.\nRetain existing single lavenderlock nearpictureLEFT face, same hairshape/shoulderlength, greeneyes and allfacefeatures. Quiet matte ashbeigehair shading, no shinywhitebands. Tiny short central rear braid hidden in thisview, don't draw visible braidedcrown. All other pixels as unchanged as possible, preservealpha. Output complete transparent corrected single mini character, no labels/panels.\n",
+    "main-prompt": "Use case: stylized-concept. Asset type: transparent animation spritesheet for STARLIT-GUILD Aria, EXACT4columns x4rows16individualfullbodydrawings, square1536x1536 or2048x2048, equal squarecells, no borders/text/labels/background/shadow.\nImage1 corrected Aria mini master: authoritative exact character identity/chibi head-body proportions/outfit/ashblondehair/floweroppositepurple/mattepaint. Image2 oldroad atlas: pose category guide ONLY, do NOTcopy longhair/hood/oldoutfit. Create fresh frames in IMAGE1 design, oneAria percell, allface and aim toward pictureRIGHT, originalsmallgameproportions2.3heads, same headsize/clothing/limblength throughallframes. Comfortablepadding, NO overlap acrosscells, allfeetbowfeatherstayswithinowncell.\nAll16cells IN EXACT ROWORDER:\nRow1(0..3) WALK: four actual cyclic footsteps rightward carrying slenderwoodenbow lowered in glovednearhand; leftlegforward contact / passing narrowlegs / rightlegforward contact / oppositepassing. Change limbs/cape modestly with sameheadangle, no duplicatedwalkdrawings; logical alternationofboots and bent knees, believableconnectedhands.\nRow2(4..7) ARCHERY: raisebow towardright / drawarrowrightready / release string withdrawinghand movedback tocheek, bowhandextendsright / lowerbowrecover. Four clearlydifferentsteps but SAMEbow and stance. BowheldLEFT hand, drawstringRIGHT hand, no twistedfinger/extraarms; arrow leavesbow only release thennoarrow. Only one normalbow, one arrow whenappropriate.\nRow3: (8) calm lively neutralWAIT bothbootsplanted,bowlowered, openeyes warmclosedmouth; (9) crouchHERB gatherA ononebentknee, rightglove reachingtoward little greenherbs,no bowacrossface; (10) crouchHERB gatherB samebody/headsize but lifting small herbcluster gently smiling; (11) recoilHURT A leaningback a little, bothfeetgrounded,bowclutched, worriedopeneye mouth.\nRow4: (12) WAITblink samePOSEexactas8buteyesshutbriefly; (13) recoilHURT B sameidentity, nearbootliftedslightly and wincingface; (14) PUSH A rightwardleaningwalk, BOTH empty hands forward shoulderheight asifpushing cartfront, no cart/handle/bowin hands (stowbowbehindcape); (15) PUSH B SAME handposition/headangle/pitch but oppositeforwardboot, distinctalternatingwalkinglegs. Quiverremainsallframes.\nHair ALWAYS shoulder/collarbone short lowvolumeashblonde MATTE, pale lavenderlock nearpictureLEFTface anatomicalRIGHT; SINGLE tinyfar-sidewhiteflower brownfeatherstips at upperpictureRIGHT edge, MOSTLYHIDDEN behindfarhead (asimage1). AbsolutelyNO leftflower besidelavender, NO visiblefront/templebraid/headband, no long flowing blondeponyhair. Tinycentralrear halfuphidden3/4. HOOD DOWN, plain broadbackgreenhood/cape and narrowgoldbotanicalfrontedgesONLY, no giantmotif onback; no hangingmetalcloakweights. Whiteopaque blouse opensmodestly atneckline, sleevesruffles simplified, single / cheststrap from anatomicalLEFTshoulder toRIGHTwaist, browncorset+pouches+waistcompass,talllacebrownboots,browngloves. NoXstrapor disconnected leatherstubs. Preserve correctflowercollarclaspseparatefromhairflower.\nPaint simplified delicatewarmdarkoutlines, softmuted clean colors, minimalbroadhairlight no shinywhitebands/grooves; readat70px. Matchimage1 exactlybut simplify tinyembroidery/ruffles enoughsmallscale. FriendlyenergeticAria expressions whereappropriate, not sleepy genericelf. Eachposefullyopaquecharacter withactualtransparentoutside and no artificialcheckerboard/coloredcanvas/halo. FullsheetONLY, no captions/gridlines/extraobjects/otherpeople.\n",
+    "work-prompt": "Use case: stylized-concept. Asset type: transparent Aria work spritesheet EXACT2columns x2rows FOUR individualfullbodyposes, square1536x1536or1024x1024, equalsquarecells,no labels/gridlines/background/shadow.\nImage1 correctedAria chibimaster: exact identity/proportions/costume/hair and fixedornaments, notedit target. GenerateONLYARIA inALLfourcells,2.3heads tall sameheadsize all4. All face/forwardmotion towardpictureRIGHT asmaster, wholeboots/feathers/cape withincellwithgenerouspadding.\nRow1: (0) PULL A walktoRIGHT, oneemptyglovedhand extendedBEHINDbodytowardpictureLEFT atwaistheight togrip invisiblecartpole, otherarm balancesforward, leftfootforward; (1) PULL B samebodylean,handbehindandheadorientation but oppositebootforward and bentbackknee. Keep actualgrippingHAND onextendedarm atpictureLEFT, no cart/rope/woodenhandle drawn, deliberate coherentconnectedanatomy. Stowbowbehindcape, quiverconnectedback,emptyhandgrip only.\nRow2: (2) PACK A crouchingonebentknee, bothbrown-glovedhands tyingknot onsmallcreamclothparcelonfloorrightofknees; (3) PACK B samekneelingbody/headsize/parcel, handsraisedslightly holdingcreamdeliveryslip/card and checkingit, no textongeneratedslip. Distinctarms/action and subduedfriendlyfocusedexpression. Bowstowedbehind,quiverretained.\nLATESTARIA ALWAYSshortlowvolumeashbeigeblondeMATTEhair shoulderlength; pale lavenderlock nearpictureLEFT of face (anatomicalRIGHT), one smallwhiteflower+brownfeather tips atfarupperpictureRIGHT partiallyhiddenbehindhead oppositepurple. NO leftflower nexttopurple, NOtemple/frontbraid, NOlongtrailingblondehair. HoodDOWN plainbroadbackgreensagecloak, tinygoldbotanicalfrontedgeonly,no hangingmetals. Singleconnecteddiagonalbrown / strap anatomicalLEFTshoulder toRIGHTwaist, noXstub. Whiteopaque modestscoopblouserufflessleeves, browncorset/beltusefulpouches/compass,tallbrownlaceboots/gloves,plainbackgreenhood restingbehindneck. Matchmasterstyle/materialandproportionsexactly, cuteenergetic smallgamecharacter, simplifiedreadableoutfit, clearbootsandhands.\nRealRGBAtransparentoutsidecharacters, doNOTpaintblack/checkerboard/floor/glow/backdrop. Separatefourposes no overlap, feetanchoredconsistentlywhenstanding, naturallylowerkneelingposeswithoutenlargedheads. OriginalfullsheetONLY, no words/labels/othercharacters, no addedcart or ropeprops.\n",
+    "work-proportions": "Use case: stylized-concept. Fresh transparent Aria work atlas EXACT2columns x2rows4poses,square1536x1536or1024x1024. Image1 MAIN16poseAria sprites is AUTHORITATIVEcharacter AND identicalmini bodyproportions/headsize. Image2 currentworkatlas is POSEcategories guide ONLY, NOT proportions. Currentworkbody/legs too tall and face too small comparedimage1. Redraw fourWORKposes as compactmini with same oversizedroundhead and shortsturdybody/legs asimage1: standingheight about2HEADS (headnearlyhalfwholeheight), MUCHSHORTERtorso and boots/legs thanimage2, crouchingheadsizeidenticalstandingheads. Match image1 exact miniature silhouette,costume,color, shortmattehair, friendlygreeneye character. Head needs visibly larger relativebody thanimage2. DoNOTmake3headtallfashionfigure. Fourfullfigureswithgenerousseparation25pxsafeedges; no pose overlapsadjacentrow/cell. ActualRGBAtransparentoutside, nofloor/shadow/glow/checkerboard/words/lines.\nTOPLEFT pullingA rightwardwalkwithnearemptygloveextendedBEHINDbody towardpictureLEFT asifgrippinginvisiblecartpole, otherarmbalancingforward,leftfootforward. TOPRIGHT pullingB samebodyandheadangle/handlocation, oppositefootforward, visiblydifferentlegstance. No cart/rope/pole/bowinhands, stowbowbehindgreencloakwithquiver. BOTTOMLEFT kneelingpackingA tyingcreamclothparcelusingtwo gloves; BOTTOMRIGHT samekneelingpackingB holdsblankdeliveryslipabovethesameparcelcheckingit. Preserve coherenthands and pairarmslegs, notduplicatedposes.\nAria matchimage1: clearbiggreeneyes, shortlowvolumeMATTEashbeigeblondehair shoulderlength and pale lavenderlock nearpictureLEFTface (anatomicalRIGHT), far-sidehairflower tinywhitedaisy+brownfeathersonupperpictureRIGHT partiallyhidden,NOflowerbesidepurple/nearleftear,NOvisiblefrontbraid/headband,longhair,hoodup. HoodDOWNplainbroadbacksagegreen, goldbotanicaltinyfrontedgeonly,no danglingmetalcloakpendants. Whiteopaqueblouse/openmodestneckline, single / diagonalleathercheststrap, browncorsetbeltpouches/compass andshortsturdybrownlaceboots, sleevesrufflesreducedsmallreadable. Keepsameclothingcoverage asmain, miniature2headstyle meanssimplifyshape notchangeoutfit. NOshinywhitehairbands, softmatte diffusecolorandthinwarmdarkoutlinesasmain. One figurepercell, totalfour, fullsheetONLY.\n"
+  },
+  "preparation": {
+    "script": "scripts/prepare-aria-animation.mjs",
+    "cell": 384,
+    "baseline": 346,
+    "main": {
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "outputDimensions": [
+        1536,
+        1536
+      ],
+      "scale": 1.0091743119266054,
+      "frames": [
+        {
+          "index": 0,
+          "sourceBox": {
+            "left": 26,
+            "top": 5,
+            "width": 284,
+            "height": 321
+          },
+          "width": 287,
+          "height": 324,
+          "left": 49,
+          "top": 22
+        },
+        {
+          "index": 1,
+          "sourceBox": {
+            "left": 337,
+            "top": 0,
+            "width": 280,
+            "height": 327
+          },
+          "width": 283,
+          "height": 330,
+          "left": 51,
+          "top": 16
+        },
+        {
+          "index": 2,
+          "sourceBox": {
+            "left": 640,
+            "top": 9,
+            "width": 283,
+            "height": 314
+          },
+          "width": 286,
+          "height": 317,
+          "left": 49,
+          "top": 29
+        },
+        {
+          "index": 3,
+          "sourceBox": {
+            "left": 968,
+            "top": 6,
+            "width": 268,
+            "height": 321
+          },
+          "width": 270,
+          "height": 324,
+          "left": 57,
+          "top": 22
+        },
+        {
+          "index": 4,
+          "sourceBox": {
+            "left": 23,
+            "top": 316,
+            "width": 285,
+            "height": 317
+          },
+          "width": 288,
+          "height": 320,
+          "left": 48,
+          "top": 26
+        },
+        {
+          "index": 5,
+          "sourceBox": {
+            "left": 339,
+            "top": 319,
+            "width": 306,
+            "height": 310
+          },
+          "width": 309,
+          "height": 313,
+          "left": 38,
+          "top": 33
+        },
+        {
+          "index": 6,
+          "sourceBox": {
+            "left": 652,
+            "top": 320,
+            "width": 295,
+            "height": 307
+          },
+          "width": 298,
+          "height": 310,
+          "left": 43,
+          "top": 36
+        },
+        {
+          "index": 7,
+          "sourceBox": {
+            "left": 973,
+            "top": 318,
+            "width": 259,
+            "height": 316
+          },
+          "width": 261,
+          "height": 319,
+          "left": 62,
+          "top": 27
+        },
+        {
+          "index": 8,
+          "sourceBox": {
+            "left": 38,
+            "top": 626,
+            "width": 254,
+            "height": 313
+          },
+          "width": 256,
+          "height": 316,
+          "left": 64,
+          "top": 30
+        },
+        {
+          "index": 9,
+          "sourceBox": {
+            "left": 353,
+            "top": 659,
+            "width": 250,
+            "height": 274
+          },
+          "width": 252,
+          "height": 277,
+          "left": 66,
+          "top": 69
+        },
+        {
+          "index": 10,
+          "sourceBox": {
+            "left": 670,
+            "top": 664,
+            "width": 230,
+            "height": 271
+          },
+          "width": 232,
+          "height": 273,
+          "left": 76,
+          "top": 73
+        },
+        {
+          "index": 11,
+          "sourceBox": {
+            "left": 980,
+            "top": 629,
+            "width": 246,
+            "height": 317
+          },
+          "width": 248,
+          "height": 320,
+          "left": 68,
+          "top": 26
+        },
+        {
+          "index": 12,
+          "sourceBox": {
+            "left": 40,
+            "top": 930,
+            "width": 266,
+            "height": 324
+          },
+          "width": 268,
+          "height": 327,
+          "left": 58,
+          "top": 19
+        },
+        {
+          "index": 13,
+          "sourceBox": {
+            "left": 357,
+            "top": 934,
+            "width": 243,
+            "height": 320
+          },
+          "width": 245,
+          "height": 323,
+          "left": 70,
+          "top": 23
+        },
+        {
+          "index": 14,
+          "sourceBox": {
+            "left": 660,
+            "top": 945,
+            "width": 258,
+            "height": 309
+          },
+          "width": 260,
+          "height": 312,
+          "left": 62,
+          "top": 34
+        },
+        {
+          "index": 15,
+          "sourceBox": {
+            "left": 977,
+            "top": 942,
+            "width": 241,
+            "height": 304
+          },
+          "width": 243,
+          "height": 307,
+          "left": 71,
+          "top": 39
+        }
+      ]
+    },
+    "work": {
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "outputDimensions": [
+        768,
+        768
+      ],
+      "scale": 0.5243697478991597,
+      "frames": [
+        {
+          "index": 0,
+          "sourceBox": {
+            "left": 71,
+            "top": 56,
+            "width": 517,
+            "height": 604
+          },
+          "width": 271,
+          "height": 317,
+          "left": 57,
+          "top": 29
+        },
+        {
+          "index": 1,
+          "sourceBox": {
+            "left": 690,
+            "top": 65,
+            "width": 507,
+            "height": 596
+          },
+          "width": 266,
+          "height": 313,
+          "left": 59,
+          "top": 33
+        },
+        {
+          "index": 2,
+          "sourceBox": {
+            "left": 119,
+            "top": 686,
+            "width": 476,
+            "height": 538
+          },
+          "width": 250,
+          "height": 282,
+          "left": 67,
+          "top": 64
+        },
+        {
+          "index": 3,
+          "sourceBox": {
+            "left": 692,
+            "top": 680,
+            "width": 483,
+            "height": 544
+          },
+          "width": 253,
+          "height": 285,
+          "left": 66,
+          "top": 61
+        }
+      ]
+    },
+    "legacyOrder": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      12,
+      11,
+      13
+    ]
+  },
+  "savedAssets": [
+    {
+      "path": "assets/source/characters/aria-mini-reference.png",
+      "sha256": "bb3ab528970a4473f7bc8803ef489da0dac3ecf273bee1c0640b8c3a655e31f5",
+      "bytes": 1368618
+    },
+    {
+      "path": "assets/source/animations/aria-v2-generated.png",
+      "sha256": "1e679cdacab0f96fd0ce48c8fdfffcc4b1422f7db868013e77cd952ab660a710",
+      "bytes": 2271103
+    },
+    {
+      "path": "assets/source/animations/aria-work-v1-generated.png",
+      "sha256": "9557d878871ec3297a274799d5ce674180be5e81b8f55321ba480e7fec1b4299",
+      "bytes": 1619180
+    },
+    {
+      "path": "assets/source/road/aria-v2.png",
+      "sha256": "830ad9c7da6ab3396167abf94127ea1fed52146a147d90668a7ef9cbc32984bc",
+      "bytes": 2678112
+    },
+    {
+      "path": "assets/source/road/aria-work-v1.png",
+      "sha256": "52acfc731a0f453a58b5b38f7185e540cfd36c4e0b545041941dcdb2e1d87e20",
+      "bytes": 601886
+    },
+    {
+      "path": "public/animations/road/aria-v2.webp",
+      "sha256": "68c2a1d2a14a1eccb39495b8d6c7db50d47262a5a2209a044d934d8e791b1cb5",
+      "bytes": 1617076
+    },
+    {
+      "path": "public/animations/road/aria-work-v1.webp",
+      "sha256": "2dd5ce79fd14d1224647b61af110c0f6c3a6bc1be9db25a8f9ac71b0446da0f4",
+      "bytes": 347038
+    },
+    {
+      "path": "public/animations/aria-v2.png",
+      "sha256": "f2350eea3610488eb4a0ce177aa1c364676bfd746a5ef28c0feecf80f5d8f72c",
+      "bytes": 2077460
+    },
+    {
+      "path": "public/characters/aria-mini-v2.webp",
+      "sha256": "d0fdf95625b090feacef9da2001abe74fad0bc4afa012f16e0348c5806c34ec7",
+      "bytes": 97398
+    }
+  ],
+  "generation": {
+    "reference": "docs/characters/aria-reference-sheet.webp",
+    "miniMaster": "exec-0d43f935-83ab-4635-b6a4-d3eb69d8eaae.png",
+    "main": "exec-d9554529-b544-4056-9ac0-0f375cdfd3b9.png",
+    "work": "exec-77b829eb-1831-4a09-aeef-d62a1116512a.png",
+    "referenceSha256": "6e1db136581a82b5f23fac0abd945cf16ea84e9e2b1913ef21a1785d4184166a"
+  },
+  "poseOrder": {
+    "main": [
+      "walk-a",
+      "walk-b",
+      "walk-c",
+      "walk-d",
+      "raise-bow",
+      "draw-arrow",
+      "release",
+      "recover",
+      "idle",
+      "gather-a",
+      "gather-b",
+      "hurt-a",
+      "blink",
+      "hurt-b",
+      "push-a",
+      "push-b"
+    ],
+    "work": [
+      "pull-a",
+      "pull-b",
+      "pack-a",
+      "pack-b"
+    ]
+  },
+  "review": {
+    "hair": "Short matte ash-blonde, near-side lavender and far-side partly hidden flower, no visible frontal braid.",
+    "costume": "One diagonal chest strap, hood down, no hanging metal decorations; simplified miniature rendering.",
+    "alignment": "20 poses retain real alpha and transparent margins; 384px cells, common foot anchor and shared scale per sheet.",
+    "browser": "Actual Phaser plus applyHeroPose/applyWorkPose loaded all 20 frames; reviewed at game-sized 90px and enlarged 130px, motion and pause checked, no console warnings/errors.",
+    "preservedTrackedImages": true,
+    "scope": "Aria only. Other heroes and shared cart/packing sheets retained.",
+    "save": "QA scene has no save access; game save format and progression unchanged.",
+    "limitations": [
+      "No full-game playthrough",
+      "No physical phone check"
+    ]
+  },
+  "validation": {
+    "unitTests": 364,
+    "failedTests": 0,
+    "format": "pass",
+    "types": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "roadArt": "36 sources current, alpha and visible pixel equality checked",
+    "preservedTrackedImages": true,
+    "browser": "actual Phaser: 20 poses, animation and pause, no errors"
+  }
+}

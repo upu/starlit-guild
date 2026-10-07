@@ -1,0 +1,384 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { testState, initialState, act, skipTo, settleOnScreen } from "../lib/game.ts";
+import { guildUnlocked } from "../lib/guild-base.ts";
+import { guildStories } from "../lib/guild-stories.ts";
+import {
+  guildHomeMembers,
+  canTellGuildStory,
+  nextGuildConversation,
+} from "../lib/guild-presence.ts";
+import { availableStories } from "../lib/stories.ts";
+import { GUILD_FOUNDING_QUEST } from "../lib/chapter-four.ts";
+import { guildLevel } from "../lib/guild-content.ts";
+import { guildStock } from "../lib/guild-production.ts";
+import {
+  gardenStatus,
+  workStatus,
+  workProgress,
+  workbenchMarkerStatus,
+} from "../lib/guild-ui-status.ts";
+import { availableConsumables, consumableStock } from "../lib/consumables.ts";
+import { parseBundle } from "../lib/save-format.ts";
+import { portraitAtlases } from "../lib/portrait-expressions.ts";
+const minute = 60000;
+const ordinaryStory = guildStories.find((story) => story.id === "guild-waiting-for-a-charm");
+const fresh = () => testState(1000, 37, 40, 100000);
+const action = (s, type, more = {}) => act(s, { type, ...more }, s.guild?.lastAt ?? s.updatedAt);
+const buy = (s, id, quantity = 10) => action(s, "guildBuy", { id, quantity });
+const assign = (s, id, hero) => action(s, "guildAssign", { id, hero });
+const plant = (s, id = "linde-1", name = "herb") => action(s, "guildPlant", { id, name });
+const later = (s, minutes) => skipTo(s, (s.guild?.lastAt ?? s.updatedAt) + minutes * minute);
+
+test("workbench marker distinguishes shortages, active progress, paused work and finished orders", () => {
+  let s = fresh();
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
+  s = assign(s, "workbench", "mira");
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
+  s.herbs = 2;
+  s = action(s, "guildCraft", { id: "tea", quantity: 1 });
+  assert.deepEqual(workbenchMarkerStatus(s, s.updatedAt), {
+    text: "材料不足",
+    warning: true,
+    progress: undefined,
+  });
+  s = buy(s, "honey", 1);
+  assert.ok(s.guild.work.batch, "buying the missing material resumes the queued order");
+  const batch = { ...s.guild.work.batch };
+  for (const [milliseconds, label] of [
+    [120001, "02:01"],
+    [60001, "01:01"],
+    [60000, "01:00"],
+    [1, "00:01"],
+    [0, "00:00"],
+    [-1000, "00:00"],
+  ]) {
+    assert.equal(workbenchMarkerStatus(s, batch.readyAt - milliseconds).remaining, label);
+  }
+  const halfway = (batch.startedAt + batch.readyAt) / 2;
+  assert.equal(workbenchMarkerStatus(s, halfway).progress, 0.5);
+  assert.equal(
+    workbenchMarkerStatus(s, halfway).warning,
+    false,
+    "consumed ingredients are not a shortage during work",
+  );
+  s = skipTo(s, halfway);
+  s = assign(s, "workbench", undefined);
+  const paused = workbenchMarkerStatus(s, halfway + 3600000);
+  assert.equal(paused.text, "一時停止・担当待ち");
+  assert.equal(paused.warning, true);
+  assert.equal(paused.progress, 0.5);
+  assert.equal(paused.remaining, "04:08", "paused countdown stays frozen too");
+  s = assign(s, "workbench", "mira");
+  s.consumables = { items: { "guild-tea": 9999 }, assigned: {} };
+  s = later(s, 30);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).text, "在庫の空き待ち");
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt).progress, 1);
+  s.consumables.items["guild-tea"] = 0;
+  s = later(s, 1);
+  assert.equal(workbenchMarkerStatus(s, s.updatedAt), undefined);
+  assert.equal(s.guild.roles.workbench, undefined);
+});
+
+test("Linde's unreleased second plot cannot plant or restart, but its old crop is harvested once", () => {
+  let s = assign(plant(buy(fresh(), "herb-seed")), "linde", "aria");
+  assert.throws(() => plant(s, "linde-2"));
+  assert.throws(() => action(s, "guildReplant", { id: "linde-2", value: true }));
+  s.guild.plots["linde-2"] = s.guild.plots["linde-1"];
+  s.guild.plots["linde-1"] = {};
+  s = roundtrip(s);
+  const seeds = guildStock(s, "herb-seed"),
+    herbs = s.herbs;
+  const quantity = s.guild.plots["linde-2"].batch.quantity;
+  s = later(assign(s, "linde", undefined), 120);
+  assert.ok(s.guild.plots["linde-2"].batch, "keep the crop until its caretaker returns");
+  s = later(assign(s, "linde", "aria"), 600);
+  assert.equal(s.herbs, herbs + quantity);
+  assert.equal(guildStock(s, "herb-seed"), seeds, "no hidden replanting consumes seeds");
+  assert.deepEqual(s.guild.plots["linde-2"], {});
+  assert.deepEqual(roundtrip(s).guild, s.guild);
+});
+
+test("facility summaries explain seed shortages, harvesting and paused work without changing saves", () => {
+  let s = plant(buy(fresh(), "herb-seed", 1));
+  const batch = s.guild.plots["linde-1"].batch;
+  assert.match(gardenStatus(s, "linde-1", batch.startedAt), /あと\d+分/);
+  assert.equal(gardenStatus(s, "linde-1", batch.readyAt), "収穫の担当待ち");
+  s = later(assign(s, "linde", "aria"), 60);
+  assert.equal(gardenStatus(s, "linde-1", s.updatedAt), "種切れ");
+  s = buy(assign(s, "workbench", "mira"), "honey");
+  s = action(s, "guildCraft", { id: "tea", quantity: 2 });
+  assert.ok(s.guild.work.batch);
+  s = later(s, 1);
+  s = assign(s, "workbench", undefined);
+  const snapshot = JSON.stringify(s);
+  const progress = workProgress(s, s.updatedAt);
+  assert.ok(progress > 0 && progress < 1);
+  assert.equal(workProgress(s, s.updatedAt + 3600000), progress);
+  assert.equal(workStatus(s, s.updatedAt + 3600000), "一時停止・担当待ち");
+  assert.equal(JSON.stringify(s), snapshot);
+  s = assign(s, "workbench", "mira");
+  s.guild.work.batch = undefined;
+  s.herbs = 0;
+  s.guild.materials.honey = 0;
+  assert.equal(workStatus(s, s.updatedAt), "材料待ち");
+});
+test("home conversations require their cast at home and an unread unlocked story", () => {
+  let s = fresh();
+  assert.equal(nextGuildConversation(s).id, ordinaryStory.id);
+  assert.equal(canTellGuildStory(s, guildStories[0]), false, "first harvest has not happened");
+  s = assign(s, "workbench", "lico");
+  assert.ok(guildHomeMembers(s).includes("lico"), "workbench is in the home");
+  assert.equal(canTellGuildStory(s, ordinaryStory), true);
+  s = assign(s, "linde", "aria");
+  assert.ok(!guildHomeMembers(s).includes("aria"));
+  assert.equal(canTellGuildStory(s, ordinaryStory), false);
+  assert.notEqual(nextGuildConversation(s)?.id, ordinaryStory.id);
+  s = assign(s, "linde", undefined);
+  s = action(s, "readStory", { id: ordinaryStory.id });
+  assert.notEqual(nextGuildConversation(s)?.id, ordinaryStory.id, "read stories do not repeat");
+  s.owned = s.owned.filter((id) => id !== "lico");
+  assert.equal(canTellGuildStory(s, ordinaryStory), false, "missing members cannot speak");
+  s.story.read.push(...guildStories.map((story) => story.id));
+  assert.equal(nextGuildConversation(s), null);
+  assert.equal(nextGuildConversation(initialState(1000)), null);
+});
+
+test("first harvest conversation waits until the gardeners have returned home", () => {
+  let s = assign(assign(plant(buy(fresh(), "herb-seed")), "linde", "aria"), "brekka", "lico");
+  s = later(s, 60);
+  assert.ok(s.guild.cultivation > 0);
+  assert.equal(canTellGuildStory(s, guildStories[0]), false);
+  s = assign(assign(s, "linde", undefined), "brekka", undefined);
+  assert.equal(nextGuildConversation(s).id, "guild-first-harvest");
+});
+function roundtrip(state) {
+  const id = "44444444-4444-4444-8444-444444444444";
+  return parseBundle(
+    JSON.parse(
+      JSON.stringify({
+        format: 4,
+        deviceId: id,
+        active: id,
+        profiles: [{ id, name: "guild", test: true, state }],
+        serial: 0,
+        sound: false,
+        cloudAt: 0,
+      }),
+    ),
+  ).profiles[0].state;
+}
+test("guild opens at the fifth-chapter boundary, not merely clearing the founding stage", () => {
+  const s = fresh();
+  assert.equal(guildUnlocked(initialState(1000)), false);
+  assert.equal(guildUnlocked(s), true);
+  s.story.read = s.story.read.filter((id) => id !== GUILD_FOUNDING_QUEST + "-return");
+  assert.equal(guildUnlocked(s), false);
+  assert.throws(() => buy(s, "herb-seed"));
+  assert.throws(() => action(s, "readStory", { id: ordinaryStory.id }));
+  assert.equal(availableStories(s).filter((story) => story.chapter === "guild").length, 0);
+  assert.equal(
+    availableConsumables(s).some((item) => item.id === "guild-tea"),
+    false,
+  );
+  assert.equal(
+    guildUnlocked(action(s, "readStory", { id: GUILD_FOUNDING_QUEST + "-return" })),
+    true,
+  );
+});
+test("old saves remain intact and optional conversations persist without rewards or quest movement", () => {
+  const before = fresh();
+  assert.equal(roundtrip(before).guild, undefined);
+  let s = action(before, "readStory", { id: ordinaryStory.id });
+  s = action(s, "readStory", { id: ordinaryStory.id });
+  assert.equal(s.story.read.filter((id) => id === ordinaryStory.id).length, 1);
+  assert.equal(s.gold, before.gold);
+  assert.deepEqual(s.squads, before.squads);
+  assert.ok(roundtrip(s).story.read.includes(ordinaryStory.id));
+  for (const story of guildStories)
+    for (const line of story.lines)
+      if (line.speaker)
+        assert.ok(portraitAtlases[line.speaker].expressions.includes(line.expression));
+});
+test("ripe crops wait without a caretaker, then harvest once and replant only with seeds", () => {
+  let s = plant(buy(fresh(), "herb-seed", 1));
+  const herbs = s.herbs;
+  s = later(s, 500);
+  assert.equal(s.herbs, herbs);
+  assert.ok(s.guild.plots["linde-1"].batch);
+  s = assign(s, "linde", "aria");
+  assert.equal(s.herbs, herbs + 3);
+  assert.ok(availableStories(s).some((story) => story.id === "guild-first-harvest"));
+  assert.equal(s.guild.plots["linde-1"].batch, undefined);
+  assert.equal(later(roundtrip(s), 500).herbs, herbs + 3);
+});
+test("experts and levels affect the next planting; all three roles exclude one another", () => {
+  const normal = plant(assign(buy(fresh(), "herb-seed"), "linde", "finn"));
+  let s = plant(assign(buy(fresh(), "herb-seed"), "linde", "aria"));
+  assert.equal(normal.guild.plots["linde-1"].batch.readyAt - 1000, 54 * minute);
+  assert.equal(s.guild.plots["linde-1"].batch.readyAt - 1000, 45 * minute);
+  assert.equal(s.guild.plots["linde-1"].batch.quantity, 5);
+  for (const role of ["brekka", "workbench"]) assert.throws(() => assign(s, role, "aria"));
+  assert.throws(() => assign(s, "brekka", "missing"));
+  assert.deepEqual(s.squads, fresh().squads);
+  s = later(s, 24 * 60);
+  assert.equal(s.guild.cultivation, 10);
+  assert.equal(guildLevel(s.guild.cultivation), 3);
+  assert.equal(s.guild.materials["herb-seed"], 0);
+});
+test("Brekka produces dried moss, Linde rejects moss, and planting can stop after harvest", () => {
+  let s = buy(assign(fresh(), "brekka", "lico"), "moss-spore");
+  assert.throws(() => plant(s, "linde-1", "moss"));
+  s = plant(s, "brekka-1", "moss");
+  s = action(s, "guildReplant", { id: "brekka-1", value: false });
+  s = later(s, 1000);
+  assert.equal(guildStock(s, "dried-moss"), 4);
+  assert.equal(guildStock(s, "moss-spore"), 9);
+  assert.equal(s.guild.plots["brekka-1"].batch, undefined);
+});
+test("crafting charges per batch, pauses without a worker, and completes a finite queue", () => {
+  let s = buy(fresh(), "honey");
+  s.herbs = 100;
+  assert.throws(() => action(s, "guildCraft", { id: "tea" }));
+  s = assign(s, "workbench", "mira");
+  s = action(s, "guildCraft", { id: "tea", quantity: 2 });
+  assert.equal(s.herbs, 98);
+  assert.equal(guildStock(s, "honey"), 9);
+  assert.equal(s.guild.work.batch.readyAt - 1000, 8.25 * minute);
+  s = later(s, 2);
+  s = assign(s, "workbench", undefined);
+  s = later(roundtrip(s), 1000);
+  assert.equal(consumableStock(s, "guild-tea"), 0);
+  s = assign(s, "workbench", "mira");
+  s = later(s, 6.25);
+  assert.equal(consumableStock(s, "guild-tea"), 1);
+  assert.equal(guildStock(s, "honey"), 8);
+  assert.equal(s.guild.roles.workbench, "mira", "keep the worker between ordered batches");
+  s = later(s, 9);
+  assert.equal(consumableStock(s, "guild-tea"), 2);
+  assert.equal(s.guild.work, undefined);
+  assert.equal(s.guild.roles.workbench, undefined, "release the worker after the final batch");
+  assert.equal(roundtrip(s).guild.roles.workbench, undefined);
+});
+test("finite orders release only the workbench member during offline settlement", () => {
+  let s = assign(assign(buy(fresh(), "honey"), "linde", "aria"), "workbench", "mira");
+  s.herbs = 100;
+  s = action(s, "guildCraft", { id: "tea", quantity: 2 });
+  s = later(roundtrip(s), 600);
+  assert.equal(consumableStock(s, "guild-tea"), 2);
+  assert.equal(s.guild.roles.workbench, undefined);
+  assert.equal(s.guild.roles.linde, "aria");
+  assert.equal(s.guild.work, undefined);
+});
+test("repeat crafting resumes on material purchase and caps levels; cancel consumes only the started batch", () => {
+  let s = assign(buy(fresh(), "honey", 1), "workbench", "leon");
+  s.herbs = 100;
+  s = action(s, "guildCraft", { id: "tea", value: true });
+  s = later(s, 100);
+  assert.equal(consumableStock(s, "guild-tea"), 1);
+  assert.equal(s.guild.work.batch, undefined);
+  assert.equal(
+    s.guild.roles.workbench,
+    "leon",
+    "repeat orders keep their member while waiting for materials",
+  );
+  s = buy(s, "honey");
+  assert.ok(s.guild.work.batch);
+  s = later(s, 500);
+  assert.equal(guildLevel(s.guild.crafting), 3);
+  s = buy(s, "honey");
+  const herbs = s.herbs;
+  s = action(s, "guildCancel");
+  assert.equal(later(s, 500).herbs, herbs);
+  assert.equal(guildStock(s, "honey"), 9);
+});
+test("one long offline settlement equals many ticks including harvest-fed crafting", () => {
+  let s = assign(
+    assign(buy(buy(fresh(), "herb-seed"), "honey"), "linde", "aria"),
+    "workbench",
+    "mira",
+  );
+  s.herbs = 0;
+  s = plant(s);
+  s = action(s, "guildCraft", { id: "tea", value: true });
+  const long = later(s, 600);
+  let ticks = s;
+  for (let i = 0; i < 600; i++) ticks = later(ticks, 1);
+  assert.deepEqual(long.guild, ticks.guild);
+  assert.equal(long.herbs, ticks.herbs);
+  assert.deepEqual(long.consumables, ticks.consumables);
+});
+test("offline harvest does not advance an adventure and clock rollback never grants twice", () => {
+  let s = plant(assign(buy(fresh(), "herb-seed", 1), "linde", "aria"));
+  s = action(s, "start", { id: "village-trade", readDeparture: true });
+  const before = structuredClone(s.squads[0].run);
+  s = later(s, 120);
+  assert.equal(s.squads[0].run.node, before.node);
+  assert.deepEqual(s.squads[0].run.health, before.health);
+  const herbs = s.herbs,
+    checkpoint = s.guild.lastAt;
+  s = skipTo(s, checkpoint - minute);
+  s = settleOnScreen(s, checkpoint);
+  assert.equal(s.herbs, herbs);
+  assert.equal(s.guild.lastAt, checkpoint);
+});
+test("stock caps hold ripe crops and pending crafts without discarding output", () => {
+  let s = plant(assign(buy(fresh(), "carrot-seed", 1), "linde", "aria"), "linde-1", "carrot");
+  s.guild.materials.carrot = 9999;
+  s = later(s, 100);
+  assert.ok(s.guild.plots["linde-1"].batch);
+  s.guild.materials.carrot = 0;
+  s = later(s, 1);
+  assert.equal(guildStock(s, "carrot"), 4);
+  s = assign(buy(s, "honey"), "workbench", "mira");
+  s.herbs = 100;
+  s = action(s, "guildCraft", { id: "tea", quantity: 1 });
+  s.consumables = { items: { "guild-tea": 9999 }, assigned: {} };
+  s = later(s, 100);
+  assert.ok(s.guild.work.batch);
+  s.consumables.items["guild-tea"] = 9998;
+  s = later(s, 1);
+  assert.equal(consumableStock(s, "guild-tea"), 9999);
+  assert.equal(s.guild.work, undefined);
+});
+test("crafted consumables use the shared departure path once per new run", () => {
+  let s = fresh();
+  s.consumables = { items: { "guild-lunch": 2 }, assigned: { aria: "guild-lunch" } };
+  s = action(s, "start", { id: "village-trade", readDeparture: true });
+  assert.equal(s.squads[0].run.consumableEffects.aria, "guild-lunch");
+  assert.equal(consumableStock(s, "guild-lunch"), 1);
+  assert.equal(consumableStock(roundtrip(later(s, 100)), "guild-lunch"), 1);
+});
+test("save validation rejects impossible roles, crops, times and stock; invalid purchases are atomic", () => {
+  const s = plant(assign(buy(fresh(), "herb-seed"), "linde", "aria"));
+  assert.deepEqual(roundtrip(s).guild, s.guild);
+  for (const corrupt of [
+    (g) => {
+      g.roles.brekka = "aria";
+    },
+    (g) => {
+      g.roles.brekka = "not-owned";
+    },
+    (g) => {
+      g.plots["linde-1"].crop = "moss";
+    },
+    (g) => {
+      g.plots["linde-1"].batch.readyAt = 0;
+    },
+    (g) => {
+      g.materials["herb-seed"] = -1;
+    },
+    (g) => {
+      g.materials.unknown = 1;
+    },
+  ]) {
+    const invalid = structuredClone(s);
+    corrupt(invalid.guild);
+    assert.throws(() => roundtrip(invalid));
+  }
+  for (const quantity of [-1, 0, 1.5, NaN, Infinity, 999])
+    assert.throws(() => buy(s, "herb-seed", quantity));
+  const before = structuredClone(s);
+  assert.throws(() => buy(s, "unknown"));
+  assert.deepEqual(s, before);
+});

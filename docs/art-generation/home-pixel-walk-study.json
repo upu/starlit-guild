@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-03",
+  "tool": "image_gen__imagegen",
+  "referenceModel": "lib/home-walk-study.ts",
+  "referenceRenderer": "app/guild-lab/walk-study/figure.tsx",
+  "records": [
+    {
+      "prompt": "Create a corrected EIGHT-frame walk sprite sheet of LEON, 1536x1024 transparent RGBA, 4 columns x 2 rows chronological order. REFERENCE 1 is the EXACT MOVEMENT TEMPLATE (plain mannequin, orange near limbs, cyan far limbs). REFERENCE 2 is ONLY the character design/style/proportions reference. Redraw Leon in EACH CORRESPONDING POSE from reference1, keeping the approved narrowed face, spiky brown hair, red cape/scarf, blue coat, silver near shoulder pad, cream sleeves, brown gloves/boots, dark brown outline, fine pixel-like texture and height/proportions from reference2. Do not copy the incorrect limb poses from reference2.\n\nThe mannequin's orange arm/leg = Leon's visible NEAR arm/leg, cyan = FAR arm/leg. Copy every near AND far shoulder/elbow/wrist/hip/knee/ankle position relative to the torso for that corresponding frame. Especially: far hand is in front only in frames 1,2 and8; moves down into occlusion in frame3; is BEHIND the torso and invisible in frames4,5,6; comes through neutral in7. Never leave the far fist permanently ahead of the belly. Near arm starts BACK (frame1), travels through straight down (3), slightly forward DOWNWARD alongside thigh (5), returns down (7), and back (8). Hands remain BELOW the waist belt at all times, elbows almost straight, no reaching/punching/raised fists. Show near leg forward in frame1 and far leg forward in frame5; near/far knee overlap must actually swap, not the same leg always forward. Passing poses are frame3 and7. Do not add pose variations unrelated to the template.\n\nHead/shoulders remain at consistent horizontal anchor and same scale through all8; tiny vertical weight change only as template. Cape follows lightly without changing silhouette wildly. Keep visible character drawing approximately390px tall in each384x512 cell, with safe transparent space between cells and rows. Both references' bodies are merely different-sized guides; use Leon's original proportions, transfer normalized joint poses. No mannequin colors, no visible bones or joint markers, no ground/shadows, no text/numbers/grid, no background, no weapons or held objects. This is a relaxed small indoor walking loop, not running. Preserve EXACT identities and costume of reference2. Deliver full body, all8 distinct sequential poses.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/work/pixel-home/walk-study/guide-sheet.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-v6.png"
+      ],
+      "output": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c as C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-8006ce68-7096-4c86-a2c9-9026fd45b639.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "adopted": false,
+      "reason": "見本のオレンジ色が脚に混入"
+    },
+    {
+      "prompt": "Fix the COSTUME on the legs in reference1. Preserve reference1's exact 8 whole-body poses, hand positions, near/far leg order and placements. Several legs incorrectly contain flat ORANGE mannequin material: completely replace EVERY orange leg section with Leon's proper DARK GRAY-BROWN TROUSER from hip to knee and BROWN LEATHER BOOT from knee to sole, including broad folded boot cuff, ankle strap and gold buckle. Clothing must match reference2 exactly, with textured shading, dark brown outlines, normal leg thickness, proper two boots per frame. No orange limbs, no bare skin on legs, no plain mannequin legs or shoes. Do not change the near/far step geometry. Restore the same detailed costume for all legs consistently across all8 frames. Preserve faces/hair/cape/arms/body style and small narrowed face. 1536x1024 RGBA genuine transparent background, exactly4x2frames, no text, shadow, floor, guides or colored mannequin material. Reference1 is the target, reference2 only clothing appearance.",
+      "refs": [
+        "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-8006ce68-7096-4c86-a2c9-9026fd45b639.png",
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-walk-v6.png"
+      ],
+      "output": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c as C:\\Users\\spitz\\.codex\\generated_images\\01a0ea21-2d98-7412-9890-517d05a0704c\\exec-01336bac-a22b-4e0a-8a9b-49de85261fe6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "path": "assets/source/home-pixel/leon-walk-study-v1.png",
+      "adopted": "study-only",
+      "reason": "衣装は復旧。奥の手は3〜7コマで隠れるが、4コマ目の手前の腕・5〜6コマ目の脚幅などが見本と一致しない。比較用に保存、本編未採用。"
+    }
+  ]
+}

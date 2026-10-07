@@ -24,5 +24,11 @@
       ],
       "prompt": "Use case: style-transfer. Production STARLIT-GUILD small battle sprite. Image1 is the authoritative STYLE and BODY PROPORTION reference: match exactly the big expressive head, very short torso and legs, chunky hands/feet, clean dark outlines and simple cel-painted color areas of this Aria battle sprite sheet. Image2 is CHARACTER IDENTITY AND COSTUME reference only, ignore all text and NEVER copy its adult realistic body proportions. Create ONE single complete standing battle-ready character, 3/4 view facing RIGHT. About 2.3 heads tall from skull crown to soles, head about 43% of body height, like Aria. Readable at only 65-80px tall. Full body including feet, centered in SQUARE canvas, silhouette fits inner 90%, small even transparent margin. NO sheet, NO multiple figures. Actual transparent RGBA background alpha zero outside silhouette, opaque clothing, no background glow, no ground shadow, no noise, no text, no borders. Simplify tiny decorative details into readable shapes without losing identity. Character: Merrill, small dryad woman, uneven sage GREEN BOB, green eyes, friendly hungry mischievous smile, red POMEGRANATE BLOSSOM and leaves growing from head with separate red ribbon. Cream blouse, muted green short hooded jacket, dark shorts, stout short legs and chunky brown lace boots. Large FOOD STUFFED BACKPACK with readable mushroom, fruit, wrapped meat and pumpkin charm silhouettes. LEFT forearm ONLY has carved wood lyre GAUNTLET with strings over back of forearm/hand; right hand bare holding backpack strap. No separate harp. Her natural sturdy compact body must become same 2.3-head chibi proportion as Aria, not miniature realistic portrait. Only Merrill, no Aria."
     }
-  ]
+  ],
+  "retiredCharacterArt": {
+    "date": "2026-10-06",
+    "note": "Old Aria and Mira character sprites were removed after replacement. Other assets in this record remain unchanged.",
+    "current": "docs/art/hero-animation-art.md",
+    "historicalCommit": "f0615cf38bf5b7f0576740deec3e2f29374dd2f9"
+  }
 }

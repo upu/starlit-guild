@@ -58,5 +58,8 @@ jobs:
       - name: Check generated game script
         run: npm run script:check
 
+      - name: Check generated guild home art
+        run: npm run home-art:check
+
       - name: Run unit tests
         run: node --test tests/*.test.mjs

@@ -1,4 +1,5 @@
 import { shopTier } from "./equipment.ts";
+import { guildUnlocked } from "./guild-base.ts";
 import type { State } from "./game-types.ts";
 
 export type Consumable = {
@@ -15,6 +16,27 @@ export type Consumables = {
   assigned: Partial<Record<string, string>>;
 };
 export const consumables: Consumable[] = [
+  {
+    id: "guild-lunch",
+    name: "胡桃と野菜のお弁当",
+    description: "出発時に1個使い、その人の経験値がその周回だけ20%増加。自動周回でも毎周使います。",
+    tier: 5,
+    effect: { timing: "departure", experience: 0.2 },
+  },
+  {
+    id: "guild-tea",
+    name: "薬草と蜂蜜のお茶",
+    description: "出発時に1個使い、その人の経験値がその周回だけ15%増加。自動周回でも毎周使います。",
+    tier: 5,
+    effect: { timing: "departure", experience: 0.15 },
+  },
+  {
+    id: "guild-soda",
+    name: "苔入り薬草ソーダ",
+    description: "出発時に1個使い、その人の経験値がその周回だけ25%増加。自動周回でも毎周使います。",
+    tier: 5,
+    effect: { timing: "departure", experience: 0.25 },
+  },
   {
     id: "herbs",
     name: "薬草",
@@ -57,7 +79,7 @@ export const consumableStock = (s: State, id: string) =>
 export const assignedConsumable = (s: State, hero: string) =>
   consumableById(s.consumables?.assigned[hero] ?? "");
 export const availableConsumables = (s: State) =>
-  consumables.filter((item) => item.tier <= shopTier(s));
+  consumables.filter((item) => (item.tier === 5 ? guildUnlocked(s) : item.tier <= shopTier(s)));
 export const shopConsumables = (s: State) =>
   availableConsumables(s).filter((item): item is ShopConsumable => item.price !== undefined);
 export function buyConsumable(s: State, id: string, quantity: number) {

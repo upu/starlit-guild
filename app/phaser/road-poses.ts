@@ -11,7 +11,19 @@ import {
   ROAD_FINN_PULL,
   ROAD_LICO_MOTION,
   licoMotionFrames,
+  ROAD_ARIA_WORK,
+  ROAD_MIRA_WORK,
+  MINI_CELL,
+  MINI_BASELINE,
+  MINI_STANDING_HEIGHT,
 } from "./road-art";
+
+function applyMiniPose(image: Phaser.GameObjects.Image, asset: string, pose: number, size: number) {
+  image
+    .setTexture(asset, String(pose))
+    .setOrigin(0.5, MINI_BASELINE / MINI_CELL)
+    .setScale((size * 0.9) / MINI_STANDING_HEIGHT);
+}
 
 function applyLicoMotion(image: Phaser.GameObjects.Image, pose: number, size: number) {
   // Lico may join after the painter was created; register the atlas on its first use.
@@ -23,14 +35,6 @@ function applyLicoMotion(image: Phaser.GameObjects.Image, pose: number, size: nu
     .setTexture(ROAD_LICO_MOTION, String(pose))
     .setOrigin(0.5, 1)
     .setScale(size * roadWalkFrame("lico", pose).scale);
-}
-
-function applyMiraPose(image: Phaser.GameObjects.Image, pose: number, size: number) {
-  const kneeling = [9, 10, 14, 15].includes(pose);
-  image
-    .setTexture(roadSheet("mira"), String(pose))
-    .setOrigin(0.5, 1)
-    .setScale((size * (kneeling ? 0.72 : 0.9)) / image.frame.height);
 }
 
 function applyLicoPose(image: Phaser.GameObjects.Image, pose: number, size: number) {
@@ -57,16 +61,16 @@ export function applyHeroPose(
   pose: string,
   size: number,
 ) {
+  if (id === "aria" || id === "mira") {
+    applyMiniPose(image, roadSheet(id), Number(pose), size);
+    return;
+  }
   if (id === "lico") {
     applyLicoPose(image, Number(pose), size);
     return;
   }
   if (id === "finn") {
     applyFinnPose(image, pose, size);
-    return;
-  }
-  if (id === "mira" && Number(pose) >= 4) {
-    applyMiraPose(image, Number(pose), size);
     return;
   }
   const frame = roadFrame(id, Number(pose));
@@ -98,9 +102,9 @@ export function applyWorkPose(
   const kind = workKind(state, pulling);
   if (!kind) return false;
   const pose = {
-    pack: { duration: 750, mira: 14, asset: ROAD_PACKING, height: 0.72 },
-    push: { duration: 220, mira: 12, asset: ROAD_PUSH, height: 0.9 },
-    pull: { duration: 220, mira: 12, asset: ROAD_PULL, height: 0.9 },
+    pack: { duration: 750, asset: ROAD_PACKING, height: 0.72 },
+    push: { duration: 220, asset: ROAD_PUSH, height: 0.9 },
+    pull: { duration: 220, asset: ROAD_PULL, height: 0.9 },
   }[kind];
   const moving = !reduced && !state.enemies.some((enemy) => enemy.hp > 0);
   const step = moving ? Math.floor(state.time / pose.duration) % 2 : 0;
@@ -109,7 +113,7 @@ export function applyWorkPose(
     else applyHeroPose(image, hero.id, "8", size);
     return true;
   }
-  if (applyExistingWorkPose(image, hero, kind, pose.mira, step, size)) return true;
+  if (applyExistingWorkPose(image, hero, kind, step, size)) return true;
   image
     .setTexture(hero.id === "finn" ? ROAD_FINN_PULL : pose.asset, `${hero.id}-${String(step)}`)
     .setOrigin(0.5, 1)
@@ -121,16 +125,34 @@ function applyExistingWorkPose(
   image: Phaser.GameObjects.Image,
   hero: Traveller,
   kind: "pack" | "push" | "pull",
-  mira: number,
   step: number,
   size: number,
 ) {
+  if (hero.id === "aria" || hero.id === "mira") {
+    applyMiniWorkPose(image, hero.id, kind, step, size);
+    return true;
+  }
   if (kind === "pull") return false;
   if (hero.id === "finn") {
     applyHeroPose(image, hero.id, String((kind === "push" ? 12 : 14) + step), size);
     return true;
   }
-  if (hero.id !== "mira") return false;
-  applyMiraPose(image, mira + step, size);
-  return true;
+  return false;
+}
+
+function applyMiniWorkPose(
+  image: Phaser.GameObjects.Image,
+  id: "aria" | "mira",
+  kind: "pack" | "push" | "pull",
+  step: number,
+  size: number,
+) {
+  if (kind === "push") applyMiniPose(image, roadSheet(id), 14 + step, size);
+  else
+    applyMiniPose(
+      image,
+      id === "aria" ? ROAD_ARIA_WORK : ROAD_MIRA_WORK,
+      (kind === "pack" ? 2 : 0) + step,
+      size,
+    );
 }

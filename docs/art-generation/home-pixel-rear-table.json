@@ -1,0 +1,38 @@
+{
+  "tool": "image_gen__imagegen",
+  "records": [
+    {
+      "id": "leon",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/leon-actions-v1.png"
+      ],
+      "prompt": "Create a corrected BACK-VIEW WALK CYCLE for Leon, the brown-haired boy with blue tunic, silver shoulder armor and red cape. The reference is the exact existing character style, clothing and BACK design. The old walking frames are WRONG: the same leg stays forward. Replace that with OBVIOUSLY ALTERNATING LEFT AND RIGHT LEGS. Only six full-body rear-view walkers, facing directly away from viewer/up-screen. Transparent RGBA, 1536x1024. EXACT grid THREE COLUMNS by TWO ROWS, six 512x512 cells, 48px transparent margins. All heads same size, centered horizontally, same silhouette, outfit and lighting, clean bold dark-brown pixel-painted outline. Keep the asymmetric red cape on the same side in every frame. Do NOT flip the whole figure to fake walking.\nTOP ROW is the LEFT-FOOT step, BOTTOM ROW is the RIGHT-FOOT step. These rows must have OPPOSITE leg poses while head and torso stay identical.\nFrame 1 top left: viewer LEFT boot planted, visibly extends LOWER on screen; viewer RIGHT boot lifted behind, its sole visible and higher.\nFrame 2 top middle: weight on LEFT boot, RIGHT knee bent and foot passing beside the LEFT calf, right sole visible.\nFrame 3 top right: RIGHT foot swings forward (up-screen), LEFT heel begins to lift. Legs clearly separated.\nFrame 4 bottom left: REVERSE frame1 legs ONLY: viewer RIGHT boot planted, visibly extends LOWER on screen; viewer LEFT boot lifted behind, its sole visible and higher.\nFrame 5 bottom middle: weight on RIGHT boot, LEFT knee bent and foot passing beside RIGHT calf, left sole visible.\nFrame 6 bottom right: LEFT foot swings forward (up-screen), RIGHT heel begins to lift. Legs clearly separated.\nSmall natural walking strides with opposing arm swing. The FOOT reaching the bottom of its cell must alternate LEFT in frames1-3, RIGHT in frames4-6. Do not draw every frame with the same lower boot. No furniture, cup, tool, labels, numbers, background, floor, shadow or extra figures. Exactly SIX sprites.",
+      "source": "assets/source/home-pixel/leon-rear-walk-v2.png",
+      "attempts": 2,
+      "correction": {
+        "prompt": "Correct ONLY the TWO lower legs in the BOTTOM MIDDLE and BOTTOM RIGHT cells of this 3x2 six-frame transparent Leon sprite sheet. In BOTH of these cells the viewer-RIGHT boot must be the long straight planted leg reaching LOWEST; the viewer-LEFT leg must be bent upward and shorter with its sole facing viewer. The BOTTOM LEFT cell already has the correct right-foot-planted pose: use that leg arrangement as the reference for the other two bottom cells, with small passing/swing differences. TOP ROW remains unchanged. Preserve all heads, torsos, arms, clothes, cape asymmetry, frame positions, size, style and alpha exactly. Bottom row must NOT repeat the top row leg arrangement. No background, shadows or additional elements. 1536x1024 RGBA transparent. This is a necessary left-right gait correction, not a whole image mirror.",
+        "refs": [
+          "C:/Users/spitz/.codex/generated_images/01a0ea21-2d98-7412-9890-517d05a0704c/exec-12847b94-24df-42c9-9ad1-8e4f58e56001.png"
+        ]
+      }
+    },
+    {
+      "id": "aria",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/aria-actions-v1.png"
+      ],
+      "prompt": "Create a corrected BACK-VIEW WALK CYCLE for Aria, the blonde elf girl with green cape, white skirt, brown boots and white flower. The reference is the exact existing character style, clothing and BACK design. The old walking frames are WRONG: the same leg stays forward. Replace that with OBVIOUSLY ALTERNATING LEFT AND RIGHT LEGS. Only six full-body rear-view walkers, facing directly away from viewer/up-screen. Transparent RGBA, 1536x1024. EXACT grid THREE COLUMNS by TWO ROWS, six 512x512 cells, 48px transparent margins. All heads same size, centered horizontally, same silhouette, outfit and lighting, clean bold dark-brown pixel-painted outline. Keep the white flower on the same viewer-right side in every frame. Do NOT flip the whole figure to fake walking.\nTOP ROW is the LEFT-FOOT step, BOTTOM ROW is the RIGHT-FOOT step. These rows must have OPPOSITE leg poses while head and torso stay identical.\nFrame 1 top left: viewer LEFT boot planted, visibly extends LOWER on screen; viewer RIGHT boot lifted behind, its sole visible and higher.\nFrame 2 top middle: weight on LEFT boot, RIGHT knee bent and foot passing beside the LEFT calf, right sole visible.\nFrame 3 top right: RIGHT foot swings forward (up-screen), LEFT heel begins to lift. Legs clearly separated.\nFrame 4 bottom left: REVERSE frame1 legs ONLY: viewer RIGHT boot planted, visibly extends LOWER on screen; viewer LEFT boot lifted behind, its sole visible and higher.\nFrame 5 bottom middle: weight on RIGHT boot, LEFT knee bent and foot passing beside RIGHT calf, left sole visible.\nFrame 6 bottom right: LEFT foot swings forward (up-screen), RIGHT heel begins to lift. Legs clearly separated.\nSmall natural walking strides with opposing arm swing. The FOOT reaching the bottom of its cell must alternate LEFT in frames1-3, RIGHT in frames4-6. Do not draw every frame with the same lower boot. No furniture, cup, tool, labels, numbers, background, floor, shadow or extra figures. Exactly SIX sprites.",
+      "source": "assets/source/home-pixel/aria-rear-walk-v2.png",
+      "attempts": 1
+    },
+    {
+      "id": "table",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/c44f/STARLIT-GUILD/assets/source/home-pixel/furniture-v1.png"
+      ],
+      "prompt": "Redraw ONLY the oval six-person wooden tea table at the TOP LEFT of the reference, as a single isolated game furniture sprite. Preserve its shape, proportions, wood, pedestal feet, cream and green embroidered cloth runner, same slightly top-down view, warm dark-outline pixel-painted style. REMOVE ALL SIX CUPS AND SAUCERS from the tabletop. No cups or saucers anywhere. Keep ONE small cream ceramic teapot with green leaf decoration on the runner, about the same size as before. Correct its anatomy: a distinct long curved tapered POURING SPOUT extends to the LEFT and tips upward, with visible small dark open tip. ONE loop handle on the RIGHT. Teapot lid on top. Spout is a solid tapered ceramic tube, NOT a second loop handle. Make the spout silhouette clearly readable when reduced. Otherwise the tabletop is empty and the cloth runner is uninterrupted. No people or chairs or other furniture. Fully transparent RGBA, 1536x1024 landscape, whole table centered with 100px clear margins, no ground, cast shadow, labels or background.",
+      "source": "assets/source/home-pixel/table-v2.png",
+      "attempts": 1
+    }
+  ]
+}
