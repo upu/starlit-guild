@@ -1,15 +1,12 @@
 import { applyDepartureConsumables, consumableExperience } from "./consumable-effects.ts";
-import { chapterThreeWorkload } from "./chapter-three.ts";
 import { paralyzed } from "./chapter-four-battles.ts";
-import { chapterFourWorkload } from "./chapter-four.ts";
 import { beginRoadExit, startRoadScene } from "./road-scenes.ts";
-import { questNodes } from "./puppet-battles.ts";
+import { questNodes, shortRoute } from "./puppet-battles.ts";
 import { createEnemies, damageEnemy, penetration, syncEnemyTotals } from "./combat.ts";
 import { isPrologueQuest } from "./prologue.ts";
-import { chapterTwoWorkload } from "./chapter-two.ts";
 import { techniqueHerbs } from "./techniques.ts";
 import { coupleCombo, storyProgress, together } from "./stories.ts";
-import { heroes, type Quest } from "./game-content.ts";
+import type { Quest } from "./game-content.ts";
 import type { GameEvent, Run, Squad, State } from "./game-types.ts";
 import {
   ensureChapterRoad,
@@ -23,6 +20,7 @@ import {
 import {
   activeBonds,
   activeRun,
+  actorPeriod,
   encounter,
   healAll,
   heroById,
@@ -30,9 +28,10 @@ import {
   memberMaxHp,
   questById,
   resistanceFor,
-  stepMs,
   targetName,
   totalMaxHp,
+  travelMs,
+  workTarget,
 } from "./game-rules.ts";
 
 export function addLog(s: State, text: string, at: number) {
@@ -67,23 +66,13 @@ export function configureTarget(r: Run, q: Quest) {
   if (r.road) delete r.road.ambushNode;
   r.enemies =
     encounter(q, r.node, r.nodes) === "battle"
-      ? createEnemies(q, r.node, r.phaseAt, r.nodes !== 15, r.nodes)
+      ? createEnemies(q, r.node, r.phaseAt, shortRoute(r.nodes), r.nodes)
       : [];
-  r.targetMax = Math.round(
-    q.need *
-      1.12 *
-      (encounter(q, r.node, r.nodes) === "escort" ? 1.8 : 2.3) *
-      chapterTwoWorkload(q.id) *
-      chapterThreeWorkload(q.id) *
-      chapterFourWorkload(q.id),
-  );
+  r.targetMax = Math.round(workTarget(q, encounter(q, r.node, r.nodes)));
   r.target = r.targetMax;
   r.hits = 0;
   syncEnemyTotals(r);
   placeRoadEnemies(r);
-}
-export function travelMs(id: string) {
-  return 2200 + (heroes.findIndex((h) => h.id === id) % 4) * 310;
 }
 export function schedule(s: State, sq: Squad, r: Run, at: number) {
   if (r.road) {
@@ -98,7 +87,7 @@ export function schedule(s: State, sq: Squad, r: Run, at: number) {
     actions: 0,
     arrivesAt: at + travelMs(hero),
     nextAt: at + travelMs(hero),
-    period: Math.round(stepMs() * (0.8 + (heroes.findIndex((h) => h.id === hero) % 4) * 0.13)),
+    period: Math.round(actorPeriod(hero)),
   }));
   r.enemyAt = at + 3700;
   for (const [index, enemy] of (r.enemies || []).entries())

@@ -16,7 +16,8 @@ import { isPrologueQuest, RESTORATION_QUEST } from "./prologue.ts";
 import { chapterTwoEnemyAsset, chapterTwoGolem } from "./chapter-two.ts";
 import type { Enemy } from "./combat.ts";
 import { puppetLook, puppetCue } from "./puppet-battles.ts";
-import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
+import { standardConfrontation } from "./chapter-four-battles.ts";
+import { ESCORT_SPRITE, GATHER_SPRITE, MIST_WOLF_SPRITE } from "./quest-sprites.ts";
 
 export type AdventureInput = {
   squad: Squad;
@@ -123,17 +124,19 @@ function adventureMember(
 function frameCutin(run: ActiveRun | null, now: number) {
   return run?.scene && now >= run.scene.at && now - run.scene.at < 2600 ? run.scene : null;
 }
+const confrontationArt = {
+  lico: "/animations/road/lico-standing-v1.webp",
+  merrill: "/animations/road/merrill-standing-v1.webp",
+};
 function targetAsset(
   quest: (typeof allQuests)[number],
   run: ActiveRun,
   kind: ReturnType<typeof encounter> | null,
   sprite: number,
 ) {
-  const encounterNode = run.road?.ambushNode ?? run.node;
-  if (kind === "battle" && quest.id === LICO_RECORDS_QUEST && encounterNode === 14)
-    return "/animations/road/lico-standing-v1.webp";
-  if (kind === "battle" && quest.id === MERRILL_SEEDLINGS_QUEST && encounterNode === 8)
-    return "/animations/road/merrill-standing-v1.webp";
+  const duel =
+    kind === "battle" ? standardConfrontation(quest.id, run.road?.ambushNode ?? run.node) : null;
+  if (duel) return confrontationArt[duel];
   const enemyArt = kind === "battle" ? chapterTwoEnemyAsset(quest.id, run.node) : null;
   if (enemyArt) return enemyArt;
   if (kind === "escort")
@@ -148,7 +151,8 @@ function frameTarget(
   kind: ReturnType<typeof encounter> | null,
 ) {
   if (!run) return null;
-  const targetSprite = kind === "gather" ? 11 : kind === "escort" ? 7 : quest.enemy;
+  const targetSprite =
+    kind === "gather" ? GATHER_SPRITE : kind === "escort" ? ESCORT_SPRITE : quest.enemy;
   return {
     id: "legacy-target",
     x: 0.8,
@@ -237,7 +241,9 @@ function frameTargets(
     if (enemy.role) return puppetTarget(base, enemy, index, enemies.length, run, now);
     const multiple = enemies.length > 1,
       name = multiple
-        ? (quest.enemy === 9 ? "霧狼" : "スライム") + " " + String.fromCharCode(65 + index)
+        ? (quest.enemy === MIST_WOLF_SPRITE ? "霧狼" : "スライム") +
+          " " +
+          String.fromCharCode(65 + index)
         : base.name;
     return {
       ...base,
