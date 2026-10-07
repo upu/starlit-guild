@@ -2,27 +2,22 @@
 
 [下部ナビと画面の案内](../development/code-map/ui-shell.md) · [旅団の拠点機能](../gameplay/guild-base.md)
 
-ホーム・菜園は [ドット絵調の全身コマとマス配置](guild-lab.md) に移行した。以下は購入・作業メニューなどで引き続き使用する旧素材の制作記録。
+ホーム・菜園は [ドット絵調の全身コマとマス配置](guild-lab.md) に移行した。現在使う旧素材はショップの床・棚・商品と、共通の商品アイコンだけ。以下では現行の担当と、廃止済みの制作記録を分ける。
 
-## 画面と描画の分担
+## 現行の素材と描画
 
-旅団ホーム、リンデの菜園、ブレッカの栽培所は別画面。背景・家具・植物・仲間と、作業台・購入メニューの絵はPhaserで描く。文字・ボタン・数量入力・会話はReactで扱い、タップとキーボード操作、読み上げを保つ。背景は床と周縁だけの手描き調ラスタ画像にし、家具・植物・人を個別に動かせる状態を保つ。拠点は共同住居ではなく仕事と連絡の場所。苔床は第四章で塔から離した栽培所を扱い、リンデに光る苔を増やさない。新しい地名・街道・距離は追加しない。
+- ホーム・菜園・仲間の動きは `app/home-room.tsx` → `app/phaser/home-room-game.ts`。現行の原本・配信画像・制作見本は [旅団ホーム](guild-lab.md) を参照。
+- `app/phaser-guild.tsx` / `app/phaser/guild-painter.ts` はショップ専用。読み込むのは `home-floor-v2`、`furniture-v3`、`goods-v3` の3画像だけ。
+- `props-v2` はニンジン等の商品アイコンで使用するため、原本と配信画像を残す。
+- 旧人物の `finn-guild-v2`、`lico-guild-v2`、`tea-party-v3`、`walk-v3` と、旧菜園背景の `linde-floor-v2`、`brekka-floor-v2` は廃止。原本PNGと配信WebPの計12ファイル（20,803,874 bytes）を削除した。
+- 現行ドット絵素材のコマ数・画像・原本・生成処理は変更しない。参照用の採用原画、生成指示、テスト用の動作見本も維持する。
+- ショップの購入・選択・画像読み込みを `tests/guild.browser.mjs` で確認する。旧画像だけを対象とした検査は廃止し、現行素材は `tests/home-room.test.mjs` と `npm run home-art:check` で確認する。
 
-- `app/phaser-guild.tsx` / `app/phaser/guild-game.ts`: 遅延読込、サイズ変更、読込失敗時の再試行、破棄。冒険と同じ高解像度描画の補助を共用する。
-- `app/phaser/guild-painter.ts` / `app/phaser/guild-sprites.ts`: 床、家具、植物、人物、湯気。足元のY座標で前後関係を決める。茶卓と5脚の椅子、依頼の手紙・帳簿・仕分け棚のある事務机、瓶や乳鉢のある作業台を別素材で描く。作業者は机の左側へ立つ。
-- `lib/guild-stage-model.ts`: 1000×750の配置基準、在室者と歩行経路。リンデの担当はプランターの角を回り込む。
-- `app/phaser/guild-art.ts` / `lib/guild-art-frames.ts` / `lib/guild-room-art.ts`: コマと姿勢。フィン・リコは歩行8コマ、残る3人は既存の4歩行コマを共用する。全員に飲茶4コマを追加。コマの切替に合わせ、全身の上下動と傾きを付ける。各シート内の縮尺を維持する。
-- `app/phaser/guild-menu-painter.ts` / `app/guild-recipe-menu.tsx`: Phaserで作業台の近景と3つの完成品、商品棚と7つの商品を描く。選択時はTweenで品物が少し大きくなって戻り、足元を照らす。作業の絵は品ごとに変えず、共通の仕込み動作と湯気を使う。
-- `app/guild-prop-image.tsx` / `app/guild-room-image.tsx` / `app/guild-plot-view.tsx`: ラスタ素材の切り抜き、植え付け操作・成長ゲージ。植物の根元と大きさは `guildCropSlots` / `guildCropWidth` を画面・詳細で共有し、成熟時も土の内側へ収める。
-- `app/guild-duty-marker.tsx`: 現地の［＋］と担当者の顔。作業台は机の下、栽培地は畑の脇から開く。下部は現在地でも省略せず、ホーム・菜園・種／材料の3アイコンを固定順で並べる。
-- `app/guild-item-icon.tsx`: 商品棚・レシピ・材料・種で共用する画像。
-- `public/ui/guild-banner.svg`: 竿の線を省いた灯籠の旗印。家・顔・等級の星数を使わない。
+## 旧方式の制作記録（以下は現行仕様ではない）
 
-ホームの空いている仲間は、それぞれの椅子でお茶を飲む。用事のない往復は行わない。飲む動作の合間には待ち時間を入れ、各人でタイミングをずらす。加工担当でも仕込み中でなければ茶卓で休む。栽培地は世話中だけ畑の間を移動する。事務机の手紙は暮らしの演出で、新たな依頼の受注や件数は追加しない。画面上の移動は進行判定に使わず、生産・収穫は旅団エンジンのみで処理する。`prefers-reduced-motion` では姿勢・揺れ・湯気・選択のTweenを静止させる。
+以下の表・生成指示は制作経緯の記録。削除した原本はGit履歴から参照できる。現在使う4種類は上記のとおり。
 
-`tests/guild-stage.test.mjs` で休憩と歩行経路・植物と土枠の関係・素材の透明部分・歩行8コマと飲茶4コマを検査する。`tests/guild.browser.mjs` は隔離した保存でPhaserの動き、縮小表示、作業台、操作、成長、会話、4画面寸法を確認する。実機での体感確認とは区別する。
-
-## 採用素材
+### 当時の採用素材
 
 内蔵 `image_gen` で生成・編集したPNG原本を `assets/source/guild/`、配信用WebPを `public/guild/` に保存する。背景は幅1080px・quality 87、アトラスは元解像度のlosslessで変換。絵の編集は生成ツールで行い、変換とアルファ境界の測定にSharpを使う。素材更新時はWebPとコマ境界（v2は `lib/guild-art-frames.ts`、v3は `lib/guild-room-art.ts`）を一緒に更新する。
 

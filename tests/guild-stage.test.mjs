@@ -1,7 +1,5 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
-import sharp from "sharp";
 import {
   guildRoute,
   guildStageLayout,
@@ -10,7 +8,6 @@ import {
   guildCropWidth,
   guildMotion,
 } from "../lib/guild-stage-model.ts";
-import { guildRoomArt } from "../lib/guild-room-art.ts";
 import { testState, act } from "../lib/game.ts";
 
 test("guild routes stop at work points and reduced motion stays at the starting point", () => {
@@ -47,37 +44,6 @@ test("guild routes stop at work points and reduced motion stays at the starting 
   );
 });
 
-test("all eight walk and four tea frames are distinct with valid transparent bounds", async () => {
-  for (const [name, count] of [
-    ["walk-v3", 8],
-    ["tea-party-v3", 4],
-  ]) {
-    const sheet = guildRoomArt[name],
-      path = `public/guild/${name}.webp`,
-      meta = await sharp(path).metadata();
-    assert.equal(meta.hasAlpha, true);
-    for (let start = 0; start < sheet.frames.length; start += count) {
-      const hashes = [];
-      for (const [left, top, width, height] of sheet.frames.slice(start, start + count)) {
-        assert.ok(
-          width > 0 &&
-            height > 0 &&
-            left >= 0 &&
-            top >= 0 &&
-            left + width <= meta.width &&
-            top + height <= meta.height,
-        );
-        const pixels = await sharp(path)
-          .extract({ left, top, width, height })
-          .resize(64, 96)
-          .raw()
-          .toBuffer();
-        hashes.push(createHash("sha256").update(pixels).digest("hex"));
-      }
-      assert.equal(new Set(hashes).size, count, `${name}: distinct poses in each character loop`);
-    }
-  }
-});
 test("plants fit the inner soil at seedling and full size; gait moves the upper body too", () => {
   for (const growth of [0, 0.5, 1])
     for (const slot of guildCropSlots) {

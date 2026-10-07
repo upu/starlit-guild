@@ -1,9 +1,6 @@
 import type Phaser from "phaser";
-import { guildPose, type GuildPoseKind } from "./guild-art";
-import { guildMotion } from "@/lib/guild-stage-model";
 import { guildRoomSprite } from "@/lib/guild-menu-model";
 import type { guildRoomArt } from "@/lib/guild-room-art";
-import type { TravellerId } from "@/lib/road-view";
 export class GuildSprites {
   private objects = new Map<string, Phaser.GameObjects.Image>();
   constructor(readonly scene: Phaser.Scene) {}
@@ -52,34 +49,4 @@ export class GuildSprites {
       depth,
     );
   }
-  actor(
-    id: TravellerId,
-    mode: GuildPoseKind,
-    point: { x: number; y: number; left?: boolean },
-    elapsed: number,
-    reduced: boolean,
-    height = 175,
-  ) {
-    const walkSpeed = id === "finn" || id === "lico" ? 80 : 160;
-    const speed = mode === "walk" ? walkSpeed : 550;
-    const step = mode === "tea" ? teaStep(elapsed) : Math.floor(elapsed / speed);
-    const frame = guildPose(id, mode, reduced ? 0 : step);
-    const motion = guildMotion(elapsed, mode === "walk", reduced);
-    const image = this.place(
-      this.image(`hero-${id}`, frame.asset, frame.rect),
-      point.x,
-      point.y,
-      frame.rect[2] * frame.scale * height,
-    );
-    image.setFlipX(point.left ?? false).setAngle(motion.angle);
-    image.y -= (motion.lift * this.scene.scale.width) / 1000;
-    return image;
-  }
-}
-
-function teaStep(elapsed: number) {
-  const phase = elapsed % 10000;
-  if (phase < 5000 || phase >= 8500) return 0;
-  if (phase < 5800) return 1;
-  return phase < 7600 ? 2 : 3;
 }

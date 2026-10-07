@@ -1,6 +1,6 @@
 import type Phaser from "phaser";
-import { guildRecipes, guildProducts } from "@/lib/guild-content";
-import { guildGoodFrame, guildRecipeSpot, guildShopSpot } from "@/lib/guild-menu-model";
+import { guildProducts } from "@/lib/guild-content";
+import { guildGoodFrame, guildShopSpot } from "@/lib/guild-menu-model";
 import type { GuildFrame } from "./guild-painter";
 import { GuildSprites } from "./guild-sprites";
 export class GuildMenuPainter {
@@ -26,14 +26,14 @@ export class GuildMenuPainter {
           ease: "Cubic.Out",
         });
     }
-    if (input.site === "shop") this.shelf();
-    const items = input.site === "shop" ? guildProducts : guildRecipes;
+    this.shelf();
+    const items = guildProducts;
     items.forEach((item, i) => {
-      const point = input.site === "shop" ? guildShopSpot(i) : guildRecipeSpot(i);
-      const frame = guildGoodFrame("output" in item ? item.output : item.id);
+      const point = guildShopSpot(i);
+      const frame = guildGoodFrame(item.id);
       const selected = item.id === input.selected;
       const zoom = selected ? 1.1 + this.pulse.value * 0.08 : 1;
-      const width = (input.site === "shop" ? 175 : 145) * zoom;
+      const width = 175 * zoom;
       const image = this.sprites.room(
         `menu-${item.id}`,
         "goods-v3",
@@ -41,11 +41,10 @@ export class GuildMenuPainter {
         { x: point.x * 1000, y: point.y * 750 - 22, width },
         1600,
       );
-      const maxHeight =
-        this.sprites.scene.scale.height * (input.site === "shop" ? 0.16 : 0.19) * zoom;
+      const maxHeight = this.sprites.scene.scale.height * 0.16 * zoom;
       if (image.displayHeight > maxHeight)
         image.setDisplaySize((image.displayWidth * maxHeight) / image.displayHeight, maxHeight);
-      if (selected) this.glow(point.x, point.y, input.site === "shop");
+      if (selected) this.glow(point.x, point.y);
     });
   }
   private shelf() {
@@ -61,12 +60,12 @@ export class GuildMenuPainter {
       this.sprites.scene.scale.height * 0.98,
     );
   }
-  private glow(x: number, y: number, shop: boolean) {
+  private glow(x: number, y: number) {
     const w = this.sprites.scene.scale.width,
       h = this.sprites.scene.scale.height;
     this.highlight
       .lineStyle(2, 0xffda88, 0.9)
-      .strokeEllipse(x * w, y * h - (22 * h) / 750 + 2, w * (shop ? 0.22 : 0.2), 14);
+      .strokeEllipse(x * w, y * h - (22 * h) / 750 + 2, w * 0.22, 14);
     this.highlight
       .fillStyle(0xffd17b, 0.16)
       .fillEllipse(x * w, y * h - (22 * h) / 750 + 2, w * 0.22, 18);

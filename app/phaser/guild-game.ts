@@ -25,9 +25,9 @@ export function createGuildGame(parent: HTMLElement, bridge: GuildBridge, engine
         bridge.status("ready");
       }
     }
-    update(_time: number, delta: number) {
+    update() {
       if (!disposed && !failed && !document.hidden)
-        this.painter?.paint(bridge.read(), delta, motion.matches);
+        this.painter?.paint(bridge.read(), motion.matches);
     }
   }
   const game = new engine.Game({
