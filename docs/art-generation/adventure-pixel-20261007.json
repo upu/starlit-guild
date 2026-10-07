@@ -74,8 +74,8 @@
   "validation": {
     "unitTests": 427,
     "homePixels": "all eight walk frames and idle match visible RGBA exactly",
-    "browser": "chapter-four: 18 cases passed; chapter-road: cargo retry and reload passed; trio-work and five-cargo results recorded in work/chapter-road-browser/dpr-3",
-    "browserFailure": "chapter-road touch assertion observed hits delta 2 instead of 1; game engine automatic attacks and tap assistance both increment run.hits. This assertion remains unpassed.",
+    "browser": "chapter-four: 18 cases passed; chapter-road: cargo retry/reload and trio-work rendering/reload passed during the targeted run",
+    "browserFailure": "chapter-road touch assertion observed hits delta 2 instead of 1; game engine automatic attacks and tap assistance both increment run.hits. Five-cargo failed its work-caption visibility assertion. These assertions remain unpassed.",
     "viewing": [
       "source sheets",
       "work/adventure-pixel/overview.png",
