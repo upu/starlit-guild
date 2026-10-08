@@ -16,7 +16,7 @@ import {
   techniqueMultiplier,
   techniqueText,
 } from "./techniques.ts";
-import { level } from "./roster.ts";
+import { heroSkills, level } from "./roster.ts";
 import { continueAutoNext } from "./game-actions.ts";
 import type { Quest } from "./game-content.ts";
 import type { Actor, Encounter, GameEvent, Run, Squad, State } from "./game-types.ts";
@@ -43,7 +43,6 @@ import {
   completeNode,
   finishRoadScene,
   event,
-  heroSkills,
   nextEvent,
   recoverRun,
   reward,

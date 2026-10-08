@@ -170,14 +170,10 @@ export function statIndex(kind: Encounter) {
   return kind === "battle" ? 2 : kind === "gather" ? 0 : 1;
 }
 export function specialInterval(hero: string) {
-  return hero === "aria" ? 3 : 4;
+  return heroes.find((h) => h.id === hero)?.skill.every ?? 4;
 }
 export function specialMultiplier(hero: string) {
-  if (hero === "lico") return 1.35;
-  if (hero === "finn") return 1.6;
-  if (hero === "leon") return 1.7;
-  if (hero === "aria") return 1.65;
-  return 1;
+  return heroes.find((h) => h.id === hero)?.skill.power ?? 1;
 }
 export function resistanceFor(q: Quest, kind: Encounter) {
   return kind === "battle" ? 0 : workResistance(q);
