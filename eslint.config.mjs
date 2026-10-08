@@ -47,7 +47,7 @@ const eslintConfig = defineConfig([
     "work/**",
   ]),
   {
-    files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
+    files: ["components/ui/**/*.{ts,tsx}"],
     extends: [tseslint.configs.disableTypeChecked],
     rules: {
       // These files are vendored verbatim from shadcn@4.17.0. Keep the
