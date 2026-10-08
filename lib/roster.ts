@@ -1,4 +1,4 @@
-// Heroes, the pair bonus and levelling for the story mode.
+// Heroes with their stats and special skill, the pair bonus, and levelling for the story mode.
 // Extracted from the removed v1 module so the migration chain could go.
 export type Kind = "採取" | "護衛" | "討伐";
 export const heroes = [
@@ -11,6 +11,13 @@ export const heroes = [
     stats: [22, 10, 14],
     trait: "採取の達人",
     bio: "薬草を見つける目は確か。気になるものを見つけると、考えるより先に足が向く。",
+    skill: {
+      style: "ranged",
+      name: "風の二連矢",
+      description: "離れて矢を放ち、3回ごとに二連射。寄り道も得意。",
+      every: 3,
+      power: 1.65,
+    },
   },
   {
     id: "leon",
@@ -21,6 +28,13 @@ export const heroes = [
     stats: [8, 17, 24],
     trait: "魔物に強い",
     bio: "地図と荷物を確かめ、帰り道まで段取りを組む。仲間の発見があれば、調べた道筋も見直す。",
+    skill: {
+      style: "melee",
+      name: "暁の踏み込み",
+      description: "前線へ飛び込み、4回ごとに強力な斬撃。",
+      every: 4,
+      power: 1.7,
+    },
   },
   {
     id: "mira",
@@ -31,6 +45,13 @@ export const heroes = [
     stats: [16, 22, 8],
     trait: "護衛の心得",
     bio: "人の小さな不調を見逃さず、診察と手当てに向かう。穏やかな口調で「あと一人だけ」と仕事を増やしてしまう。",
+    skill: {
+      style: "healer",
+      name: "月明かりの癒やし",
+      description: "4回の行動ごとに、最も弱った仲間を回復。",
+      every: 4,
+      power: 1,
+    },
   },
   {
     id: "finn",
@@ -41,6 +62,13 @@ export const heroes = [
     stats: [20, 12, 19],
     trait: "器用な手さばき",
     bio: "人脈と指先の腕を頼りに仕事を運ぶ仲介人。腕は確かだが、話が全部とは限らない。",
+    skill: {
+      style: "melee",
+      name: "隙を突く一刺し",
+      description: "短剣で素早く間合いに入り、4回ごとに隙を突く一撃。",
+      every: 4,
+      power: 1.6,
+    },
   },
   {
     id: "lico",
@@ -51,8 +79,20 @@ export const heroes = [
     stats: [27, 16, 11],
     trait: "試料の見立て",
     bio: "発光と毒を追い、気になるものへすぐ手が伸びる。研究のためなら予定も忘れるが、見つけた違和感は見逃さない。",
+    skill: {
+      style: "ranged",
+      name: "発光試料の目くらまし",
+      description: "薬液の光で敵の動きを鈍らせる。採取と調査も得意。",
+      every: 4,
+      power: 1.35,
+    },
   },
 ];
+// Every `every`-th action is the hero's special, worth `power` times an ordinary one.
+export type HeroSkill = (typeof heroes)[number]["skill"];
+export const heroSkills: Record<string, HeroSkill> = Object.fromEntries(
+  heroes.map((hero) => [hero.id, hero.skill]),
+);
 export const bonds = [
   {
     ids: ["aria", "leon"],

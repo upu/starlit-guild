@@ -1,4 +1,4 @@
-export { bonds, level, levelProgress } from "./roster.ts";
+export { bonds, heroSkills, level, levelProgress } from "./roster.ts";
 export type { Kind } from "./roster.ts";
 export { heroes, quests, allQuests, availableQuests } from "./game-content.ts";
 export type { Quest, QuestStyle } from "./game-content.ts";
@@ -27,7 +27,7 @@ export {
   travelMs,
   estimate,
 } from "./game-rules.ts";
-export { heroSkills, bondKey, bondLevel } from "./game-run.ts";
+export { bondKey, bondLevel } from "./game-run.ts";
 export { settle, settleOnScreen, skipTo, ON_SCREEN_LIMIT } from "./game-engine.ts";
 export { migrate, completeStoryStages, testState } from "./game-migrations.ts";
 export { act } from "./game-actions.ts";

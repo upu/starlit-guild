@@ -144,33 +144,6 @@ export function nextEvent(r: Run) {
     r.road?.nextAt ?? Infinity,
   );
 }
-export const heroSkills: Record<string, { style: string; name: string; description: string }> = {
-  lico: {
-    style: "ranged",
-    name: "発光試料の目くらまし",
-    description: "薬液の光で敵の動きを鈍らせる。採取と調査も得意。",
-  },
-  finn: {
-    style: "melee",
-    name: "隙を突く一刺し",
-    description: "短剣で素早く間合いに入り、4回ごとに隙を突く一撃。",
-  },
-  aria: {
-    style: "ranged",
-    name: "風の二連矢",
-    description: "離れて矢を放ち、3回ごとに二連射。寄り道も得意。",
-  },
-  leon: {
-    style: "melee",
-    name: "暁の踏み込み",
-    description: "前線へ飛び込み、4回ごとに強力な斬撃。",
-  },
-  mira: {
-    style: "healer",
-    name: "月明かりの癒やし",
-    description: "4回の行動ごとに、最も弱った仲間を回復。",
-  },
-};
 export const bondKey = (ids: string[]) => [...ids].sort().join("-");
 export const bondLevel = (s: State, ids: string[]) =>
   Math.min(3, 1 + Math.floor((s.friendship[bondKey(ids)] || 0) / 12));
