@@ -1,9 +1,35 @@
 import type Phaser from "phaser";
+import { enemySampleSize, samplePixelFrame } from "@/lib/adventure-pixel-sampling";
 
 // Cache small, isolated frames. Mipmaps can then filter each figure without
 // sampling adjacent poses or padding every large atlas to a power of two.
 export class RoadSpriteFilter {
   constructor(private scene: Phaser.Scene) {}
+
+  applyPixel(
+    image: Phaser.GameObjects.Image,
+    heroHeight: number,
+    nominal?: { width: number; height: number },
+  ) {
+    const frame = image.frame,
+      width = image.displayWidth,
+      height = image.displayHeight;
+    const size = enemySampleSize(nominal?.width ?? width, nominal?.height ?? height, heroHeight);
+    const key = `road-pixel:${image.texture.key}:${frame.name}:${String(size.width)}x${String(size.height)}`;
+    if (!this.scene.textures.exists(key)) {
+      const canvas = samplePixelFrame(
+        frame.source.image as HTMLImageElement,
+        { x: frame.cutX, y: frame.cutY, width: frame.cutWidth, height: frame.cutHeight },
+        size,
+        image.texture.key === "/sprites.png",
+      );
+      const texture = this.scene.textures.addCanvas(key, canvas);
+      texture?.add("figure", 0, 0, 0, canvas.width, canvas.height);
+      texture?.setFilter(0);
+    }
+    const { originX, originY } = image;
+    image.setTexture(key, "figure").setDisplaySize(width, height).setOrigin(originX, originY);
+  }
 
   apply(image: Phaser.GameObjects.Image) {
     const frame = image.frame,

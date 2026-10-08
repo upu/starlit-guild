@@ -1,6 +1,6 @@
 {
   "name": "starlit-guild",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "private": true,
   "license": "UNLICENSED",
   "devEngines": {
@@ -13,7 +13,7 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "assets:optimize": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize",
+    "assets:optimize": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize",
     "predev": "npm run assets:optimize",
     "prebuild": "npm run assets:optimize",
     "install:ci": "node scripts/install-ci.mjs",
@@ -45,14 +45,18 @@
     "presets:generate": "node scripts/generate-test-presets.mjs",
     "presets:check": "node scripts/generate-test-presets.mjs --check",
     "home-art:optimize": "node scripts/build-home-pixel.mjs",
-    "home-art:check": "node scripts/build-home-pixel.mjs --check"
+    "home-art:check": "node scripts/build-home-pixel.mjs --check",
+    "adventure-art:optimize": "node scripts/build-adventure-pixel.mjs",
+    "enemy-art:optimize": "node scripts/build-enemy-pixel.mjs",
+    "enemy-art:check": "node scripts/build-enemy-pixel.mjs --check",
+    "adventure-art:check": "node scripts/build-adventure-pixel.mjs --check"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "drizzle-orm": "0.45.3",
     "lucide-react": "^1.31.0",
-    "next": "16.3.6",
+    "next": "16.3.8",
     "next-themes": "^0.4.6",
     "phaser": "4.2.1",
     "radix-ui": "^1.6.7",

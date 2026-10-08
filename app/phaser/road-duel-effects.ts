@@ -1,5 +1,6 @@
 import type Phaser from "phaser";
 import type { RoadEffect } from "@/lib/road-view";
+import { adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
 export const duelEffect = (kind: RoadEffect["kind"]) =>
   ["mushroomThrow", "song", "paralyze"].includes(kind);
 export function paintDuelEffect(
@@ -18,7 +19,7 @@ export function paintDuelEffect(
   if (effect.kind === "mushroomThrow") {
     const p = Math.min(1, age / 800);
     sprite
-      .setTexture("/animations/road/mushroom-v1.webp")
+      .setTexture(adventureMushroomProjectile)
       .setDisplaySize(36 * scale, 36 * scale)
       .setPosition(
         startX + (endX - startX) * p,

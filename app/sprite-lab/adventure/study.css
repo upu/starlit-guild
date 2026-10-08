@@ -1,0 +1,77 @@
+.adventure-study {
+  padding: 24px;
+}
+.adventure-study h1 {
+  font-size: 22px;
+}
+.adventure-study p {
+  margin: 16px 0;
+  line-height: 1.7;
+}
+.adventure-study-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.adventure-study-controls button,
+.adventure-study-controls select {
+  color: #fff0c0;
+  background: #344f40;
+  border: 1px solid #a59666;
+  padding: 10px;
+  border-radius: 6px;
+}
+.adventure-study-controls input {
+  margin-right: 6px;
+}
+.adventure-study-figures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0;
+}
+.adventure-study-figures figure {
+  margin: 0;
+  text-align: center;
+}
+.adventure-study-floor {
+  background: #243e34;
+  border-bottom: 2px solid #b09b68;
+}
+.adventure-study-floor > div {
+  image-rendering: pixelated;
+}
+.adventure-study-figures figcaption {
+  padding: 12px;
+}
+.adventure-study-timeline {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.adventure-study-timeline input {
+  flex: 1;
+  max-width: 500px;
+}
+
+.enemy-study-floor {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-width: 100px;
+  background: #243e34;
+  border-bottom: 2px solid #b09b68;
+}
+.enemy-study-floor canvas {
+  image-rendering: pixelated;
+  max-width: none;
+}
+.enemy-study-figures figcaption {
+  max-width: 190px;
+}
+.enemy-study-figures {
+  overflow-x: auto;
+  justify-content: flex-start;
+}

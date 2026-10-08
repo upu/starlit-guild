@@ -2,9 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import ts from "typescript";
-const code = ts.transpileModule(readFileSync("app/phaser/road-sprite-filter.ts", "utf8"), {
-  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
-}).outputText;
+const code = ts
+  .transpileModule(readFileSync("app/phaser/road-sprite-filter.ts", "utf8"), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
+  })
+  .outputText.replace(
+    '"@/lib/adventure-pixel-sampling"',
+    JSON.stringify(new URL("../lib/adventure-pixel-sampling.ts", import.meta.url).href),
+  );
 const { RoadSpriteFilter } = await import(
   `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
 );
@@ -39,6 +44,9 @@ test("sprite filtering preserves the figure's size and feet, isolates poses and 
         addCanvas(key, canvas) {
           const texture = {
             canvas,
+            setFilter(mode) {
+              this.filter = mode;
+            },
             add(name, source, x, y, w, h) {
               this.frame = { name, x, y, w, h };
             },
@@ -109,6 +117,31 @@ test("sprite filtering preserves the figure's size and feet, isolates poses and 
     filter.apply(makeImage());
     assert.equal(canvases.length, denseCount);
     assert.equal(textures.size, 2);
+    const pixel = makeImage();
+    filter.applyPixel(pixel, 90);
+    const pixelTexture = textures.get(pixel.texture.key);
+    assert.equal(pixelTexture.filter, 0, "nearest sampling for enemy pixels");
+    assert.deepEqual([pixelTexture.canvas.width, pixelTexture.canvas.height], [77, 96]);
+    assert.deepEqual(
+      [pixel.displayWidth, pixel.displayHeight, pixel.originX, pixel.originY],
+      [72, 90, 0.46, 0.97],
+    );
+    const pixelCount = canvases.length;
+    scene.cameras.main.zoomX = scene.cameras.main.zoomY = 3;
+    const densePixel = makeImage();
+    filter.applyPixel(densePixel, 90);
+    assert.equal(densePixel.texture.key, pixel.texture.key, "DPR does not change the pixel pitch");
+    assert.equal(canvases.length, pixelCount, "same isolated pixel texture is cached");
+    const animated = makeImage();
+    animated.displayWidth = 20;
+    animated.displayHeight = 96;
+    filter.applyPixel(animated, 90, { width: 72, height: 90 });
+    assert.equal(
+      animated.texture.key,
+      pixel.texture.key,
+      "song turns and squash keep the same sampled pose",
+    );
+    assert.equal(animated.displayWidth, 20, "animation transform is retained");
   } finally {
     globalThis.document = previous;
   }

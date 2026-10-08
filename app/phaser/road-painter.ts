@@ -7,30 +7,18 @@ import { type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
 import { RoadWorkCaption } from "./road-work-caption";
-import { applyHeroPose, applyWorkPose } from "./road-poses";
+import { applyHeroPose, applyWorkPose, registerAdventureHero } from "./road-poses";
 import {
-  roadSheet,
-  roadFrame,
-  roadWalkSheet,
   ROAD_HERB,
   ROAD_CARGO,
-  ROAD_PUPPETS,
-  ROAD_PUSH,
-  pushFrames,
-  ROAD_PULL,
-  ROAD_FINN_PULL,
-  ROAD_PACKING,
-  packingFrames,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  ROAD_ARIA_WORK,
-  MINI_CELL,
-  ROAD_MIRA_WORK,
-  finnFrames,
 } from "./road-art";
+import { adventureHeroAsset } from "@/lib/adventure-hero-art";
+import { adventureEnemyArt } from "@/lib/adventure-enemy-art";
 import {
   enemyAppearance,
   enemyArrived,
@@ -70,13 +58,9 @@ export class RoadPainter {
     this.strings = scene.add.graphics().setDepth(18);
     this.bars = scene.add.graphics().setDepth(30);
     this.destination = scene.add.image(0, 0, ROAD_DESTINATION).setOrigin(0.5, 1).setDepth(5);
-    for (const id of ["aria", "leon", "mira", "finn"] as const) this.registerSheet(id);
+    for (const id of ["aria", "leon", "mira", "finn"] as const) registerAdventureHero(scene, id);
     this.registerWorkArt();
     this.destination.setFrame("marker");
-    const puppets = scene.textures.get(ROAD_PUPPETS);
-    puppets.add("pumpety", 0, 0, 0, 740, 724);
-    puppets.add("puppet", 0, 740, 0, 610, 724);
-    puppets.add("golem", 0, 1350, 0, 822, 724);
     const atlas = scene.textures.get("/sprites.png");
     const source = atlas.getSourceImage() as HTMLImageElement;
     atlas.add(
@@ -98,51 +82,9 @@ export class RoadPainter {
       );
   }
 
-  private registerSheet(id: Traveller["id"]) {
-    if (id === "lico") return;
-    const texture = this.scene.textures.get(roadSheet(id));
-    if (id === "finn") {
-      for (const [index, [x, y, w, h]] of finnFrames.entries())
-        texture.add(String(index), 0, x, y, w, h);
-      return;
-    }
-    this.registerMainFrames(id);
-    if (id !== "aria" && id !== "mira") this.registerWalkFrames(id);
-  }
-
-  private registerMainFrames(id: Traveller["id"]) {
-    const texture = this.scene.textures.get(roadSheet(id));
-    for (let index = 0; index < (id === "aria" || id === "mira" ? 16 : 12); index++) {
-      const frame = roadFrame(id, index);
-      texture.add(String(index), 0, frame.left, frame.top, frame.width, frame.height);
-    }
-  }
-
-  private registerWalkFrames(id: Traveller["id"]) {
-    const walk = this.scene.textures.get(roadWalkSheet(id));
-    for (let index = 0; index < 4; index++)
-      walk.add(String(index), 0, (index % 2) * 627, Math.floor(index / 2) * 627, 627, 627);
-  }
-
   private registerWorkArt() {
     this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 470, 340, 370, 605);
     this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
-    this.registerPackingArt();
-    this.registerMiniWorkArt(ROAD_ARIA_WORK);
-    this.registerMiniWorkArt(ROAD_MIRA_WORK);
-    const push = this.scene.textures.get(ROAD_PUSH);
-    for (const id of ["aria", "leon", "mira"] as const)
-      for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = pushFrames[id][step];
-        push.add(`${id}-${String(step)}`, 0, x, y, w, h);
-      }
-    const pull = this.scene.textures.get(ROAD_PULL);
-    for (const [index, id] of ["aria", "leon", "mira"].entries())
-      for (let step = 0; step < 2; step++)
-        pull.add(`${id}-${String(step)}`, 0, step * 512, index * 512, 512, 512);
-    const finnPull = this.scene.textures.get(ROAD_FINN_PULL);
-    for (let step = 0; step < 2; step++)
-      finnPull.add(`finn-${String(step)}`, 0, step * 887, 0, 887, 887);
     const work = this.scene.textures.get(ROAD_WORKSITES);
     const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
     berne.add("stonework", 0, 53, 271, 788, 433);
@@ -159,28 +101,6 @@ export class RoadPainter {
     }
     this.scene.textures.get(ROAD_CARGO).add("cart", 0, 48, 344, 1164, 582);
   }
-  private registerPackingArt() {
-    const texture = this.scene.textures.get(ROAD_PACKING);
-    for (const id of ["aria", "leon", "mira"] as const)
-      for (let step = 0; step < 2; step++) {
-        const [x, y, w, h] = packingFrames[id][step];
-        texture.add(`${id}-${String(step)}`, 0, x, y, w, h);
-      }
-  }
-
-  private registerMiniWorkArt(asset: string) {
-    const texture = this.scene.textures.get(asset);
-    for (let index = 0; index < 4; index++)
-      texture.add(
-        String(index),
-        0,
-        (index % 2) * MINI_CELL,
-        Math.floor(index / 2) * MINI_CELL,
-        MINI_CELL,
-        MINI_CELL,
-      );
-  }
-
   private makeFigure(asset: string, frame: string, name: string): Figure {
     return {
       image: this.scene.add.image(0, 0, asset, frame).setOrigin(0.5, 0.9),
@@ -258,7 +178,7 @@ export class RoadPainter {
       return 4 + Math.floor((state.time - hit.at) / 150);
     if (this.working(hero) && state.gathering?.task === "gather")
       return 9 + (Math.floor(state.time / 380) % 2);
-    return hero.walking ? Math.floor(state.time / 150) % 4 : 8;
+    return hero.walking ? `walk-${String(Math.floor(state.time / 90) % 8)}` : 8;
   }
 
   private working(hero: Traveller) {
@@ -268,7 +188,7 @@ export class RoadPainter {
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
     let figure = this.heroes.get(hero.id);
     if (!figure) {
-      figure = this.makeFigure(roadSheet(hero.id), hero.id === "lico" ? "__BASE" : "8", "");
+      figure = this.makeFigure(adventureHeroAsset(hero.id), "__BASE", "");
       this.heroes.set(hero.id, figure);
     }
     const size = Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34);
@@ -281,7 +201,6 @@ export class RoadPainter {
     const working =
       this.working(hero) && applyWorkPose(figure.image, state, hero, reduced, size, pulling);
     if (!working) applyHeroPose(figure.image, hero.id, pose, size);
-    this.spriteFilter.apply(figure.image);
     figure.image
       .setPosition(x, y)
       .setFlipX(hero.facing < 0)
@@ -306,17 +225,25 @@ export class RoadPainter {
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
-    const { asset, frame, character } = enemyAppearance(enemy, this.look);
+    const { asset, frame } = enemyAppearance(enemy, this.look);
     const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(character ? !facesRight : facesRight)
+      .setFlipX(
+        enemy.kind === "slime" || ["pumpety", "puppet", "golem"].includes(enemy.kind)
+          ? facesRight
+          : !facesRight,
+      )
       .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
-    fitEnemy(figure.image, enemy, size, this.spriteFilter, state.time, reduced);
+    fitEnemy(figure.image, enemy, size, state.time, reduced);
+    const heroHeight =
+      Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34) * 0.9;
+    const cellSize = (size * adventureEnemyArt.cell) / adventureEnemyArt.height;
+    this.spriteFilter.applyPixel(figure.image, heroHeight, { width: cellSize, height: cellSize });
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)

@@ -8,3 +8,5 @@
 - **検証**: 変更した種類に対応する `npm run images:check` / `stills:check` / `videos:check` / `road-art:check` / `social-card:check` / `music:check` と、該当画面・再生を確認。
 
 旅団のドット絵調素材は `assets/source/home-pixel/` → [配信生成](../../../scripts/build-home-pixel.mjs) → `public/home-pixel/`。[制作と確認](../../art/guild-lab.md) に指示・フレーム規約・検証を記録する。
+
+冒険の5人はホームの歩行・待機と `assets/source/adventure-pixel/` の専用動作 → [配信生成](../../../scripts/build-adventure-pixel.mjs) → `public/adventure-pixel/`。[冒険のミニキャラ](../../art/adventure-pixel.md)を参照。`adventure-art:check` で鮮度を検査する。

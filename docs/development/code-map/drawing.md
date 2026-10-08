@@ -7,7 +7,8 @@
 - **位置の連続性**: [道中の移動演出](../../../lib/road-motion.ts) の `RoadMotion` を `ChapterRoadPainter` ごとに保持し、隊形・作業地点・カメラの切替を補間する。表示位置はエフェクトと回復タップにも共有する。[移動検査](../../../tests/road-motion.test.mjs) で襲撃・撃破・次の地点への遷移、静止条件、表示位置への入力を確認する。
 - **荷車の隊列**: [運搬時の配置](../../../lib/road-carrier-formation.ts) で引き手・押し手の画面上の位置と奥行きを決める。[運搬検査](../../../tests/road-transport.test.mjs) で人数・戦闘後の復帰・荷車との位置関係を確認する。
 - **検証**: [投影・入力](../../../tests/adventure-presentation.test.mjs)、[描画部品](../../../tests/map-render.test.mjs)、[静止ミニキャラ](../../../tests/hero-animation.test.mjs)、[リコの歩行・運搬](../../../tests/road-poses.test.mjs)。道中や第三章の画面は [手動テスト](../development.md#ローカルの手動テスト) の `chapter-road.browser.mjs` / `chapter-three.browser.mjs`。ブラウザー表示と実機は別に確認。
-- **スマホの鮮明さ**: [描画解像度](../../../app/phaser/adventure-resolution.ts) でCanvas・カメラを高密度化し、[人物の縮小キャッシュ](../../../app/phaser/road-sprite-filter.ts) に描画密度を渡す。[解像度検査](../../../tests/adventure-resolution.test.mjs) / [縮小検査](../../../tests/road-sprite-filter.test.mjs) と、`TEST_DPR=3` を指定した道中のブラウザー検査でサイズ・リサイズ・タップを確認する。
+- **冒険の人物**: [共通のコマ規約](../../../lib/adventure-hero-art.ts) → [配信生成](../../../scripts/build-adventure-pixel.mjs) → [姿勢切替](../../../app/phaser/road-poses.ts)。歩行・待機はホーム素材を共用し、戦闘・採集・運搬は同じ絵柄の専用コマ。[配信基準と検査](../../art/adventure-pixel.md)を参照。
+- **スマホの鮮明さ**: [描画解像度](../../../app/phaser/adventure-resolution.ts) でCanvas・カメラを高密度化する。味方と敵は[共通の画素密度](../../../lib/adventure-pixel-sampling.ts)とNEARESTで描き、敵の[独立した縮小キャッシュ](../../../app/phaser/road-sprite-filter.ts)はDPRに依存させない。[解像度検査](../../../tests/adventure-resolution.test.mjs) / [縮小検査](../../../tests/road-sprite-filter.test.mjs) / [輪郭と密度の検査](../../../tests/adventure-pixel-sampling.test.mjs) と、`TEST_DPR=3` を指定した道中のブラウザー検査でサイズ・リサイズ・タップを確認する。
 
 作業ポイントの説明札は [作業画像の下端への追従](../../../app/phaser/road-work-caption.ts) を参照。
 
