@@ -14,7 +14,7 @@ import {
   ROAD_SIGNPOST,
 } from "./road-art";
 import { adventureHeroAsset } from "@/lib/adventure-hero-art";
-import { adventureEnemyAsset } from "@/lib/adventure-enemy-art";
+import { adventureEnemyAsset, adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
 import type { AdventureBridge, RuntimeState } from "./renderer-session";
 
 export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
@@ -43,6 +43,7 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
             adventureEnemyAsset("merrill-standing"),
             adventureEnemyAsset("merrill-song"),
             adventureEnemyAsset("mushroom"),
+            adventureMushroomProjectile,
           ]
         : []),
       ...(look.work ? [look.work.asset] : []),

@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import type { RoadBattle, RoadEffect } from "@/lib/road-view";
 import { ROAD_EFFECTS } from "./road-art";
+import { adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
 import { roadY } from "@/lib/road-layout";
 import { paintCommand } from "./road-command-effect";
 import { duelEffect, paintDuelEffect } from "./road-duel-effects";
@@ -23,6 +24,8 @@ export class RoadEffects {
   private sprites = new Map<number, Phaser.GameObjects.Image>();
   private threads: Phaser.GameObjects.Graphics;
   constructor(private scene: Phaser.Scene) {
+    if (scene.textures.exists(adventureMushroomProjectile))
+      scene.textures.get(adventureMushroomProjectile).setFilter(0);
     this.threads = scene.add.graphics().setDepth(39);
     const texture = scene.textures.get(ROAD_EFFECTS);
     const source = texture.getSourceImage() as HTMLImageElement;

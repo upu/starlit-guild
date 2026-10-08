@@ -14,6 +14,7 @@ export const adventureEnemyIds = [
 ] as const;
 export type AdventureEnemyId = (typeof adventureEnemyIds)[number];
 export const adventureEnemyAsset = (id: AdventureEnemyId) => `/adventure-enemies/${id}.webp`;
+export const adventureMushroomProjectile = "/adventure-enemies/mushroom-projectile.webp";
 const ordinaryArt: Partial<Record<string, AdventureEnemyId>> = {
   "8": "slime",
   "9": "wolf",

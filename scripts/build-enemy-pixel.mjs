@@ -78,6 +78,8 @@ for (const id of adventureEnemyIds) {
     .webp({ lossless: true })
     .toBuffer();
   await emit(`${id}.webp`, delivery);
+  if (id === "mushroom")
+    await emit("mushroom-projectile.webp", await sharp(image).webp({ lossless: true }).toBuffer());
   anchors[id] = { source: box, left, top, width, height, originalVisibleFraction: ratio };
 }
 await emit("anchors.json", Buffer.from(JSON.stringify(anchors, null, 2) + "\n"));
