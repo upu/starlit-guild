@@ -1,0 +1,56 @@
+.discord-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #8d9ac080;
+  border-radius: 8px;
+  background: #202d46;
+  color: #eef0ff;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+.discord-link svg {
+  flex-shrink: 0;
+}
+
+.discord-link:hover {
+  background: #314263;
+  border-color: #bcc8ee;
+}
+
+.discord-link:focus-visible {
+  outline: 2px solid #fff0cb;
+  outline-offset: 3px;
+}
+
+.discord-community {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #587151;
+}
+
+.discord-community p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+main.start-screen .discord-link {
+  background: #101d32cc;
+  text-shadow: 0 1px 4px #020e18;
+}
+
+main.start-screen .discord-link:hover {
+  background: #314263;
+}

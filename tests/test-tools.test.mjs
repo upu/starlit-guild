@@ -8,6 +8,7 @@ import vm from "node:vm";
 import ts from "typescript";
 import * as jsx from "react/jsx-runtime";
 import * as React from "react";
+import * as communityLinks from "../lib/community-links.ts";
 
 function load(file, modules) {
   const code = ts.transpileModule(readFileSync(new URL(file, import.meta.url), "utf8"), {
@@ -29,6 +30,7 @@ function load(file, modules) {
 }
 
 function loadSavePanel(modules) {
+  modules["./discord-link"] = { DiscordCommunity: () => null };
   modules["./save-test-controls"] = load("../app/save-test-controls.tsx", modules);
   modules["./save-records"] = load("../app/save-records.tsx", modules);
   modules["./save-cloud-panel"] = load("../app/save-cloud-panel.tsx", modules);
@@ -41,6 +43,7 @@ test("page reads the runtime flag on each request and enables only the exact str
     Game = () => null;
   const { default: Home, dynamic } = load("../app/page.tsx", {
     "cloudflare:workers": { env },
+    "@/lib/community-links": communityLinks,
     "./game": { default: Game },
     "react/jsx-runtime": jsx,
   });
@@ -78,6 +81,7 @@ test("game passes the server capability to local game operations and defaults to
     "./phone-game": { PhoneGame: () => null },
     "./start-screen": { StartScreen: () => null },
     "./use-game-viewport": { useGameViewport: () => {} },
+    "./discord-link": { DiscordInviteContext: React.createContext(null) },
   });
   for (const enabled of [undefined, false, true]) {
     Game({ testToolsEnabled: enabled });
