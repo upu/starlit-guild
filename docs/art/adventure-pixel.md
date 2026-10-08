@@ -39,3 +39,7 @@ dev / buildではホーム素材の生成後に作り、CIでも鮮度を検査�
 `tests/chapter-road.browser.mjs` / `tests/chapter-four.browser.mjs`（実画面・リサイズ・タップ・加入）を使う。
 ローカルの `work/adventure-pixel/overview.png` は5人の実表示48px相当の一覧。
 ブラウザー確認とスマホ実機確認は区別し、実機確認は未実施。
+
+`/sprite-lab/adventure` はテスト機能ONのときだけ開ける動作見本。
+5人を並べて8種類の動作を再生・停止・コマ送りし、通常／2倍／3倍で確認できる。
+既存の見本帳と同じ再生制御を使い、ゲームの保存データにはアクセスしない。
