@@ -21,15 +21,18 @@ mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
 const errors = [];
 const results = [];
+const enemyAssets = new Set();
 
 async function open(state) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
+    if (response.ok() && response.url().includes("/adventure-enemies/"))
+      enemyAssets.add(new URL(response.url()).pathname);
     if (
       response.status() >= 400 &&
-      /\/scenery\/|\/animations\/|\/adventure-pixel\/|\/portraits\/|\/characters\/|\/stories\//.test(
+      /\/scenery\/|\/animations\/|\/adventure-pixel\/|\/adventure-enemies\/|\/portraits\/|\/characters\/|\/stories\//.test(
         response.url(),
       )
     )
@@ -231,6 +234,11 @@ try {
     results.push(name);
   }
   await verifyKorotakeEnding();
+  for (const id of ["lico-standing", "merrill-standing", "merrill-song", "mushroom"])
+    assert.ok(
+      enemyAssets.has(`/adventure-enemies/${id}.webp`),
+      `${id}: redrawn fourth-chapter art loaded`,
+    );
   assert.deepEqual(errors, []);
   writeFileSync(`${output}/result.json`, JSON.stringify({ results, errors }, null, 2));
   console.log(JSON.stringify({ results, errors }));

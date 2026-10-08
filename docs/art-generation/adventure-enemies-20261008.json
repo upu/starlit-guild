@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-08",
+  "styleReference": "assets/source/home-pixel/leon-v1.png",
+  "attempts": [
+    {
+      "id": "slime",
+      "source": "assets/source/adventure-enemies/slime-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/sprites.png"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the blue slime in the bottom left, round translucent blue body, dark blue oval eyes, cheerful open mouth. A small gelatinous monster. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "817face27f18c835f5a0563cd82d87b6f3d37ed595dcc5f77333f8effef3ab67",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/slime.webp"
+    },
+    {
+      "id": "wolf",
+      "source": "assets/source/adventure-enemies/wolf-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/sprites.png"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the gray wolf in the bottom row second column, silver-gray shaggy coat, creamy muzzle and belly, amber eye, alert ears, four paws, facing right. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "ba5e6d36f927929ff2283958fb5697df3fb9a5ccb2e2f55aeb5254c7e9555065",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/wolf.webp"
+    },
+    {
+      "id": "dragon",
+      "source": "assets/source/adventure-enemies/dragon-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/sprites.png"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the purple baby dragon in the bottom row third column, purple scales, cream belly, tan horns, orange eye, folded purple membranous wings, curled tail, seated facing right. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "ed086fcd95f446c37d8bc0331ddae8da7a4f9cd4aa3e9f3b555794b77ebd900a",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/dragon.webp"
+    },
+    {
+      "id": "plant",
+      "source": "assets/source/adventure-enemies/plant-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/sprites.png"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the lily-of-the-valley plant in the bottom right, broad green leaves, drooping white bell flowers, clustered roots and brown soil, a magical living plant. No glow specks outside its silhouette. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "4f66beadb4777df414cc141ee2b7fdb5e6429fb8284993d9e4ce3def4d0a0761",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/plant.webp"
+    },
+    {
+      "id": "pumpety",
+      "source": "assets/source/adventure-enemies/pumpety-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/puppets-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the left pumpkin-headed girl, oversized orange carved jack-o-lantern head covering her real face completely, long peach-pink curly hair, dark green leaf bow, black bodice, yellow ruffled dress, green decorations, black boots, raised marionette crossbar with all hanging strings intact. Retain her pumpkin head, do not expose a human face. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "510984629c9d7ff094491729ab8903b48bb39a22949398292373e32c92deab51",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/pumpety.webp"
+    },
+    {
+      "id": "puppet",
+      "source": "assets/source/adventure-enemies/puppet-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/puppets-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the middle small wooden marionette, jointed wooden body, round carved pumpkin face, floppy dark green witch hat decorated in golden stars and a small pumpkin charm, dark green and gold cape, big boots, extended wooden hands. Toy-sized proportions. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "4ab27515875fb5c57f5ca9a26e31e6a4cdc77b0473dad58050c86cb2f3d41723",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/puppet.webp"
+    },
+    {
+      "id": "golem",
+      "source": "assets/source/adventure-enemies/golem-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/puppets-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. Only the right hulking stone golem, broad chunky pale gray cracked stone limbs, tiny circular black eyes, moss and leaves, dark green and gold Halloween cloth, pumpkin decorations and lantern, wooden rack and barrel on its back. Massive broad silhouette, friendly but powerful. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "0a9ed9a98c3fb6aca716def7f6b682273aab748712badaa9d8a33af0b4adc2b6",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/golem.webp"
+    },
+    {
+      "id": "lico-standing",
+      "source": "assets/source/adventure-enemies/lico-standing-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/lico-standing-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. The same red-haired young alchemist Lico, messy fluffy red ponytail, flower clip, freckles, round eyeglasses, bright green eyes, ivory blouse, short burgundy apron dress and dark vest, broad cross-body satchel, sandals. Holding the same lime-green round-bottom potion flask up in one hand. Preserve freckles and unruly hair, not a conventional flawless beauty. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "19b635b0c8afd15575a60d8ddda26a8f7b4e0f24284bb627f4c1cd9d7f2cc210",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/lico-standing.webp"
+    },
+    {
+      "id": "merrill-standing",
+      "source": "assets/source/adventure-enemies/merrill-standing-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/merrill-standing-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. The same mischievously hungry dryad Merrill, moss-green short fluffy hair, green eyes, real bright red pomegranate flower growing on her head with red ribbon, green sleeveless outer coat, cream shirt and shorts, brown boots with red laces, food-filled backpack with pumpkin charm. Ready standing stance. Anatomical LEFT arm alone wears the integrated brown wooden zither gauntlet: strings on OUTER BACK of forearm toward back of hand; palm underside stays open; anatomical RIGHT hand is bare. No separate handheld harp. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "e1cec4bf72b42e6696d252fa3278a797999d5ad00e1d9ac9ede8bdc941ebb8af",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/merrill-standing.webp"
+    },
+    {
+      "id": "merrill-song",
+      "source": "assets/source/adventure-enemies/merrill-song-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/merrill-song-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. The same dryad Merrill in her singing pose: happy closed eyes, open singing mouth, one knee lifted. Moss-green fluffy short hair, head's red pomegranate flower and red ribbon, green sleeveless outer coat, cream shirt and shorts, brown boots red laces, food-filled backpack pumpkin charm. Anatomical LEFT arm alone wears the integrated brown wooden zither gauntlet with strings on back of forearm toward back of hand, palm underside open. Bare anatomical RIGHT hand plucks the strings on her LEFT gauntlet. No independent harp or lute. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "63712b6d45a3a34d16e35ee0aa9c3ce3c957ad0935ab39ad0424f4f9683a61e9",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/merrill-song.webp"
+    },
+    {
+      "id": "mushroom",
+      "source": "assets/source/adventure-enemies/mushroom-v1.png",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/mushroom-v1.webp"
+      ],
+      "prompt": "Restyle the enemy from reference 2 into exactly the same small Japanese RPG chibi sprite painting style as reference 1 (Leon home sprite sheet): thick dark brown stepped/pixel-like outer contours, clean crisp linework, limited warm color ramps with 3–4 deliberate shadow/highlight planes, chunky readable shapes and faces, no glossy detailed illustration shading, no airbrushed gradient, no painterly texture. Reference 1 is ONLY the linework, paint and pixel-like finish master; never copy Leon's clothing or hair onto the enemy. Reference 2 is the enemy's identity/design master. The same stout mushroom creature Korotake, round brown mushroom cap with large ivory spots, cream stubby body, small determined frowning face, round little fists and short feet. Retain its comical grumpy expression. Produce ONE complete isolated full-body sprite centered in a square transparent canvas, with very generous empty margin on all sides, feet at same ground line, no ground shadow, no scenery, no text, no other characters, no cropping. Keep all weapons, props, flowers, wings and strings inside the canvas. Slight 3/4 view facing right unless the reference pose requires otherwise. The result must look from the same artist and same game as the first reference and stay readable at a displayed height of 48 pixels.",
+      "sha256": "9463ffecfd1564428f0b4abd789d087739a6e093bc88cfc7efd1eb023439e161",
+      "status": "accepted",
+      "retakes": 0,
+      "delivery": "public/adventure-enemies/mushroom.webp"
+    }
+  ],
+  "pipeline": "npm run enemy-art:optimize; npm run enemy-art:check",
+  "qa": {
+    "source": "all 11 silhouettes inspected together",
+    "delivery": "48px hero reference, shared feet, alpha gutters, no stretching; 390px viewport at 1x/2x/3x",
+    "gameplay": "ordinary battle, puppet boss, Lico apparatus, Merrill song, Korotake",
+    "retakes": 0
+  }
+}

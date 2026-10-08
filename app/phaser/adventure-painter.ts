@@ -1,5 +1,6 @@
 import type Phaser from "phaser";
 import { adventureHeroArt } from "@/lib/adventure-hero-art";
+import { restyledEnemyAsset } from "@/lib/adventure-enemy-art";
 import {
   adventureFrame,
   adventureAssets,
@@ -15,6 +16,7 @@ import { RoadSpriteFilter } from "./road-sprite-filter";
 import { AdventureEffectsPainter } from "./adventure-painter-effects";
 import {
   enemyAspect,
+  enemyCell,
   enemyLabelColor,
   enemyWindup,
   makeFigure,
@@ -289,9 +291,10 @@ export class AdventurePainter {
     }
     const width = this.scene.scale.width,
       height = this.scene.scale.height,
-      asset = target.asset;
+      asset = restyledEnemyAsset(target.asset, target.sprite);
     opponent.image.setTexture(asset, asset === "/sprites.png" ? String(target.sprite) : undefined);
     const enemySize = size * target.scale,
+      cell = enemyCell(asset, enemySize),
       pulse = this.runtime.reduced ? 1 : 1 + Math.sin(now / 420) * 0.015,
       events = frame.events.filter((event) => !event.enemy || event.enemy === target.id);
     const hurt = events.some(
@@ -306,12 +309,13 @@ export class AdventurePainter {
     opponent.image
       .setPosition(target.x * width + offset, target.y * height - Math.abs(windup))
       .setAngle(windup)
-      .setDisplaySize(enemySize * pulse * enemyAspect(asset), enemySize / pulse)
+      .setDisplaySize(cell.size * pulse * enemyAspect(asset), cell.size / pulse)
+      .setOrigin(0.5, cell.origin)
       .setFlipX(target.battle)
       .setDepth(10 + target.y * 10);
     this.spriteFilter.applyPixel(opponent.image, size * 0.9, {
-      width: enemySize * enemyAspect(asset),
-      height: enemySize,
+      width: cell.size * enemyAspect(asset),
+      height: cell.size,
     });
     if (hurt && !this.runtime.reduced) opponent.image.setTint(0xffedb1);
     else opponent.image.clearTint();

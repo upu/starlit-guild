@@ -5,42 +5,43 @@ import { enemyDisplayHeight } from "@/app/phaser/road-enemy-appearance";
 import type { RoadEnemy } from "@/lib/road-view";
 import { adventureHeroAsset } from "@/lib/adventure-hero-art";
 
+import {
+  adventureEnemyArt as art,
+  adventureEnemyAsset,
+  type AdventureEnemyId,
+} from "@/lib/adventure-enemy-art";
+
 type Example = {
   label: string;
-  asset: string;
+  art: AdventureEnemyId;
   kind: RoadEnemy["kind"];
   boss?: boolean;
-  index?: number;
-  rect?: readonly [number, number, number, number];
 };
 const examples: Example[] = [
-  { label: "スライム", asset: "/sprites.png", kind: "slime", index: 8 },
-  { label: "大きなスライム", asset: "/sprites.png", kind: "slime", boss: true, index: 8 },
-  { label: "狼", asset: "/sprites.png", kind: "slime", index: 9 },
-  { label: "竜", asset: "/sprites.png", kind: "slime", boss: true, index: 10 },
-  { label: "植物", asset: "/sprites.png", kind: "slime", index: 11 },
+  { label: "スライム", art: "slime", kind: "slime" },
+  { label: "大きなスライム", art: "slime", kind: "slime", boss: true },
+  { label: "狼", art: "wolf", kind: "slime" },
+  { label: "竜", art: "dragon", kind: "slime", boss: true },
+  { label: "植物", art: "plant", kind: "slime" },
   {
     label: "カボチャ頭の少女",
-    asset: "/animations/road/puppets-v1.webp",
+    art: "pumpety",
     kind: "pumpety",
-    rect: [0, 0, 740, 724],
   },
   {
     label: "人形",
-    asset: "/animations/road/puppets-v1.webp",
+    art: "puppet",
     kind: "puppet",
-    rect: [740, 0, 610, 724],
   },
   {
     label: "ゴーレム",
-    asset: "/animations/road/puppets-v1.webp",
+    art: "golem",
     kind: "golem",
-    rect: [1350, 0, 822, 724],
   },
-  { label: "リコの仕掛け", asset: "/animations/road/lico-standing-v1.webp", kind: "lico" },
-  { label: "メリル", asset: "/animations/road/merrill-standing-v1.webp", kind: "merrill" },
-  { label: "メリル・歌", asset: "/animations/road/merrill-song-v1.webp", kind: "merrill" },
-  { label: "コロタケ", asset: "/animations/road/mushroom-v1.webp", kind: "mushroom" },
+  { label: "リコの仕掛け", art: "lico-standing", kind: "lico" },
+  { label: "メリル", art: "merrill-standing", kind: "merrill" },
+  { label: "メリル・歌", art: "merrill-song", kind: "merrill" },
+  { label: "コロタケ", art: "mushroom", kind: "mushroom" },
 ];
 
 function EnemyFigure({ example, zoom }: { example: Example; zoom: number }) {
@@ -57,7 +58,7 @@ function EnemyFigure({ example, zoom }: { example: Example; zoom: number }) {
       if (!disposed)
         canvas.setAttribute("aria-label", `${example.label}の画像を読み込めませんでした`);
     };
-    image.src = example.asset;
+    image.src = adventureEnemyAsset(example.art);
     return () => {
       disposed = true;
     };
@@ -73,32 +74,20 @@ function EnemyFigure({ example, zoom }: { example: Example; zoom: number }) {
 }
 
 function paintExample(canvas: HTMLCanvasElement, image: HTMLImageElement, example: Example) {
-  const [x, y, width, height] =
-    example.rect ??
-    (example.index !== undefined
-      ? [
-          Math.round(((example.index % 4) * image.width) / 4),
-          Math.round((Math.floor(example.index / 4) * image.height) / 3),
-          Math.floor(image.width / 4),
-          Math.floor(image.height / 3),
-        ]
-      : [0, 0, image.width, image.height]);
+  const [x, y, width, height] = [0, 0, image.width, image.height];
   const h =
-    (enemyDisplayHeight({ kind: example.kind, boss: example.boss ?? false }, 390, 400) /
+    ((enemyDisplayHeight({ kind: example.kind, boss: example.boss ?? false }, 390, 400) /
       (390 * 0.18 * 0.9)) *
-    48;
-  const w = example.kind === "slime" ? h : (h * width) / height;
-  const sample = samplePixelFrame(
-    image,
-    { x, y, width, height },
-    enemySampleSize(w, h, 48),
-    example.index !== undefined,
-  );
+      48 *
+      art.cell) /
+    art.height;
+  const w = h;
+  const sample = samplePixelFrame(image, { x, y, width, height }, enemySampleSize(w, h, 48), false);
   canvas.width = sample.width;
   canvas.height = sample.height;
   canvas.style.width = `${String(w)}px`;
   canvas.style.height = `${String(h)}px`;
-  const origin = example.kind === "slime" ? 0.9 : example.rect ? 0.98 : 1;
+  const origin = art.foot / art.cell;
   canvas.style.transform = `translateY(${String(h * (1 - origin))}px)`;
   canvas.getContext("2d")?.drawImage(sample, 0, 0);
   canvas.dataset.status = "ready";

@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import { spriteAsset, spriteFrame, type AdventureFrame } from "@/lib/adventure-presentation";
 import { heroSheets } from "@/lib/hero-animation";
+import { adventureEnemyArt } from "@/lib/adventure-enemy-art";
 
 export type Figure = {
   image: Phaser.GameObjects.Image;
@@ -51,6 +52,13 @@ export const enemyLabelColor = (cue: string) => (cue ? "#ffe58c" : "#fff1cf");
 export const enemyWindup = (cue: string, reduced: boolean, now: number) =>
   cue && !reduced ? Math.sin(now / 140) * 4 : 0;
 export const enemyAspect = (asset: string) => (asset.startsWith("/enemies/") ? 2 / 3 : 1);
+export function enemyCell(asset: string, height: number) {
+  const restyled = asset.startsWith("/adventure-enemies/");
+  return {
+    size: restyled ? (height * adventureEnemyArt.cell) / adventureEnemyArt.height : height,
+    origin: restyled ? adventureEnemyArt.foot / adventureEnemyArt.cell : 0.9,
+  };
+}
 
 export function registerHeroFrames(
   texture: Phaser.Textures.Texture,

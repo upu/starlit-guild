@@ -140,7 +140,8 @@ try {
     page.on("request", (request) => {
       if (
         request.url().includes("/animations/road/") ||
-        request.url().includes("/adventure-pixel/")
+        request.url().includes("/adventure-pixel/") ||
+        request.url().includes("/adventure-enemies/")
       )
         roadAssets.add(new URL(request.url()).pathname);
     });
@@ -394,6 +395,11 @@ try {
     if (save.profiles[0].state.squads[0].members.includes("lico"))
       assert.ok(roadAssets.has("/adventure-pixel/lico.webp"), "Lico: joining art loaded");
     assert.ok([...roadAssets].every((asset) => asset.endsWith(".webp")));
+    for (const id of ["slime", "wolf", "dragon", "plant", "pumpety", "puppet", "golem"])
+      assert.ok(
+        roadAssets.has(`/adventure-enemies/${id}.webp`),
+        `${id}: restyled enemy art loaded`,
+      );
     if (name === "night-cargo") {
       await page.setViewportSize({ width: 390, height: 844 });
       await new Promise((resolve) => setTimeout(resolve, 75));

@@ -10,6 +10,7 @@ import {
   type GameEvent,
 } from "./game.ts";
 import { originalArt } from "./original-characters.ts";
+import { restyledEnemyAsset } from "./adventure-enemy-art.ts";
 import { questScenery } from "./scenery.ts";
 import { heroSheets } from "./hero-animation.ts";
 import { isPrologueQuest, RESTORATION_QUEST } from "./prologue.ts";
@@ -331,7 +332,10 @@ export function adventureAssets(frame: AdventureFrame) {
     const sheet = heroSheets[m.id];
     if (sheet?.ready) assets.add(sheet.asset);
   }
-  for (const target of frame.targets) assets.add(target.asset);
+  for (const target of frame.targets) {
+    assets.add(target.asset);
+    assets.add(restyledEnemyAsset(target.asset, target.sprite));
+  }
   return [...assets];
 }
 

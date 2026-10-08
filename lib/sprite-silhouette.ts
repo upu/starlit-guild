@@ -20,7 +20,7 @@ function keepEdge(keep: Uint8Array, p: number, width: number, height: number) {
     }
 }
 
-function largestComponent(data: Uint8ClampedArray, width: number, height: number) {
+export function largestComponent(data: Uint8ClampedArray, width: number, height: number) {
   const seen = new Uint8Array(width * height);
   let largest: number[] = [];
   for (let p = 0; p < seen.length; p++) {

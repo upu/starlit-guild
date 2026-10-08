@@ -1,6 +1,10 @@
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import type { RoadEnemy, RoadBattle } from "@/lib/road-view";
-import { ROAD_PUPPETS } from "./road-art";
+import {
+  adventureEnemyArt,
+  adventureEnemyAsset,
+  ordinaryEnemyArt,
+} from "@/lib/adventure-enemy-art";
 import type Phaser from "phaser";
 
 const puppetNames = {
@@ -37,11 +41,9 @@ export function fitEnemy(
   time: number,
   reduced: boolean,
 ) {
-  const { puppet, character } = enemyAppearance(enemy);
-  if (puppet) image.setScale(size / 724).setOrigin(0.5, 0.98);
-  if (character || enemy.kind === "mushroom") {
-    image.setScale(size / image.frame.height).setOrigin(0.5, 1);
-  }
+  image
+    .setScale(size / adventureEnemyArt.height)
+    .setOrigin(0.5, adventureEnemyArt.foot / adventureEnemyArt.cell);
   if (!reduced && (enemy.action === "command" || enemy.action === "rally")) {
     const beat = Math.sin(
       Math.min(1, Math.max(0, (time - (enemy.actionAt ?? time)) / 900)) * Math.PI,
@@ -84,23 +86,34 @@ export function enemyDisplayHeight(
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
   if (enemy.kind === "mushroom")
     return {
-      asset: "/animations/road/mushroom-v1.webp",
+      asset: adventureEnemyAsset("mushroom"),
       frame: "__BASE",
       puppet: false,
       character: false,
     };
   if (enemy.kind === "lico" || enemy.kind === "merrill")
     return {
-      asset: `/animations/road/${enemy.kind}-${enemy.action === "song" ? "song" : "standing"}-v1.webp`,
+      asset: adventureEnemyAsset(
+        enemy.kind === "lico"
+          ? "lico-standing"
+          : enemy.action === "song"
+            ? "merrill-song"
+            : "merrill-standing",
+      ),
       frame: "__BASE",
       puppet: false,
       character: true,
     };
   if (enemy.kind !== "slime")
-    return { asset: ROAD_PUPPETS, frame: enemy.kind, puppet: true, character: false };
+    return {
+      asset: adventureEnemyAsset(enemy.kind),
+      frame: "__BASE",
+      puppet: true,
+      character: false,
+    };
   return {
-    asset: "/sprites.png",
-    frame: look?.enemies[enemy.id]?.frame || "slime",
+    asset: adventureEnemyAsset(ordinaryEnemyArt(look?.enemies[enemy.id]?.frame || "8")),
+    frame: "__BASE",
     puppet: false,
     character: false,
   };

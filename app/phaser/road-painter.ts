@@ -11,7 +11,6 @@ import { applyHeroPose, applyWorkPose, registerAdventureHero } from "./road-pose
 import {
   ROAD_HERB,
   ROAD_CARGO,
-  ROAD_PUPPETS,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
@@ -19,6 +18,7 @@ import {
   ROAD_SIGNPOST,
 } from "./road-art";
 import { adventureHeroAsset } from "@/lib/adventure-hero-art";
+import { adventureEnemyArt } from "@/lib/adventure-enemy-art";
 import {
   enemyAppearance,
   enemyArrived,
@@ -61,10 +61,6 @@ export class RoadPainter {
     for (const id of ["aria", "leon", "mira", "finn"] as const) registerAdventureHero(scene, id);
     this.registerWorkArt();
     this.destination.setFrame("marker");
-    const puppets = scene.textures.get(ROAD_PUPPETS);
-    puppets.add("pumpety", 0, 0, 0, 740, 724);
-    puppets.add("puppet", 0, 740, 0, 610, 724);
-    puppets.add("golem", 0, 1350, 0, 822, 724);
     const atlas = scene.textures.get("/sprites.png");
     const source = atlas.getSourceImage() as HTMLImageElement;
     atlas.add(
@@ -229,24 +225,25 @@ export class RoadPainter {
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
-    const { asset, frame, character, puppet } = enemyAppearance(enemy, this.look);
+    const { asset, frame } = enemyAppearance(enemy, this.look);
     const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
     figure.image
       .setPosition(x, y + bounce)
       .setDisplaySize(size, size)
-      .setFlipX(character ? !facesRight : facesRight)
+      .setFlipX(
+        enemy.kind === "slime" || ["pumpety", "puppet", "golem"].includes(enemy.kind)
+          ? facesRight
+          : !facesRight,
+      )
       .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
     fitEnemy(figure.image, enemy, size, state.time, reduced);
     const heroHeight =
       Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34) * 0.9;
-    const aspect =
-      character || puppet || enemy.kind === "mushroom"
-        ? figure.image.frame.cutWidth / figure.image.frame.cutHeight
-        : 1;
-    this.spriteFilter.applyPixel(figure.image, heroHeight, { width: size * aspect, height: size });
+    const cellSize = (size * adventureEnemyArt.cell) / adventureEnemyArt.height;
+    this.spriteFilter.applyPixel(figure.image, heroHeight, { width: cellSize, height: cellSize });
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)

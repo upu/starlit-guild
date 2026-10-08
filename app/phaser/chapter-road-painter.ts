@@ -7,15 +7,14 @@ import {
   ROAD_EFFECTS,
   ROAD_HERB,
   ROAD_CARGO,
-  ROAD_PUPPETS,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  roadSheet,
 } from "./road-art";
 import { adventureHeroAsset } from "@/lib/adventure-hero-art";
+import { adventureEnemyAsset } from "@/lib/adventure-enemy-art";
 import type { AdventureBridge } from "./renderer-session";
 import type { RuntimeState } from "./adventure-painter-figures";
 
@@ -29,7 +28,9 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_EFFECTS,
       ROAD_HERB,
       ROAD_CARGO,
-      ROAD_PUPPETS,
+      ...(["slime", "wolf", "dragon", "plant", "pumpety", "puppet", "golem"] as const).map(
+        adventureEnemyAsset,
+      ),
       ROAD_DESTINATION,
       ROAD_WORKSITES,
       ROAD_BERNE_WORKSITES,
@@ -37,12 +38,12 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_SIGNPOST,
       ...(["aria", "leon", "mira", "finn"] as const).map(adventureHeroAsset),
       ...(input.squad.members.includes("lico") ? [adventureHeroAsset("lico")] : []),
-      ...(input.squad.run?.quest === "lico-records" ? [roadSheet("lico")] : []),
+      ...(input.squad.run?.quest === "lico-records" ? [adventureEnemyAsset("lico-standing")] : []),
       ...(input.squad.run?.quest === "merrill-seedlings"
         ? [
-            "/animations/road/merrill-standing-v1.webp",
-            "/animations/road/merrill-song-v1.webp",
-            "/animations/road/mushroom-v1.webp",
+            adventureEnemyAsset("merrill-standing"),
+            adventureEnemyAsset("merrill-song"),
+            adventureEnemyAsset("mushroom"),
           ]
         : []),
       ...(look.work ? [look.work.asset] : []),
