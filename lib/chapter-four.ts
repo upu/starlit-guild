@@ -1,4 +1,4 @@
-import type { Quest } from "./game.ts";
+import type { Quest, QuestStyle } from "./game.ts";
 import { shortRoute, STANDARD_QUEST_NODES } from "./puppet-battles.ts";
 
 export const WALNUT_INTERLUDE = "interlude-promised-walnuts";
@@ -129,6 +129,18 @@ export const chapterFourStages = definitions.map(([quest, title, , , arrival, de
   detail,
 }));
 
+const ranks = [32, 33, 34, 35, 35, 35, 36, 37, 38, 39];
+// In these two confrontations the party shields the work rather than fighting back.
+const guarded: Partial<Record<string, Pick<QuestStyle, "guardText" | "enemyText">>> = {
+  [LICO_RECORDS_QUEST]: {
+    guardText: "板と栓を押さえる",
+    enemyText: "仕掛けの光と煙に足止めされた",
+  },
+  [MERRILL_SEEDLINGS_QUEST]: {
+    guardText: "苗の籠を守る",
+    enemyText: "メリルの演奏に籠の運び手が立ち止まった",
+  },
+};
 export const chapterFourQuests: Quest[] = definitions.map(
   ([id, name, region, desc, , , scenery, kind], index) => ({
     id,
@@ -156,15 +168,12 @@ export const chapterFourQuests: Quest[] = definitions.map(
           : "街道のスライム",
     background: `/scenery/${scenery}-background.webp`,
     availability: "repeatable",
+    style: { rank: ranks[index], ...guarded[id] },
   }),
 );
 
 export const isChapterFourQuest = (id: string) =>
   chapterFourStages.some((stage) => stage.quest === id);
-export const chapterFourRank = (id: string) =>
-  [32, 33, 34, 35, 35, 35, 36, 37, 38, 39][
-    chapterFourStages.findIndex((stage) => stage.quest === id)
-  ];
 
 type Work = { kind: "battle" | "escort" | "gather"; name: string };
 const jobs = (kind: Work["kind"], ...names: string[]): Work[] =>

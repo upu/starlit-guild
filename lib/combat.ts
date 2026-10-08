@@ -1,21 +1,8 @@
-import { chapterThreeRank } from "./chapter-three.ts";
 import { confrontationEnemies, type BattleTrick, type BattleCue } from "./chapter-four-battles.ts";
-import { chapterFourRank, isChapterFourQuest } from "./chapter-four.ts";
 import type { Quest, Run, State } from "./game.ts";
 import { level } from "./roster.ts";
 import { singleOpponent } from "./quest-sprites.ts";
 import { equippedItems } from "./equipment.ts";
-import {
-  PICNIC_QUEST,
-  MOON_HERB_QUEST,
-  DELIVERY_PREP_QUEST,
-  MOUNTAIN_QUEST,
-  SIGNPOST_QUEST,
-  GOLEM_QUEST,
-  BLOCKADE_QUEST,
-  HOUSE_CALLS_QUEST,
-  MEDICINE_RETURN_QUEST,
-} from "./chapter-two.ts";
 import { prologueStages } from "./prologue.ts";
 import { nearestOpponent, roadTransport } from "./chapter-road.ts";
 import {
@@ -44,24 +31,12 @@ const firstChapterRanks = [0, 1, 2, 6, 10, 12, 17, 21, 25];
 
 // Difficulty belongs to a quest, never its repeat count or the save's total clears.
 export function combatRank(q: Quest) {
-  if (isChapterFourQuest(q.id)) return chapterFourRank(q.id);
-  const third = chapterThreeRank(q.id);
-  if (third !== undefined) return third;
-  if (q.id === PICNIC_QUEST) return 0;
-  if (q.id === MOON_HERB_QUEST) return 21;
-  if (q.id === MOUNTAIN_QUEST) return 22;
-  if (q.id === SIGNPOST_QUEST) return 23;
-  if (q.id === GOLEM_QUEST) return 24;
-  if (q.id === BLOCKADE_QUEST) return 25;
-  if (q.id === MEDICINE_RETURN_QUEST) return 20;
+  if (q.style?.rank !== undefined) return q.style.rank;
   const stage = prologueStages.findIndex((stage) => stage.quest === q.id);
   return stage >= 0 ? firstChapterRanks[stage] : Math.max(4, 4 + Math.round((q.need - 30) / 5));
 }
 export function workResistance(q: Quest) {
-  // These quiet stages have no enemy, but sit between ranked encounters.
-  if (q.id === DELIVERY_PREP_QUEST) return 21;
-  if (q.id === HOUSE_CALLS_QUEST) return 25;
-  return combatRank(q);
+  return q.style?.workResistance ?? combatRank(q);
 }
 export function penetration(s: State, hero: string) {
   const weapon = equippedItems(s, hero).find((item) => item.slot === "weapon");

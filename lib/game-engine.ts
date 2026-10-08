@@ -1,8 +1,6 @@
 import { applyPinchConsumable } from "./consumable-effects.ts";
 import { settleGuild } from "./guild-engine.ts";
-import { isChapterThreeQuest } from "./chapter-three.ts";
 import { paralyzed, shiftConfrontationClocks } from "./chapter-four-battles.ts";
-import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
 import { enemyText, groupEnemyTurns } from "./enemy-turns.ts";
 import { damageEnemy, penetration } from "./combat.ts";
 import {
@@ -12,22 +10,6 @@ import {
   roadComplete,
   roadTransport,
 } from "./chapter-road.ts";
-import {
-  TOWN_QUEST,
-  TOWER_QUEST,
-  NIGHT_QUEST,
-  WETLAND_QUEST,
-  WATERWAY_QUEST,
-  RESTORATION_QUEST,
-  MOSS_QUEST,
-} from "./prologue.ts";
-import {
-  DELIVERY_PREP_QUEST,
-  HOUSE_CALLS_QUEST,
-  MEDICINE_RETURN_QUEST,
-  MOON_HERB_QUEST,
-  SIGNPOST_QUEST,
-} from "./chapter-two.ts";
 import {
   equippedTechnique,
   techniqueHealing,
@@ -67,54 +49,26 @@ import {
   reward,
 } from "./game-run.ts";
 
-function quietStageWork(q: Quest, kind: Encounter) {
-  return (
-    [TOWN_QUEST, WETLAND_QUEST, DELIVERY_PREP_QUEST, HOUSE_CALLS_QUEST].includes(q.id) ||
-    ([
-      TOWER_QUEST,
-      NIGHT_QUEST,
-      WATERWAY_QUEST,
-      RESTORATION_QUEST,
-      MOSS_QUEST,
-      MOON_HERB_QUEST,
-      SIGNPOST_QUEST,
-      MEDICINE_RETURN_QUEST,
-    ].includes(q.id) &&
-      kind !== "battle")
-  );
+// Quest styles turn some actions into careful work; otherwise specials and hits read as attacks.
+function quietAction(q: Quest, kind: Encounter) {
+  const quiet = q.style?.quietWork;
+  return quiet === "always" || (quiet === "work" && kind !== "battle");
 }
 function actorEventKind(q: Quest, kind: Encounter, special: boolean): GameEvent["kind"] {
-  if ([LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST].includes(q.id) && kind === "battle")
-    return "gather";
-  if (isChapterThreeQuest(q.id) && kind !== "battle") return "gather";
-  if (quietStageWork(q, kind)) return "gather";
+  if (kind === "battle" && q.style?.guardText) return "gather";
+  if (quietAction(q, kind)) return "gather";
   if (special) return "skill";
   return kind === "battle" ? "hit" : "gather";
 }
-function stageWorkText(q: Quest, kind: Encounter, special: boolean) {
+function workText(q: Quest, kind: Encounter, special: boolean) {
   if (kind === "battle") return null;
-  if (isChapterThreeQuest(q.id)) return "声を掛け合って作業を進める";
-  if ([RESTORATION_QUEST, MOSS_QUEST].includes(q.id))
-    return kind === "gather" ? "手の届く範囲を丁寧に取り除く" : "声を掛け合って作業を進める";
-  const texts: Partial<Record<string, [string, string]>> = {
-    [HOUSE_CALLS_QUEST]: ["往診の包みと水を運ぶ", "控えと空き瓶を確かめる"],
-    [MEDICINE_RETURN_QUEST]: ["空き瓶を守って道を歩く", "道標と荷車の往来を確かめる"],
-    [DELIVERY_PREP_QUEST]: ["瓶と布を確かめて荷造り", "荷札と包みを照らし合わせる"],
-    [SIGNPOST_QUEST]: ["踏み跡と道筋を確かめる", "道標を元の道へ戻す"],
-    [MOON_HERB_QUEST]: ["葉の裏を見比べて採る", "採った場所ごとに包みを分ける"],
-    [WATERWAY_QUEST]: ["草を分けて水路の道筋を確かめる", "地図と苔の続く先を照らし合わせる"],
-    [WETLAND_QUEST]: ["草葉を分けて苔を探す", "葉の形と湿り気を丁寧に確かめる"],
-    [TOWER_QUEST]: ["道端の薬草を採る", "葉を見分けて丁寧に採る"],
-    [NIGHT_QUEST]: ["苔灯で足元を照らす", "灯りを寄せて道を確かめる"],
-  };
-  return texts[q.id]?.[Number(special)] || null;
+  const texts = (kind === "gather" && q.style?.gatherText) || q.style?.workText;
+  return texts?.[Number(special)] || null;
 }
 function actorEventText(q: Quest, kind: Encounter, hero: string, special: boolean) {
-  if (q.id === LICO_RECORDS_QUEST && kind === "battle") return "板と栓を押さえる";
-  if (q.id === MERRILL_SEEDLINGS_QUEST && kind === "battle") return "苗の籠を守る";
-  const work = stageWorkText(q, kind, special);
-  if (work) return work;
-  if (q.id === TOWN_QUEST) return special ? "息を合わせて荷運び" : "荷札の確認・配達";
+  if (kind === "battle" && q.style?.guardText) return q.style.guardText;
+  const text = workText(q, kind, special) || q.style?.actionText?.[Number(special)];
+  if (text) return text;
   if (special) return heroSkills[hero].name;
   return kind === "battle" ? "攻撃" : "採取・護衛";
 }
@@ -270,7 +224,7 @@ function step(s: State, sq: Squad) {
       r,
       at,
       "move",
-      targetName(q, r.node, r.nodes) + (q.id === TOWN_QUEST ? "。" : "を発見！"),
+      targetName(q, r.node, r.nodes) + (q.style?.quietArrival ? "。" : "を発見！"),
     );
   }
   const actors = runActorTurns(s, sq, r, q, kind, at);

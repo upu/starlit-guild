@@ -91,6 +91,7 @@ export const chapterTwoQuests: Quest[] = [
     enemy: 8,
     enemyName: "丘のスライム",
     background: "/scenery/tower-road-background.webp",
+    style: { rank: 0 },
     availability: "repeatable",
   },
   {
@@ -110,6 +111,11 @@ export const chapterTwoQuests: Quest[] = [
     enemyName: "林のスライム",
     background: "/scenery/forest-background.webp",
     gatherTarget: "月の光を蓄えた薬草",
+    style: {
+      quietWork: "work",
+      workText: ["葉の裏を見比べて採る", "採った場所ごとに包みを分ける"],
+      rank: 21,
+    },
     availability: "repeatable",
   },
   {
@@ -129,6 +135,12 @@ export const chapterTwoQuests: Quest[] = [
     enemyName: "配達の包み",
     escortTarget: "配達の包み",
     background: "/scenery/town-deliveries-background.webp",
+    style: {
+      quietWork: "always",
+      workText: ["瓶と布を確かめて荷造り", "荷札と包みを照らし合わせる"],
+      // A quiet stage with no enemy, but it sits between ranked encounters.
+      workResistance: 21,
+    },
     availability: "repeatable",
   },
   {
@@ -147,6 +159,7 @@ export const chapterTwoQuests: Quest[] = [
     enemy: 9,
     enemyName: "山道の霧狼",
     background: "/scenery/mountain-road-background.webp",
+    style: { rank: 22 },
     availability: "repeatable",
   },
   {
@@ -166,6 +179,11 @@ export const chapterTwoQuests: Quest[] = [
     enemyName: "道標をさらう人形",
     escortTarget: "道標",
     background: "/scenery/forest-background.webp",
+    style: {
+      quietWork: "work",
+      workText: ["踏み跡と道筋を確かめる", "道標を元の道へ戻す"],
+      rank: 23,
+    },
     availability: "repeatable",
   },
   {
@@ -184,6 +202,7 @@ export const chapterTwoQuests: Quest[] = [
     enemy: 10,
     enemyName: "おねだりする運搬用ゴーレム",
     background: "/scenery/mountain-road-background.webp",
+    style: { rank: 24 },
     availability: "repeatable",
   },
   {
@@ -202,6 +221,7 @@ export const chapterTwoQuests: Quest[] = [
     enemy: 10,
     enemyName: "通せんぼする人形",
     background: "/scenery/mountain-road-background.webp",
+    style: { rank: 25 },
     availability: "repeatable",
   },
   {
@@ -220,6 +240,12 @@ export const chapterTwoQuests: Quest[] = [
     enemy: 8,
     escortTarget: "往診の手伝い",
     background: "/scenery/town-deliveries-background.webp",
+    style: {
+      quietWork: "always",
+      workText: ["往診の包みと水を運ぶ", "控えと空き瓶を確かめる"],
+      // A quiet stage with no enemy, but it sits between ranked encounters.
+      workResistance: 25,
+    },
     availability: "repeatable",
   },
   {
@@ -239,6 +265,11 @@ export const chapterTwoQuests: Quest[] = [
     enemyName: "山道のスライム",
     escortTarget: "空き瓶と控え",
     background: "/scenery/mountain-road-background.webp",
+    style: {
+      quietWork: "work",
+      workText: ["空き瓶を守って道を歩く", "道標と荷車の往来を確かめる"],
+      rank: 20,
+    },
     availability: "repeatable",
   },
 ];

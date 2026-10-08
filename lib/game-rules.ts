@@ -3,7 +3,6 @@ import { chapterFourWorkload, chapterFourWork } from "./chapter-four.ts";
 import { equipmentBonus } from "./equipment.ts";
 import { questNodes, puppetBattleName } from "./puppet-battles.ts";
 import { createEnemies, penetration, reducedDamage, workResistance } from "./combat.ts";
-import { TRADE_QUEST, RETURN_QUEST, TOWN_QUEST, NIGHT_QUEST, WETLAND_QUEST } from "./prologue.ts";
 import { chapterTwoWork, chapterTwoWorkload } from "./chapter-two.ts";
 import { techniqueMultiplier } from "./techniques.ts";
 import { waterwayWork } from "./waterway-work.ts";
@@ -106,25 +105,22 @@ function standardEncounter(q: Quest, node: number): Encounter {
   if (q.kind === "護衛") return node === 1 ? "escort" : "battle";
   return "battle";
 }
+// Chapters that script every stretch name its kind and task; the first that knows the quest wins.
+const scriptedWork = (q: Quest, node: number, nodes: number) =>
+  chapterFourWork(q.id, node, nodes) ||
+  chapterThreeWork(q.id, node) ||
+  chapterTwoWork(q.id, node) ||
+  waterwayWork(q.id, node);
+const cycle = <T>(items: T[] | undefined, node: number) => items?.[node % items.length];
 export function encounter(q: Quest, node: number, nodes = questNodes(q.id)): Encounter {
-  const work =
-    chapterFourWork(q.id, node, nodes) ||
-    chapterThreeWork(q.id, node) ||
-    chapterTwoWork(q.id, node) ||
-    waterwayWork(q.id, node);
-  if (work) return work.kind;
-  if (q.id === WETLAND_QUEST) return "gather";
-  if (q.id === TOWN_QUEST) return "escort";
-  if (q.id === NIGHT_QUEST) return (["escort", "battle", "escort"] as const)[node % 3];
-  if (q.id === RETURN_QUEST) return (["escort", "battle", "battle"] as const)[node % 3];
-  if (q.id === TRADE_QUEST) return (["escort", "gather", "battle"] as const)[node % 3];
-  return standardEncounter(q, node);
+  return (
+    scriptedWork(q, node, nodes)?.kind ??
+    cycle(q.style?.stretches, node) ??
+    standardEncounter(q, node)
+  );
 }
 function gatherTargetName(q: Quest) {
-  if (q.gatherTarget) return q.gatherTarget;
-  if (q.id === "crystal") return "青晶石";
-  if (q.id === "blossom") return "千年樹の花";
-  return "月しずく草";
+  return q.gatherTarget || "月しずく草";
 }
 function enemyTargetName(q: Quest) {
   if (q.enemyName) return q.enemyName;
@@ -135,16 +131,8 @@ function enemyTargetName(q: Quest) {
 export function targetName(q: Quest, node: number, nodes = questNodes(q.id)) {
   const battle = puppetBattleName(q.id, node, nodes);
   if (battle) return battle;
-  const work =
-    chapterFourWork(q.id, node, nodes) ||
-    chapterThreeWork(q.id, node) ||
-    chapterTwoWork(q.id, node) ||
-    waterwayWork(q.id, node);
-  if (work) return work.name;
-  if (q.id === WETLAND_QUEST)
-    return ["湿った木陰を探す", "苔の葉を見分ける", "群落の周りを確かめる"][node % 3];
-  if (q.id === TOWN_QUEST)
-    return ["倉庫で荷札を確かめる", "商店へ荷物を運ぶ", "品を渡して控えを受け取る"][node % 3];
+  const named = scriptedWork(q, node, nodes)?.name ?? cycle(q.style?.stretchNames, node);
+  if (named) return named;
   const kind = encounter(q, node);
   if (kind === "gather") return gatherTargetName(q);
   if (kind === "escort") return q.escortTarget || "旅人を目的地へ";
