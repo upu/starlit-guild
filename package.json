@@ -62,8 +62,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.60.2",
-    "@cloudflare/workers-types": "5.20260927.1",
+    "@cloudflare/vite-plugin": "1.63.0",
+    "@cloudflare/workers-types": "5.20261008.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.6.2",
     "@types/react": "19.3.0",
@@ -83,7 +83,15 @@
     "typescript-eslint": "8.71.0",
     "vinext": "1.0.0-beta.11",
     "vite": "8.3.1",
-    "wrangler": "4.141.0"
+    "wrangler": "4.148.0"
+  },
+  "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "^0.25.12"
+    },
+    "miniflare": {
+      "sharp": "$sharp"
+    }
   },
   "type": "module",
   "allowScripts": {
