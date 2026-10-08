@@ -12,10 +12,8 @@ import { questScenery } from "../lib/scenery.ts";
 test("generated variants are fresh and every quest resolves to an existing file", async () => {
   await optimizeScenery({ check: true, log: () => {} });
   for (const quest of allQuests) {
-    const paths = ["thumbnail", "detail", "background"].map((variant) =>
-      questScenery(quest, variant),
-    );
-    assert.equal(new Set(paths).size, 3);
+    const paths = ["thumbnail", "background"].map((variant) => questScenery(quest, variant));
+    assert.equal(new Set(paths).size, 2);
     for (const file of paths)
       assert.ok(existsSync(new URL("../public" + file, import.meta.url)), file);
   }
@@ -66,7 +64,7 @@ test("pipeline detects source, config and output changes and regenerates without
     await assert.rejects(run(true), /未更新/);
     await run(false);
     await run(true);
-    rmSync(path.join(base, "public/scenery/sample-detail.webp"));
+    rmSync(path.join(base, "public/scenery/sample-background.webp"));
     await assert.rejects(run(true), /未更新/);
     await run(false);
     await run(true);

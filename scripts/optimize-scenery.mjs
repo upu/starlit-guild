@@ -12,7 +12,7 @@ import {
   writeManifest,
 } from "./asset-pipeline.mjs";
 
-const variants = ["thumbnail", "detail", "background"];
+const variants = ["thumbnail", "background"];
 
 export async function optimizeScenery({
   base = projectRoot,
