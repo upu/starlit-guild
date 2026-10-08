@@ -3,7 +3,7 @@
     "frame": 9,
     "sourceIndex": 15,
     "source": {
-      "left": 55,
+      "left": 996,
       "top": 1,
       "width": 196,
       "height": 305
@@ -33,7 +33,7 @@
     "frame": 11,
     "sourceIndex": 1,
     "source": {
-      "left": 53,
+      "left": 367,
       "top": 15,
       "width": 247,
       "height": 310
@@ -48,30 +48,30 @@
     "frame": 12,
     "sourceIndex": 2,
     "source": {
-      "left": 59,
+      "left": 686,
       "top": 21,
-      "width": 255,
+      "width": 294,
       "height": 301
     },
     "scale": 0.31475409836065577,
-    "left": 62,
+    "left": 61,
     "top": 81,
-    "width": 80,
+    "width": 93,
     "height": 95
   },
   {
     "frame": 13,
     "sourceIndex": 3,
     "source": {
-      "left": 0,
+      "left": 998,
       "top": 16,
-      "width": 257,
+      "width": 200,
       "height": 309
     },
     "scale": 0.31475409836065577,
-    "left": 47,
+    "left": 65,
     "top": 79,
-    "width": 81,
+    "width": 63,
     "height": 97
   },
   {
@@ -93,7 +93,7 @@
     "frame": 15,
     "sourceIndex": 5,
     "source": {
-      "left": 63,
+      "left": 377,
       "top": 47,
       "width": 228,
       "height": 258
@@ -108,7 +108,7 @@
     "frame": 16,
     "sourceIndex": 6,
     "source": {
-      "left": 53,
+      "left": 680,
       "top": 22,
       "width": 205,
       "height": 284
@@ -123,7 +123,7 @@
     "frame": 17,
     "sourceIndex": 7,
     "source": {
-      "left": 55,
+      "left": 996,
       "top": 10,
       "width": 196,
       "height": 299
@@ -153,7 +153,7 @@
     "frame": 19,
     "sourceIndex": 9,
     "source": {
-      "left": 68,
+      "left": 382,
       "top": 10,
       "width": 205,
       "height": 288
@@ -168,7 +168,7 @@
     "frame": 20,
     "sourceIndex": 10,
     "source": {
-      "left": 69,
+      "left": 696,
       "top": 12,
       "width": 229,
       "height": 285
@@ -183,7 +183,7 @@
     "frame": 21,
     "sourceIndex": 11,
     "source": {
-      "left": 61,
+      "left": 1002,
       "top": 9,
       "width": 220,
       "height": 288
@@ -213,7 +213,7 @@
     "frame": 23,
     "sourceIndex": 13,
     "source": {
-      "left": 74,
+      "left": 388,
       "top": 34,
       "width": 207,
       "height": 258

@@ -3,7 +3,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { adventureHeroArt as art, adventureHeroIds } from "../lib/adventure-hero-art.ts";
 import { residentArt } from "../lib/home-actor.ts";
-import { readFrame, rowCuts, spriteBounds } from "./home-pixel-frames.mjs";
+import { rowCuts, spriteBounds } from "./home-pixel-frames.mjs";
+import { adventureRowFrames } from "./adventure-pixel-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const source = new URL("assets/source/adventure-pixel/", root);
@@ -22,20 +23,12 @@ async function emit(name, buffer) {
 for (const id of adventureHeroIds) {
   const home = await readFile(new URL(`public/home-pixel/${id}.webp`, root));
   const sheet = await readFile(new URL(`${id}-actions-v1.png`, source));
-  const meta = await sharp(sheet).metadata();
   const cuts = await rowCuts(sheet, 4);
-  const frames = [];
-  for (let i = 0; i < 16; i++) {
-    const left = Math.round(((i % 4) * meta.width) / 4);
-    frames.push(
-      await readFrame(sheet, {
-        left,
-        top: cuts[Math.floor(i / 4)],
-        width: Math.round((((i % 4) + 1) * meta.width) / 4) - left,
-        height: cuts[Math.floor(i / 4) + 1] - cuts[Math.floor(i / 4)],
-      }),
-    );
-  }
+  const frames = (
+    await Promise.all(
+      cuts.slice(0, -1).map((top, row) => adventureRowFrames(sheet, top, cuts[row + 1])),
+    )
+  ).flat();
   // One scale for the whole sheet; crouching and leaning retain head size.
   const scale = art.height / frames[14].box.height;
   const pixels = Buffer.alloc(art.cell * 4 * art.cell * 6 * 4);

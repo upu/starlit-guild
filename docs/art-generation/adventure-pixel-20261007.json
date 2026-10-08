@@ -72,6 +72,7 @@
   "attempts": 5,
   "retakes": 0,
   "validation": {
+    "deliveryRepair": "2026-10-08: replaced uniform column cropping with connected silhouette separation; verified full Leon/Mira/Finn weapons in attack frame 3 at 2x, no fragments in neighbouring frames; source sheets unchanged.",
     "unitTests": 427,
     "homePixels": "all eight walk frames and idle match visible RGBA exactly",
     "browser": "chapter-four: 18 cases passed; chapter-road: cargo retry/reload and trio-work rendering/reload passed during the targeted run",
