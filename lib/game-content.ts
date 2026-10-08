@@ -16,9 +16,32 @@ import {
 } from "./prologue.ts";
 import { chapterTwoQuests } from "./chapter-two.ts";
 import { heroes as baseHeroes, type Kind } from "./roster.ts";
-import type { State } from "./game-types.ts";
+import type { Encounter, State } from "./game-types.ts";
 
 export const heroes = baseHeroes.map((h, i) => ({ ...h, sprite: i }));
+// How one quest varies the shared adventure rules. Anything left out keeps the default.
+export type QuestStyle = {
+  // Stretch kinds and names repeat in this order, unless a chapter lists each stretch itself.
+  stretches?: Encounter[];
+  stretchNames?: string[];
+  // Companions' actions read as careful work instead of attacks: always, or off battles.
+  quietWork?: "always" | "work";
+  // Action text as [normal, special]: on gather/escort, on gather only, or on every stretch.
+  workText?: [string, string];
+  gatherText?: [string, string];
+  actionText?: [string, string];
+  // Battles spent shielding the work read as that work.
+  guardText?: string;
+  // What the opponent's ordinary attack does.
+  enemyText?: string;
+  // Combat difficulty, and the work difficulty where it differs.
+  rank?: number;
+  workResistance?: number;
+  // Reaching a stretch is a plain next step rather than a discovery.
+  quietArrival?: boolean;
+  // Escort stretches carry cargo even when their names don't say so.
+  cargo?: boolean;
+};
 export type Quest = {
   id: string;
   name: string;
@@ -39,6 +62,7 @@ export type Quest = {
   escortTarget?: string;
   escortAsset?: string;
   availability?: "repeatable" | "once";
+  style?: QuestStyle;
 };
 export const quests: Quest[] = [
   {
@@ -58,6 +82,7 @@ export const quests: Quest[] = [
     background: "/scenery/forest-background.webp",
     gatherTarget: "取引先に頼まれた薬草",
     escortTarget: "村から預かった荷物",
+    style: { stretches: ["escort", "gather", "battle"], cargo: true },
     availability: "repeatable",
   },
   {
@@ -77,6 +102,7 @@ export const quests: Quest[] = [
     enemyName: "道に出てきたスライム",
     background: "/scenery/evening-trade-road-background.webp",
     escortTarget: "村へ持ち帰る品",
+    style: { stretches: ["escort", "battle", "battle"] },
     availability: "repeatable",
   },
   {
@@ -95,6 +121,13 @@ export const quests: Quest[] = [
     enemy: 8,
     background: "/scenery/town-deliveries-background.webp",
     escortTarget: "商店へ届ける荷物",
+    style: {
+      stretches: ["escort"],
+      stretchNames: ["倉庫で荷札を確かめる", "商店へ荷物を運ぶ", "品を渡して控えを受け取る"],
+      quietWork: "always",
+      actionText: ["荷札の確認・配達", "息を合わせて荷運び"],
+      quietArrival: true,
+    },
     availability: "repeatable",
   },
   {
@@ -114,6 +147,7 @@ export const quests: Quest[] = [
     enemyName: "林から出てきたスライム",
     background: "/scenery/tower-road-background.webp",
     gatherTarget: "道端の薬草",
+    style: { quietWork: "work", workText: ["道端の薬草を採る", "葉を見分けて丁寧に採る"] },
     availability: "repeatable",
   },
   {
@@ -134,6 +168,11 @@ export const quests: Quest[] = [
     background: "/scenery/moss-night-road-background.webp",
     escortTarget: "苔灯で足元を照らす",
     escortAsset: "/items/moss-lamp.png",
+    style: {
+      stretches: ["escort", "battle", "escort"],
+      quietWork: "work",
+      workText: ["苔灯で足元を照らす", "灯りを寄せて道を確かめる"],
+    },
     availability: "repeatable",
   },
   {
@@ -152,6 +191,12 @@ export const quests: Quest[] = [
     enemy: 8,
     background: "/scenery/forest-wetland-background.webp",
     gatherTarget: "湿地の草葉と苔",
+    style: {
+      stretches: ["gather"],
+      stretchNames: ["湿った木陰を探す", "苔の葉を見分ける", "群落の周りを確かめる"],
+      quietWork: "always",
+      workText: ["草葉を分けて苔を探す", "葉の形と湿り気を丁寧に確かめる"],
+    },
     availability: "repeatable",
   },
   {
@@ -171,6 +216,10 @@ export const quests: Quest[] = [
     enemyName: "斜面のスライム",
     background: "/scenery/old-waterway-background.webp",
     gatherTarget: "水路の道筋",
+    style: {
+      quietWork: "work",
+      workText: ["草を分けて水路の道筋を確かめる", "地図と苔の続く先を照らし合わせる"],
+    },
     availability: "repeatable",
   },
   {
@@ -191,6 +240,11 @@ export const quests: Quest[] = [
     background: "/scenery/old-waterway-background.webp",
     gatherTarget: "水路に残った枝と小石",
     escortTarget: "水路の修理を手伝う",
+    style: {
+      quietWork: "work",
+      workText: ["声を掛け合って作業を進める", "声を掛け合って作業を進める"],
+      gatherText: ["手の届く範囲を丁寧に取り除く", "手の届く範囲を丁寧に取り除く"],
+    },
     availability: "repeatable",
   },
   {
@@ -211,6 +265,11 @@ export const quests: Quest[] = [
     background: "/scenery/tower-drainage-open-background.webp",
     gatherTarget: "石組みを覆う苔",
     escortTarget: "苔の撤去を手伝う",
+    style: {
+      quietWork: "work",
+      workText: ["声を掛け合って作業を進める", "声を掛け合って作業を進める"],
+      gatherText: ["手の届く範囲を丁寧に取り除く", "手の届く範囲を丁寧に取り除く"],
+    },
     availability: "repeatable",
   },
   ...chapterTwoQuests,

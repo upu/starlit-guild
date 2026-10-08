@@ -112,7 +112,7 @@ export const chapterThreeStages = definitions.map(([quest, title, , , arrival, d
   detail,
 }));
 export const chapterThreeQuests: Quest[] = definitions.map(
-  ([id, name, region, desc, , , scenery], i) => ({
+  ([id, name, region, desc, , , scenery, rank], i) => ({
     id,
     name,
     region,
@@ -129,11 +129,15 @@ export const chapterThreeQuests: Quest[] = definitions.map(
     enemyName: "街道のスライム",
     background: `/scenery/${scenery}-background.webp`,
     availability: "repeatable",
+    style: {
+      quietWork: "work",
+      workText: ["声を掛け合って作業を進める", "声を掛け合って作業を進める"],
+      rank,
+    },
   }),
 );
 export const isChapterThreeQuest = (id: string) =>
   chapterThreeStages.some((stage) => stage.quest === id);
-export const chapterThreeRank = (id: string) => definitions.find((item) => item[0] === id)?.[7];
 
 type Work = { kind: "battle" | "escort" | "gather"; name: string };
 const job = (kind: Work["kind"], ...names: string[]): Work[] =>

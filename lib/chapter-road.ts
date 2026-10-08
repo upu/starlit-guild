@@ -29,7 +29,7 @@ export const roadPoint = (r: Run) => r.node * CHAPTER_ROAD_SPACING + 180;
 export function movingWork(q: Quest, r: Pick<Run, "node" | "nodes">) {
   return (
     encounter(q, r.node, r.nodes) === "escort" &&
-    (q.id === "village-trade" || /運ぶ|運び|運搬|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
+    (!!q.style?.cargo || /運ぶ|運び|運搬|届け|持ち帰/.test(targetName(q, r.node, r.nodes)))
   );
 }
 export function workPoint(q: Quest, r: Run) {
