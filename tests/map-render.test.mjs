@@ -356,14 +356,18 @@ test("effects follow current events, expire on resume, and do not alter the save
         startQuest: OPENING,
       }),
     );
+  const hitters = (now) =>
+    frameFor(state, now)
+      .members.filter((member) => member.hit)
+      .map((member) => member.id);
   const current = render(2200);
-  assert.equal(frameFor(state, 2200).events.length, 1);
+  assert.deepEqual(hitters(2200), ["leon"]);
   assert.match(current, /finisher-scene burst/);
   assert.match(current, /--scene-age:-200ms/);
   assert.doesNotMatch(render(7000), /finisher-scene burst/);
-  assert.equal(frameFor(state, 7000).events.length, 0);
+  assert.deepEqual(hitters(7000), []);
   assert.doesNotMatch(render(1500), /finisher-scene burst/);
-  assert.equal(frameFor(state, 1500).events.length, 0);
+  assert.deepEqual(hitters(1500), []);
   assert.deepEqual(state, before);
 });
 

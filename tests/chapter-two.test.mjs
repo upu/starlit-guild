@@ -33,7 +33,6 @@ import { nextGoal, journeyNotice } from "../lib/journey.ts";
 import { storyArtAt } from "../lib/story-art.ts";
 import { journeyBanter, availableStories } from "../lib/stories.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
-import { heroAnimation } from "../lib/hero-animation.ts";
 
 function firstChapter() {
   const s = initialState(1000);
@@ -238,8 +237,7 @@ test("picnic uses ordinary weak single slimes and combat poses with one roadside
     });
     assert.equal(frame.target.name, "丘のスライム");
     assert.equal(frame.target.battle, true);
-    for (const member of frame.members)
-      attacked ||= [4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt)?.frame));
+    attacked ||= frame.members.some((member) => member.hit && member.hit.kind !== "gather");
   }
   assert.equal(attacked, true);
   assert.equal(s.herbs, before + 1);

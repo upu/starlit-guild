@@ -10,6 +10,8 @@
 
 画像は内蔵 imagegen で各1回生成。透明PNGを320×320へ縮小し、アルファを保って配信する。保存先は `public/items/chest.png`、`public/items/herb.png`、`public/items/spirit.png`。3枚合計約516 KiB。既存のキャラ・背景素材は変更しない。
 
+2026-10-08、3枚を表示していた別の冒険表示が使われていなかったため、画像ごと削除した。以下のプロンプトは制作履歴で、当時の画像はGitコミット `52f62cd` 以前を参照する。
+
 ## 共通プロンプト
 
 Use case: stylized-concept. Asset type: standalone square transparent PNG game item for cozy Japanese fantasy idle RPG STARLIT GUILD. Style: cute chibi storybook painted anime, detailed warm gold outlines, rich natural green and violet jewel tones, charming polished hand-painted game art. Composition: one centered isolated subject fills 75–85% of square canvas, generous safe padding on all edges, clear bold silhouette readable at 64–88 pixels. Background: actual transparent alpha, no backdrop, no checkerboard, no scene. Constraints: no text, UI, frame, logo, watermark, or additional subjects.

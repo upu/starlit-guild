@@ -40,21 +40,13 @@ function memberVitals(run: ActiveRun | null, id: string) {
   const health = run.health[id];
   return { hp: health.hp, maxHp: health.maxHp, down: health.hp <= 0 };
 }
-function adventureMember(run: ActiveRun | null, events: GameEvent[], now: number, id: string) {
+function adventureMember(run: ActiveRun | null, events: GameEvent[], id: string) {
   const hero = heroes.find((h) => h.id === id);
   if (!hero) throw Error(`仲間「${id}」の冒険表示を読み込めません。`);
-  const actor = run?.actors.find((a) => a.hero === id),
-    lastHit = events
-      .filter((e) => e.hero === id && ["hit", "gather", "skill", "heal"].includes(e.kind))
-      .at(-1);
-  const vitals = memberVitals(run, id);
-  return {
-    id,
-    name: hero.name,
-    walking: !!run && run.phase !== "rest" && !vitals.down && now < (actor?.arrivesAt || 0),
-    hit: lastHit,
-    ...vitals,
-  };
+  const lastHit = events
+    .filter((e) => e.hero === id && ["hit", "gather", "skill", "heal"].includes(e.kind))
+    .at(-1);
+  return { id, name: hero.name, hit: lastHit, ...memberVitals(run, id) };
 }
 function frameTarget(
   quest: (typeof allQuests)[number],
@@ -139,7 +131,7 @@ export function adventureFrame(input: AdventureInput, now = input.now) {
   const quest = allQuests.find((q) => q.id === (run?.quest || input.startQuest)) || allQuests[0];
   const kind = run ? encounter(quest, run.node, run.nodes) : null;
   const events = recentEvents(run, now),
-    members = squad.members.map((id) => adventureMember(run, events, now, id));
+    members = squad.members.map((id) => adventureMember(run, events, id));
   const targets = frameTargets(quest, run, kind, now),
     target = targets.find((target) => !target.down) ?? targets.at(0) ?? null;
   const drained =
@@ -151,7 +143,6 @@ export function adventureFrame(input: AdventureInput, now = input.now) {
     members,
     target,
     targets,
-    events,
   };
 }
 export type AdventureFrame = ReturnType<typeof adventureFrame>;
