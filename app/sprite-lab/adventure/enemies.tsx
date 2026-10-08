@@ -98,6 +98,8 @@ function paintExample(canvas: HTMLCanvasElement, image: HTMLImageElement, exampl
   canvas.height = sample.height;
   canvas.style.width = `${String(w)}px`;
   canvas.style.height = `${String(h)}px`;
+  const origin = example.kind === "slime" ? 0.9 : example.rect ? 0.98 : 1;
+  canvas.style.transform = `translateY(${String(h * (1 - origin))}px)`;
   canvas.getContext("2d")?.drawImage(sample, 0, 0);
   canvas.dataset.status = "ready";
 }
@@ -116,6 +118,7 @@ export default function EnemyStudy({ zoom }: { zoom: number }) {
               style={{
                 width: 96 * zoom,
                 height: 96 * zoom,
+                transform: `translateY(${String(8 * zoom)}px)`,
                 backgroundImage: `url(${adventureHeroAsset("leon")})`,
                 backgroundSize: `${String(384 * zoom)}px ${String(576 * zoom)}px`,
                 backgroundPosition: `0px ${String(-192 * zoom)}px`,
