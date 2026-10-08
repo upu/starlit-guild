@@ -2,7 +2,7 @@
 
 [作業別のコード案内](../code-map.md) に戻る。
 
-- **編集元・主要関数**: [素材の種類別案内](../../art/README.md) から原本へ。配信用生成は [背景](../../../scripts/optimize-scenery.mjs)、[スチル](../../../scripts/optimize-story-stills.mjs)、[動画](../../../scripts/optimize-story-videos.mjs)、[道中画像](../../../scripts/optimize-road-art.mjs)、[共有カード](../../../scripts/generate-social-card.mjs)、[BGM](../../../scripts/optimize-bgm.mjs)。表示条件は該当する `lib/`・`app/`。
+- **編集元・主要関数**: [素材の種類別案内](../../art/README.md) から原本へ。配信用生成は [背景](../../../scripts/optimize-scenery.mjs)、[スチル](../../../scripts/optimize-story-stills.mjs)、[動画](../../../scripts/optimize-story-videos.mjs)、[道中画像](../../../scripts/optimize-road-art.mjs)、[共有カード](../../../scripts/generate-social-card.mjs)、[BGM](../../../scripts/optimize-bgm.mjs)。背景・スチル・動画・道中画像・BGMのハッシュ・manifest・ロック・一時ファイル経由の置き換え・画像サイズ設定の検査は [共通処理](../../../scripts/asset-pipeline.mjs) にまとめる。`npm run assets:optimize` が全種類の配信用生成を順に実行し、`dev`・`build` の前にも自動で走る。表示条件は該当する `lib/`・`app/`。
 - **仕様**: [アート・音の資料](../../art/README.md)。制作記録と現行の表示条件を区別する。
 - **アリア・ミラの動作コマの整列**: [共通の整列処理](../../../scripts/prepare-mini-animation.mjs)を[アリア](../../../scripts/prepare-aria-animation.mjs)・[ミラ](../../../scripts/prepare-mira-animation.mjs)から実行 → [道中画像の配信生成](../../../scripts/optimize-road-art.mjs)。原本・セルと足元・静止ミニキャラの切り出しは [動作画像](../../art/hero-animation-art.md) を参照。
 - **検証**: 変更した種類に対応する `npm run images:check` / `stills:check` / `videos:check` / `road-art:check` / `social-card:check` / `music:check` と、該当画面・再生を確認。

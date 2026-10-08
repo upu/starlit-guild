@@ -1,24 +1,25 @@
-import { createHash, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import {
   existsSync,
   lstatSync,
   mkdirSync,
-  openSync,
-  closeSync,
   readFileSync,
   readdirSync,
   renameSync,
   rmSync,
-  writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import {
+  digest,
+  fileHash,
+  projectRoot,
+  runAsScript,
+  withLock,
+  writeManifest,
+} from "./asset-pipeline.mjs";
 import { encodeVideo, findTool } from "./story-video-tools.mjs";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
 const sourcePattern = /^[a-z0-9]+(?:-[a-z0-9]+)*\.(mp4|mov|webm|mkv)$/;
-const digest = (data) => createHash("sha256").update(data).digest("hex");
-const fileHash = (file) => digest(readFileSync(file));
 
 function regular(file) {
   if (!existsSync(file)) return false;
@@ -80,16 +81,6 @@ function readManifest(file) {
   return m;
 }
 
-function saveManifest(file, manifest) {
-  const temp = `${file}.${randomUUID()}.tmp`;
-  try {
-    writeFileSync(temp, JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
-    renameSync(temp, file);
-  } finally {
-    rmSync(temp, { force: true });
-  }
-}
-
 function refreshVideo({ source, target, previous, profile, profileHash, sourceHash, encode }) {
   if (regular(target) && !previous)
     throw new Error(`管理対象外の動画を上書きできません: ${target}`);
@@ -116,7 +107,7 @@ function refreshVideo({ source, target, previous, profile, profileHash, sourceHa
 
 // The root/encoder arguments also let tests exercise invalidation without external binaries.
 export function optimizeStoryVideos({
-  base = root,
+  base = projectRoot,
   check = false,
   encode,
   log = console.log,
@@ -131,76 +122,69 @@ export function optimizeStoryVideos({
   directory(path.join(base, "public/stories"));
   directory(outputDir);
   const lock = path.join(base, "assets/.story-videos.lock");
-  let fd;
-  try {
-    fd = openSync(lock, "wx");
-  } catch (error) {
-    if (error.code === "EEXIST")
-      throw new Error(
-        "動画処理が実行中です。停止済みなら assets/.story-videos.lock を削除してください。",
+  const busy = "動画処理が実行中です。停止済みなら assets/.story-videos.lock を削除してください。";
+  return withLock(
+    lock,
+    true,
+    () => {
+      const profile = readProfile(base),
+        manifest = readManifest(manifestFile),
+        files = inputs(inputDir);
+      const profileHash = digest(JSON.stringify({ pipeline: 1, profile }));
+      const missing = Object.keys(manifest.files).filter(
+        (name) => !files.some((f) => f.name === name),
       );
-    throw error;
-  }
-  try {
-    const profile = readProfile(base),
-      manifest = readManifest(manifestFile),
-      files = inputs(inputDir);
-    const profileHash = digest(JSON.stringify({ pipeline: 1, profile }));
-    const missing = Object.keys(manifest.files).filter(
-      (name) => !files.some((f) => f.name === name),
-    );
-    if (missing.length)
-      throw new Error(
-        `元動画がありません: ${missing.join(", ")}。削除する場合は対応する配信用MP4とmanifestの項目も削除してください。`,
-      );
-    let converted = 0,
-      skipped = 0;
-    for (const file of files) {
-      const source = path.join(inputDir, file.name),
-        target = path.join(outputDir, file.target);
-      const sourceHash = fileHash(source),
-        previous = manifest.files[file.name];
-      const current =
-        previous?.sourceHash === sourceHash &&
-        previous?.profileHash === profileHash &&
-        regular(target) &&
-        previous.outputHash === fileHash(target);
-      if (current) {
-        skipped++;
-        log(`skip ${file.name}`);
-        continue;
-      }
-      if (check)
+      if (missing.length)
         throw new Error(
-          `${file.name}: 配信用動画が未生成か古い状態です。npm run videos:optimize を実行してください。`,
+          `元動画がありません: ${missing.join(", ")}。削除する場合は対応する配信用MP4とmanifestの項目も削除してください。`,
         );
-      encode ??= (
-        (ffmpeg, ffprobe) => (src, dst, p) =>
-          encodeVideo(src, dst, p, ffmpeg, ffprobe)
-      )(findTool("ffmpeg"), findTool("ffprobe"));
-      manifest.files[file.name] = refreshVideo({
-        source,
-        target,
-        previous,
-        profile,
-        profileHash,
-        sourceHash,
-        encode,
-      });
-      saveManifest(manifestFile, manifest);
-      const result = manifest.files[file.name];
-      converted++;
-      log(`encode ${file.name}: ${result.sourceSize} → ${result.outputSize} bytes`);
-    }
-    log(`story videos: ${converted} generated, ${skipped} unchanged`);
-    return { converted, skipped };
-  } finally {
-    closeSync(fd);
-    rmSync(lock, { force: true });
-  }
+      let converted = 0,
+        skipped = 0;
+      for (const file of files) {
+        const source = path.join(inputDir, file.name),
+          target = path.join(outputDir, file.target);
+        const sourceHash = fileHash(source),
+          previous = manifest.files[file.name];
+        const current =
+          previous?.sourceHash === sourceHash &&
+          previous?.profileHash === profileHash &&
+          regular(target) &&
+          previous.outputHash === fileHash(target);
+        if (current) {
+          skipped++;
+          log(`skip ${file.name}`);
+          continue;
+        }
+        if (check)
+          throw new Error(
+            `${file.name}: 配信用動画が未生成か古い状態です。npm run videos:optimize を実行してください。`,
+          );
+        encode ??= (
+          (ffmpeg, ffprobe) => (src, dst, p) =>
+            encodeVideo(src, dst, p, ffmpeg, ffprobe)
+        )(findTool("ffmpeg"), findTool("ffprobe"));
+        manifest.files[file.name] = refreshVideo({
+          source,
+          target,
+          previous,
+          profile,
+          profileHash,
+          sourceHash,
+          encode,
+        });
+        writeManifest(manifestFile, manifest);
+        const result = manifest.files[file.name];
+        converted++;
+        log(`encode ${file.name}: ${result.sourceSize} → ${result.outputSize} bytes`);
+      }
+      log(`story videos: ${converted} generated, ${skipped} unchanged`);
+      return { converted, skipped };
+    },
+    busy,
+  );
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (runAsScript(import.meta.url)) {
   try {
     if (process.argv.slice(2).some((arg) => arg !== "--check"))
       throw new Error("Usage: node scripts/optimize-story-videos.mjs [--check]");
