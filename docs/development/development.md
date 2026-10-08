@@ -83,7 +83,7 @@ GitHub ActionsはPR本文の選択と、PRの `package.json` / `package-lock.jso
 
 整形はPrettier（[設定](../../.prettierrc.json)、印字幅100）で行い、`npm run format` で全体を整える。取り込み済みUI・生成物・Markdownなどの除外範囲は [.prettierignore](../../.prettierignore) を正とする。コードを圧縮した1行書きには戻さず、関数長・ファイル長の上限が実際の行数で働くようにする。
 
-Lintは型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。具体的な制限と除外は [eslint.config.mjs](../../eslint.config.mjs) を正とする。`components/ui` と `hooks/use-mobile.ts` は取り込み元の形を維持するため一部ルールの対象外であり、分割待ちの一時的な除外ではない。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
+Lintは型情報付きのstrictルールと、複雑度・関数長・ファイル長の上限をerrorとして扱う。具体的な制限と除外は [eslint.config.mjs](../../eslint.config.mjs) を正とする。`components/ui` は取り込み元の形を維持するため一部ルールの対象外であり、分割待ちの一時的な除外ではない。`lint`と`lint:fix`はいずれもwarningが1件でも残ると失敗する。`lint:fix`の適用後は差分とテストを確認する。
 
 Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台本の鮮度・全ユニットテストを検査する。実行コマンドの正本は [lint.yml](../../.github/workflows/lint.yml)、PRのバージョン判定は [pr-version.yml](../../.github/workflows/pr-version.yml)。ブラウザーテストとビルド後のHTTP検証はCIに含めず、[手動テスト](#ローカルの手動テスト)として実行する。
 

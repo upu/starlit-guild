@@ -1,6 +1,5 @@
 # Vendored or generated code: keep the upstream source intact.
 components/ui/
-hooks/use-mobile.ts
 vendor/
 drizzle/
 package-lock.json
