@@ -9,6 +9,7 @@ import { SaveCloudPanel } from "./save-cloud-panel";
 import { RecordsSection, SaveCapacityNote } from "./save-records";
 import { TestControls } from "./save-test-controls";
 import type { Game, Music } from "./save-panel-types";
+import { DiscordCommunity } from "./discord-link";
 
 function FilePanel({ game, file }: { game: Game; file: RefObject<HTMLInputElement | null> }) {
   return (
@@ -67,6 +68,7 @@ function SettingsPanel({
         {game.bundle?.sound ? "手助けや報酬の効果音が鳴ります。" : "効果音はオフです。"}
       </small>
       <TestControls game={game} onAdjust={onClose} />
+      <DiscordCommunity />
     </>
   );
 }

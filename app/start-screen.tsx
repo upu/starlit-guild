@@ -3,6 +3,7 @@ import Image from "next/image";
 import "./start-screen.css";
 import { SceneAtmosphere } from "./scene-atmosphere";
 import { APP_VERSION } from "./app-version";
+import { DiscordLink } from "./discord-link";
 
 export function StartScreen({
   ready,
@@ -53,6 +54,7 @@ export function StartScreen({
           {error ? "記録を確認する" : ready ? "- START -" : "- LOADING -"}
         </button>
         {error && <p role="alert">{error}</p>}
+        <DiscordLink />
         <span className="start-version">v{APP_VERSION}</span>
       </div>
     </main>
