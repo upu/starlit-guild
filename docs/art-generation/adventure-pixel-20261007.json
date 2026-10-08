@@ -73,7 +73,8 @@
   "retakes": 0,
   "validation": {
     "deliveryRepair": "2026-10-08: replaced uniform column cropping with connected silhouette separation; verified full Leon/Mira/Finn weapons in attack frame 3 at 2x, no fragments in neighbouring frames; source sheets unchanged.",
-    "unitTests": 427,
+    "unitTests": 430,
+    "enemyRendering": "2026-10-08: shared hero pixel pitch and NEAREST for every enemy; original scale/aspect/origin retained; DPR and song/command transforms reuse sampled poses. 12 preview examples at 390px and 1/2/3x, chapter-four 18 cases and trio/puppets reload scenarios passed.",
     "homePixels": "all eight walk frames and idle match visible RGBA exactly",
     "browser": "chapter-four: 18 cases passed; chapter-road: cargo retry/reload and trio-work rendering/reload passed during the targeted run",
     "browserFailure": "chapter-road touch assertion observed hits delta 2 instead of 1; game engine automatic attacks and tap assistance both increment run.hits. Five-cargo failed its work-caption visibility assertion. These assertions remain unpassed.",

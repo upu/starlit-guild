@@ -229,7 +229,7 @@ export class RoadPainter {
       y = roadY(enemy.lane, this.scene.scale.height);
     const bounce =
       reduced || enemy.pose === "fallen" ? 0 : Math.sin(state.time / 170 + enemy.id) * 3;
-    const { asset, frame, character } = enemyAppearance(enemy, this.look);
+    const { asset, frame, character, puppet } = enemyAppearance(enemy, this.look);
     const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
     if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
       figure.image.setTexture(asset, frame);
@@ -239,7 +239,14 @@ export class RoadPainter {
       .setFlipX(character ? !facesRight : facesRight)
       .setAngle(enemyAngle(enemy, state.time, reduced))
       .setDepth(10 + enemy.lane * 10);
-    fitEnemy(figure.image, enemy, size, this.spriteFilter, state.time, reduced);
+    fitEnemy(figure.image, enemy, size, state.time, reduced);
+    const heroHeight =
+      Math.min(90, this.scene.scale.width * 0.18, this.scene.scale.height * 0.34) * 0.9;
+    const aspect =
+      character || puppet || enemy.kind === "mushroom"
+        ? figure.image.frame.cutWidth / figure.image.frame.cutHeight
+        : 1;
+    this.spriteFilter.applyPixel(figure.image, heroHeight, { width: size * aspect, height: size });
     figure.label
       .setVisible(!enemy.pose)
       .setPosition(x, y + 14)

@@ -7,6 +7,7 @@ import {
   adventureHeroFrames,
 } from "@/lib/adventure-hero-art";
 import { useStudyPlayer } from "../study-player";
+import EnemyStudy from "./enemies";
 
 const actions = [
   { label: "歩く", start: 0, count: 8, step: 90 },
@@ -163,6 +164,7 @@ export default function AdventureStudy() {
           }}
         />
       </label>
+      <EnemyStudy zoom={zoom} />
       <p>
         歩行・待機はホームと共通の素材です。攻撃と被弾は確認用に繰り返します。ゲームのセーブには触れません。
       </p>

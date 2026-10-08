@@ -2,7 +2,6 @@ import type { RoadLook } from "@/lib/chapter-road-presentation";
 import type { RoadEnemy, RoadBattle } from "@/lib/road-view";
 import { ROAD_PUPPETS } from "./road-art";
 import type Phaser from "phaser";
-import type { RoadSpriteFilter } from "./road-sprite-filter";
 
 const puppetNames = {
   pumpety: "カボチャ頭の少女",
@@ -35,7 +34,6 @@ export function fitEnemy(
   image: Phaser.GameObjects.Image,
   enemy: RoadEnemy,
   size: number,
-  filter: RoadSpriteFilter,
   time: number,
   reduced: boolean,
 ) {
@@ -43,7 +41,6 @@ export function fitEnemy(
   if (puppet) image.setScale(size / 724).setOrigin(0.5, 0.98);
   if (character || enemy.kind === "mushroom") {
     image.setScale(size / image.frame.height).setOrigin(0.5, 1);
-    filter.apply(image);
   }
   if (!reduced && (enemy.action === "command" || enemy.action === "rally")) {
     const beat = Math.sin(
@@ -65,7 +62,7 @@ export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
   if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
   return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
 }
-const enemySize = (enemy: RoadEnemy) =>
+const enemySize = (enemy: Pick<RoadEnemy, "kind" | "boss">) =>
   ({
     puppet: 0.45,
     pumpety: 1,
@@ -75,7 +72,11 @@ const enemySize = (enemy: RoadEnemy) =>
     merrill: 1,
     mushroom: 0.42,
   })[enemy.kind];
-export function enemyDisplayHeight(enemy: RoadEnemy, width: number, height: number) {
+export function enemyDisplayHeight(
+  enemy: Pick<RoadEnemy, "kind" | "boss">,
+  width: number,
+  height: number,
+) {
   if (enemy.kind === "lico" || enemy.kind === "merrill")
     return Math.min(90, width * 0.18, height * 0.34) * 0.9;
   return Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);

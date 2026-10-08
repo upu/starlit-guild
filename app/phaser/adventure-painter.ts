@@ -11,7 +11,7 @@ import {
 } from "@/lib/adventure-presentation";
 import type { AdventureBridge } from "./renderer-session";
 import { heroSheets, heroAnimation } from "@/lib/hero-animation";
-import { enemyTexture } from "./enemy-texture";
+import { RoadSpriteFilter } from "./road-sprite-filter";
 import { AdventureEffectsPainter } from "./adventure-painter-effects";
 import {
   enemyAspect,
@@ -36,6 +36,7 @@ export class AdventurePainter {
   private figures = new Map<string, Figure>();
   private opponents = new Map<string, Figure>();
   private effects: AdventureEffectsPainter;
+  private spriteFilter: RoadSpriteFilter;
   private sceneKey = "";
   private backgroundKey = "";
   private loading = false;
@@ -49,6 +50,7 @@ export class AdventurePainter {
     private syncPause: () => void,
   ) {
     this.effects = new AdventureEffectsPainter(scene, runtime);
+    this.spriteFilter = new RoadSpriteFilter(scene);
   }
   initialize() {
     if (this.runtime.disposed) return;
@@ -288,10 +290,7 @@ export class AdventurePainter {
     const width = this.scene.scale.width,
       height = this.scene.scale.height,
       asset = target.asset;
-    opponent.image.setTexture(
-      enemyTexture(this.scene.textures, asset, size * target.scale),
-      asset === "/sprites.png" ? String(target.sprite) : undefined,
-    );
+    opponent.image.setTexture(asset, asset === "/sprites.png" ? String(target.sprite) : undefined);
     const enemySize = size * target.scale,
       pulse = this.runtime.reduced ? 1 : 1 + Math.sin(now / 420) * 0.015,
       events = frame.events.filter((event) => !event.enemy || event.enemy === target.id);
@@ -310,6 +309,10 @@ export class AdventurePainter {
       .setDisplaySize(enemySize * pulse * enemyAspect(asset), enemySize / pulse)
       .setFlipX(target.battle)
       .setDepth(10 + target.y * 10);
+    this.spriteFilter.applyPixel(opponent.image, size * 0.9, {
+      width: enemySize * enemyAspect(asset),
+      height: enemySize,
+    });
     if (hurt && !this.runtime.reduced) opponent.image.setTint(0xffedb1);
     else opponent.image.clearTint();
     opponent.shadow

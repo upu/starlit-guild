@@ -55,3 +55,23 @@
   flex: 1;
   max-width: 500px;
 }
+
+.enemy-study-floor {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-width: 100px;
+  background: #243e34;
+  border-bottom: 2px solid #b09b68;
+}
+.enemy-study-floor canvas {
+  image-rendering: pixelated;
+  max-width: none;
+}
+.enemy-study-figures figcaption {
+  max-width: 190px;
+}
+.enemy-study-figures {
+  overflow-x: auto;
+  justify-content: flex-start;
+}
