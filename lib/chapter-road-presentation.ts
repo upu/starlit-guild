@@ -1,12 +1,8 @@
 import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
-import {
-  LICO_RECORDS_QUEST,
-  MERRILL_SEEDLINGS_QUEST,
-  MOSS_TRANSPLANT_QUEST,
-  isChapterFourQuest,
-} from "./chapter-four.ts";
+import { MOSS_TRANSPLANT_QUEST, isChapterFourQuest } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
-import { paralyzed } from "./chapter-four-battles.ts";
+import { paralyzed, standardConfrontation } from "./chapter-four-battles.ts";
+import { STANDARD_QUEST_NODES } from "./puppet-battles.ts";
 import { confrontationEffects, mushroomArrival } from "./chapter-four-battle-presentation.ts";
 import {
   adventureFrame,
@@ -173,11 +169,9 @@ function legacyOpponents(run: Run | null, frame: AdventureFrame) {
     },
   ];
 }
-function drawnEnemyKind(run: Run | null, frame: AdventureFrame, role?: string) {
-  const encounterNode = run?.road?.ambushNode ?? run?.node;
-  if (run?.quest === LICO_RECORDS_QUEST && encounterNode === 14) return "lico";
-  if (run?.quest === MERRILL_SEEDLINGS_QUEST && encounterNode === 8) return "merrill";
-  return enemyKind(role || (frame.quest.enemy >= 12 ? "golem" : undefined));
+function drawnEnemyKind(run: Run | null, role?: string) {
+  const duel = run && standardConfrontation(run.quest, run.road?.ambushNode ?? run.node);
+  return duel || enemyKind(role);
 }
 function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[] {
   const run = input.squad.run,
@@ -187,7 +181,7 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
     const x = position && run ? drawnX(position, run, input.now) : 200 + index * 65;
     return {
       id: index + 1,
-      kind: enemy.trick || drawnEnemyKind(run, frame, enemy.role),
+      kind: enemy.trick || drawnEnemyKind(run, enemy.role),
       appearsAt: mushroomArrival(run, enemy.id),
       action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
       actionAt: enemy.cueAt,
@@ -248,7 +242,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
       (isChapterThreeQuest(frame.quest.id) &&
         ![BERNE_QUEST, STONE_RETURN_QUEST].includes(frame.quest.id)),
     length:
-      (run?.nodes || 15) * CHAPTER_ROAD_SPACING +
+      (run?.nodes || STANDARD_QUEST_NODES) * CHAPTER_ROAD_SPACING +
       (run && movingWork(frame.quest, { ...run, node: run.nodes - 1 }) ? ROAD_CARRY_DISTANCE : 0),
     workers:
       run && run.phase !== "rest"

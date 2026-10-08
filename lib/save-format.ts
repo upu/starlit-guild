@@ -12,7 +12,7 @@ import { stories } from "./stories.ts";
 import { isRecord } from "./external-input.ts";
 import { equipmentById, validInventory } from "./equipment.ts";
 import { techniqueById, validTechniques } from "./techniques.ts";
-import { puppetRoles } from "./puppet-battles.ts";
+import { puppetRoles, STANDARD_QUEST_NODES } from "./puppet-battles.ts";
 import { confrontation } from "./chapter-four-battles.ts";
 const techniqueId = z.string().refine((id) => !!techniqueById(id));
 const techniquesSchema = z.object({
@@ -97,7 +97,7 @@ const run = z.object({
   consumableEffects: consumableEffectsSchema.optional(),
   road: road.optional(),
   serial: count,
-  nodes: count.min(1).max(15),
+  nodes: count.min(1).max(STANDARD_QUEST_NODES),
   ward: n,
   comboAt: n,
   scene: z

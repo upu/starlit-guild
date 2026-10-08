@@ -19,7 +19,7 @@ import {
   reducedDamage,
 } from "../lib/combat.ts";
 import { parseBundle } from "../lib/save-format.ts";
-import { adventureFrame, spriteSize } from "../lib/adventure-presentation.ts";
+import { adventureFrame } from "../lib/adventure-presentation.ts";
 import {
   combatScenarios,
   chapterCombatState,
@@ -91,12 +91,12 @@ test("work resistance slows an underpowered party and its remaining gauge shrink
     paused: false,
     startQuest: "medicine-packing",
   };
-  assert.equal(adventureFrame(input).target.value, 1);
+  assert.equal(adventureFrame(input).target.hp, run.targetMax);
   const remaining = run.target;
   const weak = damageEnemy(run, 20, 0, 20);
   assert.equal(weak.amount, reducedDamage(20, 20, 0));
   assert.equal(run.target, remaining - weak.amount);
-  assert.equal(adventureFrame(input).target.value, run.target / run.targetMax);
+  assert.equal(adventureFrame(input).target.hp, run.target);
   const strong = damageEnemy(run, 20, 20, 20);
   assert.equal(strong.amount, 20);
   assert.ok(strong.amount > weak.amount);
@@ -229,7 +229,7 @@ test("rest recovery and skipped time keep every living enemy clock valid", () =>
   assert.doesNotThrow(() => parseBundle(bundle(resumed)));
 });
 
-test("group portraits have distinct HP, stable positions, focused effects and fit compact maps", () => {
+test("group portraits have distinct HP and focus the next standing enemy", () => {
   const state = group(),
     before = structuredClone(state),
     input = {
@@ -242,26 +242,10 @@ test("group portraits have distinct HP, stable positions, focused effects and fi
   const frame = adventureFrame(input);
   assert.equal(frame.targets.length, 3);
   assert.deepEqual(state, before);
-  for (const [width, height] of [
-    [320, 280],
-    [430, 420],
-    [1100, 680],
-  ])
-    for (const target of frame.targets) {
-      const size = spriteSize(width, height) * target.scale;
-      assert.ok(target.x * width - size / 2 >= 0 && target.x * width + size / 2 <= width);
-      assert.ok(
-        target.y * height - size * 0.9 >= 0 && target.y * height + size * 0.13 + 25 <= height,
-      );
-    }
   damageEnemy(state.squads[0].run, 9999, 99);
   const after = adventureFrame(input);
   assert.equal(after.targets[0].down, true);
   assert.equal(after.target.id, "enemy-2");
-  assert.deepEqual(
-    after.targets.map((e) => [e.x, e.y]),
-    frame.targets.map((e) => [e.x, e.y]),
-  );
 });
 
 test("the first chapter needs training after its introduction, with the same growth rules in later quests", () => {

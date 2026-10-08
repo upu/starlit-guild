@@ -154,34 +154,10 @@ export async function prepareMiniAnimation({ id, version, recordPath, script }) 
   mkdirSync(targetDir, { recursive: true });
   const main = await atlas(name, 4, 4, [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15]);
   const work = await atlas(workName, 2, 2, [0, 1]);
-  // Existing adventure renderer has twelve semantic slots, separate from the road's gather/work slots.
-  const legacyOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 11, 13];
   await sharp(`${targetDir}/${name}.png`)
     .extract({ left: 0, top: cell * 2, width: cell, height: cell })
     .webp({ lossless: true, effort: 6 })
     .toFile(`public/characters/${id}-mini-v${version}.webp`);
-  const legacyWidth = cell * 4;
-  const legacyHeight = cell * 3;
-  const legacy = Buffer.alloc(legacyWidth * legacyHeight * 4);
-  for (const [index, pose] of legacyOrder.entries()) {
-    const input = await sharp(`${targetDir}/${name}.png`)
-      .extract({
-        left: (pose % 4) * cell,
-        top: Math.floor(pose / 4) * cell,
-        width: cell,
-        height: cell,
-      })
-      .ensureAlpha()
-      .raw()
-      .toBuffer();
-    for (let y = 0; y < cell; y++) {
-      const target = ((Math.floor(index / 4) * cell + y) * legacyWidth + (index % 4) * cell) * 4;
-      input.copy(legacy, target, y * cell * 4, (y + 1) * cell * 4);
-    }
-  }
-  await sharp(legacy, { raw: { width: legacyWidth, height: legacyHeight, channels: 4 } })
-    .png()
-    .toFile(`public/animations/${name}.png`);
   const record = JSON.parse(readFileSync(recordPath, "utf8"));
   record.preparation = {
     script,
@@ -189,8 +165,7 @@ export async function prepareMiniAnimation({ id, version, recordPath, script }) 
     baseline,
     main,
     work,
-    legacyOrder,
   };
   writeFileSync(recordPath, JSON.stringify(record, null, 2) + "\n");
-  console.log("Prepared 16 road poses, 4 work poses and the 12-slot adventure atlas.");
+  console.log("Prepared 16 road poses, 4 work poses and the still mini character.");
 }

@@ -24,9 +24,10 @@ export {
   encounter,
   targetName,
   stepMs,
+  travelMs,
   estimate,
 } from "./game-rules.ts";
-export { travelMs, heroSkills, bondKey, bondLevel } from "./game-run.ts";
+export { heroSkills, bondKey, bondLevel } from "./game-run.ts";
 export { settle, settleOnScreen, skipTo, ON_SCREEN_LIMIT } from "./game-engine.ts";
 export { migrate, completeStoryStages, testState } from "./game-migrations.ts";
 export { act } from "./game-actions.ts";

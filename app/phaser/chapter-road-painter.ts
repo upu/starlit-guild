@@ -22,8 +22,7 @@ import {
   roadSheet,
   roadWalkSheet,
 } from "./road-art";
-import type { AdventureBridge } from "./renderer-session";
-import type { RuntimeState } from "./adventure-painter-figures";
+import type { AdventureBridge, RuntimeState } from "./renderer-session";
 
 export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
   const { look } = chapterRoadFrame(input);

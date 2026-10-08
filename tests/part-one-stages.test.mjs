@@ -19,7 +19,6 @@ import {
 import { availableStories, journeyBanter } from "../lib/stories.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
-import { heroAnimation } from "../lib/hero-animation.ts";
 import { nextGoal, journeyNotice } from "../lib/journey.ts";
 
 // These tests cover story gates and scenery. Late battles use a trained fixture;
@@ -193,7 +192,6 @@ test("wetland observation causes no damage, weapon work or moss harvest rewards"
         worked = true;
         assert.equal(member.hit.kind, "gather");
       }
-      assert.ok(![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)));
     }
     s = settle(s, run.nextAt);
   }
@@ -282,10 +280,6 @@ test("waterway exploration and restoration follow fieldwork order with small bat
             worked = true;
             assert.equal(member.hit.kind, "gather");
           }
-          if (!member.hit?.enemy)
-            assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
-            );
         }
       }
       s = settle(s, run.nextAt);
@@ -373,19 +367,11 @@ test("tower gathering and night lamp work keep small battles, appropriate assets
       );
       if (Object.values(run.health).some((health) => health.hp < health.maxHp)) damaged = true;
       if (frame.target.kind !== "battle") {
-        if (id === NIGHT_QUEST) {
-          assert.equal(frame.target.asset, "/items/moss-lamp.png");
-          assert.ok(existsSync(new URL("../public" + frame.target.asset, import.meta.url)));
-        }
         for (const member of frame.members) {
           if (member.hit && !member.hit.enemy) {
             worked = true;
             assert.equal(member.hit.kind, "gather");
           }
-          if (!member.hit?.enemy)
-            assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt).frame)),
-            );
         }
       }
       s = settle(s, run.nextAt);
@@ -444,7 +430,6 @@ test("evening has more small encounters; town work has cargo, no battles or dama
       paused: false,
       startQuest: id,
     });
-    assert.equal(frame.target.asset, "/items/chest.png");
     assert.equal(frame.background, quest(id).background);
     assert.ok(existsSync(new URL("../public" + frame.background, import.meta.url)));
     while (s.squads[0].run) {
@@ -471,8 +456,8 @@ test("evening has more small encounters; town work has cargo, no battles or dama
         for (const member of current.members)
           if (!member.hit?.enemy)
             assert.ok(
-              ![4, 5, 6, 7].includes(Number(heroAnimation(member, current, s.updatedAt).frame)),
-              "delivery work never uses weapon attack poses",
+              !member.hit || member.hit.kind === "gather",
+              "delivery work never uses weapon attacks",
             );
       }
       s = settle(s, run.nextAt);

@@ -1,6 +1,12 @@
 import type { Enemy } from "./combat.ts";
 import type { Actor, GameEvent, Run } from "./game-types.ts";
-import { LICO_RECORDS_QUEST, MERRILL_SEEDLINGS_QUEST } from "./chapter-four.ts";
+import {
+  LICO_RECORDS_QUEST,
+  LICO_TRAP_NODE,
+  MERRILL_LEGACY_NODE,
+  MERRILL_SEEDLINGS_QUEST,
+} from "./chapter-four.ts";
+import { questNodes, shortRoute, STANDARD_QUEST_NODES } from "./puppet-battles.ts";
 
 export type BattleTrick = "lico" | "merrill" | "mushroom";
 export type BattleCue = "summon" | "song" | "paralyze";
@@ -16,15 +22,15 @@ export type BattleEmit = (
 ) => void;
 export const paralyzed = (actor: Actor | undefined, at: number) =>
   (actor?.paralyzedUntil ?? 0) > at;
-export function confrontation(
-  quest: string,
-  node: number,
-  nodes = quest === MERRILL_SEEDLINGS_QUEST ? 1 : 15,
-) {
-  if (quest === LICO_RECORDS_QUEST && node === 14) return "lico";
-  if (quest === MERRILL_SEEDLINGS_QUEST && node === (nodes === 1 ? 0 : 8)) return "merrill";
+export function confrontation(quest: string, node: number, nodes = questNodes(quest)) {
+  if (quest === LICO_RECORDS_QUEST && node === LICO_TRAP_NODE) return "lico";
+  if (quest === MERRILL_SEEDLINGS_QUEST && node === (nodes === 1 ? 0 : MERRILL_LEGACY_NODE))
+    return "merrill";
   return undefined;
 }
+// The figure the adventure art shows for a stretch, placed as on the standard route.
+export const standardConfrontation = (quest: string, node: number) =>
+  confrontation(quest, node, STANDARD_QUEST_NODES);
 export function confrontationEnemies(
   quest: string,
   node: number,
@@ -34,7 +40,7 @@ export function confrontationEnemies(
 ): Enemy[] | null {
   const trick = confrontation(quest, node, nodes);
   if (!trick) return null;
-  const maxHp = (36 + rank * 3) * (trick === "merrill" && nodes !== 15 ? 4 : 1);
+  const maxHp = (36 + rank * 3) * (trick === "merrill" && shortRoute(nodes) ? 4 : 1);
   return [
     {
       id: "enemy-1",

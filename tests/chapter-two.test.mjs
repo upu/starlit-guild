@@ -33,7 +33,6 @@ import { nextGoal, journeyNotice } from "../lib/journey.ts";
 import { storyArtAt } from "../lib/story-art.ts";
 import { journeyBanter, availableStories } from "../lib/stories.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
-import { heroAnimation } from "../lib/hero-animation.ts";
 
 function firstChapter() {
   const s = initialState(1000);
@@ -139,9 +138,7 @@ test("delivery stages keep the hidden voice faceless and show the masked portrai
       ready: true,
       paused: false,
     });
-  assert.equal(frame.target.asset, "/enemies/mountain-puppet.png");
-  assert.ok(frame.target.scale < 1.08);
-  assert.ok(existsSync("public" + frame.target.asset));
+  assert.equal(frame.target.name, "小さな人形");
   const st = chapterTwoStories.find((st) => st.id === GOLEM_QUEST + "-departure");
   const index = st.lines.findIndex((l) => l.text.includes("ゴーレムが姿を現した"));
   assert.equal(storyArtAt(st.id, index - 1), undefined);
@@ -239,11 +236,8 @@ test("picnic uses ordinary weak single slimes and combat poses with one roadside
       detours: false,
     });
     assert.equal(frame.target.name, "丘のスライム");
-    assert.equal(frame.target.asset, "/sprites.png");
-    assert.equal(frame.target.sprite, 8);
     assert.equal(frame.target.battle, true);
-    for (const member of frame.members)
-      attacked ||= [4, 5, 6, 7].includes(Number(heroAnimation(member, frame, s.updatedAt)?.frame));
+    attacked ||= frame.members.some((member) => member.hit && member.hit.kind !== "gather");
   }
   assert.equal(attacked, true);
   assert.equal(s.herbs, before + 1);
@@ -295,7 +289,7 @@ test("an in-progress picnic from the local gathering version loads without losin
     ready: true,
     paused: false,
   });
-  assert.equal(frame.target.sprite, 8);
+  assert.equal(frame.target.name, "丘のスライム");
   assert.equal(frame.target.battle, true);
   let next = loaded;
   while (next.squads[0].run.node === 4) next = settle(next, next.squads[0].run.nextAt);

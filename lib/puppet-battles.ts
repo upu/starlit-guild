@@ -2,10 +2,14 @@ import type { Enemy } from "./combat.ts";
 
 export type PuppetRole = "puppet" | "golem" | "sweeper" | "puppeteer";
 export const puppetRoles = ["puppet", "golem", "sweeper", "puppeteer"] as const;
+// Most quests run 15 stretches. Puppet battles and Merrill's single fight use shorter routes,
+// while saves from before those routes were shortened keep the standard count.
+export const STANDARD_QUEST_NODES = 15;
+export const shortRoute = (nodes?: number) => nodes !== STANDARD_QUEST_NODES;
 export function questNodes(id: string) {
   if (id === "merrill-seedlings") return 1;
   if (id === "spinning-signpost") return 9;
-  return ["begging-golem", "sweet-blockade"].includes(id) ? 3 : 15;
+  return ["begging-golem", "sweet-blockade"].includes(id) ? 3 : STANDARD_QUEST_NODES;
 }
 export function puppetFormation(id: string, node: number): PuppetRole[] | null {
   if (id === "spinning-signpost") return node === 7 ? ["puppet", "puppet"] : ["puppet"];
@@ -36,12 +40,10 @@ export function puppetStats(role: PuppetRole, rank: number) {
     period: tuning.period,
   };
 }
-export function puppetLook(role: PuppetRole) {
-  if (role === "puppeteer")
-    return { name: "カボチャ頭の少女", asset: "/enemies/masked-pumpety.png", scale: 0.82 };
-  if (role === "puppet")
-    return { name: "小さな人形", asset: "/enemies/mountain-puppet.png", scale: 0.72 };
-  return { name: "運搬用ゴーレム", asset: "/enemies/cargo-golem.png", scale: 1.3 };
+export function puppetName(role: PuppetRole) {
+  if (role === "puppeteer") return "カボチャ頭の少女";
+  if (role === "puppet") return "小さな人形";
+  return "運搬用ゴーレム";
 }
 export function puppetCue(enemy: Enemy, now: number) {
   if (enemy.hp <= 0 || !enemy.role || enemy.nextAt - now > 1000 || enemy.nextAt < now) return "";

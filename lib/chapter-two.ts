@@ -23,14 +23,9 @@ export const trioQuest = (id: string) =>
     HOUSE_CALLS_QUEST,
     MEDICINE_RETURN_QUEST,
   ].includes(id);
-export const chapterTwoGolem = (id: string, node: number) =>
-  (id === GOLEM_QUEST && node % 3 !== 1) || (id === BLOCKADE_QUEST && node >= 9);
-export function chapterTwoEnemyAsset(id: string, node: number) {
-  if (chapterTwoGolem(id, node)) return "/enemies/cargo-golem.png";
-  return [SIGNPOST_QUEST, GOLEM_QUEST, BLOCKADE_QUEST].includes(id)
-    ? "/enemies/mountain-puppet.png"
-    : null;
-}
+// Pumpety's puppets and the cargo golem cause mischief rather than attacking like monsters.
+export const chapterTwoMischief = (id: string) =>
+  [SIGNPOST_QUEST, GOLEM_QUEST, BLOCKADE_QUEST].includes(id);
 type ChapterWork = { kind: "battle" | "escort" | "gather"; name: string };
 const workPatterns: Partial<Record<string, ChapterWork[]>> = {
   [DELIVERY_PREP_QUEST]: [
