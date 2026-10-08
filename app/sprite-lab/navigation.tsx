@@ -10,6 +10,12 @@ export function SpriteLabNavigation() {
       <Link href="/sprite-lab" aria-current={pathname === "/sprite-lab" ? "page" : undefined}>
         見本帳
       </Link>
+      <Link
+        href="/sprite-lab/adventure"
+        aria-current={pathname === "/sprite-lab/adventure" ? "page" : undefined}
+      >
+        冒険の動き
+      </Link>
       {spriteStudies.map(({ id, title }) => (
         <Link
           key={id}

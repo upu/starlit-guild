@@ -1,180 +1,152 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
+import {
+  adventureHeroArt as art,
+  adventureHeroAsset,
+  adventureHeroIds,
+  adventureRoadPose,
+} from "../lib/adventure-hero-art.ts";
+import * as pixelArt from "../lib/adventure-hero-art.ts";
+import { residentArt } from "../lib/home-actor.ts";
 import { compileSourceModule, evaluateSourceModule } from "./helpers/source-module.mjs";
-
-const art = evaluateSourceModule(
-  compileSourceModule("../app/phaser/road-art.ts", import.meta.url),
-  {},
-);
 const { applyHeroPose, applyWorkPose } = evaluateSourceModule(
   compileSourceModule("../app/phaser/road-poses.ts", import.meta.url),
-  { "./road-art": art },
+  { "@/lib/adventure-hero-art": pixelArt },
 );
-function image(initial = []) {
-  const frames = new Map(initial.map((name) => [name, { name, width: 384, height: 384 }]));
+function sprite() {
+  const frames = new Map();
   const texture = {
     has: (name) => frames.has(name),
-    add: (name, source, x, y, width, height) => frames.set(name, { name, width, height }),
+    add: (name, source, x, y, w, h) => frames.set(name, { name, x, y, w, h }),
+    setFilter: (mode) => assert.equal(mode, 0),
   };
   return {
     scene: { textures: { get: () => texture } },
     setTexture(key, name) {
       this.key = key;
-      this.frame = name === undefined ? { name: "__BASE", height: 512 } : frames.get(name);
-      assert.ok(this.frame, `missing ${name}`);
+      this.frame = frames.get(name);
+      assert.ok(this.frame);
       return this;
     },
     setOrigin(x, y) {
       this.origin = [x, y];
       return this;
     },
-    setScale(scale) {
-      this.scale = scale;
+    setScale(value) {
+      this.scale = value;
       return this;
     },
   };
 }
-
-test("Lico's late-loaded motion sheet animates walking and returns to her standing pose", () => {
-  const sprite = image();
-  for (const step of [0, 1, 2, 3]) {
-    applyHeroPose(sprite, "lico", String(step), 90);
-    assert.equal(sprite.key, art.roadWalkSheet("lico"));
-    assert.equal(sprite.frame.name, String(step % 2));
-    assert.deepEqual(sprite.origin, [0.5, 1]);
-  }
-  for (const pose of [4, 8, 11]) {
-    applyHeroPose(sprite, "lico", String(pose), 90);
-    assert.equal(sprite.key, art.roadSheet("lico"));
-    assert.equal(sprite.frame.name, "__BASE");
-  }
-});
-
-for (const [id, work] of [
-  ["aria", art.ROAD_ARIA_WORK],
-  ["mira", art.ROAD_MIRA_WORK],
-]) {
-  test(`${id} keeps her scale and foot anchor across main and work sheets, including paused work`, () => {
-    const sprite = image(Array.from({ length: 16 }, (_, i) => String(i)));
-    applyHeroPose(sprite, id, "8", 90);
-    const scale = sprite.scale,
-      origin = sprite.origin;
-    for (let pose = 0; pose < 16; pose++) {
-      applyHeroPose(sprite, id, String(pose), 90);
-      assert.equal(sprite.key, art.roadSheet(id));
-      assert.equal(sprite.frame.name, String(pose));
-      assert.equal(sprite.scale, scale);
-      assert.deepEqual(sprite.origin, origin);
-    }
-    const state = { gathering: { kind: "cargo", task: "carry" }, time: 220, enemies: [] };
-    for (const [task, pulling, reduced, enemies, key, frame] of [
-      ["carry", false, false, [], art.roadSheet(id), "15"],
-      ["carry", true, false, [], work, "1"],
-      ["carry", true, true, [], work, "0"],
-      ["carry", true, false, [{ hp: 1 }], work, "0"],
-      ["pack", false, false, [], work, "3"],
-      ["unload", false, true, [], work, "2"],
-    ]) {
-      assert.equal(
-        applyWorkPose(
-          sprite,
-          {
-            ...state,
-            time: task === "pack" ? 750 : 220,
-            enemies,
-            gathering: { ...state.gathering, task },
-          },
-          { id },
-          reduced,
-          90,
-          pulling,
-        ),
-        true,
-      );
-      assert.equal(sprite.key, key);
-      assert.equal(sprite.frame.name, frame);
-      assert.equal(sprite.scale, scale);
-      assert.deepEqual(sprite.origin, origin);
-    }
-  });
-
-  test(`${id}'s twenty normalized poses have real alpha, intact transparent margins and distinct steps`, async () => {
-    for (const [asset, columns, rows] of [
-      [art.roadSheet(id), 4, 4],
-      [work, 2, 2],
-    ]) {
-      const source = sharp(`public${asset}`);
-      const meta = await source.metadata();
-      assert.equal(meta.hasAlpha, true);
-      assert.equal(meta.width, columns * art.MINI_CELL);
-      assert.equal(meta.height, rows * art.MINI_CELL);
+for (const id of adventureHeroIds) {
+  test(
+    id + " registers late-loaded frames and keeps scale/feet through all actions and reduced work",
+    () => {
+      const image = sprite();
+      applyHeroPose(image, id, "8", 90);
+      const scale = image.scale,
+        origin = image.origin;
+      for (let pose = 0; pose < 16; pose++) {
+        applyHeroPose(image, id, String(pose), 90);
+        assert.equal(image.key, adventureHeroAsset(id));
+        assert.equal(image.frame.name, String(adventureRoadPose(String(pose))));
+        assert.equal(image.scale, scale);
+        assert.deepEqual(image.origin, origin);
+      }
+      for (let step = 0; step < 8; step++) {
+        applyHeroPose(image, id, "walk-" + step, 90);
+        assert.equal(image.frame.name, String(step));
+      }
+      for (const [task, pulling, reduced, enemies, expected] of [
+        ["carry", false, false, [], 19],
+        ["carry", true, false, [], 21],
+        ["carry", false, true, [], 18],
+        ["carry", true, false, [{ hp: 1 }], 20],
+        ["pack", false, false, [], 23],
+        ["unload", false, true, [], 22],
+      ]) {
+        const state = {
+          gathering: { kind: "cargo", task },
+          time: task === "pack" ? 750 : 220,
+          enemies,
+        };
+        assert.equal(applyWorkPose(image, state, { id }, reduced, 90, pulling), true);
+        assert.equal(image.frame.name, String(expected));
+        assert.equal(image.scale, scale);
+        assert.deepEqual(image.origin, origin);
+      }
+      for (const gathering of [
+        null,
+        { kind: "herb", task: "gather" },
+        { kind: "cargo", task: "inspect" },
+      ])
+        assert.equal(applyWorkPose(image, { gathering }, { id }, false, 90, false), false);
+    },
+  );
+  test(
+    id + " copies all eight home walking frames and idle pixels intact, isolates every action",
+    async () => {
+      const source = sharp("public" + adventureHeroAsset(id)),
+        home = sharp("public/home-pixel/" + id + ".webp");
+      const metadata = await source.metadata();
+      assert.equal(metadata.width, art.cell * 4);
+      assert.equal(metadata.height, art.cell * 6);
+      assert.equal(metadata.hasAlpha, true);
       const frames = [];
-      for (let pose = 0; pose < columns * rows; pose++) {
-        const pixels = await source
-          .clone()
-          .extract({
-            left: (pose % columns) * art.MINI_CELL,
-            top: Math.floor(pose / columns) * art.MINI_CELL,
-            width: art.MINI_CELL,
-            height: art.MINI_CELL,
-          })
-          .ensureAlpha()
-          .raw()
-          .toBuffer();
-        for (let p = 0; p < art.MINI_CELL; p++) {
+      for (let i = 0; i < art.frames; i++) {
+        const frame = source.clone().extract({
+          left: (i % 4) * art.cell,
+          top: Math.floor(i / 4) * art.cell,
+          width: art.cell,
+          height: art.cell,
+        });
+        const pixels = await frame.clone().ensureAlpha().raw().toBuffer();
+        frames.push(pixels);
+        assert.ok(
+          pixels.some((v, p) => p % 4 === 3 && v > 96),
+          "empty pose " + i,
+        );
+        for (let p = 0; p < art.cell; p++)
           for (const offset of [
             p,
-            p * art.MINI_CELL,
-            p * art.MINI_CELL + art.MINI_CELL - 1,
-            (art.MINI_CELL - 1) * art.MINI_CELL + p,
+            p * art.cell,
+            p * art.cell + art.cell - 1,
+            (art.cell - 1) * art.cell + p,
           ])
             assert.equal(pixels[offset * 4 + 3], 0);
+        if (i <= 8) {
+          const native = await home
+            .clone()
+            .extract({
+              left: (i % 4) * residentArt.cell,
+              top: Math.floor(i / 4) * residentArt.cell,
+              width: residentArt.cell,
+              height: residentArt.cell,
+            })
+            .ensureAlpha()
+            .raw()
+            .toBuffer();
+          const copy = await frame
+            .extract({
+              left: (art.cell - residentArt.cell) / 2,
+              top: art.foot - residentArt.foot,
+              width: residentArt.cell,
+              height: residentArt.cell,
+            })
+            .ensureAlpha()
+            .raw()
+            .toBuffer();
+          for (let p = 0; p < native.length; p += 4) {
+            assert.equal(copy[p + 3], native[p + 3], `alpha ${id}/${i}/${p}`);
+            if (native[p + 3])
+              for (let c = 0; c < 3; c++)
+                assert.equal(copy[p + c], native[p + c], `color ${id}/${i}/${p}/${c}`);
+          }
         }
-        frames.push(pixels);
       }
-      assert.notDeepEqual(frames[0], frames[1]);
-      assert.notDeepEqual(frames.at(-2), frames.at(-1));
-    }
-  });
+      for (const first of [10, 14, 16, 18, 20, 22])
+        assert.notDeepEqual(frames[first], frames[first + 1]);
+    },
+  );
 }
-
-test("Lico pushes in alternating steps, keeps head scale, and freezes work animation when paused", () => {
-  const sprite = image(),
-    hero = { id: "lico" };
-  const state = { gathering: { kind: "cargo", task: "carry" }, time: 0, enemies: [] };
-  applyHeroPose(sprite, "lico", "0", 90);
-  const scale = sprite.scale;
-  for (const [time, reduced, enemies, frame] of [
-    [0, false, [], "2"],
-    [220, false, [], "3"],
-    [440, false, [], "2"],
-    [220, true, [], "2"],
-    [220, false, [{ hp: 1 }], "2"],
-  ]) {
-    assert.equal(
-      applyWorkPose(sprite, { ...state, time, enemies }, hero, reduced, 90, false),
-      true,
-    );
-    assert.equal(sprite.frame.name, frame);
-    assert.equal(sprite.scale, scale);
-  }
-  assert.equal(applyWorkPose(sprite, { ...state, gathering: null }, hero, false, 90, false), false);
-});
-
-test("each Lico motion rectangle has transparent margins and distinct limb pixels", async () => {
-  const source = sharp("assets/source/road/lico-motion-v1.png");
-  const metadata = await source.metadata();
-  assert.equal(metadata.hasAlpha, true);
-  const pixels = [];
-  for (const [left, top, width, height] of art.licoMotionFrames) {
-    assert.ok(
-      left >= 0 && top >= 0 && left + width <= metadata.width && top + height <= metadata.height,
-    );
-    pixels.push(
-      await source.clone().extract({ left, top, width, height }).resize(80, 120).raw().toBuffer(),
-    );
-  }
-  assert.notDeepEqual(pixels[0], pixels[1]);
-  assert.notDeepEqual(pixels[2], pixels[3]);
-});

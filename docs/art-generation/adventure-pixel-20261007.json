@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-07",
+  "tool": "built-in image_gen",
+  "status": "accepted after source-sheet and 48px delivery review",
+  "files": [
+    {
+      "id": "aria",
+      "prompt": "Edit the referenced guild-home character artwork into a NEW adventure action sprite sheet of ONLY aria, matching the FIRST reference exactly as the style and character master. Second reference is only old action/weapon context, never its smooth rendering style. Warm crisp dot-art-like JRPG chibi with same home body/head proportions, dark stepped outlines, broad colored planes, subtle pixel-cluster shading, no glossy smooth anime retouch, no redesign. Transparent RGBA background. Exactly 16 isolated FULL BODY figures on a perfectly uniform 4 columns x 4 rows grid, square image, substantial clear gutters, nothing crosses a cell, feet aligned per row. All face three-quarter RIGHT, same head width and consistent scale in every frame. No text, no labels, no panel lines, no floor, no shadow, no scenery, no effects painted outside hands.\nRead left to right per row:\nRow1: four attack phases: bow: 1 raising bow, 2 drawing arrow aimed right, 3 releasing with string hand back, 4 lowering bow. Short gold shoulder hair, pale lavender lock opposite flower, elf ears, green eyes, green cape, leather bodice, white skirt, brown boots.\nRow2: frame5 crouched gathering a small herb reaching down, frame6 same crouch raising gathered herb; frame7 flinching from damage with hands near chest, frame8 recovering upright.\nRow3: frame9 and10 two alternating steps pushing with BOTH empty hands forward at waist height, body leaned RIGHT; frame11 and12 two alternating steps pulling with BOTH empty hands behind at waist height while walking RIGHT. Do NOT draw cart or cart bars; engine supplies them.\nRow4: frame13 and14 kneeling packing a small tied canvas sack, hands adjusting rope with small distinct motion; frame15 ordinary upright idle hands at side, frame16 same idle with eyes briefly closed.\nKeep actual crown-to-sole height IDENTICAL for upright figures; crouched body naturally lower with SAME head size. No weapons in gathering, pushing, pulling, packing, idle frames. All weapon tips stay inside cell with ample margins. Preserve every hair accessory, garment color, footwear and face personality of home reference across all 16 poses.",
+      "references": [
+        "assets/source/home-pixel/aria-v1.png",
+        "public/animations/road/aria-v2.webp"
+      ],
+      "source": "assets/source/adventure-pixel/aria-actions-v1.png",
+      "result": "C:\\Users\\spitz\\.codex\\generated_images\\01a11675-2d38-72c2-b257-672150fce3c2\\exec-0a667c8a-add1-4f72-9c89-1ff60014bf66.png",
+      "sha256": "450f41ef650a97cf8e39f376b53e2872636305e109fada833b5cf291447d8ae3",
+      "delivery": "public/adventure-pixel/aria.webp",
+      "accepted": true
+    },
+    {
+      "id": "leon",
+      "prompt": "Edit the referenced guild-home character artwork into a NEW adventure action sprite sheet of ONLY leon, matching the FIRST reference exactly as the style and character master. Second reference is only old action/weapon context, never its smooth rendering style. Warm crisp dot-art-like JRPG chibi with same home body/head proportions, dark stepped outlines, broad colored planes, subtle pixel-cluster shading, no glossy smooth anime retouch, no redesign. Transparent RGBA background. Exactly 16 isolated FULL BODY figures on a perfectly uniform 4 columns x 4 rows grid, square image, substantial clear gutters, nothing crosses a cell, feet aligned per row. All face three-quarter RIGHT, same head width and consistent scale in every frame. No text, no labels, no panel lines, no floor, no shadow, no scenery, no effects painted outside hands.\nRead left to right per row:\nRow1: four attack phases: sword: 1 ready at hip, 2 raised above shoulder, 3 horizontal slash to right, 4 recover. Brown spiky hair, blue tunic, short red cape, shoulder armor, brown boots.\nRow2: frame5 crouched gathering a small herb reaching down, frame6 same crouch raising gathered herb; frame7 flinching from damage with hands near chest, frame8 recovering upright.\nRow3: frame9 and10 two alternating steps pushing with BOTH empty hands forward at waist height, body leaned RIGHT; frame11 and12 two alternating steps pulling with BOTH empty hands behind at waist height while walking RIGHT. Do NOT draw cart or cart bars; engine supplies them.\nRow4: frame13 and14 kneeling packing a small tied canvas sack, hands adjusting rope with small distinct motion; frame15 ordinary upright idle hands at side, frame16 same idle with eyes briefly closed.\nKeep actual crown-to-sole height IDENTICAL for upright figures; crouched body naturally lower with SAME head size. No weapons in gathering, pushing, pulling, packing, idle frames. All weapon tips stay inside cell with ample margins. Preserve every hair accessory, garment color, footwear and face personality of home reference across all 16 poses.",
+      "references": [
+        "assets/source/home-pixel/leon-v1.png",
+        "public/animations/road/leon-v1.webp"
+      ],
+      "source": "assets/source/adventure-pixel/leon-actions-v1.png",
+      "result": "C:\\Users\\spitz\\.codex\\generated_images\\01a11675-2d38-72c2-b257-672150fce3c2\\exec-7eea17ab-b6d5-48fc-b46a-dab4ba0866a3.png",
+      "sha256": "4100e1993eb4c4044e7fd7a02fdcc0df5e4a093e4f38d2b88823c3ae16d0b63a",
+      "delivery": "public/adventure-pixel/leon.webp",
+      "accepted": true
+    },
+    {
+      "id": "mira",
+      "prompt": "Edit the referenced guild-home character artwork into a NEW adventure action sprite sheet of ONLY mira, matching the FIRST reference exactly as the style and character master. Second reference is only old action/weapon context, never its smooth rendering style. Warm crisp dot-art-like JRPG chibi with same home body/head proportions, dark stepped outlines, broad colored planes, subtle pixel-cluster shading, no glossy smooth anime retouch, no redesign. Transparent RGBA background. Exactly 16 isolated FULL BODY figures on a perfectly uniform 4 columns x 4 rows grid, square image, substantial clear gutters, nothing crosses a cell, feet aligned per row. All face three-quarter RIGHT, same head width and consistent scale in every frame. No text, no labels, no panel lines, no floor, no shadow, no scenery, no effects painted outside hands.\nRead left to right per row:\nRow1: four attack phases: moon staff spell: 1 gathering focus, 2 lifting staff, 3 pointing staff to right, 4 lowering. Grey lavender tied hair, weary droopy eyes with under-eye shadow, kind small smile, moon flower ornament, dark blue and cream robe, narrow ankle sandals.\nRow2: frame5 crouched gathering a small herb reaching down, frame6 same crouch raising gathered herb; frame7 flinching from damage with hands near chest, frame8 recovering upright.\nRow3: frame9 and10 two alternating steps pushing with BOTH empty hands forward at waist height, body leaned RIGHT; frame11 and12 two alternating steps pulling with BOTH empty hands behind at waist height while walking RIGHT. Do NOT draw cart or cart bars; engine supplies them.\nRow4: frame13 and14 kneeling packing a small tied canvas sack, hands adjusting rope with small distinct motion; frame15 ordinary upright idle hands at side, frame16 same idle with eyes briefly closed.\nKeep actual crown-to-sole height IDENTICAL for upright figures; crouched body naturally lower with SAME head size. No weapons in gathering, pushing, pulling, packing, idle frames. All weapon tips stay inside cell with ample margins. Preserve every hair accessory, garment color, footwear and face personality of home reference across all 16 poses.",
+      "references": [
+        "assets/source/home-pixel/mira-v3.png",
+        "public/animations/road/mira-v3.webp"
+      ],
+      "source": "assets/source/adventure-pixel/mira-actions-v1.png",
+      "result": "C:\\Users\\spitz\\.codex\\generated_images\\01a11675-2d38-72c2-b257-672150fce3c2\\exec-0b682ea7-378c-4a61-837e-61205761151f.png",
+      "sha256": "b716c28e978a99a50ed41303a0ebfdcbc5e5a5889999ecbf1c9c6fc7add75db8",
+      "delivery": "public/adventure-pixel/mira.webp",
+      "accepted": true
+    },
+    {
+      "id": "finn",
+      "prompt": "Edit the referenced guild-home character artwork into a NEW adventure action sprite sheet of ONLY finn, matching the FIRST reference exactly as the style and character master. Second reference is only old action/weapon context, never its smooth rendering style. Warm crisp dot-art-like JRPG chibi with same home body/head proportions, dark stepped outlines, broad colored planes, subtle pixel-cluster shading, no glossy smooth anime retouch, no redesign. Transparent RGBA background. Exactly 16 isolated FULL BODY figures on a perfectly uniform 4 columns x 4 rows grid, square image, substantial clear gutters, nothing crosses a cell, feet aligned per row. All face three-quarter RIGHT, same head width and consistent scale in every frame. No text, no labels, no panel lines, no floor, no shadow, no scenery, no effects painted outside hands.\nRead left to right per row:\nRow1: four attack phases: short dagger: 1 ready, 2 winding back, 3 thrusting right, 4 recover. Middle aged man with brown low ponytail, stubble, relaxed droopy grey-purple eyes, weathered olive coat, cream shirt and brown boots. Retain his sly approachable mature face, not a boy.\nRow2: frame5 crouched gathering a small herb reaching down, frame6 same crouch raising gathered herb; frame7 flinching from damage with hands near chest, frame8 recovering upright.\nRow3: frame9 and10 two alternating steps pushing with BOTH empty hands forward at waist height, body leaned RIGHT; frame11 and12 two alternating steps pulling with BOTH empty hands behind at waist height while walking RIGHT. Do NOT draw cart or cart bars; engine supplies them.\nRow4: frame13 and14 kneeling packing a small tied canvas sack, hands adjusting rope with small distinct motion; frame15 ordinary upright idle hands at side, frame16 same idle with eyes briefly closed.\nKeep actual crown-to-sole height IDENTICAL for upright figures; crouched body naturally lower with SAME head size. No weapons in gathering, pushing, pulling, packing, idle frames. All weapon tips stay inside cell with ample margins. Preserve every hair accessory, garment color, footwear and face personality of home reference across all 16 poses.",
+      "references": [
+        "assets/source/home-pixel/finn-v1.png",
+        "public/animations/road/finn-v1.webp"
+      ],
+      "source": "assets/source/adventure-pixel/finn-actions-v1.png",
+      "result": "C:\\Users\\spitz\\.codex\\generated_images\\01a11675-2d38-72c2-b257-672150fce3c2\\exec-9dea82b0-d879-4692-8b7d-3cd104121b44.png",
+      "sha256": "28d9e7726a731bc988d17cbc0cd4b00f11009d9b459ea22a0621123c9676a164",
+      "delivery": "public/adventure-pixel/finn.webp",
+      "accepted": true
+    },
+    {
+      "id": "lico",
+      "prompt": "Edit the referenced guild-home character artwork into a NEW adventure action sprite sheet of ONLY lico, matching the FIRST reference exactly as the style and character master. Second reference is only old action/weapon context, never its smooth rendering style. Warm crisp dot-art-like JRPG chibi with same home body/head proportions, dark stepped outlines, broad colored planes, subtle pixel-cluster shading, no glossy smooth anime retouch, no redesign. Transparent RGBA background. Exactly 16 isolated FULL BODY figures on a perfectly uniform 4 columns x 4 rows grid, square image, substantial clear gutters, nothing crosses a cell, feet aligned per row. All face three-quarter RIGHT, same head width and consistent scale in every frame. No text, no labels, no panel lines, no floor, no shadow, no scenery, no effects painted outside hands.\nRead left to right per row:\nRow1: four attack phases: glowing specimen: 1 holding small vial in LEFT hand, 2 lifting vial, 3 extending left hand forward to distract enemy, 4 lowering vial. Auburn ponytail tied at back and down nape, round glasses, freckles, green eyes, red black apron dress with cream blouse, red flower ornament, sandals. Keep slightly odd curious personality.\nRow2: frame5 crouched gathering a small herb reaching down, frame6 same crouch raising gathered herb; frame7 flinching from damage with hands near chest, frame8 recovering upright.\nRow3: frame9 and10 two alternating steps pushing with BOTH empty hands forward at waist height, body leaned RIGHT; frame11 and12 two alternating steps pulling with BOTH empty hands behind at waist height while walking RIGHT. Do NOT draw cart or cart bars; engine supplies them.\nRow4: frame13 and14 kneeling packing a small tied canvas sack, hands adjusting rope with small distinct motion; frame15 ordinary upright idle hands at side, frame16 same idle with eyes briefly closed.\nKeep actual crown-to-sole height IDENTICAL for upright figures; crouched body naturally lower with SAME head size. No weapons in gathering, pushing, pulling, packing, idle frames. All weapon tips stay inside cell with ample margins. Preserve every hair accessory, garment color, footwear and face personality of home reference across all 16 poses.",
+      "references": [
+        "assets/source/home-pixel/lico-v4.png",
+        "public/animations/road/lico-standing-v1.webp"
+      ],
+      "source": "assets/source/adventure-pixel/lico-actions-v1.png",
+      "result": "C:\\Users\\spitz\\.codex\\generated_images\\01a11675-2d38-72c2-b257-672150fce3c2\\exec-88041b9e-781d-4b7f-b8d6-8955041a1077.png",
+      "sha256": "c0c1f1d38a58d3c292d5e4dd691161172c66ee222cd3b23e1d4f3653ca4b1da2",
+      "delivery": "public/adventure-pixel/lico.webp",
+      "accepted": true
+    }
+  ],
+  "attempts": 5,
+  "retakes": 0,
+  "validation": {
+    "deliveryRepair": "2026-10-08: replaced uniform column cropping with connected silhouette separation; verified full Leon/Mira/Finn weapons in attack frame 3 at 2x, no fragments in neighbouring frames; source sheets unchanged.",
+    "unitTests": 430,
+    "enemyRendering": "2026-10-08: shared hero pixel pitch and NEAREST for every enemy; original scale/aspect/origin retained; DPR and song/command transforms reuse sampled poses. 12 preview examples at 390px and 1/2/3x, chapter-four 18 cases and trio/puppets reload scenarios passed.",
+    "homePixels": "all eight walk frames and idle match visible RGBA exactly",
+    "browser": "chapter-four: 18 cases passed; chapter-road: cargo retry/reload and trio-work rendering/reload passed during the targeted run",
+    "browserFailure": "chapter-road touch assertion observed hits delta 2 instead of 1; game engine automatic attacks and tap assistance both increment run.hits. Five-cargo failed its work-caption visibility assertion. These assertions remain unpassed.",
+    "viewing": [
+      "source sheets",
+      "work/adventure-pixel/overview.png",
+      "cargo-390.png",
+      "trio-390.png",
+      "trio-work-390.png",
+      "lico-pushing-390.png"
+    ],
+    "physicalDevice": "not performed",
+    "limitations": "Generated action sheets retain slight per-frame clothing and face differences. Home walks and idle are copied without resampling. Enemies and scenery retain existing artwork."
+  }
+}

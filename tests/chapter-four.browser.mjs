@@ -21,15 +21,20 @@ mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
 const errors = [];
 const results = [];
+const enemyAssets = new Set();
 
 async function open(state) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
+    if (response.ok() && response.url().includes("/adventure-enemies/"))
+      enemyAssets.add(new URL(response.url()).pathname);
     if (
       response.status() >= 400 &&
-      /\/scenery\/|\/animations\/|\/portraits\/|\/characters\/|\/stories\//.test(response.url())
+      /\/scenery\/|\/animations\/|\/adventure-pixel\/|\/adventure-enemies\/|\/portraits\/|\/characters\/|\/stories\//.test(
+        response.url(),
+      )
     )
       errors.push(`${response.status()} ${response.url()}`);
   });
@@ -219,6 +224,7 @@ try {
     if (name === "lico-and-merrill")
       assert.equal(state.squads[0].run.quest, MERRILL_SEEDLINGS_QUEST);
     const { page, context } = await open(state);
+    if (name === "korotake-summon") await page.clock.setFixedTime(new Date(state.updatedAt + 400));
     await capture(page, name);
     if (["walk", "push"].includes(node)) {
       await page.clock.setFixedTime(new Date(state.updatedAt + (node === "walk" ? 150 : 220)));
@@ -229,6 +235,17 @@ try {
     results.push(name);
   }
   await verifyKorotakeEnding();
+  for (const id of [
+    "lico-standing",
+    "merrill-standing",
+    "merrill-song",
+    "mushroom",
+    "mushroom-projectile",
+  ])
+    assert.ok(
+      enemyAssets.has(`/adventure-enemies/${id}.webp`),
+      `${id}: redrawn fourth-chapter art loaded`,
+    );
   assert.deepEqual(errors, []);
   writeFileSync(`${output}/result.json`, JSON.stringify({ results, errors }, null, 2));
   console.log(JSON.stringify({ results, errors }));

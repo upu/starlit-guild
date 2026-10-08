@@ -7,21 +7,14 @@ import {
   ROAD_EFFECTS,
   ROAD_HERB,
   ROAD_CARGO,
-  ROAD_PUPPETS,
-  ROAD_PUSH,
-  ROAD_PULL,
-  ROAD_FINN_PULL,
-  ROAD_PACKING,
   ROAD_DESTINATION,
   ROAD_WORKSITES,
   ROAD_BERNE_WORKSITES,
   ROAD_LEDGER_DESK,
   ROAD_SIGNPOST,
-  ROAD_ARIA_WORK,
-  ROAD_MIRA_WORK,
-  roadSheet,
-  roadWalkSheet,
 } from "./road-art";
+import { adventureHeroAsset } from "@/lib/adventure-hero-art";
+import { adventureEnemyAsset, adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
 import type { AdventureBridge, RuntimeState } from "./renderer-session";
 
 export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
@@ -34,29 +27,23 @@ export function chapterRoadAssets(input: ReturnType<AdventureBridge["read"]>) {
       ROAD_EFFECTS,
       ROAD_HERB,
       ROAD_CARGO,
-      ROAD_PUPPETS,
-      ROAD_PUSH,
-      ROAD_PULL,
-      ROAD_FINN_PULL,
-      ROAD_PACKING,
+      ...(["slime", "wolf", "dragon", "plant", "pumpety", "puppet", "golem"] as const).map(
+        adventureEnemyAsset,
+      ),
       ROAD_DESTINATION,
       ROAD_WORKSITES,
       ROAD_BERNE_WORKSITES,
       ROAD_LEDGER_DESK,
       ROAD_SIGNPOST,
-      ROAD_ARIA_WORK,
-      ROAD_MIRA_WORK,
-      ...(["aria", "leon", "mira", "finn"] as const).flatMap((id) => [
-        roadSheet(id),
-        roadWalkSheet(id),
-      ]),
-      ...(input.squad.members.includes("lico") ? [roadSheet("lico"), roadWalkSheet("lico")] : []),
-      ...(input.squad.run?.quest === "lico-records" ? [roadSheet("lico")] : []),
+      ...(["aria", "leon", "mira", "finn"] as const).map(adventureHeroAsset),
+      ...(input.squad.members.includes("lico") ? [adventureHeroAsset("lico")] : []),
+      ...(input.squad.run?.quest === "lico-records" ? [adventureEnemyAsset("lico-standing")] : []),
       ...(input.squad.run?.quest === "merrill-seedlings"
         ? [
-            "/animations/road/merrill-standing-v1.webp",
-            "/animations/road/merrill-song-v1.webp",
-            "/animations/road/mushroom-v1.webp",
+            adventureEnemyAsset("merrill-standing"),
+            adventureEnemyAsset("merrill-song"),
+            adventureEnemyAsset("mushroom"),
+            adventureMushroomProjectile,
           ]
         : []),
       ...(look.work ? [look.work.asset] : []),

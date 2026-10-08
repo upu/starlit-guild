@@ -1,0 +1,145 @@
+{
+  "slime": {
+    "source": {
+      "left": 341,
+      "top": 502,
+      "width": 530,
+      "height": 372
+    },
+    "left": 386,
+    "top": 779,
+    "width": 258,
+    "height": 181,
+    "originalVisibleFraction": 0.4723756906077348
+  },
+  "wolf": {
+    "source": {
+      "left": 225,
+      "top": 326,
+      "width": 840,
+      "height": 714
+    },
+    "left": 321,
+    "top": 652,
+    "width": 362,
+    "height": 308,
+    "originalVisibleFraction": 0.8011049723756906
+  },
+  "dragon": {
+    "source": {
+      "left": 289,
+      "top": 336,
+      "width": 652,
+      "height": 673
+    },
+    "left": 341,
+    "top": 660,
+    "width": 291,
+    "height": 300,
+    "originalVisibleFraction": 0.7817679558011049
+  },
+  "plant": {
+    "source": {
+      "left": 285,
+      "top": 312,
+      "width": 695,
+      "height": 727
+    },
+    "left": 327,
+    "top": 648,
+    "width": 298,
+    "height": 312,
+    "originalVisibleFraction": 0.8121546961325967
+  },
+  "pumpety": {
+    "source": {
+      "left": 247,
+      "top": 222,
+      "width": 816,
+      "height": 884
+    },
+    "left": 375,
+    "top": 596,
+    "width": 336,
+    "height": 364,
+    "originalVisibleFraction": 0.9475138121546961
+  },
+  "puppet": {
+    "source": {
+      "left": 314,
+      "top": 234,
+      "width": 698,
+      "height": 858
+    },
+    "left": 357,
+    "top": 595,
+    "width": 297,
+    "height": 365,
+    "originalVisibleFraction": 0.9516574585635359
+  },
+  "golem": {
+    "source": {
+      "left": 78,
+      "top": 167,
+      "width": 1115,
+      "height": 992
+    },
+    "left": 283,
+    "top": 586,
+    "width": 420,
+    "height": 374,
+    "originalVisibleFraction": 0.9751381215469613
+  },
+  "lico-standing": {
+    "source": {
+      "left": 321,
+      "top": 208,
+      "width": 646,
+      "height": 905
+    },
+    "left": 360,
+    "top": 576,
+    "width": 274,
+    "height": 384,
+    "originalVisibleFraction": 1
+  },
+  "merrill-standing": {
+    "source": {
+      "left": 293,
+      "top": 190,
+      "width": 639,
+      "height": 895
+    },
+    "left": 362,
+    "top": 576,
+    "width": 274,
+    "height": 384,
+    "originalVisibleFraction": 1
+  },
+  "merrill-song": {
+    "source": {
+      "left": 315,
+      "top": 165,
+      "width": 618,
+      "height": 952
+    },
+    "left": 369,
+    "top": 577,
+    "width": 249,
+    "height": 383,
+    "originalVisibleFraction": 0.998046875
+  },
+  "mushroom": {
+    "source": {
+      "left": 315,
+      "top": 281,
+      "width": 676,
+      "height": 711
+    },
+    "left": 335,
+    "top": 576,
+    "width": 365,
+    "height": 384,
+    "originalVisibleFraction": 1
+  }
+}
