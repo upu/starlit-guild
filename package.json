@@ -13,8 +13,9 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "predev": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize",
-    "prebuild": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize",
+    "assets:optimize": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize",
+    "predev": "npm run assets:optimize",
+    "prebuild": "npm run assets:optimize",
     "install:ci": "node scripts/install-ci.mjs",
     "dev": "vinext dev --hostname 0.0.0.0 --port 5173",
     "build": "vinext build",
