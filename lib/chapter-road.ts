@@ -1,5 +1,6 @@
 import type { Encounter, GameEvent, Quest, Run, Squad } from "./game.ts";
 import { paralyzed } from "./chapter-four-battles.ts";
+import { shortRoute } from "./puppet-battles.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
 import { encounter, targetName, questById } from "./game-rules.ts";
 import { isPrologueQuest } from "./prologue.ts";
@@ -217,7 +218,7 @@ function ambush(q: Quest, r: Run, at: number) {
   )
     return;
   road.ambushNode = r.node + 1;
-  r.enemies = createEnemies(q, road.ambushNode, at, r.nodes !== 15, r.nodes);
+  r.enemies = createEnemies(q, road.ambushNode, at, shortRoute(r.nodes), r.nodes);
   placeRoadEnemies(r);
   syncEnemyTotals(r);
 }

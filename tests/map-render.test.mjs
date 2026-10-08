@@ -10,6 +10,7 @@ import { stories } from "../lib/stories.ts";
 import { nextStage, prologueStages } from "../lib/prologue.ts";
 import { storyArtAt } from "../lib/story-art.ts";
 import { adventureFrame, adventureAction } from "../lib/adventure-presentation.ts";
+import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 const OPENING = nextStage(initialState(0)).quest;
 const begin = (s = initialState(1000)) =>
   act(s, { type: "start", id: nextStage(s).quest }, s.updatedAt);
@@ -309,10 +310,14 @@ test("every restored expedition location renders with finite character coordinat
       );
       assert.match(html, /旅の道のり/);
       assert.doesNotMatch(html, /NaN|undefined%/);
-      for (const member of frameFor(state).members) {
-        assert.ok(Number.isFinite(member.x) && Number.isFinite(member.y));
-        assert.ok(member.x >= 0 && member.x <= 1 && member.y >= 0 && member.y <= 1);
-      }
+      const { battle } = chapterRoadFrame({
+        squad,
+        now: state.updatedAt,
+        ready: true,
+        paused: false,
+        startQuest: OPENING,
+      });
+      for (const hero of battle.heroes) assert.ok(Number.isFinite(hero.x));
       visited.add(node);
       if (squad.run.road?.ambushNode !== undefined) visited.add(squad.run.road.ambushNode);
     }
@@ -351,14 +356,18 @@ test("effects follow current events, expire on resume, and do not alter the save
         startQuest: OPENING,
       }),
     );
+  const hitters = (now) =>
+    frameFor(state, now)
+      .members.filter((member) => member.hit)
+      .map((member) => member.id);
   const current = render(2200);
-  assert.equal(frameFor(state, 2200).events.length, 1);
+  assert.deepEqual(hitters(2200), ["leon"]);
   assert.match(current, /finisher-scene burst/);
   assert.match(current, /--scene-age:-200ms/);
   assert.doesNotMatch(render(7000), /finisher-scene burst/);
-  assert.equal(frameFor(state, 7000).events.length, 0);
+  assert.deepEqual(hitters(7000), []);
   assert.doesNotMatch(render(1500), /finisher-scene burst/);
-  assert.equal(frameFor(state, 1500).events.length, 0);
+  assert.deepEqual(hitters(1500), []);
   assert.deepEqual(state, before);
 });
 

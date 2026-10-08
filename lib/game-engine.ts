@@ -39,20 +39,18 @@ import { continueAutoNext } from "./game-actions.ts";
 import type { Quest } from "./game-content.ts";
 import type { Actor, Encounter, GameEvent, Run, Squad, State } from "./game-types.ts";
 import {
-  activeBonds,
   activeRun,
+  actorOutput,
   encounter,
   healMember,
   heroById,
   lowestHealth,
   memberHealth,
-  memberStats,
   questById,
   resistanceFor,
   specialInterval,
   specialMultiplier,
   squadName,
-  statIndex,
   stats,
   targetName,
   totalMaxHp,
@@ -160,9 +158,7 @@ function actorTurn(
     return;
   }
   kind = roadActionKind(q, r, actor.hero);
-  const hero = actor.hero,
-    member = memberStats(s, hero),
-    bond = activeBonds(sq.members).reduce((value, item) => value + item.bonus, 0);
+  const hero = actor.hero;
   actor.actions++;
   const special = actor.actions % specialInterval(hero) === 0,
     multiplier = techniqueMultiplier(s, hero, kind, special, specialMultiplier(hero));
@@ -173,7 +169,7 @@ function actorTurn(
   }
   const hit = damageEnemy(
     r,
-    (2 + member[statIndex(kind)] * 0.23 + bond * 0.1) * multiplier,
+    actorOutput(s, sq.members, hero, kind) * multiplier,
     penetration(s, hero),
     resistanceFor(q, kind),
     hero,

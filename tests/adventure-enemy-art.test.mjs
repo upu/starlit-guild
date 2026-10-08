@@ -8,7 +8,6 @@ import {
   adventureEnemyIds,
   adventureEnemyAsset,
   ordinaryEnemyArt,
-  restyledEnemyAsset,
 } from "../lib/adventure-enemy-art.ts";
 
 test("every redrawn enemy has transparent gutters, a shared sole and intact source proportions", async () => {
@@ -37,14 +36,12 @@ test("every redrawn enemy has transparent gutters, a shared sole and intact sour
   }
 });
 
-test("legacy opponents resolve to the matching redrawn species", () => {
+test("ordinary opponents resolve to the matching redrawn species", () => {
   assert.deepEqual(
     [8, 9, 10, 11].map((n) => ordinaryEnemyArt(String(n))),
     ["slime", "wolf", "dragon", "plant"],
   );
   assert.equal(ordinaryEnemyArt("slime"), "slime");
-  assert.equal(restyledEnemyAsset("/enemies/cargo-golem.png", 8), adventureEnemyAsset("golem"));
-  assert.equal(restyledEnemyAsset("/items/chest.png", 8), "/items/chest.png");
 });
 
 const source = ts

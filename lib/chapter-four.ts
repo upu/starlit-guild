@@ -1,4 +1,5 @@
 import type { Quest } from "./game.ts";
+import { shortRoute, STANDARD_QUEST_NODES } from "./puppet-battles.ts";
 
 export const WALNUT_INTERLUDE = "interlude-promised-walnuts";
 export const LINDE_REQUESTS_QUEST = "linde-requests";
@@ -11,6 +12,10 @@ export const LICO_RECORDS_QUEST = "lico-records";
 export const MERRILL_SEEDLINGS_QUEST = "merrill-seedlings";
 export const MOSS_TRANSPLANT_QUEST = "moss-transplant";
 export const GUILD_FOUNDING_QUEST = "starlit-guild-founding";
+// Lico's trap closes the last stretch of her records quest. Merrill's fight sat at this stretch
+// before it became a single fight, and runs saved on that old route still meet her there.
+export const LICO_TRAP_NODE = STANDARD_QUEST_NODES - 1;
+export const MERRILL_LEGACY_NODE = 8;
 
 const definitions = [
   [
@@ -211,13 +216,13 @@ export const isMossTrailQuest = (id: string) =>
 
 export function chapterFourWork(id: string, node: number, nodes?: number): Work | undefined {
   if (id === LICO_RECORDS_QUEST)
-    return node === 14
+    return node === LICO_TRAP_NODE
       ? { kind: "battle", name: "リコの光と煙の仕掛けを止める" }
       : node % 3 === 1
         ? { kind: "escort", name: "管理人の記録を渡す" }
         : { kind: "gather", name: "注文控えと灯りの記録を照合する" };
   if (id === MERRILL_SEEDLINGS_QUEST)
-    return nodes !== 15 || node === 8
+    return shortRoute(nodes) || node === MERRILL_LEGACY_NODE
       ? { kind: "battle", name: "メリルから苗の籠を守る" }
       : { kind: "escort", name: "苗の籠を運び出す" };
   return patterns[id]?.[isMossTrailQuest(id) ? Math.min(2, Math.floor(node / 5)) : node % 3];

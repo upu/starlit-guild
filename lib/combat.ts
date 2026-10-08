@@ -3,6 +3,7 @@ import { confrontationEnemies, type BattleTrick, type BattleCue } from "./chapte
 import { chapterFourRank, isChapterFourQuest } from "./chapter-four.ts";
 import type { Quest, Run, State } from "./game.ts";
 import { level } from "./roster.ts";
+import { singleOpponent } from "./quest-sprites.ts";
 import { equippedItems } from "./equipment.ts";
 import {
   PICNIC_QUEST,
@@ -73,7 +74,7 @@ export function reducedDamage(base: number, resistance: number, power: number) {
   );
 }
 export function enemyCount(q: Quest, node: number) {
-  if (q.enemy >= 10) return 1;
+  if (singleOpponent(q.enemy)) return 1;
   const maximum = Math.min(3, combatRank(q) + 1);
   return 1 + (Math.floor(node / 3) % maximum);
 }

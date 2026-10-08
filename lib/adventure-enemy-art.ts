@@ -21,20 +21,6 @@ const ordinaryArt: Partial<Record<string, AdventureEnemyId>> = {
   "11": "plant",
 };
 export const ordinaryEnemyArt = (frame: string): AdventureEnemyId => ordinaryArt[frame] ?? "slime";
-export function restyledEnemyAsset(asset: string, sprite: number) {
-  if (asset === "/sprites.png") return adventureEnemyAsset(ordinaryEnemyArt(String(sprite)));
-  const legacy: Partial<Record<string, AdventureEnemyId>> = {
-    "/enemies/masked-pumpety.png": "pumpety",
-    "/enemies/mountain-puppet.png": "puppet",
-    "/enemies/cargo-golem.png": "golem",
-    "/animations/road/lico-standing-v1.webp": "lico-standing",
-    "/animations/road/merrill-standing-v1.webp": "merrill-standing",
-    "/animations/road/merrill-song-v1.webp": "merrill-song",
-    "/animations/road/mushroom-v1.webp": "mushroom",
-  };
-  const id = legacy[asset];
-  return id ? adventureEnemyAsset(id) : asset;
-}
 
 export const originalEnemyArt: Record<
   AdventureEnemyId,

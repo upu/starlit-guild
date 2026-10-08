@@ -1,5 +1,5 @@
 "use client";
-import { chapterTwoEnemyAsset } from "@/lib/chapter-two";
+import { chapterTwoMischief } from "@/lib/chapter-two";
 import type { KeyboardEvent } from "react";
 import { PhaserAdventure } from "./phaser-adventure";
 import { BurstScene } from "./battle-effects";
@@ -15,7 +15,7 @@ function activityLabel(frame: ReturnType<typeof adventureFrame>) {
   if (frame.phase === "move") return "次の地点へ移動中";
   if (frame.phase === "rest") return "ひと休み中";
   if (frame.target?.battle)
-    return chapterTwoEnemyAsset(frame.quest.id, 0) || [12, 13].includes(frame.quest.enemy)
+    return chapterTwoMischief(frame.quest.id)
       ? "いたずらを阻止中"
       : `魔物と戦闘中 · 残り${String(frame.targets.filter((target) => !target.down).length)}体`;
   if (frame.target?.kind === "gather") return "素材を採取中";
