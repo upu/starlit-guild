@@ -16,6 +16,8 @@ import { heroes } from "@/lib/game";
 import { originalCharacters } from "@/lib/original-characters";
 import type { Story, StoryLine } from "@/lib/stories";
 import { storyArtAt } from "@/lib/story-art";
+import { storyStageCue } from "@/lib/story-stage";
+import { StoryStage } from "./story-stage";
 import {
   hasNextBanter,
   nextBanter,
@@ -157,6 +159,7 @@ export function StoryReader({
     if (dialogue.current) dialogue.current.scrollTop = dialogue.current.scrollHeight;
   }, [page]);
   const { pages, art, last, advanceLabel } = storyPageState(story, page, departure);
+  const stage = !art && storyStageCue(story.id, page);
   const advance = useStoryPageAdvance(
     viewArt,
     last,
@@ -170,9 +173,13 @@ export function StoryReader({
   useImperativeHandle(advanceRef, () => ({ advance }));
   return (
     <div className={"story-reader" + (art ? " story-reader-art" : "")}>
-      {storyArtwork(art ?? null, viewArt, story.title, () => {
-        setViewArt(true);
-      })}
+      {stage ? (
+        <StoryStage key={story.id} cue={stage} speaker={story.lines[page]?.speaker} />
+      ) : (
+        storyArtwork(art ?? null, viewArt, story.title, () => {
+          setViewArt(true);
+        })
+      )}
       <div
         className="story-conversation"
         role="button"

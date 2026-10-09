@@ -140,6 +140,31 @@ function harness(name, initialProps) {
   };
 }
 
+test("the opening stage follows dialogue pages without completing or changing the story", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-departure");
+  let read = 0;
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => {
+      read++;
+      return true;
+    },
+    onClose: () => {},
+  });
+  for (let page = 0; page < story.lines.length; page++) {
+    assert.ok(h.find("StoryStage"));
+    assert.equal(h.find("StoryStage").props.speaker, story.lines[page].speaker);
+    assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, page + 1));
+    assert.equal(read, 0);
+    h.find("story-conversation").props.onClick();
+    h.render();
+  }
+  assert.equal(read, 1);
+  h.find("story-conversation").props.onClick();
+  assert.equal(read, 1);
+});
+
 test("automatic conversation completes after the final dwell, pauses, and reports read only once", () => {
   let read = 0;
   const props = {
