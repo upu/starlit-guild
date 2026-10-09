@@ -53,15 +53,19 @@ async function layout(page, name) {
   assert.ok(stage.width > 250 && stage.height > 65);
   assert.ok(stage.y + stage.height <= talk.y + 1);
   assert.ok(talk.y + talk.height <= view.height + 1);
+  const latest = await page.locator(".story-lines").boundingBox();
+  assert.ok(latest.y - (stage.y + stage.height) < 40, "latest dialogue stays next to the stage");
+  assert.equal(await page.locator(".story-lines > *").count(), 1);
   const plane = await page.locator(".story-stage-ground").boundingBox();
   const actor = await page.locator('[data-actor="leon"]').boundingBox();
   const cart = await page.locator(".story-stage-cart").boundingBox();
   assert.ok(Math.abs(plane.width / plane.height - 1.5) < 0.01);
   assert.ok(Math.abs(actor.width / plane.width - 0.24) < 0.01);
   assert.ok(Math.abs(cart.width / plane.width - 0.44) < 0.01);
-  assert.ok(
-    (await page.locator(".story-line .face-portrait").count()) > 0,
-    "dialogue portraits stay present",
+  assert.equal(
+    await page.locator(".story-line .face-portrait").count(),
+    await page.locator(".story-line").count(),
+    "every spoken line keeps its portrait",
   );
   await page.screenshot({ path: `${output}/${name}.png` });
   results.push({ name, stage, talk, actors: await positions(page) });
@@ -89,6 +93,12 @@ try {
   assert.equal(await page.locator(".story-stage-reaction").first().textContent(), "！");
   assert.match(await page.locator(".story-lines").innerText(), /ずいぶん多くない/);
   await layout(page, "390-surprise");
+  await page.getByRole("button", { name: "会話履歴", exact: true }).click();
+  assert.equal(await page.locator(".story-lines > *").count(), 5);
+  await page.locator(".story-conversation").press("Enter");
+  assert.equal(await page.locator(".story-lines > *").count(), 5);
+  await page.getByRole("button", { name: "会話に戻る", exact: true }).click();
+  assert.match(await page.locator(".story-lines").innerText(), /ずいぶん多くない/);
   for (const [width, height] of [
     [320, 568],
     [844, 390],
@@ -111,6 +121,24 @@ try {
   await page.clock.runFor(4000);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
+    [32, 81],
+  );
+  assert.match(await page.locator(".story-lines").innerText(), /もう子供じゃない/);
+  assert.equal(
+    await page.locator(".story-stage-cart").evaluate((el) => parseFloat(el.style.left)),
+    64,
+  );
+  await layout(page, "390-last-line");
+  await page.locator(".story-conversation").click();
+  await page.clock.runFor(500);
+  assert.ok((await positions(page))[0].x > 32);
+  assert.ok((await positions(page))[1].x > 81);
+  await layout(page, "390-departure");
+  // Repeated input cannot bypass the walk or dispatch departure twice.
+  await page.locator(".story-conversation").press(" ");
+  await page.clock.runFor(2200);
+  assert.deepEqual(
+    (await positions(page)).map((actor) => actor.x),
     [107, 156],
   );
   assert.equal(
@@ -118,11 +146,8 @@ try {
     139,
   );
   assert.ok((await positions(page)).every((actor) => actor.transform.endsWith("scaleX(1)")));
-  await layout(page, "390-departure");
-  // Showing the last line alone must not launch the adventure.
   assert.equal(await page.locator(".story-stage").count(), 1);
-  await page.locator(".story-conversation").press(" ");
-  await page.clock.runFor(200);
+  await page.clock.runFor(500);
   assert.equal(await page.locator(".story-stage").count(), 0);
   await page.getByRole("button", { name: "旅の手帳：ヒント・思い出・アルバム・設定" }).click();
   await page.getByRole("button", { name: /思い出/ }).click();
@@ -146,6 +171,19 @@ try {
   assert.deepEqual(await positions(still), before);
   assert.equal(await still.locator(".story-stage-reaction").first().textContent(), "！");
   await layout(still, "390-reduced");
+  for (let i = 4; i < 12; i++) await advance(still);
+  await still.clock.runFor(4000);
+  assert.deepEqual(
+    (await positions(still)).map((actor) => actor.x),
+    [32, 81],
+  );
+  await advance(still);
+  await still.locator(".story-stage").waitFor({ state: "hidden" });
+  assert.equal(
+    await still.locator(".story-stage").count(),
+    0,
+    "reduced motion completes on the final tap",
+  );
   await reduced.close();
   assert.deepEqual(errors, []);
   writeFileSync(

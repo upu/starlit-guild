@@ -97,12 +97,22 @@ const meetingCues: StoryStageCue[] = [
     luggage: true,
   },
   {
-    description: "アリアが自分の荷を持って先に歩き出し、レオンが荷車を引いて続く。",
-    actors: pair(107, 156, {}, { left: false, pull: true }),
-    luggage: false,
-    cartX: 139,
+    description: "アリアがレオンに言い返し、二人は出発を待っている。",
+    actors: pair(32, 81),
+    luggage: true,
   },
 ];
+
+const meetingExit: StoryStageCue = {
+  description: "アリアが自分の荷を持って先に歩き出し、レオンが荷車を引いて続く。",
+  actors: pair(107, 156, {}, { left: false, pull: true }),
+  luggage: false,
+  cartX: 139,
+};
+
+export function storyStageExitCue(storyId: string): StoryStageCue | null {
+  return storyId === meetingStoryId ? meetingExit : null;
+}
 
 export function storyStageCue(storyId: string, line: number): StoryStageCue | null {
   if (storyId !== meetingStoryId) return null;

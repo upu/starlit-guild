@@ -5,6 +5,7 @@ import { stories } from "../lib/stories.ts";
 import {
   meetingStoryId,
   storyStageCue,
+  storyStageExitCue,
   stageEntrance,
   sampleStageActor,
   stageTravel,
@@ -27,7 +28,12 @@ test("only the opening meeting has staging, with a cue for every existing line",
     storyStageCue(meetingStoryId, 8).actors[0].x > storyStageCue(meetingStoryId, 6).actors[0].x,
   );
   assert.match(meeting.lines.at(-1).text, /行こう/);
-  assert.ok(storyStageCue(meetingStoryId, 12).actors.every((actor) => !actor.left));
+  assert.deepEqual(
+    storyStageCue(meetingStoryId, 12).actors.map((actor) => actor.x),
+    [32, 81],
+  );
+  assert.equal(storyStageCue(meetingStoryId, 12).cartX, undefined);
+  assert.equal(storyStageExitCue("other-story"), null);
 });
 
 test("a rapid next line continues from the displayed position and settles without a queued walk", () => {
@@ -69,7 +75,7 @@ test("Leon is already inspecting the cart before Aria arrives, and takes it alon
   assert.ok([22, 23].includes(leon.frame));
   const arriving = storyStageCue(meetingStoryId, 1);
   assert.equal(sampleStageActor(arriving.actors[0], stageEntrance("aria"), 500).visible, true);
-  const last = storyStageCue(meetingStoryId, 12);
+  const last = storyStageExitCue(meetingStoryId);
   const pulling = sampleStageActor(last.actors[1], { x: 81 }, 150);
   assert.equal(pulling.atlas, "adventure");
   assert.ok([20, 21].includes(pulling.frame));

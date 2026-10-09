@@ -29,8 +29,8 @@ function animateStage(
   stage: HTMLElement,
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
+  onComplete: () => void,
 ) {
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const actors = cue.actors.map((actor) => ({
     actor,
     origin: positions.get(actor.id) ?? stageEntrance(actor.id),
@@ -42,33 +42,50 @@ function animateStage(
     3000,
     ...actors.map(({ actor, origin }) => Math.abs(actor.x - origin.x) * 34),
   );
-  let elapsed = 0,
-    previous = 0,
-    frame = 0;
-  const paint = () => {
-    const travel = stageTravel(cartOrigin, cue.cartX ?? 64, elapsed, reduced.matches);
+  const paint = (elapsed: number, reduced: boolean) => {
+    const travel = stageTravel(cartOrigin, cue.cartX ?? 64, elapsed, reduced);
     positions.set("cart", travel);
     if (cart) cart.style.left = `${String(travel.x)}%`;
     for (const { actor, origin, element } of actors) {
-      const sample = sampleStageActor(actor, origin, elapsed, reduced.matches);
+      const sample = sampleStageActor(actor, origin, elapsed, reduced);
       positions.set(actor.id, sample);
       if (element) paintActor(element, sample);
     }
   };
+  return animateFrames(paint, endAt, onComplete);
+}
+
+function animateFrames(
+  paint: (elapsed: number, reduced: boolean) => void,
+  endAt: number,
+  onComplete: () => void,
+) {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let elapsed = 0,
+    previous = 0,
+    frame = 0;
+  let completed = false;
+  const complete = () => {
+    if (elapsed < endAt || completed) return;
+    completed = true;
+    onComplete();
+  };
   const tick = (time: number) => {
     elapsed += previous ? Math.min(64, time - previous) : 0;
     previous = time;
-    paint();
+    paint(elapsed, reduced.matches);
     if (elapsed < endAt && !reduced.matches) frame = requestAnimationFrame(tick);
+    else complete();
   };
   const resume = () => {
     cancelAnimationFrame(frame);
     previous = 0;
     // Finish at a stable pose when motion is reduced, including live preference changes.
     if (reduced.matches) elapsed = endAt;
-    paint();
+    paint(elapsed, reduced.matches);
     if (!document.hidden && !reduced.matches && elapsed < endAt)
       frame = requestAnimationFrame(tick);
+    if (!document.hidden) complete();
   };
   document.addEventListener("visibilitychange", resume);
   reduced.addEventListener("change", resume);
@@ -80,11 +97,18 @@ function animateStage(
   };
 }
 
-export function useStoryStageMotion(cue: StoryStageCue) {
+export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void) {
   const stage = useRef<HTMLDivElement>(null);
   const positions = useRef(new Map<string, StagePosition>());
+  const completion = useRef(onComplete);
   useEffect(() => {
-    if (stage.current) return animateStage(stage.current, cue, positions.current);
+    completion.current = onComplete;
+  }, [onComplete]);
+  useEffect(() => {
+    if (stage.current)
+      return animateStage(stage.current, cue, positions.current, () => {
+        completion.current?.();
+      });
   }, [cue]);
   return stage;
 }

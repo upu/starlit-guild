@@ -4,8 +4,16 @@ import { stageEntrance, type StoryStageCue } from "@/lib/story-stage";
 import { useStoryStageMotion } from "./story-stage-motion";
 import type { CSSProperties } from "react";
 
-export function StoryStage({ cue, speaker }: { cue: StoryStageCue; speaker?: string }) {
-  const stage = useStoryStageMotion(cue);
+export function StoryStage({
+  cue,
+  speaker,
+  onComplete,
+}: {
+  cue: StoryStageCue;
+  speaker?: string;
+  onComplete?: () => void;
+}) {
+  const stage = useStoryStageMotion(cue, onComplete);
   return (
     <div className="story-art-space story-stage-space">
       <div ref={stage} className="story-stage" role="img" aria-label={cue.description}>

@@ -1,3 +1,47 @@
+.story-stage-dialogue {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 4px;
+  pointer-events: auto;
+}
+.story-stage-dialogue > .story-conversation {
+  flex: 1;
+}
+.story-history-toggle {
+  align-self: flex-end;
+  min-height: 44px;
+  padding: 4px 12px;
+  color: #d8c18c;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #152a25f5;
+}
+.story-history-toggle:focus-visible {
+  outline: 2px solid #b5ccaf;
+}
+.story-history-toggle:disabled {
+  opacity: 0.5;
+}
+@media (max-height: 500px) {
+  .story-stage-dialogue > .story-conversation {
+    padding: 10px;
+  }
+  .story-stage-dialogue .story-tap-hint {
+    padding-top: 6px;
+  }
+  .story-stage-dialogue .story-line > .face-portrait {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .story-stage-dialogue .story-line > div {
+    padding: 4px 8px;
+  }
+  .phone-dialog .story-stage-dialogue .story-line p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
 .story-stage-space {
   container-type: size;
 }
