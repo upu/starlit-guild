@@ -4,6 +4,13 @@ import { stageEntrance, type StoryStageCue } from "@/lib/story-stage";
 import { useStoryStageMotion } from "./story-stage-motion";
 import type { CSSProperties } from "react";
 
+function stageStyle(cue: StoryStageCue): CSSProperties {
+  return {
+    "--stage-background": `url(/story-stage/${cue.background ?? "meeting-path"}.webp)`,
+    "--cart-art": `url(/story-stage/${cue.cartArt ?? "loaded-cart"}.webp)`,
+  } as CSSProperties;
+}
+
 export function StoryStage({
   cue,
   speaker,
@@ -16,7 +23,14 @@ export function StoryStage({
   const stage = useStoryStageMotion(cue, onComplete);
   return (
     <div className="story-art-space story-stage-space">
-      <div ref={stage} className="story-stage" role="img" aria-label={cue.description}>
+      <div
+        ref={stage}
+        className="story-stage"
+        role="img"
+        aria-label={cue.description}
+        data-setting={cue.background ?? "meeting-path"}
+        style={stageStyle(cue)}
+      >
         <div className="story-stage-vignette" aria-hidden="true" />
         <div className="story-stage-ground" aria-hidden="true">
           <span className="story-stage-cart" />
@@ -27,7 +41,7 @@ export function StoryStage({
               data-actor={actor.id}
               data-speaking={speaker === actor.id}
               data-departing={!!cue.cartX}
-              style={{ left: `${String(stageEntrance(actor.id).x)}%` }}
+              style={{ left: `${String(stageEntrance(actor.id, cue).x)}%` }}
             >
               <span className="story-stage-shadow" />
               <span

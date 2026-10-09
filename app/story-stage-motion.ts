@@ -34,7 +34,7 @@ function animateStage(
 ) {
   const actors = cue.actors.map((actor) => ({
     actor,
-    origin: positions.get(actor.id) ?? stageEntrance(actor.id),
+    origin: positions.get(actor.id) ?? stageEntrance(actor.id, cue),
     element: stage.querySelector<HTMLElement>(`[data-actor="${actor.id}"]`),
   }));
   const cart = stage.querySelector<HTMLElement>(".story-stage-cart");

@@ -20,7 +20,10 @@ async function emit(name, source, image) {
 }
 for (const [name, width] of [
   ["meeting-path", 960],
+  ["town-exit", 960],
+  ["meeting-dusk", 960],
   ["loaded-cart", 420],
+  ["return-cart", 420],
   ["travel-bundle", 144],
 ]) {
   const source = await readFile(new URL(`assets/source/story-stage/${name}-v1.png`, root));

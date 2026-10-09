@@ -1,24 +1,20 @@
 import { residentFrame, type ResidentId } from "./home-actor.ts";
 import { TRADE_QUEST } from "./prologue.ts";
+import { stagePair as pair, type StageActor, type StoryStageCue } from "./story-stage-cues.ts";
+import {
+  eveningStageCue,
+  eveningExitCue,
+  eveningDepartureId,
+  eveningReturnId,
+} from "./story-stage-evening.ts";
+export type { StoryStageCue } from "./story-stage-cues.ts";
 
 export const meetingStoryId = `${TRADE_QUEST}-departure`;
-type StageActor = {
-  id: ResidentId;
-  x: number;
-  left: boolean;
-  wave?: boolean;
-  inspect?: boolean;
-  pull?: boolean;
-  visible?: boolean;
-  pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
-  reaction?: "surprise" | "nod";
-};
-export type StoryStageCue = {
-  description: string;
-  actors: StageActor[];
-  luggage: boolean;
-  cartX?: number;
-};
+export function compactStoryDialogue(storyId: string) {
+  return [meetingStoryId, `${TRADE_QUEST}-return`, eveningDepartureId, eveningReturnId].includes(
+    storyId,
+  );
+}
 export type StagePosition = { x: number };
 export type StageSample = StagePosition & {
   frame: number;
@@ -28,16 +24,6 @@ export type StageSample = StagePosition & {
   atlas: "home" | "adventure" | "conversation";
   visible: boolean;
 };
-
-const pair = (
-  aria = 28,
-  leon = 56,
-  ariaAction: Partial<StageActor> = {},
-  leonAction: Partial<StageActor> = {},
-): StageActor[] => [
-  { id: "aria", x: aria, left: false, ...ariaAction },
-  { id: "leon", x: leon, left: true, ...leonAction },
-];
 
 // One cue per existing line. Authored staging, never inferred from dialogue text.
 const meetingCues: StoryStageCue[] = [
@@ -116,16 +102,16 @@ const meetingExit: StoryStageCue = {
 };
 
 export function storyStageExitCue(storyId: string): StoryStageCue | null {
-  return storyId === meetingStoryId ? meetingExit : null;
+  return storyId === meetingStoryId ? meetingExit : eveningExitCue(storyId);
 }
 
 export function storyStageCue(storyId: string, line: number): StoryStageCue | null {
-  if (storyId !== meetingStoryId) return null;
+  if (storyId !== meetingStoryId) return eveningStageCue(storyId, line);
   return meetingCues[line] ?? null;
 }
 
-export function stageEntrance(id: ResidentId): StagePosition {
-  return { x: id === "aria" ? -10 : 56 };
+export function stageEntrance(id: ResidentId, cue?: StoryStageCue): StagePosition {
+  return { x: cue?.initial?.[id] ?? (id === "aria" ? -10 : 56) };
 }
 
 export function stageTravel(from: number, to: number, elapsed: number, reduced = false) {
@@ -156,6 +142,7 @@ function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced:
 
 export function stageLuggage(cue: StoryStageCue, aria?: StageSample) {
   if (!aria?.visible) return "hidden";
+  if (cue.bundleMode) return cue.bundleMode;
   if (cue.cartX || aria.x < 27.9) return "carried";
   return cue.luggage ? "ground" : "hidden";
 }

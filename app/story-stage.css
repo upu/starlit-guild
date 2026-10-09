@@ -1,6 +1,17 @@
-.phone-dialog > .story-reader.story-reader-stage {
+.phone-dialog > .story-reader.story-reader-compact {
   grid-template-rows: minmax(0, 1fr) clamp(190px, 28dvh, 250px);
   gap: 8px;
+}
+.story-reader-compact > .story-art-space:not(.story-stage-space) {
+  display: flex;
+  align-items: flex-end;
+  container-type: size;
+}
+.story-reader-compact > .story-art-space > .story-still {
+  width: 100%;
+  height: min(100cqh, 66.666667cqw);
+  border-radius: 12px;
+  overflow: hidden;
 }
 .story-stage-dialogue {
   position: relative;
@@ -51,7 +62,7 @@
   opacity: 0.5;
 }
 @media (max-height: 500px) {
-  .phone-dialog > .story-reader.story-reader-stage {
+  .phone-dialog > .story-reader.story-reader-compact {
     grid-template-rows: minmax(0, 1fr) 140px;
   }
   .story-stage-dialogue > .story-conversation {
@@ -90,7 +101,7 @@
 .story-stage-vignette {
   position: absolute;
   inset: 0;
-  background: url("/story-stage/meeting-path.webp") center / cover;
+  background: var(--stage-background) center / cover;
   filter: blur(14px) brightness(0.65);
   transform: scale(1.12);
 }
@@ -103,7 +114,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background: url("/story-stage/meeting-path.webp") center / 100% 100%;
+  background: var(--stage-background) center / 100% 100%;
   overflow: hidden;
   container-type: size;
   --stage-cell: 24cqw;
@@ -219,7 +230,7 @@
   width: 44%;
   aspect-ratio: 3 / 2;
   transform: translateX(-50%);
-  background: url("/story-stage/loaded-cart.webp") center / contain no-repeat;
+  background: var(--cart-art) center / contain no-repeat;
   image-rendering: pixelated;
   z-index: 1;
 }

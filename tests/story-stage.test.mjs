@@ -11,13 +11,18 @@ import {
   sampleStageActor,
   stageTravel,
   stageLuggage,
+  compactStoryDialogue,
 } from "../lib/story-stage.ts";
+import { eveningDepartureId, eveningReturnId } from "../lib/story-stage-evening.ts";
 
-test("only the opening meeting has staging, with a cue for every existing line", () => {
+test("the opening meeting and both return-road scenes have a cue for every line", () => {
   const meeting = stories.find((story) => story.id === meetingStoryId);
   for (const story of stories) {
     story.lines.forEach((_, line) => {
-      assert.equal(!!storyStageCue(story.id, line), story === meeting);
+      assert.equal(
+        !!storyStageCue(story.id, line),
+        [meetingStoryId, eveningDepartureId, eveningReturnId].includes(story.id),
+      );
     });
   }
   assert.equal(storyStageCue(meetingStoryId, -1), null);
@@ -36,6 +41,38 @@ test("only the opening meeting has staging, with a cue for every existing line",
   );
   assert.equal(storyStageCue(meetingStoryId, 12).cartX, undefined);
   assert.equal(storyStageExitCue("other-story"), null);
+});
+
+test("compact dialogue includes the static handover and only the first two stages", () => {
+  for (const story of stories) {
+    assert.equal(
+      compactStoryDialogue(story.id),
+      [meetingStoryId, "village-trade-return", eveningDepartureId, eveningReturnId].includes(
+        story.id,
+      ),
+    );
+  }
+  assert.equal(storyStageCue("village-trade-return", 0), null);
+});
+
+test("evening scenes start together with return purchases and hold the last line before exit", () => {
+  for (const id of [eveningDepartureId, eveningReturnId]) {
+    const story = stories.find((s) => s.id === id);
+    story.lines.forEach((_, line) => {
+      const cue = storyStageCue(id, line);
+      assert.equal(cue.cartArt, "return-cart");
+      assert.equal(cue.background, id === eveningDepartureId ? "town-exit" : "meeting-dusk");
+      assert.equal(stageEntrance("aria", cue).x, 28);
+      assert.equal(stageEntrance("leon", cue).x, 56);
+      assert.equal(cue.cartX, undefined);
+    });
+    assert.equal(storyStageCue(id, story.lines.length), null);
+    const exit = storyStageExitCue(id);
+    assert.equal(exit.bundleMode, "carried");
+    assert.equal(exit.actors[1].pull, true);
+    assert.equal(exit.actors[1].x - exit.cartX, 17);
+    assert.equal(exit.actors[0].x < 0, id === eveningReturnId);
+  }
 });
 
 test("a rapid next line continues from the displayed position and settles without a queued walk", () => {
@@ -141,9 +178,11 @@ test("Leon is already inspecting the cart before Aria arrives, and takes it alon
 });
 
 test("stage props retain transparent margins and use the common scene aspect ratio", async () => {
-  const background = await sharp("public/story-stage/meeting-path.webp").metadata();
-  assert.equal(background.width / background.height, 1.5);
-  for (const name of ["loaded-cart", "travel-bundle"]) {
+  for (const name of ["meeting-path", "town-exit", "meeting-dusk"]) {
+    const background = await sharp(`public/story-stage/${name}.webp`).metadata();
+    assert.equal(background.width / background.height, 1.5);
+  }
+  for (const name of ["loaded-cart", "return-cart", "travel-bundle"]) {
     const { data, info } = await sharp(`public/story-stage/${name}.webp`)
       .raw()
       .toBuffer({ resolveWithObject: true });

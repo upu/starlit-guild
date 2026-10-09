@@ -170,6 +170,61 @@ test("the opening stage follows dialogue pages without completing or changing th
   assert.equal(read, 1);
 });
 
+test("the static handover uses latest-line dialogue and history without a stage exit", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-return");
+  let read = 0;
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => {
+      read++;
+      return true;
+    },
+    onClose() {},
+  });
+  for (let page = 0; page < story.lines.length; page++) {
+    assert.equal(h.find("StoryStage"), undefined);
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    assert.equal(read, 0);
+    if (page === 3) {
+      h.click("会話履歴");
+      assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, 4));
+      h.find("story-conversation").props.onClick();
+      h.render();
+      h.click("会話に戻る");
+      assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    }
+    h.find("story-conversation").props.onClick();
+    h.render();
+  }
+  assert.equal(read, 1);
+});
+
+test("both evening scenes wait for the exit animation after the last tap", () => {
+  for (const suffix of ["departure", "return"]) {
+    const story = stories.stories.find((st) => st.id === `${prologue.RETURN_QUEST}-${suffix}`);
+    let read = 0;
+    const h = harness("StoryReader", {
+      story,
+      ready: true,
+      onRead: () => {
+        read++;
+        return true;
+      },
+      onClose() {},
+    });
+    for (const line of story.lines) {
+      assert.deepEqual(h.find("StoryLines").props.lines, [line]);
+      assert.equal(h.find("StoryStage").props.onComplete, undefined);
+      h.find("story-conversation").props.onClick();
+      h.render();
+    }
+    assert.equal(read, 0);
+    h.find("StoryStage").props.onComplete();
+    assert.equal(read, 1);
+  }
+});
+
 test("automatic conversation completes after the final dwell, pauses, and reports read only once", () => {
   let read = 0;
   const props = {

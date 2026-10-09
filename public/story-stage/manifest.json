@@ -3,9 +3,21 @@
     "source": "d06dae5e1c0b705b3855bbc5696b7d1af54425ce04ed1e3edefaa48152386812",
     "output": "5ca0e3ac041d0448933105b6ba82a6f509885ab62e50c501524bf2480c090981"
   },
+  "town-exit": {
+    "source": "38b245d6d96ffad2a97e2a9578611245d0818c18183e1629eab39230e3628383",
+    "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
+  },
+  "meeting-dusk": {
+    "source": "5ed098ad7d122951520eb18a5a65744adb9c7a44bd25fb3525bf868ca728297d",
+    "output": "0ed484bf09d2d61004cdb5676d14716b6c08a4f59476a5de7760fa64840dfc4e"
+  },
   "loaded-cart": {
     "source": "747050ce845895cac82be01dd30d6953e997d669079b00d827c513afe23a5967",
     "output": "d4687f7e82cfc2d73b596956b25c3468724bcbc77cd083ca4e4e77889dc81b1b"
+  },
+  "return-cart": {
+    "source": "502a45efec9ce0cc106bb1271151c6b1590304a76b19b7aca71aaab674728451",
+    "output": "c01c1de2e5369be47f526f431fee31784d3eca8c29954f12aeec74b3a9e5ffb7"
   },
   "travel-bundle": {
     "source": "aef518157ab5ea23a3b8e5b739ae5d3a11b961f1b18572bb205b77203faee112",

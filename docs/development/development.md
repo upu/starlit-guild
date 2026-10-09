@@ -126,6 +126,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 | テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
 | --- | --- | --- | --- |
 | `tests/story-stage.browser.mjs` 1-1の会話演出・台詞同期・早送り・再読・画面幅・動きを減らす設定 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。隔離したブラウザーで新しい冒険を開始 | `node tests/story-stage.browser.mjs` | `work/story-stage-browser/` の画像・`results.json`。スマホ実機とは別 |
+| `tests/story-evening.browser.mjs` 1-1達成の静止画と表示統一、1-2の出発・達成・最後のタップ・左右への別れ・動きを減らす設定 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。隔離したブラウザーと合成テスト記録を使用 | `node tests/story-evening.browser.mjs` | `work/story-evening-browser/` の画像・`results.json`。スマホ実機とは別 |
 | `tests/guild.browser.mjs` 旅団のPhaser描画・椅子での飲茶と歩行・栽培地切替・動きを減らす設定・高解像度・商品棚と作業台メニュー・植え付け・固定順の下部バー・現地の担当アイコン・作業台の動作・成長表示・留守中の復帰・在室条件による自動会話と停止・表情 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。独立したテスト記録で確認 | `node tests/guild.browser.mjs` | `work/guild-browser/` の画像・`results.json` |
 | `tests/home-room.browser.mjs` ドット絵調の5人・茶席・作業・菜園・家具配置・静止・再試行 | Node版Playwright + Chromium。テスト機能ONの開発サーバー | `$env:TEST_ROOT='http://localhost:5173'; node tests/home-room.browser.mjs` | `work/pixel-home/` の320/390/844/1000px画像、歩行コマ一覧、寸法記録。スマホ実機とは別 |
 | `tests/quest-picker.browser.mjs` 行先選択・設定・画面幅 | Node版Playwright + Chromium。`npm run build`。テスト自身が部品を組み立てて一時サーバーを起動 | `node tests/quest-picker.browser.mjs` | `work/quest-picker-browser/` の画像・`results.json` |
