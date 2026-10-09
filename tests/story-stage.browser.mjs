@@ -13,7 +13,10 @@ const errors = [],
 async function openMeeting(page) {
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
-    if (response.status() >= 400 && /home-pixel|scenery|portraits/.test(response.url()))
+    if (
+      response.status() >= 400 &&
+      /home-pixel|adventure-pixel|story-stage|scenery|portraits/.test(response.url())
+    )
       errors.push(`${response.status()} ${response.url()}`);
   });
   await page.goto(root);
@@ -35,6 +38,8 @@ const positions = (page) =>
       x: parseFloat(el.style.left),
       transform: el.querySelector(".story-stage-sprite").style.transform,
       frame: el.querySelector(".story-stage-sprite").style.backgroundPosition,
+      atlas: el.querySelector(".story-stage-sprite").dataset.atlas,
+      visible: el.style.visibility,
     })),
   );
 async function advance(page) {
@@ -48,6 +53,12 @@ async function layout(page, name) {
   assert.ok(stage.width > 250 && stage.height > 65);
   assert.ok(stage.y + stage.height <= talk.y + 1);
   assert.ok(talk.y + talk.height <= view.height + 1);
+  const plane = await page.locator(".story-stage-ground").boundingBox();
+  const actor = await page.locator('[data-actor="leon"]').boundingBox();
+  const cart = await page.locator(".story-stage-cart").boundingBox();
+  assert.ok(Math.abs(plane.width / plane.height - 1.5) < 0.01);
+  assert.ok(Math.abs(actor.width / plane.width - 0.24) < 0.01);
+  assert.ok(Math.abs(cart.width / plane.width - 0.44) < 0.01);
   assert.ok(
     (await page.locator(".story-line .face-portrait").count()) > 0,
     "dialogue portraits stay present",
@@ -65,9 +76,15 @@ try {
   await openMeeting(page);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
-    [36, 64],
+    [-10, 56],
   );
-  for (let i = 0; i < 4; i++) await advance(page);
+  assert.equal((await positions(page))[0].visible, "hidden");
+  assert.equal((await positions(page))[1].atlas, "adventure");
+  await page.screenshot({ path: `${output}/390-leon-waiting.png` });
+  await advance(page);
+  await page.clock.runFor(1500);
+  assert.equal((await positions(page))[0].x, 28);
+  for (let i = 1; i < 4; i++) await advance(page);
   await page.clock.runFor(220);
   assert.equal(await page.locator(".story-stage-reaction").first().textContent(), "！");
   assert.match(await page.locator(".story-lines").innerText(), /ずいぶん多くない/);
@@ -84,17 +101,21 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   for (let i = 4; i < 8; i++) await advance(page);
   const mid = (await positions(page))[0].x;
-  assert.ok(mid > 36 && mid < 48);
+  assert.ok(mid > 28 && mid < 40);
   await advance(page);
   assert.ok(Math.abs((await positions(page))[0].x - mid) < 3, "no jump on rapid advance");
   await page.clock.runFor(1300);
-  assert.equal((await positions(page))[0].x, 48);
+  assert.equal((await positions(page))[0].x, 40);
   await layout(page, "390-close");
   for (let i = 9; i < 12; i++) await advance(page);
-  await page.clock.runFor(2000);
+  await page.clock.runFor(4000);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
-    [82, 68],
+    [107, 156],
+  );
+  assert.equal(
+    await page.locator(".story-stage-cart").evaluate((el) => parseFloat(el.style.left)),
+    139,
   );
   assert.ok((await positions(page)).every((actor) => actor.transform.endsWith("scaleX(1)")));
   await layout(page, "390-departure");
@@ -109,7 +130,7 @@ try {
   await page.clock.runFor(1500);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
-    [36, 64],
+    [-10, 56],
   );
   await context.close();
 

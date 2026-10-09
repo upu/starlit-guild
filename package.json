@@ -13,7 +13,9 @@
   "scripts": {
     "videos:optimize": "node scripts/optimize-story-videos.mjs",
     "videos:check": "node scripts/optimize-story-videos.mjs --check",
-    "assets:optimize": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize",
+    "assets:optimize": "npm run images:optimize && npm run videos:optimize && npm run stills:optimize && npm run music:optimize && npm run road-art:optimize && npm run home-art:optimize && npm run adventure-art:optimize && npm run enemy-art:optimize && npm run story-stage-art:optimize",
+    "story-stage-art:optimize": "node scripts/build-story-stage-art.mjs",
+    "story-stage-art:check": "node scripts/build-story-stage-art.mjs --check",
     "predev": "npm run assets:optimize",
     "prebuild": "npm run assets:optimize",
     "install:ci": "node scripts/install-ci.mjs",
