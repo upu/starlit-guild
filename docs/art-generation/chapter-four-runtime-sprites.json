@@ -1,6 +1,15 @@
 {
-  "description": "第四章の横スクロール画面と人物表示に使う立ち絵。組み込み image_gen を使用。リコの lico-v1.png は未使用のため削除した。",
+  "description": "第四章の横スクロール画面と人物表示に使う立ち絵。組み込み image_gen を使用。",
   "assets": [
+    {
+      "output": "public/characters/lico-v1.png",
+      "status": "deleted",
+      "note": "ゲームから読み込まれていなかったため、未使用素材の整理で画像を削除した。制作条件の記録として残す。",
+      "source": "docs/characters/lico-reference-sheet.webp",
+      "mode": "built-in image_gen, reference-guided generation",
+      "promptSummary": "採用シートのリコの特徴を保ち、赤と黒の衣装、丸眼鏡、薬瓶、植物標本を持つ全身立ち絵を透明背景で作る。ゲーム内で縮小表示できるよう足元まで収める。",
+      "sha256": "78f18dba26094dab543b0166fd37b90debf6d15a48694a4a5a14cfe86464922b"
+    },
     {
       "output": "public/characters/merrill-v2.png",
       "source": "docs/characters/merrill-reference-sheet.png",
