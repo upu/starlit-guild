@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
+import { readFrame, headBounds } from "../scripts/home-pixel-frames.mjs";
 import { stories } from "../lib/stories.ts";
 import {
   meetingStoryId,
@@ -9,6 +10,7 @@ import {
   stageEntrance,
   sampleStageActor,
   stageTravel,
+  stageLuggage,
 } from "../lib/story-stage.ts";
 
 test("only the opening meeting has staging, with a cue for every existing line", () => {
@@ -45,7 +47,8 @@ test("a rapid next line continues from the displayed position and settles withou
   assert.equal(sampleStageActor(next, mid, 0).x, mid.x);
   const end = sampleStageActor(next, mid, 3000);
   assert.equal(end.x, next.x);
-  assert.equal(end.frame, 8);
+  assert.equal(end.atlas, "conversation");
+  assert.equal(end.frame, 4);
   assert.deepEqual(sampleStageActor(next, mid, 6000), end);
 });
 
@@ -60,8 +63,60 @@ test("surprise is a short single reaction; reduced motion gives the final pose a
     const still = sampleStageActor(actor, { x: 12 }, elapsed, true);
     assert.equal(still.x, actor.x);
     assert.equal(still.lift, 0);
-    assert.equal(still.frame, 8);
+    assert.equal(still.frame, 2);
     assert.equal(still.bubble, "！");
+  }
+});
+
+test("Aria carries luggage while arriving, even after rapid advance, and holds the greeting", () => {
+  const first = storyStageCue(meetingStoryId, 0);
+  assert.equal(
+    stageLuggage(first, sampleStageActor(first.actors[0], stageEntrance("aria"), 0)),
+    "hidden",
+  );
+  const arrival = storyStageCue(meetingStoryId, 1);
+  const mid = sampleStageActor(arrival.actors[0], stageEntrance("aria"), 500);
+  assert.equal(stageLuggage(arrival, mid), "carried");
+  const greeting = storyStageCue(meetingStoryId, 2);
+  assert.equal(stageLuggage(greeting, sampleStageActor(greeting.actors[0], mid, 0)), "carried");
+  for (const time of [2000, 5000, 20000]) {
+    const sample = sampleStageActor(greeting.actors[0], mid, time);
+    assert.equal(sample.atlas, "conversation");
+    assert.equal(sample.frame, 1);
+    assert.equal(stageLuggage(greeting, sample), "ground");
+  }
+  const exit = storyStageExitCue(meetingStoryId);
+  assert.equal(stageLuggage(exit, sampleStageActor(exit.actors[0], { x: 32 }, 1000)), "carried");
+});
+
+test("dialogue poses match walking stature and head size without opaque background or bleed", async () => {
+  for (const id of ["aria", "leon"]) {
+    const walk = await sharp(`public/home-pixel/${id}.webp`).png().toBuffer();
+    const poses = await sharp(`public/story-stage/${id}-poses.webp`).png().toBuffer();
+    const base = await readFrame(walk, { left: 0, top: 0, width: 128, height: 128 });
+    const head = await headBounds(await sharp(base.cell).extract(base.box).png().toBuffer(), 0.25);
+    for (let frame = 0; frame < 6; frame++) {
+      const pose = await readFrame(poses, {
+        left: (frame % 4) * 128,
+        top: Math.floor(frame / 4) * 128,
+        width: 128,
+        height: 128,
+      });
+      assert.ok(Math.abs(pose.box.height - base.box.height) <= 2, `${id}/${frame}: stature`);
+      const poseHead = await headBounds(
+        await sharp(pose.cell).extract(pose.box).png().toBuffer(),
+        0.25,
+      );
+      assert.ok(Math.abs(poseHead.width / head.width - 1) < 0.08, `${id}/${frame}: head size`);
+      assert.ok(
+        Math.abs(pose.box.left + poseHead.left + poseHead.width / 2 - 64) <= 1,
+        `${id}/${frame}: head registration`,
+      );
+      assert.ok(pose.box.top >= 22 && pose.box.top + pose.box.height <= 122);
+      const { data, info } = await sharp(pose.cell).raw().toBuffer({ resolveWithObject: true });
+      assert.equal(info.channels, 4);
+      assert.equal(data[3], 0);
+    }
   }
 });
 

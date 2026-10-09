@@ -53,6 +53,13 @@ async function layout(page, name) {
   assert.ok(stage.width > 250 && stage.height > 65);
   assert.ok(stage.y + stage.height <= talk.y + 1);
   assert.ok(talk.y + talk.height <= view.height + 1);
+  if (view.height > 500) {
+    assert.ok(talk.height < view.height * 0.36, "one line does not reserve half the screen");
+    assert.ok(
+      (stage.y + stage.height / 2) / view.height < 0.6,
+      "stage stays around the screen center",
+    );
+  }
   const latest = await page.locator(".story-lines").boundingBox();
   assert.ok(latest.y - (stage.y + stage.height) < 40, "latest dialogue stays next to the stage");
   assert.equal(await page.locator(".story-lines > *").count(), 1);
@@ -85,10 +92,29 @@ try {
   assert.equal((await positions(page))[0].visible, "hidden");
   assert.equal((await positions(page))[1].atlas, "adventure");
   await page.screenshot({ path: `${output}/390-leon-waiting.png` });
+  assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "hidden");
   await advance(page);
+  await page.clock.runFor(850);
+  assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "carried");
+  assert.equal(await page.locator(".story-stage-bundle").isVisible(), false);
+  const carried = await page.locator(".story-stage-carried-bundle").boundingBox();
+  const arriving = await page.locator('[data-actor="aria"]').boundingBox();
+  assert.ok(carried.x >= arriving.x - arriving.width * 0.1);
+  assert.ok(
+    carried.x + carried.width <= arriving.x + arriving.width * 0.6,
+    "luggage follows behind Aria instead of appearing ahead of her",
+  );
+  await page.screenshot({ path: `${output}/390-arrival.png` });
   await page.clock.runFor(1500);
   assert.equal((await positions(page))[0].x, 28);
-  for (let i = 1; i < 4; i++) await advance(page);
+  assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "ground");
+  await advance(page);
+  await page.clock.runFor(5000);
+  const greeting = (await positions(page))[0];
+  assert.equal(greeting.atlas, "conversation");
+  assert.equal(greeting.frame, "33.3333% 0%");
+  await page.screenshot({ path: `${output}/390-greeting.png` });
+  for (let i = 2; i < 4; i++) await advance(page);
   await page.clock.runFor(220);
   assert.equal(await page.locator(".story-stage-reaction").first().textContent(), "！");
   assert.match(await page.locator(".story-lines").innerText(), /ずいぶん多くない/);

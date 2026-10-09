@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import {
   sampleStageActor,
+  stageLuggage,
   stageEntrance,
   stageTravel,
   type StagePosition,
@@ -14,7 +15,7 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) {
     sprite.dataset.atlas = sample.atlas;
-    const rows = sample.atlas === "adventure" ? 6 : 4;
+    const rows = sample.atlas === "adventure" ? 6 : sample.atlas === "conversation" ? 2 : 4;
     sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String((Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
     sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left ? "-1" : "1"})`;
   }
@@ -50,6 +51,7 @@ function animateStage(
       const sample = sampleStageActor(actor, origin, elapsed, reduced);
       positions.set(actor.id, sample);
       if (element) paintActor(element, sample);
+      if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
   };
   return animateFrames(paint, endAt, onComplete);

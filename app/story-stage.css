@@ -1,4 +1,9 @@
+.phone-dialog > .story-reader.story-reader-stage {
+  grid-template-rows: minmax(0, 1fr) clamp(190px, 28dvh, 250px);
+  gap: 8px;
+}
 .story-stage-dialogue {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -8,10 +13,32 @@
 .story-stage-dialogue > .story-conversation {
   flex: 1;
 }
+.story-stage-dialogue .story-tap-hint {
+  min-height: 38px;
+  padding-top: 6px;
+}
+.story-stage-dialogue .story-conversation[role="region"] {
+  padding-bottom: 54px;
+}
+.story-stage-dialogue .story-line > .face-portrait {
+  width: 56px !important;
+  height: 56px !important;
+}
+.story-stage-dialogue .story-line > div {
+  padding: 6px 8px;
+}
+.phone-dialog .story-stage-dialogue .story-line p {
+  line-height: 1.55;
+}
+.phone-dialog .story-stage-dialogue .story-narration {
+  line-height: 1.65;
+}
 .story-history-toggle {
-  align-self: flex-end;
+  position: absolute;
+  left: 64px;
+  bottom: 8px;
   min-height: 44px;
-  padding: 4px 12px;
+  padding: 4px 8px;
   color: #d8c18c;
   font-size: 13px;
   border-radius: 8px;
@@ -24,6 +51,9 @@
   opacity: 0.5;
 }
 @media (max-height: 500px) {
+  .phone-dialog > .story-reader.story-reader-stage {
+    grid-template-rows: minmax(0, 1fr) 140px;
+  }
   .story-stage-dialogue > .story-conversation {
     padding: 10px;
   }
@@ -44,11 +74,13 @@
 }
 .story-stage-space {
   container-type: size;
+  display: flex;
+  align-items: flex-end;
 }
 .story-stage {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: min(100cqh, 83.333333cqw);
   overflow: hidden;
   border: 1px solid #b3c98a65;
   border-radius: 12px;
@@ -102,6 +134,10 @@
   background-image: var(--adventure-art);
   background-size: 400% 600%;
 }
+.story-stage-sprite[data-atlas="conversation"] {
+  background-image: var(--conversation-art);
+  background-size: 400% 200%;
+}
 .story-stage-actor[data-departing="true"][data-actor="aria"] {
   bottom: 9%;
 }
@@ -153,6 +189,7 @@
   z-index: 1;
 }
 .story-stage-bundle {
+  visibility: hidden;
   position: absolute;
   left: 15%;
   bottom: 13%;
@@ -162,13 +199,18 @@
   image-rendering: pixelated;
 }
 .story-stage-carried-bundle {
+  visibility: hidden;
   position: absolute;
   width: 55%;
   height: 44%;
-  left: 52%;
+  left: -5%;
   bottom: 7%;
   background: url("/story-stage/travel-bundle.webp") center / contain no-repeat;
   image-rendering: pixelated;
+}
+.story-stage[data-luggage="ground"] .story-stage-bundle,
+.story-stage[data-luggage="carried"] .story-stage-carried-bundle {
+  visibility: visible;
 }
 .story-stage-cart {
   position: absolute;

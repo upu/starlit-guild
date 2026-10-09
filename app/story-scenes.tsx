@@ -267,7 +267,11 @@ export function StoryReader(props: StoryReaderProps) {
   useImperativeHandle(advanceRef, () => ({ advance }));
   const conversation = storyConversation(story, ready, reader);
   return (
-    <div className={"story-reader" + (art ? " story-reader-art" : "")}>
+    <div
+      className={
+        "story-reader" + (art ? " story-reader-art" : "") + (stage ? " story-reader-stage" : "")
+      }
+    >
       {stage ? (
         <StoryStage
           key={story.id}

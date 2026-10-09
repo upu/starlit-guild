@@ -10,5 +10,13 @@
   "travel-bundle": {
     "source": "aef518157ab5ea23a3b8e5b739ae5d3a11b961f1b18572bb205b77203faee112",
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
+  },
+  "aria-poses": {
+    "source": "205748ca70cc1b792b877eb87833403dd4d8c9d6e776df8aaefd1c87fb930c66",
+    "output": "829e02e3688e275fa9b5d2e9fac7c9a71852f1ef4549afdafbc67f88a104b58b"
+  },
+  "leon-poses": {
+    "source": "ab25e0a780d5a39d1ed6ff06b7258baee206f8aacbb7743715ff1a24b49d44d3",
+    "output": "49c717332cf554a0c17d60f80d4205f0a97891e7950f24660773ded7efb79831"
   }
 }

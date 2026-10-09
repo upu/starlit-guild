@@ -10,6 +10,7 @@ type StageActor = {
   inspect?: boolean;
   pull?: boolean;
   visible?: boolean;
+  pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
   reaction?: "surprise" | "nod";
 };
 export type StoryStageCue = {
@@ -24,7 +25,7 @@ export type StageSample = StagePosition & {
   left: boolean;
   lift: number;
   bubble: string;
-  atlas: "home" | "adventure";
+  atlas: "home" | "adventure" | "conversation";
   visible: boolean;
 };
 
@@ -52,7 +53,7 @@ const meetingCues: StoryStageCue[] = [
   },
   {
     description: "アリアがレオンに手を上げて挨拶する。",
-    actors: pair(28, 56, { wave: true }),
+    actors: pair(28, 56, { wave: true }, { pose: "greet" }),
     luggage: true,
   },
   {
@@ -62,23 +63,27 @@ const meetingCues: StoryStageCue[] = [
   },
   {
     description: "レオンの荷物の多さに、アリアが驚く。",
-    actors: pair(28, 56, { reaction: "surprise" }),
+    actors: pair(28, 56, { reaction: "surprise", pose: "surprise" }),
     luggage: true,
   },
   {
     description: "レオンが用意した物を説明し、アリアが聞いている。",
-    actors: pair(),
+    actors: pair(28, 56, { pose: "think" }, { pose: "offer" }),
     luggage: true,
   },
-  { description: "アリアが少し近づき、レオンの荷を覗く。", actors: pair(34), luggage: true },
+  {
+    description: "アリアが少し近づき、レオンの荷を覗く。",
+    actors: pair(34, 56, { pose: "think" }),
+    luggage: true,
+  },
   {
     description: "念のため、とレオンが頷く。",
-    actors: pair(34, 56, {}, { reaction: "nod" }),
+    actors: pair(34, 56, { pose: "think" }, { reaction: "nod", pose: "offer" }),
     luggage: true,
   },
   {
     description: "布を分けて持とうと、アリアがレオンのそばへ寄る。",
-    actors: pair(40),
+    actors: pair(40, 56, { pose: "offer" }),
     luggage: true,
   },
   {
@@ -88,17 +93,17 @@ const meetingCues: StoryStageCue[] = [
   },
   {
     description: "アリアが少し離れ、待ち合わせ場所の思い出を話す。",
-    actors: pair(32, 56),
+    actors: pair(32, 56, { pose: "greet" }),
     luggage: true,
   },
   {
     description: "レオンは荷車の引き手へ回り、振り向いて昔の出来事を話す。",
-    actors: pair(32, 81),
+    actors: pair(32, 81, { pose: "think" }, { pose: "tease" }),
     luggage: true,
   },
   {
     description: "アリアがレオンに言い返し、二人は出発を待っている。",
-    actors: pair(32, 81),
+    actors: pair(32, 81, { pose: "tease" }, { pose: "tease" }),
     luggage: true,
   },
 ];
@@ -130,6 +135,8 @@ export function stageTravel(from: number, to: number, elapsed: number, reduced =
 }
 
 function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (moving && !actor.pull)
+    return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.inspect)
     return {
       atlas: "adventure" as const,
@@ -140,11 +147,17 @@ function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced:
       atlas: "adventure" as const,
       frame: 20 + (moving ? Math.floor(elapsed / 180) % 2 : 0),
     };
-  const wave = actor.wave && elapsed < 900;
+  const frames = { idle: 0, greet: 1, surprise: 2, think: 3, offer: 4, tease: 5 };
   return {
-    atlas: "home" as const,
-    frame: residentFrame(moving ? "walk" : wave ? "wave" : "idle", elapsed, reduced),
+    atlas: "conversation" as const,
+    frame: frames[actor.wave ? "greet" : (actor.pose ?? "idle")],
   };
+}
+
+export function stageLuggage(cue: StoryStageCue, aria?: StageSample) {
+  if (!aria?.visible) return "hidden";
+  if (cue.cartX || aria.x < 27.9) return "carried";
+  return cue.luggage ? "ground" : "hidden";
 }
 
 // Start from the displayed position, so a tap during a walk never teleports or queues a walk.

@@ -36,21 +36,18 @@ export function StoryStage({
                   {
                     "--home-art": `url(/home-pixel/${actor.id}.webp)`,
                     "--adventure-art": `url(/adventure-pixel/${actor.id}.webp)`,
+                    "--conversation-art": `url(/story-stage/${actor.id}-poses.webp)`,
                   } as CSSProperties
                 }
               />
-              {actor.id === "aria" && !cue.luggage && cue.cartX && (
-                <span className="story-stage-carried-bundle" />
-              )}
+              {actor.id === "aria" && <span className="story-stage-carried-bundle" />}
               <span className="story-stage-reaction" hidden />
               <span className="story-stage-name">{residentNames[actor.id]}</span>
             </div>
           ))}
-          {cue.luggage && (
-            <div className="story-stage-luggage">
-              <span className="story-stage-bundle" />
-            </div>
-          )}
+          <div className="story-stage-luggage" aria-hidden="true">
+            <span className="story-stage-bundle" />
+          </div>
         </div>
       </div>
     </div>
