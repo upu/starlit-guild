@@ -1,4 +1,4 @@
-type SceneryUse = "thumbnail" | "detail" | "background";
+type SceneryUse = "thumbnail" | "background";
 // Keep the destination cards and their playable map on the same illustration.
 export function questScenery(
   quest?: { id: string; background?: string },
