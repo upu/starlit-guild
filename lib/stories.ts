@@ -21,6 +21,7 @@ import { chapterTwoStories } from "./chapter-two-stories.ts";
 import { chapterTwoBanter } from "./chapter-two.ts";
 import { waterwayBanter } from "./waterway-banter.ts";
 import type { PortraitExpression } from "./portrait-expressions.ts";
+import { aria as a, leon as l } from "./story-lines.ts";
 
 export type StoryLine = { speaker?: string; text: string; expression?: PortraitExpression };
 export type Story = {
@@ -37,16 +38,6 @@ export type StoryProgress = {
   read: string[];
   mossTrailSplit?: true;
 };
-const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "aria",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "leon",
-  text,
-  ...(expression ? { expression } : {}),
-});
 
 // Their affection is mutual. Progress shows trust and small choices, never a forced confession.
 export const stories: Story[] = [

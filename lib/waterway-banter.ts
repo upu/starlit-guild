@@ -1,16 +1,7 @@
 import type { Squad } from "./game.ts";
 import type { StoryLine } from "./stories.ts";
 import { WATERWAY_QUEST, RESTORATION_QUEST, MOSS_QUEST } from "./prologue.ts";
-const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "aria",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "leon",
-  text,
-  ...(expression ? { expression } : {}),
-});
+import { aria as a, leon as l } from "./story-lines.ts";
 type Run = NonNullable<Squad["run"]>;
 function searchBanter(run: Run): StoryLine[] {
   if (run.node < 5)
