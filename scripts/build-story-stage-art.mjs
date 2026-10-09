@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { readFrame, packFrames } from "./home-pixel-frames.mjs";
+import { workPoseFrames } from "./story-stage-pose-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -21,6 +22,9 @@ async function emit(name, source, image) {
 for (const [name, width] of [
   ["meeting-path", 960],
   ["town-exit", 960],
+  ["town-shop", 960],
+  ["town-shop-return", 960],
+  ["delivery-box", 256],
   ["meeting-dusk", 960],
   ["loaded-cart", 420],
   ["return-cart", 420],
@@ -50,7 +54,24 @@ for (const id of ["aria", "leon"]) {
     );
   // Dialogue hands reach the cheeks; register above them to prevent sideways jumps.
   const atlas = await packFrames(frames, 0.25);
-  await emit(name, source, atlas.image);
+  const adventure = await readFile(new URL(`public/adventure-pixel/${id}.webp`, root));
+  const home = await readFile(new URL(`public/home-pixel/${id}.webp`, root));
+  const carry = await readFile(new URL("assets/source/story-stage/carry-poses-v1.png", root));
+  const work = await workPoseFrames(id, adventure, home, carry);
+  const expanded = await sharp({
+    create: { width: 512, height: 384, channels: 4, background: "#00000000" },
+  })
+    .composite([
+      { input: atlas.image, left: 0, top: 0 },
+      ...work.map((f, i) => ({
+        input: f.input,
+        left: ((i + 6) % 4) * 128 + f.left,
+        top: Math.floor((i + 6) / 4) * 128 + f.top,
+      })),
+    ])
+    .webp({ lossless: true })
+    .toBuffer();
+  await emit(name, Buffer.concat([source, adventure, home, carry]), expanded);
 }
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);

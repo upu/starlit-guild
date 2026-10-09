@@ -33,7 +33,8 @@ export function StoryStage({
       >
         <div className="story-stage-vignette" aria-hidden="true" />
         <div className="story-stage-ground" aria-hidden="true">
-          <span className="story-stage-cart" />
+          <span className="story-stage-cart" hidden={cue.hideCart} />
+          <span className="story-stage-delivery-box" data-box={cue.box} hidden={!cue.box} />
           {cue.actors.map((actor) => (
             <div
               key={actor.id}

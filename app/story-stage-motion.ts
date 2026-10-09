@@ -15,7 +15,7 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) {
     sprite.dataset.atlas = sample.atlas;
-    const rows = sample.atlas === "adventure" ? 6 : sample.atlas === "conversation" ? 2 : 4;
+    const rows = sample.atlas === "adventure" ? 6 : sample.atlas === "conversation" ? 3 : 4;
     sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String((Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
     sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left ? "-1" : "1"})`;
   }
@@ -53,8 +53,18 @@ function animateStage(
       if (element) paintActor(element, sample);
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
+    paintBox(stage, cue, positions);
   };
   return animateFrames(paint, endAt, onComplete);
+}
+
+function paintBox(stage: HTMLElement, cue: StoryStageCue, positions: Map<string, StagePosition>) {
+  const box = stage.querySelector<HTMLElement>(".story-stage-delivery-box");
+  if (!box || !cue.box) return;
+  const aria = positions.get("aria")?.x ?? 34,
+    leon = positions.get("leon")?.x ?? 60;
+  const x = cue.box === "table" ? 40 : cue.box === "shared" ? (aria + leon) / 2 : aria + 14;
+  box.style.left = `${String(x)}%`;
 }
 
 function animateFrames(

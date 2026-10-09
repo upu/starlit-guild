@@ -90,7 +90,7 @@ try {
     [-10, 56],
   );
   assert.equal((await positions(page))[0].visible, "hidden");
-  assert.equal((await positions(page))[1].atlas, "adventure");
+  assert.equal((await positions(page))[1].atlas, "conversation");
   await page.screenshot({ path: `${output}/390-leon-waiting.png` });
   assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "hidden");
   await advance(page);

@@ -7,6 +7,18 @@
     "source": "38b245d6d96ffad2a97e2a9578611245d0818c18183e1629eab39230e3628383",
     "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
   },
+  "town-shop": {
+    "source": "e01338dbf7a4c61b125317b4ee665616c5edd0f28bfbb98890d30aa45e78b321",
+    "output": "7bed250f6fc9cd379f737be019da95fc25cf3504b943265309d6ed8ef7938800"
+  },
+  "town-shop-return": {
+    "source": "1de56421d6472bcb227ed86e10aaae6ccd8940e0c50078fe7f8fe935fe00ada8",
+    "output": "c61ac03e6c90c25de1f698bf79b16968cac7bf5893fed99ebe918e59dce193aa"
+  },
+  "delivery-box": {
+    "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
+    "output": "77ee64ab0afdd4d26e8d443d4b616d814f9bd3056a01b6f9bd036bfaaf167cff"
+  },
   "meeting-dusk": {
     "source": "5ed098ad7d122951520eb18a5a65744adb9c7a44bd25fb3525bf868ca728297d",
     "output": "0ed484bf09d2d61004cdb5676d14716b6c08a4f59476a5de7760fa64840dfc4e"
@@ -24,11 +36,11 @@
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
   },
   "aria-poses": {
-    "source": "205748ca70cc1b792b877eb87833403dd4d8c9d6e776df8aaefd1c87fb930c66",
-    "output": "829e02e3688e275fa9b5d2e9fac7c9a71852f1ef4549afdafbc67f88a104b58b"
+    "source": "2728504933cb73ce2f4089aa3836ffb10ca0ff12758f59a9c413db3f7d17ab48",
+    "output": "758d144a4015afcc2c491c1dab1971281be098d2f8f8d55028e5955d21035b30"
   },
   "leon-poses": {
-    "source": "ab25e0a780d5a39d1ed6ff06b7258baee206f8aacbb7743715ff1a24b49d44d3",
-    "output": "49c717332cf554a0c17d60f80d4205f0a97891e7950f24660773ded7efb79831"
+    "source": "7c29f02da8f072e22e1584d493101db4c34ab30b1eb6532a5b4b2f37803a7a72",
+    "output": "72f4203ad8e802dbcc5119dbca51c0e7ed5ea297ef7921b49002b4577ac4ec31"
   }
 }

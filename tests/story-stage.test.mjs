@@ -14,14 +14,21 @@ import {
   compactStoryDialogue,
 } from "../lib/story-stage.ts";
 import { eveningDepartureId, eveningReturnId } from "../lib/story-stage-evening.ts";
+import { townDepartureId, townReturnId } from "../lib/story-stage-town.ts";
 
-test("the opening meeting and both return-road scenes have a cue for every line", () => {
+test("the first three stages have staging for every line except the static handover", () => {
   const meeting = stories.find((story) => story.id === meetingStoryId);
   for (const story of stories) {
     story.lines.forEach((_, line) => {
       assert.equal(
         !!storyStageCue(story.id, line),
-        [meetingStoryId, eveningDepartureId, eveningReturnId].includes(story.id),
+        [
+          meetingStoryId,
+          eveningDepartureId,
+          eveningReturnId,
+          townDepartureId,
+          townReturnId,
+        ].includes(story.id),
       );
     });
   }
@@ -43,13 +50,18 @@ test("the opening meeting and both return-road scenes have a cue for every line"
   assert.equal(storyStageExitCue("other-story"), null);
 });
 
-test("compact dialogue includes the static handover and only the first two stages", () => {
+test("compact dialogue includes the static handover and only the first three stages", () => {
   for (const story of stories) {
     assert.equal(
       compactStoryDialogue(story.id),
-      [meetingStoryId, "village-trade-return", eveningDepartureId, eveningReturnId].includes(
-        story.id,
-      ),
+      [
+        meetingStoryId,
+        "village-trade-return",
+        eveningDepartureId,
+        eveningReturnId,
+        townDepartureId,
+        townReturnId,
+      ].includes(story.id),
     );
   }
   assert.equal(storyStageCue("village-trade-return", 0), null);
@@ -163,8 +175,8 @@ test("Leon is already inspecting the cart before Aria arrives, and takes it alon
   const leon = sampleStageActor(opening.actors[1], stageEntrance("leon"), 1000);
   assert.equal(aria.visible, false);
   assert.equal(leon.x, stageEntrance("leon").x);
-  assert.equal(leon.atlas, "adventure");
-  assert.ok([22, 23].includes(leon.frame));
+  assert.equal(leon.atlas, "conversation");
+  assert.ok([6, 7].includes(leon.frame));
   const arriving = storyStageCue(meetingStoryId, 1);
   assert.equal(sampleStageActor(arriving.actors[0], stageEntrance("aria"), 500).visible, true);
   const last = storyStageExitCue(meetingStoryId);
@@ -178,11 +190,17 @@ test("Leon is already inspecting the cart before Aria arrives, and takes it alon
 });
 
 test("stage props retain transparent margins and use the common scene aspect ratio", async () => {
-  for (const name of ["meeting-path", "town-exit", "meeting-dusk"]) {
+  for (const name of [
+    "meeting-path",
+    "town-exit",
+    "meeting-dusk",
+    "town-shop",
+    "town-shop-return",
+  ]) {
     const background = await sharp(`public/story-stage/${name}.webp`).metadata();
     assert.equal(background.width / background.height, 1.5);
   }
-  for (const name of ["loaded-cart", "return-cart", "travel-bundle"]) {
+  for (const name of ["loaded-cart", "return-cart", "travel-bundle", "delivery-box"]) {
     const { data, info } = await sharp(`public/story-stage/${name}.webp`)
       .raw()
       .toBuffer({ resolveWithObject: true });
@@ -193,5 +211,61 @@ test("stage props retain transparent margins and use the common scene aspect rat
       alphas.some((alpha) => alpha > 240),
       `${name} includes opaque artwork`,
     );
+  }
+});
+
+test("crouching retains walking head size and ground contact while reducing body height", async () => {
+  for (const id of ["aria", "leon"]) {
+    const home = await sharp(`public/home-pixel/${id}.webp`).png().toBuffer();
+    const base = await readFrame(home, { left: 0, top: 0, width: 128, height: 128 });
+    const head = await headBounds(await sharp(base.cell).extract(base.box).png().toBuffer(), 0.25);
+    const sheet = await sharp(`public/story-stage/${id}-poses.webp`).png().toBuffer();
+    for (const index of [6, 7, 8, 9]) {
+      const pose = await readFrame(sheet, {
+        left: (index % 4) * 128,
+        top: Math.floor(index / 4) * 128,
+        width: 128,
+        height: 128,
+      });
+      const poseHead = await headBounds(
+        await sharp(pose.cell).extract(pose.box).png().toBuffer(),
+        0.25,
+      );
+      assert.ok(Math.abs(poseHead.width - head.width) <= 2, `${id}/${index}: head scale`);
+      assert.equal(pose.box.top + pose.box.height, 120, `${id}/${index}: feet on ground`);
+      if (index < 8)
+        assert.ok(
+          pose.box.height < base.box.height * 0.82,
+          `${id}/${index}: crouching is lower than standing`,
+        );
+      else
+        assert.ok(
+          Math.abs(pose.box.height - base.box.height) < 10,
+          `${id}/${index}: carry stature`,
+        );
+    }
+  }
+});
+
+test("delivery scenes put the box down and carry it together without flipping the second carrier", () => {
+  assert.equal(storyStageCue(townDepartureId, 5).box, "high");
+  assert.equal(storyStageCue(townDepartureId, 7).box, "table");
+  assert.equal(storyStageCue(townDepartureId, 10).actors[0].inspect, true);
+  const last = storyStageCue(townDepartureId, 14);
+  assert.ok(last.actors.every((a) => a.carry));
+  assert.equal(last.box, "shared");
+  const exit = storyStageExitCue(townDepartureId);
+  assert.equal(storyStageExitCue(townDepartureId), exit, "rerenders must not restart departure");
+  assert.equal(storyStageExitCue(townReturnId), storyStageExitCue(townReturnId));
+  const samples = exit.actors.map((actor, i) =>
+    sampleStageActor(actor, { x: last.actors[i].x }, 500),
+  );
+  assert.equal(samples[1].x - samples[0].x, 26);
+  assert.equal(samples[1].left, true);
+  assert.ok(samples.every((s) => s.atlas === "conversation" && [8, 9].includes(s.frame)));
+  for (const line of stories.find((s) => s.id === townReturnId).lines.keys()) {
+    assert.equal(storyStageCue(townReturnId, line).background, "town-shop-return");
+    assert.equal(storyStageCue(townReturnId, line).box, undefined);
+    assert.equal(storyStageCue(townReturnId, line).hideCart, true);
   }
 });

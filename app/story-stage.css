@@ -147,7 +147,7 @@
 }
 .story-stage-sprite[data-atlas="conversation"] {
   background-image: var(--conversation-art);
-  background-size: 400% 200%;
+  background-size: 400% 300%;
 }
 .story-stage-actor[data-departing="true"][data-actor="aria"] {
   bottom: 9%;
@@ -233,4 +233,21 @@
   background: var(--cart-art) center / contain no-repeat;
   image-rendering: pixelated;
   z-index: 1;
+}
+.story-stage-delivery-box {
+  position: absolute;
+  bottom: 12%;
+  width: 32%;
+  aspect-ratio: 3 / 2;
+  transform: translateX(-50%);
+  background: url("/story-stage/delivery-box.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+  z-index: 3;
+}
+.story-stage-delivery-box[data-box="table"] {
+  bottom: 63%;
+  width: 16%;
+}
+.story-stage-delivery-box[data-box="high"] {
+  bottom: 16%;
 }

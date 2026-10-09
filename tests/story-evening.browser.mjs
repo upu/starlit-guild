@@ -19,7 +19,7 @@ async function openStory(story, reducedMotion = "no-preference") {
     reducedMotion,
   });
   const page = await context.newPage(),
-    state = testState(Date.now(), 2, 40, 10000);
+    state = testState(Date.now(), 3, 40, 10000);
   const id = "11111111-1111-4111-8111-111111111111";
   const record = {
     format: 4,
@@ -104,17 +104,37 @@ try {
   assert.equal(await page.locator(".story-reader").count(), 0);
   await context.close();
 
-  for (const suffix of ["departure", "return"]) {
-    const story = stories.find((s) => s.id === `evening-trade-road-${suffix}`);
+  for (const scene of [
+    "evening-trade-road-departure",
+    "evening-trade-road-return",
+    "town-deliveries-departure",
+    "town-deliveries-return",
+  ]) {
+    const story = stories.find((s) => s.id === scene);
+    const town = scene.startsWith("town-"),
+      departing = scene.endsWith("departure");
     for (const reduced of [false, true]) {
       const { context, page } = await openStory(story, reduced ? "reduce" : "no-preference");
       await page.clock.runFor(200);
-      assert.deepEqual(await positions(page), [28, 56]);
+      assert.deepEqual(await positions(page), town ? [34, 60] : [28, 56]);
       assert.equal(
         await page.locator(".story-stage").getAttribute("data-setting"),
-        suffix === "departure" ? "town-exit" : "meeting-dusk",
+        town
+          ? departing
+            ? "town-shop"
+            : "town-shop-return"
+          : departing
+            ? "town-exit"
+            : "meeting-dusk",
       );
-      assert.match(await page.locator(".story-stage").getAttribute("style"), /return-cart.webp/);
+      assert.equal(await page.locator(".story-stage-cart").isVisible(), !town);
+      if (!town)
+        assert.match(await page.locator(".story-stage").getAttribute("style"), /return-cart.webp/);
+      if (!reduced && departing) {
+        await page.setViewportSize({ width: 759, height: 1244 });
+        await layout(page, `${scene}-759`, true);
+        await page.setViewportSize({ width: 390, height: 844 });
+      }
       for (let i = 0; i < story.lines.length; i++) {
         assert.ok((await page.locator(".story-lines").innerText()).includes(story.lines[i].text));
         assert.equal(await page.locator(".story-lines > *").count(), 1);
@@ -130,13 +150,24 @@ try {
           const expectedXY = expected.position.split(" ").map(parseFloat);
           assert.ok(actualXY.every((n, axis) => Math.abs(n - expectedXY[axis]) < 0.001));
         }
-        if (!reduced && [0, 1, 5, story.lines.length - 1].includes(i))
-          await layout(page, `${suffix}-${i}`, true);
+        if (!reduced && [0, 1, 5, 10, story.lines.length - 1].includes(i))
+          await layout(page, `${scene}-${i}`, true);
+        if (town && departing) {
+          const boxMode =
+            i < 3 || (i >= 7 && i < 13) ? "table" : i < 5 ? "aria" : i < 7 ? "high" : "shared";
+          assert.equal(
+            await page.locator(".story-stage-delivery-box").getAttribute("data-box"),
+            boxMode,
+          );
+        }
         if (i + 1 < story.lines.length) await advance(page);
       }
       await page.clock.runFor(4000);
       const before = await positions(page);
-      assert.deepEqual(before, suffix === "departure" ? [42, 81] : [32, 81]);
+      assert.deepEqual(
+        before,
+        town ? (departing ? [34, 60] : [45, 65]) : departing ? [42, 81] : [32, 81],
+      );
       await page.getByRole("button", { name: "会話履歴", exact: true }).click();
       assert.equal(await page.locator(".story-lines > *").count(), story.lines.length);
       await page.locator(".story-conversation").press("Enter");
@@ -145,10 +176,30 @@ try {
       await advance(page, reduced ? 32 : 700);
       if (!reduced) {
         const moving = await positions(page);
-        assert.equal(moving[0] > before[0], suffix === "departure");
+        assert.equal(moving[0] > before[0], town || departing);
         assert.ok(moving[1] > before[1]);
-        assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "carried");
-        await layout(page, `${suffix}-exit`, true);
+        assert.equal(
+          await page.locator(".story-stage").getAttribute("data-luggage"),
+          town ? "hidden" : "carried",
+        );
+        if (town && departing) {
+          assert.ok(Math.abs(moving[1] - moving[0] - 26) < 0.001);
+          const offset = await page.locator(".story-stage-ground").evaluate((el) => {
+            const xs = [...el.querySelectorAll(".story-stage-actor")].map((actor) =>
+              parseFloat(actor.style.left),
+            );
+            return (
+              parseFloat(el.querySelector(".story-stage-delivery-box").style.left) -
+              (xs[0] + xs[1]) / 2
+            );
+          });
+          assert.ok(Math.abs(offset) < 0.01);
+          assert.match(
+            await page.locator('[data-actor="leon"] .story-stage-sprite').getAttribute("style"),
+            /scaleX\(-1\)/,
+          );
+        }
+        await layout(page, `${scene}-exit`, true);
         await page.locator(".story-conversation").press("Enter");
         await page.clock.runFor(2800);
       }
@@ -162,7 +213,7 @@ try {
     JSON.stringify({ results, errors, realDevice: "not-run" }, null, 2),
   );
   console.log(
-    `PASS: static handover, both evening scenes, history, last-tap exits, reduced motion; ${results.length} screenshots`,
+    `PASS: static handover, evening and delivery scenes, history, last-tap exits, shared box, reduced motion; ${results.length} screenshots`,
   );
 } finally {
   await browser.close();

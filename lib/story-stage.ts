@@ -8,12 +8,18 @@ import {
   eveningReturnId,
 } from "./story-stage-evening.ts";
 export type { StoryStageCue } from "./story-stage-cues.ts";
+import { townDepartureId, townReturnId, townStageCue, townExitCue } from "./story-stage-town.ts";
 
 export const meetingStoryId = `${TRADE_QUEST}-departure`;
 export function compactStoryDialogue(storyId: string) {
-  return [meetingStoryId, `${TRADE_QUEST}-return`, eveningDepartureId, eveningReturnId].includes(
-    storyId,
-  );
+  return [
+    meetingStoryId,
+    `${TRADE_QUEST}-return`,
+    eveningDepartureId,
+    eveningReturnId,
+    townDepartureId,
+    townReturnId,
+  ].includes(storyId);
 }
 export type StagePosition = { x: number };
 export type StageSample = StagePosition & {
@@ -102,11 +108,14 @@ const meetingExit: StoryStageCue = {
 };
 
 export function storyStageExitCue(storyId: string): StoryStageCue | null {
-  return storyId === meetingStoryId ? meetingExit : eveningExitCue(storyId);
+  return storyId === meetingStoryId
+    ? meetingExit
+    : (eveningExitCue(storyId) ?? townExitCue(storyId));
 }
 
 export function storyStageCue(storyId: string, line: number): StoryStageCue | null {
-  if (storyId !== meetingStoryId) return eveningStageCue(storyId, line);
+  if (storyId !== meetingStoryId)
+    return eveningStageCue(storyId, line) ?? townStageCue(storyId, line);
   return meetingCues[line] ?? null;
 }
 
@@ -120,18 +129,26 @@ export function stageTravel(from: number, to: number, elapsed: number, reduced =
   return { x: from + (to - from) * progress, moving: progress < 1 && Math.abs(to - from) > 0.1 };
 }
 
+const cycleFrame = (first: number, elapsed: number, interval: number, animate: boolean) =>
+  first + (animate ? Math.floor(elapsed / interval) % 2 : 0);
+
 function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (actor.carry)
+    return {
+      atlas: "conversation" as const,
+      frame: cycleFrame(8, elapsed, 180, moving && !reduced),
+    };
   if (moving && !actor.pull)
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.inspect)
     return {
-      atlas: "adventure" as const,
-      frame: 22 + (reduced ? 0 : Math.floor(elapsed / 480) % 2),
+      atlas: "conversation" as const,
+      frame: cycleFrame(6, elapsed, 480, !reduced),
     };
   if (actor.pull)
     return {
       atlas: "adventure" as const,
-      frame: 20 + (moving ? Math.floor(elapsed / 180) % 2 : 0),
+      frame: cycleFrame(20, elapsed, 180, moving),
     };
   const frames = { idle: 0, greet: 1, surprise: 2, think: 3, offer: 4, tease: 5 };
   return {
@@ -160,7 +177,7 @@ export function sampleStageActor(
     x,
     ...actorPose(actor, moving, elapsed, reduced),
     visible: actor.visible !== false,
-    left: moving ? actor.x < origin.x : actor.left,
+    left: actor.carry ? actor.left : moving ? actor.x < origin.x : actor.left,
     lift: reactionLift(actor.reaction, reaction),
     bubble: actor.reaction === "surprise" && (reduced || elapsed < 1600) ? "！" : "",
   };
