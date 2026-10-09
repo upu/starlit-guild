@@ -1,5 +1,6 @@
 import type { StoryLine } from "./stories.ts";
 import { pumpetyBattleBanter } from "./pumpety-battle-banter.ts";
+import { line } from "./story-lines.ts";
 import type { Run } from "./game.ts";
 import {
   BLOCKADE_QUEST,
@@ -86,11 +87,6 @@ export function chapterTwoWorkload(id: string) {
     ? 2.4
     : 1;
 }
-const line = (
-  speaker: string,
-  text: string,
-  expression: StoryLine["expression"] = "neutral",
-): StoryLine => ({ speaker, text, expression });
 function packingBanter(run: Run): StoryLine[] | null {
   if (run.quest !== DELIVERY_PREP_QUEST) return null;
   return [

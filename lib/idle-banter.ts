@@ -1,26 +1,6 @@
 import type { StoryLine } from "./stories.ts";
+import { aria as a, leon as l, mira as m, finn as f, lico as r } from "./story-lines.ts";
 
-const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "aria",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "leon",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const m = (text: string): StoryLine => ({ speaker: "mira", text });
-const f = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "finn",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const r = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "lico",
-  text,
-  ...(expression ? { expression } : {}),
-});
 const quintetExchanges: StoryLine[][] = [
   [r("あの道の光、昨日より薄い。あとで比べたい。"), a("道を歩き終えてからね。私も見るよ。")],
   [l("試料の瓶は閉めましたか。"), r("うん。……開けるときは止まる。覚えてる。")],

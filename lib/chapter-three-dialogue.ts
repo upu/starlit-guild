@@ -9,18 +9,7 @@ export const chapterThreeSpeakers = {
   mira: "ミラ",
   finn: "フィン",
 };
-const speaker =
-  (id: keyof typeof chapterThreeSpeakers) =>
-  (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-    speaker: id,
-    text,
-    ...(expression ? { expression } : {}),
-  });
-export const a = speaker("aria");
-export const l = speaker("leon");
-export const m = speaker("mira");
-export const f = speaker("finn");
-export const n = (text: string): StoryLine => ({ text });
+export { aria as a, leon as l, mira as m, finn as f, narration as n } from "./story-lines.ts";
 export function scene(
   number: string,
   chapter: Story["chapter"],

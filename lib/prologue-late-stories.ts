@@ -1,6 +1,6 @@
 import type { Story } from "./stories.ts";
 import { TOWER_QUEST, NIGHT_QUEST, WETLAND_QUEST } from "./prologue.ts";
-import { a, l, n } from "./prologue-story-lines.ts";
+import { aria as a, leon as l, narration as n } from "./story-lines.ts";
 
 export const latePrologueStories: Story[] = [
   {
