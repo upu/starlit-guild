@@ -1,7 +1,13 @@
-import type { StoryStageCue } from "./story-stage-cues.ts";
+import type { StoryStageCue, StageActor, StageItem } from "./story-stage-cues.ts";
 
 export type BoxPosition = { x: number; bottom: number };
 export const boxTransferDuration = 650;
+
+export function stageItemOffset(item: StageItem, actor?: StageActor) {
+  if (!actor) return item.x;
+  const reversed = actor.left !== (actor.id === "leon");
+  return reversed ? -item.x : item.x;
+}
 
 export function deliveryBoxTarget(
   mode: StoryStageCue["box"],

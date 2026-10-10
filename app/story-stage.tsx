@@ -3,6 +3,7 @@ import { residentNames } from "@/lib/home-actor";
 import { stageEntrance, type StoryStageCue } from "@/lib/story-stage";
 import { useStoryStageMotion } from "./story-stage-motion";
 import { StoryStageProps } from "./story-stage-props";
+import { ChapterStageProps } from "./story-stage-chapter-props";
 import type { CSSProperties } from "react";
 
 function stageStyle(cue: StoryStageCue): CSSProperties {
@@ -30,11 +31,13 @@ export function StoryStage({
         role="img"
         aria-label={cue.description}
         data-setting={cue.background ?? "meeting-path"}
+        data-night={!!cue.night}
         style={stageStyle(cue)}
       >
         <div className="story-stage-vignette" aria-hidden="true" />
         <div className="story-stage-ground" aria-hidden="true">
           <StoryStageProps cue={cue} />
+          <ChapterStageProps cue={cue} />
           {cue.actors.map((actor) => (
             <div
               key={actor.id}

@@ -50,5 +50,85 @@
   "leon-poses": {
     "source": "7c29f02da8f072e22e1584d493101db4c34ab30b1eb6532a5b4b2f37803a7a72",
     "output": "72f4203ad8e802dbcc5119dbca51c0e7ed5ea297ef7921b49002b4577ac4ec31"
+  },
+  "hill-path": {
+    "source": "d934decb535a5c32fcfafa2bb0b51d2be96a202fadc83b7bdcccaaa978fdb6d6",
+    "output": "a03130f75ca7fef31e65c23577d766b2b2c100974038f9c4103d683ee7bd46f5"
+  },
+  "hill-night": {
+    "source": "9441b6ab74a5a01ffc9486cb8e4ee35e6622b431f741c5aa8768134b3a0a8a5c",
+    "output": "6d2a0b55d3569f422b5724bf9c253881695557fca412baf78ac45119fc3086ec"
+  },
+  "meeting-night": {
+    "source": "bd332538e67706e70fd2de504583990bce96950bb0c844865b066d9234f39a98",
+    "output": "eb81e601b21e9f12b04d5cac875de4f25be7d1535165344e92c144ba5c10b9b1"
+  },
+  "tower-foot": {
+    "source": "ed68f68d70fd82cdf1fdd975c3665b5731c11ddb9dcfd2dbf5da411a2f86bfe6",
+    "output": "ca75ee57b62ae850810e30f7d8f0611cf2c99f80f02eed4b1e423302639c3648"
+  },
+  "forest-floor": {
+    "source": "29913386e109bb1e3974b9cc3e5c8d3f3e5aa7ba91fe534efec5b35a333ea669",
+    "output": "f663ad7d2c6743db9757fa136f791e59b52a0f08f903bce69605690755364703"
+  },
+  "drain-blocked": {
+    "source": "bcb4c4d81d106ee892630c68c7afbd94316a1ef0d48ce9b88d2356d10f899dbe",
+    "output": "33c2eb773c75a7089d6827fe3b76858bcd2c0d29b165067a0fd9f5d5cd5295e5"
+  },
+  "drain-cleared": {
+    "source": "d2d324f73be213cd3ed0835a6f61f494c7250c4c69a9e57941b185f86901e103",
+    "output": "ea1477840f7f5ae1968d7f61404e0564d656cec026d462331a5273be00e0291d"
+  },
+  "prop-moss": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "2c7502fc38624af2fa4609543fac24b95a4b5eea3f8e35765c1db8c1b23c0d8a"
+  },
+  "prop-lantern": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "51ca3067337e2f285e2d17a4fd8e8fc7bc62ed71cda279ad681daea8b8884d70"
+  },
+  "prop-basket": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "70a22f0ef066d7e979d732bcaf7dddb1073c9f20a25a0c615a7c66b385bb1998"
+  },
+  "prop-tools": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "4bb6f1216a0ee5aa36305f6b4dff32397bd8b26afc1e37b4e70aefc31e1de1fe"
+  },
+  "prop-map": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "73facbf68de85e36de4ded8cf45ee394d5159f691cc88dae32c5f2a9aee615bc"
+  },
+  "prop-cloth": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "c22591bbe5456f1d50c80d9c3e21bd81d0d7c0b003a6ed8d9bfea990337745f1"
+  },
+  "keeper-poses": {
+    "source": "4246649b9c3812e89f12292d7ebc2385640de9ad6e4fff735fae0de9dbc2532a",
+    "output": "880e4b88132672bbf0f7715c18e5b2a9c82d16409d0a4cc10a05884589f2dd92"
+  },
+  "worker-poses": {
+    "source": "4246649b9c3812e89f12292d7ebc2385640de9ad6e4fff735fae0de9dbc2532a",
+    "output": "1f40adf848e14af9bf37d722151deb108c3bb70c6208567a21db0e25598a1fe4"
+  },
+  "aria-shawl": {
+    "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
+    "output": "de36ad5fbd7169d6fd35acff9de6981de435e16b533637797963eea28c144bc0"
+  },
+  "prop-colony": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "aaa384ffeaf11997336364b31e54b1f565c9cdcb67c4af6be3ad6d736993470a"
+  },
+  "prop-dish": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "cb5b5fec3c81fd7c1a969f50414457dc11ba02dca4db0d701596f8dbb0492b17"
+  },
+  "prop-stone": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "2a5d3ef9044a8877a710e3975c2927e52f4c7e5f2d3e21c60b4e7cba9297c8de"
+  },
+  "prop-spatula": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "3c31797227e7940bcb4a98ae29dfa8ed5b28906329b0234ca6eb82dfb927cde0"
   }
 }

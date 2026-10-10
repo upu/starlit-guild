@@ -1,0 +1,63 @@
+.story-stage-extra {
+  position: absolute;
+  width: var(--stage-cell);
+  height: var(--stage-cell);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.story-stage-extra-sprite {
+  position: absolute;
+  inset: 0;
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-extra .story-stage-name {
+  top: 4%;
+}
+.story-stage-extra[data-speaking="true"] .story-stage-name {
+  color: #fff0a5;
+}
+.story-stage-item {
+  position: absolute;
+  aspect-ratio: 1.3;
+  transform: translateX(-50%);
+  background: var(--item-art) center / contain no-repeat;
+  image-rendering: pixelated;
+  z-index: 3;
+  transition: filter 700ms;
+}
+.story-stage-item[data-art="lantern"] {
+  aspect-ratio: 0.7;
+}
+.story-stage-item[data-glow="bright"]:is([data-art="moss"], [data-art="colony"]) {
+  filter: brightness(1.3) drop-shadow(0 0 4px #b6ffd0) drop-shadow(0 0 16px #7beca6a0);
+}
+.story-stage-item[data-glow="dim"]:is([data-art="moss"], [data-art="colony"]) {
+  filter: drop-shadow(0 0 2px #9ed19b80);
+}
+.story-stage-item[data-glow="bright"][data-art="lantern"] {
+  filter: drop-shadow(0 0 9px #ffd77f90);
+}
+.story-stage-item[data-art="stone"] {
+  aspect-ratio: 2.6;
+  z-index: 1;
+}
+.story-stage-item[data-art="map"] {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art="spatula"] {
+  aspect-ratio: 0.9;
+}
+.story-stage[data-night="true"] .story-stage-sprite {
+  filter: brightness(0.82);
+}
+.story-stage-sprite[data-atlas="shawl"] {
+  background-image: url("/story-stage/aria-shawl.webp");
+  background-size: 400% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-stage-item {
+    transition: none;
+  }
+}

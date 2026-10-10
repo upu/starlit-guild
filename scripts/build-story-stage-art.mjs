@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
 import { workPoseFrames } from "./story-stage-pose-frames.mjs";
 
+import { chapterAssets } from "./build-story-stage-chapter.mjs";
+
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
 const check = process.argv.includes("--check");
@@ -13,7 +15,10 @@ async function emit(name, source, image) {
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
-  } else await writeFile(path, image);
+  } else {
+    const existing = await readFile(path).catch(() => null);
+    if (!existing?.equals(image)) await writeFile(path, image);
+  }
   manifest[name] = {
     source: createHash("sha256").update(source).digest("hex"),
     output: createHash("sha256").update(image).digest("hex"),
@@ -94,6 +99,7 @@ for (const id of ["aria", "leon"]) {
     .toBuffer();
   await emit(name, Buffer.concat([source, adventure, home, carry]), expanded);
 }
+await chapterAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

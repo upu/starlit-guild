@@ -1,0 +1,165 @@
+{
+  "mode": "builtin",
+  "tool": "image_gen",
+  "assets": {
+    "hill-path": {
+      "generation_id": "f821236a-fc45-410b-b355-d188fa3ab63d",
+      "source": "assets/source/story-stage/hill-path-v1.png"
+    },
+    "tower-foot": {
+      "generation_id": "d37eb507-358a-4dce-9857-e643d20606e2",
+      "source": "assets/source/story-stage/tower-foot-v1.png"
+    },
+    "forest-floor": {
+      "generation_id": "031398ce-1643-4165-9a56-e4b3ae433033",
+      "source": "assets/source/story-stage/forest-floor-v1.png"
+    },
+    "forest-floor-clear": {
+      "generation_id": "219ffec8-51f0-4888-86a8-9456527b8437",
+      "source": "assets/source/story-stage/forest-floor-clear-v1.png"
+    },
+    "drain-blocked": {
+      "generation_id": "f86fd322-6a86-443c-8882-610e4d43e2ee",
+      "source": "assets/source/story-stage/drain-blocked-v1.png"
+    },
+    "drain-cleared": {
+      "generation_id": "a4b1526c-a327-4bbb-b9d6-50d456ccb272",
+      "source": "assets/source/story-stage/drain-cleared-v1.png"
+    },
+    "chapter-props": {
+      "generation_id": "6bed64bd-a648-414b-a1a5-9a66ebc53342",
+      "source": "assets/source/story-stage/chapter-props-v1.png"
+    },
+    "tower-npcs": {
+      "generation_id": "8ad58db1-18ce-4bc8-a526-a1551e3d8eba",
+      "source": "assets/source/story-stage/tower-npcs-v1.png"
+    },
+    "hill-night": {
+      "generation_id": "42a881a4-248b-4caa-893a-e969ab8598ff",
+      "source": "assets/source/story-stage/hill-night-v1.png"
+    },
+    "meeting-night": {
+      "generation_id": "5e7ddd8a-0371-4cbc-b4e7-bbf02312a5fa",
+      "source": "assets/source/story-stage/meeting-night-v1.png"
+    },
+    "aria-shawl": {
+      "generation_id": "9e699c5e-8b91-4cf9-8d7e-0ad454c615ac",
+      "source": "assets/source/story-stage/aria-shawl-v1.png"
+    },
+    "field-props": {
+      "generation_id": "81d8b26d-7234-4d4c-9bd2-6053e80aedb7",
+      "source": "assets/source/story-stage/field-props-v1.png"
+    }
+  },
+  "specs": [
+    {
+      "name": "hill-path",
+      "prompt": "Use case: stylized-concept. Production background for a pixel-art JRPG dialogue stage. Landscape 1536x1024, 3:2. Match the reference's pixel grain, warm earthy palette, dark outlines and slightly elevated close scene perspective. Characters will occupy the LOWER CENTER 60% at roughly one quarter image height; keep this broad foreground playable and uncluttered, put large scenery in upper half and edges. No people, no lettering, no interface. A path on the edge of Linde, branching towards a small wooded hill beyond fields, daytime. A familiar small pale stone tower with a very faint purple window stands far above the trees. Near foreground a broad level dirt roadside where two travelers can talk. No cart.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/meeting-path-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/hill-path-v1.png"
+    },
+    {
+      "name": "tower-foot",
+      "prompt": "Use case: stylized-concept. Production background for a pixel-art JRPG dialogue stage. Landscape 1536x1024, 3:2. Match the reference's pixel grain, warm earthy palette, dark outlines and slightly elevated close scene perspective. Characters will occupy the LOWER CENTER 60% at roughly one quarter image height; keep this broad foreground playable and uncluttered, put large scenery in upper half and edges. No people, no lettering, no interface. At the foot of the same old pale-gray stone tower from reference 2. Cropped massive curved tower wall and a closed small timber door across upper-right, low mossy stone footing on right edge near middle ground, faint pale-green moss tucked in gaps. Damp soil, dry stepping stones, an approachable flat stone slab on left; empty open foreground at lower middle where two visitors can stand safely. Afternoon, countryside glimpsed at left. Tower continues above frame, do not draw a whole miniature tower.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/meeting-path-v1.png",
+        "public/stories/tower-moss-discovery.webp"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/tower-foot-v1.png"
+    },
+    {
+      "name": "forest-floor",
+      "prompt": "Use case: stylized-concept. Production background for a pixel-art JRPG dialogue stage. Landscape 1536x1024, 3:2. Match the reference's pixel grain, warm earthy palette, dark outlines and slightly elevated close scene perspective. Characters will occupy the LOWER CENTER 60% at roughly one quarter image height; keep this broad foreground playable and uncluttered, put large scenery in upper half and edges. No people, no lettering, no interface. A quiet damp forest clearing in afternoon. Large tree roots and a modest non-glowing moss colony along LEFT edge of middle ground, flat low stone on right for two shallow sample bowls; foreground broad dry soil path. Dappled daylight. No magic, no pond crossing, no tower. Same camera scale as reference.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/meeting-path-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/forest-floor-v1.png"
+    },
+    {
+      "name": "drain-blocked",
+      "prompt": "Use case: stylized-concept. Production background for a pixel-art JRPG dialogue stage. Landscape 1536x1024, 3:2. Match the reference's pixel grain, warm earthy palette, dark outlines and slightly elevated close scene perspective. Characters will occupy the LOWER CENTER 60% at roughly one quarter image height; keep this broad foreground playable and uncluttered, put large scenery in upper half and edges. No people, no lettering, no interface. Old drainage outlet on a damp hillside behind a stone tower. A LOW stone arch outlet at upper right is half blocked by one fallen log and accumulated silt. A trickle of water escapes towards right edge, pale green moss lines inside the stone joints. Upper edge hints at the tower wall. Lower-center foreground is a broad DRY safe stone-and-soil ledge for observers, separated from the channel. No bridge or huge river.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/meeting-path-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/drain-blocked-v1.png"
+    },
+    {
+      "name": "chapter-props",
+      "prompt": "Use case: stylized-concept. Transparent pixel-art game item atlas, exactly 3 columns x 2 rows, six separate objects centered within equal square cells. Matching reference pixel style, chunky pixels and dark outlines, front-three-quarter view. Top row: (1) a SMALL shallow wooden dish filled with fernlike green moss, no emitted light, (2) a hand-held brass oil lantern with an orange flame and loop handle, (3) an EMPTY shallow woven wicker work basket. Bottom row: (4) neatly bundled coiled rope, small hand saw and wooden spatula work tools, (5) an unfolded beige parchment sketch map with simple dark route strokes and no text, (6) folded cream-colored thick cloth. Full objects, generous transparent margins in every cell. No characters, no ground, no shadows, no decorative background, no labels, truly transparent alpha.",
+      "referenced_image_paths": [
+        "public/story-stage/merchant-poses.webp"
+      ],
+      "transparent_background": true,
+      "source": "assets/source/story-stage/chapter-props-v1.png"
+    },
+    {
+      "name": "tower-npcs",
+      "prompt": "Use case: stylized-concept. Transparent pixel-art JRPG NPC sprite sheet, exactly 4 columns by 2 rows. All full bodies, identical chibi 2.5-head-tall scale to reference, centered in equal square cells, ground line identical, generous transparent padding, no grid or text. TOP ROW: ONE elderly tower caretaker with short gray hair and short beard, simple faded blue work coat, brown pants and boots, no hat. Four poses in order: listening calmly; talking open palm; pointing down; farewell raised hand. BOTTOM ROW: ONE adult local drainage worker with tied-back brown hair, ochre work tunic, dark trousers, leather apron and boots, no helmet. Same four poses in order. Face slightly toward viewer's left. Do not copy merchant identity. No handheld tools, no scenery, no floor, no shadows. Match reference chunky pixels and proportions. Transparent alpha background.",
+      "referenced_image_paths": [
+        "public/story-stage/merchant-poses.webp"
+      ],
+      "transparent_background": true,
+      "source": "assets/source/story-stage/tower-npcs-v1.png"
+    },
+    {
+      "name": "hill-night",
+      "prompt": "Use case: precise-object-edit. Transform this pixel-art hillside path into early night viewed on the descent, with distant Linde rooftops below in the right valley where fields are, a trace of sunset fading on horizon and deep blue sky. Retain the same trees/path camera scale and broad empty foreground for characters. The distant tower light remains very faint, not restored. Keep outlines readable, no black crush; foreground will receive carried lantern light in game. No people, no text.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/hill-path-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/hill-night-v1.png"
+    },
+    {
+      "name": "meeting-night",
+      "prompt": "Use case: lighting-weather. Edit this established pixel-art fork in a country road from sunset to night. Preserve EXACT path forks, trees, rocks, framing and foreground open area. Blue indigo moonlit shadows, faint starlight, no sun. Readable terrain, not pitch black. No lanterns or people baked into background. No text.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/meeting-dusk-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/meeting-night-v1.png"
+    },
+    {
+      "name": "drain-cleared",
+      "prompt": "Use case: precise-object-edit. Edit this pixel-art drainage outlet after repairs. Remove the fallen log blocking the outlet and the silt plug, open the LOW dark stone channel so a small clear stream flows freely to the right edge. The channel's inner stone joints still have green moss. Put two small cut-log sections safely on the upper-left bank. Preserve exact tower wall, stone arch, camera, trees and dry broad foreground ledge. Late afternoon light. No characters, no text, no new buildings.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/drain-blocked-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/drain-cleared-v1.png"
+    },
+    {
+      "name": "forest-floor-clear",
+      "prompt": "Use case: precise-object-edit. Remove ONLY the two bowls on the upper-right flat rock. Fill with the rock's existing pixel texture. Keep every other part of this forest scene unchanged, including framing, lighting, tree roots, moss and empty foreground. No added objects.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/forest-floor-v1.png"
+      ],
+      "transparent_background": false,
+      "source": "assets/source/story-stage/forest-floor-clear-v1.png"
+    },
+    {
+      "name": "aria-shawl",
+      "prompt": "Use case: identity-preserve. Make a transparent pixel-art 2x2 sprite sheet of the SAME Aria elf girl as reference. Preserve short blonde hair with lavender fringe, green eyes, flower hair clip, pointed ears, green hood DOWN, white dress and brown boots; exact cute compact proportions and head size of original. Add a thick plain cream wool cloth wrapped over her shoulders against night chill, resting above her green cape. Full body, centered with same feet baseline in equal cells, transparent margins. Four poses: top-left quiet standing hands at waist, top-right holding both EMPTY hands forward to support a separate shallow moss dish, bottom-left same hands forward stepping with left foot, bottom-right same hands forward stepping with right foot. Do NOT draw dish or lantern; code adds those. Shawl must stay on shoulders in every pose, faces visible. No scenery, text, floor or shadows. True transparent alpha.",
+      "referenced_image_paths": [
+        "public/story-stage/aria-poses.webp"
+      ],
+      "transparent_background": true,
+      "source": "assets/source/story-stage/aria-shawl-v1.png"
+    },
+    {
+      "name": "field-props",
+      "transparent_background": true,
+      "referenced_image_paths": [
+        "assets/source/story-stage/chapter-props-v1.png"
+      ],
+      "prompt": "Use case: game-asset. Transparent production pixel-art JRPG prop atlas, 2 columns x 2 rows with generous separated equal square cells on 1024x1024 transparent canvas. Match the supplied reference pixel grain, crisp dark outlines, earthy palette and 3/4 slightly elevated perspective. No lettering, UI or characters. TOP LEFT: small low loose clump of delicate branching green moss attached to a thin patch of dark soil, naturally growing, NOT in any pot or bowl; no glow. TOP RIGHT: one empty very shallow round wooden dish with low rim, identical to the moss bowl in reference but with completely empty inner floor; no handle, no moss. BOTTOM LEFT: one low broad flat weathered gray stone slab, rectangular with rounded uneven corners, thick enough to sit on or unfold a map, flat horizontal top, NO legs, NO objects on it, NO surrounding ground or grass. BOTTOM RIGHT: one small plain wooden spatula for gently lifting moss, short slim handle and flat rounded blade, no hand. Each object fully visible in its own cell, centered. Actual transparent background throughout.",
+      "source": "assets/source/story-stage/field-props-v1.png"
+    }
+  ]
+}

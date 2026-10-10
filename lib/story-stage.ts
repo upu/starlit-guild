@@ -1,26 +1,17 @@
 import { residentFrame, type ResidentId } from "./home-actor.ts";
 import { boxTransferDuration } from "./story-stage-props.ts";
-import { TRADE_QUEST } from "./prologue.ts";
+import { TRADE_QUEST, prologueStages } from "./prologue.ts";
+import { chapterStageCue, chapterExitCue } from "./story-stage-chapter.ts";
 import { stagePair as pair, type StageActor, type StoryStageCue } from "./story-stage-cues.ts";
-import {
-  eveningStageCue,
-  eveningExitCue,
-  eveningDepartureId,
-  eveningReturnId,
-} from "./story-stage-evening.ts";
+import { eveningStageCue, eveningExitCue } from "./story-stage-evening.ts";
 export type { StoryStageCue } from "./story-stage-cues.ts";
-import { townDepartureId, townReturnId, townStageCue, townExitCue } from "./story-stage-town.ts";
+import { townStageCue, townExitCue } from "./story-stage-town.ts";
 
 export const meetingStoryId = `${TRADE_QUEST}-departure`;
 export function compactStoryDialogue(storyId: string) {
-  return [
-    meetingStoryId,
-    `${TRADE_QUEST}-return`,
-    eveningDepartureId,
-    eveningReturnId,
-    townDepartureId,
-    townReturnId,
-  ].includes(storyId);
+  return prologueStages.some(
+    ({ quest }) => storyId === `${quest}-departure` || storyId === `${quest}-return`,
+  );
 }
 export type StagePosition = { x: number };
 export type StageSample = StagePosition & {
@@ -28,7 +19,7 @@ export type StageSample = StagePosition & {
   left: boolean;
   lift: number;
   bubble: string;
-  atlas: "home" | "adventure" | "conversation";
+  atlas: "home" | "adventure" | "conversation" | "shawl";
   visible: boolean;
 };
 
@@ -111,12 +102,16 @@ const meetingExit: StoryStageCue = {
 export function storyStageExitCue(storyId: string): StoryStageCue | null {
   return storyId === meetingStoryId
     ? meetingExit
-    : (eveningExitCue(storyId) ?? townExitCue(storyId));
+    : (eveningExitCue(storyId) ?? townExitCue(storyId) ?? chapterExitCue(storyId));
 }
 
 export function storyStageCue(storyId: string, line: number): StoryStageCue | null {
   if (storyId !== meetingStoryId)
-    return eveningStageCue(storyId, line) ?? townStageCue(storyId, line);
+    return (
+      eveningStageCue(storyId, line) ??
+      townStageCue(storyId, line) ??
+      chapterStageCue(storyId, line)
+    );
   return meetingCues[line] ?? null;
 }
 
@@ -133,7 +128,15 @@ export function stageTravel(from: number, to: number, elapsed: number, reduced =
 const cycleFrame = (first: number, elapsed: number, interval: number, animate: boolean) =>
   first + (animate ? Math.floor(elapsed / interval) % 2 : 0);
 
+function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  return {
+    atlas: "shawl" as const,
+    frame: moving ? cycleFrame(2, elapsed, 180, !reduced) : actor.carry ? 1 : 0,
+  };
+}
+
 function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (actor.shawl) return shawlPose(actor, moving, elapsed, reduced);
   if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
     return {
       atlas: "conversation" as const,

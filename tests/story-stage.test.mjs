@@ -2,6 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
 import { readFrame, headBounds } from "../scripts/home-pixel-frames.mjs";
+import { prologueStories } from "../lib/prologue-stories.ts";
+import { storyArtAt } from "../lib/story-art.ts";
 import { stories } from "../lib/stories.ts";
 import {
   meetingStoryId,
@@ -17,19 +19,15 @@ import { eveningDepartureId, eveningReturnId } from "../lib/story-stage-evening.
 import { townDepartureId, townReturnId } from "../lib/story-stage-town.ts";
 import { deliveryBoxTarget, transferBox, boxTransferDuration } from "../lib/story-stage-props.ts";
 
-test("the first three stages have staging for every line except the static handover", () => {
+test("all chapter one scenes stage each line until an existing still is revealed", () => {
   const meeting = stories.find((story) => story.id === meetingStoryId);
   for (const story of stories) {
     story.lines.forEach((_, line) => {
       assert.equal(
         !!storyStageCue(story.id, line),
-        [
-          meetingStoryId,
-          eveningDepartureId,
-          eveningReturnId,
-          townDepartureId,
-          townReturnId,
-        ].includes(story.id),
+        prologueStories.some((s) => s.id === story.id) &&
+          story.id !== "village-trade-return" &&
+          !storyArtAt(story.id, line),
       );
     });
   }
@@ -51,18 +49,11 @@ test("the first three stages have staging for every line except the static hando
   assert.equal(storyStageExitCue("other-story"), null);
 });
 
-test("compact dialogue includes the static handover and only the first three stages", () => {
+test("compact dialogue covers all eighteen chapter one scenes including stills", () => {
   for (const story of stories) {
     assert.equal(
       compactStoryDialogue(story.id),
-      [
-        meetingStoryId,
-        "village-trade-return",
-        eveningDepartureId,
-        eveningReturnId,
-        townDepartureId,
-        townReturnId,
-      ].includes(story.id),
+      prologueStories.some((s) => s.id === story.id),
     );
   }
   assert.equal(storyStageCue("village-trade-return", 0), null);

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
+import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
 import {
   sampleStageActor,
   stageLuggage,
@@ -16,8 +17,8 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) {
     sprite.dataset.atlas = sample.atlas;
-    const rows = sample.atlas === "adventure" ? 6 : sample.atlas === "conversation" ? 3 : 4;
-    sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String((Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
+    const rows = { adventure: 6, conversation: 3, home: 4, shawl: 1 }[sample.atlas];
+    sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
     sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left ? "-1" : "1"})`;
   }
   const bubble = element.querySelector<HTMLElement>(".story-stage-reaction");
@@ -32,6 +33,7 @@ function animateStage(
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
   boxMotion: BoxMotion,
+  itemMotion: ItemMotion,
   onComplete: () => void,
 ) {
   const actors = cue.actors.map((actor) => ({
@@ -42,6 +44,7 @@ function animateStage(
   const cart = stage.querySelector<HTMLElement>(".story-stage-cart");
   const cartOrigin = positions.get("cart")?.x ?? 64;
   const paintBox = boxPainter(stage, cue, boxMotion);
+  const paintItems = itemPainter(stage, cue, itemMotion);
   const endAt = Math.max(
     3000,
     ...actors.map(({ actor, origin }) => Math.abs(actor.x - origin.x) * 34),
@@ -57,6 +60,7 @@ function animateStage(
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
     paintBox(positions, elapsed, reduced);
+    paintItems(positions, elapsed, reduced);
   };
   return animateFrames(paint, endAt, onComplete);
 }
@@ -107,15 +111,23 @@ export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void)
   const stage = useRef<HTMLDivElement>(null);
   const positions = useRef(new Map<string, StagePosition>());
   const boxMotion = useRef<BoxMotion>({});
+  const itemMotion = useRef<ItemMotion>(new Map());
   const completion = useRef(onComplete);
   useEffect(() => {
     completion.current = onComplete;
   }, [onComplete]);
   useEffect(() => {
     if (stage.current)
-      return animateStage(stage.current, cue, positions.current, boxMotion.current, () => {
-        completion.current?.();
-      });
+      return animateStage(
+        stage.current,
+        cue,
+        positions.current,
+        boxMotion.current,
+        itemMotion.current,
+        () => {
+          completion.current?.();
+        },
+      );
   }, [cue]);
   return stage;
 }

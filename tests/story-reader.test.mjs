@@ -289,7 +289,7 @@ test("story and banter portraits keep the expression of each individual line", (
   );
 });
 
-test("story reader retains all revealed lines for scrolling, reveals art at its action, and only finishes on the final line", () => {
+test("chapter reader shows the current line, reveals art at its action, and only finishes on the final line", () => {
   const story = stories.stories.find((st) => st.id === "tower-road-return");
   let read = 0,
     closed = 0;
@@ -303,7 +303,7 @@ test("story reader retains all revealed lines for scrolling, reveals art at its 
     onClose: () => closed++,
   });
   for (let i = 0; i < story.lines.length; i++) {
-    assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, i + 1));
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[i]]);
     assert.equal(h.find("ArtViewer").props.art, null);
     const hasFigure = !!h.find("figure");
     assert.equal(hasFigure, !!art.storyArtAt(story.id, i));
