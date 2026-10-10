@@ -10,8 +10,13 @@ function stageStyle(cue: StoryStageCue): CSSProperties {
   return {
     "--stage-background": `url(/story-stage/${cue.background ?? "meeting-path"}.webp)`,
     "--cart-art": `url(/story-stage/${cue.cartArt ?? "loaded-cart"}.webp)`,
+    "--party-cell": `${String(cue.cell ?? 24)}cqw`,
   } as CSSProperties;
 }
+const actorStyle = (cue: StoryStageCue, actor: StoryStageCue["actors"][number]) => ({
+  left: `${String(stageEntrance(actor.id, cue).x)}%`,
+  bottom: `${String(actor.bottom ?? 14)}%`,
+});
 
 export function StoryStage({
   cue,
@@ -45,7 +50,7 @@ export function StoryStage({
               data-actor={actor.id}
               data-speaking={speaker === actor.id}
               data-departing={!!cue.cartX}
-              style={{ left: `${String(stageEntrance(actor.id, cue).x)}%` }}
+              style={actorStyle(cue, actor)}
             >
               <span className="story-stage-shadow" />
               <span

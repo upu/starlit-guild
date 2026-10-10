@@ -1,7 +1,17 @@
 import type { CSSProperties } from "react";
 import type { StoryStageCue } from "@/lib/story-stage";
 
-const names = { keeper: "塔の管理人", worker: "作業者", merchant: "取引先の人" };
+const names = {
+  keeper: "塔の管理人",
+  worker: "作業者",
+  merchant: "取引先の人",
+  "masked-pumpety": "パンプキンヘッドの少女",
+  merrill: "メリル",
+  cook: "料理人",
+  doctor: "町の医者",
+  parent: "家の人",
+  child: "子ども",
+};
 const frames = { idle: 0, explain: 1, point: 2, wave: 3 };
 export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
   return (
@@ -23,7 +33,7 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
               backgroundPositionX: `${String((frames[extra.pose ?? "idle"] / 3) * 100)}%`,
             }}
           />
-          <span className="story-stage-name">{names[extra.id]}</span>
+          <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
         </div>
       ))}
       {cue.items?.map((item) => (

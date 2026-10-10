@@ -10,6 +10,8 @@ export type StageActor = {
   carry?: boolean;
   place?: boolean;
   shawl?: boolean;
+  seated?: boolean;
+  bottom?: number;
   visible?: boolean;
   pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
   reaction?: "surprise" | "nod";
@@ -19,6 +21,7 @@ export type StoryStageCue = {
   actors: StageActor[];
   luggage: boolean;
   cartX?: number;
+  cell?: number;
   background?:
     | "meeting-path"
     | "town-exit"
@@ -31,7 +34,23 @@ export type StoryStageCue = {
     | "tower-foot"
     | "forest-floor"
     | "drain-blocked"
-    | "drain-cleared";
+    | "drain-cleared"
+    | "medicine-room"
+    | "dining-room"
+    | "manor-garden"
+    | "workshop"
+    | "mountain-road"
+    | "berne-street"
+    | "brekka-alley"
+    | "village-house"
+    | "stone-yard"
+    | "storeroom"
+    | "moss-beds"
+    | "registry"
+    | "bridge-night"
+    | "warehouse-office"
+    | "patient-room"
+    | "new-moss-beds";
   hideCart?: boolean;
   box?: "table" | "aria" | "high" | "shared";
   merchant?: { pose: "idle" | "explain" | "point" | "wave"; speaking?: boolean };
@@ -44,7 +63,17 @@ export type StoryStageCue = {
 };
 
 export type StageExtra = {
-  id: "keeper" | "worker" | "merchant";
+  id:
+    | "keeper"
+    | "worker"
+    | "merchant"
+    | "masked-pumpety"
+    | "merrill"
+    | "cook"
+    | "doctor"
+    | "parent"
+    | "child";
+  name?: string;
   x: number;
   bottom?: number;
   pose?: "idle" | "explain" | "point" | "wave";
@@ -62,11 +91,35 @@ export type StageItem = {
     | "colony"
     | "dish"
     | "stone"
-    | "spatula";
+    | "spatula"
+    | "bread"
+    | "tea"
+    | "medicine"
+    | "herbs"
+    | "honey"
+    | "signpost"
+    | "keystone"
+    | "replacement"
+    | "ledger"
+    | "seedlings"
+    | "stone-lantern"
+    | "table"
+    | "pot"
+    | "key"
+    | "juice"
+    | "ale"
+    | "sample-jar"
+    | "handcart"
+    | "puppet"
+    | "golem"
+    | "picnic-cloth"
+    | "basket-cart"
+    | "seedling-cart"
+    | "empty-cart";
   x: number;
   bottom: number;
   width?: number;
-  actor?: "aria" | "leon";
+  actor?: ResidentId;
   glow?: "dim" | "bright";
 };
 

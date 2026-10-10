@@ -5,6 +5,7 @@ import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
 import { workPoseFrames } from "./story-stage-pose-frames.mjs";
 
 import { chapterAssets } from "./build-story-stage-chapter.mjs";
+import { laterAssets } from "./build-story-stage-later.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -100,10 +101,11 @@ for (const id of ["aria", "leon"]) {
   await emit(name, Buffer.concat([source, adventure, home, carry]), expanded);
 }
 await chapterAssets(root, emit);
+await laterAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {
   if ((await readFile(manifestPath, "utf8")).replaceAll("\r\n", "\n") !== serialized)
     throw Error("Stale story stage manifest");
 } else await writeFile(manifestPath, serialized);
-console.log("Story stage art: verified background, luggage and both dialogue pose atlases");
+console.log("Story stage art: verified story backgrounds, props and dialogue pose atlases");

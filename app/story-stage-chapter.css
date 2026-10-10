@@ -4,6 +4,7 @@
   height: var(--stage-cell);
   transform: translateX(-50%);
   z-index: 1;
+  transition: left 900ms ease;
 }
 .story-stage-extra-sprite {
   position: absolute;
@@ -17,6 +18,10 @@
 }
 .story-stage-extra[data-speaking="true"] .story-stage-name {
   color: #fff0a5;
+}
+.story-stage-extra[data-npc="child"] {
+  width: calc(var(--stage-cell) * 0.72);
+  height: calc(var(--stage-cell) * 0.72);
 }
 .story-stage-item {
   position: absolute;
@@ -49,6 +54,31 @@
 .story-stage-item[data-art="spatula"] {
   aspect-ratio: 0.9;
 }
+.story-stage-item:is([data-art="table"], [data-art="handcart"], [data-art$="-cart"]) {
+  aspect-ratio: 1.5;
+  z-index: 1;
+}
+.story-stage-item:is([data-art="signpost"], [data-art="stone-lantern"], [data-art="sample-jar"]) {
+  aspect-ratio: 0.85;
+}
+.story-stage-item:is([data-art="puppet"], [data-art="golem"]) {
+  aspect-ratio: 0.8;
+  z-index: 1;
+}
+.story-stage-item[data-glow="bright"][data-art="stone-lantern"] {
+  filter: drop-shadow(0 0 8px #ffd77f90);
+}
+.story-stage-item[data-item="dark"] {
+  filter: brightness(0.65);
+}
+.story-stage-item[data-art="picnic-cloth"] {
+  aspect-ratio: 5;
+  z-index: 1;
+}
+.story-stage[data-night="true"] .story-stage-ground {
+  background-blend-mode: multiply;
+  background-color: #98a1bd;
+}
 .story-stage[data-night="true"] .story-stage-sprite {
   filter: brightness(0.82);
 }
@@ -57,7 +87,8 @@
   background-size: 400% 100%;
 }
 @media (prefers-reduced-motion: reduce) {
-  .story-stage-item {
+  .story-stage-item,
+  .story-stage-extra {
     transition: none;
   }
 }

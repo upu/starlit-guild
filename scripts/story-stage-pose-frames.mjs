@@ -31,7 +31,7 @@ export async function workPoseFrames(id, adventure, home, carry) {
   return frames;
 }
 
-async function registerWorkPose(frame, headWidth) {
+export async function registerWorkPose(frame, headWidth) {
   const crop = await sharp(frame.cell).extract(frame.box).png().toBuffer();
   const head = await headBounds(crop, 0.25);
   const scale = headWidth / head.width;

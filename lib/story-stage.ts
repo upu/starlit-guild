@@ -6,11 +6,15 @@ import { stagePair as pair, type StageActor, type StoryStageCue } from "./story-
 import { eveningStageCue, eveningExitCue } from "./story-stage-evening.ts";
 export type { StoryStageCue } from "./story-stage-cues.ts";
 import { townStageCue, townExitCue } from "./story-stage-town.ts";
+import { laterStageCue, laterExitCue, hasLaterStage } from "./story-stage-later.ts";
 
 export const meetingStoryId = `${TRADE_QUEST}-departure`;
 export function compactStoryDialogue(storyId: string) {
-  return prologueStages.some(
-    ({ quest }) => storyId === `${quest}-departure` || storyId === `${quest}-return`,
+  return (
+    hasLaterStage(storyId) ||
+    prologueStages.some(
+      ({ quest }) => storyId === `${quest}-departure` || storyId === `${quest}-return`,
+    )
   );
 }
 export type StagePosition = { x: number };
@@ -102,7 +106,10 @@ const meetingExit: StoryStageCue = {
 export function storyStageExitCue(storyId: string): StoryStageCue | null {
   return storyId === meetingStoryId
     ? meetingExit
-    : (eveningExitCue(storyId) ?? townExitCue(storyId) ?? chapterExitCue(storyId));
+    : (eveningExitCue(storyId) ??
+        townExitCue(storyId) ??
+        chapterExitCue(storyId) ??
+        laterExitCue(storyId));
 }
 
 export function storyStageCue(storyId: string, line: number): StoryStageCue | null {
@@ -110,7 +117,8 @@ export function storyStageCue(storyId: string, line: number): StoryStageCue | nu
     return (
       eveningStageCue(storyId, line) ??
       townStageCue(storyId, line) ??
-      chapterStageCue(storyId, line)
+      chapterStageCue(storyId, line) ??
+      laterStageCue(storyId, line)
     );
   return meetingCues[line] ?? null;
 }
@@ -149,6 +157,7 @@ function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced:
       atlas: "conversation" as const,
       frame: cycleFrame(6, elapsed, 480, !reduced),
     };
+  if (actor.seated) return { atlas: "home" as const, frame: 10 };
   if (actor.pull)
     return {
       atlas: "adventure" as const,

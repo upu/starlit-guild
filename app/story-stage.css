@@ -117,7 +117,7 @@
   background: var(--stage-background) center / 100% 100%;
   overflow: hidden;
   container-type: size;
-  --stage-cell: 24cqw;
+  --stage-cell: var(--party-cell, 24cqw);
 }
 .story-stage-actor {
   position: absolute;
