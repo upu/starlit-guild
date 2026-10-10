@@ -1,0 +1,312 @@
+.phone-dialog > .story-reader.story-reader-compact {
+  grid-template-rows: minmax(0, 1fr) clamp(190px, 28dvh, 250px);
+  gap: 8px;
+}
+.story-reader-compact > .story-art-space:not(.story-stage-space) {
+  display: flex;
+  align-items: flex-end;
+  container-type: size;
+}
+.story-reader-compact > .story-art-space > .story-still {
+  width: 100%;
+  height: min(100cqh, 66.666667cqw);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.story-stage-dialogue {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 4px;
+  pointer-events: auto;
+}
+.story-stage-dialogue > .story-conversation {
+  flex: 1;
+}
+.story-stage-dialogue .story-tap-hint {
+  min-height: 38px;
+  padding-top: 6px;
+}
+.story-stage-dialogue .story-conversation[role="region"] {
+  padding-bottom: 54px;
+}
+.story-stage-dialogue .story-line > .face-portrait {
+  width: 56px !important;
+  height: 56px !important;
+}
+.story-stage-dialogue .story-line > div {
+  padding: 6px 8px;
+}
+.phone-dialog .story-stage-dialogue .story-line p {
+  line-height: 1.55;
+}
+.phone-dialog .story-stage-dialogue .story-narration {
+  line-height: 1.65;
+}
+.story-history-toggle {
+  position: absolute;
+  left: 64px;
+  bottom: 8px;
+  min-height: 44px;
+  padding: 4px 8px;
+  color: #d8c18c;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #152a25f5;
+}
+.story-history-toggle:focus-visible {
+  outline: 2px solid #b5ccaf;
+}
+.story-history-toggle:disabled {
+  opacity: 0.5;
+}
+@media (max-height: 500px) {
+  .phone-dialog > .story-reader.story-reader-compact {
+    grid-template-rows: minmax(0, 1fr) 140px;
+  }
+  .story-stage-dialogue > .story-conversation {
+    padding: 10px;
+  }
+  .story-stage-dialogue .story-tap-hint {
+    padding-top: 6px;
+  }
+  .story-stage-dialogue .story-line > .face-portrait {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .story-stage-dialogue .story-line > div {
+    padding: 4px 8px;
+  }
+  .phone-dialog .story-stage-dialogue .story-line p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+.story-stage-space {
+  container-type: size;
+  display: flex;
+  align-items: flex-end;
+}
+.story-stage {
+  position: relative;
+  width: 100%;
+  height: min(100cqh, 83.333333cqw);
+  overflow: hidden;
+  border: 1px solid #b3c98a65;
+  border-radius: 12px;
+  background: #31422c;
+  pointer-events: auto;
+}
+.story-stage-vignette {
+  position: absolute;
+  inset: 0;
+  background: var(--stage-background) center / cover;
+  filter: blur(14px) brightness(0.65);
+  transform: scale(1.12);
+}
+.story-stage-ground {
+  position: absolute;
+  /* A shared 3:2 plane keeps trees, luggage and people at the same zoom.
+     Portrait screens can crop the quiet edges instead of shrinking the actors. */
+  width: min(125cqw, 150cqh);
+  height: min(83.333333cqw, 100cqh);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--stage-background) center / 100% 100%;
+  overflow: hidden;
+  container-type: size;
+  --stage-cell: 24cqw;
+}
+.story-stage-actor {
+  position: absolute;
+  bottom: 14%;
+  width: var(--stage-cell);
+  height: var(--stage-cell);
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.story-stage-sprite {
+  position: absolute;
+  inset: 0;
+  background-size: 400% 400%;
+  background-image: var(--home-art);
+  background-position: 0% 66.666667%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  transform-origin: center 94%;
+}
+.story-stage-sprite[data-atlas="adventure"] {
+  width: 150%;
+  height: 150%;
+  left: -25%;
+  top: -43.75%;
+  background-image: var(--adventure-art);
+  background-size: 400% 600%;
+}
+.story-stage-sprite[data-atlas="conversation"] {
+  background-image: var(--conversation-art);
+  background-size: 400% 300%;
+}
+.story-stage-actor[data-departing="true"][data-actor="aria"] {
+  bottom: 9%;
+}
+.story-stage-shadow {
+  position: absolute;
+  width: 42%;
+  height: 9%;
+  left: 29%;
+  bottom: 3%;
+  border-radius: 50%;
+  background: #12231980;
+}
+.story-stage-actor[data-speaking="true"] .story-stage-shadow {
+  background: #ffe89a75;
+  box-shadow: 0 0 12px #ffe9a240;
+}
+.story-stage-name {
+  position: absolute;
+  top: 102%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #f1eddb;
+  font-size: clamp(8px, 3cqw, 13px);
+  line-height: 1.4;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 3px #102528,
+    0 0 5px #102528;
+}
+.story-stage-actor[data-speaking="true"] .story-stage-name {
+  color: #fff0a5;
+}
+.story-stage-reaction {
+  position: absolute;
+  top: -8%;
+  left: 60%;
+  padding: 1px 6px;
+  border: 2px solid #665532;
+  border-radius: 8px 8px 8px 0;
+  color: #584020;
+  background: #fff4c6;
+  font-weight: 900;
+  font-size: clamp(12px, 5cqw, 22px);
+  line-height: 1.2;
+}
+.story-stage-luggage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.story-stage-bundle {
+  visibility: hidden;
+  position: absolute;
+  left: 15%;
+  bottom: 13%;
+  width: 16%;
+  aspect-ratio: 5 / 4;
+  background: url("/story-stage/travel-bundle.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-carried-bundle {
+  visibility: hidden;
+  position: absolute;
+  width: 55%;
+  height: 44%;
+  left: -5%;
+  bottom: 7%;
+  background: url("/story-stage/travel-bundle.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage[data-luggage="ground"] .story-stage-bundle,
+.story-stage[data-luggage="carried"] .story-stage-carried-bundle {
+  visibility: visible;
+}
+.story-stage-cart {
+  position: absolute;
+  left: 64%;
+  bottom: 19%;
+  width: 44%;
+  aspect-ratio: 3 / 2;
+  transform: translateX(-50%);
+  background: var(--cart-art) center / contain no-repeat;
+  image-rendering: pixelated;
+  z-index: 1;
+}
+.story-stage-delivery-box {
+  position: absolute;
+  bottom: 27%;
+  width: 13%;
+  aspect-ratio: 2.1;
+  transform: translateX(-50%);
+  background: url("/story-stage/delivery-box.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+  z-index: 3;
+}
+.story-stage-merchant {
+  position: absolute;
+  left: 52%;
+  bottom: 27%;
+  width: var(--stage-cell);
+  height: var(--stage-cell);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+.story-stage-merchant-sprite {
+  position: absolute;
+  inset: 0;
+  background: url("/story-stage/merchant-poses.webp") 0% 0% / 400% 100% no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-merchant[data-pose="explain"] .story-stage-merchant-sprite {
+  background-position-x: 33.333333%;
+}
+.story-stage-merchant[data-pose="point"] .story-stage-merchant-sprite {
+  background-position-x: 66.666667%;
+}
+.story-stage-merchant[data-pose="wave"] .story-stage-merchant-sprite {
+  background-position-x: 100%;
+}
+.story-stage-merchant-name {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #f1eddb;
+  text-shadow: 0 1px 3px #102528;
+  font-size: clamp(8px, 3cqw, 13px);
+}
+.story-stage-merchant[data-speaking="true"] .story-stage-merchant-name {
+  color: #fff0a5;
+}
+.story-stage-table {
+  position: absolute;
+  left: 46%;
+  bottom: 12%;
+  width: 30%;
+  aspect-ratio: 1.91;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.story-stage-table-art {
+  position: absolute;
+  inset: 0;
+  background: url("/story-stage/packing-table.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-table-stock {
+  position: absolute;
+  left: 20%;
+  right: 13%;
+  bottom: 5%;
+  height: 34%;
+  display: flex;
+  gap: 3%;
+}
+.story-stage-table-stock > span {
+  flex: 1;
+  background: url("/story-stage/delivery-box.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
+}
