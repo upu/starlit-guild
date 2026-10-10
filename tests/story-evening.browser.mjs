@@ -72,6 +72,30 @@ async function layout(page, name, staged) {
   results.push({ name, art, talk });
 }
 
+async function townProps(page, line, departing) {
+  assert.equal(await page.locator(".story-stage-merchant").count(), 1);
+  assert.equal(await page.locator(".story-stage-table").count(), 1);
+  const speaking = (departing ? [1, 4, 9] : [8, 10, 14, 18]).includes(line);
+  assert.equal(
+    await page.locator(".story-stage-merchant").getAttribute("data-speaking"),
+    String(speaking),
+  );
+  assert.equal(await page.locator(".story-stage-table-stock").count(), departing ? 1 : 0);
+  if (!departing) return;
+  const box = await page.locator(".story-stage-delivery-box").boundingBox();
+  const aria = await page.locator('[data-actor="aria"]').boundingBox();
+  assert.ok(Math.abs(box.width / aria.width - 13 / 24) < 0.01, "small box scale stays constant");
+  if ((await page.locator(".story-stage-delivery-box").getAttribute("data-box")) === "table") {
+    const table = await page.locator(".story-stage-table").boundingBox();
+    const base = box.y + box.height;
+    assert.ok(
+      base >= table.y && base < table.y + table.height * 0.4,
+      "box rests on nearby tabletop",
+    );
+    assert.ok(Math.abs(box.x + box.width / 2 - aria.x - aria.width / 2) < aria.width * 0.7);
+  }
+}
+
 try {
   const story = stories.find((s) => s.id === "village-trade-return");
   const { context, page } = await openStory(story);
@@ -116,7 +140,7 @@ try {
     for (const reduced of [false, true]) {
       const { context, page } = await openStory(story, reduced ? "reduce" : "no-preference");
       await page.clock.runFor(200);
-      assert.deepEqual(await positions(page), town ? [34, 60] : [28, 56]);
+      assert.deepEqual(await positions(page), town ? [30, 64] : [28, 56]);
       assert.equal(
         await page.locator(".story-stage").getAttribute("data-setting"),
         town
@@ -150,7 +174,7 @@ try {
           const expectedXY = expected.position.split(" ").map(parseFloat);
           assert.ok(actualXY.every((n, axis) => Math.abs(n - expectedXY[axis]) < 0.001));
         }
-        if (!reduced && [0, 1, 5, 10, story.lines.length - 1].includes(i))
+        if (!reduced && [0, 1, 3, 5, 7, 10, story.lines.length - 1].includes(i))
           await layout(page, `${scene}-${i}`, true);
         if (town && departing) {
           const boxMode =
@@ -160,13 +184,14 @@ try {
             boxMode,
           );
         }
+        if (town) await townProps(page, i, departing);
         if (i + 1 < story.lines.length) await advance(page);
       }
       await page.clock.runFor(4000);
       const before = await positions(page);
       assert.deepEqual(
         before,
-        town ? (departing ? [34, 60] : [45, 65]) : departing ? [42, 81] : [32, 81],
+        town ? (departing ? [36, 56] : [45, 65]) : departing ? [42, 81] : [32, 81],
       );
       await page.getByRole("button", { name: "会話履歴", exact: true }).click();
       assert.equal(await page.locator(".story-lines > *").count(), story.lines.length);
@@ -183,7 +208,7 @@ try {
           town ? "hidden" : "carried",
         );
         if (town && departing) {
-          assert.ok(Math.abs(moving[1] - moving[0] - 26) < 0.001);
+          assert.ok(Math.abs(moving[1] - moving[0] - 20) < 0.001);
           const offset = await page.locator(".story-stage-ground").evaluate((el) => {
             const xs = [...el.querySelectorAll(".story-stage-actor")].map((actor) =>
               parseFloat(actor.style.left),

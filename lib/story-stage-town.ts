@@ -11,13 +11,14 @@ function town(
 ): StoryStageCue {
   return {
     description,
-    actors: stagePair(34, 60, aria, leon),
-    initial: { aria: 34, leon: 60 },
+    actors: stagePair(30, 64, aria, leon),
+    initial: { aria: 30, leon: 64 },
     background: "town-shop",
     hideCart: true,
     luggage: false,
     bundleMode: "hidden",
     box,
+    merchant: { pose: "idle" },
   };
 }
 const departure = [
@@ -31,57 +32,68 @@ const departure = [
   town("アリアが得意げに、一度で運べると請け合う。", { pose: "tease" }, {}, "table"),
   town(
     "アリアが小箱を抱え、台の下の残りの荷へ目を向ける。",
-    { carry: true },
+    { x: 36, carry: true },
     { pose: "think" },
     "aria",
   ),
   town(
     "店の人の説明を聞き、アリアが箱を抱えたまま考え込む。",
-    { carry: true },
+    { x: 36, carry: true },
     { pose: "think" },
     "aria",
   ),
   town(
     "残りの箱に気づいたアリアが驚き、抱えた箱を持ち上げる。",
-    { carry: true, reaction: "surprise" },
+    { x: 36, carry: true, reaction: "surprise" },
     {},
     "high",
   ),
   town(
     "レオンがアリアの足元を示して、積みすぎを気遣う。",
-    { carry: true },
+    { x: 36, carry: true },
     { pose: "offer" },
     "high",
   ),
   town(
     "アリアが箱を台へ戻し、自分の足元を確かめる。",
-    { pose: "think" },
+    { x: 36, place: true, pose: "offer" },
     { pose: "think" },
     "table",
   ),
-  town("アリアが落ち着いて謝り、二回に分ける相談をする。", { pose: "think" }, {}, "table"),
-  town("二人が店の人から荷札の順番を聞く。", { pose: "think" }, { pose: "think" }, "table"),
+  town("アリアが落ち着いて謝り、二回に分ける相談をする。", { x: 36, pose: "think" }, {}, "table"),
+  town("二人が店の人から荷札の順番を聞く。", { x: 36, pose: "think" }, { pose: "think" }, "table"),
   town(
     "アリアがしゃがんで荷札を確かめ、レオンが順番を見る。",
-    { inspect: true },
+    { x: 36, inspect: true },
     { pose: "think" },
     "table",
   ),
-  town("アリアが立ち上がり、先に届ける二軒を示す。", { pose: "offer" }, {}, "table"),
-  town("レオンが受け取りの控えを分けると頷く。", {}, { pose: "offer", reaction: "nod" }, "table"),
+  town("アリアが立ち上がり、先に届ける二軒を示す。", { x: 36, pose: "offer" }, {}, "table"),
+  town(
+    "レオンが受け取りの控えを分けると頷く。",
+    { x: 36 },
+    { pose: "offer", reaction: "nod" },
+    "table",
+  ),
   town(
     "アリアが箱の片側に手を添え、レオンへ声をかける。",
-    { carry: true },
-    { pose: "offer" },
+    { x: 36, carry: true },
+    { x: 56, pose: "offer" },
     "shared",
   ),
   town(
     "レオンも持ち手を握り、二人で箱を水平に持ち上げる。",
-    { carry: true },
-    { carry: true },
+    { x: 36, carry: true },
+    { x: 56, carry: true },
     "shared",
   ),
-];
+].map((cue, line): StoryStageCue => ({
+  ...cue,
+  merchant: {
+    pose: [3, 4, 9, 10].includes(line) ? "point" : line === 1 ? "explain" : "idle",
+    speaking: [1, 4, 9].includes(line),
+  },
+}));
 const returning = [
   town(
     "配達を終え、アリアが手を離す横でレオンが控えを揃える。",
@@ -140,7 +152,14 @@ const returning = [
     { x: 45, left: false },
     { x: 65, left: false },
   ),
-].map((cue): StoryStageCue => ({ ...cue, background: "town-shop-return" }));
+].map((cue, line): StoryStageCue => ({
+  ...cue,
+  background: "town-shop-return",
+  merchant: {
+    pose: line >= 18 ? "wave" : [8, 10, 14].includes(line) ? "explain" : "idle",
+    speaking: [8, 10, 14, 18].includes(line),
+  },
+}));
 
 export function townStageCue(id: string, line: number): StoryStageCue | null {
   return (id === townDepartureId ? departure : id === townReturnId ? returning : [])[line] ?? null;
@@ -148,9 +167,10 @@ export function townStageCue(id: string, line: number): StoryStageCue | null {
 const departureExit = town(
   "二人で箱を支え、歩幅を合わせて配達へ向かう。",
   { x: 110, carry: true },
-  { x: 136, carry: true },
+  { x: 130, carry: true },
   "shared",
 );
+departureExit.merchant = { pose: "wave" };
 const returnExit: StoryStageCue = {
   ...town(
     "アリアとレオンが、次に会う約束をして帰り道へ歩き出す。",
@@ -158,6 +178,7 @@ const returnExit: StoryStageCue = {
     { x: 130, left: false },
   ),
   background: "town-shop-return",
+  merchant: { pose: "wave" },
 };
 export function townExitCue(id: string): StoryStageCue | null {
   return id === townDepartureId ? departureExit : id === townReturnId ? returnExit : null;

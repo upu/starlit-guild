@@ -1,4 +1,5 @@
 import { residentFrame, type ResidentId } from "./home-actor.ts";
+import { boxTransferDuration } from "./story-stage-props.ts";
 import { TRADE_QUEST } from "./prologue.ts";
 import { stagePair as pair, type StageActor, type StoryStageCue } from "./story-stage-cues.ts";
 import {
@@ -133,7 +134,7 @@ const cycleFrame = (first: number, elapsed: number, interval: number, animate: b
   first + (animate ? Math.floor(elapsed / interval) % 2 : 0);
 
 function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  if (actor.carry)
+  if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
     return {
       atlas: "conversation" as const,
       frame: cycleFrame(8, elapsed, 180, moving && !reduced),

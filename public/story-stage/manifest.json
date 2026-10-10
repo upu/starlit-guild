@@ -8,16 +8,20 @@
     "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
   },
   "town-shop": {
-    "source": "e01338dbf7a4c61b125317b4ee665616c5edd0f28bfbb98890d30aa45e78b321",
-    "output": "7bed250f6fc9cd379f737be019da95fc25cf3504b943265309d6ed8ef7938800"
+    "source": "5ee27db12d6565951469f3b21388bb413d5af723c30f2161a7adc156cfc35d52",
+    "output": "f5326ac2d0fae094cfb1a1356a079ea1c7cc1aaa2c550dea2fd220ef84142b3f"
   },
   "town-shop-return": {
-    "source": "1de56421d6472bcb227ed86e10aaae6ccd8940e0c50078fe7f8fe935fe00ada8",
-    "output": "c61ac03e6c90c25de1f698bf79b16968cac7bf5893fed99ebe918e59dce193aa"
+    "source": "5ee27db12d6565951469f3b21388bb413d5af723c30f2161a7adc156cfc35d52",
+    "output": "f5326ac2d0fae094cfb1a1356a079ea1c7cc1aaa2c550dea2fd220ef84142b3f"
   },
   "delivery-box": {
     "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
-    "output": "77ee64ab0afdd4d26e8d443d4b616d814f9bd3056a01b6f9bd036bfaaf167cff"
+    "output": "61f6f92c850b2d12b6fc2c7e2d6e86e7593ff789e9e007a04effd5097904f3aa"
+  },
+  "packing-table": {
+    "source": "cf1143a5e3c02774305e3c5a7d871e21cffe3786f1a461a81021fde642c6daa8",
+    "output": "5296799f7bb7b684c18516304aaf92488a45b7342249f47f752a9be03b60a102"
   },
   "meeting-dusk": {
     "source": "5ed098ad7d122951520eb18a5a65744adb9c7a44bd25fb3525bf868ca728297d",
@@ -34,6 +38,10 @@
   "travel-bundle": {
     "source": "aef518157ab5ea23a3b8e5b739ae5d3a11b961f1b18572bb205b77203faee112",
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
+  },
+  "merchant-poses": {
+    "source": "bc024dbc4a992e7d8cf79f26226690da4c6476efe7987c72f1a98ac0c8dd1d48",
+    "output": "02297f0478f492234f36f772afde3b7d9f699679d8421550d5fd7291722dc933"
   },
   "aria-poses": {
     "source": "2728504933cb73ce2f4089aa3836ffb10ca0ff12758f59a9c413db3f7d17ab48",

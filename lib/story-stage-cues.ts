@@ -8,6 +8,7 @@ export type StageActor = {
   inspect?: boolean;
   pull?: boolean;
   carry?: boolean;
+  place?: boolean;
   visible?: boolean;
   pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
   reaction?: "surprise" | "nod";
@@ -20,6 +21,7 @@ export type StoryStageCue = {
   background?: "meeting-path" | "town-exit" | "meeting-dusk" | "town-shop" | "town-shop-return";
   hideCart?: boolean;
   box?: "table" | "aria" | "high" | "shared";
+  merchant?: { pose: "idle" | "explain" | "point" | "wave"; speaking?: boolean };
   cartArt?: "loaded-cart" | "return-cart";
   initial?: Partial<Record<ResidentId, number>>;
   bundleMode?: "ground" | "carried" | "hidden";

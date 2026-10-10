@@ -15,6 +15,7 @@ import {
 } from "../lib/story-stage.ts";
 import { eveningDepartureId, eveningReturnId } from "../lib/story-stage-evening.ts";
 import { townDepartureId, townReturnId } from "../lib/story-stage-town.ts";
+import { deliveryBoxTarget, transferBox, boxTransferDuration } from "../lib/story-stage-props.ts";
 
 test("the first three stages have staging for every line except the static handover", () => {
   const meeting = stories.find((story) => story.id === meetingStoryId);
@@ -200,7 +201,13 @@ test("stage props retain transparent margins and use the common scene aspect rat
     const background = await sharp(`public/story-stage/${name}.webp`).metadata();
     assert.equal(background.width / background.height, 1.5);
   }
-  for (const name of ["loaded-cart", "return-cart", "travel-bundle", "delivery-box"]) {
+  for (const name of [
+    "loaded-cart",
+    "return-cart",
+    "travel-bundle",
+    "delivery-box",
+    "packing-table",
+  ]) {
     const { data, info } = await sharp(`public/story-stage/${name}.webp`)
       .raw()
       .toBuffer({ resolveWithObject: true });
@@ -260,12 +267,53 @@ test("delivery scenes put the box down and carry it together without flipping th
   const samples = exit.actors.map((actor, i) =>
     sampleStageActor(actor, { x: last.actors[i].x }, 500),
   );
-  assert.equal(samples[1].x - samples[0].x, 26);
+  assert.equal(samples[1].x - samples[0].x, 20);
   assert.equal(samples[1].left, true);
   assert.ok(samples.every((s) => s.atlas === "conversation" && [8, 9].includes(s.frame)));
   for (const line of stories.find((s) => s.id === townReturnId).lines.keys()) {
     assert.equal(storyStageCue(townReturnId, line).background, "town-shop-return");
     assert.equal(storyStageCue(townReturnId, line).box, undefined);
     assert.equal(storyStageCue(townReturnId, line).hideCart, true);
+  }
+});
+
+test("the shopkeeper listens, points out the remaining goods, speaks and sees both visitors off", () => {
+  for (const id of [townDepartureId, townReturnId]) {
+    for (const i of stories.find((s) => s.id === id).lines.keys())
+      assert.ok(storyStageCue(id, i).merchant);
+    assert.equal(storyStageExitCue(id).merchant.pose, "wave");
+  }
+  assert.deepEqual(storyStageCue(townDepartureId, 4).merchant, { pose: "point", speaking: true });
+  assert.deepEqual(storyStageCue(townReturnId, 10).merchant, { pose: "explain", speaking: true });
+  assert.equal(storyStageCue(townDepartureId, 2).merchant.speaking, false);
+  assert.equal(storyStageCue(townReturnId, 2).merchant.speaking, false);
+  assert.deepEqual(storyStageCue(townReturnId, 18).merchant, { pose: "wave", speaking: true });
+});
+
+test("putting the box down is a short continuous hand-to-table transfer, including interruption", () => {
+  const cue = storyStageCue(townDepartureId, 7),
+    aria = cue.actors[0];
+  const from = deliveryBoxTarget("high", aria.x, 64);
+  const to = deliveryBoxTarget("table", aria.x, 64);
+  assert.ok(Math.hypot(to.x - from.x, to.bottom - from.bottom) < 6);
+  assert.deepEqual(transferBox(from, to, 0), from);
+  const mid = transferBox(from, to, boxTransferDuration / 2);
+  assert.ok(mid.x > from.x && mid.x < to.x);
+  assert.deepEqual(transferBox(mid, to, 0), mid, "rapid advance preserves the displayed box");
+  assert.deepEqual(transferBox(from, to, boxTransferDuration), to);
+  assert.deepEqual(transferBox(from, to, 0, true), to);
+  assert.equal(sampleStageActor(aria, { x: aria.x }, 200).frame, 8);
+  assert.equal(sampleStageActor(aria, { x: aria.x }, 1000).frame, 4);
+  assert.equal(sampleStageActor(aria, { x: aria.x }, 0, true).frame, 4);
+});
+
+test("the merchant uses the same standing stature and cell registration as the heroes", async () => {
+  const source = await sharp("public/story-stage/merchant-poses.webp").png().toBuffer();
+  for (let i = 0; i < 4; i++) {
+    const pose = await readFrame(source, { left: i * 128, top: 0, width: 128, height: 128 });
+    assert.ok(pose.box.height >= 94 && pose.box.height <= 98);
+    assert.ok(Math.abs(pose.box.top + pose.box.height - 120) <= 1);
+    const head = await headBounds(await sharp(pose.cell).extract(pose.box).png().toBuffer(), 0.25);
+    assert.ok(Math.abs(head.width - 48) < 6, `merchant/${i}: head width ${head.width}`);
   }
 });

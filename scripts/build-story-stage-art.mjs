@@ -1,7 +1,7 @@
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { readFrame, packFrames } from "./home-pixel-frames.mjs";
+import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
 import { workPoseFrames } from "./story-stage-pose-frames.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -25,18 +25,39 @@ for (const [name, width] of [
   ["town-shop", 960],
   ["town-shop-return", 960],
   ["delivery-box", 256],
+  ["packing-table", 384],
   ["meeting-dusk", 960],
   ["loaded-cart", 420],
   ["return-cart", 420],
   ["travel-bundle", 144],
 ]) {
-  const source = await readFile(new URL(`assets/source/story-stage/${name}-v1.png`, root));
-  const image = await sharp(source)
+  const original = name.startsWith("town-shop") ? "town-shop-clear" : name;
+  const source = await readFile(new URL(`assets/source/story-stage/${original}-v1.png`, root));
+  const trimmed = ["packing-table", "delivery-box"].includes(name)
+    ? await sharp(source)
+        .extract(await spriteBounds(source))
+        .png()
+        .toBuffer()
+    : source;
+  const image = await sharp(trimmed)
     .resize({ width, kernel: "lanczos3" })
     .webp({ lossless: true })
     .toBuffer();
   await emit(name, source, image);
 }
+const merchant = await readFile(new URL("assets/source/story-stage/merchant-poses-v1.png", root));
+const merchantSize = await sharp(merchant).metadata();
+const merchantFrames = [];
+for (let i = 0; i < 4; i++)
+  merchantFrames.push(
+    await readFrame(merchant, {
+      left: (i % 2) * (merchantSize.width / 2),
+      top: Math.floor(i / 2) * (merchantSize.height / 2),
+      width: merchantSize.width / 2,
+      height: merchantSize.height / 2,
+    }),
+  );
+await emit("merchant-poses", merchant, (await packFrames(merchantFrames, 0.25)).image);
 // Register dialogue poses with the same 128px cell, 96px stature and crown/feet
 // contract as walking. Keep the raw 3x2 generated sheet; pack delivery as 4x2.
 for (const id of ["aria", "leon"]) {

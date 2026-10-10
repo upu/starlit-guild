@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
 import {
   sampleStageActor,
   stageLuggage,
@@ -30,6 +31,7 @@ function animateStage(
   stage: HTMLElement,
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
+  boxMotion: BoxMotion,
   onComplete: () => void,
 ) {
   const actors = cue.actors.map((actor) => ({
@@ -39,6 +41,7 @@ function animateStage(
   }));
   const cart = stage.querySelector<HTMLElement>(".story-stage-cart");
   const cartOrigin = positions.get("cart")?.x ?? 64;
+  const paintBox = boxPainter(stage, cue, boxMotion);
   const endAt = Math.max(
     3000,
     ...actors.map(({ actor, origin }) => Math.abs(actor.x - origin.x) * 34),
@@ -53,18 +56,9 @@ function animateStage(
       if (element) paintActor(element, sample);
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
-    paintBox(stage, cue, positions);
+    paintBox(positions, elapsed, reduced);
   };
   return animateFrames(paint, endAt, onComplete);
-}
-
-function paintBox(stage: HTMLElement, cue: StoryStageCue, positions: Map<string, StagePosition>) {
-  const box = stage.querySelector<HTMLElement>(".story-stage-delivery-box");
-  if (!box || !cue.box) return;
-  const aria = positions.get("aria")?.x ?? 34,
-    leon = positions.get("leon")?.x ?? 60;
-  const x = cue.box === "table" ? 40 : cue.box === "shared" ? (aria + leon) / 2 : aria + 14;
-  box.style.left = `${String(x)}%`;
 }
 
 function animateFrames(
@@ -112,13 +106,14 @@ function animateFrames(
 export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void) {
   const stage = useRef<HTMLDivElement>(null);
   const positions = useRef(new Map<string, StagePosition>());
+  const boxMotion = useRef<BoxMotion>({});
   const completion = useRef(onComplete);
   useEffect(() => {
     completion.current = onComplete;
   }, [onComplete]);
   useEffect(() => {
     if (stage.current)
-      return animateStage(stage.current, cue, positions.current, () => {
+      return animateStage(stage.current, cue, positions.current, boxMotion.current, () => {
         completion.current?.();
       });
   }, [cue]);

@@ -2,6 +2,7 @@
 import { residentNames } from "@/lib/home-actor";
 import { stageEntrance, type StoryStageCue } from "@/lib/story-stage";
 import { useStoryStageMotion } from "./story-stage-motion";
+import { StoryStageProps } from "./story-stage-props";
 import type { CSSProperties } from "react";
 
 function stageStyle(cue: StoryStageCue): CSSProperties {
@@ -33,8 +34,7 @@ export function StoryStage({
       >
         <div className="story-stage-vignette" aria-hidden="true" />
         <div className="story-stage-ground" aria-hidden="true">
-          <span className="story-stage-cart" hidden={cue.hideCart} />
-          <span className="story-stage-delivery-box" data-box={cue.box} hidden={!cue.box} />
+          <StoryStageProps cue={cue} />
           {cue.actors.map((actor) => (
             <div
               key={actor.id}

@@ -236,18 +236,77 @@
 }
 .story-stage-delivery-box {
   position: absolute;
-  bottom: 12%;
-  width: 32%;
-  aspect-ratio: 3 / 2;
+  bottom: 27%;
+  width: 13%;
+  aspect-ratio: 2.1;
   transform: translateX(-50%);
   background: url("/story-stage/delivery-box.webp") center / contain no-repeat;
   image-rendering: pixelated;
   z-index: 3;
 }
-.story-stage-delivery-box[data-box="table"] {
-  bottom: 63%;
-  width: 16%;
+.story-stage-merchant {
+  position: absolute;
+  left: 52%;
+  bottom: 27%;
+  width: var(--stage-cell);
+  height: var(--stage-cell);
+  transform: translateX(-50%);
+  z-index: 0;
 }
-.story-stage-delivery-box[data-box="high"] {
-  bottom: 16%;
+.story-stage-merchant-sprite {
+  position: absolute;
+  inset: 0;
+  background: url("/story-stage/merchant-poses.webp") 0% 0% / 400% 100% no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-merchant[data-pose="explain"] .story-stage-merchant-sprite {
+  background-position-x: 33.333333%;
+}
+.story-stage-merchant[data-pose="point"] .story-stage-merchant-sprite {
+  background-position-x: 66.666667%;
+}
+.story-stage-merchant[data-pose="wave"] .story-stage-merchant-sprite {
+  background-position-x: 100%;
+}
+.story-stage-merchant-name {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #f1eddb;
+  text-shadow: 0 1px 3px #102528;
+  font-size: clamp(8px, 3cqw, 13px);
+}
+.story-stage-merchant[data-speaking="true"] .story-stage-merchant-name {
+  color: #fff0a5;
+}
+.story-stage-table {
+  position: absolute;
+  left: 46%;
+  bottom: 12%;
+  width: 30%;
+  aspect-ratio: 1.91;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.story-stage-table-art {
+  position: absolute;
+  inset: 0;
+  background: url("/story-stage/packing-table.webp") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-table-stock {
+  position: absolute;
+  left: 20%;
+  right: 13%;
+  bottom: 5%;
+  height: 34%;
+  display: flex;
+  gap: 3%;
+}
+.story-stage-table-stock > span {
+  flex: 1;
+  background: url("/story-stage/delivery-box.webp") center bottom / contain no-repeat;
+  image-rendering: pixelated;
 }
