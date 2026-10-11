@@ -1,5 +1,7 @@
-import { residentFrame, type ResidentId } from "./home-actor.ts";
-import { boxTransferDuration } from "./story-stage-props.ts";
+import { type ResidentId } from "./home-actor.ts";
+import { actorPose } from "./story-stage-pose.ts";
+import { sampleJourney, type StagePosition } from "./story-stage-travel.ts";
+export type { StagePosition } from "./story-stage-travel.ts";
 import { TRADE_QUEST, prologueStages } from "./prologue.ts";
 import { chapterStageCue, chapterExitCue } from "./story-stage-chapter.ts";
 import { stagePair as pair, type StageActor, type StoryStageCue } from "./story-stage-cues.ts";
@@ -17,7 +19,7 @@ export function compactStoryDialogue(storyId: string) {
     )
   );
 }
-export type StagePosition = { x: number };
+
 export type StageSample = StagePosition & {
   frame: number;
   left: boolean;
@@ -31,12 +33,12 @@ export type StageSample = StagePosition & {
 const meetingCues: StoryStageCue[] = [
   {
     description: "先に着いたレオンが、交易品と予備の荷物を積んだ荷車を点検している。",
-    actors: pair(-10, 56, { visible: false }, { inspect: true, left: false }),
+    actors: pair(-10, 56, { visible: false }, { inspect: true, packing: true, left: false }),
     luggage: false,
   },
   {
     description: "荷車を点検するレオンのところへ、アリアが歩いてくる。",
-    actors: pair(28, 56, {}, { inspect: true, left: false }),
+    actors: pair(28, 56, {}, { inspect: true, packing: true, left: false }),
     luggage: true,
   },
   {
@@ -76,7 +78,7 @@ const meetingCues: StoryStageCue[] = [
   },
   {
     description: "荷をまとめ直し、二人は出発の支度を終える。",
-    actors: pair(40, 56, {}, { inspect: true, left: false }),
+    actors: pair(40, 56, {}, { inspect: true, packing: true, left: false }),
     luggage: true,
   },
   {
@@ -133,43 +135,6 @@ export function stageTravel(from: number, to: number, elapsed: number, reduced =
   return { x: from + (to - from) * progress, moving: progress < 1 && Math.abs(to - from) > 0.1 };
 }
 
-const cycleFrame = (first: number, elapsed: number, interval: number, animate: boolean) =>
-  first + (animate ? Math.floor(elapsed / interval) % 2 : 0);
-
-function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  return {
-    atlas: "shawl" as const,
-    frame: moving ? cycleFrame(2, elapsed, 180, !reduced) : actor.carry ? 1 : 0,
-  };
-}
-
-function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  if (actor.shawl) return shawlPose(actor, moving, elapsed, reduced);
-  if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
-    return {
-      atlas: "conversation" as const,
-      frame: cycleFrame(8, elapsed, 180, moving && !reduced),
-    };
-  if (moving && !actor.pull)
-    return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
-  if (actor.inspect)
-    return {
-      atlas: "conversation" as const,
-      frame: cycleFrame(6, elapsed, 480, !reduced),
-    };
-  if (actor.seated) return { atlas: "home" as const, frame: 10 };
-  if (actor.pull)
-    return {
-      atlas: "adventure" as const,
-      frame: cycleFrame(20, elapsed, 180, moving),
-    };
-  const frames = { idle: 0, greet: 1, surprise: 2, think: 3, offer: 4, tease: 5 };
-  return {
-    atlas: "conversation" as const,
-    frame: frames[actor.wave ? "greet" : (actor.pose ?? "idle")],
-  };
-}
-
 export function stageLuggage(cue: StoryStageCue, aria?: StageSample) {
   if (!aria?.visible) return "hidden";
   if (cue.bundleMode) return cue.bundleMode;
@@ -184,13 +149,15 @@ export function sampleStageActor(
   elapsed: number,
   reduced = false,
 ): StageSample {
-  const { x, moving } = stageTravel(origin.x, actor.x, elapsed, reduced);
+  const travel = sampleJourney(actor, origin, elapsed, reduced);
+  const { x, moving } = travel;
   const reaction = reduced ? 1 : Math.min(1, Math.max(0, elapsed) / 520);
   return {
     x,
+    bottom: travel.bottom,
     ...actorPose(actor, moving, elapsed, reduced),
     visible: actor.visible !== false,
-    left: actor.carry ? actor.left : moving ? actor.x < origin.x : actor.left,
+    left: actor.carry && actor.lane === undefined ? actor.left : travel.left,
     lift: reactionLift(actor.reaction, reaction),
     bubble: actor.reaction === "surprise" && (reduced || elapsed < 1600) ? "！" : "",
   };

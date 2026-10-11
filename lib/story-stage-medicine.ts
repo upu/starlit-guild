@@ -68,7 +68,7 @@ export const medicineStages: Record<string, LaterStage> = {
   ),
   "moonlit-herbs-return": scene("medicine-room", trio(), [
     { at: 0, items: [table(61), onTable("herbs", 61), ground("medicine", 77)] },
-    { at: 3, actors: { mira: { seated: true } } },
+    { at: 3, actors: { mira: { seated: true, pose: "think" } } },
     { at: 4, actors: { aria: { x: 35, pose: "think" } } },
     { at: 5, actors: { leon: { x: 56 }, mira: { pose: "think" } } },
   ]),
@@ -98,18 +98,22 @@ export const medicineStages: Record<string, LaterStage> = {
   "medicine-packing-return": scene("medicine-room", trio(), [
     {
       at: 0,
-      actors: { aria: { carry: true }, leon: { inspect: true }, mira: { visible: false } },
+      actors: {
+        aria: { carry: true },
+        leon: { inspect: true, packing: true },
+        mira: { visible: false },
+      },
       items: [
-        held("medicine", "aria", { width: 14 }),
+        held("delivery-bag", "aria", { width: 10, bottom: 17 }),
         ground("cloth", 52),
         ground("honey", 62, 13, 6),
       ],
     },
     {
       at: 4,
-      actors: { leon: { inspect: false, place: true } },
+      actors: { leon: { inspect: false, place: true }, aria: { carry: false, shoulder: true } },
       items: [
-        held("medicine", "aria"),
+        held("delivery-bag", "aria", { width: 10, x: -3.8, bottom: 19 }),
         table(58),
         onTable("cloth", 58),
         ground("honey", 69, 13, 6),
@@ -128,7 +132,7 @@ export const medicineStages: Record<string, LaterStage> = {
       at: 6,
       night: false,
       actors: {
-        aria: { visible: true, carry: false },
+        aria: { visible: true, carry: false, shoulder: false },
         leon: { visible: true, place: false },
         mira: { seated: false, x: 68, inspect: true },
       },

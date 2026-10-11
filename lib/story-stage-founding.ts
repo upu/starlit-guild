@@ -62,7 +62,17 @@ export const foundingStages: Record<string, LaterStage> = {
     { at: 56, actors: { aria: { pose: "greet", reaction: "nod" } } },
     { at: 59, extras: [npc("merchant", "町の受付", 73, "explain", true)] },
     { at: 60, items: [table(), onTable("ledger")] },
-    { at: 64, actors: { leon: { seated: false, inspect: true, x: 40 }, aria: { x: 25 } } },
-    { at: 65, actors: { leon: { inspect: false, pose: "offer" } } },
+    {
+      at: 64,
+      actors: {
+        leon: { seated: false, writing: true, x: 41, bottom: 18, left: false },
+        aria: { x: 25 },
+        mira: { x: 59 },
+        finn: { x: 71 },
+        lico: { x: 83 },
+      },
+      items: [table(50), ground("ledger", 47, 32, 8)],
+    },
+    { at: 65, actors: { leon: { writing: false, pose: "offer" } } },
   ]),
 };

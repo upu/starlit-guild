@@ -17,7 +17,7 @@ function evening(background: StoryStageCue["background"], cues: StoryStageCue[])
 const departure = evening("town-exit", [
   {
     description: "夕方の街の出口で、アリアが帰りの包みを結び直し、レオンが控えを確認する。",
-    actors: pair(28, 56, { inspect: true }, { pose: "think" }),
+    actors: pair(28, 56, { inspect: true, packing: true }, { pose: "think" }),
     luggage: true,
   },
   {
@@ -47,7 +47,7 @@ const departure = evening("town-exit", [
   },
   {
     description: "レオンが袋の持ち手を点検し、荷を持ったアリアが道へ進み出る。",
-    actors: pair(42, 56, {}, { inspect: true, left: false }),
+    actors: pair(42, 56, {}, { inspect: true, packing: true, left: false }),
     luggage: false,
     bundleMode: "carried",
   },
@@ -108,7 +108,12 @@ const returning = evening("meeting-dusk", [
   },
   {
     description: "二人がそれぞれ荷の紐と袋の口を直す。",
-    actors: pair(40, 56, { inspect: true }, { inspect: true, left: false }),
+    actors: pair(
+      40,
+      56,
+      { inspect: true, packing: true },
+      { inspect: true, packing: true, left: false },
+    ),
     luggage: true,
   },
   {

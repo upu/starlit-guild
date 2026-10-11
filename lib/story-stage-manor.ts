@@ -17,7 +17,7 @@ export const manorStages: Record<string, LaterStage> = {
     {
       at: 5,
       actors: { finn: { pose: "tease" } },
-      items: [table(52), onTable("cloth", 52, 15), held("key", "finn", { width: 3 })],
+      items: [table(52), onTable("cloth", 52, 15)],
     },
     { at: 8, extras: [npc("cook", "料理人", 77, "point", true)] },
     { at: 9, actors: { mira: { pose: "think" } } },
@@ -63,15 +63,42 @@ export const manorStages: Record<string, LaterStage> = {
   ]),
   "manor-survey-return": scene("manor-garden", quartet(), [
     { at: 0, items: [table(52), onTable("cloth", 52, 15)], extras: [npc("worker", "庭師", 75)] },
-    { at: 2, actors: { finn: { pose: "tease" } } },
+    {
+      at: 2,
+      actors: { finn: { pose: "tease" } },
+      items: [table(52), onTable("cloth", 52, 15), held("key", "finn", { width: 3 })],
+    },
+    {
+      at: 4,
+      items: [
+        table(52),
+        onTable("cloth", 52, 15),
+        { ...held("key", "finn", { width: 3 }), tilt: 35 },
+      ],
+      sequence: [
+        {
+          after: 350,
+          items: [table(52), onTable("cloth", 52, 15), held("key", "finn", { width: 3 })],
+        },
+      ],
+    },
     { at: 3, actors: { leon: { pose: "think" } } },
     {
       at: 10,
-      actors: { finn: { x: 77 }, aria: { x: 27, pose: "offer" } },
-      items: [table(52), onTable("cloth", 52, 15)],
+      actors: { finn: { x: 75, bottom: 28, pose: "offer" }, aria: { x: 27, pose: "offer" } },
+      sequence: [
+        {
+          after: 1000,
+          items: [
+            table(52),
+            onTable("cloth", 52, 15),
+            { ...ground("key", -3, 44, 3), extra: "worker" },
+          ],
+        },
+      ],
     },
     { at: 13, actors: { mira: { x: 67, inspect: true } } },
-    { at: 14, actors: { finn: { x: 82, pose: "offer" } } },
+    { at: 14, actors: { finn: { x: 82, bottom: 14, pose: "offer" } } },
   ]),
   "garden-reception-departure": scene(
     "manor-garden",

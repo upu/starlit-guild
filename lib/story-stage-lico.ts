@@ -29,19 +29,20 @@ export const licoStages: Record<string, LaterStage> = {
       {
         at: 2,
         actors: {
-          lico: { visible: true, x: 82, pose: "surprise" },
+          lico: { visible: true, x: 82, pose: "surprise", name: "小柄な女性" },
           aria: { reaction: "surprise" },
         },
       },
       { at: 5, actors: { leon: { x: 46 } } },
       { at: 7, items: [plants(), held("ledger", "lico")] },
+      { at: 9, actors: { lico: { name: "リコ" } } },
       {
         at: 15,
-        actors: { lico: { x: 34, pose: "offer" }, aria: { pose: "surprise" } },
+        actors: { lico: { x: 34, lane: 0, pose: "offer" }, aria: { pose: "surprise" } },
         items: [plants(), held("ledger", "lico")],
       },
       { at: 17, actors: { aria: { reaction: "surprise" } } },
-      { at: 22, actors: { lico: { x: 79 }, mira: { pose: "think" } } },
+      { at: 22, actors: { lico: { x: 79, lane: 0 }, mira: { pose: "think" } } },
       { at: 32, items: [plants(), held("ledger", "lico"), ground("bread", 74, 13, 8)] },
       { at: 37, actors: { lico: { pose: "think" } } },
       {
@@ -51,7 +52,11 @@ export const licoStages: Record<string, LaterStage> = {
       },
       {
         at: 45,
-        actors: { lico: { inspect: false, seated: true }, mira: { x: 65, pose: "offer" } },
+        actors: {
+          lico: { inspect: false, seated: true, pose: "think" },
+          mira: { x: 65, pose: "offer" },
+        },
+        items: [plants(), ground("ledger", 84, 14, 7), ground("bread", 69, 13, 8)],
       },
       { at: 49, actors: { mira: { seated: true } } },
       {
@@ -100,7 +105,7 @@ export const licoStages: Record<string, LaterStage> = {
         at: 32,
         background: "moss-beds",
         cast: quintet().map((a) => ({ ...a, seated: a.id === "lico" })),
-        items: [plants(), ground("ledger", 73, 21, 11), ground("dish", 85, 16, 9)],
+        items: [plants(), ground("ledger", 77, 13, 8), ground("dish", 85, 13, 6)],
         extras: [keeper()],
       },
       { at: 37, actors: { lico: { pose: "think" } } },
@@ -109,9 +114,9 @@ export const licoStages: Record<string, LaterStage> = {
         actors: { aria: { x: 27, carry: true }, lico: { seated: false } },
         items: [
           plants(),
-          ground("ledger", 73, 21, 11),
+          ground("ledger", 77, 13, 8),
           held("basket", "aria"),
-          ground("dish", 85, 16, 9),
+          ground("dish", 85, 13, 6),
         ],
       },
       {
@@ -143,9 +148,9 @@ export const licoStages: Record<string, LaterStage> = {
       actors: { lico: { seated: true } },
       items: [
         plants(),
-        ground("ledger", 76, 22, 13),
+        ground("ledger", 78, 13, 9),
         ground("basket", 28),
-        ground("dish", 83, 16, 9),
+        ground("dish", 86, 13, 6),
       ],
     },
     { at: 12, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
@@ -154,7 +159,7 @@ export const licoStages: Record<string, LaterStage> = {
     {
       at: 27,
       actors: { aria: { carry: true } },
-      items: [plants(), held("seedlings", "aria"), ground("ledger", 76, 22, 13)],
+      items: [plants(), held("seedlings", "aria"), ground("ledger", 78, 13, 9)],
     },
     { at: 30, actors: { lico: { seated: true, pose: "think" } } },
   ]),

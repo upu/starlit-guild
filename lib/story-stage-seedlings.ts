@@ -1,3 +1,4 @@
+import { transplantDeparture } from "./story-stage-transplant.ts";
 import {
   scene,
   quintet,
@@ -39,66 +40,17 @@ export const seedlingStages: Record<string, LaterStage> = {
     { at: 30, extras: [visitor("explain", 73, "メリル")] },
     {
       at: 34,
-      items: [seedlings(), ground("pot", 76, 37, 9)],
-      extras: [visitor("point", 73, "メリル")],
+      items: [seedlings(), { ...ground("pot", 4, 44, 9), extra: "merrill" }],
+      extras: [{ ...visitor("idle", 73, "メリル"), carry: true }],
     },
     { at: 37, actors: { aria: { reaction: "surprise" } } },
     {
       at: 40,
-      extras: [visitor("wave", 112, "メリル")],
-      items: [seedlings(), ground("pot", 112, 37, 9)],
+      extras: [{ ...visitor("idle", 112, "メリル"), carry: true }],
+      items: [seedlings(), { ...ground("pot", 4, 44, 9), extra: "merrill" }],
     },
   ]),
-  "moss-transplant-departure": scene("moss-beds", quintet(), [
-    {
-      at: 0,
-      items: [seedlings(), held("ledger", "lico"), ground("tools", 39)],
-      extras: [npc("keeper", undefined, 27)],
-    },
-    { at: 5, extras: [npc("keeper", undefined, 27, "explain", true)] },
-    { at: 9, actors: { leon: { pose: "think" } } },
-    {
-      at: 13,
-      actors: { mira: { x: 110 } },
-      items: [seedlings(), ground("tools", 39), held("medicine", "mira")],
-    },
-    {
-      at: 16,
-      night: true,
-      actors: { mira: { x: 51 }, lico: { carry: true }, leon: { carry: true } },
-      items: [
-        held("seedlings", "lico"),
-        held("tools", "leon"),
-        ground("seedling-cart", 50, 32, 25),
-      ],
-      extras: [],
-    },
-    { at: 20, actors: { lico: { x: 78 }, mira: { x: 58 } } },
-    {
-      at: 25,
-      actors: { leon: { carry: false } },
-      items: [held("seedlings", "lico"), ground("tools", 36), ground("seedling-cart", 50, 32, 25)],
-    },
-    {
-      at: 31,
-      actors: { aria: { carry: true, x: 24 }, lico: { carry: false }, mira: { inspect: true } },
-      items: [held("seedlings", "aria"), ground("tools", 36), ground("seedling-cart", 50, 32, 25)],
-    },
-    {
-      at: 32,
-      actors: { aria: { carry: false } },
-      items: [
-        ground("seedlings", 26, 16, 15),
-        ground("tools", 36),
-        ground("seedling-cart", 50, 32, 25),
-      ],
-    },
-    {
-      at: 35,
-      actors: { lico: { carry: true }, mira: { inspect: false } },
-      items: [held("seedlings", "lico"), ground("tools", 36), ground("seedling-cart", 50, 32, 25)],
-    },
-  ]),
+  "moss-transplant-departure": transplantDeparture,
   "moss-transplant-return": scene("new-moss-beds", quintet(), [
     {
       at: 0,

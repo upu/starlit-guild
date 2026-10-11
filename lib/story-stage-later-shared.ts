@@ -12,6 +12,7 @@ export type LaterBeat = {
   extras?: StageExtra[];
   background?: StoryStageCue["background"];
   night?: boolean;
+  sequence?: { after: number; actors?: LaterBeat["actors"]; items?: StageItem[] }[];
 };
 export type LaterStage = {
   background: StoryStageCue["background"];
@@ -76,8 +77,11 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
     const beat = definition.beats.find((b) => b.at === index);
     actors = (beat?.cast ?? actors).map((a) => ({
       ...a,
+      lane: undefined,
       reaction: undefined,
-      ...(line.speaker === a.id ? { pose: speakingPose(line) } : {}),
+      ...(line.speaker === a.id
+        ? { pose: speakingPose(line), inspect: false, packing: false, writing: false }
+        : {}),
       ...beat?.actors?.[a.id],
     }));
     items = beat?.items ?? items;
@@ -87,21 +91,35 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
     }));
     background = beat?.background ?? background;
     night = beat?.night ?? night;
+    const openingActors = actors,
+      openingItems = items;
+    const sequence = beat?.sequence?.map((step) => {
+      actors = actors.map((a) => ({ ...a, ...step.actors?.[a.id] }));
+      items = step.items ?? items;
+      return { after: step.after, actors, items };
+    });
     return {
       description: `${story.place}。${line.text}`,
-      actors,
-      items: items.filter(
-        (item) => !item.actor || actors.some((a) => a.id === item.actor && a.visible !== false),
+      actors: openingActors,
+      items: openingItems.filter(
+        (item) =>
+          !item.actor || openingActors.some((a) => a.id === item.actor && a.visible !== false),
       ),
       extras,
       background,
       night,
       initial,
-      cell:
-        definition.cell ?? (definition.cast.length > 4 ? 19 : definition.cast.length > 2 ? 21 : 24),
+      cell: stageCell(definition),
       luggage: false,
       hideCart: true,
       bundleMode: "hidden",
+      sequence,
     };
   });
+}
+
+function stageCell(definition: LaterStage) {
+  return (
+    definition.cell ?? (definition.cast.length > 4 ? 19 : definition.cast.length > 2 ? 21 : 24)
+  );
 }

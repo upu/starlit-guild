@@ -14,6 +14,14 @@ const names = {
 };
 const frames = { idle: 0, explain: 1, point: 2, wave: 3 };
 export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
+  const items = [
+    ...new Map(
+      [...(cue.items ?? []), ...(cue.sequence?.flatMap((s) => s.items) ?? [])].map((item) => [
+        item.id,
+        item,
+      ]),
+    ).values(),
+  ];
   return (
     <>
       {cue.extras?.map((extra) => (
@@ -36,10 +44,11 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
           <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
         </div>
       ))}
-      {cue.items?.map((item) => (
+      {items.map((item) => (
         <span
           key={item.id}
           className="story-stage-item"
+          hidden={!cue.items?.some((shown) => shown.id === item.id)}
           data-item={item.id}
           data-glow={item.glow}
           data-art={item.art}

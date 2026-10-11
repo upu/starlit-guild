@@ -26,6 +26,8 @@ async function openMeeting(page) {
   if (await page.locator(".quest-option").count())
     await page.locator(".quest-option").filter({ hasText: "街への交易" }).click();
   await page.clock.install();
+  // Screenshots must not consume the short pause between arriving and closing.
+  await page.clock.pauseAt(new Date(Date.now() + 10000));
   await page.getByRole("button", { name: "出発", exact: true }).click();
   await page.locator(".stage-title-card").click();
   await page.locator(".story-stage").waitFor();

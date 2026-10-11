@@ -10,7 +10,7 @@ import { storyStageCue, storyStageExitCue } from "../lib/story-stage.ts";
 import { chapterTwoStories } from "../lib/chapter-two-stories.ts";
 import { chapterThreeStories } from "../lib/chapter-three-stories.ts";
 import { chapterFourStories } from "../lib/chapter-four-stories.ts";
-import { stageItemOffset } from "../lib/story-stage-props.ts";
+import { stageItemTarget } from "../lib/story-stage-props.ts";
 const chapters = [chapterTwoStories, chapterThreeStories, chapterFourStories];
 const allStories = chapters.flat();
 const root = process.env.TEST_ROOT || "http://localhost:5173";
@@ -67,7 +67,17 @@ const stagePositions = (page) =>
     actors: Object.fromEntries(
       [...stage.querySelectorAll(".story-stage-actor")].map((el) => [
         el.dataset.actor,
-        parseFloat(el.style.left),
+        {
+          x: parseFloat(el.style.left),
+          bottom: parseFloat(el.style.bottom),
+          left: el.querySelector(".story-stage-sprite").style.transform.includes("scaleX(-1)"),
+        },
+      ]),
+    ),
+    extras: Object.fromEntries(
+      [...stage.querySelectorAll(".story-stage-extra")].map((el) => [
+        `extra:${el.dataset.npc}`,
+        { x: parseFloat(el.style.left), bottom: parseFloat(el.style.bottom) },
       ]),
     ),
     items: Object.fromEntries(
@@ -102,7 +112,8 @@ try {
     for (const reduced of process.env.MOTION === "both" ? [false, true] : [true]) {
       const { context, page } = await openStory(story, reduced ? "reduce" : "no-preference");
       for (let i = 0; i < story.lines.length; i++) {
-        await page.clock.runFor(reduced ? 32 : 1000);
+        const authored = storyStageCue(story.id, i);
+        await page.clock.runFor(reduced ? 32 : (authored?.sequence?.at(-1)?.after ?? 0) + 4000);
         const cue = storyStageCue(story.id, i),
           art = storyArtAt(story.id, i);
         assert.equal(await page.locator(".story-stage").count(), cue ? 1 : 0, `${story.id}/${i}`);
@@ -126,20 +137,21 @@ try {
             );
         }
         if (cue) {
+          const rendered = { ...cue, ...cue.sequence?.at(-1) };
           assert.equal(await page.locator(".story-stage-extra").count(), cue.extras.length);
-          assert.equal(await page.locator(".story-stage-item").count(), cue.items.length);
+          assert.equal(
+            await page.locator(".story-stage-item:not([hidden])").count(),
+            rendered.items.length,
+          );
           // One DOM snapshot: separate reads can straddle an animation frame during a walk.
-          const { actors, items } = await stagePositions(page);
-          for (const item of cue.items) {
+          const { actors, items, extras } = await stagePositions(page);
+          for (const item of rendered.items) {
             const x = items[item.id];
             assert.ok(
               Math.abs(
                 x -
-                  stageItemOffset(
-                    item,
-                    cue.actors.find((a) => a.id === item.actor),
-                  ) -
-                  (item.actor ? actors[item.actor] : 0),
+                  stageItemTarget(item, rendered, new Map(Object.entries({ ...actors, ...extras })))
+                    .x,
               ) < 0.2,
               `${story.id}/${i}/${item.id}: item follows hand`,
             );

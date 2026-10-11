@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
 import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
+import { extraPainter } from "./story-stage-extra-motion";
+import { journeyDuration } from "@/lib/story-stage-travel";
 import {
   sampleStageActor,
   stageLuggage,
@@ -13,11 +15,14 @@ import {
 
 function paintActor(element: HTMLElement, sample: StageSample) {
   element.style.left = `${String(sample.x)}%`;
+  element.style.bottom = `${String(sample.bottom ?? 14)}%`;
+  element.style.zIndex = String(Math.round(100 - (sample.bottom ?? 14)));
   element.style.visibility = sample.visible ? "visible" : "hidden";
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) {
     sprite.dataset.atlas = sample.atlas;
-    const rows = { adventure: 6, conversation: 3, home: 4, shawl: 1 }[sample.atlas];
+    sprite.dataset.frame = String(sample.frame);
+    const rows = { adventure: 6, conversation: 6, home: 4, shawl: 1 }[sample.atlas];
     sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
     sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left ? "-1" : "1"})`;
   }
@@ -28,13 +33,12 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   }
 }
 
-function animateStage(
+function stagePainter(
   stage: HTMLElement,
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
   boxMotion: BoxMotion,
   itemMotion: ItemMotion,
-  onComplete: () => void,
 ) {
   const actors = cue.actors.map((actor) => ({
     actor,
@@ -45,10 +49,7 @@ function animateStage(
   const cartOrigin = positions.get("cart")?.x ?? 64;
   const paintBox = boxPainter(stage, cue, boxMotion);
   const paintItems = itemPainter(stage, cue, itemMotion);
-  const endAt = Math.max(
-    3000,
-    ...actors.map(({ actor, origin }) => Math.abs(actor.x - origin.x) * 34),
-  );
+  const paintExtras = extraPainter(stage, cue, positions);
   const paint = (elapsed: number, reduced: boolean) => {
     const travel = stageTravel(cartOrigin, cue.cartX ?? 64, elapsed, reduced);
     positions.set("cart", travel);
@@ -60,9 +61,52 @@ function animateStage(
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
     paintBox(positions, elapsed, reduced);
+    paintExtras(elapsed, reduced);
     paintItems(positions, elapsed, reduced);
   };
-  return animateFrames(paint, endAt, onComplete);
+  return paint;
+}
+
+function animateStage(
+  stage: HTMLElement,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+  boxMotion: BoxMotion,
+  itemMotion: ItemMotion,
+  onComplete: () => void,
+) {
+  const moments = [
+    { after: 0, actors: cue.actors, items: cue.items ?? [] },
+    ...(cue.sequence ?? []),
+  ];
+  const last = moments[moments.length - 1];
+  const previousActors = moments.at(-2)?.actors ?? cue.actors;
+  const endAt = Math.max(
+    3000,
+    ...cue.actors.map((a) => journeyDuration(a, positions.get(a.id) ?? stageEntrance(a.id, cue))),
+    last.after +
+      Math.max(
+        3000,
+        ...last.actors.map((a) =>
+          journeyDuration(a, previousActors.find((p) => p.id === a.id) ?? a),
+        ),
+      ),
+  );
+  let phase = -1,
+    paint: ReturnType<typeof stagePainter>;
+  return animateFrames(
+    (elapsed, reduced) => {
+      const index = moments.findLastIndex((m) => m.after <= elapsed);
+      const moment = moments[index];
+      if (index !== phase) {
+        phase = index;
+        paint = stagePainter(stage, { ...cue, ...moment }, positions, boxMotion, itemMotion);
+      }
+      paint(elapsed - moment.after, reduced);
+    },
+    endAt,
+    onComplete,
+  );
 }
 
 function animateFrames(

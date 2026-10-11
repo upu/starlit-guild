@@ -1,4 +1,5 @@
 import type { StoryStageCue, StageActor, StageItem } from "./story-stage-cues.ts";
+import type { StagePosition } from "./story-stage-travel.ts";
 
 export type BoxPosition = { x: number; bottom: number };
 export const boxTransferDuration = 650;
@@ -7,6 +8,23 @@ export function stageItemOffset(item: StageItem, actor?: StageActor) {
   if (!actor) return item.x;
   const reversed = actor.left !== (actor.id === "leon");
   return reversed ? -item.x : item.x;
+}
+
+export function stageItemTarget(
+  item: StageItem,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+) {
+  const actor = cue.actors.find((a) => a.id === item.actor);
+  const owner = positions.get(item.actor ?? `extra:${item.extra ?? ""}`);
+  const offset = actor
+    ? stageItemOffset(item, { ...actor, left: owner?.left ?? actor.left })
+    : item.x;
+  const baseline = item.actor ? 14 : (cue.extras?.find((e) => e.id === item.extra)?.bottom ?? 23);
+  return {
+    x: offset + (owner?.x ?? 0),
+    bottom: item.bottom + (owner ? (owner.bottom ?? baseline) - baseline : 0),
+  };
 }
 
 export function deliveryBoxTarget(

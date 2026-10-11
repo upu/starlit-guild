@@ -65,7 +65,7 @@ export function StoryStage({
               />
               {actor.id === "aria" && <span className="story-stage-carried-bundle" />}
               <span className="story-stage-reaction" hidden />
-              <span className="story-stage-name">{residentNames[actor.id]}</span>
+              <span className="story-stage-name">{actor.name ?? residentNames[actor.id]}</span>
             </div>
           ))}
           <div className="story-stage-luggage" aria-hidden="true">

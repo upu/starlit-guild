@@ -4,7 +4,6 @@
   height: var(--stage-cell);
   transform: translateX(-50%);
   z-index: 1;
-  transition: left 900ms ease;
 }
 .story-stage-extra-sprite {
   position: absolute;
@@ -29,7 +28,7 @@
   transform: translateX(-50%);
   background: var(--item-art) center / contain no-repeat;
   image-rendering: pixelated;
-  z-index: 3;
+  z-index: 90;
   transition: filter 700ms;
 }
 .story-stage-item[data-art="lantern"] {
