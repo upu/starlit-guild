@@ -117,7 +117,7 @@ try {
     ["trail-departure", 30, "departure"],
     ["cargo-departure", 0, "departure"],
     ["four-finn", 24, "worksite"],
-    ["five-cargo", 34, "worksite"],
+    ["five-cargo", 35, "worksite"],
     ["puppets", 15, "boss"],
     ["command", 15, "command"],
     ["command-arrival", 15, "command-arrival"],

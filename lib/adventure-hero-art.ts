@@ -1,6 +1,6 @@
 import { residentArt, residentIds, type ResidentId } from "./home-actor.ts";
 
-// Copy home pixels intact; wider cells leave room for bows and swords.
+// Copy home walking pixels intact; wider cells leave room for bows and swords.
 export const adventureHeroArt = { cell: 192, foot: 176, height: residentArt.height, frames: 24 };
 export const adventureHeroAsset = (id: ResidentId) => `/adventure-pixel/${id}.webp`;
 export const adventureHeroIds = residentIds;

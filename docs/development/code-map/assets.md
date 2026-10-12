@@ -11,4 +11,4 @@
 
 会話の舞台は `assets/source/story-stage/` → [配信生成](../../../scripts/build-story-stage-art.mjs) → `public/story-stage/`。[素材と演出](../../art/story-stage.md) に原本・プロンプト・共通縮尺を記録する。第二章〜第四章の素材は `scripts/build-story-stage-later.mjs` が切り出し・共通縮尺への登録を担当する。`story-stage-art:check` で鮮度を確認する。
 
-冒険の5人はホームの歩行・待機と `assets/source/adventure-pixel/` の専用動作 → [配信生成](../../../scripts/build-adventure-pixel.mjs) → `public/adventure-pixel/`。[冒険のミニキャラ](../../art/adventure-pixel.md)を参照。`adventure-art:check` で鮮度を検査する。
+冒険の5人はホームの歩行と `assets/source/adventure-pixel/` の専用動作 → [配信生成](../../../scripts/build-adventure-pixel.mjs) → `public/adventure-pixel/`。待機・押し引きの切り出しは `scripts/adventure-travel-frames.mjs`、会話と共通の頭幅・接地合わせは `scripts/hero-pose-registration.mjs`。[冒険のミニキャラ](../../art/adventure-pixel.md)を参照。`adventure-art:check` で鮮度を検査する。
