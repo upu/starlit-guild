@@ -41,7 +41,7 @@ for (const [name, width] of [
   ["return-cart", 420],
   ["travel-bundle", 144],
 ]) {
-  const original = name.startsWith("town-shop") ? "town-warehouse" : name;
+  const original = name.startsWith("town-shop") ? "town-warehouse-close" : name;
   const source = await readFile(new URL(`assets/source/story-stage/${original}-v1.png`, root));
   const trimmed = ["packing-table", "delivery-box"].includes(name)
     ? await sharp(source)

@@ -67,15 +67,13 @@ test("existing chapter stills replace staging at their original reveal lines", (
   }
 });
 
-test("tower moss stays rooted in the same stone crevice before discovery and after sampling", () => {
+test("tower moss belongs to its wall background before discovery and after sampling", () => {
   const id = "tower-road-return";
-  const colony = cue(id, 0).items.find((p) => p.id === "colony");
-  assert.equal(colony.art, "moss-crevice");
-  assert.equal(colony.glow, undefined, "no sudden halo when noticed");
   for (let line = 0; line < 20; line++) {
-    assert.deepEqual(
-      cue(id, line).items.find((p) => p.id === "colony"),
-      colony,
+    assert.equal(cue(id, line).background, "tower-base-moss");
+    assert.ok(
+      cue(id, line).items.every((p) => p.id === "sample"),
+      "no detached moss rocks",
     );
     assert.equal(
       cue(id, line).items.some((p) => p.id === "sample"),

@@ -1,8 +1,5 @@
 import { keeper, moss, lamp, item, type ChapterStage } from "./story-stage-chapter-shared.ts";
 
-// Rooted scenery is present before anyone notices it and remains after sampling.
-const towerCrevice = item("colony", "moss-crevice", 48, 13, { width: 16 });
-
 export const towerStages: Record<string, ChapterStage> = {
   "tower-road-departure": {
     background: "hill-path",
@@ -34,14 +31,13 @@ export const towerStages: Record<string, ChapterStage> = {
     ],
   },
   "tower-road-return": {
-    background: "tower-foot",
+    background: "tower-base-moss",
     beats: [
       {
         at: 0,
-        aria: { wave: true },
+        aria: { wave: true, bottom: 20 },
         leon: { wave: true },
         extras: [keeper()],
-        items: [towerCrevice],
       },
       { at: 1, aria: { wave: false }, leon: { wave: false } },
       { at: 2, extras: [keeper("explain", true)] },
@@ -50,7 +46,7 @@ export const towerStages: Record<string, ChapterStage> = {
       { at: 7, extras: [keeper("explain", true)] },
       {
         at: 8,
-        aria: { x: 38, inspect: true },
+        aria: { x: 42, inspect: true },
       },
       { at: 9, aria: { inspect: false, reaction: "surprise" } },
       { at: 11, aria: { reaction: undefined, left: false, pose: "think" } },
@@ -61,7 +57,7 @@ export const towerStages: Record<string, ChapterStage> = {
       {
         at: 19,
         leon: { carry: true },
-        items: [towerCrevice, { ...moss("leon", "dim"), x: -4, width: 6 }],
+        items: [{ ...moss("leon", "dim"), x: -4, width: 6 }],
       },
     ],
   },

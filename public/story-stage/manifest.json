@@ -8,12 +8,12 @@
     "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
   },
   "town-shop": {
-    "source": "a8c460a48d15c11e0f04224bcfb87899d65770ff09af041f5af95acf8786954b",
-    "output": "adbc0e22f05541f626ceca24f98d14011eacc4e9c555010d18e389c3464eb8e8"
+    "source": "2c1a8c423cc99e94f3cd1e404e12e60e60fb4676205d1e13380ac7dab45b9828",
+    "output": "caba9c44f572690c08de37519a4822ccbabc6cfaae66174be4fcef8684bb1f8d"
   },
   "town-shop-return": {
-    "source": "a8c460a48d15c11e0f04224bcfb87899d65770ff09af041f5af95acf8786954b",
-    "output": "adbc0e22f05541f626ceca24f98d14011eacc4e9c555010d18e389c3464eb8e8"
+    "source": "2c1a8c423cc99e94f3cd1e404e12e60e60fb4676205d1e13380ac7dab45b9828",
+    "output": "caba9c44f572690c08de37519a4822ccbabc6cfaae66174be4fcef8684bb1f8d"
   },
   "delivery-box": {
     "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
@@ -51,10 +51,6 @@
     "source": "e4ce717729d5ef45067ca0ef908c1bde5619268adc2d5588c78054768f51d2f3",
     "output": "1ba861b3106a1361a7ad78258e82c632bcfdaecb53aa2160b5976f38dc40128d"
   },
-  "prop-moss-crevice": {
-    "source": "3f9db31f5aa45124e157ea54985e2f683b5a87e5013ec9250fb875a54a6d217b",
-    "output": "319ad2123c658acb721e4c379b04240e9e94368e364ae745cc18ab187719cf2e"
-  },
   "hill-path": {
     "source": "d934decb535a5c32fcfafa2bb0b51d2be96a202fadc83b7bdcccaaa978fdb6d6",
     "output": "a03130f75ca7fef31e65c23577d766b2b2c100974038f9c4103d683ee7bd46f5"
@@ -70,6 +66,10 @@
   "tower-foot": {
     "source": "ed68f68d70fd82cdf1fdd975c3665b5731c11ddb9dcfd2dbf5da411a2f86bfe6",
     "output": "ca75ee57b62ae850810e30f7d8f0611cf2c99f80f02eed4b1e423302639c3648"
+  },
+  "tower-base-moss": {
+    "source": "75aa233dc28aabb91fa9ea92818fe801eb844f3dedafc8c8fe6b2165b1dba1df",
+    "output": "41cb1c98c349e211ee98efa6403f7c46f78f9081510114e7593ced94b0c05cae"
   },
   "forest-floor": {
     "source": "29913386e109bb1e3974b9cc3e5c8d3f3e5aa7ba91fe534efec5b35a333ea669",
