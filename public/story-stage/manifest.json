@@ -8,12 +8,12 @@
     "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
   },
   "town-shop": {
-    "source": "5ee27db12d6565951469f3b21388bb413d5af723c30f2161a7adc156cfc35d52",
-    "output": "f5326ac2d0fae094cfb1a1356a079ea1c7cc1aaa2c550dea2fd220ef84142b3f"
+    "source": "a8c460a48d15c11e0f04224bcfb87899d65770ff09af041f5af95acf8786954b",
+    "output": "adbc0e22f05541f626ceca24f98d14011eacc4e9c555010d18e389c3464eb8e8"
   },
   "town-shop-return": {
-    "source": "5ee27db12d6565951469f3b21388bb413d5af723c30f2161a7adc156cfc35d52",
-    "output": "f5326ac2d0fae094cfb1a1356a079ea1c7cc1aaa2c550dea2fd220ef84142b3f"
+    "source": "a8c460a48d15c11e0f04224bcfb87899d65770ff09af041f5af95acf8786954b",
+    "output": "adbc0e22f05541f626ceca24f98d14011eacc4e9c555010d18e389c3464eb8e8"
   },
   "delivery-box": {
     "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
@@ -50,6 +50,10 @@
   "leon-poses": {
     "source": "e4ce717729d5ef45067ca0ef908c1bde5619268adc2d5588c78054768f51d2f3",
     "output": "1ba861b3106a1361a7ad78258e82c632bcfdaecb53aa2160b5976f38dc40128d"
+  },
+  "prop-moss-crevice": {
+    "source": "3f9db31f5aa45124e157ea54985e2f683b5a87e5013ec9250fb875a54a6d217b",
+    "output": "319ad2123c658acb721e4c379b04240e9e94368e364ae745cc18ab187719cf2e"
   },
   "hill-path": {
     "source": "d934decb535a5c32fcfafa2bb0b51d2be96a202fadc83b7bdcccaaa978fdb6d6",

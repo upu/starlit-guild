@@ -4,6 +4,16 @@ import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
 
 export async function chapterAssets(root, emit) {
   const source = (name) => readFile(new URL(`assets/source/story-stage/${name}-v1.png`, root));
+  const crevice = await source("moss-crevice");
+  await emit(
+    "prop-moss-crevice",
+    crevice,
+    await sharp(crevice)
+      .extract(await spriteBounds(crevice))
+      .resize({ width: 256 })
+      .webp({ lossless: true })
+      .toBuffer(),
+  );
   for (const name of [
     "hill-path",
     "hill-night",

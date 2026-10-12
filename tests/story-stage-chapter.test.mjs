@@ -67,6 +67,25 @@ test("existing chapter stills replace staging at their original reveal lines", (
   }
 });
 
+test("tower moss stays rooted in the same stone crevice before discovery and after sampling", () => {
+  const id = "tower-road-return";
+  const colony = cue(id, 0).items.find((p) => p.id === "colony");
+  assert.equal(colony.art, "moss-crevice");
+  assert.equal(colony.glow, undefined, "no sudden halo when noticed");
+  for (let line = 0; line < 20; line++) {
+    assert.deepEqual(
+      cue(id, line).items.find((p) => p.id === "colony"),
+      colony,
+    );
+    assert.equal(
+      cue(id, line).items.some((p) => p.id === "sample"),
+      line === 19,
+    );
+  }
+  assert.ok(cue(id, 8).actors[0].inspect);
+  assert.ok(cue(id, 8).actors[0].x > cue(id, 7).actors[0].x);
+});
+
 test("night scenes carry the moss, add a shawl, then hand it back before parting", () => {
   const road = "moss-night-road-departure",
     meeting = "moss-night-road-return";

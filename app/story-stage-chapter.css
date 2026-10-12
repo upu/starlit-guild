@@ -47,6 +47,10 @@
   aspect-ratio: 2.6;
   z-index: 1;
 }
+.story-stage-item[data-art="moss-crevice"] {
+  aspect-ratio: 2;
+  z-index: 1;
+}
 .story-stage-item[data-art="map"] {
   aspect-ratio: 2;
 }

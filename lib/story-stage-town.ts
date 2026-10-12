@@ -23,7 +23,7 @@ function town(
 }
 const departure = [
   town(
-    "後日の取引先で、二人が台に置かれた配達用の箱を見る。",
+    "後日の取引先の倉庫前で、二人が台に置かれた配達用の箱を見る。",
     { pose: "think" },
     { pose: "think" },
     "table",

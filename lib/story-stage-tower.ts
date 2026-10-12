@@ -1,5 +1,8 @@
 import { keeper, moss, lamp, item, type ChapterStage } from "./story-stage-chapter-shared.ts";
 
+// Rooted scenery is present before anyone notices it and remains after sampling.
+const towerCrevice = item("colony", "moss-crevice", 48, 13, { width: 16 });
+
 export const towerStages: Record<string, ChapterStage> = {
   "tower-road-departure": {
     background: "hill-path",
@@ -33,16 +36,21 @@ export const towerStages: Record<string, ChapterStage> = {
   "tower-road-return": {
     background: "tower-foot",
     beats: [
-      { at: 0, aria: { wave: true }, leon: { wave: true }, extras: [keeper()] },
+      {
+        at: 0,
+        aria: { wave: true },
+        leon: { wave: true },
+        extras: [keeper()],
+        items: [towerCrevice],
+      },
       { at: 1, aria: { wave: false }, leon: { wave: false } },
       { at: 2, extras: [keeper("explain", true)] },
       { at: 4, extras: [keeper("point", true)] },
-      { at: 5, aria: { x: 40 }, leon: { x: 59 } },
+      { at: 5, aria: { x: 35 }, leon: { x: 59 } },
       { at: 7, extras: [keeper("explain", true)] },
       {
         at: 8,
-        aria: { inspect: true },
-        items: [item("colony", "colony", 47, 13, { width: 9, glow: "bright" })],
+        aria: { x: 38, inspect: true },
       },
       { at: 9, aria: { inspect: false, reaction: "surprise" } },
       { at: 11, aria: { reaction: undefined, left: false, pose: "think" } },
@@ -50,7 +58,11 @@ export const towerStages: Record<string, ChapterStage> = {
       { at: 14, aria: { pose: "offer" } },
       { at: 17, extras: [keeper("point", true)] },
       { at: 18, aria: { inspect: true } },
-      { at: 19, leon: { carry: true }, items: [moss("leon", "bright")] },
+      {
+        at: 19,
+        leon: { carry: true },
+        items: [towerCrevice, { ...moss("leon", "dim"), x: -4, width: 6 }],
+      },
     ],
   },
   "moss-night-road-departure": {

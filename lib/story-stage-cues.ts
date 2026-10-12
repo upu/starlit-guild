@@ -104,6 +104,7 @@ export type StageItem = {
     | "map"
     | "cloth"
     | "colony"
+    | "moss-crevice"
     | "dish"
     | "stone"
     | "spatula"
