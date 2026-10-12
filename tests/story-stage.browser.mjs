@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
+import { RPG_CAMERA_SCALE } from "../lib/rpg-camera.ts";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 const root = process.env.TEST_ROOT || "http://localhost:5173";
 const output = "work/story-stage-browser";
@@ -69,8 +70,8 @@ async function layout(page, name) {
   const actor = await page.locator('[data-actor="leon"]').boundingBox();
   const cart = await page.locator(".story-stage-cart").boundingBox();
   assert.ok(Math.abs(plane.width / plane.height - 1.5) < 0.01);
-  assert.ok(Math.abs(actor.width / plane.width - 0.24) < 0.01);
-  assert.ok(Math.abs(cart.width / plane.width - 0.44) < 0.01);
+  assert.ok(Math.abs(actor.width / plane.width - 0.24 * RPG_CAMERA_SCALE) < 0.01);
+  assert.ok(Math.abs(cart.width / plane.width - 0.44 * RPG_CAMERA_SCALE) < 0.01);
   assert.equal(
     await page.locator(".story-line .face-portrait").count(),
     await page.locator(".story-line").count(),
@@ -89,7 +90,7 @@ try {
   await openMeeting(page);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
-    [-10, 56],
+    [-50, 56],
   );
   assert.equal((await positions(page))[0].visible, "hidden");
   assert.equal((await positions(page))[1].atlas, "conversation");
@@ -107,7 +108,7 @@ try {
     "luggage follows behind Aria instead of appearing ahead of her",
   );
   await page.screenshot({ path: `${output}/390-arrival.png` });
-  await page.clock.runFor(1500);
+  await page.clock.runFor(2200);
   assert.equal((await positions(page))[0].x, 28);
   assert.equal(await page.locator(".story-stage").getAttribute("data-luggage"), "ground");
   await advance(page);
@@ -164,15 +165,14 @@ try {
   await layout(page, "390-departure");
   // Repeated input cannot bypass the walk or dispatch departure twice.
   await page.locator(".story-conversation").press(" ");
-  await page.clock.runFor(2200);
-  assert.deepEqual(
-    (await positions(page)).map((actor) => actor.x),
-    [107, 156],
-  );
-  assert.equal(
-    await page.locator(".story-stage-cart").evaluate((el) => parseFloat(el.style.left)),
-    139,
-  );
+  await page.clock.runFor(3200);
+  const departed = await page.locator(".story-stage").evaluate((stage) => {
+    const edge = stage.getBoundingClientRect().right;
+    return [...stage.querySelectorAll(".story-stage-actor, .story-stage-cart")].every(
+      (el) => el.getBoundingClientRect().left >= edge,
+    );
+  });
+  assert.ok(departed, "people and cart leave the wider frame before the scene closes");
   assert.ok((await positions(page)).every((actor) => actor.transform.endsWith("scaleX(1)")));
   assert.equal(await page.locator(".story-stage").count(), 1);
   await page.clock.runFor(500);
@@ -183,7 +183,7 @@ try {
   await page.clock.runFor(1500);
   assert.deepEqual(
     (await positions(page)).map((actor) => actor.x),
-    [-10, 56],
+    [-50, 56],
   );
   await context.close();
 

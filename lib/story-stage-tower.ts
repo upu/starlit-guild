@@ -46,7 +46,7 @@ export const towerStages: Record<string, ChapterStage> = {
       { at: 7, extras: [keeper("explain", true)] },
       {
         at: 8,
-        aria: { x: 42, inspect: true },
+        aria: { x: 42, bottom: 36, inspect: true },
       },
       { at: 9, aria: { inspect: false, reaction: "surprise" } },
       { at: 11, aria: { reaction: undefined, left: false, pose: "think" } },

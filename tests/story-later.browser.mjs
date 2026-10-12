@@ -11,6 +11,7 @@ import { chapterTwoStories } from "../lib/chapter-two-stories.ts";
 import { chapterThreeStories } from "../lib/chapter-three-stories.ts";
 import { chapterFourStories } from "../lib/chapter-four-stories.ts";
 import { stageItemTarget } from "../lib/story-stage-props.ts";
+import { stageCameraCue } from "../lib/story-stage-camera.ts";
 const chapters = [chapterTwoStories, chapterThreeStories, chapterFourStories];
 const allStories = chapters.flat();
 const root = process.env.TEST_ROOT || "http://localhost:5173";
@@ -137,7 +138,8 @@ try {
             );
         }
         if (cue) {
-          const rendered = { ...cue, ...cue.sequence?.at(-1) };
+          const camera = stageCameraCue(cue);
+          const rendered = { ...camera, ...camera.sequence?.at(-1) };
           assert.equal(await page.locator(".story-stage-extra").count(), cue.extras.length);
           assert.equal(
             await page.locator(".story-stage-item:not([hidden])").count(),

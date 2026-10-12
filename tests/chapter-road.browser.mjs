@@ -134,6 +134,13 @@ try {
       }),
       page = await context.newPage(),
       save = fixture(index, mode);
+    if (name === "touch") {
+      // Check one pointer action across resizes without auto-attacks or a defeated
+      // enemy resetting the node's hit counter during a slow high-DPR capture.
+      const run = save.profiles[0].state.squads[0].run;
+      for (const enemy of run.enemies) enemy.hp = enemy.maxHp = 100000;
+      run.target = run.targetMax = 100000;
+    }
     if (name === "four-finn") save.profiles[0].state.squads[0].run.health.leon.hp = 0;
     page.on("pageerror", (e) => errors.push(e.message));
     const roadAssets = new Set();
@@ -150,7 +157,8 @@ try {
     await page.clock.install({ time: new Date(save.profiles[0].state.updatedAt) });
     if (
       ["worksite", "arrival", "withdraw", "enter", "escape", "rear", "bottles"].includes(mode) ||
-      mode.startsWith("command")
+      mode.startsWith("command") ||
+      name === "touch"
     )
       await page.clock.setFixedTime(new Date(save.profiles[0].state.updatedAt));
     await page.addInitScript((save) => {

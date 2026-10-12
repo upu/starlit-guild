@@ -7,6 +7,7 @@ import { workPoseFrames } from "./story-stage-pose-frames.mjs";
 import { chapterAssets } from "./build-story-stage-chapter.mjs";
 import { laterAssets } from "./build-story-stage-later.mjs";
 import { reviewHero, reviewProps } from "./story-stage-review-art.mjs";
+import { rpgBackground } from "./rpg-backgrounds.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -14,6 +15,14 @@ const check = process.argv.includes("--check");
 const manifest = {};
 await mkdir(output, { recursive: true });
 async function emit(name, source, image) {
+  const background = await rpgBackground(root, "story", name);
+  if (background) {
+    source = background.raw;
+    image = await sharp(background.image)
+      .resize({ width: 960 })
+      .webp({ lossless: true })
+      .toBuffer();
+  }
   const reviewed = await reviewHero(root, name, source, image);
   source = reviewed.raw;
   image = reviewed.image;

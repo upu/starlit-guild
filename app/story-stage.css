@@ -91,7 +91,7 @@
 .story-stage {
   position: relative;
   width: 100%;
-  height: min(100cqh, 83.333333cqw);
+  height: min(100cqh, 66.666667cqw);
   overflow: hidden;
   border: 1px solid #b3c98a65;
   border-radius: 12px;
@@ -107,10 +107,9 @@
 }
 .story-stage-ground {
   position: absolute;
-  /* A shared 3:2 plane keeps trees, luggage and people at the same zoom.
-     Portrait screens can crop the quiet edges instead of shrinking the actors. */
-  width: min(125cqw, 150cqh);
-  height: min(83.333333cqw, 100cqh);
+  /* Keep the complete elevated 3:2 composition visible on narrow screens too. */
+  width: min(100cqw, 150cqh);
+  height: min(66.666667cqw, 100cqh);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -118,6 +117,12 @@
   overflow: hidden;
   container-type: size;
   --stage-cell: var(--party-cell, 24cqw);
+}
+.story-stage-world {
+  position: absolute;
+  inset: 0;
+  transform: translateY(-12%) scale(var(--stage-camera-scale));
+  transform-origin: 50% 75%;
 }
 .story-stage-actor {
   position: absolute;
@@ -171,7 +176,7 @@
   left: 50%;
   transform: translateX(-50%);
   color: #f1eddb;
-  font-size: clamp(8px, 3cqw, 13px);
+  font-size: clamp(11px, 4.166667cqw, 18px);
   line-height: 1.4;
   white-space: nowrap;
   text-shadow:
@@ -276,7 +281,7 @@
   white-space: nowrap;
   color: #f1eddb;
   text-shadow: 0 1px 3px #102528;
-  font-size: clamp(8px, 3cqw, 13px);
+  font-size: clamp(11px, 4.166667cqw, 18px);
 }
 .story-stage-merchant[data-speaking="true"] .story-stage-merchant-name {
   color: #fff0a5;

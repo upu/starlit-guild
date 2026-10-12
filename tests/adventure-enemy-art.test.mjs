@@ -48,9 +48,8 @@ const source = ts
   .transpileModule(await readFile("app/phaser/road-enemy-appearance.ts", "utf8"), {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
   })
-  .outputText.replace(
-    '"@/lib/adventure-enemy-art"',
-    JSON.stringify(new URL("../lib/adventure-enemy-art.ts", import.meta.url).href),
+  .outputText.replace(/"@\/lib\/([^"\n]+)"/g, (_, name) =>
+    JSON.stringify(new URL(`../lib/${name}.ts`, import.meta.url).href),
   );
 const { enemyAppearance, fitEnemy } = await import(
   `data:text/javascript;base64,${Buffer.from(source).toString("base64")}`

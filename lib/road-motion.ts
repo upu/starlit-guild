@@ -1,5 +1,5 @@
 import type { RoadLook } from "./chapter-road-presentation.ts";
-import { roadX } from "./road-layout.ts";
+import { roadScale, roadX } from "./road-layout.ts";
 import type { RoadBattle, RoadEnemy, Traveller } from "./road-view.ts";
 
 type Position = { x: number; lane: number };
@@ -111,7 +111,7 @@ export class RoadMotion {
     };
     this.positions.set(hero.id, position);
     const moving = Math.abs(x - position.x) > 2 || Math.abs(target.lane - position.lane) > 0.012;
-    const scale = Math.min(1.1, width / (battle.stage === "puppets" ? 800 : 560));
+    const scale = roadScale(width, battle.stage);
     const origin = roadX(0, battle.distance, width, battle.stage);
     return {
       ...hero,

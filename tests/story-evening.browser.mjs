@@ -226,7 +226,7 @@ try {
         }
         await layout(page, `${scene}-exit`, true);
         await page.locator(".story-conversation").press("Enter");
-        await page.clock.runFor(2800);
+        await page.clock.runFor(4500);
       }
       assert.equal(await page.locator(".story-reader").count(), 0);
       await context.close();

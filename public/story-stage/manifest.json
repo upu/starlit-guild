@@ -1,19 +1,19 @@
 {
   "meeting-path": {
-    "source": "d06dae5e1c0b705b3855bbc5696b7d1af54425ce04ed1e3edefaa48152386812",
-    "output": "5ca0e3ac041d0448933105b6ba82a6f509885ab62e50c501524bf2480c090981"
+    "source": "f9024296db5eb4797fc7cf27ec899ff102639df9641589fd988f9e67d05f4cd2",
+    "output": "900c8c88cfc1570cfb1b958ca181f41a41c1d547b2f02ccd4ac8d7c3fcb6ff1d"
   },
   "town-exit": {
-    "source": "38b245d6d96ffad2a97e2a9578611245d0818c18183e1629eab39230e3628383",
-    "output": "76c8f7884d50790b1a457b068631582baa0b863c28629de4638ff6602a948582"
+    "source": "972e55dc1cfb44043248477c6512aa1cbb8641677299fea56c65b51c2b3f9d25",
+    "output": "20bdc51e63eaa7cc6a6ff5f5b118ad925fad720eb1768bd060a0d12d9d3a2650"
   },
   "town-shop": {
-    "source": "2c1a8c423cc99e94f3cd1e404e12e60e60fb4676205d1e13380ac7dab45b9828",
-    "output": "caba9c44f572690c08de37519a4822ccbabc6cfaae66174be4fcef8684bb1f8d"
+    "source": "388e4b545aa5a278a482dfeadbb229226e887aa44516338daaa3705acaad0e4b",
+    "output": "63fad964eb042ad0ff1b11dc6c9346fe8098abcb4efb677ee9228e56328c0b82"
   },
   "town-shop-return": {
-    "source": "2c1a8c423cc99e94f3cd1e404e12e60e60fb4676205d1e13380ac7dab45b9828",
-    "output": "caba9c44f572690c08de37519a4822ccbabc6cfaae66174be4fcef8684bb1f8d"
+    "source": "388e4b545aa5a278a482dfeadbb229226e887aa44516338daaa3705acaad0e4b",
+    "output": "63fad964eb042ad0ff1b11dc6c9346fe8098abcb4efb677ee9228e56328c0b82"
   },
   "delivery-box": {
     "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
@@ -24,8 +24,8 @@
     "output": "5296799f7bb7b684c18516304aaf92488a45b7342249f47f752a9be03b60a102"
   },
   "meeting-dusk": {
-    "source": "5ed098ad7d122951520eb18a5a65744adb9c7a44bd25fb3525bf868ca728297d",
-    "output": "0ed484bf09d2d61004cdb5676d14716b6c08a4f59476a5de7760fa64840dfc4e"
+    "source": "a0b93e4674f86c504b1780a7294db2eb7aa67c93510f3c1454cd66a8ec0987b1",
+    "output": "2bc6f92a4d2f62c18238c061ff57fd190e63d5fba7d976ab28900451cdf0b229"
   },
   "loaded-cart": {
     "source": "747050ce845895cac82be01dd30d6953e997d669079b00d827c513afe23a5967",
@@ -52,36 +52,36 @@
     "output": "1ba861b3106a1361a7ad78258e82c632bcfdaecb53aa2160b5976f38dc40128d"
   },
   "hill-path": {
-    "source": "d934decb535a5c32fcfafa2bb0b51d2be96a202fadc83b7bdcccaaa978fdb6d6",
-    "output": "a03130f75ca7fef31e65c23577d766b2b2c100974038f9c4103d683ee7bd46f5"
+    "source": "62ed3c7909853eb30098a649bef9f27a6142bcc564f454389612720f535ec291",
+    "output": "c43e04500557b1482f7b400a7a34525ddf56232cc4fb52b8e8bec84b8ff59dc7"
   },
   "hill-night": {
-    "source": "9441b6ab74a5a01ffc9486cb8e4ee35e6622b431f741c5aa8768134b3a0a8a5c",
-    "output": "6d2a0b55d3569f422b5724bf9c253881695557fca412baf78ac45119fc3086ec"
+    "source": "43242cf8ceb7fc9872f7606b56fe5529086bf26addd6fe964aeab7f3b9e5fa6d",
+    "output": "9f693926db757636d4d0db1220315e0df5b477ae70078fe88b071ee0e0aba044"
   },
   "meeting-night": {
-    "source": "bd332538e67706e70fd2de504583990bce96950bb0c844865b066d9234f39a98",
-    "output": "eb81e601b21e9f12b04d5cac875de4f25be7d1535165344e92c144ba5c10b9b1"
+    "source": "eefe33b8c54334bd6c7a9f656cd06874d15c33f04b79680b22505ccf4056528a",
+    "output": "eae337eabf65b9071b94b15af1095c64c2915f4942ba1eeefdf040c177129e68"
   },
   "tower-foot": {
-    "source": "ed68f68d70fd82cdf1fdd975c3665b5731c11ddb9dcfd2dbf5da411a2f86bfe6",
-    "output": "ca75ee57b62ae850810e30f7d8f0611cf2c99f80f02eed4b1e423302639c3648"
+    "source": "e0105652556a4763264cd054a7e656b8fd72734da28b0d5a432c2611766cd1cc",
+    "output": "66f02daae553e9afd585159035b9b011f99c6779ccff6d01233069d05f410f25"
   },
   "tower-base-moss": {
-    "source": "75aa233dc28aabb91fa9ea92818fe801eb844f3dedafc8c8fe6b2165b1dba1df",
-    "output": "41cb1c98c349e211ee98efa6403f7c46f78f9081510114e7593ced94b0c05cae"
+    "source": "bed61289523b73bdaa05e5011e4b4c49d317ef663f1c2a639d45af0787183936",
+    "output": "ca00673c04d8245b49c76b3e1947b31458afc8091b33ded60a48d666c6df7797"
   },
   "forest-floor": {
-    "source": "29913386e109bb1e3974b9cc3e5c8d3f3e5aa7ba91fe534efec5b35a333ea669",
-    "output": "f663ad7d2c6743db9757fa136f791e59b52a0f08f903bce69605690755364703"
+    "source": "310d48af639e06630bbc58e5e6a2a480ce446594466c998066ea65e40057b32f",
+    "output": "0df512fbb43ec43b1eb0d3bc4fe86beac75c978e91f4bcf6b224174375fb2b75"
   },
   "drain-blocked": {
-    "source": "bcb4c4d81d106ee892630c68c7afbd94316a1ef0d48ce9b88d2356d10f899dbe",
-    "output": "33c2eb773c75a7089d6827fe3b76858bcd2c0d29b165067a0fd9f5d5cd5295e5"
+    "source": "b1069875b82807b9e9846c60a08f5781038baa4946b019725057840a22126aea",
+    "output": "1c6e041be809898a48adef7f5c023b3e511f4757b4e8f7f625b8d862f6678996"
   },
   "drain-cleared": {
-    "source": "d2d324f73be213cd3ed0835a6f61f494c7250c4c69a9e57941b185f86901e103",
-    "output": "ea1477840f7f5ae1968d7f61404e0564d656cec026d462331a5273be00e0291d"
+    "source": "4bc9e4ba0282afcf2b6017e5841d85179e90867cc656c8fcd37c1a746e8370c1",
+    "output": "287fd974df3f1c8c97963bda56f3d6b6169157f30d53bf80d5053097d86f51bb"
   },
   "prop-moss": {
     "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
@@ -136,68 +136,68 @@
     "output": "3c31797227e7940bcb4a98ae29dfa8ed5b28906329b0234ca6eb82dfb927cde0"
   },
   "medicine-room": {
-    "source": "7fc2ccf97a3386df55b7221dc2f34e9621c1993f550081e781f0eea631e40aef",
-    "output": "f1bc4075e0592daab979dd9a5bea8db5a262bdb36f9a6c1591e1d85334c23e27"
+    "source": "64beb3abe6c96a3ec9bd4b2eecaad5493ddd201588455012b20333e0e63bf44f",
+    "output": "e56970d2f3e2e0ef013dc4ff7f6be2506dd11cdd2cdfcc1d1ab9edc92015ae64"
   },
   "dining-room": {
-    "source": "7fc2ccf97a3386df55b7221dc2f34e9621c1993f550081e781f0eea631e40aef",
-    "output": "eaddb7b0c7102392e61c4c56299994540d936c4ce8de81063e69a9620046df52"
+    "source": "3e2ebf15c71a5ec74bc239b33752c07cd30525e9420dc58b99fadf6e9cd6d6d9",
+    "output": "6aee5b11634ab3bc8b51cfb8e77b4ff5f578351243a3c61106aa1aec07ee8596"
   },
   "manor-garden": {
-    "source": "7fc2ccf97a3386df55b7221dc2f34e9621c1993f550081e781f0eea631e40aef",
-    "output": "cb922cdbcf454e088f93eb1563545844dc42a740d03a8d9784ee341cbcce7ef0"
+    "source": "3fb16be683670ee6db7ff3b3402ee35466450915df13b4b2d178d3cacdcf264e",
+    "output": "ebf089847e8492c0cbf4a1258069ed70479142f18e557a06d632ef5164c926fd"
   },
   "workshop": {
-    "source": "7fc2ccf97a3386df55b7221dc2f34e9621c1993f550081e781f0eea631e40aef",
-    "output": "c22260dcd9de4f38d4d85e8a4d02d7b126466b6fca7c6d811b8a10bcf660b5fd"
+    "source": "6f84015b69775f8a37bdcf07c834694d2273317422ad1503444633f5e14408b1",
+    "output": "f6ea5c0afef346a1934403661c6113fb42cc88feac928875f62eabf77226172f"
   },
   "mountain-road": {
-    "source": "04450a71fae8bf02b7ad062c68865fad2d4dda733e57af4603b70d3bb7bc01a5",
-    "output": "f6b3fbac2cb3c6c5269fd3f8fe6696b37608f38ad786ba7dce6871cf402d0346"
+    "source": "2a90a6ead34f445e6617df7cff6b40b1114f6f0c307feba817147c050c18f1e8",
+    "output": "f613fb9fe78d7442b752fabbfe22a525d21194556127ed818c32e09f2731c3ae"
   },
   "berne-street": {
-    "source": "04450a71fae8bf02b7ad062c68865fad2d4dda733e57af4603b70d3bb7bc01a5",
-    "output": "a78dade34e1930dbb3dd9fb22ff1d2945c3f976fab5c0a4db5ae580489fbb195"
+    "source": "1f2608aa933b4fc1b297f6e07db4ae5574ecb6c96adf7668e0e39b2615c39961",
+    "output": "ef5d9c4972c5f1937d9c4b22e4159d33ebf2fd404873a4189667314e4511f8d8"
   },
   "brekka-alley": {
-    "source": "04450a71fae8bf02b7ad062c68865fad2d4dda733e57af4603b70d3bb7bc01a5",
-    "output": "91bc6e70c97e32d1ffdbcd45f66d016a92855ad189dd15a8832638cee0ffcc23"
+    "source": "a96e5a919aabf1ba73f8d820306daa9233e7e04f86f8f803989cdd940b1609a4",
+    "output": "c5c819b3ec631a8d425460d9c0824db8d95ff5135afc1d1a053ac73d25cda9a3"
   },
   "village-house": {
-    "source": "04450a71fae8bf02b7ad062c68865fad2d4dda733e57af4603b70d3bb7bc01a5",
-    "output": "9693e2a48e4e1dc770d3b06e4de1a06be47062fed6d610608101f6e4d9a2717e"
+    "source": "cc1bff58073564974bc92698369ed65383a1b93bfd89b25d3fd3d43a2b09ed6b",
+    "output": "b9c7ed8d4c482aa524957e1095a1bf66b69a4173c8033dc94bfeab29836715fa"
   },
   "stone-yard": {
-    "source": "1660a91c83e49f99d3864dbed6a9a6a61eb9b57d7206b23be944cc7dbe93595c",
-    "output": "c46ab0016656aa5e18a0d5d47fb2115afab532b2e93e9fb6bd70f623217a092f"
+    "source": "d7abf3c05b327481a0d33694b3b9ee736748d2e718e7fc3d92567ca78129e51b",
+    "output": "fbba6040488f8d65a5601d535db256cdd702778a332a41b72fb1e83828fd2109"
   },
   "storeroom": {
-    "source": "1660a91c83e49f99d3864dbed6a9a6a61eb9b57d7206b23be944cc7dbe93595c",
-    "output": "323d1ad1d9ea69029a62517413315f953c604ec9885fbe46e477accdc24839c4"
+    "source": "151fbe9f117b9e9fc13fa1b295efe909a437c499c3fb913dbce9b22583d96142",
+    "output": "85ddd298e404630390a2e83d86dc5c817d2d5e4699c0b4c487e0debffcff131d"
   },
   "moss-beds": {
-    "source": "1660a91c83e49f99d3864dbed6a9a6a61eb9b57d7206b23be944cc7dbe93595c",
-    "output": "92db46d80f6c0593a3db047cfaee3ff8702e44cb1e1ad4e47b0096af9dc4481a"
+    "source": "71e417b9055501e95ebd8aef48522e02a10c09f852dd954fa09d0a27b2d2d75e",
+    "output": "c8ecec9f0074e69db7717ae13ae015274d51ce8b8ff813fbe7b9b1a268b2e290"
   },
   "registry": {
-    "source": "1660a91c83e49f99d3864dbed6a9a6a61eb9b57d7206b23be944cc7dbe93595c",
-    "output": "47b77fd9b44f5120265e9f003bb14589aa29a8926d6cac8510751703fd60fbbd"
+    "source": "f457cba1d290ea78ab8419d7fa81a62631a864f952f69c4e2e5c7632fcc60158",
+    "output": "1b9786d73cb29d1644b2c3ca77da2f096265efc61e77cc32f757adb3f4c708d2"
   },
   "bridge-night": {
-    "source": "954e6f99bc75478c095e641b0cb4a502fb7230b5a8eaca8d54ef40f45ca22291",
-    "output": "0bfd4b6aa7d6ca10a4851b8a64fe0d98ad56b32c0b3cf0185155b1582b728d51"
+    "source": "b9853e7e220d171420eee39fa89f08c6c910e5d0d8f09bfab4110ef25c6d48ee",
+    "output": "6b666a4b5782f5b8871250bbaf4635432a752a317a0274dde4402cdfdd704aab"
   },
   "warehouse-office": {
-    "source": "954e6f99bc75478c095e641b0cb4a502fb7230b5a8eaca8d54ef40f45ca22291",
-    "output": "42c03272bb03f027f4194df27994d788e199d7e88500a353033ad66dfdea81d0"
+    "source": "0d0e02381e17ef8050e54195a876df582e5c6d0fb09e42a6e5708f0b3e36c599",
+    "output": "7526308c765b07a0f6f6b622a66b0022e39454860853ed8980e7d59948a824c7"
   },
   "patient-room": {
-    "source": "954e6f99bc75478c095e641b0cb4a502fb7230b5a8eaca8d54ef40f45ca22291",
-    "output": "483d10d002c40193f7463ecc337f58dc229ede7aa6de8625beb33fcd56c58ea8"
+    "source": "102610eeff7c9760a7d5804785264aa493cd0156766adb6ab77dea03c96a0017",
+    "output": "3964543b88745a4f0ce941c77a77a079f1e97647ec1ecf2743d4b0accbe5858f"
   },
   "new-moss-beds": {
-    "source": "954e6f99bc75478c095e641b0cb4a502fb7230b5a8eaca8d54ef40f45ca22291",
-    "output": "8095d0a65eff33f9d733f9274106920ccb417e11e7b3073e0c861634b684c924"
+    "source": "9033eb4e58b20e1b37a4983d9260b83b23916ee984131764b919e03bec2c5144",
+    "output": "745b37f32729f10f5f1d3841e46975087e6768fb1ae73781709c502c25864f6d"
   },
   "prop-bread": {
     "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
