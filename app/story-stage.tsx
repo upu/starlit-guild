@@ -13,7 +13,8 @@ function stageStyle(cue: StoryStageCue): CSSProperties {
     "--stage-background": `url(/story-stage/${cue.background ?? "meeting-path"}.webp)`,
     "--cart-art": `url(/story-stage/${cue.cartArt ?? "loaded-cart"}.webp)`,
     "--party-cell": `${String(cue.cell ?? 24)}cqw`,
-    "--stage-camera-scale": RPG_CAMERA_SCALE,
+    "--stage-camera-scale": cue.cameraScale ?? RPG_CAMERA_SCALE,
+    "--stage-label-scale": RPG_CAMERA_SCALE / (cue.cameraScale ?? RPG_CAMERA_SCALE),
   } as CSSProperties;
 }
 const actorStyle = (cue: StoryStageCue, actor: StoryStageCue["actors"][number]) => ({

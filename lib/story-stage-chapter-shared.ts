@@ -16,6 +16,7 @@ export type StageBeat = {
 };
 export type ChapterStage = {
   background: StoryStageCue["background"];
+  cameraScale?: number;
   night?: boolean;
   beats: StageBeat[];
   exit?: "together" | "apart";
@@ -92,6 +93,7 @@ export function buildChapterStage(story: Story, definition: ChapterStage) {
       items,
       extras,
       background: definition.background,
+      cameraScale: definition.cameraScale,
       night: definition.night,
       initial: { aria: 32, leon: 57 },
       hideCart: true,

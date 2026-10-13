@@ -10,7 +10,7 @@ import { chapterRoadHit } from "../lib/chapter-road-presentation.ts";
 import { stories } from "../lib/stories.ts";
 
 test("the pulled-back stage starts and finishes travel outside the visible frame", () => {
-  const projected = (x) => 50 + (x - 50) * RPG_CAMERA_SCALE;
+  const projected = (x, scale = RPG_CAMERA_SCALE) => 50 + (x - 50) * scale;
   const entry = stageCameraCue(storyStageCue("village-trade-departure", 1));
   assert.ok(projected(stageEntrance("aria", entry).x) + 12 * RPG_CAMERA_SCALE < 0);
   for (const story of stories) {
@@ -18,11 +18,12 @@ test("the pulled-back stage starts and finishes travel outside the visible frame
     if (!authored) continue;
     const exit = stageCameraCue(authored);
     for (const [i, actor] of exit.actors.entries()) {
-      const half = ((exit.cell ?? 24) / 2) * RPG_CAMERA_SCALE;
+      const scale = exit.cameraScale ?? RPG_CAMERA_SCALE;
+      const half = ((exit.cell ?? 24) / 2) * scale;
       if (authored.actors[i].x > 100)
-        assert.ok(projected(actor.x) - half > 100, `${story.id}/${actor.id} exits right`);
+        assert.ok(projected(actor.x, scale) - half > 100, `${story.id}/${actor.id} exits right`);
       if (authored.actors[i].x < 0)
-        assert.ok(projected(actor.x) + half < 0, `${story.id}/${actor.id} exits left`);
+        assert.ok(projected(actor.x, scale) + half < 0, `${story.id}/${actor.id} exits left`);
     }
   }
 });

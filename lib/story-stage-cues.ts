@@ -29,6 +29,7 @@ export type StoryStageCue = {
   luggage: boolean;
   cartX?: number;
   cell?: number;
+  cameraScale?: number;
   background?:
     | "meeting-path"
     | "town-exit"

@@ -7,6 +7,8 @@ import { expressionPortrait } from "../lib/portrait-expressions.ts";
 const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || "playwright");
 import { storyArtAt } from "../lib/story-art.ts";
 import { storyStageCue, storyStageExitCue } from "../lib/story-stage.ts";
+import { stageCameraCue } from "../lib/story-stage-camera.ts";
+import { journeyDuration } from "../lib/story-stage-travel.ts";
 import { prologueStories } from "../lib/prologue-stories.ts";
 const root = process.env.TEST_ROOT || "http://localhost:5173";
 const output = process.env.TEST_OUTPUT || "work/story-chapter-browser";
@@ -170,7 +172,12 @@ try {
           await advance(page, 32);
           if (!reduced && cue && storyStageExitCue(story.id)) {
             assert.equal(await page.locator(".story-reader").count(), 1);
-            await page.clock.runFor(5000);
+            const exit = stageCameraCue(storyStageExitCue(story.id));
+            const duration = Math.max(
+              3000,
+              ...exit.actors.map((actor, index) => journeyDuration(actor, cue.actors[index])),
+            );
+            await page.clock.runFor(duration + 250);
           }
           assert.equal(
             await page.locator(".story-reader").count(),

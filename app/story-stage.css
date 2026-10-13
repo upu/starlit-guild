@@ -176,7 +176,7 @@
   left: 50%;
   transform: translateX(-50%);
   color: #f1eddb;
-  font-size: clamp(11px, 4.166667cqw, 18px);
+  font-size: calc(clamp(11px, 4.166667cqw, 18px) * var(--stage-label-scale, 1));
   line-height: 1.4;
   white-space: nowrap;
   text-shadow:
@@ -281,7 +281,7 @@
   white-space: nowrap;
   color: #f1eddb;
   text-shadow: 0 1px 3px #102528;
-  font-size: clamp(11px, 4.166667cqw, 18px);
+  font-size: calc(clamp(11px, 4.166667cqw, 18px) * var(--stage-label-scale, 1));
 }
 .story-stage-merchant[data-speaking="true"] .story-stage-merchant-name {
   color: #fff0a5;

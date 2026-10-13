@@ -1,13 +1,14 @@
+import { RPG_CAMERA_SCALE } from "./rpg-camera.ts";
 import type { StageActor, StageItem, StoryStageCue } from "./story-stage-cues.ts";
 
 // Pulling the camera back exposes more of the ground plane. Extend entrances and
 // exits beyond that larger frame, including their props, rather than fading in mid-road.
-const outside = (x: number) => (x < 0 ? x - 40 : x > 100 ? x + 40 : x);
-const actor = (value: StageActor): StageActor => ({ ...value, x: outside(value.x) });
-const item = (value: StageItem): StageItem =>
-  value.actor || value.extra ? value : { ...value, x: outside(value.x) };
-
 export function stageCameraCue(cue: StoryStageCue): StoryStageCue {
+  const margin = Math.ceil(50 / (cue.cameraScale ?? RPG_CAMERA_SCALE) - 30);
+  const outside = (x: number) => (x < 0 ? x - margin : x > 100 ? x + margin : x);
+  const actor = (value: StageActor): StageActor => ({ ...value, x: outside(value.x) });
+  const item = (value: StageItem): StageItem =>
+    value.actor || value.extra ? value : { ...value, x: outside(value.x) };
   return {
     ...cue,
     actors: cue.actors.map(actor),

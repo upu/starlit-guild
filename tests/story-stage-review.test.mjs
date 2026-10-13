@@ -172,3 +172,21 @@ test("Aria and Leon have four registered carry phases without changes of stature
     }
   }
 });
+
+test("the returning cloth stays owned, is put away, and is handed back on the narrated line", () => {
+  const scene = "forest-wetland-departure";
+  const clothAt = (line) => cue(scene, line).items.find((item) => item.id === "cloth");
+  assert.equal(clothAt(0).actor, "aria");
+  for (const line of [4, 5, 6, 13, 14, 15]) assert.equal(clothAt(line).actor, "leon");
+  for (let line = 7; line <= 12; line++) assert.equal(clothAt(line), undefined);
+  assert.equal(clothAt(16).actor, "aria");
+  for (const line of [0, 4, 13, 16]) {
+    const stage = cue(scene, line),
+      cloth = clothAt(line);
+    const owner = stage.actors.find((a) => a.id === cloth.actor);
+    const moved = { ...owner, x: owner.x + 10, bottom: 20 };
+    const at = stageItemTarget(cloth, stage, new Map([[owner.id, moved]]));
+    assert.ok(Math.abs(at.x - moved.x) <= 5);
+    assert.equal(at.bottom - moved.bottom, owner.id === "aria" ? 6 : 10);
+  }
+});

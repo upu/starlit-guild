@@ -16,6 +16,7 @@ const moss: typeof dishMoss = (actor, glow) => ({
 export const towerStages: Record<string, ChapterStage> = {
   "tower-road-departure": {
     background: "hill-path",
+    cameraScale: 0.46,
     exit: "together",
     beats: [
       { at: 0, aria: { left: false }, leon: { left: false } },
