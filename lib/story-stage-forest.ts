@@ -1,4 +1,11 @@
-import { moss, item, type ChapterStage } from "./story-stage-chapter-shared.ts";
+import { moss as dishMoss, item, type ChapterStage } from "./story-stage-chapter-shared.ts";
+
+const moss: typeof dishMoss = (actor, glow) => ({
+  ...dishMoss(actor, glow),
+  art: "moss-jar",
+  width: 5,
+  bottom: 23,
+});
 
 export const forestStages: Record<string, ChapterStage> = {
   "forest-wetland-departure": {

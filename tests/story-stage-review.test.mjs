@@ -2,8 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
 import { readFrame, headBounds } from "../scripts/home-pixel-frames.mjs";
-import { storyStageCue as cue, sampleStageActor } from "../lib/story-stage.ts";
-import { stageItemTarget } from "../lib/story-stage-props.ts";
+import { storyStageCue as cue, storyStageExitCue, sampleStageActor } from "../lib/story-stage.ts";
+import { stageItemTarget, deliveryBoxTarget } from "../lib/story-stage-props.ts";
 import { journeyDuration } from "../lib/story-stage-travel.ts";
 
 const actor = (id, line, who) => cue(id, line).actors.find((a) => a.id === who);
@@ -121,4 +121,54 @@ test("transplant transport completes pickup, carry, placement and return within 
     .items.find((p) => p.art === "seedling-cart");
   assert.equal(restored.tilt, 0);
   assert.equal(restored.actor, "finn");
+});
+
+test("delivery carriers clear the stock and the held box follows their depth", () => {
+  const origin = cue("town-deliveries-departure", 12),
+    next = cue("town-deliveries-departure", 13);
+  for (let elapsed = 0; elapsed <= 1500; elapsed += 40) {
+    const positions = next.actors.map((a, i) => sampleStageActor(a, origin.actors[i], elapsed));
+    for (const p of positions)
+      if (p.x > 40 && p.x < 58) assert.ok(p.bottom < 10, "walk in front of table stock");
+    const box = deliveryBoxTarget(
+      "shared",
+      positions[0].x,
+      positions[1].x,
+      positions[0].bottom,
+      positions[1].bottom,
+    );
+    assert.equal(box.bottom, (positions[0].bottom + positions[1].bottom) / 2 + 10);
+  }
+});
+
+test("the night fork follows both visible branches and reduced motion reaches the same exit", () => {
+  const last = cue("moss-night-road-return", 25),
+    exit = storyStageExitCue("moss-night-road-return");
+  for (const [i, actor] of exit.actors.entries()) {
+    assert.ok(actor.via.length === 2);
+    const midpoint = sampleStageActor(actor, last.actors[i], 1800);
+    assert.ok(midpoint.bottom > last.actors[i].bottom);
+    assert.equal(midpoint.left, i === 0);
+    const end = sampleStageActor(actor, last.actors[i], 0, true);
+    assert.equal(end.bottom, actor.bottom);
+    assert.equal(end.x, actor.x);
+  }
+});
+
+test("Aria and Leon have four registered carry phases without changes of stature", async () => {
+  for (const id of ["aria", "leon"]) {
+    const actor = { id, x: 90, left: false, carry: true };
+    const frames = [0, 130, 260, 390].map((t) => sampleStageActor(actor, { x: 10 }, t).frame);
+    assert.deepEqual(frames, [8, 9, 22, 23]);
+    for (const frame of frames) {
+      const f = await readFrame(`public/story-stage/${id}-poses.webp`, {
+        left: (frame % 4) * 128,
+        top: Math.floor(frame / 4) * 128,
+        width: 128,
+        height: 128,
+      });
+      assert.equal(f.box.height, 96);
+      assert.equal(f.box.top + f.box.height, 120);
+    }
+  }
 });

@@ -251,12 +251,10 @@ test("delivery scenes put the box down and carry it together without flipping th
   const exit = storyStageExitCue(townDepartureId);
   assert.equal(storyStageExitCue(townDepartureId), exit, "rerenders must not restart departure");
   assert.equal(storyStageExitCue(townReturnId), storyStageExitCue(townReturnId));
-  const samples = exit.actors.map((actor, i) =>
-    sampleStageActor(actor, { x: last.actors[i].x }, 500),
-  );
+  const samples = exit.actors.map((actor, i) => sampleStageActor(actor, last.actors[i], 500));
   assert.equal(samples[1].x - samples[0].x, 20);
   assert.equal(samples[1].left, true);
-  assert.ok(samples.every((s) => s.atlas === "conversation" && [8, 9].includes(s.frame)));
+  assert.ok(samples.every((s) => s.atlas === "conversation" && [8, 9, 22, 23].includes(s.frame)));
   for (const line of stories.find((s) => s.id === townReturnId).lines.keys()) {
     assert.equal(storyStageCue(townReturnId, line).background, "town-shop-return");
     assert.equal(storyStageCue(townReturnId, line).box, undefined);

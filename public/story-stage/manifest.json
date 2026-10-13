@@ -44,24 +44,24 @@
     "output": "02297f0478f492234f36f772afde3b7d9f699679d8421550d5fd7291722dc933"
   },
   "aria-poses": {
-    "source": "df53c8b999a945148dcce1ffdba4961a2c60046217bc2f3c7161c9601e6ef6d0",
-    "output": "62c98f89a9ca4679c785024370cda48bcb1214af6843b8a33cb7bab749749dce"
+    "source": "774d773957fb815d62a15da78198e1b836e55aae5a31504022921dea797fba6e",
+    "output": "5a67ed7ef6f177f6efe80a52b2baad466ba97883039aa5e099672e26c13e1972"
   },
   "leon-poses": {
-    "source": "e4ce717729d5ef45067ca0ef908c1bde5619268adc2d5588c78054768f51d2f3",
-    "output": "1ba861b3106a1361a7ad78258e82c632bcfdaecb53aa2160b5976f38dc40128d"
+    "source": "820991aa4dffe32bdaadf8086c5baafb4427d6c5847dc93f33dd61d50a6f3ff5",
+    "output": "48e5123663bed4b5b149bbbbfc332309a5360ef844aa0288c820df66b806878d"
   },
   "hill-path": {
-    "source": "62ed3c7909853eb30098a649bef9f27a6142bcc564f454389612720f535ec291",
-    "output": "c43e04500557b1482f7b400a7a34525ddf56232cc4fb52b8e8bec84b8ff59dc7"
+    "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
+    "output": "79a470e73573879ad4d5a6eadce8ba644fc52c4036fc75211553df855e59779f"
   },
   "hill-night": {
-    "source": "43242cf8ceb7fc9872f7606b56fe5529086bf26addd6fe964aeab7f3b9e5fa6d",
-    "output": "9f693926db757636d4d0db1220315e0df5b477ae70078fe88b071ee0e0aba044"
+    "source": "c97fd2ebfb46f0a0e9a2410ec7cc6810b51f663fb26aed1828e82e44b360e46a",
+    "output": "cd1fc11fab9edac9001d46b00d67bae91530892a47c0059019a239df2d01e656"
   },
   "meeting-night": {
-    "source": "eefe33b8c54334bd6c7a9f656cd06874d15c33f04b79680b22505ccf4056528a",
-    "output": "eae337eabf65b9071b94b15af1095c64c2915f4942ba1eeefdf040c177129e68"
+    "source": "21440c506ee6f9b7952a2191676892e20faa099c0b4fa0daf62cce765bbf81c1",
+    "output": "41cd5dcec689ffdd0c6fe38bb9b066dde82972c704f26a278c8bbb33abc82777"
   },
   "tower-foot": {
     "source": "e0105652556a4763264cd054a7e656b8fd72734da28b0d5a432c2611766cd1cc",
@@ -334,6 +334,10 @@
   "merrill-walk": {
     "source": "98e0fb72213ad23811d4acc140c1d059844aff32916a82bc89e72e1df42c74a1",
     "output": "0b2087936793de90b995cb1204a0ef848ec732a5654077b694c72decf84696ef"
+  },
+  "prop-moss-jar": {
+    "source": "746b02fb039e31d8e5c4b84d0aca36ea9e1f3897c708e0f045bceb66c547e2d3",
+    "output": "fec6d3bb5c447264909c32910f18c68e7dd1e2631269000cfc0e3d5bf1ef8a2f"
   },
   "prop-delivery-bag": {
     "source": "70b0f2d86719a830e12d3d2a3b5822562f57a4841e240a28015ceed230c4a1a8",

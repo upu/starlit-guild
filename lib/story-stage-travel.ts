@@ -7,6 +7,7 @@ const distance = (a: StagePosition, b: StagePosition) =>
 export function actorJourney(actor: StageActor, origin: StagePosition) {
   const target = { x: actor.x, bottom: actor.bottom ?? 14 };
   if (distance(origin, target) < 0.1) return [target];
+  if (actor.via) return [origin, ...actor.via, target];
   return actor.lane === undefined
     ? [origin, target]
     : [origin, { x: origin.x, bottom: actor.lane }, { x: actor.x, bottom: actor.lane }, target];

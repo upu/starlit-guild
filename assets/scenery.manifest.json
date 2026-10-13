@@ -65,18 +65,18 @@
       }
     },
     "moss-night-road.png": {
-      "cameraSource": "assets/source/rpg-camera/field-v1.png",
-      "sourceHash": "10dd59e2495c8a4dc4eac46d80ba6f659c3f4530362deb7a517602b34351aac4",
+      "cameraSource": "assets/source/rpg-camera/routes-v2.png",
+      "sourceHash": "af2e2e1ed29816da7f17fd10d78f64f5baed1c8ac6350d3f7b789a812e3afabf",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2788095,
       "outputs": {
         "thumbnail": {
-          "hash": "e7a350ebc263404363cbdab18a3fc4fee9a974039c578647afdd902348872224",
-          "bytes": 21776
+          "hash": "fd149caf408c33b1e6c8cc80442dbca6d25c2383807aa83b552d4eb67a72043d",
+          "bytes": 32704
         },
         "background": {
-          "hash": "f0f4410ab075cc88bc5dd2fb0d87f701861e982b0c713c8afb3459fd91161188",
-          "bytes": 113756
+          "hash": "80a999658bb6ba321100ae013f8cf721f627b65fa1bab603091855043010c37c",
+          "bytes": 147562
         }
       }
     },
@@ -145,18 +145,18 @@
       }
     },
     "tower-road.png": {
-      "cameraSource": "assets/source/rpg-camera/field-v1.png",
-      "sourceHash": "65cb6d4b4692923eba73ed14864d417340bb1d7838497c6b0a0bb7f6b080c4d4",
+      "cameraSource": "assets/source/rpg-camera/routes-v2.png",
+      "sourceHash": "737ab68cce9941690a8ceab18b1e788537a3b6226e27f055592304c5136207f0",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2976470,
       "outputs": {
         "thumbnail": {
-          "hash": "446c682723a599b6493753f8ae91fa064147782bcdba346f47fa19d63231f069",
-          "bytes": 34610
+          "hash": "10d2a8696a3f29d3450d8aaad2c81c69c48fe61cc9a2e82140970cc209e6c35f",
+          "bytes": 46648
         },
         "background": {
-          "hash": "90caae2cb63a1adcc1b3ef5acb6aed3dce604df1dcaab10c701b78603c23ecb6",
-          "bytes": 165274
+          "hash": "628e291647f5847b8d42ff9e50a2982e49056ead69a84ae30740b94070763ce0",
+          "bytes": 197960
         }
       }
     },

@@ -303,9 +303,9 @@
 }
 .story-stage-table-stock {
   position: absolute;
-  left: 20%;
-  right: 13%;
-  bottom: 5%;
+  left: 33%;
+  right: 20%;
+  bottom: 23%;
   height: 34%;
   display: flex;
   gap: 3%;

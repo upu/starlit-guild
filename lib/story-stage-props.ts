@@ -31,10 +31,13 @@ export function deliveryBoxTarget(
   mode: StoryStageCue["box"],
   aria: number,
   leon: number,
+  ariaBottom = 14,
+  leonBottom = 14,
 ): BoxPosition {
-  if (mode === "table") return { x: 46, bottom: 27 };
-  if (mode === "shared") return { x: (aria + leon) / 2, bottom: 24 };
-  return { x: aria + 7, bottom: mode === "high" ? 29 : 24 };
+  if (mode === "table") return { x: 42, bottom: 27 };
+  if (mode === "shared")
+    return { x: (aria + leon) / 2, bottom: (ariaBottom + leonBottom) / 2 + 10 };
+  return { x: aria + 7, bottom: ariaBottom + (mode === "high" ? 15 : 10) };
 }
 
 // Smooth transfers keep the same small box, including a tap partway through putting it down.

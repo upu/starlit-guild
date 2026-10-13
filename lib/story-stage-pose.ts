@@ -26,7 +26,12 @@ function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced:
 }
 
 function carryingPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  const frame = moving ? cycle(8, elapsed, 180, !reduced) : actor.carry ? 14 + mood(actor) : 8;
+  const walk = actor.id === "aria" || actor.id === "leon" ? [8, 9, 22, 23] : [8, 9];
+  const frame = moving
+    ? walk[reduced ? 0 : Math.floor(elapsed / 130) % walk.length]
+    : actor.carry
+      ? 14 + mood(actor)
+      : 8;
   return { atlas: "conversation" as const, frame };
 }
 

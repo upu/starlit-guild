@@ -34,10 +34,18 @@
 .story-stage-item[data-art="lantern"] {
   aspect-ratio: 0.7;
 }
-.story-stage-item[data-glow="bright"]:is([data-art="moss"], [data-art="colony"]) {
+.story-stage-item[data-glow="bright"]:is(
+    [data-art="moss"],
+    [data-art="moss-jar"],
+    [data-art="colony"]
+  ) {
   filter: brightness(1.3) drop-shadow(0 0 4px #b6ffd0) drop-shadow(0 0 16px #7beca6a0);
 }
-.story-stage-item[data-glow="dim"]:is([data-art="moss"], [data-art="colony"]) {
+.story-stage-item[data-glow="dim"]:is(
+    [data-art="moss"],
+    [data-art="moss-jar"],
+    [data-art="colony"]
+  ) {
   filter: drop-shadow(0 0 2px #9ed19b80);
 }
 .story-stage-item[data-glow="bright"][data-art="lantern"] {
@@ -49,6 +57,30 @@
 }
 .story-stage-item[data-art="map"] {
   aspect-ratio: 2;
+}
+.story-stage-item[data-art="moss-jar"] {
+  aspect-ratio: 0.8;
+}
+.story-stage-wall-moss-light {
+  position: absolute;
+  left: 46%;
+  top: 48%;
+  width: 8%;
+  height: 5%;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #d8ffc8b0, #8feea859 45%, transparent 72%);
+  mix-blend-mode: screen;
+  animation: wall-moss-breathe 4.8s ease-in-out infinite;
+}
+@keyframes wall-moss-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 .story-stage-item[data-art="spatula"] {
   aspect-ratio: 0.9;
@@ -86,6 +118,10 @@
   background-size: 400% 100%;
 }
 @media (prefers-reduced-motion: reduce) {
+  .story-stage-wall-moss-light {
+    animation: none;
+    opacity: 0.6;
+  }
   .story-stage-item,
   .story-stage-extra {
     transition: none;

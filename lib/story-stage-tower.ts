@@ -1,4 +1,17 @@
-import { keeper, moss, lamp, item, type ChapterStage } from "./story-stage-chapter-shared.ts";
+import {
+  keeper,
+  moss as dishMoss,
+  lamp,
+  item,
+  type ChapterStage,
+} from "./story-stage-chapter-shared.ts";
+
+const moss: typeof dishMoss = (actor, glow) => ({
+  ...dishMoss(actor, glow),
+  art: "moss-jar",
+  width: 5,
+  bottom: 23,
+});
 
 export const towerStages: Record<string, ChapterStage> = {
   "tower-road-departure": {
@@ -57,7 +70,7 @@ export const towerStages: Record<string, ChapterStage> = {
       {
         at: 19,
         leon: { carry: true },
-        items: [{ ...moss("leon", "dim"), x: -4, width: 6 }],
+        items: [{ ...dishMoss("leon", "dim"), x: -4, width: 6 }],
       },
     ],
   },
@@ -66,7 +79,7 @@ export const towerStages: Record<string, ChapterStage> = {
     night: true,
     exit: "together",
     beats: [
-      { at: 0, aria: { carry: true }, items: [moss("aria", "bright")] },
+      { at: 0, aria: { carry: true }, leon: { bottom: 24 }, items: [moss("aria", "bright")] },
       { at: 2, aria: { x: 36 }, leon: { x: 60 } },
       { at: 3, items: [moss("aria", "bright"), lamp("leon")] },
       { at: 7, aria: { left: false }, leon: { left: false, pose: "think" } },
@@ -104,7 +117,7 @@ export const towerStages: Record<string, ChapterStage> = {
       },
       { at: 21, items: [moss("aria", "dim"), lamp("leon"), lamp("aria")] },
       { at: 23, aria: { pose: "tease" } },
-      { at: 25, aria: { x: 34, left: true }, leon: { x: 61, left: false } },
+      { at: 25, aria: { x: 34, bottom: 22, left: true }, leon: { x: 61, bottom: 22, left: false } },
     ],
   },
 };

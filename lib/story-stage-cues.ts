@@ -16,6 +16,7 @@ export type StageActor = {
   shoulder?: boolean;
   sword?: boolean;
   lane?: number;
+  via?: { x: number; bottom: number }[];
   name?: string;
   bottom?: number;
   visible?: boolean;
@@ -99,6 +100,7 @@ export type StageItem = {
   id: string;
   art:
     | "moss"
+    | "moss-jar"
     | "lantern"
     | "basket"
     | "tools"

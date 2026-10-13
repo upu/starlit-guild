@@ -28,6 +28,23 @@ for (const story of prologueStories) {
         ...actor,
         x: definition.exit === "apart" && index === 0 ? -12 : 110 + index * 22,
         left: definition.exit === "apart" && index === 0,
+        ...(story.id === "moss-night-road-return"
+          ? {
+              bottom: 88,
+              via: [
+                { x: index === 0 ? 30 : 70, bottom: 35 },
+                { x: index === 0 ? -3 : 103, bottom: 73 },
+              ],
+            }
+          : {}),
+        ...(story.id === "moss-night-road-departure"
+          ? {
+              x: -18 + index * 12,
+              bottom: -8,
+              left: true,
+              via: [{ x: 18 + index * 12, bottom: 5 }],
+            }
+          : {}),
         inspect: false,
         wave: false,
         reaction: undefined,

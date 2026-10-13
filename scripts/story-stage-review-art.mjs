@@ -74,6 +74,10 @@ export async function reviewHero(root, name, raw, original) {
         )
       : frames[0],
   );
+  const walk = row < 2 ? await source(root, "carry-walk-v3") : null;
+  if (walk)
+    for (const [col, index] of [8, 9, 22, 23].entries())
+      frames[index] = await registerWorkPose(await sheetFrame(walk, col, row, 4, 2), head, 96);
   const image = await sharp({
     create: { width: 512, height: 768, channels: 4, background: "#00000000" },
   })
@@ -86,7 +90,10 @@ export async function reviewHero(root, name, raw, original) {
     )
     .webp({ lossless: true })
     .toBuffer();
-  return { raw: Buffer.concat([raw, home, rest, carry, actions, adventure]), image };
+  return {
+    raw: Buffer.concat([raw, home, rest, carry, actions, adventure, ...(walk ? [walk] : [])]),
+    image,
+  };
 }
 export async function reviewProps(root, emit) {
   const actions = await source(root, "merrill-walk-v1"),
@@ -102,6 +109,16 @@ export async function reviewProps(root, emit) {
     .webp({ lossless: true })
     .toBuffer();
   await emit("merrill-walk", Buffer.concat([actions, merrill]), image);
+  const jar = await source(root, "moss-jar-v1");
+  await emit(
+    "prop-moss-jar",
+    jar,
+    await sharp(jar)
+      .extract(await spriteBounds(jar))
+      .resize({ width: 192 })
+      .webp({ lossless: true })
+      .toBuffer(),
+  );
   const bag = await source(root, "delivery-bag-v1");
   await emit(
     "prop-delivery-bag",

@@ -157,7 +157,7 @@ export function sampleStageActor(
     bottom: travel.bottom,
     ...actorPose(actor, moving, elapsed, reduced),
     visible: actor.visible !== false,
-    left: actor.carry && actor.lane === undefined ? actor.left : travel.left,
+    left: actor.carry && actor.lane === undefined && !actor.via ? actor.left : travel.left,
     lift: reactionLift(actor.reaction, reaction),
     bubble: actor.reaction === "surprise" && (reduced || elapsed < 1600) ? "！" : "",
   };

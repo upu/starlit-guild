@@ -13,6 +13,8 @@ export function boxPainter(stage: HTMLElement, cue: StoryStageCue, state: BoxMot
       cue.box,
       positions.get("aria")?.x ?? 30,
       positions.get("leon")?.x ?? 64,
+      positions.get("aria")?.bottom,
+      positions.get("leon")?.bottom,
     );
     const at = origin && transferring ? transferBox(origin, target, elapsed, reduced) : target;
     state.position = at;

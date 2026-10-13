@@ -106,7 +106,7 @@
         "story": ["meeting-dusk"]
       },
       {
-        "story": ["meeting-night"]
+        "story": []
       },
       {
         "story": ["town-exit"]
@@ -119,12 +119,12 @@
     "source": "assets/source/rpg-camera/field-v1.png",
     "cells": [
       {
-        "story": ["hill-path"],
-        "scenery": ["tower-road"]
+        "story": [],
+        "scenery": []
       },
       {
-        "story": ["hill-night"],
-        "scenery": ["moss-night-road"]
+        "story": [],
+        "scenery": []
       },
       {
         "story": ["forest-floor"]
@@ -174,5 +174,24 @@
     ],
     "columns": 2,
     "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/routes-v2.png",
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "story": ["hill-path"],
+        "scenery": ["tower-road"]
+      },
+      {
+        "story": ["hill-night"],
+        "scenery": ["moss-night-road"]
+      },
+      {},
+      {
+        "story": ["meeting-night"]
+      }
+    ]
   }
 ]
