@@ -1,18 +1,33 @@
 [
   {
-    "frame": 9,
-    "sourceIndex": 15,
+    "frame": 8,
     "source": {
-      "left": 998,
-      "top": 4,
-      "width": 198,
-      "height": 293
+      "left": 174,
+      "top": 11,
+      "width": 255,
+      "height": 467
     },
-    "scale": 0.32764505119453924,
-    "left": 60,
+    "headWidth": 49,
+    "left": 67,
     "top": 80,
-    "width": 65,
-    "height": 96
+    "width": 54,
+    "height": 96,
+    "sourceFile": "travel-v2"
+  },
+  {
+    "frame": 9,
+    "source": {
+      "left": 116,
+      "top": 11,
+      "width": 257,
+      "height": 467
+    },
+    "headWidth": 49,
+    "left": 66,
+    "top": 80,
+    "width": 55,
+    "height": 96,
+    "sourceFile": "travel-v2"
   },
   {
     "frame": 10,
@@ -23,11 +38,11 @@
       "width": 209,
       "height": 308
     },
-    "scale": 0.32764505119453924,
-    "left": 60,
-    "top": 75,
-    "width": 68,
-    "height": 101
+    "scale": 0.28488372093023256,
+    "left": 64,
+    "top": 88,
+    "width": 60,
+    "height": 88
   },
   {
     "frame": 11,
@@ -38,11 +53,11 @@
       "width": 245,
       "height": 308
     },
-    "scale": 0.32764505119453924,
-    "left": 49,
-    "top": 75,
-    "width": 80,
-    "height": 101
+    "scale": 0.28488372093023256,
+    "left": 55,
+    "top": 88,
+    "width": 70,
+    "height": 88
   },
   {
     "frame": 12,
@@ -53,11 +68,11 @@
       "width": 309,
       "height": 297
     },
-    "scale": 0.32764505119453924,
-    "left": 58,
-    "top": 79,
-    "width": 101,
-    "height": 97
+    "scale": 0.28488372093023256,
+    "left": 63,
+    "top": 91,
+    "width": 88,
+    "height": 85
   },
   {
     "frame": 13,
@@ -68,11 +83,11 @@
       "width": 198,
       "height": 309
     },
-    "scale": 0.32764505119453924,
-    "left": 61,
-    "top": 75,
-    "width": 65,
-    "height": 101
+    "scale": 0.28488372093023256,
+    "left": 66,
+    "top": 88,
+    "width": 56,
+    "height": 88
   },
   {
     "frame": 14,
@@ -83,11 +98,11 @@
       "width": 221,
       "height": 252
     },
-    "scale": 0.32764505119453924,
-    "left": 59,
-    "top": 93,
-    "width": 72,
-    "height": 83
+    "scale": 0.28488372093023256,
+    "left": 63,
+    "top": 104,
+    "width": 63,
+    "height": 72
   },
   {
     "frame": 15,
@@ -98,11 +113,11 @@
       "width": 227,
       "height": 258
     },
-    "scale": 0.32764505119453924,
-    "left": 67,
-    "top": 91,
-    "width": 74,
-    "height": 85
+    "scale": 0.28488372093023256,
+    "left": 69,
+    "top": 102,
+    "width": 65,
+    "height": 74
   },
   {
     "frame": 16,
@@ -113,11 +128,11 @@
       "width": 201,
       "height": 288
     },
-    "scale": 0.32764505119453924,
-    "left": 56,
-    "top": 82,
-    "width": 66,
-    "height": 94
+    "scale": 0.28488372093023256,
+    "left": 62,
+    "top": 94,
+    "width": 57,
+    "height": 82
   },
   {
     "frame": 17,
@@ -128,71 +143,71 @@
       "width": 198,
       "height": 292
     },
-    "scale": 0.32764505119453924,
-    "left": 60,
-    "top": 80,
-    "width": 65,
-    "height": 96
+    "scale": 0.28488372093023256,
+    "left": 65,
+    "top": 93,
+    "width": 56,
+    "height": 83
   },
   {
     "frame": 18,
-    "sourceIndex": 8,
     "source": {
-      "left": 82,
-      "top": 17,
-      "width": 221,
-      "height": 285
+      "left": 64,
+      "top": 12,
+      "width": 283,
+      "height": 465
     },
-    "scale": 0.32764505119453924,
-    "left": 66,
-    "top": 83,
-    "width": 72,
-    "height": 93
+    "headWidth": 49,
+    "left": 67,
+    "top": 84,
+    "width": 61,
+    "height": 92,
+    "sourceFile": "travel-v2"
   },
   {
     "frame": 19,
-    "sourceIndex": 9,
     "source": {
-      "left": 383,
-      "top": 18,
-      "width": 216,
-      "height": 283
+      "left": 168,
+      "top": 9,
+      "width": 284,
+      "height": 465
     },
-    "scale": 0.32764505119453924,
-    "left": 64,
-    "top": 83,
-    "width": 71,
-    "height": 93
+    "headWidth": 49,
+    "left": 67,
+    "top": 84,
+    "width": 59,
+    "height": 92,
+    "sourceFile": "travel-v2"
   },
   {
     "frame": 20,
-    "sourceIndex": 10,
     "source": {
-      "left": 684,
-      "top": 20,
-      "width": 236,
-      "height": 280
+      "left": 110,
+      "top": 9,
+      "width": 308,
+      "height": 465
     },
-    "scale": 0.32764505119453924,
-    "left": 60,
+    "headWidth": 49,
+    "left": 56,
     "top": 84,
-    "width": 77,
-    "height": 92
+    "width": 65,
+    "height": 92,
+    "sourceFile": "travel-v2"
   },
   {
     "frame": 21,
-    "sourceIndex": 11,
     "source": {
-      "left": 1002,
-      "top": 22,
-      "width": 217,
-      "height": 278
+      "left": 46,
+      "top": 9,
+      "width": 307,
+      "height": 465
     },
-    "scale": 0.32764505119453924,
-    "left": 59,
-    "top": 85,
-    "width": 71,
-    "height": 91
+    "headWidth": 49,
+    "left": 56,
+    "top": 84,
+    "width": 65,
+    "height": 92,
+    "sourceFile": "travel-v2"
   },
   {
     "frame": 22,
@@ -203,11 +218,11 @@
       "width": 219,
       "height": 262
     },
-    "scale": 0.32764505119453924,
-    "left": 59,
-    "top": 90,
-    "width": 72,
-    "height": 86
+    "scale": 0.28488372093023256,
+    "left": 65,
+    "top": 101,
+    "width": 62,
+    "height": 75
   },
   {
     "frame": 23,
@@ -218,10 +233,10 @@
       "width": 211,
       "height": 264
     },
-    "scale": 0.32764505119453924,
-    "left": 58,
-    "top": 90,
-    "width": 69,
-    "height": 86
+    "scale": 0.28488372093023256,
+    "left": 63,
+    "top": 101,
+    "width": 60,
+    "height": 75
   }
 ]

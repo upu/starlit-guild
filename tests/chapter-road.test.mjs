@@ -263,7 +263,7 @@ test("moss-bed survey shows moss, the waterway, and measuring tools without harv
   assert.equal(inspected.size, 15);
 });
 
-test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {
+test("the ground stays compact and portrait backgrounds keep the wider camera scale", () => {
   for (const [width, height] of [
     [1280, 900],
     [390, 630],
@@ -273,9 +273,12 @@ test("the ground plane stays compact and the untiled background covers all viewp
     assert.ok(roadY(0.82, height) - roadY(0.54, height) <= 68);
     for (const progress of [0, 0.4, 1]) {
       const box = roadBackdrop(width, height, 1536, 1024, progress);
-      assert.ok(box.x <= 0 && box.y <= 0);
+      assert.ok(box.x <= 0);
       assert.ok(box.x + box.width >= width - 0.01);
-      assert.ok(box.y + box.height >= height - 0.01);
+      const feet = roadY(0.82, height);
+      assert.ok(feet > box.y && feet < box.y + box.height);
+      if (height > width)
+        assert.ok(box.width < width * 1.5, "portrait does not zoom the buildings in");
     }
   }
 });

@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/merchant-poses-v1.png",
+      "prompt": "Use case: stylized-concept. Create a transparent pixel-art RPG sprite sheet, 2 columns x 2 rows with four evenly centered full-body poses of ONE ordinary middle-aged human male shopkeeper. Reference 1 is identity: the friendly brown-haired mustached middle-aged merchant on the RIGHT of the scene in white rolled sleeves, dark brown leather apron and brown trousers. Reference 2 is pixel sprite style and proportions ONLY: match its chunky clear pixels, dark outline and compact 2.5-head-tall chibi body. No sword, no cape, no hat. Four poses facing slightly towards the viewer's left: top-left relaxed listening, top-right explaining with one palm gently open, bottom-left pointing down towards goods beside him, bottom-right friendly farewell raising one hand. All same head size/body height/feet baseline, all complete unclipped figures centered inside equal square cells with generous transparent margins. No props, no floor, no shadow, no text, no grid. Truly transparent alpha background.",
+      "referenced_image_paths": [
+        "public/stories/village-trade-handover.webp",
+        "public/home-pixel/leon.webp"
+      ],
+      "transparent_background": true
+    },
+    {
+      "source": "assets/source/story-stage/packing-table-v1.png",
+      "prompt": "Use case: stylized-concept. Transparent isolated game prop: a simple small rustic wooden packing table seen from the same front-three-quarter slightly elevated RPG perspective as the reference street. Rectangular top, four sturdy legs, open space underneath so separate boxes can be placed there. EMPTY tabletop. Pixel art with chunky readable pixels, warm brown wood, dark outlines matching JRPG chibi characters. Table width around twice its height, tabletop surface occupies upper quarter, modest depth; full object centered with little transparent margin. NO boxes, NO people, NO floor, NO ambient vignette, NO text. True transparent alpha background. Reference is perspective/light/material only.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/town-shop-return-v1.png"
+      ],
+      "transparent_background": true
+    },
+    {
+      "source": "assets/source/story-stage/town-shop-clear-v1.png",
+      "prompt": "Use case: precise-object-edit. Edit this existing RPG pixel-art scene. Remove the small distant wooden table beneath the shop window, and the barrel beside it. Fill these removed objects' areas naturally with the same shop wall and stone pavement. Preserve the building, window, doorway, vegetation, hill tower, sky, empty broad foreground lane, pixel-art style, camera and all overall composition unchanged. This is a character stage background; the foreground must remain empty because characters and a separate nearby table will be overlaid by the game. No people, no crates, no furniture, no text.",
+      "referenced_image_paths": [
+        "assets/source/story-stage/town-shop-return-v1.png"
+      ],
+      "transparent_background": false
+    }
+  ]
+}

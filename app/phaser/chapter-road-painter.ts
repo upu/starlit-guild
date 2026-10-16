@@ -2,6 +2,7 @@ import type Phaser from "phaser";
 import { adventureAction } from "@/lib/adventure-presentation";
 import { chapterRoadFrame, chapterRoadHit } from "@/lib/chapter-road-presentation";
 import { RoadMotion } from "@/lib/road-motion";
+import { roadScale } from "@/lib/road-layout";
 import { RoadPainter, ROAD_BACKGROUND } from "./road-painter";
 import {
   ROAD_EFFECTS,
@@ -119,7 +120,11 @@ export class ChapterRoadPainter {
     if (!this.painter || !this.ensureAssets()) return;
     const width = this.scene.scale.width;
     const input = this.bridge.read();
-    const frame = chapterRoadFrame(input, this.runtime.reduced, width / Math.min(1.1, width / 800));
+    const frame = chapterRoadFrame(
+      input,
+      this.runtime.reduced,
+      width / roadScale(width, "puppets"),
+    );
     const run = input.squad.run;
     const key = `${input.squad.id}:${run?.quest ?? "idle"}:${String(run?.started)}`;
     this.drawn = this.motion.update(frame, key, width, this.runtime.reduced);

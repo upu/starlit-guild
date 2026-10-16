@@ -1,0 +1,197 @@
+[
+  {
+    "source": "assets/source/rpg-camera/warehouse-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["town-shop", "town-shop-return"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/rpg-camera/tower-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["tower-base-moss"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/rpg-camera/interiors-v1.png",
+    "cells": [
+      {
+        "story": ["medicine-room"]
+      },
+      {
+        "story": ["dining-room"]
+      },
+      {
+        "story": ["manor-garden"]
+      },
+      {
+        "story": ["workshop"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/streets-v1.png",
+    "cells": [
+      {
+        "story": ["mountain-road"],
+        "scenery": ["mountain-road"]
+      },
+      {
+        "story": ["berne-street"]
+      },
+      {
+        "story": ["brekka-alley"]
+      },
+      {
+        "story": ["village-house"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/worksites-v1.png",
+    "cells": [
+      {
+        "story": ["stone-yard"]
+      },
+      {
+        "story": ["storeroom"]
+      },
+      {
+        "story": ["moss-beds"]
+      },
+      {
+        "story": ["registry"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/locations-v1.png",
+    "cells": [
+      {
+        "story": ["bridge-night"]
+      },
+      {
+        "story": ["warehouse-office"]
+      },
+      {
+        "story": ["patient-room"]
+      },
+      {
+        "story": ["new-moss-beds"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/meeting-v1.png",
+    "cells": [
+      {
+        "story": ["meeting-path"]
+      },
+      {
+        "story": ["meeting-dusk"]
+      },
+      {
+        "story": []
+      },
+      {
+        "story": ["town-exit"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/field-v1.png",
+    "cells": [
+      {
+        "story": [],
+        "scenery": []
+      },
+      {
+        "story": [],
+        "scenery": []
+      },
+      {
+        "story": ["forest-floor"]
+      },
+      {
+        "story": ["tower-foot"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/waterways-v1.png",
+    "cells": [
+      {
+        "story": ["drain-blocked"]
+      },
+      {
+        "story": ["drain-cleared"],
+        "scenery": ["tower-drainage-open"]
+      },
+      {
+        "scenery": ["forest-wetland"]
+      },
+      {
+        "scenery": ["old-waterway"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/roads-v1.png",
+    "cells": [
+      {
+        "scenery": ["town-deliveries"]
+      },
+      {
+        "scenery": ["evening-trade-road"]
+      },
+      {
+        "scenery": ["riverside-manor"]
+      },
+      {
+        "scenery": ["berne"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/routes-v2.png",
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "story": ["hill-path"],
+        "scenery": ["tower-road"]
+      },
+      {
+        "story": ["hill-night"],
+        "scenery": ["moss-night-road"]
+      },
+      {},
+      {
+        "story": ["meeting-night"]
+      }
+    ]
+  }
+]

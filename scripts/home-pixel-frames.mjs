@@ -28,12 +28,12 @@ export async function readFrame(source, rect) {
   const head = await headBounds(crop);
   return { cell, box, head };
 }
-export async function headBounds(buffer) {
+export async function headBounds(buffer, fraction = 0.38) {
   const { data, info } = await sharp(buffer)
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  const height = Math.ceil(info.height * 0.38),
+  const height = Math.ceil(info.height * fraction),
     seen = new Uint8Array(info.width * height);
   let largest = [];
   for (let p = 0; p < seen.length; p++) {
@@ -87,7 +87,7 @@ export async function headBounds(buffer) {
 // lifted boot or moving hand. A constant crown-to-sole height prevents the whole
 // figure from floating or changing size. The head's connected component excludes
 // an independently raised hammer/quill from the registration measurements.
-export async function packFrames(frames) {
+export async function packFrames(frames, headFraction = 0.38) {
   const size = residentArt.cell,
     composite = [],
     anchors = [];
@@ -106,6 +106,7 @@ export async function packFrames(frames) {
     const deliveredBox = await spriteBounds(resized);
     const deliveredHead = await headBounds(
       await sharp(resized).extract(deliveredBox).png().toBuffer(),
+      headFraction,
     );
     const center = deliveredBox.left + deliveredHead.left + deliveredHead.width / 2;
     const left = Math.round(size / 2 - center),

@@ -1,0 +1,33 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-10",
+  "assets": [
+    {
+      "name": "town-shop",
+      "prompt": "Create a 1536x1024 landscape pixel-art RPG conversation stage background. Match the provided town background's crisp pixel clusters, warm outlines and near-eye-level scale. A modest medieval trading shop in Linde on a later ordinary bright afternoon, not sunset. Timber and plaster storefront with a shaded open door and small packing table in upper-left/mid-left, several small cord-tied labeled crates and folded cloth stored beneath the table. Labels have no legible writing. A lane leads past neighboring shop houses toward upper-right, and a small distant stone tower is faintly visible above rooftops on a wooded hill, its light very dim. Preserve a broad empty flat packed-earth foreground across lower 55% for two small game sprites to carry a box. The table is behind their playing space. No people, no loose crates in the foreground, no UI, text, border, no fortress or new landmark. Existing town and near-town hill tower only.",
+      "refs": [
+        "assets/source/story-stage/town-exit-v1.png"
+      ],
+      "transparent": false
+    },
+    {
+      "name": "carry-poses",
+      "prompt": "Create a square 1024x1024 transparent pixel-art sprite sheet, exactly 2 columns x 2 rows, each frame 512x512, full bodies centered with ample transparent margins and feet on same baseline. Reference one is Aria and reference two is Leon; match their WALKING frames in top rows exactly in body/head proportions, costume and pixel rendering. TOP ROW ONLY Aria the blonde pointed-ear girl in green cape, cream tunic, brown boots, flower hair clip. BOTTOM ROW ONLY Leon the brown-haired boy in red cape, blue tunic, brown boots. Both face screen RIGHT in three-quarter side view. All four frames are cooperative carrying poses: elbows bent, both hands reached forward at waist level to grip one end of an invisible wide crate. Do NOT draw a crate or any prop: separate game prop will fill the space. Column 1 left foot forward, column 2 right foot forward, subtle walking stride while holding arms steady. Same head size, slim legs, body height, foot baseline and scale in every frame; do not enlarge heads or use seated/chubby proportions. Aria slightly smaller than Leon at most, not larger. No scenery, shadows, labels, grid lines, checkerboard or background; genuine alpha transparency.",
+      "refs": [
+        "public/home-pixel/aria.webp",
+        "public/home-pixel/leon.webp"
+      ],
+      "transparent": true
+    },
+    {
+      "name": "delivery-box",
+      "prompt": "Create a single isolated pixel-art medieval delivery crate sprite on genuine transparent background, landscape 1536x1024 canvas. Small wide rectangular honey-brown wooden shipping box, about twice as wide as tall, simple wood plank construction, two sturdy short carrying grips at left and right edges, thin cord around it and one small blank cream paper tag. Three-quarter front game view with small visible lid and right side. Match the crisp pixel-art clusters, dark brown outlines, wooden color and close eye-level perspective of the reference scene. No people, hands, wheels, vegetation, scenery, ground, cast shadow, text or other objects. Center one complete box with generous transparent margins. It is a modest box two young people can carry between them, not a treasure chest.",
+      "refs": [
+        "assets/source/story-stage/town-exit-v1.png"
+      ],
+      "transparent": true
+    }
+  ],
+  "returnEdit": "Edit this exact pixel-art game background for after the delivery work has finished. Preserve all buildings, table, scale, path, tower, lighting, viewpoint and empty foreground exactly. Remove ALL delivery crates, bundles, sacks, rolls, merchandise, cloth covers and parcels under and on the shop packing table at left-center. The table must be visibly empty, with empty shadowed space beneath it and visible table legs. Leave the fixed balancing scale on the right end of the tabletop as shop furniture, and put only three small flat cream receipt papers on the table. No new characters, carts, objects, text or UI. Same 1536x1024 dimensions.",
+  "boxTransparencyEdit": "Remove the entire brown blurred glow, shadow, haze and every background pixel outside this wooden crate. Keep the wooden box, grips, tag, cord, pixel edges, exact size and exact location unchanged. Every pixel outside the crisp wooden crate silhouette must be fully transparent alpha zero. No halo, glow, floor shadow or colored mat. This is a hard-edged transparent game sprite, not an icon on a glow. Preserve 1536x1024 transparent canvas and margins."
+}

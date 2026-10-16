@@ -1,4 +1,5 @@
 import * as questNavigation from "../../lib/quest-navigation.ts";
+import * as storyStage from "../../lib/story-stage.ts";
 import { compileSourceModule, evaluateSourceModule } from "./source-module.mjs";
 
 export const storySceneCompilation = compileSourceModule(
@@ -15,7 +16,12 @@ const dependencies = [
 ].map(([id, path]) => [id, compileSourceModule(path, import.meta.url)]);
 
 export function loadStoryScenes(modules, globals = {}) {
-  const registry = { "@/lib/quest-navigation": questNavigation, ...modules };
+  const registry = {
+    "@/lib/quest-navigation": questNavigation,
+    "@/lib/story-stage": storyStage,
+    "./story-stage": { StoryStage: "StoryStage" },
+    ...modules,
+  };
   for (const [id, compiled] of dependencies) {
     registry[id] = evaluateSourceModule(compiled, registry, globals);
   }

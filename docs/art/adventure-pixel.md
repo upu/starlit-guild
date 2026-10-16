@@ -1,20 +1,22 @@
 # 冒険のドット絵調ミニキャラ
 
 アリア・レオン・ミラ・フィン・リコは、旅団ホームの人物の絵柄と配信解像度を共用する。
-歩行8コマと待機は `public/home-pixel/<id>.webp` の画素をそのまま使う。
+歩行8コマは `public/home-pixel/<id>.webp` の画素をそのまま使う。
 戦闘・採集・被弾・押し手・引き手・荷造りは同じホーム原画を外見と画風の参照にして作った全身コマを使う。
 旧冒険素材は武器と動作だけの参考とし、キャラ紹介・必殺演出などの既存用途は保持する。
 
 原本は `assets/source/adventure-pixel/<id>-actions-v1.png`。生成結果は無加工で保存する。
 生成指示・参照・採否は [制作記録](../art-generation/adventure-pixel-20261007.json) を参照。
+待機・瞬き・押し引きは歩行原本を頭身の基準に描き直した `<id>-travel-v2.png` の6コマを使う。[頭身修正の制作記録](../art-generation/adventure-proportions-20261012.json) に組み込みimage_genの参照と全文プロンプトを保存する。
 配信は `scripts/build-adventure-pixel.mjs` → `public/adventure-pixel/<id>.webp`。
 `npm run adventure-art:optimize` / `npm run adventure-art:check` で生成・鮮度を確認する。
 dev / buildではホーム素材の生成後に作り、CIでも鮮度を検査する。
 
 人物の基準はホームと同じ高さ96px。原本はLanczos3で一度だけ縮小し、PhaserではNEAREST補間で拡大する。
 武器を切らないためセルは192px、足元176px。24コマを4列×6行へ配置する。
-歩行・待機はホームの128pxセルを拡大縮小せず余白だけ広げる。
-専用動作は各人の立ち姿を基準とする共通倍率をシート全体へ適用し、しゃがみや前傾を残して靴底をそろえる。
+歩行はホームの128pxセルを拡大縮小せず余白だけ広げる。
+待機は高さ96px、押し引きは軽い前傾の92pxに登録し、頭幅は各人の歩行と2px以内に揃える。`scripts/adventure-travel-frames.mjs` が6コマを切り出し、`scripts/hero-pose-registration.mjs` が頭幅と接地を合わせる。縦横寸法を指定した縮小には `fit: fill` を使い、既定の `cover` による頭頂・靴先の切り取りを防ぐ。
+戦闘・採集・荷造りは各人の歩行の頭幅を基準とする共通倍率をシート全体へ適用し、しゃがみや前傾を残して靴底をそろえる。
 測定値は配信フォルダーの `*-anchors.json` に記録する。
 
 | コマ | 用途 |
@@ -43,7 +45,7 @@ dev / buildではホーム素材の生成後に作り、CIでも鮮度を検査�
 `npm run enemy-art:check` で全11素材と接地情報の再現性を検査する。
 進行・報酬・タップ判定・保存データは変更しない。
 
-検査は `tests/road-poses.test.mjs`（全5人のコマ・接地・静止・ホーム画素一致）、
+検査は `tests/road-poses.test.mjs`（全5人のコマ・接地・静止・ホーム歩行画素一致）、`tests/adventure-pixel-frames.test.mjs`（待機・瞬き・押し引きの頭幅・身長・接地）、`tests/story-pose-registration.test.mjs`（縮尺調整時の頭頂・靴先の保持）、
 `tests/chapter-road.browser.mjs` / `tests/chapter-four.browser.mjs`（実画面・リサイズ・タップ・加入）を使う。
 ローカルの `work/adventure-pixel/overview.png` は5人の実表示48px相当の一覧。
 ブラウザー確認とスマホ実機確認は区別し、実機確認は未実施。

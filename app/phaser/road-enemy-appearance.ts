@@ -6,6 +6,8 @@ import {
   ordinaryEnemyArt,
 } from "@/lib/adventure-enemy-art";
 import type Phaser from "phaser";
+import { roadHeroSize } from "@/lib/road-layout";
+import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
 
 const puppetNames = {
   pumpety: "カボチャ頭の少女",
@@ -56,8 +58,8 @@ export function fitEnemy(
     const turn = ((time - (enemy.actionAt ?? time)) / 900) * Math.PI * 2;
     image.scaleX *= Math.max(0.15, Math.abs(Math.cos(turn)));
     if (Math.cos(turn) < 0) image.toggleFlipX();
-    image.x += Math.sin(turn) * 8;
-    image.y -= Math.abs(Math.sin(turn)) * 5;
+    image.x += Math.sin(turn) * 8 * RPG_CAMERA_SCALE;
+    image.y -= Math.abs(Math.sin(turn)) * 5 * RPG_CAMERA_SCALE;
   }
 }
 export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
@@ -79,9 +81,8 @@ export function enemyDisplayHeight(
   width: number,
   height: number,
 ) {
-  if (enemy.kind === "lico" || enemy.kind === "merrill")
-    return Math.min(90, width * 0.18, height * 0.34) * 0.9;
-  return Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);
+  if (enemy.kind === "lico" || enemy.kind === "merrill") return roadHeroSize(width, height) * 0.9;
+  return RPG_CAMERA_SCALE * Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);
 }
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
   if (enemy.kind === "mushroom")

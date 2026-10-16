@@ -22,7 +22,7 @@ import {
   ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
-import { roadX, roadY } from "./road-layout.ts";
+import { roadHeroSize, roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
 import { spreadBattleParty } from "./road-party-formation.ts";
 import { arrangeCarriers } from "./road-carrier-formation.ts";
@@ -346,7 +346,7 @@ export function chapterRoadHit(
   height: number,
   battle = chapterRoadFrame(input).battle,
 ): AdventureIntent {
-  const size = Math.min(90, width * 0.18, height * 0.34);
+  const size = roadHeroSize(width, height);
   const distance = (h: Traveller) =>
     Math.hypot(
       point.x - chapterRoadX(h.x, battle.distance, width, battle.stage),

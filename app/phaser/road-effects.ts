@@ -3,6 +3,7 @@ import type { RoadBattle, RoadEffect } from "@/lib/road-view";
 import { ROAD_EFFECTS } from "./road-art";
 import { adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
 import { roadY } from "@/lib/road-layout";
+import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
 import { paintCommand } from "./road-command-effect";
 import { duelEffect, paintDuelEffect } from "./road-duel-effects";
 
@@ -64,7 +65,7 @@ export class RoadEffects {
       this.sprites.set(effect.id, sprite);
     }
     const age = state.time - effect.at;
-    const scale = Math.min(1, this.scene.scale.width / 620);
+    const scale = RPG_CAMERA_SCALE * Math.min(1, this.scene.scale.width / 620);
     const endX = screenX(effect.x),
       endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),

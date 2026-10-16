@@ -6,6 +6,8 @@ import "./phone.css";
 import "./mobile-polish.css";
 import "./battle-effects.css";
 import "./stories.css";
+import "./story-stage.css";
+import "./story-stage-chapter.css";
 import "./navigation.css"; // Adventure, party, and memory screens.
 import "./cinematic.css";
 import "./quest-picker.css";
