@@ -1,6 +1,5 @@
 import { chapterFourStages, WALNUT_INTERLUDE } from "./chapter-four.ts";
 import type { Story, StoryLine } from "./stories.ts";
-import type { PortraitExpression } from "./portrait-expressions.ts";
 
 export const chapterFourSpeakers = {
   aria: "アリア",
@@ -11,12 +10,7 @@ export const chapterFourSpeakers = {
   merrill: "メリル",
 };
 export type ChapterFourSection = { number: string; title: string; scenes: Story[] };
-export const line = (
-  speaker: string,
-  text: string,
-  expression: PortraitExpression = "neutral",
-): StoryLine => ({ speaker, text, expression });
-export const narration = (text: string): StoryLine => ({ text });
+export { line, narration } from "./story-lines.ts";
 export function scene(
   number: string,
   chapter: Story["chapter"],

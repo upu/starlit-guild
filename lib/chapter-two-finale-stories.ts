@@ -1,21 +1,6 @@
 import type { Story, StoryLine } from "./stories.ts";
 import { BLOCKADE_QUEST, HOUSE_CALLS_QUEST, MEDICINE_RETURN_QUEST } from "./chapter-two.ts";
-const a = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "aria",
-  text,
-});
-const l = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "leon",
-  text,
-});
-const m = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "mira",
-  text,
-});
-const n = (text: string): StoryLine => ({ text });
+import { aria as a, leon as l, mira as m, narration as n } from "./story-lines.ts";
 // A helmeted stranger, never the unmasked visitor portrait or a friendly name.
 const p = (text: string): StoryLine => ({
   speaker: "masked-pumpety",

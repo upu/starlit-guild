@@ -1,16 +1,6 @@
-import type { Story, StoryLine } from "./stories.ts";
+import type { Story } from "./stories.ts";
 import { WATERWAY_QUEST, RESTORATION_QUEST } from "./prologue.ts";
-const a = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "aria",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const l = (text: string, expression?: StoryLine["expression"]): StoryLine => ({
-  speaker: "leon",
-  text,
-  ...(expression ? { expression } : {}),
-});
-const n = (text: string): StoryLine => ({ text });
+import { aria as a, leon as l, narration as n } from "./story-lines.ts";
 
 export const waterwayStories: Story[] = [
   {

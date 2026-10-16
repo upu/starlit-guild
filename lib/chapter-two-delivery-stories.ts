@@ -1,21 +1,6 @@
 import type { Story, StoryLine } from "./stories.ts";
 import { DELIVERY_PREP_QUEST, MOUNTAIN_QUEST, SIGNPOST_QUEST, GOLEM_QUEST } from "./chapter-two.ts";
-const a = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "aria",
-  text,
-});
-const l = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "leon",
-  text,
-});
-const m = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "mira",
-  text,
-});
-const n = (text: string): StoryLine => ({ text });
+import { aria as a, leon as l, mira as m, narration as n } from "./story-lines.ts";
 // Keep the caller unnamed and without an unmasked portrait. Before she is seen, only her voice speaks.
 const v = (text: string) => n("木々の奥からの声「" + text + "」");
 // Once the pumpkin-headed figure is visible, label what is seen rather than a name.

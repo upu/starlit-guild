@@ -71,7 +71,11 @@ const routes: Record<string, StoryLine[][]> = {
   [BREKKA_ARRIVAL_QUEST]: [
     [
       { expression: "smile", speaker: "aria", text: "樽がごろごろ通るね。全部エール？" },
-      { speaker: "leon", text: "空樽を戻す荷もあるらしい。帰りも荷車が要るんだな。" },
+      {
+        expression: "neutral",
+        speaker: "leon",
+        text: "空樽を戻す荷もあるらしい。帰りも荷車が要るんだな。",
+      },
       { expression: "smile", speaker: "aria", text: "飲み終わったら仕事も終わり、じゃないんだ。" },
     ],
     [
@@ -203,7 +207,7 @@ const routes: Record<string, StoryLine[][]> = {
         speaker: "leon",
         text: "その石の先は滑ります。足を置くなら、乾いた方へ。",
       },
-      { speaker: "lico", text: "見てる。……手帳の方を。" },
+      { expression: "neutral", speaker: "lico", text: "見てる。……手帳の方を。" },
       {
         expression: "serious",
         speaker: "leon",

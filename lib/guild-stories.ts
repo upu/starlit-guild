@@ -1,12 +1,12 @@
 import type { Story, StoryLine } from "./stories.ts";
 import { GUILD_FOUNDING_QUEST } from "./chapter-four.ts";
+import { narration } from "./story-lines.ts";
 
 const line = (
   speaker: string,
   text: string,
   expression: NonNullable<StoryLine["expression"]>,
 ): StoryLine => ({ speaker, text, expression });
-const narration = (text: string): StoryLine => ({ text });
 
 export const guildStories: Story[] = [
   {
