@@ -120,8 +120,15 @@ export async function reviewHero(root, name, raw, original) {
     }
     frames.push(registered);
   }
+  const push = id === "leon" ? await source(root, "leon-push-v1") : null;
+  for (let i = 0; i < 4; i++)
+    frames.push(
+      push && i < 2
+        ? await registerWorkPose(await sheetFrame(push, i, 0, 2, 1), head, 92)
+        : frames[0],
+    );
   const image = await sharp({
-    create: { width: 512, height: 1408, channels: 4, background: "#00000000" },
+    create: { width: 512, height: 1536, channels: 4, background: "#00000000" },
   })
     .composite(
       frames.map((f, i) => ({
@@ -145,6 +152,7 @@ export async function reviewHero(root, name, raw, original) {
       ...(perch ? [perch] : []),
       ...(bed ? [bed] : []),
       ...(walk ? [walk] : []),
+      ...(push ? [push] : []),
     ]),
     image,
   };

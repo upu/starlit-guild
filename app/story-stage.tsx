@@ -4,6 +4,7 @@ import { stageEntrance, type StoryStageCue } from "@/lib/story-stage";
 import { useStoryStageMotion } from "./story-stage-motion";
 import { StoryStageProps } from "./story-stage-props";
 import { ChapterStageProps } from "./story-stage-chapter-props";
+import { StoryStageArrows } from "./story-stage-arrows";
 import { useMemo, type CSSProperties } from "react";
 import { stageCameraCue } from "@/lib/story-stage-camera";
 import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
@@ -56,6 +57,7 @@ export function StoryStage({
           <div className="story-stage-world">
             <StoryStageProps cue={cue} />
             <ChapterStageProps cue={cue} />
+            <StoryStageArrows cue={cue} />
             {cue.actors.map((actor) => (
               <div
                 key={actor.id}

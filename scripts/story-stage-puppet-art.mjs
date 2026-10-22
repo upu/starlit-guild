@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import { readFile } from "node:fs/promises";
-import { readFrame, headBounds } from "./home-pixel-frames.mjs";
+import { readFrame, headBounds, spriteBounds } from "./home-pixel-frames.mjs";
 import { registerHeroPose } from "./hero-pose-registration.mjs";
 
 const source = (root, id) =>
@@ -91,9 +91,22 @@ export async function puppetMotionAssets(root, emit) {
         top: Math.floor(frame / 4) * 512 + 480 - height,
       });
     }
+    const recoil =
+      id === "puppet"
+        ? await readFile(new URL("assets/source/story-stage/puppet-recoil-v1.png", root))
+        : null;
+    if (recoil) {
+      const box = await spriteBounds(recoil);
+      const width = Math.round((box.width * ref.height) / box.height);
+      layers.push({
+        input: await sharp(recoil).extract(box).resize(width, ref.height).png().toBuffer(),
+        left: 3 * 512 + Math.round(256 - width / 2),
+        top: 512 + 480 - ref.height,
+      });
+    }
     await emit(
       `prop-${id}-poses`,
-      Buffer.concat([raw, original]),
+      Buffer.concat([raw, original, ...(recoil ? [recoil] : [])]),
       await sharp({ create: { width: 2048, height: 1024, channels: 4, background: "#00000000" } })
         .composite(layers)
         .webp({ lossless: true })

@@ -45,11 +45,11 @@
   },
   "aria-poses": {
     "source": "5d4a1b590f467b102dfffa7112911a4978db85ea0a139e41f79b3d48fb61e54b",
-    "output": "356a6bdf3bf3fc80e11809a52188ae9d96ede02d8b5d72d2a75eb636f38fd7ac"
+    "output": "7a8e4e319c14bc0c5b12aa7fd91ba0ae47260abcdc8c555c6efa1fcb11fe7ecc"
   },
   "leon-poses": {
-    "source": "352c72a17b8a63e18fd8fa9e18e4d87cd5325cf7bd8633938b00c9405364f8b2",
-    "output": "26f7e14bb8f38ab98d5891e96449d1eec3442052f6041f005258c762e0c02224"
+    "source": "f0dee110478ce0cd4da5c6da49aea5bf9c6e0453668eca3ebe2699d10b56a6c0",
+    "output": "7c03369b8e70ca0742ad9c527813e1c3d7cd7b13d96339bd336986239889bb85"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -313,15 +313,15 @@
   },
   "mira-poses": {
     "source": "17ac62de6c5f82eb19b029e81e9b254cfeee262cb3f0480324275c949d4559fd",
-    "output": "ad4cb937304a09828a867284930661e46bbf0c8ff2018e760c545d8fda4be2fc"
+    "output": "89b4b49f36caeae74efb3a34a989c156680477d08eacd28c53c28e1812a89a47"
   },
   "finn-poses": {
     "source": "26bc22cbdc6c856b3ed0f778e30eda2efd57fd91d33363d62ce111146026b92c",
-    "output": "eddce540e43e3d2700eeaab997c52c1b8290fea67382a37fa85dcd258d5bd512"
+    "output": "0361d961b427040028e415486a910f9662b365f6c538c61a5b68406aa00fcb32"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
-    "output": "485657be1bccd3eca825312291d9a4e92ec227741eb4a51463ae3706bac37793"
+    "output": "5605e313d5660c8e371698a12c03135eaa1be2866ed7cd45cbc7bc0dd780a681"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -456,8 +456,8 @@
     "output": "4565db29e5c06ee4a0936bad1bf4a1f920fbb5abc062f95476b0fa2d1dea679f"
   },
   "prop-puppet-poses": {
-    "source": "3a3614ca14b178ad8949ba69a56f8361790a9be604dfbc400ac29fd2acf38a5d",
-    "output": "ecb2165d663922561d47900b51362374b09aa7c4e979083fd07a8dc6c2ff66f6"
+    "source": "2d2e9ab2b4c3e4533948450820c2c8ae71e8ee2d86488ca12c735f184a7d4f17",
+    "output": "d24c27e4a7cda84fa4b39f769cd93d520561a0b0d32b1a6315d2d7f376f4342b"
   },
   "mountain-fork-empty": {
     "source": "d3d6b898974599e656c0c4fc83b066e8e37a38484239aedc06bc3b572f0db343",

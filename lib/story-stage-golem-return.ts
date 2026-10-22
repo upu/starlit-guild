@@ -5,7 +5,7 @@ export const golemReturn = scene(
   "workshop-yard",
   [
     actor("aria", 15, { bottom: 43, left: false }),
-    actor("leon", 33, { bottom: 22, left: false, sword: true }),
+    actor("leon", 37, { bottom: 22, left: false, push: "brace" }),
     actor("mira", 43, { bottom: 62, left: true, carry: true }),
   ],
   [
@@ -13,7 +13,16 @@ export const golemReturn = scene(
       at: 0,
       items: golemFieldItems("near").map((p) => (p.id === "golem" ? { ...p, x: 55 } : p)),
       extras: [{ ...npc("masked-pumpety", undefined, 96), bottom: 58 }],
-      sequence: [{ after: 650, items: golemFieldItems("near") }],
+      sequence: [
+        {
+          after: 300,
+          actors: { leon: { push: "extend" } },
+          items: golemFieldItems("near").map((p) =>
+            p.id === "golem" ? { ...p, travelMs: 500 } : p,
+          ),
+        },
+        { after: 1100, actors: { leon: { push: undefined, pose: "idle" } } },
+      ],
     },
     { at: 2, actors: { leon: { sword: false, pose: "offer" } } },
     { at: 3, actors: { aria: { reaction: "surprise" } } },

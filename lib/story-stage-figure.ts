@@ -11,7 +11,7 @@ export function stageFigure(item: StageItem, moving: boolean, elapsed: number) {
     footPadding: (width * 32 * 1.5) / referenceWidth,
     frame: moving
       ? 1 + (item.backstep ? (4 - step) % 4 : step)
-      : { idle: 0, kneel: 5, bow: 6 }[item.figure ?? "idle"],
+      : { idle: 0, kneel: 5, bow: 6, recoil: 7 }[item.figure ?? "idle"],
   };
 }
 

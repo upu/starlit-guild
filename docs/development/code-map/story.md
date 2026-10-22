@@ -34,3 +34,5 @@
 2-6後の作業場へ逃げる人形と布・蜜は `lib/story-stage-golem-return.ts` / `lib/story-stage-golem-items.ts`、二人の手当てと薬箱の運搬は `lib/story-stage-golem-care.ts`。`StageItem.backstep` は向きを保って足運びを逆順にする。包帯は `lib/story-stage-wrists.ts` の表示コマごとの腕位置へ追従し、腕が胴体の裏へ隠れるコマでは一緒に隠す。128pxセルの下端と120pxの足元を混同しない。布・包帯の登録は `scripts/story-stage-golem-art.mjs`、縮尺・追従・手元・実素材の透明領域は `tests/story-stage-golem-return.test.mjs`。
 
 処置後に残す包帯は `StageActor.dressed` と `lib/story-stage-dressings.ts`。`buildLaterStage` が人物の状態から各行・連続動作へ追加するため、小物一覧の入れ替えで消えない。2-7では三人の出発まで保持する。弓用192pxセルの位置は共通128px枠へ換算し、驚きの上下動も包帯へ渡す。包み布の回収・手渡し・袋への収納、腕の実画素、運搬経路の足元は `tests/story-stage-dressings.test.mjs`。
+
+2-7後の押し返しは共通会話アトラス44/45、腕を弾かれた小人形は人形アトラス7。会話アトラスは全員4列12行で、低い座位は36〜43に限定する。矢は `StageArrow` の先端座標と発射・到達時刻を `lib/story-stage-arrow.ts` で計算し、`app/story-stage-arrows.tsx` が描画する。台詞内の姿勢切り替えで飛行時間をリセットせず、動きを減らす設定では隠す。接触・退避・新ポーズの縮尺は `tests/story-stage-contact.test.mjs`。

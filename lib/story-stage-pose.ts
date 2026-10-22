@@ -16,7 +16,17 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
     return { atlas: "adventure" as const, frame: cycle(20, elapsed, 180, moving && !reduced) };
-  return bowPose(actor) ?? stationaryPose(actor, elapsed, reduced);
+  return pushPose(actor) ?? bowPose(actor) ?? stationaryPose(actor, elapsed, reduced);
+}
+
+function pushPose(actor: StageActor) {
+  if (actor.id !== "leon" || !actor.push) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: { brace: 44, extend: 45 }[actor.push],
+    handDrop: 0,
+    onChair: false,
+  };
 }
 
 function bowPose(actor: StageActor) {
@@ -50,13 +60,14 @@ function stationaryPose(actor: StageActor, elapsed: number, reduced: boolean) {
     frame,
     handDrop: poseHandDrop(frame),
     onChair:
-      actor.visible !== false && ((frame >= 24 && frame < 32) || (frame >= 36 && !!actor.stool)),
+      actor.visible !== false &&
+      ((frame >= 24 && frame < 32) || (frame >= 36 && frame < 44 && !!actor.stool)),
   };
 }
 
 function poseHandDrop(frame: number) {
-  if (frame >= 36) return 16;
-  if (frame >= 24) return 8;
+  if (frame >= 36 && frame < 44) return 16;
+  if (frame >= 24 && frame < 36) return 8;
   if (frame >= 10 && frame <= 12) return 20;
   if (frame === 13) return 28;
   return frame === 6 || frame === 7 ? 24 : 0;

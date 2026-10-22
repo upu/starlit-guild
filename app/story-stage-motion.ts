@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
 import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
 import { extraPainter } from "./story-stage-extra-motion";
+import { paintStageArrows } from "./story-stage-arrows";
 import { journeyDuration } from "@/lib/story-stage-travel";
 import { extraTravelDuration } from "@/lib/story-stage-extra-travel";
 import {
@@ -23,7 +24,8 @@ function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
   if (name) {
     name.style.left = `${String(50 + nameOffset)}%`;
     name.style.top =
-      (sample.onChair || (sample.atlas === "conversation" && sample.frame >= 36)) &&
+      (sample.onChair ||
+        (sample.atlas === "conversation" && sample.frame >= 36 && sample.frame < 44)) &&
       (sample.bottom ?? 14) >= 20
         ? sample.frame >= 36
           ? "26%"
@@ -42,11 +44,11 @@ function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
 function paintSprite(sprite: HTMLElement, sample: StageSample) {
   sprite.dataset.atlas = sample.atlas;
   sprite.dataset.frame = String(sample.frame);
-  const rows = { adventure: 6, conversation: 11, home: 4, shawl: 1 }[sample.atlas];
+  const rows = { adventure: 6, conversation: 12, home: 4, shawl: 1 }[sample.atlas];
   sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
   const authoredFacing =
     sample.atlas === "conversation" &&
-    ((sample.frame >= 24 && sample.frame < 32) || sample.frame >= 36);
+    ((sample.frame >= 24 && sample.frame < 32) || (sample.frame >= 36 && sample.frame < 44));
   sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left && !authoredFacing ? "-1" : "1"})`;
 }
 
@@ -100,6 +102,7 @@ function animateStage(
   const previousActors = moments.at(-2)?.actors ?? cue.actors;
   const endAt = Math.max(
     3000,
+    ...(cue.arrows ?? []).map((arrow) => arrow.after + arrow.duration),
     ...moments.map(
       (m, i) =>
         m.after +
@@ -136,6 +139,7 @@ function animateStage(
         paint = stagePainter(stage, { ...cue, ...moment }, positions, boxMotion, itemMotion);
       }
       paint(elapsed - moment.after, reduced);
+      paintStageArrows(stage, cue, elapsed, reduced);
     },
     endAt,
     onComplete,

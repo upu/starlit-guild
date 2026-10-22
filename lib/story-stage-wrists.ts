@@ -40,6 +40,8 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     16: [76, 77],
     13: [77, 108],
     21: [76, 95],
+    44: [77, 78],
+    45: [88, 71],
   },
   mira: { 0: [77, 87], 4: [81, 77], 5: [75, 71], 10: [76, 105] },
 };

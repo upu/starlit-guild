@@ -150,9 +150,19 @@
   background-image: var(--adventure-art);
   background-size: 400% 600%;
 }
+.story-stage-arrow {
+  display: none;
+  position: absolute;
+  width: 5%;
+  height: auto;
+  overflow: visible;
+  transform-origin: 100% 50%;
+  pointer-events: none;
+  z-index: 150;
+}
 .story-stage-sprite[data-atlas="conversation"] {
   background-image: var(--conversation-art);
-  background-size: 400% 1100%;
+  background-size: 400% 1200%;
 }
 .story-stage-actor[data-departing="true"][data-actor="aria"] {
   bottom: 9%;

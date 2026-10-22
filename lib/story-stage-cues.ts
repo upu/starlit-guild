@@ -20,6 +20,7 @@ export type StageActor = {
   writing?: boolean;
   shoulder?: boolean;
   sword?: boolean;
+  push?: "brace" | "extend";
   bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
@@ -34,6 +35,7 @@ export type StageActor = {
   dressed?: boolean;
 };
 export type StoryStageCue = {
+  arrows?: StageArrow[];
   description: string;
   actors: StageActor[];
   luggage: boolean;
@@ -84,6 +86,13 @@ export type StoryStageCue = {
   initialBottom?: Partial<Record<ResidentId, number>>;
   bundleMode?: "ground" | "carried" | "hidden";
   sequence?: StageMoment[];
+};
+
+export type StageArrow = {
+  after: number;
+  duration: number;
+  from: { x: number; bottom: number };
+  to: { x: number; bottom: number };
 };
 
 export type StageMoment = {
@@ -214,7 +223,7 @@ export type StageItem = {
   tilt?: number;
   /** Ground movement duration; ordinary handoffs retain their default duration. */
   travelMs?: number;
-  figure?: "kneel" | "bow";
+  figure?: "kneel" | "bow" | "recoil";
   glow?: "dim" | "bright";
 };
 

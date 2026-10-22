@@ -6,6 +6,7 @@ import { actorDressings } from "./story-stage-dressings.ts";
 export { item };
 
 export type LaterBeat = {
+  arrows?: StoryStageCue["arrows"];
   at: number;
   actors?: Partial<Record<ResidentId, Partial<StageActor>>>;
   cast?: StageActor[];
@@ -115,6 +116,7 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
     });
     return {
       description: `${story.place}。${line.text}`,
+      arrows: beat?.arrows,
       actors: openingActors,
       items: [...furniture, ...openingItems, ...actorDressings(openingActors)].filter(
         (item) =>
