@@ -122,12 +122,15 @@ export async function reviewHero(root, name, raw, original) {
   }
   const push = id === "leon" ? await source(root, "leon-push-v1") : null;
   const knock = id === "finn" ? await source(root, "finn-knock-v1") : null;
+  const care = id === "mira" ? await source(root, "mira-care-v1") : null;
   const gesture = push ?? knock;
   for (let i = 0; i < 4; i++)
     frames.push(
-      gesture && i < 2
-        ? await registerWorkPose(await sheetFrame(gesture, i, 0, 2, 1), head, 92)
-        : frames[0],
+      care
+        ? await carePose(await sheetFrame(care, i, 0, 4, 1), head, i)
+        : gesture && i < 2
+          ? await registerWorkPose(await sheetFrame(gesture, i, 0, 2, 1), head, 92)
+          : frames[0],
     );
   const image = await sharp({
     create: { width: 512, height: 1536, channels: 4, background: "#00000000" },
@@ -156,9 +159,15 @@ export async function reviewHero(root, name, raw, original) {
       ...(walk ? [walk] : []),
       ...(push ? [push] : []),
       ...(knock ? [knock] : []),
+      ...(care ? [care] : []),
     ]),
     image,
   };
+}
+function carePose(frame, head, index) {
+  return index < 2
+    ? restingPose(frame, head)
+    : registerWorkPose(frame, head, index === 2 ? 84 : 92);
 }
 export async function reviewProps(root, emit) {
   const notebook = await source(root, "closed-ledger-v1");

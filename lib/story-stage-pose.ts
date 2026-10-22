@@ -22,11 +22,22 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
 
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
   return (
+    healingPose(actor, elapsed, reduced) ??
     knockPose(actor, elapsed, reduced) ??
     pushPose(actor) ??
     bowPose(actor) ??
     stationaryPose(actor, elapsed, reduced)
   );
+}
+
+function healingPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.id !== "mira" || !actor.healing) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: healingFrame(actor.healing, elapsed, reduced),
+    handDrop: 0,
+    onChair: false,
+  };
 }
 
 function knockPose(actor: StageActor, elapsed: number, reduced: boolean) {
@@ -109,6 +120,10 @@ function stationaryFrame(actor: StageActor, elapsed: number, reduced: boolean): 
   if (actor.inspect) return actor.packing ? cycle(6, elapsed, 480, !reduced) : 13;
   if (actor.seated) return 10 + mood(actor);
   return conversationFrame(actor);
+}
+function healingFrame(pose: NonNullable<StageActor["healing"]>, elapsed: number, reduced: boolean) {
+  if (pose === "treat") return cycle(44, elapsed, 420, !reduced);
+  return pose === "rise" ? 46 : 47;
 }
 
 function conversationFrame(actor: StageActor) {

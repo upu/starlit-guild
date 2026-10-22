@@ -25,6 +25,7 @@ export type StageActor = {
   push?: "brace" | "extend";
   /** Finn's two-frame fist tap on a door. */
   knock?: boolean;
+  healing?: "treat" | "rise" | "steady";
   bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
@@ -83,6 +84,7 @@ export type StoryStageCue = {
     | "village-house"
     | "stone-yard"
     | "storeroom"
+    | "stone-storeroom"
     | "moss-beds"
     | "registry"
     | "bridge-night"
@@ -118,12 +120,14 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  care?: "sore" | "palm" | "bandaged" | "rest";
   grip?: "reach" | "hold";
   limp?: boolean;
   hatGreeting?: boolean;
   id:
     | "keeper"
     | "worker"
+    | "stone-carrier"
     | "merchant"
     | "masked-pumpety"
     | "merrill"
@@ -229,6 +233,12 @@ export type StageItem = {
     | "tower-stone"
     | "tower-stone-bottom"
     | "light-cloth"
+    | "candidate-blue"
+    | "candidate-violet"
+    | "candidate-dull"
+    | "covered-stone"
+    | "stone-wrap"
+    | "wrapped-stone"
     | "receipt-front"
     | "receipt-back"
     | "lap-board"

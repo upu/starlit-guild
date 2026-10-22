@@ -2,6 +2,7 @@ import { keystoneInspection, keystoneFoundation } from "./story-stage-keystone.t
 import { bernePaving } from "./story-stage-berne-paving.ts";
 import { berneVisit } from "./story-stage-berne-visit.ts";
 import { stoneRest } from "./story-stage-stone-rest.ts";
+import { stoneYard } from "./story-stage-stone-yard.ts";
 import { overlookRest } from "./story-stage-low-seats.ts";
 import {
   scene,
@@ -45,25 +46,7 @@ export const berneStages: Record<string, LaterStage> = {
   "berne-house-calls-return": berneVisit,
   "missing-keystone-departure": keystoneInspection,
   "missing-keystone-return": keystoneFoundation,
-  "matching-lantern-stone-departure": scene("stone-yard", crew(), [
-    {
-      at: 0,
-      items: [ground("replacement", 48, 15, 13), ground("keystone", 30, 12, 12)],
-      extras: [mason()],
-    },
-    { at: 1, extras: [{ ...mason(), pose: "explain", speaking: true }] },
-    { at: 4, actors: { finn: { pose: "think" } } },
-    { at: 8, extras: [{ ...mason(), pose: "point", speaking: true }] },
-    {
-      at: 9,
-      actors: { aria: { inspect: true } },
-      items: [ground("replacement", 29, 17, 13), held("cloth", "leon")],
-    },
-    { at: 11, actors: { aria: { inspect: false, pose: "think" } } },
-    { at: 13, actors: { mira: { x: 61, inspect: true } } },
-    { at: 15, actors: { mira: { inspect: false, pose: "think" }, finn: { pose: "offer" } } },
-    { at: 17, actors: { mira: { x: 72 } } },
-  ]),
+  "matching-lantern-stone-departure": stoneYard,
   "matching-lantern-stone-return": stoneRest,
   "berne-restoration-departure": scene("tower-foot", crew(), [
     {

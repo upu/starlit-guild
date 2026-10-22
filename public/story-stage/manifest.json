@@ -312,8 +312,8 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "17ac62de6c5f82eb19b029e81e9b254cfeee262cb3f0480324275c949d4559fd",
-    "output": "89b4b49f36caeae74efb3a34a989c156680477d08eacd28c53c28e1812a89a47"
+    "source": "167f70ed76825517c091495f633c853f722625b8bb825cb500fff33952f9def2",
+    "output": "4693b629db501eb58187464620dc248076178445dbc479ce4bcc9d0367505e07"
   },
   "finn-poses": {
     "source": "d9484a29104b1dcf3620c916e1ff1951867e8240e870baeaa1430c6eb7299b02",
@@ -654,5 +654,37 @@
   "prop-light-cloth": {
     "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
     "output": "d76e9214fd908d09da292177337c1fddf18efacde9beadda4e016ac9cca0917b"
+  },
+  "stone-carrier-poses": {
+    "source": "7a326405bd2b37155965d034c36f284ac9e78a7a488f536f371ae6257d349006",
+    "output": "e2ef614855c081fbe6f3b2a861b13858b0b5c1e5eb718dee29e41c7620c566a0"
+  },
+  "prop-candidate-blue": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "2d4233cd489d4db20afd7b0b67f7c0187f15a98dcb791ac87a03c786876c0d58"
+  },
+  "prop-candidate-violet": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "a88a288d153bde07747f802dbf45f585567fc6e56cbbb7c6199461fb241fe0ed"
+  },
+  "prop-candidate-dull": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "a625d4f374436a85108f68de6e3658a8ba43c5189ec43f468680a5ef60a18c4d"
+  },
+  "prop-covered-stone": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "47a1bbaa747a1d6c7c4d6763859f69830af004d7c8fc723ab41f8f089cc62b44"
+  },
+  "prop-stone-wrap": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "e0c35a5d6c534d460db3162831ab959f4c9d49ad4879e48e0ca131720a7a2f61"
+  },
+  "prop-wrapped-stone": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "3a474ab98d2d7eb340cb5d20d3fd88dbbb6c60bb05bcf3fe3862fe33fd4b0403"
+  },
+  "stone-storeroom": {
+    "source": "96a5979f0d7d6303936f23b7bdc17d87d6bae5cfb7129aa54eaf99880d6fccf7",
+    "output": "9986e491bb96c950202cc06f9600aa6900c79c4ac7001078f938ccf2ee520c0c"
   }
 }

@@ -21,6 +21,7 @@ import { berneOpeningAssets } from "./story-stage-berne-opening-art.mjs";
 import { berneVisitAssets } from "./story-stage-berne-visit-art.mjs";
 import { keystoneAssets } from "./story-stage-keystone-art.mjs";
 import { reviewManorNpc, manorAssets } from "./story-stage-manor-art.mjs";
+import { stoneSelectionAssets } from "./story-stage-stone-selection-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -156,6 +157,7 @@ await berneOpeningAssets(root, emit);
 await berneVisitAssets(root, emit);
 await keystoneAssets(root, emit);
 await manorAssets(root, emit);
+await stoneSelectionAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

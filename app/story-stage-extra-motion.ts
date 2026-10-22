@@ -67,7 +67,7 @@ function paintPose(
 }
 
 function paintFacing(sprite: HTMLElement, extra: StageExtra, moving: boolean, left: boolean) {
-  if (["masked-pumpety", "worker"].includes(extra.id)) {
+  if (["masked-pumpety", "worker", "stone-carrier"].includes(extra.id)) {
     const flip = moving ? !left : !!extra.left;
     sprite.style.transform = `scaleX(${flip ? "-1" : "1"})`;
     return;

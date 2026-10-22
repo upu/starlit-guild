@@ -26,7 +26,8 @@
     [data-npc="child"],
     [data-npc="keeper"],
     [data-npc="merchant"],
-    [data-npc="parent"]
+    [data-npc="parent"],
+    [data-npc="stone-carrier"]
   )
   .story-stage-extra-sprite {
   background-size: 400% 200%;
@@ -42,6 +43,20 @@
 }
 .story-stage-item[data-art="light-cloth"]:not([data-glow]) {
   filter: brightness(0.8);
+}
+.story-stage-item:is(
+  [data-art^="candidate-"],
+  [data-art="covered-stone"],
+  [data-art="stone-wrap"],
+  [data-art="wrapped-stone"]
+) {
+  aspect-ratio: 256 / 320;
+}
+.story-stage-item[data-art="candidate-blue"][data-glow] {
+  filter: drop-shadow(0 0 5px #7bbaffc0);
+}
+.story-stage-item[data-art="candidate-violet"][data-glow] {
+  filter: drop-shadow(0 0 4px #c0b2ff90);
 }
 .story-stage-item:is([data-art^="display-"], [data-art^="tower-stone"], [data-art="light-cloth"]) {
   aspect-ratio: 256 / 320;

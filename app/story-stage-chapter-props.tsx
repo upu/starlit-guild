@@ -6,6 +6,7 @@ import { stageExtraFrame, stageExtraRows } from "@/lib/story-stage-figure";
 const names = {
   keeper: "塔の管理人",
   worker: "作業者",
+  "stone-carrier": "石を運ぶ人",
   merchant: "取引先の人",
   "masked-pumpety": "パンプキンヘッドの少女",
   merrill: "メリル",
