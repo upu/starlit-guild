@@ -19,6 +19,7 @@ export function extraPainter(
       positions.set(`extra:${extra.id}`, { x: at.x, bottom: extra.bottom ?? 23, left });
       if (!element) continue;
       element.style.left = `${String(at.x)}%`;
+      element.style.zIndex = String(Math.round(100 - (extra.bottom ?? 23)));
       paintExtraSprite(element, extra, at.moving && !reduced, elapsed, left);
     }
   };

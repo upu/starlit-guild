@@ -28,3 +28,5 @@
 歩行原本は各人の `*-walk-v9-a.png`（1〜4コマ）と `*-walk-v9-b.png`（5〜8コマ）。ミラ・フィンの後半だけは色味と頭身を合わせた `*-walk-v10-b.png` を使う。[読み取り](../../../scripts/home-walk-frames.mjs) の `walkSourceName` → [配信画像の生成](../../../scripts/build-home-pixel.mjs) を通す。比較ページの全8コマ一覧は配信画像をそのまま使い、クリックした位相で停止する。2人の頭幅・髪色の回帰検査は `tests/home-walk-identity.test.mjs`。
 
 施設アイコンは [座標と型](../../../lib/home-room-markers.ts) → [React操作](../../../app/home-room-markers.tsx) → `app/phaser/home-room-game.ts` のカメラ投影。着席時の頭幅合わせと椅子・道具の位置は [表示寸法](../../../lib/home-room-presentation.ts)。実画面の幅・担当・拡大は `tests/guild.browser.mjs`、茶席の反応と回転なしの確認は `tests/home-room.browser.mjs`。
+
+荷車の引き手・押し手は `lib/road-cart-layout.ts` で画像と手元の接点を同じ表示寸法から求め、`lib/road-carrier-formation.ts` で隊列へ投影する。引く一人・押す一人以外は同行し、4-9は本文どおりフィンが引く。`lib/road-motion.ts` は運搬中の同行者にも隊列を保つ。`tests/road-transport.test.mjs` と `tests/road-motion.test.mjs` で画面幅・交代・戦闘復帰・タップ位置・移動の連続性を検査する。

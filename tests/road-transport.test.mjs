@@ -5,7 +5,8 @@ import { storyStages } from "../lib/prologue.ts";
 import { damageEnemy } from "../lib/combat.ts";
 import { combination, configureTarget, schedule } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
-import { roadY } from "../lib/road-layout.ts";
+import { roadY, roadX, roadHeroSize } from "../lib/road-layout.ts";
+import { chapterRoadHit } from "../lib/chapter-road-presentation.ts";
 import { travellerLane } from "../lib/road-view.ts";
 import { roadHasEnemies } from "../lib/chapter-road.ts";
 import {
@@ -60,14 +61,17 @@ test("legacy Merrill routes leave the cart formation during the ambush and resum
       const lico = battle.heroes.find((hero) => hero.id === "lico");
       assert.ok(lico.lane > 0.82, "Lico is in front of the cart, not hidden behind it");
       assert.deepEqual(run, before, "drawing must not change saved combat");
-    } else if (defended && look.workers.length === 5 && battle.gathering?.task === "carry") {
+    } else if (defended && look.workers.length === 2 && battle.gathering?.task === "carry") {
       resumed = true;
       const cartX = battle.gathering.x + 65;
-      assert.equal(look.frontCarriers.length, 2);
+      assert.equal(look.frontCarriers.length, 1);
       for (const id of look.frontCarriers)
         assert.ok(battle.heroes.find((hero) => hero.id === id).x > cartX + 50);
-      const pushers = battle.heroes.filter((hero) => !look.frontCarriers.includes(hero.id));
-      assert.deepEqual(pushers.map((hero) => hero.lane).sort(), [0.68, 0.82, 0.96]);
+      const pushers = battle.heroes.filter(
+        (hero) => look.workers.includes(hero.id) && !look.frontCarriers.includes(hero.id),
+      );
+      assert.equal(pushers.length, 1);
+      assert.equal(battle.heroes.length - look.workers.length, 3, "remaining companions escort");
       assert.ok(pushers.every((hero) => hero.x < cartX - 40));
     }
     state = settle(state, run.nextAt);
@@ -103,42 +107,67 @@ test("a living member takes over pulling when the lead carrier falls", () => {
   });
   assert.equal(handoff.look.puller, "aria");
   assert.deepEqual(handoff.look.frontCarriers, ["aria"]);
-  assert.equal(handoff.battle.heroes.find((hero) => hero.id === "aria").lane, 0.82);
+  assert.ok(handoff.battle.heroes.find((hero) => hero.id === "aria").lane > 0.7);
 });
 
-test("four carriers form side-by-side pairs centered on the cart's ground line", () => {
-  let state = start(24, 12);
-  while (state.squads[0].run.phase !== "work") state = settle(state, state.squads[0].run.nextAt);
-  let frame;
-  for (let step = 0; step < 100; step++) {
-    const run = state.squads[0].run;
-    frame = chapterRoadFrame({
-      squad: state.squads[0],
-      startQuest: run.quest,
-      now: state.updatedAt,
-      ready: true,
-      paused: false,
-    });
-    if (frame.look.workers.length === 4) break;
-    state = settle(state, run.nextAt);
+test("cart grips stay by the hands across viewport sizes, with companions escorting", () => {
+  for (const index of [0, 24, 35]) {
+    let state = start(index, 40);
+    let input, frame;
+    for (let step = 0; step < 2000; step++) {
+      input = { squad: state.squads[0], now: state.updatedAt, ready: true, paused: false };
+      frame = chapterRoadFrame(input);
+      if (frame.look.workers.length === 2 && frame.battle.gathering?.task === "carry") break;
+      state = settle(state, state.updatedAt + 100);
+    }
+    assert.equal(frame.look.workers.length, 2);
+    const saved = JSON.stringify(state);
+    for (const [width, height] of [
+      [320, 210],
+      [390, 600],
+      [768, 500],
+      [1280, 700],
+    ]) {
+      const { battle, look } = chapterRoadFrame(input, false, 1400, { width, height });
+      assert.equal(look.frontCarriers.length, 1);
+      if (index === 35)
+        assert.deepEqual(look.frontCarriers, ["finn"], "Finn pulls the seedlings as in 4-9");
+      const cartX = roadX(battle.gathering.x + 65, battle.distance, width, battle.stage);
+      const cartY = roadY(0.82, height),
+        cartWidth = 0.72 * Math.min(145, width * 0.3);
+      const unit = (roadHeroSize(width, height) * 0.9) / 96;
+      for (const hero of battle.heroes.filter((hero) => look.workers.includes(hero.id))) {
+        const pulling = look.frontCarriers.includes(hero.id);
+        const hx = roadX(hero.x, battle.distance, width, battle.stage);
+        const hy = roadY(hero.lane, height);
+        const grip = look.work.asset.includes("seedling-cart")
+          ? pulling
+            ? -0.3
+            : -0.27
+          : pulling
+            ? -0.33
+            : -0.22;
+        assert.ok(
+          Math.abs(
+            hx + (pulling ? -32 : 30) * unit - (cartX + (pulling ? 0.46 : -0.46) * cartWidth),
+          ) < 13,
+        );
+        assert.ok(Math.abs(hy + (pulling ? -41 : -48) * unit - (cartY + grip * cartWidth)) < 0.01);
+        assert.equal(
+          chapterRoadHit(
+            input,
+            { x: hx, y: hy - roadHeroSize(width, height) * 0.45 },
+            width,
+            height,
+          ),
+          "heal:" + hero.id,
+        );
+      }
+      const escorts = battle.heroes.filter((hero) => !look.workers.includes(hero.id));
+      assert.equal(escorts.length, battle.heroes.length - 2);
+    }
+    assert.equal(JSON.stringify(state), saved, "layout never changes saved positions or progress");
   }
-  assert.equal(frame.look.workers.length, 4);
-  assert.equal(frame.battle.gathering.task, "carry");
-  assert.equal(frame.battle.heroes.length, 4);
-  const cartFeet = roadY(0.82, 200);
-  assert.equal(frame.look.frontCarriers.length, 2);
-  const cartX = frame.battle.gathering.x + 65;
-  const pullers = frame.battle.heroes.filter((hero) => frame.look.frontCarriers.includes(hero.id));
-  const pushers = frame.battle.heroes.filter((hero) => !frame.look.frontCarriers.includes(hero.id));
-  assert.equal(pullers.length, 2);
-  assert.equal(pushers.length, 2);
-  for (const pair of [pullers, pushers]) {
-    assert.deepEqual(pair.map((hero) => hero.lane).sort(), [0.7, 0.94]);
-    assert.equal(pair.reduce((sum, hero) => sum + roadY(hero.lane, 200), 0) / 2, cartFeet);
-    assert.ok(Math.abs(pair[0].x - pair[1].x) <= 40);
-  }
-  assert.ok(pullers.every((hero) => hero.x > cartX + 50));
-  assert.ok(pushers.every((hero) => hero.x < cartX - 40));
 });
 
 test("2-5 checks the signpost in place, while its later carrying step remains transport", () => {

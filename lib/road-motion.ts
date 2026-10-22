@@ -79,7 +79,9 @@ export class RoadMotion {
       raw.gathering.task === "carry" &&
       !raw.enemies.some((enemy) => enemy.hp > 0);
     battle.heroes = raw.heroes.map((hero) => {
-      const target = reduced ? hero : roaming(hero, raw, workers.has(hero.id));
+      // Escort lanes are part of the cart formation too. Roaming around the
+      // workers makes companions cross faces and the cart while transporting.
+      const target = reduced ? hero : roaming(hero, raw, workers.has(hero.id) || carrying);
       const drawn = this.moveHero(hero, target, battle, width, dt);
       if (carrying && workers.has(hero.id)) drawn.facing = 1;
       if (

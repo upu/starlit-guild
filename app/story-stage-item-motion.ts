@@ -1,5 +1,10 @@
 import type { StagePosition, StoryStageCue } from "@/lib/story-stage";
-import { transferBox, stageItemTarget, type BoxPosition } from "@/lib/story-stage-props";
+import {
+  transferBox,
+  stageItemTarget,
+  stageItemDepth,
+  type BoxPosition,
+} from "@/lib/story-stage-props";
 import type { StageItem } from "@/lib/story-stage-cues";
 
 type ItemState = { position: BoxPosition; signature: string; settled: boolean; tilt: number };
@@ -29,7 +34,10 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         tilt,
         settled: Math.abs(at.x - target.x) + Math.abs(at.bottom - target.bottom) < 0.001,
       });
-      if (element) paintItem(element, item, at, tilt);
+      if (element) {
+        paintItem(element, item, at, tilt);
+        element.style.zIndex = String(stageItemDepth(item, cue, positions));
+      }
     }
   };
 }
@@ -41,4 +49,6 @@ function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt:
   element.style.transform = `translateX(-50%) rotate(${String(tilt)}deg)`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
+  if (item.glow) element.dataset.glow = item.glow;
+  else delete element.dataset.glow;
 }

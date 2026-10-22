@@ -63,20 +63,28 @@ export const brekkaStages: Record<string, LaterStage> = {
   "lantern-detour-return": scene("village-house", quartet(), [
     {
       at: 0,
-      actors: { leon: { inspect: true } },
+      actors: { leon: { x: 61, bottom: 29, inspect: true, left: true } },
       items: [ground("stone-lantern", 51, 32, 17), ground("tools", 44)],
       extras: [npc("worker", "荷運び人", 74)],
     },
     {
       at: 2,
-      actors: { aria: { inspect: true } },
-      items: [ground("stone-lantern", 51, 32, 17), held("cloth", "aria"), ground("tools", 44)],
+      actors: { aria: { x: 42, bottom: 35, pose: "offer", left: false } },
+      items: [
+        ground("stone-lantern", 51, 32, 17),
+        held("cloth", "aria", { width: 4, x: 5, support: "stone-lantern" }),
+        ground("tools", 44),
+      ],
     },
     {
       at: 7,
       night: true,
-      actors: { leon: { inspect: false } },
-      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, ground("tools", 44)],
+      actors: {
+        leon: { x: 55, bottom: 14, inspect: false },
+        aria: { x: 40, bottom: 10, inspect: true },
+      },
+      extras: [{ ...npc("worker", "荷運び人", 61), bottom: 35 }],
+      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, ground("tools", 32)],
     },
     { at: 8, actors: { aria: { inspect: false, pose: "greet" } } },
     { at: 9, extras: [npc("worker", "荷運び人", 74, "explain", true)] },

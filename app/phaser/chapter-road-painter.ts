@@ -124,6 +124,7 @@ export class ChapterRoadPainter {
       input,
       this.runtime.reduced,
       width / roadScale(width, "puppets"),
+      { width, height: this.scene.scale.height },
     );
     const run = input.squad.run;
     const key = `${input.squad.id}:${run?.quest ?? "idle"}:${String(run?.started)}`;

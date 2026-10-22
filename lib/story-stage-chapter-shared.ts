@@ -13,6 +13,12 @@ export type StageBeat = {
   leon?: Partial<StageActor>;
   items?: StageItem[];
   extras?: StageExtra[];
+  sequence?: {
+    after: number;
+    aria?: Partial<StageActor>;
+    leon?: Partial<StageActor>;
+    items?: StageItem[];
+  }[];
 };
 export type ChapterStage = {
   background: StoryStageCue["background"];
@@ -53,7 +59,10 @@ export const lamp = (actor: "aria" | "leon"): StageItem =>
 export const basket = (actor?: "aria" | "leon"): StageItem =>
   item("basket", "basket", actor ? -6 : 51, actor ? 22 : 14, { actor, width: 14 });
 export const notes = (onStone = false): StageItem =>
-  item("notes", "map", 49, onStone ? 26 : 17, { width: 13 });
+  item("notes", "map", 49, onStone ? 26 : 17, {
+    width: 13,
+    support: onStone ? "stone" : undefined,
+  });
 export const stone = (): StageItem => item("stone", "stone", 49, 16, { width: 24 });
 export const tools = (): StageItem => item("tools", "tools", 17, 9, { width: 13 });
 
@@ -87,10 +96,21 @@ export function buildChapterStage(story: Story, definition: ChapterStage) {
     }));
     items = beat?.items ?? items;
     extras = beat?.extras ?? extras.map((extra) => ({ ...extra, speaking: false }));
+    const openingActors = actors,
+      openingItems = items;
+    const sequence = beat?.sequence?.map((step) => {
+      actors = actors.map((actor) => ({
+        ...actor,
+        ...step[actor.id === "aria" ? "aria" : "leon"],
+      }));
+      items = step.items ?? items;
+      return { after: step.after, actors, items };
+    });
     return {
       description: `${story.place}。${line.text}`,
-      actors,
-      items,
+      actors: openingActors,
+      items: openingItems,
+      sequence,
       extras,
       background: definition.background,
       cameraScale: definition.cameraScale,

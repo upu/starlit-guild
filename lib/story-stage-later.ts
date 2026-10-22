@@ -36,6 +36,7 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
   if (last && definition.exit)
     exits.set(story.id, {
       ...last,
+      sequence: undefined,
       description: `${story.place}。会話を終えて出発する。`,
       actors: last.actors.map((a, i) =>
         definition.exit?.includes(a.id)
@@ -43,6 +44,8 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
               ...a,
               x: 110 + i * 8,
               left: false,
+              via: undefined,
+              lane: undefined,
               inspect: false,
               seated: false,
               wave: false,

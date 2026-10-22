@@ -141,6 +141,8 @@ export type StageItem = {
   width?: number;
   actor?: ResidentId;
   extra?: StageExtra["id"];
+  /** Surface supporting or being touched by this object, independent of its height. */
+  support?: string;
   tilt?: number;
   glow?: "dim" | "bright";
 };

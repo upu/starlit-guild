@@ -20,11 +20,46 @@ export function stageItemTarget(
   const offset = actor
     ? stageItemOffset(item, { ...actor, left: owner?.left ?? actor.left })
     : item.x;
-  const baseline = item.actor ? 14 : (cue.extras?.find((e) => e.id === item.extra)?.bottom ?? 23);
   return {
     x: offset + (owner?.x ?? 0),
-    bottom: item.bottom + (owner ? (owner.bottom ?? baseline) - baseline : 0),
+    bottom: heldItemBottom(item, cue, owner),
   };
+}
+
+function heldItemBottom(item: StageItem, cue: StoryStageCue, owner?: StagePosition) {
+  if (!owner) return item.bottom;
+  const baseline = item.actor ? 14 : (cue.extras?.find((e) => e.id === item.extra)?.bottom ?? 23);
+  // Actor cells use width units on a 3:2 ground plane; bottom uses height units.
+  const handDrop = ((owner.handDrop ?? 0) / 128) * (cue.cell ?? 24) * 1.5;
+  return item.bottom + (owner.bottom ?? baseline) - baseline - handDrop;
+}
+
+export function stageItemDepth(
+  item: StageItem,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+) {
+  const owner = item.actor
+    ? (positions.get(item.actor) ?? cue.actors.find((a) => a.id === item.actor))
+    : item.extra
+      ? (positions.get(`extra:${item.extra}`) ?? cue.extras?.find((e) => e.id === item.extra))
+      : undefined;
+  if (item.art === "picnic-cloth") return 0;
+  // A support chain shares the ground contact of its lowest object.
+  let base = item,
+    above = 0;
+  const seen = new Set([item.id]);
+  while (base.support) {
+    const next = cue.items?.find((p) => p.id === base.support);
+    if (!next || seen.has(next.id)) break;
+    seen.add(next.id);
+    base = next;
+    above += 1;
+  }
+  const depth = Math.round(100 - base.bottom) + above;
+  return owner
+    ? Math.max(Math.round(100 - (owner.bottom ?? 14)) + 1, base !== item ? depth : 0)
+    : depth;
 }
 
 export function deliveryBoxTarget(

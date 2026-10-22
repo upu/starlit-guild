@@ -199,3 +199,27 @@ test("real gathering ambushes, victories and work-point changes never teleport c
     assert.ok(ambush && victory && changed, `${stage}: ${ambush}/${victory}/${changed}`);
   }
 });
+
+test("cart escorts keep their authored lanes while walking alongside the carriers", () => {
+  const motion = new RoadMotion();
+  const sample = {
+    battle: {
+      time: 1000,
+      stage: "forest",
+      distance: 0,
+      phase: "journey",
+      effects: [],
+      enemies: [],
+      gathering: { kind: "cargo", task: "carry", x: 100, remaining: 50, total: 100 },
+      heroes: [{ id: "mira", x: 20, lane: 1.08, hp: 10, maxHp: 10, walking: true, facing: 1 }],
+    },
+    look: { workers: ["leon", "finn"], frontCarriers: ["finn"], puller: "finn" },
+  };
+  for (let at = 1000; at < 6000; at += 100) {
+    sample.battle.time = at;
+    const { battle } = motion.update(sample, "cart", 390);
+    assert.equal(battle.heroes[0].lane, 1.08);
+    assert.ok(Math.abs(battle.heroes[0].x - 20) < 1e-8);
+    assert.equal(battle.heroes[0].walking, true);
+  }
+});

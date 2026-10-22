@@ -8,7 +8,7 @@
 
 1-3の取引先の人・手前の台・残りの荷は `app/story-stage-props.tsx`。小箱の置き場所と補間は `lib/story-stage-props.ts`、台詞を送ったときの位置保持と共同運搬への追従は `app/story-stage-box-motion.ts`。取引先の台詞別ポーズは `lib/story-stage-town.ts` に置く。
 
-会話中の着座・運搬・専用動作の選択は `lib/story-stage-pose.ts`、手前を回る移動は `lib/story-stage-travel.ts`、NPCの歩行と持ち物の追従は `app/story-stage-extra-motion.ts`。台詞内の複数動作は `StageMoment` と `buildLaterStage` で組み立て、4-9の籠運びは `lib/story-stage-transplant.ts` に定義する。専用ポーズの登録は `scripts/story-stage-review-art.mjs`、縮尺・迂回・時系列の検査は `tests/story-stage-review.test.mjs` を参照する。
+会話中の着座・運搬・専用動作の選択は `lib/story-stage-pose.ts`、手前を回る移動は `lib/story-stage-travel.ts`、NPCの歩行と持ち物の追従は `app/story-stage-extra-motion.ts`。台詞内の複数動作は `StageMoment` と `buildLaterStage` で組み立て、4-9の籠運びは `lib/story-stage-transplant.ts` に定義する。専用ポーズの登録は `scripts/story-stage-review-art.mjs`、縮尺・迂回・時系列の検査は `tests/story-stage-review.test.mjs`、手元高さ・支持物の重なり・受け渡しは `tests/story-stage-attachments.test.mjs` を参照する。
 
 旅団の日常は `lib/guild-stories.ts`、解放は `lib/guild-base.ts`、在室と未読の選択は `lib/guild-presence.ts`。`app/guild-chat.tsx` が共通の `Banter` で自動再生し、`app/use-banter-completion.ts` が最後の台詞の表示時間と一時停止を扱う。既読は `story.read`、思い出での再読は `StoryReader` を共用する。生成台本は `docs/story/game-script/guild.md`。`tests/guild.test.mjs` / `tests/story-reader.test.mjs` / `tests/guild.browser.mjs` で解放・在室・既読・停止・再読・表情を確認する。
 

@@ -51,7 +51,10 @@ export const held = (art: StageItem["art"], owner: ResidentId, extra: Partial<St
 export const ground = (art: StageItem["art"], x = 50, bottom = 12, width = 12) =>
   item(art, art, x, bottom, { width });
 export const table = (x = 50) => ground("table", x, 16, 21);
-export const onTable = (art: StageItem["art"], x = 50, width = 10) => ground(art, x, 33, width);
+export const onTable = (art: StageItem["art"], x = 50, width = 10): StageItem => ({
+  ...ground(art, x, 33, width),
+  support: "table",
+});
 export const scene = (
   background: LaterStage["background"],
   cast: StageActor[],

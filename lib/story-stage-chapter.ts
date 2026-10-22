@@ -23,6 +23,7 @@ for (const story of prologueStories) {
   if (definition.exit)
     exits.set(story.id, {
       ...last,
+      sequence: undefined,
       description: `${story.place}。会話を終え、二人が歩き出す。`,
       actors: last.actors.map((actor, index) => ({
         ...actor,

@@ -1,6 +1,6 @@
 import type { StageActor } from "./story-stage-cues.ts";
 
-export type StagePosition = { x: number; bottom?: number; left?: boolean };
+export type StagePosition = { x: number; bottom?: number; left?: boolean; handDrop?: number };
 const distance = (a: StagePosition, b: StagePosition) =>
   Math.hypot(b.x - a.x, (((b.bottom ?? 14) - (a.bottom ?? 14)) * 2) / 3);
 

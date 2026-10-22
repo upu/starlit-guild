@@ -1,5 +1,6 @@
 import { paintPuppetStrings } from "./road-puppet-strings";
 import type Phaser from "phaser";
+import { roadCartWidth } from "@/lib/road-cart-layout";
 import type { RoadLook } from "@/lib/chapter-road-presentation";
 import { roadBackdrop, roadHeroSize, roadX, roadY } from "@/lib/road-layout";
 import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
@@ -269,7 +270,7 @@ export class RoadPainter {
 
   private workAppearance(cargo: boolean) {
     const size = cargo
-      ? Math.min(145, this.scene.scale.width * 0.3)
+      ? roadCartWidth(this.scene.scale.width) / RPG_CAMERA_SCALE
       : Math.min(
           ({ waterway: 85, signpost: 44, ledger: 85 } as Record<string, number>)[
             this.look?.work?.frame || ""

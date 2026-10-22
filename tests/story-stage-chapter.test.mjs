@@ -120,7 +120,7 @@ test("experiments separate near, distant and forest moss; restoration changes th
     cue("tower-restoration-departure", 3).extras.find((p) => p.id === "worker").speaking,
     true,
   );
-  assert.ok(cue("tower-moss-removal-return", 2).actors.every((a) => a.inspect));
+  assert.ok(cue("tower-moss-removal-return", 2).actors.every((a) => a.seated && !a.inspect));
 });
 
 test("new standing atlases share hero stature, head proportions and foot registration", async () => {

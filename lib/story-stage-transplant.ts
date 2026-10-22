@@ -31,7 +31,7 @@ export const transplantDeparture = scene("moss-beds", quintet(), [
     night: true,
     actors: {
       mira: { x: 51 },
-      lico: { carry: true, left: false, x: 76 },
+      lico: { carry: true, left: false, x: 83 },
       leon: { carry: true, left: false },
     },
     items: [
@@ -48,7 +48,7 @@ export const transplantDeparture = scene("moss-beds", quintet(), [
           leon: { x: 39 },
           mira: { x: 55 },
           finn: { x: 71 },
-          lico: { x: 80 },
+          lico: { x: 84 },
         },
         items: [
           held("seedlings", "lico", { width: 10, bottom: 17 }),
@@ -83,7 +83,7 @@ export const transplantDeparture = scene("moss-beds", quintet(), [
     },
     items: [held("seedlings", "aria", { width: 10, bottom: 17 }), tools(), cart()],
     sequence: [
-      { after: 700, actors: { aria: { x: 27, lane: 0, left: true } } },
+      { after: 700, actors: { aria: { x: 31, lane: 0, left: true } } },
       {
         after: 2800,
         actors: { aria: { carry: false, place: true, pose: "offer", lane: undefined } },
@@ -94,10 +94,10 @@ export const transplantDeparture = scene("moss-beds", quintet(), [
   },
   {
     at: 35,
-    actors: { lico: { x: 39, lane: 0, carry: false }, mira: { inspect: false, pose: "offer" } },
+    actors: { lico: { x: 31, lane: 0, carry: false }, mira: { inspect: false, pose: "offer" } },
     sequence: [
       {
-        after: 2300,
+        after: 2700,
         actors: { lico: { carry: true, left: true, lane: undefined } },
         items: [
           held("seedlings", "lico", { width: 10, bottom: 17 }),

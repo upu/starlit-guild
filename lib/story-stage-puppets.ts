@@ -17,7 +17,7 @@ export const puppetStages: Record<string, LaterStage> = {
         actors: { aria: { inspect: false, reaction: "surprise" } },
         items: [ground("signpost", 57, 42, 15), ground("puppet", 57, 28, 9), held("map", "leon")],
       },
-      { at: 6, actors: { aria: { x: 42, pose: "surprise" } } },
+      { at: 6, actors: { aria: { x: 35, pose: "surprise" } } },
       { at: 8, actors: { leon: { x: 50, pose: "offer" } } },
       {
         at: 10,

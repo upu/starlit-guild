@@ -136,7 +136,17 @@ export const waterwayStages: Record<string, ChapterStage> = {
         at: 13,
         aria: { x: 44, pose: "offer" },
         leon: { pose: "offer" },
-        items: [basket(), item("cloth", "cloth", 51, 25, { width: 9 })],
+        items: [basket(), item("cloth", "cloth", 4, 20, { actor: "aria", width: 9 })],
+        sequence: [
+          {
+            after: 900,
+            items: [basket(), item("cloth", "cloth", -4, 24, { actor: "leon", width: 9 })],
+          },
+          {
+            after: 2300,
+            items: [basket(), item("cloth", "cloth", 4, 20, { actor: "aria", width: 9 })],
+          },
+        ],
       },
       {
         at: 16,
@@ -180,12 +190,17 @@ export const waterwayStages: Record<string, ChapterStage> = {
           tools(),
           item("basket", "basket", 58, 14, { width: 10 }),
           item("remaining", "colony", 49, 13, { width: 7, glow: "dim" }),
-          item("collected", "colony", 58, 17, { width: 6 }),
+          item("collected", "colony", 58, 17, { width: 6, support: "basket" }),
           spatula(),
         ],
       },
       { at: 13, aria: { inspect: false, left: false }, leon: { inspect: false } },
-      { at: 16, aria: { pose: "offer" }, leon: { carry: true }, items: [tools(), basket("leon")] },
+      {
+        at: 16,
+        aria: { pose: "offer" },
+        leon: { carry: true },
+        items: [tools(), { ...basket("leon"), width: 10 }],
+      },
       {
         at: 17,
         aria: { inspect: true },
@@ -193,7 +208,7 @@ export const waterwayStages: Record<string, ChapterStage> = {
         items: [
           tools(),
           item("basket", "basket", 58, 14, { width: 10 }),
-          item("collected", "colony", 58, 17, { width: 6 }),
+          item("collected", "colony", 58, 17, { width: 6, support: "basket" }),
           spatula(),
         ],
       },
@@ -206,12 +221,13 @@ export const waterwayStages: Record<string, ChapterStage> = {
       { at: 1, extras: [keeper("explain", true), worker()] },
       {
         at: 2,
-        aria: { x: 40, inspect: true },
-        leon: { x: 54, inspect: true },
+        aria: { x: 40, seated: true },
+        leon: { x: 54, seated: true },
         extras: [worker()],
         items: [tools()],
       },
       { at: 5, extras: [keeper("point"), worker()] },
+      { at: 25, aria: { seated: false }, leon: { seated: false } },
     ],
   },
 };

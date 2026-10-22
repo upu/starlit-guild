@@ -111,7 +111,7 @@ export const licoStages: Record<string, LaterStage> = {
       { at: 37, actors: { lico: { pose: "think" } } },
       {
         at: 40,
-        actors: { aria: { x: 27, carry: true }, lico: { seated: false } },
+        actors: { aria: { x: 23, carry: true }, lico: { seated: false } },
         items: [
           plants(),
           ground("ledger", 77, 13, 8),
@@ -121,12 +121,12 @@ export const licoStages: Record<string, LaterStage> = {
       },
       {
         at: 42,
-        actors: { lico: { x: 73, pose: "surprise" } },
+        actors: { lico: { x: 78, bottom: 0, pose: "surprise" } },
         items: [
           plants(),
-          ground("ledger", 80, 15, 11),
+          ground("ledger", 86, -1, 8),
           held("basket", "aria"),
-          ground("dish", 71, 18, 10),
+          ground("dish", 71, -1, 6),
         ],
       },
       { at: 46, actors: { aria: { x: 24 }, leon: { pose: "offer" } } },

@@ -36,7 +36,12 @@ function carryingPose(actor: StageActor, moving: boolean, elapsed: number, reduc
 }
 
 function stationaryPose(actor: StageActor, elapsed: number, reduced: boolean) {
-  return { atlas: "conversation" as const, frame: stationaryFrame(actor, elapsed, reduced) };
+  const frame = stationaryFrame(actor, elapsed, reduced);
+  // Hand displacement in the registered 128px cell, relative to standing.
+  // Derive it from the displayed frame: walking/carrying override a seated cue.
+  const handDrop =
+    frame >= 10 && frame <= 12 ? 20 : frame === 13 ? 28 : frame === 6 || frame === 7 ? 24 : 0;
+  return { atlas: "conversation" as const, frame, handDrop };
 }
 
 function stationaryFrame(actor: StageActor, elapsed: number, reduced: boolean): number {

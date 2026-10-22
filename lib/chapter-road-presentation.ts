@@ -17,15 +17,15 @@ import {
   roadHasEnemies,
   workPoint,
   movingWork,
-  roadPuller,
   CHAPTER_ROAD_SPACING,
   ROAD_CARRY_DISTANCE,
 } from "./chapter-road.ts";
 import type { RoadPosition } from "./chapter-road-types.ts";
+import type { RoadViewport } from "./road-cart-layout.ts";
 import { roadHeroSize, roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
 import { spreadBattleParty } from "./road-party-formation.ts";
-import { arrangeCarriers } from "./road-carrier-formation.ts";
+import { arrangeCarriers, roadCarrierLead } from "./road-carrier-formation.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -223,7 +223,7 @@ function makeBattle(input: AdventureInput, frame: AdventureFrame): RoadBattle {
 }
 function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
-  const puller = run ? roadPuller(frame.quest, run) : null;
+  const puller = roadCarrierLead(frame.quest, run);
   return {
     background: frame.background,
     destination: ![
@@ -267,12 +267,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
 }
 function frontCarriers(run: Run | null, puller: string | null) {
   if (!run || !puller) return [];
-  const living = run.actors.map((actor) => actor.hero).filter((id) => run.health[id].hp > 0);
-  if (living.length < 4) return [puller];
-  const partner = ["leon", "finn", "aria", "mira"].find(
-    (id) => id !== puller && living.includes(id),
-  );
-  return partner ? [puller, partner] : [puller];
+  return [puller];
 }
 function enemyLabel(frame: AdventureFrame, id: string) {
   const target = frame.targets.find((target) => target.id === id);
@@ -294,7 +289,13 @@ function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: numb
     if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
   }
 }
-function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattle, look: RoadLook) {
+function addWork(
+  input: AdventureInput,
+  frame: AdventureFrame,
+  battle: RoadBattle,
+  look: RoadLook,
+  view: RoadViewport,
+) {
   const run = input.squad.run,
     road = run?.road;
   const kind = run ? encounter(frame.quest, run.node, run.nodes) : null;
@@ -310,7 +311,17 @@ function addWork(input: AdventureInput, frame: AdventureFrame, battle: RoadBattl
     remaining: run.target,
     total: run.targetMax,
   };
-  if (cargo && task === "carry") arrangeCarriers(frame.quest, run, battle, look.frontCarriers);
+  if (cargo && task === "carry") {
+    const carriers = arrangeCarriers(
+      frame.quest,
+      run,
+      battle,
+      look.frontCarriers,
+      view,
+      look.work.asset.includes("seedling-cart"),
+    );
+    look.workers = look.workers.filter((id) => carriers.includes(id));
+  }
   faceWorkers(battle, look, cargo, x);
 }
 function commandMotion(battle: RoadBattle, look: RoadLook) {
@@ -327,12 +338,13 @@ export function chapterRoadFrame(
   input: AdventureInput,
   reduced = false,
   worldWidth = 1400,
+  view: RoadViewport = { width: 560, height: 320 },
 ): { battle: RoadBattle; look: RoadLook } {
   const frame = adventureFrame(input),
     run = input.squad.run;
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
-  addWork(input, frame, battle, look);
+  addWork(input, frame, battle, look, view);
   spreadBattleParty(battle, look.workers);
   battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
   commandMotion(battle, look);
@@ -344,7 +356,7 @@ export function chapterRoadHit(
   point: { x: number; y: number },
   width: number,
   height: number,
-  battle = chapterRoadFrame(input).battle,
+  battle = chapterRoadFrame(input, false, 1400, { width, height }).battle,
 ): AdventureIntent {
   const size = roadHeroSize(width, height);
   const distance = (h: Traveller) =>

@@ -161,15 +161,32 @@ export const medicineStages: Record<string, LaterStage> = {
           npc("merchant", "もう一人の運び手", 72, "explain", true),
         ],
       },
-      { at: 6, actors: { mira: { x: 58, pose: "offer" } } },
+      {
+        at: 6,
+        actors: {
+          mira: { x: 38, bottom: 36, via: [{ x: 60, bottom: 42 }], carry: true, left: true },
+        },
+        items: [held("medicine", "mira", { width: 12 })],
+        sequence: [
+          {
+            after: 2000,
+            actors: { mira: { carry: false, pose: "offer" } },
+            items: [ground("medicine", 44, 32)],
+          },
+        ],
+      },
       {
         at: 10,
-        actors: { mira: { inspect: true }, aria: { pose: "think" }, leon: { pose: "think" } },
-        items: [held("map", "leon", { width: 12 }), ground("medicine", 51)],
+        actors: { mira: { pose: "offer" }, aria: { pose: "think" }, leon: { pose: "think" } },
+        items: [
+          held("map", "leon", { width: 12 }),
+          ground("medicine", 44, 32),
+          held("cloth", "mira", { width: 4 }),
+        ],
       },
       {
         at: 13,
-        actors: { mira: { inspect: false } },
+        actors: { mira: { x: 73, bottom: 14, via: [{ x: 60, bottom: 42 }], inspect: false } },
         items: [held("medicine", "mira"), held("map", "leon", { width: 12 })],
       },
     ],
