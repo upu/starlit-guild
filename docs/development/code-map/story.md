@@ -54,3 +54,5 @@
 3-4の勝手口・ノックと料理人の接近は `lib/story-stage-manor-door.ts`、展示台の石・覆い・鍵・光の測定は `lib/story-stage-manor-display.ts` と `lib/story-stage-manor-display-items.ts`。素材の切り出しと料理人・商人の共通縮尺への登録は `scripts/story-stage-manor-art.mjs`。フィンのノックは共通会話アトラス44・45番。到着後の接触、石の表裏と覆いの順、布の深度、腰の鍵の連続性、既存画素と頭幅・接地の維持は `tests/story-stage-manor.test.mjs`。
 
 3-6前半の門番への反応・鍋の受け渡し・料理人の退出は `lib/story-stage-survey-door.ts`。鍋本体と蓋、道具袋、磨き布、料理人12〜15番、門の背景は `scripts/story-stage-survey-art.mjs`。`StageItem.behindOwner` は背負う袋の前後関係を指定する。到着時刻・手元の接点・蓋の順序・退出中の持ち物追従・頭幅と接地は `tests/story-stage-survey-door.test.mjs`。
+
+3-6後半の下見・庭師への接近は `lib/story-stage-survey-garden.ts`、鉢・手袋・鍵・道具袋の持ち主と位置は `lib/story-stage-survey-garden-items.ts`。`StageActor.gloves` はフィンの共通アトラス46・47番（手袋を着けた手元／脱ぐ途中）を選ぶ。`StageExtra.limp` は庭師の足をかばう歩行と立位も表す。素材は `scripts/story-stage-survey-art.mjs` と `scripts/story-stage-review-art.mjs`。鍵の一回転、元の鍵との縮尺、手袋と鍵の返却、鉢の設置、アリア・ミラ・フィンの経路、既存46コマの維持は `tests/story-stage-survey-garden.test.mjs`。

@@ -50,6 +50,7 @@ export async function surveyAssets(root, emit) {
   for (const [sourceName, names] of [
     ["survey-pot", ["survey-pot", "pot-lid"]],
     ["survey-gear", ["tool-rucksack", "scrubbing-rag"]],
+    ["garden-props", ["garden-pot", "work-gloves"]],
   ]) {
     const raw = await readFile(new URL(`assets/source/story-stage/${sourceName}-v1.png`, root));
     const parts = await cells(raw, 2);
@@ -66,4 +67,10 @@ export async function surveyAssets(root, emit) {
   }
   const gate = await readFile(new URL("assets/source/story-stage/manor-gate-v1.png", root));
   await emit("manor-gate", gate, await sharp(gate).resize(960).webp({ lossless: true }).toBuffer());
+  const paths = await readFile(new URL("assets/source/story-stage/manor-back-paths-v1.png", root));
+  await emit(
+    "manor-back-paths",
+    paths,
+    await sharp(paths).resize(960).webp({ lossless: true }).toBuffer(),
+  );
 }

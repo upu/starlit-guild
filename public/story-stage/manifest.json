@@ -316,8 +316,8 @@
     "output": "4693b629db501eb58187464620dc248076178445dbc479ce4bcc9d0367505e07"
   },
   "finn-poses": {
-    "source": "d9484a29104b1dcf3620c916e1ff1951867e8240e870baeaa1430c6eb7299b02",
-    "output": "f9c49a562ef8dedf70dbb4a641645ff1e6fcc8231030d7ea22f0c673ee4c4206"
+    "source": "92b7fd6d6380215f43f40d086fa38c5424cfd94867ed43f3a33341427ad5085d",
+    "output": "cf4ab1a678a43243110113ef79e329e4937d130ecb7f72845a460cfce8be3f1f"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
@@ -703,8 +703,20 @@
     "source": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9",
     "output": "32c58818557802813dce863fc0f3174ca4dd1e2557ed454ae7b32e61b4f1860f"
   },
+  "prop-garden-pot": {
+    "source": "150403057fb5448dec854b9605271e78e41edf382befe4221f4a568cda3c5613",
+    "output": "42eaa0f08fcf4437d82647fbb43cfe6b92ddefb240901116a7b07b963eebaf88"
+  },
+  "prop-work-gloves": {
+    "source": "150403057fb5448dec854b9605271e78e41edf382befe4221f4a568cda3c5613",
+    "output": "a9f099ed7dc40a72945de417c5710a6373e5e9bba928c4e6fb35949b51938629"
+  },
   "manor-gate": {
     "source": "32f86d2a86c9e9ebbc404229b435588738095f7c0381609796a75afd6efbb3fa",
     "output": "e5c78efdef3ff45b5121cd177a4460d99564bc3e86eb97aebf2630f409e8b590"
+  },
+  "manor-back-paths": {
+    "source": "288a59183c1c49a03267199755d661fac9cf92ed38322f2a480d7c6811bf3be8",
+    "output": "006329c63696a50e1f09f2fccf398c286a7997db2e4a0dd5b22a875ab2715b2c"
   }
 }

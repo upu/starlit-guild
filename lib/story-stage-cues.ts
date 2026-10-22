@@ -26,6 +26,7 @@ export type StageActor = {
   /** Finn's two-frame fist tap on a door. */
   knock?: boolean;
   healing?: "treat" | "rise" | "steady";
+  gloves?: "worn" | "remove";
   bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
@@ -66,6 +67,7 @@ export type StoryStageCue = {
     | "manor-kitchen"
     | "manor-kitchen-open"
     | "manor-gate"
+    | "manor-back-paths"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -254,6 +256,8 @@ export type StageItem = {
     | "pot-lid"
     | "tool-rucksack"
     | "scrubbing-rag"
+    | "garden-pot"
+    | "work-gloves"
     | "key"
     | "juice"
     | "ale"

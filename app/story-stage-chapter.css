@@ -74,7 +74,12 @@
 .story-stage-extra:is([data-npc="worker"], [data-npc="cook"]) .story-stage-extra-sprite {
   background-size: 400% 400%;
 }
-.story-stage-item:is([data-art="survey-pot"], [data-art="tool-rucksack"]) {
+.story-stage-item:is(
+  [data-art="survey-pot"],
+  [data-art="tool-rucksack"],
+  [data-art="garden-pot"],
+  [data-art="work-gloves"]
+) {
   aspect-ratio: 1;
 }
 .story-stage-item[data-art="pot-lid"] {
