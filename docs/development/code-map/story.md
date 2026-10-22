@@ -28,3 +28,5 @@
 2-7の射撃・蜜の回収・布への受け渡しとお辞儀は `lib/story-stage-blockade-recovery.ts`。人形の歩行・膝つき・お辞儀は `lib/story-stage-figure.ts`、NPCの奥行きを含む補間は `lib/story-stage-extra-travel.ts`。素材登録は `scripts/story-stage-puppet-art.mjs`、足元・縮尺・手渡し位置・NPCの台詞内連続動作は `tests/story-stage-puppet-motion.test.mjs` を参照する。
 
 2-7後半の控え・道標・荷車は `lib/story-stage-blockade-road.ts`、小人形の抱き上げ・蜜の収納・手当ては `lib/story-stage-blockade-care.ts`。物に載せた荷物は `StageItem.carrier`、袋の中身は `stored` で保持する。`lib/story-stage-cargo.ts` が親から先に描画位置を計算し、`lib/story-stage-props.ts` が向き・接地・重なりを受け渡す。運び手の歩行・記録・低い姿勢と運搬用小物の素材登録は `scripts/story-stage-carrier-art.mjs`、検査は `tests/story-stage-cargo.test.mjs`。
+
+会話送り・台詞内の姿勢変更を挟む移動は `lib/story-stage-travel.ts` の `stageRoute`。表示位置と未通過の経由点を一緒に引き継ぎ、行き先または指定経路が変わった場合だけ経路を作り直す。NPCも `lib/story-stage-extra-travel.ts` から同じ処理を使う。中断前後の位置・到着時刻と全章の指定経路は `tests/story-stage-route-continuity.test.mjs`。

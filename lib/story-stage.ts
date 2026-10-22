@@ -155,6 +155,7 @@ export function sampleStageActor(
   return {
     x,
     bottom: travel.bottom,
+    ...(travel.route ? { route: travel.route } : {}),
     ...actorPose(actor, moving, elapsed, reduced),
     visible: actor.visible !== false,
     left: actor.carry && actor.lane === undefined && !actor.via ? actor.left : travel.left,

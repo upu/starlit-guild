@@ -8,17 +8,34 @@ export type StagePosition = {
   onChair?: boolean;
   mirrored?: boolean;
   depth?: number;
+  route?: { key: string; remaining: { x: number; bottom: number }[] };
 };
 const distance = (a: StagePosition, b: StagePosition) =>
   Math.hypot(b.x - a.x, (((b.bottom ?? 14) - (a.bottom ?? 14)) * 2) / 3);
 
+export function stageRoute(
+  actor: Pick<StageActor, "x" | "bottom" | "via" | "lane">,
+  origin: StagePosition,
+  defaultBottom = 14,
+) {
+  const target = { x: actor.x, bottom: actor.bottom ?? defaultBottom };
+  const start = { ...origin, bottom: origin.bottom ?? defaultBottom };
+  const key = JSON.stringify([target.x, target.bottom, actor.via ?? null, actor.lane ?? null]);
+  if (distance(start, target) < 0.1) return { key, points: [target] };
+  if (origin.route?.key === key) return { key, points: [start, ...origin.route.remaining] };
+  const via =
+    actor.via ??
+    (actor.lane === undefined
+      ? []
+      : [
+          { x: start.x, bottom: actor.lane },
+          { x: actor.x, bottom: actor.lane },
+        ]);
+  return { key, points: [start, ...via, target] };
+}
+
 export function actorJourney(actor: StageActor, origin: StagePosition) {
-  const target = { x: actor.x, bottom: actor.bottom ?? 14 };
-  if (distance(origin, target) < 0.1) return [target];
-  if (actor.via) return [origin, ...actor.via, target];
-  return actor.lane === undefined
-    ? [origin, target]
-    : [origin, { x: origin.x, bottom: actor.lane }, { x: actor.x, bottom: actor.lane }, target];
+  return stageRoute(actor, origin).points;
 }
 
 export function journeyDuration(actor: StageActor, origin: StagePosition) {
@@ -31,8 +48,8 @@ export function sampleJourney(
   origin: StagePosition,
   elapsed: number,
   reduced: boolean,
-) {
-  const points = actorJourney(actor, origin);
+): StagePosition & { moving: boolean; left: boolean } {
+  const { key, points } = stageRoute(actor, origin);
   let remaining = Math.max(0, elapsed) / 34;
   for (let i = 1; i < points.length && !reduced; i++) {
     const from = points[i - 1],
@@ -42,9 +59,12 @@ export function sampleJourney(
       const t = remaining / length;
       return {
         x: from.x + (to.x - from.x) * t,
-        bottom: (from.bottom ?? 14) + ((to.bottom ?? 14) - (from.bottom ?? 14)) * t,
+        bottom: from.bottom + (to.bottom - from.bottom) * t,
         moving: true,
         left: Math.abs(to.x - from.x) > 0.1 ? to.x < from.x : (origin.left ?? actor.left),
+        ...(actor.via || actor.lane !== undefined
+          ? { route: { key, remaining: points.slice(i) } }
+          : {}),
       };
     }
     remaining -= length;
