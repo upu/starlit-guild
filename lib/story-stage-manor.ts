@@ -1,3 +1,5 @@
+import { receptionWell } from "./story-stage-reception-well.ts";
+import { receptionDisplay } from "./story-stage-reception-display.ts";
 import { manorDoor } from "./story-stage-manor-door.ts";
 import { manorDisplay } from "./story-stage-manor-display.ts";
 import { surveyDoor } from "./story-stage-survey-door.ts";
@@ -19,40 +21,8 @@ export const manorStages: Record<string, LaterStage> = {
   "riverside-manor-return": manorDisplay,
   "manor-survey-departure": surveyDoor,
   "manor-survey-return": surveyGarden,
-  "garden-reception-departure": scene(
-    "manor-garden",
-    quartet(),
-    [
-      { at: 0, items: [ground("handcart", 63, 28, 25), held("tools", "leon")] },
-      { at: 2, actors: { aria: { x: 33 } } },
-      { at: 4, actors: { aria: { x: 20, pose: "think" } } },
-      { at: 6, actors: { leon: { reaction: "surprise" } }, extras: [servant()] },
-      {
-        at: 10,
-        actors: { leon: { inspect: true } },
-        items: [ground("handcart", 63, 28, 25), ground("tools", 72, 36, 12)],
-      },
-      { at: 12, actors: { aria: { inspect: true }, leon: { inspect: false } } },
-      { at: 14, items: [held("map", "leon"), ground("handcart", 63, 28, 25)] },
-      { at: 15, actors: { aria: { inspect: false, pose: "offer" } } },
-    ],
-    { exit: ["aria", "leon", "mira", "finn"] },
-  ),
-  "garden-reception-return": scene("manor-garden", quartet(), [
-    { at: 0, actors: { aria: { inspect: true } }, items: [table(51), onTable("cloth", 51, 14)] },
-    { at: 1, actors: { aria: { inspect: false } } },
-    { at: 2, extras: [servant()] },
-    { at: 7, actors: { aria: { pose: "offer" } } },
-    { at: 10, actors: { leon: { pose: "offer" } } },
-    {
-      at: 13,
-      items: [table(51), onTable("cloth", 51, 14), held("cloth", "leon", { id: "spare-cloth" })],
-    },
-    {
-      at: 18,
-      items: [table(51), onTable("cloth", 51, 14), held("cloth", "finn", { id: "spare-cloth" })],
-    },
-  ]),
+  "garden-reception-departure": receptionWell,
+  "garden-reception-return": receptionDisplay,
   "keystone-night-road-departure": scene("manor-garden", quartet(), [
     { at: 0, night: true, items: [table(57), onTable("keystone", 57)], extras: [servant()] },
     { at: 2, actors: { finn: { x: 76, inspect: true } } },

@@ -293,5 +293,17 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["stone-storeroom"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-well-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-well"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-display-back-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-display-back"] }]
   }
 ]

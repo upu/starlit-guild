@@ -56,3 +56,6 @@
 3-6前半の門番への反応・鍋の受け渡し・料理人の退出は `lib/story-stage-survey-door.ts`。鍋本体と蓋、道具袋、磨き布、料理人12〜15番、門の背景は `scripts/story-stage-survey-art.mjs`。`StageItem.behindOwner` は背負う袋の前後関係を指定する。到着時刻・手元の接点・蓋の順序・退出中の持ち物追従・頭幅と接地は `tests/story-stage-survey-door.test.mjs`。
 
 3-6後半の下見・庭師への接近は `lib/story-stage-survey-garden.ts`、鉢・手袋・鍵・道具袋の持ち主と位置は `lib/story-stage-survey-garden-items.ts`。`StageActor.gloves` はフィンの共通アトラス46・47番（手袋を着けた手元／脱ぐ途中）を選ぶ。`StageExtra.limp` は庭師の足をかばう歩行と立位も表す。素材は `scripts/story-stage-survey-art.mjs` と `scripts/story-stage-review-art.mjs`。鍵の一回転、元の鍵との縮尺、手袋と鍵の返却、鉢の設置、アリア・ミラ・フィンの経路、既存46コマの維持は `tests/story-stage-survey-garden.test.mjs`。
+
+
+3-7の井戸・厨房・道の間違い・荷車の退出は `lib/story-stage-reception-well.ts`、袋・縄・留め具は `lib/story-stage-reception-well-items.ts`。展示台裏の目印・布の受け渡しは `lib/story-stage-reception-display.ts`、共通荷車と展示物は `lib/story-stage-reception-items.ts`。料理人の手は `lib/story-stage-extra-wrists.ts` → `app/story-stage-extra-motion.ts` から位置情報へ渡し、`StageItem.wristAnchor: "top"` は袋の取っ手を手へ合わせる。NPC所有の手元小物も `stageItemVisible` で判定する。荷車の連続性・受け渡しの到着時刻・退出の距離・袋の歩行追従・展示物の縮尺は `tests/story-stage-reception.test.mjs`。

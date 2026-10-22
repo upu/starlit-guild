@@ -2,6 +2,7 @@ import { type StagePosition, type StoryStageCue } from "@/lib/story-stage";
 import type { StageExtra } from "@/lib/story-stage-cues";
 import { stageExtraFrame, stageExtraRows } from "@/lib/story-stage-figure";
 import { sampleExtraTravel } from "@/lib/story-stage-extra-travel";
+import { stageExtraWrist } from "@/lib/story-stage-extra-wrists";
 
 export function extraPainter(
   stage: HTMLElement,
@@ -21,7 +22,10 @@ export function extraPainter(
     for (const { extra, origin, element } of extras) {
       const at = sampleExtraTravel(extra, origin, elapsed, reduced);
       const { left } = at;
-      positions.set(`extra:${extra.id}`, at);
+      positions.set(`extra:${extra.id}`, {
+        ...at,
+        wrist: stageExtraWrist(extra, at.moving && !reduced, elapsed),
+      });
       if (!element) continue;
       element.style.left = `${String(at.x)}%`;
       element.style.bottom = `${String(at.bottom)}%`;

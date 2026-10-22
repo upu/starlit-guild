@@ -6,7 +6,7 @@ export const boxTransferDuration = 650;
 
 export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
   if (item.stored) return false;
-  if (item.wrist && !positions.get(item.actor ?? "")?.wrist) return false;
+  if (item.wrist && !positions.get(item.actor ?? `extra:${item.extra ?? ""}`)?.wrist) return false;
   const sitter = item.seatFor && positions.get(item.seatFor);
   return (
     !sitter ||
@@ -57,7 +57,9 @@ function wristTarget(item: StageItem, cue: StoryStageCue, owner?: StagePosition)
     x: owner.x + (owner.wrist.x - 64) * pixel * (owner.left ? -1 : 1),
     bottom:
       // The actor element ends at y=128; y=120 is the foot inside that element.
-      (owner.bottom ?? 14) + (128 - owner.wrist.y) * pixel * 1.5 - ((item.width ?? 2) / 1.3) * 0.75,
+      (owner.bottom ?? 14) +
+      (128 - owner.wrist.y) * pixel * 1.5 -
+      (item.wristAnchor === "top" ? (item.width ?? 2) * 1.5 : ((item.width ?? 2) / 1.3) * 0.75),
   };
 }
 

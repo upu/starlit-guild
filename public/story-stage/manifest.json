@@ -718,5 +718,25 @@
   "manor-back-paths": {
     "source": "288a59183c1c49a03267199755d661fac9cf92ed38322f2a480d7c6811bf3be8",
     "output": "006329c63696a50e1f09f2fccf398c286a7997db2e4a0dd5b22a875ab2715b2c"
+  },
+  "prop-snag-rope": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "ec1874c37d289b8a1781e07add77318027f753e2902919dcaa0cb8fe1205387a"
+  },
+  "prop-iron-fastener": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "4b2856bd2b9a9ea6310ca71a9eb511f5dee9ceaaec2658c8739582b7c9b9e392"
+  },
+  "prop-cart-drape": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "79d41799b96d234f0d573384c71dd0586596566217fce5a9bb2bbf87ee5f6fce"
+  },
+  "manor-well": {
+    "source": "df8d710044cd756b7448adf32a63712c1c37ea52dde0103bd4e913066b419516",
+    "output": "32bedea6bc24dbe1a5d8bbd5540036ad55f850614a3bbc1a55f0ebc6477be28f"
+  },
+  "manor-display-back": {
+    "source": "5bc030746911265a4526f6c9b9d28384d934cafb71426b0382a2decbc7461a76",
+    "output": "ae7ef5c7dc9d9726b27e3675da386d87b8a38c78877ec2b5c6e6710056fb55b0"
   }
 }

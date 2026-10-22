@@ -1,3 +1,4 @@
+import { receptionAssets } from "./story-stage-reception-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -160,6 +161,7 @@ await keystoneAssets(root, emit);
 await manorAssets(root, emit);
 await stoneSelectionAssets(root, emit);
 await surveyAssets(root, emit);
+await receptionAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

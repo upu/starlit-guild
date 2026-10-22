@@ -68,6 +68,8 @@ export type StoryStageCue = {
     | "manor-kitchen-open"
     | "manor-gate"
     | "manor-back-paths"
+    | "manor-well"
+    | "manor-display-back"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -258,6 +260,9 @@ export type StageItem = {
     | "scrubbing-rag"
     | "garden-pot"
     | "work-gloves"
+    | "snag-rope"
+    | "iron-fastener"
+    | "cart-drape"
     | "key"
     | "juice"
     | "ale"
@@ -287,6 +292,8 @@ export type StageItem = {
   backstep?: boolean;
   /** Dressing attached to the displayed arm; hidden when that arm is behind the body. */
   wrist?: boolean;
+  /** Suspend a square prop by its top edge, for example a bag held by its handle. */
+  wristAnchor?: "top";
   /** Contents remain attached to their container after being put away. */
   stored?: boolean;
   /** Surface supporting or being touched by this object, independent of its height. */
