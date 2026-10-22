@@ -1,6 +1,13 @@
 import type { RoadLook } from "./chapter-road-presentation.ts";
 import { roadScale, roadX } from "./road-layout.ts";
 import type { RoadBattle, RoadEnemy, Traveller } from "./road-view.ts";
+import {
+  avoidPartyStep,
+  partyClearance,
+  partyFootClearance,
+  spacedPartyTargets,
+  type PartyTarget,
+} from "./road-party-spacing.ts";
 
 type Position = { x: number; lane: number };
 type Frame = { battle: RoadBattle; look: RoadLook };
@@ -79,6 +86,51 @@ function followEffects(before: Traveller[], battle: RoadBattle) {
   });
 }
 
+function carryingCart(battle: RoadBattle) {
+  return (
+    battle.gathering?.kind === "cargo" &&
+    battle.gathering.task === "carry" &&
+    !battle.enemies.some((enemy) => enemy.hp > 0)
+  );
+}
+
+function partyTargets(frame: Frame, camera: number, width: number, reduced: boolean) {
+  const { battle, look } = frame;
+  const carrying = carryingCart(battle);
+  return battle.heroes.map((hero): PartyTarget => {
+    const working = look.workers.includes(hero.id);
+    // Escort lanes are part of the cart formation too.
+    const target = reduced ? hero : roaming(hero, battle, working || carrying);
+    return {
+      ...target,
+      id: hero.id,
+      facing: hero.facing,
+      fixed: working || hero.hp <= 0 || !!hero.paralyzed,
+      x: (roadX(target.x, camera, width, battle.stage) / width) * 560,
+    };
+  });
+}
+
+function atWorkPosition(drawn: Traveller, original: Traveller, width: number, battle: RoadBattle) {
+  // Allow the small horizontal lag of a moving cart, but never use a work pose
+  // while taking a different lane around a companion.
+  const dx = Math.abs(drawn.x - original.x) * roadScale(width, battle.stage);
+  return (
+    dx <= (carryingCart(battle) ? 12 : width / 280) && Math.abs(drawn.lane - original.lane) <= 0.02
+  );
+}
+
+function stepFacing(
+  hero: Traveller,
+  previous: Position | undefined,
+  position: Position,
+  battle: RoadBattle,
+) {
+  const dx = previous ? position.x - previous.x : 0;
+  if (Math.abs(dx) < 0.1 || battle.enemies.some((enemy) => enemy.hp > 0)) return hero.facing;
+  return dx > 0 ? 1 : -1;
+}
+
 // Renderer-owned continuity only. Never persist these positions or use them for combat range.
 export class RoadMotion {
   private key = "";
@@ -86,7 +138,7 @@ export class RoadMotion {
   private camera = 0;
   private positions = new Map<string, Position>();
 
-  update(frame: Frame, key: string, width: number, reduced = false): Frame {
+  update(frame: Frame, key: string, width: number, reduced = false, height = 320): Frame {
     const { battle: raw, look } = frame;
     // React snapshots can correct the projected clock backwards by a few milliseconds.
     // Only a different adventure (or reduced motion) may discard the visible position.
@@ -97,44 +149,62 @@ export class RoadMotion {
     this.key = key;
     this.at = raw.time;
     const battle = { ...raw, distance: this.camera };
-    const workers = new Set(look.workers);
-    const carrying =
-      raw.gathering?.kind === "cargo" &&
-      raw.gathering.task === "carry" &&
-      !raw.enemies.some((enemy) => enemy.hp > 0);
-    battle.heroes = raw.heroes.map((hero) => {
-      // Escort lanes are part of the cart formation too. Roaming around the
-      // workers makes companions cross faces and the cart while transporting.
-      const target = reduced ? hero : roaming(hero, raw, workers.has(hero.id) || carrying);
-      const drawn = this.moveHero(hero, target, battle, width, dt);
-      if (carrying && workers.has(hero.id)) drawn.facing = 1;
-      if (
-        !carrying &&
-        (Math.abs(drawn.x - target.x) > 5 || Math.abs(drawn.lane - target.lane) > 0.02)
-      )
-        workers.delete(hero.id);
-      return drawn;
-    });
     for (const id of this.positions.keys())
       if (!raw.heroes.some((hero) => hero.id === id)) this.positions.delete(id);
+    const gap = partyClearance(width, height);
+    const targets = spacedPartyTargets(partyTargets(frame, battle.distance, width, reduced), gap);
+    battle.heroes = this.moveParty(targets, battle, width, dt, partyFootClearance(width, height));
+    const workers = look.workers.filter((id) => {
+      const original = raw.heroes.find((hero) => hero.id === id);
+      const drawn = battle.heroes.find((hero) => hero.id === id);
+      return original && drawn && atWorkPosition(drawn, original, width, battle);
+    });
+    if (carryingCart(raw)) this.faceAlongCart(battle, raw, width);
     followEffects(raw.heroes, battle);
-    return { battle, look: { ...look, workers: [...workers] } };
+    return { battle, look: { ...look, workers } };
+  }
+
+  private faceAlongCart(battle: RoadBattle, raw: RoadBattle, width: number) {
+    for (const drawn of battle.heroes) {
+      const original = raw.heroes.find((hero) => hero.id === drawn.id);
+      if (original && atWorkPosition(drawn, original, width, battle)) drawn.facing = 1;
+    }
+  }
+
+  private moveParty(
+    targets: PartyTarget[],
+    battle: RoadBattle,
+    width: number,
+    dt: number,
+    gap: Position,
+  ) {
+    const placed = new Map<string, Traveller>();
+    for (const target of targets) {
+      const hero = battle.heroes.find((h) => h.id === target.id);
+      if (hero) placed.set(hero.id, this.moveHero(hero, target, battle, width, dt, gap));
+    }
+    return battle.heroes.map((hero) => placed.get(hero.id) ?? hero);
   }
 
   private moveHero(
     hero: Traveller,
-    target: Position,
+    target: PartyTarget,
     battle: RoadBattle,
     width: number,
     dt: number,
+    gap: Position,
   ): Traveller {
     // Width-normalized screen positions also absorb camera/forest-to-puppet framing changes.
-    const x = (roadX(target.x, battle.distance, width, battle.stage) / width) * 560;
+    const x = target.x;
     const previous = this.positions.get(hero.id);
-    const position = {
+    const wanted = {
       x: previous ? approach(previous.x, x, dt, 280) : x,
       lane: previous ? approach(previous.lane, target.lane, dt, 0.9) : target.lane,
     };
+    const blockers = [...this.positions].filter(([id]) => id !== hero.id).map(([, p]) => p);
+    const position = previous
+      ? avoidPartyStep(previous, wanted, target, blockers, gap, dt)
+      : wanted;
     this.positions.set(hero.id, position);
     const moving = Math.abs(x - position.x) > 2 || Math.abs(target.lane - position.lane) > 0.012;
     const scale = roadScale(width, battle.stage);
@@ -143,12 +213,7 @@ export class RoadMotion {
       ...hero,
       x: ((position.x / 560) * width - origin) / scale,
       lane: position.lane,
-      facing:
-        moving && !battle.enemies.some((enemy) => enemy.hp > 0) && Math.abs(x - position.x) > 3
-          ? x > position.x
-            ? 1
-            : -1
-          : hero.facing,
+      facing: stepFacing(hero, previous, position, battle),
       walking: hero.hp > 0 && !hero.paralyzed && (hero.walking || moving),
     };
   }

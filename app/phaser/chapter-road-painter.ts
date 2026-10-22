@@ -128,7 +128,13 @@ export class ChapterRoadPainter {
     );
     const run = input.squad.run;
     const key = `${input.squad.id}:${run?.quest ?? "idle"}:${String(run?.started)}`;
-    this.drawn = this.motion.update(frame, key, width, this.runtime.reduced);
+    this.drawn = this.motion.update(
+      frame,
+      key,
+      width,
+      this.runtime.reduced,
+      this.scene.scale.height,
+    );
     const { battle, look } = this.drawn;
     this.painter.paint(battle, this.runtime.reduced, look);
   }

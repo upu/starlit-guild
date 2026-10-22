@@ -32,7 +32,11 @@ import {
   enemyDisplayHeight,
 } from "./road-enemy-appearance";
 
-type Figure = { image: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text };
+type Figure = {
+  image: Phaser.GameObjects.Image;
+  label: Phaser.GameObjects.Text;
+  bar: Phaser.GameObjects.Graphics;
+};
 export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
 
 export class RoadPainter {
@@ -112,6 +116,7 @@ export class RoadPainter {
   private makeFigure(asset: string, frame: string, name: string): Figure {
     return {
       image: this.scene.add.image(0, 0, asset, frame).setOrigin(0.5, 0.9),
+      bar: this.scene.add.graphics(),
       label: this.scene.add
         .text(0, 0, name, {
           fontFamily: "sans-serif",
@@ -170,10 +175,17 @@ export class RoadPainter {
     this.ground.fillStyle(0x132f25, 0.36).fillRect(0, 0, width, height);
   }
 
-  private health(x: number, y: number, size: number, ratio: number, enemy = false) {
+  private health(
+    x: number,
+    y: number,
+    size: number,
+    ratio: number,
+    enemy = false,
+    graphics = this.bars,
+  ) {
     const width = size * 0.61;
-    this.bars.fillStyle(0x0a241d, 0.9).fillRoundedRect(x - width / 2, y, width, 5, 2);
-    this.bars
+    graphics.fillStyle(0x0a241d, 0.9).fillRoundedRect(x - width / 2, y, width, 5, 2);
+    graphics
       .fillStyle(enemy ? 0xefb390 : 0xaad6a0)
       .fillRoundedRect(x - width / 2, y, width * ratio, 5, 2);
   }
@@ -224,7 +236,8 @@ export class RoadPainter {
       .setVisible(!!hero.paralyzed)
       .setText("麻痺")
       .setPosition(x, y - size);
-    this.health(x, y + 4, size, hero.hp / hero.maxHp);
+    figure.bar.setDepth(10 + hero.lane * 10 + 0.01);
+    this.health(x, y + 4, size, hero.hp / hero.maxHp, false, figure.bar);
   }
 
   private paintEnemy(state: RoadBattle, enemy: RoadEnemy, reduced: boolean) {
@@ -264,8 +277,9 @@ export class RoadPainter {
       .setPosition(x, y + 14)
       .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
       .setText(enemyLabel(enemy, this.look));
+    figure.bar.setDepth(10 + enemy.lane * 10 + 0.01);
     if (enemy.kind !== "pumpety" && !enemy.pose)
-      this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true);
+      this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true, figure.bar);
   }
 
   private workAppearance(cargo: boolean) {
@@ -324,15 +338,18 @@ export class RoadPainter {
     this.bars.clear();
     this.paintGathering(state, look);
     for (const [id, figure] of this.enemies) {
+      figure.bar.clear();
       if (enemyPresent(state, id, reduced)) continue;
       figure.image.destroy();
       figure.label.destroy();
+      figure.bar.destroy();
       this.enemies.delete(id);
     }
     for (const [id, figure] of this.heroes) {
       const active = state.heroes.some((hero) => hero.id === id);
       figure.image.setVisible(active);
       figure.label.setVisible(active);
+      figure.bar.clear().setVisible(active);
     }
     for (const hero of state.heroes) this.paintHero(state, hero, reduced);
     for (const enemy of state.enemies)
