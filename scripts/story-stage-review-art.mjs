@@ -78,8 +78,26 @@ export async function reviewHero(root, name, raw, original) {
   if (walk)
     for (const [col, index] of [8, 9, 22, 23].entries())
       frames[index] = await registerWorkPose(await sheetFrame(walk, col, row, 4, 2), head, 96);
+  while (frames.length < 24) frames.push(frames[0]);
+  const chair = await source(root, `${id}-chair-v1`);
+  for (let i = 0; i < 8; i++)
+    frames.push(
+      await registerWorkPose(await sheetFrame(chair, i % 4, Math.floor(i / 4), 4, 2), head, 88),
+    );
+  const bed = id === "mira" ? await source(root, "mira-bed-v1") : null;
+  for (let i = 0; i < 4; i++)
+    frames.push(
+      bed
+        ? await registerWorkPose(
+            await sheetFrame(bed, i, 0, 4, 1),
+            head,
+            undefined,
+            i === 3 ? { headCenter: 94 } : {},
+          )
+        : frames[0],
+    );
   const image = await sharp({
-    create: { width: 512, height: 768, channels: 4, background: "#00000000" },
+    create: { width: 512, height: 1152, channels: 4, background: "#00000000" },
   })
     .composite(
       frames.map((f, i) => ({
@@ -91,11 +109,41 @@ export async function reviewHero(root, name, raw, original) {
     .webp({ lossless: true })
     .toBuffer();
   return {
-    raw: Buffer.concat([raw, home, rest, carry, actions, adventure, ...(walk ? [walk] : [])]),
+    raw: Buffer.concat([
+      raw,
+      home,
+      rest,
+      carry,
+      actions,
+      adventure,
+      chair,
+      ...(bed ? [bed] : []),
+      ...(walk ? [walk] : []),
+    ]),
     image,
   };
 }
 export async function reviewProps(root, emit) {
+  const diningTable = await source(root, "dining-table-v1");
+  await emit(
+    "prop-dining-table",
+    diningTable,
+    await sharp(diningTable)
+      .extract(await spriteBounds(diningTable))
+      .resize({ width: 384 })
+      .webp({ lossless: true })
+      .toBuffer(),
+  );
+  const chair = await source(root, "chair-v1");
+  await emit(
+    "prop-chair",
+    chair,
+    await sharp(chair)
+      .extract(await spriteBounds(chair))
+      .resize({ width: 192 })
+      .webp({ lossless: true })
+      .toBuffer(),
+  );
   const actions = await source(root, "merrill-walk-v1"),
     merrill = await readFile(new URL("public/story-stage/merrill-poses.webp", root));
   const head = await walkingHead(merrill),

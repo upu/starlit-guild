@@ -11,6 +11,7 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
   if (actor.shawl) return shawlPose(actor, moving, elapsed, reduced);
   if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
     return carryingPose(actor, moving, elapsed, reduced);
+  if (actor.bed) return stationaryPose(actor, elapsed, reduced);
   if (moving && !actor.pull)
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
@@ -39,12 +40,29 @@ function stationaryPose(actor: StageActor, elapsed: number, reduced: boolean) {
   const frame = stationaryFrame(actor, elapsed, reduced);
   // Hand displacement in the registered 128px cell, relative to standing.
   // Derive it from the displayed frame: walking/carrying override a seated cue.
-  const handDrop =
-    frame >= 10 && frame <= 12 ? 20 : frame === 13 ? 28 : frame === 6 || frame === 7 ? 24 : 0;
-  return { atlas: "conversation" as const, frame, handDrop };
+  return {
+    atlas: "conversation" as const,
+    frame,
+    handDrop: poseHandDrop(frame),
+    onChair: actor.visible !== false && frame >= 24 && frame < 32,
+  };
+}
+
+function poseHandDrop(frame: number) {
+  if (frame >= 24) return 8;
+  if (frame >= 10 && frame <= 12) return 20;
+  if (frame === 13) return 28;
+  return frame === 6 || frame === 7 ? 24 : 0;
+}
+
+function chairFrame(actor: StageActor) {
+  const frames = { idle: 0, greet: 1, surprise: 3, think: 3, offer: 1, tease: 2 };
+  return 24 + (actor.left ? 4 : 0) + frames[actor.pose ?? "idle"];
 }
 
 function stationaryFrame(actor: StageActor, elapsed: number, reduced: boolean): number {
+  if (actor.bed) return 32 + ["rest", "edge", "breakfast", "sleep"].indexOf(actor.bed);
+  if (actor.seated && actor.chair) return chairFrame(actor);
   if (actor.shoulder) return 19 + Number(actor.pose === "tease");
   if (actor.writing) return cycle(17, elapsed, 400, !reduced);
   if (actor.sword) return 21;

@@ -3,6 +3,7 @@ import {
   transferBox,
   stageItemTarget,
   stageItemDepth,
+  stageItemVisible,
   type BoxPosition,
 } from "@/lib/story-stage-props";
 import type { StageItem } from "@/lib/story-stage-cues";
@@ -35,6 +36,7 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         settled: Math.abs(at.x - target.x) + Math.abs(at.bottom - target.bottom) < 0.001,
       });
       if (element) {
+        element.hidden = !stageItemVisible(item, positions);
         paintItem(element, item, at, tilt);
         element.style.zIndex = String(stageItemDepth(item, cue, positions));
       }
@@ -46,7 +48,7 @@ function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt:
   element.style.left = `${String(at.x)}%`;
   element.style.bottom = `${String(at.bottom)}%`;
   element.style.width = `${String(item.width ?? 10)}%`;
-  element.style.transform = `translateX(-50%) rotate(${String(tilt)}deg)`;
+  element.style.transform = `translateX(-50%) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
   if (item.glow) element.dataset.glow = item.glow;

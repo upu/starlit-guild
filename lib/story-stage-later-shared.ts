@@ -10,8 +10,10 @@ export type LaterBeat = {
   cast?: StageActor[];
   items?: StageItem[];
   extras?: StageExtra[];
+  furniture?: StageItem[];
   background?: StoryStageCue["background"];
   night?: boolean;
+  cut?: boolean;
   sequence?: { after: number; actors?: LaterBeat["actors"]; items?: StageItem[] }[];
 };
 export type LaterStage = {
@@ -20,8 +22,10 @@ export type LaterStage = {
   beats: LaterBeat[];
   night?: boolean;
   exit?: ResidentId[];
+  exitLanes?: Partial<Record<ResidentId, number>>;
   initial?: StoryStageCue["initial"];
   cell?: number;
+  furniture?: StageItem[];
 };
 export const actor = (id: ResidentId, x: number, extra: Partial<StageActor> = {}): StageActor => ({
   id,
@@ -74,44 +78,39 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
     items: StageItem[] = [],
     extras: StageExtra[] = [];
   let background = definition.background,
-    night = definition.night;
+    night = definition.night,
+    furniture = definition.furniture ?? [];
   const initial = { ...Object.fromEntries(actors.map((a) => [a.id, a.x])), ...definition.initial };
+  const initialBottom = Object.fromEntries(actors.map((a) => [a.id, a.bottom ?? 14]));
   return story.lines.map((line, index): StoryStageCue => {
     const beat = definition.beats.find((b) => b.at === index);
-    actors = (beat?.cast ?? actors).map((a) => ({
-      ...a,
-      lane: undefined,
-      reaction: undefined,
-      ...(line.speaker === a.id
-        ? { pose: speakingPose(line), inspect: false, packing: false, writing: false }
-        : {}),
-      ...beat?.actors?.[a.id],
-    }));
+    actors = speakingActors(actors, line, beat);
     items = beat?.items ?? items;
     extras = (beat?.extras ?? extras).map((extra) => ({
       ...extra,
       speaking: extra.id === line.speaker || (beat?.extras ? extra.speaking : false),
     }));
     background = beat?.background ?? background;
+    furniture = beat?.furniture ?? furniture;
     night = beat?.night ?? night;
     const openingActors = actors,
       openingItems = items;
     const sequence = beat?.sequence?.map((step) => {
       actors = actors.map((a) => ({ ...a, ...step.actors?.[a.id] }));
       items = step.items ?? items;
-      return { after: step.after, actors, items };
+      return { after: step.after, actors, items: [...furniture, ...items] };
     });
     return {
       description: `${story.place}。${line.text}`,
       actors: openingActors,
-      items: openingItems.filter(
+      items: [...furniture, ...openingItems].filter(
         (item) =>
           !item.actor || openingActors.some((a) => a.id === item.actor && a.visible !== false),
       ),
       extras,
       background,
       night,
-      initial,
+      ...stageStart(openingActors, beat, { initial, initialBottom }),
       cell: stageCell(definition),
       luggage: false,
       hideCart: true,
@@ -119,6 +118,32 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
       sequence,
     };
   });
+}
+
+function speakingActors(actors: StageActor[], line: StoryLine, beat?: LaterBeat) {
+  return (beat?.cast ?? actors).map((a) => ({
+    ...a,
+    lane: undefined,
+    reaction: undefined,
+    ...(line.speaker === a.id
+      ? { pose: speakingPose(line), inspect: false, packing: false, writing: false }
+      : {}),
+    ...beat?.actors?.[a.id],
+  }));
+}
+
+function stageStart(
+  actors: StageActor[],
+  beat: LaterBeat | undefined,
+  initial: Pick<StoryStageCue, "initial" | "initialBottom">,
+) {
+  const cut = beat?.cut ?? !!beat?.background;
+  if (!cut) return { ...initial, cut };
+  return {
+    cut,
+    initial: Object.fromEntries(actors.map((a) => [a.id, a.x])),
+    initialBottom: Object.fromEntries(actors.map((a) => [a.id, a.bottom ?? 14])),
+  };
 }
 
 function stageCell(definition: LaterStage) {

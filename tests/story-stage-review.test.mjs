@@ -23,7 +23,7 @@ test("sitting and carrying preserve emotional changes without cups or packing po
     assert.equal(settled({ ...base, inspect: true, packing: true }).frame, 6);
   }
   assert.ok([17, 18].includes(settled(actor("starlit-guild-founding-return", 64, "leon")).frame));
-  assert.equal(settled(actor("moonlit-herbs-return", 3, "mira")).frame, 11);
+  assert.equal(settled(actor("moonlit-herbs-return", 3, "mira")).frame, 31);
 });
 
 test("delivered dialogue poses retain head scale, foot contact and short seated bodies", async () => {

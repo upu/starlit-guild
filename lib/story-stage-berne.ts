@@ -1,7 +1,6 @@
 import {
   scene,
   quartet,
-  trio,
   held,
   ground,
   table,
@@ -9,19 +8,24 @@ import {
   npc,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
+import { chair, diningCast, diningItems, diningScene } from "./story-stage-furniture.ts";
 const crew = () => quartet();
 const mason = () => npc("worker", "石工", 27);
 const keeper = () => npc("keeper", undefined, 73);
 export const berneStages: Record<string, LaterStage> = {
-  "berne-road-departure": scene("dining-room", trio(), [
-    {
-      at: 0,
-      actors: { aria: { seated: true }, leon: { seated: true }, mira: { seated: true } },
-      items: [table(50), onTable("tea", 50)],
-      extras: [npc("merchant", "店主", 25)],
-    },
-    { at: 1, extras: [npc("merchant", "店主", 25, "explain", true)] },
-  ]),
+  "berne-road-departure": diningScene(
+    [
+      {
+        at: 0,
+        actors: { aria: { seated: true }, leon: { seated: true }, mira: { seated: true } },
+        items: [table(50), onTable("tea", 50)],
+        extras: [npc("merchant", "店主", 25)],
+      },
+      { at: 1, extras: [npc("merchant", "店主", 25, "explain", true)] },
+    ],
+    {},
+    false,
+  ),
   "berne-road-return": scene("hill-path", crew(), [
     { at: 0, actors: { finn: { seated: true } }, items: [held("ledger", "finn")] },
     { at: 6, actors: { mira: { pose: "think" } } },
@@ -186,9 +190,12 @@ export const berneStages: Record<string, LaterStage> = {
       at: 4,
       background: "dining-room",
       night: false,
-      actors: { aria: { seated: true }, leon: { seated: true }, mira: { seated: true } },
-      items: [table(50), onTable("tea", 50)],
-      extras: [npc("merchant", "控えの持ち主", 73, "explain", true)],
+      cast: diningCast().map((a) =>
+        a.id === "finn" ? { ...a, x: 77, bottom: 33, seated: false } : a,
+      ),
+      furniture: diningCast().map((a) => chair(a)),
+      items: diningItems([table(50), onTable("tea", 50)]),
+      extras: [npc("merchant", "控えの持ち主", 90, "explain", true)],
     },
   ]),
 };

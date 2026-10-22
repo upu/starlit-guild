@@ -4,6 +4,16 @@ import type { StagePosition } from "./story-stage-travel.ts";
 export type BoxPosition = { x: number; bottom: number };
 export const boxTransferDuration = 650;
 
+export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
+  const sitter = item.seatFor && positions.get(item.seatFor);
+  return (
+    !sitter ||
+    !sitter.onChair ||
+    Math.abs(sitter.x - item.x) > 2 ||
+    Math.abs((sitter.bottom ?? 14) - item.bottom) > 4
+  );
+}
+
 export function stageItemOffset(item: StageItem, actor?: StageActor) {
   if (!actor) return item.x;
   const reversed = actor.left !== (actor.id === "leon");

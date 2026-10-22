@@ -9,9 +9,10 @@ import {
   npc,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
+import { diningScene } from "./story-stage-furniture.ts";
 const owner = () => npc("merchant", "店主", 73);
 export const brekkaStages: Record<string, LaterStage> = {
-  "linde-requests-departure": scene("dining-room", quartet(), [
+  "linde-requests-departure": diningScene([
     {
       at: 0,
       actors: {
@@ -33,7 +34,7 @@ export const brekkaStages: Record<string, LaterStage> = {
     { at: 20, actors: { aria: { reaction: "surprise" } } },
     { at: 26, items: [table(), onTable("ledger"), held("ledger", "mira", { id: "letter" })] },
   ]),
-  "linde-requests-return": scene("dining-room", quartet(), [
+  "linde-requests-return": diningScene([
     {
       at: 0,
       actors: {
@@ -100,9 +101,7 @@ export const brekkaStages: Record<string, LaterStage> = {
       items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, held("ledger", "aria")],
     },
   ]),
-  "brekka-arrival-departure": scene(
-    "dining-room",
-    quartet(),
+  "brekka-arrival-departure": diningScene(
     [
       {
         at: 0,
@@ -125,10 +124,14 @@ export const brekkaStages: Record<string, LaterStage> = {
         at: 20,
         items: [table(), onTable("juice", 46, 6), onTable("ale", 54, 5), onTable("bread", 50, 7)],
       },
-      { at: 22, actors: { leon: { seated: false } } },
+      { at: 22, actors: { leon: { seated: false, bottom: 8 } } },
       {
         at: 24,
-        actors: { aria: { seated: false }, mira: { seated: false }, finn: { seated: false } },
+        actors: {
+          aria: { seated: false, bottom: 8 },
+          mira: { seated: false },
+          finn: { seated: false },
+        },
       },
     ],
     { exit: ["aria", "leon", "mira", "finn"] },

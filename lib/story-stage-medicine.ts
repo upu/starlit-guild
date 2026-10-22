@@ -7,8 +7,20 @@ import {
   table,
   onTable,
   npc,
+  actor,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
+import { chair, diningItems } from "./story-stage-furniture.ts";
+
+const bedsideCast = () => [
+  actor("aria", 60, { bottom: 59, seated: true, chair: true, left: false }),
+  actor("leon", 43, { bottom: 52, left: false }),
+  actor("mira", 81, { bottom: 70, bed: "rest", left: true }),
+];
+const breakfast = () => [
+  ground("dish", 92, 70, 6),
+  { ...ground("bread", 92, 71, 4), support: "dish" },
+];
 
 export const medicineStages: Record<string, LaterStage> = {
   "hilltop-picnic-departure": scene(
@@ -66,34 +78,64 @@ export const medicineStages: Record<string, LaterStage> = {
     ],
     { exit: ["aria", "leon"] },
   ),
-  "moonlit-herbs-return": scene("medicine-room", trio(), [
-    { at: 0, items: [table(61), onTable("herbs", 61), ground("medicine", 77)] },
-    { at: 3, actors: { mira: { seated: true, pose: "think" } } },
-    { at: 4, actors: { aria: { x: 35, pose: "think" } } },
-    { at: 5, actors: { leon: { x: 56 }, mira: { pose: "think" } } },
-  ]),
-  "medicine-packing-departure": scene(
+  "moonlit-herbs-return": scene(
     "medicine-room",
-    trio(),
+    trio().map((a) => (a.id === "mira" ? { ...a, seated: true, chair: true } : a)),
     [
       {
         at: 0,
-        actors: { mira: { seated: true }, aria: { seated: true } },
-        items: [held("ledger", "aria"), ground("medicine", 60)],
+        items: [
+          { ...table(61), width: 16 },
+          { ...onTable("herbs", 61), bottom: 28 },
+          ground("medicine", 85, 12, 9),
+        ],
+      },
+      { at: 3, actors: { mira: { seated: true, pose: "think" } } },
+      { at: 4, actors: { aria: { x: 35, pose: "think" } } },
+      { at: 5, actors: { leon: { x: 56 }, mira: { pose: "think" } } },
+    ],
+    { furniture: [chair(actor("mira", 73))] },
+  ),
+  "medicine-packing-departure": scene(
+    "medicine-room",
+    bedsideCast(),
+    [
+      {
+        at: 0,
+        items: [held("ledger", "aria", { width: 6 }), ...breakfast()],
       },
       {
         at: 9,
-        actors: { leon: { inspect: true }, mira: { seated: false } },
-        items: [held("ledger", "leon"), ground("medicine", 60)],
+        actors: { leon: { writing: true }, mira: { bed: "edge", bottom: 65 } },
+        items: [held("ledger", "leon", { width: 6 }), ...breakfast()],
       },
-      { at: 11, actors: { aria: { seated: false, pose: "offer" } } },
+      {
+        at: 11,
+        actors: {
+          aria: { seated: false, x: 66, bottom: 51, pose: "offer" },
+          leon: { writing: false },
+        },
+      },
       {
         at: 13,
-        actors: { mira: { seated: true }, leon: { inspect: false } },
-        items: [held("ledger", "aria"), ground("medicine", 60)],
+        actors: {
+          mira: { bed: "breakfast", bottom: 70 },
+          leon: { x: 57, bottom: 49, writing: false },
+        },
+        items: [held("ledger", "leon", { width: 6 }), ...breakfast()],
+        sequence: [
+          {
+            after: 1000,
+            items: [
+              held("ledger", "aria", { width: 6 }),
+              held("delivery-bag", "leon", { width: 8, bottom: 19 }),
+              ...breakfast(),
+            ],
+          },
+        ],
       },
     ],
-    { exit: ["aria", "leon"] },
+    { exit: ["aria", "leon"], furniture: [chair(bedsideCast()[0])] },
   ),
   "medicine-packing-return": scene("medicine-room", trio(), [
     {
@@ -122,19 +164,25 @@ export const medicineStages: Record<string, LaterStage> = {
     {
       at: 5,
       night: true,
+      cut: true,
       actors: {
         aria: { visible: false },
         leon: { visible: false },
-        mira: { visible: true, seated: true },
+        mira: { visible: true, seated: false, x: 81, bottom: 70, left: true, bed: "breakfast" },
       },
+      items: breakfast(),
+      sequence: [
+        { after: 2000, actors: { mira: { bed: "sleep", x: 78, bottom: 71, left: false } } },
+      ],
     },
     {
       at: 6,
       night: false,
+      cut: true,
       actors: {
         aria: { visible: true, carry: false, shoulder: false },
         leon: { visible: true, place: false },
-        mira: { seated: false, x: 68, inspect: true },
+        mira: { seated: false, bed: undefined, x: 68, bottom: 14, inspect: true },
       },
       items: [ground("medicine", 52), ground("honey", 62, 13, 6), ground("cloth", 40)],
     },
@@ -258,14 +306,15 @@ export const medicineStages: Record<string, LaterStage> = {
     {
       at: 1,
       background: "medicine-room",
-      items: [table(56), onTable("ledger", 56), ground("medicine", 78)],
+      furniture: [chair(actor("mira", 73))],
+      items: [...diningItems([table(56), onTable("ledger", 56)]), ground("medicine", 85, 12, 9)],
     },
     { at: 3, actors: { aria: { pose: "greet" } } },
     { at: 6, actors: { aria: { reaction: "surprise" } } },
     {
       at: 9,
-      actors: { mira: { seated: true } },
-      items: [table(56), onTable("tea", 56), ground("medicine", 78)],
+      actors: { mira: { seated: true, chair: true } },
+      items: [...diningItems([table(56), onTable("tea", 56)]), ground("medicine", 85, 12, 9)],
     },
     { at: 10, actors: { aria: { x: 34, pose: "offer" } } },
   ]),

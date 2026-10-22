@@ -18,19 +18,24 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   element.style.bottom = `${String(sample.bottom ?? 14)}%`;
   element.style.zIndex = String(Math.round(100 - (sample.bottom ?? 14)));
   element.style.visibility = sample.visible ? "visible" : "hidden";
+  const name = element.querySelector<HTMLElement>(".story-stage-name");
+  if (name) name.style.top = sample.onChair && (sample.bottom ?? 14) >= 20 ? "8%" : "100%";
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
-  if (sprite) {
-    sprite.dataset.atlas = sample.atlas;
-    sprite.dataset.frame = String(sample.frame);
-    const rows = { adventure: 6, conversation: 6, home: 4, shawl: 1 }[sample.atlas];
-    sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
-    sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left ? "-1" : "1"})`;
-  }
+  if (sprite) paintSprite(sprite, sample);
   const bubble = element.querySelector<HTMLElement>(".story-stage-reaction");
   if (bubble) {
     bubble.textContent = sample.bubble;
     bubble.hidden = !sample.bubble;
   }
+}
+
+function paintSprite(sprite: HTMLElement, sample: StageSample) {
+  sprite.dataset.atlas = sample.atlas;
+  sprite.dataset.frame = String(sample.frame);
+  const rows = { adventure: 6, conversation: 9, home: 4, shawl: 1 }[sample.atlas];
+  sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
+  const authoredFacing = sample.atlas === "conversation" && sample.frame >= 24 && sample.frame < 32;
+  sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left && !authoredFacing ? "-1" : "1"})`;
 }
 
 function stagePainter(
@@ -161,6 +166,11 @@ export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void)
     completion.current = onComplete;
   }, [onComplete]);
   useEffect(() => {
+    if (cue.cut) {
+      positions.current.clear();
+      itemMotion.current.clear();
+      boxMotion.current = {};
+    }
     if (stage.current)
       return animateStage(
         stage.current,

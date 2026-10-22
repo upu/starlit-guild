@@ -126,7 +126,7 @@ export function storyStageCue(storyId: string, line: number): StoryStageCue | nu
 }
 
 export function stageEntrance(id: ResidentId, cue?: StoryStageCue): StagePosition {
-  return { x: cue?.initial?.[id] ?? (id === "aria" ? -10 : 56) };
+  return { x: cue?.initial?.[id] ?? (id === "aria" ? -10 : 56), bottom: cue?.initialBottom?.[id] };
 }
 
 export function stageTravel(from: number, to: number, elapsed: number, reduced = false) {

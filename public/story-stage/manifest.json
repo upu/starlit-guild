@@ -44,12 +44,12 @@
     "output": "02297f0478f492234f36f772afde3b7d9f699679d8421550d5fd7291722dc933"
   },
   "aria-poses": {
-    "source": "774d773957fb815d62a15da78198e1b836e55aae5a31504022921dea797fba6e",
-    "output": "5a67ed7ef6f177f6efe80a52b2baad466ba97883039aa5e099672e26c13e1972"
+    "source": "c3b3881b21548c8183cc857cb8e22c2a2bacd04fa281ded6b14bcfd126afb591",
+    "output": "c56c9e3e636cf2fe8a7cbc58eb7d064889bd804ada8bfc56d2ea96006b5f39db"
   },
   "leon-poses": {
-    "source": "820991aa4dffe32bdaadf8086c5baafb4427d6c5847dc93f33dd61d50a6f3ff5",
-    "output": "48e5123663bed4b5b149bbbbfc332309a5360ef844aa0288c820df66b806878d"
+    "source": "d886ece625b57d50bd2af5e1caccb2388e27c519e6af8a65adfbdaf446ca4050",
+    "output": "e45ed38e9577de178e448fead2770da0c47b43c436d87b7ca85c3ef8ddc2cc6d"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -296,16 +296,16 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "d17f8965b748c4397c927c1c85dc0b02d8c4750c0503e7ab19fdbb3b0254a998",
-    "output": "4d59e173124674a5caeb911cd66e242576b041346b96a776c3a3b91abcb1a86e"
+    "source": "27f9e20df59e1befbf206598c371c46830fedd053da48a95a21ee5a72f1c0297",
+    "output": "7253e1bc04bfafbadc209d35ae84de8e0fe189c28b52855b4bf8068cfb8404d3"
   },
   "finn-poses": {
-    "source": "e2ec64ff0473c7187a95167757d9cd9ca99ba99d060a789ab8de188b75864b51",
-    "output": "51fb31e38df203fb7861bf65eb9b13b1e6bc01d6103437e2f4efd548187297e2"
+    "source": "bf71e9257be3fb784d2910e7561151405013d072e880ff33f52281b9e663a140",
+    "output": "33a9ed382740cb1211ccedcc82be01d99ae2803695cbc1b2e4c0bc31f8dbda98"
   },
   "lico-poses": {
-    "source": "0d33714a2f450337d912d491d90d5bb39cb810ecefb21071b2e9e48bca80c95b",
-    "output": "e592cf5b2b516378ca727e9062e2551701b8955f4225a4892baa7392c141a692"
+    "source": "096d4812365e605e4d58546c4473adea3504d3972f0300633ea8b7271a717ee9",
+    "output": "cb09cd5d8291ed5b52d247f724d60ed4fa6127315009707c6e08393fe50d5010"
   },
   "masked-pumpety-poses": {
     "source": "567914cef3465e164b3cd65d553c4c419e53c8b595164f073fd0792a64ea26c4",
@@ -330,6 +330,14 @@
   "child-poses": {
     "source": "85d9239eb9e679b36dbeba24fa00fc9ef7160093fc93b6721c2bbc206bfcef05",
     "output": "6b10ef382cff67e047a5364982bcf73b2b9ad7a390ecc242170aeb3d93ad0015"
+  },
+  "prop-dining-table": {
+    "source": "60176cf83a054d92ac146f9b2f436e1719b45c54c9e0ea2093e549ad487a7451",
+    "output": "1e4d767902fe582a515491b5a7be370a9fbdb872c8d1fb930d7a70ddc166a0e1"
+  },
+  "prop-chair": {
+    "source": "8488cefde91e06a1eb2ef88eda90e34a7d5f6f190bc499c092d6245aebaafabb",
+    "output": "63d354bc981a680de30b4c01a3935edeaf5281c8bd8057cdffdaa08f395f8e9b"
   },
   "merrill-walk": {
     "source": "98e0fb72213ad23811d4acc140c1d059844aff32916a82bc89e72e1df42c74a1",

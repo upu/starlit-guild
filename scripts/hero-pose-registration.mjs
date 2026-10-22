@@ -5,7 +5,7 @@ export async function registerHeroPose(
   frame,
   headWidth,
   standingHeight,
-  { cell = 128, foot = 120 } = {},
+  { cell = 128, foot = 120, headCenter = cell / 2 } = {},
 ) {
   const crop = await sharp(frame.cell).extract(frame.box).png().toBuffer();
   const head = await headBounds(crop, 0.25);
@@ -25,7 +25,7 @@ export async function registerHeroPose(
     bounds = await spriteBounds(resized);
     deliveredHead = await headBounds(await sharp(resized).extract(bounds).png().toBuffer(), 0.25);
   }
-  const left = Math.round(cell / 2 - bounds.left - deliveredHead.left - deliveredHead.width / 2);
+  const left = Math.round(headCenter - bounds.left - deliveredHead.left - deliveredHead.width / 2);
   const top = foot - bounds.top - bounds.height;
   if (left < 2 || top < 2 || left + width > cell - 2 || top + height > cell - 2)
     throw Error("Work pose exceeds padded cell");

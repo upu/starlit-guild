@@ -33,21 +33,25 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
   const cues = buildLaterStage(story, definition);
   stages.set(story.id, cues);
   const last = cues.at(-1);
-  if (last && definition.exit)
+  const settled = last?.sequence?.at(-1) ?? last;
+  if (last && settled && definition.exit)
     exits.set(story.id, {
       ...last,
       sequence: undefined,
+      cut: false,
+      items: settled.items,
       description: `${story.place}。会話を終えて出発する。`,
-      actors: last.actors.map((a, i) =>
+      actors: settled.actors.map((a, i) =>
         definition.exit?.includes(a.id)
           ? {
               ...a,
               x: 110 + i * 8,
               left: false,
               via: undefined,
-              lane: undefined,
+              lane: definition.exitLanes?.[a.id],
               inspect: false,
               seated: false,
+              bed: undefined,
               wave: false,
               reaction: undefined,
             }

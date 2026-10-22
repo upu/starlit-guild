@@ -34,6 +34,12 @@
 .story-stage-item[data-art="lantern"] {
   aspect-ratio: 0.7;
 }
+.story-stage-item[data-art="chair"] {
+  aspect-ratio: 0.75;
+}
+.story-stage-item[data-art="dining-table"] {
+  aspect-ratio: 3;
+}
 .story-stage-item[data-glow="bright"]:is(
     [data-art="moss"],
     [data-art="moss-jar"],

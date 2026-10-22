@@ -11,6 +11,8 @@ export type StageActor = {
   place?: boolean;
   shawl?: boolean;
   seated?: boolean;
+  chair?: boolean;
+  bed?: "rest" | "edge" | "breakfast" | "sleep";
   packing?: boolean;
   writing?: boolean;
   shoulder?: boolean;
@@ -66,8 +68,10 @@ export type StoryStageCue = {
   extras?: StageExtra[];
   items?: StageItem[];
   night?: boolean;
+  cut?: boolean;
   cartArt?: "loaded-cart" | "return-cart";
   initial?: Partial<Record<ResidentId, number>>;
+  initialBottom?: Partial<Record<ResidentId, number>>;
   bundleMode?: "ground" | "carried" | "hidden";
   sequence?: StageMoment[];
 };
@@ -124,6 +128,8 @@ export type StageItem = {
     | "seedlings"
     | "stone-lantern"
     | "table"
+    | "dining-table"
+    | "chair"
     | "pot"
     | "key"
     | "juice"
@@ -136,6 +142,8 @@ export type StageItem = {
     | "basket-cart"
     | "seedling-cart"
     | "empty-cart";
+  seatFor?: ResidentId;
+  left?: boolean;
   x: number;
   bottom: number;
   width?: number;
