@@ -15,6 +15,8 @@ export type StageActor = {
   stool?: boolean;
   /** Low seat rendered separately: rock, ledge or step stool. */
   perch?: boolean;
+  /** A small seated adjustment on the same seat, without switching to a walk. */
+  scoot?: boolean;
   bed?: "rest" | "edge" | "breakfast" | "sleep";
   packing?: boolean;
   writing?: boolean;
@@ -50,6 +52,7 @@ export type StoryStageCue = {
     | "town-shop-return"
     | "hill-path"
     | "picnic-hill"
+    | "roadside-rest"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -176,6 +179,15 @@ export type StageItem = {
     | "flask-cup"
     | "twine"
     | "cake-parcel"
+    | "walnut-light"
+    | "walnut-medium"
+    | "walnut-dark"
+    | "walnut-light-half"
+    | "walnut-medium-half"
+    | "walnut-dark-half"
+    | "walnut-underside"
+    | "walnut-piece"
+    | "low-bench"
     | "keystone"
     | "replacement"
     | "ledger"

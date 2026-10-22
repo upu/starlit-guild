@@ -42,3 +42,5 @@
 2-9の帰路・薬箱・空き瓶・荷車は `lib/story-stage-homeward.ts`、帰着後の控え・茶器・着座は `lib/story-stage-homeward-office.ts`。運び手の帽子の挨拶は共通アトラス12番（4列4行）、空き瓶の袋と追加コマの登録は `scripts/story-stage-homeward-art.mjs`。既存12コマを再合成せず生の画素列で保持する。荷物の連続性、画面外補正後の停車時刻、三つのカップの順、机の手前の立ち位置は `tests/story-stage-homeward.test.mjs`。
 
 幕間「私が用意するお昼」の布・菓子・水筒・紐と包みは `lib/story-stage-picnic.ts`。草地の背景と携帯用小物は `scripts/story-stage-picnic-art.mjs`、背景の登録は `config/rpg-backgrounds.json`。菓子の持ち主・縮尺・手渡し接点、二人分の分離、水筒の位置と包みの重なりは `tests/story-stage-picnic.test.mjs`。
+
+幕間「約束の胡桃」は `lib/story-stage-walnut-tasting.ts` と `lib/story-stage-walnut-items.ts`。焼き色・半割り・裏面・欠片と腰掛けの登録は `scripts/story-stage-walnut-art.mjs`。`StageActor.scoot` は座位のまま寄る小移動、`LaterStage.exitRoutes` は退出時の経路指定。菓子の順・受け渡し・腰掛けの前後関係・水筒の時刻・背景の道に沿う退出は `tests/story-stage-walnut-tasting.test.mjs`。

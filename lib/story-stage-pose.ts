@@ -12,6 +12,7 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
   if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
     return carryingPose(actor, moving, elapsed, reduced);
   if (actor.bed) return stationaryPose(actor, elapsed, reduced);
+  if (actor.seated && actor.scoot) return stationaryPose(actor, elapsed, reduced);
   if (moving && !actor.pull)
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)

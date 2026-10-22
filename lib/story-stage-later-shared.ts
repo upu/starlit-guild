@@ -31,6 +31,7 @@ export type LaterStage = {
   exit?: ResidentId[];
   exitSide?: "left" | "right";
   exitLanes?: Partial<Record<ResidentId, number>>;
+  exitRoutes?: Partial<Record<ResidentId, Pick<StageActor, "x" | "bottom" | "via">>>;
   initial?: StoryStageCue["initial"];
   cell?: number;
   furniture?: StageItem[];

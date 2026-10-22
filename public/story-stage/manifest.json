@@ -530,5 +530,45 @@
   "prop-cake-parcel": {
     "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
     "output": "b3f594a8bb537cacb25ba94a71d0c17296da13780474f8cdeb8f9d88489365fd"
+  },
+  "roadside-rest": {
+    "source": "b51245a9cba459fde57c50cd06b006885b0afb0737d2733a3c9fd7d520d38139",
+    "output": "3feb76c5d388a5de2ad9d5917620f6a1b62e906ad96bfe1a509650897f59cb37"
+  },
+  "prop-walnut-light": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "9d3f3b93abd954725af11a20dc4b3b61cdab01c36d70ade2bc1cdc74b2b076d9"
+  },
+  "prop-walnut-medium": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "bf45b6ef9587850874dfd190ab5c72b735eb3efe8ede7fde2685bedbf65208d4"
+  },
+  "prop-walnut-dark": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "8ca0dcb801b7cb13d913611591316e2a16be3eee54ba9c56504a9ffb6f5303fe"
+  },
+  "prop-walnut-light-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "97dd34430fc732400def60a2e585941780c59f152f6e20c1a8c10481fe7c79b3"
+  },
+  "prop-walnut-medium-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "33c884c0cbaa78897d9074231e23f5756bb00c34e1902eb848fae33a9bd8d5c7"
+  },
+  "prop-walnut-dark-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "3a17a091d83e3871208ba6c8bee38219932f4564a96e8977b40d0941bbad17e7"
+  },
+  "prop-walnut-underside": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "b87629ef76e80d2c01531578d969eb97f12a15952b4bbaee58c20fe1bbab75ba"
+  },
+  "prop-walnut-piece": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "cdc10d54ac655db511b0bb953412539cc629e2a797538d9f5aaed088510b30a0"
+  },
+  "prop-low-bench": {
+    "source": "79c971d26c8fc39cd38463b787ee93e0c3816c0762e15c804993fc517e95e0da",
+    "output": "7ab2fcdc242a8a04f5a209beedce24dbb68060e5f2f472a957c57ff732202077"
   }
 }

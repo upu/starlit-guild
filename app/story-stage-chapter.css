@@ -68,6 +68,14 @@
   aspect-ratio: 1;
 }
 .story-stage-item:is(
+  [data-art="walnut-light"],
+  [data-art="walnut-medium"],
+  [data-art="walnut-dark"],
+  [data-art="walnut-light-half"],
+  [data-art="walnut-medium-half"],
+  [data-art="walnut-dark-half"],
+  [data-art="walnut-underside"],
+  [data-art="walnut-piece"],
   [data-art="walnut-cake"],
   [data-art="honey-cake"],
   [data-art="travel-flask"],
@@ -76,6 +84,9 @@
   [data-art="cake-parcel"]
 ) {
   aspect-ratio: 1;
+}
+.story-stage-item[data-art="low-bench"] {
+  aspect-ratio: 3 / 1;
 }
 .story-stage-item:is([data-art="packing-cloth"], [data-art="dragging-cloth"]) {
   aspect-ratio: 256 / 144;

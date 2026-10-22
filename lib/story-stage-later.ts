@@ -55,6 +55,7 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
               bed: undefined,
               wave: false,
               reaction: undefined,
+              ...definition.exitRoutes?.[a.id],
             }
           : a,
       ),

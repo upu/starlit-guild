@@ -205,6 +205,12 @@
     ]
   },
   {
+    "source": "assets/source/story-stage/roadside-rest-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["roadside-rest"] }]
+  },
+  {
     "source": "assets/source/story-stage/picnic-hill-v1.png",
     "columns": 1,
     "rows": 1,
