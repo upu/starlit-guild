@@ -38,3 +38,5 @@
 2-7後の押し返しは共通会話アトラス44/45、腕を弾かれた小人形は人形アトラス7。会話アトラスは全員4列12行で、低い座位は36〜43に限定する。矢は `StageArrow` の先端座標と発射・到達時刻を `lib/story-stage-arrow.ts` で計算し、`app/story-stage-arrows.tsx` が描画する。台詞内の姿勢切り替えで飛行時間をリセットせず、動きを減らす設定では隠す。接触・退避・新ポーズの縮尺は `tests/story-stage-contact.test.mjs`。
 
 2-8の戸口での挨拶・室内の薬箱設置・桶の受け渡し・往診は `lib/story-stage-households.ts`。家の人の片側をかばう歩行は `StageExtra.limp` と `lib/story-stage-figure.ts` / `lib/story-stage-extra-travel.ts`、2行アトラスと桶の登録は `scripts/story-stage-household-art.mjs`。包帯・荷物の持ち越し、手元、寝台を避ける経路、ポーズ間の頭幅と足元は `tests/story-stage-households.test.mjs`、治療スチルへの接続は `tests/story-stage-patient.test.mjs`。
+
+2-9の帰路・薬箱・空き瓶・荷車は `lib/story-stage-homeward.ts`、帰着後の控え・茶器・着座は `lib/story-stage-homeward-office.ts`。運び手の帽子の挨拶は共通アトラス12番（4列4行）、空き瓶の袋と追加コマの登録は `scripts/story-stage-homeward-art.mjs`。既存12コマを再合成せず生の画素列で保持する。荷物の連続性、画面外補正後の停車時刻、三つのカップの順、机の手前の立ち位置は `tests/story-stage-homeward.test.mjs`。

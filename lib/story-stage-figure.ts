@@ -29,7 +29,8 @@ export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) 
 }
 
 export function stageExtraRows(extra: StageExtra) {
-  if (["masked-pumpety", "worker"].includes(extra.id)) return 3;
+  if (extra.id === "worker") return 4;
+  if (extra.id === "masked-pumpety") return 3;
   return ["child", "keeper", "merchant", "parent"].includes(extra.id) ? 2 : 1;
 }
 
@@ -43,6 +44,7 @@ function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 
 function workerFrame(extra: StageExtra, moving: boolean, elapsed: number) {
   if (moving) return 4 + (Math.floor(elapsed / 180) % 4);
+  if (extra.hatGreeting) return 12;
   if (extra.writing) return 8 + (Math.floor(elapsed / 320) % 2);
   if (extra.inspect) return 10;
   return extra.carry ? 11 : poses[extra.pose ?? "idle"];

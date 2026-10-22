@@ -14,6 +14,7 @@ import { reviewMaskedMotion, puppetMotionAssets } from "./story-stage-puppet-art
 import { reviewWorkerMotion, carrierAssets } from "./story-stage-carrier-art.mjs";
 import { golemClothAssets } from "./story-stage-golem-art.mjs";
 import { reviewParentMotion, householdProps } from "./story-stage-household-art.mjs";
+import { reviewWorkerHat, homewardProps } from "./story-stage-homeward-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -33,7 +34,8 @@ async function emit(name, source, image) {
   const reviewed = await reviewNpcChair(root, name, hero.raw, hero.image);
   const masked = await reviewMaskedMotion(root, name, reviewed.raw, reviewed.image);
   const worker = await reviewWorkerMotion(root, name, masked.raw, masked.image);
-  const parent = await reviewParentMotion(root, name, worker.raw, worker.image);
+  const hat = await reviewWorkerHat(root, name, worker.raw, worker.image);
+  const parent = await reviewParentMotion(root, name, hat.raw, hat.image);
   source = parent.raw;
   image = parent.image;
   const path = new URL(`${name}.webp`, output);
@@ -140,6 +142,7 @@ await puppetMotionAssets(root, emit);
 await carrierAssets(root, emit);
 await golemClothAssets(root, emit);
 await householdProps(root, emit);
+await homewardProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

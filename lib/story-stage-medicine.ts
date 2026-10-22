@@ -10,9 +10,11 @@ import {
   actor,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
-import { chair, diningItems } from "./story-stage-furniture.ts";
+import { chair } from "./story-stage-furniture.ts";
 import { mountainRest } from "./story-stage-mountain-rest.ts";
 import { waitingDeparture, waitingReturn } from "./story-stage-households.ts";
+import { homewardDeparture } from "./story-stage-homeward.ts";
+import { homewardReturn } from "./story-stage-homeward-office.ts";
 
 const bedsideCast = () => [
   actor("aria", 60, { bottom: 59, seated: true, chair: true, left: false }),
@@ -245,39 +247,6 @@ export const medicineStages: Record<string, LaterStage> = {
   "mountain-entrance-return": mountainRest,
   "waiting-households-departure": waitingDeparture,
   "waiting-households-return": waitingReturn,
-  "medicine-road-home-departure": scene(
-    "village-house",
-    trio(),
-    [
-      {
-        at: 0,
-        actors: { mira: { carry: true } },
-        items: [held("medicine", "mira"), held("basket", "leon")],
-      },
-      {
-        at: 4,
-        background: "mountain-road",
-        actors: { aria: { x: 31 }, leon: { x: 51 }, mira: { x: 73 } },
-        extras: [npc("worker", "運び手", 78, "wave")],
-      },
-    ],
-    { exit: ["aria", "leon", "mira"] },
-  ),
-  "medicine-road-home-return": scene("mountain-road", trio(), [
-    { at: 0, items: [ground("signpost", 79, 34, 12), held("medicine", "mira")] },
-    {
-      at: 1,
-      background: "medicine-room",
-      furniture: [chair(actor("mira", 73))],
-      items: [...diningItems([table(56), onTable("ledger", 56)]), ground("medicine", 85, 12, 9)],
-    },
-    { at: 3, actors: { aria: { pose: "greet" } } },
-    { at: 6, actors: { aria: { reaction: "surprise" } } },
-    {
-      at: 9,
-      actors: { mira: { seated: true, chair: true } },
-      items: [...diningItems([table(56), onTable("tea", 56)]), ground("medicine", 85, 12, 9)],
-    },
-    { at: 10, actors: { aria: { x: 34, pose: "offer" } } },
-  ]),
+  "medicine-road-home-departure": homewardDeparture,
+  "medicine-road-home-return": homewardReturn,
 };

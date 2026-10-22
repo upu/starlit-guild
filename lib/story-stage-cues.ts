@@ -104,6 +104,7 @@ export type StageMoment = {
 
 export type StageExtra = {
   limp?: boolean;
+  hatGreeting?: boolean;
   id:
     | "keeper"
     | "worker"
@@ -167,6 +168,7 @@ export type StageItem = {
     | "dragging-cloth"
     | "wrist-bandage"
     | "water-bucket"
+    | "empty-bottles"
     | "keystone"
     | "replacement"
     | "ledger"

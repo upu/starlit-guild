@@ -37,8 +37,11 @@
 .story-stage-extra[data-bed="true"] .story-stage-shadow {
   display: none;
 }
-.story-stage-extra:is([data-npc="masked-pumpety"], [data-npc="worker"]) .story-stage-extra-sprite {
+.story-stage-extra[data-npc="masked-pumpety"] .story-stage-extra-sprite {
   background-size: 400% 300%;
+}
+.story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {
+  background-size: 400% 400%;
 }
 .story-stage-extra[data-bed="true"] .story-stage-name {
   top: 22%;
@@ -60,6 +63,9 @@
 }
 .story-stage-item:is([data-art="honey-bag"], [data-art="honey-bag-open"]) {
   aspect-ratio: 256 / 280;
+}
+.story-stage-item[data-art="empty-bottles"] {
+  aspect-ratio: 1;
 }
 .story-stage-item:is([data-art="packing-cloth"], [data-art="dragging-cloth"]) {
   aspect-ratio: 256 / 144;

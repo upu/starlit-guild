@@ -112,8 +112,8 @@
     "output": "e78ce946da2a7060dd9cab197a24fa9175b93ff99e3918a1bc0a1813de95be9a"
   },
   "worker-poses": {
-    "source": "8e788dd161769f679103b89e79ca6c696fdab17a255258176dab8c6314b3633f",
-    "output": "de671d094dcfb20c9df2cd9046e6fe68c3f73e79015929509dabcac739e13c72"
+    "source": "6895c5f6122aab06eed359a600bfa424699fca5717069aeff7ca6eae373195e2",
+    "output": "3b8f305d4957da2e0dfb7789f2b0421a1e4da8b3b51c942693f0edc194e79566"
   },
   "aria-shawl": {
     "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
@@ -498,5 +498,9 @@
   "prop-water-bucket": {
     "source": "2044dbe7b874c5271ca62b74fd7e61e7e764d85bf48bb9b96933f19e007969d9",
     "output": "acebd9752ed39623833eb321555d247d60daa2719254dabddb1219fc11346ae7"
+  },
+  "prop-empty-bottles": {
+    "source": "2e6aa7c22bc095ddf45a2427973038efc17ec943a7f5a3d1441a793d57813eb5",
+    "output": "c569c25a3f22992a550b302e99346641b338de611594d42972805fabb3bdc8b1"
   }
 }
