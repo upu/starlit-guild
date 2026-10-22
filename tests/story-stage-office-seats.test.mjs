@@ -52,13 +52,14 @@ test("Mira has a chair before trying to get up and the group stays inside the st
   assert.equal(attempt.actors.find((a) => a.id === "mira").seated, false);
   assert.ok(attempt.sequence.at(-1).actors.find((a) => a.id === "mira").seated);
   const end = cue(id, 21);
-  assert.equal(end.background, "storeroom");
+  assert.equal(end.background, "stone-storeroom");
   assert.equal(end.cut, false);
-  assert.ok(end.sequence.at(-1).actors.every((a) => a.seated && a.chair));
-  assert.equal(end.items.find((p) => p.art === "kettle").support, "brazier");
-  assert.equal(end.items.find((p) => p.art === "medicine").support, "table");
-  assert.equal(end.items.filter((p) => p.art === "tea-four").length, 1);
-  assert.ok(!end.items.some((p) => p.art === "teacup"));
+  const settled = end.sequence.at(-1);
+  assert.ok(settled.actors.every((a) => a.seated && a.chair));
+  assert.equal(settled.items.find((p) => p.art === "kettle").support, "brazier");
+  assert.equal(settled.items.find((p) => p.art === "medicine-packet").support, "table");
+  assert.equal(settled.items.filter((p) => p.art === "empty-cup" || p.art === "teacup").length, 4);
+  assert.ok(!settled.items.some((p) => p.art === "tea-four"), "the tea is still being prepared");
 });
 
 test("the receipt reaches Finn only after arrival and reaches Leon after the return walk", () => {

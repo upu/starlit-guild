@@ -1,151 +1,164 @@
-import { actor, ground, held, npc, quartet, scene } from "./story-stage-later-shared.ts";
-import { chair, diningCast, diningItems } from "./story-stage-furniture.ts";
-import type { StageItem } from "./story-stage-cues.ts";
-
-const mason = () => npc("worker", "石工", 27);
-const desk = () => diningItems([ground("table", 52, 16, 32)])[0];
-const surface = (art: StageItem["art"], x = 52, width = 8): StageItem => ({
-  ...ground(art, x, 27, width),
-  support: "table",
+import type { StageExtra } from "./story-stage-cues.ts";
+import { actor, ground, held, npc, scene, type LaterBeat } from "./story-stage-later-shared.ts";
+import { chair } from "./story-stage-furniture.ts";
+import { restItems, type RestItems, type RestState } from "./story-stage-stone-rest-items.ts";
+import { stoneTea } from "./story-stage-stone-tea.ts";
+const mason = (patch: Partial<StageExtra> = {}): StageExtra => ({
+  ...npc("worker", "石工", 28),
+  bottom: 60,
+  left: true,
+  ...patch,
 });
-const cup = () => held("teacup", "mira", { id: "mira-cup", width: 3.5, x: 3, bottom: 23 });
-const fixtures = () => [
-  ...diningCast().map((a) =>
-    chair(a.id === "mira" ? a : { ...a, x: a.x + (a.id === "aria" ? -2 : 2) }),
-  ),
-  ground("brazier", 91, 32, 7),
-];
-const comparison = () => [desk(), surface("cloth", 45, 10), surface("replacement", 45, 8), cup()];
-const resting = () => [
-  desk(),
-  surface("tea-four", 51, 13),
-  surface("medicine", 64, 6),
-  { ...ground("kettle", 91, 37, 6), support: "brazier" },
-];
-
-export const stoneRest = scene("stone-yard", quartet(), [
-  { at: 0, items: [ground("replacement", 46, 16, 12), ground("cloth", 57)], extras: [mason()] },
-  {
-    at: 4,
-    background: "storeroom",
-    night: true,
-    cast: [
-      actor("aria", 35, { pose: "offer" }),
-      actor("leon", 65, { pose: "offer" }),
-      actor("mira", 39, { bottom: 22, seated: true, chair: true }),
-      actor("finn", 82),
-    ],
-    furniture: fixtures(),
-    items: comparison(),
-  },
-  { at: 7, extras: [{ ...mason(), pose: "explain", speaking: true }] },
-  {
-    at: 12,
-    actors: {
-      finn: {
-        x: 35,
-        bottom: 36,
-        left: true,
-        pose: "offer",
-        via: [
-          { x: 86, bottom: 53 },
-          { x: 35, bottom: 53 },
-        ],
-      },
+function outside(): LaterBeat[] {
+  const items = [
+    { ...ground("candidate-blue", 16, 12, 6.2), id: "blue-stone" },
+    { ...ground("candidate-violet", 42, 12, 6.2), id: "violet-stone" },
+    { ...ground("candidate-dull", 51, 12, 6.2), id: "dull-stone" },
+    chair(actor("mira", 58, { bottom: 31, left: true })),
+    ground("basket", 16, 4, 7),
+    ground("delivery-bag", 77, 5, 8),
+    ground("medicine-closed", 57, 48, 8),
+  ];
+  return [
+    {
+      at: 0,
+      items,
+      extras: [{ ...mason(), x: 30, bottom: 44 }],
+      actors: { finn: { x: 59, bottom: 13 } },
+      sequence: [{ after: 600, actors: { finn: { inspect: true } } }],
     },
-    items: [...comparison(), { ...ground("paper", 3, 44, 6), extra: "worker" }],
-    sequence: [
-      { after: 3300, items: [...comparison(), held("paper", "finn", { width: 6 })] },
-      {
-        after: 4000,
-        actors: {
-          finn: {
-            x: 53,
-            bottom: 14,
-            left: false,
-            via: [
-              { x: 29, bottom: 36 },
-              { x: 29, bottom: 6 },
-              { x: 53, bottom: 6 },
-            ],
+    { at: 1, actors: { finn: { inspect: true } } },
+    {
+      at: 2,
+      actors: { aria: { x: 34.6, bottom: 14, pose: "offer" } },
+      items: [
+        ...items,
+        held("light-cloth", "aria", {
+          id: "comparison-cloth",
+          x: 3.4,
+          bottom: 23,
+          width: 3.5,
+          glow: "dim",
+          glowTone: "violet",
+        }),
+      ],
+      sequence: [{ after: 650, actors: { aria: { inspect: true } } }],
+    },
+  ];
+}
+function compare(items: RestItems): LaterBeat[] {
+  return [
+    {
+      at: 4,
+      background: "stone-storeroom",
+      cast: [
+        actor("aria", 48.6, { bottom: 49, inspect: true, left: false }),
+        actor("leon", 38, { bottom: 49, inspect: true, left: false }),
+        actor("mira", 28, { bottom: 25, seated: true, chair: true, left: false }),
+        actor("finn", 88, { bottom: 44, left: true }),
+      ],
+      extras: [mason()],
+      items: items({ comparison: "open" }),
+      sequence: [
+        { after: 900, items: items({ comparison: "dull" }) },
+        {
+          after: 2000,
+          actors: {
+            aria: {
+              x: 39,
+              inspect: false,
+              via: [
+                { x: 48.6, bottom: 60 },
+                { x: 39, bottom: 60 },
+              ],
+            },
+            leon: {
+              x: 64,
+              inspect: false,
+              left: true,
+              via: [
+                { x: 38, bottom: 35 },
+                { x: 64, bottom: 35 },
+              ],
+            },
           },
         },
-      },
-      { after: 6200, items: [...comparison(), held("paper", "leon", { width: 6 })] },
-    ],
-  },
-  {
-    at: 15,
-    actors: {
-      mira: { pose: "think", seated: false, chair: true },
-      finn: {
-        x: 82,
-        bottom: 14,
-        via: [
-          { x: 53, bottom: 0 },
-          { x: 82, bottom: 0 },
-        ],
-      },
-    },
-    sequence: [{ after: 500, actors: { mira: { seated: true } } }],
-  },
-  {
-    at: 20,
-    actors: {
-      leon: {
-        x: 85,
-        bottom: 30,
-        left: false,
-        pose: "offer",
-        via: [
-          { x: 80, bottom: 14 },
-          { x: 85, bottom: 14 },
-        ],
-      },
-      aria: { pose: "offer" },
-    },
-    items: [
-      desk(),
-      surface("replacement", 45, 8),
-      cup(),
-      held("kettle", "leon", { width: 6 }),
-      held("teacup", "aria", { width: 3.5 }),
-    ],
-  },
-  {
-    at: 21,
-    actors: {
-      finn: {
-        x: 61,
-        bottom: 22,
-        seated: true,
-        chair: true,
-        via: [
-          { x: 82, bottom: 44 },
-          { x: 61, bottom: 44 },
-        ],
-      },
-    },
-    furniture: [...diningCast().map((a) => chair(a)), ground("brazier", 91, 32, 7)],
-    items: resting(),
-    sequence: [
-      {
-        after: 750,
-        actors: {
-          aria: { seated: true, chair: true },
-          leon: {
-            x: 65,
-            bottom: 14,
-            left: true,
-            seated: true,
-            chair: true,
-            via: [
-              { x: 85, bottom: 14 },
-              { x: 80, bottom: 14 },
-            ],
+        {
+          after: 3400,
+          actors: { aria: { inspect: true, left: false }, leon: { inspect: true } },
+          items: items({ comparison: "violet" }),
+        },
+        { after: 3800, actors: { aria: { x: 34.6, inspect: false, via: undefined } } },
+        { after: 4300, actors: { aria: { inspect: true } } },
+        {
+          after: 4500,
+          actors: {
+            leon: { x: 74, bottom: 44, inspect: false, left: true, via: [{ x: 70, bottom: 49 }] },
           },
         },
+      ],
+    },
+    { at: 5, actors: { aria: { inspect: true } } },
+    { at: 7, extras: [mason({ pose: "explain", speaking: true })] },
+    { at: 8, extras: [mason({ pose: "explain", speaking: true })] },
+    { at: 10, actors: { aria: { inspect: true } } },
+  ];
+}
+function paper(items: RestItems): LaterBeat[] {
+  return [
+    {
+      at: 12,
+      extras: [mason({ writing: true })],
+      items: items({ paper: "worker" }),
+      actors: {
+        finn: {
+          x: 36,
+          bottom: 60,
+          left: true,
+          pose: "offer",
+          via: [
+            { x: 88, bottom: 62 },
+            { x: 36, bottom: 62 },
+          ],
+        },
       },
-    ],
-  },
-]);
+      sequence: [
+        { after: 2300, extras: [mason({ pose: "explain" })], items: items({ paper: "finn" }) },
+        {
+          after: 2900,
+          actors: { finn: { x: 66, bottom: 44, left: false, via: [{ x: 66, bottom: 60 }] } },
+        },
+        { after: 4600, actors: { leon: { pose: "offer" } }, items: items({ paper: "leon" }) },
+      ],
+    },
+    {
+      at: 15,
+      actors: {
+        mira: { seated: false, healing: "rise", pose: "think" },
+        finn: {
+          x: 96,
+          bottom: 34,
+          left: true,
+          via: [{ x: 96, bottom: 44 }],
+        },
+      },
+      sequence: [{ after: 900, actors: { mira: { seated: true, healing: undefined } } }],
+    },
+    { at: 16, actors: { aria: { left: true } } },
+  ];
+}
+function beats() {
+  let state: RestState = {};
+  const items: RestItems = (patch = {}) => restItems((state = { ...state, ...patch }));
+  return [...outside(), ...compare(items), ...paper(items), ...stoneTea(items)];
+}
+export const stoneRest = scene(
+  "stone-yard",
+  [
+    actor("aria", 22, { bottom: 14, left: false }),
+    actor("leon", 43, { bottom: 28, left: true }),
+    actor("mira", 58, { bottom: 31, seated: true, chair: true, left: true }),
+    actor("finn", 65, { bottom: 13, left: true }),
+  ],
+  beats(),
+);

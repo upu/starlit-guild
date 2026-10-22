@@ -286,6 +286,7 @@ export type StageItem = {
   travelMs?: number;
   figure?: "kneel" | "bow" | "recoil";
   glow?: "dim" | "bright";
+  glowTone?: "violet";
 };
 
 export const stagePair = (

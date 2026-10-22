@@ -39,6 +39,7 @@ function displayCase(state: DisplayState): StageItem[] {
       stored: state.cover === "draped",
       tilt: state.stone === "tilting" ? -18 : 0,
       glow: "dim",
+      glowTone: "violet",
     },
   ];
 }
@@ -60,6 +61,7 @@ function displayCloth(state: DisplayState): StageItem[] {
             bottom: 27,
             width: 3.5,
             glow: state.cloth === "near" ? "dim" : undefined,
+            glowTone: "violet",
             support: "case",
           }),
         ]

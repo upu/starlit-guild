@@ -58,6 +58,9 @@
 .story-stage-item[data-art="candidate-violet"][data-glow] {
   filter: drop-shadow(0 0 4px #c0b2ff90);
 }
+.story-stage-item[data-glow="dim"][data-glow-tone="violet"] {
+  filter: brightness(1.08) drop-shadow(0 0 4px #c5b5fbb0) drop-shadow(0 0 8px #ab8adc50);
+}
 .story-stage-item:is([data-art^="display-"], [data-art^="tower-stone"], [data-art="light-cloth"]) {
   aspect-ratio: 256 / 320;
 }

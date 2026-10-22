@@ -47,6 +47,7 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
           hidden={!cue.items?.some((shown) => shown.id === item.id)}
           data-item={item.id}
           data-glow={item.glow}
+          data-glow-tone={item.glowTone}
           data-dissipating={!!item.dissipating}
           data-pouring={!!item.pouring}
           data-steaming={!!item.steaming}

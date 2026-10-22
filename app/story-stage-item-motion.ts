@@ -119,4 +119,6 @@ function paintItem(
   element.dataset.steaming = String(!!item.steaming);
   if (item.glow) element.dataset.glow = item.glow;
   else delete element.dataset.glow;
+  if (item.glowTone) element.dataset.glowTone = item.glowTone;
+  else delete element.dataset.glowTone;
 }
