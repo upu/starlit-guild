@@ -13,6 +13,7 @@ const names = {
   child: "子ども",
 };
 const frames = { idle: 0, explain: 1, point: 2, wave: 3 };
+const bedFrames = { rest: 0, listen: 1, ask: 2, nod: 3 };
 export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
   const items = [
     ...new Map(
@@ -31,6 +32,7 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
           data-npc={extra.id}
           data-speaking={!!extra.speaking}
           data-pose={extra.pose ?? "idle"}
+          data-bed={extra.id === "child" && !!extra.bed}
           style={{ left: `${String(extra.x)}%`, bottom: `${String(extra.bottom ?? 23)}%` }}
         >
           <span className="story-stage-shadow" />
@@ -38,7 +40,8 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
             className="story-stage-extra-sprite"
             style={{
               backgroundImage: `url(/story-stage/${extra.id}-poses.webp)`,
-              backgroundPositionX: `${String((frames[extra.pose ?? "idle"] / 3) * 100)}%`,
+              backgroundPositionX: `${String(((extra.id === "child" && extra.bed ? bedFrames[extra.bed] : frames[extra.pose ?? "idle"]) / 3) * 100)}%`,
+              backgroundPositionY: extra.id === "child" && extra.bed ? "100%" : "0%",
             }}
           />
           <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>

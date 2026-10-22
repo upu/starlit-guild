@@ -65,16 +65,31 @@ export const brekkaStages: Record<string, LaterStage> = {
     {
       at: 0,
       actors: { leon: { x: 61, bottom: 29, inspect: true, left: true } },
-      items: [ground("stone-lantern", 51, 32, 17), ground("tools", 44)],
+      items: [
+        { ...ground("stone-lantern-sooty", 51, 32, 17), id: "stone-lantern" },
+        held("oil-dish", "leon", { width: 4.5, x: -3, bottom: 25 }),
+        ground("tools", 44),
+      ],
       extras: [npc("worker", "荷運び人", 74)],
     },
     {
       at: 2,
       actors: { aria: { x: 42, bottom: 35, pose: "offer", left: false } },
       items: [
-        ground("stone-lantern", 51, 32, 17),
+        { ...ground("stone-lantern-sooty", 51, 32, 17), id: "stone-lantern" },
         held("cloth", "aria", { width: 4, x: 5, support: "stone-lantern" }),
+        { ...ground("oil-dish", 51, 47, 4.5), support: "stone-lantern" },
         ground("tools", 44),
+      ],
+      sequence: [
+        {
+          after: 1800,
+          items: [
+            { ...ground("stone-lantern-unlit", 51, 32, 17), id: "stone-lantern" },
+            held("cloth", "aria", { width: 4, x: 5, support: "stone-lantern" }),
+            ground("tools", 44),
+          ],
+        },
       ],
     },
     {
@@ -82,12 +97,12 @@ export const brekkaStages: Record<string, LaterStage> = {
       night: true,
       actors: {
         leon: { x: 55, bottom: 14, inspect: false },
-        aria: { x: 40, bottom: 10, inspect: true },
+        aria: { x: 8, bottom: 10, inspect: true, left: true },
       },
       extras: [{ ...npc("worker", "荷運び人", 61), bottom: 35 }],
-      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, ground("tools", 32)],
+      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, ground("tools", 19)],
     },
-    { at: 8, actors: { aria: { inspect: false, pose: "greet" } } },
+    { at: 8, actors: { aria: { x: 38, bottom: 14, inspect: false, pose: "greet", left: false } } },
     { at: 9, extras: [npc("worker", "荷運び人", 74, "explain", true)] },
     {
       at: 18,

@@ -239,13 +239,29 @@
     "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
     "output": "4808902940b5d9e92f50682927763207ef760bdbd9ec5abb94d656c753233cbb"
   },
+  "prop-stone-lantern-sooty": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "7fefc10f3ff1a0dda8b743f44b0703507ccb980e250ba1b869e43b1ce7b394c6"
+  },
+  "prop-stone-lantern-unlit": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "a67de9ea85e08bd421d0dc46e63b8bcefd9ae19df27dddba11a7d9a33be1192b"
+  },
   "prop-stone-lantern": {
-    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
-    "output": "9792502cc50a91f0ee28214b3d4307010060ba07e844560a3874175af0ad95f7"
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "ec0bd1b8f51e9746d82b9178612906afd9814d8f1885712e9447acf98e8177ef"
+  },
+  "prop-oil-dish": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "928e28a7680ddfbe040bfeced8ea322fee3af880ab0351a47f57e930ca487389"
   },
   "prop-table": {
     "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
     "output": "745db1642311dfe606c7a4cea1dfd34f899a25c7ddb72f39285b0974bcdd47ad"
+  },
+  "prop-plant-label": {
+    "source": "44adbf8614a58842414576b2a737911543882f56bb658658b6ed580ad545d622",
+    "output": "f165f76e94dd47c0ec56d12ae9f3c2002939682dacd0cf1cf018f016c3e6918f"
   },
   "prop-pot": {
     "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
@@ -328,8 +344,8 @@
     "output": "d63dd577e67b3fd8785cb0de1437a678a70b8032b98a74479e7b10f078fbe7c5"
   },
   "child-poses": {
-    "source": "85d9239eb9e679b36dbeba24fa00fc9ef7160093fc93b6721c2bbc206bfcef05",
-    "output": "6b10ef382cff67e047a5364982bcf73b2b9ad7a390ecc242170aeb3d93ad0015"
+    "source": "c30fb207925353cc3dcc172ed73ae58fc37e30990df47643f06b0ff54e4a9cab",
+    "output": "c0a53ae5e08d8d111e02cf8773d378fe960dbfd44f5a91229d3ca747b3ae70c1"
   },
   "prop-dining-table": {
     "source": "60176cf83a054d92ac146f9b2f436e1719b45c54c9e0ea2093e549ad487a7451",

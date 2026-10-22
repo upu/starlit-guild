@@ -22,6 +22,15 @@
   width: calc(var(--stage-cell) * 0.72);
   height: calc(var(--stage-cell) * 0.72);
 }
+.story-stage-extra[data-npc="child"] .story-stage-extra-sprite {
+  background-size: 400% 200%;
+}
+.story-stage-extra[data-bed="true"] .story-stage-shadow {
+  display: none;
+}
+.story-stage-extra[data-bed="true"] .story-stage-name {
+  top: 22%;
+}
 .story-stage-item {
   position: absolute;
   aspect-ratio: 1.3;
@@ -95,8 +104,14 @@
   aspect-ratio: 1.5;
   z-index: 1;
 }
-.story-stage-item:is([data-art="signpost"], [data-art="stone-lantern"], [data-art="sample-jar"]) {
+.story-stage-item:is([data-art="signpost"], [data-art^="stone-lantern"], [data-art="sample-jar"]) {
   aspect-ratio: 0.85;
+}
+.story-stage-item[data-art="plant-label"] {
+  aspect-ratio: 0.7;
+}
+.story-stage-item[data-art="oil-dish"] {
+  aspect-ratio: 1.5;
 }
 .story-stage-item:is([data-art="puppet"], [data-art="golem"]) {
   aspect-ratio: 0.8;

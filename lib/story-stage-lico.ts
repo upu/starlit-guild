@@ -12,15 +12,22 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 const keeper = () => npc("keeper", undefined, 28);
-const plants = () => ground("colony", 53, 10, 12);
+// These sit inside the painted bed beside the left channel, not in the walking lane.
+const plants = () => ground("colony", 7, 45, 12);
+const plantLabel = () => ground("plant-label", 12, 44, 2.8);
 const withLico = () => [actor("aria", 20), actor("leon", 41), actor("mira", 62), actor("lico", 82)];
 export const licoStages: Record<string, LaterStage> = {
-  "brekka-moss-beds-departure": scene("moss-beds", trio(), [
-    { at: 0, items: [plants(), ground("ledger", 72, 33, 8)] },
-    { at: 1, actors: { aria: { inspect: true } } },
-    { at: 2, actors: { leon: { pose: "offer" } } },
-    { at: 4, actors: { aria: { inspect: false } } },
-  ]),
+  "brekka-moss-beds-departure": scene(
+    "moss-beds",
+    trio(),
+    [
+      { at: 0, items: [plants()] },
+      { at: 1, actors: { aria: { x: 23, bottom: 38, inspect: true, left: true } } },
+      { at: 2, actors: { leon: { pose: "offer" } } },
+      { at: 4, actors: { aria: { inspect: false, left: false } } },
+    ],
+    { furniture: [plantLabel()] },
+  ),
   "brekka-moss-beds-return": scene(
     "moss-beds",
     withLico(),
@@ -69,7 +76,7 @@ export const licoStages: Record<string, LaterStage> = {
         ],
       },
     ],
-    { initial: { lico: 110 } },
+    { initial: { lico: 110 }, furniture: [plantLabel()] },
   ),
   "lico-records-departure": scene(
     "registry",
@@ -104,6 +111,7 @@ export const licoStages: Record<string, LaterStage> = {
       {
         at: 32,
         background: "moss-beds",
+        furniture: [plantLabel()],
         cast: quintet().map((a) => ({ ...a, seated: a.id === "lico" })),
         items: [plants(), ground("ledger", 77, 13, 8), ground("dish", 85, 13, 6)],
         extras: [keeper()],
@@ -133,34 +141,39 @@ export const licoStages: Record<string, LaterStage> = {
     ],
     { cell: 19, initial: { lico: 83 } },
   ),
-  "lico-records-return": scene("moss-beds", quintet(), [
-    {
-      at: 0,
-      items: [plants(), held("ledger", "leon"), ground("dish", 78, 16, 9)],
-      extras: [keeper()],
-    },
-    {
-      at: 4,
-      items: [plants(), held("ledger", "lico"), ground("basket", 28), ground("dish", 78, 16, 9)],
-    },
-    {
-      at: 8,
-      actors: { lico: { seated: true } },
-      items: [
-        plants(),
-        ground("ledger", 78, 13, 9),
-        ground("basket", 28),
-        ground("dish", 86, 13, 6),
-      ],
-    },
-    { at: 12, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
-    { at: 17, actors: { lico: { pose: "think" } } },
-    { at: 24, extras: [{ ...keeper(), pose: "point", speaking: true }] },
-    {
-      at: 27,
-      actors: { aria: { carry: true } },
-      items: [plants(), held("seedlings", "aria"), ground("ledger", 78, 13, 9)],
-    },
-    { at: 30, actors: { lico: { seated: true, pose: "think" } } },
-  ]),
+  "lico-records-return": scene(
+    "moss-beds",
+    quintet(),
+    [
+      {
+        at: 0,
+        items: [plants(), held("ledger", "leon"), ground("dish", 78, 16, 9)],
+        extras: [keeper()],
+      },
+      {
+        at: 4,
+        items: [plants(), held("ledger", "lico"), ground("basket", 28), ground("dish", 78, 16, 9)],
+      },
+      {
+        at: 8,
+        actors: { lico: { seated: true } },
+        items: [
+          plants(),
+          ground("ledger", 78, 13, 9),
+          ground("basket", 28),
+          ground("dish", 86, 13, 6),
+        ],
+      },
+      { at: 12, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
+      { at: 17, actors: { lico: { pose: "think" } } },
+      { at: 24, extras: [{ ...keeper(), pose: "point", speaking: true }] },
+      {
+        at: 27,
+        actors: { aria: { carry: true } },
+        items: [plants(), held("seedlings", "aria"), ground("ledger", 78, 13, 9)],
+      },
+      { at: 30, actors: { lico: { seated: true, pose: "think" } } },
+    ],
+    { furniture: [plantLabel()] },
+  ),
 };

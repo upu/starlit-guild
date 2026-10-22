@@ -21,6 +21,15 @@ const breakfast = () => [
   ground("dish", 92, 70, 6),
   { ...ground("bread", 92, 71, 4), support: "dish" },
 ];
+const patientCast = () => [
+  actor("aria", 43, { bottom: 35 }),
+  actor("leon", 60, { bottom: 35 }),
+  actor("mira", 79, { bottom: 52, seated: true, chair: true, left: false }),
+];
+const patientExtras = (bed: "rest" | "listen" | "ask" | "nod") => [
+  { ...npc("parent", "家の人", 97), bottom: 52 },
+  { ...npc("child", undefined, 86), bottom: 73, bed, speaking: bed === "ask" },
+];
 
 export const medicineStages: Record<string, LaterStage> = {
   "hilltop-picnic-departure": scene(
@@ -274,15 +283,24 @@ export const medicineStages: Record<string, LaterStage> = {
     ],
     { exit: ["aria", "leon"] },
   ),
-  "waiting-households-return": scene("patient-room", trio(), [
-    {
-      at: 0,
-      actors: { mira: { seated: true } },
-      items: [ground("medicine", 49), held("honey", "mira", { width: 5 })],
-      extras: [npc("parent", "家の人", 82), npc("child", undefined, 62)],
-    },
-    { at: 1, actors: { mira: { pose: "offer" } } },
-  ]),
+  "waiting-households-return": scene(
+    "patient-room",
+    patientCast(),
+    [
+      {
+        at: 0,
+        items: [
+          ground("medicine", 52, 33, 9),
+          { ...ground("honey", 52, 40, 3.5), support: "medicine" },
+        ],
+        extras: patientExtras("rest"),
+      },
+      { at: 1, extras: patientExtras("listen") },
+      { at: 2, extras: patientExtras("ask") },
+      { at: 3, extras: patientExtras("nod") },
+    ],
+    { furniture: [chair(patientCast()[2])] },
+  ),
   "medicine-road-home-departure": scene(
     "village-house",
     trio(),

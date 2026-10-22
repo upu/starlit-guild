@@ -100,6 +100,7 @@ export type StageExtra = {
   speaking?: boolean;
   carry?: boolean;
   left?: boolean;
+  bed?: "rest" | "listen" | "ask" | "nod";
 };
 export type StageItem = {
   id: string;
@@ -127,6 +128,10 @@ export type StageItem = {
     | "ledger"
     | "seedlings"
     | "stone-lantern"
+    | "stone-lantern-sooty"
+    | "stone-lantern-unlit"
+    | "oil-dish"
+    | "plant-label"
     | "table"
     | "dining-table"
     | "chair"

@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { readFile } from "node:fs/promises";
 import { readFrame, packFrames, headBounds } from "./home-pixel-frames.mjs";
 import { registerWorkPose } from "./story-stage-pose-frames.mjs";
+import { fieldLanterns, plantLabel } from "./story-stage-field-art.mjs";
 
 async function cells(raw, columns, rows) {
   const { width, height } = await sharp(raw).metadata();
@@ -95,7 +96,11 @@ export async function laterAssets(root, emit) {
     "stone-lantern",
     "table",
   ];
-  for (const [i, name] of names.entries())
+  for (const [i, name] of names.entries()) {
+    if (name === "stone-lantern") {
+      await fieldLanterns(root, emit);
+      continue;
+    }
     await emit(
       `prop-${name}`,
       raw,
@@ -105,6 +110,8 @@ export async function laterAssets(root, emit) {
         .webp({ lossless: true })
         .toBuffer(),
     );
+  }
+  await plantLabel(root, emit);
   const hand = await source("later-hand-props"),
     handFrames = await cells(hand, 3, 2);
   for (const [i, name] of ["pot", "key", "juice", "ale", "sample-jar", "handcart"].entries())
@@ -176,6 +183,14 @@ async function townsfolk(source, emit) {
       width: width / 2,
       height: i < 2 ? split : height - split,
     });
-    await emit(`${id}-poses`, raw, (await packFrames([frame, frame, frame, frame], 0.25)).image);
+    let image = (await packFrames([frame, frame, frame, frame], 0.25)).image;
+    let provenance = raw;
+    if (id === "child") {
+      const bed = await source("child-bed");
+      const { childBedAtlas } = await import("./story-stage-patient-art.mjs");
+      image = await childBedAtlas(image, bed);
+      provenance = Buffer.concat([raw, bed]);
+    }
+    await emit(`${id}-poses`, provenance, image);
   }
 }
