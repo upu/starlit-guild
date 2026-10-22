@@ -12,7 +12,7 @@ export function partyClearance(width: number, height: number): Clearance {
   const size = roadHeroSize(width, height);
   return {
     x: ((size * 0.64 + 3) / width) * 560,
-    lane: (size * 0.9 + 12) / (roadY(1, height) - roadY(0, height)),
+    lane: (size * 0.9 + 12) / (roadY(1, height, width) - roadY(0, height, width)),
   };
 }
 
@@ -22,7 +22,7 @@ export function partyFootClearance(width: number, height: number): Clearance {
   const size = roadHeroSize(width, height);
   return {
     x: ((size * 0.45 + 3) / width) * 560,
-    lane: (size * 0.22 + 3) / (roadY(1, height) - roadY(0, height)),
+    lane: (size * 0.22 + 3) / (roadY(1, height, width) - roadY(0, height, width)),
   };
 }
 
@@ -55,7 +55,7 @@ function freeTarget(
   // Support characters may use an adjacent row, but not move past the front
   // fighter toward an enemy merely to make space.
   return (
-    targetCandidates(base, targets.length, gap)
+    targetCandidates(base, targets.length, gap, placed)
       .filter(({ p }) => inRoad(p, gap) && (p.x - front) * target.facing <= 0.001)
       .filter(({ p }) => !placed.some((other) => partyOverlap(p, other, gap)))
       .sort((a, b) => a.cost - b.cost)[0]?.p ?? base
@@ -66,16 +66,31 @@ function inRoad(p: PartyPosition, gap: Clearance) {
   return p.x >= gap.x / 2 && p.x <= 560 - gap.x / 2 && p.lane >= 0.1 && p.lane <= 1.3;
 }
 
-function targetCandidates(base: PartyTarget, count: number, gap: Clearance) {
+function targetCandidates(base: PartyTarget, count: number, gap: Clearance, placed: PartyTarget[]) {
   const candidates = [];
-  for (let row = -2; row <= 2; row++)
-    for (let col = -count; col <= count; col++) {
+  // Include the actual edges of occupied spaces. A grid anchored to each
+  // character can miss an empty slot between companions after a resize.
+  const xs = [
+    ...Array.from({ length: count * 2 + 1 }, (_, i) => base.x + (i - count) * gap.x),
+    ...placed.flatMap((p) => [p.x - gap.x, p.x + gap.x]),
+  ];
+  const lanes = [
+    ...[-2, -1, 0, 1, 2].map((row) => base.lane + row * gap.lane),
+    ...placed.flatMap((p) => [p.lane - gap.lane, p.lane + gap.lane]),
+  ];
+  for (const lane of lanes)
+    for (const x of xs) {
       const p = {
         ...base,
-        x: base.x - col * gap.x * base.facing,
-        lane: base.lane + row * gap.lane,
+        x: Math.max(gap.x / 2, Math.min(560 - gap.x / 2, x)),
+        // Narrow viewports have fewer ground rows. Also try the road edges:
+        // a full row step can overshoot a usable edge and falsely report no room.
+        lane: Math.max(0.1, Math.min(1.3, lane)),
       };
-      candidates.push({ p, cost: Math.abs(col) + Math.abs(row) * 1.8 + (col < 0 ? 1 : 0) });
+      const rowDistance = Math.abs(p.lane - base.lane) / gap.lane;
+      const columnDistance = Math.abs(p.x - base.x) / gap.x;
+      const forward = (p.x - base.x) * base.facing > 0 ? 1 : 0;
+      candidates.push({ p, cost: columnDistance + rowDistance * 1.8 + forward });
     }
   return candidates;
 }

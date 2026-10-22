@@ -133,13 +133,13 @@ test("cart grips stay by the hands across viewport sizes, with companions escort
       if (index === 35)
         assert.deepEqual(look.frontCarriers, ["finn"], "Finn pulls the seedlings as in 4-9");
       const cartX = roadX(battle.gathering.x + 65, battle.distance, width, battle.stage);
-      const cartY = roadY(0.82, height),
+      const cartY = roadY(0.82, height, width),
         cartWidth = 0.72 * Math.min(145, width * 0.3);
       const unit = (roadHeroSize(width, height) * 0.9) / 96;
       for (const hero of battle.heroes.filter((hero) => look.workers.includes(hero.id))) {
         const pulling = look.frontCarriers.includes(hero.id);
         const hx = roadX(hero.x, battle.distance, width, battle.stage);
-        const hy = roadY(hero.lane, height);
+        const hy = roadY(hero.lane, height, width);
         const grip = look.work.asset.includes("seedling-cart")
           ? pulling
             ? -0.3

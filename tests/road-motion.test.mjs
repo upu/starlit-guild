@@ -131,7 +131,7 @@ test("effects and recovery taps follow the displayed hero during repositioning",
   assert.equal(
     chapterRoadHit(
       null,
-      { x: screenX(battle), y: roadY(battle.heroes[0].lane, 300) - 25 },
+      { x: screenX(battle), y: roadY(battle.heroes[0].lane, 300, 390) - 25 },
       390,
       300,
       battle,

@@ -1,6 +1,36 @@
 {
   "version": 1,
   "files": {
+    "adventure-berne.png": {
+      "sourceHash": "10e4915ed4be8bd6d4097b512af939d0f2a5bd2a4f7d25668146e29b7f0c133b",
+      "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
+      "sourceBytes": 3384890,
+      "outputs": {
+        "thumbnail": {
+          "hash": "d561efb268c0508b467caf119c9444898c4316fcbbf38bb11e0eec23735bd588",
+          "bytes": 35108
+        },
+        "background": {
+          "hash": "78d84b02b03f48208baed84d958aa970de06a7f86f4bbd6b294f2ffceebad243",
+          "bytes": 437704
+        }
+      }
+    },
+    "adventure-farm-road.png": {
+      "sourceHash": "d667b514e7677d94ba9316eb5264e51fe904bafeb7815688a008748ac2c6893e",
+      "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
+      "sourceBytes": 3874329,
+      "outputs": {
+        "thumbnail": {
+          "hash": "06d97be5d06eba16278025226f72f6a60758b38df1baad56920babbdc96e7ef5",
+          "bytes": 46382
+        },
+        "background": {
+          "hash": "d087228246343e0c87f17eca7a84c72f396a7178604ee3a7fe4602f2dccd19c6",
+          "bytes": 658126
+        }
+      }
+    },
     "berne.png": {
       "cameraSource": "assets/source/rpg-camera/roads-v1.png",
       "sourceHash": "8d4bb7965ff5431ec9c2e83879860eede34c3fa01f6d474ad0f2baa47d7f6c5d",

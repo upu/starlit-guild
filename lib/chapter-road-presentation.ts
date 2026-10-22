@@ -1,3 +1,4 @@
+import { roadBackground } from "./road-background.ts";
 import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
 import { MOSS_TRANSPLANT_QUEST, isChapterFourQuest } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
@@ -225,7 +226,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
   const puller = roadCarrierLead(frame.quest, run);
   return {
-    background: frame.background,
+    background: roadBackground(frame.background),
     destination: ![
       "spinning-signpost",
       "begging-golem",
@@ -362,15 +363,15 @@ export function chapterRoadHit(
   const distance = (h: Traveller) =>
     Math.hypot(
       point.x - chapterRoadX(h.x, battle.distance, width, battle.stage),
-      point.y - (roadY(h.lane, height) - size * 0.45),
+      point.y - (roadY(h.lane, height, width) - size * 0.45),
     );
   const hero = [...battle.heroes]
     .sort((a, b) => distance(a) - distance(b))
     .find(
       (h) =>
         Math.abs(point.x - chapterRoadX(h.x, battle.distance, width, battle.stage)) < size * 0.45 &&
-        point.y > roadY(h.lane, height) - size * 0.9 &&
-        point.y < roadY(h.lane, height) + size * 0.2,
+        point.y > roadY(h.lane, height, width) - size * 0.9 &&
+        point.y < roadY(h.lane, height, width) + size * 0.2,
     );
   return hero ? `heal:${hero.id}` : "help";
 }

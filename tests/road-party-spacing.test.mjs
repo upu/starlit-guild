@@ -104,30 +104,30 @@ test("a companion faces the actual sideways detour instead of walking backwards"
   const motion = new RoadMotion();
   let previous = points(
     motion.update(
-      formation(1000, 388, [
-        [240, 0.2],
+      formation(1000, 1178, [
+        [240, 0.1],
         [240, 0.7],
       ]),
       "test",
-      388,
+      1178,
       false,
-      740,
+      848,
     ).battle,
-    388,
+    1178,
   );
   let sideSteps = 0;
   for (let time = 1016; time < 6000; time += 16) {
     const result = motion.update(
-      formation(time, 388, [
-        [240, 1.2],
+      formation(time, 1178, [
+        [240, 1.3],
         [240, 0.7],
       ]),
       "test",
-      388,
+      1178,
       false,
-      740,
+      848,
     );
-    const next = points(result.battle, 388);
+    const next = points(result.battle, 1178);
     const dx = next[0].x - previous[0].x;
     if (Math.abs(dx) > 0.2) {
       sideSteps++;
@@ -136,7 +136,7 @@ test("a companion faces the actual sideways detour instead of walking backwards"
     previous = next;
   }
   assert.ok(sideSteps > 0);
-  assert.ok(Math.abs(previous[0].x - 240) < 1 && Math.abs(previous[0].lane - 1.2) < 0.01);
+  assert.ok(Math.abs(previous[0].x - 240) < 1 && Math.abs(previous[0].lane - 1.3) < 0.01);
 });
 
 test("reduced motion spaces a crowded party immediately and stays static", () => {

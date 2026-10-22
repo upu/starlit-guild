@@ -1,4 +1,4 @@
-import { roadHeroSize, roadScale } from "./road-layout.ts";
+import { roadDepth, roadHeroSize, roadScale } from "./road-layout.ts";
 import { RPG_CAMERA_SCALE } from "./rpg-camera.ts";
 
 export type RoadViewport = { width: number; height: number };
@@ -20,8 +20,6 @@ export function roadCartSlot(
   const gripY = pulling ? (seedlings ? -0.3 : -0.33) : seedlings ? -0.27 : -0.22;
   return {
     offset: (cart * gripX - handX * figure) / roadScale(view.width, stage),
-    lane:
-      0.82 +
-      (cart * gripY - handY * figure) / (Math.min(240, view.height * 0.65) * RPG_CAMERA_SCALE),
+    lane: 0.82 + (cart * gripY - handY * figure) / roadDepth(view.width, view.height),
   };
 }

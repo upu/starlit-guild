@@ -67,9 +67,11 @@ export class RoadEffects {
     const age = state.time - effect.at;
     const scale = RPG_CAMERA_SCALE * Math.min(1, this.scene.scale.width / 620);
     const endX = screenX(effect.x),
-      endY = roadY(effect.lane, this.scene.scale.height) - 24 * scale;
+      endY = roadY(effect.lane, this.scene.scale.height, this.scene.scale.width) - 24 * scale;
     const startX = screenX(effect.fromX ?? effect.x),
-      startY = roadY(effect.fromLane ?? effect.lane, this.scene.scale.height) - 28 * scale;
+      startY =
+        roadY(effect.fromLane ?? effect.lane, this.scene.scale.height, this.scene.scale.width) -
+        28 * scale;
     if (
       paintDuelEffect(this.threads, sprite, effect, age, scale, startX, startY, endX, endY, reduced)
     )

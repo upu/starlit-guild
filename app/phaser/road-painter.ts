@@ -9,6 +9,7 @@ import { type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
 import { RoadWorkCaption } from "./road-work-caption";
+import { RoadEnemyLabels } from "./road-enemy-labels";
 import { applyHeroPose, applyWorkPose, registerAdventureHero } from "./road-poses";
 import {
   ROAD_HERB,
@@ -28,7 +29,6 @@ import {
   enemyFacesRight,
   enemyAngle,
   fitEnemy,
-  enemyLabel,
   enemyDisplayHeight,
 } from "./road-enemy-appearance";
 
@@ -52,6 +52,7 @@ export class RoadPainter {
   private strings: Phaser.GameObjects.Graphics;
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
+  private enemyLabels = new RoadEnemyLabels();
   private destination: Phaser.GameObjects.Image;
   private look?: RoadLook;
 
@@ -163,7 +164,7 @@ export class RoadPainter {
     this.backdrop.setDisplaySize(view.width, view.height).setPosition(view.x, view.y);
     const markerHeight = RPG_CAMERA_SCALE * Math.min(125, width * 0.26, height * 0.4);
     this.destination.setDisplaySize((markerHeight * 874) / 1144, markerHeight);
-    this.destination.setPosition(this.screenX(length + 100, state), roadY(0.6, height));
+    this.destination.setPosition(this.screenX(length + 100, state), roadY(0.6, height, width));
     this.destination.setVisible(
       !!this.look?.destination && state.phase === "journey" && state.distance > length - 380,
     );
@@ -221,7 +222,7 @@ export class RoadPainter {
     const gathering = this.working(hero) && state.gathering?.task === "gather";
     const crouch =
       gathering && !reduced ? (4 + Math.sin(state.time / 280) * 2) * RPG_CAMERA_SCALE : 0;
-    const y = roadY(hero.lane, this.scene.scale.height) + crouch;
+    const y = roadY(hero.lane, this.scene.scale.height, this.scene.scale.width) + crouch;
     const pose = String(this.heroPose(state, hero, reduced));
     const pulling = this.look?.frontCarriers.includes(hero.id) || false;
     const working =
@@ -249,7 +250,7 @@ export class RoadPainter {
     }
     const size = enemyDisplayHeight(enemy, this.scene.scale.width, this.scene.scale.height);
     const x = this.screenX(enemy.x, state),
-      y = roadY(enemy.lane, this.scene.scale.height);
+      y = roadY(enemy.lane, this.scene.scale.height, this.scene.scale.width);
     const bounce =
       reduced || enemy.pose === "fallen"
         ? 0
@@ -272,11 +273,6 @@ export class RoadPainter {
     const heroHeight = roadHeroSize(this.scene.scale.width, this.scene.scale.height) * 0.9;
     const cellSize = (size * adventureEnemyArt.cell) / adventureEnemyArt.height;
     this.spriteFilter.applyPixel(figure.image, heroHeight, { width: cellSize, height: cellSize });
-    figure.label
-      .setVisible(!enemy.pose)
-      .setPosition(x, y + 14)
-      .setWordWrapWidth(Math.min(150, this.scene.scale.width * 0.3), true)
-      .setText(enemyLabel(enemy, this.look));
     figure.bar.setDepth(10 + enemy.lane * 10 + 0.01);
     if (enemy.kind !== "pumpety" && !enemy.pose)
       this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true, figure.bar);
@@ -306,7 +302,7 @@ export class RoadPainter {
     const cargo = point.kind === "cargo";
     const lane = cargo ? 0.82 : 0.68;
     const x = this.screenX(point.x + 65, state),
-      y = roadY(lane, this.scene.scale.height);
+      y = roadY(lane, this.scene.scale.height, this.scene.scale.width);
     const { size, asset, frame } = this.workAppearance(cargo);
     if (this.gathering.texture.key !== asset || this.gathering.frame.name !== frame)
       this.gathering.setTexture(asset, frame);
@@ -354,7 +350,19 @@ export class RoadPainter {
     for (const hero of state.heroes) this.paintHero(state, hero, reduced);
     for (const enemy of state.enemies)
       if (enemy.hp > 0 || enemy.pose) this.paintEnemy(state, enemy, reduced);
-    paintPuppetStrings(this.strings, state, this.scene.scale.height, (x) => this.screenX(x, state));
+    this.enemyLabels.paint(
+      state,
+      look,
+      reduced,
+      this.heroes,
+      this.enemies,
+      this.gathering,
+      this.scene.scale.width,
+      this.scene.scale.height,
+    );
+    paintPuppetStrings(this.strings, state, this.scene.scale.height, this.scene.scale.width, (x) =>
+      this.screenX(x, state),
+    );
     this.effects.paint(state, reduced, (x) => this.screenX(x, state));
   }
 }

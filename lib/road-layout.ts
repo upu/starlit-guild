@@ -5,8 +5,10 @@ export const roadScale = (width: number, stage = "forest") =>
   RPG_CAMERA_SCALE * Math.min(1.4, width / (stage === "puppets" ? 800 : 560));
 export const roadHeroSize = (width: number, height: number) =>
   RPG_CAMERA_SCALE * Math.min(128, width * 0.18, height * 0.34);
-export const roadY = (lane: number, height: number) =>
-  height * 0.62 + (lane - 0.68) * Math.min(240, height * 0.65) * RPG_CAMERA_SCALE;
+export const roadDepth = (width: number, height: number) =>
+  Math.min(240, height * 0.65, width * 0.35) * RPG_CAMERA_SCALE;
+export const roadY = (lane: number, height: number, width: number) =>
+  height * 0.62 + (lane - 0.68) * roadDepth(width, height);
 export const roadX = (x: number, camera: number, width: number, stage = "forest") =>
   width * (stage === "puppets" ? 0.2 : 0.35) + (x - camera) * roadScale(width, stage);
 
@@ -27,6 +29,6 @@ export function roadBackdrop(
     width: w,
     height: h,
     x: -(w - width) * Math.max(0, Math.min(1, progress)),
-    y: h >= height ? (height - h) / 2 : height * 0.62 - h * 0.7,
+    y: height * 0.62 - h * 0.7,
   };
 }
