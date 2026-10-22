@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { readFile } from "node:fs/promises";
 import { readFrame, headBounds, rowCuts } from "./home-pixel-frames.mjs";
 import { registerHeroPose } from "./hero-pose-registration.mjs";
+import { surveyCook } from "./story-stage-survey-art.mjs";
 
 async function cell(raw, index, columns, rows) {
   const { width, height } = await sharp(raw).metadata();
@@ -46,7 +47,7 @@ export async function reviewManorNpc(root, name, raw, image) {
     .composite(layers)
     .raw()
     .toBuffer();
-  return {
+  const result = {
     raw: Buffer.concat([raw, source]),
     image: await sharp(Buffer.concat([original, additions]), {
       raw: { width: 512, height: 384, channels: 4 },
@@ -54,6 +55,7 @@ export async function reviewManorNpc(root, name, raw, image) {
       .webp({ lossless: true })
       .toBuffer(),
   };
+  return cook ? surveyCook(root, result.raw, result.image) : result;
 }
 export async function manorAssets(root, emit) {
   for (const name of ["manor-kitchen", "manor-kitchen-open"]) {

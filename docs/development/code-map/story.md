@@ -52,3 +52,5 @@
 3-3の図面と控え・石組みの調査は `lib/story-stage-keystone.ts`、紙と荷物の状態は `lib/story-stage-keystone-items.ts`。背景2種は `scripts/story-stage-keystone-art.mjs` と `config/rpg-backgrounds.json`、紙を取る・戻す接点、移動完了後の動作、縮尺、荷物回収と空所を避ける退出は `tests/story-stage-keystone.test.mjs`。
 
 3-4の勝手口・ノックと料理人の接近は `lib/story-stage-manor-door.ts`、展示台の石・覆い・鍵・光の測定は `lib/story-stage-manor-display.ts` と `lib/story-stage-manor-display-items.ts`。素材の切り出しと料理人・商人の共通縮尺への登録は `scripts/story-stage-manor-art.mjs`。フィンのノックは共通会話アトラス44・45番。到着後の接触、石の表裏と覆いの順、布の深度、腰の鍵の連続性、既存画素と頭幅・接地の維持は `tests/story-stage-manor.test.mjs`。
+
+3-6前半の門番への反応・鍋の受け渡し・料理人の退出は `lib/story-stage-survey-door.ts`。鍋本体と蓋、道具袋、磨き布、料理人12〜15番、門の背景は `scripts/story-stage-survey-art.mjs`。`StageItem.behindOwner` は背負う袋の前後関係を指定する。到着時刻・手元の接点・蓋の順序・退出中の持ち物追従・頭幅と接地は `tests/story-stage-survey-door.test.mjs`。

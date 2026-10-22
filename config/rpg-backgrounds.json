@@ -277,6 +277,12 @@
     "cells": [{ "story": ["manor-kitchen-open"] }]
   },
   {
+    "source": "assets/source/story-stage/manor-gate-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-gate"] }]
+  },
+  {
     "source": "assets/source/story-stage/stone-storeroom-v2.png",
     "columns": 1,
     "rows": 1,

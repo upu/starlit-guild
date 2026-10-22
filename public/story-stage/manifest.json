@@ -332,8 +332,8 @@
     "output": "1d396a68acb9e869f8236ac02080bc548facea73ec8a74eec76ddf038cff18dc"
   },
   "cook-poses": {
-    "source": "5925a6b31f7cc186f2527a4ea0a6412cac12f8e9703720d50a060206985aa4a6",
-    "output": "4be0022957f5be9bc8ad86015e715c91b79a523c9374133e3286b697940ca005"
+    "source": "00e09154e462acc04a70abbcf6887e5ba770f5ffb4e30ac34e6643a56cc9d3b8",
+    "output": "15b571d1a369850719f32acebee0885ace2069f17465e856f8afc6d2268801b8"
   },
   "doctor-poses": {
     "source": "85d9239eb9e679b36dbeba24fa00fc9ef7160093fc93b6721c2bbc206bfcef05",
@@ -686,5 +686,25 @@
   "stone-storeroom": {
     "source": "96a5979f0d7d6303936f23b7bdc17d87d6bae5cfb7129aa54eaf99880d6fccf7",
     "output": "9986e491bb96c950202cc06f9600aa6900c79c4ac7001078f938ccf2ee520c0c"
+  },
+  "prop-survey-pot": {
+    "source": "fffb0cb4fef7865bf3ff05f8e8f76e5a2ffd111303d577dcf094df77cbbfdd20",
+    "output": "11adb7f8cf2effc3ed08fc9b38b189de44cb78493d134e0a15ae83e90d3ceb12"
+  },
+  "prop-pot-lid": {
+    "source": "fffb0cb4fef7865bf3ff05f8e8f76e5a2ffd111303d577dcf094df77cbbfdd20",
+    "output": "fe3505373476292466282f6fba7fcabf7f433ce4d879fd1c81d007f4556c4d1b"
+  },
+  "prop-tool-rucksack": {
+    "source": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9",
+    "output": "92a4e634dd5727800b90a723e7f2529fdc31774ecf5a2973dc84bebec76afc51"
+  },
+  "prop-scrubbing-rag": {
+    "source": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9",
+    "output": "32c58818557802813dce863fc0f3174ca4dd1e2557ed454ae7b32e61b4f1860f"
+  },
+  "manor-gate": {
+    "source": "32f86d2a86c9e9ebbc404229b435588738095f7c0381609796a75afd6efbb3fa",
+    "output": "e5c78efdef3ff45b5121cd177a4460d99564bc3e86eb97aebf2630f409e8b590"
   }
 }

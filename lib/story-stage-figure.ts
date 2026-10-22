@@ -40,13 +40,14 @@ function maskedFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 }
 function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
   if (moving) return 4 + (Math.floor(elapsed / 180) % 4);
+  if (extra.kitchen) return { pot: 12, lid: 13, inspect: 14, cloth: 15 }[extra.kitchen];
   if (extra.grip) return extra.grip === "reach" ? 8 : 9;
   return extra.pose === "explain" || extra.pose === "point" ? 10 : 11;
 }
 
 export function stageExtraRows(extra: StageExtra) {
-  if (extra.id === "worker") return 4;
-  if (extra.id === "cook" || extra.id === "merchant") return 3;
+  if (extra.id === "worker" || extra.id === "cook") return 4;
+  if (extra.id === "merchant") return 3;
   if (extra.id === "masked-pumpety") return 3;
   return ["child", "keeper", "merchant", "parent", "stone-carrier"].includes(extra.id) ? 2 : 1;
 }

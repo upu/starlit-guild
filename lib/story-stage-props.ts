@@ -85,9 +85,11 @@ export function stageItemDepth(
       : undefined;
   if (item.art === "picnic-cloth") return 0;
   const { depth, supported } = supportDepth(item, cue);
-  return owner
-    ? Math.max(Math.round(100 - (owner.bottom ?? 14)) + 1, supported ? depth : 0)
-    : depth;
+  return owner ? Math.max(ownerDepth(item, owner), supported ? depth : 0) : depth;
+}
+
+function ownerDepth(item: StageItem, owner: StagePosition) {
+  return Math.round(100 - (owner.bottom ?? 14)) + (item.behindOwner ? -1 : 1);
 }
 
 function supportDepth(item: StageItem, cue: StoryStageCue) {

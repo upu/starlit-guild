@@ -65,6 +65,7 @@ export type StoryStageCue = {
     | "berne-foundation-open"
     | "manor-kitchen"
     | "manor-kitchen-open"
+    | "manor-gate"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -120,6 +121,7 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  kitchen?: "pot" | "lid" | "inspect" | "cloth";
   care?: "sore" | "palm" | "bandaged" | "rest";
   grip?: "reach" | "hold";
   limp?: boolean;
@@ -248,6 +250,10 @@ export type StageItem = {
     | "reflector-down"
     | "low-smoke"
     | "pot"
+    | "survey-pot"
+    | "pot-lid"
+    | "tool-rucksack"
+    | "scrubbing-rag"
     | "key"
     | "juice"
     | "ale"
@@ -269,6 +275,8 @@ export type StageItem = {
   width?: number;
   actor?: ResidentId;
   extra?: StageExtra["id"];
+  /** A strapped bag sits behind its owner, rather than in the hands. */
+  behindOwner?: boolean;
   /** Parent object carrying this object; x/bottom become offsets from its displayed base. */
   carrier?: string;
   /** Move away while retaining the authored facing and reversing the foot cycle. */

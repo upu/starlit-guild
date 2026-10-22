@@ -1,5 +1,6 @@
 import { manorDoor } from "./story-stage-manor-door.ts";
 import { manorDisplay } from "./story-stage-manor-display.ts";
+import { surveyDoor } from "./story-stage-survey-door.ts";
 import {
   scene,
   quartet,
@@ -15,22 +16,7 @@ const servant = (speaking = false) =>
 export const manorStages: Record<string, LaterStage> = {
   "riverside-manor-departure": manorDoor,
   "riverside-manor-return": manorDisplay,
-  "manor-survey-departure": scene("berne-street", quartet(), [
-    { at: 0, items: [held("tools", "leon"), held("pot", "finn")] },
-    {
-      at: 9,
-      background: "manor-garden",
-      actors: { aria: { pose: "think" } },
-      extras: [npc("worker", "門番", 75)],
-    },
-    { at: 11, actors: { aria: { reaction: "surprise" }, finn: { pose: "greet" } } },
-    {
-      at: 12,
-      items: [held("tools", "leon"), ground("pot", 75, 39, 10)],
-      extras: [npc("cook", "料理人", 75, "explain", true)],
-    },
-    { at: 15, items: [held("tools", "leon"), held("cloth", "finn")] },
-  ]),
+  "manor-survey-departure": surveyDoor,
   "manor-survey-return": scene("manor-garden", quartet(), [
     { at: 0, items: [table(52), onTable("cloth", 52, 15)], extras: [npc("worker", "庭師", 75)] },
     {
