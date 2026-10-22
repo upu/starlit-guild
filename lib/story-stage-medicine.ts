@@ -12,6 +12,7 @@ import {
 } from "./story-stage-later-shared.ts";
 import { chair, diningItems } from "./story-stage-furniture.ts";
 import { mountainRest } from "./story-stage-mountain-rest.ts";
+import { waitingDeparture, waitingReturn } from "./story-stage-households.ts";
 
 const bedsideCast = () => [
   actor("aria", 60, { bottom: 59, seated: true, chair: true, left: false }),
@@ -21,15 +22,6 @@ const bedsideCast = () => [
 const breakfast = () => [
   ground("dish", 92, 70, 6),
   { ...ground("bread", 92, 71, 4), support: "dish" },
-];
-const patientCast = () => [
-  actor("aria", 43, { bottom: 35 }),
-  actor("leon", 60, { bottom: 35 }),
-  actor("mira", 79, { bottom: 52, seated: true, chair: true, left: false }),
-];
-const patientExtras = (bed: "rest" | "listen" | "ask" | "nod") => [
-  { ...npc("parent", "家の人", 97), bottom: 52 },
-  { ...npc("child", undefined, 86), bottom: 73, bed, speaking: bed === "ask" },
 ];
 
 export const medicineStages: Record<string, LaterStage> = {
@@ -251,44 +243,8 @@ export const medicineStages: Record<string, LaterStage> = {
     { exit: ["aria", "leon", "mira"] },
   ),
   "mountain-entrance-return": mountainRest,
-  "waiting-households-departure": scene(
-    "village-house",
-    trio(),
-    [
-      {
-        at: 0,
-        extras: [npc("parent", "家の人", 62, "wave", true)],
-        items: [held("medicine", "leon")],
-      },
-      { at: 2, actors: { mira: { x: 68, pose: "think" } } },
-      { at: 5, items: [held("medicine", "leon"), held("ledger", "aria")] },
-      {
-        at: 9,
-        actors: { mira: { x: 110 } },
-        items: [table(53), onTable("medicine", 53)],
-        extras: [npc("parent", "家の人", 108)],
-      },
-    ],
-    { exit: ["aria", "leon"] },
-  ),
-  "waiting-households-return": scene(
-    "patient-room",
-    patientCast(),
-    [
-      {
-        at: 0,
-        items: [
-          ground("medicine", 52, 33, 9),
-          { ...ground("honey", 52, 40, 3.5), support: "medicine" },
-        ],
-        extras: patientExtras("rest"),
-      },
-      { at: 1, extras: patientExtras("listen") },
-      { at: 2, extras: patientExtras("ask") },
-      { at: 3, extras: patientExtras("nod") },
-    ],
-    { furniture: [chair(patientCast()[2])] },
-  ),
+  "waiting-households-departure": waitingDeparture,
+  "waiting-households-return": waitingReturn,
   "medicine-road-home-departure": scene(
     "village-house",
     trio(),

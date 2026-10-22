@@ -14,7 +14,12 @@ export const honeyBag = (open = false): StageItem => ({
   ...ground(open ? "honey-bag-open" : "honey-bag", 76, 24, 8),
   id: "honey-bag",
 });
-export const heldBag = () => held("honey-bag", "mira", { x: -4, bottom: 20, width: 8 });
+export const heldBag = (inHands = false) =>
+  held("honey-bag", "mira", {
+    x: inHands ? 2.2 : -4,
+    bottom: inHands ? 15 : 20,
+    width: 8,
+  });
 const stowedHoney = (stored = true): StageItem => ({
   ...ground("honey", 0, 3, 6),
   carrier: "honey-bag",
@@ -170,13 +175,13 @@ export const departureAndCare: LaterBeat[] = [
   {
     at: 31,
     actors: {
-      mira: { x: 72, bottom: 24, seated: false, left: false },
+      mira: { x: 72, bottom: 24, seated: false, carry: true, left: false },
       leon: { x: 52, bottom: 22, carry: true, left: false },
     },
     items: [
       roadSign(),
       { ...held("medicine-closed", "leon", { width: 8, bottom: 22 }), id: "medicine" },
-      heldBag(),
+      heldBag(true),
       ...stowedParcel(),
     ],
   },

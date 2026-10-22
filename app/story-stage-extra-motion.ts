@@ -67,4 +67,5 @@ function paintPose(
     const flip = moving ? !left : !!extra.left;
     sprite.style.transform = `scaleX(${flip ? "-1" : "1"})`;
   }
+  if (extra.id === "parent") sprite.style.transform = `scaleX(${left ? "-1" : "1"})`;
 }

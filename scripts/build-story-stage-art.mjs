@@ -13,6 +13,7 @@ import { reviewNpcChair, licoFieldAssets } from "./story-stage-lico-art.mjs";
 import { reviewMaskedMotion, puppetMotionAssets } from "./story-stage-puppet-art.mjs";
 import { reviewWorkerMotion, carrierAssets } from "./story-stage-carrier-art.mjs";
 import { golemClothAssets } from "./story-stage-golem-art.mjs";
+import { reviewParentMotion, householdProps } from "./story-stage-household-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -32,8 +33,9 @@ async function emit(name, source, image) {
   const reviewed = await reviewNpcChair(root, name, hero.raw, hero.image);
   const masked = await reviewMaskedMotion(root, name, reviewed.raw, reviewed.image);
   const worker = await reviewWorkerMotion(root, name, masked.raw, masked.image);
-  source = worker.raw;
-  image = worker.image;
+  const parent = await reviewParentMotion(root, name, worker.raw, worker.image);
+  source = parent.raw;
+  image = parent.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -137,6 +139,7 @@ await licoFieldAssets(root, emit);
 await puppetMotionAssets(root, emit);
 await carrierAssets(root, emit);
 await golemClothAssets(root, emit);
+await householdProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

@@ -37,7 +37,11 @@ test("the patient rests in bed while Mira is seated beside it until the treatmen
     const sample = sampleStageActor(mira, stageEntrance("mira", cue), 0, false);
     assert.equal(sample.onChair, true);
     assert.ok(cue.items.some((p) => p.seatFor === "mira"));
-    assert.equal(cue.items.find((p) => p.art === "honey").support, "medicine");
+    const honey = cue.items.find((p) => p.art === "honey");
+    const medicine = cue.items.find((p) => p.id === "medicine");
+    assert.equal(honey.support, "table");
+    assert.equal(medicine.support, "table");
+    assert.ok(cue.items.some((p) => p.id === honey.support && p.art === "table"));
   }
   assert.equal(storyStageCue("waiting-households-return", 4), null);
 });

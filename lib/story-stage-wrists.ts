@@ -43,7 +43,22 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     44: [77, 78],
     45: [88, 71],
   },
-  mira: { 0: [77, 87], 4: [81, 77], 5: [75, 71], 10: [76, 105] },
+  mira: {
+    0: [77, 87],
+    3: [74, 79],
+    4: [81, 77],
+    5: [75, 71],
+    10: [76, 105],
+    8: [77, 81],
+    9: [77, 81],
+    14: [76, 82],
+    15: [76, 82],
+    16: [76, 82],
+    24: [78, 89],
+    25: [82, 83],
+    26: [88, 82],
+    27: [78, 89],
+  },
 };
 type Points = Partial<Record<number, number[] | null>>;
 const atlases: Partial<Record<string, Partial<Record<ResidentId, Points>>>> = {

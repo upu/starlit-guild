@@ -29,6 +29,7 @@ export type LaterStage = {
   beats: LaterBeat[];
   night?: boolean;
   exit?: ResidentId[];
+  exitSide?: "left" | "right";
   exitLanes?: Partial<Record<ResidentId, number>>;
   initial?: StoryStageCue["initial"];
   cell?: number;

@@ -46,8 +46,8 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
         definition.exit?.includes(a.id)
           ? {
               ...a,
-              x: 110 + i * 8,
-              left: false,
+              x: definition.exitSide === "left" ? -10 - i * 8 : 110 + i * 8,
+              left: definition.exitSide === "left",
               via: undefined,
               lane: definition.exitLanes?.[a.id],
               inspect: false,

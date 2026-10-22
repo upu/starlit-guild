@@ -18,6 +18,7 @@ export function stageFigure(item: StageItem, moving: boolean, elapsed: number) {
 const poses = { idle: 0, explain: 1, point: 2, wave: 3 };
 const beds = { rest: 4, listen: 5, ask: 6, nod: 7 };
 export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) {
+  if (extra.id === "parent") return parentFrame(extra, moving, elapsed);
   if (extra.id === "worker") return workerFrame(extra, moving, elapsed);
   if (extra.id === "masked-pumpety") {
     if (moving) return 4 + (Math.floor(elapsed / 160) % 4);
@@ -29,7 +30,15 @@ export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) 
 
 export function stageExtraRows(extra: StageExtra) {
   if (["masked-pumpety", "worker"].includes(extra.id)) return 3;
-  return ["child", "keeper", "merchant"].includes(extra.id) ? 2 : 1;
+  return ["child", "keeper", "merchant", "parent"].includes(extra.id) ? 2 : 1;
+}
+
+function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {
+  if (!moving) return poses[extra.pose ?? "idle"];
+  const phase = elapsed % 760;
+  return extra.limp
+    ? 4 + [260, 380, 620, 760].findIndex((end) => phase < end)
+    : 4 + (Math.floor(elapsed / 180) % 4);
 }
 
 function workerFrame(extra: StageExtra, moving: boolean, elapsed: number) {

@@ -22,9 +22,17 @@
   width: calc(var(--stage-cell) * 0.72);
   height: calc(var(--stage-cell) * 0.72);
 }
-.story-stage-extra:is([data-npc="child"], [data-npc="keeper"], [data-npc="merchant"])
+.story-stage-extra:is(
+    [data-npc="child"],
+    [data-npc="keeper"],
+    [data-npc="merchant"],
+    [data-npc="parent"]
+  )
   .story-stage-extra-sprite {
   background-size: 400% 200%;
+}
+.story-stage-item[data-art="water-bucket"] {
+  aspect-ratio: 192 / 304;
 }
 .story-stage-extra[data-bed="true"] .story-stage-shadow {
   display: none;

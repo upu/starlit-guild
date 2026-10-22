@@ -36,3 +36,5 @@
 処置後に残す包帯は `StageActor.dressed` と `lib/story-stage-dressings.ts`。`buildLaterStage` が人物の状態から各行・連続動作へ追加するため、小物一覧の入れ替えで消えない。2-7では三人の出発まで保持する。弓用192pxセルの位置は共通128px枠へ換算し、驚きの上下動も包帯へ渡す。包み布の回収・手渡し・袋への収納、腕の実画素、運搬経路の足元は `tests/story-stage-dressings.test.mjs`。
 
 2-7後の押し返しは共通会話アトラス44/45、腕を弾かれた小人形は人形アトラス7。会話アトラスは全員4列12行で、低い座位は36〜43に限定する。矢は `StageArrow` の先端座標と発射・到達時刻を `lib/story-stage-arrow.ts` で計算し、`app/story-stage-arrows.tsx` が描画する。台詞内の姿勢切り替えで飛行時間をリセットせず、動きを減らす設定では隠す。接触・退避・新ポーズの縮尺は `tests/story-stage-contact.test.mjs`。
+
+2-8の戸口での挨拶・室内の薬箱設置・桶の受け渡し・往診は `lib/story-stage-households.ts`。家の人の片側をかばう歩行は `StageExtra.limp` と `lib/story-stage-figure.ts` / `lib/story-stage-extra-travel.ts`、2行アトラスと桶の登録は `scripts/story-stage-household-art.mjs`。包帯・荷物の持ち越し、手元、寝台を避ける経路、ポーズ間の頭幅と足元は `tests/story-stage-households.test.mjs`、治療スチルへの接続は `tests/story-stage-patient.test.mjs`。

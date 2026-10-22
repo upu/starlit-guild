@@ -340,8 +340,8 @@
     "output": "a83b6ab41c35c545c23a0f22f7a48c39799a95e987dd37fd759d1fa5a31515b0"
   },
   "parent-poses": {
-    "source": "85d9239eb9e679b36dbeba24fa00fc9ef7160093fc93b6721c2bbc206bfcef05",
-    "output": "d63dd577e67b3fd8785cb0de1437a678a70b8032b98a74479e7b10f078fbe7c5"
+    "source": "38df190f887fc6bb4e76eb8e884496b96d1658872a3b16ccdf9b195205e7b510",
+    "output": "522873a1cf9c0b1ea57297b09481341feb5bf2e27c025a27b67ab200d1a64dd1"
   },
   "child-poses": {
     "source": "c30fb207925353cc3dcc172ed73ae58fc37e30990df47643f06b0ff54e4a9cab",
@@ -494,5 +494,9 @@
   "prop-wrist-bandage": {
     "source": "14b1255cc7b79ae71ab9522935a479f7c6ae6cd7dfed25e602f713b4a426562a",
     "output": "175c61694ef81dedbbc610ce714fa80c3b4b6605a56787b7c6cede240f7a3b98"
+  },
+  "prop-water-bucket": {
+    "source": "2044dbe7b874c5271ca62b74fd7e61e7e764d85bf48bb9b96933f19e007969d9",
+    "output": "acebd9752ed39623833eb321555d247d60daa2719254dabddb1219fc11346ae7"
   }
 }
