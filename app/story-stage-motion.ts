@@ -15,7 +15,7 @@ import {
   type StoryStageCue,
 } from "@/lib/story-stage";
 
-function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
+function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0, nameAbove = false) {
   element.style.left = `${String(sample.x)}%`;
   element.style.bottom = `${String(sample.bottom ?? 14)}%`;
   element.style.zIndex = String(Math.round(100 - (sample.bottom ?? 14)));
@@ -23,14 +23,7 @@ function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
   const name = element.querySelector<HTMLElement>(".story-stage-name");
   if (name) {
     name.style.left = `${String(50 + nameOffset)}%`;
-    name.style.top =
-      (sample.onChair ||
-        (sample.atlas === "conversation" && sample.frame >= 36 && sample.frame < 44)) &&
-      (sample.bottom ?? 14) >= 20
-        ? sample.frame >= 36
-          ? "26%"
-          : "8%"
-        : "100%";
+    name.style.top = nameTop(sample, nameAbove);
   }
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) paintSprite(sprite, sample);
@@ -39,6 +32,16 @@ function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
     bubble.textContent = sample.bubble;
     bubble.hidden = !sample.bubble;
   }
+}
+
+function nameTop(sample: StageSample, above: boolean) {
+  if (above)
+    return sample.atlas === "conversation" && sample.frame >= 10 && sample.frame <= 13
+      ? "20%"
+      : "-8%";
+  if ((sample.bottom ?? 14) < 20) return "100%";
+  if (sample.atlas === "conversation" && sample.frame >= 36 && sample.frame < 44) return "26%";
+  return sample.onChair ? "8%" : "100%";
 }
 
 function paintSprite(sprite: HTMLElement, sample: StageSample) {
@@ -76,7 +79,7 @@ function stagePainter(
     for (const { actor, origin, element } of actors) {
       const sample = sampleStageActor(actor, origin, elapsed, reduced);
       positions.set(actor.id, sample);
-      if (element) paintActor(element, sample, actor.nameOffset);
+      if (element) paintActor(element, sample, actor.nameOffset, actor.nameAbove);
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
     paintBox(positions, elapsed, reduced);

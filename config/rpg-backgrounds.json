@@ -1,5 +1,17 @@
 [
   {
+    "source": "assets/source/story-stage/berne-paving-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-paving"] }]
+  },
+  {
+    "source": "assets/source/story-stage/berne-porch-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-porch"] }]
+  },
+  {
     "source": "assets/source/story-stage/berne-overlook-v1.png",
     "columns": 1,
     "rows": 1,

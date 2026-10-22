@@ -582,5 +582,37 @@
   "prop-receipt-back": {
     "source": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70",
     "output": "4423c4454fd8edc5b4e21d211b9e9aa7e17ce8d1ab18fbe0c10819505f19fb4b"
+  },
+  "berne-paving": {
+    "source": "75826bab386a1d3b13bc5dd03ba19b8d4cb84eecb3475185193509f7352221db",
+    "output": "4c0562a8746ab3a2af53801e8c1a6263ba549748825ef739d0c339e99b7247c8"
+  },
+  "berne-porch": {
+    "source": "84c5f9b605b9a86e2de387dc2979b82fd31973b2a7613c7cced529dc137faeab",
+    "output": "847a53f1e27f9c88aeb328ce45b97e6016d1b8e6ae2eae69ce6fec07f27ab9ac"
+  },
+  "prop-bread-roll": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "7f09d5b7e2726de52f7ea42e7db368d14abf194eacc857cabbd6f2498ef2a308"
+  },
+  "prop-bread-half": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "8acc8e3571ff41a46ee53860a8878769885be1b31a4a868b5b26866dbb6c5de6"
+  },
+  "prop-medicine-packet": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "4eae8e663fc361b3d993e10268e77e997c9f45702890a040584f0e236edff127"
+  },
+  "prop-lap-napkin": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "cd4df00eefdb0349b88477a69dfbba10e36be2fee999ff2a9418ce611bf669f5"
+  },
+  "prop-old-wrapper": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "bfee8ffd1feee6229ff9b21409355212a6441482228a6140746ad33de0504058"
+  },
+  "prop-serving-tray": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "b344442e0d7f31e14fe3f76c8cdd427ffdf6cf2745b2cc14204a5b511095728e"
   }
 }

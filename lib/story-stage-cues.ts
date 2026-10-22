@@ -29,6 +29,8 @@ export type StageActor = {
   name?: string;
   /** Horizontal label adjustment in percent of the actor cell during close interaction. */
   nameOffset?: number;
+  /** Keep names clear of meal props laid in front of the actors. */
+  nameAbove?: boolean;
   bottom?: number;
   visible?: boolean;
   pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
@@ -54,6 +56,8 @@ export type StoryStageCue = {
     | "picnic-hill"
     | "roadside-rest"
     | "berne-overlook"
+    | "berne-paving"
+    | "berne-porch"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -149,6 +153,12 @@ export type StageItem = {
     | "stone"
     | "spatula"
     | "bread"
+    | "bread-roll"
+    | "bread-half"
+    | "medicine-packet"
+    | "lap-napkin"
+    | "old-wrapper"
+    | "serving-tray"
     | "tea"
     | "tea-four"
     | "teacup"

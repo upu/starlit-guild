@@ -46,3 +46,5 @@
 幕間「約束の胡桃」は `lib/story-stage-walnut-tasting.ts` と `lib/story-stage-walnut-items.ts`。焼き色・半割り・裏面・欠片と腰掛けの登録は `scripts/story-stage-walnut-art.mjs`。`StageActor.scoot` は座位のまま寄る小移動、`LaterStage.exitRoutes` は退出時の経路指定。菓子の順・受け渡し・腰掛けの前後関係・水筒の時刻・背景の道に沿う退出は `tests/story-stage-walnut-tasting.test.mjs`。
 
 3-1の食堂は `lib/story-stage-berne.ts`、街を見下ろす休憩所は `lib/story-stage-low-seats.ts`。背景と紙の表裏は `scripts/story-stage-berne-opening-art.mjs`、配信用背景の登録は `config/rpg-backgrounds.json`。`StageItem.turn` は同じ寸法の小物を縦軸で裏返す角度で、`app/story-stage-item-motion.ts` が途中状態を引き継ぐ。茶器・荷物の縮尺、静止画への切替、接近後の紙の回転と低負荷設定は `tests/story-stage-berne-opening.test.mjs`。
+
+3-2の街路・退出経路は `lib/story-stage-berne-paving.ts`、往診・昼食の時系列は `lib/story-stage-berne-visit.ts`、同一の薬箱・紙・三人分の食事・四つのカップの位置は `lib/story-stage-berne-visit-items.ts`。素材生成は `scripts/story-stage-berne-visit-art.mjs`、接点・数量・退出の検査は `tests/story-stage-berne-visit.test.mjs`。`StageActor.nameAbove` は足元の道具を避ける名前位置で、`app/story-stage-motion.ts` が姿勢に合わせる。

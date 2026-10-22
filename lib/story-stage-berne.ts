@@ -1,3 +1,5 @@
+import { bernePaving } from "./story-stage-berne-paving.ts";
+import { berneVisit } from "./story-stage-berne-visit.ts";
 import { stoneRest } from "./story-stage-stone-rest.ts";
 import { overlookRest } from "./story-stage-low-seats.ts";
 import {
@@ -38,60 +40,8 @@ export const berneStages: Record<string, LaterStage> = {
     false,
   ),
   "berne-road-return": overlookRest,
-  "berne-house-calls-departure": scene(
-    "berne-street",
-    crew(),
-    [
-      { at: 0, items: [held("medicine", "mira")], extras: [npc("merchant", "通りの人", 70)] },
-      { at: 2, extras: [npc("merchant", "通りの人", 70, "explain", true)] },
-      { at: 5, items: [held("medicine", "mira"), held("map", "leon")] },
-      { at: 9, actors: { leon: { pose: "think" }, finn: { pose: "tease" } } },
-    ],
-    { exit: ["aria", "leon", "mira", "finn"] },
-  ),
-  "berne-house-calls-return": scene("village-house", crew(), [
-    {
-      at: 0,
-      items: [ground("replacement", 51, 45, 9), held("medicine", "mira")],
-      extras: [npc("keeper", "家の人", 73)],
-    },
-    { at: 2, extras: [npc("keeper", "家の人", 73, "explain", true)] },
-    {
-      at: 6,
-      items: [ground("replacement", 51, 45, 9), held("ledger", "leon"), held("medicine", "mira")],
-    },
-    {
-      at: 10,
-      actors: { aria: { seated: true } },
-      items: [
-        ground("replacement", 51, 45, 9),
-        ground("bread", 36),
-        held("ledger", "mira"),
-        ground("medicine", 45),
-      ],
-    },
-    { at: 14, actors: { leon: { seated: true }, mira: { seated: true } } },
-    {
-      at: 17,
-      actors: { finn: { seated: true } },
-      items: [
-        ground("replacement", 51, 45, 9),
-        held("bread", "finn"),
-        held("bread", "leon", { id: "leon-bread" }),
-        ground("medicine", 45),
-      ],
-    },
-    {
-      at: 20,
-      items: [
-        ground("replacement", 51, 45, 9),
-        held("bread", "mira"),
-        ground("tea", 50),
-        ground("medicine", 45),
-      ],
-    },
-    { at: 22, extras: [npc("keeper", "家の人", 73, "explain", true)] },
-  ]),
+  "berne-house-calls-departure": bernePaving,
+  "berne-house-calls-return": berneVisit,
   "missing-keystone-departure": scene("tower-foot", crew(), [
     {
       at: 0,
