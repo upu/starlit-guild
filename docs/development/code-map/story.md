@@ -40,3 +40,5 @@
 2-8の戸口での挨拶・室内の薬箱設置・桶の受け渡し・往診は `lib/story-stage-households.ts`。家の人の片側をかばう歩行は `StageExtra.limp` と `lib/story-stage-figure.ts` / `lib/story-stage-extra-travel.ts`、2行アトラスと桶の登録は `scripts/story-stage-household-art.mjs`。包帯・荷物の持ち越し、手元、寝台を避ける経路、ポーズ間の頭幅と足元は `tests/story-stage-households.test.mjs`、治療スチルへの接続は `tests/story-stage-patient.test.mjs`。
 
 2-9の帰路・薬箱・空き瓶・荷車は `lib/story-stage-homeward.ts`、帰着後の控え・茶器・着座は `lib/story-stage-homeward-office.ts`。運び手の帽子の挨拶は共通アトラス12番（4列4行）、空き瓶の袋と追加コマの登録は `scripts/story-stage-homeward-art.mjs`。既存12コマを再合成せず生の画素列で保持する。荷物の連続性、画面外補正後の停車時刻、三つのカップの順、机の手前の立ち位置は `tests/story-stage-homeward.test.mjs`。
+
+幕間「私が用意するお昼」の布・菓子・水筒・紐と包みは `lib/story-stage-picnic.ts`。草地の背景と携帯用小物は `scripts/story-stage-picnic-art.mjs`、背景の登録は `config/rpg-backgrounds.json`。菓子の持ち主・縮尺・手渡し接点、二人分の分離、水筒の位置と包みの重なりは `tests/story-stage-picnic.test.mjs`。

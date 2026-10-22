@@ -1,3 +1,4 @@
+import { walnutLunch } from "./story-stage-picnic.ts";
 import { scene, duo, held, ground, type LaterStage } from "./story-stage-later-shared.ts";
 const cloth = () => ground("picnic-cloth", 50, 12, 28);
 export const interludeStages: Record<string, LaterStage> = {
@@ -43,28 +44,5 @@ export const interludeStages: Record<string, LaterStage> = {
     ],
     { exit: ["aria", "leon"] },
   ),
-  "interlude-walnut-lunch": scene("hill-path", duo(), [
-    {
-      at: 0,
-      actors: { aria: { seated: true }, leon: { seated: true } },
-      items: [cloth(), ground("bread", 50, 17)],
-    },
-    { at: 6, items: [cloth(), ground("bread", 46, 17), ground("tea", 57, 17)] },
-    { at: 11, items: [cloth(), held("bread", "leon"), ground("tea", 57, 17)] },
-    {
-      at: 15,
-      items: [
-        cloth(),
-        held("bread", "leon"),
-        held("bread", "aria", { id: "aria-bread" }),
-        ground("tea", 57, 17),
-      ],
-    },
-    {
-      at: 28,
-      actors: { aria: { seated: false, inspect: true }, leon: { pose: "offer" } },
-      items: [cloth(), ground("bread", 45, 17), ground("tea", 57, 17)],
-    },
-    { at: 29, actors: { aria: { inspect: false, seated: true } } },
-  ]),
+  "interlude-walnut-lunch": walnutLunch,
 };

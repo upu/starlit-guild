@@ -205,6 +205,12 @@
     ]
   },
   {
+    "source": "assets/source/story-stage/picnic-hill-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["picnic-hill"] }]
+  },
+  {
     "source": "assets/source/story-stage/mountain-fork-empty-v1.png",
     "columns": 1,
     "rows": 1,

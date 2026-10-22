@@ -67,6 +67,16 @@
 .story-stage-item[data-art="empty-bottles"] {
   aspect-ratio: 1;
 }
+.story-stage-item:is(
+  [data-art="walnut-cake"],
+  [data-art="honey-cake"],
+  [data-art="travel-flask"],
+  [data-art="flask-cup"],
+  [data-art="twine"],
+  [data-art="cake-parcel"]
+) {
+  aspect-ratio: 1;
+}
 .story-stage-item:is([data-art="packing-cloth"], [data-art="dragging-cloth"]) {
   aspect-ratio: 256 / 144;
 }

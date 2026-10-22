@@ -502,5 +502,33 @@
   "prop-empty-bottles": {
     "source": "2e6aa7c22bc095ddf45a2427973038efc17ec943a7f5a3d1441a793d57813eb5",
     "output": "c569c25a3f22992a550b302e99346641b338de611594d42972805fabb3bdc8b1"
+  },
+  "picnic-hill": {
+    "source": "982e5d29f2c8076bc63d27ff9097346399bb6367c06dde7d1957548d17c3abc6",
+    "output": "f58879dea0259d8f782546e9f767b553a1eb90618b76e768b324da5947b15bd5"
+  },
+  "prop-walnut-cake": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "56d4a7e3f11036bf5ae699ef566a14d06824ceb28a7edf95bb91c8bf0307028d"
+  },
+  "prop-honey-cake": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "3c954e737eae3d1b89e4fd9805e4409cee1747e0ab6241522e371da2657c1299"
+  },
+  "prop-travel-flask": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "2cf6ccceec2a630880a9b027e6906c314a53ab1c328f302939966fa633c4a453"
+  },
+  "prop-flask-cup": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "3d2bc59ae5a693b4e4ea5085156002ccb4fc28c57b54fb7e3cd254af87db645c"
+  },
+  "prop-twine": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "cbf3c5ef11b0fc36662394e7e90ca72688b13224925e62e452d88f7b9f819d95"
+  },
+  "prop-cake-parcel": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "b3f594a8bb537cacb25ba94a71d0c17296da13780474f8cdeb8f9d88489365fd"
   }
 }

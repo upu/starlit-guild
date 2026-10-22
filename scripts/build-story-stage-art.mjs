@@ -15,6 +15,7 @@ import { reviewWorkerMotion, carrierAssets } from "./story-stage-carrier-art.mjs
 import { golemClothAssets } from "./story-stage-golem-art.mjs";
 import { reviewParentMotion, householdProps } from "./story-stage-household-art.mjs";
 import { reviewWorkerHat, homewardProps } from "./story-stage-homeward-art.mjs";
+import { picnicAssets } from "./story-stage-picnic-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -143,6 +144,7 @@ await carrierAssets(root, emit);
 await golemClothAssets(root, emit);
 await householdProps(root, emit);
 await homewardProps(root, emit);
+await picnicAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {
