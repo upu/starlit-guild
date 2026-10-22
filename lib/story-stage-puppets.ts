@@ -1,10 +1,8 @@
 import { scene, trio, held, ground, npc, type LaterStage } from "./story-stage-later-shared.ts";
 import { blockadeApproach } from "./story-stage-blockade.ts";
-import {
-  recoveryCast,
-  recoveryBeats,
-  recoveryController,
-} from "./story-stage-blockade-recovery.ts";
+import { recoveryCast, recoveryBeats } from "./story-stage-blockade-recovery.ts";
+import { inventoryBeats, roadOpening } from "./story-stage-blockade-road.ts";
+import { departureAndCare } from "./story-stage-blockade-care.ts";
 const pumpkin = (pose: "idle" | "explain" | "point" | "wave" = "idle", x = 60) =>
   npc("masked-pumpety", undefined, x, pose);
 const dolls = () => [ground("golem", 78, 37, 21), ground("puppet", 39, 36, 9)];
@@ -92,34 +90,7 @@ export const puppetStages: Record<string, LaterStage> = {
   "sweet-blockade-return": scene(
     "workshop-yard",
     recoveryCast(),
-    [
-      ...recoveryBeats,
-      {
-        at: 12,
-        extras: [recoveryController(), { ...npc("worker", "運び手", 18, "explain"), bottom: 50 }],
-      },
-      {
-        at: 17,
-        cast: trio(),
-        background: "mountain-road",
-        items: [ground("signpost", 55, 31, 14), held("honey", "mira", { width: 6 })],
-        actors: { leon: { inspect: true } },
-      },
-      {
-        at: 20,
-        actors: { leon: { inspect: false } },
-        extras: [pumpkin(), npc("worker", "運び手", 25, "wave", true)],
-      },
-      { at: 22, extras: [pumpkin("point", 111)], items: [ground("medicine", 54)] },
-      { at: 24, actors: { aria: { x: 51, pose: "think" }, leon: { x: 30 }, mira: { x: 71 } } },
-      { at: 27, actors: { mira: { seated: true } } },
-      {
-        at: 30,
-        actors: { aria: { inspect: true } },
-        items: [ground("medicine", 54), held("cloth", "aria")],
-      },
-      { at: 31, actors: { aria: { inspect: false }, mira: { seated: false } } },
-    ],
+    [...recoveryBeats, ...inventoryBeats, ...roadOpening, ...departureAndCare],
     { exit: ["aria", "leon", "mira"] },
   ),
 };

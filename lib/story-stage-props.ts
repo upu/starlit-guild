@@ -5,6 +5,7 @@ export type BoxPosition = { x: number; bottom: number };
 export const boxTransferDuration = 650;
 
 export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
+  if (item.stored) return false;
   const sitter = item.seatFor && positions.get(item.seatFor);
   return (
     !sitter ||
@@ -25,6 +26,13 @@ export function stageItemTarget(
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
 ) {
+  if (item.carrier) {
+    const parent = positions.get(`item:${item.carrier}`);
+    return {
+      x: (parent?.x ?? 0) + item.x * (parent?.mirrored ? -1 : 1),
+      bottom: (parent?.bottom ?? 0) + item.bottom,
+    };
+  }
   const actor = cue.actors.find((a) => a.id === item.actor);
   const owner = positions.get(item.actor ?? `extra:${item.extra ?? ""}`);
   const offset = actor
@@ -49,12 +57,23 @@ export function stageItemDepth(
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
 ) {
+  if (item.carrier) {
+    const parent = positions.get(`item:${item.carrier}`);
+    return (parent?.depth ?? Math.round(100 - (parent?.bottom ?? item.bottom))) + 1;
+  }
   const owner = item.actor
     ? (positions.get(item.actor) ?? cue.actors.find((a) => a.id === item.actor))
     : item.extra
       ? (positions.get(`extra:${item.extra}`) ?? cue.extras?.find((e) => e.id === item.extra))
       : undefined;
   if (item.art === "picnic-cloth") return 0;
+  const { depth, supported } = supportDepth(item, cue);
+  return owner
+    ? Math.max(Math.round(100 - (owner.bottom ?? 14)) + 1, supported ? depth : 0)
+    : depth;
+}
+
+function supportDepth(item: StageItem, cue: StoryStageCue) {
   // A support chain shares the ground contact of its lowest object.
   let base = item,
     above = 0;
@@ -67,9 +86,7 @@ export function stageItemDepth(
     above += 1;
   }
   const depth = Math.round(100 - base.bottom) + above;
-  return owner
-    ? Math.max(Math.round(100 - (owner.bottom ?? 14)) + 1, base !== item ? depth : 0)
-    : depth;
+  return { depth, supported: base !== item };
 }
 
 export function deliveryBoxTarget(

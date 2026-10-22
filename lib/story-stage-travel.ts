@@ -6,6 +6,8 @@ export type StagePosition = {
   left?: boolean;
   handDrop?: number;
   onChair?: boolean;
+  mirrored?: boolean;
+  depth?: number;
 };
 const distance = (a: StagePosition, b: StagePosition) =>
   Math.hypot(b.x - a.x, (((b.bottom ?? 14) - (a.bottom ?? 14)) * 2) / 3);

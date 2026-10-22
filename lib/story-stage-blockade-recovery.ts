@@ -33,6 +33,7 @@ export function recoveryItems(
 ): StageItem[] {
   return [
     ground("table", 92, 52, 18),
+    { ...ground("trade-parcels-open", 97, 66, 7.5), id: "other-goods", support: "table" },
     ground("medicine", 40, 62, 8),
     ...dolls(figure),
     held("cloth", "mira", { bottom: 22, width: 6 }),

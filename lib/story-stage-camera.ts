@@ -9,7 +9,7 @@ export function stageCameraCue(cue: StoryStageCue): StoryStageCue {
   const outside = (x: number) => (x < 0 ? x - margin : x > 100 ? x + margin : x);
   const actor = (value: StageActor): StageActor => ({ ...value, x: outside(value.x) });
   const item = (value: StageItem): StageItem =>
-    value.actor || value.extra ? value : { ...value, x: outside(value.x) };
+    value.actor || value.extra || value.carrier ? value : { ...value, x: outside(value.x) };
   return {
     ...cue,
     cameraScale,

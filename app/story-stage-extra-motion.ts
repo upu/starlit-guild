@@ -63,7 +63,7 @@ function paintPose(
   const frame = stageExtraFrame(extra, moving, elapsed);
   sprite.dataset.frame = String(frame);
   sprite.style.backgroundPosition = `${String(((frame % 4) * 100) / 3)}% ${String((Math.floor(frame / 4) * 100) / Math.max(1, stageExtraRows(extra) - 1))}%`;
-  if (extra.id === "masked-pumpety") {
+  if (["masked-pumpety", "worker"].includes(extra.id)) {
     const flip = moving ? !left : !!extra.left;
     sprite.style.transform = `scaleX(${flip ? "-1" : "1"})`;
   }

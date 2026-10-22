@@ -8,17 +8,17 @@ import {
 } from "@/lib/story-stage-props";
 import type { StageItem } from "@/lib/story-stage-cues";
 import { stageFigure } from "@/lib/story-stage-figure";
+import { orderStageItems, itemFacing } from "@/lib/story-stage-cargo";
 
 type ItemState = { position: BoxPosition; signature: string; settled: boolean; tilt: number };
 export type ItemMotion = Map<string, ItemState>;
 export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemMotion) {
-  const items =
-    cue.items?.map((item) => ({
-      item,
-      element: stage.querySelector<HTMLElement>(`[data-item="${item.id}"]`),
-      origin: state.get(item.id),
-      signature: `${item.actor ?? item.extra ?? "ground"}:${String(item.x)}:${String(item.bottom)}:${String(item.tilt ?? 0)}`,
-    })) ?? [];
+  const items = orderStageItems(cue.items ?? []).map((item) => ({
+    item,
+    element: stage.querySelector<HTMLElement>(`[data-item="${item.id}"]`),
+    origin: state.get(item.id),
+    signature: `${item.actor ?? item.extra ?? item.carrier ?? "ground"}:${String(item.x)}:${String(item.bottom)}:${String(item.tilt ?? 0)}`,
+  }));
   for (const id of state.keys()) if (!items.some(({ item }) => item.id === id)) state.delete(id);
   stage.querySelectorAll<HTMLElement>("[data-item]").forEach((element) => {
     element.hidden = !items.some(({ item }) => item.id === element.dataset.item);
@@ -32,6 +32,12 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         : target;
       const t = reduced ? 1 : Math.min(1, elapsed / 650);
       const tilt = (origin?.tilt ?? 0) + ((item.tilt ?? 0) - (origin?.tilt ?? 0)) * t;
+      const depth = stageItemDepth({ ...item, bottom: at.bottom }, cue, positions);
+      positions.set(`item:${item.id}`, {
+        ...at,
+        depth,
+        mirrored: itemFacing(item, at, target, reduced),
+      });
       state.set(item.id, {
         position: at,
         signature,
@@ -42,9 +48,7 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         element.hidden = !stageItemVisible(item, positions);
         paintItem(element, item, at, tilt);
         paintFigure(element, item, at, target, elapsed, reduced);
-        element.style.zIndex = String(
-          stageItemDepth({ ...item, bottom: at.bottom }, cue, positions),
-        );
+        element.style.zIndex = String(depth);
       }
     }
   };
@@ -58,7 +62,8 @@ function paintFigure(
   elapsed: number,
   reduced: boolean,
 ) {
-  const moving = !reduced && Math.hypot(at.x - target.x, at.bottom - target.bottom) > 0.001;
+  const moving =
+    !item.carrier && !reduced && Math.hypot(at.x - target.x, at.bottom - target.bottom) > 0.001;
   const figure = stageFigure(item, moving, elapsed);
   element.dataset.figure = String(!!figure);
   if (!figure) {

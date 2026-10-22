@@ -11,6 +11,7 @@ import { rpgBackground } from "./rpg-backgrounds.mjs";
 import { teaPreparationAssets } from "./story-stage-tea-art.mjs";
 import { reviewNpcChair, licoFieldAssets } from "./story-stage-lico-art.mjs";
 import { reviewMaskedMotion, puppetMotionAssets } from "./story-stage-puppet-art.mjs";
+import { reviewWorkerMotion, carrierAssets } from "./story-stage-carrier-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -29,8 +30,9 @@ async function emit(name, source, image) {
   const hero = await reviewHero(root, name, source, image);
   const reviewed = await reviewNpcChair(root, name, hero.raw, hero.image);
   const masked = await reviewMaskedMotion(root, name, reviewed.raw, reviewed.image);
-  source = masked.raw;
-  image = masked.image;
+  const worker = await reviewWorkerMotion(root, name, masked.raw, masked.image);
+  source = worker.raw;
+  image = worker.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -132,6 +134,7 @@ await emit(
 );
 await licoFieldAssets(root, emit);
 await puppetMotionAssets(root, emit);
+await carrierAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

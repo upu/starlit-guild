@@ -40,6 +40,7 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
       sequence: undefined,
       cut: false,
       items: settled.items,
+      extras: settled.extras ?? last.extras,
       description: `${story.place}。会話を終えて出発する。`,
       actors: settled.actors.map((a, i) =>
         definition.exit?.includes(a.id)

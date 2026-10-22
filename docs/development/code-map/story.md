@@ -26,3 +26,5 @@
 - **検証**: [台詞](../../../tests/stories.test.mjs)、[読者](../../../tests/story-reader.test.mjs)、[スチル](../../../tests/story-art.test.mjs)、[掛け合いの進行](../../../tests/banter-exchange.test.mjs)、[台本](../../../tests/export-script.test.mjs)。画面幅は [手動テスト](../development.md#ローカルの手動テスト) の `dialog-layout.browser.py`、動画は `story-video.browser.mjs`。本文変更後は `npm run script:export` / `npm run script:check`。
 
 2-7の射撃・蜜の回収・布への受け渡しとお辞儀は `lib/story-stage-blockade-recovery.ts`。人形の歩行・膝つき・お辞儀は `lib/story-stage-figure.ts`、NPCの奥行きを含む補間は `lib/story-stage-extra-travel.ts`。素材登録は `scripts/story-stage-puppet-art.mjs`、足元・縮尺・手渡し位置・NPCの台詞内連続動作は `tests/story-stage-puppet-motion.test.mjs` を参照する。
+
+2-7後半の控え・道標・荷車は `lib/story-stage-blockade-road.ts`、小人形の抱き上げ・蜜の収納・手当ては `lib/story-stage-blockade-care.ts`。物に載せた荷物は `StageItem.carrier`、袋の中身は `stored` で保持する。`lib/story-stage-cargo.ts` が親から先に描画位置を計算し、`lib/story-stage-props.ts` が向き・接地・重なりを受け渡す。運び手の歩行・記録・低い姿勢と運搬用小物の素材登録は `scripts/story-stage-carrier-art.mjs`、検査は `tests/story-stage-cargo.test.mjs`。

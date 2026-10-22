@@ -112,8 +112,8 @@
     "output": "e78ce946da2a7060dd9cab197a24fa9175b93ff99e3918a1bc0a1813de95be9a"
   },
   "worker-poses": {
-    "source": "4246649b9c3812e89f12292d7ebc2385640de9ad6e4fff735fae0de9dbc2532a",
-    "output": "1f40adf848e14af9bf37d722151deb108c3bb70c6208567a21db0e25598a1fe4"
+    "source": "8e788dd161769f679103b89e79ca6c696fdab17a255258176dab8c6314b3633f",
+    "output": "de671d094dcfb20c9df2cd9046e6fe68c3f73e79015929509dabcac739e13c72"
   },
   "aria-shawl": {
     "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
@@ -458,5 +458,29 @@
   "prop-puppet-poses": {
     "source": "3a3614ca14b178ad8949ba69a56f8361790a9be604dfbc400ac29fd2acf38a5d",
     "output": "ecb2165d663922561d47900b51362374b09aa7c4e979083fd07a8dc6c2ff66f6"
+  },
+  "mountain-fork-empty": {
+    "source": "d3d6b898974599e656c0c4fc83b066e8e37a38484239aedc06bc3b572f0db343",
+    "output": "aa513ddc24ad4ca26fbc8767ece733a17dcd37805d20fc82ba23bbc98145f32d"
+  },
+  "prop-signpost-portable": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "151b0befc9a6026074fec41af6f9f6c535ec102d93d7118d0c4c6b5fc0c35306"
+  },
+  "prop-honey-bag-open": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "4ba12865b6563253e569fe58b29be919ac9e3065961fe6da34388e7dc1252f85"
+  },
+  "prop-trade-parcels": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "3eafd5b78b3f280ad44da6f41497ae8d81921633827aeee49bb33e66ff403b4f"
+  },
+  "prop-trade-parcels-open": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "437fcb9f1ae49be3ece1fcd610bff3ce7d761c98ce0a0cccf252fa597a4cf47a"
+  },
+  "prop-honey-bag": {
+    "source": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23",
+    "output": "3878f9171436b5ece414c85c99141b70279a3c84b9adeb5b68fe6bcadfd442eb"
   }
 }

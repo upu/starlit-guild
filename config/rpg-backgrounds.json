@@ -198,6 +198,20 @@
     "source": "assets/source/story-stage/workshop-yard-v1.png",
     "columns": 1,
     "rows": 1,
-    "cells": [{ "story": ["workshop-yard"] }]
+    "cells": [
+      {
+        "story": ["workshop-yard"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/mountain-fork-empty-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["mountain-fork-empty"]
+      }
+    ]
   }
 ]

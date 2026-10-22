@@ -58,6 +58,7 @@ export type StoryStageCue = {
     | "workshop"
     | "workshop-yard"
     | "mountain-road"
+    | "mountain-fork-empty"
     | "berne-street"
     | "brekka-alley"
     | "village-house"
@@ -103,6 +104,7 @@ export type StageExtra = {
     | "child";
   name?: string;
   x: number;
+  via?: { x: number; bottom: number }[];
   bottom?: number;
   pose?: "idle" | "explain" | "point" | "wave";
   speaking?: boolean;
@@ -111,6 +113,8 @@ export type StageExtra = {
   chair?: boolean;
   bed?: "rest" | "listen" | "ask" | "nod";
   bow?: "shallow" | "deep";
+  writing?: boolean;
+  inspect?: boolean;
 };
 export type StageItem = {
   id: string;
@@ -142,6 +146,11 @@ export type StageItem = {
     | "herbs"
     | "honey"
     | "signpost"
+    | "signpost-portable"
+    | "honey-bag"
+    | "honey-bag-open"
+    | "trade-parcels"
+    | "trade-parcels-open"
     | "keystone"
     | "replacement"
     | "ledger"
@@ -187,6 +196,10 @@ export type StageItem = {
   width?: number;
   actor?: ResidentId;
   extra?: StageExtra["id"];
+  /** Parent object carrying this object; x/bottom become offsets from its displayed base. */
+  carrier?: string;
+  /** Contents remain attached to their container after being put away. */
+  stored?: boolean;
   /** Surface supporting or being touched by this object, independent of its height. */
   support?: string;
   tilt?: number;
