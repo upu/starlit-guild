@@ -46,11 +46,12 @@ function uncover(items: Items): LaterBeat[] {
 }
 const departingOwner = () =>
   owner({
-    x: -65,
-    bottom: 10,
+    x: 28,
+    bottom: -55,
     via: [
-      { x: 6, bottom: 43 },
-      { x: 6, bottom: 10 },
+      { x: 7, bottom: 43 },
+      { x: 7, bottom: 10 },
+      { x: 28, bottom: -8 },
     ],
   });
 const departingGardener = () => gardener({ x: 125, bottom: 20, via: [{ x: 86, bottom: 28 }] });

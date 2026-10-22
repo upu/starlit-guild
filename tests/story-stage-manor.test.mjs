@@ -67,6 +67,12 @@ test("the stone stays one size while its three grooves are revealed and remains 
   assert.equal(item(closing[1], "case-key").x, -7);
   assert.equal(item(closing[2], "case-key").x, 2);
   assert.ok(extra(closing[3], "worker").x > 100);
+  const leaving = extra(closing[0], "merchant");
+  assert.ok(leaving.bottom < -40, "the owner leaves through the open foreground");
+  assert.ok(
+    leaving.via.every((point) => point.x >= 7),
+    "keep the route inside the left fence",
+  );
   const origin = new Map([["extra:worker", extra(closing[2], "worker")]]);
   assert.deepEqual(
     stageItemTarget(item(closing[2], "case-key"), closing[2], origin),
