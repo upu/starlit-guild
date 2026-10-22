@@ -136,3 +136,9 @@
 4-2の宛名の確認は `lib/story-stage-lantern-address.ts` が担当する。荷運び人の手帳は `extra` で本人に追従し、依頼の紙はレオンの筆記の後にアリアへ渡して畳む。接近中の `nameOffset` は人物セル内の名前だけを横へずらし、身体の位置・倍率は変えない。`tests/story-stage-lantern-address.test.mjs` で異なる書類の所有者と受け渡しの接点を検査する。
 
 2-7前の入口での誘導は `lib/story-stage-blockade.ts` が定義する。アリアの `bow` は共通の冒険アトラスを使い、歩行が終わってから構えへ切り替える。物の `travelMs` は地面を移動する人形に使い、手渡しの標準時間を変えない。ゴーレムは配信画像と同じ縦横比で足元を合わせ、移動中の物の奥行きもその時点の足元から決める。原本と全文プロンプトは [作業場の入口](../art-generation/story-stage-workshop-yard-20261022.json)、本文と残件は [全章レビュー](story-stage-review-20261022.md) を参照する。
+
+### 人形の歩行・膝つき・お辞儀
+
+ゴーレムと小人形は `prop-golem-poses.webp` / `prop-puppet-poses.webp` の512pxセルを使用する。0番は従来の立位、1〜4番は歩行、5番は膝つき、6番はお辞儀。足元はy=480へ揃え、透明余白を除いた従来の身体幅で配置する。移動途中の足元で重なり順を決め、静止・動きを減らす設定では歩行を再生しない。
+
+覆面のプティは共通の `masked-pumpety-poses.webp` を4列3行へ拡張する。既存0〜3番の接地をy=120へ揃え、4〜7番は歩行、8・9番は浅い／深いお辞儀。顔は覆面のまま保持する。`StageMoment.extras` により同じ台詞の途中でNPCの位置・姿勢を変えられ、最後の状態を次の台詞へ引き継ぐ。原本と組み込み画像生成の全文プロンプト・ハッシュは `docs/art-generation/story-stage-puppet-motion-20261022.json`。

@@ -324,8 +324,8 @@
     "output": "485657be1bccd3eca825312291d9a4e92ec227741eb4a51463ae3706bac37793"
   },
   "masked-pumpety-poses": {
-    "source": "567914cef3465e164b3cd65d553c4c419e53c8b595164f073fd0792a64ea26c4",
-    "output": "f75c70b3af16b539c5f906b93685a38f2e92513f32819508947e04b8f36d4aa6"
+    "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
+    "output": "d5c1adf4d69417c1ca78fef342ad0d46f2c3063dfc855c8f32029ba92a4f6570"
   },
   "merrill-poses": {
     "source": "4d0756fe2a4ef1541c5e739eb1d65091500923f9d0870ad5f9e842664c1fc2c9",
@@ -450,5 +450,13 @@
   "prop-low-smoke": {
     "source": "d48396309c794d25627e585c88fc09216f33f08e2090d9bf05e0f15f4ac0181f",
     "output": "1f67f0d2b9df400a8dbcedee8a846ec9c7386e832eb74c47d0d7a490e4ecf4f4"
+  },
+  "prop-golem-poses": {
+    "source": "62d9f19c2290121cc11212bf42618ef11d431bdfa1b9398c2b3dff8b28523481",
+    "output": "4565db29e5c06ee4a0936bad1bf4a1f920fbb5abc062f95476b0fa2d1dea679f"
+  },
+  "prop-puppet-poses": {
+    "source": "3a3614ca14b178ad8949ba69a56f8361790a9be604dfbc400ac29fd2acf38a5d",
+    "output": "ecb2165d663922561d47900b51362374b09aa7c4e979083fd07a8dc6c2ff66f6"
   }
 }

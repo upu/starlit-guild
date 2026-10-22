@@ -24,6 +24,7 @@ export function stageCameraCue(cue: StoryStageCue): StoryStageCue {
       ...moment,
       actors: moment.actors.map(actor),
       items: moment.items.map(item),
+      extras: moment.extras?.map((extra) => ({ ...extra, x: outside(extra.x) })),
     })),
   };
 }

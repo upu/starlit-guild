@@ -3,6 +3,7 @@ import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
 import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
 import { extraPainter } from "./story-stage-extra-motion";
 import { journeyDuration } from "@/lib/story-stage-travel";
+import { extraTravelDuration } from "@/lib/story-stage-extra-travel";
 import {
   sampleStageActor,
   stageLuggage,
@@ -92,13 +93,29 @@ function animateStage(
   onComplete: () => void,
 ) {
   const moments = [
-    { after: 0, actors: cue.actors, items: cue.items ?? [] },
+    { after: 0, actors: cue.actors, items: cue.items ?? [], extras: cue.extras },
     ...(cue.sequence ?? []),
   ];
   const last = moments[moments.length - 1];
   const previousActors = moments.at(-2)?.actors ?? cue.actors;
   const endAt = Math.max(
     3000,
+    ...moments.map(
+      (m, i) =>
+        m.after +
+        Math.max(
+          0,
+          ...m.items.map((item) => item.travelMs ?? 650),
+          ...(m.extras ?? []).map((e) =>
+            extraTravelDuration(
+              e,
+              (i
+                ? moments[i - 1].extras?.find((p) => p.id === e.id)
+                : positions.get(`extra:${e.id}`)) ?? e,
+            ),
+          ),
+        ),
+    ),
     ...cue.actors.map((a) => journeyDuration(a, positions.get(a.id) ?? stageEntrance(a.id, cue))),
     last.after +
       Math.max(

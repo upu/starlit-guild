@@ -87,6 +87,7 @@ export type StageMoment = {
   after: number;
   actors: StageActor[];
   items: StageItem[];
+  extras?: StageExtra[];
 };
 
 export type StageExtra = {
@@ -109,6 +110,7 @@ export type StageExtra = {
   left?: boolean;
   chair?: boolean;
   bed?: "rest" | "listen" | "ask" | "nod";
+  bow?: "shallow" | "deep";
 };
 export type StageItem = {
   id: string;
@@ -190,6 +192,7 @@ export type StageItem = {
   tilt?: number;
   /** Ground movement duration; ordinary handoffs retain their default duration. */
   travelMs?: number;
+  figure?: "kneel" | "bow";
   glow?: "dim" | "bright";
 };
 

@@ -14,7 +14,12 @@ export type LaterBeat = {
   background?: StoryStageCue["background"];
   night?: boolean;
   cut?: boolean;
-  sequence?: { after: number; actors?: LaterBeat["actors"]; items?: StageItem[] }[];
+  sequence?: {
+    after: number;
+    actors?: LaterBeat["actors"];
+    items?: StageItem[];
+    extras?: StageExtra[];
+  }[];
 };
 export type LaterStage = {
   background: StoryStageCue["background"];
@@ -94,11 +99,13 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
     furniture = beat?.furniture ?? furniture;
     night = beat?.night ?? night;
     const openingActors = actors,
-      openingItems = items;
+      openingItems = items,
+      openingExtras = extras;
     const sequence = beat?.sequence?.map((step) => {
       actors = actors.map((a) => ({ ...a, ...step.actors?.[a.id] }));
       items = step.items ?? items;
-      return { after: step.after, actors, items: [...furniture, ...items] };
+      extras = step.extras ?? extras;
+      return { after: step.after, actors, items: [...furniture, ...items], extras };
     });
     return {
       description: `${story.place}。${line.text}`,
@@ -107,7 +114,7 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
         (item) =>
           !item.actor || openingActors.some((a) => a.id === item.actor && a.visible !== false),
       ),
-      extras,
+      extras: openingExtras,
       background,
       night,
       ...stageStart(openingActors, beat, { initial, initialBottom }),

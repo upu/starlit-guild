@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 import type { StoryStageCue } from "@/lib/story-stage";
+import type { StageExtra } from "@/lib/story-stage-cues";
+import { stageExtraFrame, stageExtraRows } from "@/lib/story-stage-figure";
 
 const names = {
   keeper: "塔の管理人",
@@ -12,9 +14,14 @@ const names = {
   parent: "家の人",
   child: "子ども",
 };
-const frames = { idle: 0, explain: 1, point: 2, wave: 3 };
-const bedFrames = { rest: 0, listen: 1, ask: 2, nod: 3 };
 export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
+  const extras = [
+    ...new Map(
+      [...(cue.extras ?? []), ...(cue.sequence?.flatMap((s) => s.extras ?? []) ?? [])].map(
+        (extra) => [extra.id, extra],
+      ),
+    ).values(),
+  ];
   const items = [
     ...new Map(
       [...(cue.items ?? []), ...(cue.sequence?.flatMap((s) => s.items) ?? [])].map((item) => [
@@ -25,29 +32,12 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
   ];
   return (
     <>
-      {cue.extras?.map((extra) => (
-        <div
+      {extras.map((extra) => (
+        <Extra
           key={extra.id}
-          className="story-stage-extra"
-          data-npc={extra.id}
-          data-speaking={!!extra.speaking}
-          data-pose={extra.pose ?? "idle"}
-          data-bed={extra.id === "child" && !!extra.bed}
-          style={{ left: `${String(extra.x)}%`, bottom: `${String(extra.bottom ?? 23)}%` }}
-        >
-          <span className="story-stage-shadow" />
-          <span
-            className="story-stage-extra-sprite"
-            style={{
-              backgroundImage: `url(/story-stage/${extra.id}-poses.webp)`,
-              backgroundPositionX: `${String(((extra.id === "child" && extra.bed ? bedFrames[extra.bed] : frames[extra.pose ?? "idle"]) / 3) * 100)}%`,
-              backgroundPositionY:
-                (extra.id === "child" && extra.bed) || extra.chair ? "100%" : "0%",
-              transform: extra.chair ? `scaleX(${extra.left ? "1" : "-1"})` : undefined,
-            }}
-          />
-          <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
-        </div>
+          extra={extra}
+          hidden={!cue.extras?.some((shown) => shown.id === extra.id)}
+        />
       ))}
       {items.map((item) => (
         <span
@@ -71,5 +61,31 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
         />
       ))}
     </>
+  );
+}
+
+function Extra({ extra, hidden }: { extra: StageExtra; hidden: boolean }) {
+  return (
+    <div
+      className="story-stage-extra"
+      data-npc={extra.id}
+      hidden={hidden}
+      data-speaking={!!extra.speaking}
+      data-pose={extra.pose ?? "idle"}
+      data-bed={extra.id === "child" && !!extra.bed}
+      style={{ left: `${String(extra.x)}%`, bottom: `${String(extra.bottom ?? 23)}%` }}
+    >
+      <span className="story-stage-shadow" />
+      <span
+        className="story-stage-extra-sprite"
+        style={{
+          backgroundImage: `url(/story-stage/${extra.id}-poses.webp)`,
+          backgroundPositionX: `${String(((stageExtraFrame(extra) % 4) / 3) * 100)}%`,
+          backgroundPositionY: `${String((Math.floor(stageExtraFrame(extra) / 4) * 100) / Math.max(1, stageExtraRows(extra) - 1))}%`,
+          transform: extra.chair ? `scaleX(${extra.left ? "1" : "-1"})` : undefined,
+        }}
+      />
+      <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
+    </div>
   );
 }

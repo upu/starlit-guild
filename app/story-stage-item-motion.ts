@@ -7,6 +7,7 @@ import {
   type BoxPosition,
 } from "@/lib/story-stage-props";
 import type { StageItem } from "@/lib/story-stage-cues";
+import { stageFigure } from "@/lib/story-stage-figure";
 
 type ItemState = { position: BoxPosition; signature: string; settled: boolean; tilt: number };
 export type ItemMotion = Map<string, ItemState>;
@@ -40,12 +41,37 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
       if (element) {
         element.hidden = !stageItemVisible(item, positions);
         paintItem(element, item, at, tilt);
+        paintFigure(element, item, at, target, elapsed, reduced);
         element.style.zIndex = String(
           stageItemDepth({ ...item, bottom: at.bottom }, cue, positions),
         );
       }
     }
   };
+}
+
+function paintFigure(
+  element: HTMLElement,
+  item: StageItem,
+  at: BoxPosition,
+  target: BoxPosition,
+  elapsed: number,
+  reduced: boolean,
+) {
+  const moving = !reduced && Math.hypot(at.x - target.x, at.bottom - target.bottom) > 0.001;
+  const figure = stageFigure(item, moving, elapsed);
+  element.dataset.figure = String(!!figure);
+  if (!figure) {
+    element.style.removeProperty("background-position");
+    return;
+  }
+  element.style.width = `${String(figure.width)}%`;
+  element.style.bottom = `${String(at.bottom - figure.footPadding)}%`;
+  element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}-poses.webp)`);
+  element.style.backgroundPosition = `${String(((figure.frame % 4) * 100) / 3)}% ${String(Math.floor(figure.frame / 4) * 100)}%`;
+  element.dataset.frame = String(figure.frame);
+  // These two source figures face left. Keep the authored resting direction after arrival.
+  if (moving) element.style.transform = `translateX(-50%) scaleX(${target.x > at.x ? "-1" : "1"})`;
 }
 
 function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt: number) {

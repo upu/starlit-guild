@@ -29,6 +29,9 @@
 .story-stage-extra[data-bed="true"] .story-stage-shadow {
   display: none;
 }
+.story-stage-extra[data-npc="masked-pumpety"] .story-stage-extra-sprite {
+  background-size: 400% 300%;
+}
 .story-stage-extra[data-bed="true"] .story-stage-name {
   top: 22%;
 }
@@ -215,6 +218,14 @@
 .story-stage-item[data-art="golem"] {
   /* Match the delivered 432x384 sprite so its feet sit on the authored ground coordinate. */
   aspect-ratio: 432 / 384;
+}
+.story-stage-item[data-figure="true"] {
+  aspect-ratio: 1;
+  background-size: 400% 200%;
+}
+.story-stage-item[data-art="puppet"] {
+  /* The detailed wooden figure is much smaller than the heroes; filter its source pixels. */
+  image-rendering: auto;
 }
 .story-stage-item[data-glow="bright"][data-art="stone-lantern"] {
   filter: drop-shadow(0 0 8px #ffd77f90);
