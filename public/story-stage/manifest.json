@@ -387,6 +387,26 @@
     "source": "70b0f2d86719a830e12d3d2a3b5822562f57a4841e240a28015ceed230c4a1a8",
     "output": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23"
   },
+  "prop-tea-rock": {
+    "source": "1bb89448b0ee3e64a656147d7697d37b82dfd0a9923e2c220d52edfe1d310148",
+    "output": "46d425040041428f7b1de26ce0a60d8750ed74bef404d6699cb68b057549dee4"
+  },
+  "prop-medicine-closed": {
+    "source": "a15fe3cfa1a297f89a1303d0a75537586f1a11d29bb7853a4f46f3bddecc2c53",
+    "output": "3dae0f4a8b53da7f32942464f2c0fda37e6c58491eddbd2daf7907f397c97e39"
+  },
+  "prop-teapot": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "dd79ee3a24a0c11e7195b22700adc7f34606ba346a2ec318f08800dd295f6926"
+  },
+  "prop-teapot-open": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "cbac945a001058b143e2f1d2ca3af86e2c68510b2a688d4135635d9009954af6"
+  },
+  "prop-empty-cup": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "5b4854eece34bf458729935effd03557f0117b327959e305f505c1c252036cbc"
+  },
   "prop-step-stool": {
     "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
     "output": "46a67117bde3afbc420dd3679dd2c99de0fc37f2f5f60bedd229b65796e9fc79"

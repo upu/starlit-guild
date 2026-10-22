@@ -44,6 +44,46 @@
 .story-stage-item[data-art="lantern"] {
   aspect-ratio: 0.7;
 }
+.story-stage-item[data-pouring="true"]::after {
+  content: "";
+  position: absolute;
+  left: 5%;
+  top: 40%;
+  width: max(1px, 4%);
+  height: 32%;
+  background: linear-gradient(90deg, #dbf4e9cc, #accfdf99);
+  transform: rotate(20deg);
+  transform-origin: top;
+  pointer-events: none;
+}
+.story-stage-item[data-steaming="true"]::before {
+  content: "";
+  position: absolute;
+  left: 40%;
+  top: -18%;
+  width: 20%;
+  height: 38%;
+  border-left: 2px solid #f0eee6a0;
+  border-right: 1px solid #f0eee680;
+  border-radius: 50%;
+  animation: stage-tea-steam 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes stage-tea-steam {
+  from {
+    transform: translateY(0) skewX(-6deg);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(-20%) skewX(6deg);
+    opacity: 0.8;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-stage-item[data-steaming="true"]::before {
+    animation: none;
+  }
+}
 .story-stage-item[data-art="chair"] {
   aspect-ratio: 0.75;
 }

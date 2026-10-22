@@ -11,7 +11,7 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 import { chair, diningItems } from "./story-stage-furniture.ts";
-import { mountainRest } from "./story-stage-low-seats.ts";
+import { mountainRest } from "./story-stage-mountain-rest.ts";
 
 const bedsideCast = () => [
   actor("aria", 60, { bottom: 59, seated: true, chair: true, left: false }),

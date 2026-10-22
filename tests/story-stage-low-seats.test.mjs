@@ -41,7 +41,7 @@ test("rocks and low stools remain separate from actors and walking overrides the
   for (const [id, line, who] of [
     ["tower-moss-removal-return", 2, "aria"],
     ["tower-moss-removal-return", 2, "leon"],
-    ["mountain-entrance-return", 4, "mira"],
+    ["mountain-entrance-return", 5, "mira"],
     ["berne-road-return", 0, "finn"],
     ["brekka-moss-beds-return", 49, "mira"],
   ]) {

@@ -124,9 +124,14 @@ export type StageItem = {
     | "tea"
     | "tea-four"
     | "teacup"
+    | "empty-cup"
+    | "teapot"
+    | "teapot-open"
+    | "tea-rock"
     | "brazier"
     | "kettle"
     | "medicine"
+    | "medicine-closed"
     | "delivery-bag"
     | "herbs"
     | "honey"
@@ -168,6 +173,8 @@ export type StageItem = {
     | "empty-cart";
   seatFor?: ResidentId;
   dissipating?: boolean;
+  pouring?: boolean;
+  steaming?: boolean;
   left?: boolean;
   x: number;
   bottom: number;

@@ -130,3 +130,5 @@
 2-8の患者宅では子どもを寝台に、ミラをその脇の椅子に置く。子どもの共通アトラスは4列2行とし、上段の既存4コマを保ったまま下段へ寝台の4表情を追加する。元画像の髪より上に孤立した画素があるため、頭幅の基準は頭全体を含む範囲から取る。寝台用を立位の全身高さまで引き伸ばさない。4行目からの投薬は既存の一枚絵を使う。[患者宅の制作記録](../art-generation/story-stage-patient-20261022.json) に内蔵image_genの原本・参照・全文プロンプトを記録し、`tests/story-stage-patient.test.mjs` で頭幅と表示条件を検査する。
 
 4-2の石造りの灯籠は、煤のある消灯・清掃後の消灯・点灯の3状態と、取り出す油皿を使う。3状態とも320×400px、実体の高さ376px、足元392pxへ揃える。木札は苔の床に差す小さな杭とし、帳簿で代用しない。[灯籠と木札の制作記録](../art-generation/story-stage-field-props-20261022.json) に内蔵image_genの原本・参照・全文プロンプトを記録する。`scripts/story-stage-field-art.mjs` が共通の配信生成へ組み込み、`tests/story-stage-field-props.test.mjs` が消灯と点灯の順序・寸法・配置を検査する。
+
+2-4の休憩では `lib/story-stage-mountain-rest.ts` が薬箱の開閉、空の三杯、ポットの開閉、注湯と蒸らしを段階的に指定する。`pouring` / `steaming` は小物の状態変更と同時に更新し、動きを減らす設定では湯気の揺れを止める。ポットの `support` は低い自然石へ結び、立った受け渡しのあとミラが自分の岩へ戻る。原本・全文プロンプトは [お茶の準備の制作記録](../art-generation/story-stage-tea-preparation-20261022.json)、生成は `scripts/story-stage-tea-art.mjs`、検査は `tests/story-stage-tea.test.mjs`。

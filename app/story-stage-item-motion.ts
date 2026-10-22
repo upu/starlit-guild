@@ -52,6 +52,8 @@ function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt:
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
   element.dataset.dissipating = String(!!item.dissipating);
+  element.dataset.pouring = String(!!item.pouring);
+  element.dataset.steaming = String(!!item.steaming);
   if (item.glow) element.dataset.glow = item.glow;
   else delete element.dataset.glow;
 }

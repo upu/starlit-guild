@@ -8,6 +8,7 @@ import { chapterAssets } from "./build-story-stage-chapter.mjs";
 import { laterAssets } from "./build-story-stage-later.mjs";
 import { reviewHero, reviewProps } from "./story-stage-review-art.mjs";
 import { rpgBackground } from "./rpg-backgrounds.mjs";
+import { teaPreparationAssets } from "./story-stage-tea-art.mjs";
 import { reviewNpcChair, licoFieldAssets } from "./story-stage-lico-art.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -118,6 +119,7 @@ for (const id of ["aria", "leon"]) {
 await chapterAssets(root, emit);
 await laterAssets(root, emit);
 await reviewProps(root, emit);
+await teaPreparationAssets(root, emit);
 await licoFieldAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);

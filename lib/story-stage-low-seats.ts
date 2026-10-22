@@ -19,34 +19,6 @@ export function lowSeat(
   };
 }
 
-const mountainCast = () => [
-  actor("aria", 35, { seated: true, perch: true }),
-  actor("leon", 54, { seated: true, perch: true, left: true }),
-  actor("mira", 70, { perch: true, left: true }),
-];
-const medicine = () => ground("medicine", 75, 14, 8);
-const tea = () => ground("tea", 47, 13, 10);
-export const mountainRest: LaterStage = scene(
-  "mountain-road",
-  mountainCast(),
-  [
-    { at: 0, actors: { mira: { inspect: true } }, items: [medicine()] },
-    { at: 2, actors: { aria: { pose: "offer" } }, items: [medicine(), tea()] },
-    {
-      at: 4,
-      actors: { mira: { x: 66, inspect: false, seated: true } },
-      items: [medicine(), tea()],
-    },
-    { at: 5, actors: { aria: { reaction: "nod", pose: "offer" } } },
-    {
-      at: 10,
-      actors: { aria: { pose: "idle" } },
-      items: [medicine(), tea(), ground("bread", 45, 7, 8)],
-    },
-  ],
-  { furniture: mountainCast().map((a) => lowSeat(a.id === "mira" ? { ...a, x: 66 } : a)) },
-);
-
 const overlookCast = () => [
   actor("aria", 28),
   actor("leon", 50),
