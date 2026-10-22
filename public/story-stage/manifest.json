@@ -570,5 +570,17 @@
   "prop-low-bench": {
     "source": "79c971d26c8fc39cd38463b787ee93e0c3816c0762e15c804993fc517e95e0da",
     "output": "7ab2fcdc242a8a04f5a209beedce24dbb68060e5f2f472a957c57ff732202077"
+  },
+  "berne-overlook": {
+    "source": "c442c21af78370058459dcaa8a0cdc459d02b05231c11e6e9aa82c814e29dc24",
+    "output": "6a065e12774e75ffb99cf5cfceb3cbb568f30b6a90edcd57de10a3a87f632100"
+  },
+  "prop-receipt-front": {
+    "source": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70",
+    "output": "fe1555d301a721cdbec36d8c1e032b8e3bc0939435d5dcc462d007a4ffa8f0c8"
+  },
+  "prop-receipt-back": {
+    "source": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70",
+    "output": "4423c4454fd8edc5b4e21d211b9e9aa7e17ce8d1ab18fbe0c10819505f19fb4b"
   }
 }

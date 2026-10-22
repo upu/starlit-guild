@@ -1,0 +1,19 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/berne-overlook-v1.png",
+      "reference": "public/story-stage/tower-foot.webp",
+      "prompt": "Use case: illustration-story. Create a new 3:2 landscape pixel-art RPG background for STARLIT-GUILD, matching the crisp earthy pixel texture, warm daylight, dark outlines and natural colors of the supplied tower-foot style reference. This is NOT the same location: a roadside resting clearing overlooking the stone-paved town Berne, with its old round stone tower visible beyond the town roofs in the upper third. View the foreground steeply from above, about 50 degrees downward, RPG three-quarter overhead camera, no horizon sky strip. Lower 65 percent is broad, unobstructed flat tawny dirt and small paving stones, allowing four small separate character sprites to stand on it. Foreground scale: a character would be about 13 percent of image height; no oversized rocks, flowers or vegetation. Middle upper edge of clearing slopes away, shrubs and low roadside grass only at edges. In the distant upper third, modest medieval timber and stone town roofs and one old round stone tower with a plain roof, visually consistent with the stonework of reference. The tower must be clearly recognizable but naturally small because distant. Keep the center and right lower foreground completely clear: a separate seated character and movable small low seat will be composited there. No characters, furniture, paper, carts, text, UI, magic beams, or giant castle. Do not add rivers, bridges or fixed directional landmarks. Do not copy the close-up tower entrance of the reference. Output one coherent usable empty background.",
+      "sha256": "dbc0b4a4d63d16bba9046488fc54e03166a20b85079c2787febf686802425235"
+    },
+    {
+      "source": "assets/source/story-stage/shipping-receipt-v1.png",
+      "reference": "public/story-stage/prop-folded-paper.webp",
+      "prompt": "Use case: stylized-concept. A transparent pixel-art game prop sheet with exactly TWO equal square cells, arranged horizontally, generous empty gutters. Two views of the SAME small folded cream parchment shipping receipt, FRONT in left cell and BACK in right cell. Match the warm cream/brown pixel art of the reference paper, but a thin SINGLE folded sheet not a thick stack or book. Both views exactly same size, camera angle and silhouette: upright oblique rectangle facing camera, about 20 degrees tilted in perspective, no rotation around image plane. Left FRONT has a few tiny simple brown bookkeeping strokes and a clearly frayed little brown binding thread remaining at the upper-left corner with a tiny torn notch. Right BACK is mostly blank cream with a faint fold crease and the same torn corner/thread mirrored naturally by turning the paper over. No legible letters, symbols, labels, diagrams, hands or shadows outside the paper. Clearly visibly DIFFERENT front/back. Crisp low-resolution pixel art with dark brown outline and limited warm palette, matching small RPG sprites. Each paper fully inside its cell, no clipped thread. REAL transparent RGBA background.",
+      "sha256": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70"
+    }
+  ]
+}

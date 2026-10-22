@@ -53,6 +53,7 @@ export type StoryStageCue = {
     | "hill-path"
     | "picnic-hill"
     | "roadside-rest"
+    | "berne-overlook"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -205,6 +206,8 @@ export type StageItem = {
     | "record-board"
     | "paper"
     | "folded-paper"
+    | "receipt-front"
+    | "receipt-back"
     | "lap-board"
     | "sample-dish"
     | "reflector-covered"
@@ -244,6 +247,8 @@ export type StageItem = {
   /** Surface supporting or being touched by this object, independent of its height. */
   support?: string;
   tilt?: number;
+  /** Turn a flat prop around its vertical axis, without changing its physical size. */
+  turn?: number;
   /** Ground movement duration; ordinary handoffs retain their default duration. */
   travelMs?: number;
   figure?: "kneel" | "bow" | "recoil";

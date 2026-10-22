@@ -20,7 +20,16 @@ export const berneStages: Record<string, LaterStage> = {
       {
         at: 0,
         actors: { aria: { seated: true }, leon: { seated: true }, mira: { seated: true } },
-        items: [table(50), onTable("tea", 50)],
+        items: [
+          table(50),
+          onTable("teapot", 52, 4.5),
+          { ...onTable("teacup", 40, 2.8), id: "aria-cup" },
+          { ...onTable("teacup", 58, 2.8), id: "leon-cup" },
+          { ...onTable("teacup", 44, 2.8), id: "mira-cup" },
+          ground("medicine-closed", 29, 25, 8),
+          ground("delivery-bag", 76, 14, 8),
+          ground("basket", 25, 12, 7),
+        ],
         extras: [npc("merchant", "店主", 25)],
       },
       { at: 1, extras: [npc("merchant", "店主", 25, "explain", true)] },

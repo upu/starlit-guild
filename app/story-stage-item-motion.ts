@@ -10,7 +10,13 @@ import type { StageItem } from "@/lib/story-stage-cues";
 import { stageFigure } from "@/lib/story-stage-figure";
 import { orderStageItems, itemFacing } from "@/lib/story-stage-cargo";
 
-type ItemState = { position: BoxPosition; signature: string; settled: boolean; tilt: number };
+type ItemState = {
+  position: BoxPosition;
+  signature: string;
+  settled: boolean;
+  tilt: number;
+  turn: number;
+};
 export type ItemMotion = Map<string, ItemState>;
 export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemMotion) {
   const items = orderStageItems(cue.items ?? []).map((item) => ({
@@ -31,7 +37,7 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         ? transferBox(origin.position, target, elapsed, reduced, item.travelMs)
         : target;
       const t = reduced ? 1 : Math.min(1, elapsed / 650);
-      const tilt = (origin?.tilt ?? 0) + ((item.tilt ?? 0) - (origin?.tilt ?? 0)) * t;
+      const { tilt, turn } = itemAngles(item, origin, t);
       const depth = stageItemDepth({ ...item, bottom: at.bottom }, cue, positions);
       positions.set(`item:${item.id}`, {
         ...at,
@@ -42,15 +48,25 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         position: at,
         signature,
         tilt,
+        turn,
         settled: Math.abs(at.x - target.x) + Math.abs(at.bottom - target.bottom) < 0.001,
       });
       if (element) {
         element.hidden = !stageItemVisible(item, positions);
-        paintItem(element, item, at, tilt, wristLift(item, positions));
+        paintItem(element, item, at, tilt, wristLift(item, positions), turn);
         paintFigure(element, item, at, target, elapsed, reduced);
         element.style.zIndex = String(depth);
       }
     }
+  };
+}
+
+function itemAngles(item: StageItem, origin: ItemState | undefined, t: number) {
+  const fromTilt = origin?.tilt ?? 0,
+    fromTurn = origin?.turn ?? 0;
+  return {
+    tilt: fromTilt + ((item.tilt ?? 0) - fromTilt) * t,
+    turn: fromTurn + ((item.turn ?? 0) - fromTurn) * t,
   };
 }
 
@@ -84,11 +100,18 @@ function paintFigure(
     element.style.transform = `translateX(-50%) scaleX(${itemFacing(item, at, target, reduced) ? "-1" : "1"})`;
 }
 
-function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt: number, lift = 0) {
+function paintItem(
+  element: HTMLElement,
+  item: StageItem,
+  at: BoxPosition,
+  tilt: number,
+  lift = 0,
+  turn = 0,
+) {
   element.style.left = `${String(at.x)}%`;
   element.style.bottom = `${String(at.bottom)}%`;
   element.style.width = `${String(item.width ?? 10)}%`;
-  element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})`;
+  element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})${turn ? ` rotateY(${String(turn)}deg)` : ""}`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
   element.dataset.dissipating = String(!!item.dissipating);

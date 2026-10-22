@@ -1,5 +1,11 @@
 [
   {
+    "source": "assets/source/story-stage/berne-overlook-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-overlook"] }]
+  },
+  {
     "source": "assets/source/rpg-camera/warehouse-v1.png",
     "columns": 1,
     "rows": 1,

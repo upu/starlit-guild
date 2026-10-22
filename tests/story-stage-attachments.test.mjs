@@ -84,7 +84,7 @@ test("Lico reaches the placed basket before picking it up without overlapping Ar
 
 test("hill-path scenes share the background's scale and exits do not replay an earlier path", () => {
   const one = stageCameraCue(storyStageCue("tower-road-departure", 0));
-  for (const id of ["berne-road-return", "hilltop-picnic-departure", "lantern-detour-departure"])
+  for (const id of ["hilltop-picnic-departure", "lantern-detour-departure"])
     assert.equal(stageCameraCue(storyStageCue(id, 0)).cameraScale, one.cameraScale);
   const exit = storyStageExitCue("mountain-entrance-departure");
   assert.ok(exit.actors.every((a) => !a.via && !a.lane));

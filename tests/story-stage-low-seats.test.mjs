@@ -42,7 +42,7 @@ test("rocks and low stools remain separate from actors and walking overrides the
     ["tower-moss-removal-return", 2, "aria"],
     ["tower-moss-removal-return", 2, "leon"],
     ["mountain-entrance-return", 5, "mira"],
-    ["berne-road-return", 0, "finn"],
+    ["berne-road-return", 1, "finn"],
     ["brekka-moss-beds-return", 49, "mira"],
   ]) {
     const stage = cue(id, line),
@@ -134,6 +134,6 @@ test("the folded note is shown near Leon only after he approaches Finn", () => {
     leon = stage.actors.find((a) => a.id === "leon");
   const before = cue("berne-road-return", 9).actors.find((a) => a.id === "leon");
   assert.ok(stage.sequence[0].after >= journeyDuration(leon, before));
-  assert.equal(stage.items.find((p) => p.actor === "finn").art, "folded-paper");
+  assert.equal(stage.items.find((p) => p.actor === "finn").art, "receipt-front");
   assert.ok(Math.abs(leon.x - stage.actors.find((a) => a.id === "finn").x) <= 11);
 });

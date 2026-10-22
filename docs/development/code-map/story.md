@@ -44,3 +44,5 @@
 幕間「私が用意するお昼」の布・菓子・水筒・紐と包みは `lib/story-stage-picnic.ts`。草地の背景と携帯用小物は `scripts/story-stage-picnic-art.mjs`、背景の登録は `config/rpg-backgrounds.json`。菓子の持ち主・縮尺・手渡し接点、二人分の分離、水筒の位置と包みの重なりは `tests/story-stage-picnic.test.mjs`。
 
 幕間「約束の胡桃」は `lib/story-stage-walnut-tasting.ts` と `lib/story-stage-walnut-items.ts`。焼き色・半割り・裏面・欠片と腰掛けの登録は `scripts/story-stage-walnut-art.mjs`。`StageActor.scoot` は座位のまま寄る小移動、`LaterStage.exitRoutes` は退出時の経路指定。菓子の順・受け渡し・腰掛けの前後関係・水筒の時刻・背景の道に沿う退出は `tests/story-stage-walnut-tasting.test.mjs`。
+
+3-1の食堂は `lib/story-stage-berne.ts`、街を見下ろす休憩所は `lib/story-stage-low-seats.ts`。背景と紙の表裏は `scripts/story-stage-berne-opening-art.mjs`、配信用背景の登録は `config/rpg-backgrounds.json`。`StageItem.turn` は同じ寸法の小物を縦軸で裏返す角度で、`app/story-stage-item-motion.ts` が途中状態を引き継ぐ。茶器・荷物の縮尺、静止画への切替、接近後の紙の回転と低負荷設定は `tests/story-stage-berne-opening.test.mjs`。

@@ -17,6 +17,7 @@ import { reviewParentMotion, householdProps } from "./story-stage-household-art.
 import { reviewWorkerHat, homewardProps } from "./story-stage-homeward-art.mjs";
 import { picnicAssets } from "./story-stage-picnic-art.mjs";
 import { walnutAssets } from "./story-stage-walnut-art.mjs";
+import { berneOpeningAssets } from "./story-stage-berne-opening-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -147,6 +148,7 @@ await householdProps(root, emit);
 await homewardProps(root, emit);
 await picnicAssets(root, emit);
 await walnutAssets(root, emit);
+await berneOpeningAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

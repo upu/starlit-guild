@@ -20,24 +20,49 @@ export function lowSeat(
 }
 
 const overlookCast = () => [
-  actor("aria", 28),
-  actor("leon", 50),
-  actor("mira", 43, { bottom: 29 }),
-  actor("finn", 82, { seated: true, perch: true, left: true }),
+  actor("aria", 27, { bottom: 24 }),
+  actor("leon", 48, { bottom: 24 }),
+  actor("mira", 38, { bottom: 43 }),
+  actor("finn", 76, { bottom: 24, seated: true, perch: true, left: true }),
 ];
-const paper = (tilt = 0) => held("folded-paper", "finn", { width: 6, tilt });
+const paper = (back = false, turn = 0) =>
+  held(back ? "receipt-back" : "receipt-front", "finn", {
+    id: "shipping-receipt",
+    width: 6,
+    bottom: 25,
+    turn,
+  });
+const overlookLuggage = () => [
+  ground("medicine-closed", 48, 41, 8),
+  ground("delivery-bag", 58, 38, 8),
+  ground("basket", 18, 22, 7),
+];
 export const overlookRest: LaterStage = scene(
-  "hill-path",
+  "berne-overlook",
   overlookCast(),
   [
-    { at: 0, items: [paper()] },
+    {
+      at: 0,
+      actors: { finn: { seated: false, perch: false } },
+      items: [],
+      sequence: [
+        { after: 650, actors: { finn: { seated: true, perch: true } } },
+        { after: 1350, actors: { finn: { pose: "offer" } }, items: [paper()] },
+      ],
+    },
     { at: 6, actors: { mira: { pose: "think" } } },
     {
       at: 10,
-      actors: { leon: { x: 71, pose: "offer", left: false }, finn: { pose: "idle" } },
-      sequence: [{ after: 1500, actors: { finn: { pose: "tease" } }, items: [paper(-16)] }],
+      actors: {
+        leon: { x: 67, bottom: 24, via: [{ x: 59, bottom: 20 }], pose: "offer", left: false },
+        finn: { pose: "idle" },
+      },
+      sequence: [
+        { after: 1800, items: [paper(false, 90)] },
+        { after: 2450, actors: { finn: { pose: "tease" } }, items: [paper(true, 180)] },
+      ],
     },
     { at: 11, actors: { aria: { reaction: "surprise" } } },
   ],
-  { furniture: [lowSeat(overlookCast()[3])] },
+  { furniture: [lowSeat(overlookCast()[3]), ...overlookLuggage()] },
 );
