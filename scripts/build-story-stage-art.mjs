@@ -12,6 +12,7 @@ import { teaPreparationAssets } from "./story-stage-tea-art.mjs";
 import { reviewNpcChair, licoFieldAssets } from "./story-stage-lico-art.mjs";
 import { reviewMaskedMotion, puppetMotionAssets } from "./story-stage-puppet-art.mjs";
 import { reviewWorkerMotion, carrierAssets } from "./story-stage-carrier-art.mjs";
+import { golemClothAssets } from "./story-stage-golem-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -135,6 +136,7 @@ await emit(
 await licoFieldAssets(root, emit);
 await puppetMotionAssets(root, emit);
 await carrierAssets(root, emit);
+await golemClothAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

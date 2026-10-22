@@ -5,11 +5,12 @@ export function stageFigure(item: StageItem, moving: boolean, elapsed: number) {
   if (item.art !== "golem" && item.art !== "puppet") return null;
   const referenceWidth = item.art === "golem" ? 432 : 312;
   const width = item.width ?? 10;
+  const step = Math.floor(elapsed / (item.art === "golem" ? 180 : 130)) % 4;
   return {
     width: (width * 512) / referenceWidth,
     footPadding: (width * 32 * 1.5) / referenceWidth,
     frame: moving
-      ? 1 + (Math.floor(elapsed / (item.art === "golem" ? 180 : 130)) % 4)
+      ? 1 + (item.backstep ? (4 - step) % 4 : step)
       : { idle: 0, kneel: 5, bow: 6 }[item.figure ?? "idle"],
   };
 }

@@ -1,11 +1,9 @@
-import { scene, trio, held, ground, npc, type LaterStage } from "./story-stage-later-shared.ts";
+import { scene, trio, held, ground, type LaterStage } from "./story-stage-later-shared.ts";
 import { blockadeApproach } from "./story-stage-blockade.ts";
 import { recoveryCast, recoveryBeats } from "./story-stage-blockade-recovery.ts";
 import { inventoryBeats, roadOpening } from "./story-stage-blockade-road.ts";
 import { departureAndCare } from "./story-stage-blockade-care.ts";
-const pumpkin = (pose: "idle" | "explain" | "point" | "wave" = "idle", x = 60) =>
-  npc("masked-pumpety", undefined, x, pose);
-const dolls = () => [ground("golem", 78, 37, 21), ground("puppet", 39, 36, 9)];
+import { golemReturn } from "./story-stage-golem-return.ts";
 export const puppetStages: Record<string, LaterStage> = {
   "spinning-signpost-departure": scene(
     "mountain-road",
@@ -61,31 +59,7 @@ export const puppetStages: Record<string, LaterStage> = {
     },
     { at: 1, actors: { aria: { pose: "surprise" } } },
   ]),
-  "begging-golem-return": scene("workshop", trio(), [
-    {
-      at: 0,
-      actors: { mira: { carry: true } },
-      items: [held("medicine", "mira"), ground("honey", 57, 24, 6), ...dolls()],
-    },
-    { at: 3, actors: { aria: { reaction: "surprise" } } },
-    { at: 4, items: [held("medicine", "mira"), ground("honey", 80, 35, 6), ...dolls()] },
-    { at: 6, extras: [pumpkin("point")] },
-    { at: 8, items: [held("medicine", "mira")], extras: [] },
-    { at: 10, actors: { mira: { carry: false, x: 65 }, leon: { x: 50, pose: "offer" } } },
-    {
-      at: 13,
-      actors: { leon: { pose: "offer" }, mira: { inspect: true } },
-      items: [ground("medicine", 61)],
-    },
-    {
-      at: 17,
-      actors: {
-        leon: { inspect: true },
-        aria: { left: false },
-        mira: { inspect: false, pose: "offer" },
-      },
-    },
-  ]),
+  "begging-golem-return": golemReturn,
   "sweet-blockade-departure": blockadeApproach,
   "sweet-blockade-return": scene(
     "workshop-yard",

@@ -151,6 +151,9 @@ export type StageItem = {
     | "honey-bag-open"
     | "trade-parcels"
     | "trade-parcels-open"
+    | "packing-cloth"
+    | "dragging-cloth"
+    | "wrist-bandage"
     | "keystone"
     | "replacement"
     | "ledger"
@@ -198,6 +201,10 @@ export type StageItem = {
   extra?: StageExtra["id"];
   /** Parent object carrying this object; x/bottom become offsets from its displayed base. */
   carrier?: string;
+  /** Move away while retaining the authored facing and reversing the foot cycle. */
+  backstep?: boolean;
+  /** Dressing attached to the displayed arm; hidden when that arm is behind the body. */
+  wrist?: boolean;
   /** Contents remain attached to their container after being put away. */
   stored?: boolean;
   /** Surface supporting or being touched by this object, independent of its height. */

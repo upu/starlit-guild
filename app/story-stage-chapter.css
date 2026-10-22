@@ -53,6 +53,9 @@
 .story-stage-item:is([data-art="honey-bag"], [data-art="honey-bag-open"]) {
   aspect-ratio: 256 / 280;
 }
+.story-stage-item:is([data-art="packing-cloth"], [data-art="dragging-cloth"]) {
+  aspect-ratio: 256 / 144;
+}
 .story-stage-item[data-pouring="true"]::after {
   content: "";
   position: absolute;

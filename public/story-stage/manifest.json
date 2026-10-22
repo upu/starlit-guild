@@ -482,5 +482,17 @@
   "prop-honey-bag": {
     "source": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23",
     "output": "3878f9171436b5ece414c85c99141b70279a3c84b9adeb5b68fe6bcadfd442eb"
+  },
+  "prop-packing-cloth": {
+    "source": "5a969192a60ac3ff3050bc4ddd34abcf6a38c3ec1fb5a7e6572d38eedd6f7360",
+    "output": "9b5b08c14f2cbcf5c0257a0b2f3e8055d8a5edaf75e1bf067d21e9e12deed340"
+  },
+  "prop-dragging-cloth": {
+    "source": "5a969192a60ac3ff3050bc4ddd34abcf6a38c3ec1fb5a7e6572d38eedd6f7360",
+    "output": "10fb6039f791d33d0d58ebeb0105c28065e0906dfb2b67e9b5729321cbd33dca"
+  },
+  "prop-wrist-bandage": {
+    "source": "14b1255cc7b79ae71ab9522935a479f7c6ae6cd7dfed25e602f713b4a426562a",
+    "output": "175c61694ef81dedbbc610ce714fa80c3b4b6605a56787b7c6cede240f7a3b98"
   }
 }

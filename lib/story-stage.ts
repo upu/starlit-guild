@@ -1,5 +1,6 @@
 import { type ResidentId } from "./home-actor.ts";
 import { actorPose } from "./story-stage-pose.ts";
+import { stageWrist } from "./story-stage-wrists.ts";
 import { sampleJourney, type StagePosition } from "./story-stage-travel.ts";
 export type { StagePosition } from "./story-stage-travel.ts";
 import { TRADE_QUEST, prologueStages } from "./prologue.ts";
@@ -151,12 +152,15 @@ export function sampleStageActor(
 ): StageSample {
   const travel = sampleJourney(actor, origin, elapsed, reduced);
   const { x, moving } = travel;
+  const pose = actorPose(actor, moving, elapsed, reduced);
+  const wrist = stageWrist(actor.id, pose.atlas, pose.frame);
   const reaction = reduced ? 1 : Math.min(1, Math.max(0, elapsed) / 520);
   return {
     x,
     bottom: travel.bottom,
     ...(travel.route ? { route: travel.route } : {}),
-    ...actorPose(actor, moving, elapsed, reduced),
+    ...pose,
+    ...(wrist ? { wrist } : {}),
     visible: actor.visible !== false,
     left: actor.carry && actor.lane === undefined && !actor.via ? actor.left : travel.left,
     lift: reactionLift(actor.reaction, reaction),

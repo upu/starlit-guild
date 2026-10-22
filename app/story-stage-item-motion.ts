@@ -76,7 +76,8 @@ function paintFigure(
   element.style.backgroundPosition = `${String(((figure.frame % 4) * 100) / 3)}% ${String(Math.floor(figure.frame / 4) * 100)}%`;
   element.dataset.frame = String(figure.frame);
   // These two source figures face left. Keep the authored resting direction after arrival.
-  if (moving) element.style.transform = `translateX(-50%) scaleX(${target.x > at.x ? "-1" : "1"})`;
+  if (moving)
+    element.style.transform = `translateX(-50%) scaleX(${itemFacing(item, at, target, reduced) ? "-1" : "1"})`;
 }
 
 function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt: number) {

@@ -6,6 +6,7 @@ export const boxTransferDuration = 650;
 
 export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
   if (item.stored) return false;
+  if (item.wrist && !positions.get(item.actor ?? "")?.wrist) return false;
   const sitter = item.seatFor && positions.get(item.seatFor);
   return (
     !sitter ||
@@ -27,20 +28,36 @@ export function stageItemTarget(
   positions: Map<string, StagePosition>,
 ) {
   if (item.carrier) {
-    const parent = positions.get(`item:${item.carrier}`);
-    return {
-      x: (parent?.x ?? 0) + item.x * (parent?.mirrored ? -1 : 1),
-      bottom: (parent?.bottom ?? 0) + item.bottom,
-    };
+    return carrierTarget(item, positions.get(`item:${item.carrier}`));
   }
   const actor = cue.actors.find((a) => a.id === item.actor);
   const owner = positions.get(item.actor ?? `extra:${item.extra ?? ""}`);
+  const wrist = wristTarget(item, cue, owner);
+  if (wrist) return wrist;
   const offset = actor
     ? stageItemOffset(item, { ...actor, left: owner?.left ?? actor.left })
     : item.x;
   return {
     x: offset + (owner?.x ?? 0),
     bottom: heldItemBottom(item, cue, owner),
+  };
+}
+
+function carrierTarget(item: StageItem, parent?: StagePosition) {
+  return {
+    x: (parent?.x ?? 0) + item.x * (parent?.mirrored ? -1 : 1),
+    bottom: (parent?.bottom ?? 0) + item.bottom,
+  };
+}
+
+function wristTarget(item: StageItem, cue: StoryStageCue, owner?: StagePosition) {
+  if (!item.wrist || !owner?.wrist) return null;
+  const pixel = (cue.cell ?? 24) / 128;
+  return {
+    x: owner.x + (owner.wrist.x - 64) * pixel * (owner.left ? -1 : 1),
+    bottom:
+      // The actor element ends at y=128; y=120 is the foot inside that element.
+      (owner.bottom ?? 14) + (128 - owner.wrist.y) * pixel * 1.5 - ((item.width ?? 2) / 1.3) * 0.75,
   };
 }
 

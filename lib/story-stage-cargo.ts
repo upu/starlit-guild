@@ -23,6 +23,7 @@ export function itemFacing(
   target: BoxPosition,
   reduced: boolean,
 ) {
-  if (item.carrier || reduced || !["golem", "puppet"].includes(item.art)) return !!item.left;
+  if (item.carrier || item.backstep || reduced || !["golem", "puppet"].includes(item.art))
+    return !!item.left;
   return Math.abs(target.x - at.x) > 0.001 ? target.x > at.x : !!item.left;
 }
