@@ -21,7 +21,12 @@ function paintActor(element: HTMLElement, sample: StageSample) {
   const name = element.querySelector<HTMLElement>(".story-stage-name");
   if (name)
     name.style.top =
-      sample.onChair && (sample.bottom ?? 14) >= 20 ? (sample.frame >= 36 ? "26%" : "8%") : "100%";
+      (sample.onChair || (sample.atlas === "conversation" && sample.frame >= 36)) &&
+      (sample.bottom ?? 14) >= 20
+        ? sample.frame >= 36
+          ? "26%"
+          : "8%"
+        : "100%";
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) paintSprite(sprite, sample);
   const bubble = element.querySelector<HTMLElement>(".story-stage-reaction");

@@ -10,6 +10,12 @@ import {
   item,
   type ChapterStage,
 } from "./story-stage-chapter-shared.ts";
+import { lowSeat } from "./story-stage-low-seats.ts";
+
+const towerSeats = () => [
+  lowSeat({ id: "aria", x: 40, left: false }, "stone", 24),
+  lowSeat({ id: "leon", x: 47, left: false }, "stone", 24),
+];
 
 const samples = (bright = false) => [
   item("near", "moss", 66, 17, { width: 9, glow: bright ? "bright" : undefined }),
@@ -217,14 +223,14 @@ export const waterwayStages: Record<string, ChapterStage> = {
   "tower-moss-removal-return": {
     background: "tower-foot",
     beats: [
-      { at: 0, items: [tools()], extras: [keeper("point"), worker()] },
+      { at: 0, items: [tools(), ...towerSeats()], extras: [keeper("point"), worker()] },
       { at: 1, extras: [keeper("explain", true), worker()] },
       {
         at: 2,
-        aria: { x: 40, seated: true },
-        leon: { x: 54, seated: true },
+        aria: { x: 40, seated: true, perch: true },
+        leon: { x: 47, seated: true, perch: true, left: false },
         extras: [worker()],
-        items: [tools()],
+        items: [tools(), ...towerSeats()],
       },
       { at: 5, extras: [keeper("point"), worker()] },
       { at: 25, aria: { seated: false }, leon: { seated: false } },

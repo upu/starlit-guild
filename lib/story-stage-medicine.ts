@@ -11,6 +11,7 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 import { chair, diningItems } from "./story-stage-furniture.ts";
+import { mountainRest } from "./story-stage-low-seats.ts";
 
 const bedsideCast = () => [
   actor("aria", 60, { bottom: 59, seated: true, chair: true, left: false }),
@@ -249,20 +250,7 @@ export const medicineStages: Record<string, LaterStage> = {
     ],
     { exit: ["aria", "leon", "mira"] },
   ),
-  "mountain-entrance-return": scene("mountain-road", trio(), [
-    {
-      at: 0,
-      actors: { aria: { seated: true }, leon: { seated: true }, mira: { inspect: true } },
-      items: [ground("medicine", 69)],
-    },
-    { at: 2, items: [ground("medicine", 69), ground("tea", 50, 16, 14)] },
-    { at: 4, actors: { mira: { inspect: false, seated: true } } },
-    { at: 5, actors: { aria: { reaction: "nod" } } },
-    {
-      at: 10,
-      items: [ground("medicine", 77), ground("tea", 50, 16, 14), ground("bread", 35, 13, 11)],
-    },
-  ]),
+  "mountain-entrance-return": mountainRest,
   "waiting-households-departure": scene(
     "village-house",
     trio(),

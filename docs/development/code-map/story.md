@@ -12,6 +12,8 @@
 
 椅子・食卓・奥の席の退席通路は `lib/story-stage-furniture.ts`。2-3の寝台の姿勢と場面転換は `lib/story-stage-medicine.ts`、場面転換で位置を引き継がない処理は `buildLaterStage` の `stageStart` と `useStoryStageMotion`。`tests/story-stage-furniture.test.mjs` で共通アトラスの椅子座位、椅子の残存、寝台、最後の動作から出発への持ち物の引き継ぎを検査する。
 
+低い岩・縁・踏み台は `lib/story-stage-low-seats.ts` の `lowSeat` と `StageActor.perch` を使い、支持物を人物と別に描く。アリア・レオン・ミラ・フィンは共通アトラス36〜43番、リコの同じ番号は踏み台を含む専用姿勢。4-6の支え歩き・手帳と鞄の受け取りは `lib/story-stage-lico.ts`、頭幅・接地・手元と到着時刻の検査は `tests/story-stage-low-seats.test.mjs`。
+
 3-5の物置での休憩・控えの受け渡しは `lib/story-stage-stone-rest.ts`、4-10の同じ椅子を譲る動作は `lib/story-stage-founding.ts`、五人で回す登録用紙は `lib/story-stage-registration-paper.ts`。検査は `tests/story-stage-office-seats.test.mjs`。アリアの筆記2コマは共通アトラスの17・18番を使い、`scripts/story-stage-review-art.mjs` で歩行と頭幅・身長・足元を揃える。4-7の踏み台・反射装置・煙・記録板は `lib/story-stage-lico-records.ts`、素材の登録は `scripts/story-stage-lico-art.mjs`、接地・縮尺・受け渡しは `tests/story-stage-lico.test.mjs` を参照する。
 
 旅団の日常は `lib/guild-stories.ts`、解放は `lib/guild-base.ts`、在室と未読の選択は `lib/guild-presence.ts`。`app/guild-chat.tsx` が共通の `Banter` で自動再生し、`app/use-banter-completion.ts` が最後の台詞の表示時間と一時停止を扱う。既読は `story.read`、思い出での再読は `StoryReader` を共用する。生成台本は `docs/story/game-script/guild.md`。`tests/guild.test.mjs` / `tests/story-reader.test.mjs` / `tests/guild.browser.mjs` で解放・在室・既読・停止・再読・表情を確認する。

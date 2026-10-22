@@ -107,12 +107,19 @@ export async function reviewHero(root, name, raw, original) {
         : frames[0],
     );
   const stool = id === "lico" ? await source(root, "lico-stool-v1") : null;
-  for (let i = 0; i < 8; i++)
-    frames.push(
-      stool
-        ? await registerWorkPose(await sheetFrame(stool, i % 4, Math.floor(i / 4), 4, 2), head, 80)
-        : frames[0],
-    );
+  const perch = !stool ? await source(root, "perch-poses-v1") : null;
+  for (let i = 0; i < 8; i++) {
+    const f = stool
+      ? await sheetFrame(stool, i % 4, Math.floor(i / 4), 4, 2)
+      : await sheetFrame(perch, i % 4, row, 4, 4);
+    const registered = await registerWorkPose(f, head, 80);
+    if (perch && i >= 4) {
+      const { width } = await sharp(registered.input).metadata();
+      registered.input = await sharp(registered.input).flop().png().toBuffer();
+      registered.left = 128 - registered.left - width;
+    }
+    frames.push(registered);
+  }
   const image = await sharp({
     create: { width: 512, height: 1408, channels: 4, background: "#00000000" },
   })
@@ -135,6 +142,7 @@ export async function reviewHero(root, name, raw, original) {
       adventure,
       chair,
       ...(stool ? [stool] : []),
+      ...(perch ? [perch] : []),
       ...(bed ? [bed] : []),
       ...(walk ? [walk] : []),
     ]),
@@ -142,6 +150,16 @@ export async function reviewHero(root, name, raw, original) {
   };
 }
 export async function reviewProps(root, emit) {
+  const notebook = await source(root, "closed-ledger-v1");
+  await emit(
+    "prop-closed-ledger",
+    notebook,
+    await sharp(notebook)
+      .extract(await spriteBounds(notebook))
+      .resize({ width: 192 })
+      .webp({ lossless: true })
+      .toBuffer(),
+  );
   const teaKit = await source(root, "tea-kit-v1");
   const { height: teaHeight } = await sharp(teaKit).metadata();
   const cuts = [0, 550, 1100, 1480, 2172];

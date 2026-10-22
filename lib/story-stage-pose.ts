@@ -44,7 +44,8 @@ function stationaryPose(actor: StageActor, elapsed: number, reduced: boolean) {
     atlas: "conversation" as const,
     frame,
     handDrop: poseHandDrop(frame),
-    onChair: actor.visible !== false && ((frame >= 24 && frame < 32) || frame >= 36),
+    onChair:
+      actor.visible !== false && ((frame >= 24 && frame < 32) || (frame >= 36 && !!actor.stool)),
   };
 }
 
@@ -58,12 +59,14 @@ function poseHandDrop(frame: number) {
 
 function chairFrame(actor: StageActor) {
   const frames = { idle: 0, greet: 1, surprise: 3, think: 3, offer: 1, tease: 2 };
-  return (actor.stool ? 36 : 24) + (actor.left ? 4 : 0) + frames[actor.pose ?? "idle"];
+  return (
+    (actor.stool || actor.perch ? 36 : 24) + (actor.left ? 4 : 0) + frames[actor.pose ?? "idle"]
+  );
 }
 
 function stationaryFrame(actor: StageActor, elapsed: number, reduced: boolean): number {
   if (actor.bed) return 32 + ["rest", "edge", "breakfast", "sleep"].indexOf(actor.bed);
-  if (actor.seated && (actor.chair || actor.stool)) return chairFrame(actor);
+  if (actor.seated && (actor.chair || actor.stool || actor.perch)) return chairFrame(actor);
   if (actor.shoulder) return 19 + Number(actor.pose === "tease");
   if (actor.writing) return cycle(17, elapsed, 400, !reduced);
   if (actor.sword) return 21;

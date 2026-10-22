@@ -44,12 +44,12 @@
     "output": "e04e23c5db2a2ec5ff8a42d4dd088a6739ea5f45718f8e70181785f0f4affdcf"
   },
   "aria-poses": {
-    "source": "c3b3881b21548c8183cc857cb8e22c2a2bacd04fa281ded6b14bcfd126afb591",
-    "output": "5f49864f200157683dc2a637e2890d2b3f77cd36bb742d6e1de8e12e266adde9"
+    "source": "5d4a1b590f467b102dfffa7112911a4978db85ea0a139e41f79b3d48fb61e54b",
+    "output": "356a6bdf3bf3fc80e11809a52188ae9d96ede02d8b5d72d2a75eb636f38fd7ac"
   },
   "leon-poses": {
-    "source": "d886ece625b57d50bd2af5e1caccb2388e27c519e6af8a65adfbdaf446ca4050",
-    "output": "eb51372947086e8b07a1c3b7f4578ad5cc7025f7ac48895bc033cf46200a43fc"
+    "source": "352c72a17b8a63e18fd8fa9e18e4d87cd5325cf7bd8633938b00c9405364f8b2",
+    "output": "26f7e14bb8f38ab98d5891e96449d1eec3442052f6041f005258c762e0c02224"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -312,12 +312,12 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "27f9e20df59e1befbf206598c371c46830fedd053da48a95a21ee5a72f1c0297",
-    "output": "c385a3949514a07480e8cc4cc87087d26de4a51de64415bac149bdc45e3bb1ed"
+    "source": "17ac62de6c5f82eb19b029e81e9b254cfeee262cb3f0480324275c949d4559fd",
+    "output": "ad4cb937304a09828a867284930661e46bbf0c8ff2018e760c545d8fda4be2fc"
   },
   "finn-poses": {
-    "source": "bf71e9257be3fb784d2910e7561151405013d072e880ff33f52281b9e663a140",
-    "output": "dcd8a84cc702ec288c7e4019d5872714fa6fb413c94ef44a0d27063a44476a9b"
+    "source": "26bc22cbdc6c856b3ed0f778e30eda2efd57fd91d33363d62ce111146026b92c",
+    "output": "eddce540e43e3d2700eeaab997c52c1b8290fea67382a37fa85dcd258d5bd512"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
@@ -346,6 +346,10 @@
   "child-poses": {
     "source": "c30fb207925353cc3dcc172ed73ae58fc37e30990df47643f06b0ff54e4a9cab",
     "output": "c0a53ae5e08d8d111e02cf8773d378fe960dbfd44f5a91229d3ca747b3ae70c1"
+  },
+  "prop-closed-ledger": {
+    "source": "75e38e35b1e32e55ca91e3deff562f0fa2dcf0c5cd8b1770a85b6a2b8dc51615",
+    "output": "90f452f6b903aed4b0b7b64aebd4a95f3d354e32f35b716a093fb0f3bcae6a1e"
   },
   "prop-brazier": {
     "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",

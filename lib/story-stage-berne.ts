@@ -1,4 +1,5 @@
 import { stoneRest } from "./story-stage-stone-rest.ts";
+import { overlookRest } from "./story-stage-low-seats.ts";
 import {
   scene,
   quartet,
@@ -27,12 +28,7 @@ export const berneStages: Record<string, LaterStage> = {
     {},
     false,
   ),
-  "berne-road-return": scene("hill-path", crew(), [
-    { at: 0, actors: { finn: { seated: true } }, items: [held("ledger", "finn")] },
-    { at: 6, actors: { mira: { pose: "think" } } },
-    { at: 10, actors: { leon: { x: 48, pose: "offer" }, finn: { pose: "tease" } } },
-    { at: 11, actors: { aria: { reaction: "surprise" } } },
-  ]),
+  "berne-road-return": overlookRest,
   "berne-house-calls-departure": scene(
     "berne-street",
     crew(),

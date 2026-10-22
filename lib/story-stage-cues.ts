@@ -13,6 +13,8 @@ export type StageActor = {
   seated?: boolean;
   chair?: boolean;
   stool?: boolean;
+  /** Low seat rendered separately: rock, ledge or step stool. */
+  perch?: boolean;
   bed?: "rest" | "edge" | "breakfast" | "sleep";
   packing?: boolean;
   writing?: boolean;
@@ -132,6 +134,7 @@ export type StageItem = {
     | "keystone"
     | "replacement"
     | "ledger"
+    | "closed-ledger"
     | "seedlings"
     | "stone-lantern"
     | "stone-lantern-sooty"
