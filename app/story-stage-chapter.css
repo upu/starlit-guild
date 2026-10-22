@@ -34,10 +34,23 @@
 .story-stage-item[data-art="water-bucket"] {
   aspect-ratio: 192 / 304;
 }
+.story-stage-item[data-art^="tower-stone"][data-glow="dim"] {
+  filter: drop-shadow(0 0 3px #b7e3ffb0) drop-shadow(0 0 9px #87bde85a);
+}
+.story-stage-item[data-art="light-cloth"][data-glow="dim"] {
+  filter: brightness(1.12) drop-shadow(0 0 5px #a9dbffb0);
+}
+.story-stage-item[data-art="light-cloth"]:not([data-glow]) {
+  filter: brightness(0.8);
+}
+.story-stage-item:is([data-art^="display-"], [data-art^="tower-stone"], [data-art="light-cloth"]) {
+  aspect-ratio: 256 / 320;
+}
 .story-stage-extra[data-bed="true"] .story-stage-shadow {
   display: none;
 }
-.story-stage-extra[data-npc="masked-pumpety"] .story-stage-extra-sprite {
+.story-stage-extra:is([data-npc="masked-pumpety"], [data-npc="cook"], [data-npc="merchant"])
+  .story-stage-extra-sprite {
   background-size: 400% 300%;
 }
 .story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {

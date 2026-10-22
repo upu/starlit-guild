@@ -121,10 +121,12 @@ export async function reviewHero(root, name, raw, original) {
     frames.push(registered);
   }
   const push = id === "leon" ? await source(root, "leon-push-v1") : null;
+  const knock = id === "finn" ? await source(root, "finn-knock-v1") : null;
+  const gesture = push ?? knock;
   for (let i = 0; i < 4; i++)
     frames.push(
-      push && i < 2
-        ? await registerWorkPose(await sheetFrame(push, i, 0, 2, 1), head, 92)
+      gesture && i < 2
+        ? await registerWorkPose(await sheetFrame(gesture, i, 0, 2, 1), head, 92)
         : frames[0],
     );
   const image = await sharp({
@@ -153,6 +155,7 @@ export async function reviewHero(root, name, raw, original) {
       ...(bed ? [bed] : []),
       ...(walk ? [walk] : []),
       ...(push ? [push] : []),
+      ...(knock ? [knock] : []),
     ]),
     image,
   };

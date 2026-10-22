@@ -23,6 +23,8 @@ export type StageActor = {
   shoulder?: boolean;
   sword?: boolean;
   push?: "brace" | "extend";
+  /** Finn's two-frame fist tap on a door. */
+  knock?: boolean;
   bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
@@ -60,6 +62,8 @@ export type StoryStageCue = {
     | "berne-porch"
     | "berne-foundation-grass"
     | "berne-foundation-open"
+    | "manor-kitchen"
+    | "manor-kitchen-open"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
@@ -114,6 +118,7 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  grip?: "reach" | "hold";
   limp?: boolean;
   hatGreeting?: boolean;
   id:
@@ -218,6 +223,12 @@ export type StageItem = {
     | "record-board"
     | "paper"
     | "folded-paper"
+    | "display-open"
+    | "display-closed"
+    | "display-covered"
+    | "tower-stone"
+    | "tower-stone-bottom"
+    | "light-cloth"
     | "receipt-front"
     | "receipt-back"
     | "lap-board"

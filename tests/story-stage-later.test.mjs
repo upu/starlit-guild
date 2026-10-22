@@ -89,7 +89,7 @@ test("story objects transfer to the right person and distinguish the original an
     "aria",
   );
   assert.equal(cue("sweet-blockade-return", 10).items.find((p) => p.id === "honey").actor, "mira");
-  assert.ok(cue("riverside-manor-return", 0).items.some((p) => p.art === "keystone"));
+  assert.ok(cue("riverside-manor-return", 0).items.some((p) => p.art === "tower-stone"));
   assert.ok(cue("matching-lantern-stone-return", 5).items.some((p) => p.art === "replacement"));
   assert.equal(
     cue("starlit-guild-founding-departure", 19).items.find((p) => p.id === "sample-jar").actor,

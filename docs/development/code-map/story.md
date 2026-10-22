@@ -50,3 +50,5 @@
 3-2の街路・退出経路は `lib/story-stage-berne-paving.ts`、往診・昼食の時系列は `lib/story-stage-berne-visit.ts`、同一の薬箱・紙・三人分の食事・四つのカップの位置は `lib/story-stage-berne-visit-items.ts`。素材生成は `scripts/story-stage-berne-visit-art.mjs`、接点・数量・退出の検査は `tests/story-stage-berne-visit.test.mjs`。`StageActor.nameAbove` は足元の道具を避ける名前位置で、`app/story-stage-motion.ts` が姿勢に合わせる。
 
 3-3の図面と控え・石組みの調査は `lib/story-stage-keystone.ts`、紙と荷物の状態は `lib/story-stage-keystone-items.ts`。背景2種は `scripts/story-stage-keystone-art.mjs` と `config/rpg-backgrounds.json`、紙を取る・戻す接点、移動完了後の動作、縮尺、荷物回収と空所を避ける退出は `tests/story-stage-keystone.test.mjs`。
+
+3-4の勝手口・ノックと料理人の接近は `lib/story-stage-manor-door.ts`、展示台の石・覆い・鍵・光の測定は `lib/story-stage-manor-display.ts` と `lib/story-stage-manor-display-items.ts`。素材の切り出しと料理人・商人の共通縮尺への登録は `scripts/story-stage-manor-art.mjs`。フィンのノックは共通会話アトラス44・45番。到着後の接触、石の表裏と覆いの順、布の深度、腰の鍵の連続性、既存画素と頭幅・接地の維持は `tests/story-stage-manor.test.mjs`。

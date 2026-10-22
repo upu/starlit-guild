@@ -17,7 +17,26 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
     return { atlas: "adventure" as const, frame: cycle(20, elapsed, 180, moving && !reduced) };
-  return pushPose(actor) ?? bowPose(actor) ?? stationaryPose(actor, elapsed, reduced);
+  return actionPose(actor, elapsed, reduced);
+}
+
+function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  return (
+    knockPose(actor, elapsed, reduced) ??
+    pushPose(actor) ??
+    bowPose(actor) ??
+    stationaryPose(actor, elapsed, reduced)
+  );
+}
+
+function knockPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.id !== "finn" || !actor.knock) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: cycle(44, elapsed, 180, !reduced),
+    handDrop: 0,
+    onChair: false,
+  };
 }
 
 function pushPose(actor: StageActor) {

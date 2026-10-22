@@ -20,16 +20,26 @@ const beds = { rest: 4, listen: 5, ask: 6, nod: 7 };
 export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) {
   if (extra.id === "parent") return parentFrame(extra, moving, elapsed);
   if (extra.id === "worker") return workerFrame(extra, moving, elapsed);
-  if (extra.id === "masked-pumpety") {
-    if (moving) return 4 + (Math.floor(elapsed / 160) % 4);
-    if (extra.bow) return { shallow: 8, deep: 9 }[extra.bow];
-  }
+  if (extra.id === "cook") return cookFrame(extra, moving, elapsed);
+  if (extra.id === "merchant" && moving) return 8 + (Math.floor(elapsed / 180) % 4);
+  if (extra.id === "masked-pumpety") return maskedFrame(extra, moving, elapsed);
   if (extra.id === "child" && extra.bed) return beds[extra.bed];
   return poses[extra.pose ?? "idle"] + (extra.chair ? 4 : 0);
 }
 
+function maskedFrame(extra: StageExtra, moving: boolean, elapsed: number) {
+  if (moving) return 4 + (Math.floor(elapsed / 160) % 4);
+  return extra.bow ? { shallow: 8, deep: 9 }[extra.bow] : poses[extra.pose ?? "idle"];
+}
+function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
+  if (moving) return 4 + (Math.floor(elapsed / 180) % 4);
+  if (extra.grip) return extra.grip === "reach" ? 8 : 9;
+  return extra.pose === "explain" || extra.pose === "point" ? 10 : 11;
+}
+
 export function stageExtraRows(extra: StageExtra) {
   if (extra.id === "worker") return 4;
+  if (extra.id === "cook" || extra.id === "merchant") return 3;
   if (extra.id === "masked-pumpety") return 3;
   return ["child", "keeper", "merchant", "parent"].includes(extra.id) ? 2 : 1;
 }

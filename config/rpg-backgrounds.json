@@ -263,5 +263,17 @@
         "story": ["berne-foundation-open"]
       }
     ]
+  },
+  {
+    "source": "assets/source/story-stage/manor-kitchen-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-kitchen"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-kitchen-open-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-kitchen-open"] }]
   }
 ]

@@ -1,3 +1,5 @@
+import { manorDoor } from "./story-stage-manor-door.ts";
+import { manorDisplay } from "./story-stage-manor-display.ts";
 import {
   scene,
   quartet,
@@ -11,40 +13,8 @@ import {
 const servant = (speaking = false) =>
   npc("worker", "使用人", 72, speaking ? "explain" : "idle", speaking);
 export const manorStages: Record<string, LaterStage> = {
-  "riverside-manor-departure": scene("manor-garden", quartet(), [
-    { at: 0, actors: { finn: { x: 77, pose: "greet" } } },
-    { at: 3, extras: [npc("cook", "料理人", 77, "explain", true)] },
-    {
-      at: 5,
-      actors: { finn: { pose: "tease" } },
-      items: [table(52), onTable("cloth", 52, 15)],
-    },
-    { at: 8, extras: [npc("cook", "料理人", 77, "point", true)] },
-    { at: 9, actors: { mira: { pose: "think" } } },
-  ]),
-  "riverside-manor-return": scene(
-    "manor-garden",
-    quartet(),
-    [
-      {
-        at: 0,
-        items: [table(52), onTable("keystone", 52)],
-        extras: [npc("worker", "庭師", 74), npc("merchant", "庭の主人", 29)],
-      },
-      {
-        at: 2,
-        extras: [npc("worker", "庭師", 74), npc("merchant", "庭の主人", 29, "explain", true)],
-      },
-      { at: 6, items: [table(52), onTable("cloth", 52, 15)], extras: [] },
-      { at: 15, actors: { aria: { reaction: "surprise" } } },
-      { at: 19, actors: { aria: { pose: "greet" } } },
-      {
-        at: 21,
-        items: [table(52), onTable("keystone", 52), held("ledger", "leon"), held("cloth", "aria")],
-      },
-    ],
-    { exit: ["aria", "leon", "mira", "finn"] },
-  ),
+  "riverside-manor-departure": manorDoor,
+  "riverside-manor-return": manorDisplay,
   "manor-survey-departure": scene("berne-street", quartet(), [
     { at: 0, items: [held("tools", "leon"), held("pot", "finn")] },
     {

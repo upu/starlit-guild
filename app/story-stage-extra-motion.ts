@@ -63,9 +63,20 @@ function paintPose(
   const frame = stageExtraFrame(extra, moving, elapsed);
   sprite.dataset.frame = String(frame);
   sprite.style.backgroundPosition = `${String(((frame % 4) * 100) / 3)}% ${String((Math.floor(frame / 4) * 100) / Math.max(1, stageExtraRows(extra) - 1))}%`;
+  paintFacing(sprite, extra, moving, left);
+}
+
+function paintFacing(sprite: HTMLElement, extra: StageExtra, moving: boolean, left: boolean) {
   if (["masked-pumpety", "worker"].includes(extra.id)) {
     const flip = moving ? !left : !!extra.left;
     sprite.style.transform = `scaleX(${flip ? "-1" : "1"})`;
+    return;
   }
-  if (extra.id === "parent") sprite.style.transform = `scaleX(${left ? "-1" : "1"})`;
+  paintRightFacing(sprite, extra, moving, left);
+}
+
+function paintRightFacing(sprite: HTMLElement, extra: StageExtra, moving: boolean, left: boolean) {
+  const transform = `scaleX(${left ? "-1" : "1"})`;
+  if (extra.id === "parent") sprite.style.transform = transform;
+  if (["cook", "merchant"].includes(extra.id)) sprite.style.transform = moving ? transform : "";
 }

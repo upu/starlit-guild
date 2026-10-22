@@ -20,6 +20,7 @@ import { walnutAssets } from "./story-stage-walnut-art.mjs";
 import { berneOpeningAssets } from "./story-stage-berne-opening-art.mjs";
 import { berneVisitAssets } from "./story-stage-berne-visit-art.mjs";
 import { keystoneAssets } from "./story-stage-keystone-art.mjs";
+import { reviewManorNpc, manorAssets } from "./story-stage-manor-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -41,8 +42,9 @@ async function emit(name, source, image) {
   const worker = await reviewWorkerMotion(root, name, masked.raw, masked.image);
   const hat = await reviewWorkerHat(root, name, worker.raw, worker.image);
   const parent = await reviewParentMotion(root, name, hat.raw, hat.image);
-  source = parent.raw;
-  image = parent.image;
+  const manor = await reviewManorNpc(root, name, parent.raw, parent.image);
+  source = manor.raw;
+  image = manor.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -153,6 +155,7 @@ await walnutAssets(root, emit);
 await berneOpeningAssets(root, emit);
 await berneVisitAssets(root, emit);
 await keystoneAssets(root, emit);
+await manorAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {
