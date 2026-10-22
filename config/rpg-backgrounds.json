@@ -243,5 +243,25 @@
         "story": ["mountain-fork-empty"]
       }
     ]
+  },
+  {
+    "source": "assets/source/story-stage/berne-foundation-grass-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["berne-foundation-grass"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/berne-foundation-open-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["berne-foundation-open"]
+      }
+    ]
   }
 ]

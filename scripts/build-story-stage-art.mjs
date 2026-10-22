@@ -19,6 +19,7 @@ import { picnicAssets } from "./story-stage-picnic-art.mjs";
 import { walnutAssets } from "./story-stage-walnut-art.mjs";
 import { berneOpeningAssets } from "./story-stage-berne-opening-art.mjs";
 import { berneVisitAssets } from "./story-stage-berne-visit-art.mjs";
+import { keystoneAssets } from "./story-stage-keystone-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -151,6 +152,7 @@ await picnicAssets(root, emit);
 await walnutAssets(root, emit);
 await berneOpeningAssets(root, emit);
 await berneVisitAssets(root, emit);
+await keystoneAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

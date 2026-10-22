@@ -614,5 +614,13 @@
   "prop-serving-tray": {
     "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
     "output": "b344442e0d7f31e14fe3f76c8cdd427ffdf6cf2745b2cc14204a5b511095728e"
+  },
+  "berne-foundation-grass": {
+    "source": "1e6f0bd7d17a841d19b4f8bc0c5f963075e74083950787908b67b98021c8ca23",
+    "output": "1a4d3d67fcccf7a4ab80411625d26a19cc540a541bc597b9aa3e3e9c303fe999"
+  },
+  "berne-foundation-open": {
+    "source": "0308bb239df37f513f77b38fd68a378c4f4be90b678db09119b7e8da9b1c4cb8",
+    "output": "141a5891c7db2600fb9740bd084347328a3b4a4c68a66c9e555aeeaaf3a4a056"
   }
 }

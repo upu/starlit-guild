@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-23",
+  "mode": "built-in imagegen",
+  "purpose": "3-3 inspection before and after uncovering the old tower foundation",
+  "entries": [
+    {
+      "source": "assets/source/story-stage/berne-foundation-grass-v1.png",
+      "prompt": "Use case: illustration-story. Edit reference pixel-art RPG tower courtyard background, retaining the exact camera, warm detailed pixel art, same curved tower wall/wood door/steps and surrounding road. 3:2 landscape. Story scene: an archaeological inspection of old foundation stones extending outward from the tower, uncovered beneath a former stairway. Add a NARROW SINGLE LINE of small old squared foundation blocks emerging from tower base at image x38%,y35%, following diagonally toward x51%,y69%. Blocks are mostly soil-covered with a thin strip of grass marking the seam; not a wall or raised staircase. Along this line at x46%,y57%, indicate a very subtle grass-covered buried rectangular socket (NOT visible hole yet), about 3.5% image width and 2.5% image height, two adult palms wide relative to the wooden door. The old stone seam must physically connect to the tower foundation, not be a mysterious isolated rock. Preserve wide flat walkable space to left and right, particularly x55-85% y50-85% for six tiny game characters and a small work table, and x20-45% y60-80%. No people, furniture, items, text, arrows, glowing magic or UI. Do not alter camera or add geographical landmarks. Keep scale matching this reference.",
+      "reference": "public/story-stage/tower-foot.webp",
+      "sha256": "3559cfcedfecbc0e7b1b680e14038b5bc13cd8f9e75fcb63701b5ba1afefaa27"
+    },
+    {
+      "source": "assets/source/story-stage/berne-foundation-open-v1.png",
+      "prompt": "Use case: precise-object-edit. Edit this exact RPG tower courtyard background into its AFTER-inspection state. Preserve camera, tower/door/steps, all major ground shapes and pixel-art style pixel-for-pixel where possible. ONLY remove grass and loose soil from the narrow old foundation-stone line that runs from the tower base near x36%,y39% toward x55%,y88%. Expose the same old stone joints continuing from the tower base. The grass-filled rectangular small socket already visible near x45.5%,y63.5% should now be a clearly empty shallow stone-lined recess with dark earthy bottom. Its opening must stay SMALL, same dimensions as the existing grass-filled rectangle, roughly 4% image width and 4% image height including rim; do not enlarge it or make it a well/crater. Adjacent blocks remain embedded flush with the ground, old weathered edges, disturbed soil immediately alongside them. This is a missing two-palms-wide stone from an old tower foundation, not a magical stone or isolated loose object. No glowing marks or magical glyphs. No people, tools, furniture, labels, UI. Same 3:2 landscape and precise composition as input.",
+      "reference": "assets/source/story-stage/berne-foundation-grass-v1.png",
+      "sha256": "e5e494b76a82301262d515ada3a7a54e049ec98fe4865ebd7762184804dad1eb"
+    }
+  ]
+}

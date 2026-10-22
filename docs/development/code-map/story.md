@@ -48,3 +48,5 @@
 3-1の食堂は `lib/story-stage-berne.ts`、街を見下ろす休憩所は `lib/story-stage-low-seats.ts`。背景と紙の表裏は `scripts/story-stage-berne-opening-art.mjs`、配信用背景の登録は `config/rpg-backgrounds.json`。`StageItem.turn` は同じ寸法の小物を縦軸で裏返す角度で、`app/story-stage-item-motion.ts` が途中状態を引き継ぐ。茶器・荷物の縮尺、静止画への切替、接近後の紙の回転と低負荷設定は `tests/story-stage-berne-opening.test.mjs`。
 
 3-2の街路・退出経路は `lib/story-stage-berne-paving.ts`、往診・昼食の時系列は `lib/story-stage-berne-visit.ts`、同一の薬箱・紙・三人分の食事・四つのカップの位置は `lib/story-stage-berne-visit-items.ts`。素材生成は `scripts/story-stage-berne-visit-art.mjs`、接点・数量・退出の検査は `tests/story-stage-berne-visit.test.mjs`。`StageActor.nameAbove` は足元の道具を避ける名前位置で、`app/story-stage-motion.ts` が姿勢に合わせる。
+
+3-3の図面と控え・石組みの調査は `lib/story-stage-keystone.ts`、紙と荷物の状態は `lib/story-stage-keystone-items.ts`。背景2種は `scripts/story-stage-keystone-art.mjs` と `config/rpg-backgrounds.json`、紙を取る・戻す接点、移動完了後の動作、縮尺、荷物回収と空所を避ける退出は `tests/story-stage-keystone.test.mjs`。

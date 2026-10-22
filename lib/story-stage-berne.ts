@@ -1,3 +1,4 @@
+import { keystoneInspection, keystoneFoundation } from "./story-stage-keystone.ts";
 import { bernePaving } from "./story-stage-berne-paving.ts";
 import { berneVisit } from "./story-stage-berne-visit.ts";
 import { stoneRest } from "./story-stage-stone-rest.ts";
@@ -42,41 +43,8 @@ export const berneStages: Record<string, LaterStage> = {
   "berne-road-return": overlookRest,
   "berne-house-calls-departure": bernePaving,
   "berne-house-calls-return": berneVisit,
-  "missing-keystone-departure": scene("tower-foot", crew(), [
-    {
-      at: 0,
-      items: [table(51), onTable("map", 47), onTable("ledger", 57)],
-      extras: [mason(), keeper()],
-    },
-    { at: 2, extras: [mason(), { ...keeper(), pose: "explain", speaking: true }] },
-    { at: 3, actors: { aria: { inspect: true } } },
-    { at: 4, extras: [{ ...mason(), pose: "point", speaking: true }, keeper()] },
-    {
-      at: 6,
-      actors: { aria: { inspect: false } },
-      items: [table(51), onTable("map", 47), held("ledger", "finn")],
-    },
-    { at: 8, actors: { leon: { pose: "offer" } } },
-    {
-      at: 11,
-      items: [table(51), onTable("map", 47), onTable("ledger", 57)],
-      actors: { finn: { pose: "tease" } },
-    },
-  ]),
-  "missing-keystone-return": scene(
-    "tower-foot",
-    crew(),
-    [
-      { at: 0, items: [ground("tools", 50), held("map", "leon")], extras: [mason(), keeper()] },
-      { at: 1, extras: [{ ...mason(), pose: "point", speaking: true }, keeper()] },
-      { at: 5, actors: { aria: { reaction: "surprise" } } },
-      { at: 6, extras: [mason(), { ...keeper(), pose: "explain", speaking: true }] },
-      { at: 10, actors: { aria: { pose: "think" } } },
-      { at: 13, actors: { finn: { inspect: true, pose: "think" } } },
-      { at: 17, actors: { finn: { inspect: false } } },
-    ],
-    { exit: ["aria", "leon", "mira", "finn"] },
-  ),
+  "missing-keystone-departure": keystoneInspection,
+  "missing-keystone-return": keystoneFoundation,
   "matching-lantern-stone-departure": scene("stone-yard", crew(), [
     {
       at: 0,

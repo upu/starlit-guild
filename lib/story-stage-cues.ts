@@ -58,6 +58,8 @@ export type StoryStageCue = {
     | "berne-overlook"
     | "berne-paving"
     | "berne-porch"
+    | "berne-foundation-grass"
+    | "berne-foundation-open"
     | "hill-night"
     | "meeting-night"
     | "tower-foot"
