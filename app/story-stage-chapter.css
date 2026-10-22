@@ -212,6 +212,10 @@
   aspect-ratio: 0.8;
   z-index: 1;
 }
+.story-stage-item[data-art="golem"] {
+  /* Match the delivered 432x384 sprite so its feet sit on the authored ground coordinate. */
+  aspect-ratio: 432 / 384;
+}
 .story-stage-item[data-glow="bright"][data-art="stone-lantern"] {
   filter: drop-shadow(0 0 8px #ffd77f90);
 }

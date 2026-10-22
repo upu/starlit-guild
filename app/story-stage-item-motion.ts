@@ -26,7 +26,9 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
     for (const { item, element, origin, signature } of items) {
       const target = stageItemTarget(item, cue, positions);
       const transferring = origin && (origin.signature !== signature || !origin.settled);
-      const at = transferring ? transferBox(origin.position, target, elapsed, reduced) : target;
+      const at = transferring
+        ? transferBox(origin.position, target, elapsed, reduced, item.travelMs)
+        : target;
       const t = reduced ? 1 : Math.min(1, elapsed / 650);
       const tilt = (origin?.tilt ?? 0) + ((item.tilt ?? 0) - (origin?.tilt ?? 0)) * t;
       state.set(item.id, {
@@ -38,7 +40,9 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
       if (element) {
         element.hidden = !stageItemVisible(item, positions);
         paintItem(element, item, at, tilt);
-        element.style.zIndex = String(stageItemDepth(item, cue, positions));
+        element.style.zIndex = String(
+          stageItemDepth({ ...item, bottom: at.bottom }, cue, positions),
+        );
       }
     }
   };

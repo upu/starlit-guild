@@ -134,3 +134,5 @@
 2-4の休憩では `lib/story-stage-mountain-rest.ts` が薬箱の開閉、空の三杯、ポットの開閉、注湯と蒸らしを段階的に指定する。`pouring` / `steaming` は小物の状態変更と同時に更新し、動きを減らす設定では湯気の揺れを止める。ポットの `support` は低い自然石へ結び、立った受け渡しのあとミラが自分の岩へ戻る。原本・全文プロンプトは [お茶の準備の制作記録](../art-generation/story-stage-tea-preparation-20261022.json)、生成は `scripts/story-stage-tea-art.mjs`、検査は `tests/story-stage-tea.test.mjs`。
 
 4-2の宛名の確認は `lib/story-stage-lantern-address.ts` が担当する。荷運び人の手帳は `extra` で本人に追従し、依頼の紙はレオンの筆記の後にアリアへ渡して畳む。接近中の `nameOffset` は人物セル内の名前だけを横へずらし、身体の位置・倍率は変えない。`tests/story-stage-lantern-address.test.mjs` で異なる書類の所有者と受け渡しの接点を検査する。
+
+2-7前の入口での誘導は `lib/story-stage-blockade.ts` が定義する。アリアの `bow` は共通の冒険アトラスを使い、歩行が終わってから構えへ切り替える。物の `travelMs` は地面を移動する人形に使い、手渡しの標準時間を変えない。ゴーレムは配信画像と同じ縦横比で足元を合わせ、移動中の物の奥行きもその時点の足元から決める。原本と全文プロンプトは [作業場の入口](../art-generation/story-stage-workshop-yard-20261022.json)、本文と残件は [全章レビュー](story-stage-review-20261022.md) を参照する。

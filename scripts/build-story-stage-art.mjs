@@ -120,6 +120,14 @@ await chapterAssets(root, emit);
 await laterAssets(root, emit);
 await reviewProps(root, emit);
 await teaPreparationAssets(root, emit);
+const workshopYard = await readFile(
+  new URL("assets/source/story-stage/workshop-yard-v1.png", root),
+);
+await emit(
+  "workshop-yard",
+  workshopYard,
+  await sharp(workshopYard).resize({ width: 960 }).webp({ lossless: true }).toBuffer(),
+);
 await licoFieldAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);

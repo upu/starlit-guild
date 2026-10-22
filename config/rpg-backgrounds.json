@@ -193,5 +193,11 @@
         "story": ["meeting-night"]
       }
     ]
+  },
+  {
+    "source": "assets/source/story-stage/workshop-yard-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["workshop-yard"] }]
   }
 ]

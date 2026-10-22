@@ -1,4 +1,5 @@
 import { scene, trio, held, ground, npc, type LaterStage } from "./story-stage-later-shared.ts";
+import { blockadeApproach } from "./story-stage-blockade.ts";
 const pumpkin = (pose: "idle" | "explain" | "point" | "wave" = "idle", x = 60) =>
   npc("masked-pumpety", undefined, x, pose);
 const dolls = () => [ground("golem", 78, 37, 21), ground("puppet", 39, 36, 9)];
@@ -82,24 +83,7 @@ export const puppetStages: Record<string, LaterStage> = {
       },
     },
   ]),
-  "sweet-blockade-departure": scene("workshop", trio(), [
-    {
-      at: 0,
-      extras: [pumpkin("explain")],
-      items: [ground("honey", 69, 32, 6), ground("medicine", 39), ...dolls()],
-    },
-    { at: 6, extras: [pumpkin("point")] },
-    {
-      at: 11,
-      actors: {
-        aria: { x: 35, pose: "surprise", reaction: "surprise" },
-        leon: { x: 56, pose: "offer" },
-      },
-    },
-    { at: 13, actors: { aria: { x: 28, pose: "think" } } },
-    { at: 17, actors: { leon: { pose: "greet" } } },
-    { at: 21, actors: { leon: { x: 72 }, aria: { x: 45 }, mira: { inspect: true, x: 25 } } },
-  ]),
+  "sweet-blockade-departure": blockadeApproach,
   "sweet-blockade-return": scene(
     "workshop",
     trio(),

@@ -86,8 +86,14 @@ export function deliveryBoxTarget(
 }
 
 // Smooth transfers keep the same small box, including a tap partway through putting it down.
-export function transferBox(from: BoxPosition, to: BoxPosition, elapsed: number, reduced = false) {
-  const t = reduced ? 1 : Math.min(1, Math.max(0, elapsed) / boxTransferDuration);
+export function transferBox(
+  from: BoxPosition,
+  to: BoxPosition,
+  elapsed: number,
+  reduced = false,
+  duration = boxTransferDuration,
+) {
+  const t = reduced ? 1 : Math.min(1, Math.max(0, elapsed) / Math.max(1, duration));
   const progress = t * t * (3 - 2 * t);
   return {
     x: from.x + (to.x - from.x) * progress,

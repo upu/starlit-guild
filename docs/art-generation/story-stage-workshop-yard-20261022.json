@@ -1,0 +1,10 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in edit",
+  "date": "2026-10-22",
+  "source": "assets/source/story-stage/workshop-yard-v1.png",
+  "reference": "public/story-stage/workshop.webp",
+  "output": "public/story-stage/workshop-yard.webp",
+  "prompt": "Edit the supplied pixel-art RPG old wooden roadside workshop environment into an EXTERIOR VIEW OF THE SAME WORKSHOP ENTRANCE. Elevated oblique top-down JRPG camera, about 50 degrees down, orthographic-like, no sky or horizon. Maintain the same warm aged timber, stone base, modest rural workshop, grass and packed-earth texture, thin dark pixel outlines and crisp painted pixel clusters. Composition is a readable game stage, 3:2 landscape. The upper right half contains a wide open wooden double gate into a dim workshop; doorway from 46% to 89% of image width, threshold approximately 49% down the image. Both heavy timber gateposts and open doors visible. Right and back interior visible but not a full roof covering it. A small EMPTY low workbench inside at upper right around 80% width, 35% height; make it modest with table height appropriate for tiny JRPG characters, no objects upon it. Left gatepost at 46% width is a clear waist-to-head-high wooden pillar to take cover behind. Lower 55 percent of image is CLEAR BROAD WALKABLE PACKED EARTH YARD with sparse small pebbles, leading to a rural road along left edge. Outside and inside ground meet continuously at the doorway, no huge step. Keep foreground free of fences, walls, oversized props, rocks, tools or plants. Dense natural greenery only at outer edges. No people, creatures, honey, boxes, carts, signs, lettering, UI, magical glow or weapons. This is the old workshop beside a mountain road, not a permanent villain lair. Show useful ground space at the gate for small figures to move in and out and around the left post; top-down environmental scale, not an eye-level postcard.",
+  "sha256": "f391a0f0252abf3f96d3510723bf223922d13f11424e37ae419d3f05ae445f30"
+}

@@ -16,7 +16,12 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
     return { atlas: "adventure" as const, frame: cycle(20, elapsed, 180, moving && !reduced) };
-  return stationaryPose(actor, elapsed, reduced);
+  return bowPose(actor) ?? stationaryPose(actor, elapsed, reduced);
+}
+
+function bowPose(actor: StageActor) {
+  if (actor.id !== "aria" || !actor.bow) return null;
+  return { atlas: "adventure" as const, frame: actor.bow === "aim" ? 11 : 13 };
 }
 
 function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {

@@ -20,6 +20,7 @@ export type StageActor = {
   writing?: boolean;
   shoulder?: boolean;
   sword?: boolean;
+  bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
   name?: string;
@@ -55,6 +56,7 @@ export type StoryStageCue = {
     | "dining-room"
     | "manor-garden"
     | "workshop"
+    | "workshop-yard"
     | "mountain-road"
     | "berne-street"
     | "brekka-alley"
@@ -186,6 +188,8 @@ export type StageItem = {
   /** Surface supporting or being touched by this object, independent of its height. */
   support?: string;
   tilt?: number;
+  /** Ground movement duration; ordinary handoffs retain their default duration. */
+  travelMs?: number;
   glow?: "dim" | "bright";
 };
 
