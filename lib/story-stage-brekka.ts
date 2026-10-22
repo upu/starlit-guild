@@ -10,6 +10,7 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 import { diningScene } from "./story-stage-furniture.ts";
+import { lanternAddressBeats } from "./story-stage-lantern-address.ts";
 const owner = () => npc("merchant", "店主", 73);
 export const brekkaStages: Record<string, LaterStage> = {
   "linde-requests-departure": diningScene([
@@ -104,17 +105,7 @@ export const brekkaStages: Record<string, LaterStage> = {
     },
     { at: 8, actors: { aria: { x: 38, bottom: 14, inspect: false, pose: "greet", left: false } } },
     { at: 9, extras: [npc("worker", "荷運び人", 74, "explain", true)] },
-    {
-      at: 18,
-      items: [
-        { ...ground("stone-lantern", 51, 32, 17), glow: "bright" },
-        ground("ledger", 74, 44, 9),
-      ],
-    },
-    {
-      at: 21,
-      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, held("ledger", "aria")],
-    },
+    ...lanternAddressBeats,
   ]),
   "brekka-arrival-departure": diningScene(
     [

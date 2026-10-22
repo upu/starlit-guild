@@ -13,13 +13,14 @@ import {
   type StoryStageCue,
 } from "@/lib/story-stage";
 
-function paintActor(element: HTMLElement, sample: StageSample) {
+function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0) {
   element.style.left = `${String(sample.x)}%`;
   element.style.bottom = `${String(sample.bottom ?? 14)}%`;
   element.style.zIndex = String(Math.round(100 - (sample.bottom ?? 14)));
   element.style.visibility = sample.visible ? "visible" : "hidden";
   const name = element.querySelector<HTMLElement>(".story-stage-name");
-  if (name)
+  if (name) {
+    name.style.left = `${String(50 + nameOffset)}%`;
     name.style.top =
       (sample.onChair || (sample.atlas === "conversation" && sample.frame >= 36)) &&
       (sample.bottom ?? 14) >= 20
@@ -27,6 +28,7 @@ function paintActor(element: HTMLElement, sample: StageSample) {
           ? "26%"
           : "8%"
         : "100%";
+  }
   const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
   if (sprite) paintSprite(sprite, sample);
   const bubble = element.querySelector<HTMLElement>(".story-stage-reaction");
@@ -71,7 +73,7 @@ function stagePainter(
     for (const { actor, origin, element } of actors) {
       const sample = sampleStageActor(actor, origin, elapsed, reduced);
       positions.set(actor.id, sample);
-      if (element) paintActor(element, sample);
+      if (element) paintActor(element, sample, actor.nameOffset);
       if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
     }
     paintBox(positions, elapsed, reduced);

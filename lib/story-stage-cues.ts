@@ -23,6 +23,8 @@ export type StageActor = {
   lane?: number;
   via?: { x: number; bottom: number }[];
   name?: string;
+  /** Horizontal label adjustment in percent of the actor cell during close interaction. */
+  nameOffset?: number;
   bottom?: number;
   visible?: boolean;
   pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
