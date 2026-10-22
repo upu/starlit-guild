@@ -96,8 +96,15 @@ export async function reviewHero(root, name, raw, original) {
           )
         : frames[0],
     );
+  const stool = id === "lico" ? await source(root, "lico-stool-v1") : null;
+  for (let i = 0; i < 8; i++)
+    frames.push(
+      stool
+        ? await registerWorkPose(await sheetFrame(stool, i % 4, Math.floor(i / 4), 4, 2), head, 80)
+        : frames[0],
+    );
   const image = await sharp({
-    create: { width: 512, height: 1152, channels: 4, background: "#00000000" },
+    create: { width: 512, height: 1408, channels: 4, background: "#00000000" },
   })
     .composite(
       frames.map((f, i) => ({
@@ -117,6 +124,7 @@ export async function reviewHero(root, name, raw, original) {
       actions,
       adventure,
       chair,
+      ...(stool ? [stool] : []),
       ...(bed ? [bed] : []),
       ...(walk ? [walk] : []),
     ]),

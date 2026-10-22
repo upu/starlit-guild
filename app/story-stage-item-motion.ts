@@ -51,6 +51,7 @@ function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt:
   element.style.transform = `translateX(-50%) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
+  element.dataset.dissipating = String(!!item.dissipating);
   if (item.glow) element.dataset.glow = item.glow;
   else delete element.dataset.glow;
 }

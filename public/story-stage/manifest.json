@@ -40,16 +40,16 @@
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
   },
   "merchant-poses": {
-    "source": "bc024dbc4a992e7d8cf79f26226690da4c6476efe7987c72f1a98ac0c8dd1d48",
-    "output": "02297f0478f492234f36f772afde3b7d9f699679d8421550d5fd7291722dc933"
+    "source": "c33e09ba07e9af97b59b5951727f7b9148cfb80f52d62938f5d4b0567df966a6",
+    "output": "e04e23c5db2a2ec5ff8a42d4dd088a6739ea5f45718f8e70181785f0f4affdcf"
   },
   "aria-poses": {
     "source": "c3b3881b21548c8183cc857cb8e22c2a2bacd04fa281ded6b14bcfd126afb591",
-    "output": "c56c9e3e636cf2fe8a7cbc58eb7d064889bd804ada8bfc56d2ea96006b5f39db"
+    "output": "81771a00c93bef99c87878e22a9f5224f0712873e7d71bd27ff072a24a164de1"
   },
   "leon-poses": {
     "source": "d886ece625b57d50bd2af5e1caccb2388e27c519e6af8a65adfbdaf446ca4050",
-    "output": "e45ed38e9577de178e448fead2770da0c47b43c436d87b7ca85c3ef8ddc2cc6d"
+    "output": "eb51372947086e8b07a1c3b7f4578ad5cc7025f7ac48895bc033cf46200a43fc"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -108,8 +108,8 @@
     "output": "c22591bbe5456f1d50c80d9c3e21bd81d0d7c0b003a6ed8d9bfea990337745f1"
   },
   "keeper-poses": {
-    "source": "4246649b9c3812e89f12292d7ebc2385640de9ad6e4fff735fae0de9dbc2532a",
-    "output": "880e4b88132672bbf0f7715c18e5b2a9c82d16409d0a4cc10a05884589f2dd92"
+    "source": "a82cc9e07741e28a8964e8403e8927bd2243f12394690c332a2c0e81d3002dce",
+    "output": "e78ce946da2a7060dd9cab197a24fa9175b93ff99e3918a1bc0a1813de95be9a"
   },
   "worker-poses": {
     "source": "4246649b9c3812e89f12292d7ebc2385640de9ad6e4fff735fae0de9dbc2532a",
@@ -313,15 +313,15 @@
   },
   "mira-poses": {
     "source": "27f9e20df59e1befbf206598c371c46830fedd053da48a95a21ee5a72f1c0297",
-    "output": "7253e1bc04bfafbadc209d35ae84de8e0fe189c28b52855b4bf8068cfb8404d3"
+    "output": "c385a3949514a07480e8cc4cc87087d26de4a51de64415bac149bdc45e3bb1ed"
   },
   "finn-poses": {
     "source": "bf71e9257be3fb784d2910e7561151405013d072e880ff33f52281b9e663a140",
-    "output": "33a9ed382740cb1211ccedcc82be01d99ae2803695cbc1b2e4c0bc31f8dbda98"
+    "output": "dcd8a84cc702ec288c7e4019d5872714fa6fb413c94ef44a0d27063a44476a9b"
   },
   "lico-poses": {
-    "source": "096d4812365e605e4d58546c4473adea3504d3972f0300633ea8b7271a717ee9",
-    "output": "cb09cd5d8291ed5b52d247f724d60ed4fa6127315009707c6e08393fe50d5010"
+    "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
+    "output": "485657be1bccd3eca825312291d9a4e92ec227741eb4a51463ae3706bac37793"
   },
   "masked-pumpety-poses": {
     "source": "567914cef3465e164b3cd65d553c4c419e53c8b595164f073fd0792a64ea26c4",
@@ -366,5 +366,45 @@
   "prop-delivery-bag": {
     "source": "70b0f2d86719a830e12d3d2a3b5822562f57a4841e240a28015ceed230c4a1a8",
     "output": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23"
+  },
+  "prop-step-stool": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "46a67117bde3afbc420dd3679dd2c99de0fc37f2f5f60bedd229b65796e9fc79"
+  },
+  "prop-record-board": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "1ed1ac6c7d711452a18357e7feb58aa81959909b2480063e9ab74c10dbd417fd"
+  },
+  "prop-paper": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "404a2f570f59bbcdc2f8b2402bd9c4e13b16ce479a60be5b3c1dd5928de03c4b"
+  },
+  "prop-folded-paper": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "718bed3e43ec075581bc439bd0b3d7caccc1c98c1ddba30e583f227a3d23eae0"
+  },
+  "prop-lap-board": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "99a88dbf5ca4582109baf552bc2b42aee2d9d087cfaf9e299228d2183924086f"
+  },
+  "prop-sample-dish": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "6f87d8aea1b8262ec3d0a5e245392060c3dcc2b95cbcbee97f037e4628159a54"
+  },
+  "prop-reflector-covered": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "a6827f6189a2fe27e63f36442b0cb34aef9da9c899a82c78c20840e49ac6ca2f"
+  },
+  "prop-reflector": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "dcfabda04d75338cc122b4f400a977e4694609385fe8b76a2d5fe75f192d4315"
+  },
+  "prop-reflector-down": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "106b73bfe9334c5a7ccfbca78a90c44d2210b8271ffd405dc1431403c070e4d6"
+  },
+  "prop-low-smoke": {
+    "source": "d48396309c794d25627e585c88fc09216f33f08e2090d9bf05e0f15f4ac0181f",
+    "output": "1f67f0d2b9df400a8dbcedee8a846ec9c7386e832eb74c47d0d7a490e4ecf4f4"
   }
 }

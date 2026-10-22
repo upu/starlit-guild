@@ -41,7 +41,9 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
             style={{
               backgroundImage: `url(/story-stage/${extra.id}-poses.webp)`,
               backgroundPositionX: `${String(((extra.id === "child" && extra.bed ? bedFrames[extra.bed] : frames[extra.pose ?? "idle"]) / 3) * 100)}%`,
-              backgroundPositionY: extra.id === "child" && extra.bed ? "100%" : "0%",
+              backgroundPositionY:
+                (extra.id === "child" && extra.bed) || extra.chair ? "100%" : "0%",
+              transform: extra.chair ? `scaleX(${extra.left ? "1" : "-1"})` : undefined,
             }}
           />
           <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
@@ -54,6 +56,7 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
           hidden={!cue.items?.some((shown) => shown.id === item.id)}
           data-item={item.id}
           data-glow={item.glow}
+          data-dissipating={!!item.dissipating}
           data-art={item.art}
           style={
             {

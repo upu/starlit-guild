@@ -8,6 +8,7 @@ import { chapterAssets } from "./build-story-stage-chapter.mjs";
 import { laterAssets } from "./build-story-stage-later.mjs";
 import { reviewHero, reviewProps } from "./story-stage-review-art.mjs";
 import { rpgBackground } from "./rpg-backgrounds.mjs";
+import { reviewNpcChair, licoFieldAssets } from "./story-stage-lico-art.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("public/story-stage/", root);
@@ -23,7 +24,8 @@ async function emit(name, source, image) {
       .webp({ lossless: true })
       .toBuffer();
   }
-  const reviewed = await reviewHero(root, name, source, image);
+  const hero = await reviewHero(root, name, source, image);
+  const reviewed = await reviewNpcChair(root, name, hero.raw, hero.image);
   source = reviewed.raw;
   image = reviewed.image;
   const path = new URL(`${name}.webp`, output);
@@ -116,6 +118,7 @@ for (const id of ["aria", "leon"]) {
 await chapterAssets(root, emit);
 await laterAssets(root, emit);
 await reviewProps(root, emit);
+await licoFieldAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

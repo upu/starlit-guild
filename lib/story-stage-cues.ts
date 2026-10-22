@@ -12,6 +12,7 @@ export type StageActor = {
   shawl?: boolean;
   seated?: boolean;
   chair?: boolean;
+  stool?: boolean;
   bed?: "rest" | "edge" | "breakfast" | "sleep";
   packing?: boolean;
   writing?: boolean;
@@ -100,6 +101,7 @@ export type StageExtra = {
   speaking?: boolean;
   carry?: boolean;
   left?: boolean;
+  chair?: boolean;
   bed?: "rest" | "listen" | "ask" | "nod";
 };
 export type StageItem = {
@@ -135,6 +137,16 @@ export type StageItem = {
     | "table"
     | "dining-table"
     | "chair"
+    | "step-stool"
+    | "record-board"
+    | "paper"
+    | "folded-paper"
+    | "lap-board"
+    | "sample-dish"
+    | "reflector-covered"
+    | "reflector"
+    | "reflector-down"
+    | "low-smoke"
     | "pot"
     | "key"
     | "juice"
@@ -148,6 +160,7 @@ export type StageItem = {
     | "seedling-cart"
     | "empty-cart";
   seatFor?: ResidentId;
+  dissipating?: boolean;
   left?: boolean;
   x: number;
   bottom: number;

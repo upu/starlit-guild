@@ -22,7 +22,8 @@
   width: calc(var(--stage-cell) * 0.72);
   height: calc(var(--stage-cell) * 0.72);
 }
-.story-stage-extra[data-npc="child"] .story-stage-extra-sprite {
+.story-stage-extra:is([data-npc="child"], [data-npc="keeper"], [data-npc="merchant"])
+  .story-stage-extra-sprite {
   background-size: 400% 200%;
 }
 .story-stage-extra[data-bed="true"] .story-stage-shadow {
@@ -48,6 +49,60 @@
 }
 .story-stage-item[data-art="dining-table"] {
   aspect-ratio: 3;
+}
+.story-stage-item[data-art="step-stool"] {
+  aspect-ratio: 1.4;
+}
+.story-stage-item:is(
+  [data-art="record-board"],
+  [data-art="paper"],
+  [data-art="folded-paper"],
+  [data-art="lap-board"],
+  [data-art="sample-dish"]
+) {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art^="reflector"] {
+  aspect-ratio: 272 / 240;
+}
+.story-stage-item[data-art="reflector"][data-glow="bright"] {
+  filter: drop-shadow(-4px 2px 8px #d6efaaa0);
+}
+.story-stage-item[data-art="low-smoke"] {
+  aspect-ratio: 6;
+  background: none;
+  pointer-events: none;
+}
+.story-stage-item[data-art="low-smoke"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--item-art) center / contain no-repeat;
+  opacity: 0.48;
+  animation: stage-smoke-drift 3.2s ease-in-out infinite alternate;
+}
+.story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+  animation: stage-smoke-fade 3s ease-out forwards;
+}
+@keyframes stage-smoke-drift {
+  from {
+    transform: translateX(3%);
+    opacity: 0.35;
+  }
+  to {
+    transform: translateX(-4%);
+    opacity: 0.55;
+  }
+}
+@keyframes stage-smoke-fade {
+  from {
+    transform: translateX(0);
+    opacity: 0.48;
+  }
+  to {
+    transform: translateX(-8%);
+    opacity: 0;
+  }
 }
 .story-stage-item[data-glow="bright"]:is(
     [data-art="moss"],
@@ -139,6 +194,13 @@
   background-size: 400% 100%;
 }
 @media (prefers-reduced-motion: reduce) {
+  .story-stage-item[data-art="low-smoke"]::before {
+    animation: none;
+    opacity: 0.4;
+  }
+  .story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+    opacity: 0;
+  }
   .story-stage-wall-moss-light {
     animation: none;
     opacity: 0.6;
