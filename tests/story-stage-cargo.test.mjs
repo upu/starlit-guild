@@ -110,7 +110,10 @@ test("honey stays in a distinct bag and the bandage passes between touching hand
   const a = targets({ ...care, ...from }).get("item:bandage"),
     b = targets({ ...care, ...to }).get("item:bandage");
   assert.equal(a.x, b.x);
-  assert.ok(Math.abs(a.bottom - b.bottom) < 0.1, "cloth stays on the joined wrists");
+  assert.ok(
+    Math.abs(a.bottom + (3 / 1.3) * 0.75 - (b.bottom + 0.75)) < 0.1,
+    "loose strip and finished wrap share the same wrist center",
+  );
   const exit = storyStageExitCue(id);
   assert.equal(exit.items.find((p) => p.id === "honey-bag").actor, "mira");
   assert.equal(exit.items.find((p) => p.id === "medicine").actor, "leon");

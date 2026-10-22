@@ -4,7 +4,7 @@ import {
   roadController,
   roadSign,
   roadMedicine,
-  roadHoney,
+  roadParcel,
   roadDolls,
   movingRoadCargo,
   leavingCarrier,
@@ -20,7 +20,16 @@ const stowedHoney = (stored = true): StageItem => ({
   carrier: "honey-bag",
   stored,
 });
-const base = (open = false) => [roadSign(), roadMedicine(open), honeyBag(), stowedHoney()];
+const stowedParcel = (stored = true): StageItem[] => [
+  stowedHoney(stored),
+  {
+    ...ground("packing-cloth", 0, 2, 10),
+    id: "loot-cloth",
+    carrier: "honey-bag",
+    stored,
+  },
+];
+const base = (open = false) => [roadSign(), roadMedicine(open), honeyBag(), ...stowedParcel()];
 const retreat = (leaving = false): StageItem[] => {
   const dolls = roadDolls(leaving ? 111 : 84, leaving ? 112 : 62).map((p) =>
     p.id === "golem" ? { ...p, left: true, travelMs: 2300 } : p,
@@ -29,8 +38,7 @@ const retreat = (leaving = false): StageItem[] => {
     p.id === "small-puppet" ? { ...p, carrier: "golem", x: -12.8, bottom: 15, figure: "kneel" } : p,
   );
 };
-const bandage = (owner: "aria" | "mira", tilt = 0) =>
-  held("cloth", owner, { id: "bandage", bottom: owner === "aria" ? 25 : 24, width: 3, tilt });
+const bandage = (tilt = 0) => held("cloth", "aria", { id: "bandage", bottom: 25, width: 3, tilt });
 const pickupDolls = (held = false): StageItem[] =>
   roadDolls(84, 62).map((p) => {
     if (p.id === "golem") return { ...p, figure: "kneel" };
@@ -41,7 +49,7 @@ const pickupDolls = (held = false): StageItem[] =>
 const pickupItems = (held = false): StageItem[] => [
   roadSign(),
   roadMedicine(),
-  roadHoney(),
+  ...roadParcel(),
   heldBag(),
   ...pickupDolls(held),
   ...movingRoadCargo(),
@@ -59,7 +67,7 @@ export const departureAndCare: LaterBeat[] = [
         items: [
           roadSign(),
           roadMedicine(),
-          roadHoney(),
+          ...roadParcel(),
           heldBag(),
           ...retreat(),
           ...movingRoadCargo(),
@@ -74,7 +82,7 @@ export const departureAndCare: LaterBeat[] = [
     items: [
       roadSign(),
       roadMedicine(),
-      roadHoney(),
+      ...roadParcel(),
       heldBag(),
       ...retreat(true),
       ...movingRoadCargo(),
@@ -82,11 +90,11 @@ export const departureAndCare: LaterBeat[] = [
     sequence: [
       {
         after: 650,
-        actors: { mira: { inspect: true } },
+        actors: { mira: { inspect: true, carry: false } },
         items: [
           roadSign(),
           roadMedicine(),
-          roadHoney(),
+          ...roadParcel(),
           honeyBag(true),
           ...retreat(true),
           ...movingRoadCargo(),
@@ -98,7 +106,7 @@ export const departureAndCare: LaterBeat[] = [
           roadSign(),
           roadMedicine(),
           honeyBag(true),
-          stowedHoney(false),
+          ...stowedParcel(false),
           ...retreat(true),
           ...movingRoadCargo(),
         ],
@@ -109,7 +117,7 @@ export const departureAndCare: LaterBeat[] = [
           roadSign(),
           roadMedicine(),
           honeyBag(true),
-          stowedHoney(),
+          ...stowedParcel(),
           ...retreat(true),
           ...movingRoadCargo(),
         ],
@@ -148,14 +156,14 @@ export const departureAndCare: LaterBeat[] = [
     at: 30,
     actors: {
       aria: { inspect: true, left: true },
-      mira: { x: 68, bottom: 22, left: true, seated: true },
+      mira: { x: 68, bottom: 22, left: true, seated: true, pose: "offer" },
     },
-    items: [...base(true), bandage("aria")],
+    items: [...base(true), bandage()],
     sequence: [
-      { after: 800, actors: { aria: { left: false } } },
-      { after: 1500, items: [...base(true), bandage("aria", 12)] },
-      { after: 2300, items: [...base(true), bandage("aria", -8)] },
-      { after: 3100, items: [...base(true), bandage("mira")] },
+      { after: 800, actors: { aria: { x: 62.03125, bottom: 21.821875, left: false } } },
+      { after: 1500, items: [...base(true), bandage(12)] },
+      { after: 2300, items: [...base(true), bandage(-8)] },
+      { after: 3100, actors: { mira: { dressed: true } }, items: base(true) },
       { after: 4000, actors: { aria: { x: 58, bottom: 42, inspect: false } } },
     ],
   },
@@ -169,8 +177,7 @@ export const departureAndCare: LaterBeat[] = [
       roadSign(),
       { ...held("medicine-closed", "leon", { width: 8, bottom: 22 }), id: "medicine" },
       heldBag(),
-      stowedHoney(),
-      bandage("mira"),
+      ...stowedParcel(),
     ],
   },
 ];

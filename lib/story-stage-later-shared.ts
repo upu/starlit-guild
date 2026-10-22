@@ -2,6 +2,7 @@ import type { ResidentId } from "./home-actor.ts";
 import type { Story, StoryLine } from "./stories.ts";
 import type { StageActor, StoryStageCue, StageItem, StageExtra } from "./story-stage-cues.ts";
 import { item } from "./story-stage-chapter-shared.ts";
+import { actorDressings } from "./story-stage-dressings.ts";
 export { item };
 
 export type LaterBeat = {
@@ -105,12 +106,17 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
       actors = actors.map((a) => ({ ...a, ...step.actors?.[a.id] }));
       items = step.items ?? items;
       extras = step.extras ?? extras;
-      return { after: step.after, actors, items: [...furniture, ...items], extras };
+      return {
+        after: step.after,
+        actors,
+        items: [...furniture, ...items, ...actorDressings(actors)],
+        extras,
+      };
     });
     return {
       description: `${story.place}。${line.text}`,
       actors: openingActors,
-      items: [...furniture, ...openingItems].filter(
+      items: [...furniture, ...openingItems, ...actorDressings(openingActors)].filter(
         (item) =>
           !item.actor || openingActors.some((a) => a.id === item.actor && a.visible !== false),
       ),

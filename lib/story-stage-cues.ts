@@ -30,6 +30,8 @@ export type StageActor = {
   visible?: boolean;
   pose?: "idle" | "greet" | "surprise" | "think" | "offer" | "tease";
   reaction?: "surprise" | "nod";
+  /** The applied dressing remains on the arm when scene props change. */
+  dressed?: boolean;
 };
 export type StoryStageCue = {
   description: string;

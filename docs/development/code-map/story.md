@@ -32,3 +32,5 @@
 会話送り・台詞内の姿勢変更を挟む移動は `lib/story-stage-travel.ts` の `stageRoute`。表示位置と未通過の経由点を一緒に引き継ぎ、行き先または指定経路が変わった場合だけ経路を作り直す。NPCも `lib/story-stage-extra-travel.ts` から同じ処理を使う。中断前後の位置・到着時刻と全章の指定経路は `tests/story-stage-route-continuity.test.mjs`。
 
 2-6後の作業場へ逃げる人形と布・蜜は `lib/story-stage-golem-return.ts` / `lib/story-stage-golem-items.ts`、二人の手当てと薬箱の運搬は `lib/story-stage-golem-care.ts`。`StageItem.backstep` は向きを保って足運びを逆順にする。包帯は `lib/story-stage-wrists.ts` の表示コマごとの腕位置へ追従し、腕が胴体の裏へ隠れるコマでは一緒に隠す。128pxセルの下端と120pxの足元を混同しない。布・包帯の登録は `scripts/story-stage-golem-art.mjs`、縮尺・追従・手元・実素材の透明領域は `tests/story-stage-golem-return.test.mjs`。
+
+処置後に残す包帯は `StageActor.dressed` と `lib/story-stage-dressings.ts`。`buildLaterStage` が人物の状態から各行・連続動作へ追加するため、小物一覧の入れ替えで消えない。2-7では三人の出発まで保持する。弓用192pxセルの位置は共通128px枠へ換算し、驚きの上下動も包帯へ渡す。包み布の回収・手渡し・袋への収納、腕の実画素、運搬経路の足元は `tests/story-stage-dressings.test.mjs`。

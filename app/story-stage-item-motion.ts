@@ -46,12 +46,16 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
       });
       if (element) {
         element.hidden = !stageItemVisible(item, positions);
-        paintItem(element, item, at, tilt);
+        paintItem(element, item, at, tilt, wristLift(item, positions));
         paintFigure(element, item, at, target, elapsed, reduced);
         element.style.zIndex = String(depth);
       }
     }
   };
+}
+
+function wristLift(item: StageItem, positions: Map<string, StagePosition>) {
+  return item.wrist ? (positions.get(item.actor ?? "")?.lift ?? 0) : 0;
 }
 
 function paintFigure(
@@ -80,11 +84,11 @@ function paintFigure(
     element.style.transform = `translateX(-50%) scaleX(${itemFacing(item, at, target, reduced) ? "-1" : "1"})`;
 }
 
-function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt: number) {
+function paintItem(element: HTMLElement, item: StageItem, at: BoxPosition, tilt: number, lift = 0) {
   element.style.left = `${String(at.x)}%`;
   element.style.bottom = `${String(at.bottom)}%`;
   element.style.width = `${String(item.width ?? 10)}%`;
-  element.style.transform = `translateX(-50%) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})`;
+  element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
   element.dataset.dissipating = String(!!item.dissipating);

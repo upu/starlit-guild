@@ -2,8 +2,8 @@ import type { StageItem, StageExtra } from "./story-stage-cues.ts";
 import { actor, ground, held, npc, type LaterBeat } from "./story-stage-later-shared.ts";
 
 export const recoveryCast = () => [
-  actor("aria", 65, { bottom: 39, bow: "aim", left: false }),
-  actor("leon", 8, { bottom: 18, sword: true, left: false }),
+  actor("aria", 65, { bottom: 39, bow: "aim", left: false, dressed: true }),
+  actor("leon", 8, { bottom: 18, sword: true, left: false, dressed: true }),
   actor("mira", 43, { bottom: 62, inspect: true, left: false }),
 ];
 export const recoveryController = (extra: Partial<StageExtra> = {}): StageExtra => ({
@@ -27,6 +27,10 @@ const parcel = (owner: "table" | "aria" | "mira"): StageItem =>
   owner === "table"
     ? { ...ground("honey", 90, 66, 6), support: "table" }
     : held("honey", owner, { bottom: 24, width: 6 });
+export const parcelCloth = (owner: "table" | "aria" | "mira"): StageItem =>
+  owner === "table"
+    ? { ...ground("packing-cloth", 90, 65, 10), id: "loot-cloth", support: "table" }
+    : held("packing-cloth", owner, { id: "loot-cloth", bottom: 23, width: 10 });
 export function recoveryItems(
   owner: "table" | "aria" | "mira",
   figure?: StageItem["figure"],
@@ -38,6 +42,7 @@ export function recoveryItems(
     ...dolls(figure),
     held("cloth", "mira", { bottom: 22, width: 6 }),
     parcel(owner),
+    parcelCloth(owner),
   ];
 }
 
@@ -55,12 +60,12 @@ export const recoveryBeats: LaterBeat[] = [
       {
         after: 3000,
         actors: {
-          aria: { x: 56, bottom: 46, left: true, via: [{ x: 72, bottom: 47 }], nameOffset: 10 },
+          aria: { x: 56, bottom: 46, left: true, via: [{ x: 68, bottom: 56 }], nameOffset: 10 },
         },
       },
       {
         after: 5000,
-        actors: { aria: { carry: false, pose: "offer", via: undefined } },
+        actors: { aria: { carry: false, pose: "offer", via: undefined }, mira: { carry: true } },
         items: recoveryItems("mira"),
       },
       {

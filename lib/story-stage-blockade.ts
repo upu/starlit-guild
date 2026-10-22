@@ -3,8 +3,8 @@ import { actor, ground, npc, scene } from "./story-stage-later-shared.ts";
 
 /** A readable outside/inside boundary: the large puppet follows, the small one turns back. */
 export const blockadeCast = () => [
-  actor("aria", 30, { bottom: 32, left: false }),
-  actor("leon", 40, { bottom: 20, left: false }),
+  actor("aria", 30, { bottom: 32, left: false, dressed: true }),
+  actor("leon", 40, { bottom: 20, left: false, dressed: true }),
   actor("mira", 43, { bottom: 62, left: false }),
 ];
 const controller = () => ({ ...npc("masked-pumpety", undefined, 96, "point"), bottom: 58 });
@@ -15,6 +15,7 @@ export function blockadeItems(
 ): StageItem[] {
   return [
     ground("table", 92, 52, 18),
+    { ...ground("packing-cloth", 90, 65, 10), id: "loot-cloth", support: "table" },
     { ...ground("honey", 90, 66, 6), support: "table" },
     ground(medicineOpen ? "medicine" : "medicine-closed", 40, 62, 8),
     { ...ground("golem", golem.x, golem.bottom, 32), travelMs: 1300 },

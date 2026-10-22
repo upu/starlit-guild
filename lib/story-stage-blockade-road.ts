@@ -1,6 +1,6 @@
 import type { StageItem, StageExtra } from "./story-stage-cues.ts";
 import { actor, ground, held, npc, type LaterBeat } from "./story-stage-later-shared.ts";
-import { recoveryItems, recoveryController } from "./story-stage-blockade-recovery.ts";
+import { recoveryItems, recoveryController, parcelCloth } from "./story-stage-blockade-recovery.ts";
 
 export const carrier = (extra: Partial<StageExtra> = {}): StageExtra => ({
   ...npc("worker", "運び手", 100),
@@ -8,9 +8,9 @@ export const carrier = (extra: Partial<StageExtra> = {}): StageExtra => ({
   ...extra,
 });
 export const roadsideCast = () => [
-  actor("aria", 50, { bottom: 24, left: false }),
-  actor("leon", 40, { bottom: 48, left: true }),
-  actor("mira", 72, { bottom: 12, left: false }),
+  actor("aria", 50, { bottom: 24, left: false, dressed: true }),
+  actor("leon", 40, { bottom: 48, left: true, dressed: true }),
+  actor("mira", 72, { bottom: 12, left: false, carry: true }),
 ];
 export const roadController = (extra: Partial<StageExtra> = {}) =>
   recoveryController({ x: 98, bottom: 74, ...extra });
@@ -20,6 +20,7 @@ export const roadMedicine = (open = false): StageItem => ({
   id: "medicine",
 });
 export const roadHoney = () => held("honey", "mira", { bottom: 24, width: 6 });
+export const roadParcel = () => [roadHoney(), parcelCloth("mira")];
 const roadCart = (x = 30): StageItem => ({ ...ground("empty-cart", x, 12, 25), left: true });
 export const roadCargo = (x = 30): StageItem[] => [
   roadCart(x),
@@ -40,7 +41,7 @@ export function roadDolls(golemX = 84, puppetX = 36): StageItem[] {
 const atRoad = (post: StageItem, dolls = roadDolls()): StageItem[] => [
   post,
   roadMedicine(),
-  roadHoney(),
+  ...roadParcel(),
   held("honey-bag", "mira", { x: -4, bottom: 20, width: 8 }),
   ...roadCargo(),
   ...dolls,
@@ -155,7 +156,7 @@ export const roadOpening: LaterBeat[] = [
         items: [
           roadSign(),
           roadMedicine(),
-          roadHoney(),
+          ...roadParcel(),
           held("honey-bag", "mira", { x: -4, bottom: 20, width: 8 }),
           ...roadDolls(84, 62),
           ...movingRoadCargo(),

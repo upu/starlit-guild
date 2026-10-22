@@ -10,6 +10,7 @@ export type StagePosition = {
   depth?: number;
   route?: { key: string; remaining: { x: number; bottom: number }[] };
   wrist?: { x: number; y: number };
+  lift?: number;
 };
 const distance = (a: StagePosition, b: StagePosition) =>
   Math.hypot(b.x - a.x, (((b.bottom ?? 14) - (a.bottom ?? 14)) * 2) / 3);
