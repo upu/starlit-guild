@@ -29,6 +29,25 @@ function attackStep(hero: Traveller, battle: RoadBattle, melee: boolean) {
   return age >= 0 && age < 600 ? Math.sin((age / 600) * Math.PI) * (melee ? 34 : 10) : 0;
 }
 
+function outsideEnemy(
+  hero: Traveller,
+  battle: RoadBattle,
+  target: RoadEnemy | undefined,
+  x: number,
+) {
+  if (!target) return x;
+  // Saved melee range measures point positions. Sway plus a lunge must not
+  // put the drawn torso inside the enemy; large bodies need more room.
+  const ahead = battle.enemies.filter(
+    (e) =>
+      e.hp > 0 && e.kind !== "pumpety" && (e.id === target.id || (e.x - hero.x) * hero.facing >= 0),
+  );
+  return ahead.reduce((position, enemy) => {
+    const gap = enemy.boss || enemy.kind === "golem" ? 120 : 75;
+    return hero.facing > 0 ? Math.min(position, enemy.x - gap) : Math.max(position, enemy.x + gap);
+  }, x);
+}
+
 function roamingTarget(hero: Traveller, battle: RoadBattle, enemy?: RoadEnemy): Position {
   const index = ["aria", "leon", "mira", "finn", "lico"].indexOf(hero.id);
   const beat = battle.time / 1000 + index * 1.7;
@@ -36,7 +55,12 @@ function roamingTarget(hero: Traveller, battle: RoadBattle, enemy?: RoadEnemy): 
   const lane = enemy && melee ? enemy.lane + (hero.id === "leon" ? 0.1 : -0.2) : hero.lane;
   const lunge = attackStep(hero, battle, melee);
   return {
-    x: hero.x + Math.sin(beat * 0.9) * (enemy ? 24 : 36) + hero.facing * lunge,
+    x: outsideEnemy(
+      hero,
+      battle,
+      enemy,
+      hero.x + Math.sin(beat * 0.9) * (enemy ? 24 : 36) + hero.facing * lunge,
+    ),
     lane: Math.max(0.3, Math.min(0.98, lane + Math.sin(beat * 0.7) * (enemy ? 0.16 : 0.23))),
   };
 }

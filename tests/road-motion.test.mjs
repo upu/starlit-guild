@@ -24,6 +24,50 @@ function frame(time = 1000) {
 const screenX = (battle, width = 390) =>
   roadX(battle.heroes[0].x, battle.distance, width, battle.stage);
 
+test("melee lunges keep bodies apart on either side without changing saved combat", () => {
+  for (const width of [390, 1280])
+    for (const facing of [-1, 1])
+      for (const boss of [false, true]) {
+        const motion = new RoadMotion();
+        for (let t = 1000; t <= 3200; t += 16) {
+          const next = frame(t),
+            hero = next.battle.heroes[0];
+          hero.facing = facing;
+          next.battle.enemies = [
+            {
+              id: 1,
+              kind: boss ? "golem" : "slime",
+              boss,
+              hp: 10,
+              maxHp: 10,
+              x: hero.x + facing * 55,
+              lane: 0.74,
+            },
+          ];
+          next.battle.effects = [
+            {
+              id: 1,
+              kind: "slash",
+              hero: "leon",
+              at: 1000 + Math.floor((t - 1000) / 600) * 600,
+              amount: 1,
+              x: next.battle.enemies[0].x,
+              lane: 0.74,
+              fromX: hero.x,
+              fromLane: hero.lane,
+            },
+          ];
+          const saved = structuredClone(next);
+          const { battle } = motion.update(next, "battle", width);
+          const drawn = battle.heroes[0],
+            enemy = battle.enemies[0];
+          assert.ok((enemy.x - drawn.x) * facing >= (boss ? 115 : 70));
+          assert.equal(battle.effects[0].fromX, drawn.x);
+          assert.deepEqual(next, saved);
+        }
+      }
+});
+
 test("formation, camera and stage changes stay continuous and converge to work positions", () => {
   const motion = new RoadMotion();
   const first = motion.update(frame(), "run", 390);
@@ -49,6 +93,18 @@ test("formation, camera and stage changes stay continuous and converge to work p
   assert.ok(Math.abs(result.battle.heroes[0].lane - 0.36) < 0.0001);
   assert.deepEqual(result.look.workers, ["leon"]);
   assert.equal(result.battle.heroes[0].walking, false);
+});
+
+test("a small foreground opponent cannot hide the large enemy's body clearance", () => {
+  const sample = frame(),
+    motion = new RoadMotion();
+  sample.battle.enemies = [
+    { id: 1, kind: "puppet", boss: false, hp: 10, maxHp: 10, x: 155, lane: 0.74 },
+    { id: 2, kind: "golem", boss: true, hp: 10, maxHp: 10, x: 170, lane: 0.57 },
+  ];
+  const result = motion.update(sample, "two-enemies", 390);
+  assert.ok(result.battle.heroes[0].x <= 50);
+  assert.equal(sample.battle.heroes[0].x, 100);
 });
 
 test("effects and recovery taps follow the displayed hero during repositioning", () => {

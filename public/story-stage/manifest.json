@@ -45,7 +45,7 @@
   },
   "aria-poses": {
     "source": "c3b3881b21548c8183cc857cb8e22c2a2bacd04fa281ded6b14bcfd126afb591",
-    "output": "81771a00c93bef99c87878e22a9f5224f0712873e7d71bd27ff072a24a164de1"
+    "output": "5f49864f200157683dc2a637e2890d2b3f77cd36bb742d6e1de8e12e266adde9"
   },
   "leon-poses": {
     "source": "d886ece625b57d50bd2af5e1caccb2388e27c519e6af8a65adfbdaf446ca4050",
@@ -346,6 +346,22 @@
   "child-poses": {
     "source": "c30fb207925353cc3dcc172ed73ae58fc37e30990df47643f06b0ff54e4a9cab",
     "output": "c0a53ae5e08d8d111e02cf8773d378fe960dbfd44f5a91229d3ca747b3ae70c1"
+  },
+  "prop-brazier": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "767edb1c04bc058fda42dc40be0b66e95c5ef93b9a2e04efbc06cd7b28500468"
+  },
+  "prop-kettle": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "7e119881fda6e6350cff5746d1066abe613d3d2e946d53a1f7c76b8bc855b499"
+  },
+  "prop-teacup": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "cea46700349c01915bf3c4febf852c7cbe5b2ab974fb981238421fa68ecf6b18"
+  },
+  "prop-tea-four": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "51d0e4ce0a7e2119206be16b70ab86966806b1d2bf69347f70e6a78aafecc84d"
   },
   "prop-dining-table": {
     "source": "60176cf83a054d92ac146f9b2f436e1719b45c54c9e0ea2093e549ad487a7451",

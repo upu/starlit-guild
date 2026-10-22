@@ -4,7 +4,7 @@
 
 - **編集元・主要関数**: [表示用投影](../../../lib/adventure-presentation.ts) の `adventureFrame` / `adventureAction` → [DOM操作](../../../app/map-stage.tsx) の `MapStage` → [Phaser接続](../../../app/phaser-adventure.tsx) の `PhaserAdventure`。味方の戦闘時の表示間隔は [隊形](../../../lib/road-party-formation.ts)、移動・作業コマの切替は [道中の姿勢](../../../app/phaser/road-poses.ts)。Canvas描画は [app/phaser/](../../../app/phaser/)。
 - **仕様**: [Phaser冒険画面](../phaser-adventure.md)、[横スクロール戦闘](../../gameplay/scrolling-battle.md)。描画側へ進行・保存の判定を重複させない。
-- **位置の連続性**: [道中の移動演出](../../../lib/road-motion.ts) の `RoadMotion` を `ChapterRoadPainter` ごとに保持し、隊形・作業地点・カメラの切替を補間する。表示位置はエフェクトと回復タップにも共有する。[移動検査](../../../tests/road-motion.test.mjs) で襲撃・撃破・次の地点への遷移、静止条件、表示位置への入力を確認する。
+- **位置の連続性**: [道中の移動演出](../../../lib/road-motion.ts) の `RoadMotion` を `ChapterRoadPainter` ごとに保持し、隊形・作業地点・カメラの切替を補間する。戦闘の揺れと踏み込みは敵の胴体まで入り込まない表示間隔に収める。表示位置はエフェクトと回復タップにも共有する。[移動検査](../../../tests/road-motion.test.mjs) で襲撃・撃破・次の地点への遷移、静止条件、表示位置への入力を確認する。
 - **荷車の隊列**: [運搬時の配置](../../../lib/road-carrier-formation.ts) で引き手・押し手の画面上の位置と奥行きを決める。[運搬検査](../../../tests/road-transport.test.mjs) で人数・戦闘後の復帰・荷車との位置関係を確認する。
 - **検証**: [投影・入力](../../../tests/adventure-presentation.test.mjs)、[描画部品](../../../tests/map-render.test.mjs)、[静止ミニキャラ](../../../tests/hero-animation.test.mjs)、[リコの歩行・運搬](../../../tests/road-poses.test.mjs)。道中や第三章の画面は [手動テスト](../development.md#ローカルの手動テスト) の `chapter-road.browser.mjs` / `chapter-three.browser.mjs`。ブラウザー表示と実機は別に確認。
 - **冒険の人物**: [共通のコマ規約](../../../lib/adventure-hero-art.ts) → [配信生成](../../../scripts/build-adventure-pixel.mjs) → [姿勢切替](../../../app/phaser/road-poses.ts)。歩行はホーム素材を共用し、待機・戦闘・採集・運搬は歩行の頭幅に合わせた専用コマ。[配信基準と検査](../../art/adventure-pixel.md)を参照。

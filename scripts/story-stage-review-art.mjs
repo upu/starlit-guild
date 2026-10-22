@@ -54,6 +54,16 @@ export async function reviewHero(root, name, raw, original) {
     frames.push(await registerWorkPose(await sheetFrame(carry, col, row, 3, 5), head, 96));
   const actions = await source(root, "scene-actions-v3");
   for (let i = 17; i <= 20; i++) {
+    if (id === "aria" && i < 19) {
+      frames.push(
+        await registerWorkPose(
+          await sheetFrame(await source(root, "aria-writing-v1"), i - 17, 0, 2, 1),
+          head,
+          96,
+        ),
+      );
+      continue;
+    }
     const action = (id === "leon" && i < 19) || (id === "aria" && i >= 19);
     frames.push(
       action
@@ -132,6 +142,22 @@ export async function reviewHero(root, name, raw, original) {
   };
 }
 export async function reviewProps(root, emit) {
+  const teaKit = await source(root, "tea-kit-v1");
+  const { height: teaHeight } = await sharp(teaKit).metadata();
+  const cuts = [0, 550, 1100, 1480, 2172];
+  for (const [i, name] of ["brazier", "kettle", "teacup", "tea-four"].entries()) {
+    const f = await readFrame(teaKit, {
+      left: cuts[i],
+      top: 0,
+      width: cuts[i + 1] - cuts[i],
+      height: teaHeight,
+    });
+    await emit(
+      `prop-${name}`,
+      teaKit,
+      await sharp(f.cell).extract(f.box).resize({ width: 256 }).webp({ lossless: true }).toBuffer(),
+    );
+  }
   const diningTable = await source(root, "dining-table-v1");
   await emit(
     "prop-dining-table",

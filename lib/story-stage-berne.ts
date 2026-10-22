@@ -1,3 +1,4 @@
+import { stoneRest } from "./story-stage-stone-rest.ts";
 import {
   scene,
   quartet,
@@ -140,31 +141,7 @@ export const berneStages: Record<string, LaterStage> = {
     { at: 15, actors: { mira: { inspect: false, pose: "think" }, finn: { pose: "offer" } } },
     { at: 17, actors: { mira: { x: 72 } } },
   ]),
-  "matching-lantern-stone-return": scene("stone-yard", crew(), [
-    { at: 0, items: [ground("replacement", 46, 16, 12), ground("cloth", 57)], extras: [mason()] },
-    {
-      at: 4,
-      background: "storeroom",
-      night: true,
-      items: [ground("replacement", 36, 21, 13), ground("cloth", 47, 18, 13)],
-      actors: { aria: { inspect: true }, leon: { inspect: true } },
-    },
-    { at: 6, actors: { aria: { inspect: false }, leon: { inspect: false } } },
-    { at: 7, extras: [{ ...mason(), pose: "explain", speaking: true }] },
-    {
-      at: 12,
-      items: [ground("replacement", 36, 21, 13), held("ledger", "leon")],
-      actors: { finn: { pose: "offer" } },
-    },
-    { at: 15, actors: { mira: { seated: true, pose: "think" } } },
-    {
-      at: 21,
-      background: "stone-yard",
-      night: false,
-      actors: { aria: { seated: true }, leon: { seated: true }, finn: { seated: true } },
-      items: [table(50), onTable("tea", 50), ground("replacement", 75, 13, 12)],
-    },
-  ]),
+  "matching-lantern-stone-return": stoneRest,
   "berne-restoration-departure": scene("tower-foot", crew(), [
     {
       at: 0,
