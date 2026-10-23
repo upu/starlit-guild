@@ -1,0 +1,43 @@
+{
+  "model": "image_gen",
+  "referenceCommit": "46f461b100bbb05639756b7a3445bc3d6133d6d0",
+  "references": [
+    "work/brekka-young-reference.png: Aria and Leon seated frames 24..27 at referenceCommit",
+    "work/brekka-adults-reference.png: Mira and Finn seated frames 24..27 at referenceCommit",
+    "work/worker-field-reference.png: first row of worker atlas at referenceCommit",
+    "public/story-stage/dining-room.webp at referenceCommit"
+  ],
+  "sources": [
+    {
+      "path": "assets/source/story-stage/brekka-young-drinks-v1.png",
+      "generatedFile": "exec-11920bbc-1c1b-45a0-9c95-fbddcdee8301.png",
+      "prompt": "Generate a transparent RGBA RPG pixel-art sprite sheet extending the two EXACT seated characters in the reference. THREE columns by TWO rows, six complete full-body poses on the SAME small plain wooden chair as the reference. Row1 Aria (blonde side-swept hair with lavender underside, flower, green cape, cream skirt, brown gloves and boots). Row2 Leon (messy brown hair, blue tunic, red scarf/cape, brown gloves, trousers and boots). Preserve faces, head widths, proportions, outfits, chair shape and the high-oblique three-quarter RIGHT-facing camera. Same seated silhouette height and feet contact in each cell, broad fully transparent gutters, no borders, text, ground or shadow. Do NOT merge feet or clip crowns/chair legs.\nEach row: column1 seated, near forearm bent, EMPTY near hand gently cupped at lower chest, as if holding a small glass. Column2 seated, raising the SAME empty near hand to the mouth, lips at the hand's edge, looking at a small unseen glass to take a sip; modest elbow lift, head and torso stay at same height. Column3 seated leaning slightly forward and reaching the SAME empty near hand out to the RIGHT, near arm almost straight at chest height, as if lightly clinking glasses with a companion; full hand within cell, not waving, keep chair fixed and feet grounded. All hands are EMPTY; cups and glasses will be rendered separately. No drink, table, bottle or new clothing. Crisp warm pixel outlining, match the reference rather than changing their style.",
+      "sha256": "27ba0adad95afeb930a1e241f6a0e6dccbf13710883a31b7e2c4d71b9f0e7c5e"
+    },
+    {
+      "path": "assets/source/story-stage/brekka-adult-drinks-v1.png",
+      "generatedFile": "exec-6d9c3bc1-b30a-4005-b4d1-ce953819c034.png",
+      "prompt": "Generate a transparent RGBA RPG pixel-art sprite sheet extending the two EXACT seated characters in the reference. THREE columns by TWO rows, six complete full-body poses on the SAME plain wooden chair as the reference. Row1 Mira: lavender-gray hair tied up with flower ornament, cream healer dress with blue trim, short cape, brown boots. Row2 Finn: scruffy middle-aged man with tousled brown hair, faint stubble, drooping amused eyes, worn brown coat, open cream shirt, brown trousers and boots. Preserve their original faces, head width, age, body proportions and clothes. High-oblique three-quarter RIGHT-facing view. Lock chair position, seated height and feet contact. Wide completely transparent gutters. No floor, cast shadows, haze, background color, frame or text.\nEach row: column1 seated, near EMPTY hand gently cupped at lower chest to hold an unseen palm-sized cup. Column2 the SAME near EMPTY hand raised just under nose and lips to smell and sip a small unseen cup, elbow raised modestly, head almost fixed; expression appreciating its aroma. Column3 the SAME EMPTY near hand extended forward to the RIGHT at chest height, elbow almost straight, to take a piece of bread or receive a cup. Other hand on lap, both feet grounded; keep entire chair legs and hair safely inside cell. No actual cup, bread, table, glass, jug, staff or weapon: the game renders held objects separately. Crisp warm pixel art matching the supplied sprites, no change to a smoother illustration style.",
+      "sha256": "bad80abe2926fee1511d0f7cedf202a5a371f1ab99ed3bbb73ab1f6b6a813d4e"
+    },
+    {
+      "path": "assets/source/story-stage/worker-dining-v1.png",
+      "generatedFile": "exec-c9cae6b2-baae-4a5f-9ade-88fbfa49b34e.png",
+      "prompt": "Transparent RGBA sprite strip for the SAME young porter in the supplied reference: short brown hair, ochre rolled-sleeve shirt, dark brown work apron/vest, trousers and boots. THREE complete full-body poses in one horizontal row with equal cells and generous transparent gutters. High-oblique three-quarter LEFT-facing RPG pixel art, identical head scale, seat and boots in every cell. He sits on one plain wooden chair, full chair legs and soles visible. Cell1 relaxed seated, near EMPTY hand cupped at chest height for an unseen small cup. Cell2 same seated position, near EMPTY hand raised just under mouth to sip from an unseen cup or eat a bite, head and body almost fixed. Cell3 leaning slightly forward, near EMPTY hand reaching LEFT and down toward an unseen tabletop at waist level. Other hand rests on lap. Match the reference face and warm pixel outlines, no change of age/style. Absolutely no cup, bread, plate, table, floor, shadow, haze, text or background. The game draws food and drinks separately.",
+      "sha256": "4f6b56c6d3fc5ba99211cdc87903976d5d933ee11be8ae6ce2c3d0268daf21b1"
+    },
+    {
+      "path": "assets/source/story-stage/brekka-drinks-v1.png",
+      "generatedFile": "exec-b4f5f26c-3212-44e1-b9cf-9018518a6045.png",
+      "prompt": "Transparent RGBA medieval RPG pixel-art prop sheet in FOUR equal cells, 2 columns by 2 rows, generous transparent gutters. High-oblique view matching warm outlined pixel sprites. No floor, shadows, text or background. Top left: one very SMALL palm-sized handleless dark brown ceramic tasting cup, EMPTY, visible ellipse rim, simple undecorated pottery. Top right: the EXACT SAME cup at same angle and scale, filled with amber ale and a very thin cream foam edge; do not make it a tankard. Bottom left: one small clear cylindrical fruit-water glass, slightly taller and narrower than the tasting cups, pale golden translucent juice below a clear rim, no straw or handle. Bottom right: one modest brown ceramic serving jug with a handle on the RIGHT, short pouring lip on the LEFT, round body, no decoration. Jug about twice the cup height. Crisp brown outlines, readable at 10-25px, solid object interiors and truly transparent outside.",
+      "sha256": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc"
+    },
+    {
+      "path": "assets/source/story-stage/brekka-dining-room-v1.png",
+      "generatedFile": "exec-05fea0af-a766-4154-82c9-3262efbdf74d.png",
+      "prompt": "Edit this empty RPG inn dining room for the town of Brekka. Keep the SAME high-oblique overhead camera, warm pixel-art grain, plank-floor perspective, wall materials, sunlight, right-side table and rear bench. Preserve a wide empty central floor for separately rendered characters and tables; remove the LEFT-side table and its stools so that whole left foreground is also clear wooden floor. No people, creatures or loose items on the empty floor. Change the existing rear window so that through its glass and diamond frame we can clearly glimpse the upper portion of a distant old stone beacon tower beyond nearby roofs. Most of the tower is obscured by a nearer building's roof and wall; only its small upper light opening is visible. It is daytime: the opening holds only a VERY faint subdued violet remnant of light, no beam, rays, halo or bright magical glow. The tower is outdoors and distant, never inside the room. Keep the window at the same place and believable room scale; slightly open shutters if needed, retain flowers below it. This is a separate Brekka background variant, not a new viewpoint. No new signage, lettering or UI.",
+      "sha256": "edededd73006b17715a03caed435a261ee05b8dfa5c86d763b728912722b5473"
+    }
+  ],
+  "processing": "scripts/story-stage-brekka-dining-art.mjs. Preserve prior 56 hero cells and 16 worker cells. Match established head widths and foot y=120; new seated silhouette height88px. Append hold/sip/reach and reserved cells. Hero atlas15rows; worker5rows. Use alpha bounds for four props; row cut430 avoids clipping the jug lip. Brekka room variant keeps the town and indoor viewpoint, showing only a distant daylight tower."
+}

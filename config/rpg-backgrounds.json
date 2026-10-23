@@ -311,5 +311,11 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["manor-display-back"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-dining-room-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-dining-room"] }]
   }
 ]

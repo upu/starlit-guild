@@ -47,15 +47,17 @@ test("a chair is hidden only while its occupant is visibly seated at that locati
   assert.equal(stageItemVisible(seat, new Map([["leon", seated]])), false);
   const absent = sampleStageActor({ ...leon, visible: false }, leon, 3000, false);
   assert.equal(stageItemVisible(seat, new Map([["leon", absent]])), true);
-  const standing = cue("brekka-arrival-departure", 22).actors.find((a) => a.id === "leon");
+  const standing = cue("brekka-arrival-departure", 24)
+    .sequence.at(-1)
+    .actors.find((a) => a.id === "leon");
   const moving = sampleStageActor(standing, leon, 0, false);
   assert.equal(stageItemVisible(seat, new Map([["leon", moving]])), true);
   assert.equal(stageItemVisible(seat, new Map([["leon", { ...seated, x: 100 }]])), true);
   const exit = storyStageExitCue("brekka-arrival-departure");
   assert.ok(exit.items.some((p) => p.id === seat.id));
   assert.ok(exit.actors.every((a) => !a.seated));
-  assert.equal(exit.actors.find((a) => a.id === "mira").lane, 48);
-  assert.equal(exit.actors.find((a) => a.id === "finn").lane, 48);
+  assert.equal(exit.actors.find((a) => a.id === "mira").lane, -14);
+  assert.equal(exit.actors.find((a) => a.id === "finn").lane, -14);
 });
 
 test("Mira starts on the bed, lowers her feet without walking, and returns to breakfast", () => {

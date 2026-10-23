@@ -5,6 +5,7 @@ import { restorationKeeper, restorationProps } from "./story-stage-restoration-a
 import { diningTeaPoses } from "./story-stage-dining-tea-art.mjs";
 import { merchantService, lindeProps } from "./story-stage-linde-art.mjs";
 import { lanternWorkPoses, lanternServiceProps } from "./story-stage-lantern-service-art.mjs";
+import { brekkaDiningPoses, brekkaDiningProps } from "./story-stage-brekka-dining-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -56,8 +57,9 @@ async function emit(name, source, image) {
   const service = await merchantService(root, name, restoration.raw, restoration.image);
   const tea = await diningTeaPoses(root, name, service.raw, service.image);
   const field = await lanternWorkPoses(root, name, tea.raw, tea.image);
-  source = field.raw;
-  image = field.image;
+  const dining = await brekkaDiningPoses(root, name, field.raw, field.image);
+  source = dining.raw;
+  image = dining.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -177,6 +179,7 @@ await bridgeProps(root, emit);
 await restorationProps(root, emit);
 await lindeProps(root, emit);
 await lanternServiceProps(root, emit);
+await brekkaDiningProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

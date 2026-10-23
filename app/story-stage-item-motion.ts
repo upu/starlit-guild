@@ -23,7 +23,8 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
     item,
     element: stage.querySelector<HTMLElement>(`[data-item="${item.id}"]`),
     origin: state.get(item.id),
-    signature: `${item.actor ?? item.extra ?? item.carrier ?? "ground"}:${String(item.x)}:${String(item.bottom)}:${String(item.tilt ?? 0)}`,
+    // Angle changes do not release a grip; only a new owner or destination starts a transfer.
+    signature: `${item.actor ?? item.extra ?? item.carrier ?? "ground"}:${String(item.x)}:${String(item.bottom)}`,
   }));
   for (const id of state.keys()) if (!items.some(({ item }) => item.id === id)) state.delete(id);
   stage.querySelectorAll<HTMLElement>("[data-item]").forEach((element) => {

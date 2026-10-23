@@ -11,6 +11,9 @@ const walking = {
 };
 const conversation: Record<string, Partial<Record<number, number[]>>> = {
   finn: {
+    56: [70, 84],
+    57: [67, 69],
+    58: [92, 74],
     0: [78, 88],
     1: [84, 68],
     2: [72, 76],
@@ -23,6 +26,9 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     20: [93, 79],
   },
   aria: {
+    56: [72, 80],
+    57: [74, 64],
+    58: [94, 72],
     0: [76, 82],
     1: [81, 63],
     2: [72, 71],
@@ -41,6 +47,9 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     53: [86, 65],
   },
   leon: {
+    56: [72, 82],
+    57: [72, 64],
+    58: [94, 72],
     0: [76, 83],
     3: [73, 73],
     4: [81, 70],
@@ -59,6 +68,9 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     45: [88, 71],
   },
   mira: {
+    56: [70, 85],
+    57: [71, 73],
+    58: [94, 80],
     0: [77, 87],
     3: [74, 79],
     4: [81, 77],

@@ -21,7 +21,7 @@ test("fieldwork preserves the previous 52 hero cells and registers standing/knee
     const image = sharp(`public/story-stage/${id}-poses.webp`);
     const meta = await image.metadata();
     assert.equal(meta.width, 512);
-    assert.equal(meta.height, 1792);
+    assert.ok(meta.height >= 1792);
     const old = await image
       .extract({ left: 0, top: 0, width: 512, height: 1664 })
       .ensureAlpha()

@@ -12,6 +12,9 @@ const hands: Partial<Record<StageExtra["id"], Partial<Record<number, [number, nu
     12: [28, 76],
   },
   worker: {
+    16: [38, 71],
+    17: [43, 64],
+    18: [24, 81],
     1: [37, 72],
     4: [44, 78],
     5: [43, 78],

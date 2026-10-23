@@ -67,7 +67,8 @@ function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 }
 
 export function stageExtraRows(extra: StageExtra) {
-  if (extra.id === "worker" || extra.id === "cook" || extra.id === "keeper") return 4;
+  if (extra.id === "worker") return 5;
+  if (extra.id === "cook" || extra.id === "keeper") return 4;
   if (extra.id === "merchant") return 4;
   if (extra.id === "masked-pumpety") return 3;
   return ["child", "merchant", "parent", "stone-carrier", "fence-carrier"].includes(extra.id)
@@ -85,6 +86,7 @@ function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 
 function workerFrame(extra: StageExtra, moving: boolean, elapsed: number) {
   if (moving) return workerWalkFrame(extra, elapsed);
+  if (extra.dining) return 16 + ["hold", "sip", "reach"].indexOf(extra.dining);
   if (extra.hatGreeting) return 12;
   if (extra.wiping) return 13 + (Math.floor(elapsed / 430) % 2);
   if (extra.writing) return 8 + (Math.floor(elapsed / 320) % 2);

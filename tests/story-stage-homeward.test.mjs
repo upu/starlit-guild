@@ -49,7 +49,7 @@ test("the cart reaches its pause before the hat greeting, then carries its load 
   const stopped = sampleExtraTravel(worker, origin, stop.after - moving.after, false);
   assert.equal(stopped.moving, false);
   assert.equal(stageExtraFrame(stop.extras[0], false), 12);
-  assert.equal(stageExtraRows(worker), 4);
+  assert.equal(stageExtraRows(worker), 5);
   const cart = cue.items.find((i) => i.art === "empty-cart");
   for (const t of [100, 300, 600, 1200, 2500]) {
     const at = sampleExtraTravel(worker, origin, t, false);
@@ -95,5 +95,5 @@ test("the raised hat fits its common cell without shrinking the worker's body", 
     .toBuffer();
   const head = await spriteBounds(hair);
   assert.ok(head.width >= 50 && head.width <= 53);
-  assert.equal((await sharp(atlas).metadata()).height, 512);
+  assert.equal((await sharp(atlas).metadata()).height, stageExtraRows({ id: "worker" }) * 128);
 });

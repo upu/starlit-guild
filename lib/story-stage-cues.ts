@@ -13,6 +13,8 @@ export type StageActor = {
   seated?: boolean;
   /** Chair-seated tea poses for Aria, Leon and Mira, with the cup in the atlas. */
   tea?: "hold" | "sip";
+  /** Seated empty-hand poses; drinks and food remain separate stage items. */
+  dining?: "hold" | "sip" | "reach";
   /** Aria's glass wiping and low sickle strokes; the tool is in the cutting frames. */
   fieldWork?: "wipe" | "weed";
   chair?: boolean;
@@ -89,6 +91,7 @@ export type StoryStageCue = {
     | "drain-cleared"
     | "medicine-room"
     | "dining-room"
+    | "brekka-dining-room"
     | "manor-garden"
     | "workshop"
     | "workshop-yard"
@@ -144,6 +147,7 @@ export type StageExtra = {
   grip?: "reach" | "hold";
   limp?: boolean;
   hatGreeting?: boolean;
+  dining?: "hold" | "sip" | "reach";
   id:
     | "keeper"
     | "worker"
@@ -195,6 +199,10 @@ export type StageItem = {
     | "tea-four"
     | "teacup"
     | "empty-cup"
+    | "ale-cup-empty"
+    | "ale-cup-full"
+    | "fruit-glass"
+    | "ale-jug"
     | "teapot"
     | "teapot-open"
     | "tea-rock"

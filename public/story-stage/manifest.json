@@ -44,12 +44,12 @@
     "output": "10552de4a9d377cc3ac5eeb7ee2a0d8465ad5d95451e84f3f450003ecb66f2e7"
   },
   "aria-poses": {
-    "source": "55e6c8868cc0c07b369fe3593381eea9ba4574ec15ee1b1670d7eb8f8a84a88a",
-    "output": "119fc05cb1f00df92dfd8baab6f3a821d39360b01bf59be5368c427bd6905822"
+    "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
+    "output": "dbdb6fa9942545f729d8ec27f6c43c8c08a3827c4c6d24f42daba39ec7117fa2"
   },
   "leon-poses": {
-    "source": "c272010ff1776170661fb417c31b91e7748c78d0dcd43d07ebceede598399756",
-    "output": "2215d35481395bd38f854cc82db1f3a4cf5f9e40fffc1c8338b8c84d3c186d4e"
+    "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
+    "output": "50ba7e35f42efa066e08b4da9b06e9d884aed1bdaa22dca63f44605582cd753f"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -112,8 +112,8 @@
     "output": "8f5f896b85d42194a45f7d6545489e3c31f53c66da96156200d11de0c1095662"
   },
   "worker-poses": {
-    "source": "001469e14dbbc3a3a1c7a984e80ab5720b6f8339ade60a8ab75f79dfef581082",
-    "output": "ec4dc66400271cb021d9db5faca35e5120c808ae9b31b6ff493c95610d44ecee"
+    "source": "0e52ae98c0e2ea2e9dfbae246701e7109ed3d0fc54423cc7683151dd790a85a3",
+    "output": "9381385f648effba87fe355bb25e39a28d1ab1e47d20cfdd86f55835b713878d"
   },
   "aria-shawl": {
     "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
@@ -312,16 +312,16 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "4d86e2272affb3a0a3d1a1100ee1bc3e9fffe59bc15631f873106ddc8098ab2b",
-    "output": "c845c2edba4aaeb985517ca2947e8c6844e7a6a7afc1f3c5e3b5c312d13031ae"
+    "source": "47f26c6a13bebb8727725cb8b489eed1790a0e458f9242afbf2c387d3ece2676",
+    "output": "81258a78ab1ce42e9c667c9f55fde34166ee96739289d8fad592bb5f781f03bb"
   },
   "finn-poses": {
-    "source": "5cc11b186505a09fcb70eb6d3a209e56f16031be96fad09852614559ae68cd11",
-    "output": "f9d47cb96a6f6fe2ecb1169f3f35339272473d5cd7a1a3e7e4e9ea58afd04634"
+    "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
+    "output": "27d8eb9b24977307a89b34a015db11defb4ce6b0cdeae340dbc1b8d157c4b772"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
-    "output": "535799dea3e0ffebfcc2652ee6013a5e67caa84902e48be391bbf398bec87186"
+    "output": "f660f870ed6e01c53b45c704d4d0126fb3d8877bfc303044f1e2b36e80139a57"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -660,7 +660,7 @@
     "output": "d76e9214fd908d09da292177337c1fddf18efacde9beadda4e016ac9cca0917b"
   },
   "stone-carrier-poses": {
-    "source": "97c08d149a2058f30befcfbf384a1c60ccc9179d3db00a3fb239eabab5ad7fa5",
+    "source": "7de32b0f78f3e7aa939221e661ec8d530834640bf8e5abb10a6470ff63c572f5",
     "output": "e2ef614855c081fbe6f3b2a861b13858b0b5c1e5eb718dee29e41c7620c566a0"
   },
   "prop-candidate-blue": {
@@ -798,5 +798,25 @@
   "prop-lamp-oil": {
     "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
     "output": "7227a26d3ee3a0f8785ee4b19b40d11d387ba6a795e367c6ce9a178436ef027b"
+  },
+  "prop-ale-cup-empty": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "ba7987bce4bab91528cd223e814d19f69c9c014e1698d4c6130e7b95fdf4e682"
+  },
+  "prop-ale-cup-full": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "43ba52b2c9e7bea81884b1c7ba8d43b3cc84a5b78d9ad903a131bfe9e39674ac"
+  },
+  "prop-fruit-glass": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "2d3dfcf507e1306ca7ccb21635869fa2b56223356f6c2c5b941a87fb0f9f4741"
+  },
+  "prop-ale-jug": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "187b6e9b9186cadb262bcb46940f421beaa94f3a1da0cc2bc2c465aef0a2c8aa"
+  },
+  "brekka-dining-room": {
+    "source": "6cb72bbff25c354aa0bdcc9b1bc71f676f3c0133dfb8e954ba5b399bb8159f35",
+    "output": "423197c39e964c1329976d6ceffacde74dcf5d8407df1480da3fedfa7f301ba0"
   }
 }

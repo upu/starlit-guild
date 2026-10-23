@@ -79,14 +79,21 @@
 .story-stage-extra:is([data-npc="masked-pumpety"]) .story-stage-extra-sprite {
   background-size: 400% 300%;
 }
-.story-stage-extra:is(
-    [data-npc="worker"],
-    [data-npc="cook"],
-    [data-npc="keeper"],
-    [data-npc="merchant"]
-  )
+.story-stage-extra:is([data-npc="cook"], [data-npc="keeper"], [data-npc="merchant"])
   .story-stage-extra-sprite {
   background-size: 400% 400%;
+}
+.story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {
+  background-size: 400% 500%;
+}
+.story-stage-item:is([data-art="ale-cup-empty"], [data-art="ale-cup-full"], [data-art="ale-jug"]) {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="fruit-glass"] {
+  aspect-ratio: 0.62;
+}
+.story-stage-item[data-art="ale-jug"][data-pouring="true"]::after {
+  background: #d8a647b0;
 }
 .story-stage-item:is([data-art="dining-plate"], [data-art="lunch-plate"]) {
   aspect-ratio: 1.65;
