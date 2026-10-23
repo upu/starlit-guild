@@ -45,11 +45,11 @@
   },
   "aria-poses": {
     "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
-    "output": "447d97c5e58fc3174ef58ab12a5dcaa1859c88fe65d6de1dda2cd97084bab9a3"
+    "output": "f488443e90aa23125da74f6f5c39caf7d3330ddef737b5f0cd513a56f641fb6c"
   },
   "leon-poses": {
     "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
-    "output": "89cc5c14967cb5ad060ba2fbfb084a5b097c505bacde6627a2242c1265a996d9"
+    "output": "0e48fee8d7f00977c9f9adeed4af4b749ac06c8f2fc3469e20ff8732be0f4d41"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -112,8 +112,8 @@
     "output": "8f5f896b85d42194a45f7d6545489e3c31f53c66da96156200d11de0c1095662"
   },
   "worker-poses": {
-    "source": "0e52ae98c0e2ea2e9dfbae246701e7109ed3d0fc54423cc7683151dd790a85a3",
-    "output": "9381385f648effba87fe355bb25e39a28d1ab1e47d20cfdd86f55835b713878d"
+    "source": "23909222e0d142cbb38e21fb68961d770186c5b0629fe84dbcceb1d44a5ba253",
+    "output": "11116cb76c5fba9a9350f36cb8d7e3d314634da46ff7c1ed76f76975ece61a00"
   },
   "aria-shawl": {
     "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
@@ -312,16 +312,16 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "8e6ec54e7a0424f46581e1e32684b3a956769771ff67f9df0f011024188d5ef6",
-    "output": "6e81390c38212c5eb2cd9eefa33cccc0a5fe3b33cdb95aa5751e1393eae505b7"
+    "source": "5cd02010d57678c5b7dc8820ebf8be525220975ee879138a50b14e01b449b86a",
+    "output": "12c5ab2b5a94bc4c5fa317e6ea2f130f489a66ffba148871412a955fc9e108ed"
   },
   "finn-poses": {
     "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
-    "output": "bead9c9cfca2c657bfc4c643c997439230b9f1f7d5e673caaef1fb695ad9b9f9"
+    "output": "cb3276028e168a2f72cee5c767fdcfd9a036d7d66ebfa335e621cb2c961c1c63"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
-    "output": "eb53eada9f8b619147f21193305e775886807666335840b1d1d3d3fae46d9667"
+    "output": "bc31ca7be394e257f21ffa9b33a7e7bbc062705a76b6f5678192efe68d8f9bf9"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -660,7 +660,7 @@
     "output": "d76e9214fd908d09da292177337c1fddf18efacde9beadda4e016ac9cca0917b"
   },
   "stone-carrier-poses": {
-    "source": "7de32b0f78f3e7aa939221e661ec8d530834640bf8e5abb10a6470ff63c572f5",
+    "source": "cb18d76e1c09ff774c91375c217b804070c7a7a0102c9996182c00b9ebda8d8f",
     "output": "e2ef614855c081fbe6f3b2a861b13858b0b5c1e5eb718dee29e41c7620c566a0"
   },
   "prop-candidate-blue": {
@@ -826,5 +826,13 @@
   "brekka-homes": {
     "source": "c5062b81640ebc175eb075552cf5120e8bf95c43ab5d6c0d574451a171f945ab",
     "output": "cf86c22a9ed86f0678c83aa40fd0b8144a82883d23ca413767f8a1d33659c04e"
+  },
+  "brekka-foyer": {
+    "source": "5131de38e805bc570382a7e58172bbd2ac85d37869842c25276f0be652ff1ff5",
+    "output": "474e8b976fa3b3ff05db8e4204e25763b7f58cda77dd4b6c9709c380812d1f29"
+  },
+  "prop-cart-wheel": {
+    "source": "e221290a038337741a534b32dbf2ce3bbd2d6631561830d49c9b0cc731d6ee24",
+    "output": "48a655a9a23df3dd34faca0676fa065e838762a64ba8be1a50087eaa792afec2"
   }
 }

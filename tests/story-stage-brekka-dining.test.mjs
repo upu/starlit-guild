@@ -57,7 +57,7 @@ test("dining additions preserve every previous cell and register heads, chairs a
       assert.ok(pose.box.left >= 2 && pose.box.left + pose.box.width <= 126);
     }
   }
-  assert.equal(stageExtraRows({ id: "worker" }), 5);
+  assert.equal(stageExtraRows({ id: "worker" }), 6);
 });
 
 test("serving reaches each cup before pouring and keeps the tray and glasses above the tabletop", () => {

@@ -32,7 +32,7 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
   });
   return (positions: Map<string, StagePosition>, elapsed: number, reduced: boolean) => {
     for (const { item, element, origin, signature } of items) {
-      const target = stageItemTarget(item, cue, positions);
+      const target = itemDestination(item, cue, positions, origin);
       const transferring = origin && (origin.signature !== signature || !origin.settled);
       const at = transferring
         ? transferBox(origin.position, target, elapsed, reduced, item.travelMs)
@@ -60,6 +60,16 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
       }
     }
   };
+}
+
+function itemDestination(
+  item: StageItem,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+  origin?: ItemState,
+) {
+  const target = stageItemTarget(item, cue, positions);
+  return item.dropInPlace && origin ? { ...target, x: origin.position.x } : target;
 }
 
 function itemAngles(item: StageItem, origin: ItemState | undefined, t: number) {
@@ -109,6 +119,11 @@ function paintItem(
   lift = 0,
   turn = 0,
 ) {
+  if (item.art === "cart-wheel")
+    element.style.setProperty(
+      "--wheel-angle",
+      `${String((at.x / ((item.width ?? 1) * Math.PI)) * 360)}deg`,
+    );
   element.style.left = `${String(at.x)}%`;
   element.style.bottom = `${String(at.bottom)}%`;
   element.style.width = `${String(item.width ?? 10)}%`;

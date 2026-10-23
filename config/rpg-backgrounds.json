@@ -323,5 +323,11 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["brekka-homes"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-foyer-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-foyer"] }]
   }
 ]

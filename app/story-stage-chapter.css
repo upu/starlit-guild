@@ -85,7 +85,7 @@
   background-size: 400% 400%;
 }
 .story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {
-  background-size: 400% 500%;
+  background-size: 400% 600%;
 }
 .story-stage-item:is([data-art="ale-cup-empty"], [data-art="ale-cup-full"], [data-art="ale-jug"]) {
   aspect-ratio: 1;
@@ -425,4 +425,16 @@
   .story-stage-extra {
     transition: none;
   }
+}
+
+.story-stage-item[data-art="cart-wheel"] {
+  aspect-ratio: 1;
+  background: none;
+}
+.story-stage-item[data-art="cart-wheel"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--item-art) center / contain no-repeat;
+  transform: scaleX(0.82) rotate(var(--wheel-angle, 0deg));
 }

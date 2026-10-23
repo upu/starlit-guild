@@ -42,6 +42,13 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
   );
 }
 function visitPose(actor: StageActor) {
+  if (actor.id === "mira" && actor.allNighter)
+    return {
+      atlas: "conversation" as const,
+      frame: 64 + ["reach", "pause", "answer", "think"].indexOf(actor.allNighter),
+      handDrop: 0,
+      onChair: false,
+    };
   if (actor.id === "mira" && actor.lookAcross)
     return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
   if (actor.id !== "mira" || !actor.visit) return null;

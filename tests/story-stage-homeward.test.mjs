@@ -49,7 +49,7 @@ test("the cart reaches its pause before the hat greeting, then carries its load 
   const stopped = sampleExtraTravel(worker, origin, stop.after - moving.after, false);
   assert.equal(stopped.moving, false);
   assert.equal(stageExtraFrame(stop.extras[0], false), 12);
-  assert.equal(stageExtraRows(worker), 5);
+  assert.equal(stageExtraRows(worker), 6);
   const cart = cue.items.find((i) => i.art === "empty-cart");
   for (const t of [100, 300, 600, 1200, 2500]) {
     const at = sampleExtraTravel(worker, origin, t, false);

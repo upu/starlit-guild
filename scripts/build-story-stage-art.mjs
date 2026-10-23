@@ -7,6 +7,7 @@ import { merchantService, lindeProps } from "./story-stage-linde-art.mjs";
 import { lanternWorkPoses, lanternServiceProps } from "./story-stage-lantern-service-art.mjs";
 import { brekkaDiningPoses, brekkaDiningProps } from "./story-stage-brekka-dining-art.mjs";
 import { brekkaVisitPoses, brekkaVisitProps } from "./story-stage-brekka-visit-art.mjs";
+import { mossTrailPoses, mossTrailProps } from "./story-stage-moss-trail-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -60,8 +61,9 @@ async function emit(name, source, image) {
   const field = await lanternWorkPoses(root, name, tea.raw, tea.image);
   const dining = await brekkaDiningPoses(root, name, field.raw, field.image);
   const visit = await brekkaVisitPoses(root, name, dining.raw, dining.image);
-  source = visit.raw;
-  image = visit.image;
+  const trail = await mossTrailPoses(root, name, visit.raw, visit.image);
+  source = trail.raw;
+  image = trail.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -183,6 +185,7 @@ await lindeProps(root, emit);
 await lanternServiceProps(root, emit);
 await brekkaDiningProps(root, emit);
 await brekkaVisitProps(root, emit);
+await mossTrailProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

@@ -77,3 +77,5 @@
 4-3前半の食堂は `lib/story-stage-brekka-dining.ts`、給仕の時系列は `lib/story-stage-brekka-dining-service.ts`、小杯・果実水・パン・隣の卓は `lib/story-stage-brekka-dining-items.ts`。四人の共通56〜58番と荷運び人16〜18番が、持つ／飲む／手を伸ばす座位を選ぶ。登録は `scripts/story-stage-brekka-dining-art.mjs`、原本と全文プロンプトは `docs/art-generation/story-stage-brekka-dining-20261023.json`。旧56コマと荷運び人16コマのRGBA、頭幅・接地・給仕の到着と杯の接点は `tests/story-stage-brekka-dining.test.mjs`。角度だけの変更では手から小物を離さず、持ち主・置き場所が変わるときだけ移動を補間する（`app/story-stage-item-motion.ts`、`tests/story-stage-drink-grip.test.mjs`）。
 
 4-3後半の往診・退室・隣家へのノックは `lib/story-stage-brekka-visit.ts`。ミラの共通60〜63番は小瓶へ触れる／茶杯へ手を伸ばす／二拍のノック、医者4〜7番は記録・説明の姿勢。登録は `scripts/story-stage-brekka-visit-art.mjs`、原本・全文プロンプト・ハッシュは `docs/art-generation/story-stage-brekka-visit-20261023.json`。医者のアトラスは2行。旧60姿勢と医者の旧4姿勢の保持、頭幅・足元、茶杯を置く順、薬箱を下ろしてからノックする順は `tests/story-stage-brekka-visit.test.mjs`。
+
+4-4の夜明け前のミラと荷車の追跡は `lib/story-stage-moss-trail.ts`。手元を含む疲れた姿勢・御者の歩行と車輪は `scripts/story-stage-moss-trail-art.mjs`、既存姿勢の保存・縮尺・追従・一枚絵への切替は `tests/story-stage-moss-trail.test.mjs` を参照する。

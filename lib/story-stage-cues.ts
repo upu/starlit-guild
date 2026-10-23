@@ -1,6 +1,7 @@
 import type { ResidentId } from "./home-actor.ts";
 
 export type StageActor = {
+  allNighter?: "reach" | "pause" | "answer" | "think";
   visit?: "touch" | "slide";
   id: ResidentId;
   x: number;
@@ -94,6 +95,7 @@ export type StoryStageCue = {
     | "dining-room"
     | "brekka-dining-room"
     | "brekka-homes"
+    | "brekka-foyer"
     | "manor-garden"
     | "workshop"
     | "workshop-yard"
@@ -140,6 +142,7 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  pullCart?: boolean;
   notebook?: boolean;
   wiping?: boolean;
   restoration?: "trace" | "touch" | "read" | "receive";
@@ -177,6 +180,8 @@ export type StageExtra = {
   inspect?: boolean;
 };
 export type StageItem = {
+  /** Drop vertically from the rendered position, including after an early dialogue tap. */
+  dropInPlace?: boolean;
   id: string;
   art:
     | "moss"
@@ -312,6 +317,7 @@ export type StageItem = {
     | "golem"
     | "picnic-cloth"
     | "basket-cart"
+    | "cart-wheel"
     | "seedling-cart"
     | "empty-cart";
   seatFor?: ResidentId;

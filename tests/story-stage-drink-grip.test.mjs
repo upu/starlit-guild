@@ -34,3 +34,31 @@ test("a held cup follows its hand immediately when a sip changes its angle, whil
   itemPainter(stage, cue(held), state)(hands(85), 150, false);
   assert.deepEqual(state.get("cup").position, props.stageItemTarget(held, cue(held), hands(85)));
 });
+
+test("an early tap drops cargo beneath its current carrier rather than its authored destination", () => {
+  const { itemPainter } = evaluateSourceModule(
+    compileSourceModule("../app/story-stage-item-motion.ts", import.meta.url),
+    {
+      "@/lib/story-stage-props": props,
+      "@/lib/story-stage-figure": figure,
+      "@/lib/story-stage-cargo": cargo,
+    },
+  );
+  const element = { style: { setProperty() {}, removeProperty() {} }, dataset: {}, hidden: false };
+  const stage = { querySelector: () => element, querySelectorAll: () => [element] };
+  const state = new Map();
+  const moss = { id: "moss", art: "moss", carrier: "cart", x: -8, bottom: 10, width: 2 };
+  const cue = (item) => ({ actors: [], items: [item] });
+  const positions = new Map([["item:cart", { x: 40, bottom: 40 }]]);
+  itemPainter(stage, cue(moss), state)(positions, 650, false);
+  const fallen = { ...moss, carrier: undefined, x: 65, bottom: 38, dropInPlace: true };
+  const drop = itemPainter(stage, cue(fallen), state);
+  for (const time of [0, 180, 400, 650]) {
+    drop(positions, time, false);
+    assert.equal(state.get("moss").position.x, 32);
+  }
+  assert.equal(state.get("moss").position.bottom, 38);
+  itemPainter(stage, cue(fallen), state)(positions, 1000, false);
+  assert.equal(state.get("moss").position.x, 32);
+  assert.equal(state.get("moss").position.bottom, 38);
+});
