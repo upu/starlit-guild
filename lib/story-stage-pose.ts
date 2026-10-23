@@ -28,9 +28,8 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
       handDrop: 8,
       onChair: true,
     };
-  if (actor.id === "mira" && actor.lookAcross)
-    return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
   return (
+    visitPose(actor) ??
     diningPose(actor) ??
     fieldWorkPose(actor, elapsed, reduced) ??
     healingPose(actor, elapsed, reduced) ??
@@ -41,6 +40,17 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
     bowPose(actor) ??
     stationaryPose(actor, elapsed, reduced)
   );
+}
+function visitPose(actor: StageActor) {
+  if (actor.id === "mira" && actor.lookAcross)
+    return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
+  if (actor.id !== "mira" || !actor.visit) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: actor.visit === "touch" ? 60 : 61,
+    handDrop: 0,
+    onChair: false,
+  };
 }
 function diningPose(actor: StageActor) {
   if (!actor.seated || !actor.dining) return null;
@@ -94,10 +104,10 @@ function healingPose(actor: StageActor, elapsed: number, reduced: boolean) {
 }
 
 function knockPose(actor: StageActor, elapsed: number, reduced: boolean) {
-  if (actor.id !== "finn" || !actor.knock) return null;
+  if (!actor.knock || !["finn", "mira"].includes(actor.id)) return null;
   return {
     atlas: "conversation" as const,
-    frame: cycle(44, elapsed, 180, !reduced),
+    frame: cycle(actor.id === "mira" ? 62 : 44, elapsed, 180, !reduced),
     handDrop: 0,
     onChair: false,
   };

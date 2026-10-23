@@ -28,6 +28,7 @@ const extraFrames: Partial<
   parent: parentFrame,
   worker: workerFrame,
   cook: cookFrame,
+  doctor: doctorFrame,
   "masked-pumpety": maskedFrame,
 };
 export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) {
@@ -67,6 +68,7 @@ function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 }
 
 export function stageExtraRows(extra: StageExtra) {
+  if (extra.id === "doctor") return 2;
   if (extra.id === "worker") return 5;
   if (extra.id === "cook" || extra.id === "keeper") return 4;
   if (extra.id === "merchant") return 4;
@@ -74,6 +76,11 @@ export function stageExtraRows(extra: StageExtra) {
   return ["child", "merchant", "parent", "stone-carrier", "fence-carrier"].includes(extra.id)
     ? 2
     : 1;
+}
+function doctorFrame(extra: StageExtra, moving: boolean, elapsed: number) {
+  if (extra.writing && !moving) return 4 + (Math.floor(elapsed / 320) % 2);
+  if (extra.notebook) return extra.pose === "explain" || extra.pose === "point" ? 7 : 6;
+  return poses[extra.pose ?? "idle"];
 }
 
 function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {

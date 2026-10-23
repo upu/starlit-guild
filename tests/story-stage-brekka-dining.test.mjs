@@ -30,7 +30,7 @@ test("dining additions preserve every previous cell and register heads, chairs a
       worker = id === "worker";
     const meta = await sharp(path).metadata();
     assert.equal(meta.width, 512);
-    assert.equal(meta.height, worker ? 640 : 1920);
+    assert.ok(meta.height >= (worker ? 640 : 1920));
     const raw = await sharp(path)
       .extract({ left: 0, top: 0, width: 512, height: worker ? 512 : 1792 })
       .ensureAlpha()

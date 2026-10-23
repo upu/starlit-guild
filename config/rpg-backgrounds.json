@@ -317,5 +317,11 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["brekka-dining-room"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-homes-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-homes"] }]
   }
 ]

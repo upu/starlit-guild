@@ -1,6 +1,7 @@
 import type { ResidentId } from "./home-actor.ts";
 
 export type StageActor = {
+  visit?: "touch" | "slide";
   id: ResidentId;
   x: number;
   left: boolean;
@@ -29,7 +30,7 @@ export type StageActor = {
   shoulder?: boolean;
   sword?: boolean;
   push?: "brace" | "extend";
-  /** Finn's two-frame fist tap on a door. */
+  /** Finn or Mira taps a door with two registered fist poses. */
   knock?: boolean;
   healing?: "treat" | "rise" | "steady";
   gloves?: "worn" | "remove";
@@ -92,6 +93,7 @@ export type StoryStageCue = {
     | "medicine-room"
     | "dining-room"
     | "brekka-dining-room"
+    | "brekka-homes"
     | "manor-garden"
     | "workshop"
     | "workshop-yard"
@@ -200,6 +202,7 @@ export type StageItem = {
     | "teacup"
     | "empty-cup"
     | "ale-cup-empty"
+    | "ale-bottle"
     | "ale-cup-full"
     | "fruit-glass"
     | "ale-jug"

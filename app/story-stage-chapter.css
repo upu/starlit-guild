@@ -33,6 +33,7 @@
 }
 .story-stage-extra:is(
     [data-npc="child"],
+    [data-npc="doctor"],
     [data-npc="fence-carrier"],
     [data-npc="merchant"],
     [data-npc="parent"],
@@ -91,6 +92,9 @@
 }
 .story-stage-item[data-art="fruit-glass"] {
   aspect-ratio: 0.62;
+}
+.story-stage-item[data-art="ale-bottle"] {
+  aspect-ratio: 422 / 890;
 }
 .story-stage-item[data-art="ale-jug"][data-pouring="true"]::after {
   background: #d8a647b0;

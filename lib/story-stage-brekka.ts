@@ -4,11 +4,10 @@ import {
   duo,
   held,
   ground,
-  table,
-  onTable,
   npc,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
+import { brekkaVisit } from "./story-stage-brekka-visit.ts";
 import { brekkaDining } from "./story-stage-brekka-dining.ts";
 import { lanternWork } from "./story-stage-lantern-work.ts";
 import { lindeDeparture, lindeReturn } from "./story-stage-linde-requests.ts";
@@ -33,25 +32,7 @@ export const brekkaStages: Record<string, LaterStage> = {
   ),
   "lantern-detour-return": lanternWork,
   "brekka-arrival-departure": brekkaDining,
-  "brekka-arrival-return": scene("patient-room", quartet(), [
-    {
-      at: 0,
-      actors: { finn: { visible: false } },
-      items: [table(), onTable("tea"), ground("medicine", 68)],
-      extras: [npc("keeper", "患者", 25, "explain", true), npc("doctor", "町の医者", 73)],
-    },
-    { at: 2, extras: [npc("keeper", "患者", 25), npc("doctor", "町の医者", 73, "explain", true)] },
-    { at: 10, actors: { mira: { pose: "offer" } } },
-    {
-      at: 12,
-      background: "brekka-alley",
-      actors: { finn: { visible: true } },
-      extras: [],
-      items: [held("medicine", "mira")],
-    },
-    { at: 14, actors: { aria: { reaction: "surprise" } } },
-    { at: 27, actors: { mira: { x: 72, pose: "offer" }, leon: { left: true } } },
-  ]),
+  "brekka-arrival-return": brekkaVisit,
   "glowing-moss-trail-departure": scene(
     "dining-room",
     quartet(),

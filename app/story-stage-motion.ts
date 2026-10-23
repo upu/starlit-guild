@@ -48,7 +48,7 @@ function nameTop(sample: StageSample, above: boolean) {
 function paintSprite(sprite: HTMLElement, sample: StageSample) {
   sprite.dataset.atlas = sample.atlas;
   sprite.dataset.frame = String(sample.frame);
-  const rows = { adventure: 6, conversation: 15, home: 4, shawl: 1 }[sample.atlas];
+  const rows = { adventure: 6, conversation: 16, home: 4, shawl: 1 }[sample.atlas];
   sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
   const authoredFacing =
     sample.atlas === "conversation" &&
