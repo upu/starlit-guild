@@ -834,5 +834,13 @@
   "prop-cart-wheel": {
     "source": "e221290a038337741a534b32dbf2ce3bbd2d6631561830d49c9b0cc731d6ee24",
     "output": "48a655a9a23df3dd34faca0676fa065e838762a64ba8be1a50087eaa792afec2"
+  },
+  "brekka-fork": {
+    "source": "5062de4e77679335f1bc838e82c6f2f4bc105f895047668cd432b31507b0f477",
+    "output": "3947e6fe8e1eafc162eb2cb23d236312a1940b46edd10c02aa77a3371574cae4"
+  },
+  "brekka-tower-path": {
+    "source": "d46c889d919ea69ded027d3f6242ce0e543f7f0c00de63d870f10868863bbad0",
+    "output": "24d164deadc813a1c30c1c4cfb24a7827fc8b4f8c9454b102e7569534fe5b201"
   }
 }

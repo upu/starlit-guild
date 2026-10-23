@@ -1,5 +1,6 @@
+import { secondDayDeparture, secondDayReturn } from "./story-stage-moss-second-day.ts";
 import { tiredMira, followMossCart } from "./story-stage-moss-trail.ts";
-import { scene, quartet, held, ground, npc, type LaterStage } from "./story-stage-later-shared.ts";
+import { scene, quartet, held, npc, type LaterStage } from "./story-stage-later-shared.ts";
 import { brekkaVisit } from "./story-stage-brekka-visit.ts";
 import { brekkaDining } from "./story-stage-brekka-dining.ts";
 import { lanternWork } from "./story-stage-lantern-work.ts";
@@ -28,21 +29,6 @@ export const brekkaStages: Record<string, LaterStage> = {
   "brekka-arrival-return": brekkaVisit,
   "glowing-moss-trail-departure": tiredMira,
   "glowing-moss-trail-return": followMossCart,
-  "glowing-moss-trail-next-day-departure": scene(
-    "brekka-alley",
-    quartet(),
-    [
-      { at: 0, items: [held("ledger", "leon")], actors: { mira: { x: 66 }, finn: { x: 82 } } },
-      { at: 4, actors: { aria: { pose: "think" } } },
-      { at: 5, items: [held("ledger", "leon"), ground("basket-cart", 83, 37, 25)] },
-    ],
-    { exit: ["aria", "leon", "mira", "finn"] },
-  ),
-  "glowing-moss-trail-next-day-return": scene("brekka-alley", quartet(), [
-    { at: 0, items: [ground("basket-cart", 81, 37, 25), held("ledger", "leon")] },
-    { at: 3, background: "moss-beds", items: [held("ledger", "leon"), ground("moss", 47, 15, 6)] },
-    { at: 4, actors: { aria: { inspect: true } } },
-    { at: 8, actors: { aria: { inspect: false } } },
-    { at: 9, actors: { finn: { x: 112, pose: "greet" } } },
-  ]),
+  "glowing-moss-trail-next-day-departure": secondDayDeparture,
+  "glowing-moss-trail-next-day-return": secondDayReturn,
 };

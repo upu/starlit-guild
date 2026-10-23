@@ -7,7 +7,11 @@ import { merchantService, lindeProps } from "./story-stage-linde-art.mjs";
 import { lanternWorkPoses, lanternServiceProps } from "./story-stage-lantern-service-art.mjs";
 import { brekkaDiningPoses, brekkaDiningProps } from "./story-stage-brekka-dining-art.mjs";
 import { brekkaVisitPoses, brekkaVisitProps } from "./story-stage-brekka-visit-art.mjs";
-import { mossTrailPoses, mossTrailProps } from "./story-stage-moss-trail-art.mjs";
+import {
+  mossTrailPoses,
+  mossTrailProps,
+  secondDayBackgrounds,
+} from "./story-stage-moss-trail-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -186,6 +190,7 @@ await lanternServiceProps(root, emit);
 await brekkaDiningProps(root, emit);
 await brekkaVisitProps(root, emit);
 await mossTrailProps(root, emit);
+await secondDayBackgrounds(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

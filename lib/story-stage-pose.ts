@@ -29,6 +29,7 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
       onChair: true,
     };
   return (
+    routeNotesPose(actor, elapsed, reduced) ??
     visitPose(actor) ??
     diningPose(actor) ??
     fieldWorkPose(actor, elapsed, reduced) ??
@@ -40,6 +41,15 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
     bowPose(actor) ??
     stationaryPose(actor, elapsed, reduced)
   );
+}
+function routeNotesPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.id !== "leon" || !actor.routeNotes) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: cycle(17, elapsed, 400, actor.routeNotes === "write" && !reduced),
+    handDrop: 0,
+    onChair: false,
+  };
 }
 function visitPose(actor: StageActor) {
   if (actor.id === "mira" && actor.allNighter)

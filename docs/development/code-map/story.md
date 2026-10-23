@@ -79,3 +79,5 @@
 4-3後半の往診・退室・隣家へのノックは `lib/story-stage-brekka-visit.ts`。ミラの共通60〜63番は小瓶へ触れる／茶杯へ手を伸ばす／二拍のノック、医者4〜7番は記録・説明の姿勢。登録は `scripts/story-stage-brekka-visit-art.mjs`、原本・全文プロンプト・ハッシュは `docs/art-generation/story-stage-brekka-visit-20261023.json`。医者のアトラスは2行。旧60姿勢と医者の旧4姿勢の保持、頭幅・足元、茶杯を置く順、薬箱を下ろしてからノックする順は `tests/story-stage-brekka-visit.test.mjs`。
 
 4-4の夜明け前のミラと荷車の追跡は `lib/story-stage-moss-trail.ts`。手元を含む疲れた姿勢・御者の歩行と車輪は `scripts/story-stage-moss-trail-art.mjs`、既存姿勢の保存・縮尺・追従・一枚絵への切替は `tests/story-stage-moss-trail.test.mjs` を参照する。
+
+4-5の道順の記録、分かれ道、塔の石段は `lib/story-stage-moss-second-day.ts`。手帳の読む／書く姿勢は `StageActor.routeNotes` と `lib/story-stage-pose.ts`、背景の登録は `scripts/story-stage-moss-trail-art.mjs` の `secondDayBackgrounds`。荷車は4-4と共通の `mossCartDriver` / `mossCartItems` を使い、手帳を閉じる時点、縮尺、御者と取っ手の接点、階段と帰路の維持は `tests/story-stage-moss-second-day.test.mjs` で検査する。

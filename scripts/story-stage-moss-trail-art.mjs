@@ -67,3 +67,13 @@ export async function mossTrailProps(root, emit) {
       .toBuffer(),
   );
 }
+
+export async function secondDayBackgrounds(root, emit) {
+  for (const [name, version] of [
+    ["brekka-fork", 1],
+    ["brekka-tower-path", 2],
+  ]) {
+    const raw = await source(root, name, version);
+    await emit(name, raw, await sharp(raw).resize(960, 640).webp({ lossless: true }).toBuffer());
+  }
+}

@@ -24,16 +24,16 @@ export const tiredMira = scene(
   ],
 );
 
-const driver = (x: number): StageExtra => ({
+export const mossCartDriver = (x: number, bottom = 36): StageExtra => ({
   id: "worker",
   name: "御者",
   x,
-  bottom: 36,
+  bottom,
   left: true,
   pullCart: true,
 });
-const cart = (dropped = false): StageItem[] => [
-  { ...ground("basket-cart", -17.3, 40.3, 33), extra: "worker" },
+export const mossCartItems = (dropped = false, bottom = 36): StageItem[] => [
+  { ...ground("basket-cart", -17.3, bottom + 4.3, 33), extra: "worker" },
   { ...ground("cart-wheel", -7.8, 1.2, 14.6), carrier: "basket-cart" },
   dropped
     ? { ...ground("moss", 64.9, 38, 1.8), id: "wheel-moss", dropInPlace: true }
@@ -46,19 +46,27 @@ export const followMossCart = scene(
   [
     {
       at: 0,
-      extras: [driver(61)],
-      items: cart(),
+      extras: [mossCartDriver(61)],
+      items: mossCartItems(),
       sequence: [
-        { after: 80, extras: [driver(75)] },
+        { after: 80, extras: [mossCartDriver(75)] },
         { after: 400, actors: { aria: { x: 10 }, leon: { x: 24 } } },
       ],
     },
-    { at: 1, extras: [driver(80)], actors: { aria: { x: 16, pose: "think" }, leon: { x: 30 } } },
-    { at: 2, extras: [driver(90)], actors: { aria: { x: 23 }, leon: { x: 37, pose: "greet" } } },
+    {
+      at: 1,
+      extras: [mossCartDriver(80)],
+      actors: { aria: { x: 16, pose: "think" }, leon: { x: 30 } },
+    },
+    {
+      at: 2,
+      extras: [mossCartDriver(90)],
+      actors: { aria: { x: 23 }, leon: { x: 37, pose: "greet" } },
+    },
     {
       at: 3,
-      extras: [driver(120)],
-      items: cart(true),
+      extras: [mossCartDriver(120)],
+      items: mossCartItems(true),
       actors: { aria: { x: 33, pose: "surprise" }, leon: { x: 47 } },
     },
   ],

@@ -329,5 +329,17 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["brekka-foyer"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-fork-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-fork"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-tower-path-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-tower-path"] }]
   }
 ]

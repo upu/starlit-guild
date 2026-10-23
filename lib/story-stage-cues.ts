@@ -1,6 +1,8 @@
 import type { ResidentId } from "./home-actor.ts";
 
 export type StageActor = {
+  /** Leon keeps the open route notes in his registered hand pose. */
+  routeNotes?: "read" | "write";
   allNighter?: "reach" | "pause" | "answer" | "think";
   visit?: "touch" | "slide";
   id: ResidentId;
@@ -96,6 +98,8 @@ export type StoryStageCue = {
     | "brekka-dining-room"
     | "brekka-homes"
     | "brekka-foyer"
+    | "brekka-fork"
+    | "brekka-tower-path"
     | "manor-garden"
     | "workshop"
     | "workshop-yard"
