@@ -1,4 +1,5 @@
 import { restorationDeparture } from "./story-stage-restoration.ts";
+import { restorationDining } from "./story-stage-restoration-dining.ts";
 import { keystoneInspection, keystoneFoundation } from "./story-stage-keystone.ts";
 import { bernePaving } from "./story-stage-berne-paving.ts";
 import { berneVisit } from "./story-stage-berne-visit.ts";
@@ -14,7 +15,7 @@ import {
   npc,
   type LaterStage,
 } from "./story-stage-later-shared.ts";
-import { chair, diningCast, diningItems, diningScene } from "./story-stage-furniture.ts";
+import { diningScene } from "./story-stage-furniture.ts";
 const keeper = () => ({ ...npc("keeper", undefined, 57), bottom: 30 });
 export const berneStages: Record<string, LaterStage> = {
   "berne-road-departure": diningScene(
@@ -59,17 +60,7 @@ export const berneStages: Record<string, LaterStage> = {
       { at: 0, items: [], extras: [keeper()] },
       { at: 1, actors: { aria: { pose: "greet", reaction: "nod" } } },
       { at: 2, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
-      {
-        at: 4,
-        background: "dining-room",
-        night: false,
-        cast: diningCast().map((a) =>
-          a.id === "finn" ? { ...a, x: 77, bottom: 33, seated: false } : a,
-        ),
-        furniture: diningCast().map((a) => chair(a)),
-        items: diningItems([table(50), onTable("tea", 50)]),
-        extras: [npc("merchant", "控えの持ち主", 90, "explain", true)],
-      },
+      restorationDining(),
     ],
   ),
 };

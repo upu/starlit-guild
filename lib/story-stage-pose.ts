@@ -21,6 +21,13 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
 }
 
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.tea && actor.seated && ["aria", "leon", "mira"].includes(actor.id))
+    return {
+      atlas: "conversation" as const,
+      frame: 48 + Number(actor.tea === "sip") + (actor.left ? 2 : 0),
+      handDrop: 8,
+      onChair: true,
+    };
   if (actor.id === "mira" && actor.lookAcross)
     return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
   return (

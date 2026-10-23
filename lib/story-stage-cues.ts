@@ -11,6 +11,8 @@ export type StageActor = {
   place?: boolean;
   shawl?: boolean;
   seated?: boolean;
+  /** Chair-seated tea poses for Aria, Leon and Mira, with the cup in the atlas. */
+  tea?: "hold" | "sip";
   chair?: boolean;
   stool?: boolean;
   /** Low seat rendered separately: rock, ledge or step stool. */
