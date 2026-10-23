@@ -1,5 +1,7 @@
 # 台詞・読者・思い出
 
+3-9後半の塔の回復は `lib/story-stage-berne.ts` と `app/story-stage-restored.css`。石を戻した背景は `scripts/story-stage-keystone-art.mjs` と `config/rpg-backgrounds.json` に登録する。窓・石組みの発光は人物用の縮尺変換の外で背景へ固定し、窓から順に一度だけ点灯する。縮尺・包帯・一枚絵の維持は `tests/story-stage-restored-tower.test.mjs`。
+
 第二章のプティ戦は [戦況別の掛け合い](../../../lib/pumpety-battle-banter.ts) を `chapterTwoBanter` から呼ぶ。[プティ戦の検査](../../../tests/pumpety-presentation.test.mjs) で通常進行中の会話・追撃動作・覆面の表情・会話の保持を確認する。
 
 [作業別のコード案内](../code-map.md) に戻る。

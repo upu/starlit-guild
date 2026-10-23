@@ -7,7 +7,7 @@ import { stoneYard } from "./story-stage-stone-yard.ts";
 import { overlookRest } from "./story-stage-low-seats.ts";
 import {
   scene,
-  quartet,
+  actor,
   ground,
   table,
   onTable,
@@ -15,8 +15,7 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 import { chair, diningCast, diningItems, diningScene } from "./story-stage-furniture.ts";
-const crew = () => quartet();
-const keeper = () => npc("keeper", undefined, 73);
+const keeper = () => ({ ...npc("keeper", undefined, 57), bottom: 30 });
 export const berneStages: Record<string, LaterStage> = {
   "berne-road-departure": diningScene(
     [
@@ -48,20 +47,29 @@ export const berneStages: Record<string, LaterStage> = {
   "matching-lantern-stone-departure": stoneYard,
   "matching-lantern-stone-return": stoneRest,
   "berne-restoration-departure": restorationDeparture,
-  "berne-restoration-return": scene("tower-foot", crew(), [
-    { at: 0, night: true, items: [ground("keystone", 53, 22, 13)], extras: [keeper()] },
-    { at: 1, actors: { aria: { pose: "greet", reaction: "nod" } } },
-    { at: 2, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
-    {
-      at: 4,
-      background: "dining-room",
-      night: false,
-      cast: diningCast().map((a) =>
-        a.id === "finn" ? { ...a, x: 77, bottom: 33, seated: false } : a,
-      ),
-      furniture: diningCast().map((a) => chair(a)),
-      items: diningItems([table(50), onTable("tea", 50)]),
-      extras: [npc("merchant", "控えの持ち主", 90, "explain", true)],
-    },
-  ]),
+  "berne-restoration-return": scene(
+    "berne-foundation-restored",
+    [
+      actor("aria", 22, { bottom: 7, left: false }),
+      actor("leon", 37, { bottom: 0, left: false }),
+      actor("mira", 75, { bottom: 5, left: true }),
+      actor("finn", 90, { bottom: 14, left: true, dressed: true, handAction: "guard" }),
+    ],
+    [
+      { at: 0, items: [], extras: [keeper()] },
+      { at: 1, actors: { aria: { pose: "greet", reaction: "nod" } } },
+      { at: 2, extras: [{ ...keeper(), pose: "explain", speaking: true }] },
+      {
+        at: 4,
+        background: "dining-room",
+        night: false,
+        cast: diningCast().map((a) =>
+          a.id === "finn" ? { ...a, x: 77, bottom: 33, seated: false } : a,
+        ),
+        furniture: diningCast().map((a) => chair(a)),
+        items: diningItems([table(50), onTable("tea", 50)]),
+        extras: [npc("merchant", "控えの持ち主", 90, "explain", true)],
+      },
+    ],
+  ),
 };

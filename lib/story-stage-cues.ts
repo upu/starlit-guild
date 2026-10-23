@@ -69,6 +69,7 @@ export type StoryStageCue = {
     | "berne-porch"
     | "berne-foundation-grass"
     | "berne-foundation-open"
+    | "berne-foundation-restored"
     | "manor-kitchen"
     | "manor-kitchen-open"
     | "manor-gate"

@@ -54,6 +54,12 @@ export function StoryStage({
         <div className="story-stage-vignette" aria-hidden="true" />
         <div className="story-stage-ground" aria-hidden="true">
           {cue.background === "tower-base-moss" && <span className="story-stage-wall-moss-light" />}
+          {cue.background === "berne-foundation-restored" && (
+            <>
+              <span className="story-stage-restored-window" />
+              <span className="story-stage-restored-stones" />
+            </>
+          )}
           <div className="story-stage-world">
             <StoryStageProps cue={cue} />
             <ChapterStageProps cue={cue} />

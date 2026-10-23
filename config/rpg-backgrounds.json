@@ -265,6 +265,12 @@
     ]
   },
   {
+    "source": "assets/source/story-stage/berne-foundation-restored-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-foundation-restored"] }]
+  },
+  {
     "source": "assets/source/story-stage/manor-kitchen-v1.png",
     "columns": 1,
     "rows": 1,
