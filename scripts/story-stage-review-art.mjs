@@ -2,6 +2,7 @@ import sharp from "sharp";
 import { readFile } from "node:fs/promises";
 import { readFrame, headBounds, rowCuts, spriteBounds } from "./home-pixel-frames.mjs";
 import { registerWorkPose } from "./story-stage-pose-frames.mjs";
+import { injuredHandFrames } from "./story-stage-night-hand-art.mjs";
 
 const ids = ["aria", "leon", "mira", "finn", "lico"];
 const source = (root, name) => readFile(new URL(`assets/source/story-stage/${name}.png`, root));
@@ -135,6 +136,11 @@ export async function reviewHero(root, name, raw, original) {
             ? await registerWorkPose(await sheetFrame(gloves, i - 2, 0, 2, 1), head, 96)
             : frames[0],
     );
+  const hands = id === "finn" ? await injuredHandFrames(root, head) : null;
+  if (hands)
+    hands.frames.forEach((frame, i) => {
+      frames[17 + i] = frame;
+    });
   const image = await sharp({
     create: { width: 512, height: 1536, channels: 4, background: "#00000000" },
   })
@@ -164,6 +170,7 @@ export async function reviewHero(root, name, raw, original) {
       ...(knock ? [knock] : []),
       ...(care ? [care] : []),
       ...(gloves ? [gloves] : []),
+      ...(hands ? [hands.raw] : []),
     ]),
     image,
   };

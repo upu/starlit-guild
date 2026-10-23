@@ -1,4 +1,5 @@
 import { receptionAssets } from "./story-stage-reception-art.mjs";
+import { nightHandAssets } from "./story-stage-night-hand-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -162,6 +163,7 @@ await manorAssets(root, emit);
 await stoneSelectionAssets(root, emit);
 await surveyAssets(root, emit);
 await receptionAssets(root, emit);
+await nightHandAssets(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

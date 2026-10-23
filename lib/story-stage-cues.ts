@@ -27,6 +27,7 @@ export type StageActor = {
   knock?: boolean;
   healing?: "treat" | "rise" | "steady";
   gloves?: "worn" | "remove";
+  handAction?: "catch" | "guard" | "wipe" | "palm";
   bow?: "aim" | "release";
   lane?: number;
   via?: { x: number; bottom: number }[];
@@ -260,6 +261,8 @@ export type StageItem = {
     | "scrubbing-rag"
     | "garden-pot"
     | "work-gloves"
+    | "broken-fastener"
+    | "stained-cloth"
     | "snag-rope"
     | "iron-fastener"
     | "cart-drape"

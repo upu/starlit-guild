@@ -9,6 +9,14 @@ const walking = {
   mira: [[79, 88], [79, 88], null, [83, 91], [81, 88], [81, 88], null, null],
 };
 const conversation: Record<string, Partial<Record<number, number[]>>> = {
+  finn: {
+    0: [78, 88],
+    4: [83, 78],
+    17: [94, 94],
+    18: [70, 70],
+    19: [58, 86],
+    20: [93, 79],
+  },
   aria: {
     0: [76, 82],
     1: [81, 63],

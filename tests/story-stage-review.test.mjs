@@ -48,7 +48,8 @@ test("delivered dialogue poses retain head scale, foot contact and short seated 
         `${id}/${frame}: head ${actual.width} vs ${head.width}`,
       );
       assert.equal(f.box.top + f.box.height, 120, `${id}/${frame}: foot`);
-      if (frame >= 10 && frame <= 13) assert.ok(f.box.height < 86, `${id}/${frame}: stays low`);
+      if ((frame >= 10 && frame <= 13) || (id === "finn" && frame === 17))
+        assert.ok(f.box.height < 86, `${id}/${frame}: stays low`);
       else if (frame !== 6 && frame !== 7) assert.equal(f.box.height, 96);
     }
   }

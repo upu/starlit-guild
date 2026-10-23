@@ -106,7 +106,7 @@ test("Aria tests light near and away from the closed case while Leon records its
 
 test("new motion retains previous atlas pixels and matches the standing heads and padded foot line", async () => {
   const originals = [
-    ["finn", 1408, "a1700e2f8cfc2b59e49130b39310b8f2734c15bab403b56af93a0ac9850e7301", [44, 45]],
+    ["finn", 1408, "fd335ecdca2741f3e320aa27f73ad1cc19ff0ed924238e4aaf5f9395b18c1714", [44, 45]],
     [
       "cook",
       128,
@@ -127,6 +127,13 @@ test("new motion retains previous atlas pixels and matches the standing heads an
       .ensureAlpha()
       .raw()
       .toBuffer();
+    // Finn's former placeholders 17–20 now hold the separately tested injury poses.
+    if (id === "finn")
+      for (const cell of [17, 18, 19, 20])
+        for (let y = 0; y < 128; y++) {
+          const offset = ((Math.floor(cell / 4) * 128 + y) * 512 + (cell % 4) * 128) * 4;
+          bytes.fill(0, offset, offset + 128 * 4);
+        }
     // Lossless WebP may choose arbitrary RGB behind fully transparent pixels.
     for (let i = 0; i < bytes.length; i += 4) if (!bytes[i + 3]) bytes.fill(0, i, i + 3);
     assert.equal(createHash("sha256").update(bytes).digest("hex"), expected, id);

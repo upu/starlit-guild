@@ -5,6 +5,9 @@
   transform: translateX(-50%);
   z-index: 1;
 }
+.story-stage-item:is([data-art="broken-fastener"], [data-art="stained-cloth"]) {
+  aspect-ratio: 1;
+}
 .story-stage-extra-sprite {
   position: absolute;
   inset: 0;

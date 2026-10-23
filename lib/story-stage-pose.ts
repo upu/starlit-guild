@@ -23,12 +23,23 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
   return (
     healingPose(actor, elapsed, reduced) ??
+    injuredHandPose(actor) ??
     glovePose(actor) ??
     knockPose(actor, elapsed, reduced) ??
     pushPose(actor) ??
     bowPose(actor) ??
     stationaryPose(actor, elapsed, reduced)
   );
+}
+
+function injuredHandPose(actor: StageActor) {
+  if (actor.id !== "finn" || !actor.handAction) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: { catch: 17, guard: 18, wipe: 19, palm: 20 }[actor.handAction],
+    handDrop: 0,
+    onChair: false,
+  };
 }
 
 function glovePose(actor: StageActor) {

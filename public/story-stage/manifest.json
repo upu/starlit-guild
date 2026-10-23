@@ -316,8 +316,8 @@
     "output": "4693b629db501eb58187464620dc248076178445dbc479ce4bcc9d0367505e07"
   },
   "finn-poses": {
-    "source": "92b7fd6d6380215f43f40d086fa38c5424cfd94867ed43f3a33341427ad5085d",
-    "output": "cf4ab1a678a43243110113ef79e329e4937d130ecb7f72845a460cfce8be3f1f"
+    "source": "daf0e32e892e7568b80d6820e1d7499ffa06c8231e42b96ee0035e533c97aa9b",
+    "output": "2922a8a2bcae8dabd2317b423f2a25cb4c48b84e256858f8e39e333442b2290d"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
@@ -738,5 +738,13 @@
   "manor-display-back": {
     "source": "5bc030746911265a4526f6c9b9d28384d934cafb71426b0382a2decbc7461a76",
     "output": "ae7ef5c7dc9d9726b27e3675da386d87b8a38c78877ec2b5c6e6710056fb55b0"
+  },
+  "prop-broken-fastener": {
+    "source": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3",
+    "output": "21021153d43679ecc6e767e66705f133cfa8c9467d186713a5467c455a214437"
+  },
+  "prop-stained-cloth": {
+    "source": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3",
+    "output": "63d5955a5211b24448bc56ba440ee6228d5a50acbfc2573b68814359bfe8bf3a"
   }
 }
