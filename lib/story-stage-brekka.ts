@@ -11,46 +11,11 @@ import {
 } from "./story-stage-later-shared.ts";
 import { diningScene } from "./story-stage-furniture.ts";
 import { lanternAddressBeats } from "./story-stage-lantern-address.ts";
+import { lindeDeparture, lindeReturn } from "./story-stage-linde-requests.ts";
 const owner = () => npc("merchant", "店主", 73);
 export const brekkaStages: Record<string, LaterStage> = {
-  "linde-requests-departure": diningScene([
-    {
-      at: 0,
-      actors: {
-        aria: { seated: true },
-        leon: { seated: true },
-        mira: { seated: true },
-        finn: { seated: true },
-      },
-      items: [table(), onTable("tea")],
-      extras: [owner()],
-    },
-    {
-      at: 6,
-      items: [table(), onTable("ledger")],
-      extras: [{ ...owner(), pose: "explain", speaking: true }],
-    },
-    { at: 13, actors: { aria: { pose: "surprise", reaction: "surprise" } } },
-    { at: 19, extras: [{ ...owner(), pose: "point" }] },
-    { at: 20, actors: { aria: { reaction: "surprise" } } },
-    { at: 26, items: [table(), onTable("ledger"), held("ledger", "mira", { id: "letter" })] },
-  ]),
-  "linde-requests-return": diningScene([
-    {
-      at: 0,
-      actors: {
-        aria: { seated: true },
-        leon: { seated: true },
-        mira: { seated: true },
-        finn: { seated: true },
-      },
-      items: [table(), onTable("ledger")],
-      extras: [owner()],
-    },
-    { at: 5, items: [table(), onTable("ledger"), held("ledger", "mira", { id: "letter" })] },
-    { at: 7, actors: { aria: { reaction: "surprise" } } },
-    { at: 15, extras: [{ ...owner(), pose: "explain", speaking: true }] },
-  ]),
+  "linde-requests-departure": lindeDeparture,
+  "linde-requests-return": lindeReturn,
   "lantern-detour-departure": scene(
     "hill-path",
     quartet(),

@@ -40,8 +40,8 @@
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
   },
   "merchant-poses": {
-    "source": "694f2cebd457ca854d5360ae31ff350b9df342a6656ae1d9ba48f2b7ff7e7555",
-    "output": "db971c936af6fffaf689bdc6ad556b8115057332c6ab92af9193115ed8c36b29"
+    "source": "e6531f2960ef0e406b905c8436cc65aabffe794c3f08d9581dbe96ec8d1dacb5",
+    "output": "10552de4a9d377cc3ac5eeb7ee2a0d8465ad5d95451e84f3f450003ecb66f2e7"
   },
   "aria-poses": {
     "source": "be808de3852de9d874835ea3acee21781b954ed9efd4fbc13ca7208582a49c19",
@@ -762,5 +762,17 @@
   "prop-joint-roots": {
     "source": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8",
     "output": "4707b828cefc1c80d85ce3b134652ed17b8ae30c5cadf490d1369e5cd3e2e96e"
+  },
+  "prop-dining-plate": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "2ca8d32ab4e7944d14cf37f40882ab8dafe207dba2aa60615285451826039bb6"
+  },
+  "prop-lunch-plate": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "29e4db0cd34734b33ecce2b4131993db2d7475d89d3ebec1c0f1a876c3c0c94a"
+  },
+  "prop-sealed-letter": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "6d89e74d722d58c8c314517fa0e3212eaa3f1a0475a614459652e709d65c2a49"
   }
 }

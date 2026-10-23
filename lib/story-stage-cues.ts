@@ -134,6 +134,7 @@ export type StageMoment = {
 
 export type StageExtra = {
   restoration?: "trace" | "touch" | "read" | "receive";
+  service?: "carry" | "place" | "raise" | "talk";
   kitchen?: "pot" | "lid" | "inspect" | "cloth";
   care?: "sore" | "palm" | "bandaged" | "rest";
   grip?: "reach" | "hold";
@@ -243,6 +244,9 @@ export type StageItem = {
     | "record-board"
     | "paper"
     | "folded-paper"
+    | "dining-plate"
+    | "lunch-plate"
+    | "sealed-letter"
     | "display-open"
     | "display-closed"
     | "display-covered"
@@ -307,8 +311,8 @@ export type StageItem = {
   backstep?: boolean;
   /** Dressing attached to the displayed arm; hidden when that arm is behind the body. */
   wrist?: boolean;
-  /** Suspend a square prop by its top edge, for example a bag held by its handle. */
-  wristAnchor?: "top";
+  /** Attach a hanging bag by its top, or a plate above the supporting palm. */
+  wristAnchor?: "top" | "bottom";
   /** Contents remain attached to their container after being put away. */
   stored?: boolean;
   /** Surface supporting or being touched by this object, independent of its height. */

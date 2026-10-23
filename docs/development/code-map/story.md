@@ -69,3 +69,5 @@
 3-7の井戸・厨房・道の間違い・荷車の退出は `lib/story-stage-reception-well.ts`、袋・縄・留め具は `lib/story-stage-reception-well-items.ts`。展示台裏の目印・布の受け渡しは `lib/story-stage-reception-display.ts`、共通荷車と展示物は `lib/story-stage-reception-items.ts`。料理人の手は `lib/story-stage-extra-wrists.ts` → `app/story-stage-extra-motion.ts` から位置情報へ渡し、`StageItem.wristAnchor: "top"` は袋の取っ手を手へ合わせる。NPC所有の手元小物も `stageItemVisible` で判定する。荷車の連続性・受け渡しの到着時刻・退出の距離・袋の歩行追従・展示物の縮尺は `tests/story-stage-reception.test.mjs`。
 
 3-9後半の食堂導入は `lib/story-stage-restoration-dining.ts`。`StageActor.tea` は三人の共通アトラス48〜51番でカップを持つ／飲む座位を選ぶ。生成・旧48コマの保持は `scripts/story-stage-dining-tea-art.mjs`、共通13行の描画は `app/story-stage-motion.ts` と `app/story-stage.css`。控え返却の接点、渡してから下がる順序、座席とカップの重複防止、頭幅・接地・旧RGBAは `tests/story-stage-dining-return.test.mjs`。
+
+4-1の昼食・依頼の紙・皿の片付け・往診鞄から封書を出す動作は `lib/story-stage-linde-requests.ts`。店主の接客姿勢12〜15番と皿・封書の登録は `scripts/story-stage-linde-art.mjs`。`StageItem.wristAnchor: "bottom"` は皿の底を手のひらへ合わせ、椅子姿勢の手元は `lib/story-stage-wrists.ts` で左右の表示へ対応する。旧店主12コマのRGBA・頭幅・足元、皿の接点と持ち上げの順、封書と三通の紙の保持は `tests/story-stage-linde-requests.test.mjs`。

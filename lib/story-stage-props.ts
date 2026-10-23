@@ -66,13 +66,18 @@ function carrierTarget(item: StageItem, parent?: StagePosition) {
 function wristTarget(item: StageItem, cue: StoryStageCue, owner?: StagePosition) {
   if (!item.wrist || !owner?.wrist) return null;
   const pixel = (cue.cell ?? 24) / 128;
+  // A plate rests above the supporting palm; a hanging bag attaches by its top edge.
+  const drop =
+    item.wristAnchor === "bottom"
+      ? 0
+      : item.wristAnchor === "top"
+        ? (item.width ?? 2) * 1.5
+        : ((item.width ?? 2) / 1.3) * 0.75;
   return {
     x: owner.x + (owner.wrist.x - 64) * pixel * (owner.left ? -1 : 1),
     bottom:
       // The actor element ends at y=128; y=120 is the foot inside that element.
-      (owner.bottom ?? 14) +
-      (128 - owner.wrist.y) * pixel * 1.5 -
-      (item.wristAnchor === "top" ? (item.width ?? 2) * 1.5 : ((item.width ?? 2) / 1.3) * 0.75),
+      (owner.bottom ?? 14) + (128 - owner.wrist.y) * pixel * 1.5 - drop,
   };
 }
 

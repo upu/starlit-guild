@@ -271,7 +271,7 @@
 .story-stage-merchant-sprite {
   position: absolute;
   inset: 0;
-  background: url("/story-stage/merchant-poses.webp") 0% 0% / 400% 200% no-repeat;
+  background: url("/story-stage/merchant-poses.webp") 0% 0% / 400% 400% no-repeat;
   image-rendering: pixelated;
 }
 .story-stage-merchant[data-pose="explain"] .story-stage-merchant-sprite {

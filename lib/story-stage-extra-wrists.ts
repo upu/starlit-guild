@@ -12,7 +12,21 @@ const cookHands: Partial<Record<number, [number, number]>> = {
 };
 
 export function stageExtraWrist(extra: StageExtra, moving: boolean, elapsed: number) {
-  if (extra.id === "merchant" && !moving && stageExtraFrame(extra) === 1) return { x: 35, y: 74 };
+  if (extra.id === "merchant") {
+    const hands: Partial<Record<number, [number, number]>> = {
+      1: [35, 74],
+      8: [90, 83],
+      9: [90, 83],
+      10: [89, 84],
+      11: [88, 82],
+      12: [35, 80],
+      13: [34, 99],
+      14: [34, 62],
+      15: [35, 83],
+    };
+    const point = hands[stageExtraFrame(extra, moving, elapsed)];
+    return point ? { x: point[0], y: point[1] } : undefined;
+  }
   if (extra.id === "keeper") {
     const frame = stageExtraFrame(extra, moving, elapsed);
     const hand: Partial<Record<number, [number, number]>> = {

@@ -80,7 +80,38 @@ const atlases: Partial<Record<string, Partial<Record<ResidentId, Points>>>> = {
   // Adventure cells are 192px, drawn at left=-32/top=-56 in the common 128px cell.
   adventure: { aria: { 11: [117 - 32, 133 - 56], 13: [108 - 32, 150 - 56] } },
 };
+// Chair sprites include both facings. Return right-facing coordinates because
+// the attachment painter mirrors coordinates with the displayed owner.
+const chairHands: Partial<Record<ResidentId, number[][]>> = {
+  aria: [
+    [76, 89],
+    [81, 78],
+    [85, 80],
+    [76, 89],
+  ],
+  leon: [
+    [79, 91],
+    [80, 82],
+    [89, 77],
+    [79, 91],
+  ],
+  mira: [
+    [78, 89],
+    [82, 83],
+    [88, 82],
+    [78, 89],
+  ],
+  finn: [
+    [79, 92],
+    [81, 86],
+    [86, 83],
+    [79, 92],
+  ],
+};
 export function stageWrist(id: ResidentId, atlas: string, frame: number) {
-  const point = atlases[atlas]?.[id]?.[frame];
+  const point =
+    atlas === "conversation" && frame >= 24 && frame < 32
+      ? chairHands[id]?.[(frame - 24) % 4]
+      : atlases[atlas]?.[id]?.[frame];
   return point ? { x: point[0], y: point[1] } : undefined;
 }
