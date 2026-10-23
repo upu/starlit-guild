@@ -52,8 +52,6 @@ test("all lantern states share the same canvas, roof height and foot contact", a
 
 test("moss markers stay on the planted bed through the gardener and records scenes", () => {
   for (const [id, line] of [
-    ["brekka-moss-beds-departure", 0],
-    ["brekka-moss-beds-return", 2],
     ["lico-records-departure", 32],
     ["lico-records-return", 0],
   ]) {

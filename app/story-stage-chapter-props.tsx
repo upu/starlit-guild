@@ -52,6 +52,7 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
           data-pouring={!!item.pouring}
           data-steaming={!!item.steaming}
           data-art={item.art}
+          data-shaded={!!item.shaded}
           style={
             {
               left: `${String(item.x)}%`,

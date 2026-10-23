@@ -45,11 +45,11 @@
   },
   "aria-poses": {
     "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
-    "output": "f488443e90aa23125da74f6f5c39caf7d3330ddef737b5f0cd513a56f641fb6c"
+    "output": "4ac0c5d7eb1fc799d22d1a90faf2341117a649279cd03e507adb3b23763c6ed5"
   },
   "leon-poses": {
     "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
-    "output": "0e48fee8d7f00977c9f9adeed4af4b749ac06c8f2fc3469e20ff8732be0f4d41"
+    "output": "358ba4333469000a854ff51045ec5310afed5f30177fe0e87ee539397b5eac4b"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -176,8 +176,8 @@
     "output": "85ddd298e404630390a2e83d86dc5c817d2d5e4699c0b4c487e0debffcff131d"
   },
   "moss-beds": {
-    "source": "71e417b9055501e95ebd8aef48522e02a10c09f852dd954fa09d0a27b2d2d75e",
-    "output": "c8ecec9f0074e69db7717ae13ae015274d51ce8b8ff813fbe7b9b1a268b2e290"
+    "source": "8a5401f264a5f87a4ca461e79c6d458adba066863e1861ac30932a1e11fe8b63",
+    "output": "eb9285dd5a6d2efdc9e6c83c3ced194fdc0dff51495de42a91e50125b535f8f2"
   },
   "registry": {
     "source": "f457cba1d290ea78ab8419d7fa81a62631a864f952f69c4e2e5c7632fcc60158",
@@ -312,16 +312,16 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "5cd02010d57678c5b7dc8820ebf8be525220975ee879138a50b14e01b449b86a",
-    "output": "12c5ab2b5a94bc4c5fa317e6ea2f130f489a66ffba148871412a955fc9e108ed"
+    "source": "37616522f2ba7b02a96fb679134cfc1c33e9006dade8792b174547a601b19614",
+    "output": "ee416320aba7d1cb65665ce47ea37cf1e531137b537f83d6a3cc8d233bf7e964"
   },
   "finn-poses": {
     "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
-    "output": "cb3276028e168a2f72cee5c767fdcfd9a036d7d66ebfa335e621cb2c961c1c63"
+    "output": "d24b1a2a0585fbf7b5b6b0ee915e607fb9c133f3d8dc6c86b136da5b5b0907b8"
   },
   "lico-poses": {
-    "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
-    "output": "bc31ca7be394e257f21ffa9b33a7e7bbc062705a76b6f5678192efe68d8f9bf9"
+    "source": "758aa776c2fafc14d4f691b1fd27bcf41ca0e95dac36fc4d5dc575bee7bf6329",
+    "output": "7d4f3fb657afe5a49f008ac2235245516f4f1f1a2205a0f2fad689b4f5923082"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -842,5 +842,9 @@
   "brekka-tower-path": {
     "source": "d46c889d919ea69ded027d3f6242ce0e543f7f0c00de63d870f10868863bbad0",
     "output": "24d164deadc813a1c30c1c4cfb24a7827fc8b4f8c9454b102e7569534fe5b201"
+  },
+  "prop-doctor-satchel": {
+    "source": "01be4627a23f72624edd257d68f6bab6a28a48609d09867b2cf9e6dd699bad28",
+    "output": "3b02e0fc29109dc8362c018fe1df60c0c32cd481edbe812541fba7afeb1116d5"
   }
 }

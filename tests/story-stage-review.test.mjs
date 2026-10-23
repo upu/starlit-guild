@@ -57,21 +57,22 @@ test("delivered dialogue poses retain head scale, foot contact and short seated 
 
 test("Lico walks around the party and held items follow her displayed facing and depth", () => {
   const id = "brekka-moss-beds-return";
-  for (const [line, start] of [
-    [15, 82],
-    [22, 34],
-  ]) {
+  for (const line of [15, 22]) {
     const stage = cue(id, line),
       lico = stage.actors.find((a) => a.id === "lico"),
-      origin = { x: start, bottom: 14 };
+      origin = cue(id, line - 1).actors.find((a) => a.id === "lico");
     const duration = journeyDuration(lico, origin);
     for (let t = 0; t < duration; t += 50) {
       const s = sampleStageActor(lico, origin, t);
-      if (s.x > 41 && s.x < 67) assert.ok(s.bottom <= 1, `avoids occupied row at ${t}`);
+      for (const other of stage.actors.filter((a) => a.id !== "lico"))
+        assert.ok(
+          Math.hypot(s.x - other.x, (((s.bottom ?? 14) - (other.bottom ?? 14)) * 2) / 3) >= 8,
+          `clears ${other.id} at ${t}`,
+        );
       const book = stage.items.find((p) => p.id === "ledger");
       const target = stageItemTarget(book, stage, new Map([["lico", s]]));
       assert.equal(Math.sign(target.x - s.x), s.left ? -1 : 1);
-      assert.ok(Math.abs(target.bottom - s.bottom - 9) < 0.0001);
+      assert.ok(Math.abs(target.bottom - s.bottom - 8) < 0.0001);
     }
     const during = sampleStageActor(lico, origin, 600);
     const next = sampleStageActor(lico, during, 0);

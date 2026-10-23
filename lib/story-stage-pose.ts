@@ -1,5 +1,6 @@
 import { residentFrame } from "./home-actor.ts";
 import { boxTransferDuration } from "./story-stage-props.ts";
+import { mossStudyPose } from "./story-stage-study-pose.ts";
 import type { StageActor } from "./story-stage-cues.ts";
 
 const cycle = (first: number, elapsed: number, interval: number, animate: boolean) =>
@@ -17,7 +18,7 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
     return { atlas: "adventure" as const, frame: cycle(20, elapsed, 180, moving && !reduced) };
-  return actionPose(actor, elapsed, reduced);
+  return mossStudyPose(actor, elapsed, reduced) ?? actionPose(actor, elapsed, reduced);
 }
 
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {

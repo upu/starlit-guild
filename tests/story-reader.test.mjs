@@ -140,6 +140,27 @@ function harness(name, initialProps) {
   };
 }
 
+test("early and repeated taps finish a physical handoff before advancing exactly one line", () => {
+  const story = stories.stories.find((s) => s.id === "brekka-moss-beds-return");
+  const h = harness("StoryReader", { story, ready: true, onRead: () => true, onClose() {} });
+  for (let page = 0; page < 52; page++) {
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    h.find("story-conversation").props.onClick();
+    h.render();
+    if (![42, 45, 50].includes(page)) continue;
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    assert.equal(h.find("StoryStage").props.hasten, true);
+    for (let tap = 0; tap < 3; tap++) h.find("story-conversation").props.onClick();
+    h.render();
+    const complete = h.find("StoryStage").props.onComplete;
+    complete();
+    complete();
+    h.render();
+    assert.equal(h.find("StoryStage").props.hasten, false);
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page + 1]]);
+  }
+});
+
 test("the opening stage follows dialogue pages without completing or changing the story", () => {
   const story = stories.stories.find((st) => st.id === "village-trade-departure");
   let read = 0;

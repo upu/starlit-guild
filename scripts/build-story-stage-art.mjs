@@ -13,6 +13,7 @@ import {
   secondDayBackgrounds,
 } from "./story-stage-moss-trail-art.mjs";
 import sharp from "sharp";
+import { mossBedPoses, mossBedProps } from "./story-stage-moss-beds-art.mjs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
@@ -66,8 +67,9 @@ async function emit(name, source, image) {
   const dining = await brekkaDiningPoses(root, name, field.raw, field.image);
   const visit = await brekkaVisitPoses(root, name, dining.raw, dining.image);
   const trail = await mossTrailPoses(root, name, visit.raw, visit.image);
-  source = trail.raw;
-  image = trail.image;
+  const study = await mossBedPoses(root, name, trail.raw, trail.image);
+  source = study.raw;
+  image = study.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -191,6 +193,7 @@ await brekkaDiningProps(root, emit);
 await brekkaVisitProps(root, emit);
 await mossTrailProps(root, emit);
 await secondDayBackgrounds(root, emit);
+await mossBedProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-23",
+  "purpose": "4-6 moss study and resting poses",
+  "status": "adopted",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/moss-beds-v2.png",
+      "prompt": "Edit this RPG pixel-art background while preserving its high oblique top-down camera, warm crisp pixel grain, 3:2 composition, left and right water channels, clear broad central walking area, and arrangement of planting beds. The stone tower and wooden door at upper right are miniature compared with the intended RPG people. Enlarge the wooden door to about twice its present height (around 140 pixels in a 960x640 equivalent image), preserving a believable adult doorway, and widen/enlarge the cropped tower base around it so it reads as a full-size stone tower extending beyond the top edge. Keep a few low steps at the door. Do not move the main walking area or existing water channels. The planted rectangles are CULTIVATED MOSS beds, not a flower garden: replace the many white blossoms with low dense fine branching moss, naturally varied green with occasional muted pale yellow tips. No strong glow in daylight. Keep their stone boundaries, uniform bed widths, and empty earthen paths. Add a few tiny wooden botanical labels at bed edges, with small tally marks only, no legible words. Do not add characters, stools, carts, tools, wooden fences, or UI. No horizon. This is the same place, with a corrected architectural scale and moss vegetation.",
+      "reference": "public/story-stage/moss-beds.webp (before this change)",
+      "method": "built-in image_gen edit",
+      "sha256": "a0f56ed28cbbee7f235206390b8a87dffcdd5f7ce9ba622c15b45feac37d98ca"
+    },
+    {
+      "source": "assets/source/story-stage/lico-study-v1.png",
+      "prompt": "Create a transparent pixel-art sprite sheet of EXACTLY 8 full-body poses of the SAME small female alchemist Lico in the reference. Grid 4 columns x 2 rows, uniform cells with generous fully transparent gutters, NO text, NO floor shadows, no panels or borders. Match the reference pixel grain, warm reddish brown messy low ponytail, round glasses, green eyes, freckles, deep red apron over charcoal clothing, pale blouse sleeves, sandals, approachable odd scientist personality. Keep exactly the same head size, body proportions and costume in EVERY standing pose. Full hair and feet inside each cell. Three-quarter view FACING SCREEN RIGHT in all eight, including actions. Small notebook with dark brown cover and cream pages remains visually consistent. Read left-to-right top row then bottom row: 1 standing, left hand holding notebook near waist, right fingertips pushing up round glasses at bridge of nose; 2 standing reading open notebook at chest, looking at page; 3 same body position, writing in that notebook with a small pencil, a distinct hand angle; 4 standing, BOTH arms extending the open notebook toward SCREEN RIGHT at FACE HEIGHT, eager questioning expression, notebook far edge near her nose height, NOT covering her own face; 5 standing turning a notebook page and pointing to a small blank area, eyes lowered; 6 standing holding open notebook in left hand, right hand reaching halfway DOWN and toward screen right for bread outside the frame, stopping before touching anything, no bread drawn; 7 standing with notebook under left arm, tiny moss sample on right fingertip at lips, thoughtful tasting expression (no exaggerated tongue); 8 exhausted crouch with bent knees and much LOWER body silhouette, closed notebook tucked at left hip, right palm extending forward to brace on a low rail outside the sprite, no rail drawn. The crouching head must stay the SAME width as the other seven. No extra characters or objects. Crisp clean pixel silhouettes, no blur. All props physically attached to hands; no floating pages. Distinct separated sprites, no clipped limbs.",
+      "reference": "public/story-stage/lico-poses.webp frame 0, nearest-neighbor 4x reference crop",
+      "method": "built-in image_gen, transparent",
+      "sha256": "43859b7e3322bf67d83fde08da0a6428f3c43a5a6c9df528d15e2b3baa47ee25"
+    },
+    {
+      "source": "assets/source/story-stage/mira-moss-care-v1.png",
+      "prompt": "Transparent pixel-art sprite sheet, 4 separate full-body standing poses of the SAME healer Mira from reference, ONE ROW FOUR COLUMNS with equal cells and generous transparent gutters. Match reference pixel style, lavender-gray long braid, little white flower and gold hair ornament, pale cream short healer dress and brown boots, dark blue and gold outer cloth, soft tired expression. Exact same head width and crown-to-sole height in all four poses, all facing SCREEN RIGHT three-quarter view. No captions, no floor shadows, no other people, no floating objects, no notebook. Pose1: shoulders tired but standing, right fingers gripping the top handle of a small dark brown leather doctor's SATCHEL hanging beside right thigh. Pose2: same stance, fingers loosening and sliding off handle, satchel sinking just slightly but still caught by its wrist loop so it doesn't fall; clearly tired eyelids. Pose3: supporting another unseen person's upper arm: right forearm extended forward SCREEN RIGHT, palm gently open at chest height ready to support, left hand holds the SAME satchel by her opposite hip. Pose4: same support stance with right palm raised a little and elbow more bent, steadying the unseen person; same satchel left hand. Keep a natural small hand, no huge arm, no patient drawn. Costume and head size unchanged, feet level and fully visible. A brief humane exhaustion and care, not dramatic collapse. Crisp pixel silhouettes, do not beautify or redesign.",
+      "reference": "public/story-stage/mira-poses.webp frame 0, nearest-neighbor 4x reference crop",
+      "method": "built-in image_gen, transparent",
+      "sha256": "7681324c23253528733e5a1d8c9aac6467504dbb1abdb2358b42699e769f6ef5"
+    },
+    {
+      "source": "assets/source/story-stage/doctor-satchel-v1.png",
+      "prompt": "Extract/recreate ONLY the small brown leather doctor's satchel held by Mira in the reference as one standalone transparent RPG pixel-art item. Match its exact dark brown rounded rectangular soft bag, short curved top handle, simple front flap and small brass center clasp. Same warm crisp pixel art grain. Three-quarter view with front and subtle right side visible. Top handle intact, bag closed. NO character, hands, wrist loop dangling separately, cross symbol, ground shadow, floor, text, or extra items. Full item centered with ample transparent padding on every side. The bag should remain recognizable at around 32 pixels wide in game. Do not turn it into a rigid wooden medicine chest or green canvas pack.",
+      "reference": "assets/source/story-stage/mira-moss-care-v1.png",
+      "method": "built-in image_gen edit, transparent",
+      "sha256": "01be4627a23f72624edd257d68f6bab6a28a48609d09867b2cf9e6dd699bad28"
+    }
+  ]
+}

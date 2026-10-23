@@ -7,6 +7,7 @@ export const storySceneCompilation = compileSourceModule(
   import.meta.url,
 );
 const dependencies = [
+  ["./use-story-motion-advance", "../../app/use-story-motion-advance.ts"],
   ["./use-banter-completion", "../../app/use-banter-completion.ts"],
   ["./story-viewers", "../../app/story-viewers.tsx"],
   ["./story-memory-groups", "../../app/story-memory-groups.ts"],

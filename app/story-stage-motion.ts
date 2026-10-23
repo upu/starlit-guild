@@ -6,6 +6,7 @@ import { paintStageArrows } from "./story-stage-arrows";
 import { stageActorDepth } from "@/lib/story-stage-props";
 import { journeyDuration } from "@/lib/story-stage-travel";
 import { extraTravelDuration } from "@/lib/story-stage-extra-travel";
+import type { StageMoment } from "@/lib/story-stage-cues";
 import {
   sampleStageActor,
   stageLuggage,
@@ -48,7 +49,7 @@ function nameTop(sample: StageSample, above: boolean) {
 function paintSprite(sprite: HTMLElement, sample: StageSample) {
   sprite.dataset.atlas = sample.atlas;
   sprite.dataset.frame = String(sample.frame);
-  const rows = { adventure: 6, conversation: 17, home: 4, shawl: 1 }[sample.atlas];
+  const rows = { adventure: 6, conversation: 19, home: 4, shawl: 1 }[sample.atlas];
   sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
   const authoredFacing =
     sample.atlas === "conversation" &&
@@ -104,14 +105,40 @@ function animateStage(
   boxMotion: BoxMotion,
   itemMotion: ItemMotion,
   onComplete: () => void,
+  speed: () => number,
 ) {
   const moments = [
     { after: 0, actors: cue.actors, items: cue.items ?? [], extras: cue.extras },
     ...(cue.sequence ?? []),
   ];
+  const endAt = stageEndAt(cue, moments, positions);
+  let phase = -1,
+    paint: ReturnType<typeof stagePainter>;
+  return animateFrames(
+    (elapsed, reduced) => {
+      const index = moments.findLastIndex((m) => m.after <= elapsed);
+      const moment = moments[index];
+      if (index !== phase) {
+        phase = index;
+        paint = stagePainter(stage, { ...cue, ...moment }, positions, boxMotion, itemMotion);
+      }
+      paint(elapsed - moment.after, reduced);
+      paintStageArrows(stage, cue, elapsed, reduced);
+    },
+    endAt,
+    onComplete,
+    speed,
+  );
+}
+
+function stageEndAt(
+  cue: StoryStageCue,
+  moments: StageMoment[],
+  positions: Map<string, StagePosition>,
+) {
   const last = moments[moments.length - 1];
   const previousActors = moments.at(-2)?.actors ?? cue.actors;
-  const endAt = Math.max(
+  return Math.max(
     3000,
     ...(cue.arrows ?? []).map((arrow) => arrow.after + arrow.duration),
     ...moments.map(
@@ -139,28 +166,13 @@ function animateStage(
         ),
       ),
   );
-  let phase = -1,
-    paint: ReturnType<typeof stagePainter>;
-  return animateFrames(
-    (elapsed, reduced) => {
-      const index = moments.findLastIndex((m) => m.after <= elapsed);
-      const moment = moments[index];
-      if (index !== phase) {
-        phase = index;
-        paint = stagePainter(stage, { ...cue, ...moment }, positions, boxMotion, itemMotion);
-      }
-      paint(elapsed - moment.after, reduced);
-      paintStageArrows(stage, cue, elapsed, reduced);
-    },
-    endAt,
-    onComplete,
-  );
 }
 
 function animateFrames(
   paint: (elapsed: number, reduced: boolean) => void,
   endAt: number,
   onComplete: () => void,
+  speed: () => number,
 ) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   let elapsed = 0,
@@ -173,7 +185,7 @@ function animateFrames(
     onComplete();
   };
   const tick = (time: number) => {
-    elapsed += previous ? Math.min(64, time - previous) : 0;
+    elapsed += previous ? Math.min(64, time - previous) * speed() : 0;
     previous = time;
     paint(elapsed, reduced.matches);
     if (elapsed < endAt && !reduced.matches) frame = requestAnimationFrame(tick);
@@ -199,12 +211,16 @@ function animateFrames(
   };
 }
 
-export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void) {
+export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void, hasten = false) {
   const stage = useRef<HTMLDivElement>(null);
   const positions = useRef(new Map<string, StagePosition>());
   const boxMotion = useRef<BoxMotion>({});
   const itemMotion = useRef<ItemMotion>(new Map());
   const completion = useRef(onComplete);
+  const speed = useRef(1);
+  useEffect(() => {
+    speed.current = hasten ? 3 : 1;
+  }, [hasten]);
   useEffect(() => {
     completion.current = onComplete;
   }, [onComplete]);
@@ -224,6 +240,7 @@ export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void)
         () => {
           completion.current?.();
         },
+        () => speed.current,
       );
   }, [cue]);
   return stage;

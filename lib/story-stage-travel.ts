@@ -1,6 +1,8 @@
 import type { StageActor } from "./story-stage-cues.ts";
 
 export type StagePosition = {
+  atlas?: "home" | "adventure" | "conversation" | "shawl";
+  frame?: number;
   x: number;
   bottom?: number;
   left?: boolean;

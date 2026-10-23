@@ -19,6 +19,7 @@ export function stageActorDepth(
 
 export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
   if (item.stored) return false;
+  if (itemDrawnInPose(item, positions)) return false;
   if (item.wrist && !positions.get(item.actor ?? `extra:${item.extra ?? ""}`)?.wrist) return false;
   const sitter = item.seatFor && positions.get(item.seatFor);
   return (
@@ -26,6 +27,13 @@ export function stageItemVisible(item: StageItem, positions: Map<string, StagePo
     !sitter.onChair ||
     Math.abs(sitter.x - item.x) > 2 ||
     Math.abs((sitter.bottom ?? 14) - item.bottom) > 4
+  );
+}
+
+function itemDrawnInPose(item: StageItem, positions: Map<string, StagePosition>) {
+  const owner = item.actor && positions.get(item.actor);
+  return (
+    !!owner && owner.atlas === "conversation" && !!item.embeddedFrames?.includes(owner.frame ?? -1)
   );
 }
 

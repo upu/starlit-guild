@@ -85,9 +85,7 @@
       {
         "story": ["storeroom"]
       },
-      {
-        "story": ["moss-beds"]
-      },
+      {},
       {
         "story": ["registry"]
       }
@@ -341,5 +339,11 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["brekka-tower-path"] }]
+  },
+  {
+    "source": "assets/source/story-stage/moss-beds-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["moss-beds"] }]
   }
 ]

@@ -1,6 +1,9 @@
 import type { ResidentId } from "./home-actor.ts";
 
 export type StageActor = {
+  /** Lico's notebook / fieldwork and Mira's supporting hand, registered in the common atlas. */
+  mossStudy?: "glasses" | "read" | "write" | "show" | "page" | "reach" | "taste" | "brace";
+  mossCare?: "hold" | "slip" | "support" | "steady";
   /** Leon keeps the open route notes in his registered hand pose. */
   routeNotes?: "read" | "write";
   allNighter?: "reach" | "pause" | "answer" | "think";
@@ -58,6 +61,8 @@ export type StageActor = {
   dressed?: boolean;
 };
 export type StoryStageCue = {
+  /** Finish a physical interaction before applying the next line's settled props. */
+  finishBeforeAdvance?: boolean;
   arrows?: StageArrow[];
   description: string;
   actors: StageActor[];
@@ -222,6 +227,7 @@ export type StageItem = {
     | "kettle"
     | "medicine"
     | "medicine-closed"
+    | "doctor-satchel"
     | "delivery-bag"
     | "herbs"
     | "honey"
@@ -346,6 +352,9 @@ export type StageItem = {
   wristAnchor?: "top" | "bottom";
   /** Contents remain attached to their container after being put away. */
   stored?: boolean;
+  /** The same held item is already drawn in these conversation frames. */
+  embeddedFrames?: number[];
+  shaded?: boolean;
   /** Surface supporting or being touched by this object, independent of its height. */
   support?: string;
   tilt?: number;

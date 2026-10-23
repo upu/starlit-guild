@@ -29,17 +29,21 @@ const actorArt = (id: string): CSSProperties =>
     "--conversation-art": `url(/story-stage/${id}-poses.webp)`,
   }) as CSSProperties;
 
+type StoryStageProps = {
+  cue: StoryStageCue;
+  speaker?: string;
+  onComplete?: () => void;
+  hasten?: boolean;
+};
+
 export function StoryStage({
   cue: authoredCue,
   speaker,
   onComplete,
-}: {
-  cue: StoryStageCue;
-  speaker?: string;
-  onComplete?: () => void;
-}) {
+  hasten = false,
+}: StoryStageProps) {
   const cue = useMemo(() => stageCameraCue(authoredCue), [authoredCue]);
-  const stage = useStoryStageMotion(cue, onComplete);
+  const stage = useStoryStageMotion(cue, onComplete, hasten);
   return (
     <div className="story-art-space story-stage-space">
       <div

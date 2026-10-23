@@ -334,6 +334,9 @@
 .story-stage-item[data-art="plant-label"] {
   aspect-ratio: 0.7;
 }
+.story-stage-item[data-shaded="true"] {
+  filter: brightness(0.55);
+}
 .story-stage-item[data-art="oil-dish"] {
   aspect-ratio: 1.5;
 }

@@ -81,3 +81,5 @@
 4-4の夜明け前のミラと荷車の追跡は `lib/story-stage-moss-trail.ts`。手元を含む疲れた姿勢・御者の歩行と車輪は `scripts/story-stage-moss-trail-art.mjs`、既存姿勢の保存・縮尺・追従・一枚絵への切替は `tests/story-stage-moss-trail.test.mjs` を参照する。
 
 4-5の道順の記録、分かれ道、塔の石段は `lib/story-stage-moss-second-day.ts`。手帳の読む／書く姿勢は `StageActor.routeNotes` と `lib/story-stage-pose.ts`、背景の登録は `scripts/story-stage-moss-trail-art.mjs` の `secondDayBackgrounds`。荷車は4-4と共通の `mossCartDriver` / `mossCartItems` を使い、手帳を閉じる時点、縮尺、御者と取っ手の接点、階段と帰路の維持は `tests/story-stage-moss-second-day.test.mjs` で検査する。
+
+4-6の苔床は [場面](../../../lib/story-stage-moss-beds.ts) → [介助と受け渡し](../../../lib/story-stage-moss-bed-rest.ts) → [小物と腰掛け](../../../lib/story-stage-moss-bed-items.ts)。[観察・介助姿勢](../../../lib/story-stage-study-pose.ts) と [素材生成](../../../scripts/story-stage-moss-beds-art.mjs) は共通アトラスを使う。画像に描いた小物の重複抑止・姿勢寸法・退出は [検査](../../../tests/story-stage-moss-beds.test.mjs) を参照。身体動作を終えてから台詞を送る場面は `finishBeforeAdvance` を指定し、[送り待ち](../../../app/use-story-motion-advance.ts) と [読者検査](../../../tests/story-reader.test.mjs) で連打・重複完了を扱う。

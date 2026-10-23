@@ -6,6 +6,7 @@ import { actorDressings } from "./story-stage-dressings.ts";
 export { item };
 
 export type LaterBeat = {
+  finishBeforeAdvance?: boolean;
   arrows?: StoryStageCue["arrows"];
   at: number;
   actors?: Partial<Record<ResidentId, Partial<StageActor>>>;
@@ -117,6 +118,7 @@ export function buildLaterStage(story: Story, definition: LaterStage) {
       };
     });
     return {
+      finishBeforeAdvance: beat?.finishBeforeAdvance,
       description: `${story.place}。${line.text}`,
       arrows: beat?.arrows,
       actors: openingActors,

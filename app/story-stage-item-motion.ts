@@ -130,6 +130,7 @@ function paintItem(
   element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})${turn ? ` rotateY(${String(turn)}deg)` : ""}`;
   element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
   element.dataset.art = item.art;
+  element.dataset.shaded = String(!!item.shaded);
   element.dataset.dissipating = String(!!item.dissipating);
   element.dataset.pouring = String(!!item.pouring);
   element.dataset.steaming = String(!!item.steaming);

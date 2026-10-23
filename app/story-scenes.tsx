@@ -19,6 +19,7 @@ import type { Story, StoryLine } from "@/lib/stories";
 import { storyArtAt } from "@/lib/story-art";
 import { compactStoryDialogue, storyStageCue, storyStageExitCue } from "@/lib/story-stage";
 import { StoryStage } from "./story-stage";
+import { useStoryMotionAdvance } from "./use-story-motion-advance";
 import {
   hasNextBanter,
   nextBanter,
@@ -192,8 +193,13 @@ function useReaderState({ story, ready, onRead, onClose, departure = false }: St
     onClose,
   );
   const playback = useStageExit(advancePage, finishing, !!(last && exitCue && ready));
+  const motion = useStoryMotionAdvance(
+    page,
+    !!(stage && stage.finishBeforeAdvance),
+    playback.advance,
+  );
   const advance = () => {
-    if (!viewHistory) playback.advance();
+    if (!viewHistory) motion.advance();
   };
   const handlers = useStoryGestureHandlers(dialogue, gesture, advance);
   return {
@@ -212,6 +218,12 @@ function useReaderState({ story, ready, onRead, onClose, departure = false }: St
     dialogue,
     handlers,
     ...playback,
+    ...motion,
+    finishStage: playback.exiting
+      ? playback.finishExit
+      : stage && stage.finishBeforeAdvance
+        ? motion.finishMotion
+        : undefined,
     advance,
   };
 }
@@ -232,6 +244,7 @@ function storyConversation(
       tabIndex={0}
       aria-label={viewHistory ? "会話履歴" : label}
       aria-disabled={exiting || (last && !ready)}
+      aria-busy={reader.hasten}
       {...handlers}
     >
       <div ref={dialogue} className="dialogue-page dialogue-history">
@@ -265,8 +278,7 @@ function compactDialogue(conversation: ReactNode, reader: ReturnType<typeof useR
 export function StoryReader(props: StoryReaderProps) {
   const reader = useReaderState(props);
   const { story, ready, advanceRef } = props;
-  const { page, art, stage, compact, exiting, exitCue, finishExit, viewArt, setViewArt, advance } =
-    reader;
+  const { page, art, stage, compact, exiting, exitCue, viewArt, setViewArt, advance } = reader;
   useImperativeHandle(advanceRef, () => ({ advance }));
   const conversation = storyConversation(story, ready, reader);
   return (
@@ -280,7 +292,8 @@ export function StoryReader(props: StoryReaderProps) {
           key={story.id}
           cue={exiting && exitCue ? exitCue : stage}
           speaker={story.lines[page]?.speaker}
-          onComplete={exiting ? finishExit : undefined}
+          hasten={reader.hasten}
+          onComplete={reader.finishStage}
         />
       ) : (
         storyArtwork(art ?? null, viewArt, story.title, () => {

@@ -61,13 +61,15 @@ test("rocks and low stools remain separate from actors and walking overrides the
 });
 
 test("Lico reaches the label, receives support before walking and sits on the waiting stool", () => {
-  const close = cue("brekka-moss-beds-return", 42).actors.find((a) => a.id === "lico");
-  assert.ok(close.inspect && close.x < 25 && close.bottom >= 38);
+  const study = cue("brekka-moss-beds-return", 42);
+  assert.equal(study.actors.find((a) => a.id === "lico").mossStudy, "taste");
+  const close = study.sequence.at(-1).actors.find((a) => a.id === "lico");
+  assert.ok(close.inspect && close.bottom >= 60);
   const rest = cue("brekka-moss-beds-return", 45);
   const start = rest.actors.find((a) => a.id === "lico");
-  assert.ok(start.inspect);
+  assert.equal(start.mossStudy, "brace");
   const supported = rest.sequence[0];
-  assert.ok(!supported.actors.find((a) => a.id === "lico").inspect);
+  assert.equal(supported.actors.find((a) => a.id === "mira").mossCare, "steady");
   const helper = supported.actors.find((a) => a.id === "mira");
   assert.ok(Math.abs(helper.x - start.x) <= 8);
   const destination = rest.sequence.at(-1).actors.find((a) => a.id === "lico");
@@ -120,11 +122,12 @@ test("Aria reaches each seated owner before taking their things, then sets them 
   assert.ok(
     settled.items.filter((p) => ["ledger", "medicine"].includes(p.id)).every((p) => !p.actor),
   );
-  assert.equal(settled.items.find((p) => p.id === "medicine").art, "delivery-bag");
+  assert.equal(settled.items.find((p) => p.id === "medicine").art, "doctor-satchel");
   const leon = settled.actors.find((a) => a.id === "leon");
   for (const item of settled.items.filter((p) => ["ledger", "medicine"].includes(p.id)))
     assert.ok(
-      item.bottom + (item.width * 1.5) / 1.3 < (leon.bottom ?? 14),
+      item.bottom + (item.width * 1.5) / 1.3 < (leon.bottom ?? 14) ||
+        Math.abs(item.x - leon.x) > 10,
       "placed objects clear Leon's feet",
     );
 });

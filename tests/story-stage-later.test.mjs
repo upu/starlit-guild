@@ -69,8 +69,9 @@ test("later arrivals and separate errands do not show characters before their en
   assert.deepEqual(visible("brekka-moss-beds-return", 0), ["aria", "leon", "mira"]);
   const licoCue = cue("brekka-moss-beds-return", 2),
     lico = licoCue.actors.find((a) => a.id === "lico");
-  assert.equal(stageEntrance("lico", licoCue).x, 110);
-  assert.ok(sampleStageActor(lico, { x: 110 }, 300).x > lico.x);
+  const entry = stageEntrance("lico", licoCue);
+  assert.ok(entry.bottom > lico.bottom, "comes from the tower side, not across the water channel");
+  assert.ok(sampleStageActor(lico, entry, 300).bottom > lico.bottom);
   assert.deepEqual(visible("lico-records-departure", 0), ["aria", "leon", "mira", "finn"]);
   assert.deepEqual(visible("lico-records-departure", 32), ["aria", "leon", "mira", "finn", "lico"]);
   assert.deepEqual(visible("moss-transplant-return", 15), ["mira"]);
