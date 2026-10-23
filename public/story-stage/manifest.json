@@ -312,12 +312,12 @@
     "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
   },
   "mira-poses": {
-    "source": "167f70ed76825517c091495f633c853f722625b8bb825cb500fff33952f9def2",
-    "output": "4693b629db501eb58187464620dc248076178445dbc479ce4bcc9d0367505e07"
+    "source": "3ea837bc29d034bb654e50145831941a4cbfad871b9182959f8e343bc8cc420a",
+    "output": "5ef53489a0c85331d67b66cdb4f9e2ff181a138d7cf8b9ae5d5dbd388a681713"
   },
   "finn-poses": {
-    "source": "daf0e32e892e7568b80d6820e1d7499ffa06c8231e42b96ee0035e533c97aa9b",
-    "output": "2922a8a2bcae8dabd2317b423f2a25cb4c48b84e256858f8e39e333442b2290d"
+    "source": "5cc11b186505a09fcb70eb6d3a209e56f16031be96fad09852614559ae68cd11",
+    "output": "3f172eb8fabad2f5fe912f99b350ed6ade9bd39095dc633fae6c63e4a579065c"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
@@ -746,5 +746,9 @@
   "prop-stained-cloth": {
     "source": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3",
     "output": "63d5955a5211b24448bc56ba440ee6228d5a50acbfc2573b68814359bfe8bf3a"
+  },
+  "prop-empty-garden-pot": {
+    "source": "73bea1c8e1e96472e4c0824dba3b7462251c89ccd852b2fec2dc07f6e12f10c2",
+    "output": "eadfeae90d0d2bf656b0de38a6bd74bef000c5beb115a0ef76b6dcd51926e59e"
   }
 }

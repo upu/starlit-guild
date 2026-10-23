@@ -14,5 +14,12 @@ export function dressingItem(actor: ResidentId): StageItem {
 }
 
 export function actorDressings(actors: StageActor[]) {
-  return actors.filter((a) => a.dressed && a.visible !== false).map((a) => dressingItem(a.id));
+  return actors
+    .filter((a) => {
+      // These two poses already paint the dressing on the stationary right palm.
+      const painted =
+        a.id === "finn" && (a.handAction === "pat-ready" || a.handAction === "pat-touch");
+      return a.dressed && a.visible !== false && !painted;
+    })
+    .map((a) => dressingItem(a.id));
 }

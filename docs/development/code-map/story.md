@@ -18,6 +18,8 @@
 
 3-8の一枚絵より前の受傷・布の受け渡しは `lib/story-stage-night-hand.ts`、展示物と持ち物は `lib/story-stage-night-hand-items.ts`。フィンの共通アトラス17〜20番と小物の登録は `scripts/story-stage-night-hand-art.mjs`、縮尺・接点・経路・既存44コマの画素は `tests/story-stage-night-hand.test.mjs` で検査する。一枚絵が始まる13行目以降は `storyArtAt` の既存区間を維持する。
 
+3-8後半の橋での合流、包帯の確認、荷車の包みを空いた手で叩く動作は `lib/story-stage-bridge.ts`。共通アトラスのフィン32・33番、ミラ17番と空の鉢は `scripts/story-stage-bridge-art.mjs`。静止した人物が荷物へ手を伸ばす間の前後関係は `lib/story-stage-props.ts` の `stageActorDepth`、接点・縮尺・経路・既存コマの画素は `tests/story-stage-bridge.test.mjs` を参照する。
+
 旅団の日常は `lib/guild-stories.ts`、解放は `lib/guild-base.ts`、在室と未読の選択は `lib/guild-presence.ts`。`app/guild-chat.tsx` が共通の `Banter` で自動再生し、`app/use-banter-completion.ts` が最後の台詞の表示時間と一時停止を扱う。既読は `story.read`、思い出での再読は `StoryReader` を共用する。生成台本は `docs/story/game-script/guild.md`。`tests/guild.test.mjs` / `tests/story-reader.test.mjs` / `tests/guild.browser.mjs` で解放・在室・既読・停止・再読・表情を確認する。
 
 - **編集元・主要関数**: [シーンの集約](../../../lib/stories.ts) の `stories` / `availableStories` → 対象章の本文。第三章は [接続](../../../lib/chapter-three-stories.ts) から [分割ファイル](../../../lib/chapter-three-opening-stories.ts) へ。第四章は [接続](../../../lib/chapter-four-stories.ts) から [幕間〜4-3の本文](../../../lib/chapter-four-stories-1.ts)・[4-4〜4-6の本文](../../../lib/chapter-four-stories-2.ts)・[4-7〜4-8の本文](../../../lib/chapter-four-conflict-stories.ts)・[4-9〜4-10の本文](../../../lib/chapter-four-stories-3.ts) と [道中会話](../../../lib/chapter-four-banter.ts) へ。[読者](../../../app/story-scenes.tsx) は `StoryReader`、[思い出の章選択と一覧](../../../app/story-library.tsx) は `StoryLibrary`、スチルは [storyArtAt](../../../lib/story-art.ts)。マップ下の掛け合いの送りと重複防止は [掛け合いの進行](../../../lib/banter-exchange.ts) の `nextBanter`。

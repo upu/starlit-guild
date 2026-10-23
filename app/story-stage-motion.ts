@@ -3,6 +3,7 @@ import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
 import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
 import { extraPainter } from "./story-stage-extra-motion";
 import { paintStageArrows } from "./story-stage-arrows";
+import { stageActorDepth } from "@/lib/story-stage-props";
 import { journeyDuration } from "@/lib/story-stage-travel";
 import { extraTravelDuration } from "@/lib/story-stage-extra-travel";
 import {
@@ -85,6 +86,11 @@ function stagePainter(
     paintBox(positions, elapsed, reduced);
     paintExtras(elapsed, reduced);
     paintItems(positions, elapsed, reduced);
+    for (const { actor, element } of actors) {
+      const at = positions.get(actor.id);
+      if (element && actor.reachOver && at)
+        element.style.zIndex = String(stageActorDepth(actor, at, cue, positions));
+    }
   };
   return paint;
 }

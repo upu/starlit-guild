@@ -79,10 +79,15 @@ test("care and carrying frames retain head scale, lower kneeling height and padd
     .ensureAlpha()
     .raw()
     .toBuffer();
+  // Mira's former idle placeholder 17 now holds the separately tested river-facing pose.
+  for (let y = 0; y < 128; y++) {
+    const offset = ((4 * 128 + y) * 512 + 128) * 4;
+    bytes.fill(0, offset, offset + 128 * 4);
+  }
   for (let i = 0; i < bytes.length; i += 4) if (!bytes[i + 3]) bytes.fill(0, i, i + 3);
   assert.equal(
     createHash("sha256").update(bytes).digest("hex"),
-    "771cb1e4254b7adde4588846938de5aed3f73baa66f0f61bf386f1920621ed0f",
+    "838f022843a0bf6a5317c267a814e8b3c61249dada85b9dd66b07b01a00fc509",
   );
   for (const [id, indices, reference] of [
     ["mira", [44, 45, 46, 47], "mira"],

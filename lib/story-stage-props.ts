@@ -4,6 +4,19 @@ import type { StagePosition } from "./story-stage-travel.ts";
 export type BoxPosition = { x: number; bottom: number };
 export const boxTransferDuration = 650;
 
+export function stageActorDepth(
+  actor: StageActor,
+  at: StagePosition,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+) {
+  const base = Math.round(100 - (at.bottom ?? 14));
+  if (Math.abs(at.x - actor.x) + Math.abs((at.bottom ?? 14) - (actor.bottom ?? 14)) > 0.001)
+    return base;
+  const support = actor.reachOver && cue.items?.find((item) => item.id === actor.reachOver);
+  return support ? Math.max(base, stageItemDepth(support, cue, positions) + 1) : base;
+}
+
 export function stageItemVisible(item: StageItem, positions: Map<string, StagePosition>) {
   if (item.stored) return false;
   if (item.wrist && !positions.get(item.actor ?? `extra:${item.extra ?? ""}`)?.wrist) return false;

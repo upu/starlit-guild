@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { readFrame, headBounds, rowCuts, spriteBounds } from "./home-pixel-frames.mjs";
 import { registerWorkPose } from "./story-stage-pose-frames.mjs";
 import { injuredHandFrames } from "./story-stage-night-hand-art.mjs";
+import { bridgeFrames } from "./story-stage-bridge-art.mjs";
 
 const ids = ["aria", "leon", "mira", "finn", "lico"];
 const source = (root, name) => readFile(new URL(`assets/source/story-stage/${name}.png`, root));
@@ -141,6 +142,8 @@ export async function reviewHero(root, name, raw, original) {
     hands.frames.forEach((frame, i) => {
       frames[17 + i] = frame;
     });
+  const bridge = await bridgeFrames(root, id, head);
+  if (bridge) for (const { index, pose } of bridge.frames) frames[index] = pose;
   const image = await sharp({
     create: { width: 512, height: 1536, channels: 4, background: "#00000000" },
   })
@@ -171,6 +174,7 @@ export async function reviewHero(root, name, raw, original) {
       ...(care ? [care] : []),
       ...(gloves ? [gloves] : []),
       ...(hands ? [hands.raw] : []),
+      ...(bridge ? [bridge.raw] : []),
     ]),
     image,
   };

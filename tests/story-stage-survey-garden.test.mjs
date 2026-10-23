@@ -106,8 +106,8 @@ test("the glove poses preserve Finn's other established cells and standing scale
       ].map((box) => sharp(atlas).extract(box).ensureAlpha().raw().toBuffer()),
     ),
   );
-  // The injury scene replaces four idle placeholders; its own test covers those poses.
-  for (const cell of [17, 18, 19, 20])
+  // Injury and parcel-pat scenes replace idle placeholders and test those poses separately.
+  for (const cell of [17, 18, 19, 20, 32, 33])
     for (let y = 0; y < 128; y++) {
       const offset = ((Math.floor(cell / 4) * 128 + y) * 512 + (cell % 4) * 128) * 4;
       previous.fill(0, offset, offset + 128 * 4);
@@ -115,7 +115,7 @@ test("the glove poses preserve Finn's other established cells and standing scale
   for (let i = 0; i < previous.length; i += 4) if (!previous[i + 3]) previous.fill(0, i, i + 3);
   assert.equal(
     createHash("sha256").update(previous).digest("hex"),
-    "1818fff1f67881e0a9c1e5634db91601f621eb8efbf0d5c8d6da177df54eac30",
+    "a7e6d31cf87b2acd5fbbf978ed89765af06fe7668169ad062c97d57a72c40269",
   );
   const ref = await readFrame(atlas, { left: 0, top: 0, width: 128, height: 128 });
   const head = await headBounds(await sharp(ref.cell).extract(ref.box).png().toBuffer(), 0.25);

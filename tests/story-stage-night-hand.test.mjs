@@ -110,7 +110,7 @@ test("Leon and Aria walk around companions, the cart and the display instead of 
   }
 });
 
-test("Finn's new hand poses preserve head scale, padded feet and the other 44 atlas frames", async () => {
+test("Finn's hand poses preserve head scale, padded feet and established atlas frames", async () => {
   const atlas = "public/story-stage/finn-poses.webp",
     hash = createHash("sha256");
   const home = await readFrame("public/home-pixel/finn.webp", {
@@ -140,7 +140,7 @@ test("Finn's new hand poses preserve head scale, padded feet and the other 44 at
       const wrist = stageWrist("finn", "conversation", i);
       const pixels = await sharp(frame.cell).ensureAlpha().raw().toBuffer();
       assert.ok(pixels[(wrist.y * 128 + wrist.x) * 4 + 3] > 200, `visible hand ${i}`);
-    } else {
+    } else if (i !== 32 && i !== 33) {
       const pixels = await sharp(atlas).extract(bounds).ensureAlpha().raw().toBuffer();
       for (let j = 0; j < pixels.length; j += 4) if (!pixels[j + 3]) pixels.fill(0, j, j + 3);
       hash.update(pixels);
@@ -148,7 +148,7 @@ test("Finn's new hand poses preserve head scale, padded feet and the other 44 at
   }
   assert.equal(
     hash.digest("hex"),
-    "503860d7902217c6addb68b8a31f40593ae35d3608ee12dab85141854f09b158",
+    "2149bfaf24bce274fafdbc3b88691ca245e260ac3007af635b50058ea0b5fec4",
   );
 });
 

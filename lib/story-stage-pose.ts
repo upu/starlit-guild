@@ -21,6 +21,8 @@ export function actorPose(actor: StageActor, moving: boolean, elapsed: number, r
 }
 
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.id === "mira" && actor.lookAcross)
+    return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
   return (
     healingPose(actor, elapsed, reduced) ??
     injuredHandPose(actor) ??
@@ -36,7 +38,9 @@ function injuredHandPose(actor: StageActor) {
   if (actor.id !== "finn" || !actor.handAction) return null;
   return {
     atlas: "conversation" as const,
-    frame: { catch: 17, guard: 18, wipe: 19, palm: 20 }[actor.handAction],
+    frame: { catch: 17, guard: 18, wipe: 19, palm: 20, "pat-ready": 32, "pat-touch": 33 }[
+      actor.handAction
+    ],
     handDrop: 0,
     onChair: false,
   };
