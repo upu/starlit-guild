@@ -130,6 +130,7 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  restoration?: "trace" | "touch" | "read" | "receive";
   kitchen?: "pot" | "lid" | "inspect" | "cloth";
   care?: "sore" | "palm" | "bandaged" | "rest";
   grip?: "reach" | "hold";
@@ -139,6 +140,7 @@ export type StageExtra = {
     | "keeper"
     | "worker"
     | "stone-carrier"
+    | "fence-carrier"
     | "merchant"
     | "masked-pumpety"
     | "merrill"
@@ -265,6 +267,8 @@ export type StageItem = {
     | "scrubbing-rag"
     | "garden-pot"
     | "empty-garden-pot"
+    | "work-fence"
+    | "joint-roots"
     | "work-gloves"
     | "broken-fastener"
     | "stained-cloth"

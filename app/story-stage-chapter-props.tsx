@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import type { StoryStageCue } from "@/lib/story-stage";
 import type { StageExtra } from "@/lib/story-stage-cues";
-import { stageExtraFrame, stageExtraRows } from "@/lib/story-stage-figure";
+import { stageExtraFrame, stageExtraRows, stageExtraAtlas } from "@/lib/story-stage-figure";
 
 const names = {
   keeper: "塔の管理人",
@@ -75,19 +75,22 @@ function Extra({ extra, hidden }: { extra: StageExtra; hidden: boolean }) {
       data-speaking={!!extra.speaking}
       data-pose={extra.pose ?? "idle"}
       data-bed={extra.id === "child" && !!extra.bed}
+      data-restoration={!!extra.restoration}
       style={{ left: `${String(extra.x)}%`, bottom: `${String(extra.bottom ?? 23)}%` }}
     >
       <span className="story-stage-shadow" />
       <span
         className="story-stage-extra-sprite"
         style={{
-          backgroundImage: `url(/story-stage/${extra.id}-poses.webp)`,
+          backgroundImage: `url(/story-stage/${stageExtraAtlas(extra)}-poses.webp)`,
           backgroundPositionX: `${String(((stageExtraFrame(extra) % 4) / 3) * 100)}%`,
           backgroundPositionY: `${String((Math.floor(stageExtraFrame(extra) / 4) * 100) / Math.max(1, stageExtraRows(extra) - 1))}%`,
           transform: extra.chair ? `scaleX(${extra.left ? "1" : "-1"})` : undefined,
         }}
       />
-      <span className="story-stage-name">{extra.name ?? names[extra.id]}</span>
+      <span className="story-stage-name">
+        {extra.name ?? (extra.id === "fence-carrier" ? "柵を運ぶ人" : names[extra.id])}
+      </span>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   stageEntrance,
 } from "../lib/story-stage.ts";
 import { storyArtAt } from "../lib/story-art.ts";
+import { stageExtraAtlas } from "../lib/story-stage-figure.ts";
 import { portraitAtlases } from "../lib/portrait-expressions.ts";
 const stories = [...chapterTwoStories, ...chapterThreeStories, ...chapterFourStories];
 
@@ -52,7 +53,7 @@ test("58 later stories preserve still reveals, complete casts, expressions and d
           );
       }
       for (const extra of stage.extras)
-        assert.ok(existsSync(`public/story-stage/${extra.id}-poses.webp`));
+        assert.ok(existsSync(`public/story-stage/${stageExtraAtlas(extra)}-poses.webp`));
     }
   }
 });

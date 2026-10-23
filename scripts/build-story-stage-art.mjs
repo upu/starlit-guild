@@ -1,6 +1,7 @@
 import { receptionAssets } from "./story-stage-reception-art.mjs";
 import { nightHandAssets } from "./story-stage-night-hand-art.mjs";
 import { bridgeProps } from "./story-stage-bridge-art.mjs";
+import { restorationKeeper, restorationProps } from "./story-stage-restoration-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -48,8 +49,9 @@ async function emit(name, source, image) {
   const hat = await reviewWorkerHat(root, name, worker.raw, worker.image);
   const parent = await reviewParentMotion(root, name, hat.raw, hat.image);
   const manor = await reviewManorNpc(root, name, parent.raw, parent.image);
-  source = manor.raw;
-  image = manor.image;
+  const restoration = await restorationKeeper(root, name, manor.raw, manor.image);
+  source = restoration.raw;
+  image = restoration.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -166,6 +168,7 @@ await surveyAssets(root, emit);
 await receptionAssets(root, emit);
 await nightHandAssets(root, emit);
 await bridgeProps(root, emit);
+await restorationProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

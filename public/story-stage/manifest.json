@@ -108,8 +108,8 @@
     "output": "c22591bbe5456f1d50c80d9c3e21bd81d0d7c0b003a6ed8d9bfea990337745f1"
   },
   "keeper-poses": {
-    "source": "a82cc9e07741e28a8964e8403e8927bd2243f12394690c332a2c0e81d3002dce",
-    "output": "e78ce946da2a7060dd9cab197a24fa9175b93ff99e3918a1bc0a1813de95be9a"
+    "source": "deddc4a5b70fb8c9ef2bc6f51b07144d21b873297cadf2347dba98e40482348a",
+    "output": "8f5f896b85d42194a45f7d6545489e3c31f53c66da96156200d11de0c1095662"
   },
   "worker-poses": {
     "source": "6895c5f6122aab06eed359a600bfa424699fca5717069aeff7ca6eae373195e2",
@@ -750,5 +750,13 @@
   "prop-empty-garden-pot": {
     "source": "73bea1c8e1e96472e4c0824dba3b7462251c89ccd852b2fec2dc07f6e12f10c2",
     "output": "eadfeae90d0d2bf656b0de38a6bd74bef000c5beb115a0ef76b6dcd51926e59e"
+  },
+  "prop-work-fence": {
+    "source": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8",
+    "output": "17472c33c4fd85d6ed156cce2e301ebb2827afc7c61ed51a80d4253815d29655"
+  },
+  "prop-joint-roots": {
+    "source": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8",
+    "output": "4707b828cefc1c80d85ce3b134652ed17b8ae30c5cadf490d1369e5cd3e2e96e"
   }
 }

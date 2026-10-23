@@ -16,14 +16,23 @@ export function stageFigure(item: StageItem, moving: boolean, elapsed: number) {
 }
 
 const poses = { idle: 0, explain: 1, point: 2, wave: 3 };
+export const stageExtraAtlas = (extra: StageExtra) =>
+  extra.id === "fence-carrier" ? "stone-carrier" : extra.id;
 const beds = { rest: 4, listen: 5, ask: 6, nod: 7 };
+const extraFrames: Partial<
+  Record<StageExtra["id"], (extra: StageExtra, moving: boolean, elapsed: number) => number>
+> = {
+  "stone-carrier": stoneCarrierFrame,
+  keeper: keeperFrame,
+  parent: parentFrame,
+  worker: workerFrame,
+  cook: cookFrame,
+  "masked-pumpety": maskedFrame,
+};
 export function stageExtraFrame(extra: StageExtra, moving = false, elapsed = 0) {
-  if (extra.id === "stone-carrier") return stoneCarrierFrame(extra, moving, elapsed);
-  if (extra.id === "parent") return parentFrame(extra, moving, elapsed);
-  if (extra.id === "worker") return workerFrame(extra, moving, elapsed);
-  if (extra.id === "cook") return cookFrame(extra, moving, elapsed);
+  const selectFrame = extraFrames[stageExtraAtlas(extra)];
+  if (selectFrame) return selectFrame(extra, moving, elapsed);
   if (extra.id === "merchant" && moving) return 8 + (Math.floor(elapsed / 180) % 4);
-  if (extra.id === "masked-pumpety") return maskedFrame(extra, moving, elapsed);
   if (extra.id === "child" && extra.bed) return beds[extra.bed];
   return poses[extra.pose ?? "idle"] + (extra.chair ? 4 : 0);
 }
@@ -32,6 +41,12 @@ function stoneCarrierFrame(extra: StageExtra, moving: boolean, elapsed: number) 
   if (moving) return Math.floor(elapsed / 180) % 4;
   if (extra.care) return { sore: 4, palm: 5, bandaged: 6, rest: 7 }[extra.care];
   return 1;
+}
+
+function keeperFrame(extra: StageExtra, moving: boolean, elapsed: number) {
+  if (moving) return 8 + (Math.floor(elapsed / 180) % 4);
+  if (extra.restoration) return { trace: 12, touch: 13, read: 14, receive: 15 }[extra.restoration];
+  return poses[extra.pose ?? "idle"] + (extra.chair ? 4 : 0);
 }
 
 function maskedFrame(extra: StageExtra, moving: boolean, elapsed: number) {
@@ -46,10 +61,12 @@ function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 }
 
 export function stageExtraRows(extra: StageExtra) {
-  if (extra.id === "worker" || extra.id === "cook") return 4;
+  if (extra.id === "worker" || extra.id === "cook" || extra.id === "keeper") return 4;
   if (extra.id === "merchant") return 3;
   if (extra.id === "masked-pumpety") return 3;
-  return ["child", "keeper", "merchant", "parent", "stone-carrier"].includes(extra.id) ? 2 : 1;
+  return ["child", "merchant", "parent", "stone-carrier", "fence-carrier"].includes(extra.id)
+    ? 2
+    : 1;
 }
 
 function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {

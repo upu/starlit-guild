@@ -18,6 +18,12 @@
 .story-stage-extra .story-stage-name {
   top: 4%;
 }
+.story-stage-extra:is([data-npc="fence-carrier"], [data-restoration="true"]) .story-stage-name {
+  top: 100%;
+}
+.story-stage-extra[data-restoration="true"] .story-stage-name {
+  left: 20%;
+}
 .story-stage-extra[data-speaking="true"] .story-stage-name {
   color: #fff0a5;
 }
@@ -27,7 +33,7 @@
 }
 .story-stage-extra:is(
     [data-npc="child"],
-    [data-npc="keeper"],
+    [data-npc="fence-carrier"],
     [data-npc="merchant"],
     [data-npc="parent"],
     [data-npc="stone-carrier"]
@@ -74,7 +80,8 @@
   .story-stage-extra-sprite {
   background-size: 400% 300%;
 }
-.story-stage-extra:is([data-npc="worker"], [data-npc="cook"]) .story-stage-extra-sprite {
+.story-stage-extra:is([data-npc="worker"], [data-npc="cook"], [data-npc="keeper"])
+  .story-stage-extra-sprite {
   background-size: 400% 400%;
 }
 .story-stage-item:is(
@@ -82,6 +89,8 @@
   [data-art="tool-rucksack"],
   [data-art="garden-pot"],
   [data-art="empty-garden-pot"],
+  [data-art="work-fence"],
+  [data-art="joint-roots"],
   [data-art="work-gloves"],
   [data-art="snag-rope"],
   [data-art="iron-fastener"],

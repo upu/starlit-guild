@@ -4,6 +4,7 @@ import type { ResidentId } from "./home-actor.ts";
 // Unlike carried items, an applied dressing follows the arm through its walking swing.
 // null means the far arm is behind the torso in this frame.
 const walking = {
+  finn: [[75, 85], [76, 85], [76, 87], null, [47, 80], [51, 84], null, null],
   aria: [[76, 80], [76, 80], null, null, null, null, null, [83, 75]],
   leon: [[76, 82], [76, 82], null, null, [76, 82], [76, 82], null, null],
   mira: [[79, 88], [79, 88], null, [83, 91], [81, 88], [81, 88], null, null],
@@ -11,7 +12,11 @@ const walking = {
 const conversation: Record<string, Partial<Record<number, number[]>>> = {
   finn: {
     0: [78, 88],
+    1: [84, 68],
+    2: [72, 76],
+    3: [71, 71],
     4: [83, 78],
+    5: [84, 71],
     17: [94, 94],
     18: [70, 70],
     19: [58, 86],

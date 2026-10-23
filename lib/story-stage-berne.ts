@@ -1,3 +1,4 @@
+import { restorationDeparture } from "./story-stage-restoration.ts";
 import { keystoneInspection, keystoneFoundation } from "./story-stage-keystone.ts";
 import { bernePaving } from "./story-stage-berne-paving.ts";
 import { berneVisit } from "./story-stage-berne-visit.ts";
@@ -7,7 +8,6 @@ import { overlookRest } from "./story-stage-low-seats.ts";
 import {
   scene,
   quartet,
-  held,
   ground,
   table,
   onTable,
@@ -16,7 +16,6 @@ import {
 } from "./story-stage-later-shared.ts";
 import { chair, diningCast, diningItems, diningScene } from "./story-stage-furniture.ts";
 const crew = () => quartet();
-const mason = () => npc("worker", "石工", 27);
 const keeper = () => npc("keeper", undefined, 73);
 export const berneStages: Record<string, LaterStage> = {
   "berne-road-departure": diningScene(
@@ -48,23 +47,7 @@ export const berneStages: Record<string, LaterStage> = {
   "missing-keystone-return": keystoneFoundation,
   "matching-lantern-stone-departure": stoneYard,
   "matching-lantern-stone-return": stoneRest,
-  "berne-restoration-departure": scene("tower-foot", crew(), [
-    {
-      at: 0,
-      items: [ground("keystone", 53, 22, 13), ground("tools", 29)],
-      extras: [keeper(), mason()],
-    },
-    { at: 1, extras: [{ ...keeper(), pose: "point", speaking: true }, mason()] },
-    { at: 3, actors: { aria: { pose: "think" } } },
-    { at: 7, items: [ground("keystone", 53, 22, 13), held("ledger", "leon"), ground("tools", 29)] },
-    {
-      at: 8,
-      items: [ground("keystone", 53, 22, 13), ground("ledger", 73, 41, 8), ground("tools", 29)],
-    },
-    { at: 10, items: [ground("keystone", 53, 22, 13), held("map", "leon"), ground("tools", 29)] },
-    { at: 11, actors: { aria: { inspect: true, x: 28 } } },
-    { at: 15, actors: { finn: { x: 85, pose: "greet" } } },
-  ]),
+  "berne-restoration-departure": restorationDeparture,
   "berne-restoration-return": scene("tower-foot", crew(), [
     { at: 0, night: true, items: [ground("keystone", 53, 22, 13)], extras: [keeper()] },
     { at: 1, actors: { aria: { pose: "greet", reaction: "nod" } } },
