@@ -44,12 +44,12 @@
     "output": "10552de4a9d377cc3ac5eeb7ee2a0d8465ad5d95451e84f3f450003ecb66f2e7"
   },
   "aria-poses": {
-    "source": "be808de3852de9d874835ea3acee21781b954ed9efd4fbc13ca7208582a49c19",
-    "output": "d6933e255afc2a28a5db98233c7497f62d9407d42ca589529fd558cbc7d0bcb9"
+    "source": "55e6c8868cc0c07b369fe3593381eea9ba4574ec15ee1b1670d7eb8f8a84a88a",
+    "output": "119fc05cb1f00df92dfd8baab6f3a821d39360b01bf59be5368c427bd6905822"
   },
   "leon-poses": {
     "source": "c272010ff1776170661fb417c31b91e7748c78d0dcd43d07ebceede598399756",
-    "output": "411807cf80447bbc19f4b3d9bfd4e7832693419e0827f2cd7a3d701adecb963d"
+    "output": "2215d35481395bd38f854cc82db1f3a4cf5f9e40fffc1c8338b8c84d3c186d4e"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -112,8 +112,8 @@
     "output": "8f5f896b85d42194a45f7d6545489e3c31f53c66da96156200d11de0c1095662"
   },
   "worker-poses": {
-    "source": "6895c5f6122aab06eed359a600bfa424699fca5717069aeff7ca6eae373195e2",
-    "output": "3b8f305d4957da2e0dfb7789f2b0421a1e4da8b3b51c942693f0edc194e79566"
+    "source": "001469e14dbbc3a3a1c7a984e80ab5720b6f8339ade60a8ab75f79dfef581082",
+    "output": "ec4dc66400271cb021d9db5faca35e5120c808ae9b31b6ff493c95610d44ecee"
   },
   "aria-shawl": {
     "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
@@ -313,15 +313,15 @@
   },
   "mira-poses": {
     "source": "4d86e2272affb3a0a3d1a1100ee1bc3e9fffe59bc15631f873106ddc8098ab2b",
-    "output": "0f765d3ffec972aab720991b868a8f20e80b0dd234e7ae789ca3cbe56b16a985"
+    "output": "c845c2edba4aaeb985517ca2947e8c6844e7a6a7afc1f3c5e3b5c312d13031ae"
   },
   "finn-poses": {
     "source": "5cc11b186505a09fcb70eb6d3a209e56f16031be96fad09852614559ae68cd11",
-    "output": "a97c0fb900b1f3170507781ef650d072a7a680835538cc75686c5aba4c207479"
+    "output": "f9d47cb96a6f6fe2ecb1169f3f35339272473d5cd7a1a3e7e4e9ea58afd04634"
   },
   "lico-poses": {
     "source": "f42b45d35cc01d92b3f7c18d852e1ddea54ee28fb6855b8071a97dd84ccede4a",
-    "output": "31fd8c879dc345197e579eaf93082ee9aa5ea44e9d1fecd9f18a56be28522b3e"
+    "output": "535799dea3e0ffebfcc2652ee6013a5e67caa84902e48be391bbf398bec87186"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -660,7 +660,7 @@
     "output": "d76e9214fd908d09da292177337c1fddf18efacde9beadda4e016ac9cca0917b"
   },
   "stone-carrier-poses": {
-    "source": "7a326405bd2b37155965d034c36f284ac9e78a7a488f536f371ae6257d349006",
+    "source": "97c08d149a2058f30befcfbf384a1c60ccc9179d3db00a3fb239eabab5ad7fa5",
     "output": "e2ef614855c081fbe6f3b2a861b13858b0b5c1e5eb718dee29e41c7620c566a0"
   },
   "prop-candidate-blue": {
@@ -774,5 +774,29 @@
   "prop-sealed-letter": {
     "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
     "output": "6d89e74d722d58c8c314517fa0e3212eaa3f1a0475a614459652e709d65c2a49"
+  },
+  "prop-stone-lantern-closed-sooty": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "96c019798b309ad8b1ae533bbb86d21fd1e7053e134379a23d7b8698b472fa9f"
+  },
+  "prop-stone-lantern-empty": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "8f1174aa03913432a29f1bf3091943e9e73e7ba24fd2cd7684286db90bd64d1c"
+  },
+  "prop-stone-lantern-closed-lit": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "e7059df0efa85ea9e9eb02fd1e5c81904195c97176847c3d2cd400c8d59636a2"
+  },
+  "prop-roadside-grass": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "51649775cd5e4f0235844d0ea94ef08420c9c7d764992b6eca445bf7b1bc531c"
+  },
+  "prop-roadside-stubble": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "f235e46ed78c1429f44a3a5ad9ee0c2db668e8dad7405cbdf7e333c859df7f12"
+  },
+  "prop-lamp-oil": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "7227a26d3ee3a0f8785ee4b19b40d11d387ba6a795e367c6ce9a178436ef027b"
   }
 }

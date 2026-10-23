@@ -31,6 +31,7 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
   if (actor.id === "mira" && actor.lookAcross)
     return { atlas: "conversation" as const, frame: 17, handDrop: 0, onChair: false };
   return (
+    fieldWorkPose(actor, elapsed, reduced) ??
     healingPose(actor, elapsed, reduced) ??
     injuredHandPose(actor) ??
     glovePose(actor) ??
@@ -39,6 +40,15 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
     bowPose(actor) ??
     stationaryPose(actor, elapsed, reduced)
   );
+}
+function fieldWorkPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.id !== "aria" || !actor.fieldWork) return null;
+  return {
+    atlas: "conversation" as const,
+    frame: cycle(actor.fieldWork === "wipe" ? 52 : 54, elapsed, 430, !reduced),
+    handDrop: 0,
+    onChair: false,
+  };
 }
 
 function injuredHandPose(actor: StageActor) {

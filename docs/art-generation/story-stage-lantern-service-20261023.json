@@ -1,0 +1,36 @@
+{
+  "model": "image_gen",
+  "referenceCommit": "f5dcad9c3c2f3db603aa74d929a991ccf064ff08",
+  "references": [
+    "work/aria-field-reference.png: first 512x512 of public/story-stage/aria-poses.webp at referenceCommit",
+    "work/worker-field-reference.png: first row of public/story-stage/worker-poses.webp at referenceCommit",
+    "public/story-stage/prop-stone-lantern-sooty.webp at referenceCommit"
+  ],
+  "sources": [
+    {
+      "path": "assets/source/story-stage/aria-fieldwork-v1.png",
+      "generatedFile": "exec-8e4efd63-7c91-40fc-815e-2f94e708f623.png",
+      "prompt": "Create a transparent RGBA sprite sheet of the SAME Aria from the supplied reference: blonde swept side hair with lavender underside, small flower above her ear, green cape with gold edging, cream tunic and short skirt, brown gloves and boots. Preserve her face, hair and existing chibi RPG proportions exactly. Four complete full-body poses, 2 columns x 2 rows, generous transparent gutters, no background, ground, shadows, labels or borders. High-oblique three-quarter view facing RIGHT in every cell. Keep the same head width and boot contact, never stretch her torso.\nTop two cells are a coherent two-frame WIPING cycle. Aria stands with a slight forward lean, near arm extended to her RIGHT at chest height, palm pressing a small unseen cloth against a vertical glass pane. Left frame hand slightly higher/farther forward, right frame hand lower/closer by about half a head. Other hand near waist. Draw EMPTY hands; the game draws the cloth and lantern separately. No pane or lantern.\nBottom two cells are a coherent two-frame WEED CUTTING cycle. Aria kneels on one knee, weight low, head the same scale as standing, near hand holding ONE short curved iron sickle with a brown handle. Left frame draws the sickle back near her knee, right frame makes a short low forward sweep to her RIGHT at ground level. Other gloved hand rests on the raised knee, safely away from the blade. No grass, cuttings, bag or ground. Keep head and hips almost fixed; only arm and blade move. No full-size sword. Both boots and all hair/cape ends entirely inside their cells. Use the same crisp warm pixel-art outlining and resolution style as the reference.",
+      "sha256": "71e4719a640215641a96833ec91ff1352f82ec000ccbc467042d803293d56ce5"
+    },
+    {
+      "path": "assets/source/story-stage/worker-wiping-v1.png",
+      "generatedFile": "exec-4ce6e566-0112-4dd9-8c4c-3782c7cd14fe.png",
+      "prompt": "Create a transparent RGBA sprite strip for the SAME young village porter from the reference: short brown hair, ochre shirt, dark brown work apron/vest, brown trousers and boots, friendly plain face. Two full-body poses in ONE horizontal row of equal cells with wide clear margins. Both are the SAME high-oblique three-quarter LEFT-facing RPG pixel-art character at identical scale and boot contact. Match existing head width and body proportions, warm crisp outlines. No floor, background, cast shadows, borders or text.\nThese are a two-frame wiping cycle: near arm reaches to his LEFT to press an unseen cloth against a low vertical glass pane at waist/chest level. First cell hand slightly forward and higher, second hand lower and closer (about half a head apart). Modest torso lean, other hand at hip, knees almost straight. Head and feet remain nearly fixed. EMPTY hands: the game renders the cloth and lantern separately. No cloth, pane, lantern, tools, notebook or other objects. Keep complete hair and soles inside each cell.",
+      "sha256": "707738ac2e49087a4d74847e30ac552e40e7754d4a731b4e55b2a09e5cac1f59"
+    },
+    {
+      "path": "assets/source/story-stage/lantern-service-states-v1.png",
+      "generatedFile": "exec-99b0ee4a-6f69-42fa-9ab9-168f22fa2d4b.png",
+      "prompt": "Use the supplied stone lantern as the exact object reference. Create three matching transparent RGBA full-object sprites in one horizontal row of three equal cells, all same scale and SAME fixed camera, roof, moss, stonework, base footprint, roof center and foot contact. This is a small medieval stone OIL lantern with a wooden-framed glass chamber, not a magical tower. Warm crisp RPG pixel art, high-oblique view exactly as reference. Wide clear gutters. No scene, ground plane, cast shadows, figures, text or labels.\nLEFT: soot-dark glass chamber with the hinged FRONT DOOR CLOSED across the front opening. Oily black-gray smudges on glass. A shallow empty oil pan barely visible inside. No flame or glow.\nMIDDLE: same door swung to the LEFT as in reference, glass now clear, chamber COMPLETELY EMPTY with a visible flat stone chamber floor. NO oil pan, wick, candle or flame. This is the state while the removable pan is outside.\nRIGHT: same cleaned lantern, front door CLOSED again, a small shallow oil pan and short wick within, tiny warm yellow flame. Faint amber light only inside glass chamber, not an outside halo. Keep stones and moss their natural colors, no bright outline. Do not change the size of the oil pan or the chamber. All three match the original roof and stacked mossy base. No embellishments.",
+      "sha256": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117"
+    },
+    {
+      "path": "assets/source/story-stage/lantern-field-kit-v1.png",
+      "generatedFile": "exec-cc85c61f-220a-4364-b2b7-d1a20ae0c807.png",
+      "prompt": "Transparent RGBA medieval RPG pixel-art prop sheet, one horizontal row of three equal cells with broad transparent gutters. High-oblique overhead angle, warm dark-brown crisp outlines. No people, background scene, labels, glow or cast shadows. Objects must be legible at 20-60 pixels.\nCell 1: a low narrow clump of ordinary GREEN roadside grass with some long blades bending outward to the RIGHT over a walking path. Modest uneven tuft, exposed tiny root/soil patch beneath, not a bush, tree, magical moss or flower garden.\nCell 2: the EXACT SAME footprint/root/soil patch seen from same angle, after cutting: short green stubble with the same lower blades, plus several long freshly cut blades lying immediately to the right. Keep the base size and root position identical; plant above ground is shorter. Do not draw a tool or person.\nCell 3: one small plain brown ceramic lamp-oil flask with a short pouring spout, small loop handle and dark stopper beside the neck. Simple portable household oil flask, palm-sized, no writing or decoration, no flame or spill.\nDo not add a rectangular tile or ground around the grass. Transparent outside the actual object.",
+      "sha256": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015"
+    }
+  ],
+  "processing": "scripts/story-stage-lantern-service-art.mjs; retain prior 52 hero cells; Aria work poses use matching head width and foot y=120; worker reserved cells13/14 only; lantern roof and grass roots share anchors."
+}

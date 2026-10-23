@@ -326,6 +326,9 @@
 .story-stage-item[data-art="oil-dish"] {
   aspect-ratio: 1.5;
 }
+.story-stage-item:is([data-art="roadside-grass"], [data-art="roadside-stubble"]) {
+  aspect-ratio: 1.25;
+}
 .story-stage-item:is([data-art="puppet"], [data-art="golem"]) {
   aspect-ratio: 0.8;
   z-index: 1;
@@ -344,6 +347,34 @@
 }
 .story-stage-item[data-glow="bright"][data-art="stone-lantern"] {
   filter: drop-shadow(0 0 8px #ffd77f90);
+}
+.story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+  content: "";
+  position: absolute;
+  left: 43%;
+  top: 45%;
+  width: 10%;
+  height: 12%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, #fff6bcbd, #ffc14d66 40%, transparent 75%);
+  mix-blend-mode: screen;
+  transform-origin: center bottom;
+  animation: oil-lantern-flicker 1.7s ease-in-out infinite;
+}
+@keyframes oil-lantern-flicker {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.94, 0.96);
+  }
+  45% {
+    opacity: 0.85;
+    transform: scale(1.04, 1.1);
+  }
+  70% {
+    opacity: 0.6;
+    transform: scale(1, 1.02);
+  }
 }
 .story-stage-item[data-item="dark"] {
   filter: brightness(0.65);
@@ -364,6 +395,10 @@
   background-size: 400% 100%;
 }
 @media (prefers-reduced-motion: reduce) {
+  .story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+    animation: none;
+    opacity: 0.6;
+  }
   .story-stage-item[data-art="low-smoke"]::before {
     animation: none;
     opacity: 0.4;

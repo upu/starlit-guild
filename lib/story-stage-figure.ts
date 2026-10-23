@@ -84,18 +84,21 @@ function parentFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 }
 
 function workerFrame(extra: StageExtra, moving: boolean, elapsed: number) {
-  if (moving) {
-    const phase = elapsed % 760;
-    return (
-      4 +
-      (extra.limp
-        ? [260, 380, 620, 760].findIndex((end) => phase < end)
-        : Math.floor(elapsed / 180) % 4)
-    );
-  }
+  if (moving) return workerWalkFrame(extra, elapsed);
   if (extra.hatGreeting) return 12;
+  if (extra.wiping) return 13 + (Math.floor(elapsed / 430) % 2);
   if (extra.writing) return 8 + (Math.floor(elapsed / 320) % 2);
+  if (extra.notebook) return 8;
   if (extra.inspect) return 10;
   if (extra.carry) return 11;
   return extra.limp && (!extra.pose || extra.pose === "idle") ? 5 : poses[extra.pose ?? "idle"];
+}
+function workerWalkFrame(extra: StageExtra, elapsed: number) {
+  const phase = elapsed % 760;
+  return (
+    4 +
+    (extra.limp
+      ? [260, 380, 620, 760].findIndex((end) => phase < end)
+      : Math.floor(elapsed / 180) % 4)
+  );
 }

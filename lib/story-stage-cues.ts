@@ -13,6 +13,8 @@ export type StageActor = {
   seated?: boolean;
   /** Chair-seated tea poses for Aria, Leon and Mira, with the cup in the atlas. */
   tea?: "hold" | "sip";
+  /** Aria's glass wiping and low sickle strokes; the tool is in the cutting frames. */
+  fieldWork?: "wipe" | "weed";
   chair?: boolean;
   stool?: boolean;
   /** Low seat rendered separately: rock, ledge or step stool. */
@@ -133,6 +135,8 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  notebook?: boolean;
+  wiping?: boolean;
   restoration?: "trace" | "touch" | "read" | "receive";
   service?: "carry" | "place" | "raise" | "talk";
   kitchen?: "pot" | "lid" | "inspect" | "cloth";
@@ -235,6 +239,12 @@ export type StageItem = {
     | "stone-lantern"
     | "stone-lantern-sooty"
     | "stone-lantern-unlit"
+    | "stone-lantern-closed-sooty"
+    | "stone-lantern-empty"
+    | "stone-lantern-closed-lit"
+    | "roadside-grass"
+    | "roadside-stubble"
+    | "lamp-oil"
     | "oil-dish"
     | "plant-label"
     | "table"

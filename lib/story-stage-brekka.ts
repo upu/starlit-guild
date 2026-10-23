@@ -10,7 +10,7 @@ import {
   type LaterStage,
 } from "./story-stage-later-shared.ts";
 import { diningScene } from "./story-stage-furniture.ts";
-import { lanternAddressBeats } from "./story-stage-lantern-address.ts";
+import { lanternWork } from "./story-stage-lantern-work.ts";
 import { lindeDeparture, lindeReturn } from "./story-stage-linde-requests.ts";
 const owner = () => npc("merchant", "店主", 73);
 export const brekkaStages: Record<string, LaterStage> = {
@@ -21,57 +21,18 @@ export const brekkaStages: Record<string, LaterStage> = {
     quartet(),
     [
       { at: 0, extras: [npc("worker", "荷運び人", 72, "explain", true)] },
-      { at: 1, items: [held("map", "leon")] },
+      {
+        at: 1,
+        actors: { leon: { pose: "offer" } },
+        items: [held("map", "leon", { wrist: true, width: 6.5 })],
+      },
       { at: 4, actors: { aria: { pose: "greet" } } },
       { at: 7, actors: { finn: { pose: "tease" } } },
+      { at: 8, actors: { leon: { carry: true } } },
     ],
     { exit: ["aria", "leon", "mira", "finn"] },
   ),
-  "lantern-detour-return": scene("village-house", quartet(), [
-    {
-      at: 0,
-      actors: { leon: { x: 61, bottom: 29, inspect: true, left: true } },
-      items: [
-        { ...ground("stone-lantern-sooty", 51, 32, 17), id: "stone-lantern" },
-        held("oil-dish", "leon", { width: 4.5, x: -3, bottom: 25 }),
-        ground("tools", 44),
-      ],
-      extras: [npc("worker", "荷運び人", 74)],
-    },
-    {
-      at: 2,
-      actors: { aria: { x: 42, bottom: 35, pose: "offer", left: false } },
-      items: [
-        { ...ground("stone-lantern-sooty", 51, 32, 17), id: "stone-lantern" },
-        held("cloth", "aria", { width: 4, x: 5, support: "stone-lantern" }),
-        { ...ground("oil-dish", 51, 47, 4.5), support: "stone-lantern" },
-        ground("tools", 44),
-      ],
-      sequence: [
-        {
-          after: 1800,
-          items: [
-            { ...ground("stone-lantern-unlit", 51, 32, 17), id: "stone-lantern" },
-            held("cloth", "aria", { width: 4, x: 5, support: "stone-lantern" }),
-            ground("tools", 44),
-          ],
-        },
-      ],
-    },
-    {
-      at: 7,
-      night: true,
-      actors: {
-        leon: { x: 55, bottom: 14, inspect: false },
-        aria: { x: 8, bottom: 10, inspect: true, left: true },
-      },
-      extras: [{ ...npc("worker", "荷運び人", 61), bottom: 35 }],
-      items: [{ ...ground("stone-lantern", 51, 32, 17), glow: "bright" }, ground("tools", 19)],
-    },
-    { at: 8, actors: { aria: { x: 38, bottom: 14, inspect: false, pose: "greet", left: false } } },
-    { at: 9, extras: [npc("worker", "荷運び人", 74, "explain", true)] },
-    ...lanternAddressBeats,
-  ]),
+  "lantern-detour-return": lanternWork,
   "brekka-arrival-departure": diningScene(
     [
       {

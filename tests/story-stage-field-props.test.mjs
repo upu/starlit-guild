@@ -7,23 +7,23 @@ import { storyStageCue as cue } from "../lib/story-stage.ts";
 test("the lantern stays unlit through cleaning and lights with the evening narration", () => {
   const scene = "lantern-detour-return";
   const start = cue(scene, 0);
-  assert.equal(start.items.find((p) => p.id === "stone-lantern").art, "stone-lantern-sooty");
-  assert.equal(start.items.find((p) => p.art === "oil-dish").actor, "leon");
+  assert.equal(start.items.find((p) => p.id === "stone-lantern").art, "stone-lantern-closed-sooty");
+  assert.ok(start.items.find((p) => p.art === "oil-dish").stored);
   const cleaning = cue(scene, 2);
   const returningDish = cleaning.items.find((p) => p.art === "oil-dish");
-  assert.equal(returningDish.actor, undefined);
-  assert.equal(returningDish.support, "stone-lantern");
+  assert.equal(returningDish.actor, "leon");
   const finished = cleaning.sequence.at(-1).items;
-  assert.equal(finished.find((p) => p.id === "stone-lantern").art, "stone-lantern-unlit");
-  assert.ok(!finished.some((p) => p.art === "oil-dish"));
+  assert.equal(finished.find((p) => p.id === "stone-lantern").art, "stone-lantern-empty");
+  assert.equal(finished.find((p) => p.art === "oil-dish").actor, "leon");
   for (let line = 3; line < 7; line++) {
     const lamp = cue(scene, line).items.find((p) => p.id === "stone-lantern");
-    assert.equal(lamp.art, "stone-lantern-unlit");
+    assert.equal(lamp.art, "stone-lantern-empty");
     assert.equal(lamp.glow, undefined);
   }
-  const evening = cue(scene, 7).items.find((p) => p.id === "stone-lantern");
-  assert.equal(evening.art, "stone-lantern");
-  assert.equal(evening.glow, "bright");
+  const evening = cue(scene, 7)
+    .sequence.at(-1)
+    .items.find((p) => p.id === "stone-lantern");
+  assert.equal(evening.art, "stone-lantern-closed-lit");
   const original = start.items.find((p) => p.id === "stone-lantern");
   assert.deepEqual(
     [evening.x, evening.bottom, evening.width],
@@ -32,7 +32,14 @@ test("the lantern stays unlit through cleaning and lights with the evening narra
 });
 
 test("all lantern states share the same canvas, roof height and foot contact", async () => {
-  for (const name of ["stone-lantern-sooty", "stone-lantern-unlit", "stone-lantern"]) {
+  for (const name of [
+    "stone-lantern-sooty",
+    "stone-lantern-unlit",
+    "stone-lantern",
+    "stone-lantern-closed-sooty",
+    "stone-lantern-empty",
+    "stone-lantern-closed-lit",
+  ]) {
     const path = `public/story-stage/prop-${name}.webp`;
     const metadata = await sharp(path).metadata();
     assert.deepEqual([metadata.width, metadata.height], [320, 400]);

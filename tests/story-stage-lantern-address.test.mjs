@@ -1,29 +1,29 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { storyStageCue as cue } from "../lib/story-stage.ts";
+import { storyStageCue as cue, sampleStageActor } from "../lib/story-stage.ts";
 import { stageItemTarget } from "../lib/story-stage-props.ts";
 import { journeyDuration } from "../lib/story-stage-travel.ts";
+import { stageExtraFrame } from "../lib/story-stage-figure.ts";
 
 test("the carrier's notebook follows his hand and remains separate from the request copy", () => {
   for (const line of [18, 19, 20, 21]) {
     const stage = cue("lantern-detour-return", line);
     for (const step of [stage, ...(stage.sequence ?? [])]) {
-      const book = step.items.find((p) => p.id === "carrier-notebook");
-      assert.equal(book.extra, "worker");
-      assert.equal(book.actor, undefined);
-      assert.equal(book.art, "ledger");
-      assert.equal(book.width, 6);
-      const owner = stage.extras.find((p) => p.id === "worker");
-      const before = stageItemTarget(book, stage, new Map([["extra:worker", owner]]));
-      const after = stageItemTarget(
-        book,
-        stage,
-        new Map([["extra:worker", { ...owner, x: owner.x + 7, bottom: owner.bottom + 3 }]]),
+      const owner = step.extras.find((p) => p.id === "worker");
+      assert.ok(owner.notebook);
+      assert.ok(
+        [8, 9].includes(stageExtraFrame(owner, false, 400)),
+        "notebook is drawn in the worker's hands",
       );
-      assert.equal(after.x - before.x, 7);
-      assert.equal(after.bottom - before.bottom, 3);
+      assert.ok(
+        !step.items.some((p) => p.id === "carrier-notebook" || p.art === "ledger"),
+        "no second overlaid notebook",
+      );
     }
   }
+  const writing = cue("lantern-detour-return", 18).extras.find((p) => p.id === "worker");
+  assert.equal(stageExtraFrame(writing, false, 0), 8);
+  assert.equal(stageExtraFrame(writing, false, 400), 9);
 });
 
 test("Leon writes before giving the separate paper to Aria, who folds it after receiving it", () => {
@@ -49,19 +49,20 @@ test("Leon writes before giving the separate paper to Aria, who folds it after r
         stage.actors.find((a) => a.id === "aria"),
       ),
   );
-  const positions = new Map(taken.actors.map((a) => [a.id, a]));
-  assert.deepEqual(
-    stageItemTarget(
-      ready.items.find((p) => p.id === "request-copy"),
-      { ...stage, actors: ready.actors },
-      positions,
-    ),
-    stageItemTarget(
-      taken.items.find((p) => p.id === "request-copy"),
-      { ...stage, actors: taken.actors },
-      positions,
-    ),
-    "paper transfers at the shared hand position without travelling through the air",
+  const positions = new Map(taken.actors.map((a) => [a.id, sampleStageActor(a, a, 0, true)]));
+  const from = stageItemTarget(
+    ready.items.find((p) => p.id === "request-copy"),
+    { ...stage, actors: ready.actors },
+    positions,
+  );
+  const to = stageItemTarget(
+    taken.items.find((p) => p.id === "request-copy"),
+    { ...stage, actors: taken.actors },
+    positions,
+  );
+  assert.ok(
+    Math.hypot(from.x - to.x, ((from.bottom - to.bottom) * 2) / 3) < 2,
+    "both hands meet within the sheet's width",
   );
   assert.equal(taken.items.find((p) => p.id === "request-copy").art, "paper");
   const folded = stage.sequence.at(-1).items.find((p) => p.id === "request-copy");

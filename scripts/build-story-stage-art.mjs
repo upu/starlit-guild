@@ -4,6 +4,7 @@ import { bridgeProps } from "./story-stage-bridge-art.mjs";
 import { restorationKeeper, restorationProps } from "./story-stage-restoration-art.mjs";
 import { diningTeaPoses } from "./story-stage-dining-tea-art.mjs";
 import { merchantService, lindeProps } from "./story-stage-linde-art.mjs";
+import { lanternWorkPoses, lanternServiceProps } from "./story-stage-lantern-service-art.mjs";
 import sharp from "sharp";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -54,8 +55,9 @@ async function emit(name, source, image) {
   const restoration = await restorationKeeper(root, name, manor.raw, manor.image);
   const service = await merchantService(root, name, restoration.raw, restoration.image);
   const tea = await diningTeaPoses(root, name, service.raw, service.image);
-  source = tea.raw;
-  image = tea.image;
+  const field = await lanternWorkPoses(root, name, tea.raw, tea.image);
+  source = field.raw;
+  image = field.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -174,6 +176,7 @@ await nightHandAssets(root, emit);
 await bridgeProps(root, emit);
 await restorationProps(root, emit);
 await lindeProps(root, emit);
+await lanternServiceProps(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

@@ -162,7 +162,7 @@
 }
 .story-stage-sprite[data-atlas="conversation"] {
   background-image: var(--conversation-art);
-  background-size: 400% 1300%;
+  background-size: 400% 1400%;
 }
 .story-stage-actor[data-departing="true"][data-actor="aria"] {
   bottom: 9%;

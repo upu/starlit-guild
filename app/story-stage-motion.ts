@@ -48,13 +48,13 @@ function nameTop(sample: StageSample, above: boolean) {
 function paintSprite(sprite: HTMLElement, sample: StageSample) {
   sprite.dataset.atlas = sample.atlas;
   sprite.dataset.frame = String(sample.frame);
-  const rows = { adventure: 6, conversation: 13, home: 4, shawl: 1 }[sample.atlas];
+  const rows = { adventure: 6, conversation: 14, home: 4, shawl: 1 }[sample.atlas];
   sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
   const authoredFacing =
     sample.atlas === "conversation" &&
     ((sample.frame >= 24 && sample.frame < 32) ||
       (sample.frame >= 36 && sample.frame < 44) ||
-      sample.frame >= 48);
+      (sample.frame >= 48 && sample.frame < 52));
   sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left && !authoredFacing ? "-1" : "1"})`;
 }
 

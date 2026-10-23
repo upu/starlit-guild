@@ -37,6 +37,8 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     14: [75, 76],
     15: [75, 76],
     16: [75, 76],
+    52: [87, 55],
+    53: [86, 65],
   },
   leon: {
     0: [76, 83],
