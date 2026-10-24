@@ -1,0 +1,19 @@
+{
+  "tool": "image_gen.imagegen",
+  "date": "2026-10-22",
+  "mode": "edit",
+  "source": "assets/source/story-stage/tea-kit-v1.png",
+  "references": [
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/story-stage/prop-tea.webp",
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/story-stage/prop-pot.webp"
+  ],
+  "prompt": "Use the supplied pixel-art tea set and iron pot as STYLE references for STARLIT-GUILD. Create a transparent medieval overhead RPG PROP ATLAS in exactly 4 columns and 1 row, four equal square cells, generous fully transparent gutters. Warm earthy outlines, coherent chunky pixel detail, viewed from 40 degrees above, no floor or cast shadows. Cell 1: a small low round clay charcoal BRAZIER on three tiny feet, dark orange embers inside with an iron trivet across top, no kettle on it, no flames, no smoke. Cell 2: a small squat dark iron KETTLE with curved handle and clear pouring spout, closed lid, no brazier under it, no steam. Cell 3: ONE small cream ceramic tea CUP filled with amber tea, same blue leaf motif and handle as reference cups, no saucer. Cell 4: the cream blue-leaf TEAPOT from reference surrounded by exactly FOUR matching cups, not three. Preserve the style and materials of reference. Four separate sprites, one per equal cell, all completely contained with alpha padding. No text, labels, dividers, people, scenery, border or background. True transparency. Keep the brazier and kettle separate for compositing a kettle being placed on the trivet.",
+  "generatedSource": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-3b423aa0-f60a-463e-ae40-07a4cf3a0fe9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+  "outputs": [
+    "public/story-stage/prop-brazier.webp",
+    "public/story-stage/prop-kettle.webp",
+    "public/story-stage/prop-teacup.webp",
+    "public/story-stage/prop-tea-four.webp"
+  ],
+  "registration": "Transparent columns separated at source x=0,550,1100,1480,2172; each alpha crop resized to width 256. Runtime kettle is supported by the brazier, four cups match four diners."
+}

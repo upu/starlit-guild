@@ -1,0 +1,247 @@
+import { useEffect, useRef } from "react";
+import { boxPainter, type BoxMotion } from "./story-stage-box-motion";
+import { itemPainter, type ItemMotion } from "./story-stage-item-motion";
+import { extraPainter } from "./story-stage-extra-motion";
+import { paintStageArrows } from "./story-stage-arrows";
+import { stageActorDepth } from "@/lib/story-stage-props";
+import { journeyDuration } from "@/lib/story-stage-travel";
+import { extraTravelDuration } from "@/lib/story-stage-extra-travel";
+import type { StageMoment } from "@/lib/story-stage-cues";
+import {
+  sampleStageActor,
+  stageLuggage,
+  stageEntrance,
+  stageTravel,
+  type StagePosition,
+  type StageSample,
+  type StoryStageCue,
+} from "@/lib/story-stage";
+
+function paintActor(element: HTMLElement, sample: StageSample, nameOffset = 0, nameAbove = false) {
+  element.style.left = `${String(sample.x)}%`;
+  element.style.bottom = `${String(sample.bottom ?? 14)}%`;
+  element.style.zIndex = String(Math.round(100 - (sample.bottom ?? 14)));
+  element.style.visibility = sample.visible ? "visible" : "hidden";
+  const name = element.querySelector<HTMLElement>(".story-stage-name");
+  if (name) {
+    name.style.left = `${String(50 + nameOffset)}%`;
+    name.style.top = nameTop(sample, nameAbove);
+  }
+  const sprite = element.querySelector<HTMLElement>(".story-stage-sprite");
+  if (sprite) paintSprite(sprite, sample);
+  const bubble = element.querySelector<HTMLElement>(".story-stage-reaction");
+  if (bubble) {
+    bubble.textContent = sample.bubble;
+    bubble.hidden = !sample.bubble;
+  }
+}
+
+function nameTop(sample: StageSample, above: boolean) {
+  if (above)
+    return sample.atlas === "conversation" && sample.frame >= 10 && sample.frame <= 13
+      ? "20%"
+      : "-8%";
+  if ((sample.bottom ?? 14) < 20) return "100%";
+  if (sample.atlas === "conversation" && sample.frame >= 36 && sample.frame < 44) return "26%";
+  return sample.onChair ? "8%" : "100%";
+}
+
+function paintSprite(sprite: HTMLElement, sample: StageSample) {
+  sprite.dataset.atlas = sample.atlas;
+  sprite.dataset.frame = String(sample.frame);
+  const rows = { adventure: 6, conversation: 20, home: 4, shawl: 1 }[sample.atlas];
+  sprite.style.backgroundPosition = `${String(((sample.frame % 4) / 3) * 100)}% ${String(rows === 1 ? 0 : (Math.floor(sample.frame / 4) / (rows - 1)) * 100)}%`;
+  const authoredFacing =
+    sample.atlas === "conversation" &&
+    ((sample.frame >= 24 && sample.frame < 32) ||
+      (sample.frame >= 36 && sample.frame < 44) ||
+      (sample.frame >= 48 && sample.frame < 52));
+  sprite.style.transform = `translateY(${String(sample.lift)}px) scaleX(${sample.left && !authoredFacing ? "-1" : "1"})`;
+}
+
+function stagePainter(
+  stage: HTMLElement,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+  boxMotion: BoxMotion,
+  itemMotion: ItemMotion,
+) {
+  const actors = cue.actors.map((actor) => ({
+    actor,
+    origin: positions.get(actor.id) ?? stageEntrance(actor.id, cue),
+    element: stage.querySelector<HTMLElement>(`[data-actor="${actor.id}"]`),
+  }));
+  const cart = stage.querySelector<HTMLElement>(".story-stage-cart");
+  const cartOrigin = positions.get("cart")?.x ?? 64;
+  const paintBox = boxPainter(stage, cue, boxMotion);
+  const paintItems = itemPainter(stage, cue, itemMotion);
+  const paintExtras = extraPainter(stage, cue, positions);
+  const paint = (elapsed: number, reduced: boolean) => {
+    const travel = stageTravel(cartOrigin, cue.cartX ?? 64, elapsed, reduced);
+    positions.set("cart", travel);
+    if (cart) cart.style.left = `${String(travel.x)}%`;
+    for (const { actor, origin, element } of actors) {
+      const sample = sampleStageActor(actor, origin, elapsed, reduced);
+      positions.set(actor.id, sample);
+      if (element) paintActor(element, sample, actor.nameOffset, actor.nameAbove);
+      if (actor.id === "aria") stage.dataset.luggage = stageLuggage(cue, sample);
+    }
+    paintBox(positions, elapsed, reduced);
+    paintExtras(elapsed, reduced);
+    paintItems(positions, elapsed, reduced);
+    for (const { actor, element } of actors) {
+      const at = positions.get(actor.id);
+      if (element && actor.reachOver && at)
+        element.style.zIndex = String(stageActorDepth(actor, at, cue, positions));
+    }
+  };
+  return paint;
+}
+
+function animateStage(
+  stage: HTMLElement,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+  boxMotion: BoxMotion,
+  itemMotion: ItemMotion,
+  onComplete: () => void,
+  speed: () => number,
+) {
+  const moments = [
+    { after: 0, actors: cue.actors, items: cue.items ?? [], extras: cue.extras },
+    ...(cue.sequence ?? []),
+  ];
+  const endAt = stageEndAt(cue, moments, positions);
+  let phase = -1,
+    paint: ReturnType<typeof stagePainter>;
+  return animateFrames(
+    (elapsed, reduced) => {
+      const index = moments.findLastIndex((m) => m.after <= elapsed);
+      const moment = moments[index];
+      if (index !== phase) {
+        phase = index;
+        paint = stagePainter(stage, { ...cue, ...moment }, positions, boxMotion, itemMotion);
+      }
+      paint(elapsed - moment.after, reduced);
+      paintStageArrows(stage, cue, elapsed, reduced);
+    },
+    endAt,
+    onComplete,
+    speed,
+  );
+}
+
+function stageEndAt(
+  cue: StoryStageCue,
+  moments: StageMoment[],
+  positions: Map<string, StagePosition>,
+) {
+  const last = moments[moments.length - 1];
+  const previousActors = moments.at(-2)?.actors ?? cue.actors;
+  return Math.max(
+    3000,
+    ...(cue.arrows ?? []).map((arrow) => arrow.after + arrow.duration),
+    ...moments.map(
+      (m, i) =>
+        m.after +
+        Math.max(
+          0,
+          ...m.items.map((item) => item.travelMs ?? 650),
+          ...(m.extras ?? []).map((e) =>
+            extraTravelDuration(
+              e,
+              (i
+                ? moments[i - 1].extras?.find((p) => p.id === e.id)
+                : positions.get(`extra:${e.id}`)) ?? e,
+            ),
+          ),
+        ),
+    ),
+    ...cue.actors.map((a) => journeyDuration(a, positions.get(a.id) ?? stageEntrance(a.id, cue))),
+    last.after +
+      Math.max(
+        3000,
+        ...last.actors.map((a) =>
+          journeyDuration(a, previousActors.find((p) => p.id === a.id) ?? a),
+        ),
+      ),
+  );
+}
+
+function animateFrames(
+  paint: (elapsed: number, reduced: boolean) => void,
+  endAt: number,
+  onComplete: () => void,
+  speed: () => number,
+) {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let elapsed = 0,
+    previous = 0,
+    frame = 0;
+  let completed = false;
+  const complete = () => {
+    if (elapsed < endAt || completed) return;
+    completed = true;
+    onComplete();
+  };
+  const tick = (time: number) => {
+    elapsed += previous ? Math.min(64, time - previous) * speed() : 0;
+    previous = time;
+    paint(elapsed, reduced.matches);
+    if (elapsed < endAt && !reduced.matches) frame = requestAnimationFrame(tick);
+    else complete();
+  };
+  const resume = () => {
+    cancelAnimationFrame(frame);
+    previous = 0;
+    // Finish at a stable pose when motion is reduced, including live preference changes.
+    if (reduced.matches) elapsed = endAt;
+    paint(elapsed, reduced.matches);
+    if (!document.hidden && !reduced.matches && elapsed < endAt)
+      frame = requestAnimationFrame(tick);
+    if (!document.hidden) complete();
+  };
+  document.addEventListener("visibilitychange", resume);
+  reduced.addEventListener("change", resume);
+  resume();
+  return () => {
+    cancelAnimationFrame(frame);
+    document.removeEventListener("visibilitychange", resume);
+    reduced.removeEventListener("change", resume);
+  };
+}
+
+export function useStoryStageMotion(cue: StoryStageCue, onComplete?: () => void, hasten = false) {
+  const stage = useRef<HTMLDivElement>(null);
+  const positions = useRef(new Map<string, StagePosition>());
+  const boxMotion = useRef<BoxMotion>({});
+  const itemMotion = useRef<ItemMotion>(new Map());
+  const completion = useRef(onComplete);
+  const speed = useRef(1);
+  useEffect(() => {
+    speed.current = hasten ? 3 : 1;
+  }, [hasten]);
+  useEffect(() => {
+    completion.current = onComplete;
+  }, [onComplete]);
+  useEffect(() => {
+    if (cue.cut) {
+      positions.current.clear();
+      itemMotion.current.clear();
+      boxMotion.current = {};
+    }
+    if (stage.current)
+      return animateStage(
+        stage.current,
+        cue,
+        positions.current,
+        boxMotion.current,
+        itemMotion.current,
+        () => {
+          completion.current?.();
+        },
+        () => speed.current,
+      );
+  }, [cue]);
+  return stage;
+}

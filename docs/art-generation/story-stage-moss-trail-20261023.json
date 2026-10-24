@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-23",
+  "tool": "image_gen",
+  "purpose": "4-4: tired Mira at the inn and the basket-cart driver",
+  "assets": [
+    {
+      "key": "mira",
+      "refs": [
+        "work/mira-tired-reference.png",
+        "public/stories/mira-after-all-nighter.webp"
+      ],
+      "transparent": true,
+      "prompt": "Create a transparent RGBA sprite strip of EXACT Mira from reference1, in the SAME crisp warm RPG pixel-art style, chibi head/body proportions, lavender-gray hair/flower, cream healer dress with blue trim and brown boots. Reference2 only describes her exhausted all-night visit mood and brown leather medical satchel, NOT its painterly art style. FOUR equal full-body cells in ONE horizontal row, generous transparent gutters, no floor/shadow/text. High-oblique three-quarter RIGHT-facing. Fixed head and foot positions across all four. She is STANDING, shoulders slightly drooped, hair slightly loosened with a few stray strands, subtle clothing wrinkles and tired but awake eyes. Keep her original approachable face, not crying or ill/gray. Far arm cradles the SAME small brown leather medical satchel against the lower torso, approximately one head wide, leather flap open and a small brass clasp. Near hand handles ONE small cream paper note. Cell1: fingertips just entering the open satchel to take the note. Cell2: note half withdrawn from the satchel, hand pauses. Cell3: same half-withdrawn note and hand, she glances up to answer a concerned friend, tired slight smile. Cell4: same note/hand, modest downcast thoughtful expression. Standing full body with both boots visible. No stool or chair. Bag and note included in each pose, identical size and placement; do not cover face or feet.",
+      "source": "assets/source/story-stage/mira-all-nighter-v1.png",
+      "sha256": "72910ff76682a8f1ce8a6a999d7a7761d1e2d3b88a6157a017af5e9409078b21"
+    },
+    {
+      "key": "driver",
+      "refs": [
+        "work/cart-driver-reference.png"
+      ],
+      "transparent": true,
+      "prompt": "Create a transparent RGBA sprite strip extending the EXACT ordinary brown-haired worker in reference: ochre shirt, dark brown work apron, trousers, brown boots. SAME RPG pixel art, face, adult head/body proportions and high-oblique view. FOUR equal full-body cells in ONE horizontal row with broad transparent gutters. All four face LEFT, pulling a small unseen handcart BEHIND him to the RIGHT. Torso slightly forward toward LEFT, near hand stretched back toward RIGHT at waist height, closed fingers gripping an INVISIBLE horizontal cart shaft. Far hand can similarly brace behind torso but don't invent cart/rope. The gripping wrist stays at EXACT SAME location in all four cells; fixed head scale, foot baseline, no vertical bob. FOUR DISTINCT walking leg phases: left boot forward/right boot back; legs passing with one knee lifted; right boot forward/left boot back; opposite passing knee phase. Make boot stride and bent knee readable at small resolution; no skating. Complete hair/hands/soles. No actual cart, crate, wheels, props, floor, cast shadow, text, border, haze or opaque background.",
+      "source": "assets/source/story-stage/worker-cart-v1.png",
+      "sha256": "c7be04ab4011e7aef88ce874a486877aa5c296ae35e224ed6e9a37ceab957efe"
+    },
+    {
+      "key": "foyer",
+      "refs": [
+        "public/story-stage/brekka-dining-room.webp",
+        "public/stories/mira-after-all-nighter.webp"
+      ],
+      "transparent": false,
+      "prompt": "Create an EMPTY medieval small-town inn entrance hall in the crisp warm RPG pixel-art style and high-oblique top-down camera of reference1. Reference2 is only architectural/mood guidance for the dawn-before-sunrise scene, not painterly style. Landscape 3:2. This is an entrance foyer, no dining table or food service. Timber beams, plaster/stone walls, polished worn plank floor, a closed street entrance in upper-right wall with a narrow upper window showing very pale blue/lavender predawn sky, small low reception counter along upper-left wall, stairs rising at upper left, warm wall lanterns still lit. A narrow bench against the far wall, subtle flower jar, modest cozy lived-in inn. Middle and LOWER TWO THIRDS remain an unobstructed walkable wood floor for four small characters and separate chairs added by engine. Perspective and floorboards MUST match high-oblique 50-60-degree RPG camera, no low eye-level horizon. No characters, NPCs, loose chairs, central tables, baggage, writing/text, logos or UI. Gentle predawn light, warm indoors, clear floor readability. Match existing game pixel grain, outlines, material scale; avoid photorealism.",
+      "source": "assets/source/story-stage/brekka-foyer-v1.png",
+      "sha256": "4a7e240402b5cd6a954f82010443a5a8b09f890f02cda55924e0cd5282205d26"
+    },
+    {
+      "key": "wheel",
+      "source": "assets/source/story-stage/cart-wheel-v1.png",
+      "refs": [
+        "public/story-stage/prop-basket-cart.webp"
+      ],
+      "transparent": true,
+      "prompt": "Generate ONE isolated front-on circular wooden cart wheel on a fully transparent RGBA background. Use the supplied empty-basket handcart image ONLY as a material, color and pixel-art reference. Dark iron outer tire, warm weathered brown wooden rim, eight radial wooden spokes, round central axle hub, deep dark brown gaps behind spokes (opaque dark recessed wheel body, so this sprite can cover an existing wheel). Perfect circle seen straight on, not an ellipse and no three-quarter perspective; the game will project it. Centered, complete rim with transparent padding all around. Match the reference's warm crisp RPG pixel art, pixel size and outlines. No cart body, basket, shaft, floor, cast shadow, text, multiple wheels, blur or photorealism.",
+      "sha256": "e221290a038337741a534b32dbf2ce3bbd2d6631561830d49c9b0cc731d6ee24"
+    }
+  ]
+}

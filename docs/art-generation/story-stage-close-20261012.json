@@ -1,0 +1,22 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Close warehouse threshold staging and moss integrated into continuous tower foundation",
+  "records": [
+    {
+      "file": "assets/source/story-stage/town-warehouse-close-v1.png",
+      "reference": "assets/source/story-stage/town-warehouse-v1.png",
+      "prompt": "Recompose this pixel-art fantasy warehouse background with the CAMERA MUCH CLOSER to the warehouse entrance. Keep same warehouse materials, warm pixel style, open double wooden loading doors, sacks and crates inside, nearby town street and small distant hill tower visible through a narrow slice at far right. CRITICAL GEOMETRY: warehouse facade fills upper 70 percent; its threshold and wall-ground contact must run at y=70-73% of image, NOT at y=40%. The broad open loading doorway spans x=20-68% and extends beyond the top edge. We are standing immediately at the entrance, on the small loading apron beneath the awning. Only bottom 27 percent is empty walkable ground. No large courtyard or stretch of road between camera and building. Separate characters will have feet at y=85%, heads at y=57%; table surface will be y=65-72%, feet y=85%. Their merchant stands with feet y=71%, just inside the doorway: allow dark warehouse interior behind him at x52%. This must make the separately rendered packing table feel one step outside the doorway. Do not draw table, characters, loose foreground boxes or cart. No text. 3:2 landscape. Everything is a single coherent close view, not a pasted building, no vignette or blur."
+    },
+    {
+      "file": "assets/source/story-stage/tower-base-close-v1.png",
+      "status": "intermediate composition",
+      "reference": "assets/source/story-stage/tower-foot-v1.png",
+      "prompt": "Edit reference into a MUCH CLOSER coherent view of THIS tower's exterior foundation, matching same warm detailed Japanese fantasy pixel art. The old round tower's contiguous stone wall fills upper right 70 percent and extends out of top and right edges. Keep wooden door on the right, a tiny glimpse of town and hillside far left. MOST IMPORTANT: bring the tower wall foundation right into the lower middle foreground, so the tower itself meets ground at approximately x=45%,y=79%, curving back to x=85%,y=70%. Ground only occupies bottom 20-28 percent in the centre. At x=47%,y=77%, in a mortar joint of the LOWEST COURSE OF THE ACTUAL TOWER WALL, paint a SMALL (about 4% of canvas width) soft green moss patch with a subtle pale green glow visible in the shaded gap. It grows flat against and between connected masonry blocks, part of tower's foundation, not on loose rocks. The wall courses must continue unbroken upward and rightward into the tower: NO standalone rock pile, no detached stone platform, no altar, no separate boulder prop, no isolated glowing object, no ferns. A kneeling character will be composited around x=40%, feet y=85%, hand x46% y79%, investigating the patch. Leave walkable ground for standing characters at x59% y85% and x73% y76%. No people, bowls, tools, text or UI. 3:2 landscape. Preserve convincing single-scene perspective and human-scale masonry. Daylight, very restrained moss light only at the mortar gap."
+    },
+    {
+      "file": "assets/source/story-stage/tower-base-moss-v1.png",
+      "reference": "assets/source/story-stage/tower-base-close-v1.png",
+      "prompt": "Keep this entire pixel-art tower background and its composition unchanged. Only fix the small luminous thing at x48%,y67%: remove its white triangular/point-light/crystal appearance. Paint a flat irregular velvety carpet of tiny moss leaves following the lowest masonry mortar joint at x44-51%, y70-73%, rooted along the foot of this same continuous tower wall. Subtle muted yellow-green, with only the softest green reflected light inside the dark joint, no white pixels, no luminous orb, no star, no triangle, no crystal, no halo, no glow beam. It should look like real ordinary moss tucked into the actual tower's stonework; you notice its faint light on closer inspection. Do not add any separate stones or foreground objects. All doors, other vegetation, stone architecture, camera angle and ground remain unchanged."
+    }
+  ]
+}

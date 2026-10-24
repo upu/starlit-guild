@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-6 manor gate, pot inspection, back-worn tool bag and scrubbing cloth",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/survey-pot-v1.png",
+      "reference": "public/story-stage/prop-pot.webp",
+      "generated": "exec-4fa07d83-08e5-4995-a0eb-49500f4d03b7.png",
+      "prompt": "Edit target is the supplied small pixel art cast iron cooking pot. Create a transparent sprite sheet with exactly TWO equal cells in ONE HORIZONTAL ROW. Left cell: same pot with its lid completely REMOVED, revealing an empty dark interior with subtle burnt brown residue at bottom. KEEP the pot body, rim, two small feet, upright arch handle, 3/4 elevated viewing angle, color palette and pixel art style exactly the same as reference. Right cell: only the removed matching metal lid with small knob, at the same scale and angle as the reference. No other objects, no table, no words, no borders, no checkerboard. Separate cells with ample transparent margins, each object wholly within its own cell. Pot and lid should not touch. Body height and width must remain consistent with reference; open interior visible below the upright arch. This is a production JRPG inventory prop sprite, crisp restrained pixel clusters, not glossy or cartoon.",
+      "sha256": "fffb0cb4fef7865bf3ff05f8e8f76e5a2ffd111303d577dcf094df77cbbfdd20"
+    },
+    {
+      "source": "assets/source/story-stage/survey-gear-v1.png",
+      "generated": "exec-4fb8029e-89b4-470e-bf80-9f31d850f0fd.png",
+      "prompt": "Create a transparent production sprite sheet for a warm medieval pixel-art JRPG, TWO equal cells in a single horizontal row, generous empty gutters, no background, no text. Elevated three-quarter view about 40 degrees down; dark brown outlines, crisp chunky pixel clusters and limited muted warm palette. Left cell: a worn, compact olive-brown CANVAS TOOL RUCKSACK worn on someone's back, rear/side view, leather shoulder straps, closed bulging flap, tightly coiled spare rope strapped on top. It contains cloth and spare metal fasteners; no loose saw or hammer, NO red or medical crosses, no symbols, no human. Right cell: a small folded rough brown-beige SCRUBBING RAG, worn frayed corners and a few dark soot spots, not a pristine large towel, viewed at same angle. Independent complete isolated objects, aligned to cell bases, do not touch. Intended to display at 25-45 pixels wide alongside chibi characters.",
+      "sha256": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9"
+    },
+    {
+      "source": "assets/source/story-stage/manor-gate-v1.png",
+      "reference": "public/story-stage/manor-garden.webp",
+      "generated": "exec-7e1374e4-2c29-4583-8302-daa2d871a779.png",
+      "prompt": "Reference image is the established manor garden in our pixel-art JRPG. Generate a matching NEW adjacent scene, the approach just OUTSIDE this same modest wealthy stone manor's garden GATE. Keep same warm sandstone blocks, stone balustrades, leafy hedges, white and small pink flowers, late afternoon sun, crisp pixel clusters, restrained detailed game environment rendering. Landscape 3:2. RPG high oblique overhead camera, about 50 degrees downward, NO sky or horizon. Paved approach occupies lower 70 percent, simple worn stone paving of same scale as reference, large unblocked play area. Across upper third is low stone garden wall with hedges. A modest OPEN wrought-iron double gate with stout square sandstone pillars stands centered at 70 percent horizontal, with a walkable threshold at 42 percent height. Through the open gate a path continues UP into the same manicured garden; glimpse stone manor wall near upper right. No people, no guard, no furniture, no crates, no carts, no pot or tools, no text, no extra exits near the lower corners. Avoid monumental palace scale. Foreground paving must be clear so four small characters can stand naturally; guard will be layered beside gate.",
+      "sha256": "7d31ac183a8b8fbb00214c9b44102b3ae1d01931dac87ad5c70a606895f10fa8"
+    },
+    {
+      "source": "assets/source/story-stage/cook-survey-v1.png",
+      "reference": "public/story-stage/cook-poses.webp at f53fbd9",
+      "generated": "exec-f7f4b8d4-0fbd-47cc-a875-31c7ae9812c4.png",
+      "prompt": "Reference is the EXISTING cook sprite atlas. Create four NEW full-body animation poses of this exact same stout middle-aged cook, short black hair, thick moustache, brown rolled-sleeve shirt, ivory apron, dark trousers and boots. Exactly FOUR equal cells in ONE HORIZONTAL ROW, transparent background, generous gutters. Same head size, stocky proportions, pixel texture, overhead three-quarter RPG view and identity; feet aligned across all cells. All poses face screen LEFT in a three-quarter view. No props in the artwork, hands will hold separately rendered objects. 1: holds an invisible hanging pot handle in his LEFTMOST hand extended toward screen left at waist height; rightmost hand free at chest, neutral look toward left. 2: same body/feet/pot hand position; rightmost hand lifts an invisible lid to chest height to his right, enough gap for separately added lid; looking down toward invisible pot. 3: same holding pose as 2, tips head forward slightly to look into invisible pot held to his left, brows knitted annoyed; do not bend enough to change head size. 4: same pot-holding leftmost hand LOW near hip now, but RIGHTMOST arm reaches diagonally across body FAR to SCREEN LEFT with open palm at chest height, as if pressing a cleaning rag into someone else's chest standing to the left. The reaching hand must extend at least half a head beyond face, at waist-to-chest height. No actual pot, lid, rag, background, text or extra people. Entire hands, hair and feet visible.",
+      "sha256": "90078d1a48d2b7fc27a81a7082e5b8bd5a1f313649fae4a19ad7306462e8ca02"
+    }
+  ]
+}

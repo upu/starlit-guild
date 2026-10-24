@@ -1,41 +1,46 @@
-import { roadHasEnemies, roadWorkOffset } from "./chapter-road.ts";
+import { MOSS_TRANSPLANT_QUEST } from "./chapter-four.ts";
+import { roadHasEnemies, roadWorkOffset, roadPuller } from "./chapter-road.ts";
 import type { Quest, Run } from "./game.ts";
 import type { RoadBattle } from "./road-view.ts";
+import { roadCartSlot, type RoadViewport } from "./road-cart-layout.ts";
+import { roadHeroSize, roadScale } from "./road-layout.ts";
 
-type CarrierSlot = { offset: number; lane: number };
-
-const frontPair: CarrierSlot[] = [
-  { offset: 55, lane: 0.94 },
-  { offset: 80, lane: 0.7 },
-];
-const rearPair: CarrierSlot[] = [
-  { offset: -155, lane: 0.7 },
-  { offset: -180, lane: 0.94 },
-];
-const rearTrio: CarrierSlot[] = [
-  { offset: -155, lane: 0.68 },
-  { offset: -180, lane: 0.82 },
-  { offset: -155, lane: 0.96 },
-];
-
-export function arrangeCarriers(q: Quest, run: Run, battle: RoadBattle, front: string[]) {
-  if (!front.length || roadHasEnemies(run)) return;
-  // A pair shares a handle across the cart's depth; the lanes center on its wheel line.
-  const paired = front.length === 2;
-  const rear = battle.heroes.filter((hero) => !front.includes(hero.id));
-  const frontSlots = paired ? frontPair : [{ offset: 45, lane: 0.82 }];
-  const rearSlots = paired
-    ? rear.length > 2
-      ? rearTrio
-      : rearPair
-    : rear.map((_, index) => ({ offset: -145 - index * (rear.length > 2 ? 55 : 70), lane: 0.82 }));
+export function arrangeCarriers(
+  q: Quest,
+  run: Run,
+  battle: RoadBattle,
+  front: string[],
+  view: RoadViewport,
+  seedlings: boolean,
+) {
+  if (!front.length || roadHasEnemies(run)) return [];
+  const rear = ["leon", "finn", "aria", "mira", "lico"].find(
+    (id) => !front.includes(id) && battle.heroes.some((hero) => hero.id === id && hero.hp > 0),
+  );
+  const carriers = [...front, ...(rear ? [rear] : [])];
+  const escorts = battle.heroes.filter((hero) => !carriers.includes(hero.id));
+  const spacing = roadHeroSize(view.width, view.height) / roadScale(view.width, battle.stage);
   for (const hero of battle.heroes) {
-    const frontIndex = front.indexOf(hero.id);
-    const slot =
-      frontIndex >= 0
-        ? frontSlots[frontIndex]
-        : rearSlots[rear.findIndex((member) => member.id === hero.id)];
-    hero.x += slot.offset - roadWorkOffset(q, run, hero.id);
+    const slot = roadCartSlot(view, battle.stage, seedlings, front.includes(hero.id));
+    if (!carriers.includes(hero.id)) {
+      const index = escorts.indexOf(hero);
+      // Companions walk beside and behind the cart; they do not push thin air.
+      slot.offset -= spacing * (0.8 + Math.floor(index / 2) * 0.8);
+      slot.lane = index % 2 === 0 ? 0.48 : 1.08;
+    }
+    hero.x += -40 + slot.offset - roadWorkOffset(q, run, hero.id);
     hero.lane = slot.lane;
   }
+  return carriers;
+}
+
+export function roadCarrierLead(q: Quest, run: Run | null) {
+  if (!run) return null;
+  const preferred = roadPuller(q, run);
+  return preferred &&
+    run.quest === MOSS_TRANSPLANT_QUEST &&
+    run.actors.some((actor) => actor.hero === "finn") &&
+    run.health.finn.hp > 0
+    ? "finn"
+    : preferred;
 }

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-22",
+  "tool": "built-in image_gen",
+  "asset": "assets/source/story-stage/child-bed-v1.png",
+  "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-ff539bd2-1a3f-4fb6-9626-4a30b7aa7edb.png",
+  "references": [
+    "public/story-stage/child-poses.webp",
+    "public/story-stage/patient-room.webp"
+  ],
+  "prompt": "Use case: identity-preserve. Asset: transparent pixel-art RPG sprite sheet, 4 columns in a single horizontal row, equal square cells with generous clear gutters. Reference 1 is the existing small brown-haired sick boy in cream pajamas: preserve that child's face, tousled light brown hair, body/head proportions, colors, pixel-art outlines. Reference 2 is the room showing his actual bed: use its elevated three-quarter overhead perspective and ivory bedding color only, do NOT draw the room or bed furniture.\nCreate four consistent poses of this SAME child resting in bed, propped slightly upright against a small ivory pillow at his back on the RIGHT; his pajama torso at right, lower body and legs extend diagonally toward LEFT foreground under a small ivory blanket. Face turned gently toward screen LEFT where the healer sits. Child is calm and tired with a sore throat, not in distress. Four cells: 1 listening quietly mouth closed; 2 tired listening with one hand resting lightly near throat; 3 speaking/questioning with mouth slightly open; 4 small reassuring nod/mouth closed. All same head dimensions and pillow/blanket position, all fit fully in each cell. Compact readable pixel art with warm restrained palette matching reference; transparent background everywhere outside child, pillow and his little blanket. No chair, stool, bedframe, mattress, floor, shadow, text, labels, icons, borders, medical apparatus, other people. These sprites will overlay the existing bed in reference 2. Keep pillow small enough not to dwarf his head, keep his face unobscured. Output 4 equal square cells in one row.",
+  "integration": "Child NPC common atlas row 2. Reference head width retained without stretching the bed pose to standing height; transparent padding and 128px cells."
+}

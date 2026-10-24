@@ -1,0 +1,15 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Stage 1-3 warehouse forecourt and stage 1-4 persistent stone-crevice moss",
+  "records": [
+    {
+      "file": "assets/source/story-stage/town-warehouse-v1.png",
+      "reference": "assets/source/story-stage/town-shop-clear-v1.png",
+      "prompt": "Edit the reference RPG pixel-art background into the OUTSIDE LOADING FORECOURT of a small medieval trade warehouse, not a retail shop or public village square. Preserve the exact warm detailed pixel-art style, camera angle, native 3:2 landscape composition, generous EMPTY lower 55 percent ground for three separately rendered chibi characters and a packing table. Upper left and centre: broad open double timber warehouse doors, inside clearly visible stacked shipping crates, tied sacks, shelves and barrels. Stone threshold nearly level with outdoor ground so boxes can be carried out. Rough timber/stone walls, modest practical loading canopy; no shop signs, no flower shop window. Right upper third: narrow town street and tiled rooftops leading visually toward a distant small hill tower (subtle, for return dialogue). Maintain character-scale perspective: the foreground actors will be about 24 percent of frame height, warehouse doorway fits roughly two standing actors in height. Foreground is a quiet working apron immediately beside the warehouse entrance, shaded at the back, clear and unobstructed from x25-75percent y60-90percent. No foreground boxes, tables, carts, people, text, labels, or UI; those are rendered separately. No new geographical landmarks."
+    },
+    {
+      "file": "assets/source/story-stage/moss-crevice-v1.png",
+      "prompt": "Create one isolated transparent-background pixel-art game scenery prop: a very low cluster of 3 weathered gray masonry stones from an old tower's outer footing, two on ground and one slightly overlapping, with a SMALL amount of tiny velvety green moss tucked into a dark shaded crevice between them. Moss is rooted to the stones, not a loose fern pile. Moss carries a subtle pale green luminescence only inside the crevice, illuminating the immediately adjacent inner stone edges. This is a quiet discovery in daylight, NOT a glowing magic crystal, not neon, no glow halo around the entire rocks. Stone cluster is wider than tall, roughly 2.1:1 silhouette, ankle to shin high relative to chibi characters. Three-quarter view from slightly above, matching warm detailed Japanese fantasy RPG pixel-art, crisp pixel texture and dark outline, restrained gray-green palette. Full silhouette intact with generous transparent margins. No people, pots, soil island, big leaves, ferns, flowers, tools, text, ground plane or background. True transparent alpha. One prop only, not a spritesheet."
+    }
+  ]
+}

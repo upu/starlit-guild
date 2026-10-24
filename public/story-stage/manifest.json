@@ -1,0 +1,858 @@
+{
+  "meeting-path": {
+    "source": "f9024296db5eb4797fc7cf27ec899ff102639df9641589fd988f9e67d05f4cd2",
+    "output": "900c8c88cfc1570cfb1b958ca181f41a41c1d547b2f02ccd4ac8d7c3fcb6ff1d"
+  },
+  "town-exit": {
+    "source": "972e55dc1cfb44043248477c6512aa1cbb8641677299fea56c65b51c2b3f9d25",
+    "output": "20bdc51e63eaa7cc6a6ff5f5b118ad925fad720eb1768bd060a0d12d9d3a2650"
+  },
+  "town-shop": {
+    "source": "388e4b545aa5a278a482dfeadbb229226e887aa44516338daaa3705acaad0e4b",
+    "output": "63fad964eb042ad0ff1b11dc6c9346fe8098abcb4efb677ee9228e56328c0b82"
+  },
+  "town-shop-return": {
+    "source": "388e4b545aa5a278a482dfeadbb229226e887aa44516338daaa3705acaad0e4b",
+    "output": "63fad964eb042ad0ff1b11dc6c9346fe8098abcb4efb677ee9228e56328c0b82"
+  },
+  "delivery-box": {
+    "source": "bf732deb95371e8140dd06af1b93442614f60bea5218ddf44fdf921fb45b7a64",
+    "output": "61f6f92c850b2d12b6fc2c7e2d6e86e7593ff789e9e007a04effd5097904f3aa"
+  },
+  "packing-table": {
+    "source": "cf1143a5e3c02774305e3c5a7d871e21cffe3786f1a461a81021fde642c6daa8",
+    "output": "5296799f7bb7b684c18516304aaf92488a45b7342249f47f752a9be03b60a102"
+  },
+  "meeting-dusk": {
+    "source": "a0b93e4674f86c504b1780a7294db2eb7aa67c93510f3c1454cd66a8ec0987b1",
+    "output": "2bc6f92a4d2f62c18238c061ff57fd190e63d5fba7d976ab28900451cdf0b229"
+  },
+  "loaded-cart": {
+    "source": "747050ce845895cac82be01dd30d6953e997d669079b00d827c513afe23a5967",
+    "output": "d4687f7e82cfc2d73b596956b25c3468724bcbc77cd083ca4e4e77889dc81b1b"
+  },
+  "return-cart": {
+    "source": "502a45efec9ce0cc106bb1271151c6b1590304a76b19b7aca71aaab674728451",
+    "output": "c01c1de2e5369be47f526f431fee31784d3eca8c29954f12aeec74b3a9e5ffb7"
+  },
+  "travel-bundle": {
+    "source": "aef518157ab5ea23a3b8e5b739ae5d3a11b961f1b18572bb205b77203faee112",
+    "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
+  },
+  "merchant-poses": {
+    "source": "a6c625c88285908d2811929442bdca32ad1a9f6f1b2f8d83919930f2534beb8f",
+    "output": "52446397c68ca76230e40f4e84d509a88973236c124ffb433de5e126ec57a8ae"
+  },
+  "aria-poses": {
+    "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
+    "output": "8e45448170674a22a46f23d5f76d59047a5d3a4f591048aa53e5bde56cce21a6"
+  },
+  "leon-poses": {
+    "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
+    "output": "8e961865111ea7e3ea451a706db695eff6ddb2af6bb271079ce8488253194d15"
+  },
+  "hill-path": {
+    "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
+    "output": "79a470e73573879ad4d5a6eadce8ba644fc52c4036fc75211553df855e59779f"
+  },
+  "hill-night": {
+    "source": "c97fd2ebfb46f0a0e9a2410ec7cc6810b51f663fb26aed1828e82e44b360e46a",
+    "output": "cd1fc11fab9edac9001d46b00d67bae91530892a47c0059019a239df2d01e656"
+  },
+  "meeting-night": {
+    "source": "21440c506ee6f9b7952a2191676892e20faa099c0b4fa0daf62cce765bbf81c1",
+    "output": "41cd5dcec689ffdd0c6fe38bb9b066dde82972c704f26a278c8bbb33abc82777"
+  },
+  "tower-foot": {
+    "source": "e0105652556a4763264cd054a7e656b8fd72734da28b0d5a432c2611766cd1cc",
+    "output": "66f02daae553e9afd585159035b9b011f99c6779ccff6d01233069d05f410f25"
+  },
+  "tower-base-moss": {
+    "source": "bed61289523b73bdaa05e5011e4b4c49d317ef663f1c2a639d45af0787183936",
+    "output": "ca00673c04d8245b49c76b3e1947b31458afc8091b33ded60a48d666c6df7797"
+  },
+  "forest-floor": {
+    "source": "310d48af639e06630bbc58e5e6a2a480ce446594466c998066ea65e40057b32f",
+    "output": "0df512fbb43ec43b1eb0d3bc4fe86beac75c978e91f4bcf6b224174375fb2b75"
+  },
+  "drain-blocked": {
+    "source": "b1069875b82807b9e9846c60a08f5781038baa4946b019725057840a22126aea",
+    "output": "1c6e041be809898a48adef7f5c023b3e511f4757b4e8f7f625b8d862f6678996"
+  },
+  "drain-cleared": {
+    "source": "4bc9e4ba0282afcf2b6017e5841d85179e90867cc656c8fcd37c1a746e8370c1",
+    "output": "287fd974df3f1c8c97963bda56f3d6b6169157f30d53bf80d5053097d86f51bb"
+  },
+  "prop-moss": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "2c7502fc38624af2fa4609543fac24b95a4b5eea3f8e35765c1db8c1b23c0d8a"
+  },
+  "prop-lantern": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "51ca3067337e2f285e2d17a4fd8e8fc7bc62ed71cda279ad681daea8b8884d70"
+  },
+  "prop-basket": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "70a22f0ef066d7e979d732bcaf7dddb1073c9f20a25a0c615a7c66b385bb1998"
+  },
+  "prop-tools": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "4bb6f1216a0ee5aa36305f6b4dff32397bd8b26afc1e37b4e70aefc31e1de1fe"
+  },
+  "prop-map": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "73facbf68de85e36de4ded8cf45ee394d5159f691cc88dae32c5f2a9aee615bc"
+  },
+  "prop-cloth": {
+    "source": "f38e587dfd9f2755802e110b963bcb30d18446d504fe6644953c0b028aa9c5f4",
+    "output": "c22591bbe5456f1d50c80d9c3e21bd81d0d7c0b003a6ed8d9bfea990337745f1"
+  },
+  "keeper-poses": {
+    "source": "0a53267624c07e08d9dbcef1ea5f879239eef87d5a93a81416e0582e106084b3",
+    "output": "9fc06838d15ced83cd91049472dc99b68f1ad66972cb256ec012d9ba7556d40b"
+  },
+  "worker-poses": {
+    "source": "23909222e0d142cbb38e21fb68961d770186c5b0629fe84dbcceb1d44a5ba253",
+    "output": "11116cb76c5fba9a9350f36cb8d7e3d314634da46ff7c1ed76f76975ece61a00"
+  },
+  "aria-shawl": {
+    "source": "bad67b97dce1a00920ac50948f30bcd28c268279d6c90042e28e43ea859ea4e0",
+    "output": "de36ad5fbd7169d6fd35acff9de6981de435e16b533637797963eea28c144bc0"
+  },
+  "prop-colony": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "aaa384ffeaf11997336364b31e54b1f565c9cdcb67c4af6be3ad6d736993470a"
+  },
+  "prop-dish": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "cb5b5fec3c81fd7c1a969f50414457dc11ba02dca4db0d701596f8dbb0492b17"
+  },
+  "prop-stone": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "2a5d3ef9044a8877a710e3975c2927e52f4c7e5f2d3e21c60b4e7cba9297c8de"
+  },
+  "prop-spatula": {
+    "source": "b566ba11772226b939eb07557e04c95168d14c8afe5f676a6b2f276cd4d33105",
+    "output": "3c31797227e7940bcb4a98ae29dfa8ed5b28906329b0234ca6eb82dfb927cde0"
+  },
+  "medicine-room": {
+    "source": "64beb3abe6c96a3ec9bd4b2eecaad5493ddd201588455012b20333e0e63bf44f",
+    "output": "e56970d2f3e2e0ef013dc4ff7f6be2506dd11cdd2cdfcc1d1ab9edc92015ae64"
+  },
+  "dining-room": {
+    "source": "3e2ebf15c71a5ec74bc239b33752c07cd30525e9420dc58b99fadf6e9cd6d6d9",
+    "output": "6aee5b11634ab3bc8b51cfb8e77b4ff5f578351243a3c61106aa1aec07ee8596"
+  },
+  "manor-garden": {
+    "source": "3fb16be683670ee6db7ff3b3402ee35466450915df13b4b2d178d3cacdcf264e",
+    "output": "ebf089847e8492c0cbf4a1258069ed70479142f18e557a06d632ef5164c926fd"
+  },
+  "workshop": {
+    "source": "6f84015b69775f8a37bdcf07c834694d2273317422ad1503444633f5e14408b1",
+    "output": "f6ea5c0afef346a1934403661c6113fb42cc88feac928875f62eabf77226172f"
+  },
+  "mountain-road": {
+    "source": "2a90a6ead34f445e6617df7cff6b40b1114f6f0c307feba817147c050c18f1e8",
+    "output": "f613fb9fe78d7442b752fabbfe22a525d21194556127ed818c32e09f2731c3ae"
+  },
+  "berne-street": {
+    "source": "1f2608aa933b4fc1b297f6e07db4ae5574ecb6c96adf7668e0e39b2615c39961",
+    "output": "ef5d9c4972c5f1937d9c4b22e4159d33ebf2fd404873a4189667314e4511f8d8"
+  },
+  "brekka-alley": {
+    "source": "a96e5a919aabf1ba73f8d820306daa9233e7e04f86f8f803989cdd940b1609a4",
+    "output": "c5c819b3ec631a8d425460d9c0824db8d95ff5135afc1d1a053ac73d25cda9a3"
+  },
+  "village-house": {
+    "source": "cc1bff58073564974bc92698369ed65383a1b93bfd89b25d3fd3d43a2b09ed6b",
+    "output": "b9c7ed8d4c482aa524957e1095a1bf66b69a4173c8033dc94bfeab29836715fa"
+  },
+  "stone-yard": {
+    "source": "d7abf3c05b327481a0d33694b3b9ee736748d2e718e7fc3d92567ca78129e51b",
+    "output": "fbba6040488f8d65a5601d535db256cdd702778a332a41b72fb1e83828fd2109"
+  },
+  "storeroom": {
+    "source": "151fbe9f117b9e9fc13fa1b295efe909a437c499c3fb913dbce9b22583d96142",
+    "output": "85ddd298e404630390a2e83d86dc5c817d2d5e4699c0b4c487e0debffcff131d"
+  },
+  "moss-beds": {
+    "source": "8a5401f264a5f87a4ca461e79c6d458adba066863e1861ac30932a1e11fe8b63",
+    "output": "eb9285dd5a6d2efdc9e6c83c3ced194fdc0dff51495de42a91e50125b535f8f2"
+  },
+  "registry": {
+    "source": "f457cba1d290ea78ab8419d7fa81a62631a864f952f69c4e2e5c7632fcc60158",
+    "output": "1b9786d73cb29d1644b2c3ca77da2f096265efc61e77cc32f757adb3f4c708d2"
+  },
+  "bridge-night": {
+    "source": "b9853e7e220d171420eee39fa89f08c6c910e5d0d8f09bfab4110ef25c6d48ee",
+    "output": "6b666a4b5782f5b8871250bbaf4635432a752a317a0274dde4402cdfdd704aab"
+  },
+  "warehouse-office": {
+    "source": "0d0e02381e17ef8050e54195a876df582e5c6d0fb09e42a6e5708f0b3e36c599",
+    "output": "7526308c765b07a0f6f6b622a66b0022e39454860853ed8980e7d59948a824c7"
+  },
+  "patient-room": {
+    "source": "102610eeff7c9760a7d5804785264aa493cd0156766adb6ab77dea03c96a0017",
+    "output": "3964543b88745a4f0ce941c77a77a079f1e97647ec1ecf2743d4b0accbe5858f"
+  },
+  "new-moss-beds": {
+    "source": "9033eb4e58b20e1b37a4983d9260b83b23916ee984131764b919e03bec2c5144",
+    "output": "745b37f32729f10f5f1d3841e46975087e6768fb1ae73781709c502c25864f6d"
+  },
+  "prop-bread": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "ced8af5856f137c9a430795e5dad55bf968d65d9fd3dca89a6fd5b9b3bea675d"
+  },
+  "prop-tea": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "cfbe490fca4cf1cdd7a97d7845bc49d8522fb940cfddb2a96616fffa631c2783"
+  },
+  "prop-medicine": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "049e0299aad39d61f3eeb781662d4bd23fd6b559df60769c3fa65101940f59a8"
+  },
+  "prop-herbs": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "fb2c1015ac75b49eb81e4cf11aafb18dd0d4c947c2109f1b11780ae0fc1398b8"
+  },
+  "prop-honey": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "17cc0d889c7188e3746c233156f963a80c036603774ce4723fc4498f746c477d"
+  },
+  "prop-signpost": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "d87a17a02661ff822a151a825e86eddfa990d6d5ee2735c0d269839fe4cfa8ba"
+  },
+  "prop-keystone": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "590b01b44413358f9234e28d88cac484e73b2b2b597ee10143004413d272e644"
+  },
+  "prop-replacement": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "a792451416f959c47c2f3ba985ccb8ccad0676c63fdd0b145bd278afa781e8b1"
+  },
+  "prop-ledger": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "5b7a87df9390f8db39745b91067ae02319c14ebcfe64605687dda90ddc019afd"
+  },
+  "prop-seedlings": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "4808902940b5d9e92f50682927763207ef760bdbd9ec5abb94d656c753233cbb"
+  },
+  "prop-stone-lantern-sooty": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "7fefc10f3ff1a0dda8b743f44b0703507ccb980e250ba1b869e43b1ce7b394c6"
+  },
+  "prop-stone-lantern-unlit": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "a67de9ea85e08bd421d0dc46e63b8bcefd9ae19df27dddba11a7d9a33be1192b"
+  },
+  "prop-stone-lantern": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "ec0bd1b8f51e9746d82b9178612906afd9814d8f1885712e9447acf98e8177ef"
+  },
+  "prop-oil-dish": {
+    "source": "20385bae74b578f972db4be584545ee865f3a9253ef6546ae3b37ab94027d76e",
+    "output": "928e28a7680ddfbe040bfeced8ea322fee3af880ab0351a47f57e930ca487389"
+  },
+  "prop-table": {
+    "source": "d29845589935d1c6d5189037c04b44fb7415a71a9b476877c8ca049e0c614d45",
+    "output": "745db1642311dfe606c7a4cea1dfd34f899a25c7ddb72f39285b0974bcdd47ad"
+  },
+  "prop-plant-label": {
+    "source": "44adbf8614a58842414576b2a737911543882f56bb658658b6ed580ad545d622",
+    "output": "f165f76e94dd47c0ec56d12ae9f3c2002939682dacd0cf1cf018f016c3e6918f"
+  },
+  "prop-pot": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "b24ec6065847061ce4cfec3c085e5145abad503d12b16a6a2998c0e1b31cb9c3"
+  },
+  "prop-key": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "2e576d30a46a249144cddca9dd6a488b0fd5da649cf1e6bfa089ce3426f86268"
+  },
+  "prop-juice": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "360347e4035efc84eb5661e431adf78f60456a9f91a65b3125c2f952ab1f774d"
+  },
+  "prop-ale": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "72ec7d5676a843fd62a968fe1d71cc7d25a2f1096f6bf8c0fc3a96017b87a59b"
+  },
+  "prop-sample-jar": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "f4baaa4809fe8bc26f0a81b395470f3277f02023be5010261f4b4b32a36772e1"
+  },
+  "prop-handcart": {
+    "source": "e4e308bc16c5a503d50ec2092d56fdaf07af94c84529b6a4f11c48e39c59fd35",
+    "output": "78d9b0d8c0b58f2b88d510d2ddaa6e22099b1cc138c7b9b506a8e6fe67c8ba03"
+  },
+  "prop-basket-cart": {
+    "source": "7ae85dd4fd5a337d02aee7824a6e23d228fd4f2d7c63f758a6793eed16c6d91c",
+    "output": "c771c327d5fbdc12b1c76cccbd63858b45e21ced60f8f4fd54b2bf5562c9b28e"
+  },
+  "prop-seedling-cart": {
+    "source": "7ae85dd4fd5a337d02aee7824a6e23d228fd4f2d7c63f758a6793eed16c6d91c",
+    "output": "5525ed411004f20291a39ed44476336d12ea1b0d4f9902c1a0528714213dab24"
+  },
+  "prop-empty-cart": {
+    "source": "7ae85dd4fd5a337d02aee7824a6e23d228fd4f2d7c63f758a6793eed16c6d91c",
+    "output": "7a40286261d0fbd9a1237e94200b9ca625cde209a812d7642b23f1a3c474a108"
+  },
+  "prop-puppet": {
+    "source": "4ab27515875fb5c57f5ca9a26e31e6a4cdc77b0473dad58050c86cb2f3d41723",
+    "output": "2a1ab07028f5351c2d63400a04b66d302fcf88efbbfe1dc73aab182ffdc4b670"
+  },
+  "prop-golem": {
+    "source": "0a9ed9a98c3fb6aca716def7f6b682273aab748712badaa9d8a33af0b4adc2b6",
+    "output": "f5a793c3cd9584b590107868ec1e1018b3fed5e3bd5db9991ca5feba65a25eb3"
+  },
+  "prop-picnic-cloth": {
+    "source": "c7f9f697621c45152ed3cb12cb1b6c519a6194d16422306337bb2a1966cf462d",
+    "output": "062440217b5c62b2529b29394168cee1b4bd784b15f9895147b33bb96fdf0729"
+  },
+  "mira-poses": {
+    "source": "37616522f2ba7b02a96fb679134cfc1c33e9006dade8792b174547a601b19614",
+    "output": "ce70dc25577c2c88b3a490c493de215c155f0f2baf374deaa5c2051b042752e1"
+  },
+  "finn-poses": {
+    "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
+    "output": "6ba792a16ebd579407032cce54b33b207e7c26f56c149aa9b547fbe67bb411da"
+  },
+  "lico-poses": {
+    "source": "5ee9efbb4bdef16db53083e68e22317c00457700f166d8d1ba9914aeacf27fb2",
+    "output": "c5bb09f91d952f817f3a2d37ab9f1789cd07a5588b7c477c6d701e8bbc341c65"
+  },
+  "masked-pumpety-poses": {
+    "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
+    "output": "d5c1adf4d69417c1ca78fef342ad0d46f2c3063dfc855c8f32029ba92a4f6570"
+  },
+  "merrill-poses": {
+    "source": "4d0756fe2a4ef1541c5e739eb1d65091500923f9d0870ad5f9e842664c1fc2c9",
+    "output": "1d396a68acb9e869f8236ac02080bc548facea73ec8a74eec76ddf038cff18dc"
+  },
+  "cook-poses": {
+    "source": "00e09154e462acc04a70abbcf6887e5ba770f5ffb4e30ac34e6643a56cc9d3b8",
+    "output": "15b571d1a369850719f32acebee0885ace2069f17465e856f8afc6d2268801b8"
+  },
+  "doctor-poses": {
+    "source": "14baf7bfcd0f37ddeeca8ce71a4795ba5e8068f0854bbafeee02b648f4cd79ef",
+    "output": "15ef6b0b26c9fa0b37d9a047ea08954bf4e0c7d78519e538e5fbc3cbe5b4330f"
+  },
+  "parent-poses": {
+    "source": "38df190f887fc6bb4e76eb8e884496b96d1658872a3b16ccdf9b195205e7b510",
+    "output": "522873a1cf9c0b1ea57297b09481341feb5bf2e27c025a27b67ab200d1a64dd1"
+  },
+  "child-poses": {
+    "source": "c30fb207925353cc3dcc172ed73ae58fc37e30990df47643f06b0ff54e4a9cab",
+    "output": "c0a53ae5e08d8d111e02cf8773d378fe960dbfd44f5a91229d3ca747b3ae70c1"
+  },
+  "prop-closed-ledger": {
+    "source": "75e38e35b1e32e55ca91e3deff562f0fa2dcf0c5cd8b1770a85b6a2b8dc51615",
+    "output": "90f452f6b903aed4b0b7b64aebd4a95f3d354e32f35b716a093fb0f3bcae6a1e"
+  },
+  "prop-brazier": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "767edb1c04bc058fda42dc40be0b66e95c5ef93b9a2e04efbc06cd7b28500468"
+  },
+  "prop-kettle": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "7e119881fda6e6350cff5746d1066abe613d3d2e946d53a1f7c76b8bc855b499"
+  },
+  "prop-teacup": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "cea46700349c01915bf3c4febf852c7cbe5b2ab974fb981238421fa68ecf6b18"
+  },
+  "prop-tea-four": {
+    "source": "2b13e5c6609873c059d1445c09715cf43a792afc797c6becbe720f42e34aa9be",
+    "output": "51d0e4ce0a7e2119206be16b70ab86966806b1d2bf69347f70e6a78aafecc84d"
+  },
+  "prop-dining-table": {
+    "source": "60176cf83a054d92ac146f9b2f436e1719b45c54c9e0ea2093e549ad487a7451",
+    "output": "1e4d767902fe582a515491b5a7be370a9fbdb872c8d1fb930d7a70ddc166a0e1"
+  },
+  "prop-chair": {
+    "source": "8488cefde91e06a1eb2ef88eda90e34a7d5f6f190bc499c092d6245aebaafabb",
+    "output": "63d354bc981a680de30b4c01a3935edeaf5281c8bd8057cdffdaa08f395f8e9b"
+  },
+  "merrill-walk": {
+    "source": "98e0fb72213ad23811d4acc140c1d059844aff32916a82bc89e72e1df42c74a1",
+    "output": "0b2087936793de90b995cb1204a0ef848ec732a5654077b694c72decf84696ef"
+  },
+  "prop-moss-jar": {
+    "source": "746b02fb039e31d8e5c4b84d0aca36ea9e1f3897c708e0f045bceb66c547e2d3",
+    "output": "fec6d3bb5c447264909c32910f18c68e7dd1e2631269000cfc0e3d5bf1ef8a2f"
+  },
+  "prop-delivery-bag": {
+    "source": "70b0f2d86719a830e12d3d2a3b5822562f57a4841e240a28015ceed230c4a1a8",
+    "output": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23"
+  },
+  "prop-tea-rock": {
+    "source": "1bb89448b0ee3e64a656147d7697d37b82dfd0a9923e2c220d52edfe1d310148",
+    "output": "46d425040041428f7b1de26ce0a60d8750ed74bef404d6699cb68b057549dee4"
+  },
+  "prop-medicine-closed": {
+    "source": "a15fe3cfa1a297f89a1303d0a75537586f1a11d29bb7853a4f46f3bddecc2c53",
+    "output": "3dae0f4a8b53da7f32942464f2c0fda37e6c58491eddbd2daf7907f397c97e39"
+  },
+  "prop-teapot": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "dd79ee3a24a0c11e7195b22700adc7f34606ba346a2ec318f08800dd295f6926"
+  },
+  "prop-teapot-open": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "cbac945a001058b143e2f1d2ca3af86e2c68510b2a688d4135635d9009954af6"
+  },
+  "prop-empty-cup": {
+    "source": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+    "output": "5b4854eece34bf458729935effd03557f0117b327959e305f505c1c252036cbc"
+  },
+  "workshop-yard": {
+    "source": "88a04cbc02ead7b91c86fb6f00dc3a2a6a95ffc590afd85855bae893605f759d",
+    "output": "2054dc52ccc859a4de0d884c9eacdb41694e914c103dadcf4078500e877389dc"
+  },
+  "prop-step-stool": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "46a67117bde3afbc420dd3679dd2c99de0fc37f2f5f60bedd229b65796e9fc79"
+  },
+  "prop-record-board": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "1ed1ac6c7d711452a18357e7feb58aa81959909b2480063e9ab74c10dbd417fd"
+  },
+  "prop-paper": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "404a2f570f59bbcdc2f8b2402bd9c4e13b16ce479a60be5b3c1dd5928de03c4b"
+  },
+  "prop-folded-paper": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "718bed3e43ec075581bc439bd0b3d7caccc1c98c1ddba30e583f227a3d23eae0"
+  },
+  "prop-lap-board": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "99a88dbf5ca4582109baf552bc2b42aee2d9d087cfaf9e299228d2183924086f"
+  },
+  "prop-sample-dish": {
+    "source": "508521cc1c809283630cc4226b473a899c059591834c5aa112c24c9b609ffb29",
+    "output": "6f87d8aea1b8262ec3d0a5e245392060c3dcc2b95cbcbee97f037e4628159a54"
+  },
+  "prop-reflector-covered": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "a6827f6189a2fe27e63f36442b0cb34aef9da9c899a82c78c20840e49ac6ca2f"
+  },
+  "prop-reflector": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "dcfabda04d75338cc122b4f400a977e4694609385fe8b76a2d5fe75f192d4315"
+  },
+  "prop-reflector-down": {
+    "source": "21669abfabbd901a3899e8fdcff1181759327cd2a5bfb71e070252ccf172f241",
+    "output": "106b73bfe9334c5a7ccfbca78a90c44d2210b8271ffd405dc1431403c070e4d6"
+  },
+  "prop-low-smoke": {
+    "source": "d48396309c794d25627e585c88fc09216f33f08e2090d9bf05e0f15f4ac0181f",
+    "output": "1f67f0d2b9df400a8dbcedee8a846ec9c7386e832eb74c47d0d7a490e4ecf4f4"
+  },
+  "prop-golem-poses": {
+    "source": "62d9f19c2290121cc11212bf42618ef11d431bdfa1b9398c2b3dff8b28523481",
+    "output": "4565db29e5c06ee4a0936bad1bf4a1f920fbb5abc062f95476b0fa2d1dea679f"
+  },
+  "prop-puppet-poses": {
+    "source": "2d2e9ab2b4c3e4533948450820c2c8ae71e8ee2d86488ca12c735f184a7d4f17",
+    "output": "d24c27e4a7cda84fa4b39f769cd93d520561a0b0d32b1a6315d2d7f376f4342b"
+  },
+  "mountain-fork-empty": {
+    "source": "d3d6b898974599e656c0c4fc83b066e8e37a38484239aedc06bc3b572f0db343",
+    "output": "aa513ddc24ad4ca26fbc8767ece733a17dcd37805d20fc82ba23bbc98145f32d"
+  },
+  "prop-signpost-portable": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "151b0befc9a6026074fec41af6f9f6c535ec102d93d7118d0c4c6b5fc0c35306"
+  },
+  "prop-honey-bag-open": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "4ba12865b6563253e569fe58b29be919ac9e3065961fe6da34388e7dc1252f85"
+  },
+  "prop-trade-parcels": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "3eafd5b78b3f280ad44da6f41497ae8d81921633827aeee49bb33e66ff403b4f"
+  },
+  "prop-trade-parcels-open": {
+    "source": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+    "output": "437fcb9f1ae49be3ece1fcd610bff3ce7d761c98ce0a0cccf252fa597a4cf47a"
+  },
+  "prop-honey-bag": {
+    "source": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23",
+    "output": "3878f9171436b5ece414c85c99141b70279a3c84b9adeb5b68fe6bcadfd442eb"
+  },
+  "prop-packing-cloth": {
+    "source": "5a969192a60ac3ff3050bc4ddd34abcf6a38c3ec1fb5a7e6572d38eedd6f7360",
+    "output": "9b5b08c14f2cbcf5c0257a0b2f3e8055d8a5edaf75e1bf067d21e9e12deed340"
+  },
+  "prop-dragging-cloth": {
+    "source": "5a969192a60ac3ff3050bc4ddd34abcf6a38c3ec1fb5a7e6572d38eedd6f7360",
+    "output": "10fb6039f791d33d0d58ebeb0105c28065e0906dfb2b67e9b5729321cbd33dca"
+  },
+  "prop-wrist-bandage": {
+    "source": "14b1255cc7b79ae71ab9522935a479f7c6ae6cd7dfed25e602f713b4a426562a",
+    "output": "175c61694ef81dedbbc610ce714fa80c3b4b6605a56787b7c6cede240f7a3b98"
+  },
+  "prop-water-bucket": {
+    "source": "2044dbe7b874c5271ca62b74fd7e61e7e764d85bf48bb9b96933f19e007969d9",
+    "output": "acebd9752ed39623833eb321555d247d60daa2719254dabddb1219fc11346ae7"
+  },
+  "prop-empty-bottles": {
+    "source": "2e6aa7c22bc095ddf45a2427973038efc17ec943a7f5a3d1441a793d57813eb5",
+    "output": "c569c25a3f22992a550b302e99346641b338de611594d42972805fabb3bdc8b1"
+  },
+  "picnic-hill": {
+    "source": "982e5d29f2c8076bc63d27ff9097346399bb6367c06dde7d1957548d17c3abc6",
+    "output": "f58879dea0259d8f782546e9f767b553a1eb90618b76e768b324da5947b15bd5"
+  },
+  "prop-walnut-cake": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "56d4a7e3f11036bf5ae699ef566a14d06824ceb28a7edf95bb91c8bf0307028d"
+  },
+  "prop-honey-cake": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "3c954e737eae3d1b89e4fd9805e4409cee1747e0ab6241522e371da2657c1299"
+  },
+  "prop-travel-flask": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "2cf6ccceec2a630880a9b027e6906c314a53ab1c328f302939966fa633c4a453"
+  },
+  "prop-flask-cup": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "3d2bc59ae5a693b4e4ea5085156002ccb4fc28c57b54fb7e3cd254af87db645c"
+  },
+  "prop-twine": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "cbf3c5ef11b0fc36662394e7e90ca72688b13224925e62e452d88f7b9f819d95"
+  },
+  "prop-cake-parcel": {
+    "source": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e",
+    "output": "b3f594a8bb537cacb25ba94a71d0c17296da13780474f8cdeb8f9d88489365fd"
+  },
+  "roadside-rest": {
+    "source": "b51245a9cba459fde57c50cd06b006885b0afb0737d2733a3c9fd7d520d38139",
+    "output": "3feb76c5d388a5de2ad9d5917620f6a1b62e906ad96bfe1a509650897f59cb37"
+  },
+  "prop-walnut-light": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "9d3f3b93abd954725af11a20dc4b3b61cdab01c36d70ade2bc1cdc74b2b076d9"
+  },
+  "prop-walnut-medium": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "bf45b6ef9587850874dfd190ab5c72b735eb3efe8ede7fde2685bedbf65208d4"
+  },
+  "prop-walnut-dark": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "8ca0dcb801b7cb13d913611591316e2a16be3eee54ba9c56504a9ffb6f5303fe"
+  },
+  "prop-walnut-light-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "97dd34430fc732400def60a2e585941780c59f152f6e20c1a8c10481fe7c79b3"
+  },
+  "prop-walnut-medium-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "33c884c0cbaa78897d9074231e23f5756bb00c34e1902eb848fae33a9bd8d5c7"
+  },
+  "prop-walnut-dark-half": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "3a17a091d83e3871208ba6c8bee38219932f4564a96e8977b40d0941bbad17e7"
+  },
+  "prop-walnut-underside": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "b87629ef76e80d2c01531578d969eb97f12a15952b4bbaee58c20fe1bbab75ba"
+  },
+  "prop-walnut-piece": {
+    "source": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0",
+    "output": "cdc10d54ac655db511b0bb953412539cc629e2a797538d9f5aaed088510b30a0"
+  },
+  "prop-low-bench": {
+    "source": "79c971d26c8fc39cd38463b787ee93e0c3816c0762e15c804993fc517e95e0da",
+    "output": "7ab2fcdc242a8a04f5a209beedce24dbb68060e5f2f472a957c57ff732202077"
+  },
+  "berne-overlook": {
+    "source": "c442c21af78370058459dcaa8a0cdc459d02b05231c11e6e9aa82c814e29dc24",
+    "output": "6a065e12774e75ffb99cf5cfceb3cbb568f30b6a90edcd57de10a3a87f632100"
+  },
+  "prop-receipt-front": {
+    "source": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70",
+    "output": "fe1555d301a721cdbec36d8c1e032b8e3bc0939435d5dcc462d007a4ffa8f0c8"
+  },
+  "prop-receipt-back": {
+    "source": "ebfe817e5ae44f027b943d3a04d03fbc0caa2efe9ac56b774ce6cba233888e70",
+    "output": "4423c4454fd8edc5b4e21d211b9e9aa7e17ce8d1ab18fbe0c10819505f19fb4b"
+  },
+  "berne-paving": {
+    "source": "75826bab386a1d3b13bc5dd03ba19b8d4cb84eecb3475185193509f7352221db",
+    "output": "4c0562a8746ab3a2af53801e8c1a6263ba549748825ef739d0c339e99b7247c8"
+  },
+  "berne-porch": {
+    "source": "84c5f9b605b9a86e2de387dc2979b82fd31973b2a7613c7cced529dc137faeab",
+    "output": "847a53f1e27f9c88aeb328ce45b97e6016d1b8e6ae2eae69ce6fec07f27ab9ac"
+  },
+  "prop-bread-roll": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "7f09d5b7e2726de52f7ea42e7db368d14abf194eacc857cabbd6f2498ef2a308"
+  },
+  "prop-bread-half": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "8acc8e3571ff41a46ee53860a8878769885be1b31a4a868b5b26866dbb6c5de6"
+  },
+  "prop-medicine-packet": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "4eae8e663fc361b3d993e10268e77e997c9f45702890a040584f0e236edff127"
+  },
+  "prop-lap-napkin": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "cd4df00eefdb0349b88477a69dfbba10e36be2fee999ff2a9418ce611bf669f5"
+  },
+  "prop-old-wrapper": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "bfee8ffd1feee6229ff9b21409355212a6441482228a6140746ad33de0504058"
+  },
+  "prop-serving-tray": {
+    "source": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409",
+    "output": "b344442e0d7f31e14fe3f76c8cdd427ffdf6cf2745b2cc14204a5b511095728e"
+  },
+  "berne-foundation-grass": {
+    "source": "1e6f0bd7d17a841d19b4f8bc0c5f963075e74083950787908b67b98021c8ca23",
+    "output": "1a4d3d67fcccf7a4ab80411625d26a19cc540a541bc597b9aa3e3e9c303fe999"
+  },
+  "berne-foundation-open": {
+    "source": "0308bb239df37f513f77b38fd68a378c4f4be90b678db09119b7e8da9b1c4cb8",
+    "output": "141a5891c7db2600fb9740bd084347328a3b4a4c68a66c9e555aeeaaf3a4a056"
+  },
+  "berne-foundation-restored": {
+    "source": "b00cbe27fba15ed6dde1a1efe85f278ff8c86da970cd4a8e00661194033a990a",
+    "output": "8fdb543cb993024a599e7db538a60bfa6a805c03210a0a20816a91504e138cc1"
+  },
+  "manor-kitchen": {
+    "source": "8099a5bf7158e64a2924b6bb9f8a5fd7c5b0855e9bc7f8521798c29cd5249290",
+    "output": "449788afd415079c8d911c670657046c868d6aa813579526464e9f4aca8111b7"
+  },
+  "manor-kitchen-open": {
+    "source": "98cbc566c0dffc0b79126fc63d4d5c3bcb9f68e34f8321dde90341f82ff9ad33",
+    "output": "6312599e77d43ed878b7971b8723341646135f2e94e3ef8d22e61c7fadfcd1bb"
+  },
+  "prop-display-open": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "f8fc9572553017fa0b758aecff1439696ae3b16387f3aa923921104b950ccba7"
+  },
+  "prop-display-closed": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "26b92152afdc370d5c52842a8e43fbf540d0d4588014ceb6b00ed555c5af84bb"
+  },
+  "prop-display-covered": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "2cdede4deb7a8db2a14aa0cf9da648def92b0c457cca116956037338e24453b7"
+  },
+  "prop-tower-stone": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "307dea6e38146417bc7f8c2c059cc0a45e50598bf061c7abbb035a7a2614e34b"
+  },
+  "prop-tower-stone-bottom": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "88b1ef5e47e47f751045ebee6028f5566eed3df57ce0e807cca211a79b7612ab"
+  },
+  "prop-light-cloth": {
+    "source": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134",
+    "output": "d76e9214fd908d09da292177337c1fddf18efacde9beadda4e016ac9cca0917b"
+  },
+  "stone-carrier-poses": {
+    "source": "cb18d76e1c09ff774c91375c217b804070c7a7a0102c9996182c00b9ebda8d8f",
+    "output": "e2ef614855c081fbe6f3b2a861b13858b0b5c1e5eb718dee29e41c7620c566a0"
+  },
+  "prop-candidate-blue": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "2d4233cd489d4db20afd7b0b67f7c0187f15a98dcb791ac87a03c786876c0d58"
+  },
+  "prop-candidate-violet": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "a88a288d153bde07747f802dbf45f585567fc6e56cbbb7c6199461fb241fe0ed"
+  },
+  "prop-candidate-dull": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "a625d4f374436a85108f68de6e3658a8ba43c5189ec43f468680a5ef60a18c4d"
+  },
+  "prop-covered-stone": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "47a1bbaa747a1d6c7c4d6763859f69830af004d7c8fc723ab41f8f089cc62b44"
+  },
+  "prop-stone-wrap": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "e0c35a5d6c534d460db3162831ab959f4c9d49ad4879e48e0ca131720a7a2f61"
+  },
+  "prop-wrapped-stone": {
+    "source": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf",
+    "output": "3a474ab98d2d7eb340cb5d20d3fd88dbbb6c60bb05bcf3fe3862fe33fd4b0403"
+  },
+  "stone-storeroom": {
+    "source": "96a5979f0d7d6303936f23b7bdc17d87d6bae5cfb7129aa54eaf99880d6fccf7",
+    "output": "9986e491bb96c950202cc06f9600aa6900c79c4ac7001078f938ccf2ee520c0c"
+  },
+  "prop-survey-pot": {
+    "source": "fffb0cb4fef7865bf3ff05f8e8f76e5a2ffd111303d577dcf094df77cbbfdd20",
+    "output": "11adb7f8cf2effc3ed08fc9b38b189de44cb78493d134e0a15ae83e90d3ceb12"
+  },
+  "prop-pot-lid": {
+    "source": "fffb0cb4fef7865bf3ff05f8e8f76e5a2ffd111303d577dcf094df77cbbfdd20",
+    "output": "fe3505373476292466282f6fba7fcabf7f433ce4d879fd1c81d007f4556c4d1b"
+  },
+  "prop-tool-rucksack": {
+    "source": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9",
+    "output": "92a4e634dd5727800b90a723e7f2529fdc31774ecf5a2973dc84bebec76afc51"
+  },
+  "prop-scrubbing-rag": {
+    "source": "f3ec2791656abc1c2116188e265f4a348767c4e05994a13a1fb5321f273e36d9",
+    "output": "32c58818557802813dce863fc0f3174ca4dd1e2557ed454ae7b32e61b4f1860f"
+  },
+  "prop-garden-pot": {
+    "source": "150403057fb5448dec854b9605271e78e41edf382befe4221f4a568cda3c5613",
+    "output": "42eaa0f08fcf4437d82647fbb43cfe6b92ddefb240901116a7b07b963eebaf88"
+  },
+  "prop-work-gloves": {
+    "source": "150403057fb5448dec854b9605271e78e41edf382befe4221f4a568cda3c5613",
+    "output": "a9f099ed7dc40a72945de417c5710a6373e5e9bba928c4e6fb35949b51938629"
+  },
+  "manor-gate": {
+    "source": "32f86d2a86c9e9ebbc404229b435588738095f7c0381609796a75afd6efbb3fa",
+    "output": "e5c78efdef3ff45b5121cd177a4460d99564bc3e86eb97aebf2630f409e8b590"
+  },
+  "manor-back-paths": {
+    "source": "288a59183c1c49a03267199755d661fac9cf92ed38322f2a480d7c6811bf3be8",
+    "output": "006329c63696a50e1f09f2fccf398c286a7997db2e4a0dd5b22a875ab2715b2c"
+  },
+  "prop-snag-rope": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "ec1874c37d289b8a1781e07add77318027f753e2902919dcaa0cb8fe1205387a"
+  },
+  "prop-iron-fastener": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "4b2856bd2b9a9ea6310ca71a9eb511f5dee9ceaaec2658c8739582b7c9b9e392"
+  },
+  "prop-cart-drape": {
+    "source": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f",
+    "output": "79d41799b96d234f0d573384c71dd0586596566217fce5a9bb2bbf87ee5f6fce"
+  },
+  "manor-well": {
+    "source": "df8d710044cd756b7448adf32a63712c1c37ea52dde0103bd4e913066b419516",
+    "output": "32bedea6bc24dbe1a5d8bbd5540036ad55f850614a3bbc1a55f0ebc6477be28f"
+  },
+  "manor-display-back": {
+    "source": "5bc030746911265a4526f6c9b9d28384d934cafb71426b0382a2decbc7461a76",
+    "output": "ae7ef5c7dc9d9726b27e3675da386d87b8a38c78877ec2b5c6e6710056fb55b0"
+  },
+  "prop-broken-fastener": {
+    "source": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3",
+    "output": "21021153d43679ecc6e767e66705f133cfa8c9467d186713a5467c455a214437"
+  },
+  "prop-stained-cloth": {
+    "source": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3",
+    "output": "63d5955a5211b24448bc56ba440ee6228d5a50acbfc2573b68814359bfe8bf3a"
+  },
+  "prop-empty-garden-pot": {
+    "source": "73bea1c8e1e96472e4c0824dba3b7462251c89ccd852b2fec2dc07f6e12f10c2",
+    "output": "eadfeae90d0d2bf656b0de38a6bd74bef000c5beb115a0ef76b6dcd51926e59e"
+  },
+  "prop-work-fence": {
+    "source": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8",
+    "output": "17472c33c4fd85d6ed156cce2e301ebb2827afc7c61ed51a80d4253815d29655"
+  },
+  "prop-joint-roots": {
+    "source": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8",
+    "output": "4707b828cefc1c80d85ce3b134652ed17b8ae30c5cadf490d1369e5cd3e2e96e"
+  },
+  "prop-dining-plate": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "2ca8d32ab4e7944d14cf37f40882ab8dafe207dba2aa60615285451826039bb6"
+  },
+  "prop-lunch-plate": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "29e4db0cd34734b33ecce2b4131993db2d7475d89d3ebec1c0f1a876c3c0c94a"
+  },
+  "prop-sealed-letter": {
+    "source": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e",
+    "output": "6d89e74d722d58c8c314517fa0e3212eaa3f1a0475a614459652e709d65c2a49"
+  },
+  "prop-stone-lantern-closed-sooty": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "96c019798b309ad8b1ae533bbb86d21fd1e7053e134379a23d7b8698b472fa9f"
+  },
+  "prop-stone-lantern-empty": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "8f1174aa03913432a29f1bf3091943e9e73e7ba24fd2cd7684286db90bd64d1c"
+  },
+  "prop-stone-lantern-closed-lit": {
+    "source": "86c7af8bd7ff77e4e6263e62a2aa9b7ab90411e34fbdc91c2914ea122c3d3117",
+    "output": "e7059df0efa85ea9e9eb02fd1e5c81904195c97176847c3d2cd400c8d59636a2"
+  },
+  "prop-roadside-grass": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "51649775cd5e4f0235844d0ea94ef08420c9c7d764992b6eca445bf7b1bc531c"
+  },
+  "prop-roadside-stubble": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "f235e46ed78c1429f44a3a5ad9ee0c2db668e8dad7405cbdf7e333c859df7f12"
+  },
+  "prop-lamp-oil": {
+    "source": "b924fc90f73a949c9c7cf4becba24f1ed1e9dac2076162da84686e07c2ffe015",
+    "output": "7227a26d3ee3a0f8785ee4b19b40d11d387ba6a795e367c6ce9a178436ef027b"
+  },
+  "prop-ale-cup-empty": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "ba7987bce4bab91528cd223e814d19f69c9c014e1698d4c6130e7b95fdf4e682"
+  },
+  "prop-ale-cup-full": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "43ba52b2c9e7bea81884b1c7ba8d43b3cc84a5b78d9ad903a131bfe9e39674ac"
+  },
+  "prop-fruit-glass": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "2d3dfcf507e1306ca7ccb21635869fa2b56223356f6c2c5b941a87fb0f9f4741"
+  },
+  "prop-ale-jug": {
+    "source": "6ff26b2c23c6a5fcab3e0c20e27aac76c428dad45902f6bdfe73fd3ee7f290dc",
+    "output": "187b6e9b9186cadb262bcb46940f421beaa94f3a1da0cc2bc2c465aef0a2c8aa"
+  },
+  "brekka-dining-room": {
+    "source": "6cb72bbff25c354aa0bdcc9b1bc71f676f3c0133dfb8e954ba5b399bb8159f35",
+    "output": "423197c39e964c1329976d6ceffacde74dcf5d8407df1480da3fedfa7f301ba0"
+  },
+  "prop-ale-bottle": {
+    "source": "2d773336038d8f67e211ab4d0a92342f7a07f497ad4fb87a830a363115229719",
+    "output": "122317b107f683ebb41ae04fe68f469a799464ed0a1914e3ff2ef964dd8dab6a"
+  },
+  "brekka-homes": {
+    "source": "c5062b81640ebc175eb075552cf5120e8bf95c43ab5d6c0d574451a171f945ab",
+    "output": "cf86c22a9ed86f0678c83aa40fd0b8144a82883d23ca413767f8a1d33659c04e"
+  },
+  "brekka-foyer": {
+    "source": "5131de38e805bc570382a7e58172bbd2ac85d37869842c25276f0be652ff1ff5",
+    "output": "474e8b976fa3b3ff05db8e4204e25763b7f58cda77dd4b6c9709c380812d1f29"
+  },
+  "prop-cart-wheel": {
+    "source": "e221290a038337741a534b32dbf2ce3bbd2d6631561830d49c9b0cc731d6ee24",
+    "output": "48a655a9a23df3dd34faca0676fa065e838762a64ba8be1a50087eaa792afec2"
+  },
+  "brekka-fork": {
+    "source": "5062de4e77679335f1bc838e82c6f2f4bc105f895047668cd432b31507b0f477",
+    "output": "3947e6fe8e1eafc162eb2cb23d236312a1940b46edd10c02aa77a3371574cae4"
+  },
+  "brekka-tower-path": {
+    "source": "d46c889d919ea69ded027d3f6242ce0e543f7f0c00de63d870f10868863bbad0",
+    "output": "24d164deadc813a1c30c1c4cfb24a7827fc8b4f8c9454b102e7569534fe5b201"
+  },
+  "prop-doctor-satchel": {
+    "source": "01be4627a23f72624edd257d68f6bab6a28a48609d09867b2cf9e6dd699bad28",
+    "output": "3b02e0fc29109dc8362c018fe1df60c0c32cd481edbe812541fba7afeb1116d5"
+  },
+  "prop-reflector-cover": {
+    "source": "57f91bff19971f3d2508f888c3d7afb5ca1652aad1f24fb3d880f420cd4d6c35",
+    "output": "21fb0e16a8b54579d3456ec225dfbece3e72a56e9ecd49f1457c87f25b17de6c"
+  },
+  "prop-reflector-cover-flat": {
+    "source": "24e0ac6c27b29dbe6d4f626d61ea2a04dc4923ff4b0e1b5354f6eba04115d15c",
+    "output": "dfd559aaf5aea0484ccbe63bcce42adbc962edb1bf102c5cd190c1ddeefeb931"
+  }
+}

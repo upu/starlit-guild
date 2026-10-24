@@ -84,69 +84,66 @@ for (const id of adventureHeroIds) {
         assert.equal(applyWorkPose(image, { gathering }, { id }, false, 90, false), false);
     },
   );
-  test(
-    id + " copies all eight home walking frames and idle pixels intact, isolates every action",
-    async () => {
-      const source = sharp("public" + adventureHeroAsset(id)),
-        home = sharp("public/home-pixel/" + id + ".webp");
-      const metadata = await source.metadata();
-      assert.equal(metadata.width, art.cell * 4);
-      assert.equal(metadata.height, art.cell * 6);
-      assert.equal(metadata.hasAlpha, true);
-      const frames = [];
-      for (let i = 0; i < art.frames; i++) {
-        const frame = source.clone().extract({
-          left: (i % 4) * art.cell,
-          top: Math.floor(i / 4) * art.cell,
-          width: art.cell,
-          height: art.cell,
-        });
-        const pixels = await frame.clone().ensureAlpha().raw().toBuffer();
-        frames.push(pixels);
-        assert.ok(
-          pixels.some((v, p) => p % 4 === 3 && v > 96),
-          "empty pose " + i,
-        );
-        for (let p = 0; p < art.cell; p++)
-          for (const offset of [
-            p,
-            p * art.cell,
-            p * art.cell + art.cell - 1,
-            (art.cell - 1) * art.cell + p,
-          ])
-            assert.equal(pixels[offset * 4 + 3], 0);
-        if (i <= 8) {
-          const native = await home
-            .clone()
-            .extract({
-              left: (i % 4) * residentArt.cell,
-              top: Math.floor(i / 4) * residentArt.cell,
-              width: residentArt.cell,
-              height: residentArt.cell,
-            })
-            .ensureAlpha()
-            .raw()
-            .toBuffer();
-          const copy = await frame
-            .extract({
-              left: (art.cell - residentArt.cell) / 2,
-              top: art.foot - residentArt.foot,
-              width: residentArt.cell,
-              height: residentArt.cell,
-            })
-            .ensureAlpha()
-            .raw()
-            .toBuffer();
-          for (let p = 0; p < native.length; p += 4) {
-            assert.equal(copy[p + 3], native[p + 3], `alpha ${id}/${i}/${p}`);
-            if (native[p + 3])
-              for (let c = 0; c < 3; c++)
-                assert.equal(copy[p + c], native[p + c], `color ${id}/${i}/${p}/${c}`);
-          }
+  test(id + " copies all eight home walking frames intact, isolates every action", async () => {
+    const source = sharp("public" + adventureHeroAsset(id)),
+      home = sharp("public/home-pixel/" + id + ".webp");
+    const metadata = await source.metadata();
+    assert.equal(metadata.width, art.cell * 4);
+    assert.equal(metadata.height, art.cell * 6);
+    assert.equal(metadata.hasAlpha, true);
+    const frames = [];
+    for (let i = 0; i < art.frames; i++) {
+      const frame = source.clone().extract({
+        left: (i % 4) * art.cell,
+        top: Math.floor(i / 4) * art.cell,
+        width: art.cell,
+        height: art.cell,
+      });
+      const pixels = await frame.clone().ensureAlpha().raw().toBuffer();
+      frames.push(pixels);
+      assert.ok(
+        pixels.some((v, p) => p % 4 === 3 && v > 96),
+        "empty pose " + i,
+      );
+      for (let p = 0; p < art.cell; p++)
+        for (const offset of [
+          p,
+          p * art.cell,
+          p * art.cell + art.cell - 1,
+          (art.cell - 1) * art.cell + p,
+        ])
+          assert.equal(pixels[offset * 4 + 3], 0);
+      if (i < 8) {
+        const native = await home
+          .clone()
+          .extract({
+            left: (i % 4) * residentArt.cell,
+            top: Math.floor(i / 4) * residentArt.cell,
+            width: residentArt.cell,
+            height: residentArt.cell,
+          })
+          .ensureAlpha()
+          .raw()
+          .toBuffer();
+        const copy = await frame
+          .extract({
+            left: (art.cell - residentArt.cell) / 2,
+            top: art.foot - residentArt.foot,
+            width: residentArt.cell,
+            height: residentArt.cell,
+          })
+          .ensureAlpha()
+          .raw()
+          .toBuffer();
+        for (let p = 0; p < native.length; p += 4) {
+          assert.equal(copy[p + 3], native[p + 3], `alpha ${id}/${i}/${p}`);
+          if (native[p + 3])
+            for (let c = 0; c < 3; c++)
+              assert.equal(copy[p + c], native[p + c], `color ${id}/${i}/${p}/${c}`);
         }
       }
-      for (const first of [10, 14, 16, 18, 20, 22])
-        assert.notDeepEqual(frames[first], frames[first + 1]);
-    },
-  );
+    }
+    for (const first of [10, 14, 16, 18, 20, 22])
+      assert.notDeepEqual(frames[first], frames[first + 1]);
+  });
 }

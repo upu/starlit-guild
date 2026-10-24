@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-8 bridge reunion, free-hand parcel pat, looking across the river, empty flowerpot",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/finn-parcel-pat-v1.png",
+      "reference": "assets/source/story-stage/finn-injured-hand-v1.png",
+      "generated": "exec-f71c5b06-39a6-4525-9ace-66515af4b3c7.png",
+      "prompt": "Use case: stylized-concept. Asset: transparent RPG sprite animation strip. Reference image is character identity, palette and pixel-cluster style, especially its FOURTH standing pose. Generate TWO full-body Finn figures in a horizontal row with generous transparent margin and a wide empty gutter. EXACT same scruffy middle-aged man, tousled brown shoulder-length hair, unshaven face with tired half-lidded eyes and wry smile, shabby brown long coat, cream open collar, brown trousers and boots. Elevated three-quarter RPG view. Match reference head size and roughly three-head-tall proportions. Both figures face three-quarter screen RIGHT, same head, torso, feet and baseline. The RIGHT arm (toward screen RIGHT) stays extended palm-up at waist height for a healer to check; draw a narrow cream dressing across that palm. His FREE LEFT arm reaches toward SCREEN LEFT, away from the torso, bent elbow, open left hand facing DOWN, fingers slightly curved as if about to lightly pat a parcel at waist height. No parcel or other character drawn. First frame: free left hand raised just above that imaginary parcel. Second frame: same pose but free left hand 5 pixels lower at final 128px-cell scale, a gentle single pat, NOT a punch. Keep right injured hand, head, stance and clothing identical between frames. BOTH hands must be visible on opposite sides of his body, anatomically connected. Keep whole hair, fingertips and boots well inside each cell. True transparent background, no floor shadow, no text, no weapons, no blood. Do not make him youthful or handsome, preserve the established older roguish character.",
+      "sha256": "f76e357c4a58663d23ac052447a6876f5f00a55da54cb1d9525916c1dd0fd666"
+    },
+    {
+      "source": "assets/source/story-stage/mira-river-look-v1.png",
+      "reference": "public/home-pixel/mira.webp",
+      "generated": "exec-a4b0ec81-da4a-43eb-8429-1975df217db6.png",
+      "prompt": "Use case: stylized-concept. A single full-body transparent JRPG sprite of the EXACT Mira character in the reference sheet. Reference establishes identity, outfit, colors and chunky pixel-cluster drawing style. Silver-lavender braided hair, small white and gold flower ornament, white-and-gold healer dress with blue sash and cloak panels, brown ankle boots. Adult healer, matching the reference head/body proportions, about three heads tall, not a taller realistic figure. Elevated three-quarter RPG camera. She has finished checking someone's hand and stands relaxed, body turned three-quarter AWAY toward UPPER RIGHT of the image, looking up across a river that is outside this sprite. Show back of head, braid and side profile only; gaze leads to upper right. Arms relaxed close to her waist, no props or staff, complete boots on a common ground baseline. Keep the SAME head size and detailed costume as the reference, whole hair and boots comfortably inside generous transparent margins. No background, no water, no ground shadow, no text.",
+      "sha256": "7181eb16cf61d5f0ead42c76cfde2b77701bd7c611ebb0ea6a72e6ad6e4060f7"
+    },
+    {
+      "source": "assets/source/story-stage/empty-garden-pot-v1.png",
+      "reference": "public/story-stage/prop-garden-pot.webp",
+      "generated": "exec-c77f7c23-ef4a-49e4-bc42-f1a3faf12681.png",
+      "prompt": "Use case: precise-object-edit. Edit this transparent RPG pixel-art flowerpot to show the SAME terracotta pot EMPTY. Remove only flowers, leaves, roots and soil. Reveal the dark empty inner cavity with the same round rim in elevated three-quarter view. Preserve the pot's warm orange-brown clay, worn muted decoration, outline, width, body height and pixel-cluster style. One complete isolated pot, generous transparent margin, no background, no pedestal, no shadow outside the pot, no labels.",
+      "sha256": "73bea1c8e1e96472e4c0824dba3b7462251c89ccd852b2fec2dc07f6e12f10c2"
+    }
+  ]
+}

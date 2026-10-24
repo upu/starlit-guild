@@ -1,0 +1,24 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/berne-paving-v1.png",
+      "prompt": "Use case: illustration-story. Modify this pixel-art medieval town street reference for a specific RPG scene just inside Berne town gate. Preserve the warm daylight, high oblique top-down camera around 50 degrees, 3:2 landscape format, coherent small paving-block scale, buildings at both sides, and broad central street. The lower-left center at x25-45%, y57-73% must have a CLEAR rectangular missing section of pavement, 5 by 4 stones removed, newly exposed compact brown earth with square impressions and a slightly sharp cut edge. This is deliberately removed paving, not a pothole full of rubble. Other road stones remain intact. A very faint cool pale blue glow is visible along a few seams in the remaining paving and stone wall blocks, barely visible in daylight, not neon and not bright magical effects. Foreground at x48-86%,y50-82% remains walkable intact flat paving for four small characters, each roughly 14% image height; central top road continues out of frame. No characters, furniture, loose objects, arrows, text or UI. Don't add towers, rivers or new junctions. Match original detailed pixel-art texture and outlines; don't enlarge the paving stones.",
+      "reference": "public/story-stage/berne-street.webp",
+      "sha256": "ac491ce617c730dbc6a8edf9304ade94ddd19333c833c8e7adf7caefd100270f"
+    },
+    {
+      "source": "assets/source/story-stage/berne-porch-v1.png",
+      "prompt": "Use case: illustration-story. Create a new 3:2 landscape pixel-art RPG background, using the reference village house image ONLY for the warm crisp pixel-art style, materials and small-object scale. Setting: the sheltered stone-paved porch under the eaves of a modest medieval town house in Berne. High oblique overhead camera looking down about 50 degrees, no horizon. Upper 35-40% shows plaster-and-stone house wall, wooden door at x84%, windows, exposed eaves near top edge. Lower 60% is a broad empty flat stone-paved shaded porch, enough for four small sprites to sit together, clear of furniture/plants. CRITICAL story detail: on the plaster wall, centered at x34%, y29%, mount one SMALL wooden bracket shelf with one palm-sized ordinary smooth pale blue-gray rounded stone resting on it. Stone is only 2.5% of image width, clearly supported by shelf, with a very soft pale-blue glow lighting the immediate shelf edge; not a giant magical crystal, not hovering. Shelf height must be above a standing character's head (characters will stand with feet at y60%, heads y42%). A plain doorway and small threshold at upper-right around y40%, where the homeowner can stand. Provide some muted shade cast by eaves across the porch floor, subtle warm reflected daylight from foreground. Small plants only at outer edges; no foreground fence, large objects, steps across the central floor, bench, table, food, people, paper, UI or text. Keep lower foreground entirely unobstructed for animation.",
+      "reference": "public/story-stage/village-house.webp",
+      "sha256": "2ce50b1e9cf42d6026890a4205a95bb1dfbad35d92d8aec41039efbd6c7899ee"
+    },
+    {
+      "source": "assets/source/story-stage/berne-meal-props-v1.png",
+      "prompt": "Use case: stylized-concept. Transparent RGBA pixel-art RPG prop sprite sheet, exactly 3 columns by 2 rows, six equal square cells, generous clear gutters, no labels/grid. Crisp warm pixel clusters, thin dark brown outlines, high-oblique three-quarter view, matching warm detailed Japanese fantasy RPG props readable at 15-35 pixels. Top row left to right: 1 ONE small oval crusty golden bread roll, whole, no plate or cloth; 2 HALF of the exact same bread roll, visibly torn open with pale crumb, half the volume of whole roll, no plate or cloth; 3 a small cream paper medicine sachet folded over and tied with a little brown thread, no writing or cross. Bottom row left to right: 4 a small square cream picnic napkin spread with gentle soft folds, viewed steeply from above, empty, no food; 5 a visibly older faded tan square wrapping cloth spread flat, slightly frayed edge, empty, no food; 6 one shallow plain dark brown oval wooden serving tray with short handles, empty, viewed at same high-oblique angle. Every object isolated and fully inside its own cell, actual transparent background, no cast shadow outside objects, no scenery or hands. Bread objects physically same scale, half bread smaller than whole.",
+      "sha256": "752fded4026675bad8d007e0069d55bb919c91d678b14201df27d6f8bfa15409"
+    }
+  ]
+}

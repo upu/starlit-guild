@@ -1,0 +1,82 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in edits",
+  "date": "2026-10-22",
+  "images": [
+    {
+      "source": "assets/source/story-stage/worker-motion-v1.png",
+      "reference": "public/story-stage/worker-poses.webp",
+      "prompt": "Create a transparent-background pixel-art RPG sprite sheet using the attached worker sheet as EXACT character reference. Same friendly adult brown-haired male carrier, ochre short shirt, dark brown work apron/trousers, leather boots, normal two hands. Preserve facial identity, hairstyle, chunky pixel outlines, oblique elevated RPG angle and chibi head/body proportions. EXACTLY EIGHT isolated full-body poses in FOUR equal columns by TWO equal rows, row-major order, wide transparent gutters. No text, labels, ground, shadows, furniture, decorative background or neighboring cell overlap. All cells SAME camera zoom, head width and limb thickness, feet grounded at a common baseline. Frames 1-4 four DISTINCT chronological walking footfalls facing viewer-left, arms loosely forward at waist ready to guide a cart: left foot forward, passing left stance, right foot forward, passing right stance. Frames 5-6 standing and actually writing with a small quill in right hand into a small open cream paper notebook supported by left hand at waist/chest height; two slightly differing writing strokes, same scale; include notebook and quill in those two figures only. Frame7 crouches on one knee looking down to viewer-left, empty right hand reaches near floor to inspect a wheel that is NOT drawn. Frame8 stands holding both empty hands forward around waist height, ready to carry a wooden signpost that is NOT drawn. Low pose becomes shorter by bending joints, NOT reducing the head size. All boots, hair and hands remain inside cell. 1536x1024 horizontal canvas. True RGBA alpha background.",
+      "purpose": "Initial motion sheet; retained as the reference for the leg correction.",
+      "sourceSha256": "cb3d0edd0c3dfe36cb116698010fe41d7333e383e4cc1c81bf4bd701a87846cb",
+      "referenceSha256": {
+        "public/story-stage/worker-poses.webp": "1f40adf848e14af9bf37d722151deb108c3bb70c6208567a21db0e25598a1fe4"
+      },
+      "referenceRevision": "74c96b2f2e1a9c6d4d8664ad5abbd54f4dab8fc5"
+    },
+    {
+      "source": "assets/source/story-stage/worker-motion-v2.png",
+      "reference": "assets/source/story-stage/worker-motion-v1.png",
+      "prompt": "Targeted correction to this exact 4-column by 2-row transparent sprite sheet. Preserve the four lower-row figures and all heads, faces, outfits, character scale, cell positions, transparent gutters and baseline. Correct ONLY the walking legs/boots in the FOUR UPPER cells so this is a true ALTERNATING walking cycle rather than stepping with one leg repeatedly. Upper cell1: NEAR leg/boot (on viewer's left side of this character) extended forward toward viewer-left, FAR boot planted back toward viewer-right. Upper cell2: near leg takes weight, far boot lifted passing forward behind. Upper cell3: FAR leg/boot is now extended forward toward viewer-left, NEAR knee bent back with the NEAR boot lifted visibly behind toward viewer-right; this silhouette must be clearly different from cell1, with the forward boot connected to the opposite hip. Upper cell4: far leg takes weight, near boot lifted passing forward. Keep two legs and two boots total in each frame, anatomically connected, no extra limbs. Keep the hands, aprons and whole bodies in place, same height and head size. Crisp RPG pixel art matching reference, no text, no grid, no ground. Retain true transparent RGBA background.",
+      "output": "public/story-stage/worker-poses.webp",
+      "sourceSha256": "d8f13e8309578e3c6ecb9cff8655a6951da3565b897e25afe9f11dd34af75cdd",
+      "outputSha256": "de671d094dcfb20c9df2cd9046e6fe68c3f73e79015929509dabcac739e13c72",
+      "referenceSha256": {
+        "assets/source/story-stage/worker-motion-v1.png": "cb3d0edd0c3dfe36cb116698010fe41d7333e383e4cc1c81bf4bd701a87846cb"
+      },
+      "referenceRevision": "74c96b2f2e1a9c6d4d8664ad5abbd54f4dab8fc5"
+    },
+    {
+      "source": "assets/source/story-stage/mountain-fork-empty-v1.png",
+      "reference": "public/story-stage/mountain-road.webp",
+      "prompt": "Edit only the painted wooden directional signpost beside the left-hand fork in this RPG background. Remove its board and vertical post completely and replace its exact footprint with natural exposed dirt and a small inconspicuous dark post hole, retaining adjacent rocks, wildflowers and plants. Keep the entire existing fork, stone retaining wall, forest, fence, lighting, pixel-art texture, elevated oblique camera, ground scale, framing and image dimensions unchanged. No people, props, extra signs, text or new paths. This will be a background behind separately animated characters and a separately drawn signpost.",
+      "output": "public/story-stage/mountain-fork-empty.webp",
+      "sourceSha256": "f369a97710b7cc5cb9d4c8b118a3e96f3ff54deb48a72ae471488fa2676d2adb",
+      "outputSha256": "aa513ddc24ad4ca26fbc8767ece733a17dcd37805d20fc82ba23bbc98145f32d",
+      "referenceSha256": {
+        "public/story-stage/mountain-road.webp": "f613fb9fe78d7442b752fabbfe22a525d21194556127ed818c32e09f2731c3ae"
+      },
+      "referenceRevision": "74c96b2f2e1a9c6d4d8664ad5abbd54f4dab8fc5"
+    },
+    {
+      "source": "assets/source/story-stage/carrier-props-v1.png",
+      "references": [
+        "public/story-stage/prop-signpost.webp",
+        "public/story-stage/prop-delivery-bag.webp"
+      ],
+      "prompt": "Create a transparent pixel-art RPG prop sheet EXACTLY 2 columns x 2 rows, four separate objects, one per cell, equal cells, generous clear alpha gutters. Elevated oblique RPG view, crisp pixel clusters and dark outlines matching the two reference assets, no labels, text, grid, shadows outside object or scenery. TOP LEFT: the exact reference wooden right-pointing signpost, preserve board, nails, wood grain and pole width, but remove ALL surrounding stones, grass, soil and roots: just the bare board and straight wooden pole with exposed bottom, portable. TOP RIGHT: the exact reference olive green leather medical delivery satchel with its tan straps and tiny red-cross tag, but with flap OPEN and lifted back so the dark empty interior and brass clasp are visible. Preserve its closed-bag body shape and size; do not add medicine rolls sticking out or any contents. BOTTOM LEFT: a small compact stack of three brown-paper parcels tied with cream string, modest village trade goods, no labels or letters. BOTTOM RIGHT: the EXACT SAME parcel stack at identical scale, but the top wrapping is opened and a few small round golden biscuits are visible with two pieces missing; one small cut cream cord lies on top; keep lower parcels and footprint unchanged. No extra characters, hands, arms, furniture, cart, lantern, glow or ground. 1024x1024 true RGBA alpha.",
+      "outputs": [
+        "public/story-stage/prop-signpost-portable.webp",
+        "public/story-stage/prop-honey-bag-open.webp",
+        "public/story-stage/prop-trade-parcels.webp",
+        "public/story-stage/prop-trade-parcels-open.webp"
+      ],
+      "sourceSha256": "1d0577dc65fc26daacfed7894edb18b0ca520019be56468fff06b53a379d4058",
+      "outputSha256": {
+        "public/story-stage/prop-signpost-portable.webp": "151b0befc9a6026074fec41af6f9f6c535ec102d93d7118d0c4c6b5fc0c35306",
+        "public/story-stage/prop-honey-bag-open.webp": "4ba12865b6563253e569fe58b29be919ac9e3065961fe6da34388e7dc1252f85",
+        "public/story-stage/prop-trade-parcels.webp": "3eafd5b78b3f280ad44da6f41497ae8d81921633827aeee49bb33e66ff403b4f",
+        "public/story-stage/prop-trade-parcels-open.webp": "437fcb9f1ae49be3ece1fcd610bff3ce7d761c98ce0a0cccf252fa597a4cf47a"
+      },
+      "referenceSha256": {
+        "public/story-stage/prop-signpost.webp": "d87a17a02661ff822a151a825e86eddfa990d6d5ee2735c0d269839fe4cfa8ba",
+        "public/story-stage/prop-delivery-bag.webp": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23"
+      },
+      "referenceRevision": "74c96b2f2e1a9c6d4d8664ad5abbd54f4dab8fc5"
+    }
+  ],
+  "registration": {
+    "worker": "128px cells, foot y=120; original poses 0-3 retained, walking 4-7, writing 8-9, crouching 10, carrying 11. Standing poses registered to 96px stature and original head width; crouching preserves head scale and lowers stature to 78px.",
+    "props": "Open and closed honey bag use 256x280 transparent canvases with equal 256px body width and south alignment. The closed bag reuses the existing delivery bag. The portable sign contains no terrain.",
+    "background": "Existing settlement fork, with the painted sign removed for separate object placement; no route or geography change."
+  },
+  "derived": [
+    {
+      "source": "public/story-stage/prop-delivery-bag.webp",
+      "output": "public/story-stage/prop-honey-bag.webp",
+      "sourceSha256": "a2f751e13ef9ac79ff5d69383f1ca55cc5af3c7078a834250d2d70b074349d23",
+      "outputSha256": "3878f9171436b5ece414c85c99141b70279a3c84b9adeb5b68fe6bcadfd442eb",
+      "method": "Alpha crop, equal body-width resize and south-aligned transparent canvas in scripts/story-stage-carrier-art.mjs."
+    }
+  ]
+}

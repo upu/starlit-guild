@@ -66,5 +66,8 @@ jobs:
       - name: Check enemy art
         run: npm run enemy-art:check
 
+      - name: Check story stage art
+        run: npm run story-stage-art:check
+
       - name: Run unit tests
         run: node --test tests/*.test.mjs

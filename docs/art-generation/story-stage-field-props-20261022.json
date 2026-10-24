@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-22",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "wood-label",
+      "source": "assets/source/story-stage/wood-label-v1.png",
+      "prompt": "Use case: stylized-concept. Asset for warm medieval pixel-art RPG viewed obliquely from above (about 40 degrees down), matching the supplied moss garden's chunky outlined pixels and natural browns. One small wooden plant-identification stake, standing upright and leaning very slightly backward, full stake visible, transparent background. A modest rectangular weathered pale wood label fixed to a thin wooden pointed stake; a simple carved numeral \"2\" and two short horizontal tally marks on its face. Not a large signpost, billboard, book or scroll. This is a knee-high plant row marker to be embedded in soil along a moss bed. Brown dark outlines, visible top edge, subtle wood grain, legible at only 20 pixels tall. No ground, no soil mound, no grass, no flowers, no shadow, no frame, no surrounding scenery. Entire object contained with generous transparent margins.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-22de1fa2-4936-42f9-8b03-6e3992402f08.png",
+      "references": [
+        "public/story-stage/moss-beds.webp"
+      ]
+    },
+    {
+      "id": "stone-lantern-initial",
+      "source": "assets/source/story-stage/stone-lantern-states-v1.png",
+      "prompt": "Use case: precise-object-edit. Reference is the game's stone oil lantern, preserve this exact squat mossy grey-stone pagoda-style lantern, square pedestal, roof, weathering, warm dark outlines and coarse pixel-art texture, same elevated three-quarter view. Make a TRANSPARENT sprite sheet with THREE equal-width cells in one horizontal row, no borders or labels, very generous transparent margins, all lanterns identical shape/scale/view/aligned base and roof. ONLY change repair/lighting state between cells. Cell 1: fire OUT, blackened soot-clouded glass, hinged glass door slightly open, visibly EMPTY dark oil chamber (no flame, no glow, no orange light). Cell 2: same lantern and open door, glass carefully cleaned with clear dark chamber and unlit wick dish, NO light or flame. Cell 3: same lantern, door shut, small warm yellow oil flame in chamber with modest amber illumination, like the reference. No background, ground, characters, tools, smoke, floating effects, text or numbers. Keep every detail of roof, stones and moss identical between all three cells; this is a three-state game prop, not three different lantern designs.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-eaae31c2-4734-4d23-b863-d0b88c2f1bce.png",
+      "references": [
+        "public/story-stage/prop-stone-lantern.webp (prior output from later-props-v1.png)"
+      ]
+    },
+    {
+      "id": "stone-lantern-final",
+      "source": "assets/source/story-stage/stone-lantern-states-v2.png",
+      "prompt": "Edit this transparent three-cell pixel-art stone lantern state sheet. Preserve all three lanterns' design, perspective, pixel texture, moss, scale, arrangement and clear alpha background. ONLY corrections: In the FIRST (sooty unlit) lantern remove the entire loose round oil bowl and wick from inside the chamber, leaving its bare dark interior floor. Keep second clean-but-unlit and third burning lantern as they are. Add a FOURTH equal-width cell to the RIGHT with the removed shallow blackened bronze oil dish alone, seen at the same elevated angle, empty of oil, no flame, no smoke. The dish is a small removable palm-sized vessel, on transparent background with ample margin. Final output FOUR equal-width cells in a SINGLE horizontal row, the first three lanterns aligned identically in their equal cells and same size; the fourth contains only the standalone small dish, centered. No letters, numbers, checkerboard, scenery, shadows or labels. True transparency.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-95006067-4a33-4df6-aff3-afbb0551dc8c.png",
+      "references": [
+        "assets/source/story-stage/stone-lantern-states-v1.png"
+      ]
+    }
+  ]
+}

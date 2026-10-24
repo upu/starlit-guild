@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-7 well, service paths and continuity of reception cargo",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/manor-well-v1.png",
+      "reference": "public/story-stage/manor-back-paths.webp",
+      "generated": "exec-2844d200-502c-49f2-a9af-38252dbc2c2d.png",
+      "prompt": "Use the reference only for the established pixel-art palette, stone masonry and flowering hedges of this manor. New 3:2 RPG background, same chunky pixel clusters and dark outlines, steep elevated three-quarter camera 45 degrees down, no horizon. Late afternoon warm light. A manor SERVICE COURTYARD: a small low round stone well with wooden winding spindle stands upper-left at x28%, y30%, kitchen wall and open service doorway upper-right at x83%, y20%. A low rectangular island of flowering hedge sits upper-middle, paths loop around its right and back sides toward the well, visibly two right-angle bends, no dead end. A second narrow service path exits toward the LEFT edge around x0%, y38%, with a modest wooden numbered waypost (two short horizontal tally marks, no words), a patch of flattened grass and one small circular flowerpot impression in damp soil at its mouth around x18%, y48%. Broad continuous unobstructed golden stone paving fills lower 55% for small moving sprites, no furniture there. At right edge x91%, y60%, a low shrub has a small bare branch projecting left to x81% for a loose rope to snag. Space in front of kitchen door is accessible. Keep well and door appropriately modest for characters around 1/6 image height. No people, no cart, no foreground props, no lettering, no cinematic perspective. This is another part of the same garden, not a new geographical location.",
+      "role": "edit input; not rendered",
+      "sha256": "5f5a111bd3bf0add1bc1b6ee7bc0f0d631c5f7ad6b9600080a4671867c24635d"
+    },
+    {
+      "source": "assets/source/story-stage/manor-well-v2.png",
+      "reference": "assets/source/story-stage/manor-well-v1.png",
+      "generated": "exec-243db828-2ec6-4f7e-aeee-3a192dcd6314.png",
+      "prompt": "Edit this existing RPG garden courtyard image with a tiny local correction only. At x19%, y43%, beside the left path's wooden sign, there is a small terracotta ring / empty pot. REMOVE that physical object. In exactly the same patch of damp soil, show only a FLAT round darker damp imprint where a pot USED TO stand, and gently flattened grass. No rim, no raised edge, no pot remains. Preserve every other pixel-art feature and layout, camera, well, kitchen door, hedge paths, foreground paving and right branch. Opaque background.",
+      "sha256": "8eba0ffc9edb8cd5e1b6b0eb60c9e7788a7511f082fcff66d5d2827f9abc7a98"
+    },
+    {
+      "source": "assets/source/story-stage/manor-display-back-v1.png",
+      "reference": "public/story-stage/manor-garden.webp",
+      "generated": "exec-2e26a731-32b8-423b-b022-6ca685b77242.png",
+      "prompt": "Use reference as established manor pixel-art style, warm stonework and green flowering hedges. New 3:2 RPG background, steep elevated oblique view about45 degrees, no horizon. The WORK AREA BEHIND the garden display, early evening warm amber light. Continuous open stone paving fills lower70% to receive separately drawn display table, handcart and small people. At upper-right a low balustrade and beyond it a small glimpse of rows of guest seating for a garden reception, empty no people. At upper-left x15%,y20% a stone garden gate leads away; connect it with a clear path running down the LEFT side of the composition then around a flowering hedge corner at x20%,y48%. At the corner a small unobtrusive wooden waypost with a bare peg is available for tying a small marker string. The left path, gate and the open work apron are visually connected; no walls blocking walking. At the top a short section of familiar manor stone facade, no grand castle. Keep objects small to match sprites about1/6 image height. No display table painted into background, no stone artifact, no cart, no people, no writing, no oversized foreground architecture.",
+      "sha256": "eaf134f662bd16ba2f502688b1f96b02a2bd8296680b33f68a55ebdb347680ee"
+    },
+    {
+      "source": "assets/source/story-stage/reception-props-v1.png",
+      "generated": "exec-e742b97e-6f92-4004-9b1b-2e3c5128a868.png",
+      "prompt": "Transparent JRPG pixel-art prop sheet, THREE equal cells in ONE HORIZONTAL ROW, generous transparent margins and gutters. Warm medieval palette, chunky sharp pixel clusters, dark outlines, elevated three-quarter view. LEFT: a length of tan coarse rope pulled taut diagonally from lower-left to upper-right, upper-right forms a small loop catching an unseen branch, frayed free tail droops short at lower-left; no branch or bag drawn. MIDDLE: one tiny dull iron fastening clip with an angular U-shaped hook and short clasp, solid usable unbroken metal fitting, viewed obliquely on ground, no background shadow. RIGHT: a single cream linen decorating cloth folded OVER an invisible wooden cart rim, top edge nearly horizontal recedes gently up toward right, a narrow rear flap and a longer front flap drape down with soft folds; complete isolated cloth only, no wood, no hands, no patterns, rectangular not a tablecloth pile. No text, no background, keep true alpha.",
+      "sha256": "3d897244056ba05455dc325a1b78f91a25fe19bd386feac705706c994df5bf0f"
+    }
+  ]
+}

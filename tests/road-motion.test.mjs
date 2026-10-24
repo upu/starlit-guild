@@ -24,6 +24,50 @@ function frame(time = 1000) {
 const screenX = (battle, width = 390) =>
   roadX(battle.heroes[0].x, battle.distance, width, battle.stage);
 
+test("melee lunges keep bodies apart on either side without changing saved combat", () => {
+  for (const width of [390, 1280])
+    for (const facing of [-1, 1])
+      for (const boss of [false, true]) {
+        const motion = new RoadMotion();
+        for (let t = 1000; t <= 3200; t += 16) {
+          const next = frame(t),
+            hero = next.battle.heroes[0];
+          hero.facing = facing;
+          next.battle.enemies = [
+            {
+              id: 1,
+              kind: boss ? "golem" : "slime",
+              boss,
+              hp: 10,
+              maxHp: 10,
+              x: hero.x + facing * 55,
+              lane: 0.74,
+            },
+          ];
+          next.battle.effects = [
+            {
+              id: 1,
+              kind: "slash",
+              hero: "leon",
+              at: 1000 + Math.floor((t - 1000) / 600) * 600,
+              amount: 1,
+              x: next.battle.enemies[0].x,
+              lane: 0.74,
+              fromX: hero.x,
+              fromLane: hero.lane,
+            },
+          ];
+          const saved = structuredClone(next);
+          const { battle } = motion.update(next, "battle", width);
+          const drawn = battle.heroes[0],
+            enemy = battle.enemies[0];
+          assert.ok((enemy.x - drawn.x) * facing >= (boss ? 115 : 70));
+          assert.equal(battle.effects[0].fromX, drawn.x);
+          assert.deepEqual(next, saved);
+        }
+      }
+});
+
 test("formation, camera and stage changes stay continuous and converge to work positions", () => {
   const motion = new RoadMotion();
   const first = motion.update(frame(), "run", 390);
@@ -51,6 +95,18 @@ test("formation, camera and stage changes stay continuous and converge to work p
   assert.equal(result.battle.heroes[0].walking, false);
 });
 
+test("a small foreground opponent cannot hide the large enemy's body clearance", () => {
+  const sample = frame(),
+    motion = new RoadMotion();
+  sample.battle.enemies = [
+    { id: 1, kind: "puppet", boss: false, hp: 10, maxHp: 10, x: 155, lane: 0.74 },
+    { id: 2, kind: "golem", boss: true, hp: 10, maxHp: 10, x: 170, lane: 0.57 },
+  ];
+  const result = motion.update(sample, "two-enemies", 390);
+  assert.ok(result.battle.heroes[0].x <= 50);
+  assert.equal(sample.battle.heroes[0].x, 100);
+});
+
 test("effects and recovery taps follow the displayed hero during repositioning", () => {
   const motion = new RoadMotion();
   motion.update(frame(), "run", 390);
@@ -75,7 +131,7 @@ test("effects and recovery taps follow the displayed hero during repositioning",
   assert.equal(
     chapterRoadHit(
       null,
-      { x: screenX(battle), y: roadY(battle.heroes[0].lane, 300) - 25 },
+      { x: screenX(battle), y: roadY(battle.heroes[0].lane, 300, 390) - 25 },
       390,
       300,
       battle,
@@ -114,7 +170,7 @@ test("travelling explores both axes, while work, rest, scenes and reduced motion
   }
 });
 
-test("carriers keep their work pose and forward facing while the display catches up", () => {
+test("carriers keep their pose for small cart lag, but walk until a distant grip is reached", () => {
   const motion = new RoadMotion();
   const initial = frame();
   initial.look.workers = ["leon"];
@@ -123,13 +179,22 @@ test("carriers keep their work pose and forward facing while the display catches
   motion.update(initial, "run", 390);
   const shifted = structuredClone(initial);
   shifted.battle.time = 1016;
-  shifted.battle.heroes[0].x = -100;
+  shifted.battle.heroes[0].x = 90;
   shifted.battle.heroes[0].facing = -1;
   const drawn = motion.update(shifted, "run", 390);
   assert.ok(Math.abs(drawn.battle.heroes[0].x - shifted.battle.heroes[0].x) > 5);
   assert.deepEqual(drawn.look.workers, ["leon"]);
   assert.equal(drawn.battle.heroes[0].facing, 1);
   assert.equal(shifted.battle.heroes[0].facing, -1, "drawing must not change saved facing");
+  shifted.battle.heroes[0].x = -100;
+  shifted.battle.time += 16;
+  const distant = motion.update(shifted, "run", 390);
+  assert.deepEqual(distant.look.workers, []);
+  assert.equal(distant.battle.heroes[0].walking, true);
+  shifted.battle.heroes[0].x = distant.battle.heroes[0].x;
+  shifted.battle.heroes[0].lane -= 0.4;
+  shifted.battle.time += 16;
+  assert.deepEqual(motion.update(shifted, "run", 390).look.workers, []);
 });
 
 test("new runs reset continuity, pauses cannot produce a large catch-up step", () => {
@@ -197,5 +262,29 @@ test("real gathering ambushes, victories and work-point changes never teleport c
       if (ambush && victory && changed) break;
     }
     assert.ok(ambush && victory && changed, `${stage}: ${ambush}/${victory}/${changed}`);
+  }
+});
+
+test("cart escorts keep their authored lanes while walking alongside the carriers", () => {
+  const motion = new RoadMotion();
+  const sample = {
+    battle: {
+      time: 1000,
+      stage: "forest",
+      distance: 0,
+      phase: "journey",
+      effects: [],
+      enemies: [],
+      gathering: { kind: "cargo", task: "carry", x: 100, remaining: 50, total: 100 },
+      heroes: [{ id: "mira", x: 20, lane: 1.08, hp: 10, maxHp: 10, walking: true, facing: 1 }],
+    },
+    look: { workers: ["leon", "finn"], frontCarriers: ["finn"], puller: "finn" },
+  };
+  for (let at = 1000; at < 6000; at += 100) {
+    sample.battle.time = at;
+    const { battle } = motion.update(sample, "cart", 390);
+    assert.equal(battle.heroes[0].lane, 1.08);
+    assert.ok(Math.abs(battle.heroes[0].x - 20) < 1e-8);
+    assert.equal(battle.heroes[0].walking, true);
   }
 });

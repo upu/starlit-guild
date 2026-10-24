@@ -1,0 +1,18 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/picnic-hill-v1.png",
+      "reference": "public/story-stage/hill-path.webp",
+      "prompt": "Use case: game environment variant. Use reference only for matching warm detailed pixel-art style, pixel grain, trees, rural fantasy village, and high oblique overhead RPG camera around 50 degrees. Create a landscape 3:2 background: a quiet small grassy clearing on the familiar hill just OFF the village footpath, for two tiny adventurers having a picnic. Central lower two thirds must be a broad level area of short dry grass and earth with sparse small flowers, NO tall plants/rocks/objects in that play area. The narrow dirt footpath runs along the far upper-right edge and continues out of view, never through the picnic area. Edges framed by low shrubs, an oak at upper left, distant hints of village farm roofs beyond the upper edge. No horizon-level view, no huge buildings in foreground, no people, no picnic blanket, food, furniture, lettering, or props. Match reference object scale for small RPG characters. Calm afternoon sunlight and coherent shadows, crisp pixel clusters, full opaque scene.",
+      "sha256": "68ea0e7833257e40a8b135ceefe9f859f3c97843f576b61b1d9b4060d21e9099"
+    },
+    {
+      "source": "assets/source/story-stage/picnic-props-v1.png",
+      "prompt": "Use case: production pixel-art fantasy RPG props. Transparent RGBA sprite sheet with exactly SIX separate items in a regular 3 columns by 2 rows grid. Equal 512x512 cells, generous transparent gutters, no labels, grid, floor, shadows or people. Warm brown crisp pixel-art outlines and chunky readable shapes, elevated three-quarter view. Top row left: ONE small round walnut tea cake, golden baked surface, walnut pieces embedded. Top middle: ONE small square honey cake, pale golden color and porous soft crumb, no plate. Top right: a SMALL leather-covered cylindrical travel water flask, narrow neck with a fitted wooden screw cap, short carrying strap, sealed; no modern plastic or metal thermos. Bottom left: a small detached plain wooden flask cap that doubles as a drinking cup, hollow oval rim visible. Bottom middle: a short loose piece of thin brown twine laid in a gentle curve, with a small loop, no spool. Bottom right: a SMALL parcel made of unprinted light parchment, neatly folded around a couple of cakes, tied closed with crossed brown twine. No duplicate items, no food bundle shaped like a full loaf, no text. One item per cell, consistent lighting; intended to display at 12 to 28 pixels.",
+      "sha256": "98bed1b0255d59b332d818c4f5369279d1f1ca36bfb92010d9de4279d427d46e"
+    }
+  ]
+}

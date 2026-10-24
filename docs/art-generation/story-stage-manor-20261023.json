@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-4 service-door knock, cook shoulder grip and garden stone inspection",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/cook-motion-v1.png",
+      "prompt": "Use case: stylized-concept. Create a transparent RGBA sprite sheet, exactly 4 equal columns x 2 equal rows, based on the attached cook NPC reference. Preserve his identity exactly: stocky middle-aged man, short dark hair, small moustache, brown sleeves, cream apron tied at waist, dark trousers and boots. NO chef hat. Detailed warm pixel-art RPG character, full body, high oblique three-quarter game view, same head/body proportions in every frame. Generous transparent gutters and identical foot baseline and body scale in all 8 cells, no ground shadows. TOP ROW: four consecutive walking frames facing RIGHT, clear alternate left and right steps with lifted heel and passing pose, slight arm swing. BOTTOM ROW: 1 front-facing, both arms reaching FORWARD AND DOWN in front of his apron, hands separated by another man's shoulder width, reaching to grasp the shoulders of a shorter man standing immediately in front; EMPTY HANDS, do not draw other man. His palms at his own upper-thigh level. 2 same pose but both hands curled gently to hold those shoulders, palms same locations near upper thighs; exasperated but comical expression, NOT violence. 3 animated explanatory gesture with one open hand, slightly exasperated friendly face. 4 resting both arms lowered at sides, relaxed face. Cook never shrinks or becomes a child, no weapons or carried items. Each character fully inside its own cell, crisp contours and consistent pixel density, actual transparency.",
+      "reference": "public/story-stage/cook-poses.webp",
+      "sha256": "976b6d0229d7a4cf7397ff8e5652b992f65e219edd175cff74587d4fe77a572c",
+      "referenceRevision": "ff2480d7db7527a990dcd1ad898c3c2a70ed7398"
+    },
+    {
+      "source": "assets/source/story-stage/cook-motion-v2.png",
+      "prompt": "Edit this exact transparent 4-column x 2-row cook sprite sheet. Preserve the entire BOTTOM ROW (four arm poses), the cook's identity, body scale, head size, apron, pixel-art style and alpha. Correct ONLY TOP ROW to a readable four-phase WALK CYCLE facing RIGHT. Currently the first three cells repeat the same stride, which must change. TOP cell1: long contact stride, front/near leg extended right, back/far leg extended left. TOP cell2: PASSING pose: legs almost together directly beneath pelvis, one knee visibly bent with boot lifted clear off ground; one foot grounded, not two feet spread. TOP cell3: opposite long contact stride, near/front leg extended LEFT behind body while far/back leg reaches RIGHT in front; swap which shin crosses in front. TOP cell4: opposite PASSING pose, legs almost together under pelvis with the OTHER knee bent and boot lifted off ground. Contact frames have feet spread widely left-right; passing frames have feet clearly close together under hips. Opposing arm swing matches leg changes. No horizontal body translations between cells. Identical scale/head position/foot baseline; retain transparency and all gutters.",
+      "reference": "assets/source/story-stage/cook-motion-v1.png",
+      "sha256": "fd7ca14a33972af06fac4a640674227f4f64299554c964b0378e21effb8d7c6c"
+    },
+    {
+      "source": "assets/source/story-stage/finn-knock-v1.png",
+      "prompt": "Use case: stylized-concept. Transparent RGBA sprite sheet with exactly TWO equal square cells in one row. Use attached Finn atlas ONLY as identity/proportion/style reference: scruffy middle-aged man, tousled brown hair tied loosely at back, tired half-lidded eyes, faint stubble, worn brown long coat, olive shirt, brown trousers and boots. Match same detailed warm pixel art and high-oblique three-quarter RPG view, same adult head/body proportions. Both frames are full-body, facing RIGHT toward an imaginary vertical door just to his right, feet planted at identical baseline, identical scale and head dimensions. Frame 1: right elbow bent, right fist raised beside shoulder but drawn back slightly to knock, other arm loose. Frame 2: same pose and feet, only elbow/forearm extends and fist moves right a short distance to make contact with the imaginary door; no actual door drawn. Knock hand at chest/shoulder level, not waving an open hand. No props, text, grid, ground shadow, speech bubbles or other characters. Generous transparent gutters, actual alpha, preserve all head/hair and boots.",
+      "reference": "public/story-stage/finn-poses.webp",
+      "sha256": "0ecda0f040a40f1508880da08aa9caaa0c0b5c3ea34e5e7a7b696ba1e75e9bdb",
+      "referenceRevision": "ff2480d7db7527a990dcd1ad898c3c2a70ed7398"
+    },
+    {
+      "source": "assets/source/story-stage/merchant-walk-v1.png",
+      "prompt": "Use case: stylized-concept. Transparent RGBA sprite sheet exactly FOUR square cells in one horizontal row. Use attached merchant NPC atlas as exact identity and style reference: middle-aged man with wavy dark gray-brown hair, small dark moustache, white rolled sleeves, brown waistcoat/apron and trousers, sturdy boots. Full body detailed warm pixel-art RPG, high oblique game view. Four consecutive WALKING frames facing RIGHT with clearly alternating left/right steps, lifted heel and passing pose, gentle opposite arm swing. Same head width and body height as the standing reference, identical foot baseline and scale for all frames. NO standing idle copies, no new items, no ground shadow, no labels or grid. Fully transparent RGBA background and generous clear gutters; no cropping of head/feet.",
+      "reference": "public/story-stage/merchant-poses.webp",
+      "sha256": "9a771f8436299657d2065d849092fdb956c13ae006742653c06a814d11b20108",
+      "referenceRevision": "ff2480d7db7527a990dcd1ad898c3c2a70ed7398"
+    },
+    {
+      "source": "assets/source/story-stage/merchant-walk-v2.png",
+      "prompt": "Edit this exact transparent four-cell merchant walk sheet. Keep character identity, pixel-art style, identical body scale, four equal cells and alpha. Critical fix: do NOT repeat four spread-leg poses. Create a four-phase WALK CYCLE facing RIGHT. Cell1 long contact stride, boots separated wide left/right. Cell2 PASSING pose with feet directly below pelvis CLOSE TOGETHER, front knee BENT and front boot LIFTED clear of ground, only far foot touches baseline. Cell3 opposite contact stride: near leg stretched BACK TO LEFT and far leg forward RIGHT; switch the visible overlapping shins versus cell1. Cell4 opposite passing pose: feet CLOSE TOGETHER under hips, other knee bent and other boot lifted. Arms swing opposite legs. The silhouettes must alternate WIDE / NARROW / WIDE / NARROW, not four wide strides. Head center and grounded foot baseline consistent. No shadow, props, labels or borders.",
+      "reference": "assets/source/story-stage/merchant-walk-v1.png",
+      "sha256": "2e64405eb7942a9f0e4fd4979ebf16212eebc82c80f1080edc4dfe00bff7e6ed"
+    },
+    {
+      "source": "assets/source/story-stage/manor-kitchen-v1.png",
+      "prompt": "Use case: illustration-story. Create a 3:2 landscape RPG pixel-art background using attached manor garden ONLY for matching warm detailed pixel-art style, pale stone masonry, small paving scale, sunlight and HIGH OBLIQUE OVERHEAD camera. Scene is the manor's modest kitchen SERVICE ENTRANCE, not the grand front entrance. Upper third and upper-right show pale stone kitchen wall, a small window, sloping tiled eaves at top. A simple CLOSED dark wooden service door centered at x72%, with threshold at y49%; door occupies x66%-78%, y25%-49%. Flat threshold, no stairs at this doorway. The lower two thirds are a wide clear stone-paved working courtyard for four SMALL characters. Keep x25%-80%,y50%-86% unobstructed, paving sized consistently with reference. Herbs in pots and one small woodpile only far edges. A narrow paved garden path can continue out at lower-left; no river, towers or new geography. No characters, furniture, food, carts, barrels in the central area, signs, text or UI. A human character will stand with feet at y52%, head at y35%, so doorway height must be proportionate. Do not draw a miniature door or a towering facade.",
+      "reference": "public/story-stage/manor-garden.webp",
+      "sha256": "98725f15a512b0d396559631222af4f26352c9ae659f365a245fa38e227532b5",
+      "referenceRevision": "ff2480d7db7527a990dcd1ad898c3c2a70ed7398"
+    },
+    {
+      "source": "assets/source/story-stage/manor-kitchen-open-v1.png",
+      "prompt": "Use case: precise-object-edit. Edit only the wooden kitchen door in this exact RPG courtyard background. Keep every other wall, plant, window, paving stone, camera, lighting and composition unchanged. Swing the door inward so it is OPEN and the doorway reveals a dark, dim warm kitchen interior without any people. Door frame and threshold remain in EXACT same pixel position and dimensions. No new stairs. No furniture outside, no characters, no UI. Maintain original 3:2 pixel-art landscape size.",
+      "reference": "assets/source/story-stage/manor-kitchen-v1.png",
+      "sha256": "754d6588f815cc5830fb6af178c498ef6c23aa83b5fc961eba2e5fc1e1e1814c"
+    },
+    {
+      "source": "assets/source/story-stage/manor-display-props-v1.png",
+      "prompt": "Use case: stylized-concept. Transparent RGBA six-prop sprite sheet, exactly 3 columns x 2 rows of equal square cells. Detailed warm pixel-art RPG, high oblique three-quarter view, crisp dark brown outlines, clean alpha and generous gutters, no grid/text. TOP ROW depicts THREE STATES OF THE SAME small medieval wooden display case: identical base footprint/width, same perspective, base at same cell baseline. 1 OPEN case: low dark-brown wooden plinth, shallow transparent glass sides, hinged wood-framed clear glass lid swung open upwards BEHIND the base, empty inside, small brass lock at front. 2 CLOSED case: exact same base, clear glass hood/lid closed, EMPTY and entirely see-through in center, thin wood frame and brass front lock. 3 exact same CLOSED case completely draped with ONE thin cream cloth conforming to the case silhouette, base still visible; no huge folded stack. BOTTOM ROW: 1 small ordinary weathered pale gray-blue rectangular foundation stone, about two palms wide, shallow flat block with ONE chipped corner, seen from above, subtle soft pale blue light along edge, no runes or crystal facets; 2 the EXACT SAME stone tilted to show its underside toward viewer: exactly THREE parallel straight channels carved into underside, same chipped corner, identical physical dimensions and visual size, no magical symbols; 3 one small thin white handkerchief hanging from an invisible pinched top corner, soft folds, no hand or arm. Each stone isolated, no pedestal. Stone sprites physically HALF the display case width. No cast shadows outside objects, no labels, no characters, no scenery. Each of six objects fully inside its cell; preserve transparent glass center as alpha.",
+      "reference": null,
+      "sha256": "85364875d71530d4f234d6094877e5def49bab3413ec6c63b39ca3b66d104134"
+    }
+  ]
+}
