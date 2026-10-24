@@ -57,13 +57,14 @@ test("moss markers stay on the planted bed through the gardener and records scen
   ]) {
     const stage = cue(id, line);
     const marker = stage.items.find((p) => p.art === "plant-label");
-    const moss = stage.items.find((p) => p.art === "colony");
-    assert.ok(marker && moss);
-    assert.ok(Math.abs(marker.bottom - moss.bottom) <= 2);
-    assert.ok(Math.abs(marker.x - moss.x) < moss.width);
+    assert.equal(stage.background, "moss-beds");
+    assert.ok(marker);
+    // The planted rows are painted into this background; do not float a second colony above them.
+    assert.ok(!stage.items.some((p) => p.art === "colony"));
+    assert.ok(marker.x < 15 && marker.bottom >= 38 && marker.bottom <= 42);
     assert.equal(marker.actor, undefined);
     assert.ok(marker.width < 4);
-    assert.ok(stage.actors.every((a) => Math.abs(a.x - moss.x) > moss.width / 2));
+    assert.ok(stage.actors.every((a) => a.x > marker.x + marker.width));
   }
   assert.ok(!cue("brekka-moss-beds-departure", 0).items.some((p) => p.art === "ledger"));
 });

@@ -46,12 +46,24 @@ function stoneCarrierFrame(extra: StageExtra, moving: boolean, elapsed: number) 
 
 function keeperFrame(extra: StageExtra, moving: boolean, elapsed: number) {
   if (moving) return 8 + (Math.floor(elapsed / 180) % 4);
+  if (extra.deskWork)
+    return extra.deskWork === "write"
+      ? 17 + (Math.floor(elapsed / 420) % 2)
+      : extra.deskWork === "hold"
+        ? 19
+        : 16;
   if (extra.restoration) return { trace: 12, touch: 13, read: 14, receive: 15 }[extra.restoration];
   return poses[extra.pose ?? "idle"] + (extra.chair ? 4 : 0);
 }
 
 function merchantFrame(extra: StageExtra, moving: boolean, elapsed: number) {
   if (moving) return 8 + (Math.floor(elapsed / 180) % 4);
+  if (extra.deskWork)
+    return extra.deskWork === "count"
+      ? 17 + (Math.floor(elapsed / 420) % 2)
+      : extra.deskWork === "stow"
+        ? 19
+        : 16;
   if (extra.service) return { carry: 12, place: 13, raise: 14, talk: 15 }[extra.service];
   return poses[extra.pose ?? "idle"] + (extra.chair ? 4 : 0);
 }
@@ -70,8 +82,8 @@ function cookFrame(extra: StageExtra, moving: boolean, elapsed: number) {
 export function stageExtraRows(extra: StageExtra) {
   if (extra.id === "doctor") return 2;
   if (extra.id === "worker") return 6;
-  if (extra.id === "cook" || extra.id === "keeper") return 4;
-  if (extra.id === "merchant") return 4;
+  if (extra.id === "cook") return 4;
+  if (extra.id === "keeper" || extra.id === "merchant") return 5;
   if (extra.id === "masked-pumpety") return 3;
   return ["child", "merchant", "parent", "stone-carrier", "fence-carrier"].includes(extra.id)
     ? 2

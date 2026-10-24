@@ -31,7 +31,7 @@ export function stageItemVisible(item: StageItem, positions: Map<string, StagePo
 }
 
 function itemDrawnInPose(item: StageItem, positions: Map<string, StagePosition>) {
-  const owner = item.actor && positions.get(item.actor);
+  const owner = positions.get(item.actor ?? `extra:${item.extra ?? ""}`);
   return (
     !!owner && owner.atlas === "conversation" && !!item.embeddedFrames?.includes(owner.frame ?? -1)
   );

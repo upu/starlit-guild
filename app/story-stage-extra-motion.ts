@@ -24,6 +24,8 @@ export function extraPainter(
       const { left } = at;
       positions.set(`extra:${extra.id}`, {
         ...at,
+        atlas: "conversation",
+        frame: stageExtraFrame(extra, at.moving && !reduced, elapsed),
         wrist: stageExtraWrist(extra, at.moving && !reduced, elapsed),
       });
       if (!element) continue;
@@ -71,6 +73,10 @@ function paintPose(
 }
 
 function paintFacing(sprite: HTMLElement, extra: StageExtra, moving: boolean, left: boolean) {
+  if (extra.chair && (extra.id === "keeper" || extra.id === "merchant")) {
+    sprite.style.transform = `scaleX(${left ? "1" : "-1"})`;
+    return;
+  }
   if (
     ["masked-pumpety", "worker", "stone-carrier", "fence-carrier"].includes(extra.id) ||
     (extra.id === "keeper" && (moving || extra.restoration))

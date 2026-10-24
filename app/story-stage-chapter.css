@@ -80,9 +80,11 @@
 .story-stage-extra:is([data-npc="masked-pumpety"]) .story-stage-extra-sprite {
   background-size: 400% 300%;
 }
-.story-stage-extra:is([data-npc="cook"], [data-npc="keeper"], [data-npc="merchant"])
-  .story-stage-extra-sprite {
+.story-stage-extra[data-npc="cook"] .story-stage-extra-sprite {
   background-size: 400% 400%;
+}
+.story-stage-extra:is([data-npc="keeper"], [data-npc="merchant"]) .story-stage-extra-sprite {
+  background-size: 400% 500%;
 }
 .story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {
   background-size: 400% 600%;
@@ -236,6 +238,23 @@
 }
 .story-stage-item[data-art="reflector"][data-glow="bright"] {
   filter: drop-shadow(-4px 2px 8px #d6efaaa0);
+}
+.story-stage-item[data-art="reflector-cover"] {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="reflector-cover-flat"] {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art="reflector"][data-glow="bright"]::after {
+  content: "";
+  position: absolute;
+  width: 420%;
+  height: 160%;
+  left: -140%;
+  top: 75%;
+  pointer-events: none;
+  transform: rotate(8deg);
+  background: radial-gradient(ellipse, #efffc48c 0%, #e9f5a64d 35%, #d9f2ad00 70%);
 }
 .story-stage-item[data-art="low-smoke"] {
   aspect-ratio: 6;

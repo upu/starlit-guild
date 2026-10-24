@@ -42,7 +42,8 @@ test("4-7 seats match the narration and the stool remains after Lico gets up", (
     a = seated.actors.find((a) => a.id === "lico");
   const seat = seated.items.find((p) => p.seatFor === "lico");
   const pose = sampleStageActor(a, a, 3000, false);
-  assert.ok(pose.frame >= 36 && pose.frame < 44);
+  assert.equal(pose.frame, 76);
+  assert.equal(pose.onChair, true);
   assert.equal(stageItemVisible(seat, new Map([["lico", pose]])), false);
   const stood = cue("lico-records-departure", 40)
     .sequence.at(-1)
@@ -77,9 +78,13 @@ test("Aria collects her basket before approaching and receives the seedling only
   assert.equal(pickup.sequence[0].items.find((p) => p.id === "basket").actor, "aria");
   const receive = cue("lico-records-return", 27),
     target = receive.actors.find((a) => a.id === "aria");
-  assert.ok(receive.sequence[0].after >= journeyDuration(target, walk));
-  const moss = receive.sequence[0].items.find((p) => p.art === "moss");
-  assert.equal(moss.actor, "aria");
-  assert.equal(moss.support, "basket");
+  const arrived = pickup.sequence.at(-1).actors.find((a) => a.id === "aria");
+  assert.equal(pickup.finishBeforeAdvance, true, "finish the basket approach before the next line");
+  assert.deepEqual([target.x, target.bottom], [arrived.x, arrived.bottom]);
+  const inHand = receive.sequence[0].items.find((p) => p.art === "moss");
+  assert.equal(inHand.actor, "lico");
+  const moss = receive.sequence.at(-1).items.find((p) => p.art === "moss");
+  assert.equal(moss.actor, undefined);
+  assert.equal(moss.carrier, "basket");
   assert.ok(receive.items.every((p) => p.art !== "seedlings"));
 });

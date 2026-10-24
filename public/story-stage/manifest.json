@@ -40,16 +40,16 @@
     "output": "f4d6a542a77b49287e5f96688844e172a16d52aac3c08e1cebde61afe0b9a3bb"
   },
   "merchant-poses": {
-    "source": "e6531f2960ef0e406b905c8436cc65aabffe794c3f08d9581dbe96ec8d1dacb5",
-    "output": "10552de4a9d377cc3ac5eeb7ee2a0d8465ad5d95451e84f3f450003ecb66f2e7"
+    "source": "a6c625c88285908d2811929442bdca32ad1a9f6f1b2f8d83919930f2534beb8f",
+    "output": "52446397c68ca76230e40f4e84d509a88973236c124ffb433de5e126ec57a8ae"
   },
   "aria-poses": {
     "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
-    "output": "4ac0c5d7eb1fc799d22d1a90faf2341117a649279cd03e507adb3b23763c6ed5"
+    "output": "8e45448170674a22a46f23d5f76d59047a5d3a4f591048aa53e5bde56cce21a6"
   },
   "leon-poses": {
     "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
-    "output": "358ba4333469000a854ff51045ec5310afed5f30177fe0e87ee539397b5eac4b"
+    "output": "8e961865111ea7e3ea451a706db695eff6ddb2af6bb271079ce8488253194d15"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -108,8 +108,8 @@
     "output": "c22591bbe5456f1d50c80d9c3e21bd81d0d7c0b003a6ed8d9bfea990337745f1"
   },
   "keeper-poses": {
-    "source": "deddc4a5b70fb8c9ef2bc6f51b07144d21b873297cadf2347dba98e40482348a",
-    "output": "8f5f896b85d42194a45f7d6545489e3c31f53c66da96156200d11de0c1095662"
+    "source": "0a53267624c07e08d9dbcef1ea5f879239eef87d5a93a81416e0582e106084b3",
+    "output": "9fc06838d15ced83cd91049472dc99b68f1ad66972cb256ec012d9ba7556d40b"
   },
   "worker-poses": {
     "source": "23909222e0d142cbb38e21fb68961d770186c5b0629fe84dbcceb1d44a5ba253",
@@ -313,15 +313,15 @@
   },
   "mira-poses": {
     "source": "37616522f2ba7b02a96fb679134cfc1c33e9006dade8792b174547a601b19614",
-    "output": "ee416320aba7d1cb65665ce47ea37cf1e531137b537f83d6a3cc8d233bf7e964"
+    "output": "ce70dc25577c2c88b3a490c493de215c155f0f2baf374deaa5c2051b042752e1"
   },
   "finn-poses": {
     "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
-    "output": "d24b1a2a0585fbf7b5b6b0ee915e607fb9c133f3d8dc6c86b136da5b5b0907b8"
+    "output": "6ba792a16ebd579407032cce54b33b207e7c26f56c149aa9b547fbe67bb411da"
   },
   "lico-poses": {
-    "source": "758aa776c2fafc14d4f691b1fd27bcf41ca0e95dac36fc4d5dc575bee7bf6329",
-    "output": "7d4f3fb657afe5a49f008ac2235245516f4f1f1a2205a0f2fad689b4f5923082"
+    "source": "5ee9efbb4bdef16db53083e68e22317c00457700f166d8d1ba9914aeacf27fb2",
+    "output": "c5bb09f91d952f817f3a2d37ab9f1789cd07a5588b7c477c6d701e8bbc341c65"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
@@ -846,5 +846,13 @@
   "prop-doctor-satchel": {
     "source": "01be4627a23f72624edd257d68f6bab6a28a48609d09867b2cf9e6dd699bad28",
     "output": "3b02e0fc29109dc8362c018fe1df60c0c32cd481edbe812541fba7afeb1116d5"
+  },
+  "prop-reflector-cover": {
+    "source": "57f91bff19971f3d2508f888c3d7afb5ca1652aad1f24fb3d880f420cd4d6c35",
+    "output": "21fb0e16a8b54579d3456ec225dfbece3e72a56e9ecd49f1457c87f25b17de6c"
+  },
+  "prop-reflector-cover-flat": {
+    "source": "24e0ac6c27b29dbe6d4f626d61ea2a04dc4923ff4b0e1b5354f6eba04115d15c",
+    "output": "dfd559aaf5aea0484ccbe63bcce42adbc962edb1bf102c5cd190c1ddeefeb931"
   }
 }

@@ -26,6 +26,10 @@ const hands: Partial<Record<StageExtra["id"], Partial<Record<number, [number, nu
     14: [39, 79],
   },
   merchant: {
+    16: [91, 80],
+    17: [78, 79],
+    18: [78, 79],
+    19: [78, 79],
     1: [35, 74],
     8: [90, 83],
     9: [90, 83],

@@ -1,6 +1,7 @@
 import type { ResidentId } from "./home-actor.ts";
 
 export type StageActor = {
+  recordStudy?: "read" | "point" | "page" | "hug";
   /** Lico's notebook / fieldwork and Mira's supporting hand, registered in the common atlas. */
   mossStudy?: "glasses" | "read" | "write" | "show" | "page" | "reach" | "taste" | "brace";
   mossCare?: "hold" | "slip" | "support" | "steady";
@@ -151,6 +152,7 @@ export type StageMoment = {
 };
 
 export type StageExtra = {
+  deskWork?: "reach" | "write" | "hold" | "count" | "stow";
   pullCart?: boolean;
   notebook?: boolean;
   wiping?: boolean;
@@ -318,6 +320,8 @@ export type StageItem = {
     | "snag-rope"
     | "iron-fastener"
     | "cart-drape"
+    | "reflector-cover"
+    | "reflector-cover-flat"
     | "key"
     | "juice"
     | "ale"
