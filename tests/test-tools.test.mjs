@@ -44,7 +44,7 @@ test("page reads the runtime flag on each request and enables only the exact str
   const { default: Home, dynamic } = load("../app/page.tsx", {
     "cloudflare:workers": { env },
     "@/lib/community-links": communityLinks,
-    "./game": { default: Game },
+    "./game": { __esModule: true, default: Game },
     "react/jsx-runtime": jsx,
   });
   assert.equal(dynamic, "force-dynamic");

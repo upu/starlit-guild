@@ -58,7 +58,7 @@ function harness(name, initialProps) {
     "@/lib/interludes": interludes,
     react,
     "react/jsx-runtime": jsxRuntime,
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": {
       BookOpen: "icon",
       ChevronDown: "icon",

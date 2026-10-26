@@ -70,7 +70,7 @@ function harness(state, selected = prologue.TRADE_QUEST) {
     "@/lib/quest-navigation": navigation,
     "@/lib/scenery": scenery,
     "@/lib/original-characters": { originalCharacters: [] },
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": { Check: "check", ChevronDown: "chevron" },
     "./sprite": { Sprite: "sprite" },
     "./quest-progression-setting": { QuestProgressionSetting: "setting" },

@@ -28,7 +28,7 @@ function harness(data = new Map(), denyStorage = false) {
   const modules = {
     react: { useCallback: (fn) => fn, useSyncExternalStore: (_subscribe, snapshot) => snapshot() },
     "react/jsx-runtime": jsx,
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "@/lib/journey": journey,
     "@/lib/external-input": externalInput,
     "@/lib/equipment": equipment,

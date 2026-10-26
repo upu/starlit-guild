@@ -17,7 +17,7 @@ const exports = evaluateSourceModule(
     "react/jsx-runtime": jsxRuntime,
     "./character-loadout": ui("CharacterEquipment", "EquipmentSlotPanel"),
     "./consumable-panels": ui("ConsumableBag", "ConsumableDetails"),
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": {
       Coins: "coins",
       Leaf: "leaf",
