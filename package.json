@@ -76,7 +76,7 @@
     "@vitejs/plugin-react": "6.1.1",
     "@vitejs/plugin-rsc": "0.5.35",
     "drizzle-kit": "0.31.11",
-    "eslint": "9.39.4",
+    "eslint": "10.13.0",
     "eslint-config-next": "16.2.6",
     "eslint-plugin-sonarjs": "^4.2.1",
     "prettier": "3.9.9",
