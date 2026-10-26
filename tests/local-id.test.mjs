@@ -4,7 +4,7 @@ import { localId } from "../lib/local-id.ts";
 import { z } from "zod";
 
 test("local identifiers remain UUIDs on secure origins", () => {
-  assert.equal(z.string().uuid().safeParse(localId()).success, true);
+  assert.equal(z.uuid().safeParse(localId()).success, true);
 });
 
 test("LAN HTTP without randomUUID creates distinct save-compatible v4 UUIDs", () => {
@@ -15,7 +15,7 @@ test("LAN HTTP without randomUUID creates distinct save-compatible v4 UUIDs", ()
     const ids = Array.from({ length: 100 }, () => localId());
     assert.equal(new Set(ids).size, ids.length);
     for (const id of ids) {
-      assert.equal(z.string().uuid().safeParse(id).success, true);
+      assert.equal(z.uuid().safeParse(id).success, true);
       assert.match(id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
     }
   } finally {
