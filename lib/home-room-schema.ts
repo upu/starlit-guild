@@ -18,11 +18,11 @@ export const homeLayoutSchema = z
   .max(24)
   .superRefine((items, context) => {
     const message = layoutError(items, true);
-    if (message) context.addIssue({ code: z.ZodIssueCode.custom, message });
+    if (message) context.addIssue({ code: "custom", message });
     for (const kind of ["table", "bench", "desk"])
       if (!items.some((item) => item.kind === kind))
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: "テーブル・作業台・事務机を残してください",
         });
   });

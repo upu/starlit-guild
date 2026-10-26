@@ -10,7 +10,7 @@ import {
 } from "./guild-content.ts";
 import type { State } from "./game-types.ts";
 
-const time = z.number().finite().min(0).max(8640000000000000);
+const time = z.number().min(0).max(8640000000000000);
 const batch = z
   .object({ startedAt: time, readyAt: time, quantity: z.number().int().min(1).max(9) })
   .strict()
