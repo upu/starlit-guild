@@ -31,4 +31,4 @@
 
 画像・DOM・時刻は `work/goal-audit-20261031/late-{pc,mobile}-<scene-id>.json` と同名のPNG群。名前は `transplant-label-fixed.json`、`founding-label-fixed.json`。全体の索引は `late-reader-progress.json`。1-7の比較画像は `old-waterway-departure-{pc,mobile}-contact.png`。確認終了時のブラウザーのwarning/errorは0件だった。
 
-第三・第四章の以前の詳細記録も読み直し、範囲を[照合表](storybook-verification-matrix-20261031.md)へ反映する。全体の品質検査・最新mainとの統合・既存Draft PR #261への反映は別工程であり、この画面確認だけでは全体ゴールを完了扱いにしない。
+第三・第四章の以前の詳細記録も読み直し、範囲を[照合表](storybook-verification-matrix-20261031.md)へ反映する。最新main `ff219eb` との統合と既存[PR #261](https://github.com/upu/starlit-guild/pull/261)への集約を行った。全体の品質検査の最終結果はPR本文と最新checksを参照し、この画面確認だけでは全体ゴールを完了扱いにしない。マージ・プレビュー反映は承認後の工程として残る。
