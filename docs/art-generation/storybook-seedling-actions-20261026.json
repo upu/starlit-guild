@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "liveScope": "4-8 return: Lico strikes an entry, tears a route slip, hands it to Merrill, who stows it. Shared free-hand greeting/surprise for Mira, Lico and Finn.",
+  "stillContract": "merrill-seedlings-departure revealAtLine14 remains unchanged through line34. No new animation replaces that illustration. Ear cover and basket-shield images are preparation only, not routed into this scene.",
+  "assets": [
+    {
+      "source": "assets/source/storybook/lico-seedling-defense-v2.png",
+      "generation": "exec-ab023ecd-f609-4c20-89e7-8117f2b7b0f1",
+      "references": ["assets/source/storybook/lico-seedling-defense-v1.png", "assets/source/storybook/lico-conversation-ponytail-v1.png"],
+      "promptSummary": "Same Lico identity, freckles, glasses, compact tied ponytail and exposed nape, red spider-lily and apron, sandals. Eight full-body elevated painted sprites in wide4x2 grid with ample transparent margins. First row pen ready, strike entry, start tearing, loose torn sheet with notebook. Second row empty low/chest/shield/lowered basket grips, no basket. Preserve same body proportions and full soles.",
+      "outputs": { "public/storybook-study/lico-seedling-paper-v1.webp": "integrated: frames80-83", "public/storybook-study/lico-seedling-shield-v1.webp": "preparation only" },
+      "calibration": "Each four-standing-pose group uses its first standing pose to calibrate to128px,192px cells, soles176. Original generation shrank second row; separate group calibration restores same standing height. No pose-by-pose fitting.",
+      "initial": { "source": "assets/source/storybook/lico-seedling-defense-v1.png", "generation": "exec-88a4f58f-5496-4b15-844a-c5a9a5bd30fb", "status": "not adopted: narrow canvas merges first two cells and clips outer characters" }
+    },
+    {
+      "source": "assets/source/storybook/aria-cover-ears-v1.png",
+      "generation": "exec-02fa0588-01c8-4749-afdb-7fdc2de077b8",
+      "reference": "assets/source/storybook/conversation-pair-v1.png",
+      "promptSummary": "Only Aria from top reference row. Four equal separated full-body elevated painted poses: raise gloved hands to own elf ears, hold both palms against ears, protest with ears covered, lower one hand while watching. Preserve short blonde hair with lavender lock and white flower, green cape, outfit and134px standing scale. Transparent, no props or text.",
+      "status": "preparation only: departure uses existing illustration from line14"
+    },
+    {
+      "source": "assets/source/storybook/crew-reactions-v2.png",
+      "generation": "exec-091ef640-c61d-4daf-b499-ee0353529b82",
+      "references": ["assets/source/storybook/crew-reactions-v1.png", "assets/source/storybook/mira-conversation-v1.png", "assets/source/storybook/lico-conversation-ponytail-v1.png", "assets/source/storybook/finn-conversation-v2.png"],
+      "promptSummary": "Warm elevated painted4x3 sprite sheet. Row1 only exact Mira, row2 only compact ponytail Lico, row3 only Finn. Per row neutral upright calibration, small greeting hand, genuine restrained surprise with hand at collar, low deep inspection keeping head size. Same body scale per row, full heads/soles, no objects or text. v2 shrinks figures within original cells to70 percent height so feet do not touch next row's hair.",
+      "status": "greeting and surprise integrated globally into painted stages; neutral calibration and crouches retained as preparation",
+      "calibration": "Mira126px, Lico128px, Finn148px; one scale per character;192px cells; soles176; crouches remain lower",
+      "initial": { "source": "assets/source/storybook/crew-reactions-v1.png", "generation": "exec-48b3e7e1-e580-4ff8-a689-d54669490be3", "status": "not adopted: Mira third cell touches Lico third cell" }
+    }
+  ],
+  "packing": "scripts/build-storybook-seedling-actions.mjs. Source and rejected layouts retained. Generated CSS routes only live paper actions and shared free-hand reactions."
+}

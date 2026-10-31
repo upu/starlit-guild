@@ -1,0 +1,361 @@
+[
+  {
+    "source": "assets/source/story-stage/tower-records-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["tower-records"] }]
+  },
+  {
+    "source": "assets/source/story-stage/berne-paving-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-paving"] }]
+  },
+  {
+    "source": "assets/source/story-stage/berne-porch-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-porch"] }]
+  },
+  {
+    "source": "assets/source/story-stage/berne-overlook-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-overlook"] }]
+  },
+  {
+    "source": "assets/source/rpg-camera/warehouse-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["town-shop", "town-shop-return"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/rpg-camera/tower-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["tower-base-moss"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/rpg-camera/interiors-v1.png",
+    "cells": [
+      {
+        "story": ["medicine-room"]
+      },
+      {
+        "story": ["dining-room"]
+      },
+      {
+        "story": ["manor-garden"]
+      },
+      {
+        "story": ["workshop"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/streets-v1.png",
+    "cells": [
+      {
+        "story": ["mountain-road"],
+        "scenery": ["mountain-road"]
+      },
+      {
+        "story": ["berne-street"]
+      },
+      {
+        "story": ["brekka-alley"]
+      },
+      {
+        "story": ["village-house"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/worksites-v1.png",
+    "cells": [
+      {
+        "story": ["stone-yard"]
+      },
+      {
+        "story": ["storeroom"]
+      },
+      {},
+      {
+        "story": ["registry"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/locations-v1.png",
+    "cells": [
+      {
+        "story": ["bridge-night"]
+      },
+      {
+        "story": ["warehouse-office"]
+      },
+      {
+        "story": ["patient-room"]
+      },
+      {
+        "story": ["new-moss-beds"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/meeting-v1.png",
+    "cells": [
+      {
+        "story": ["meeting-path"]
+      },
+      {
+        "story": ["meeting-dusk"]
+      },
+      {
+        "story": []
+      },
+      {
+        "story": ["town-exit"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/field-v1.png",
+    "cells": [
+      {
+        "story": [],
+        "scenery": []
+      },
+      {
+        "story": [],
+        "scenery": []
+      },
+      {
+        "story": ["forest-floor"]
+      },
+      {
+        "story": ["tower-foot"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/waterways-v1.png",
+    "cells": [
+      {
+        "story": ["drain-blocked"]
+      },
+      {
+        "story": ["drain-cleared"],
+        "scenery": ["tower-drainage-open"]
+      },
+      {
+        "scenery": ["forest-wetland"]
+      },
+      {
+        "scenery": ["old-waterway"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/roads-v1.png",
+    "cells": [
+      {
+        "scenery": ["town-deliveries"]
+      },
+      {
+        "scenery": ["evening-trade-road"]
+      },
+      {
+        "scenery": ["riverside-manor"]
+      },
+      {
+        "scenery": ["berne"]
+      }
+    ],
+    "columns": 2,
+    "rows": 2
+  },
+  {
+    "source": "assets/source/rpg-camera/routes-v2.png",
+    "columns": 2,
+    "rows": 2,
+    "cells": [
+      {
+        "story": ["hill-path"],
+        "scenery": ["tower-road"]
+      },
+      {
+        "story": ["hill-night"],
+        "scenery": ["moss-night-road"]
+      },
+      {},
+      {
+        "story": ["meeting-night"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/workshop-yard-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["workshop-yard"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/roadside-rest-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["roadside-rest"] }]
+  },
+  {
+    "source": "assets/source/story-stage/picnic-hill-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["picnic-hill"] }]
+  },
+  {
+    "source": "assets/source/story-stage/mountain-fork-empty-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["mountain-fork-empty"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/berne-foundation-grass-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["berne-foundation-grass"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/berne-foundation-open-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [
+      {
+        "story": ["berne-foundation-open"]
+      }
+    ]
+  },
+  {
+    "source": "assets/source/story-stage/berne-foundation-restored-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["berne-foundation-restored"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-kitchen-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-kitchen"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-kitchen-open-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-kitchen-open"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-gate-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-gate"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-back-paths-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-back-paths"] }]
+  },
+  {
+    "source": "assets/source/story-stage/stone-storeroom-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["stone-storeroom"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-well-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-well"] }]
+  },
+  {
+    "source": "assets/source/story-stage/manor-display-back-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["manor-display-back"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-dining-room-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-dining-room"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-homes-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-homes"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-foyer-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-foyer"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-fork-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-fork"] }]
+  },
+  {
+    "source": "assets/source/story-stage/brekka-tower-path-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["brekka-tower-path"] }]
+  },
+  {
+    "source": "assets/source/story-stage/moss-beds-v2.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["moss-beds"] }]
+  },
+  {
+    "source": "assets/source/story-stage/transplant-path-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["transplant-path"] }]
+  }
+]

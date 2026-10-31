@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+    "scale": 0.24543946932006633,
+    "left": 32,
+    "top": 28,
+    "width": 108,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.08592758448337
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+    "scale": 0.24543946932006633,
+    "left": 35,
+    "top": 28,
+    "width": 104,
+    "height": 148,
+    "baseline": 176,
+    "headX": 97.16043710173152
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+    "scale": 0.24543946932006633,
+    "left": 32,
+    "top": 29,
+    "width": 107,
+    "height": 147,
+    "baseline": 176,
+    "headX": 93.7292690481542
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+    "scale": 0.24543946932006633,
+    "left": 38,
+    "top": 28,
+    "width": 102,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.65391871711185
+  }
+]

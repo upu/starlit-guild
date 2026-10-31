@@ -1,0 +1,45 @@
+{
+  "sha256": "7b00497c4c395fc89e8780c70de22910ca748c65e7cb793f3a0842ce8b87646c",
+  "frames": [
+    {
+      "source": "assets/source/storybook/aria-shoulder-v1.png",
+      "sourceFrame": 0,
+      "scale": 0.24632352941176472,
+      "width": 63,
+      "height": 134,
+      "left": 58,
+      "top": 42,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/aria-shoulder-v1.png",
+      "sourceFrame": 1,
+      "scale": 0.24632352941176472,
+      "width": 63,
+      "height": 134,
+      "left": 59,
+      "top": 42,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/aria-shoulder-v1.png",
+      "sourceFrame": 2,
+      "scale": 0.24632352941176472,
+      "width": 63,
+      "height": 134,
+      "left": 59,
+      "top": 42,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/aria-shoulder-v1.png",
+      "sourceFrame": 3,
+      "scale": 0.24632352941176472,
+      "width": 66,
+      "height": 134,
+      "left": 58,
+      "top": 42,
+      "baseline": 176
+    }
+  ]
+}

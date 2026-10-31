@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Create a warm hand-painted 2D RPG traversable mountain-road background, landscape 3:2, same painterly texture, mountain flora, earthy colors and elevated 50-degree downward camera as reference. This is a SIDEWAYS SCROLLING WORLD: a broad ochre dirt trail runs horizontally from left edge to right edge through middle-lower band, centered at about 65% image height. Top 45% is a strip of small evergreen trees, rounded low grey rock banks and grass, bottom 15% is low grass and tiny stones. Middle band from y45% to y85% stays mostly open compacted dirt, suitable for three small adventurers walking left to right and occasional battles. No path curving away into distance, no horizon, no sky, no buildings, no fences, no signs, no people, no animals, no props, no UI. Trees about three adventurer heights, rocks knee to waist high assuming heroes about 14% of image height. Road markings, pebbles and vegetation should be horizontally seamless at left/right edges so the image repeats naturally. Both side edges must show matching continuous ground and forest bands. Keep main path width equal at both edges. Subtle warm daylight, no heavy vignette, no massive foreground rocks, no pixel art.",
+  "source": "assets/source/storybook/mountain-lane-loop-v1.png",
+  "outputs": [
+    "public/storybook-study/mountain-lane-loop-v1.png"
+  ]
+}

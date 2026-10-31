@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "integrated into the lantern-detour gameplay presentation",
+  "reference": "public/storybook-study/hill-path-v1.png",
+  "landscape": {
+    "generated": "exec-bb98953c-6ea9-4563-9642-a647aabbfafe.png",
+    "source": "assets/source/storybook/lantern-road-landscape-v1.png",
+    "output": "public/storybook-study/lantern-road-landscape-v1.png",
+    "prompt": "Create a gameplay background for the same warm high-angle pixel-art village outskirts as the reference. Retain the golden dirt road, fenced cabbage and wheat, timber houses with red roofs, low stone walls, foliage and rocks. Recompose as a broad open lane with space for five sprites; scenery stays at the edges, house doors are small relative to the image. No sky, people, animals, carts, lanterns, signs, text, UI or frame."
+  },
+  "portrait": {
+    "generated": "exec-96f9d780-5324-4d80-bf10-a9a9cdaacd11.png",
+    "source": "assets/source/storybook/lantern-road-portrait-v1.png",
+    "output": "public/storybook-study/lantern-road-portrait-v1.png",
+    "reference": "assets/source/storybook/lantern-road-landscape-v1.png",
+    "prompt": "Create a portrait composition of the same village outskirts and warm elevated pixel-art style. Keep the red-roofed timber houses, cabbage and wheat fields near the upper left, with a broad open dirt road for five sprites in the middle and lower center. No sky, people, animals, carts, lanterns, signs, text, UI or frame."
+  }
+}

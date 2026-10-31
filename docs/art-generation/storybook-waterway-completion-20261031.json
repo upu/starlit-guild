@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-31",
+  "generator": "image_gen.imagegen",
+  "mode": "built-in; referenced_image_paths; transparent background only for keeper strip",
+  "purpose": "1-9 return: cleared dusk recess, closing cover, work-basket exit, low seating, keeper walking through open doorway and pointing upward; existing final illustration unchanged",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/drain-inspection-empty-dusk-v1.png",
+      "output": "public/storybook-study/drain-inspection-empty-dusk-v1.png",
+      "generated": "exec-b1803245-054a-4145-b616-f8cffba0f829.png",
+      "references": [
+        "public/storybook-study/drain-inspection-bare-v1.png",
+        "public/storybook-study/drain-inspection-dusk-v1.png"
+      ],
+      "prompt": "Edit FIRST background for STARLIT-GUILD. FIRST is the exact camera and masonry target: open little inspection recess with NO loose cover, approved dry paving, arched drain, cut logs, water and trees. SECOND is ONLY the approved dusk color/lighting reference for the same location. Preserve FIRST's 1536x1024 composition and every architectural position. Remove the dense green moss leaves ONLY INSIDE the SMALL rectangular inspection opening at x58%-64%,y27%-36%; show the now-cleared dark damp stone interior with a few tiny non-glowing remnants in mortar cracks. Do not remove ivy or foliage outside it. The inspection lid is a separate animated sprite, so do NOT draw ANY lid, including no leaning slab. Match soft late-day amber highlights and cool violet shadows to SECOND, but keep the recess readable. Tower is still unlit. No magical glow inside or outside, no characters, tools, baskets, lanterns, chalk or text. Keep all scenery otherwise unchanged."
+    },
+    {
+      "source": "assets/source/storybook/tower-front-dusk-v1.png",
+      "output": "public/storybook-study/tower-front-dusk-v1.png",
+      "generated": "exec-91a3ed0b-0716-41db-bc4c-6b1b89b50058.png",
+      "references": [
+        "public/storybook-study/tower-base-v1.png"
+      ],
+      "prompt": "Edit this approved warm RPG tower-front background, keeping EXACT 1536x1024 composition, elevated camera, stone paving, ground, closed arched wooden door on right, ivy, steps, and all stone sizes/positions. Change ONLY the daylight into quiet early dusk consistent with a late-day forest scene: warm amber rim lighting from upper left and cool subdued violet blue shadows; mild soft darkening, still readable. The tower has not relit yet: no purple or other magical light anywhere, no rays from the CLOSED door, no lit windows. Do not add a tower top or sky, do not move the door, steps, rocks, plants, camera or ground. No people, tools, furniture, baskets, artificial seat rocks, captions, lettering or props. This is the same front entrance before the later still illustration shows the tower's first light."
+    },
+    {
+      "source": "assets/source/storybook/tower-front-open-dusk-v1.png",
+      "output": "public/storybook-study/tower-front-open-dusk-v1.png",
+      "generated": "exec-da603e7f-1972-4762-b88f-f09e498961db.png",
+      "references": [
+        "public/storybook-study/tower-front-dusk-v1.png"
+      ],
+      "prompt": "Edit this exact STARLIT-GUILD background. Preserve the 1536x1024 canvas, elevated warm hand-painted RPG style, ALL paving/steps/ivy/stones/lighting and their exact positions. Change ONLY the arched closed WOODEN DOOR in the upper right. Swing this same door INWARD to the RIGHT on its right hinge, leaving a clear DARK OPEN arched doorway. The door leaf should be visible foreshortened inside the right side of the aperture, never covering the outer steps. Interior is dim muted blue-brown, unlit; a small glimpse of ordinary dark stone floor, no bright room, no light beam. Do not move or alter the stone arch or sill. Keep the opening's threshold at the current door bottom line. No people, no extra objects, no new windows, no effects, no text. Everything outside the wooden door aperture must remain unchanged, since this is a registered animation difference for a character entering."
+    },
+    {
+      "source": "assets/source/storybook/keeper-tower-signal-v1.png",
+      "output": "public/storybook-study/keeper-tower-signal-v1.webp",
+      "generated": "exec-5386e857-37f8-4933-8de1-5d2bd1af6683.png",
+      "references": [
+        "public/storybook-study/keeper-poses-v1.webp"
+      ],
+      "prompt": "Create a transparent TWO-pose sprite strip for STARLIT-GUILD from the referenced tower keeper. Reference is the exact adult proportions, gray short swept hair, small moustache, blue-gray waistcoat/tunic, rolled pale sleeves, dark brown trousers and boots, fine warm painted RPG outline and colors. TWO equal columns, ONE row, same small adult man seen from elevated three-quarter camera facing LEFT. Pose0 ordinary standing with arms lowered, head gently tilted up, calm small smile. Pose1 SAME standing body/scale, left-side visible arm raised beside his head, elbow bent, index finger pointing CLEARLY UP ABOVE HIS HEAD toward the top-left, looking up toward a tower light. Other hand resting near belt. Finger must point toward upper left, NOT downward/sideways. Head size EXACTLY same in both; raised fingertip may be taller than hair, do NOT shrink the body to fit a cell. Full boots on same baseline, generous empty transparent gutters and space over raised finger. No tower, light, floor, shadow, props or text. Genuine transparent alpha. Preserve the modest adult proportions rather than giant-head chibi."
+    }
+  ],
+  "registrations": [
+    {
+      "output": "keeper-lantern-registered-v2",
+      "sources": [
+        "keeper-lantern-v1"
+      ],
+      "standingHeight": 93,
+      "baseline": 120
+    },
+    {
+      "output": "worker-repair-basket-v2",
+      "sources": [
+        "waterway-worker-handoff-v1",
+        "waterway-worker-basket-walk-v1"
+      ],
+      "standingHeight": 93,
+      "baseline": 120
+    },
+    {
+      "output": "aria-rest-perch-v2",
+      "sources": [
+        "aria-perch-v1"
+      ],
+      "standingHeight": 148,
+      "baseline": 176
+    },
+    {
+      "output": "leon-rest-perch-v2",
+      "sources": [
+        "leon-perch-v1"
+      ],
+      "standingHeight": 148,
+      "baseline": 176
+    }
+  ],
+  "builds": [
+    "node scripts/build-storybook-waterway-completion.mjs",
+    "node scripts/build-storybook-keeper-motions.mjs keeper-tower-signal-v1"
+  ],
+  "registration": "Landscape PNGs preserve source composition and decoded pixels without resizing. Existing strips use one scale derived from standing pose, foot-centered registration and nearest resize. Keeper signal shares one scale between standing and raised arm; heights93/100 and baseline120. No code paints anatomy or resizes heads/limbs separately. Transparent hidden RGB is retained and does not appear in the browser.",
+  "verification": "See docs/art/storybook-waterway-completion-review-20261031.md for actual replay scope and remaining checks."
+}

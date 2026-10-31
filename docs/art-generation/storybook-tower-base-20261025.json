@@ -1,0 +1,11 @@
+{
+  "status": "integrating",
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/tower-base-v1.png",
+  "output": "public/storybook-study/tower-base-v1.png",
+  "references": [
+    "public/storybook-study/warehouse-v1.png",
+    "assets/source/rpg-camera/tower-v1.png"
+  ],
+  "prompt": "Edit target: second reference, original stone tower foot background. Style reference only: first reference, approved warm painted warehouse. Create one 3:2 landscape game background. Preserve second image's composition and spatial landmarks exactly: curved tower masonry across upper right half, arched wooden door at right edge, three stone entry steps, small path climbing upper left, open walkable earth with inset flagstones across lower half. Keep the base of wall boundary and door size in same positions to preserve authored character contacts. Redraw in the first image's warm hand-painted 2D RPG language: clean softly colored outlines, broad deliberate color shapes, 2-3 painted shade tones, muted sage green leaves, warm cream grey stone and ochre earth. Elevated three-quarter overhead view, orthographic feeling, no horizon. Remove gritty pixel noise and dense stippled texture; readable at small mobile size. At the shaded foot of tower, around 63 percent across and 57 percent down, show a small thin patch of ordinary soft green moss growing directly within a mortar seam and adjoining foundation stone, subtly yellow-green at its center, no detached rock, no mound, no bright magical aura. Preserve daylight, soft contact shadows, plant borders, clear lower central walkable area. No people, no furniture, no loose luggage, no text, no UI. The moss illumination is a separate runtime effect, so do not paint a large glow."
+}

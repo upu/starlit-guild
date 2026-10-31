@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "tool": "built-in image_gen",
+  "purpose": "Finn turns in place with cupped hands while carrying a separate basket.",
+  "source": "assets/source/storybook/finn-founding-turn-v1.png",
+  "output": "public/storybook-study/finn-founding-turn-v1.webp",
+  "build": "node scripts/build-storybook-finn-founding-turn.mjs",
+  "references": [
+    "public/storybook-study/finn-handheld-balanced-v2.webp",
+    "public/storybook-study/leon-basket-turn-v1.webp"
+  ],
+  "generation": "exec-2756d285-4735-45a1-b913-a528ab80061a.png",
+  "prompt": "Use case: precise-object-edit. Asset: a 4-frame pixel art game sprite turn animation, transparent RGBA. Image 1 is FINN's exact face, size, hair and clothing reference. Image 2 illustrates a character turning with cupped empty hands and is a pose reference only. Draw FINN alone, four equal horizontal cells, one full body per cell, each with clear transparent space around them, feet all at same baseline, same exact height and head size. The four frames show a slow turn from three-quarter LEFT to three-quarter RIGHT: frame 1 faces left with both empty cupped hands near waist, frame 2 half-left, frame 3 faces camera with both cupped hands centered, frame 4 half-right. Draw open cupped hands in all frames, clearly visible, intended to carry a small separate basket. DO NOT draw the basket, paper, any prop, ground, shadows, letters or grid. Feet stay planted, torso and face actually rotate; preserve his brown low ponytail, short stubble, relaxed middle-aged face, worn dark olive coat, ivory shirt, brown boots and precise slim 2.5-head proportions of image 1. Warm detailed storybook pixel art with dark pixel outlines. Real transparency, not checkerboard."
+}

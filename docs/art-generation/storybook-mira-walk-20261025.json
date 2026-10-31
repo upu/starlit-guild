@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create a four-frame walk cycle of MIRA from the reference. Strictly preserve compact three-head-tall proportions, head size, pale grey-lavender braided updo, moon-flower ornament, tired gentle eyes with grey-purple under-eye shadows, ivory/pale blue robe gold edges, opaque bodice, neck ribbon, medical waist pouch and sandals. Petite adult healer, not child or glamorous generic girl. Warm hand-painted 2D RPG, elevated three-quarter facing screen RIGHT, full body visible. Exactly FOUR figures in one horizontal row, same body/head sizes and baseline. Loop order: left foot forward contact/right toe back; left leg supports body/right knee lifts and passes; right foot forward contact/left toe back; right leg supports body/left knee lifts and passes. Both legs must alternately step, clearly lifted sandal during passing phase, modest natural relaxed stride, alternating slight arm swing, robe gently swings without obscuring all legs. No running, no four standing variants, no sliding. Keep same head orientation/identity, small bounce only. Thin clear warm grey-brown contours especially pale hair/robe silhouette for small screen readability, no dark thick cartoon outlines. No staff or held items, no background/floor/shadows/text/borders, true transparency, generous gutters and no clipped hair/hem/feet.",
+  "references": [
+    "assets/source/storybook/mira-conversation-v1.png"
+  ],
+  "source": "assets/source/storybook/mira-walk-v1.png",
+  "output": "public/storybook-study/mira-walk-v1.webp",
+  "scope": "Indoor study walking. Shared scale by standing head width."
+}

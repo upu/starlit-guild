@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "scene": "starlit-guild-founding-departure, indices0-41",
+  "direction": "Approved warm hand-painted elevated oblique RPG, common cell19 and explicit cameraScale0.72 at both existing places. Preserve story, stills and the Brekka-to-Linde itinerary.",
+  "assets": [
+    {
+      "source": "assets/source/storybook/founding-tower-yard-v1.png",
+      "generation": "exec-f712889f-b9db-4b35-ba5b-b34f9d6a7638",
+      "references": ["public/storybook-study/brekka-tower-drain-v1.png", "public/story-stage/tower-records.webp"],
+      "prompt": "Edit same tower courtyard, preserve elevated50degree camera, restored channel upper-left, door upper-right, edging and open foreground. Add modest narrow arched window in SAME curved tower wall left of door, subdued lavender at sill, not portal. Daylight,1536x1024, no distant tower or sky, no people desks chairs baskets tools or props. Match small12%height humans.",
+      "output": "public/storybook-study/founding-tower-yard-v1.png"
+    },
+    {
+      "source": "assets/source/storybook/founding-return-path-v1.png",
+      "generation": "exec-4fd34258-d861-4439-97c1-56dec418ce57",
+      "references": ["public/storybook-study/hill-path-v1.png"],
+      "prompt": "Same warm hand-painted elevated50degree RPG countryside. Broad earth road traverses lower-half from lower-left to middle-right and curves away far-right; no new fork or named place. Ground fills1536x1024, no sky buildings huge obstructing foreground trees or people/cargo. Low ordinary shaded grey roadside stone and clear earth around it for two crouching figures, small plants and stones, room for five people and cart.",
+      "output": "public/storybook-study/founding-return-path-v1.png",
+      "registration": "Generated shaded stone is at the lower-right verge, rather than the proposed prompt coordinate. Actors are registered to the actual stone; Lico remains in the extended visible camera margin."
+    },
+    {
+      "source": "assets/source/storybook/wrapped-moss-jar-v1.png",
+      "generation": "exec-a7c4ad3f-4c5f-425a-812a-fd4c43404ad9",
+      "references": ["public/storybook-study/moss-jar-v1.webp"],
+      "prompt": "Only wrap this SAME corked moss jar snugly in cream linen secured with thin twine under neck. Preserve jar proportions, perspective and cork, leave cork and small glass neck visible, faint green leakage. Compact travel wrapping, no hands floor labels extra objects, actual transparent background.",
+      "output": "public/storybook-study/wrapped-moss-jar-v1.webp"
+    }
+  ],
+  "packing": "scripts/build-storybook-founding-departure.mjs registers the jar wrapper in160x200, source retained. Lico's ponytail care/work/walk, keeper registry poses, desk/chair, satchels, empty cart, basket and letters reuse existing painted assets.",
+  "contacts": "lib/storybook/founding-departure-cue.ts and founding-departure-items.ts: drawstring/low pickup at bag opening, same palm for gift transfer, same bottle ID through wrapping/storage, two low poses at opposite stone edges, cart attached to Finn.",
+  "camera": "Explicit0.72 avoids old hill-path0.46 body shrink. StageActor.insideCamera preserves intentional placements within pulled-back margins, while unmarked entrances/exits retain extension.",
+  "scope": "Departure only. Founding return registration and later stills are not completed by this record. Whole-goal audit remains open."
+}

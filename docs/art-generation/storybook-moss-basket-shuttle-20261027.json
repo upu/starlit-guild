@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-27",
+  "scope": "1-9: two basket deliveries, parked cart and return of the spare empty basket",
+  "method": "Reuse existing accepted painted assets; renderer-owned movement and object ownership. No new image generation.",
+  "cart": {
+    "source": "assets/source/storybook/handcart-raised-v1.png",
+    "delivery": "public/storybook-study/waterway-moss-cart-v1.webp",
+    "packing": "scripts/build-storybook-moss-cycle.mjs trims transparent outside margins and resizes to512 before lossless WebP. Wheel contact is the delivery image bottom."
+  },
+  "actors": "Existing worker basket-walk, worker handoff, Aria moss cycle and Leon carrying atlases from storybook-moss-basket-cycle-20261027.json. Rightward worker movement mirrors both the cell origin and the palm contact.",
+  "placement": {
+    "cartFoot": [440, 810],
+    "firstBasketOnBed": [395, 748],
+    "secondBasketOnBed": [440, 758],
+    "workerHandoffFoot": [930, 800],
+    "firstLoadingFoot": [430, 800],
+    "secondLoadingFoot": [475, 800]
+  },
+  "evidence": [
+    "37 related tests pass, including both viewport widths, four return strides, persistent basket positions, save purity, and no second departure before node13",
+    "work/moss-shuttle-final-pc.json: 208 screenshots over approximately48seconds,1243x1244, from first collection through arrival",
+    "work/moss-shuttle-final-mobile.json: 231 screenshots over approximately48seconds,390x844 browser viewport, from first collection through arrival",
+    "Both final filmstrips viewed; cart loading detail viewed. Physical phone and all-frame video verification not performed."
+  ],
+  "status": "Basket flow is connected in the adventure study. Default1-9 rollout remains disabled until covers, second inspection location and full scene continuity are ready."
+}

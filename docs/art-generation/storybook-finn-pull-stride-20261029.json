@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-29",
+  "purpose": "Make Finn's cart-pulling walk visibly alternate feet while retaining his body proportions and rear-hand contact.",
+  "generator": "image_gen.imagegen",
+  "generated": "exec-cfd471e6-a542-4fff-9b21-ad63b084e543.png",
+  "references": [
+    "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+    "assets/source/storybook/finn-night-push-walk-balanced-v5.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Edit image 1, a 4-frame transparent RPG character sprite strip. Preserve Finn's exact mature face, tied-back dark hair, proportions, clothing, right-facing angle, forward-leaning torso and especially the rear hand at the same exact coordinates in every frame, gripping an invisible cart BEHIND him. Do not draw a cart. Image 2 is ONLY a leg motion reference: it shows four different alternating steps, including one frame with the rear boot lifted and one with the front boot lifted. Redraw the legs of image 1 to make those four clear distinct sequential steps while leaving head, upper body, both arms and cart-gripping hand visually unchanged from image 1. Frame 1: front boot planted, rear boot back. Frame 2: front boot planted, rear boot raised clearly. Frame 3: passing position with both boots under body. Frame 4: rear boot planted, front boot raised clearly. Every grounded foot touches the same baseline; maintain consistent scale and silhouette, no foot cropping, no shadows or text, transparent background. Four separate full figures, one row, evenly separated, generous transparent padding. Warm painted pixel RPG aesthetic identical to image 1.",
+  "source": "assets/source/storybook/finn-pull-scene-balanced-v3.png",
+  "sourceSha256": "b7285aec64f2ac0b3d43f0d0e425e6556dbcc98630ed772a37c31ed2c937fffc",
+  "output": "public/storybook-study/finn-pull-scene-balanced-v3.webp",
+  "outputSha256": "b7f97434daf3c96e7c3fe12bf2187ec6f32ca4ad6c43fa8250f9b8815a076fda",
+  "build": "node scripts/build-storybook-finn-balanced.mjs pull-scene-balanced-v3"
+}

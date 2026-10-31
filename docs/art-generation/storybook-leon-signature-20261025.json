@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/leon-paper-v1.png",
+  "output": "public/storybook-study/leon-paper-v1.webp",
+  "prompt": "Create a transparent RGBA game sprite strip, four separate evenly spaced full-body figures in one horizontal row. Reference 1 is Leon identity and exact warm softly hand-painted 2D RPG rendering, proportions, brown hair, blue vest, white shirt, red cape, brown boots. Reference 2 demonstrates standing handwriting action only; do NOT copy its character or connecting rectangular artifacts. Frame 1 Leon neutral standing exactly matching reference1 first figure. Frames 2 and 3 same Leon standing facing screen right three-quarter view, holding a small cream paper on a thin backing board in his left hand near lower chest and writing his signature with a tiny quill in right hand; frames differ only by a small pen stroke. Frame4 same Leon pauses with pen lifted above paper. Keep SAME head/body/legs/boots size and same grounded standing feet in ALL frames, slight downward gaze only. Mild elevated view. Each figure fully isolated including paper and quill, clear large transparent gutters, no table, no floor, no shadows, no scenery, no labels, no lines or colored rectangles between figures. True transparent background. Output wide landscape strip with 4 equal cells.",
+  "registration": "node scripts/build-storybook-work.mjs leon paper v1",
+  "heights": [
+    144,
+    143,
+    144,
+    144
+  ],
+  "scope": "Indoor prototype signing frames 17 and 18 only"
+}

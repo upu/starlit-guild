@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: illustration-story. Asset type: wide3:2 hand-painted 2D RPG dialogue background. Image1 is exact location layout reference, image2 painting style reference only, do not introduce its bedroom objects. Repaint the same cobblestone town lane with warm softly painted surfaces and restrained brown contours, golden morning daylight. Elevated45-degree downward camera, orthographic-like three-quarter RPG view, no sky, no horizon. Preserve small timber plaster houses along left and right edges, their roofs visible from above; broad passable stone lane up the center and center-right to top edge. Preserve ONE rectangular removed paving patch with packed brown soil and neat stone rim at x23%-46%, y55%-78%; shallow missing stones, not deep hole, no glowing magical effect. The heroes stand to its RIGHT on intact stone. Leave lower half and center-right clear for four small actors; standing person will be about15% of image height, doors about20%, cobbles2-3%, barrels8%; background and actors must feel same scale. No people, no movable props in center lane, no glowing stones, no text, labels, watermark, interface or border. Keep lane traversable from bottom toward upper center, no blocked steps, fence or random furniture. Actual opaque background.",
+  "references": [
+    "public/story-stage/berne-paving.webp",
+    "public/storybook-study/medicine-room-v1.png"
+  ],
+  "source": "assets/source/storybook/berne-paving-v1.png",
+  "output": "public/storybook-study/berne-paving-v1.png"
+}

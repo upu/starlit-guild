@@ -1,0 +1,42 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/aria-night-battle-v1.png",
+    "scale": 0.38285714285714284,
+    "left": 53,
+    "top": 42,
+    "width": 104,
+    "height": 134,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/aria-night-battle-v1.png",
+    "scale": 0.38285714285714284,
+    "left": 54,
+    "top": 37,
+    "width": 104,
+    "height": 139,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/aria-night-battle-v1.png",
+    "scale": 0.38285714285714284,
+    "left": 53,
+    "top": 41,
+    "width": 94,
+    "height": 135,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/aria-night-battle-v1.png",
+    "scale": 0.38285714285714284,
+    "left": 54,
+    "top": 53,
+    "width": 85,
+    "height": 123,
+    "baseline": 176
+  }
+]

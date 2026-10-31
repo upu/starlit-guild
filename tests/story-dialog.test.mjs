@@ -35,16 +35,22 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
   const react = {
     useState(initial) {
       const i = cursor++;
-      if (!(i in slots)) slots[i] = initial;
+      if (!(i in slots)) slots[i] = typeof initial === "function" ? initial() : initial;
       return [
         slots[i],
         (value) => {
-          slots[i] = value;
+          slots[i] = typeof value === "function" ? value(slots[i]) : value;
         },
       ];
     },
     useRef(initial) {
       return (slots[cursor++] ??= { current: initial });
+    },
+    useMemo(create, deps) {
+      const i = cursor++;
+      if (!slots[i] || deps.some((value, index) => !Object.is(value, slots[i].deps[index])))
+        slots[i] = { deps, value: create() };
+      return slots[i].value;
     },
     useImperativeHandle(ref, create) {
       if (ref) ref.current = create();
@@ -175,7 +181,13 @@ test("final readiness and unsuccessful completion do not accidentally close the 
 
 test("dragging, scrolling, and cancelled pointers do not advance a line", () => {
   const h = harness(),
-    viewport = { scrollTop: 0, scrollHeight: 600 };
+    viewport = {
+      scrollTop: 0,
+      scrollHeight: 600,
+      scrollTo({ top }) {
+        this.scrollTop = top;
+      },
+    };
   h.find("dialogue-page dialogue-history").props.ref.current = viewport;
   const control = () => h.find("story-conversation").props;
   const down = () => control().onPointerDown({ clientX: 30, clientY: 100 });

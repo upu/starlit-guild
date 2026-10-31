@@ -1,0 +1,24 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-pat-balanced-v2.png",
+    "scale": 0.18546365914786966,
+    "left": 26,
+    "top": 28,
+    "width": 103,
+    "height": 148,
+    "baseline": 176,
+    "headX": 90.34294255504459
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-pat-balanced-v2.png",
+    "scale": 0.18546365914786966,
+    "left": 39,
+    "top": 28,
+    "width": 90,
+    "height": 148,
+    "baseline": 176,
+    "headX": 89.03006463160911
+  }
+]

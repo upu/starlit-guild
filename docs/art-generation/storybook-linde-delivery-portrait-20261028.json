@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "draft; portrait companion to the 4-1 delivery study",
+  "source": "assets/source/storybook/linde-delivery-portrait-v1.png",
+  "output": "public/storybook-study/linde-delivery-portrait-v1.png",
+  "generated": "exec-fe140626-a999-4a51-abd0-3beaa7677187.png",
+  "references": ["public/storybook-study/linde-delivery-square-v1.png"],
+  "prompt": "Use case: illustration-story. Create a PORTRAIT 1024x1536 adaptation of the same Linde town square in the reference, for a tall mobile RPG playfield. Preserve the same world, morning light, warm hand-painted fine 2D RPG style, high oblique overhead camera, pale plaster and timber, red-and-cream striped produce stall on the LEFT and blue door on the RIGHT. Recompose both the entire produce stall and the blue doorway so both are visible side by side in the upper half of this narrow image, with their ground-level entrances clearly accessible and naturally separated by a pedestrian cobbled square. Leave a BROAD empty, continuous cobblestone plaza across the middle and lower half for four small sprites to stand and walk, without obstacles. Keep architectural scale and perspective coherent across image. The upper left and upper right corners may show building edges, no sky, no horizon, no human characters, no animals, no carts, no labels or lettering, no UI or borders. Do not make a crop of the original; thoughtfully recompose the same two destinations in a portrait frame."
+}

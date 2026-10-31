@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 59,
+    "top": 28,
+    "width": 67,
+    "height": 148,
+    "baseline": 176,
+    "headX": 97.21176596575663
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 53,
+    "top": 31,
+    "width": 95,
+    "height": 145,
+    "baseline": 176,
+    "headX": 99.60667053807686
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 49,
+    "top": 31,
+    "width": 96,
+    "height": 145,
+    "baseline": 176,
+    "headX": 100.0820410132371
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 47,
+    "top": 32,
+    "width": 98,
+    "height": 144,
+    "baseline": 176,
+    "headX": 100.19924624922939
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 47,
+    "top": 36,
+    "width": 99,
+    "height": 140,
+    "baseline": 176,
+    "headX": 100.06280563492922
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 47,
+    "top": 36,
+    "width": 98,
+    "height": 140,
+    "baseline": 176,
+    "headX": 99.88165335192812
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 45,
+    "top": 64,
+    "width": 103,
+    "height": 112,
+    "baseline": 176,
+    "headX": 102.66035397585266
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 41,
+    "top": 72,
+    "width": 115,
+    "height": 104,
+    "baseline": 176,
+    "headX": 104.0265491975913
+  }
+]

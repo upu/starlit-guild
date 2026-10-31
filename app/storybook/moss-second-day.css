@@ -1,0 +1,60 @@
+:is(
+    .storybook-reader-stage[data-story^="glowing-moss-trail-next-day-"],
+    .storybook-reader-stage[data-story="old-waterway-return"],
+    .storybook-reader-stage[data-story="tower-restoration-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="17"], [data-frame="18"]) {
+  background-image: url("/storybook-study/leon-route-notes-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+
+.storybook-reader-stage:is(
+    [data-story="old-waterway-return"],
+    [data-story="tower-restoration-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="fold"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-map-stow-v1.webp");
+  background-position: 33.333333% 0% !important;
+}
+.storybook-reader-stage:is(
+    [data-story="old-waterway-return"],
+    [data-story="tower-restoration-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="pocket"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-map-stow-v1.webp");
+  background-position: 66.666667% 0% !important;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-next-day-"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="write"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="17"] {
+  background-position: 66.666667% 0% !important;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-next-day-"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="write"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-position: 100% 0% !important;
+}
+
+.storybook-reader-stage[data-story^="glowing-moss-trail-next-day-"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="1"] {
+  background-image: url("/storybook-study/mira-check-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}

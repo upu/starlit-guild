@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create transparent 4-column character pose strip using the attached original male adventurer Finn. Keep exact long brown tied hair, confident mature face, warm olive and cream clothing, brown trousers boots, illustrated RPG rendering and elevated 3/4 camera. Column1 reproduce standing full body of reference first column (scale calibration). Columns2,3,4 SAME seated posture as reference second column, at identical seated height, head size, legs, knees, feet and hips. No chair drawn: separate furniture will be layered behind. Face RIGHT in all columns. Col2 reach right hand forward palm up at waist height to receive a sheet. Col3 both hands gently support invisible sheet across lap, looking down. Col4 extend sheet toward right to pass it on with open hand. Draw empty hands, NO paper prop. All poses full hair and soles, generous transparent padding, no floor shadows text or grids. Keep torso and head identical across seated poses, natural relaxed elbows and wrist, no waving.",
+  "source": "assets/source/storybook/finn-paper-seat-v1.png",
+  "output": "public/storybook-study/finn-paper-seat-v1.webp",
+  "review": "Standing148px, seated130-131px. Existing seat approximately125px; remaining head/hip continuity to check in continuous playback. Receive frame1 mirrored, pass frame3, prototype paper scene only."
+}

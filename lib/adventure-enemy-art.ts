@@ -1,4 +1,6 @@
 export const adventureEnemyArt = { cell: 1024, foot: 960, height: 384 };
+export const storybookWolfAsset = "/storybook-study/wolf-v1.webp";
+export const storybookSlimeAsset = "/storybook-study/slime-road-v1.webp";
 export const adventureEnemyIds = [
   "slime",
   "wolf",

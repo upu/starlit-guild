@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Warm hand-painted 2D RPG background matching supplied manor garden and kitchen. Elevated 45-degree downward three-quarter view, no sky or horizon. Preserve layout of first reference manor-back-paths: broad warm ochre paved work court in foreground/lower two thirds; low clipped hedges and daisies along upper third; a clearly walkable narrow paved garden path starts at x22 y60 percent and winds toward x22 y5 between hedges, so a small person can walk from foreground around LEFT then UP to this path. On upper RIGHT is same limestone manor wall with blue leaded windows and small back door and two shallow steps. Additional side route leading offscreen lower right for the work yard; main front edge open toward gate. Rich warm brush-painted textures and fine outlines, stone scale and palette from second reference. Leave center and lower court empty for four small figures and a gardener, each about one fifth image height. NO people, loose pots, furniture, text, markers, arrows, mysterious stone, towers, bridges. Landscape 3:2. This is the same manor's back garden, not a new location.",
+  "references": [
+    "public/story-stage/manor-back-paths.webp",
+    "public/storybook-study/manor-garden-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-back-paths-v1.png"
+}

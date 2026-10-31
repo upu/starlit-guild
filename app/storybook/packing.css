@@ -1,0 +1,63 @@
+/* Standing and kneeling use the same scale, measured from each standing reference. */
+.storybook-painted-stage[data-painted="true"]
+  :is([data-setting="town-exit"], [data-setting="meeting-dusk"])
+  .story-stage-bundle {
+  width: 12%;
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="aria"] {
+  --storybook-packing-art: url("/storybook-study/aria-packing-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="leon"] {
+  --storybook-packing-art: url("/storybook-study/leon-packing-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="6"], [data-frame="7"]) {
+  background-image: var(--storybook-packing-art);
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="7"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="adventure"]:is([data-frame="20"], [data-frame="21"]) {
+  background-image: url("/storybook-study/leon-pull-v1.webp");
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: storybook-cart-stride 720ms steps(1, end) infinite;
+}
+@keyframes storybook-cart-stride {
+  0%,
+  100% {
+    background-position-x: 0%;
+  }
+  25% {
+    background-position-x: 33.333333%;
+  }
+  50% {
+    background-position-x: 66.666667%;
+  }
+  75% {
+    background-position-x: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-painted-stage[data-painted="true"]
+    [data-actor="leon"]
+    .story-stage-sprite[data-atlas="adventure"]:is([data-frame="20"], [data-frame="21"]) {
+    animation: none;
+    background-position-x: 33.333333% !important;
+  }
+}

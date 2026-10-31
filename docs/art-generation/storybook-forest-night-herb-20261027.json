@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "accepted": [
+    {
+      "name": "forest-moon-lane-loop-v1",
+      "source": "assets/source/storybook/forest-moon-lane-loop-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-5f471ca8-ee67-4931-8baa-c2392421d4eb.png",
+      "prompt": "Edit this exact horizontally repeating forest-ground RPG background into a quiet moonlit evening version. Preserve EVERY path boundary, tree root, fern, ground scale, elevated50degree angle and traversable central68% corridor. Warm painted texture remains. Natural soft blue-green moonlight filters from upperleft onto leaf litter; soil is muted umber with sparse gentle silver-green highlights, foliage dark moss green. Readable gentle night, not near-black, not day, no glowing patches, stars, moon disc, tower, lamps, fireflies, characters or text. Left/right ground colors continue to match. Full opaque image, same1536x1024 composition. This is the same forest at night, not a new place.",
+      "references": [
+        "public/storybook-study/forest-lane-loop-v1.png"
+      ]
+    },
+    {
+      "name": "forage-herb-v1",
+      "source": "assets/source/storybook/forage-herb-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-b9a643cb-dde0-4b92-8059-47d51c9cee16.png",
+      "prompt": "One small wild medicinal herb clump growing naturally in a thin irregular patch of damp forest leaf litter, standalone transparent game prop. Warm hand-painted elevated-oblique2D RPG camera about50degrees, fine brown outlines and soft natural painterly shading matching the referenced forest. About8 modest pointed oval sage-green leaves with pale undersides, tiny stems close to ground, no flowers or berries, no magical glow, not giant tropical leaves. A loose shallow patch, no round mound, stone pedestal, container, rope or bound bundle. Root footprint about1.6times its height. Entire small patch fits generous transparent margins. No scene, labels, text, people or cast-shadow blob. True alpha background.",
+      "references": [
+        "public/storybook-study/forest-floor-v1.png"
+      ]
+    }
+  ],
+  "validation": [
+    "Herb outer haze has alpha0 at sampled positions; preserve source alpha, no matte removal or repaint.",
+    "Ground and prop integrated into the actual forest-wetland and moonlit-herbs adventure defaults."
+  ]
+}

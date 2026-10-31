@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "generatedDirectory": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/leon-carry-walk-v1.png",
+      "generatedFile": "exec-815f3666-28eb-4523-8cf5-f2e09aacbfb2.png",
+      "references": ["public/storybook-study/leon-walk-v1.webp", "public/storybook-study/leon-carry-v1.webp"],
+      "direction": "Arms-only carrying variation of the existing four walking phases, both empty palms cupped forward at waist level; preserve legs, cape, identity, head/body scale and lifted passing feet. True transparent background, four columns."
+    },
+    {
+      "source": "assets/source/storybook/waterway-worker-handoff-v1.png",
+      "generatedFile": "exec-8028c98e-88c8-4ae5-9f82-583089d7815d.png",
+      "references": ["public/storybook-study/waterway-worker-v1.webp"],
+      "direction": "Same ochre-shirt workwoman, eight poses in4x2: receive left, low pick, low place, stand empty, then four alternating walking phases facing left. No baked stone or saw. Lower kneels with unchanged head size and transparent gutters."
+    },
+    {
+      "source": "assets/source/storybook/waterway-repair-stone-v1.png",
+      "generatedFile": "exec-fe978331-010a-47a5-af2d-a0a069f52132.png",
+      "direction": "Plain small worn grey limestone repair block, about15x10x8cm, elevated oblique view, no glow/moss/symbols/cloth/ground, transparent background."
+    },
+    {
+      "source": "assets/source/storybook/waterway-basket-filled-v1.png",
+      "generatedFile": "exec-727e5022-a046-46b1-92ca-97fc675cc54a.png",
+      "references": ["public/storybook-study/basket-v1.webp"],
+      "direction": "Preserve existing shallow wicker basket camera and silhouette; place five thin twigs and three small pebbles below rim, no plants or magical objects, transparent background."
+    }
+  ],
+  "rejected": [
+    {
+      "generatedFile": "exec-388ad78e-895c-40ed-a950-4da8450320f0.png",
+      "reason": "Aria's eyes changed blue and clothes became more ornate. Not packed or used."
+    },
+    {
+      "generatedFile": "exec-b468d992-5349-42da-8525-a0bc67babd84.png",
+      "reason": "Eye color corrected, but the unchanged canonical bare-handed work poses suffice after contact placement. Keep the existing Aria art without a new costume variant. Not packed or used."
+    }
+  ],
+  "builder": "scripts/build-storybook-waterway-handoffs.mjs",
+  "packing": "Four256x192 cells per row. One scale per atlas, first standing/walking height134, soles176. Kneeling worker boots measured separately from hands touching ground. Full transparent cell gutters. Props packed separately so handoff and placement preserve one object.",
+  "status": "Connected to the1-8 adventure preview. Existing Aria and Leon work/carry stills reused. Basket collection and stone pickup/carry/handoff/withdraw/place are implemented. Default rollout remains pending saw/tool transitions and final whole-route playback.",
+  "validation": "79 related tests passed; typecheck, scoped lint and source build passed. PC1243x1244 and browser phone390x844 targeted playback verified basket collection and stone pickup/carry/handoff/withdraw/place. Screenshots are sampled partial playback, not whole-route video or physical phone testing."
+}

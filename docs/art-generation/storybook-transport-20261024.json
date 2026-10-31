@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-24",
+  "tool": "built-in image_gen",
+  "initial": {
+    "source": "assets/source/storybook/transport-pair-v1.png",
+    "prompt": "Create a production sprite sheet on TRUE transparent background, 4 columns x 2 rows, 1536x1024. Image 1 is Aria identity/proportion/style reference, image 2 Leon. Use their first standing sprite as strict head-to-body and costume reference. Warm softly illustrated elevated three-quarter RPG characters facing right, gentle brown outlines, same detail density as references. Eight full bodies, generous gutters, equal drawing scale within each row, feet on a consistent baseline. Top row Aria PUSHING a cart which is NOT drawn: arms extended forward RIGHT at waist level, palms steady at same position relative to torso, slight forward lean only, elbows softly bent, no clenched fist. Bottom row Leon PULLING a cart which is NOT drawn: body and face right, near arm extended backwards LEFT and slightly down, hand gripping an absent shaft behind hip, free arm natural. Preserve red cape, blue tunic, belt, brown trousers and boots. Preserve Aria elf ears, green eyes, blonde/lavender hair white flower, green gold cape, cream blouse/skirt, brown corset/gloves/boots, band on far thigh. Preserve head sizes, torso and leg lengths from references; no muscle enlargement, no oversized boots, no weapons. Four genuinely distinct walking phases for EACH row: column1 near leg forward heel landing, far leg trails; col2 near leg under hips supports, far leg bent swings through; col3 far leg forward heel landing, near leg trails; col4 far leg under hips supports, near leg bent swings through. Modest walking stride, knees low, no marching/high kicks, no repeated same leading leg. Keep hands nearly stationary in all four columns while feet alternate. Full heads and feet, no clipping. NO cart, handles, ropes, props, floor, shadows, text or background. Only eight separated characters.",
+    "review": "Not connected: repeated lead-leg phases. Arm gesture reference only."
+  },
+  "edits": [
+    {
+      "source": "assets/source/storybook/aria-push-walk-v1.png",
+      "prompt": "Edit image 1, a registered FOUR-COLUMN SINGLE-ROW aria walking atlas. Preserve EXACTLY its four different lower-body poses, which leg is foreground, hip positions, foot contacts, body height, head size, face, costume, four192x192 cells and transparent padding. Do NOT redesign legs or regenerate a repeated generic walk. Only change arms and slight shoulder posture to PUSH: both arms extend forward right at waist height, hands open pressing an invisible cart. Image 2 is supporting ARM gesture reference only (top row). Never copy its legs or body proportions. Keep hands in the same relative place over the four poses. No cart, props, handles, floor, shadows, text, gradients, or backdrop. TRUE transparent background. Keep output 768x192 if possible, exactly four cells in one row, full heads and boots, no crop. This is a precise arm edit of an existing valid walk cycle.",
+      "review": "Not connected: leg alternation not preserved."
+    },
+    {
+      "source": "assets/source/storybook/leon-pull-walk-v1.png",
+      "prompt": "Edit image 1, a registered FOUR-COLUMN SINGLE-ROW leon walking atlas. Preserve EXACTLY its four different lower-body poses, which leg is foreground, hip positions, foot contacts, body height, head size, face, costume, four192x192 cells and transparent padding. Do NOT redesign legs or regenerate a repeated generic walk. Only change arms and slight shoulder posture to PULL: near arm extends backward left slightly below hip, hand grips invisible cart shaft; free far arm stays natural. Image 2 is supporting ARM gesture reference only (bottom row). Never copy its legs or body proportions. Keep hands in the same relative place over the four poses. No cart, props, handles, floor, shadows, text, gradients, or backdrop. TRUE transparent background. Keep output 768x192 if possible, exactly four cells in one row, full heads and boots, no crop. This is a precise arm edit of an existing valid walk cycle.",
+      "review": "Prototype pull connected. PC approach-to-pull transition and pause observed; hand near shaft tip. Per-frame precise contact, quantitative foot slip and mobile transport remain unverified."
+    }
+  ],
+  "runtime": "Adventure prototype only; standard scenes unchanged."
+}

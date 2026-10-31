@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: stylized-concept. Transparent8pose sprite atlas for warm soft hand-painted 2D RPG, 4columns2rows. Reference gives SAME cook identity: stocky middle-aged man, short dark hair, dark moustache, brown rolled-sleeve workshirt, offwhite cook apron, dark trousers and sturdy brown boots, firm practical expression not villainous. Elevated45degree downward camera, three-quarter facing RIGHT in every cell. Exact same body scale, head size, costume and height in allposes. Row1 col1 neutralstanding calibration armsrelaxed; col2 walk left foot forward; col3 walk passing right foot lifted; col4 walk right foot forward. Row2 col1 walk passing left foot lifted; col2 collar REACH: near arm extends forward-right at chest height with open hand reaching to take someone's shirt collar; col3 collar HOLD: same arm forward-right at chest height, fingers curled gripping an invisible collar, firm stance; col4 explaining with palm up forward-right at waist height. Empty hands, no other person, no actual collar/shirt separate from his costume, no objects, food, tools, floor, shadows, text or labels. Standing adult about3.5heads tall, keep moustached adult face, no baby chibi. Generous transparent gutters, complete hair and soles. Warm soft painted broad shapes, restrained brown outlines, no dense black pixel outlines. Genuine alpha background.",
+  "references": [
+    "public/story-stage/cook-poses.webp"
+  ],
+  "source": "assets/source/storybook/cook-motion-v1.png"
+}

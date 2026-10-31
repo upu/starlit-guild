@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-door-balanced-v2.png",
+    "scale": 0.23832528180354268,
+    "left": 58,
+    "top": 28,
+    "width": 69,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.06846492357248
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-door-balanced-v2.png",
+    "scale": 0.23832528180354268,
+    "left": 58,
+    "top": 28,
+    "width": 74,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.77933016861748
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-door-balanced-v2.png",
+    "scale": 0.23832528180354268,
+    "left": 57,
+    "top": 28,
+    "width": 96,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.62016104820444
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-door-balanced-v2.png",
+    "scale": 0.23832528180354268,
+    "left": 55,
+    "top": 27,
+    "width": 75,
+    "height": 149,
+    "baseline": 176,
+    "headX": 81.76305262985821
+  }
+]

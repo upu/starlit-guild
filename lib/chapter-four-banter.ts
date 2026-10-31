@@ -207,11 +207,11 @@ const routes: Record<string, StoryLine[][]> = {
         speaker: "leon",
         text: "その石の先は滑ります。足を置くなら、乾いた方へ。",
       },
-      { expression: "neutral", speaker: "lico", text: "見てる。……手帳の方を。" },
+      { expression: "neutral", speaker: "lico", text: "見てる。……籠の中を。" },
       {
         expression: "serious",
         speaker: "leon",
-        text: "次の平らな場所で止まりますから、それまで閉じてください。",
+        text: "次の平らな場所で止まりますから、それまでは足元を。",
       },
     ],
     [
@@ -255,6 +255,21 @@ const rests: StoryLine[][] = [
     { expression: "serious", speaker: "leon", text: "道を確かめてから進もう。" },
   ],
 ];
+
+/** Match the displayed line rather than predicting the exchange from route progress. */
+export function mossTrailNoteCue(line?: StoryLine) {
+  const note = routes[MOSS_TRAIL_QUEST][1][1];
+  return !!line && line.speaker === note.speaker && line.text === note.text;
+}
+export function mossBedsBanterCue(line?: StoryLine): "water" | "label" | "around" | "other" {
+  if (!line) return "other";
+  const [water, labels] = routes[MOSS_BEDS_QUEST];
+  const matches = (entry: StoryLine) => entry.speaker === line.speaker && entry.text === line.text;
+  if (water.some(matches)) return "water";
+  if (matches(labels[2])) return "around";
+  if (labels.some(matches)) return "label";
+  return "other";
+}
 function pursuitBanter(run: Run): StoryLine[] | null {
   if (run.quest === MOSS_TRAIL_QUEST)
     return run.phase === "rest" ? rests[1] : routes[run.quest][run.node < 10 ? 0 : 1];

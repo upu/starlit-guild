@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game character sprite atlas FOUR full-body sprites in one horizontal row, equal cells, exact same character/camera/head/boot size and common sole baseline. Reference woman's identity and warm hand-painted elevated 3/4 RPG chibi style: lavender gray long hair, white flowers, sleepy violet eyes, cream gold layered dress, dark boots. All face SCREEN RIGHT. Empty hands, no objects. Pose0 neutral STANDING calibration. Pose1 slight bend at knees and waist, right/front hand lowered beside right knee at 70 percent of original standing height measured from head, fingers curled as if lowering bag handle; left hand near skirt. Pose2 LOW CROUCH on heels, right hand reaches forward and DOWN close to FLOOR, hand about 12 percent of standing height above boot sole; torso leans forward, head at only 75-80 percent of original standing height, same actual head size. Pose3 half-risen position between crouching and standing, right hand relaxed just above knee. Important hand in pose2 is DOWN BY FLOOR, not at chest, no cupped hands or prayer pose. No bag or any props, shadow, text or grid. Hair and both boot soles fully shown, ample transparent margins.",
+  "references": [
+    "assets/source/storybook/mira-check-v1.png"
+  ],
+  "source": "assets/source/storybook/mira-bag-place-v1.png"
+}

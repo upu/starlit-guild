@@ -1,0 +1,213 @@
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/finn-push-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: var(--well-push-x, 33.333333%) var(--well-push-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-npc="cook"]
+  .story-stage-name {
+  top: 100%;
+  left: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="14"] {
+  --well-push-x: 33.333333333333336%;
+  --well-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="15"] {
+  --well-push-x: 33.333333333333336%;
+  --well-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="16"] {
+  --well-push-x: 33.333333333333336%;
+  --well-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="8"] {
+  --well-push-x: 66.66666666666667%;
+  --well-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="9"] {
+  --well-push-x: 100%;
+  --well-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="22"] {
+  --well-push-x: 0%;
+  --well-push-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="23"] {
+  --well-push-x: 33.333333333333336%;
+  --well-push-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="tool-rucksack"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/leon-kettle-v1.webp");
+  background-size: 400% 200%;
+  background-position: var(--well-bag-x, 33.333333%) var(--well-bag-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="14"] {
+  --well-bag-x: 33.333333333333336%;
+  --well-bag-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="15"] {
+  --well-bag-x: 33.333333333333336%;
+  --well-bag-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="16"] {
+  --well-bag-x: 33.333333333333336%;
+  --well-bag-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="8"] {
+  --well-bag-x: 66.66666666666667%;
+  --well-bag-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="9"] {
+  --well-bag-x: 100%;
+  --well-bag-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="22"] {
+  --well-bag-x: 0%;
+  --well-bag-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="23"] {
+  --well-bag-x: 33.333333333333336%;
+  --well-bag-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="cook"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/cook-survey-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--well-cook-x, 33.333333%) var(--well-cook-y, 0%) !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="4"] {
+  --well-cook-x: 66.66666666666667%;
+  --well-cook-y: 0%;
+  scale: 1;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --well-cook-x: 100%;
+  --well-cook-y: 0%;
+  scale: 1;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  --well-cook-x: 0%;
+  --well-cook-y: 100%;
+  scale: 1;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  --well-cook-x: 33.333333333333336%;
+  --well-cook-y: 100%;
+  scale: 1;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="empty-cart"] {
+  background-image: url("/storybook-study/garden-handcart-v2.webp");
+  aspect-ratio: 512 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="garden-pot"] {
+  background-image: url("/storybook-study/garden-pot-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="tool-rucksack"] {
+  background-image: url("/storybook-study/tool-rucksack-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="snag-rope"] {
+  background-image: url("/storybook-study/snag-rope-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="iron-fastener"] {
+  background-image: url("/storybook-study/iron-fastener-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"] .story-stage-item[data-art="map"] {
+  background-image: url("/storybook-study/garden-map-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-departure"]
+  .story-stage-item[data-art="wrapped-stone"] {
+  background-image: url("/storybook-study/covered-stone-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="garden-reception-departure"][data-mode="outdoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}

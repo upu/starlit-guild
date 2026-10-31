@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Redraw FIRST reference's mountain trail layout as a warm hand-painted 2D RPG background matching SECOND reference's soft brushwork, restrained contours and coherent elevated 50-degree three-quarter view. Landscape 3:2. Preserve FIRST geography: low rocky bank and modest wooden signpost on upper-left edge, evergreen trees between two uphill trails in upper half, low rustic fence at lower-left edge, broad compacted ochre dirt resting area in center and foreground. Small scattered pebbles and white wildflowers. No horizon or sky; camera looks down on ground and tree crowns. Trees roughly three standing-person heights, fence about waist high, signpost about chest high assuming eventual actors are 1/6 of image height. Keep lower center and lower right clear, without enormous foreground objects. Ground gently climbs toward upper trails, no cliffs or ravines. Soft warm afternoon light. Original cozy rural fantasy environment, no people, no animals, no furniture, no medicine box, no readable text, no icons, no UI. Do not use pixel-art texture. Scenery scale consistent throughout.",
+  "source": "assets/source/storybook/mountain-road-v1.png",
+  "outputs": [
+    "public/storybook-study/mountain-road-v1.png"
+  ]
+}

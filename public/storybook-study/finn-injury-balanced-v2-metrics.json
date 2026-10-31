@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 57,
+    "top": 28,
+    "width": 78,
+    "height": 148,
+    "baseline": 176,
+    "headX": 102.25264785047227
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 55,
+    "top": 27,
+    "width": 82,
+    "height": 149,
+    "baseline": 176,
+    "headX": 95.97873451689628
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 54,
+    "top": 28,
+    "width": 78,
+    "height": 148,
+    "baseline": 176,
+    "headX": 98.74822943394771
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 55,
+    "top": 27,
+    "width": 78,
+    "height": 149,
+    "baseline": 176,
+    "headX": 96.19027336658164
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 50,
+    "top": 32,
+    "width": 96,
+    "height": 144,
+    "baseline": 176,
+    "headX": 97.2792021312033
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 51,
+    "top": 32,
+    "width": 79,
+    "height": 144,
+    "baseline": 176,
+    "headX": 96.37115014201058
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 49,
+    "top": 31,
+    "width": 107,
+    "height": 145,
+    "baseline": 176,
+    "headX": 95.65677185252686
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+    "scale": 0.3418013856812933,
+    "left": 50,
+    "top": 41,
+    "width": 111,
+    "height": 135,
+    "baseline": 176,
+    "headX": 104.31338551134553
+  }
+]

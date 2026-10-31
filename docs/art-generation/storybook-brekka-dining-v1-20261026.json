@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit reference tavern background into original warm hand-painted2D RPG elevated45degree top-down threequarter view matching approved storybookvillage atmosphere. Keep recognizable roomlayout: upperwall woodtimber plasterstone, backbench beneath window, glassbottles shelf upperleft, heavywooddoor upperright, small existingedge table farright, a barrel alongupperleftwall. LowerTWO THIRDS are wide CLEAR empty woodenfloor for separate dynamically added diningtables chairs and characters. Do notpaint any central diningfurniture or people. Window near uppermiddle shows small distant masonry tower partlyhidden by village rooftops, only a VERY FAINT PURPLE glimmer in its upper opening, daylight no magical beam. Warm lunchtimesoftambient, natural goldenbrownwood mutedgreen details, clear roomgeometry and visiblefloor, highcamera enough see broadtabletop atedge and floorperspective. No text lettersUI. Opaque completebackground3:2landscape.",
+  "references": [
+    "public/story-stage/brekka-dining-room.webp"
+  ],
+  "source": "assets/source/storybook/brekka-dining-v1.png"
+}

@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "generation": "exec-08cd1930-8209-48c4-ac26-ffb4baa8084d",
+  "scope": "4-9 moss-transplant-departure, loading yard indices0-15",
+  "source": "assets/source/storybook/farm-hoe-v1.png",
+  "sha256": "52a4d6adedbe12bc4d0db8154c0518eb7ccc7127d6a3258b6e949015103a01ac",
+  "promptSummary": "Single complete warm hand-painted farming hoe, iron blade at top extending left from straight vertical wooden shaft, elevated oblique blade view, transparent margins, no people or scenery. Blade quarter of length, thin shaft, no markings or cast shadow.",
+  "output": "public/storybook-study/farm-hoe-v1.webp",
+  "packing": "scripts/build-storybook-transplant-loading.mjs. Stem centered on x160 in320x640 transparent canvas, sole624. One fixed scale and width5.5 in all states. Ground rotates about rounded shaft tip, with pitch55 and tilt78.",
+  "reused": [
+    "tower-loading-yard-v1.png",
+    "loading-basket-v1.webp",
+    "loading-basket-covered-v1.webp",
+    "loading-cloth-v1.webp",
+    "snag-rope-v1.webp",
+    "lico-moss-study-ponytail-v1.webp",
+    "mira-moss-care-v1.webp",
+    "leon-carry-v1.webp",
+    "leon-reaction-v1.webp"
+  ],
+  "integration": "Loading camera uses cell19, matching the same yard in4-8. Finn moves aside. Leon approaches the placement point and steps away; remaining strapped hoe follows his back and lean. Mira carries her medical bag toward the path, pauses on screen for her last reply, and the later night cut covers her medical visit.",
+  "remaining": "The transplant-path night scene from index16, handoffs, cart escape and guarding still require painted conversion; do not treat all4-9 departure as done."
+}

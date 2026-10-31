@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/leon-handheld-v1.png",
+    "index": 0,
+    "scale": 0.3380281690140845,
+    "left": 53,
+    "top": 32,
+    "width": 69,
+    "height": 144,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/leon-handheld-v1.png",
+    "index": 5,
+    "scale": 0.3380281690140845,
+    "left": 38,
+    "top": 69,
+    "width": 99,
+    "height": 107,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/leon-handheld-v1.png",
+    "index": 6,
+    "scale": 0.3380281690140845,
+    "left": 48,
+    "top": 49,
+    "width": 89,
+    "height": 127,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/leon-handheld-v1.png",
+    "index": 7,
+    "scale": 0.3380281690140845,
+    "left": 53,
+    "top": 29,
+    "width": 79,
+    "height": 147,
+    "baseline": 176
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/leon-handheld-walk-v1.png",
+    "index": 0,
+    "scale": 0.3161512027491409,
+    "left": 32,
+    "top": 38,
+    "width": 93,
+    "height": 138,
+    "baseline": 176
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/leon-handheld-walk-v1.png",
+    "index": 1,
+    "scale": 0.3161512027491409,
+    "left": 40,
+    "top": 38,
+    "width": 89,
+    "height": 138,
+    "baseline": 176
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/leon-handheld-walk-v1.png",
+    "index": 2,
+    "scale": 0.3161512027491409,
+    "left": 38,
+    "top": 38,
+    "width": 95,
+    "height": 138,
+    "baseline": 176
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/leon-handheld-walk-v1.png",
+    "index": 3,
+    "scale": 0.3161512027491409,
+    "left": 40,
+    "top": 39,
+    "width": 85,
+    "height": 137,
+    "baseline": 176
+  }
+]

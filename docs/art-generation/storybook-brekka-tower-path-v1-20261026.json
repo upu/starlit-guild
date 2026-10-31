@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create a complete 3:2 landscape 2D RPG game background. Reference1 establishes the EXACT geography: tower rear doorway at upper right, a clear upper dirt terrace below that doorway, CENTRAL STONE STAIRCASE rising diagonally toward upper-right, a separate cart ramp winding around far RIGHT, narrow blue water channel at far LEFT between low stone walls, clear lower dirt path. Reference2 only the approved warm hand-painted storybook style, fine brown outlines, painted muted ochre stone and soft green plants, elevated looking-down 45degree camera, no pixel grid. Carefully rebuild the stairs to match these normalized screen positions: lower toe edge y63percent spans x37 to61percent; staircase rises toward upper right; upper landing edge y26percent spans x50 to74percent. The visible two walking lanes run (x45,y62) to (x52,y45) to (x55,y35) to (x55,y26), and (x53,y62) to (x60,y45) to (x63,y35) to (x63,y26). Both lanes are STONE STEPS throughout, no walls crossing them, equal regular risers and believable step depth. Behind upper landing a continuous WALKABLE terrace extends left to x24percent, y20-29percent for four characters; do not put a wall across this terrace. Rear tower door at x80percent upper edge, fully visible at human scale, not a giant monumental door. Low retaining walls alongside stairs and ramp, no obstacles on stairs. Main ramp remains far right x80-98 with enough width for handcart to climb separately. Water channel only farleft x5-20, lower clear dirt route unblocked. Morning. No people, carts, loose moss props, labels, UI, arrows or diagram lines. Preserve recognizable modest tower setting.",
+  "references": [
+    "public/story-stage/brekka-tower-path.webp",
+    "assets/source/storybook/brekka-alley-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-tower-path-v1.png"
+}

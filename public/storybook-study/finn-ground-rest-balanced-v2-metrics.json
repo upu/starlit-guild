@@ -1,0 +1,35 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-ground-rest-balanced-v2.png",
+    "scale": 0.21052631578947367,
+    "left": 56,
+    "top": 28,
+    "width": 71,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.18338789611069
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-ground-rest-balanced-v2.png",
+    "scale": 0.21052631578947367,
+    "left": 58,
+    "top": 80,
+    "width": 86,
+    "height": 96,
+    "baseline": 176,
+    "headX": 100.60773622083984
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-ground-rest-balanced-v2.png",
+    "scale": 0.21052631578947367,
+    "left": 57,
+    "top": 81,
+    "width": 87,
+    "height": 95,
+    "baseline": 176,
+    "headX": 99.98340755877875
+  }
+]

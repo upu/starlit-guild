@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Redraw the FOUR poses of the manor servant from FIRST reference using the compact RPG body/head proportions of SECOND reference gardener: larger head relative to body, about3 heads tall, short legs and rounded boots, same anatomy as existing RPG people. Preserve first character's shorttidydarkgrayhair, adult40sface, bluevest creamrolledsleeves longdarkbrownworkapron. Transparent sprite sheet4columnsONErow, elevated45degree3quartercamera allfaceLEFT. Samebodyheight and headscaleallfourposes. In EVERYpose the CAMERA-NEAR hand (visible on right side of torso in image) rests in front of BELT with fingerscurled around tiny INVISIBLEkey, clearfingertip atsameposition. Other free farhand:0 relaxed;1openpalmtowardLEFTexplaining;2unchangedarmsbutheadglancesoverrightshoulder;3freefarhandraisestowardLEFTliftinginvisiblecover. Keyandcovernotincluded. Fullheadboots, largegaps, noobjects,ground,text,shadows. Match warm paintedoutlinesandcompactproportions ofSECONDreference, do not use realistic humanleglength.",
+  "references": [
+    "assets/source/storybook/servant-display-v1.png",
+    "assets/source/storybook/gardener-survey-v1.png"
+  ],
+  "source": "assets/source/storybook/servant-display-v2.png"
+}

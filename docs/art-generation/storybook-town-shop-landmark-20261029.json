@@ -1,0 +1,15 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-29",
+  "purpose": "1-3の配達先に見下ろし視点の商店を表示する",
+  "source": "assets/source/storybook/town-shop-landmark-v1.png",
+  "sourceSha256": "adfced7675228009b95b3b7eaf212243083558a33b7c3b2b234c4e5d5d789c61",
+  "output": "public/storybook-study/town-shop-landmark-v1.webp",
+  "outputSha256": "d4f10a082c08940fbddb707f512853a1fc35bbf090a9629e679133b5d9b03774",
+  "conversion": "sharp lossless WebP; RGBA preserved",
+  "references": [
+    "public/storybook-study/workshop-landmark-v1.webp",
+    "public/storybook-study/warehouse-landmark-v1.png"
+  ],
+  "prompt": "Use case: game-asset. Create a single small neighborhood general store for a warm hand-painted 2D RPG viewed from diagonally above. Image 1 is the exact camera angle, scale, isolated-building presentation and painterly outline style reference; image 2 is the same village's warehouse and color/material reference. Create a different, smaller welcoming shop: one compact timber-and-cream-plaster building, red terracotta roof, open doorway and small shop window with a simple hanging wooden sign and a few crates or baskets just outside. The entrance should face the open foreground so a person can receive a parcel in front of it. Preserve consistent three-quarter isometric perspective, visible roof, sunny warm tones and readable architecture matching references. Show the full building including roof, doorway and base, with generous transparent gutters. No people, text, lettering, other buildings, large separate paving, vignette, scenery, shadows extending into the environment, borders, or checkerboard. Isolated sprite on true transparent alpha."
+}

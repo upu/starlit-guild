@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-30",
+  "tool": "built-in image_gen",
+  "purpose": "Mira turns in place with cupped hands while carrying a separate basket.",
+  "source": "assets/source/storybook/mira-founding-turn-v1.png",
+  "output": "public/storybook-study/mira-founding-turn-v1.webp",
+  "build": "node scripts/build-storybook-mira-founding-turn.mjs",
+  "references": [
+    "public/storybook-study/mira-paper-walk-v1.webp",
+    "public/storybook-study/mira-handheld-v1.webp",
+    "public/storybook-study/aria-packing-turn-v1.webp"
+  ],
+  "generation": "exec-8d23dae8-497f-4114-9bc6-8a7213cdc937.png",
+  "prompt": "Use case: precise-object-edit. Production sprite animation for a warm storybook 2D RPG. Images 1 and 2 define MIRA's exact identity, lilac hair with white flower and moon ornament, pale white-and-blue layered robe, gentle sleepy expression, small stature and proportions; match her existing pixel-art style and scale. Image 3 is solely a pose reference for a carrier turning with cupped hands. Create a NEW isolated four-frame horizontal atlas showing only MIRA turning in place while holding an invisible small basket: frame 1 three-quarter right with both empty cupped hands in front of her waist, frame 2 half-turned right hands together, frame 3 directly facing camera with two cupped empty hands centered, frame 4 three-quarter left, hands in front of waist. No basket or props in any frame, no writing, no grid, no floor, no shadow. All feet stay aligned at one baseline; identical head size and body height in all frames, large transparent padding around each complete character. Preserve her white-and-blue robe, lavender hair, moon and tiny white flowers; no extra headwear or staff. Soft warm pixel clusters and clear outlines consistent with the references, real alpha transparency."
+}

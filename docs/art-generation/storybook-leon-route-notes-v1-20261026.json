@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent character sprite atlas exactly FOUR isolated full-body sprites in ONE horizontal row, ample gutters. Same young male hero Leon and warm hand-painted chibi elevated three-quarter RPG style as reference: tousled brown hair, brown eyes, navy blue tunic with cream shirt sleeves, red short shoulder cape, leather belt and brown boots, small silver shoulder armor. All face SCREEN RIGHT, identical head size/body/boot size/camera and ground sole baseline. Pose0 neutral STANDING calibration with hands empty. Pose1 holds a SMALL OPEN BROWN BOUND NOTEBOOK (not loose paper, no large map board) in left hand at lower chest, looks down reading its open cream pages, right hand relaxed by notebook. Pose2 same standing body and small open notebook, writes a route note with small dark pencil in right hand; shoulders and head almost same as pose1. Pose3 same writing with only a small pencil stroke change, identical body scale. Small notebook is clearly physically held with supporting fingers below it, minimal abstract page marks, no readable letters. No scenery, floor, shadows, labels, numbers or grid. Full hair and boot soles with generous transparent margins. Do not enlarge reading/writing head or arms.",
+  "references": [
+    "assets/source/storybook/leon-paper-v1.png"
+  ],
+  "source": "assets/source/storybook/leon-route-notes-v1.png"
+}

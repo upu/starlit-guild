@@ -1,0 +1,20 @@
+{
+  "model": "image_gen",
+  "reference": "public/story-stage/merchant-poses.webp",
+  "referenceCommit": "5227b6387dd16aa223705dd96fdd67ca1bcff170",
+  "sources": [
+    {
+      "path": "assets/source/story-stage/merchant-service-v1.png",
+      "generatedFile": "exec-7ef9b982-1a8e-4452-be32-0528e1300f44.png",
+      "prompt": "Extend the standing merchant in the supplied RPG pixel-art sprite atlas. He is the SAME friendly middle-aged innkeeper, short wavy brown-gray hair, moustache, cream rolled sleeves, dark brown vest/apron, brown trousers and boots. Transparent RGBA background. Four complete full-body animation poses arranged 2 columns x 2 rows, equal cells with large transparent gutters, no shadows/glow/text/borders. Use exactly the same high-oblique RPG 3/4 LEFT-facing angle as the first row of the reference. Same head size, proportions, clothing and boot contact throughout.\nTop left: standing holding the NEAR hand open palm-up to his LEFT at waist level, elbow bent, to support a small flat item that the game will render separately; empty hand, no object.\nTop right: leaning a little forward, extending the SAME near hand to the LEFT and downward toward a waist-high table, hand open placing an item; empty hand, no table. Keep feet stationary; modest torso bend, not crouching.\nBottom left: standing lifting the SAME open near palm up toward shoulder level, looking across with mild knowing amusement, presenting a small plate that the game will render separately. Empty hand, no object.\nBottom right: standing with the near palm supporting an unseen object at waist level, the other hand making a small conversational gesture, mildly admonishing but friendly expression. Empty hands.\nThese are coherent frames of one actor. Lock head width and feet positions; natural bend only. Preserve distinctive face and original pixel rendering. Do NOT draw any paper, plate, tray, table, floor or background.",
+      "sha256": "8039ad76c435bab5208f7bd0cb57abf5c98eaf4d6a4b4dcbec8f8c78281fb60a"
+    },
+    {
+      "path": "assets/source/story-stage/linde-props-v1.png",
+      "generatedFile": "exec-d1e22c56-09d9-4c6a-91e4-1dcaa43638a3.png",
+      "prompt": "Create a transparent RPG pixel-art PROP sheet, one horizontal row of THREE equal separate square cells with wide transparent gutters. No people, hands, table, floor, cast shadows, glow, lettering or labels. Match warm medieval fantasy chibi pixel sprites with crisp dark brown outlines, readable at 20-35 pixels wide.\nCell1: ONE nearly empty small cream ceramic dinner plate, viewed at the same high-oblique overhead RPG angle (surface ellipse about 2:1 width to height), with two tiny brown breadcrumbs and a faint sauce smear. Single plate, no cutlery. An innkeeper will lift it.\nCell2: ONE same-sized same-design plate at same angle, with remnants of a simple village lunch: small piece of brown bread and a few cooked vegetables, modest portion, no cup or cutlery. Plate must share identical outside size and outline as cell1.\nCell3: ONE small sealed cream parchment envelope with a folded triangular flap and a modest dark red wax dot. Rectangular, laid flat in the same high-oblique angle, slightly turned clockwise, plain no readable writing. This is a normal portable letter, not a book or ledger.\nSolid object interiors with clean transparent outside. Avoid decorative borders, aura or semitransparent background haze.",
+      "sha256": "daf764bb95db9f668f169225dfb7f6eb47c7f6e2dca7c285c3c56e2b6d71427e"
+    }
+  ],
+  "processing": "scripts/story-stage-linde-art.mjs; preserve old twelve merchant cells as decoded RGBA; register four service poses with existing head width, feet at y=120 and standing height 96, leaning height 92."
+}

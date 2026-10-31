@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "used in the 3-9 adventure scene; foot contact remains subject to visual review",
+  "assets": [
+    {
+      "source": "assets/source/storybook/mason-lift-stone-v1.png",
+      "output": "public/storybook-study/mason-lift-stone-v1.webp",
+      "generated": "exec-276394e5-138c-4e70-b0ad-2bb8fbb966ed.png",
+      "references": ["assets/source/storybook/mason-carry-stone-v1.png", "assets/source/storybook/mason-replace-stone-v1.png"],
+      "build": "node scripts/build-storybook-mason-lift-stone.mjs",
+      "prompt": "Create ONE horizontal four-frame sprite sheet of the same adult mason from the attached reference images. It depicts a coherent slow LIFT animation facing LEFT. Frame 1 kneeling low with two empty hands reaching to the ground (as the second reference). Frame 2 raising her body halfway with knees bent and empty hands just below her knees. Frame 3 rising into a squat, knees bent and empty hands at her lower abdomen. Frame 4 standing slightly bent forward with both empty hands at waist height (as first reference). No stone: a separate prop will be placed in her hands. Keep her head size, brown ponytail, mustard shirt, work apron, boots, warm painterly pixel style and body proportions unchanged. Hands progress smoothly from ground to waist; both boots stay planted, on the same baseline, with no walking. All bodies complete and unobstructed, transparent alpha, no light, halos, floor, shadow, text, borders or props. Four distinct frames of progressive rising in a single row."
+    },
+    {
+      "source": "assets/source/storybook/mason-replace-stone-v1.png",
+      "output": "public/storybook-study/mason-replace-stone-v1.webp",
+      "generated": "exec-7747f619-c42a-45c2-8608-7fb4126a660c.png",
+      "reference": "public/storybook-study/mason-motion-v1.webp",
+      "build": "node scripts/build-storybook-mason-replace-stone.mjs",
+      "prompt": "Use case: game-asset. Create a transparent 4-frame sprite sheet in a single horizontal row for the SAME stone mason in the FIRST reference. She has brown hair in a low ponytail, a mustard-yellow rolled-sleeve shirt, brown work apron, gray-brown trousers and brown work boots. Keep her recognizable face, body proportions, clothing and the same warm hand-painted 2D RPG pixel-art style. Her pose faces LEFT and is viewed from a slightly elevated oblique angle. These four frames are a connected action of kneeling to lift and replace an unseen heavy paving stone directly in front of her on the LEFT. Frame 1: standing, arms down. Frame 2: kneeling, hands reaching down in front toward the ground. Frame 3: kneeling, both hands close together around the low sides of an unseen object, hands just above ground. Frame 4: kneeling, both hands extended down again to set that object on the ground. Draw no object at all: a separate stone sprite will be overlaid at her hands later. Keep the same hair, head size, clothing and boot positions between the three kneeling frames; kneeling must be visibly lower than standing. Four full figures, equal cells, consistent foot baseline, generous transparent gutters. Completely transparent background with clean opaque edges: absolutely no brown fog, shadows, ground, frame borders, writing, cart, stone or tools."
+    },
+    {
+      "source": "assets/source/storybook/mason-carry-stone-v2.png",
+      "output": "public/storybook-study/mason-carry-stone-v2.webp",
+      "generated": "exec-893324c9-c29c-4539-bffd-49886c69370c.png",
+      "references": ["assets/source/storybook/mason-carry-stone-v1.png", "assets/source/storybook/leon-walk-v2.png"],
+      "build": "node scripts/build-storybook-mason-replace-stone.mjs carry v2",
+      "status": "trial: four distinguishable poses; foot contact and alternating steps need further review",
+      "prompt": "Use case: precise-object-edit. Game sprite sheet of the stone mason from IMAGE 1. Edit her LOWER BODY to have a complete walking cycle, while preserving exactly her unchanged head, brown hair, upper body, hands, clothing colors and left facing direction in image 1. IMAGE 2 provides examples of how the legs and boots change angle with each step: top left legs separated; top right back foot lifted; bottom right near leg bent and lifted forward; use that leg ACTION, NOT his appearance. Draw exactly FOUR equally spaced sprites in one horizontal row, identical scale and head position, real transparent background. Each sprite carries an invisible stone with both hands extended forward at waist and hands in same location: no stone or added object. Leg phases: (1) planted leftward leading boot, back boot behind to right. (2) standing on leading boot, lift the rightward back boot and bend its knee. (3) both feet under the hips as the back leg passes. (4) stand on back boot and visibly RAISE the near knee and boot FORWARD to the left, like the lower-right pose of image 2 but mirrored to face left. The lifted knee and boot must be obvious and clearly different from frame 2, avoid duplicated frames. Small careful walking steps, her feet remain inside their cell, no ground, text, halo or shadow."
+    },
+    {
+      "source": "assets/source/storybook/mason-carry-stone-v1.png",
+      "output": "public/storybook-study/mason-carry-stone-v1.webp",
+      "generated": "exec-a3cbe699-b439-4425-850d-e99f697a6e89.png",
+      "reference": "assets/source/storybook/mason-replace-stone-v1.png",
+      "build": "node scripts/build-storybook-mason-replace-stone.mjs carry",
+      "issue": "Walking frames repeat the same leading foot and need improvement before final integration.",
+      "prompt": "Use case: game-asset. Create ONE horizontal row of FOUR transparent game sprites. This is the SAME stone mason from the reference: brown low ponytail, yellow rolled-sleeve shirt, brown apron, dark trousers and brown boots. Adult body proportions and warm painterly RPG pixel-art style must match the reference. Facing LEFT at an elevated oblique angle, she takes short careful steps CARRYING AN INVISIBLE RECTANGULAR STONE with both hands near waist height. Draw the HANDS EMPTY, with palms facing inward spaced apart so a separate object can later be overlaid between them; no stone visible in this sprite sheet. Keep face, hair, size, hand position and trunk nearly identical across four frames. Only the feet alternate in four successive positions: frame 1 near foot in front, frame 2 feet passing, frame 3 far foot in front, frame 4 feet passing. Avoid broad strides; she carries a heavy stone. Full bodies in equal spaced cells with consistent foot baseline. Real transparent background, no floor, shadows, halos, text, markings or other objects."
+    }
+  ]
+}

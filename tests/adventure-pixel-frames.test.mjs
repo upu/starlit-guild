@@ -2,6 +2,32 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
 import { adventureRowFrames } from "../scripts/adventure-pixel-frames.mjs";
+import { readFrame, headBounds } from "../scripts/home-pixel-frames.mjs";
+
+test("idle, blink and cart poses keep walking head scale and almost-standing stature", async () => {
+  for (const id of ["aria", "leon", "mira", "finn", "lico"]) {
+    const path = `public/adventure-pixel/${id}.webp`;
+    const frame = (i) =>
+      readFrame(path, {
+        left: (i % 4) * 192,
+        top: Math.floor(i / 4) * 192,
+        width: 192,
+        height: 192,
+      });
+    const walking = await frame(0);
+    const head = await headBounds(
+      await sharp(walking.cell).extract(walking.box).png().toBuffer(),
+      0.25,
+    );
+    for (const i of [8, 9, 18, 19, 20, 21]) {
+      const f = await frame(i);
+      const actual = await headBounds(await sharp(f.cell).extract(f.box).png().toBuffer(), 0.25);
+      assert.ok(Math.abs(actual.width - head.width) <= 2, `${id}/${i}: walking head width`);
+      assert.ok(f.box.height >= 90 && f.box.height <= 97, `${id}/${i}: preserve torso and legs`);
+      assert.equal(f.box.top + f.box.height, 176, `${id}/${i}: ground contact`);
+    }
+  }
+});
 
 test("a weapon crossing a nominal column stays whole with its owner", async () => {
   const data = Buffer.alloc(400 * 100 * 4);

@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
-import type { BanterExchange } from "@/lib/banter-exchange";
+import { atEndOfBanter, type BanterExchange } from "@/lib/banter-exchange";
 
 // A final line becomes read only after it has remained visible for its reading time.
 export function useBanterCompletion(
   exchange: BanterExchange,
   paused: boolean,
+  hasNext: boolean,
+  minimum: number,
   onComplete?: () => void,
 ) {
   const complete = useRef(onComplete),
@@ -12,10 +14,15 @@ export function useBanterCompletion(
   useEffect(() => {
     complete.current = onComplete;
   }, [onComplete]);
-  const line = exchange.lines.at(exchange.index),
-    last = exchange.index === exchange.lines.length - 1;
+  const line = exchange.lines.length ? exchange.history.at(-1) : undefined,
+    last = atEndOfBanter(exchange);
   useEffect(() => {
-    if (paused || !last || !line || !complete.current || finished.current) return;
+    if (paused || hasNext || !last || !complete.current || finished.current) return;
+    if (!line) {
+      finished.current = true;
+      complete.current();
+      return;
+    }
     let timer: ReturnType<typeof setTimeout>;
     const schedule = () => {
       clearTimeout(timer);
@@ -25,7 +32,7 @@ export function useBanterCompletion(
           finished.current = true;
           complete.current?.();
         },
-        Math.max(3500, line.text.length * 100),
+        Math.max(3500, line.text.length * 100, minimum),
       );
     };
     schedule();
@@ -34,5 +41,5 @@ export function useBanterCompletion(
       clearTimeout(timer);
       document.removeEventListener("visibilitychange", schedule);
     };
-  }, [paused, last, line]);
+  }, [paused, hasNext, last, line, minimum, onComplete]);
 }

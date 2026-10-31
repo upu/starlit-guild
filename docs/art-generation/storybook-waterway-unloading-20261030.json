@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-30",
+  "generator": "image_gen.imagegen",
+  "mode": "built-in edit",
+  "source": "assets/source/storybook/waterway-empty-tool-cart-v1.png",
+  "output": "public/storybook-study/waterway-empty-tool-cart-v1.webp",
+  "generated": "exec-9b04e5aa-c8d5-4a8f-b41f-ab08bdd50eb9.png",
+  "references": [
+    "public/storybook-study/waterway-tool-cart-v1.webp"
+  ],
+  "registration": "node scripts/build-storybook-waterway-unload.mjs",
+  "reusedPoseInputs": [
+    "public/storybook-study/merchant-placement-v2.webp",
+    "public/storybook-study/merchant-turn-carry-v2.webp"
+  ],
+  "reusedMotionInput": "public/storybook-study/merchant-carry-walk-v1.webp",
+  "reusedProp": "public/story-stage/prop-rope-coil.webp",
+  "poseOutput": "public/storybook-study/merchant-repair-unload-v1.webp",
+  "prompt": "Use case: precise-object-edit. Edit target: the provided transparent 420x280 painted RPG tool cart. Make an EMPTY version of this EXACT same cart. Remove ALL cargo only: the saw, wooden mallet, all coiled and hanging ropes, all baskets, loose stones, sacks or other contents. Reveal the empty wooden bed and inner side panels where these cargo objects were. Preserve the cart itself exactly: same warm wood, dark metal fittings, individual board edges, same two wheels with visible hubs, axle, side-wall height, perspective, long parallel pull shafts pointing down-right, the precise silhouette and screen footprint, same position of wheel ground contact and shaft tips. Do not redesign, recolor, enlarge or shorten anything, and do not add cargo, cloth, people, ground, labels, cast shadow or scene. Output a transparent 3:2 PNG with the cart placed in precisely the same normalized location and size as the reference, including the existing transparent padding; 1536x1024 is suitable. This is a project asset for a warm hand-painted 2D RPG at an elevated three-quarter camera. No checkerboard, no solid background, no text or watermark. Preserve genuine alpha transparency."
+}

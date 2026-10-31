@@ -1,0 +1,221 @@
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="covered-stone"] {
+  background-image: url("/storybook-study/covered-stone-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="brazier"] {
+  background-image: url("/storybook-study/brazier-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="medicine-packet"] {
+  background-image: url("/storybook-study/medicine-packet-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="kettle"] {
+  background-image: url("/storybook-study/kettle-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="teapot"] {
+  background-image: url("/storybook-study/teapot-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="empty-cup"] {
+  background-image: url("/storybook-study/empty-cup-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-art="teacup"] {
+  background-image: url("/storybook-study/empty-cup-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .story-stage-item[data-item="comparison-cloth"][data-art="stone-wrap"] {
+  background-image: url("/storybook-study/heavy-cloth-v1.webp");
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/finn-tray-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: var(--rest-paper-x, 0%) var(--rest-paper-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-frame="8"] {
+  --rest-paper-x: 33.333333333333336%;
+  --rest-paper-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-frame="9"] {
+  --rest-paper-x: 66.66666666666667%;
+  --rest-paper-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-frame="22"] {
+  --rest-paper-x: 100%;
+  --rest-paper-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-frame="23"] {
+  --rest-paper-x: 0%;
+  --rest-paper-y: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/finn-tray-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.666667% 100% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite:is(
+    [data-frame="0"],
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="3"],
+    [data-frame="8"],
+    [data-frame="9"]
+  ) {
+  background-image: url("/storybook-study/mason-paper-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--rest-worker-x, 0%) var(--rest-worker-y, 0%) !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  --rest-worker-x: 0%;
+  --rest-worker-y: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="2"] {
+  --rest-worker-x: 100%;
+  --rest-worker-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="8"] {
+  --rest-worker-x: 33.333333333333336%;
+  --rest-worker-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="9"] {
+  --rest-worker-x: 66.66666666666667%;
+  --rest-worker-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-kettle-v1.webp");
+  background-size: 400% 200%;
+  background-position: var(--rest-kettle-x, 33.333333%) var(--rest-kettle-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  --rest-kettle-x: 66.66666666666667%;
+  --rest-kettle-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  --rest-kettle-x: 100%;
+  --rest-kettle-y: 0%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  --rest-kettle-x: 0%;
+  --rest-kettle-y: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  --rest-kettle-x: 33.333333333333336%;
+  --rest-kettle-y: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="27"], [data-frame="31"]) {
+  background-image: url("/storybook-study/mira-seat-v3.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="31"] {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-art="stone-storeroom-v1"] :is(.story-stage-actor, .story-stage-extra) {
+  filter: brightness(0.85);
+}
+.storybook-reader-stage[data-art="stone-storeroom-v1"] .story-stage-item:not([data-glow]) {
+  filter: brightness(0.8);
+}
+.storybook-reader-stage[data-art="stone-storeroom-v1"]
+  .story-stage-item[data-art="light-cloth"][data-glow] {
+  filter: brightness(1.3) drop-shadow(0 0 5px #d6c5ffaf);
+}
+.storybook-reader-stage[data-art="stone-storeroom-v1"]
+  .story-stage-item[data-art="candidate-violet"][data-glow] {
+  filter: brightness(1.1) drop-shadow(0 0 4px #c2aaff9f);
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-mode="indoor"][data-art="stone-storeroom-v1"] .story-stage-space {
+    transform: none;
+  }
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="kettle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  --rest-kettle-x: 66.666667%;
+  --rest-kettle-y: 100%;
+}

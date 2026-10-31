@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "used in the portrait 3-9 adventure scene",
+  "assets": [
+    {
+      "source": "assets/source/storybook/berne-foundation-open-portrait-v1.png",
+      "output": "public/storybook-study/berne-foundation-open-portrait-v1.png",
+      "reference": "assets/source/storybook/berne-foundation-open-v2.png",
+      "generated": "exec-2e74f3d8-19a7-4468-a1e3-63c3a1e327aa.png",
+      "sha256": "b94233f5a56b641d197c68689864fd6995222bfd67dc40aa657c8960757f162c",
+      "prompt": "Edit the supplied STARLIT-GUILD tower restoration courtyard background into a VERTICAL portrait game backdrop, approximately 1024x1536, for a warm hand-painted pixel-art 2D RPG, seen from the same high oblique camera angle. Preserve the SAME round weathered stone tower, ivy, wood arched door, sunny earth, wildflowers and the continuous single narrow diagonal row of paving stones. The reference is an exact architectural and color style reference, not a prompt to invent a new site. Recompose vertically with the tower and door in the upper part, a spacious earthen courtyard through the center and lower foreground, and the paving row running diagonally from upper-left to lower-right. The single empty rectangular hole where a stone was removed MUST be clearly visible near the center of the portrait image (around x=490,y=850 in a 1024x1536 image); maintain its same stone size relative to the tower doorway. Leave broad open level ground around the hole on all sides, especially to the right. The door should be at the upper right. Do not add people, characters, tools, loose stones, text, signs, panels, frames, vignettes, blur, lighting effects, gradients, or labels. The image must be a continuous painted scene with no horizontal strips or seams, suitable for sprites walking on it. Use the warm ochre and green palette, grain and outlines from the reference."
+    },
+    {
+      "source": "assets/source/storybook/berne-foundation-repaired-portrait-v1.png",
+      "output": "public/storybook-study/berne-foundation-repaired-portrait-v1.png",
+      "reference": "assets/source/storybook/berne-foundation-open-portrait-v1.png",
+      "generated": "exec-2d3243bd-14ee-41a3-b220-886b2375ecdf.png",
+      "sha256": "65126ad58d2921f975f3717ac73044f840a6ce8490608bb0c8d25ec469d5726b",
+      "prompt": "Edit the supplied portrait game background with one tightly localized change only. Fill the one empty rectangular gap in the diagonal narrow row of paving stones near the center (around x=520,y=760 in the 1024x1536 image) with ONE fitted paving stone matching the neighboring stones, so the row is continuous and repaired. Match its perspective, scale, colors and soft pixel texture exactly. Preserve the entire rest of the background: tower door, plants, shadows, all other stone positions, ground, composition, lighting, camera, image dimensions and colors. No people, props, text, new marks, new objects or other gaps. Preserve the same vertical 1024x1536 framing."
+    }
+  ]
+}

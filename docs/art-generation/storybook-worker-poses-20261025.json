@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Create a transparent production character sprite sheet for a warm hand-painted 2D RPG. FIRST reference is identity only: the ordinary brown-haired male worker, mustard rolled-sleeve shirt, dark brown work apron/vest, brown trousers and boots. SECOND reference is the exact painted rendering, elevated three-quarter camera and adult body proportions to match. Redraw ONLY the FIRST ROW's four standing poses from first reference in that soft painted style: neutral, explaining open palm, indicating down-left, cheerful modest wave. Four equal square cells in ONE horizontal row. Same head size and body stature across all four, around three heads tall, match the second reference height and anatomy. All face screen-left three-quarter. Both boots stationary on identical baseline. Hands vary, body scale does not. No tools, hats, ground shadows, scenery, outlines of cells or text. Fully transparent alpha with generous margins above hair and below boots, no clipping. Soft restrained brown contour and warm natural colors, not pixel art.",
+  "source": "assets/source/storybook/worker-poses-v1.png",
+  "outputs": [
+    "public/storybook-study/worker-poses-v1.webp"
+  ]
+}

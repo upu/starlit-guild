@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-25",
+  "source": "assets/source/storybook/warehouse-landmark-v1.png",
+  "output": "public/storybook-study/warehouse-landmark-v1.png",
+  "reference": "public/storybook-study/warehouse-road-v1.png",
+  "prompt": "Use the provided reference as the exact building design reference. Create one isolated medieval rural warehouse BUILDING SPRITE for a warm hand-painted 2D RPG, on a genuinely transparent background. Elevated three-quarter orthographic view, looking down at roof and front entrance, matching reference. Red terracotta tiled roof, cream plaster and dark wood beams, large double wooden doors open with neatly stacked crates and sacks visible inside, a small barrel beside doorway. Full freestanding compact rectangular building with entire roof and walls contained inside canvas, no cut edges. Only the building, its small doorstep, and a very narrow contact shadow; NO pavement rectangle, NO landscape, NO bushes, no sky, no characters, no text. Soft ochre/olive warm daylight and fine painterly outlines, NOT pixel art. Entry threshold near bottom center for registration on a scrolling street. Do not add a base plinth or floating island. Landscape 3:2 composition, modest transparent margins all around. The whole building is a single consistent asset, not a sprite sheet."
+}

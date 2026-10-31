@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "request": "リコのポニーテール以外の後ろ髪をすっきりさせる",
+  "source": "assets/source/storybook/lico-label-ponytail-v3.png",
+  "output": "public/storybook-study/lico-label-v1.webp",
+  "generated": "exec-1ff62825-aad6-453e-8c9d-4564dc928f04",
+  "reference": "assets/source/storybook/lico-label-ponytail-v2.png",
+  "supportingReference": "assets/source/storybook/lico-conversation-ponytail-v1.png",
+  "intermediate": "exec-d22d695d-d615-4303-bbb1-17a9ce3ec509",
+  "prompt": "Hair only: sweep rear hair into a visible red ribbon knot and a single slim short ponytail; remove rounded bob hair at nape and behind ears, expose neck above collar. Keep messy bangs, flower, glasses, faces, clothes, body scale, poses, pencil and hand positions, four-cell layout. Genuine transparent background.",
+  "packing": "scripts/build-storybook-founding-return.mjs: shared standing calibration scale and sole baseline176 for all four192px cells. Previous sources retained.",
+  "scope": "標本の受け取り、紙の保持、ラベル書き。立位・歩行・他の作業には既存のponytail素材を使用する。"
+}

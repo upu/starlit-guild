@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create a four-frame work action sprite strip of EXACTLY this Lico. Keep identical head size/body proportions, round glasses, freckles, sleepy green eyes, messy tied reddish brown hair and red flower, crimson apron, black coat/skirt, cream blouse, sandals. Same warm hand-painted RPG style. Elevated three-quarter view facing RIGHT. Four full figures in ONE HORIZONTAL ROW with common foot baseline and generous transparent margin above all flyaway hair and below feet. 1 exact neutral standing reference, arms down. 2 standing beside an unseen waist-high desk, slight lean forward, both hands gently extended forward together at waist height as receiving a shallow small specimen dish (DO NOT draw dish), palms cupped up. 3 same stance leaning slightly toward unseen desktop, right hand holding a thin small brown writing pen, writing at waist level, left fingertips resting beside writing hand; no paper or table drawn. 4 same as pose3 with pen hand moved slightly to finish a short stroke, no change to feet/head/body. Pen in poses3/4 only; hands empty in pose2. All head and body dimensions consistent, no crouching or squatting. No background, no floor, no shadow, no text, no bottle/bag/basket/table. Actual transparency, no clipped hair or toes.",
+  "reference": "assets/source/storybook/lico-conversation-v2.png",
+  "source": "assets/source/storybook/lico-work-v1.png",
+  "output": "public/storybook-study/lico-work-v1.webp",
+  "registration": "One scale from neutral128px, all four poses128px high. Feet at176 in192px cells. Neutral/reach/write-start/write-end. Reach hand registered at81,83 in128px coordinates.",
+  "scope": "Indoor study research reach frame73 and writing frames69/70. Written pen is embedded in writing poses. Sample dish remains separate."
+}

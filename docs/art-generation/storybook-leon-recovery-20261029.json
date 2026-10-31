@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-29",
+  "tool": "built-in image_gen",
+  "purpose": "Four grounded recovery poses connecting a dropped letter to Leon's carrying pose.",
+  "source": "assets/source/storybook/leon-recover-offer-v1.png",
+  "output": "public/storybook-study/leon-recover-offer-v1.webp",
+  "build": "node scripts/build-storybook-leon-recover.mjs",
+  "references": [
+    "public/storybook-study/leon-handheld-v1.webp",
+    "public/storybook-study/leon-conversation-v1.webp",
+    "public/storybook-study/leon-paper-walk-v2.webp"
+  ],
+  "generation": "exec-59b2d03b-004c-45d9-b6ac-f857f973e8a2.png",
+  "initialCandidate": {
+    "generation": "exec-31b0b5c6-1691-4d9a-b54d-d9405ba4184e.png",
+    "result": "rejected: the kneeling hand differs from the extended hand in later poses",
+    "prompt": "Edit a STARLIT-GUILD painted 2D RPG sprite atlas for smooth recovery of a fallen letter. First reference is Leon identity, costume and crouch. Second reference's third pose is the exact standing hand-off pose to arrive at. Third reference shows his existing carrying walk. Produce ONE horizontal strip of exactly FOUR complete full-body Leon poses on transparent alpha, same warm hand-painted pixel RPG visual, same character scale, facing right 3/4. Pose 1 kneels and reaches down to pick a tiny object (do NOT draw any object); pose 2 rises low with the same extended RIGHT arm moving upward and forward; pose 3 nearly upright, same RIGHT hand halfway between pose 2 and pose 4; pose 4 stands with arm extended forward, matching second reference third pose. His right hand needs to travel gradually from low by knee to extended in front at waist level, with no sudden left-right reversal. Both feet stay planted at exactly same baseline, no sideways movement, natural adult chibi proportions consistent across all four. Preserve red scarf, brown spiky hair, navy tunic, belt, trousers and boots, no extra characters, no props, no shadows, no text, generous transparent margins between silhouettes and around hair and boots. Show each full sprite in four equally spaced cells; no overlaps or clipping."
+  },
+  "prompt": "EDIT the first sprite sheet for a small RPG. Keep the exact same four characters, clothes, hair, perspective, scale, boots, layout and alpha. Fix one issue only: in frame 1 the UNGLOVED hand touches the ground but in frames 2–4 the opposite GLOVED hand is extended. Make the SAME DARK GLOVED hand the one holding an invisible letter in ALL FOUR poses. Frame 1: dark gloved arm reaches down and slightly right to the ground, open palm near his front boot; the pale ungloved hand rests on his knee. Frame 2: SAME dark gloved hand reaches forward low; frame 3: SAME gloved hand rises midway; frame 4: SAME gloved hand ends extended at waist height. No object in any frame. Keep his feet planted and common baseline, one row four full-body sprites, clean transparent gutters, no shadows or text."
+}

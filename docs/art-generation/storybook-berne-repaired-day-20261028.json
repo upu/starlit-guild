@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "draft, used only in the 3-9 adventure study",
+  "source": "assets/source/storybook/berne-foundation-repaired-day-v1.png",
+  "output": "public/storybook-study/berne-foundation-repaired-day-v1.png",
+  "generated": "exec-32f6794e-02b6-4f23-a120-633e3c2a6c9b.png",
+  "references": ["public/storybook-study/berne-foundation-open-v2.png", "public/storybook-study/berne-foundation-restored-v1.png"],
+  "prompt": "Use case: precise-object-edit. The FIRST reference is the exact background image to edit. In the center-bottom area of the FIRST image, a single rectangular stone is missing from the narrow diagonal paving strip and leaves a deep square hole. Edit ONLY that hole: put the same warm, pale, flat stone back into the hole, flush with the surrounding pavement, matching the neighboring stones' size, angle, outlines, texture, lighting and perspective. Remove every trace of the dark empty hole. The SECOND reference shows the same location later at dusk after the stone was replaced; use it only to understand the repaired stone's shape. Do NOT copy the SECOND reference's dusk colors or purple glow. Preserve every other pixel of the FIRST background: all stonework, tower, window, wooden door, vines, plants, soil, paving, daytime golden color, composition, camera angle, dimensions. No people, props, new highlights, text, borders or glow."
+}

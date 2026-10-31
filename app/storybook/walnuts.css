@@ -1,0 +1,264 @@
+/* Shared body scale and separate snack props. */
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="idle"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="lap"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="split"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="offer"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="bite"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="reach"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="drink"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="idle"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="lap"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="split"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="offer"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="bite"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="reach"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="drink"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-snack-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-light"] {
+  background-image: url("/storybook-study/walnut-light-v1.webp");
+  aspect-ratio: 240 / 202;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-medium"] {
+  background-image: url("/storybook-study/walnut-medium-v1.webp");
+  aspect-ratio: 240 / 197;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-dark"] {
+  background-image: url("/storybook-study/walnut-dark-v1.webp");
+  aspect-ratio: 240 / 200;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-light-half"] {
+  background-image: url("/storybook-study/walnut-light-half-v1.webp");
+  aspect-ratio: 240 / 143;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-medium-half"] {
+  background-image: url("/storybook-study/walnut-medium-half-v1.webp");
+  aspect-ratio: 240 / 143;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-dark-half"] {
+  background-image: url("/storybook-study/walnut-dark-half-v1.webp");
+  aspect-ratio: 240 / 144;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-underside"] {
+  background-image: url("/storybook-study/walnut-underside-v1.webp");
+  aspect-ratio: 240 / 215;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-piece"] {
+  background-image: url("/storybook-study/walnut-piece-v1.webp");
+  aspect-ratio: 240 / 226;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="low-bench"] {
+  background-image: url("/storybook-study/low-bench-v1.webp");
+  aspect-ratio: 480 / 253;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-snack-action] {
+  --stage-name-above: 20%;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="low-bench"] {
+  aspect-ratio: 1974 / 408;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="picnic-cloth"] {
+  background-image: url("/storybook-study/walnut-cloth-v1.webp");
+  aspect-ratio: 4;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="packing-cloth"] {
+  background-image: url("/storybook-study/spare-cloth-folded-v1.webp");
+  aspect-ratio: 2;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/basket-v1.webp");
+  aspect-ratio: 1.3;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-promised-walnuts"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="travel-flask"] {
+  background-image: url("/storybook-study/water-flask-v1.webp");
+  aspect-ratio: 762 / 855;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="interlude-promised-walnuts"] .story-stage-space {
+    transform: none;
+  }
+  .storybook-reader-stage[data-story="interlude-promised-walnuts"] .story-stage-name {
+    font-size: 12px;
+  }
+}

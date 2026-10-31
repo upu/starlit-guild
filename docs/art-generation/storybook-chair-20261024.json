@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/chair-v1.png",
+  "prompt": "Restyle ONLY the single wooden chair from image1 to match the warm storybook illustration of the office in image2. Image1 is the silhouette, camera, orientation and construction reference; image2 is color/paint texture reference only. One isolated chair, facing diagonally down-right as image1, elevated three-quarter camera. Honey brown wood with broad simple grain, softly shaded painted color planes, restrained dark brown outlines, muted sage cushion. Preserve chair proportions: modest backrest, four short legs, clearly visible seat top. Suitable for a small 3.3-head adventurer seated facing screen-right. No arms, no ornate carvings. No room, floor, props, people, cast shadow, halo, words or labels. Full chair with generous transparent margins. Transparent background.",
+  "status": "prototype-unapproved",
+  "scope": "Indoor seated-pose comparison only; not yet used by story scenes.",
+  "review": "Rendered behind both seated heroes, with a shared foot baseline. PC visual inspection shows cushion beneath hips and backrest behind torso; mobile check pending."
+}

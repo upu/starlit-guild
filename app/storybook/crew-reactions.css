@@ -1,0 +1,67 @@
+/* Free-hand greetings and surprise retain each character's standing calibration. */
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="1"] {
+  background-image: url("/storybook-study/mira-reaction-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="2"] {
+  background-image: url("/storybook-study/mira-reaction-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="1"] {
+  background-image: url("/storybook-study/lico-reaction-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="2"] {
+  background-image: url("/storybook-study/lico-reaction-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="1"] {
+  background-image: url("/storybook-study/finn-reaction-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="2"] {
+  background-image: url("/storybook-study/finn-reaction-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}

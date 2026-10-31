@@ -1,0 +1,525 @@
+/* Registered field study: same body scale and separate supported documents. */
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="76"]) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="77"]) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="78"]) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="79"]) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="73"]) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="36"],
+    [data-frame="37"],
+    [data-frame="38"],
+    [data-frame="39"],
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  background-image: url("/storybook-study/lico-field-records-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="68"]) {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"][data-record-hand-out="true"]
+  .story-stage-sprite[data-frame="79"] {
+  background-position: 100% 100% !important;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"] {
+  --stage-name-above: 20%;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]:has(
+    .story-stage-sprite:is(
+      [data-frame="36"],
+      [data-frame="37"],
+      [data-frame="38"],
+      [data-frame="39"],
+      [data-frame="40"],
+      [data-frame="41"],
+      [data-frame="42"],
+      [data-frame="43"],
+      [data-frame="76"],
+      [data-frame="77"],
+      [data-frame="78"],
+      [data-frame="79"]
+    )
+  ) {
+  --stage-name-above: 30%;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="68"]) {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="69"]) {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="70"]) {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="71"]) {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="14"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="15"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="16"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="8"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="9"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="22"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="23"]) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="0"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+  transform: none !important;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="1"], [data-frame="2"], [data-frame="3"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  transform: none !important;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="14"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666667% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="15"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="8"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="9"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.333333333333336% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="10"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666667% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="11"]) {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector-covered"] {
+  background-image: url("/storybook-study/field-reflector-covered-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector"] {
+  background-image: url("/storybook-study/field-reflector-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector-down"] {
+  background-image: url("/storybook-study/field-reflector-down-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector-cover"] {
+  background-image: url("/storybook-study/field-cover-folded-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector-cover-flat"] {
+  background-image: url("/storybook-study/field-cover-flat-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="lap-board"] {
+  background-image: url("/storybook-study/field-lap-board-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ledger"] {
+  background-image: url("/storybook-study/field-open-ledger-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="record-board"] {
+  background-image: url("/storybook-study/field-closed-ledger-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="closed-ledger"] {
+  background-image: url("/storybook-study/field-closed-ledger-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="sample-dish"] {
+  background-image: url("/storybook-study/field-samples-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="moss"] {
+  background-image: url("/storybook-study/field-seedling-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/field-basket-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="folded-paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="doctor-satchel"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="plant-label"] {
+  background-image: url("/storybook-study/bed-label-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="step-stool"] {
+  background-image: url("/storybook-study/bed-stool-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="work-fence"] {
+  background-image: url("/storybook-study/work-fence-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="reflector"][data-glow="bright"]::after {
+  width: 280%;
+  height: 75%;
+  left: -100%;
+  top: 80%;
+  opacity: 0.65;
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="low-smoke"]::before {
+  background:
+    radial-gradient(
+      ellipse at 25% 66%,
+      #fff8e8e6 0%,
+      #eeede9b8 27%,
+      #f0eee54d 50%,
+      transparent 73%
+    ),
+    radial-gradient(ellipse at 73% 44%, #faf8f0cc 0%, #eeede980 34%, transparent 72%);
+  filter: blur(4px);
+  border-radius: 50%;
+  animation: records-field-smoke 3.2s ease-in-out infinite alternate;
+}
+@keyframes records-field-smoke {
+  from {
+    transform: translateX(2%);
+    opacity: 0.68;
+  }
+  to {
+    transform: translateX(-3%);
+    opacity: 0.85;
+  }
+}
+.storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+  animation: stage-smoke-fade 3s ease-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+    .storybook-painted-stage[data-painted="true"]
+    .story-stage-item[data-art="low-smoke"]::before {
+    animation: none;
+    opacity: 0.68;
+  }
+  .storybook-reader-stage[data-story^="lico-records-"][data-art="moss-beds-v1"]
+    .storybook-painted-stage[data-painted="true"]
+    .story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+    animation: none;
+    opacity: 0;
+  }
+}

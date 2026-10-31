@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted 2D RPG sprite sheet exactly 8 full-body poses in 4 columns 2 rows. Same stout middle-aged cook as reference: swept dark brown hair, bushy mustache, brown shirt and trousers, plain white apron, brown boots. Elevated 45 degree 3-quarter camera, facing RIGHT in every pose. Same anatomy, head/body proportions and standing height, consistent warm fine outlines. Row1: 0 neutral standing calibration; 1 holding an INVISIBLE heavy cooking pot by two side handles at waist level with BOTH hands spread horizontally, forearms forward; 2 walking carrying invisible pot near leg forward contact; 3 passing step with near leg under hips and far heel lifted. Row2: 4 opposite contact near leg back and far leg forward; 5 opposite passing step near knee lifted; 6 holding pot with left hand at waist while right hand raised to lift an INVISIBLE lid, looking down curiously; 7 holding invisible pot in one hand at waist while the other arm extends a cleaning rag toward RIGHT at chest height, EMPTY hand gently gripping invisible cloth. Pot lid and rag NOT included. Full heads and boots, large transparent gutters, no ground, props, text, shadows. Keep opposite leg phases visibly different. Never include cookware, only hands for attaching separate objects.",
+  "references": [
+    "assets/source/storybook/cook-motion-v2.png"
+  ],
+  "source": "assets/source/storybook/cook-survey-v1.png"
+}

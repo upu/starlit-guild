@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Homeward luggage is carried by Leon/Mira; passing carts belong to other travellers",
+  "sources": [
+    {
+      "name": "leon-handheld-v1",
+      "source": "assets/source/storybook/leon-handheld-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-e536d7f4-a10d-4786-92d3-ebf218c0ecaa.png",
+      "prompt": "Create an EIGHT-pose FOUR-COLUMN TWO-ROW full-body sprite atlas for this same original warm hand-painted elevated2D RPG. Image1 is Leon's brown hair, red scarf, blue vest, cream sleeves, boots and exact standing body proportions; image2 is the same person's walking shape/stride reference. Preserve head/boot scale, costume and age across all8poses. All face screenRIGHT. Row0:0neutral planted standing carrying an INVISIBLE bottle bag by its handle in the right hand just in front of thigh, fingers curled downward;1walking LEFT foot forward RIGHT behind with that same hand grip;2left support leg planted, right foot lifted passing;3RIGHT foot forward LEFT behind with same hand grip. Row1:4right support leg planted left foot lifted passing;5low kneeling to lower the invisible object to floor just beyond front boot;6half-rise with knees bent while lifting the invisible object;7standing examining the way ahead while maintaining the SAME carrying grip. Free left arm balances a little, held hand stays nearly fixed near hip/thigh. Do NOT paint the actual bag, case, bottle, package, floor or shadow into these sprites. Hands and fingers must remain visible for separate object registration. Four distinct walking phases with unmistakable alternating lead legs, no repeated same-leg frames. NO shrinking or enlarging heads in kneeling/standing, no added tools/weapons. Gentle natural expressions. Exact8separate cells, generous transparent gutters around every complete head/cloak/boot. Brown fine outlines, soft painterly shading, no pixel grid, no colored matte, no text/labels or backdrop. Genuine alpha transparency.",
+      "references": [
+        "public/storybook-study/leon-conversation-v1.webp",
+        "public/storybook-study/leon-walk-v1.webp"
+      ],
+      "use": "Standing/lowering/rising/look poses only; original walking1..4 rejected for repeated lead leg"
+    },
+    {
+      "name": "mira-handheld-v1",
+      "source": "assets/source/storybook/mira-handheld-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-792232b3-c09b-4309-881f-006286a613ba.png",
+      "prompt": "Create an EIGHT-pose FOUR-COLUMN TWO-ROW full-body sprite atlas for this same original warm hand-painted elevated2D RPG. Image1 is Mira's tired grey-lilac tied hair with moon ornament, pale robes, treatment pouch and boots and exact standing body proportions; image2 is the same person's walking shape/stride reference. Preserve head/boot scale, costume and age across all8poses. All face screenRIGHT. Row0:0neutral planted standing carrying an INVISIBLE small medicine case with BOTH palms at its lower left and right corners, hands in front of waist, spaced visibly apart;1walking LEFT foot forward RIGHT behind with that same hand grip;2left support leg planted, right foot lifted passing;3RIGHT foot forward LEFT behind with same hand grip. Row1:4right support leg planted left foot lifted passing;5low kneeling to lower the invisible object to floor just beyond front boot;6half-rise with knees bent while lifting the invisible object;7standing examining the way ahead while maintaining the SAME carrying grip. Both forearms remain in the case-supporting pose while walking, robe parts enough to reveal opposite stepping boots. Do NOT paint the actual bag, case, bottle, package, floor or shadow into these sprites. Hands and fingers must remain visible for separate object registration. Four distinct walking phases with unmistakable alternating lead legs, no repeated same-leg frames. NO shrinking or enlarging heads in kneeling/standing, no added tools/weapons. Gentle natural expressions. Exact8separate cells, generous transparent gutters around every complete head/cloak/boot. Brown fine outlines, soft painterly shading, no pixel grid, no colored matte, no text/labels or backdrop. Genuine alpha transparency.",
+      "references": [
+        "public/storybook-study/mira-conversation-v1.webp",
+        "public/storybook-study/mira-walk-v1.webp"
+      ],
+      "use": "Standing/lowering/rising/look poses only; original walking1..4 rejected for repeated lead leg"
+    },
+    {
+      "name": "workshop-landmark-v1",
+      "source": "assets/source/storybook/workshop-landmark-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-bed5d152-00a2-49e5-a861-ed72b90dbc21.png",
+      "prompt": "Create a transparent standalone landmark of the same quiet old TIMBER WORKSHOP from image1, to place behind the mountain road in image2. Full small building including simple weathered wooden shingle roof, heavy timber posts, stone foundation, dark open double plank door with iron hinge plates, empty wooden table and one stool just inside. Warm hand-painted elevated-oblique2D RPG at50degrees, consistent brush texture and fine muted brown outlines. Entire building is visible with all roof edges inside image. Front door faces lower-right; a tiny irregular dust doorstep only, no surrounding street, terrain rectangle or tree. No figures, crates, goods, signs or text, no large cast shadow. Not a tower or mansion. Clearly quiet after everyone left, not ruined rubble. Door height around40percent building height; width about1.6times totalheight so its scale will match small RPG heroes. Generous transparent margins, true alpha.",
+      "references": [
+        "public/storybook-study/workshop-yard-v1.png",
+        "public/storybook-study/mountain-lane-loop-v1.png"
+      ],
+      "use": "Stationary old workshop landmark"
+    },
+    {
+      "name": "leon-handheld-walk-v1",
+      "source": "assets/source/storybook/leon-handheld-walk-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-5dd689f2-768c-48a5-89a3-1c98be890bc7.png",
+      "prompt": "Precise ARMS-ONLY edit of image1 four-column one-row walking sprite strip. Preserve EXACTLY image1's four full bodies, leg and boot positions in every cell, stride order, faces, head sizes, clothes, colors, baseline and4x1layout. Do not replace its legs with image2. Image2 is ONLY reference for carrying-arm posture. Change image1's forearms/hands to carry an invisible bottle bag: right forearm lowered just ahead of thigh, fingers curl downward around an invisible vertical handle; free left arm balances naturally. No actual bag/case/props or tools. Keep arm grip position consistent through all four walking phases, leaving the original opposite lead legs and passing legs untouched. Do not copy image2's repeated same-leg walking. Warm hand-painted2D RPG, exact same physical body proportions and original camera. Genuine alpha background, full heads/cloaks/boots intact, transparent gutters. No matte, no backdrop, no ground shadow, text or labels.",
+      "references": [
+        "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/storybook-study/leon-walk-v1.webp",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-e536d7f4-a10d-4786-92d3-ebf218c0ecaa.png"
+      ],
+      "use": "Arm edit of the original four walking phases"
+    },
+    {
+      "name": "mira-handheld-walk-v1",
+      "source": "assets/source/storybook/mira-handheld-walk-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-473e14dd-3394-4712-b030-b2e2ce001234.png",
+      "prompt": "Precise ARMS-ONLY edit of image1 four-column one-row walking sprite strip. Preserve EXACTLY image1's four full bodies, leg and boot positions in every cell, stride order, faces, head sizes, clothes, colors, baseline and4x1layout. Do not replace its legs with image2. Image2 is ONLY reference for carrying-arm posture. Change image1's forearms/hands to support an invisible small medicine case: both elbows lightly bent, palms in front of waist visibly spaced apart, fingers underneath the lower case corners. No actual bag/case/props or tools. Keep arm grip position consistent through all four walking phases, leaving the original opposite lead legs and passing legs untouched. Do not copy image2's repeated same-leg walking. Warm hand-painted2D RPG, exact same physical body proportions and original camera. Genuine alpha background, full heads/cloaks/boots intact, transparent gutters. No matte, no backdrop, no ground shadow, text or labels.",
+      "references": [
+        "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/storybook-study/mira-walk-v1.webp",
+        "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-792232b3-c09b-4309-881f-006286a613ba.png"
+      ],
+      "use": "Arm edit of the original four walking phases"
+    }
+  ],
+  "validation": [
+    "54 related tests passed, including full15-node pickup cycles, asset gutters and atlas row selection",
+    "PC1243x1244 full route captured; mountain seam correction rechecked",
+    "Browser mobile390x844 full15-node route with three battles reached arrival; no console errors",
+    "Typecheck and scoped lint passed; see docs/art/storybook-homeward-adventure-review-20261027.md for limits and build log",
+    "Production build passed: work/homeward-build-final.log"
+  ]
+}

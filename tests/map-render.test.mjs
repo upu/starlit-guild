@@ -33,7 +33,47 @@ await build({
   alias: imageAlias,
   jsx: "automatic",
 });
-const { MapStage } = await import(output.href);
+const { MapStage, MapStageView } = await import(output.href);
+
+test("town work text follows the visible handoff and rejects stale runs", () => {
+  let state = act(
+    testState(1000, 2, 40, 10000),
+    { type: "start", id: "town-deliveries", readDeparture: true, value: false },
+    1000,
+  );
+  for (let i = 0; i < 1000; i++) {
+    const run = state.squads[0].run;
+    if (run?.node === 3 && run.phase === "work") break;
+    state = settle(state, state.updatedAt + 50);
+  }
+  const squad = state.squads[0],
+    run = squad.run;
+  assert.equal(run.node, 3);
+  const render = (activity) =>
+    renderToStaticMarkup(
+      createElement(MapStageView, {
+        state,
+        squad,
+        now: state.updatedAt,
+        ready: true,
+        paused: false,
+        onAction: () => {},
+        startQuest: "town-deliveries",
+        lindeProgress: null,
+        setLindeProgress: () => {},
+        townActivity: activity,
+      }),
+    );
+  const visible = render({ started: run.started, label: "品を渡して控えを受け取る" });
+  assert.equal((visible.match(/品を渡して控えを受け取る/g) ?? []).length, 2);
+  assert.doesNotMatch(visible, /倉庫で荷札を確かめる/);
+  const stale = render({ started: run.started - 1, label: "品を渡して控えを受け取る" });
+  assert.match(stale, /倉庫で荷札を確かめる/);
+  assert.doesNotMatch(stale, /品を渡して控えを受け取る/);
+  run.phase = "rest";
+  const resting = render({ started: run.started, label: "品を渡して控えを受け取る" });
+  assert.doesNotMatch(resting, /品を渡して控えを受け取る/);
+});
 const equipmentOutput = new URL("../work/equipment-render.mjs", import.meta.url);
 await build({
   entryPoints: ["app/equipment-panels.tsx"],
@@ -139,6 +179,8 @@ await build({
   platform: "node",
   format: "esm",
   packages: "external",
+  // Public image URLs are served by the app, not resolved from filesystem root by esbuild.
+  external: ["/storybook-study/*"],
   alias: imageAlias,
   jsx: "automatic",
 });
@@ -151,12 +193,13 @@ await build({
   platform: "node",
   format: "esm",
   packages: "external",
+  external: ["/storybook-study/*"],
   alias: imageAlias,
   jsx: "automatic",
 });
 const { PhoneGame } = await import(phoneOutput.href);
 
-test("dialogue and banter show close-up portraits and the trade still appears from the first page", () => {
+test("dialogue and banter show close-up portraits and the first-page trade still waits for loading", () => {
   const story = stories.find((st) => st.id === "village-trade-return");
   const first = renderToStaticMarkup(
     createElement(StoryReader, { story, ready: true, onRead: () => true, onClose: () => {} }),
@@ -179,7 +222,8 @@ test("dialogue and banter show close-up portraits and the trade still appears fr
   assert.deepEqual(lines, before);
   for (let line = 0; line < story.lines.length; line += 3)
     assert.equal(storyArtAt(story.id, line)?.src, "/stories/village-trade-handover.webp");
-  assert.ok(first.includes("/stories/village-trade-handover.webp"));
+  assert.match(first, /絵を準備しています/);
+  assert.match(first, /aria-disabled="true"/);
 });
 
 test("prologue guides the first quest choice before departure and keeps actions below chat", () => {
@@ -372,7 +416,7 @@ test("effects follow current events, expire on resume, and do not alter the save
 });
 
 function mapKey(state, key, ready = true, paused = false) {
-  const tree = MapStage({
+  const tree = MapStageView({
     state,
     squad: state.squads[0],
     now: state.updatedAt,
@@ -382,6 +426,8 @@ function mapKey(state, key, ready = true, paused = false) {
     ready,
     paused,
     startQuest: OPENING,
+    lindeProgress: null,
+    setLindeProgress: () => {},
   });
   const map = [tree.props.children]
     .flat()

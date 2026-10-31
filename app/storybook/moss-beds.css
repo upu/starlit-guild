@@ -1,0 +1,666 @@
+/* Calibrated once against standing bodies; low poses keep the same head size. */
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  [data-actor="lico"] {
+  --stage-name-above: 22%;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  [data-actor="mira"] {
+  --stage-name-above: 29%;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  [data-actor="lico"]:has(
+    .story-stage-sprite[data-atlas="conversation"]:is(
+        [data-frame="40"],
+        [data-frame="41"],
+        [data-frame="42"],
+        [data-frame="43"]
+      )
+  ) {
+  --stage-name-above: 29%;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  [data-actor="lico"]:has(.story-stage-sprite[data-atlas="conversation"][data-frame="13"])
+  .story-stage-name {
+  top: 35% !important;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item:is(
+    [data-art="closed-ledger"],
+    [data-art="bread"],
+    [data-art="plant-label"],
+    [data-art="step-stool"],
+    [data-art="doctor-satchel"]
+  ) {
+  aspect-ratio: 1;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="68"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="69"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="70"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 0% 50% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="71"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 33.333333333333336% 50% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="72"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 66.66666666666667% 50% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="73"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 50% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="74"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="75"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"][data-moss-study="write"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="69"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: url("/storybook-study/lico-notebook-walk-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  background-image: url("/storybook-study/lico-notebook-walk-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  background-image: url("/storybook-study/lico-notebook-walk-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  background-image: url("/storybook-study/lico-notebook-walk-ponytail-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="36"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="36"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="37"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="37"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="38"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="38"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="39"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="39"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="40"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="40"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="lico"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="40"] {
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="41"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="41"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="lico"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="41"] {
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="42"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="42"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="lico"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="42"] {
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="43"] {
+  background-image: url("/storybook-study/lico-moss-study-ponytail-v1.webp");
+  background-size: 400% 300%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="43"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="lico"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="43"] {
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="68"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="69"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="70"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="71"] {
+  background-image: url("/storybook-study/mira-moss-care-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="closed-ledger"] {
+  background-image: url("/storybook-study/bed-ledger-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="bread"] {
+  background-image: url("/storybook-study/bed-bread-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="plant-label"] {
+  background-image: url("/storybook-study/bed-label-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="step-stool"] {
+  background-image: url("/storybook-study/bed-stool-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="doctor-satchel"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="brekka-moss-beds-"],
+    [data-story^="merrill-seedlings-"],
+    [data-story^="moss-transplant-"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="work-fence"] {
+  background-image: url("/storybook-study/work-fence-v1.webp");
+  image-rendering: auto;
+}

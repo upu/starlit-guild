@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-drinks-balanced-v2.png",
+    "scale": 0.21142857142857144,
+    "left": 54,
+    "top": 28,
+    "width": 74,
+    "height": 148,
+    "baseline": 176,
+    "headX": 94.41476956345453
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-drinks-balanced-v2.png",
+    "scale": 0.21142857142857144,
+    "left": 46,
+    "top": 66,
+    "width": 84,
+    "height": 110,
+    "baseline": 176,
+    "headX": 88.56089941414308
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-drinks-balanced-v2.png",
+    "scale": 0.21142857142857144,
+    "left": 46,
+    "top": 67,
+    "width": 84,
+    "height": 109,
+    "baseline": 176,
+    "headX": 87.23685031274098
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-drinks-balanced-v2.png",
+    "scale": 0.21142857142857144,
+    "left": 46,
+    "top": 66,
+    "width": 86,
+    "height": 110,
+    "baseline": 176,
+    "headX": 84.94861964061171
+  }
+]

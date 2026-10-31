@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game character pose atlas, exactly FOUR isolated full-body sprites in one horizontal row, evenly separated. Reference 1 identity: older woman town physician, short softly parted gray hair, kind mature face, dark forest green ankle-length robe, cream apron, brown boots, small brown medical shoulder satchel with cream cross. Reference 2 art style: warm hand-painted chibi 2D RPG, soft texture and crisp fine brown outlines, elevated three-quarter view. All FOUR face SCREEN LEFT, same head size/body proportions/camera/scale/ground baseline; no floor or cast shadows. Pose0 neutral standing empty hands. Pose1 writing in small brown notebook held in other hand at chest, eyes down. Pose2 same writing pose, tiny pencil movement only, exact same head and body size. Pose3 holds notebook at waist and explains toward screen left with free open palm. Do not make any pose taller. Fully show top of hair and boot soles with generous transparent margins. No text, numbers, labels or grid.",
+  "references": [
+    "public/story-stage/doctor-poses.webp",
+    "assets/source/storybook/keeper-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/doctor-visit-v1.png"
+}

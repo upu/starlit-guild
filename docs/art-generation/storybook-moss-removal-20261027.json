@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "1-9 moss removal: dedicated scraper and inset foliage, contact registration",
+  "status": "Contact study only. Not enabled as the default adventure; opening, deposit and carry sequences remain unfinished.",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/aria-moss-scrape-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-3fe0467d-84f6-4bc8-b640-28d05e7f374b.png",
+      "direction": "Same Aria, four columns: stand with short wooden spatula, kneel insert, kneel scrape farther, lift a tiny moss tuft. Common head/body scale, fixed kneeling boots, transparent gutters. No background or ledge baked into the actor."
+    },
+    {
+      "source": "assets/source/storybook/waterway-hatch-moss-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-94969be5-1ef0-4ada-99f7-587a7a355223.png",
+      "direction": "Thin overlapping moss leaves hanging down the inside of an inspection hatch. Match existing elevated-oblique workyard; transparent foliage only, no mystery stone, soil mound or pedestal. Restrained pale tips."
+    }
+  ],
+  "packing": "scripts/build-storybook-moss-removal.mjs. Standing reference134, one shared scale for four cells256x192; baseline176, boots anchored independently of spatula. Moss trimmed and packed lossless WebP.",
+  "registration": "lib/road-moss-removal-layout.ts; shared fixed workyard scale and source projection. Scraper tip reaches1043,637. Feet remain outside the hatch, basket below the lifted tip.",
+  "evidence": [
+    "work/moss-contact-pc.json: 91 screenshot samples across about6.5seconds at1243x1244",
+    "work/moss-contact-mobile.json: 131 screenshot samples across about6.5seconds at390x844 browser width, not a physical phone",
+    "work/moss-contact-filmstrip.png: three observed scraping phases at both widths, viewed after recording",
+    "8 targeted layout, atlas and existing waterway saw tests passed; scoped lint and typecheck passed"
+  ],
+  "remaining": ["Keeper lifts and sets down hatch covers", "Moss leaves detach and pass from spatula into basket", "Worker accepts basket and carries it away from tower", "Two inspection locations, final cover closing", "Actual quest playback and default rollout"]
+}

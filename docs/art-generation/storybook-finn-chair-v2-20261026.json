@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact transparent8pose4columns2rows Finn sprite sheet. Preserve exact identity, tired scruffy expression, upper bodies, both hands, heads, scale, ground baseline, all cellcenters and allsixotherposes. Change ONLY index4=BOTTOM ROW LEFTMOST and index5=BOTTOM ROW SECOND. They are opposite contact and opposite passing of a RIGHT-facing carry walk. Bottom leftmost: NEAR visible leg must swing BACK toward image LEFT, near boot planted distinctly LEFT of hips; FAR leg reaches FORWARD toward image RIGHT with boot to RIGHT of hips, occluded at thigh by near leg. The near boot must be the LEFTMOST boot unlike top rowthird pose's near boot is RIGHTMOST. Bottom second passing: near knee lifted RIGHT with heel offground, far foot planted belowhips; differentfromtoprowfourthpose. Maintain the long coat moving slightly but no body stretching, identicalheadscale and bootbaseline. All eight independent complete figures remain in exactpositions. No actualchair orprops, no shadow/ground/text, preserve transparency.",
+  "references": [
+    "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-5ca2ec2a-2b4d-4aaa-bed2-590d6a2e6e60.png"
+  ],
+  "source": "assets/source/storybook/finn-chair-v2.png"
+}

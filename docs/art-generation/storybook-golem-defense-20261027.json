@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-27",
+  "tool": "No new generation; reuse accepted mountain road, closed packing bags, medicine box and puppet/golem atlases",
+  "scope": "2-6 fixed defence default rollout17/37; registered ground,luggage,enemy windup and strike",
+  "assets": [
+    "public/storybook-study/mountain-road-v1.png",
+    "public/storybook-study/packing-bag-close-3-v1.webp",
+    "public/storybook-study/homeward-medicine-v1.webp",
+    "public/storybook-study/puppet-poses-v1.webp",
+    "public/storybook-study/golem-poses-v1.webp"
+  ],
+  "runtime": "road-golem-defense projects the scene and actors onto fixedRoadLayout. Medicine/honey bags and Mira's medicine box stay behind the defenders, matching departure dialogue. Golem and small puppet use separated rows. Enemy X follows original relative distance; effects reproject to displayed contacts. road-puppet-attack uses actual scheduled time for windup and same-enemy/current-encounter hurt events for strike. No game state, battle tuning, still or prose changes.",
+  "reviewFixes": [
+    "Honey bag bottom clipped on phone: move rear parcels toward the middle of the stage.",
+    "Melee approach to the small puppet put Leon's feet below the phone crop: move enemy rows inward and assert all heroes' bottom margins throughout every encounter.",
+    "Unused five-person idle input fits both widths;2-5 Lico idle slot corrected too. Actual replay start explicitly restores Aria/Leon/Mira; tested. No five-person combat claim."
+  ],
+  "validation": [
+    "29 related tests pass:3encounters at both widths,stable parcels,depth,impact contacts,save identity,combat foot margins,five-member idle slots,three-member replay crew,default/comparison overrides,attack schedules/events and existing painted enemy/signpost regressions.",
+    "Corrected PC1243x1244 continuous capture466screenshots0-56.982seconds,from opening to arrival; filmstrip inspected. Earlier segmented recordings are superseded for final-combat coverage.",
+    "Default browser390x844 continuous capture739screenshots0-56.953seconds,opening to arrival. Not every-frame video or a physical-phone claim.",
+    "Typecheck,scoped ESLint and source build passed."
+  ],
+  "remaining": "20 adventures,full dialogue audit,wheels/enemy/effects and release remain for whole goal. Repeated restart loading delay remains undiagnosed; no console error and later progress on same tab. Whole goal active."
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "broken-fastener",
+    "width": 240,
+    "height": 183,
+    "left": 8,
+    "top": 65
+  },
+  {
+    "name": "stained-cloth",
+    "width": 240,
+    "height": 196,
+    "left": 8,
+    "top": 52
+  },
+  {
+    "name": "wrist-bandage",
+    "width": 240,
+    "height": 179,
+    "left": 8,
+    "top": 69
+  },
+  {
+    "name": "empty-garden-pot",
+    "width": 216,
+    "height": 236,
+    "left": 20,
+    "top": 12
+  }
+]

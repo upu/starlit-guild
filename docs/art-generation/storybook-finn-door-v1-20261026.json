@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: stylized-concept. Transparent hand-painted 2D RPG character strip, exactly4columns1row, FOUR complete separated fullbody poses. Reference is the SAME scruffy middle-aged man Finn, stubble, tired half-lidded eyes, untidy brown hair tied loosely back, open white shirt, worn brown long coat/trousers and boots, relaxed sly demeanor. Preserve exact head size, physique and costume. Elevated45degree downward camera, three-quarter facing RIGHT, same scale in all4poses. Col1 neutral STANDING calibration armsrelaxed; col2 KNOCK preparation: near elbow raised, closed fist forward-right at shoulder height, pulled back slightly; col3 KNOCK contact: same fist extends further forward-right at shoulder height; col4 being held by collar: feet planted, shoulders raised, upper torso leaning back slightly, looking up toward right with awkward sheepish expression, one hand raised defensively near chest, open shirt collar pulled slightly forward-right. Draw no other character, no gripping hand from outside, no door, no props, no floor, no shadows, no text. Clear generous transparent gutters and full boots/hair in every cell. Same head/body scale, no pose enlarged to fill cell, no giant head in reaction. Warm soft painted surfaces and restrained contours, no pixel stair steps. Genuine transparent alpha background.",
+  "references": [
+    "public/storybook-study/finn-conversation-v2.webp"
+  ],
+  "source": "assets/source/storybook/finn-door-v1.png"
+}

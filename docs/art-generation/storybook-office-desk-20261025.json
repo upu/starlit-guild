@@ -1,0 +1,14 @@
+{
+  "tool": "image_gen",
+  "prompt": "Edit this single wooden table game sprite. Keep the warm honey wood, hand-painted shading, restrained outlines, tabletop width, tabletop corner orientation and elevated three-quarter view. It currently has very short legs like a floor coffee table. Replace the short legs with practical longer legs for an ordinary seated writing desk used with wooden chairs. Keep the tabletop the same thickness and depth, raise it by lengthening the legs, not by stretching the entire drawing. Four sturdy legs, natural joints and one subtle cross brace, clear open space under the tabletop for knees. Overall image silhouette width to height about 2.3:1 instead of 3:1. No drawers, cloth, objects, paper, chairs, characters or ground shadow. Single full desk, true transparent background, small clear margin, no clipped feet.",
+  "references": [
+    "public/storybook-study/office-table-v1.webp"
+  ],
+  "source": "assets/source/storybook/office-table-v2.png",
+  "output": "public/storybook-study/office-table-v2.webp",
+  "size": [
+    384,
+    167
+  ],
+  "scope": "Indoor study; preserve floor position and horizontal footprint, lift supported items by 2 stage units."
+}

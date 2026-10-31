@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: precise-object-edit. Edit ONLY the closed wooden service door in this manor kitchen courtyard. Open that single wooden door inward to the LEFT so the RIGHT half of the doorway is clear. Reveal a modest dim warm kitchen just inside, with a little wooden counter and copper cooking pots on a back wall. Retain the same door leaf, iron hinges and ring handle, stone frame, bottom threshold, camera angle and EXACT position of doorway. Keep ALL paving, wall, flowers, balustrade, roof, firewood, plants, framing, light and colors unchanged. No characters or furniture outside, no text or symbols. This is the same static camera one moment later. Warm hand-painted 2D RPG, elevated45degree view, opaque3:2 background.",
+  "references": [
+    "assets/source/storybook/manor-kitchen-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-kitchen-open-v1.png"
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "One original long communal WOODEN DINING TABLE game prop on transparent background. Warm hand-painted2D RPGstyle elevated45degree three-quartercamera matching reference, no people, chairs, tablecloth, food or props. Critical physical proportions: a LONG narrow village tavern table about3.4metres long,0.7metres deep and0.65metres high, so its projected silhouette is roughly3.2times wider than tall. Four ordinary short stoutwoodenlegs and horizontaljoiningrails, broad visible table top seenfromabove, naturalthin tableedge, worn goldenbrownplanks. Do NOT make a tall writingdesk or short squaretable. Show complete alllegs with generousalpha margins, level floor contact of frontlegs, no groundshadow or glow. Table must allow seated small adults to be visible above the rear edge. One complete cutout prop, no letters.",
+  "references": [
+    "public/storybook-study/office-table-v2.webp"
+  ],
+  "source": "assets/source/storybook/linde-table-v1.png"
+}

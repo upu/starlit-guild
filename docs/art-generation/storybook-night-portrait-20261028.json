@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Portrait backgrounds for the experimental 3-8 night-road scene",
+  "generator": "image_gen.imagegen",
+  "outputs": [
+    {
+      "reference": "public/storybook-study/transplant-night-path-v1.png",
+      "source": "assets/source/storybook/night-road-portrait-v1.png",
+      "output": "public/storybook-study/night-road-portrait-v1.png",
+      "generated": "exec-88d575be-3429-4485-b46d-8557c204ca14.png",
+      "prompt": "Use case: precise-object-edit. Edit the reference into a tall PORTRAIT game background by extending it above and below. Preserve the familiar diagonal brown dirt road, small drainage ditch, stones, dark blue-green foliage, large tree on the left and fine warm painted pixel-art style. The camera stays steeply elevated, looking down onto nearby ground; absolutely no sky, horizon, mountains, distant landscape, bodies of water, buildings, figures, animals, carts, text or UI. Continue the same empty dirt road and low foliage above and below; keep a very wide clear navigable road in the center for sprites. Do not add new objects, tracks crossing, paths splitting or landmarks. Portrait full bleed."
+    },
+    {
+      "reference": "public/storybook-study/bridge-approach-night-v1.png",
+      "source": "assets/source/storybook/bridge-approach-portrait-v1.png",
+      "output": "public/storybook-study/bridge-approach-portrait-v1.png",
+      "generated": "exec-ab6326de-632d-49b6-aa8b-57e7820b432e.png",
+      "prompt": "Use case: precise-object-edit. Edit the reference into a TALL PORTRAIT 2D RPG background. It depicts a SMALL RIVER, not a lake. Preserve the entire original road and bridge composition in the middle and make only vertical extensions above and below. Camera is steeply elevated, looking DOWN at the ground and water surface: absolutely NO SKY, no horizon, no moon, no distant mountains, no lake, no distant vistas. Above the original, continue only nearby dark river water surface, vegetation, trees seen from above, and near stone riverbank. Below the original, continue only the same brown dirt road with stones, wheel ruts and low roadside foliage. Keep the same upper-left stone bridge, its exact two lanterns, small stream, shapes, road direction, relative locations, style, light, detailed hand-painted pixel-art-like outlines. Maintain a large empty navigable ground plane in the center. No characters, animals, carts, additional landmarks, text, frames or interface. Portrait aspect ratio, full bleed."
+    },
+    {
+      "reference": "public/storybook-study/bridge-night-v1.png",
+      "source": "assets/source/storybook/bridge-arrival-portrait-v1.png",
+      "output": "public/storybook-study/bridge-arrival-portrait-v1.png",
+      "generated": "exec-4ada8fd7-8bc4-436c-9869-db0149155fd0.png",
+      "prompt": "Use case: precise-object-edit. Edit the reference to a tall PORTRAIT 2D RPG background by extending above and below the original. Keep the same stone bridge, recognizable two warm lanterns with their stone posts and masonry parapet, dark river surface behind it, same overhead oblique camera, nighttime atmosphere and fine hand-painted pixel-inspired style. Absolutely no sky, horizon, moon, lake, mountains, distant vistas or additional lanterns, bridges or structures. Extend only nearby dark river and treetops above, and matching cobblestone bridge paving below. Preserve the bridge's spatial arrangement and tile size; leave a wide clear empty central foreground for four sprites and a handcart. No people, animals, carts, labels, UI or borders. Portrait full bleed."
+    }
+  ],
+  "rejected": [
+    {
+      "generated": "exec-664b779b-17cb-44ca-9c7a-252fa46c19af.png",
+      "reason": "Added a large lake and sky, changing the setting and camera angle."
+    }
+  ]
+}

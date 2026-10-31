@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "keeper-lantern-v1",
+    "sourceFrame": 0,
+    "scale": 0.6940298507462687,
+    "left": 21,
+    "top": 56,
+    "width": 60,
+    "height": 64,
+    "baseline": 120
+  },
+  {
+    "frame": 1,
+    "source": "keeper-lantern-v1",
+    "sourceFrame": 1,
+    "scale": 0.6940298507462687,
+    "left": 20,
+    "top": 44,
+    "width": 59,
+    "height": 76,
+    "baseline": 120
+  },
+  {
+    "frame": 2,
+    "source": "keeper-lantern-v1",
+    "sourceFrame": 2,
+    "scale": 0.6940298507462687,
+    "left": 29,
+    "top": 33,
+    "width": 57,
+    "height": 87,
+    "baseline": 120
+  },
+  {
+    "frame": 3,
+    "source": "keeper-lantern-v1",
+    "sourceFrame": 3,
+    "scale": 0.6940298507462687,
+    "left": 34,
+    "top": 27,
+    "width": 50,
+    "height": 93,
+    "baseline": 120
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "tool": "image_gen",
+  "prompt": "Edit this four-cell warm hand-painted game sprite strip of Leon into a sit-down animation. Preserve the FIRST standing figure exactly as scale reference. Preserve the seated anatomy, large rounded head, spiky brown hair, red cape, navy gold tunic and brown boots. Four full-body figures in one horizontal row, equal scale, same planted-foot baseline, elevated three-quarter facing right. Cell1 identical standing. Cell2 begins to sit: knees slightly flexed, hips moved slightly back and down, chest leans forward slightly, hands near thighs; height roughly139 compared with standing144. Cell3 nearly seated on invisible chair, knees bent farther, hips lower, thighs almost horizontal, same feet, height roughly132. Cell4 relaxed fully seated matching reference second figure, height about125. Keep head size and face width identical throughout, no shrinking or enlargement. Clear boot contacts and changing knee angle. No furniture, no chair, no paper, no ground shadow or text, true transparent background, generous margins and gutters.",
+  "references": [
+    "public/storybook-study/leon-seat-v1.webp"
+  ],
+  "source": "assets/source/storybook/leon-sit-down-v1.png",
+  "output": "public/storybook-study/leon-sit-down-v1.webp",
+  "registration": {
+    "standing": 144,
+    "lower": 137,
+    "settle": 129,
+    "feet": 176
+  },
+  "scope": "Indoor line51 arrival at chair; intermediate frames1/2 only."
+}

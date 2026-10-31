@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "references": ["public/storybook-study/worker-poses-v1.webp"],
+  "prompt": "Use case: stylized-concept. Asset type: transparent sprite atlas for hand-painted elevated45-degree 2D RPG. Reference is the SAME adult stoneworker identity, face, brown hair tied back, rolled sleeves, ochre work shirt, brown work apron and dark trousers, sturdy brown boots. Preserve the reference's approachable practical adult appearance and body proportions, not a giant-headed toddler. Eight separate complete fullbody poses in4columns2rows, ALL facing LEFT in3/4 view, camera elevated45degrees looking down. Row1 col1 neutral STANDING calibration; col2 walk left foot forward; col3 walk passing right foot lifted; col4 walk right foot forward. Row2 col1 walk passing left foot lifted; col2 crouched on one knee leaning forward to inspect a stone joint with the near empty hand reaching downward/left almost to ground; col3 kneeling and pointing along ground to left; col4 kneeling reaching low with both empty hands. NO tools, blocks, stones, carried objects, background, floor, contact shadows or text. Exactly same scale/head diameter/body size/clothes across all8poses. Standing figure about3.5 heads tall; crouching naturally only65-75% standing height, do not enlarge crouching to fill cells. Generous transparent gutters all around, complete hair and boots, no overlap between figures. Simple readable warm painted surfaces with restrained brown contour, no pixel stair-steps. Genuine alpha background.",
+  "source": "assets/source/storybook/mason-motion-v1.png",
+  "output": "public/storybook-study/mason-motion-v1.webp",
+  "builder": "scripts/build-storybook-mason.mjs"
+}

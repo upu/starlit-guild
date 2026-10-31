@@ -1,0 +1,62 @@
+/* A missing shared strip should not make a party member disappear. */
+.storybook-painted-stage [data-actor="aria"] {
+  --cast-standing: url("/storybook-study/aria-conversation-v1.webp");
+  --cast-walking: url("/storybook-study/aria-walk-v1.webp");
+}
+.storybook-painted-stage [data-actor="leon"] {
+  --cast-standing: url("/storybook-study/leon-conversation-v1.webp");
+  --cast-walking: url("/storybook-study/leon-walk-v1.webp");
+}
+.storybook-painted-stage [data-actor="mira"] {
+  --cast-standing: url("/storybook-study/mira-conversation-v1.webp");
+  --cast-walking: url("/storybook-study/mira-walk-v1.webp");
+}
+.storybook-painted-stage [data-actor="finn"] {
+  --cast-standing: url("/storybook-study/finn-conversation-balanced-v3.webp");
+  --cast-walking: url("/storybook-study/finn-walk-balanced-v3.webp");
+}
+.storybook-painted-stage [data-actor="lico"] {
+  --cast-standing: url("/storybook-study/lico-conversation-ponytail-v1.webp");
+  --cast-walking: url("/storybook-study/lico-walk-ponytail-v1.webp");
+}
+
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor][data-fallback-standing="true"][data-fallback-walking="false"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ) {
+  background-image: var(--cast-walking) !important;
+  background-size: 400% 100% !important;
+  background-position: 0% 0% !important;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor][data-fallback-walking="true"][data-fallback-standing="false"]
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: var(--cast-standing) !important;
+  background-size: 400% 100% !important;
+  background-position: 0% 0% !important;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor][data-fallback-standing="true"][data-fallback-walking="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ),
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor][data-fallback-standing="true"][data-fallback-walking="true"]
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: var(--home-art) !important;
+  background-size: 400% 400% !important;
+  background-position: 0% 66.666667% !important;
+  image-rendering: pixelated;
+  scale: 0.82;
+}

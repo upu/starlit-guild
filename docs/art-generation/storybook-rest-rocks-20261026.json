@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Transparent two-cell prop sheet matching reference's warm hand-painted rural RPG background. Same elevated 50-degree three-quarter downward camera. LEFT cell: one naturally rounded low grey-brown stone suitable for sitting, roughly oval footprint, flat softly weathered upper surface, only shin-height compared with a standing person. RIGHT cell: one broader low flat grey-brown stone with a nearly level upper surface suitable for setting a tiny teapot down, round irregular natural outline, very low rounded sides. Soft warm shadows within stone facets, tiny moss flecks at edges only, no hard black pixels, no rectilinear cut-stone blocks. Fully transparent outside both stones, no ground shadow blob, no grass clumps, no characters, no teapot or props, no text. Each stone isolated within its equal square cell, generous transparent margin, do not crop.",
+  "source": "assets/source/storybook/rest-rocks-v1.png",
+  "outputs": [
+    "public/storybook-study/seat-rock-v1.webp",
+    "public/storybook-study/tea-rock-v1.webp"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/town-exit-v1.png",
+  "output": "public/storybook-study/town-exit-v1.png",
+  "references": [
+    "public/story-stage/town-exit.webp",
+    "public/storybook-study/warehouse-v1.png"
+  ],
+  "prompt": "Edit target: first image, evening town exit. Style reference: second image, approved painted warehouse. Redraw target as warm hand-painted 2D RPG environment preserving exact elevated three-quarter overhead composition and scale. Modest cream plaster timber houses with orange clay roofs along upper left, door at left about one quarter image height, fence right, road from broad empty lower foreground toward upper right. Late afternoon warm long soft shadows. No horizon. Clear broad empty walkable ground lower two thirds for small animated characters and loaded cart. Soft colored outlines, broad deliberate foliage clusters, restrained texture, ochre and cream light with muted sage greens. Replace noisy pixel stippling with clean painted forms and 2-3 tonal shades. No characters, loose bags, carts, UI, letters or watermark. 3:2 landscape."
+}

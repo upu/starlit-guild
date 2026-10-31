@@ -1,0 +1,38 @@
+[
+  {
+    "frame": 0,
+    "width": 64,
+    "height": 134,
+    "left": 65,
+    "top": 42,
+    "scale": 0.268,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "width": 125,
+    "height": 105,
+    "left": 61,
+    "top": 71,
+    "scale": 0.268,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "width": 103,
+    "height": 105,
+    "left": 61,
+    "top": 71,
+    "scale": 0.268,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "width": 80,
+    "height": 134,
+    "left": 63,
+    "top": 42,
+    "scale": 0.268,
+    "baseline": 176
+  }
+]

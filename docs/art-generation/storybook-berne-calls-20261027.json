@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen built-in",
+  "scope": "3-2 Berne house calls integrated as default",
+  "source": "assets/source/storybook/berne-calls-street-v1.png",
+  "delivery": "public/storybook-study/berne-calls-street-v1.png",
+  "references": [
+    "public/storybook-study/berne-paving-v1.png",
+    "public/storybook-study/housecalls-courtyard-v1.png"
+  ],
+  "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-e7190c47-ae30-4d21-9f58-0f031f7845ee.png",
+  "prompt": "Create a NEW 1536x1024 full-screen game background for a warm hand-painted elevated-oblique Japanese 2D RPG, consistent with references. Reference 1 establishes Berne's pale stone paving, timber plaster houses and warm colors; reference 2 supplies the high 50-degree downward camera, scale and usable open foreground. This is a modest residential stone street, viewed from above, not the previous rural village courtyard. Along the TOP EDGE arrange three small stone/plaster house fronts facing the street, with THREE clearly separate visible doors at approximately (x320,y400), (x750,y320), (x1280,y400). The middle door is visibly muted blue timber, two shallow stone steps beneath. Doors about 115px tall in this 1536x1024 scene, naturally scaled for 140px-tall characters. Open broad uninterrupted stone-paved street fills middle and lower two thirds for moving game characters. At ground about x850,y710 create ONE understated irregular patch of missing paving with exposed soil, 200x100px, shallow and flush, no hole, no large rocks. A small low wooden worktable near x1020,y450 with visible legs; a stone street water fountain or small covered well around x260,y650. Reserve clear walking space around the three doors, table and missing paving; avoid overlaying buildings onto walkable middle. Small restrained plants and muted slate roofs, warm daytime, delicate brown outlines, readable natural stone texture, no giant flagstones, no oversized doors, no text, no humans, no animals, no detached objects such as bags or boxes. No perspective sky, no horizon, no vignette. Entire background is one consistent high overhead camera and the same fine hand-painted RPG look as references.",
+  "validation": [
+    "PC 1243x1244 and browser mobile 390x844: full default replay; 24 selected frames inspected per size.",
+    "15 nodes, 4 carrying strides, foot positions, stationary residents, object depth, displayed work names and final standing covered by tests.",
+    "2-8 house calls and 3-1 Berne road regression tests passed."
+  ],
+  "remaining": "Whole goal remains incomplete: 16 adventures, full story playback review, special effects, Lico low rest, small-scale clarity and broader loading performance."
+}

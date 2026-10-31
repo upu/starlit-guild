@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompts": [
+    "Transparent sprite sheet, 4 equal columns by 3 equal rows, 12 completely separated full body poses. Warm soft hand-painted 2D RPG art, same character identity, body proportions, head size, outfit, hair and brushwork as attached reference sheets. Row1 Aria blonde elf, green cape, white blouse/skirt, brown boots; row2 Leon brown hair, red short cape, navy tunic, brown trousers/boots; row3 Mira lavender hair floral ornament, pale layered healer dress, flats. All face three-quarter RIGHT. In each row: column1 neutral STANDING calibration pose; column2 knees bending halfway to sit on a very low invisible rock; column3 fully seated on a low invisible rock (seat height about shin height), relaxed with knees bent and both feet planted on ground; column4 identical low seated body but one open palm extended in friendly conversation. Do NOT draw rocks, furniture, cups, tools or props. Keep heads EXACT same physical size across four columns of each character, no enlargement when seated. Sitting reduces total height to 65-70% of standing by bending knees and hips, never shrinking body parts. Same foot ground line within each cell, ample transparent margins. Camera elevated 40-degree three-quarter downward view, visible tops of heads/shoulders. No pixel art, no text, no labels, no grid, no background. Clothing and feet fully in frame. No chibi exaggeration beyond attached references. Exactly twelve figures.",
+    "Transparent single-row sprite sheet with FOUR equal cells, full-body same lavender-haired healer Mira from reference, same exact face/head size, floral hair ornament, pale layered dress and flat brown shoes, same softly painted RPG style. All face three-quarter RIGHT. Cell1 standing straight at normal anatomy, knees straight. Cell2 bending knees halfway to sit. Cell3 seated on a LOW invisible stone at SHIN height, thighs nearly horizontal, knees strongly bent, feet flat on ground, hands resting on knees. Cell4 exact same seated body and head as cell3 but right palm gently extended. No chair or stone visible. The head must be identical pixel size in all four cells. Seated total height must be only 70-75 percent of the standing figure by bending at knees and hips, NOT resizing the head or body. Important: do not draw standing legs in seated cells. Same foot ground line across cells. Feet and dress fully visible and never cropped. Generous transparent margin, no props, no letters, no grid, no background, no text. Camera elevated downward three-quarter, visible tops of heads."
+  ],
+  "sources": [
+    "assets/source/storybook/perch-trio-v1.png",
+    "assets/source/storybook/mira-perch-v1.png"
+  ],
+  "outputs": [
+    "public/storybook-study/aria-perch-v1.webp",
+    "public/storybook-study/leon-perch-v1.webp",
+    "public/storybook-study/mira-perch-v1.webp"
+  ],
+  "note": "Mira row in the trio draft is superseded by the dedicated Mira sheet."
+}

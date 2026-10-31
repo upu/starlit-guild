@@ -1,0 +1,477 @@
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="12"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="15"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="8"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="9"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="10"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="11"] {
+  background-image: url("/storybook-study/keeper-restoration-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="0"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="2"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="3"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="fence-carrier"]
+  .story-stage-extra-sprite[data-frame="0"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="fence-carrier"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="fence-carrier"]
+  .story-stage-extra-sprite[data-frame="2"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="fence-carrier"]
+  .story-stage-extra-sprite[data-frame="3"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="fence-carrier"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  background-image: url("/storybook-study/restoration-carrier-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="work-fence"] {
+  background-image: url("/storybook-study/work-fence-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="joint-roots"] {
+  background-image: url("/storybook-study/joint-roots-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="tools"] {
+  background-image: url("/storybook-study/mason-tools-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="light-cloth"] {
+  background-image: url("/storybook-study/cleaning-rag-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="tower-stone-bottom"] {
+  background-image: url("/storybook-study/tower-stone-bottom-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="table"] {
+  background-image: url("/storybook-study/medicine-table-v1.webp");
+  aspect-ratio: 1.6;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-position: 33.333333% 100% !important;
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  ):has([data-actor="finn"] .story-stage-sprite[data-frame="18"])
+  [data-item="bandage"] {
+  visibility: hidden;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-art="berne-foundation-restored-v1"] .story-stage-space {
+    transform: none;
+  }
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-image: url("/storybook-study/finn-injury-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="20"] {
+  background-image: url("/storybook-study/finn-injury-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="empty-cart"] {
+  background-image: url("/storybook-study/garden-handcart-v2.webp");
+  aspect-ratio: 512 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="berne-restoration-departure"],
+    [data-story="berne-restoration-return"]
+  )
+  .story-stage-item[data-art="paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .story-stage-item[data-item="removal-record"] {
+  background-image: url("/storybook-study/archive-records-v1.webp");
+  aspect-ratio: 1;
+}
+.storybook-reader-stage[data-story="berne-restoration-departure"]
+  .story-stage-item[data-art="map"] {
+  background-image: url("/storybook-study/groove-plan-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="48"] {
+  background-image: url("/storybook-study/aria-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="49"] {
+  background-image: url("/storybook-study/aria-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="50"] {
+  background-image: url("/storybook-study/aria-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="51"] {
+  background-image: url("/storybook-study/aria-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="48"] {
+  background-image: url("/storybook-study/leon-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="49"] {
+  background-image: url("/storybook-study/leon-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="50"] {
+  background-image: url("/storybook-study/leon-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="51"] {
+  background-image: url("/storybook-study/leon-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="48"] {
+  background-image: url("/storybook-study/mira-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="49"] {
+  background-image: url("/storybook-study/mira-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="50"] {
+  background-image: url("/storybook-study/mira-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="51"] {
+  background-image: url("/storybook-study/mira-tea-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="paper"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="4"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="teapot"] {
+  background-image: url("/storybook-study/teapot-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="empty-cup"] {
+  background-image: url("/storybook-study/empty-cup-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="berne-restoration-return"][data-mode="indoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}
+.storybook-reader-stage[data-story="berne-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="50"], [data-frame="51"]) {
+  scale: -1 1;
+}
+/* Keep the one-time return of light on the repainted window and stone conduit. */
+.storybook-reader-stage[data-art="berne-foundation-restored-v1"] .story-stage-restored-window {
+  display: block;
+  left: 43.3%;
+  top: 2.8%;
+  width: 2.2%;
+  height: 9%;
+}
+.storybook-reader-stage[data-art="berne-foundation-restored-v1"] .story-stage-restored-stones {
+  display: block;
+  clip-path: polygon(
+    29.8% 35%,
+    31.3% 34.8%,
+    36.8% 46%,
+    44% 58.7%,
+    52.5% 71.5%,
+    62% 84.5%,
+    73.5% 98%,
+    70% 100%,
+    58.7% 87%,
+    49.6% 74%,
+    41% 61%,
+    34% 48.5%
+  );
+}

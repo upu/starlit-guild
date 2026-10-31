@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: identity-preserve. Transparent game animation sprite strip, four equal cells in a single horizontal row. Reference 1 is exact Aria identity/proportion/style and its last figure is the required upper body: EMPTY palms supporting an imaginary thin paper at waist height. Reference 2 shows her ordinary walk and costume. Produce FOUR consecutive carrying-walk phases, all facing screen-right, same elevated three-quarter view, same head/body scale as reference1. Maintain BOTH hands/palms level and steady in the identical forward carrying position in ALL frames, with no paper or object (a separate game prop will be attached). Feet must actually alternate, not four copies of the same stride: frame0 left leg forward/right leg back; frame1 right leg passing forward with right knee bent, left foot supporting under pelvis; frame2 RIGHT leg forward/LEFT leg back, opposite frame0; frame3 left leg passing forward with left knee bent, right foot supporting. Keep both legs distinguishable by overlap and near/far shading. Soft cape movement, head vertical bob at most 2 percent, no stretching, no size change. Preserve blond/pink bob lavender streak pointed ears green eyes white flower green cape cream ruffled blouse/skirt brown bodice gloves boots. Warm hand-painted gouache style, restrained brown outlines. Complete body uncut, wide margins, transparent alpha, no floor shadow, no props/text/guides. Deliver four distinct readable gait phases, not running or sliding.",
+  "references": [
+    "public/storybook-study/aria-paper-v1.webp",
+    "public/storybook-study/aria-walk-v1.webp"
+  ],
+  "source": "assets/source/storybook/aria-paper-walk-v1.png",
+  "output": "public/storybook-study/aria-paper-walk-v1.webp",
+  "build": "node scripts/build-storybook-walk-strip.mjs aria v1 paper-walk",
+  "registration": "common head scale56px, all4height133px baseline176",
+  "scope": "indoor line36 paper carry only"
+}

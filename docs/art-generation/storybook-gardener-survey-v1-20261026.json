@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent sprite sheet exactly8 full-body poses in4columns2rows, warm hand-painted 2D RPG. Same gardener as reference: brown hair tied in short ponytail, golden ochre shirt sleeves rolled, brown work apron/overalls, dark trousers, brown boots, approachable adult worker. All face LEFT, elevated45degree3quarter camera, consistent head/body scale/standingheight. Row1:0calibration neutral standing;1walkingLEFT with both hands cupped atwaist supporting INVISIBLE medium plantpot, nearleg forward contact;2passing nearfootunderhips farheelraised;3oppositecontact NEARleg backRIGHT farleg forwardLEFT. Row2:4oppositepassing nearheelraised farfootbelowhips;5standingholding invisibleplantpot withboth palms atwaist;6kneeling onone knee bendingforward left tolower invisiblepot onto ground, hands near boot level, torso/head visiblylower without rescaling;7standing receiving tiny INVISIBLE key or gloves in forward open palmLEFT atwaist, otherhandnearwaist. No pot, plants, key, gloves, shadow, ground or text. Full heads and boots withlarge transparentgutters. Fourwalkphasesdifferent, pot-supporting palms stable. Same clothing and figure asref; no youthful replacement.",
+  "references": [
+    "public/storybook-study/gardener-motion-v1.webp"
+  ],
+  "source": "assets/source/storybook/gardener-survey-v1.png"
+}

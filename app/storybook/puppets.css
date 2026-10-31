@@ -1,0 +1,20 @@
+.storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="puppet"][data-figure="true"] {
+  background-image: url("/storybook-study/puppet-poses-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="golem"][data-figure="true"] {
+  background-image: url("/storybook-study/golem-poses-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="signpost"] {
+  background-image: url("/storybook-study/signpost-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="signpost-portable"] {
+  background-image: url("/storybook-study/signpost-portable-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}

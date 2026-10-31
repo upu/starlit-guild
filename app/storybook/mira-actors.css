@@ -1,0 +1,87 @@
+/* Mira is shorter than Aria; the source is registered at 126px, not enlarged per pose. */
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]:is([data-seat-transition="lower"], [data-seat-transition="settle"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/mira-sit-down-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  filter: drop-shadow(0 0 1px #514336a6);
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"][data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-position: 66.666667% 0% !important;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"]
+  ) {
+  background-image: url("/storybook-study/mira-seat-v3.webp");
+  background-size: 400% 100%;
+  background-position: var(--mira-seat-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+  filter: drop-shadow(0 0 1px #514336a6);
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage
+  [data-actor="mira"]
+  .story-stage-sprite:is([data-frame="25"], [data-frame="29"]) {
+  --mira-seat-position: 66.666667%;
+}
+.storybook-painted-stage
+  [data-actor="mira"]
+  .story-stage-sprite:is([data-frame="26"], [data-frame="30"]) {
+  --mira-seat-position: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"]
+  ) {
+  scale: -1 1;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: url("/storybook-study/mira-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  filter: drop-shadow(0 0 1px #514336a6);
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ) {
+  background-image: url("/storybook-study/mira-conversation-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-conversation-position) 0% !important;
+  image-rendering: auto;
+  /* A subtle warm edge keeps the pale robe readable against the wooden floor. */
+  filter: drop-shadow(0 0 1px #514336a6);
+  top: 2.083333%;
+  height: 100%;
+}

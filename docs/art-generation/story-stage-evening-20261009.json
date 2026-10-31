@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-09",
+  "assets": [
+    {
+      "name": "town-exit",
+      "ref": "meeting-path-v1.png",
+      "transparent": false,
+      "prompt": "Use case: stylized-concept. Create a 1536x1024 landscape pixel-art game conversation background, using the reference ONLY as exact pixel-art rendering/style/ground-level perspective and scale reference. Scene: outskirts of the small medieval trade town Linde in late afternoon; two modest timber-and-plaster shop houses recede toward the upper left, their long soft shadows crossing the empty packed-earth lane. On the upper right the lane leaves town toward green countryside with trees. Low unobtrusive fence and hedges on distant edges, no monumental gate or wall, no castle, no river, no new distinctive landmark. Warm amber sunset light, still enough daylight to read faces. Horizon high, close eye-level camera like the reference. Keep the foreground and middle completely empty, gently textured even ground across the lower 60% for two 96px game sprites and a loaded handcart to stand. Use precise attractive pixel-art clusters, consistent crisp dark outlines and warm green-brown palette. No people, characters, carts, loose luggage, text, symbols, UI or border."
+    },
+    {
+      "name": "meeting-dusk",
+      "ref": "meeting-path-v1.png",
+      "transparent": false,
+      "prompt": "Use case: lighting-weather. Edit this exact 1536x1024 game background into the same location in late afternoon toward dusk on the return journey. Preserve the tree trunks, every path connection, boulders, composition, foreground open ground and pixel-art style exactly. Warm amber light from low evening sun through leaves, subtly longer shadows, slightly cooler violet-green shaded foliage. Still daylight; readable ground, not nighttime, not heavy orange monochrome. The two village paths still branch at the same trees. Do not add/remove locations, paths, people, luggage, carts, fires, lanterns, buildings, text or UI. Preserve original aspect ratio and scale."
+    },
+    {
+      "name": "return-cart",
+      "ref": "loaded-cart-v1.png",
+      "transparent": true,
+      "prompt": "Use case: precise-object-edit. Edit this pixel-art handcart sprite for the trip home after selling the village trade goods and purchasing supplies. Genuinely transparent background, same 1536x1024 canvas, precise identical cart geometry, wheel diameters, camera angle, scale, location and two long shafts pointing screen-right. Replace the delivered vegetable basket and high stack of trade crates with TWO prominent plump fabric-wrapped rectangular parcels tied with cord, a broad bulging closed purchase sack, and one low closed wooden box, all securely tied down. No visible produce. Keep the spare rope coil, leather receipt satchel and small spare pouches, but only ONE cream rolled rain cloth (Aria holds the other). The load is still substantial, visibly reorganized and different from the outbound cart, with the two tied parcels easy to distinguish. Exact same wooden cart, metal bands, crisp pixel-art style, outline, color and lighting. No people, animals, ground plane, shadow outside the sprite, words, labels or border. Maintain transparent margins."
+    }
+  ]
+}

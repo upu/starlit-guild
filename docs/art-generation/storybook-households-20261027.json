@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "2-8 households and 2-9 morning departure",
+  "accepted": [
+    {
+      "name": "household-parent-v1",
+      "references": [
+        "public/story-stage/parent-poses.webp",
+        "public/storybook-study/doctor-visit-v1.webp"
+      ],
+      "prompt": "Create a transparent sprite atlas8poses,4columns2rows. Image1 is character identity reference: modest middle-aged village woman brown hair tied at nape, plain blue dress and cream apron, dark shoes. Image2 is ONLY warm hand-painted RPG style and elevated45degree camera reference. Same adult head/body scale in every pose. Row1: neutral standing hands relaxed; speaking with near hand open; gentle pointing screen-right; small welcome wave held beside head. Row2: four successive walking phases facing screen-right, alternating leg lead, one foot cautiously taking less weight: subtle limp, no cane, no dramatic injury. Warm kind ordinary villager. Fine brown outlines/gouache, no pixel grid, no shadows/scenery/text. Full bodies with generous cell gutters and visible shoes. Do not copy the doctor.",
+      "source": "assets/source/storybook/household-parent-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-8bd911fb-8964-45c6-8137-5d781d599db3.png"
+    },
+    {
+      "name": "household-child-bed-v1",
+      "references": [
+        "public/story-stage/child-poses.webp",
+        "public/storybook-study/doctor-visit-v1.webp"
+      ],
+      "prompt": "Create transparent4column1row game sprite atlas. Image1 is identity reference for small brown-haired boy in simple cream sleep shirt, pale tired but calm. Image2 is ONLY warm hand-painted2D RPG medium and elevated45degree camera reference. Each of4frames contains SAME COMPLETE modest wooden bed, all four posts and legs visible, cream blanket and single pillow, boy propped up at upper-right head of bed facing diagonally screen-left toward visiting healer. Bed runs upper-right to lower-left, seen from45degrees above. Child head naturally SMALLER than adult reference head relative to bed. Four subtle poses: resting, listening with eyes open, asks question mouth slightly open, small relieved nod. Same bed dimensions and child body size across all4. Full bed in EACH cell, generous transparent gutters; no adult, no room or floor, no text, no pixel grid, no second chair or bedside table. Very ordinary cozy cottage bed, no ornate hospital props.",
+      "source": "assets/source/storybook/household-child-bed-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-8e7b476c-5689-450b-a511-2de9c74458a0.png"
+    },
+    {
+      "name": "household-cook-v1",
+      "references": [
+        "public/storybook-study/cook-motion-v2.webp",
+        "public/storybook-study/doctor-visit-v1.webp"
+      ],
+      "prompt": "Transparent8pose sprite atlas4columns2rows. Image1 identity: ordinary village kitchen man brown short hair and moustache, simple brown shirt rolled sleeves, plain light apron, trousers/shoes. Image2 ONLY warm painted RPG style elevated45degree reference. Row1: neutral standing; speaking palm open; offer a small bucket with extended near hand but DO NOT draw bucket; same hand relaxed holding bucket handle at waist but bucket NOT DRAWN. Row2 four alternating full walking gait phases screen-right. All same adult body scale, hands visible for separate prop attachment, full shoe soles and hair inside cells, transparent gutters. Warm handpainted fine brown outlines, no pixel grid/text/scenery, no chef hat or new outfit.",
+      "source": "assets/source/storybook/household-cook-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-264857c1-a75e-4a81-a724-cb2ee1a3b3de.png"
+    },
+    {
+      "name": "household-carry-props-v1",
+      "references": [
+        "public/storybook-study/medicine-closed-v1.webp"
+      ],
+      "prompt": "Transparent2x2 game prop atlas warm handpainted2D RPG elevated45degree angle. Four separate objects, generous gutters: top-left small ordinary wooden water pail with tall curved handle, visible calm water surface (no steam drawn); top-right simple brown cloth carrying bag with a sturdy loop handle and several EMPTY clear glass medicine bottles poking out safely; bottom-left small folded stack of handwritten inventory slips tied with string, no readable text; bottom-right same compact WOODEN MEDICINE CASE as image1, same wood/strap construction and size/proportions, lid closed with a small folded reminder note peeking securely from under latch. NOT a suitcase or enormous chest. No hands, no scenery, no shadow, no glow, no extra objects. Keep delicate brown outlines and subdued natural colors. Genuine alpha.",
+      "source": "assets/source/storybook/household-carry-props-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-7841b8eb-a19a-4a22-8a9d-8e7f5f2b53f4.png"
+    },
+    {
+      "name": "homeward-worker-v1",
+      "references": [
+        "public/storybook-study/worker-push-road-v1.webp"
+      ],
+      "prompt": "Edit/extend reference sprite atlas into EXACTLY8 full-body sprites in4columns×2rows on genuine transparent background. Preserve this ordinary short brown-haired village delivery worker's ochre shirt, brown apron, trousers, boots, warm painted RPG medium, elevated camera, body proportions and pushing-hand reach. Add a small simple SOFT BROWN CLOTH CAP worn on head. Row1: preserve the existing FOUR successive pushing gait poses and exact same hand reach, now wearing the cap. Row2: four STATIONARY phases facing screen RIGHT: col0 stands feet planted, both hands forward on invisible cart shafts, cap on; col1 friendly greeting, raises cap just above head with FAR hand, NEAR hand stays extended at the original cart-shaft grip height; col2 lowers cap onto head, near hand still keeps shaft; col3 cap back on, both hands forward again. No cart drawn, no objects other than cap, no text or floor. All8 maintain SAME head/body/boot size and grounded sole line within each row; cap raise increases total silhouette height naturally, never shrink body to fit. Generous transparent gutters. No different face, new outfit or broad arm waving away from cart.",
+      "source": "assets/source/storybook/homeward-worker-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-4dcf6b31-6f1a-4117-a7cd-0c3d78a3a73c.png"
+    }
+  ],
+  "validation": [
+    "41 related tests passed",
+    "PC1243x1244 and browser mobile390x844: 46 numbered UI displays plus choreography, pickup, traffic and exit playback observed; work/households-ui-pages.json",
+    "No new browser console errors observed",
+    "Same medicine case width8 across pickup and transfer, one scale per atlas, transparent gutters, complete bed and boots",
+    "One-frame flat background during PC scene switching remains a global loading issue; this is not whole-goal completion",
+    "Final source typecheck, targeted ESLint and Vinext build passed; normal npm run build including asset preparation also passed before final cue refinements"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "scope": "starlit-guild-founding-return indices0-66. Preserve existing guild-formation illustration from index67 onward.",
+  "assets": [
+    {
+      "source": "assets/source/storybook/founding-office-v2.png",
+      "generation": "exec-99d13a86-3d23-4926-a852-d92f3e036c31",
+      "references": ["public/storybook-study/office-v1.png"],
+      "prompt": "Edit same upstairs warehouse office, warm hand-painted50degree oblique RPG1536x1024. Keep windows, stairs, wood/plaster and clear foreground. Remove oversized background desk/chair; modest cupboard about18%height, barrels6%, rail8% matching12%imageheight people. Narrower floorboards, no people or interactive furniture in central70% floor. No new rooms or geography.",
+      "output": "public/storybook-study/founding-office-v2.png"
+    },
+    {
+      "source": "assets/source/storybook/lico-label-ponytail-v2.png",
+      "generation": "exec-09d70b37-5544-478f-9b55-14e56c70d3a9",
+      "references": ["assets/source/storybook/lico-label-loose-v1.png", "public/storybook-study/lico-work-ponytail-v1.webp"],
+      "prompt": "Four full-body same-scale poses facing right in equal transparent cells: neutral, supporting empty upward palm, tiny pencil writing label on separate imaginary bowl at same palm, lowering hands to pack. Lico red-black clothes freckles round glasses, compact short tied ponytail and exposed nape. Hair edit only on second pass: sweep loose bob toward one red tie and slender short tail, preserve pose/hand/pencil/body/feet positions and transparency.",
+      "output": "public/storybook-study/lico-label-v1.webp",
+      "packing": "One128px calibration scale across all four poses,192px cells with sole176. Writing engine frames69/70 share one drawing; this is a pose change, not a completed pencil-stroke animation."
+    },
+    {
+      "source": "assets/source/storybook/founding-moss-bowl-v1.png",
+      "generation": "exec-ac682add-6655-4c1b-98bd-8a75bd32ddcc",
+      "references": ["public/storybook-study/sample-bowl-v1.webp", "public/storybook-study/field-samples-v1.webp"],
+      "prompt": "One palm-sized shallow wooden specimen bowl with ONE divided yellow-green moss clump on soil and one blank cream front-rim label. Elevated50degree hand-painted RPG, wide low bowl, clear dark contours, no extra plants labels text hands scene floor or cast shadow. Actual transparent background and gutters.",
+      "output": "public/storybook-study/founding-moss-bowl-v1.webp",
+      "packing": "256x197, bowl painted base aligned8px above canvas bottom so the supporting palm has no large transparent gap."
+    }
+  ],
+  "rejected": [
+    {
+      "source": "assets/source/storybook/lico-label-loose-v1.png",
+      "generation": "exec-c3c4f888-8f2e-4d8f-a33e-ab3d09780431",
+      "reason": "Loose back hair read as a bob; retained as source evidence and replaced with nape/ponytail correction."
+    }
+  ],
+  "integration": "scripts/build-storybook-founding-return.mjs, lib/storybook/founding-return-cue.ts. Existing indoor seat transitions remain. Painted carry enabled through the scene, including Aria's smiling specimen hold; paper and pack use existing painted props.",
+  "paper": "founding-paper-circuit.ts and founding-paper-contacts.ts add receive/turn/offer phases, five coincident paper-edge handoffs, and corner placement followed by a slide to the narrated center. StageItem.grip explicitly eases same-owner regrips while ordinary rotation remains attached. No dialogue edits.",
+  "remaining": "Whole-goal motion audit remains open; pencil movement, some gait phases, other scenes/adventure conversion and any QA findings must not be treated as completed by this provenance record."
+}

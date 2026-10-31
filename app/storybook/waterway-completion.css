@@ -1,0 +1,155 @@
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="36"],
+    [data-frame="37"],
+    [data-frame="38"],
+    [data-frame="39"]
+  ) {
+  background-image: url("/storybook-study/keeper-lantern-registered-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite:is(
+    [data-frame="11"],
+    [data-frame="32"],
+    [data-frame="33"],
+    [data-frame="34"],
+    [data-frame="35"]
+  ) {
+  background-image: url("/storybook-study/worker-repair-basket-v2.webp") !important;
+  background-size: 400% 200% !important;
+  background-position-y: 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="11"] {
+  background-position: 0% 0% !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .story-stage-item[data-item="inspection-lamp"] {
+  background-image: url("/storybook-study/night-lantern-v1.webp");
+  aspect-ratio: 110 / 256;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .story-stage-item[data-item="last-moss"] {
+  background-image: url("/storybook-study/moss-colony-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"] .story-stage-item[data-art="stone"] {
+  background-image: url("/storybook-study/seat-rock-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"] [data-actor="aria"] {
+  --completion-perch: url("/storybook-study/aria-rest-perch-v2.webp");
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"] [data-actor="leon"] {
+  --completion-perch: url("/storybook-study/leon-rest-perch-v2.webp");
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="36"],
+    [data-frame="37"],
+    [data-frame="38"],
+    [data-frame="39"],
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  background-image: var(--completion-perch);
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  scale: 1 1;
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"] .story-stage-sprite[data-frame="37"] {
+  background-position-x: 100% !important;
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-actor:is([data-seat-transition="lower"], [data-seat-transition="settle"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: var(--completion-perch);
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  scale: 1 1;
+}
+.storybook-reader-stage[data-art="tower-front-dusk-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-actor[data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/aria-paper-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-frame="9"] {
+  background-position-x: 33.333333% !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-frame="22"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-frame="23"] {
+  background-position-x: 100% !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage[data-scenery="tower-door-open"] {
+  --stage-background: url("/storybook-study/tower-front-open-dusk-v1.png") !important;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is([data-frame="40"], [data-frame="41"]) {
+  background-image: url("/storybook-study/keeper-tower-signal-v1.webp") !important;
+  background-size: 200% 100% !important;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-moss-removal-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="41"] {
+  background-position-x: 100% !important;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="tower-moss-removal-return"][data-mode="outdoor"]
+    .story-stage-space {
+    /* Keep the entire entrance and rear worksite visible at the same camera scale. */
+    transform: none;
+  }
+}

@@ -1,0 +1,67 @@
+.storybook-reader-stage[data-story="tower-restoration-departure"][data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite:is(
+    [data-frame="12"],
+    [data-frame="13"],
+    [data-frame="14"],
+    [data-frame="20"],
+    [data-frame="21"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/merchant-repair-unload-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--repair-merchant-x, 0%) var(--repair-merchant-y, 0%) !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite[data-frame="12"] {
+  --repair-merchant-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite[data-frame="22"] {
+  --repair-merchant-x: 66.666667%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite[data-frame="23"] {
+  --repair-merchant-x: 100%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite:is([data-frame="13"], [data-frame="14"], [data-frame="21"]) {
+  --repair-merchant-y: 100%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite[data-frame="14"] {
+  --repair-merchant-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-extra-sprite[data-frame="21"] {
+  --repair-merchant-x: 66.666667%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"][data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-carry="true"]
+  .story-stage-extra-sprite:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="10"],
+    [data-frame="11"]
+  ) {
+  background-image: url("/storybook-study/merchant-carry-walk-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  scale: 1;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-item[data-item="repair-tool-cart"] {
+  background-image: url("/storybook-study/waterway-empty-tool-cart-v1.webp");
+  aspect-ratio: 420 / 280;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .story-stage-item[data-item="last-rope"] {
+  background-image: url("/storybook-study/repair-rope-coil-v1.webp");
+  aspect-ratio: 1.3;
+  image-rendering: auto;
+}

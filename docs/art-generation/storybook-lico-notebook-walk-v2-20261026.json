@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this sprite atlas retaining the exact Lico character, head/body/feet physical scale, colors, freckles, round glasses, red-black outfit and sandal identity. Keep FOUR columns TWO rows. Background MUST be truly transparent, no painted gradient. KEEP top row four standing figures identical with original cell0 calibration. REPLACE bottom row with FOUR DISTINCT phases of a normal walk to SCREEN RIGHT while both hands hold the same small brown notebook steady at waist. Crucial correction: current bottom row repeats the SAME forward foot in all frames, which causes skating. New bottom-left frame: NEAR leg strides forward to screen right, rear leg extends backward. Bottom-second: both feet almost under torso, rear knee flexed in passing, NO extended forward foot. Bottom-third: FAR leg strides forward to screen right, near leg now stretches BACK to screen LEFT, reverse which thigh overlaps; skirt opening and sandal straps clearly identify the alternating leg. Bottom-fourth: feet again under torso with opposite knee lifted in passing. Hand notebook and head stay same location/scale, feet at common floor baseline. Make four noticeably different silhouettes and correct alternating foot placement, no jumping, no enlarged head, no gliding pose repeated. Do not draw ground shadows, labels, grid or scenery.",
+  "references": [
+    "assets/source/storybook/lico-notebook-walk-v1.png"
+  ],
+  "source": "assets/source/storybook/lico-notebook-walk-v2.png"
+}

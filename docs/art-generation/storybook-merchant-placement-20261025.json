@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Edit reference merchant sprite strip into four evenly spaced full-body merchant poses on transparent background. Same middle aged brown haired man, brown apron white rolled sleeves, exact warm hand painted RPG style, body proportions and face. Four horizontal equal cells: 1 neutral standing as reference first frame for scale reference; 2 holding an INVISIBLE small box with both open palms supporting its underside in front of waist, fingers facing upward, hands about shoulder width apart; 3 slightly leaning forward with both arms lowered to place that invisible box onto a waist-low table, hands at upper thigh height; 4 same lean lower reach but fingers open and hands moved slightly to sides after release. Face and body face 3/4 toward screen left/front, matching reference. Keep boots grounded same baseline and head/body size absolutely identical. NO box, no furniture, no floor, no shadows, no labels, no connectors or horizontal colored areas between figures. All hands clearly visible. The actual box will be drawn separately by game. Transparent isolated figures.",
+  "source": "assets/source/storybook/merchant-placement-v1.png",
+  "output": "public/storybook-study/merchant-placement-v1.webp",
+  "command": "node scripts/build-storybook-merchant.mjs placement",
+  "status": "Integrated prototype; tabletop hand occlusion remains under review"
+}

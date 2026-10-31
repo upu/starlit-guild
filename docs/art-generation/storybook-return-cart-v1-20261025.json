@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/return-cart-v1.png",
+  "output": "public/storybook-study/return-cart-v1.webp",
+  "references": [
+    "public/story-stage/return-cart.webp",
+    "public/storybook-study/warehouse-v1.png"
+  ],
+  "prompt": "Edit first target image, loaded return-trip wooden handcart, into warm hand-painted 2D RPG style of second warehouse reference. Preserve EXACT cart silhouette, arrangement, elevated 3/4 viewpoint facing right, two rightward shafts, near wooden spoke wheel lower left and smaller far wheel, cargo: large forest green rectangular cloth bale left, large navy blue cloth bale right, central low wooden crate, large cream drawstring sack behind, rolled cream blanket top left, brown leather side bag, beige hanging pouches and taut rope bindings. Keep full wheel, handles and cargo inside image. Clearly simplified painted shapes, soft brown colored outlines, broad brush shading, no pixel stippling or tiny black texture. Retain all visible contact points: cargo tied to cart, wheel resting at lowest baseline, shafts ending around same height as original. One isolated cart, transparent background, no glow/ground/shadow, no people, no writing. Same 3:2 landscape canvas."
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly TWO original small RPG cargo props in ONE horizontal row with very generous separation on clean transparent background, no words,hands,ground or shadows. Elevated45degree3quartercamera, warm handpaintedstorybook2D style and softinkedges matching provided gameprops. LEFT: a practical doctor's darkbrown leather SATCHEL, squat rectangular bag with short handle and brassbuckles, soft worn leather, no redcross icon, looks carryable by onehand. RIGHT: a compact group of village TRADE PARCELS consisting one small woodencrate tiedwithhemp and two smaller creamlinencloth bundles tiedwithtwine restingbesideit, normal believable travelcargo. Complete objectgroups, no cart or people, no oversaturatedglow. Keep neutralwarmmaterials.",
+  "references": [
+    "public/storybook-study/medicine-closed-v1.webp",
+    "public/storybook-study/garden-pot-v1.webp"
+  ],
+  "source": "assets/source/storybook/linde-travel-props-v1.png"
+}

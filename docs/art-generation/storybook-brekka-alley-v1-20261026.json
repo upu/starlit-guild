@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "One landscape3:2 2D RPG background, approved warm hand-painted storybook style of reference2, smooth subtle brush texture and fine brown outlines, elevated 45-degree looking-down view, not pixel art. Preserve reference1 brewery rear alley: copper brewing vessel partly visible upper left behind low stone wall, barrels by rear wall, stone-timber brewery back door in upper middle-left, modest stone houses and closed gate upper right. Clear dirt-and-cobble alley across middle and lower two thirds where a handcart can travel LEFT TO RIGHT, no dead end across its horizontal route. A small narrow passage at far right with a blue hanging laundry cloth attached to a real high clothesline near wall, background detail only. Early morning cool soft light with warm brick and wood; coherent small human-scale doors and cobbles, courtyard not oversized. No people, carts, loose props at center, text or UI. Keep two walls framing an open usable lower route. No magical moss carpet.",
+  "references": [
+    "public/story-stage/brekka-alley.webp",
+    "assets/source/storybook/brekka-homes-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-alley-v1.png"
+}

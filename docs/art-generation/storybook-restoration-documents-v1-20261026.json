@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly FOUR separate original small 2D RPG paper props in ONE horizontal row on clean transparent background, no hands, no floor, no shadows. Warm hand-painted parchment textures and subtle ink lines, elevated45degree three-quarter view. Left to right:1 one small cream handwritten shipping record sheet with faint NONLEGIBLE abstract line strokes, no readable words;2 two slightly offset stacked cream archive sheets with small faint nonlegible strokes;3 open pale rectangular builder PLAN showing a simple rectangular stone block cross-section and exactly THREE long parallel grooves, faint brown ink, no garden or compass, no words;4 small round plain cork tea coaster. Complete objects and generous separation, crisp soft ink outlines not pixels, no loose quills or tools.",
+  "references": [
+    "assets/source/storybook/restoration-props-v1.png"
+  ],
+  "source": "assets/source/storybook/restoration-documents-v1.png"
+}

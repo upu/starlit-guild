@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Create a transparent two-cell prop sheet for a warm hand-painted 2D RPG. Use the reference's soft brown outlines, warm wood palette and brush texture. Two independent equal square cells side by side. LEFT: small square wooden apothecary work table, waist-height with four sturdy legs and simple cross braces, empty flat top, seen from elevated 50-degree downward three-quarter angle. All four legs fully visible, soft painterly wood, no drawers, no items. RIGHT: a small freshly harvested bundle of medicinal leaves tied with thin twine, lying FLAT on an invisible tabletop, same elevated perspective, muted sage green leaves and a few pale green leaf undersides, no magical glow, no flowers, no tray. Entire objects within respective cells with ample transparent margins. Transparent background, no ground or opaque shadow blob, no labels, no characters, no border. Do not use pixel art.",
+  "source": "assets/source/storybook/medicine-props-v1.png",
+  "outputs": [
+    "public/storybook-study/medicine-table-v1.webp",
+    "public/storybook-study/herbs-v1.webp"
+  ]
+}

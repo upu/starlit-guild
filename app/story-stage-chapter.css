@@ -1,0 +1,466 @@
+.story-stage-extra {
+  position: absolute;
+  width: var(--stage-cell);
+  height: var(--stage-cell);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.story-stage-item:is([data-art="broken-fastener"], [data-art="stained-cloth"]) {
+  aspect-ratio: 1;
+}
+.story-stage-extra-sprite {
+  position: absolute;
+  inset: 0;
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.story-stage-extra .story-stage-name {
+  top: 4%;
+}
+.story-stage-extra:is([data-npc="fence-carrier"], [data-restoration="true"]) .story-stage-name {
+  top: 100%;
+}
+.story-stage-extra[data-restoration="true"] .story-stage-name {
+  left: 20%;
+}
+.story-stage-extra[data-speaking="true"] .story-stage-name {
+  color: #fff0a5;
+}
+.story-stage-extra[data-npc="child"] {
+  width: calc(var(--stage-cell) * 0.72);
+  height: calc(var(--stage-cell) * 0.72);
+}
+.story-stage-extra:is(
+    [data-npc="child"],
+    [data-npc="doctor"],
+    [data-npc="fence-carrier"],
+    [data-npc="merchant"],
+    [data-npc="parent"],
+    [data-npc="stone-carrier"]
+  )
+  .story-stage-extra-sprite {
+  background-size: 400% 200%;
+}
+.story-stage-item[data-art="water-bucket"] {
+  aspect-ratio: 192 / 304;
+}
+.story-stage-item[data-art^="tower-stone"][data-glow="dim"] {
+  filter: drop-shadow(0 0 3px #b7e3ffb0) drop-shadow(0 0 9px #87bde85a);
+}
+.story-stage-item[data-art="light-cloth"][data-glow="dim"] {
+  filter: brightness(1.12) drop-shadow(0 0 5px #a9dbffb0);
+}
+.story-stage-item[data-art="light-cloth"]:not([data-glow]) {
+  filter: brightness(0.8);
+}
+.story-stage-item:is(
+  [data-art^="candidate-"],
+  [data-art="covered-stone"],
+  [data-art="stone-wrap"],
+  [data-art="wrapped-stone"]
+) {
+  aspect-ratio: 256 / 320;
+}
+.story-stage-item[data-art="candidate-blue"][data-glow] {
+  filter: drop-shadow(0 0 5px #7bbaffc0);
+}
+.story-stage-item[data-art="candidate-violet"][data-glow] {
+  filter: drop-shadow(0 0 4px #c0b2ff90);
+}
+.story-stage-item[data-glow="dim"][data-glow-tone="violet"] {
+  filter: brightness(1.08) drop-shadow(0 0 4px #c5b5fbb0) drop-shadow(0 0 8px #ab8adc50);
+}
+.story-stage-item:is([data-art^="display-"], [data-art^="tower-stone"], [data-art="light-cloth"]) {
+  aspect-ratio: 256 / 320;
+}
+.story-stage-extra[data-bed="true"] .story-stage-shadow {
+  display: none;
+}
+.story-stage-extra:is([data-npc="masked-pumpety"]) .story-stage-extra-sprite {
+  background-size: 400% 300%;
+}
+.story-stage-extra[data-npc="cook"] .story-stage-extra-sprite {
+  background-size: 400% 400%;
+}
+.story-stage-extra:is([data-npc="keeper"], [data-npc="merchant"]) .story-stage-extra-sprite {
+  background-size: 400% 500%;
+}
+.story-stage-extra[data-npc="worker"] .story-stage-extra-sprite {
+  background-size: 400% 600%;
+}
+.story-stage-item:is([data-art="ale-cup-empty"], [data-art="ale-cup-full"], [data-art="ale-jug"]) {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="fruit-glass"] {
+  aspect-ratio: 0.62;
+}
+.story-stage-item[data-art="ale-bottle"] {
+  aspect-ratio: 422 / 890;
+}
+.story-stage-item[data-art="ale-jug"][data-pouring="true"]::after {
+  background: #d8a647b0;
+}
+.story-stage-item:is([data-art="dining-plate"], [data-art="lunch-plate"]) {
+  aspect-ratio: 1.65;
+}
+.story-stage-item[data-art="sealed-letter"] {
+  aspect-ratio: 1.5;
+}
+.story-stage-item:is(
+  [data-art="survey-pot"],
+  [data-art="tool-rucksack"],
+  [data-art="garden-pot"],
+  [data-art="empty-garden-pot"],
+  [data-art="work-fence"],
+  [data-art="joint-roots"],
+  [data-art="work-gloves"],
+  [data-art="snag-rope"],
+  [data-art="iron-fastener"],
+  [data-art="cart-drape"]
+) {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="pot-lid"] {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art="scrubbing-rag"] {
+  aspect-ratio: 4 / 3;
+}
+.story-stage-extra[data-bed="true"] .story-stage-name {
+  top: 22%;
+}
+.story-stage-item[data-art="farm-hoe"] {
+  aspect-ratio: 1 / 5;
+}
+
+.story-stage-item {
+  position: absolute;
+  aspect-ratio: 1.3;
+  transform: translateX(-50%);
+  background: var(--item-art) center / contain no-repeat;
+  image-rendering: pixelated;
+  z-index: 90;
+  transition: filter 700ms;
+}
+.story-stage-item[data-art="lantern"] {
+  aspect-ratio: 0.7;
+}
+.story-stage-item[data-art="signpost-portable"] {
+  aspect-ratio: 0.85;
+}
+.story-stage-item:is([data-art="honey-bag"], [data-art="honey-bag-open"]) {
+  aspect-ratio: 256 / 280;
+}
+.story-stage-item[data-art="empty-bottles"] {
+  aspect-ratio: 1;
+}
+.story-stage-item:is(
+  [data-art="walnut-light"],
+  [data-art="walnut-medium"],
+  [data-art="walnut-dark"],
+  [data-art="walnut-light-half"],
+  [data-art="walnut-medium-half"],
+  [data-art="walnut-dark-half"],
+  [data-art="walnut-underside"],
+  [data-art="walnut-piece"],
+  [data-art="walnut-cake"],
+  [data-art="honey-cake"],
+  [data-art="travel-flask"],
+  [data-art="flask-cup"],
+  [data-art="twine"],
+  [data-art="cake-parcel"]
+) {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="low-bench"] {
+  aspect-ratio: 3 / 1;
+}
+.story-stage-item:is([data-art="packing-cloth"], [data-art="dragging-cloth"]) {
+  aspect-ratio: 256 / 144;
+}
+.story-stage-item[data-pouring="true"]::after {
+  content: "";
+  position: absolute;
+  left: 5%;
+  top: 40%;
+  width: max(1px, 4%);
+  height: 32%;
+  background: linear-gradient(90deg, #dbf4e9cc, #accfdf99);
+  transform: rotate(20deg);
+  transform-origin: top;
+  pointer-events: none;
+}
+.story-stage-item[data-steaming="true"]::before {
+  content: "";
+  position: absolute;
+  left: 40%;
+  top: -18%;
+  width: 20%;
+  height: 38%;
+  border-left: 2px solid #f0eee6a0;
+  border-right: 1px solid #f0eee680;
+  border-radius: 50%;
+  animation: stage-tea-steam 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes stage-tea-steam {
+  from {
+    transform: translateY(0) skewX(-6deg);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(-20%) skewX(6deg);
+    opacity: 0.8;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-stage-item[data-steaming="true"]::before {
+    animation: none;
+  }
+}
+.story-stage-item[data-art="chair"] {
+  aspect-ratio: 0.75;
+}
+.story-stage-item[data-art="dining-table"] {
+  aspect-ratio: 3;
+}
+.story-stage-item[data-art="step-stool"] {
+  aspect-ratio: 1.4;
+}
+.story-stage-item:is(
+  [data-art="record-board"],
+  [data-art="paper"],
+  [data-art="folded-paper"],
+  [data-art="lap-board"],
+  [data-art="sample-dish"]
+) {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art^="reflector"] {
+  aspect-ratio: 272 / 240;
+}
+.story-stage-item[data-art="reflector"][data-glow="bright"] {
+  filter: drop-shadow(-4px 2px 8px #d6efaaa0);
+}
+.story-stage-item[data-art="reflector-cover"] {
+  aspect-ratio: 1;
+}
+.story-stage-item[data-art="reflector-cover-flat"] {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art="reflector"][data-glow="bright"]::after {
+  content: "";
+  position: absolute;
+  width: 420%;
+  height: 160%;
+  left: -140%;
+  top: 75%;
+  pointer-events: none;
+  transform: rotate(8deg);
+  background: radial-gradient(ellipse, #efffc48c 0%, #e9f5a64d 35%, #d9f2ad00 70%);
+}
+.story-stage-item[data-art="low-smoke"] {
+  aspect-ratio: 6;
+  background: none;
+  pointer-events: none;
+}
+.story-stage-item[data-art="low-smoke"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--item-art) center / contain no-repeat;
+  opacity: 0.48;
+  animation: stage-smoke-drift 3.2s ease-in-out infinite alternate;
+}
+.story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+  animation: stage-smoke-fade 3s ease-out forwards;
+}
+@keyframes stage-smoke-drift {
+  from {
+    transform: translateX(3%);
+    opacity: 0.35;
+  }
+  to {
+    transform: translateX(-4%);
+    opacity: 0.55;
+  }
+}
+@keyframes stage-smoke-fade {
+  from {
+    transform: translateX(0);
+    opacity: 0.48;
+  }
+  to {
+    transform: translateX(-8%);
+    opacity: 0;
+  }
+}
+.story-stage-item[data-glow="bright"]:is(
+    [data-art="moss"],
+    [data-art="moss-jar"],
+    [data-art="colony"]
+  ) {
+  filter: brightness(1.3) drop-shadow(0 0 4px #b6ffd0) drop-shadow(0 0 16px #7beca6a0);
+}
+.story-stage-item[data-glow="dim"]:is(
+    [data-art="moss"],
+    [data-art="moss-jar"],
+    [data-art="colony"]
+  ) {
+  filter: drop-shadow(0 0 2px #9ed19b80);
+}
+.story-stage-item[data-glow="bright"][data-art="lantern"] {
+  filter: drop-shadow(0 0 9px #ffd77f90);
+}
+.story-stage-item[data-art="stone"] {
+  aspect-ratio: 2.6;
+  z-index: 1;
+}
+.story-stage-item[data-art="map"] {
+  aspect-ratio: 2;
+}
+.story-stage-item[data-art="moss-jar"] {
+  aspect-ratio: 0.8;
+}
+.story-stage-wall-moss-light {
+  position: absolute;
+  left: 46%;
+  top: 48%;
+  width: 8%;
+  height: 5%;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #d8ffc8b0, #8feea859 45%, transparent 72%);
+  mix-blend-mode: screen;
+  animation: wall-moss-breathe 4.8s ease-in-out infinite;
+}
+@keyframes wall-moss-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.story-stage-item[data-art="spatula"] {
+  aspect-ratio: 0.9;
+}
+.story-stage-item:is([data-art="table"], [data-art="handcart"], [data-art$="-cart"]) {
+  aspect-ratio: 1.5;
+  z-index: 1;
+}
+.story-stage-item:is([data-art="signpost"], [data-art^="stone-lantern"], [data-art="sample-jar"]) {
+  aspect-ratio: 0.85;
+}
+.story-stage-item[data-art="plant-label"] {
+  aspect-ratio: 0.7;
+}
+.story-stage-item[data-shaded="true"] {
+  filter: brightness(0.55);
+}
+.story-stage-item[data-art="oil-dish"] {
+  aspect-ratio: 1.5;
+}
+.story-stage-item:is([data-art="roadside-grass"], [data-art="roadside-stubble"]) {
+  aspect-ratio: 1.25;
+}
+.story-stage-item:is([data-art="puppet"], [data-art="golem"]) {
+  aspect-ratio: 0.8;
+  z-index: 1;
+}
+.story-stage-item[data-art="golem"] {
+  /* Match the delivered 432x384 sprite so its feet sit on the authored ground coordinate. */
+  aspect-ratio: 432 / 384;
+}
+.story-stage-item[data-figure="true"] {
+  aspect-ratio: 1;
+  background-size: 400% 200%;
+}
+.story-stage-item[data-art="puppet"] {
+  /* The detailed wooden figure is much smaller than the heroes; filter its source pixels. */
+  image-rendering: auto;
+}
+.story-stage-item[data-glow="bright"][data-art="stone-lantern"] {
+  filter: drop-shadow(0 0 8px #ffd77f90);
+}
+.story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+  content: "";
+  position: absolute;
+  left: 43%;
+  top: 45%;
+  width: 10%;
+  height: 12%;
+  pointer-events: none;
+  background: radial-gradient(ellipse, #fff6bcbd, #ffc14d66 40%, transparent 75%);
+  mix-blend-mode: screen;
+  transform-origin: center bottom;
+  animation: oil-lantern-flicker 1.7s ease-in-out infinite;
+}
+@keyframes oil-lantern-flicker {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.94, 0.96);
+  }
+  45% {
+    opacity: 0.85;
+    transform: scale(1.04, 1.1);
+  }
+  70% {
+    opacity: 0.6;
+    transform: scale(1, 1.02);
+  }
+}
+.story-stage-item[data-item="dark"] {
+  filter: brightness(0.65);
+}
+.story-stage-item[data-art="picnic-cloth"] {
+  aspect-ratio: 5;
+  z-index: 1;
+}
+.story-stage[data-night="true"] .story-stage-ground {
+  background-blend-mode: multiply;
+  background-color: #98a1bd;
+}
+.story-stage[data-night="true"] .story-stage-sprite {
+  filter: brightness(0.82);
+}
+.story-stage-sprite[data-atlas="shawl"] {
+  background-image: url("/story-stage/aria-shawl.webp");
+  background-size: 400% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+    animation: none;
+    opacity: 0.6;
+  }
+  .story-stage-item[data-art="low-smoke"]::before {
+    animation: none;
+    opacity: 0.4;
+  }
+  .story-stage-item[data-art="low-smoke"][data-dissipating="true"]::before {
+    opacity: 0;
+  }
+  .story-stage-wall-moss-light {
+    animation: none;
+    opacity: 0.6;
+  }
+  .story-stage-item,
+  .story-stage-extra {
+    transition: none;
+  }
+}
+
+.story-stage-item[data-art="cart-wheel"] {
+  aspect-ratio: 1;
+  background: none;
+}
+.story-stage-item[data-art="cart-wheel"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--item-art) center / contain no-repeat;
+  transform: scaleX(0.82) rotate(var(--wheel-angle, 0deg));
+}

@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Forest adventure ground and empty-hand forage motion",
+  "accepted": [
+    {
+      "name": "forest-lane-loop-v1",
+      "source": "assets/source/storybook/forest-lane-loop-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-887e0f7b-8930-4d22-b0c0-4838e4383ed7.png",
+      "prompt": "Create a new horizontally repeating woodland adventure ground for this original warm hand-painted 2D RPG. Image1 provides forest identity, plant palette and brush texture; image2 ONLY provides elevated oblique camera, ground scale, and horizontal scrolling layout. 1536x1024 landscape composition. Replace image1's depth-facing path with a wide continuous forest-floor walking corridor extending LEFT to RIGHT across the entire canvas. Camera looks down at about50degrees, no horizon or sky. Far upper20% has modest tree roots, ferns and dark-green shrubs, near lower12% has sparse soft leaves. Middle68% must be clear traversable gently damp ochre soil with fine leaf litter and tiny moss flecks, no obstructing trunks, roots, boulders, puddles or cliff edges. Plants and pebbles are small relative to the walking ground, like image2 ground scale; do not enlarge scenery for miniature heroes. Left and right boundaries have matching ground/foliage levels and colors for seamless horizontal repetition; no vertical end caps or corners. A quiet shady forest, warm soft daylight filtered through foliage, moss at roots. No houses, tower, lantern, props, people, text, frame, grid, outlines or pixel-art filter. Full opaque background.",
+      "references": [
+        "public/storybook-study/forest-floor-v1.png",
+        "public/storybook-study/village-lane-loop-v1.png"
+      ]
+    },
+    {
+      "name": "aria-forage-v1",
+      "source": "assets/source/storybook/aria-forage-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-1e53da33-27cb-485f-89cf-b0c9b3145b58.png",
+      "prompt": "Create a FOUR-COLUMN ONE-ROW transparent sprite strip of Aria the pale blonde pointed-ear girl in green cloak, flower hair ornament, cream tunic, brown boots for the same original warm hand-painted2D RPG as references. Image1 is canonical character identity, face, head/body size, colors and standing pose; image2 is reference for same body scale when crouching, NOT tools. Four completely separated full-body poses, facing screenRIGHT throughout:0 neutral standing calibration exactly matching image1;1 low grounded kneel, free left hand supports bent knee, empty right hand reaches ahead to small plants at ground just beyond the front boot;2 same planted feet and head size, right fingers gently pinch a tiny leaf near ground, torso leans forward slightly;3 same kneel, right hand lifts a tiny two-leaf sprig toward chest to inspect its underside, head tilts toward hand. No digging, trowel, hoe, shovel, container, basket or baked-in plant patch. Only frame2/3 may have one tiny leaf sprig. All kneeling poses visibly lower than standing, heads and boots keep same physical size, no childification. Hands reach ahead beyondtoe, not between knees. Gentle curious expression, calm precise motion, no action lines or effects. Finely painted brown outlines and soft fabric shading, matching reference brush texture. All sandal/boot tips, cloak and head fit inside cell with generous transparent gutters. Real alpha transparency, no matte, no scenery, no shadow blobs, no text or labels.",
+      "references": [
+        "public/storybook-study/aria-conversation-v1.webp",
+        "public/storybook-study/aria-earthwork-v1.webp"
+      ]
+    },
+    {
+      "name": "leon-forage-v1",
+      "source": "assets/source/storybook/leon-forage-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-2b9bcda3-1940-4486-b2ef-5b9d97bb5a2d.png",
+      "prompt": "Create a FOUR-COLUMN ONE-ROW transparent sprite strip of Leon the brown-haired young man in red scarf, dark blue vest, cream sleeves and brown boots for the same original warm hand-painted2D RPG as references. Image1 is canonical character identity, face, head/body size, colors and standing pose; image2 is reference for same body scale when crouching, NOT tools. Four completely separated full-body poses, facing screenRIGHT throughout:0 neutral standing calibration exactly matching image1;1 low grounded kneel, free left hand supports bent knee, empty right hand reaches ahead to small plants at ground just beyond the front boot;2 same planted feet and head size, right fingers gently pinch a tiny leaf near ground, torso leans forward slightly;3 same kneel, right hand lifts a tiny two-leaf sprig toward chest to inspect its underside, head tilts toward hand. No digging, trowel, hoe, shovel, container, basket or baked-in plant patch. Only frame2/3 may have one tiny leaf sprig. All kneeling poses visibly lower than standing, heads and boots keep same physical size, no childification. Hands reach ahead beyondtoe, not between knees. Gentle curious expression, calm precise motion, no action lines or effects. Finely painted brown outlines and soft fabric shading, matching reference brush texture. All sandal/boot tips, cloak and head fit inside cell with generous transparent gutters. Real alpha transparency, no matte, no scenery, no shadow blobs, no text or labels.",
+      "references": [
+        "public/storybook-study/leon-conversation-v1.webp",
+        "public/storybook-study/leon-earthwork-v1.webp"
+      ]
+    }
+  ],
+  "validation": [
+    "Both characters retain one atlas scale calibrated to134/144px standing height, baseline176 and transparent gutters; kneeling poses remain lower without rescaling heads.",
+    "Actual PC1243x1244 and browser mobile390x844: daytime and moonlit forest forage, standing/walking transitions, ground scrolling and night battle reviewed. Final spacing correction checked at both widths in work/forage-both-*.png.",
+    "Forest repetition mirrors alternating tiles so identical painted edges meet; forest-only parity is tested across tile boundaries.",
+    "Default rollout is now5/37 adventures; remaining32 and full chapter-wide final QA are not complete."
+  ]
+}

@@ -170,22 +170,22 @@ const patterns: Partial<Record<string, Work[]>> = {
     "区画図と継ぎ目を照合する",
     "抜けた石の溝を写し取る",
   ),
-  [MANOR_QUEST]: job("escort", "厨房へ荷物を運ぶ", "庭へ鉢を運ぶ", "荷札と庭の灯りを確かめる"),
+  [MANOR_QUEST]: job("escort", "厨房へ荷物を運ぶ", "庭へ鉢を運ぶ", "荷札と行き先を確かめる"),
   [REPLACEMENT_QUEST]: [
-    ...job("escort", "保管石を比較台へ運ぶ"),
+    ...job("escort", "保管石を比較する場所へ運ぶ"),
     ...job("gather", "石の色と明るさを比べる", "寸法と保管記録を照合する"),
   ],
   [REHEARSAL_QUEST]: job(
     "escort",
-    "厨房へ鍋を届ける",
+    "庭の鉢を運ぶ",
     "飾り布の包みを整える",
-    "展示台と帰路を確かめる",
+    "庭の通路と帰路を確かめる",
   ),
   [RECEPTION_QUEST]: job(
     "escort",
     "鉢と包みを運ぶ",
     "踏み跡から通路を確かめる",
-    "会場の荷物を仕分ける",
+    "荷車の積み荷を確かめる",
   ),
   [STONE_RETURN_QUEST]: [
     ...job("battle", "斜面から下りてくるスライム"),
@@ -200,6 +200,14 @@ const patterns: Partial<Record<string, Work[]>> = {
   ),
 };
 export function chapterThreeWork(id: string, node: number) {
+  if (id === RECEPTION_QUEST && node === 14)
+    return { kind: "escort" as const, name: "展示台の裏へ向かう" };
+  if (id === REHEARSAL_QUEST && node === 14)
+    return { kind: "escort" as const, name: "手伝いを終えて裏庭に集まる" };
+  if (id === REPLACEMENT_QUEST && node === 14)
+    return { kind: "gather" as const, name: "候補の石をより分ける" };
+  if (id === MANOR_QUEST && node === 14)
+    return { kind: "escort" as const, name: "庭の展示台へ向かう" };
   const pattern = patterns[id];
   return pattern ? pattern[node % pattern.length] : null;
 }

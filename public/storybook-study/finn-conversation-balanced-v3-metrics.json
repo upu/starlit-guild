@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-conversation-balanced-v3.png",
+    "scale": 0.23125,
+    "left": 55,
+    "top": 28,
+    "width": 71,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.16977452518442
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-conversation-balanced-v3.png",
+    "scale": 0.23125,
+    "left": 58,
+    "top": 28,
+    "width": 67,
+    "height": 148,
+    "baseline": 176,
+    "headX": 92.57039398087127
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-conversation-balanced-v3.png",
+    "scale": 0.23125,
+    "left": 55,
+    "top": 28,
+    "width": 72,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.3809133714706
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-conversation-balanced-v3.png",
+    "scale": 0.23125,
+    "left": 56,
+    "top": 30,
+    "width": 73,
+    "height": 146,
+    "baseline": 176,
+    "headX": 95.42362187423578
+  }
+]

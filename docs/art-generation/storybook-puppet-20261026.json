@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Create a transparent 4-column by 2-row sprite sheet, EIGHT full-body poses of the SAME small wooden puppet in FIRST reference, redrawn in the warm soft hand-painted style of SECOND reference. Preserve carved round wooden jack-o-lantern face with dark hollow eyes and smiling mouth (NOT a human child), hinged wooden arms/legs, floppy forest-green pointed hat with yellow stars and tiny pumpkin charm, jagged green/yellow cape/tunic, small dark boots. Simplify tiny ornamentation into clear soft shapes readable at 35px game size; no pixel outlines. All face three-quarter LEFT, elevated 45-degree downward view, constant head size and limb length across all poses, same boot ground line, generous transparent margins. ROW1: col1 neutral standing, col2 walking left phase1 left leg forward, col3 walking left phase2 feet passing, col4 walking left phase3 right leg forward. ROW2: col1 walking left phase4 feet passing opposite, col2 kneeling on one knee (head lower, unchanged size), col3 theatrical bow at waist (head lower, unchanged size), col4 slight surprised recoil with one palm raised. Hands clear and not hidden behind chest. No props to carry, no signpost, no ground or shadow blobs, no text, no grid. Exactly eight figures, no duplicated extra limbs. Entire hat tips, boots and dangling pumpkin inside cells.",
+  "source": "assets/source/storybook/puppet-poses-v1.png",
+  "outputs": [
+    "public/storybook-study/puppet-poses-v1.webp"
+  ],
+  "registration": "512px cells, 4x2, same scale from neutral height384, foot line480."
+}

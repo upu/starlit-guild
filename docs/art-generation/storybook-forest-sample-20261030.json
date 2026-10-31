@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen.imagegen",
+  "scope": "1-6 return, open jar and specimen transfer",
+  "accepted": [
+    {
+      "reference": "assets/source/storybook/aria-forage-v1.png",
+      "generated": "exec-552b2bcf-c4c6-49ee-90b9-575dd20da6c4.png",
+      "source": "assets/source/storybook/aria-forest-sample-v1.png",
+      "sourceSha256": "2f093a09aab3afc6dbfdb2ce92d6f44b8eb2912fc0ce6a4501e86f4f2335a3eb",
+      "output": "public/storybook-study/aria-forest-sample-v1.webp",
+      "outputSha256": "8668010b1bf025f8e12a41e84dedbfa3919ef369a0accd52f10dcfd0f3c0b80d",
+      "prompt": "Edit this four-frame original Aria hand-painted 2D RPG sprite strip into a matching moss sample inspection strip. Preserve exact identity, pointed ears, pale hair and white flower, dark green cloak, white clothing, brown gloves and boots, her head and physical body proportions, 3/4 view, same lighting and four separate columns with transparent gutters. Frame 1 stays the same standing neutral pose as the scale benchmark. Frames 2, 3, 4: same low kneeling pose, torso and planted boots at the same position and same head size as the reference's crouching figures; only change the near arm gesture. Frame 2 reaches down toward a nearby unseen jar while holding a tiny short flat wooden spatula in her gloved hand. Frame 3 draws the same small spatula slightly upward, holding a tiny bit of dark green moss on its tip. Frame 4 reaches slightly forward and downward to place that moss into an unseen shallow bowl. Spatula is visibly gripped by hand in all 3 frames and its tip never touches her face. Draw no jars, no bowls, no other props, no scenery, no light, no text or shadows. Genuine alpha transparency. Full hair, cloak, tool tip, and boots fully visible within each frame with generous gutters; same compact game sprite look, not a portrait."
+    },
+    {
+      "reference": "assets/source/storybook/moss-jar-v1.png",
+      "generated": "exec-95103745-5ce5-44b5-9565-5f848f197252.png",
+      "source": "assets/source/storybook/moss-jar-open-v1.png",
+      "sourceSha256": "1267d6e160e6cbcb5d8935e5a717a29b87850cd662d3d84a930e008b056a14e9",
+      "output": "public/storybook-study/moss-jar-open-v1.webp",
+      "outputSha256": "a339e5a50bfdc5726b10dea9616a68fcd94eb3fe5fcd0fa75f6e5f4d134f1679",
+      "prompt": "Edit this exact small travel moss jar into its OPEN daytime version for the next story scene. Remove the cork completely, revealing the wide open glass mouth seen slightly from above. Keep the same glass jar silhouette, neck, rope loop, soil and moss, colors, angle, size, lighting, hand-painted warm 2D RPG style, transparent margins and genuine alpha. The moss has grown dim since yesterday: remove its yellow luminous hot spots and render the green moss naturally without any glow. No lid, no hands, no utensil, no text, no background and no shadow. One complete isolated jar."
+    }
+  ],
+  "build": "node scripts/build-storybook-forest-sample.mjs"
+}

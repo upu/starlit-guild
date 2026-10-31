@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create a complete landscape 3:2 game background. Reference1 exact fork geometry and landmarks to preserve: a small roofed public stone washing basin at upper left with thin water stream, blue hanging laundry on a real clothesline in the upper left narrow passage; stone-and-timber houses and brewery rear door with barrels at upper middle; dirt/cobble crossroad extending from lower left toward SCREEN RIGHT, second narrower cobbled way recedes upper middle-left. Reference2 approved warm hand-painted storybook 2D RPG style, fine brown outlines, soft warm ochre masonry and painted materials, elevated three-quarter 45 degree camera. Redraw reference1 matching this style and stronger looking-down view, no pixel grid. Keep a wide usable horizontal ground route at y55-72percent for a handcart to exit screen right, lower half clear for four small heroes, no central obstacles. Morning daylight. Human-scale door heights, cobbles and washing basin compatible with small chibi game characters. No people, cart, moss, labels, text or UI. Do not make the passage a dead end or move the washing basin to right.",
+  "references": [
+    "public/story-stage/brekka-fork.webp",
+    "assets/source/storybook/brekka-alley-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-fork-v1.png"
+}

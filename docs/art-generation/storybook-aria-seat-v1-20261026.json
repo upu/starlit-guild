@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent hand-painted warm2D RPG 4-pose sprite sheet in1horizontalrow of EXACT ARIA fromreference: short pale blonde/light silver hair with green accent strand, small white flower near ear, large green eyes, elf ears, green hooded cape over creamshortdress brownwaistbelt, brownkneehighboots, friendly adventurousadultchibi. Same elevated45degree threequarter downwardcamera, allfaceRIGHT. Preserve exact head/body scale, complete boots and consistent footbaseline, generous clear gutters. Pose0neutralstandingcalibration. Pose1 begins sitting on INVISIBLE chair: knees slightlybent, hipslowered BACKandLEFT, torsoleansslightlyforward, handsnear thighs, silhouette onlyabout8% shorterthanstanding; notkneeling on ground. Pose2 seated on invisible normalchair with thighs horizontal, lowerlegsvertical, bootsonfloor, emptyhands relaxedonlap; about12% shorterthanstanding withoutlargerhead. Pose3 same seatedbody and boots, nearhand extendedgentlyRIGHT palmupas ifreceivingsmallcup, farhandonlap. No chair,cup, ground, shadow, labels,text, heldobjects. Allfourfiguresindependentontransparentbackground, fullhairandbootsnotclipped. Fine warm outlines and paintedtexture matching reference rather than pixelart.",
+  "references": [
+    "public/storybook-study/aria-poses-v1.webp"
+  ],
+  "source": "assets/source/storybook/aria-seat-v1.png"
+}

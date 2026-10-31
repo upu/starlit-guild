@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "draft; used only in the 3-9 adventure study",
+  "source": "assets/source/storybook/leon-groove-plan-v1.png",
+  "output": "public/storybook-study/leon-groove-plan-v1.webp",
+  "generated": "exec-dfe8f071-9004-4cb1-a165-32bd5b70e2eb.png",
+  "references": ["assets/source/storybook/leon-route-notes-v1.png", "public/storybook-study/groove-plan-v1.webp"],
+  "build": "node scripts/build-storybook-work.mjs leon groove-plan v1",
+  "prompt": "Use case: precise-object-edit. FIRST image is an existing transparent four-frame sprite strip of Leon, a young adult RPG character in a blue tunic, brown boots and red scarf. SECOND reference is the parchment plan of a stone with THREE parallel grooves. Edit ONLY the objects in FIRST: in frames 2, 3 and 4, replace the small dark notebook with one pale open parchment plan, held naturally in both gloved hands at the same waist/chest height. The plan has a faint clear drawing of a rectangular paving stone with three parallel grooves as in reference 2, but no text. Leon studies or points at the plan in all three frames. Frame 1 is the same empty-handed idle. Preserve all four original head-to-body proportions, faces, hairstyles, poses, silhouettes, red scarf, clothing, boots, foot baselines, camera angle, detailed warm RPG pixel-art style and equal frame layout; no other changes. Four complete figures with ample transparent gutters in one horizontal row; genuinely transparent background, no added props, writing, shadows, floor or glow."
+}

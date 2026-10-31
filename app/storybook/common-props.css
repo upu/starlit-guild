@@ -1,0 +1,6 @@
+/* Both the standing luggage and the carried cluster retain their authored box. */
+.storybook-painted-stage[data-painted="true"]
+  :is(.story-stage-bundle, .story-stage-carried-bundle) {
+  background-image: url("/storybook-study/common-travel-bundle-v1.webp");
+  image-rendering: auto;
+}

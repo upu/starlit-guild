@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen",
+  "scope": "Grounded trowel work for the earthwork worksite only; other gathering actions remain separately unfinished.",
+  "assets": [
+    {
+      "source": "assets/source/storybook/aria-earthwork-v1.png",
+      "output": "public/storybook-study/aria-earthwork-v1.webp",
+      "generated": "exec-e9f1d8d9-fd16-4f1c-ba66-2967944ba0e5",
+      "reference": "public/storybook-study/aria-conversation-v1.webp",
+      "prompt": "Use case: identity-preserve. Reference image is the character identity and exact costume, not the pose layout to copy. Create a transparent four-cell horizontal RPG animation strip of this SAME blonde elf young woman, pointed ears, green cloak, brown boots. Warm hand-painted 2D RPG, elevated 55-degree oblique camera, facing right in every frame. Frame0: standing relaxed empty hands, exact standing body proportions of reference, no tool. Frame1: low kneeling/squatting pose, one knee down and other foot planted, small wooden hand trowel held with tip on the ground immediately in front of the knees. Frame2: SAME low kneeling pose, gently pushing loose earth forward with that same small trowel, hands lower and slightly forward. Frame3: SAME kneeling pose, patting the earth flat with the trowel, hands slightly back. Head must be IDENTICAL physical size across all four frames; seated/kneeling body's total height should be 65 to75 percent of standing height, never upscale crouched person. Same tiny trowel, one arm and hand holds it naturally; no digging with swords or staffs, no other equipment. All four poses have the same ground baseline at bottom of feet/knee/trowel tip. Trowel tip always at same ground level as supporting foot. Generous transparent gutters around EACH complete separate body. Four equal cells in ONE row, no overlap, no labels, no text, no ground patch, no cast shadow, true alpha. Keep original face, clothes, age, hair, body size. Do not beautify or change anatomy."
+    },
+    {
+      "source": "assets/source/storybook/leon-earthwork-v1.png",
+      "output": "public/storybook-study/leon-earthwork-v1.webp",
+      "generated": "exec-5e66a9b1-6be6-4317-96e7-aad99b4c0c30",
+      "reference": "public/storybook-study/leon-conversation-v1.webp",
+      "prompt": "Use case: identity-preserve. Reference image is the character identity and exact costume, not the pose layout to copy. Create a transparent four-cell horizontal RPG animation strip of this SAME young brown-haired man, red scarf and cape, blue tunic, brown boots. Warm hand-painted 2D RPG, elevated 55-degree oblique camera, facing right in every frame. Frame0: standing relaxed empty hands, exact standing body proportions of reference, no tool. Frame1: low kneeling/squatting pose, one knee down and other foot planted, small wooden hand trowel held with tip on the ground immediately in front of the knees. Frame2: SAME low kneeling pose, gently pushing loose earth forward with that same small trowel, hands lower and slightly forward. Frame3: SAME kneeling pose, patting the earth flat with the trowel, hands slightly back. Head must be IDENTICAL physical size across all four frames; seated/kneeling body's total height should be 65 to75 percent of standing height, never upscale crouched person. Same tiny trowel, one arm and hand holds it naturally; no digging with swords or staffs, no other equipment. All four poses have the same ground baseline at bottom of feet/knee/trowel tip. Trowel tip always at same ground level as supporting foot. Generous transparent gutters around EACH complete separate body. Four equal cells in ONE row, no overlap, no labels, no text, no ground patch, no cast shadow, true alpha. Keep original face, clothes, age, hair, body size. Do not beautify or change anatomy."
+    },
+    {
+      "source": "assets/source/storybook/mira-earthwork-v2.png",
+      "output": "public/storybook-study/mira-earthwork-v1.webp",
+      "generated": "exec-82bad87a-f925-49a0-a8e3-3c52bcfd9a3c",
+      "reference": "public/storybook-study/mira-conversation-v1.webp",
+      "prompt": "Use case: identity-preserve. Reference image is the character identity and exact costume, not the pose layout to copy. Create a transparent four-cell horizontal RPG animation strip of this SAME adult lavender-haired healer woman, pale layered long dress, flowers, calm face. Warm hand-painted 2D RPG, elevated 55-degree oblique camera, facing right in every frame. Frame0: standing relaxed empty hands, exact standing body proportions of reference, no tool. Frame1: low kneeling/squatting pose, one knee down and other foot planted, small wooden hand trowel held with tip on the ground immediately in front of the knees. Frame2: SAME low kneeling pose, gently pushing loose earth forward with that same small trowel, hands lower and slightly forward. Frame3: SAME kneeling pose, patting the earth flat with the trowel, hands slightly back. Head must be IDENTICAL physical size across all four frames; seated/kneeling body's total height should be 65 to75 percent of standing height, never upscale crouched person. Same tiny trowel, one arm and hand holds it naturally; no digging with swords or staffs, no other equipment. All four poses have the same ground baseline at bottom of feet/knee/trowel tip. Trowel tip always at same ground level as supporting foot. Generous transparent gutters around EACH complete separate body. Four equal cells in ONE row, no overlap, no labels, no text, no ground patch, no cast shadow, true alpha. Keep original face, clothes, age, hair, body size. Do not beautify or change anatomy.",
+      "editPrompt": "Edit only the three kneeling poses (cells 2,3,4). Keep cell1 standing EXACTLY unchanged, including size and head. Keep all heads same physical size as standing cell1. The kneeling figures currently sit too upright/high. Bend hips and upper torso forward toward the trowel, tuck knees and heels more compactly, lower head/shoulder position so total kneeling silhouette is only 72 to77 percent of standing height. Do NOT achieve this by scaling/shrinking the whole kneeling person: retain head diameter, hand size, foot size, clothing detail and anatomy. Keep same face/costume/hairstyle, especially short tied ponytail and exposed nape if present. Same little hand trowel, same three phases of touching/pushing/patting soil; trowel stays on supporting-foot floor baseline. Same four equal columns, one row, generous transparent gutters and genuine alpha, no ground patch, no shadow, no text.",
+      "initialSource": "assets/source/storybook/mira-earthwork-v1.png",
+      "initialGenerated": "exec-77f00f09-b58a-4e9b-bf3d-a4c79d5dfb25",
+      "revisionReason": "Initial kneeling pose was too upright; replaced with lower torso and same head scale."
+    },
+    {
+      "source": "assets/source/storybook/finn-earthwork-v1.png",
+      "output": "public/storybook-study/finn-earthwork-v1.webp",
+      "generated": "exec-5fe11c9f-0c54-42c4-b5f3-b33731094237",
+      "reference": "public/storybook-study/finn-conversation-v2.webp",
+      "prompt": "Use case: identity-preserve. Reference image is the character identity and exact costume, not the pose layout to copy. Create a transparent four-cell horizontal RPG animation strip of this SAME middle-aged brown-haired man, low ponytail, stubble, worn long brown coat, boots. Warm hand-painted 2D RPG, elevated 55-degree oblique camera, facing right in every frame. Frame0: standing relaxed empty hands, exact standing body proportions of reference, no tool. Frame1: low kneeling/squatting pose, one knee down and other foot planted, small wooden hand trowel held with tip on the ground immediately in front of the knees. Frame2: SAME low kneeling pose, gently pushing loose earth forward with that same small trowel, hands lower and slightly forward. Frame3: SAME kneeling pose, patting the earth flat with the trowel, hands slightly back. Head must be IDENTICAL physical size across all four frames; seated/kneeling body's total height should be 65 to75 percent of standing height, never upscale crouched person. Same tiny trowel, one arm and hand holds it naturally; no digging with swords or staffs, no other equipment. All four poses have the same ground baseline at bottom of feet/knee/trowel tip. Trowel tip always at same ground level as supporting foot. Generous transparent gutters around EACH complete separate body. Four equal cells in ONE row, no overlap, no labels, no text, no ground patch, no cast shadow, true alpha. Keep original face, clothes, age, hair, body size. Do not beautify or change anatomy."
+    },
+    {
+      "source": "assets/source/storybook/lico-earthwork-v2.png",
+      "output": "public/storybook-study/lico-earthwork-v1.webp",
+      "generated": "exec-9f9850ab-e449-4514-9ecd-45cc68d11a5b",
+      "reference": "public/storybook-study/lico-conversation-ponytail-v1.webp",
+      "prompt": "Use case: identity-preserve. Reference image is the character identity and exact costume, not the pose layout to copy. Create a transparent four-cell horizontal RPG animation strip of this SAME short young freckled woman, loose round glasses, short tied ponytail exposing nape, red flower, red apron, charcoal clothes, sandals. Warm hand-painted 2D RPG, elevated 55-degree oblique camera, facing right in every frame. Frame0: standing relaxed empty hands, exact standing body proportions of reference, no tool. Frame1: low kneeling/squatting pose, one knee down and other foot planted, small wooden hand trowel held with tip on the ground immediately in front of the knees. Frame2: SAME low kneeling pose, gently pushing loose earth forward with that same small trowel, hands lower and slightly forward. Frame3: SAME kneeling pose, patting the earth flat with the trowel, hands slightly back. Head must be IDENTICAL physical size across all four frames; seated/kneeling body's total height should be 65 to75 percent of standing height, never upscale crouched person. Same tiny trowel, one arm and hand holds it naturally; no digging with swords or staffs, no other equipment. All four poses have the same ground baseline at bottom of feet/knee/trowel tip. Trowel tip always at same ground level as supporting foot. Generous transparent gutters around EACH complete separate body. Four equal cells in ONE row, no overlap, no labels, no text, no ground patch, no cast shadow, true alpha. Keep original face, clothes, age, hair, body size. Do not beautify or change anatomy.",
+      "editPrompt": "Edit only the three kneeling poses (cells 2,3,4). Keep cell1 standing EXACTLY unchanged, including size and head. Keep all heads same physical size as standing cell1. The kneeling figures currently sit too upright/high. Bend hips and upper torso forward toward the trowel, tuck knees and heels more compactly, lower head/shoulder position so total kneeling silhouette is only 72 to77 percent of standing height. Do NOT achieve this by scaling/shrinking the whole kneeling person: retain head diameter, hand size, foot size, clothing detail and anatomy. Keep same face/costume/hairstyle, especially short tied ponytail and exposed nape if present. Same little hand trowel, same three phases of touching/pushing/patting soil; trowel stays on supporting-foot floor baseline. Same four equal columns, one row, generous transparent gutters and genuine alpha, no ground patch, no shadow, no text.",
+      "initialSource": "assets/source/storybook/lico-earthwork-v1.png",
+      "initialGenerated": "exec-d373187d-d9f1-4052-80ae-22f9750cca79",
+      "revisionReason": "Initial kneeling pose was too upright; replaced with lower torso and same head scale."
+    }
+  ],
+  "soil": {
+    "source": "assets/source/storybook/earthwork-patch-v1.png",
+    "output": "public/storybook-study/earthwork-patch-v1.webp",
+    "generated": "exec-bc880dfa-64e3-4238-8ca9-80c3d8b3f681",
+    "direction": "Small shallow rural drainage trench partly filled with loose soil. Elevated 55-degree camera, horizontal 3.5:1 ground patch, no tools, people, glow, deep pit, frame or floating shadow. Genuine alpha."
+  },
+  "packing": "scripts/build-storybook-earthwork.mjs; standing calibration134/144/132/148/128, one common scale per character, baseline176 in192px cells. Supporting foot/knee remains fixed, tool tip at same floor. Lower working silhouettes are not upscaled.",
+  "remaining": [
+    "Full-quest entry/exit motion review",
+    "Other gathering/worksite poses",
+    "Remaining regions/enemies/effects",
+    "Whole chapter PC/mobile audit"
+  ]
+}

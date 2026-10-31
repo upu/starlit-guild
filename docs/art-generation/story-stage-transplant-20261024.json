@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/transplant-path-v1.png",
+      "reference": "public/story-stage/moss-beds.webp",
+      "prompt": "Create one 3:2 landscape pixel-art RPG background, matching the reference's elevated 45-degree top-down oblique camera, pixel grain, earthy stone/soil colors and architectural scale. New adjacent location on the soil transport path just outside the moss-growing garden behind Brekka's tower. NO people, carts, baskets, tools, text, icons, monsters or horizon. Ground fills the frame. A wide earth path runs from left to right with a clear exit at the right edge. Across the middle/right around x55% y58% is a subtle irregular patch of newly backfilled irrigation ditch, darker soft muddy earth with a shallow wheel rut, not an open stream or pit. In the left foreground around x25% y76% a large old tree at the extreme left edge has exposed roots bordering a DRY FLAT patch of firm soil large enough for a basket and cloth, clearly connected to the central path. Main staging area spanning x35-80%, y50-85% is unobstructed flat earth for five separately rendered small characters and one cart. Background top quarter shows distant stone edging of the moss garden and shrubs, no giant tower or door. Slight dusk neutral light, NOT dark night: game applies night overlay. Crisp detailed pixel illustration, coherent overhead perspective, no giant foreground props. The reference is STYLE AND CAMERA ONLY, do not reproduce its symmetrical garden layout. Make the central path passable and keep the foreground dry route continuous to the right.",
+      "sha256": "48771b878f8ad81da061c131c50ca105e783cad5e0a660af978010ffe1c3730a"
+    }
+  ]
+}

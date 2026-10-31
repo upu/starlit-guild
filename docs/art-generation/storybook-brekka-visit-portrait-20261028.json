@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial; pending whole-scene review",
+  "reference": "public/storybook-study/brekka-homes-v1.png",
+  "generated": "exec-1f39675a-3cf7-4b2e-9d6f-38618934c1e1.png",
+  "source": "assets/source/storybook/brekka-visit-portrait-v1.png",
+  "output": "public/storybook-study/brekka-visit-portrait-v1.png",
+  "prompt": "Use case: illustration-story. Asset: portrait 2D RPG gameplay background. Recompose the SAME reference courtyard and SAME two adjacent homes for a 2:3 vertical view, in the identical warm painted overhead three-quarter RPG style. Retain both timber-and-pale-stone houses with red tiled roofs, ivy and white flowers, left house has an open arched wooden door and short pale stone steps, right house has a closed arched wooden door and short pale stone steps. Keep the houses at the upper third with architecture sized for small full-body RPG characters; preserve their left-right order and adjacent courtyard relationship. Fill the middle and lower two-thirds with broad continuous warm dirt-and-cobblestone ground suitable for walking and a handcart. No people, cart, furniture, signs, text, sky, interface, borders or scenery painted into the open ground. Gentle daylight, overhead oblique angle, matching color, texture and storybook style of reference."
+}

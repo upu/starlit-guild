@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent RPG character atlas, FOUR isolated full body sprites in one horizontal row, same elevated three-quarter camera, same head/body/boot size and ground baseline. Reference1 exact chibi character and approved hand-painted style. Reference2 only fatigue and overnight rumpled clothes/mussed hair storytelling. Mira young adult woman lavender-gray long hair flowers and cream gold layered healer dress dark boots. Hair visibly loosened with stray locks, clothes rumpled, shoulders drooped, subtle gray-violet under-eye fatigue but eyes still alert, no drunk blush, no injury or collapse, do not age her. All face SCREEN RIGHT. Pose0 tired standing neutral calibration, empty hands lowered. Pose1 right/front hand reaching toward bag at waist level in front of her, fingers starting to grasp a small note that is NOT drawn, left arm low. Pose2 same hand paused just above invisible bag, looks up startled slightly, shoulder still slumped. Pose3 quietly replying, tired concerned soft eyes and hand withdrawn to chest. No props, bag, chair, staff, floor shadows, text or grid. Whole head and boots visible, ample transparent margins, identical physical height.",
+  "references": [
+    "assets/source/storybook/mira-check-v1.png",
+    "public/stories/mira-after-all-nighter.webp"
+  ],
+  "source": "assets/source/storybook/mira-all-nighter-v1.png"
+}

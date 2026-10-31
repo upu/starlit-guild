@@ -1,0 +1,36 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Match idle and handcart poses to walking proportions; preserve transparent alpha",
+  "records": [
+    {
+      "id": "aria",
+      "file": "assets/source/adventure-pixel/aria-travel-v2.png",
+      "reference": "assets/source/home-pixel/aria-walk-v9-a.png",
+      "prompt": "Create a production game pixel-art sprite atlas of the SAME aria character in the reference walking sheet. Reference is identity, clothing, pixel texture AND EXACT BODY PROPORTIONS master. Exactly 3 columns x 2 rows, 6 isolated full-body sprites, generous transparent gutters. Read order: 1 standing relaxed looking right, arms down; 2 exact same standing pose eyes briefly closed for blink; 3 pushing an invisible handcart to the RIGHT, arms forward waist-high, LEFT foot forward; 4 same pushing, RIGHT foot forward; 5 pulling an invisible handcart to the RIGHT, arms extending behind to the left at hip height, LEFT foot forward; 6 same pulling RIGHT foot forward. No cart, no cargo, no weapons, no floor or shadows. In ALL frames match the walking reference: same relatively small head, visible neck and torso, same long legs and boots, same head-to-body ratio. DO NOT make squat giant-head chibi poses; pushing leans only slightly and keeps almost full standing height. Preserve identity, color palette, garment lengths, eye color and ornaments. Preserve distinct foot strides. Keep every crown, hair curl and toe fully inside its cell. Consistent scale across all 6 cells. Transparent alpha background. No text labels numbers grid or dividers."
+    },
+    {
+      "id": "leon",
+      "file": "assets/source/adventure-pixel/leon-travel-v2.png",
+      "reference": "assets/source/home-pixel/leon-walk-v9-a.png",
+      "prompt": "Create a production game pixel-art sprite atlas of the SAME leon character in the reference walking sheet. Reference is identity, clothing, pixel texture AND EXACT BODY PROPORTIONS master. Exactly 3 columns x 2 rows, 6 isolated full-body sprites, generous transparent gutters. Read order: 1 standing relaxed looking right, arms down; 2 exact same standing pose eyes briefly closed for blink; 3 pushing an invisible handcart to the RIGHT, arms forward waist-high, LEFT foot forward; 4 same pushing, RIGHT foot forward; 5 pulling an invisible handcart to the RIGHT, arms extending behind to the left at hip height, LEFT foot forward; 6 same pulling RIGHT foot forward. No cart, no cargo, no weapons, no floor or shadows. In ALL frames match the walking reference: same relatively small head, visible neck and torso, same long legs and boots, same head-to-body ratio. DO NOT make squat giant-head chibi poses; pushing leans only slightly and keeps almost full standing height. Preserve identity, color palette, garment lengths, eye color and ornaments. Preserve distinct foot strides. Keep every crown, hair curl and toe fully inside its cell. Consistent scale across all 6 cells. Transparent alpha background. No text labels numbers grid or dividers."
+    },
+    {
+      "id": "mira",
+      "file": "assets/source/adventure-pixel/mira-travel-v2.png",
+      "reference": "assets/source/home-pixel/mira-walk-v9-a.png",
+      "prompt": "Create a production game pixel-art sprite atlas of the SAME mira character in the reference walking sheet. Reference is identity, clothing, pixel texture AND EXACT BODY PROPORTIONS master. Exactly 3 columns x 2 rows, 6 isolated full-body sprites, generous transparent gutters. Read order: 1 standing relaxed looking right, arms down; 2 exact same standing pose eyes briefly closed for blink; 3 pushing an invisible handcart to the RIGHT, arms forward waist-high, LEFT foot forward; 4 same pushing, RIGHT foot forward; 5 pulling an invisible handcart to the RIGHT, arms extending behind to the left at hip height, LEFT foot forward; 6 same pulling RIGHT foot forward. No cart, no cargo, no weapons, no floor or shadows. In ALL frames match the walking reference: same relatively small head, visible neck and torso, same long legs and boots, same head-to-body ratio. DO NOT make squat giant-head chibi poses; pushing leans only slightly and keeps almost full standing height. Preserve identity, color palette, garment lengths, eye color and ornaments. Preserve distinct foot strides. Keep every crown, hair curl and toe fully inside its cell. Consistent scale across all 6 cells. Transparent alpha background. No text labels numbers grid or dividers."
+    },
+    {
+      "id": "finn",
+      "file": "assets/source/adventure-pixel/finn-travel-v2.png",
+      "reference": "assets/source/home-pixel/finn-walk-v9-a.png",
+      "prompt": "Create a production game pixel-art sprite atlas of the SAME finn character in the reference walking sheet. Reference is identity, clothing, pixel texture AND EXACT BODY PROPORTIONS master. Exactly 3 columns x 2 rows, 6 isolated full-body sprites, generous transparent gutters. Read order: 1 standing relaxed looking right, arms down; 2 exact same standing pose eyes briefly closed for blink; 3 pushing an invisible handcart to the RIGHT, arms forward waist-high, LEFT foot forward; 4 same pushing, RIGHT foot forward; 5 pulling an invisible handcart to the RIGHT, arms extending behind to the left at hip height, LEFT foot forward; 6 same pulling RIGHT foot forward. No cart, no cargo, no weapons, no floor or shadows. In ALL frames match the walking reference: same relatively small head, visible neck and torso, same long legs and boots, same head-to-body ratio. DO NOT make squat giant-head chibi poses; pushing leans only slightly and keeps almost full standing height. Preserve identity, color palette, garment lengths, eye color and ornaments. Preserve distinct foot strides. Keep every crown, hair curl and toe fully inside its cell. Consistent scale across all 6 cells. Transparent alpha background. No text labels numbers grid or dividers."
+    },
+    {
+      "id": "lico",
+      "file": "assets/source/adventure-pixel/lico-travel-v2.png",
+      "reference": "assets/source/home-pixel/lico-walk-v9-a.png",
+      "prompt": "Create a production game pixel-art sprite atlas of the SAME lico character in the reference walking sheet. Reference is identity, clothing, pixel texture AND EXACT BODY PROPORTIONS master. Exactly 3 columns x 2 rows, 6 isolated full-body sprites, generous transparent gutters. Read order: 1 standing relaxed looking right, arms down; 2 exact same standing pose eyes briefly closed for blink; 3 pushing an invisible handcart to the RIGHT, arms forward waist-high, LEFT foot forward; 4 same pushing, RIGHT foot forward; 5 pulling an invisible handcart to the RIGHT, arms extending behind to the left at hip height, LEFT foot forward; 6 same pulling RIGHT foot forward. No cart, no cargo, no weapons, no floor or shadows. In ALL frames match the walking reference: same relatively small head, visible neck and torso, same long legs and boots, same head-to-body ratio. DO NOT make squat giant-head chibi poses; pushing leans only slightly and keeps almost full standing height. Preserve identity, color palette, garment lengths, eye color and ornaments. Preserve distinct foot strides. Keep every crown, hair curl and toe fully inside its cell. Consistent scale across all 6 cells. Transparent alpha background. No text labels numbers grid or dividers."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent RPG prop sprite sheet, TWO isolated objects side by side with generous spacing, same elevated three-quarter 45 degree view and warm hand-painted clean storybook illustration as reference. Left: plain corked small brown glass ale bottle, subdued amber, no label, modest household size. Right: small warm cream ceramic teacup with single loop handle on right, shallow amber tea visible, no saucer. Both completely shown, fine brown outlines, soft painted highlights. No ground shadow, no people, no text, no background. These will appear as tabletop props so show their open top ellipses clearly. Keep bottle and cup separate.",
+  "references": [
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/visit-tea-props-v1.png"
+}

@@ -1,0 +1,22 @@
+{
+  "date":"2026-10-27",
+  "tool":"image_gen built-in for turning sprites; existing accepted sprites and cropped bag layers for motion",
+  "scope":"2-3 medicine-packing study: five separately stored medicine/honey pairs, no default rollout yet",
+  "accepted":[
+    {"source":"assets/source/storybook/aria-packing-turn-v1.png","generated":"C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-afa165d5-acb4-4934-b0f3-1b7900b26971.png","delivery":"public/storybook-study/aria-packing-turn-v1.webp","reference":"public/storybook-study/aria-night-handheld-v1.webp"},
+    {"source":"assets/source/storybook/leon-packing-turn-v1.png","generated":"C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-a042633e-06f5-4225-b1de-6f32c4505653.png","delivery":"public/storybook-study/leon-packing-turn-v1.webp","reference":"public/storybook-study/leon-carry-v1.webp"}
+  ],
+  "turnPrompt":"Four-frame horizontal turn-in-place strip of same character as carrying reference. Warm painted2D RPG style, exact face and body proportions, same full height and planted boot baseline. Both empty open palms support a small parcel at waist, no object baked in. Frame0three-quarter right,1slightly toward viewer,2nearly frontal starting left,3three-quarter left. Rotate hands and body together, no walking or kneeling, no costume changes, transparent gutters, no shadows or text. Play forward/backward for held parcel attached to palms.",
+  "rejected":[{"generated":"C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-90690be6-5b66-4ed9-8cef-d4036f44f7c5.png","reason":"Added gold knee armor and ornate boots absent from canonical Leon carrying costume"}],
+  "correctionPrompt":"Edit only rejected Leon legs and boots using canonical carrying strip as costume reference. Straight dark-brown trousers tucked into plain knee-high brown leather boots with softly folded tops. Remove gold knee cuffs, armored shin panels, filigree and elaborate boot decoration. Preserve exact four poses, hands, arms, faces, hair, red cape, blue vest, white sleeves, body size, baseline and transparency.",
+  "packing":"scripts/build-storybook-medicine-packing.mjs packs both turn strips at one134-standing reference scale each,256x192cells,boot baseline176. It also crops the unchanged open-bag pixels below source y110 into packing-bag-front-v1.webp; same width and bottom align both bag layers. No repaint or fabricated alpha cutout.",
+  "runtime":"road-packing-carrier.ts owns each packet from lift through four turning frames, distance-driven carry gait, lower, release and empty return. Packet palms remain attached per rendered pose. road-packing-actions.ts delays visual next batch until both return; original engine and saves unchanged. road-paint-key.ts preserves storage at arrival. Open bags remain separate at source(760,800) and(1150,795), front lips mask inserted packets, stored packet positions persist. Completed/cold camp restores five per bag; unstarted camp does not pick up bottles.",
+  "validation":[
+    "60 related tests passed:374/936 widths,Lv18/40 progression,five pairs before engine arrival,unique table/carried ownership,all four carry and turn frames,palm contacts,bag/table foot exclusion,stable stored points,cold unstarted/completed states,atlas scale/gutters and existing waterway/transport regressions",
+    "FinalPC1243x1244:687 screenshots over80seconds,work/packing-storage-final-pc.json",
+    "Final browser390x844:1051 screenshots over80seconds,work/packing-storage-final-mobile.json",
+    "Both final filmstrips inspected through arrival; focused deposit contact images reviewed. Earlier packing-storage-pc/mobile contain work caption jumping over merchant face and are superseded. Caption is now fixed at bottom for packing only.",
+    "Final typecheck,scoped ESLint,npx vinext build passed. Physical phone and every-frame video verification not performed."
+  ],
+  "remaining":"Study only. Actual cloth wrapping and label contact, final bag closing/ready-to-carry continuity, then default rollout remain. Whole goal active13/37 adventures with24 defaults and full conversation/enemy/effect/wheel review still outstanding."
+}

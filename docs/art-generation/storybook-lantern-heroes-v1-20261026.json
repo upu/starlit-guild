@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original 2D warm softly handpainted RPG sprites, elevated45degree threequarter camera, TRANSPARENT background. 8 isolated completebody sprites in4columns x2rows. Preserve EXACT identities, costume, head size, boot size and body build from references. Both characters all face viewer-RIGHT, no mirroring. Same camera scale within each row. Row1 ARIA elf girl pale blond wavy hair with lavenderlock, leafdaisy hairclip, green hoodedcape white ruffle blouse and short white skirt, brown fingerless gloves and brownboots:0 neutral upright fullstanding for scale reference;1 standing beside chesthigh oil lantern extending near RIGHT hand ahead and slightlyup in a wipingmotion, otherarm supporting naturally;2 same at equalheight with wiping hand about8cm further right;3 bends fromhips/partialcrouch to trim weeds at kneeheight with small safe hand sickle innearhand, planted boots, head lowers naturally. Row2 LEON youngman brownhair bluevest white sleeves redcape brown gloves trousersboots:0 neutral fullstanding forscale reference;1 upright holding imaginary palmwide shallow oil dish inboth cupped hands just ahead ofwaist;2 same onehand cupped supporting dish and otherhand reaching forwardRIGHT about10cm;3 standing close to lantern reaching right hand forward at upperwaistheight to open door latch, otherhand atwaist. NO actual lantern or separate oil dish, cloth, props held except sickle inAria3. Characters inrows maintainidentical headheight and physical anatomy, poseonlychanges. Feet anchored to commonbaseline eachrow, same scale not resized to fillcell. Generoustransparentgaps and margins allhair/boots/hands visible, no text, labels, groundshadow or scenery. Do not make lean poses taller or puffier.",
+  "references": [
+    "assets/source/storybook/aria-work-v1.png",
+    "assets/source/storybook/leon-work-v1.png"
+  ],
+  "source": "assets/source/storybook/lantern-heroes-v1.png"
+}

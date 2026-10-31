@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/hill-night-v1.png",
+  "output": "public/storybook-study/hill-night-v1.png",
+  "references": [
+    "public/story-stage/hill-night.webp",
+    "public/storybook-study/meeting-path-v1.png"
+  ],
+  "prompt": "Edit first image, original moonlit hill road, into the soft hand-painted 2D RPG treatment of second approved daytime forest image. Preserve exact first-image overhead camera, composition and geographic layout: winding road from lower left diagonally across center to upper right, small stone tower edge with tiny warm lit door at extreme upper right, dense trees and rocks along sides. Tower door remains tiny around 6 percent canvas height, path should be broad enough for small travelers. No horizon, strong overhead three-quarter view. Calm dark blue/sage night palette, subtle cool moonlight, readable paths and silhouettes with broad brush shading and colored outlines. Remove pixel stipple and busy glitter speckles. No new glowing plants, no stars on ground, no people, no lamps/props on road, no UI or text. 3:2 landscape."
+}

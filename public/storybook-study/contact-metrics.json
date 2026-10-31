@@ -1,0 +1,50 @@
+[
+  {
+    "pose": "contact-a-v1",
+    "scale": 0.1,
+    "width": 96,
+    "height": 143,
+    "top": 33,
+    "baseline": 176
+  },
+  {
+    "pose": "contact-b-v1",
+    "scale": 0.1,
+    "width": 90,
+    "height": 134,
+    "top": 42,
+    "baseline": 176
+  },
+  {
+    "pose": "contact-b-v2",
+    "scale": 0.1,
+    "width": 95,
+    "height": 142,
+    "top": 34,
+    "baseline": 176
+  },
+  {
+    "pose": "pass-b-v2",
+    "scale": 0.1,
+    "width": 96,
+    "height": 138,
+    "top": 38,
+    "baseline": 176
+  },
+  {
+    "pose": "pass-b-v3",
+    "scale": 0.1,
+    "width": 88,
+    "height": 138,
+    "top": 38,
+    "baseline": 176
+  },
+  {
+    "pose": "pass-a-v1",
+    "scale": 0.1,
+    "width": 91,
+    "height": 139,
+    "top": 37,
+    "baseline": 176
+  }
+]

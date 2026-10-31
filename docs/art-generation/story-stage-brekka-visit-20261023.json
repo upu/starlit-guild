@@ -1,0 +1,53 @@
+{
+  "mode": "built-in imagegen",
+  "purpose": "4-3 return: recorded consultation, tabletop bottle and cup, neighboring residential doors",
+  "records": [
+    {
+      "id": "mira",
+      "prompt": "Generate a transparent RGBA RPG pixel-art sprite strip extending the EXACT healer Mira in the supplied reference. Four equal cells in ONE horizontal row, generous clear gutters. Preserve lavender-gray tied hair with flower, cream dress with blue trim, short cape, brown boots, original face/head width and chibi body proportions. High-oblique three-quarter RIGHT-facing camera. Full body and complete boots in every cell, fixed head/feet scale, no ground, cast shadows, background, labels or props. Cell1: standing with slight forward lean, near empty hand lowered and extended to the RIGHT at waist height, fingertips gently touching the side of an unseen small bottle on an unseen table. Cell2: same stance, near empty hand reaches a little farther RIGHT at the SAME waist height, palm open, gently pushing an unseen small cup along an unseen tabletop; modest elbow movement, do not crouch. Cell3: upright, near arm raised with loose knuckles extended to the RIGHT at shoulder height, contacting an unseen wooden door. Cell4: same knock pose, knuckles withdrawn toward her chest by about one third head width, same body and feet. Columns3/4 are a two-frame gentle door knock. EMPTY hands, no bottle, cup, table, door, staff or weapon. Keep the gentle adult face and crisp warm pixel outlines exactly consistent with the reference.",
+      "generatedFile": "exec-20148977-b509-44fe-94be-6a9469d4f7c7.png",
+      "path": "assets/source/story-stage/mira-visit-v1.png",
+      "sha256": "9da0b7904c1ff004831143ad14b8efe520d822c606f3af15ffd6ff65763ae4e9",
+      "status": "superseded by v2"
+    },
+    {
+      "id": "doctor",
+      "prompt": "Transparent RGBA RPG pixel-art sprite strip of the EXACT older village doctor in the reference: gray side-parted hair, calm lined face, green long coat, cream apron/robe, brown shoes and small brown medical satchel with cross. Four equal full-body cells in ONE horizontal row. High-oblique three-quarter LEFT-facing camera, same proportions and head width, clear gutters, all hair and soles visible, no floor or cast shadow or haze or text. First two cells form a subtle WRITING cycle: he holds one open small paper notebook in the far hand at waist height and writes on it with a short quill in the near hand; second cell moves only the quill and wrist a little, head/body/feet fixed, eyes lowered to the page. Third cell: same open notebook held against waist, quill paused, looks toward the patient at LEFT. Fourth cell: notebook still held in far hand, near hand gently gestures LEFT while explaining. Notebook and quill are part of these poses; no desk, chair or other person. Match the reference's warm pixel-art outlines and age, do not turn him into a young hero.",
+      "generatedFile": "exec-29471858-a787-4207-9e4b-1d90adeb1df4.png",
+      "path": "assets/source/story-stage/doctor-records-v1.png",
+      "sha256": "8e983c6109d42b7c089e716fca8fbe345c51831752da58b43f57f77e66a0009d",
+      "status": "integrated"
+    },
+    {
+      "id": "bottle",
+      "prompt": "A single small closed amber-brown glass bottle of ale, transparent RGBA background, medieval RPG pixel art in a high-oblique three-quarter view. Short round-shouldered body with a slender short neck and plain tan cork firmly inserted. Palm-sized portable household bottle, no handle, label, writing, magical glow, sparkle or decoration. Translucent warm amber liquid below the neck, a couple subdued glass highlights and crisp dark-brown outline. Full bottle and base safely inside generous transparent margins. No other object, floor or cast shadow. It will display at about 15 pixels wide beside a small ceramic cup, so keep the silhouette simple and readable.",
+      "generatedFile": "exec-68fd195d-059a-4e6d-b225-4c095e194c6d.png",
+      "path": "assets/source/story-stage/ale-bottle-v1.png",
+      "sha256": "2d773336038d8f67e211ab4d0a92342f7a07f497ad4fb87a830a363115229719",
+      "status": "integrated"
+    },
+    {
+      "id": "street",
+      "prompt": "Edit this Brekka high-oblique RPG pixel-art street into the adjacent residential frontage where a healer visits a patient and then knocks on the neighbor's door. Keep the same high camera, warm cobblestones, timber/stone houses, greenery, roof style and pixel grain. Remove the giant copper brewing vessel and brewing barrels; replace that left-side equipment area with a modest home facade. Show TWO clearly separate neighboring residential wooden doors: the patient's door around 30% of image width, with threshold near 36% of image height; neighbor's door around 77% width with threshold near 48% height. Each door about 18-22% image height, tall enough for the separately rendered small RPG characters. Neighbor's door should face the open street and be reachable from its LEFT side; its knocker/contact area around 77% width, 35% height. Keep the entire lower half and central approach open level cobblestone for four characters to stand and walk. No people, text, signs, labels, loose foreground props, UI or new landmarks. This is a residential corner inside the already established town, no tower or landscape change.",
+      "generatedFile": "exec-cd5584de-91a1-4326-8484-fb135b0cdfba.png",
+      "path": "assets/source/story-stage/brekka-homes-v1.png",
+      "sha256": "5f631116bbe2696b086e509fe965f7522adce1d45cb2e1b746104eaaee7f334c",
+      "status": "integrated"
+    },
+    {
+      "id": "mira-edit",
+      "prompt": "Edit only the SECOND of the four sprite cells. Keep the exact Mira identity, head, body, feet, outlines, camera, palette and other three cells unchanged. In cell2, extend her near arm farther to the RIGHT at the same waist/tabletop height: her palm should reach about one third of a head width farther right than it currently does, elbow almost straight, to visibly slide a small unseen cup along a table. Keep her torso upright, feet fixed, and empty hand fully inside the cell with a wide transparent margin. No table or cup. Preserve true transparent RGBA background and the four-cell horizontal layout.",
+      "generatedFile": "exec-ea8d4f9f-3f94-4cfd-baf0-4db80bf2c84a.png",
+      "path": "assets/source/story-stage/mira-visit-v2.png",
+      "sha256": "27b475259f788fce81c722282d6740e10e5a87468d6d6c999c731ad3c59c927d",
+      "status": "integrated"
+    }
+  ],
+  "referenceCommit": "30f1c684f3720ac1f9ee899406b0cd5b9b4ace24",
+  "references": [
+    "assets/source/story-stage/mira-poses-v1.png (first pose reference crop; see work/mira-visit-reference.png)",
+    "public/story-stage/doctor-poses.webp at referenceCommit",
+    "public/story-stage/brekka-alley.webp at referenceCommit",
+    "assets/source/story-stage/mira-visit-v1.png for the v2 reach edit"
+  ]
+}

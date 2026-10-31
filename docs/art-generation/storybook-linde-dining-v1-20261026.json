@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Repaint the supplied original RPG inn room as warm handpainted2D storybook game background with elevated45degree3quarter camera. Preserve broad OPEN wooden plank floor in lower2/3 for small actors and a separate large central diningtable to be added by game. Existing tables/stools remain only at FAR LEFT and FAR RIGHT edges, backwall has shelves with jars, arched glazed smallwindow, wooden bench, heavywoodendoor, small warm lanterns and a cloth banner with simple mug icon (no text). This is a welcoming village diningroom, soft golden NOON daylight from window, creamplaster and darkwarmtimbers, mildweathereddetails, restrainedpalette, softinkedges notpixels. Scale backwall benches and chairs naturally for compact adult sprites that occupy about15percent of backgroundheight. No people or center furniture, no readablelettering, no horizon, no extra doors or floors. Keep groundflat and wideaisles along both sides.",
+  "references": [
+    "public/story-stage/dining-room.webp",
+    "public/storybook-study/roadside-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/linde-dining-v1.png"
+}

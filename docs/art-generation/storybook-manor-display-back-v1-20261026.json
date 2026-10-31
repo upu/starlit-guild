@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Warm hand-painted2D RPG background, elevated45degree downward3quarter camera, no skyhorizon. Preserve geography of first reference manor-display-back: upperLEFT open smallgarden gate withpavedexitpath; warmochrelimestone manorwall withblueleadwindowandshortsteps across upperedge; stonebalustradeatupperRIGHT with several orderly empty wooden guestchairs beyond it; clipped hedges and white daisies border broad empty paved workcourt lower two thirds. A smallwooden route signpost atx23%, topat34%,crosspieceat38%,baseat49%, so a small woman can tie string to it. Fork path behindpostleadsleftoutgate; diagonalworkingpathrunsunderfrontofupperhedges. Empty displayarea aroundx62%,y47% and four smallfigureswillstandwithhandcartintheforeground. No people, table, displaycase, cart, loosepots or otherprops; no lettering,text,arrows. Same manor materials, finelypaintedwarmoutlines, stone size and palette as secondreference. Warm lateafternoon goingtowardevening, 3:2landscape.",
+  "references": [
+    "public/story-stage/manor-display-back.webp",
+    "public/storybook-study/manor-garden-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-display-back-v1.png"
+}

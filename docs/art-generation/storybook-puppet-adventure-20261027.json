@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-27",
+  "tool": "No new generation; reused accepted painted conversation atlases",
+  "scope": "Shared painted puppet, carrier golem and masked controller road rendering; stage rollout pending",
+  "assets": ["public/storybook-study/puppet-poses-v1.webp", "public/storybook-study/golem-poses-v1.webp", "public/storybook-study/masked-pumpety-v1.webp"],
+  "packing": "Existing cells and metrics unchanged: puppet/golem512x512 cells,sole480,standing reference384; masked128 cells,sole120,reference78. Same atlas-wide scale in every pose. No pixel-art filter on painted frames.",
+  "runtime": "RoadGait now accepts a structural walker id/x/lane for enemies as well as heroes. RoadStorybookEnemies selects travel-driven walking,stopped,recoil,rally/command and lowered fallen/drag poses. RoadEnemyFigures separates Phaser fitting/filtering from RoadPainter. Masked child height is76percent of hero physical height at both widths,shared with impact placement. Small puppets occupy a foreground lane away from golem feet. Escape golem route moves from0.55 to0.28 during first640ms using renderer-only sceneProgress. Combat and save data unchanged.",
+  "evidence": "docs/art/storybook-puppet-adventure-review-20261027.md records counts,gaps,superseded captures and remaining scope; final retreat proof work/puppet-escape-final-{pc,mobile}-proof.png",
+  "tests": "26 related tests passed,including travel-driven4-frame gait,planted idle,reactions,fixed pose scale/sole,child/puppet/golem proportions,separated foot lanes,smooth retreat lane,existing enemy/battle/conversation/picnic regressions",
+  "remaining": "Defaults remain15/37. Stage2-5/6/7 backgrounds,portable sign,medicine/honey luggage and workshop staging pending. Full effect/thread contact and palette review and physical-phone verification remain. Whole goal active."
+}

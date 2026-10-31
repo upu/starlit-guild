@@ -1,0 +1,82 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/aria-forest-hand-v1.png",
+    "scale": 0.26961770623742454,
+    "left": 58,
+    "top": 42,
+    "width": 72,
+    "height": 134,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/aria-forest-hand-v1.png",
+    "scale": 0.26961770623742454,
+    "left": 46,
+    "top": 84,
+    "width": 87,
+    "height": 92,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/aria-forest-hand-v1.png",
+    "scale": 0.26961770623742454,
+    "left": 57,
+    "top": 53,
+    "width": 81,
+    "height": 123,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/aria-forest-hand-v1.png",
+    "scale": 0.26961770623742454,
+    "left": 58,
+    "top": 42,
+    "width": 71,
+    "height": 134,
+    "baseline": 176
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/aria-forest-walk-v1.png",
+    "scale": 0.30180180180180183,
+    "left": 34,
+    "top": 38,
+    "width": 90,
+    "height": 138,
+    "baseline": 176
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/aria-forest-walk-v1.png",
+    "scale": 0.30180180180180183,
+    "left": 39,
+    "top": 44,
+    "width": 75,
+    "height": 132,
+    "baseline": 176
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/aria-forest-walk-v1.png",
+    "scale": 0.30180180180180183,
+    "left": 40,
+    "top": 43,
+    "width": 82,
+    "height": 133,
+    "baseline": 176
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/aria-forest-walk-v1.png",
+    "scale": 0.30180180180180183,
+    "left": 37,
+    "top": 43,
+    "width": 89,
+    "height": 133,
+    "baseline": 176
+  }
+]

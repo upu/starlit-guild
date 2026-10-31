@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 58,
+    "top": 28,
+    "width": 74,
+    "height": 148,
+    "baseline": 176,
+    "headX": 100.17905785914371
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 50,
+    "top": 31,
+    "width": 95,
+    "height": 145,
+    "baseline": 176,
+    "headX": 100.75655570762255
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 45,
+    "top": 33,
+    "width": 98,
+    "height": 143,
+    "baseline": 176,
+    "headX": 98.00551865610964
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 49,
+    "top": 33,
+    "width": 97,
+    "height": 143,
+    "baseline": 176,
+    "headX": 99.75711806706897
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 35,
+    "top": 35,
+    "width": 110,
+    "height": 141,
+    "baseline": 176,
+    "headX": 97.01609152373175
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 37,
+    "top": 35,
+    "width": 104,
+    "height": 141,
+    "baseline": 176,
+    "headX": 94.46529315293154
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 45,
+    "top": 46,
+    "width": 104,
+    "height": 130,
+    "baseline": 176,
+    "headX": 106.48496657478694
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-push-balanced-v2.png",
+    "scale": 0.3425925925925926,
+    "left": 45,
+    "top": 51,
+    "width": 121,
+    "height": 125,
+    "baseline": 176,
+    "headX": 114.33981752123547
+  }
+]

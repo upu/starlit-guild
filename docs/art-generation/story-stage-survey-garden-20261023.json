@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-6 gardener plant, glove removal and visible garden work paths",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/finn-gloves-v1.png",
+      "reference": "assets/source/story-stage/finn-poses-v1.png",
+      "generated": "exec-cd3493fa-1839-4f94-8f07-724fce00fde0.png",
+      "prompt": "Reference is the existing Finn character sheet. Create EXACTLY TWO new full-body animation frames, two equal cells in ONE HORIZONTAL ROW, transparent background, generous gutters. SAME male Finn with messy medium brown hair in a low ponytail, half-lidded approachable eyes, scruffy warm expression, olive-brown long split coat, open-collar cream shirt, brown trousers and boots; preserve broad hairstyle and recognizable laid-back face, no beautification. Crisp pixel-art JRPG sprite, elevated three-quarter view, facing SCREEN RIGHT, consistent head width and body height, feet aligned. Frame 1: wearing plain rough brown gardener work gloves on BOTH hands, hands together low in front of his waist, right hand grips the fingertips of left glove to begin pulling it off. Frame 2: same stance, bare right hand pulling off the left glove, left palm almost freed; the limp glove stretches slightly rightward between the hands, already removed glove tucked together with it. Small careful hand movement, no change to head/feet/scale. No key visible (will be layered later), no extra objects, no words, no ground shadow, no background. Keep all fingers, ponytail and boot soles wholly inside each cell.",
+      "sha256": "99e67a9abc74f99fc589a394e44406554bc01be354a0a6651cf3db18794f1ca5"
+    },
+    {
+      "source": "assets/source/story-stage/garden-props-v1.png",
+      "generated": "exec-25cc374a-edb6-4339-ba92-f580575baffa.png",
+      "prompt": "Create a transparent JRPG pixel-art prop sprite sheet, TWO equal cells in a single horizontal row, wide clear gutters, complete isolated objects. Warm medieval palette and crisp chunky pixel clusters, dark brown outlines, elevated three-quarter view 40 degrees down. LEFT cell: one manageable terracotta flowerpot, reddish brown unglazed clay, filled with a small leafy flowering plant with a few small white daisies and yellow centers; compact leaves and short stems, no giant bush, pot plus plant should be roughly as high as wide, carried in two hands by a gardener. RIGHT cell: a pair of worn brown leather/canvas gardening work gloves loosely held together by the cuffs, fingers hanging downward, small soot/soil marks, no hand inside, no person, no modern logos. No scenery, no platform, no shadows outside the objects, no text, preserve true alpha.",
+      "sha256": "150403057fb5448dec854b9605271e78e41edf382befe4221f4a568cda3c5613"
+    },
+    {
+      "source": "assets/source/story-stage/manor-back-paths-v1.png",
+      "reference": "public/story-stage/manor-garden.webp",
+      "generated": "exec-cf5db761-6a9b-4d44-adcc-0481b1006ceb.png",
+      "prompt": "Reference image shows the established manor garden. Generate a matching adjacent BACK-GARDEN WORK AREA for the same warm medieval pixel-art JRPG. Landscape 3:2, high oblique overhead RPG camera about 50 degrees downward, NO sky or horizon. Same sandstone paving scale, muted warm afternoon light, crisp pixel clusters, same white/pink small flowers and stone manor materials. The lower two thirds is an OPEN PAVED CLEARING for four characters, unobstructed. Across upper third leafy waist-high hedges and flower borders. On the LEFT around 25 percent horizontal, a clearly walkable NARROW PATH runs from the clearing upward BETWEEN TWO HEDGES, bends away behind planting toward the rear display garden. On the RIGHT, around 78 percent horizontal, a wider plain paved WORK PASSAGE extends upward along the manor's rear stone wall, toward a small practical wooden service door. A broader path from the clearing continues out of the lower edge toward the main gate. Paths must connect logically and keep empty paving at their mouths. Modest garden, no huge mansion, no table, no display pedestal, no staged furniture, no potted plant in clearing (will be separate sprite), no people, no tools, no props, no words, no arrows, no UI. Keep foreground area flat and readable for small sprites. This depicts existing garden paths, not new geographic destinations.",
+      "sha256": "2202d69d9fd47e3c308578623d4ce41a0a3f2d3c05e4b14cbc4360c8f26cc84b"
+    }
+  ]
+}
