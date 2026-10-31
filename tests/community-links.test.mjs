@@ -37,7 +37,7 @@ test("page rereads the runtime invite so it can be replaced or removed without c
     {
       "cloudflare:workers": { env },
       "@/lib/community-links": communityLinks,
-      "./game": { default: () => null },
+      "./game": { __esModule: true, default: () => null },
       "react/jsx-runtime": jsx,
     },
   );

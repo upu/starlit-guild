@@ -27,9 +27,9 @@ const techniquesSchema = z.object({
       .strict(),
   ),
 });
-const n = z.number().finite().min(0).max(1e15),
+const n = z.number().min(0).max(1e15),
   count = n.int(),
-  id = z.string().uuid();
+  id = z.uuid();
 const hero = z.string().refine((v) => heroes.some((h) => h.id === v));
 const uniqueHeroes = z
   .array(hero)
@@ -73,7 +73,7 @@ const enemy = z.object({
   cueAt: n.optional(),
 });
 const health = z.record(hero, z.object({ hp: n, maxHp: n.min(1) }));
-const coordinate = z.number().finite().min(-10000).max(10000);
+const coordinate = z.number().min(-10000).max(10000);
 const position = z.object({
   x: coordinate,
   previousX: coordinate,
@@ -89,7 +89,7 @@ const road = z.object({
   camera: coordinate,
   previousCamera: coordinate,
   members: z.record(hero, position),
-  opponents: z.record(enemyId, position),
+  opponents: z.partialRecord(enemyId, position),
   ambushNode: count.max(14).optional(),
   scene: z.object({ kind: z.enum(["withdraw", "enter", "escape"]), at: n }).optional(),
 });

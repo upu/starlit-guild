@@ -7,7 +7,7 @@ export const consumablesSchema = z
   .object({
     items: z.record(
       consumableId.refine((id) => id !== "herbs"),
-      z.number().finite().int().min(0).max(9999),
+      z.number().int().min(0).max(9999),
     ),
     assigned: z.record(z.string(), consumableId),
   })

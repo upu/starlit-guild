@@ -5,26 +5,7 @@ import {
 } from "./chapter-three.ts";
 import type { Run } from "./game.ts";
 import type { StoryLine } from "./stories.ts";
-const a = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "aria",
-  text,
-});
-const l = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "leon",
-  text,
-});
-const m = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "mira",
-  text,
-});
-const f = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "finn",
-  text,
-});
+import { aria as a, leon as l, mira as m, finn as f } from "./story-lines.ts";
 const routes: Record<string, StoryLine[][]> = {
   "berne-road": [
     [

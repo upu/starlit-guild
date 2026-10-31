@@ -27,7 +27,7 @@ const pickerExports = evaluateSourceModule(
     "@/lib/game": game,
     "@/lib/prologue": prologue,
     "@/lib/scenery": { questScenery: () => "" },
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": ui("Check", "LockKeyhole"),
     "./quest-progression-setting": ui("QuestProgressionSetting"),
   },
@@ -81,7 +81,7 @@ function harness(initialState) {
     "@/lib/prologue": prologue,
     "@/lib/journey": journey,
     "@/lib/equipment": equipment,
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": ui("House", "BookOpen", "ChevronRight", "Heart", "Lightbulb", "Images"),
     "@/components/ui/tabs": ui("Tabs", "TabsList", "TabsTrigger", "TabsContent"),
     "@/components/ui/dialog": ui(

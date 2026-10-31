@@ -71,7 +71,11 @@ const routes: Record<string, StoryLine[][]> = {
   [BREKKA_ARRIVAL_QUEST]: [
     [
       { expression: "smile", speaker: "aria", text: "樽がごろごろ通るね。全部エール？" },
-      { speaker: "leon", text: "空樽を戻す荷もあるらしい。帰りも荷車が要るんだな。" },
+      {
+        expression: "neutral",
+        speaker: "leon",
+        text: "空樽を戻す荷もあるらしい。帰りも荷車が要るんだな。",
+      },
       { expression: "smile", speaker: "aria", text: "飲み終わったら仕事も終わり、じゃないんだ。" },
     ],
     [

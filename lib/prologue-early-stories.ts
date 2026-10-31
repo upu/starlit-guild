@@ -1,6 +1,6 @@
 import type { Story } from "./stories.ts";
 import { TRADE_QUEST, RETURN_QUEST, TOWN_QUEST } from "./prologue.ts";
-import { a, l, n } from "./prologue-story-lines.ts";
+import { aria as a, leon as l, narration as n } from "./story-lines.ts";
 
 export const earlyPrologueStories: Story[] = [
   {

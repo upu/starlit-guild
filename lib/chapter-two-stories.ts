@@ -1,23 +1,8 @@
 import { deliveryStories } from "./chapter-two-delivery-stories.ts";
 import { finaleStories } from "./chapter-two-finale-stories.ts";
-import type { Story, StoryLine } from "./stories.ts";
+import type { Story } from "./stories.ts";
 import { PICNIC_QUEST, MOON_HERB_QUEST } from "./chapter-two.ts";
-const a = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "aria",
-  text,
-});
-const l = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "leon",
-  text,
-});
-const m = (text: string, expression: StoryLine["expression"] = "neutral"): StoryLine => ({
-  expression,
-  speaker: "mira",
-  text,
-});
-const n = (text: string): StoryLine => ({ text });
+import { aria as a, leon as l, mira as m, narration as n } from "./story-lines.ts";
 export const chapterTwoStories: Story[] = [
   ...deliveryStories,
   ...finaleStories,

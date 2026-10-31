@@ -69,7 +69,7 @@ function harness(overrides = {}, { withArt = false, selection = null } = {}) {
     "@/lib/interludes": interludes,
     react,
     "react/jsx-runtime": { jsx, jsxs: jsx },
-    "next/image": { default: "img" },
+    "next/image": { __esModule: true, default: "img" },
     "lucide-react": { BookOpen: "icon", ChevronRight: "icon" },
     "./portrait": { Portrait: "portrait" },
     "./story-artwork": { StoryArtwork: "StoryArtwork" },

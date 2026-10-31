@@ -142,7 +142,7 @@ export class FoundingDrop {
     hero.walking = false;
     const age = Math.max(0, battle.time - item.liftedAt);
     hero.facing = item.facing ?? 1;
-    const { pose, palm } = pickupArt(hero.id as HandheldItem["hero"], age, art, courier);
+    const { pose, palm } = pickupArt(hero.id, age, art, courier);
     const point = waterwayPalm(hero, palm, hero.facing, view);
     const done = age >= (hero.id === "leon" || hero.id === "finn" ? 800 : 600);
     if (done) this.drop = undefined;
