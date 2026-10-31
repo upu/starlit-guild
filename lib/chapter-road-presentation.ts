@@ -1,4 +1,7 @@
 import { roadBackground } from "./road-background.ts";
+import { arrangeTownParcel, townParcelCheck } from "./road-town-parcel.ts";
+import { roadEnemyCaption } from "./road-enemy-caption.ts";
+import * as storybookWork from "./road-storybook-work.ts";
 import { isChapterThreeQuest, BERNE_QUEST, STONE_RETURN_QUEST } from "./chapter-three.ts";
 import { MOSS_TRANSPLANT_QUEST, isChapterFourQuest } from "./chapter-four.ts";
 import { presentRoadScene } from "./road-scene-presentation.ts";
@@ -25,8 +28,15 @@ import type { RoadPosition } from "./chapter-road-types.ts";
 import type { RoadViewport } from "./road-cart-layout.ts";
 import { roadHeroSize, roadX, roadY } from "./road-layout.ts";
 import { roadWorkLook } from "./chapter-road-work-look.ts";
-import { spreadBattleParty } from "./road-party-formation.ts";
+import { prepareForestCompletion } from "./road-forest-completion.ts";
+import { commandMotion } from "./road-command-motion.ts";
+import { faceWorkers, spreadBattleParty } from "./road-party-formation.ts";
+import { presentFixedRoad } from "./road-fixed-presentation.ts";
+import { arrangeBerneParty } from "./road-berne-journey.ts";
+import { arrangePaintedPuppets } from "./road-storybook-enemy.ts";
+import { puppetAttackPose } from "./road-puppet-attack.ts";
 import { arrangeCarriers, roadCarrierLead } from "./road-carrier-formation.ts";
+import { seedlingCarrierPair } from "./road-seedling-cart-start.ts";
 import {
   travellerLane,
   type RoadBattle,
@@ -36,17 +46,8 @@ import {
   type Traveller,
 } from "./road-view.ts";
 
-export type RoadLook = {
-  background: string;
-  length: number;
-  workers: string[];
-  puller: string | null;
-  frontCarriers: string[];
-  urban: boolean;
-  destination: boolean;
-  work?: ReturnType<typeof roadWorkLook>;
-  enemies: Record<number, { frame: string; label: string }>;
-};
+import type { RoadLook } from "./road-look.ts";
+export type { RoadLook } from "./road-look.ts";
 export const chapterRoadX = roadX;
 
 // Predict only the drawing between 200 ms React snapshots. Combat and saved coordinates stay untouched.
@@ -67,7 +68,11 @@ function effectKind(event: GameEvent): RoadEffect["kind"] | null {
   if (["hurt", "gather", "heal", "assist"].includes(event.kind))
     return event.kind as RoadEffect["kind"];
   if (!["hit", "skill", "combo"].includes(event.kind)) return null;
-  return event.hero === "aria" ? "arrow" : event.hero === "mira" ? "magic" : "slash";
+  return event.hero === "aria"
+    ? "arrow"
+    : ["mira", "lico"].includes(event.hero ?? "")
+      ? "magic"
+      : "slash";
 }
 function effects(run: Run | null, battle: RoadBattle): RoadEffect[] {
   if (!run) return [];
@@ -186,6 +191,7 @@ function drawnEnemies(input: AdventureInput, frame: AdventureFrame): RoadEnemy[]
       appearsAt: mushroomArrival(run, enemy.id),
       action: enemy.cueAt !== undefined && input.now - enemy.cueAt < 1800 ? enemy.cue : undefined,
       actionAt: enemy.cueAt,
+      attack: puppetAttackPose(enemy, run, input.now),
       x,
       lane: drawnEnemyLane(enemy, index),
       hp: enemy.hp,
@@ -224,9 +230,16 @@ function makeBattle(input: AdventureInput, frame: AdventureFrame): RoadBattle {
 }
 function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
   const run = input.squad.run;
-  const puller = roadCarrierLead(frame.quest, run);
+  const puller = roadCarrierLead(frame.quest, run, input.storybookHeroes);
   return {
-    background: roadBackground(frame.background),
+    background: roadBackground(frame.background, frame.quest.id),
+    quest: frame.quest.id,
+    townFinalizing: input.townFinalizing,
+    mossFinalizing: input.mossFinalizing,
+    forestFinalizing: input.forestFinalizing,
+    waterwaySearchFinalizing: input.waterwaySearchFinalizing,
+    storybookHeroes: input.storybookHeroes,
+    night: [MOSS_TRANSPLANT_QUEST, "moonlit-herbs", "moss-night-road"].includes(frame.quest.id),
     destination: ![
       "spinning-signpost",
       "begging-golem",
@@ -260,7 +273,7 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
         index + 1,
         {
           frame: String(frame.quest.enemy),
-          label: enemyLabel(frame, enemy.id),
+          label: roadEnemyCaption(frame, enemy.id, enemy.role || enemy.trick),
         },
       ]),
     ),
@@ -269,10 +282,6 @@ function makeLook(input: AdventureInput, frame: AdventureFrame): RoadLook {
 function frontCarriers(run: Run | null, puller: string | null) {
   if (!run || !puller) return [];
   return [puller];
-}
-function enemyLabel(frame: AdventureFrame, id: string) {
-  const target = frame.targets.find((target) => target.id === id);
-  return target?.cue || target?.name || "";
 }
 function gatheringX(
   road: Run["road"],
@@ -284,11 +293,6 @@ function gatheringX(
 ) {
   if (!road) return 160;
   return workPoint(q, run) - (cargo && task === "carry" && puller ? 105 : 65);
-}
-function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
-  for (const hero of battle.heroes) {
-    if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
-  }
 }
 function addWork(
   input: AdventureInput,
@@ -302,6 +306,7 @@ function addWork(
   const kind = run ? encounter(frame.quest, run.node, run.nodes) : null;
   if (!run || kind === "battle") return;
   look.work = roadWorkLook(frame.quest, run);
+  storybookWork.prepareStorybookWork(look);
   const cargo = look.work.cargo;
   const task = look.work.task;
   const x = gatheringX(road, frame.quest, run, cargo, task, look.puller);
@@ -312,28 +317,19 @@ function addWork(
     remaining: run.target,
     total: run.targetMax,
   };
+  if (townParcelCheck(battle, look)) battle.gathering.lane = 0.82;
   if (cargo && task === "carry") {
-    const carriers = arrangeCarriers(
-      frame.quest,
-      run,
-      battle,
-      look.frontCarriers,
-      view,
-      look.work.asset.includes("seedling-cart"),
-    );
-    look.workers = look.workers.filter((id) => carriers.includes(id));
+    const carriers = arrangeCarriers(frame.quest, run, battle, look.frontCarriers, view, look);
+    look.workers = seedlingCarrierPair({ battle, look })
+      ? carriers
+      : look.workers.filter((id) => carriers.includes(id));
   }
   faceWorkers(battle, look, cargo, x);
-}
-function commandMotion(battle: RoadBattle, look: RoadLook) {
-  const effect = battle.effects.find((item) => item.kind === "command");
-  if (!effect) return;
-  for (const enemy of battle.enemies) {
-    if (enemy.hp <= 0) continue;
-    enemy.action = enemy.kind === "pumpety" ? "command" : "rally";
-    enemy.actionAt = effect.at;
-    if (enemy.kind === "pumpety") look.enemies[enemy.id].label = "もう一回なのよ！";
-  }
+  arrangeTownParcel(battle, look, view);
+  if (input.storybookHeroes) storybookWork.arrangeStorybookPack(battle, look, view);
+  storybookWork.arrangeStorybookEarthwork(battle, look, view);
+  storybookWork.arrangeStorybookForage(battle, look, view);
+  storybookWork.arrangeHomewardWork(battle, look, view);
 }
 export function chapterRoadFrame(
   input: AdventureInput,
@@ -345,11 +341,16 @@ export function chapterRoadFrame(
     run = input.squad.run;
   const battle = makeBattle(input, frame),
     look = makeLook(input, frame);
+  prepareForestCompletion(battle, look, input, frame.quest);
   addWork(input, frame, battle, look, view);
   spreadBattleParty(battle, look.workers);
+  arrangeBerneParty(battle, look);
+  arrangePaintedPuppets(battle, look.storybookHeroes);
   battle.effects = [...effects(run, battle), ...confrontationEffects(run, battle)];
   commandMotion(battle, look);
   presentRoadScene(battle, run, input.now, reduced, worldWidth);
+  if (battle.scene) arrangePaintedPuppets(battle, look.storybookHeroes);
+  presentFixedRoad({ battle, look }, input, view);
   return { battle, look };
 }
 export function chapterRoadHit(
@@ -383,9 +384,14 @@ export function chapterRoadActivity(input: AdventureInput) {
     return {
       withdraw: "人形たちがいったん退く",
       enter: "カボチャ頭の少女と人形たち",
-      escape: "少女が人形たちを引いて逃げる",
+      escape: "少女が止まった人形たちを引く",
     }[run.road.scene.kind];
   const quest = adventureFrame(input).quest;
+  if (
+    run.quest === "lico-records" &&
+    run.enemies?.some((enemy) => enemy.trick === "lico" && enemy.hp > 0)
+  )
+    return "リコの仕掛けを止める";
   if (run.road?.ambushNode !== undefined && roadHasEnemies(run))
     return run.target > 0 ? "作業中の仲間を護衛" : "襲ってきた敵を撃退中";
   if (encounter(quest, run.node, run.nodes) === "battle") return "道を開きながら前へ";

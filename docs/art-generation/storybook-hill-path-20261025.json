@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/hill-path-v1.png",
+  "output": "public/storybook-study/hill-path-v1.png",
+  "references": [
+    "public/story-stage/hill-path.webp",
+    "public/storybook-study/warehouse-v1.png"
+  ],
+  "prompt": "Edit target: first image, existing original hillside lane. Style reference: second image, approved painted warehouse. Redraw first scene in the second's warm hand-painted 2D RPG style. Preserve exact elevated three-quarter overhead composition, scale and positions: lower-left small cream-plaster timber houses with clay roofs, their door about 13% of image height; fenced vegetable and grain plots upper-left; ochre footpath starts lower center and bends toward upper-right through green trees and shrubs. No tower visible here. Preserve broad empty walkable path around image center and lower center for small animated characters. No horizon, no deep diminishing perspective, orthographic feeling. Soft colored outlines, deliberate broad foliage clusters, restrained material texture, warm ochre and cream, muted sage green, 2-3 painted shading tones per material. Replace noisy speckled pixel grain with clean brush-painted shapes like reference. Consistent diffuse daylight and soft contact shadows. No people, animals, loose luggage, cart, UI, letters or watermark. One 3:2 landscape background."
+}

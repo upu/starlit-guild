@@ -101,9 +101,9 @@ const routes: Record<string, StoryLine[][]> = {
   ],
   "manor-survey": [
     [
-      a("フィン、その鍋、ぶつけないでね。", "worried"),
-      f("分かってるって。借りるときより丁寧に運んでるよ。", "mischievous"),
-      l("借りるときも丁寧にしてください。", "serious"),
+      a("鉢を並べると、庭の雰囲気が変わるね。", "smile"),
+      f("おう。花の向きをそろえると、きれいだねえ。", "smile"),
+      l("通路は空けておこう。人が通るから。", "serious"),
     ],
     [
       m("この布は、どちらへ畳めばいいの？"),
@@ -203,5 +203,38 @@ export function chapterThreeBanter(run: Run): StoryLine[] | null {
   if (!isChapterThreeQuest(run.quest)) return null;
   const injured = [STONE_RETURN_QUEST, BERNE_RESTORATION_QUEST].includes(run.quest);
   const pool = run.phase === "rest" ? (injured ? injuredRests : rests) : routes[run.quest];
+  const context = nightBridgeBanterContext(run);
+  if (context && context !== "rest") return pool[nightBridgePoolIndex(context)];
   return pool[Math.floor(run.node / 3) % pool.length];
+}
+
+function nightBridgePoolIndex(context: "battle" | "road" | "bridge") {
+  if (context === "battle") return 0;
+  return context === "bridge" ? 2 : 1;
+}
+
+/** Use the same living-enemy condition as the night-road renderer. */
+export function nightBridgeBanterContext(
+  run: Run | null,
+): "battle" | "road" | "bridge" | "rest" | null {
+  if (run?.quest !== STONE_RETURN_QUEST) return null;
+  if (run.phase === "rest") return "rest";
+  if (run.enemies?.some((enemy) => enemy.hp > 0)) return "battle";
+  return run.node >= 6 ? "bridge" : "road";
+}
+
+/** Trigger Leon's move when this actual line becomes current, not from route progress. */
+export function nightBridgeWheelCue(line?: StoryLine) {
+  const cue = routes[STONE_RETURN_QUEST][2][1];
+  return !!line && line.speaker === cue.speaker && line.text === cue.text;
+}
+
+/** Visual cue for the line actually shown, rather than the run's current node. */
+export function restorationBanterCue(line?: StoryLine): "guide" | "root" | "plan" | "other" {
+  if (!line) return "other";
+  const [guide, roots] = routes["berne-restoration"];
+  if (guide.some((entry) => entry.text === line.text)) return "guide";
+  if (roots[0].text === line.text) return "root";
+  if (roots[1].text === line.text) return "plan";
+  return "other";
 }

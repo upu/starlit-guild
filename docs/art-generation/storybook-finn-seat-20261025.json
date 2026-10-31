@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Make a transparent production sprite strip of Finn in the attached reference, strict SAME identity, compact three-head proportions, head size, hair, face, clothes and warm hand-painted style. Four full-body figures in ONE horizontal row evenly spaced: 0 standing neutral (scale reference); 1 sitting on an INVISIBLE ordinary chair, hands resting on lap, listening; 2 same seated body with one hand lightly at chin thinking; 3 same seated body smiling sheepishly one hand behind head. Camera elevated three-quarter, all face screen RIGHT. Sitting hips clearly lower than standing, thighs approximately horizontal, knees bent 90 degrees, boots planted on same floor baseline. Seated figure height about 80-85 percent of standing but EXACT SAME head width and anatomical limb sizes; do NOT shrink whole seated character. No chair drawn, no floor or shadows, no furniture/props, genuine transparency. Adult late-forties face, tan subtle stubble, drooping grey-violet eyes, loosely low-tied dark brown hair, worn charcoal olive coat gold trim ochre lining, cream open shirt, brown trousers boots. Compact readable silhouette, broad large head like reference, NOT realistic tall proportions, NOT a child. Coat drapes beside thighs without concealing hip/knee bend. Same head/costume across all frames, entire hair and boots within frame, generous transparent gutters, no text.",
+  "references": [
+    "assets/source/storybook/finn-conversation-v2.png"
+  ],
+  "source": "assets/source/storybook/finn-seat-v1.png",
+  "status": "Not connected; seated head too large and height 137-139 vs standing148. Revision requested."
+}

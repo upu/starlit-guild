@@ -2,11 +2,23 @@
 import { useEffect, useRef, useState } from "react";
 import type { Action } from "@/lib/game";
 import type { AdventureInput } from "@/lib/adventure-presentation";
-import { rendererSession, type RendererStatus } from "./phaser/renderer-session";
+import {
+  rendererSession,
+  type AdventureBridge,
+  type RendererStatus,
+  type LindeProgress,
+  type TownActivity,
+} from "./phaser/renderer-session";
+import { storybookAdventureInput } from "@/lib/storybook/adventure";
 
 type Props = {
   input: AdventureInput;
   onAction: (action: Action) => void;
+  onStatusChange?: (status: RendererStatus) => void;
+  onVisualComplete?: (quest: string) => void;
+  onNightPushFrame?: (frame: number | null) => void;
+  onLindeProgress?: (progress: LindeProgress) => void;
+  onTownActivity?: (activity: TownActivity) => void;
 };
 
 const loadAdventureGame: Parameters<typeof rendererSession>[2] = async () => {
@@ -17,30 +29,57 @@ const loadAdventureGame: Parameters<typeof rendererSession>[2] = async () => {
   return (parent, bridge) => createAdventureGame(parent, bridge, Phaser);
 };
 
-function usePhaserSession({ input, onAction }: Props) {
+type Latest = Pick<
+  Props,
+  | "input"
+  | "onAction"
+  | "onVisualComplete"
+  | "onNightPushFrame"
+  | "onLindeProgress"
+  | "onTownActivity"
+> & {
+  receivedAt: number;
+};
+function sessionBridge(
+  latest: { current: Latest },
+  status: AdventureBridge["status"],
+): AdventureBridge {
+  return {
+    read: () => {
+      const { input, receivedAt } = latest.current;
+      const elapsed = input.paused ? 0 : Math.max(0, performance.now() - receivedAt);
+      return { ...input, now: input.now + elapsed };
+    },
+    act: (action) => {
+      latest.current.onAction(action);
+    },
+    status,
+    visualComplete: (quest) => {
+      latest.current.onVisualComplete?.(quest);
+    },
+    nightPushFrame: (frame) => {
+      latest.current.onNightPushFrame?.(frame);
+    },
+    lindeProgress: (progress) => latest.current.onLindeProgress?.(progress),
+    townActivity: (activity) => latest.current.onTownActivity?.(activity),
+  };
+}
+
+function usePhaserSession(props: Props) {
   const host = useRef<HTMLDivElement>(null);
-  const latest = useRef({ input, onAction, receivedAt: 0 });
+  const latest = useRef({ ...props, receivedAt: 0 });
   const session = useRef<ReturnType<typeof rendererSession> | null>(null);
   const [status, setStatus] = useState<RendererStatus>("loading"),
     [retry, setRetry] = useState(0);
   useEffect(() => {
-    latest.current = { input, onAction, receivedAt: performance.now() };
-    session.current?.setPaused(input.paused || !input.ready || document.hidden);
-  }, [input, onAction]);
+    latest.current = { ...props, receivedAt: performance.now() };
+    session.current?.setPaused(props.input.paused || !props.input.ready || document.hidden);
+  }, [props]);
   useEffect(() => {
     if (!host.current) return;
     const active = rendererSession(
       host.current,
-      {
-        read: () => {
-          const { input, receivedAt } = latest.current;
-          return { ...input, now: input.now + Math.max(0, performance.now() - receivedAt) };
-        },
-        act: (action) => {
-          latest.current.onAction(action);
-        },
-        status: setStatus,
-      },
+      sessionBridge(latest, setStatus),
       loadAdventureGame,
     );
     session.current = active;
@@ -74,8 +113,26 @@ function usePhaserSession({ input, onAction }: Props) {
   };
 }
 
-export function PhaserAdventure({ input, onAction }: Props) {
-  const { host, status, restart } = usePhaserSession({ input, onAction });
+export function PhaserAdventure({
+  input,
+  onAction,
+  onStatusChange,
+  onVisualComplete,
+  onNightPushFrame,
+  onLindeProgress,
+  onTownActivity,
+}: Props) {
+  const { host, status, restart } = usePhaserSession({
+    input: storybookAdventureInput(input),
+    onAction,
+    onVisualComplete,
+    onNightPushFrame,
+    onLindeProgress,
+    onTownActivity,
+  });
+  useEffect(() => {
+    onStatusChange?.(status);
+  }, [onStatusChange, status]);
   return (
     <>
       <div

@@ -1,0 +1,42 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-recover-offer-v1.png",
+    "scale": 0.27106227106227104,
+    "left": 42,
+    "top": 93,
+    "width": 77,
+    "height": 83,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-recover-offer-v1.png",
+    "scale": 0.27106227106227104,
+    "left": 47,
+    "top": 59,
+    "width": 74,
+    "height": 117,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-recover-offer-v1.png",
+    "scale": 0.27106227106227104,
+    "left": 55,
+    "top": 35,
+    "width": 68,
+    "height": 141,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-recover-offer-v1.png",
+    "scale": 0.27106227106227104,
+    "left": 59,
+    "top": 28,
+    "width": 65,
+    "height": 148,
+    "baseline": 176
+  }
+]

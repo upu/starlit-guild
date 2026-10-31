@@ -4,10 +4,25 @@ import { createHash } from "node:crypto";
 import sharp from "sharp";
 import { readFrame, headBounds } from "../scripts/home-pixel-frames.mjs";
 import { storyStageCue, storyStageExitCue } from "../lib/story-stage.ts";
+import { studyCue } from "../lib/storybook/carry-cue.ts";
 import { actorPose } from "../lib/story-stage-pose.ts";
 import { stageWrist } from "../lib/story-stage-wrists.ts";
 import { stageExtraWrist } from "../lib/story-stage-extra-wrists.ts";
 import { stageItemTarget, stageItemVisible } from "../lib/story-stage-props.ts";
+
+test("the watching companions leave room for the porter and Leon during the lantern work", () => {
+  const cue = studyCue("lantern-detour-return", 7, true);
+  for (const state of [cue, ...cue.sequence]) {
+    const worker = state.extras.find((extra) => extra.id === "worker");
+    const finn = state.actors.find((actor) => actor.id === "finn");
+    const leon = state.actors.find((actor) => actor.id === "leon");
+    const mira = state.actors.find((actor) => actor.id === "mira");
+    assert.ok(finn.x - worker.x >= 10, `porter and Finn at ${state.after ?? 0}ms`);
+    assert.ok(leon.bottom - mira.bottom >= 15, `Leon and Mira at ${state.after ?? 0}ms`);
+    if (leon.x - mira.x < 10 && leon.bottom < 20)
+      assert.ok(leon.nameOffset >= 20, `Leon label clears Mira at ${state.after ?? 0}ms`);
+  }
+});
 
 test("fieldwork preserves the previous 52 hero cells and registers standing/kneeling at the same head scale", async () => {
   const hashes = {

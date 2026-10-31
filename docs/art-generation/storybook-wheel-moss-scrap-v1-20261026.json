@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent small game prop, a TINY torn fragment of moss caught in a dab of damp brown mud. Only TWO short forked green fernlike moss sprigs with few recognizable small leaves, not a whole bush, bed, island or rock. Same warm fine outlined hand-painted RPG style as reference. Elevated three-quarter45degree view. Compact single cluster, deep muted yellow-green and brown, no magical light, no glow, no flowers, no large stone, no container, no text, no shadow or backdrop. Generous transparent margins, easy silhouette at small display size.",
+  "references": [
+    "public/storybook-study/moss-colony-v1.webp"
+  ],
+  "source": "assets/source/storybook/wheel-moss-scrap-v1.png"
+}

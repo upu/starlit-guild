@@ -1,55 +1,60 @@
 import { paintPuppetStrings } from "./road-puppet-strings";
+import type { RoadFigure as Figure } from "./road-figure";
+import { roadHeroOpacity } from "@/lib/road-injury-pose";
+import * as housecalls from "@/lib/road-housecalls-layout";
+import { fixedFigureScale } from "@/lib/road-fixed-figure-scale";
 import type Phaser from "phaser";
-import { roadCartWidth } from "@/lib/road-cart-layout";
+import { paintRoadSceneFade } from "./road-scene-fade";
+import {
+  gatherCrouch,
+  roadWorkProgressLayout,
+  groundWorkVisible,
+  roadWorkFoot,
+  hideFixedWorkProgress,
+} from "@/lib/road-storybook-work";
 import type { RoadLook } from "@/lib/chapter-road-presentation";
-import { roadBackdrop, roadHeroSize, roadX, roadY } from "@/lib/road-layout";
+import { roadFigureDepth, roadHeroSize, roadX, roadY } from "@/lib/road-layout";
+import { roadGatheringAppearance } from "./road-town-parcel";
+import { paintGroundWorkImage } from "./road-ground-work-image";
 import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
+import { RoadScenery } from "./road-scenery";
+import { paintRoadHeroPose, faceRoadHero } from "./road-hero-pose";
+import { RoadHandheldProps } from "./road-handheld-props";
+import { RoadNightLights } from "./road-night-lights";
+import { RoadJourneyCart } from "./road-journey-cart";
+import { RoadSeedlingWheels } from "./road-seedling-wheels";
+import { registerRoadWorkArt } from "./road-register-work-art";
+import { RoadWaterway } from "./road-waterway";
+import { RoadGait } from "@/lib/road-gait";
+import { RoadEnemyFigures } from "./road-enemy-figure";
 import { type RoadBattle, type RoadEnemy, type Traveller } from "@/lib/road-view";
 
 import { RoadEffects } from "./road-effects";
 import { RoadSpriteFilter } from "./road-sprite-filter";
 import { RoadWorkCaption } from "./road-work-caption";
 import { RoadEnemyLabels } from "./road-enemy-labels";
-import { applyHeroPose, applyWorkPose, registerAdventureHero } from "./road-poses";
-import {
-  ROAD_HERB,
-  ROAD_CARGO,
-  ROAD_DESTINATION,
-  ROAD_WORKSITES,
-  ROAD_BERNE_WORKSITES,
-  ROAD_LEDGER_DESK,
-  ROAD_SIGNPOST,
-} from "./road-art";
+import { registerAdventureHero } from "./road-poses";
+import { ROAD_HERB, ROAD_DESTINATION } from "./road-art";
 import { adventureHeroAsset } from "@/lib/adventure-hero-art";
-import { adventureEnemyArt } from "@/lib/adventure-enemy-art";
-import {
-  enemyAppearance,
-  enemyArrived,
-  enemyPresent,
-  enemyFacesRight,
-  enemyAngle,
-  fitEnemy,
-  enemyDisplayHeight,
-} from "./road-enemy-appearance";
-
-type Figure = {
-  image: Phaser.GameObjects.Image;
-  label: Phaser.GameObjects.Text;
-  bar: Phaser.GameObjects.Graphics;
-};
-export const ROAD_BACKGROUND = "/scenery/forest-background.webp";
+import { enemyArrived, enemyPresent, sceneEnemyHeight } from "./road-enemy-appearance";
 
 export class RoadPainter {
-  private backdrop: Phaser.GameObjects.Image;
-  private surround: Phaser.GameObjects.Image;
-  private ground: Phaser.GameObjects.Graphics;
-  private sizeKey = "";
+  private waterway: RoadWaterway;
+  private handheld: RoadHandheldProps;
+  private nightLights: RoadNightLights;
+  private journeyCart: RoadJourneyCart;
+  private seedlingWheels: RoadSeedlingWheels;
+  private gait = new RoadGait();
+  private enemyFigures: RoadEnemyFigures;
+  private background: RoadScenery;
   private gathering: Phaser.GameObjects.Image;
+  private mossGlow: Phaser.GameObjects.Graphics;
   private workCaption: RoadWorkCaption;
   private effects: RoadEffects;
   private spriteFilter: RoadSpriteFilter;
   private bars: Phaser.GameObjects.Graphics;
   private strings: Phaser.GameObjects.Graphics;
+  private sceneFade: Phaser.GameObjects.Graphics;
   private heroes = new Map<string, Figure>();
   private enemies = new Map<number, Figure>();
   private enemyLabels = new RoadEnemyLabels();
@@ -57,22 +62,24 @@ export class RoadPainter {
   private look?: RoadLook;
 
   constructor(private scene: Phaser.Scene) {
+    this.waterway = new RoadWaterway(scene);
+    this.handheld = new RoadHandheldProps(scene);
+    this.nightLights = new RoadNightLights(scene);
+    this.journeyCart = new RoadJourneyCart(scene);
+    this.seedlingWheels = new RoadSeedlingWheels(scene);
     this.spriteFilter = new RoadSpriteFilter(scene);
-    this.surround = scene.add
-      .image(0, 0, ROAD_BACKGROUND)
-      .setOrigin(0.5)
-      .setDepth(0)
-      .setAlpha(0.25);
-    this.backdrop = scene.add.image(0, 0, ROAD_BACKGROUND).setOrigin(0).setDepth(0);
-    this.ground = scene.add.graphics().setDepth(1);
+    this.enemyFigures = new RoadEnemyFigures(this.spriteFilter);
+    this.background = new RoadScenery(scene);
     this.gathering = scene.add.image(0, 0, ROAD_HERB).setDepth(16).setVisible(false);
+    this.mossGlow = scene.add.graphics().setDepth(17.8);
     this.workCaption = new RoadWorkCaption(scene);
     this.effects = new RoadEffects(scene);
     this.strings = scene.add.graphics().setDepth(18);
+    this.sceneFade = scene.add.graphics().setDepth(200);
     this.bars = scene.add.graphics().setDepth(30);
     this.destination = scene.add.image(0, 0, ROAD_DESTINATION).setOrigin(0.5, 1).setDepth(5);
     for (const id of ["aria", "leon", "mira", "finn"] as const) registerAdventureHero(scene, id);
-    this.registerWorkArt();
+    registerRoadWorkArt(scene);
     this.destination.setFrame("marker");
     const atlas = scene.textures.get("/sprites.png");
     const source = atlas.getSourceImage() as HTMLImageElement;
@@ -95,25 +102,6 @@ export class RoadPainter {
       );
   }
 
-  private registerWorkArt() {
-    this.scene.textures.get(ROAD_SIGNPOST).add("signpost", 0, 470, 340, 370, 605);
-    this.scene.textures.get(ROAD_DESTINATION).add("marker", 0, 209, 86, 874, 1144);
-    const work = this.scene.textures.get(ROAD_WORKSITES);
-    const berne = this.scene.textures.get(ROAD_BERNE_WORKSITES);
-    berne.add("stonework", 0, 53, 271, 788, 433);
-    berne.add("records", 0, 933, 250, 797, 468);
-    this.scene.textures.get(ROAD_LEDGER_DESK).add("ledger", 0, 15, 240, 1230, 930);
-    const objects = [
-      [133, 215, 497, 339],
-      [798, 147, 564, 433],
-      [1504, 195, 538, 398],
-    ];
-    for (const [index, name] of ["moss", "waterway", "parcels"].entries()) {
-      const [x, y, w, h] = objects[index];
-      work.add(name, 0, x, y, w, h);
-    }
-    this.scene.textures.get(ROAD_CARGO).add("cart", 0, 48, 344, 1164, 582);
-  }
   private makeFigure(asset: string, frame: string, name: string): Figure {
     return {
       image: this.scene.add.image(0, 0, asset, frame).setOrigin(0.5, 0.9),
@@ -136,44 +124,28 @@ export class RoadPainter {
   }
 
   private scenery(state: RoadBattle, reduced: boolean) {
-    const background = this.look?.background || ROAD_BACKGROUND;
-    if (this.backdrop.texture.key !== background) {
-      this.backdrop.setTexture(background);
-      this.surround.setTexture(background);
-      this.sizeKey = "";
-    }
+    this.background.paint(state, reduced, this.look);
     const { width, height } = this.scene.scale;
-    const key = `${String(width)}:${String(height)}`;
-    if (this.sizeKey !== key) {
-      this.sizeKey = key;
-      this.resizeScenery(width, height);
-    }
-    const source = this.backdrop.texture.getSourceImage() as HTMLImageElement;
-    const surroundScale = Math.max(width / source.width, height / source.height);
-    this.surround
-      .setDisplaySize(source.width * surroundScale, source.height * surroundScale)
-      .setPosition(width / 2, height / 2);
     const length = this.look?.length ?? 1;
-    const view = roadBackdrop(
-      width,
-      height,
-      source.width,
-      source.height,
-      reduced ? 0 : state.distance / length,
-    );
-    this.backdrop.setDisplaySize(view.width, view.height).setPosition(view.x, view.y);
     const markerHeight = RPG_CAMERA_SCALE * Math.min(125, width * 0.26, height * 0.4);
     this.destination.setDisplaySize((markerHeight * 874) / 1144, markerHeight);
     this.destination.setPosition(this.screenX(length + 100, state), roadY(0.6, height, width));
     this.destination.setVisible(
-      !!this.look?.destination && state.phase === "journey" && state.distance > length - 380,
+      !!this.look?.destination &&
+        !(
+          this.look.storybookHeroes &&
+          [
+            "tower-road",
+            "town-deliveries",
+            "moss-night-road",
+            "village-trade",
+            "evening-trade-road",
+            "berne-road",
+          ].includes(this.look.quest ?? "")
+        ) &&
+        state.phase === "journey" &&
+        state.distance > length - 380,
     );
-  }
-
-  private resizeScenery(width: number, height: number) {
-    this.backdrop.setAlpha(0.9);
-    this.ground.clear();
-    this.ground.fillStyle(0x132f25, 0.36).fillRect(0, 0, width, height);
   }
 
   private health(
@@ -184,31 +156,13 @@ export class RoadPainter {
     enemy = false,
     graphics = this.bars,
   ) {
+    if (housecalls.firstChapterReturn(this.look) && !enemy) return;
+    if (graphics !== this.bars && !enemy && this.look?.mossBeds?.recordsClosing) return;
     const width = size * 0.61;
     graphics.fillStyle(0x0a241d, 0.9).fillRoundedRect(x - width / 2, y, width, 5, 2);
     graphics
       .fillStyle(enemy ? 0xefb390 : 0xaad6a0)
       .fillRoundedRect(x - width / 2, y, width * ratio, 5, 2);
-  }
-
-  private heroPose(state: RoadBattle, hero: Traveller, reduced: boolean) {
-    if (reduced || state.scene || hero.hp <= 0 || state.phase !== "journey") return 8;
-    const hit = state.effects
-      .filter((item) => item.hero === hero.id && item.kind !== "hurt" && item.kind !== "gather")
-      .at(-1);
-    const hurt = state.effects
-      .filter((item) => item.hero === hero.id && item.kind === "hurt")
-      .at(-1);
-    if (hurt && state.time >= hurt.at && state.time - hurt.at < 300) return 11;
-    if (hit && state.time >= hit.at && state.time - hit.at < 600)
-      return 4 + Math.floor((state.time - hit.at) / 150);
-    if (this.working(hero) && state.gathering?.task === "gather")
-      return 9 + (Math.floor(state.time / 380) % 2);
-    return hero.walking ? `walk-${String(Math.floor(state.time / 90) % 8)}` : 8;
-  }
-
-  private working(hero: Traveller) {
-    return !!this.look?.workers.includes(hero.id);
   }
 
   private paintHero(state: RoadBattle, hero: Traveller, reduced: boolean) {
@@ -217,27 +171,45 @@ export class RoadPainter {
       figure = this.makeFigure(adventureHeroAsset(hero.id), "__BASE", "");
       this.heroes.set(hero.id, figure);
     }
-    const size = roadHeroSize(this.scene.scale.width, this.scene.scale.height);
+    const size = this.look?.nightBridge
+      ? housecalls.nightBridgeLayout(this.scene.scale, this.look.nightBridge.section).figureSize *
+        fixedFigureScale(this.look, this.scene.scale)
+      : housecalls.usesHousecallsLayout(this.look)
+        ? housecalls.housecallsSceneLayout(this.scene.scale, this.look).figureSize *
+          fixedFigureScale(this.look, this.scene.scale)
+        : roadHeroSize(this.scene.scale.width, this.scene.scale.height);
+    const strideFrame = this.gait.frame(hero, {
+      width: this.scene.scale.width,
+      height: this.scene.scale.height,
+      stage: state.stage,
+      figureSize: size,
+    });
     const x = this.screenX(hero.x, state);
-    const gathering = this.working(hero) && state.gathering?.task === "gather";
-    const crouch =
-      gathering && !reduced ? (4 + Math.sin(state.time / 280) * 2) * RPG_CAMERA_SCALE : 0;
+    const gathering = !!this.look?.workers.includes(hero.id) && state.gathering?.task === "gather";
+    const crouch = gatherCrouch(gathering, reduced, state.time, this.look) * RPG_CAMERA_SCALE;
     const y = roadY(hero.lane, this.scene.scale.height, this.scene.scale.width) + crouch;
-    const pose = String(this.heroPose(state, hero, reduced));
-    const pulling = this.look?.frontCarriers.includes(hero.id) || false;
-    const working =
-      this.working(hero) && applyWorkPose(figure.image, state, hero, reduced, size, pulling);
-    if (!working) applyHeroPose(figure.image, hero.id, pose, size);
+    const { luggage, frame: carryFrame } = paintRoadHeroPose(
+      figure.image,
+      state,
+      hero,
+      reduced,
+      size,
+      strideFrame,
+      this.look,
+    );
+    faceRoadHero(figure.image, hero.facing);
+    if (this.look?.storybookHeroes) this.spriteFilter.apply(figure.image);
     figure.image
       .setPosition(x, y)
-      .setFlipX(hero.facing < 0)
-      .setDepth(10 + hero.lane * 10)
-      .setAlpha(hero.hp > 0 ? 1 : 0.35);
+      .setDepth(roadFigureDepth(hero.lane, this.scene.scale, this.look))
+      .setTint(this.look?.night ? 0xd1d1d1 : 0xffffff)
+      .setAlpha(roadHeroOpacity(hero.hp, !!this.look?.storybookHeroes));
     figure.label
       .setVisible(!!hero.paralyzed)
       .setText("麻痺")
       .setPosition(x, y - size);
-    figure.bar.setDepth(10 + hero.lane * 10 + 0.01);
+    figure.bar.setDepth(roadFigureDepth(hero.lane, this.scene.scale, this.look) + 0.01);
+    if (luggage) this.handheld.paint(hero, luggage, carryFrame, state, this.scene.scale, this.look);
     this.health(x, y + 4, size, hero.hp / hero.maxHp, false, figure.bar);
   }
 
@@ -248,80 +220,105 @@ export class RoadPainter {
       figure = this.makeFigure("/sprites.png", "slime", "");
       this.enemies.set(enemy.id, figure);
     }
-    const size = enemyDisplayHeight(enemy, this.scene.scale.width, this.scene.scale.height);
+    const size = sceneEnemyHeight(
+      enemy,
+      this.scene.scale.width,
+      this.scene.scale.height,
+      this.look,
+    );
     const x = this.screenX(enemy.x, state),
       y = roadY(enemy.lane, this.scene.scale.height, this.scene.scale.width);
-    const bounce =
-      reduced || enemy.pose === "fallen"
-        ? 0
-        : Math.sin(state.time / 170 + enemy.id) * 3 * RPG_CAMERA_SCALE;
-    const { asset, frame } = enemyAppearance(enemy, this.look);
-    const facesRight = enemyFacesRight(enemy, state.heroes[0].x);
-    if (figure.image.texture.key !== asset || figure.image.frame.name !== frame)
-      figure.image.setTexture(asset, frame);
-    figure.image
-      .setPosition(x, y + bounce)
-      .setDisplaySize(size, size)
-      .setFlipX(
-        enemy.kind === "slime" || ["pumpety", "puppet", "golem"].includes(enemy.kind)
-          ? facesRight
-          : !facesRight,
-      )
-      .setAngle(enemyAngle(enemy, state.time, reduced))
-      .setDepth(10 + enemy.lane * 10);
-    fitEnemy(figure.image, enemy, size, state.time, reduced);
-    const heroHeight = roadHeroSize(this.scene.scale.width, this.scene.scale.height) * 0.9;
-    const cellSize = (size * adventureEnemyArt.cell) / adventureEnemyArt.height;
-    this.spriteFilter.applyPixel(figure.image, heroHeight, { width: cellSize, height: cellSize });
-    figure.bar.setDepth(10 + enemy.lane * 10 + 0.01);
+    this.enemyFigures.paint(
+      figure.image,
+      enemy,
+      state,
+      this.look,
+      this.scene.scale,
+      size,
+      x,
+      y,
+      reduced,
+    );
+    figure.bar.setDepth(roadFigureDepth(enemy.lane, this.scene.scale, this.look) + 0.01);
     if (enemy.kind !== "pumpety" && !enemy.pose)
       this.health(x, y + 5, size, enemy.hp / enemy.maxHp, true, figure.bar);
   }
 
-  private workAppearance(cargo: boolean) {
-    const size = cargo
-      ? roadCartWidth(this.scene.scale.width) / RPG_CAMERA_SCALE
-      : Math.min(
-          ({ waterway: 85, signpost: 44, ledger: 85 } as Record<string, number>)[
-            this.look?.work?.frame || ""
-          ] || 65,
-          this.scene.scale.width * 0.2,
-        );
-    const asset = this.look?.work?.asset || (cargo ? ROAD_CARGO : ROAD_HERB);
-    const frame = this.look?.work?.frame || (cargo ? "cart" : "__BASE");
-    return { size: size * RPG_CAMERA_SCALE, asset, frame };
-  }
-
-  private paintGathering(state: RoadBattle, look: RoadLook) {
+  private paintGathering(state: RoadBattle, look: RoadLook, reduced: boolean) {
     const point = state.gathering;
-    this.gathering.setVisible(!!point);
+    this.mossGlow.clear();
+    this.gathering.setVisible(groundWorkVisible(state, look));
     if (!point) {
+      this.seedlingWheels.paint(state, look, 0, 0, 0, false, reduced);
       this.workCaption.paint(state, look, 0, 0);
       return;
     }
     const cargo = point.kind === "cargo";
-    const lane = cargo ? 0.82 : 0.68;
-    const x = this.screenX(point.x + 65, state),
+    const { x: worldX, lane } = roadWorkFoot(point, state.heroes, look);
+    const x = this.screenX(worldX, state),
       y = roadY(lane, this.scene.scale.height, this.scene.scale.width);
-    const { size, asset, frame } = this.workAppearance(cargo);
-    if (this.gathering.texture.key !== asset || this.gathering.frame.name !== frame)
-      this.gathering.setTexture(asset, frame);
-    this.gathering.setOrigin(0.5, cargo || this.look?.work?.frame ? 1 : 0.92);
-    this.gathering
-      .setPosition(x, y)
-      .setScale(size / this.gathering.frame.width)
-      .setDepth(10 + lane * 10 - 0.1)
-      .setFlipX(cargo && point.task === "carry" && !!this.look?.puller);
-    this.workCaption.paint(
-      state,
-      look,
+    const appearance = roadGatheringAppearance(state, look, this.scene.scale, cargo);
+    const { size } = appearance;
+    const captionOffset = paintGroundWorkImage(this.gathering, look, point, this.scene.scale, {
+      ...appearance,
       x,
-      y + this.gathering.displayHeight * (1 - this.gathering.originY),
+      y,
+      lane,
+    });
+    this.seedlingWheels.paint(state, look, x, y, size, this.gathering.visible, reduced);
+    this.paintMossGlow(x, y, size, this.gathering.visible && !!look.night && cargo);
+    this.workCaption.paint(state, look, x, y + captionOffset, this.workAvoidRects());
+    // This courtyard has no fixed work object: the carrier and delivered items
+    if (state.townParcelHandoff || hideFixedWorkProgress(look)) return;
+    const progress = roadWorkProgressLayout(
+      look,
+      size,
+      this.gathering.displayHeight,
+      roadHeroSize(this.scene.scale.width, this.scene.scale.height),
     );
     if (point.task === "carry")
-      this.transportProgress(x, y + 5, size, 1 - point.remaining / point.total);
-    else this.health(x, y + 5, size, point.remaining / point.total);
+      this.transportProgress(
+        x,
+        y + progress.offset,
+        progress.size,
+        1 - point.remaining / point.total,
+      );
+    else this.health(x, y + progress.offset, progress.size, point.remaining / point.total);
   }
+  private workAvoidRects() {
+    return [
+      ...this.background.trafficBounds,
+      ...this.waterway.actorBounds,
+      ...[...this.heroes.values(), ...this.enemies.values()].flatMap(({ image }) =>
+        image.visible
+          ? [
+              image.getBounds(),
+              {
+                x: image.x - image.displayWidth / 2,
+                y: image.y + 4,
+                width: image.displayWidth,
+                height: 7,
+              },
+            ]
+          : [],
+      ),
+      ...[...this.heroes.values()].flatMap(({ label }) =>
+        label.visible ? [label.getBounds()] : [],
+      ),
+    ];
+  }
+  private paintMossGlow(x: number, y: number, size: number, visible: boolean) {
+    if (!visible) return;
+    for (const [spread, alpha] of [
+      [1.15, 0.025],
+      [0.9, 0.04],
+      [0.65, 0.06],
+    ])
+      this.mossGlow
+        .fillStyle(0xc8ef99, alpha)
+        .fillEllipse(x, y - size * 0.28, size * spread, size * spread * 0.55);
+  }
+
   private transportProgress(x: number, y: number, size: number, progress: number) {
     const width = size * 0.7;
     this.bars.fillStyle(0x26362f, 0.9).fillRoundedRect(x - width / 2, y, width, 4, 2);
@@ -329,10 +326,12 @@ export class RoadPainter {
   }
 
   paint(state: RoadBattle, reduced: boolean, look: RoadLook) {
+    this.waterway.paint(state, look, reduced);
+    this.handheld.begin();
+    this.journeyCart.paint(state, reduced, look);
     this.look = look;
     this.scenery(state, reduced);
     this.bars.clear();
-    this.paintGathering(state, look);
     for (const [id, figure] of this.enemies) {
       figure.bar.clear();
       if (enemyPresent(state, id, reduced)) continue;
@@ -348,8 +347,10 @@ export class RoadPainter {
       figure.bar.clear().setVisible(active);
     }
     for (const hero of state.heroes) this.paintHero(state, hero, reduced);
+    this.nightLights.paint(state, look, reduced, this.handheld.points.get("aria"));
     for (const enemy of state.enemies)
       if (enemy.hp > 0 || enemy.pose) this.paintEnemy(state, enemy, reduced);
+    this.paintGathering(state, look, reduced);
     this.enemyLabels.paint(
       state,
       look,
@@ -359,10 +360,25 @@ export class RoadPainter {
       this.gathering,
       this.scene.scale.width,
       this.scene.scale.height,
+      this.workCaption.bounds,
+      this.waterway.bounds,
     );
-    paintPuppetStrings(this.strings, state, this.scene.scale.height, this.scene.scale.width, (x) =>
-      this.screenX(x, state),
+    paintPuppetStrings(
+      this.strings,
+      state,
+      this.scene.scale.height,
+      this.scene.scale.width,
+      (x) => this.screenX(x, state),
+      look.storybookHeroes,
     );
-    this.effects.paint(state, reduced, (x) => this.screenX(x, state));
+    const screenX = (x: number) => this.screenX(x, state);
+    this.effects.paint(state, reduced, screenX, look.storybookHeroes, !!look.mossBeds?.seedlings);
+    paintRoadSceneFade(
+      this.sceneFade,
+      look,
+      this.scene.scale.width,
+      this.scene.scale.height,
+      state,
+    );
   }
 }

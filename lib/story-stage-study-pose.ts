@@ -1,7 +1,8 @@
 import type { StageActor } from "./story-stage-cues.ts";
 
 export function mossStudyPose(actor: StageActor, elapsed: number, reduced: boolean) {
-  if (actor.id === "lico") return licoStudyPose(actor, elapsed, reduced);
+  if (actor.id === "lico")
+    return licoCarePose(actor, elapsed, reduced) ?? licoStudyPose(actor, elapsed, reduced);
   if (actor.id === "mira" && actor.mossCare)
     return {
       atlas: "conversation" as const,
@@ -12,7 +13,25 @@ export function mossStudyPose(actor: StageActor, elapsed: number, reduced: boole
   return null;
 }
 
+function licoCarePose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.mossStudy === "wipe" || actor.mossStudy === "spread")
+    return {
+      atlas: "conversation" as const,
+      frame: (actor.mossStudy === "wipe" ? 84 : 86) + (reduced ? 0 : Math.floor(elapsed / 450) % 2),
+      handDrop: 0,
+      onChair: false,
+    };
+  return null;
+}
 function licoStudyPose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.paperAction)
+    return {
+      atlas: "conversation" as const,
+      frame:
+        80 + ["strike-start", "strike-end", "tear-start", "tear-end"].indexOf(actor.paperAction),
+      handDrop: 0,
+      onChair: false,
+    };
   if (actor.recordStudy)
     return {
       atlas: "conversation" as const,

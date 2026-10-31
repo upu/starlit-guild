@@ -1,0 +1,94 @@
+{
+  "aria": [
+    {
+      "scale": 0.35733333333333334,
+      "width": 68,
+      "height": 134,
+      "left": 58,
+      "top": 42
+    },
+    {
+      "scale": 0.35733333333333334,
+      "width": 84,
+      "height": 99,
+      "left": 58,
+      "top": 77
+    },
+    {
+      "scale": 0.35733333333333334,
+      "width": 84,
+      "height": 99,
+      "left": 58,
+      "top": 77
+    }
+  ],
+  "leon": [
+    {
+      "scale": 0.384,
+      "width": 76,
+      "height": 144,
+      "left": 52,
+      "top": 32
+    },
+    {
+      "scale": 0.384,
+      "width": 90,
+      "height": 106,
+      "left": 51,
+      "top": 70
+    },
+    {
+      "scale": 0.384,
+      "width": 99,
+      "height": 106,
+      "left": 51,
+      "top": 70
+    }
+  ],
+  "mira": [
+    {
+      "scale": 0.3324538258575198,
+      "width": 68,
+      "height": 126,
+      "left": 60,
+      "top": 50
+    },
+    {
+      "scale": 0.3324538258575198,
+      "width": 75,
+      "height": 103,
+      "left": 58,
+      "top": 73
+    },
+    {
+      "scale": 0.3324538258575198,
+      "width": 78,
+      "height": 104,
+      "left": 59,
+      "top": 72
+    }
+  ],
+  "finn": [
+    {
+      "scale": 0.3583535108958838,
+      "width": 78,
+      "height": 148,
+      "left": 58,
+      "top": 28
+    },
+    {
+      "scale": 0.3583535108958838,
+      "width": 90,
+      "height": 117,
+      "left": 55,
+      "top": 59
+    },
+    {
+      "scale": 0.3583535108958838,
+      "width": 93,
+      "height": 118,
+      "left": 51,
+      "top": 58
+    }
+  ]
+}

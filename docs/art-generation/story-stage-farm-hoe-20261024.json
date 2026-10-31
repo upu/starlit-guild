@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "assets": [{
+    "source": "assets/source/story-stage/farm-hoe-v1.png",
+    "output": "public/story-stage/prop-farm-hoe.webp",
+    "sha256": "c484600992906a16fe685fcec33f255cb660dac8991701b2da23b2f0b3f8fe2c",
+    "prompt": "Create a single isolated farm hoe sprite for a detailed Japanese fantasy pixel-art RPG. Transparent background with real alpha. One modest utilitarian agricultural hoe, NOT a weapon, axe, pickaxe or shovel. Long plain warm brown wooden shaft, small dull grey rectangular iron hoe blade attached perpendicular at the upper end, iron head points left, entire tool near vertical with handle end at bottom. Show slightly elevated three-quarter view matching 45-degree overhead RPG characters. Crisp dark brown outlines, visible square pixel clusters, restrained earth colors and simple highlights, no smooth painterly edges. Full silhouette visible with generous transparent padding, no cropped top or handle. No people, hands, rope, other tools, ground, shadow, text or decorative frame. Designed to be readable when reduced to about 16 pixels wide and 65 pixels tall; length represents a hoe reaching a standing character's shoulder. Exactly one hoe centered."
+  }]
+}

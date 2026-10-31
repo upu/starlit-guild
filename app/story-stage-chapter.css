@@ -130,6 +130,10 @@
 .story-stage-extra[data-bed="true"] .story-stage-name {
   top: 22%;
 }
+.story-stage-item[data-art="farm-hoe"] {
+  aspect-ratio: 1 / 5;
+}
+
 .story-stage-item {
   position: absolute;
   aspect-ratio: 1.3;

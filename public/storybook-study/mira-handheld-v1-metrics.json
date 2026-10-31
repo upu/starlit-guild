@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/mira-handheld-v1.png",
+    "index": 0,
+    "scale": 0.336,
+    "left": 59,
+    "top": 50,
+    "width": 66,
+    "height": 126,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/mira-handheld-v1.png",
+    "index": 5,
+    "scale": 0.336,
+    "left": 57,
+    "top": 73,
+    "width": 93,
+    "height": 103,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/mira-handheld-v1.png",
+    "index": 6,
+    "scale": 0.336,
+    "left": 56,
+    "top": 56,
+    "width": 83,
+    "height": 120,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/mira-handheld-v1.png",
+    "index": 7,
+    "scale": 0.336,
+    "left": 60,
+    "top": 48,
+    "width": 66,
+    "height": 128,
+    "baseline": 176
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/mira-handheld-walk-v1.png",
+    "index": 0,
+    "scale": 0.25786487880350695,
+    "left": 52,
+    "top": 51,
+    "width": 70,
+    "height": 125,
+    "baseline": 176
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/mira-handheld-walk-v1.png",
+    "index": 1,
+    "scale": 0.25786487880350695,
+    "left": 50,
+    "top": 52,
+    "width": 73,
+    "height": 124,
+    "baseline": 176
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/mira-handheld-walk-v1.png",
+    "index": 2,
+    "scale": 0.25786487880350695,
+    "left": 50,
+    "top": 50,
+    "width": 72,
+    "height": 126,
+    "baseline": 176
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/mira-handheld-walk-v1.png",
+    "index": 3,
+    "scale": 0.25786487880350695,
+    "left": 49,
+    "top": 50,
+    "width": 69,
+    "height": 126,
+    "baseline": 176
+  }
+]

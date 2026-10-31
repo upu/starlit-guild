@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: style-transfer. Create a production transparent character sprite sheet for an original warm hand-painted 2D RPG, elevated three-quarter view. Image 1 is identity reference: only its FIRST ROW, the gray-haired middle-aged warehouse landlord in blue work vest/tunic, beige rolled sleeve shirt, brown belt with small pouch, brown trousers and boots, small mustache, approachable ordinary face. Image 2 is exact rendering-style and proportion reference: soft warm painted shading, restrained thin brown contours, clear simple shapes at tiny game size, approximately 3-head-tall adult, NOT pixel-art. Redraw the landlord from image 1 in the style of image 2. Four full-body poses in ONE HORIZONTAL ROW, equal square cells, same character, identical head/body scale and boot baseline. All face screen-left three-quarter, fixed standing feet. Left to right: neutral resting arms, speaking with one open palm extended left, indicating down-left with one hand, friendly modest wave. Keep gray tousled hair, blue vest and mustache in all four. No chairs, tools, props, text, numbers, panels, ground shadows, decorations or background. Fully transparent alpha. Generous transparent margin above hair and beneath boots, no clipping, no silhouettes touching adjacent cells. Use image 2 body/head proportions exactly; hands may vary but head sizes and stature must remain invariant.",
+  "references": [
+    "public/story-stage/keeper-poses.webp",
+    "public/storybook-study/merchant-poses-v2.webp"
+  ],
+  "source": "assets/source/storybook/keeper-poses-v1.png",
+  "output": "public/storybook-study/keeper-poses-v1.webp",
+  "build": "node scripts/build-storybook-merchant.mjs poses keeper",
+  "scope": "indoor study only; conversation frames 0-3",
+  "registration": "single common scale from first pose; 128px cells, foot baseline120; heights94/94/93/94"
+}

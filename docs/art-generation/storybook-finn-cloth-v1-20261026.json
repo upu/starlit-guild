@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent hand-painted warm2D RPG sprite sheet exactly8fullbodyposes4columns2rows of exactmiddleagedFinnfromreference. Same weatheredface, stubble,wavybrownponytail,tatteredolivebrownlongcoatwhiteshirtdarkboots. Elevated45degree downward3quartercamera, faceRIGHT everypose, sameanatomyheadscaleheight. Row1:0 neutraluprightstandingcalibration;1holding folded INVISIBLElinencloth withbothhands atwaist, nearhandalittleforward;2walkingRIGHT holdingcloth nearlegforwardcontact;3passingnearlegunderhipsfarheelraised. Row2:4oppositecontact nearlegbackLEFTfarlegforwardRIGHT;5oppositepassing nearheelraised;6botharms spread atwaist/chest toopen INVISIBLEcloth, supportingtwocorners;7slightforwardlean withbothhands extendingRIGHTlower atthighheight tolay INVISIBLEcloth oncartbed, headlooksdown. No actualcloth,props,ground,shadows,text. Eight separatecompletefiguresfullheadsbootswidegutters. Fourdistinctwalkinglegphases, allbodies scaledtostandingreference; forwardleanreducesoverallheightnaturally.",
+  "references": [
+    "assets/source/storybook/finn-chair-v2.png"
+  ],
+  "source": "assets/source/storybook/finn-cloth-v1.png"
+}

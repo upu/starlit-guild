@@ -1,0 +1,18 @@
+.storybook-reader-stage[data-story="moss-transplant-departure"][data-art="tower-loading-yard-v1"]
+  .story-stage-item[data-art="farm-hoe"] {
+  background-image: url("/storybook-study/farm-hoe-v1.webp");
+  aspect-ratio: 1/2;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="moss-transplant-departure"][data-art="tower-loading-yard-v1"]
+  .story-stage-item[data-art="rope-coil"] {
+  background-image: url("/storybook-study/snag-rope-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="moss-transplant-departure"][data-art="tower-loading-yard-v1"]
+    .story-stage-space {
+    transform: none;
+  }
+}

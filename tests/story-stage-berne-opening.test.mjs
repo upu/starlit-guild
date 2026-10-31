@@ -104,3 +104,39 @@ test("flat prop turning preserves location and size, including interrupted and r
   paint(180)(new Map(), 0, true);
   assert.match(element.style.transform, /rotateY\(180deg\)/);
 });
+
+test("laying a board flat keeps its lower edge fixed and resumes its displayed angle", () => {
+  const { itemPainter } = evaluateSourceModule(
+    compileSourceModule("../app/story-stage-item-motion.ts", import.meta.url),
+    {
+      "@/lib/story-stage-props": props,
+      "@/lib/story-stage-figure": figure,
+      "@/lib/story-stage-cargo": cargo,
+    },
+  );
+  const element = { style: { setProperty() {}, removeProperty() {} }, dataset: {}, hidden: false };
+  const stage = { querySelector: () => element, querySelectorAll: () => [element] };
+  const state = new Map();
+  const paint = (pitch) =>
+    itemPainter(
+      stage,
+      {
+        actors: [],
+        items: [{ id: "board", art: "lap-board", x: 85, bottom: 36, width: 13, pitch }],
+      },
+      state,
+    );
+  paint(0)(new Map(), 650, false);
+  paint(60)(new Map(), 325, false);
+  assert.match(element.style.transform, /rotateX\(30deg\)/);
+  assert.equal(element.style.transformOrigin, "center bottom");
+  assert.equal(element.style.bottom, "36%");
+  assert.equal(element.style.width, "13%");
+  paint(60)(new Map(), 0, false);
+  assert.match(element.style.transform, /rotateX\(30deg\)/);
+  paint(60)(new Map(), 0, true);
+  assert.match(element.style.transform, /rotateX\(60deg\)/);
+  paint(0)(new Map(), 650, false);
+  assert.equal(element.style.transformOrigin, "");
+  assert.doesNotMatch(element.style.transform, /rotateX/);
+});

@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "used for the portrait 4-6 adventure",
+  "reference": "public/storybook-study/moss-beds-v1.png",
+  "generated": "exec-89f539ed-df91-4592-b9b5-6f912779bcc8.png",
+  "source": "assets/source/storybook/moss-beds-portrait-v1.png",
+  "output": "public/storybook-study/moss-beds-portrait-v1.png",
+  "sha256": "a31762ea6fb9950e4573575cc1b5264e971b602a66801abebe4c291d0e091490",
+  "prompt": "Create a portrait 2:3 game background of this exact moss garden behind the stone tower, matching the attached reference's warm painted pixel-art 2D RPG style, colors, overhead 55-degree oblique camera and architectural materials. This is a mobile recomposition of the same place, not a new location: the round tower and its arched wooden door appear toward the upper right, regular low pale-stone rectangular green moss beds with simple small wooden marker stakes to the upper and left sides, and narrow straight water channels beside the beds. A broad earth path runs from lower middle toward the tower and between the beds, with flat unobstructed walkable earth in the middle. Keep the beds near the path so small characters can naturally examine them from the path. Show generous ground for characters, with a clear continuous path, stones and vegetation scaled to small adventurer sprites. No characters, animals, creatures, UI, readable writing, icons, outlines, borders or framing. Cohesive natural sunlit scene with subtle moss glimmers, details restrained for gameplay clarity."
+}

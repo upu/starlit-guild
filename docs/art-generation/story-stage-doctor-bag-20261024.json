@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "source": "assets/source/story-stage/doctor-bag-v1.png",
+  "sha256": "09a952ad45c133e55fbee16d12579d3438605dfb9a074c37b04d29b93ada56ed",
+  "output": "public/story-stage/doctor-poses.webp frames 8-11",
+  "reference": "work/doctor-current-inspect.png",
+  "prompt": "Create a new transparent 2 by 2 sprite sheet, four full-body poses of EXACTLY the same town doctor woman shown in the reference image. Reference is identity/style only, not an edit target. Preserve short gray bob hair, mature kind face, dark forest-green long-sleeve dress, cream apron, brown boots, brown leather doctor's shoulder satchel with cream medical cross, the same chibi head proportions and crisp fantasy RPG pixel-art style. Face three-quarter toward viewer-left as in reference. All four cells same scale, feet on same baseline, equal square cells with generous transparent gutters. Top left: gentle slight nod, hand grasping the strap of her own bag resting at right hip. Top right: reaches down to grasp that same satchel's top handle. Bottom left: lifts that same satchel slightly upward toward waist, shoulder strap slack but still attached, head raised to address companion. Bottom right: holds it in that raised position with a warm small smile. Exactly ONE satchel in each cell, no additional ground bag, no book, no paper, no other props. Movement subtle and anatomically clear, no size change between poses, no amputated feet or hair, no shadows, text, labels, borders or background. True transparent alpha."
+}
+

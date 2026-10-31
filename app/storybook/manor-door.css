@@ -1,0 +1,92 @@
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="44"], [data-frame="45"]) {
+  background-image: url("/storybook-study/finn-door-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: var(--door-x, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="45"] {
+  --door-x: 66.666667%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/cook-motion-v2.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--cook-x, 0%) var(--cook-y, 0%) !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite:is(
+    [data-frame="4"],
+    [data-frame="5"],
+    [data-frame="6"],
+    [data-frame="7"]
+  ) {
+  scale: 1;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="4"] {
+  --cook-x: 33.333333%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --cook-x: 66.666667%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  --cook-x: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  --cook-y: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="8"] {
+  --cook-x: 33.333333%;
+  --cook-y: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite[data-frame="9"] {
+  --cook-x: 66.666667%;
+  --cook-y: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  [data-npc="cook"]
+  .story-stage-extra-sprite:is(
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="3"],
+    [data-frame="10"]
+  ) {
+  --cook-x: 100%;
+  --cook-y: 100%;
+}
+.storybook-reader-stage:is([data-art="manor-kitchen-v1"], [data-art="manor-kitchen-open-v1"])
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-mode="outdoor"]:is(
+      [data-art="manor-kitchen-v1"],
+      [data-art="manor-kitchen-open-v1"]
+    )
+    .story-stage-space {
+    transform: none;
+  }
+}

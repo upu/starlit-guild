@@ -1,5 +1,11 @@
 [
   {
+    "source": "assets/source/story-stage/tower-records-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["tower-records"] }]
+  },
+  {
     "source": "assets/source/story-stage/berne-paving-v1.png",
     "columns": 1,
     "rows": 1,
@@ -345,5 +351,11 @@
     "columns": 1,
     "rows": 1,
     "cells": [{ "story": ["moss-beds"] }]
+  },
+  {
+    "source": "assets/source/story-stage/transplant-path-v1.png",
+    "columns": 1,
+    "rows": 1,
+    "cells": [{ "story": ["transplant-path"] }]
   }
 ]

@@ -1,0 +1,24 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/keeper-tower-signal-v1.png",
+    "scale": 0.15897435897435896,
+    "left": 39,
+    "top": 27,
+    "width": 48,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 34
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/keeper-tower-signal-v1.png",
+    "scale": 0.15897435897435896,
+    "left": 27,
+    "top": 20,
+    "width": 60,
+    "height": 100,
+    "baseline": 120,
+    "upperSilhouetteWidth": 53
+  }
+]

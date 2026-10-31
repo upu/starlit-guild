@@ -7,7 +7,8 @@ import { storyStageCue, storyStageExitCue, stageEntrance } from "../lib/story-st
 import { deliveryBoxTarget, stageItemTarget } from "../lib/story-stage-props.ts";
 import { roadBackdrop, roadHeroSize, roadX, roadY } from "../lib/road-layout.ts";
 import { roadBackground } from "../lib/road-background.ts";
-import { chapterRoadHit } from "../lib/chapter-road-presentation.ts";
+import { chapterRoadHit, chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
+import { testState, act } from "../lib/game.ts";
 import { stories } from "../lib/stories.ts";
 
 test("the pulled-back stage starts and finishes travel outside the visible frame", () => {
@@ -104,4 +105,28 @@ test("moving routes use clear ground while conversation scenery and other routes
     "/scenery/forest-background.webp",
   );
   assert.equal(roadBackground("/story-stage/berne-street.webp"), "/story-stage/berne-street.webp");
+  assert.equal(
+    roadBackground("/scenery/old-waterway-background.webp", "moss-transplant"),
+    "/story-stage/transplant-path.webp",
+  );
+});
+
+test("the transplant journey continues the scene's night route without changing other routes", () => {
+  for (const [index, quest, night] of [
+    [35, "moss-transplant", true],
+    [36, "starlit-guild-founding", false],
+  ]) {
+    let state = testState(1000, index, 40, 10000);
+    state = act(state, { type: "start", id: quest, readDeparture: true, value: false }, 1000);
+    const before = structuredClone(state);
+    const look = chapterRoadFrame({
+      squad: state.squads[0],
+      now: 1000,
+      ready: true,
+      paused: false,
+    }).look;
+    assert.equal(look.night, night);
+    if (night) assert.equal(look.background, "/story-stage/transplant-path.webp");
+    assert.deepEqual(state, before);
+  }
 });

@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "assets": [
+    {
+      "source": "assets/source/storybook/delivery-box-v2.png",
+      "prompt": "Edit the provided original delivery crate sprite. Preserve exact silhouette, side handles, camera, shallow box proportions, rope and blank cream paper tag. Only change WOOD from bright honey yellow to muted medium chestnut brown: front faces noticeably darker than a honey-colored table, upper face lighter than front for readable volume. Keep rope and tag pale and clean, metal small and subdued. Warm storybook painted 2D RPG art, broad simple color planes, sparse grain, soft brown outlines. Do not add black heavy borders. No change to geometry. Transparent background, no ground/shadow/glow/text. Full crate uncropped."
+    },
+    {
+      "source": "assets/source/storybook/covered-box-v1.png",
+      "prompt": "Edit this original delivery crate into a cloth-covered stored crate, on transparent background. Preserve the same shallow oblong silhouette, side handles, elevated three-quarter camera and muted chestnut wood. Add a soft muted sage-green packing cloth laid directly ON the lid and draped over its front upper half and side edge. Cloth must rest on the box, follow its corners and hang under gravity, never float. Three broad gentle folds, no detailed weave, matte fabric, cloth ends above the box bottom so the dark wooden lower edge stays visible. A small blank cream shipping tag hangs visibly on the FRONT over cloth. Rope gently holds cloth against the box. Keep same warm storybook 2D game style and sparse painted detail. One box only, fully visible, no floor, shadow, glow, lettering, labels, background or extra objects. Landscape."
+    }
+  ]
+}

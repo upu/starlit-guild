@@ -1,5 +1,5 @@
-import { consumableNotice } from "@/lib/consumable-effects";
 import { guildUnlocked } from "@/lib/guild-base";
+import type { ComponentProps } from "react";
 import { GuildPanel } from "./guild-panel";
 import Image from "next/image";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -10,31 +10,23 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import { CharacterPanel } from "./equipment-panels";
+import { CompanionsTab } from "./phone-companions-tab";
 import { ShopEntry } from "./shop-entry";
 import { QuestCompletion } from "./quest-completion";
 import { Toaster } from "@/components/ui/sonner";
-import { MapStage } from "./map-stage";
-import { Banter, StoryLibrary } from "./story-scenes";
-import { pumpetyBattleBanter } from "@/lib/pumpety-battle-banter";
-import { chapterFourBattleBanter } from "@/lib/chapter-four-battle-banter";
+import { StoryLibrary } from "./story-scenes";
+import { AdventureTab } from "./phone-adventure-tab";
 import { useStoryAdvance } from "./use-story-advance";
 import { StoryHeading } from "./story-heading";
 import { storyProgress } from "@/lib/stories";
 import { TRADE_QUEST } from "@/lib/prologue";
-import { allQuests, squadName } from "@/lib/game";
+import { allQuests } from "@/lib/game";
+import { ReturnDialog } from "./phone-return-dialog";
 import { resolveSheet } from "./phone-game-sheets";
 import type { Game, PhoneFrameModel } from "./phone-game-types";
+import { useRestorationHandoff } from "./use-restoration-handoff";
+import { chapterThreeHandoffs, chapterFourHandoff, handoffQuest } from "./phone-restoration-mode";
+type RestorationHandoff = ReturnType<typeof useRestorationHandoff>;
 
 function PhoneHeader({ model: m }: { model: PhoneFrameModel }) {
   return (
@@ -136,7 +128,13 @@ function adventurePrimaryAction(m: PhoneFrameModel, guide: FirstDepartureGuide) 
     </button>
   );
 }
-export function AdventureDestination({ model: m }: { model: PhoneFrameModel }) {
+export function AdventureDestination({
+  model: m,
+  restoration,
+}: {
+  model: PhoneFrameModel;
+  restoration?: RestorationHandoff;
+}) {
   const guide = firstDepartureGuide(m),
     obscured = !!m.sheet || !!m.ending;
   return (
@@ -167,62 +165,36 @@ export function AdventureDestination({ model: m }: { model: PhoneFrameModel }) {
           m.setSheet("shop");
         }}
       />
-      {adventurePrimaryAction(m, guide)}
+      {restoration?.waiting ? (
+        <button className="outline" onClick={restoration.skip}>
+          演出をスキップ
+        </button>
+      ) : (
+        adventurePrimaryAction(m, guide)
+      )}
       {firstDepartureBubble(guide)}
     </div>
   );
 }
-function AdventureBanter({ model: m }: { model: PhoneFrameModel }) {
-  const notice = consumableNotice(m.state, m.clock);
-  if (!m.banter.length)
-    return (
-      <div className="phone-banter">
-        <p role={notice ? "status" : undefined}>{notice || m.quote}</p>
+function MemoriesTab({ model: m }: { model: PhoneFrameModel }) {
+  return (
+    <TabsContent value="memories" className="phone-memories">
+      <div className="screen-heading">
+        <h2>旅の思い出</h2>
       </div>
-    );
-  return (
-    <Banter
-      key={(m.game.profile?.id || "") + ":" + m.squad.id + ":" + (m.run?.quest || "idle")}
-      lines={m.banter}
-      notice={notice}
-      retain={!!m.run && !!(chapterFourBattleBanter(m.run) || pumpetyBattleBanter(m.run))}
-      paused={!!m.sheet || !!m.ending || !m.ready}
-    />
-  );
-}
-function AdventureTab({ model: m }: { model: PhoneFrameModel }) {
-  return (
-    <TabsContent
-      value="adventure"
-      className={"phone-adventure" + (m.run ? " phone-adventure-running" : "")}
-    >
-      <MapStage
-        state={m.state}
-        squad={m.squad}
-        now={m.clock}
-        ready={m.ready}
-        onAction={m.act}
-        startQuest={m.quest.id}
-        paused={!!m.sheet || !!m.returnIntent || !!m.ending}
-      />
-      <AdventureBanter model={m} />
-      <AdventureDestination model={m} />
+      <StoryLibrary state={m.state} onOpen={m.openStory} />
     </TabsContent>
   );
 }
-function CompanionsTab({ model: m }: { model: PhoneFrameModel }) {
-  return (
-    <TabsContent value="companions" className="phone-characters">
-      <CharacterPanel state={m.state} ready={m.ready} onAction={m.act} />
-    </TabsContent>
-  );
-}
-function GameTabs({ model: m }: { model: PhoneFrameModel }) {
+function GameTabs(props: Omit<ComponentProps<typeof AdventureTab>, "children">) {
+  const { model: m, restoration } = props;
   return (
     <Tabs className="phone-tabs" value={m.view} onValueChange={m.navigate}>
       <PhoneHeader model={m} />
       <div className="phone-screen">
-        <AdventureTab model={m} />
+        <AdventureTab {...props}>
+          <AdventureDestination model={m} restoration={restoration} />
+        </AdventureTab>
         <CompanionsTab model={m} />
         {guildUnlocked(m.state) && (
           <TabsContent value="guild" className="phone-guild">
@@ -236,12 +208,7 @@ function GameTabs({ model: m }: { model: PhoneFrameModel }) {
             />
           </TabsContent>
         )}
-        <TabsContent value="memories" className="phone-memories">
-          <div className="screen-heading">
-            <h2>旅の思い出</h2>
-          </div>
-          <StoryLibrary state={m.state} onOpen={m.openStory} />
-        </TabsContent>
+        <MemoriesTab model={m} />
       </div>
       <TabsList
         className={"phone-navigation" + (guildUnlocked(m.state) ? " guild-navigation" : "")}
@@ -311,8 +278,14 @@ export function SheetDialog({ model: m }: { model: PhoneFrameModel }) {
     </Dialog>
   );
 }
-function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
-  if (!m.ending) return null;
+function EndingDialog({
+  model: m,
+  restoration,
+}: {
+  model: PhoneFrameModel;
+  restoration: RestorationHandoff;
+}) {
+  if (!m.ending || restoration.waiting) return null;
   const ending = m.ending;
   return (
     <QuestCompletion
@@ -320,6 +293,7 @@ function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
       story={ending}
       questName={allQuests.find((q) => q.id === ending.quest)?.name ?? ending.title}
       ready={m.ready}
+      completedAdventure={restoration.completed ? restoration.quest : undefined}
       onRead={() => m.readStory(ending.id)}
       onClose={() => {
         m.setSheet(null);
@@ -327,55 +301,74 @@ function EndingDialog({ model: m }: { model: PhoneFrameModel }) {
     />
   );
 }
-function ReturnDialog({ model: m }: { model: PhoneFrameModel }) {
-  const intent = m.returnIntent;
-  const title =
-    intent?.destination === "companions"
-      ? "帰還して編成しますか？"
-      : intent?.quest
-        ? "帰還して行き先を変えますか？"
-        : "帰還しますか？";
-  const target = m.state.squads.find((p) => p.id === intent?.squad);
-  return (
-    <AlertDialog
-      open={!!intent}
-      onOpenChange={(open) => {
-        if (!open) m.setReturnIntent(null);
-      }}
-    >
-      <AlertDialogContent className="game-confirm">
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {target && squadName(target)}
-            の確保済みの区間報酬は残ります。途中の依頼は最初からになります。
-            {intent?.quest && "帰還後に行き先を選び直します。自動では出発しません。"}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>冒険を続ける</AlertDialogCancel>
-          <AlertDialogAction
-            disabled={!m.ready}
-            onClick={(e) => {
-              e.preventDefault();
-              m.confirmReturn();
-            }}
-          >
-            {intent?.destination === "companions" ? "帰還して編成する" : "帰還する"}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+function chapterOneHandoff(m: PhoneFrameModel, studies: boolean[], quest: string) {
+  return !studies.some(Boolean) && (m.squad.run?.quest ?? m.ending?.quest ?? m.quest.id) === quest;
 }
-export function PhoneFrame({ model: m }: { model: PhoneFrameModel }) {
+function chapterOneModes(m: PhoneFrameModel, studies: boolean[]) {
+  return {
+    town: chapterOneHandoff(m, studies, "town-deliveries"),
+    moss: chapterOneHandoff(m, studies, "tower-moss-removal"),
+    forest: chapterOneHandoff(m, studies, "forest-wetland"),
+    waterwaySearch: chapterOneHandoff(m, studies, "old-waterway"),
+  };
+}
+export function PhoneFrame({
+  model: m,
+  restorationStudy = false,
+  nightBridgeStudy = false,
+  lindeStudy = false,
+  lanternStudy = false,
+  reviewPaused = false,
+}: {
+  model: PhoneFrameModel;
+  restorationStudy?: boolean;
+  nightBridgeStudy?: boolean;
+  lindeStudy?: boolean;
+  lanternStudy?: boolean;
+  /** Freeze only the sprite-lab trial together with its separately stopped clock. */
+  reviewPaused?: boolean;
+}) {
+  const otherStudy = lindeStudy || lanternStudy;
+  const studies = [restorationStudy, nightBridgeStudy, otherStudy];
+  const { town, moss, forest, waterwaySearch } = chapterOneModes(m, studies);
+  const third = chapterThreeHandoffs(m, restorationStudy, nightBridgeStudy, otherStudy);
+  const thirdRestoration = third.berne || third.foundation;
+  const fourth = chapterFourHandoff(m, thirdRestoration, third.night, lindeStudy, lanternStudy);
+  const { linde, lantern, brekka, trail, secondDay, records, seedlings, founding } = fourth;
+  const restoration = useRestorationHandoff(
+    m,
+    Object.values({ ...third, ...fourth, town, moss, forest, waterwaySearch }).some(Boolean),
+    handoffQuest(
+      third.night,
+      lantern,
+      linde,
+      brekka,
+      trail,
+      secondDay,
+      records,
+      seedlings,
+      founding,
+      town,
+      moss,
+      third.foundation,
+      forest,
+      waterwaySearch,
+    ),
+  );
   return (
     <main className="phone-game prologue-game">
       <Toaster theme="dark" position="top-center" />
       <GameNotice game={m.game} />
-      <GameTabs model={m} />
+      <GameTabs
+        model={m}
+        restoration={restoration}
+        nightBridgeStudy={nightBridgeStudy}
+        lindeStudy={linde}
+        lanternStudy={lantern}
+        reviewPaused={reviewPaused}
+      />
       <SheetDialog model={m} />
-      <EndingDialog model={m} />
+      <EndingDialog model={m} restoration={restoration} />
       <ReturnDialog model={m} />
     </main>
   );

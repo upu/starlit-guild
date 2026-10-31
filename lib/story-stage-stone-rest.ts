@@ -17,7 +17,7 @@ function outside(): LaterBeat[] {
     chair(actor("mira", 58, { bottom: 31, left: true })),
     ground("basket", 16, 4, 7),
     ground("delivery-bag", 77, 5, 8),
-    ground("medicine-closed", 57, 48, 8),
+    ground("medicine-closed", 71.5, 24.3, 8),
   ];
   return [
     {

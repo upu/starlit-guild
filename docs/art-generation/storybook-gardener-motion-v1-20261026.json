@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent hand-painted warm 2D RPG sprite sheet with exactly 8 full-body poses in4columns2rows. Use the exact young brown-haired male worker from reference as the manor gardener: ochre rolled-sleeve shirt, dark brown leather apron/overalls, trousers and boots, friendly practical face. Preserve original character head, body proportions and clothes. Elevated45degree three-quarter camera; soft painted texture fine warm outlines, no pixelart. All poses face LEFT, same height and head size, identical ground baseline. Row1:0 neutral standing calibration hands down;1 walking left contact left foot forward;2 walking left passing feet underneath body;3 walking left contact opposite foot forward. Row2:4 walking left opposite passing;5 stationary reaching both hands toward LEFT at chest height to lift a covering cloth, one hand a little higher;6 stationary supporting a small heavy rectangular block with BOTH palms up at waist/chest height, arms extended toward LEFT;7 stationary leaning slightly forward, one hand extended LEFT at waist height fingers turning a tiny invisible key, other hand steadying an invisible lid. No visible objects, stones, keys, cloth, chair or table. Full complete boots with transparent gutters below and above hair, no touching figures, no ground/shadows/text. The reference is low resolution but render clean painted shapes consistent with it.",
+  "references": [
+    "public/storybook-study/worker-poses-v1.webp"
+  ],
+  "source": "assets/source/storybook/gardener-motion-v1.png"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Transparent two-cell prop sheet in a warm softly hand-painted 2D RPG style matching SECOND reference puppet. FIRST reference is identity/layout only. Two identical modest wooden right-pointing arrow signposts, weathered warm brown wood, small dark nail heads, no writing or symbols, elevated 45-degree downward three-quarter camera. LEFT: planted signpost with a tiny clump of natural grass and two small rounded stones at its base. RIGHT: EXACT SAME board, post width, height and camera, uprooted portable sign with completely bare cut lower end, no grass or stones, a simple thin hemp rope loop around lower-middle post for strapping onto a small puppet's back. Match arrow board physical width exactly across cells. Sign shape simple and readable at small game size, soft brown outlines, no dense woodgrain or pixel edges. No characters, no hands, no background, no floor or shadow blob, no text, generous fully transparent margin, entire posts inside their equal cells.",
+  "source": "assets/source/storybook/signposts-v1.png",
+  "outputs": [
+    "public/storybook-study/signpost-v1.webp",
+    "public/storybook-study/signpost-portable-v1.webp"
+  ]
+}

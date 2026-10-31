@@ -34,13 +34,13 @@ for (const story of [...chapterTwoStories, ...chapterThreeStories, ...chapterFou
   stages.set(story.id, cues);
   const last = cues.at(-1);
   const settled = last?.sequence?.at(-1) ?? last;
-  if (last && settled && definition.exit)
+  if (last && settled && (definition.exit || definition.exitExtras))
     exits.set(story.id, {
       ...last,
       sequence: undefined,
       cut: false,
       items: settled.items,
-      extras: settled.extras ?? last.extras,
+      extras: definition.exitExtras ?? settled.extras ?? last.extras,
       description: `${story.place}。会話を終えて出発する。`,
       actors: settled.actors.map((a, i) =>
         definition.exit?.includes(a.id)

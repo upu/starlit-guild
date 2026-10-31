@@ -1,0 +1,95 @@
+/* Same ground baseline and physical scale as the other painted characters. */
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="25"], [data-frame="29"]) {
+  background-image: url("/storybook-study/finn-paper-seat-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="29"] {
+  background-position-x: 33.333333% !important;
+  scale: -1 1;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/finn-seat-balanced-v3.webp");
+  background-size: 400% 100%;
+  background-position: var(--finn-seat-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage
+  [data-actor="finn"]
+  .story-stage-sprite:is([data-frame="27"], [data-frame="31"]) {
+  --finn-seat-position: 66.666667%;
+}
+.storybook-painted-stage
+  [data-actor="finn"]
+  .story-stage-sprite:is([data-frame="26"], [data-frame="30"]) {
+  --finn-seat-position: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: url("/storybook-study/finn-walk-balanced-v3.webp");
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ) {
+  background-image: url("/storybook-study/finn-conversation-balanced-v3.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-conversation-position) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]:is([data-seat-transition="lower"], [data-seat-transition="settle"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/finn-sit-down-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: var(--finn-sit-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage [data-actor="finn"][data-seat-transition="settle"] {
+  --finn-sit-position: 66.666667%;
+}

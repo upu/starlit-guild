@@ -1,0 +1,27 @@
+.storybook-reader-stage:is([data-art="berne-paving-v1"], [data-art="roadside-dining-v1"])
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="roadside-dining-v1"] .story-stage-item[data-art="teapot"] {
+  background-image: url("/storybook-study/teapot-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="berne-paving-v1"] .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/basket-v1.webp");
+  image-rendering: auto;
+}
+/* Light remains in the intact paving and wall; the removed patch stays dark. */
+.storybook-reader-stage[data-art="berne-paving-v1"] .story-stage-ground::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 6% 3% at 62% 69%, #e3f1b459, #e3f1b400),
+    radial-gradient(ellipse 5% 3% at 58% 47%, #e3f1b440, #e3f1b400),
+    radial-gradient(ellipse 4% 8% at 13% 43%, #e3f1b43b, #e3f1b400);
+}

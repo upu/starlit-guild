@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG isolated empty compact two-wheel wooden garden handcart. Elevated45degree downward3quarter camera matching reference background. Side visible: large spoked wheel atleft-center beneath a shallow rectangular flat timber loadbed, low wooden sides, bed EMPTY so separate flowerpots and wrappedstone can be added. Two sturdy long handles extend toward RIGHT and slightly DOWN inperspective, with slightly raised handgrips at the farRIGHT tips, enoughclearance for adultpushingfromRIGHTtowardLEFT. Left body andright handles complete, warmbrownwood ironhardware, finewarmoutlinespaintedtexture. No supplies,pots, cloth,people,ground,castshadow,text. Fullcartincludinghandlesinsidecanvaswithtransparentpadding, landscape3:2canvas.",
+  "references": [
+    "public/storybook-study/manor-back-paths-v1.png"
+  ],
+  "source": "assets/source/storybook/garden-handcart-v1.png"
+}

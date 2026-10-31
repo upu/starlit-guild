@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: identity-preserve. Production game character sprite strip, fully transparent. Reference image is the definitive Aria appearance, watercolor/gouache warm hand-painted 2D RPG chibi with thin restrained brown outlines. Preserve EXACT pale pink-blond bob, green eyes, white flower at hair, green gold-trimmed ranger cape, cream blouse, brown bodice, short white ruffled skirt, brown knee boots, same face and 3-head-tall proportions. Four equal square cells in one horizontal row. Every frame shows same full character with IDENTICAL head size, limb lengths, body height and foot baseline, same elevated three-quarter camera and facing SCREEN-RIGHT. Frame 0: neutral reference pose, both hands relaxed near chest. Frame 1: warm greeting, one hand raised to shoulder/ear height with open palm, small smile, feet still planted. Frame 2: mild surprised realization, eyes slightly widened and mouth small open, hands near chest; no jump, no leaning or giant eyes. Frame 3: greeting hand gently lowered halfway, same smile for an eventual transition. Preserve the exact reference character scale and rendering, neither more realistic nor more juvenile. Ample clear margin over hair and beneath boots, no cropped hair/boots, no background, no floor, no shadows, no text or borders, no other objects. Separate clean alpha cutouts.",
+  "reference": "public/storybook-study/aria-conversation-v1.webp",
+  "source": "assets/source/storybook/aria-reaction-v1.png",
+  "output": "public/storybook-study/aria-reaction-v1.webp",
+  "build": "node scripts/build-storybook-work.mjs aria reaction v1",
+  "registration": "single scale; all134px tall, foot176; frames1 and2 used for greeting/surprise",
+  "scope": "storybook study only"
+}

@@ -1,0 +1,222 @@
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="starlit-guild-founding-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="60"],
+    [data-frame="61"],
+    [data-frame="68"],
+    [data-frame="14"],
+    [data-frame="15"]
+  ) {
+  background-image: url("/storybook-study/mira-check-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--visit-position, 33.333333%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-actor="mira"]
+  .story-stage-sprite:is([data-frame="60"], [data-frame="14"], [data-frame="15"]) {
+  --visit-position: 66.666667%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/mira-bag-place-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="46"] {
+  background-image: url("/storybook-study/mira-bag-place-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="62"], [data-frame="63"]) {
+  background-image: url("/storybook-study/mira-knock-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--knock-position, 33.333333%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-actor="mira"]
+  .story-stage-sprite[data-frame="63"] {
+  --knock-position: 66.666667%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="doctor"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/doctor-visit-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: var(--visit-doctor-position, 0%) 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-npc="doctor"]
+  .story-stage-extra-sprite:is([data-frame="4"], [data-frame="6"]) {
+  --visit-doctor-position: 33.333333%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-npc="doctor"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --visit-doctor-position: 66.666667%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-npc="doctor"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  --visit-doctor-position: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/patient-visit-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: var(--visit-patient-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --visit-patient-position: 66.666667%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  --visit-patient-position: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-table"] {
+  background-image: url("/storybook-study/linde-table-v1.webp");
+  aspect-ratio: 384 / 160;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ale-bottle"] {
+  background-image: url("/storybook-study/patient-ale-bottle-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="teacup"] {
+  background-image: url("/storybook-study/patient-teacup-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="brekka-arrival-return"],
+    [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+    [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ale-cup-empty"] {
+  background-image: url("/storybook-study/ale-cup-empty-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+/* Both neighboring doors and the complete room remain visible at phone widths. */
+@media (max-width: 600px) {
+  .storybook-reader-stage:is(
+      [data-story="brekka-arrival-return"],
+      [data-story="moss-transplant-return"][data-art="patient-room-v1"],
+      [data-story="moss-transplant-return"][data-art="brekka-homes-v1"]
+    )
+    .story-stage-space {
+    transform: none;
+  }
+}

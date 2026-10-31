@@ -2,6 +2,7 @@ import type Phaser from "phaser";
 import type { RoadBattle } from "@/lib/road-view";
 import { roadY } from "@/lib/road-layout";
 import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
+import { puppetStringContacts } from "@/lib/road-puppet-strings";
 
 export function paintPuppetStrings(
   graphics: Phaser.GameObjects.Graphics,
@@ -9,18 +10,20 @@ export function paintPuppetStrings(
   height: number,
   width: number,
   screenX: (x: number) => number,
+  painted = false,
 ) {
   graphics.clear();
-  if (state.scene !== "escape") return;
-  const master = state.enemies.find((enemy) => enemy.kind === "pumpety");
-  if (!master) return;
-  const fromX = screenX(master.x),
-    fromY = roadY(master.lane, height, width) - 25 * RPG_CAMERA_SCALE;
-  graphics.lineStyle(2, 0xf1d699, 0.9);
-  for (const enemy of state.enemies.filter((enemy) => enemy.pose === "drag")) {
+  const widthPx = painted ? Math.max(0.8, width / 800) : 2;
+  graphics.lineStyle(widthPx, painted ? 0x78614b : 0xf1d699, painted ? 0.8 : 0.9);
+  for (const { from, to } of puppetStringContacts(state, width, height, painted)) {
+    const fromX = screenX(from.x),
+      fromY = roadY(from.lane, height, width);
+    const toX = screenX(to.x),
+      toY = roadY(to.lane, height, width);
     graphics.beginPath();
     graphics.moveTo(fromX, fromY);
-    graphics.lineTo(screenX(enemy.x), roadY(enemy.lane, height, width) - 30 * RPG_CAMERA_SCALE);
+    if (painted) graphics.lineTo((fromX + toX) / 2, (fromY + toY) / 2 + 3 * RPG_CAMERA_SCALE);
+    graphics.lineTo(toX, toY);
     graphics.strokePath();
   }
 }

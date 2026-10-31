@@ -8,6 +8,8 @@ import {
   adventureEnemyIds,
   adventureEnemyAsset,
   ordinaryEnemyArt,
+  storybookWolfAsset,
+  storybookSlimeAsset,
 } from "../lib/adventure-enemy-art.ts";
 
 test("every redrawn enemy has transparent gutters, a shared sole and intact source proportions", async () => {
@@ -79,5 +81,34 @@ test("Merrill switches singing art and every road opponent uses the shared scale
     fitEnemy(image, { kind }, 81, 0, true);
     assert.equal(image.scale, 81 / art.height);
     assert.deepEqual(image.origin, [0.5, art.foot / art.cell]);
+  }
+});
+
+test("painted wolves and slimes retain enemy grounding and replace only matching species", async () => {
+  const look = { storybookHeroes: true, enemies: { 1: { frame: "9" }, 2: { frame: "8" } } };
+  assert.equal(enemyAppearance({ kind: "slime", id: 1 }, look).asset, storybookWolfAsset);
+  assert.equal(enemyAppearance({ kind: "slime", id: 2 }, look).asset, storybookSlimeAsset);
+  assert.equal(
+    enemyAppearance({ kind: "slime", id: 3 }, { ...look, enemies: { 3: { frame: "11" } } }).asset,
+    adventureEnemyAsset("plant"),
+  );
+  for (const asset of [storybookWolfAsset, storybookSlimeAsset]) {
+    const { data, info } = await sharp(`public${asset}`)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    assert.equal(info.width, art.cell);
+    assert.equal(info.height, art.cell);
+    let top = info.height,
+      bottom = 0;
+    for (let y = 0; y < info.height; y++)
+      for (let x = 0; x < info.width; x++) {
+        if (data[(y * info.width + x) * 4 + 3] < 96) continue;
+        top = Math.min(top, y);
+        bottom = Math.max(bottom, y);
+        assert.ok(x > 8 && x < info.width - 8);
+      }
+    assert.ok(Math.abs(bottom - (art.foot - 1)) <= 2);
+    assert.ok(Math.abs(bottom - top + 1 - art.height) <= 2);
   }
 });

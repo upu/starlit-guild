@@ -1,0 +1,188 @@
+.storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite:is(
+    [data-frame="0"],
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="3"]
+  ) {
+  background-image: url("/storybook-study/worker-poses-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="tools"] {
+  background-image: url("/storybook-study/tools-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/basket-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="cloth"] {
+  background-image: url("/storybook-study/folded-shawl-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-setting="drain-cleared"]
+  .story-stage-item[data-art="colony"] {
+  background-image: url("/storybook-study/moss-colony-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="old-waterway-return"],
+    [data-story="tower-restoration-return"],
+    [data-story="tower-moss-removal-departure"],
+    [data-story="tower-moss-removal-return"],
+    [data-story="tower-restoration-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="10"],
+    [data-frame="11"]
+  ) {
+  background-image: url("/storybook-study/keeper-yard-walk-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="old-waterway-return"],
+    [data-story="tower-restoration-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/leon-forage-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="old-waterway-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-item="waterway-marker"] {
+  background-image: url("/storybook-study/waterway-marker-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="old-waterway-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="unfold"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-kneel-notes-v1.webp") !important;
+  background-position: 33.333333% 0% !important;
+}
+.storybook-reader-stage[data-story="old-waterway-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="write"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-kneel-notes-v1.webp") !important;
+  background-position: 66.666667% 0% !important;
+}
+.storybook-reader-stage[data-story="old-waterway-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-route-notes="write"]
+  .story-stage-sprite[data-frame="18"] {
+  background-position: 100% 0% !important;
+}
+.storybook-reader-stage[data-story="old-waterway-return"] .story-stage-item[data-art="lantern"] {
+  background-image: url("/storybook-study/night-lantern-v1.webp");
+  image-rendering: auto;
+}
+
+/* The opening uses a low stone slab, hand-sized jars, then the archival map. */
+.storybook-reader-stage[data-story="old-waterway-departure"]
+  .story-stage-item:is([data-item="archive-map"], [data-item="field-copy"]) {
+  aspect-ratio: 1;
+}
+.storybook-reader-stage[data-story="old-waterway-departure"]
+  .story-stage-item[data-item="opening-slab"] {
+  aspect-ratio: 12 / 7;
+}
+.storybook-reader-stage[data-story="old-waterway-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]:is([data-held-art="moss"], [data-held-art="moss-jar"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/aria-carry-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-carry-position, 0%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="old-waterway-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="17"], [data-frame="18"]) {
+  background-image: url("/storybook-study/leon-paper-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="old-waterway-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-position-x: 66.666667% !important;
+}
+
+/* One decoded strip spans the held, lowered and released basket poses. */
+.storybook-painted-stage[data-painted="true"][data-repair-basket-place="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/leon-basket-place-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: var(--basket-place-frame, 0%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-repair-basket-place="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-frame="13"] {
+  --basket-place-frame: 33.333333%;
+}
+.storybook-painted-stage[data-repair-basket-place="true"]
+  [data-actor="leon"]
+  .story-stage-sprite:is([data-frame="0"], [data-frame="3"], [data-frame="4"], [data-frame="5"]) {
+  --basket-place-frame: 100%;
+}
+
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="20"],
+    [data-frame="21"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/keeper-basket-handoff-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: var(--keeper-basket-frame, 0%) 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="20"] {
+  --keeper-basket-frame: 33.333333%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="21"] {
+  --keeper-basket-frame: 66.666667%;
+}
+.storybook-reader-stage[data-story="tower-restoration-departure"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite[data-frame="22"] {
+  --keeper-basket-frame: 100%;
+}

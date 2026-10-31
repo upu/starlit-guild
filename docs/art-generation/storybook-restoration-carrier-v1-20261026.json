@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly EIGHT complete full-body poses in FOUR columns TWO rows on clean transparent background, no text, props, shadows or ground. An original adult town labourer matching the provided original mason: dark brown short hair with small tied nape, ochre rolled-sleeve work shirt, dark brown waistcoat, brown trousers and boots, compact adult 3-head proportions, warm painterly 2D RPG style elevated45degree three-quarter camera. All face screen LEFT and keep SAME head/body scale and full boots with wide gutters. Row1:0standing upright calibration with BOTH hands forward LEFT at waist as if holding an invisible horizontal barrier rail, relaxed body;1walking same two hands held steady LEFT waist, leftlegforward;2passing leg visible boot lift;3rightlegforward. Row2:4opposite passingphase;5standing leaning forward slightly BOTH hands forward LEFT waist as if gently pushing invisible handcart crossbar, SAME anatomy;6standing free hand pointing LEFT to show detour;7kneeling low on one knee forward cleaning invisible stone on ground LEFT using clothnotdrawn. No fence,cart,stone,cloth,tool in image. Keep adult proportions no child face.",
+  "references": [
+    "assets/source/storybook/mason-motion-v1.png"
+  ],
+  "source": "assets/source/storybook/restoration-carrier-v1.png"
+}

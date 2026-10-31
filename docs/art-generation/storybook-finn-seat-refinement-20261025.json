@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Correct this seated Finn sheet. KEEP first standing figure exactly as identity/proportion calibration. The other three seated figures were accidentally drawn larger: their heads are bigger than standing. REDRAW seated figures with EXACTLY SAME head dimensions as first standing figure, no enlarged face or hair. Maintain same anatomy but lower hips and compress vertical body by bending thighs horizontal and knees 90 degrees. All soles on same floor line. Seated crowns must be 16-20 percent LOWER than standing crown (total seated height 80-84% of standing), not current 93%. This is not scaling whole figure: same head size, lower seated body. Same clothing and adult face, warm painted style, three-quarter facing right. Four figures one row: standing, seated listen hands on lap, seated think hand chin, seated sheepish smile hand behind head. No chair/floor/shadows/text. Transparent background, clear margins. Preserve mature low-tied brown-haired stubbled man with charcoal olive coat gold trim cream shirt brown boots. Head size must be identical across all four; seated pose is visibly lower.",
+  "references": [
+    "assets/source/storybook/finn-seat-v1.png"
+  ],
+  "source": "assets/source/storybook/finn-seat-v2.png",
+  "output": "public/storybook-study/finn-seat-v2.webp",
+  "scope": "Indoor study chair idle/think/smile. Shared standing-reference scale gives seated heights125/125/126 versus148."
+}

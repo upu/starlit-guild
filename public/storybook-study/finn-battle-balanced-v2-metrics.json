@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-battle-balanced-v2.png",
+    "scale": 0.2638146167557932,
+    "left": 58,
+    "top": 28,
+    "width": 77,
+    "height": 148,
+    "baseline": 176,
+    "headX": 102.28567843383598
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-battle-balanced-v2.png",
+    "scale": 0.2638146167557932,
+    "left": 58,
+    "top": 27,
+    "width": 86,
+    "height": 149,
+    "baseline": 176,
+    "headX": 100.1442582559924
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-battle-balanced-v2.png",
+    "scale": 0.2638146167557932,
+    "left": 52,
+    "top": 27,
+    "width": 116,
+    "height": 149,
+    "baseline": 176,
+    "headX": 105.9908608144151
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-battle-balanced-v2.png",
+    "scale": 0.2638146167557932,
+    "left": 60,
+    "top": 27,
+    "width": 82,
+    "height": 149,
+    "baseline": 176,
+    "headX": 100.134405719944
+  }
+]

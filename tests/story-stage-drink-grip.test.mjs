@@ -62,3 +62,32 @@ test("an early tap drops cargo beneath its current carrier rather than its autho
   assert.equal(state.get("moss").position.x, 32);
   assert.equal(state.get("moss").position.bottom, 38);
 });
+
+test("a picked-up sheet keeps resizing even if its hand starts at the same location", () => {
+  const { itemPainter } = evaluateSourceModule(
+    compileSourceModule("../app/story-stage-item-motion.ts", import.meta.url),
+    {
+      "@/lib/story-stage-props": props,
+      "@/lib/story-stage-figure": figure,
+      "@/lib/story-stage-cargo": cargo,
+    },
+  );
+  const element = { style: { setProperty() {}, removeProperty() {} }, dataset: {}, hidden: false };
+  const stage = { querySelector: () => element, querySelectorAll: () => [element] };
+  const state = new Map();
+  const actor = { id: "leon", x: 40, bottom: 14, left: false };
+  const sheet = { id: "ledger", art: "paper", x: 40, bottom: 20, width: 6 };
+  const cue = (item) => ({ actors: [actor], items: [item] });
+  const positions = new Map([["leon", actor]]);
+  itemPainter(stage, cue(sheet), state)(positions, 650, false);
+  const held = { ...sheet, actor: "leon", x: 0, width: 3.5, resizeMs: 650 };
+  const pickup = itemPainter(stage, cue(held), state);
+  pickup(positions, 0, false);
+  assert.equal(element.style.width, "6%");
+  assert.equal(state.get("ledger").settled, false);
+  pickup(positions, 325, false);
+  assert.equal(element.style.width, "4.75%");
+  pickup(positions, 650, false);
+  assert.equal(element.style.width, "3.5%");
+  assert.equal(state.get("ledger").settled, true);
+});

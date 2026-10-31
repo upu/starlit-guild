@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Paint an opaque wide 3:2 hand-painted warm 2D RPG background. First reference exact manor garden layout; second reference approved paint medium and downward camera. Preserve the upper-right house wall and small garden stairs, curved low balustrade across back and left, pale stone paving, hedges and white flower pots at edges. Broad empty flat central courtyard for a separately drawn movable table near x55% y65% and six small people. Elevated 45-degree three-quarter downward camera, orthographic-like, no sky or horizon, no dramatic perspective. Paving stones about 3-4% image width, door about 25% image height, characters later about 15% image height. Warm afternoon sunlight, soft hand-painted textured surfaces and fine warm contours. Same house materials and flowering ivy as second reference. Do not paint people, display table, display cases, stones, portable props, labels or text.",
+  "references": [
+    "public/story-stage/manor-garden.webp",
+    "public/storybook-study/manor-kitchen-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-garden-v1.png"
+}

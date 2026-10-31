@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "source": "assets/source/storybook/ground-rest-v1.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent 2D RPG character pose atlas, exactly THREE columns by FOUR rows, twelve separate complete figures. References1-4 are character identity/style references, respectively Aria, Leon, Mira, Finn. Keep their faces, hair, ages, proportions, outfits and warm soft hand-painted medium. Camera elevated45degrees, three-quarter view toward RIGHT for all figures. Row1 Aria: blonde elf, pale lilac hair lock, green cloak, white skirt and brown boots, flower hairpin. Row2 Leon: brown haired young man, red scarf cloak, blue vest, brown trousers and boots. Row3 Mira: very long pale lilac hair with braid, floral ornament, pale layered healer dress, shorter than Aria. Row4 Finn: scruffy middle-aged brown-haired man, stubble, half-lidded eyes, loose open white shirt, worn brown long coat and trousers, relaxed sly demeanor, broad face. Each row has column1 neutral standing calibration figure; column2 sitting directly ON THE GROUND with legs folded comfortably, hands resting near lap; column3 same ground-sitting posture extending one empty open palm forward at waist/lap height as if accepting a bread roll. No chairs, stools, rocks, food, bottles, dishes, books or carried props. Ground sitting must be substantially shorter than standing (about65-70% standing height), with EXACT SAME head diameter, torso scale and outfit anatomy as that row's standing figure. Do not enlarge seated figures to fill cells. Visible knees and boots below folded legs, believable cloth pooling. Preserve adult/young adult proportions, no baby chibis. Clean alpha transparency, generous empty gutters, complete feet and hair, no ground shadows, no background, no text, labels or extra figures.",
+  "references": [
+    "public/storybook-study/aria-conversation-v1.webp",
+    "public/storybook-study/leon-conversation-v1.webp",
+    "public/storybook-study/mira-conversation-v1.webp",
+    "public/storybook-study/finn-conversation-v2.webp"
+  ]
+}

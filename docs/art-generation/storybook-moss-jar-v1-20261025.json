@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/moss-jar-v1.png",
+  "output": "public/storybook-study/moss-jar-v1.webp",
+  "references": [
+    "public/story-stage/prop-moss-jar.webp"
+  ],
+  "prompt": "Redraw this original small corked moss specimen jar as a warm hand-painted 2D RPG inventory prop, simple soft brown outlines and broad painted shading rather than pixel grain. Preserve clear rounded glass bottle silhouette, short neck, snug cork stopper, thin tied cord at neck, small soil layer and a modest patch of moss inside. Moss emits a subtle pale yellow-green glow confined INSIDE the glass, not dazzling lime neon. Muted olive green, warm cream reflections, transparent glass edges readable on dark blue night background. Gentle elevated three-quarter angle. Entire jar isolated centered on transparent background with clear margin, no floor, no cast shadow, no external glow halo, no label, no UI. One jar, portrait."
+}

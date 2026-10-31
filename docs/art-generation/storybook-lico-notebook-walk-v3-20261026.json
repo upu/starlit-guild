@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit the provided atlas of the SAME original character Lico. Retain physical proportions and the calibrated first top-left STANDING body exactly. Output 4 columns by 2 rows of completely separate full body transparent sprites. Warm hand painted RPG elevated three quarter view. Red brown messy ponytail with red spider lily, freckles, low round glasses, red apron over black dress and cream sleeves, black SANDALS. Keep all head sizes and limb lengths identical. Four top row poses: original standing calibration, holding closed small brown notebook steadily in front of chest in each. Bottom row is a slow alternating walking cycle facing SCREEN RIGHT, notebook held steadily with both hands. Correct the incorrect animation: in existing sheet the NEAR thigh is forward in EVERY frame. Bottom cell 0: NEAR leg forward, FAR leg back, long stride. Bottom cell 1: NEAR foot planted beneath torso, FAR thigh and knee clearly lift FORWARD at right, lifted sandal visible above ground. Bottom cell 2: FAR thigh and knee FORWARD at right and FAR sandal grounded forward; NEAR thigh extends sharply BACK to left, NEAR calf visible at LEFT behind skirt. THIS MUST REVERSE WHICH KNEE IS FORWARD. Bottom cell 3: FAR foot beneath body while NEAR knee lifts FORWARD at right with sandal above ground. Use anatomical leg overlap and alternate raised knees, not two copies of the same foot. Show all sandals, no crop. No speed lines, ground, shadows, lighting halos, words or grid. True transparent background alpha0. Do not add props other than small brown notebook. Match first reference body pixel height of standing calibration and walk; neither enlarged head nor stretched or shrunk legs.",
+  "references": [
+    "assets/source/storybook/lico-notebook-walk-v2.png"
+  ],
+  "source": "assets/source/storybook/lico-notebook-walk-v3.png",
+  "status": "review-only",
+  "note": "Knee lift improved, but alternating contact silhouettes remain too similar."
+}

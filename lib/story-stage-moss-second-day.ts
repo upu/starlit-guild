@@ -7,6 +7,12 @@ const companions = () => [
   actor("mira", 58, { bottom: 15, left: true }),
   actor("finn", 80, { bottom: 12, left: true }),
 ];
+const pursuers = () => [
+  actor("aria", 41, { bottom: 24, left: false, nameAbove: true }),
+  actor("leon", 52, { bottom: 22, left: false, nameAbove: true }),
+  actor("mira", 41, { bottom: 5, left: false }),
+  actor("finn", 52, { bottom: 3, left: false }),
+];
 export const secondDayDeparture = scene(
   "brekka-alley",
   companions(),
@@ -70,12 +76,12 @@ const ascent: LaterBeat = {
 
 export const secondDayReturn = scene(
   "brekka-fork",
-  companions(),
+  pursuers(),
   [
     {
       at: 0,
       actors: { leon: { routeNotes: undefined }, mira: { left: false }, finn: { left: false } },
-      extras: [mossCartDriver(70, 32)],
+      extras: [mossCartDriver(89, 32)],
       items: mossCartItems(false, 32),
       sequence: [{ after: 80, extras: [mossCartDriver(120, 32)] }],
     },

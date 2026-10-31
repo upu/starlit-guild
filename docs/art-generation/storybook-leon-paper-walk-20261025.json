@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "sources": [
+    "assets/source/storybook/leon-paper-walk-v1.png",
+    "assets/source/storybook/leon-paper-walk-v2.png"
+  ],
+  "prompts": [
+    "Create a transparent four-frame horizontal sprite strip of the SAME original brown-haired young male RPG adventurer from reference 1. Preserve his exact face, head/body ratio, blue tunic, leather gloves and boots, red cape, small shoulder armor and warm hand-painted finish. Elevated three-quarter view facing screen right. He walks slowly while holding an invisible light sheet of paper in front of his waist: palms and forearms remain steady in the SAME position as reference 1 first frame. Do not draw the paper or any prop. Four genuinely alternating gait phases: near leg forward contact, near leg supports while far foot passes raised slightly, far leg forward contact with near leg trailing, far leg supports while near foot passes raised slightly. Reference 2 shows the leg/body proportions to preserve. Keep knees modest, no marching, no running. Same head size and height, same torso, hand position and camera across all frames, only slight natural knee flexion. Full figures including hair and soles, generous transparent margins and equal separated cells, no floor, shadow, labels, grids or background. Do not mirror face or outfit between frames. Boots must alternate weight-bearing vs lifted rather than slide.",
+    "Edit reference 1 (the four-frame Leon walking strip) ONLY ABOVE THE WAIST to make him carry a light invisible sheet. Preserve every leg, trouser, boot, foot position and gait frame EXACTLY from reference 1. No changes to leg silhouettes, knees or strides. Preserve face, hair, head scale, body length and location. Replace the swinging arms with both gloved hands extended steadily forward at waist height, as in reference 2 first frame. Hands empty, no paper, no box. Keep the four original distinct leg phases and transparent gutters. Warm hand-painted RPG finish, same character, same elevated 3/4 view. Transparent background, no floor or shadows. Exact 4-column strip."
+  ],
+  "selected": "public/storybook-study/leon-paper-walk-v2.webp",
+  "review": "v1 rejected: repeated leg phases. v2 retains reference walk phases. Common scale capped by standing height; 141-144px vs standing144px; head49-50px vs53px. Small remaining head difference, full continuous circuit still pending."
+}

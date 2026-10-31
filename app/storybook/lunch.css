@@ -1,0 +1,284 @@
+/* Seated lunch bodies retain the standing calibration and planted feet. */
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="idle"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="lap"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="offer"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="bite"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="reach"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="split"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-snack-action="drink"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/aria-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="idle"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="lap"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="offer"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="bite"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="reach"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333333333336% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="split"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666667% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-snack-action="drink"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/leon-lunch-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="honey-cake"] {
+  background-image: url("/storybook-study/lunch-honey-cake-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="honey-cake-bitten"] {
+  background-image: url("/storybook-study/lunch-honey-cake-bitten-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="walnut-cake"] {
+  background-image: url("/storybook-study/lunch-walnut-cake-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="bread"] {
+  background-image: url("/storybook-study/lunch-bread-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="cake-parcel"] {
+  background-image: url("/storybook-study/lunch-cake-parcel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="twine"] {
+  background-image: url("/storybook-study/lunch-twine-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="picnic-cloth"] {
+  background-image: url("/storybook-study/walnut-cloth-v1.webp");
+  aspect-ratio: 4;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="packing-cloth"] {
+  background-image: url("/storybook-study/spare-cloth-folded-v1.webp");
+  aspect-ratio: 2;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/basket-v1.webp");
+  aspect-ratio: 1.3;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="interlude-walnut-lunch"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="travel-flask"] {
+  background-image: url("/storybook-study/water-flask-v1.webp");
+  aspect-ratio: 0.8912280701754386;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="interlude-walnut-lunch"],
+    [data-story="hilltop-picnic-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-snack-action] {
+  --stage-name-above: 20%;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage:is(
+      [data-story="interlude-walnut-lunch"],
+      [data-story="hilltop-picnic-return"]
+    )
+    .story-stage-space {
+    transform: none !important;
+  }
+}

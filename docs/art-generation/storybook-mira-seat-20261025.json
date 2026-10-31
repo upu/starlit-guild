@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create a strict four-pose registration strip of Mira from attached reference, on genuine transparent background. Exactly four figures ONE horizontal row: 0 same neutral standing pose as reference (calibration); 1 seated listening hands on lap; 2 seated explaining with one open palm at waist/table level; 3 seated thinking hand at chin. Same adult petite healer and compact 3-head-tall proportions, same grey lavender braided updo, moon flower ornament, tired gentle eyes with grey-purple shadows, ivory pale blue light robe and gold trim, dark neck ribbon, opaque bodice, medical waist pouch, sandals. All facing screen RIGHT elevated three-quarter. IMPORTANT seated head must be EXACT same pixel size as standing head; NEVER enlarge seated figures. Sit on an invisible standard chair, hips lower, thighs horizontal, knees 90 degrees, both sandals planted baseline identical to standing soles. Seated crown should be 18-20 percent LOWER than standing crown, total seated height 80-82 percent of standing with identical head and anatomy. Robe drapes over thighs and sides, feet visible, no chair painted. Four identical faces/costumes/proportions. Warm hand-painted small game sprites with thin clear warm grey-brown outlines to keep pale robe readable, restrained soft shading. No staff, no held objects, no floor/shadows/background, no text or borders, all hair/hem/feet fully visible with large transparent gutters.",
+  "references": [
+    "assets/source/storybook/mira-conversation-v1.png"
+  ],
+  "source": "assets/source/storybook/mira-seat-v1.png",
+  "status": "Not connected. Seated height117-119 versus standing126 was too high; revised lower hips and requested smiling fourth pose for actual dialogue."
+}

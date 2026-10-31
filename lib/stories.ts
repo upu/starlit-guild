@@ -160,11 +160,8 @@ function townBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
       l("本当だ。先に確かめておいてよかった。", "smile"),
     ];
   return run.node % 3 === 1
-    ? [l("次は角の店だ。荷車が通るから、少し待とう。"), a("今日はみんな、同じ時間に運んでるね。")]
-    : [
-        a("受け取りの控え、もらったよ。次の包みは？"),
-        l("これで一区切りだ。荷札と順番を揃えよう。"),
-      ];
+    ? [l("次は角の店だ。今日は荷車も配達も多いな。"), a("みんな、同じ時間に運んでるね。")]
+    : [a("控えも忘れずに受け取ろうね。"), l("ああ。荷札と順番を揃えておこう。")];
 }
 function tradeBanter(run: NonNullable<Squad["run"]>): StoryLine[] {
   if (run.phase === "rest")

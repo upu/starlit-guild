@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "assets": [
+    {
+      "source": "assets/source/storybook/packing-table-v1.png",
+      "prompt": "Create one isolated wooden packing table sprite for a warm storybook 2D RPG, transparent background. Input1 is the current table to redesign; preserve its basic silhouette, four legs, orientation and width-to-height ratio about 1.91:1, so existing hands and parcels still meet the tabletop. Input2 is the target scene style: match its honey-brown wood, broad deliberate painted color planes, restrained brown outlines and diffuse daylight. Elevated three-quarter overhead view consistent with warehouse ground. Long front edge nearly horizontal gently rising toward right; tabletop visible as broad surface with three simple plank divisions. Top surface occupies upper 40% of object; legs visible below, bottom of near legs aligned ground. No crossbar blocking the empty central space below tabletop. Reduce noisy wood grain, scratches and dense dark outlines from input1; subtle knots at most two. Matte warm wood, no shiny highlights, no photoreal textures, no heavy black outline. Empty table only, no boxes, cloth, tools, people, ground, shadow, labels, glow or scene. Entire table and all leg tips visible with transparent margin. Landscape image."
+    },
+    {
+      "source": "assets/source/storybook/delivery-box-v1.png",
+      "prompt": "Redesign the small delivery crate in image1 as one isolated warm storybook game sprite on transparent background. Image1 is shape and contact reference: preserve the shallow oblong wood crate width to height about 2.1:1, tiny side handles on left/right, closed lid, rope around middle, hanging cream paper label, same elevated three-quarter orientation. Image2 is material/style reference: use this table's honey-brown wood, simple broad painted planes, soft brown outlines and sparse grain, reduce black ink lines and tiny scratches. No contents or extra boxes. The lid and front face clear at small sizes; rope and paper tag readable, tag blank. Maintain fully visible corners and handles, no baked shadow, no floor, no people, no text/UI/glow. Gentle diffuse warm daylight, clean transparency. Landscape."
+    }
+  ]
+}

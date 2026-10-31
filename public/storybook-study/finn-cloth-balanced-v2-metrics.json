@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 58,
+    "top": 28,
+    "width": 66,
+    "height": 148,
+    "baseline": 176,
+    "headX": 94.03369301195815
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 54,
+    "top": 29,
+    "width": 71,
+    "height": 147,
+    "baseline": 176,
+    "headX": 93.3722665417086
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 53,
+    "top": 30,
+    "width": 79,
+    "height": 146,
+    "baseline": 176,
+    "headX": 97.08580193544474
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 48,
+    "top": 30,
+    "width": 77,
+    "height": 146,
+    "baseline": 176,
+    "headX": 90.20479461164314
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 42,
+    "top": 29,
+    "width": 96,
+    "height": 147,
+    "baseline": 176,
+    "headX": 91.12693976854288
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 43,
+    "top": 30,
+    "width": 84,
+    "height": 146,
+    "baseline": 176,
+    "headX": 89.07997820727303
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 50,
+    "top": 25,
+    "width": 104,
+    "height": 151,
+    "baseline": 176,
+    "headX": 93.17676928928338
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+    "scale": 0.3854166666666667,
+    "left": 58,
+    "top": 55,
+    "width": 112,
+    "height": 121,
+    "baseline": 176,
+    "headX": 117.85437030387664
+  }
+]

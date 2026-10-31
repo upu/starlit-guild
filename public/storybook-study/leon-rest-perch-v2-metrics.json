@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "leon-perch-v1",
+    "sourceFrame": 0,
+    "scale": 1.0277777777777777,
+    "left": 51,
+    "top": 28,
+    "width": 76,
+    "height": 148,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "leon-perch-v1",
+    "sourceFrame": 1,
+    "scale": 1.0277777777777777,
+    "left": 39,
+    "top": 37,
+    "width": 88,
+    "height": 139,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "leon-perch-v1",
+    "sourceFrame": 2,
+    "scale": 1.0277777777777777,
+    "left": 31,
+    "top": 44,
+    "width": 96,
+    "height": 132,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "leon-perch-v1",
+    "sourceFrame": 3,
+    "scale": 1.0277777777777777,
+    "left": 36,
+    "top": 44,
+    "width": 99,
+    "height": 132,
+    "baseline": 176
+  }
+]

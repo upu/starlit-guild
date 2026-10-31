@@ -45,11 +45,11 @@
   },
   "aria-poses": {
     "source": "af7a1640f18ca1b8eb9a2025ebf03d1d998ba2a210d380a26732adb7e65f2ee9",
-    "output": "8e45448170674a22a46f23d5f76d59047a5d3a4f591048aa53e5bde56cce21a6"
+    "output": "f69825fe83464d016deab7071a787bd0cf913745532bada64dfd787e926418e3"
   },
   "leon-poses": {
     "source": "4e221d1b5c53b15d445f0742a86e9cd77c1ec7e3bf7ff88e425ab58df7704294",
-    "output": "8e961865111ea7e3ea451a706db695eff6ddb2af6bb271079ce8488253194d15"
+    "output": "0ef30230c132bd1079239d2c266e75f5370aab974116c32b1424a8007d88bbe5"
   },
   "hill-path": {
     "source": "9f906c7390c916d1849532fd057c24690658591c410fef919b8350c71dd8303f",
@@ -313,31 +313,31 @@
   },
   "mira-poses": {
     "source": "37616522f2ba7b02a96fb679134cfc1c33e9006dade8792b174547a601b19614",
-    "output": "ce70dc25577c2c88b3a490c493de215c155f0f2baf374deaa5c2051b042752e1"
+    "output": "d58732bcb9cc3164af09997bca381ce5dfaf0a2fbe034f6236840a114c1443be"
   },
   "finn-poses": {
     "source": "4c63dcfe176d0fbd5bb5945ae1ebadca1a7a4b8e7d78aa19c9de5f6f385cd2e3",
-    "output": "6ba792a16ebd579407032cce54b33b207e7c26f56c149aa9b547fbe67bb411da"
+    "output": "dbb13fa59ecf1b7b53b7e6e6565d2500da282ecad43b6694e2565bc7a3a09ae7"
   },
   "lico-poses": {
-    "source": "5ee9efbb4bdef16db53083e68e22317c00457700f166d8d1ba9914aeacf27fb2",
-    "output": "c5bb09f91d952f817f3a2d37ab9f1789cd07a5588b7c477c6d701e8bbc341c65"
+    "source": "88af5e0fa9cc0e369490fd9144bea0e3d71ba13190da215b2a1c9fc2f5ce4022",
+    "output": "3e3bc8d7a089aa9a39881ade3a96a40f167abef16044e5c6b2f0423807c3442b"
   },
   "masked-pumpety-poses": {
     "source": "56facd77de5d8853f40b7dcb4b933cefd2004d077ebaebadfb253bf78cb39cf7",
     "output": "d5c1adf4d69417c1ca78fef342ad0d46f2c3063dfc855c8f32029ba92a4f6570"
   },
   "merrill-poses": {
-    "source": "4d0756fe2a4ef1541c5e739eb1d65091500923f9d0870ad5f9e842664c1fc2c9",
-    "output": "1d396a68acb9e869f8236ac02080bc548facea73ec8a74eec76ddf038cff18dc"
+    "source": "039edb3dcb1562556e7375e26aae292845f31a2a887490a72eb09627c38fbc9e",
+    "output": "94af3ed728802f1634ed06d9c43a886208a321bdeb7a891e6633f84de8855326"
   },
   "cook-poses": {
     "source": "00e09154e462acc04a70abbcf6887e5ba770f5ffb4e30ac34e6643a56cc9d3b8",
     "output": "15b571d1a369850719f32acebee0885ace2069f17465e856f8afc6d2268801b8"
   },
   "doctor-poses": {
-    "source": "14baf7bfcd0f37ddeeca8ce71a4795ba5e8068f0854bbafeee02b648f4cd79ef",
-    "output": "15ef6b0b26c9fa0b37d9a047ea08954bf4e0c7d78519e538e5fbc3cbe5b4330f"
+    "source": "8cd13e50f5a58842b0fc138d911e6866b9f707d8137506fac9fd78c56e45a914",
+    "output": "6b845b61df67581bc910620fba4db6b20f6b8b8c934cbfaf8bd53c8afcc34396"
   },
   "parent-poses": {
     "source": "38df190f887fc6bb4e76eb8e884496b96d1658872a3b16ccdf9b195205e7b510",
@@ -376,7 +376,7 @@
     "output": "63d354bc981a680de30b4c01a3935edeaf5281c8bd8057cdffdaa08f395f8e9b"
   },
   "merrill-walk": {
-    "source": "98e0fb72213ad23811d4acc140c1d059844aff32916a82bc89e72e1df42c74a1",
+    "source": "0a5200dbfcd9436e5c28fd642dc03d13a1729eba13c4caebaf5fd4681c409e00",
     "output": "0b2087936793de90b995cb1204a0ef848ec732a5654077b694c72decf84696ef"
   },
   "prop-moss-jar": {
@@ -854,5 +854,37 @@
   "prop-reflector-cover-flat": {
     "source": "24e0ac6c27b29dbe6d4f626d61ea2a04dc4923ff4b0e1b5354f6eba04115d15c",
     "output": "dfd559aaf5aea0484ccbe63bcce42adbc962edb1bf102c5cd190c1ddeefeb931"
+  },
+  "prop-korotake": {
+    "source": "fe98ee56bfccdf249f44105f6b9a07c981b070cefe4fcac5fefc7e3e07b46bc5",
+    "output": "0fe62c736c614eed8090a00ef1b43ada700f3127e7358a91d53ae185f948b8f7"
+  },
+  "prop-merrill-pot": {
+    "source": "b33197c3b47178f828b23bc1b25d0acebbfcade33b22932fb794ebdad668d16f",
+    "output": "1b1811a829654825fdf561bf5a18466b05be9c2ff9e092f8dd2bb4a163d34b28"
+  },
+  "prop-quill": {
+    "source": "3a3eebc47e38991e65fe76e2c083923a18aebfa3a060b18397fa699d4251ebb4",
+    "output": "c8f956286de8859534d56e19ee22957a1d12795997a3d33f4ade7f2369a7c25a"
+  },
+  "tower-records": {
+    "source": "53d38cd8aff02832002c0112749b3cb48229134c9b51a4f0dd0c874286a3cfaa",
+    "output": "80b6a977c305c479b195e7379867c9493e5c5230954c31ec05f44dacfea559fd"
+  },
+  "prop-slime": {
+    "source": "5c37082ecb8bc5442ba669198d5aae776e1851a4a82ce138a4161b0b0eb3527a",
+    "output": "d12ddca3d45bfccb7d111b48ef9d46fdea579da6600670a702bed5ebc126c621"
+  },
+  "transplant-path": {
+    "source": "2d0898e24c7109fd8d7605a69a9b77087154b54e760d074551d8bbe445b646be",
+    "output": "b36e1c4d7ec9c949366097845a4a2ddb101814e169bbddfbaa620aef488348f2"
+  },
+  "prop-farm-hoe": {
+    "source": "c484600992906a16fe685fcec33f255cb660dac8991701b2da23b2f0b3f8fe2c",
+    "output": "3bbcb14099325b618f3a819b834d9c29535d7b4ee65b7fa253d5aa95c50916fd"
+  },
+  "prop-rope-coil": {
+    "source": "f0225f6bf925f46f5b2ffb4d8c4cad0a6a23e415b47d1b9a80edb2d5aacaf473",
+    "output": "3dd7821947a1096a6854a5c0d056af1837367c7c6bb78ac441b1521e6850d323"
   }
 }

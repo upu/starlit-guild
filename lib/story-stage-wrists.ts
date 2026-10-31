@@ -11,6 +11,12 @@ const walking = {
 };
 const conversation: Record<string, Partial<Record<number, number[]>>> = {
   lico: {
+    8: [76, 78],
+    9: [76, 78],
+    14: [80, 80],
+    15: [80, 80],
+    16: [80, 80],
+    73: [91, 80],
     76: [80, 89],
     77: [80, 90],
     78: [76, 83],
@@ -25,6 +31,10 @@ const conversation: Record<string, Partial<Record<number, number[]>>> = {
     43: [76, 89],
   },
   finn: {
+    13: [80, 112],
+    14: [72, 80],
+    15: [72, 80],
+    16: [72, 80],
     56: [70, 84],
     57: [67, 69],
     58: [92, 74],

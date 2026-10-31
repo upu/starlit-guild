@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG sprite sheet exactly8fullbodyposes4columns2rows of exact LEON fromreference: youngbrown-haired man, red scarf/cape, blue tunic brown straps, darkpants brownboots, practical gentle face. Elevated45degree3quarter downwardcamera allfaceRIGHT, consistent head and body proportions, samebodyheight and bootbaseline, fine warmoutlines and paintedtexture. Row1:0 neutralstandingcalibration;1 standing with nearhand gently curled gripping an INVISIBLE kettle handle at WAIST height, arm hangs slightlyforward, otherhand relaxed;2 walking RIGHT holding invisiblekettle NEAR leg forwardcontact;3 passing nearlegbelowhips farheelraised. Row2:4 oppositecontact NEAR visibleleg extendedBACKtowardLEFT, FARleg extendedRIGHTforward;5 oppositepassing NEARknee raisedRIGHT farfootbelowhips;6 slightcrouch extendingnearhand lowerRIGHT to place invisiblekettle on smallbrazier;7 same loweredhandwithfingersopened afterrelease. Keep carryinghand stable atwaist inwalkposes. Kettle NOT included, no props, ground,shadows,text. Eight independent fullfigureswithcompleteboots and headpadding. Fourwalkphases musthave visiblydistinct opposite contact and passing legs; do not repeat sameforwardleg.",
+  "references": [
+    "public/storybook-study/leon-walk-v1.webp"
+  ],
+  "source": "assets/source/storybook/leon-kettle-v1.png"
+}

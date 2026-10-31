@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen",
+  "source": "assets/source/storybook/patient-visit-v2.png",
+  "sha256": "C7381EFB008F29F2C6EDB165C1E2D85992B5E793549027FE613D891DBCD16BBF",
+  "reference": "assets/source/storybook/patient-visit-v1.png",
+  "firstCandidate": "exec-4b69d0a7-4e46-4b62-88eb-70b21716ecf3.png",
+  "firstCandidatePrompt": "Use case: precise-object-edit. Asset: transparent four-pose sprite sheet for a warm, hand-drawn pixel RPG. Input image is the character, pixel style and four exact gestures. Keep exactly four full-body figures in ONE horizontal row, no chair drawn. Pose 1: same full-height standing calibration, unchanged. Poses 2-4: same seated patient, same head and hair size as pose 1, same facial character, clothing, colors, hands and individual expressions as input. Make the three seated bodies visibly LOWER: each seated figure's overall height from hair to sole is about 75% of standing height, with feet on the same baseline. To achieve this, bend the knees strongly and keep thighs horizontal, lower the hips and whole head together naturally as on a low chair; keep the head shape and scale unchanged, avoid vertical squashing. Maintain 3/4 left-facing elevated RPG view, invisible chair; no chair, table, props or floor. All 4 full sprites completely inside their own cells, generous transparent gutters, matching boot soles and consistent head size. Crisp fine dark pixel-like outlines, matte warm colors, no text, no numbers, no shadows, no halos. The second, third and fourth faces and poses respectively: quiet listening hands on lap; speaking with open palm; pointing gently down left. Output transparent RGBA.",
+  "firstCandidateDecision": "Not adopted: seated figures remained approximately 85% of standing height and nearly as tall as Mira.",
+  "acceptedOutput": "exec-abe57746-5d6e-4632-b205-cf317bdb8047.png",
+  "prompt": "Precise edit of this transparent 4-sprite horizontal sheet for a warm 2D RPG. Keep the leftmost standing man unchanged, and preserve same man's identity, hairstyle, face scale, clothing, three seated gestures and transparent gutters. Modify only poses 2, 3 and 4: seated man sits substantially lower on a LOW chair, head, shoulders and hips lowered together toward the common boot-sole baseline. The seated figures must have hair-to-sole height 70-75% of the first standing figure, a clearly visible reduction, not 85%. Knees project forward horizontally; short lower legs reach floor with the same size boots. Keep seated heads exactly as large as the standing head, do not shrink or squash the head and do not change the same clothing. Four isolated figures, row of 4, upright alignment and generous space, no chair, no floor, no cast shadow, no text, no grid. Match reference warm fine outlines and pixel-cluster style exactly.",
+  "derivedBuild": "node scripts/build-storybook-patient-visit.mjs",
+  "output": "public/storybook-study/patient-visit-v2.webp"
+}

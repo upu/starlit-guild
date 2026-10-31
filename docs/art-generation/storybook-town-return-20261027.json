@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "prompt": "Warm hand-painted 2D RPG prop sheet on truly transparent background, two separate objects in one horizontal row with a large transparent gap. Left: a small stack of three cream delivery receipt slips with tiny illegible brown strokes, subtle offset corners, NO readable text, no seal, no large book. Right: a small EMPTY soft pale flax cloth delivery wrapping laid on a wooden counter (do not draw counter): loosely folded inward, visibly flat and collapsed with two loose cloth corners, NO contents, NO box, no ribbon bow. Elevated oblique overhead view about45degrees, warm watercolor/gouache with fine brown outlines, natural muted beige palette, restrained highlights. These are small everyday medieval trading props, not icons with UI frames. Equal generous object areas, all edges inside canvas, no shadow ground plane, no background, no labels.",
+  "generation": "exec-10009c42-6632-4069-9f4e-650efe2e82dd",
+  "source": "assets/source/storybook/town-return-props-v1.png",
+  "outputs": [
+    "public/storybook-study/delivery-receipts-v1.webp",
+    "public/storybook-study/empty-delivery-wrap-v1.webp"
+  ],
+  "builder": "scripts/build-storybook-town-return.mjs",
+  "integration": "town-deliveries-return only: same warehouse-v1 background; merchant resting/wave; Aria carries empty wrap to tabletop; receipts align; settled props persist through all25 pages and exit. Still scenes unchanged.",
+  "validation": "PC1243x1244 and browser mobile390x844 sequential25 pages. Screenshots work/town-return-{pc,mobile}-00..24.png. Mobile is browser width, not physical phone.",
+  "limitations": "Only one of seven missing conversation registrations closed. Full goal remains active."
+}

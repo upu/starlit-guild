@@ -16,6 +16,10 @@ export type StagePosition = {
 };
 const distance = (a: StagePosition, b: StagePosition) =>
   Math.hypot(b.x - a.x, (((b.bottom ?? 14) - (a.bottom ?? 14)) * 2) / 3);
+const pace = (actor: StageActor) =>
+  actor.paceMsPerUnit && Number.isFinite(actor.paceMsPerUnit) && actor.paceMsPerUnit > 0
+    ? actor.paceMsPerUnit
+    : 34;
 
 export function stageRoute(
   actor: Pick<StageActor, "x" | "bottom" | "via" | "lane">,
@@ -44,7 +48,9 @@ export function actorJourney(actor: StageActor, origin: StagePosition) {
 
 export function journeyDuration(actor: StageActor, origin: StagePosition) {
   const points = actorJourney(actor, origin);
-  return points.slice(1).reduce((sum, point, i) => sum + distance(points[i], point) * 34, 0);
+  return points
+    .slice(1)
+    .reduce((sum, point, i) => sum + distance(points[i], point) * pace(actor), 0);
 }
 
 export function sampleJourney(
@@ -54,7 +60,7 @@ export function sampleJourney(
   reduced: boolean,
 ): StagePosition & { moving: boolean; left: boolean } {
   const { key, points } = stageRoute(actor, origin);
-  let remaining = Math.max(0, elapsed) / 34;
+  let remaining = Math.max(0, elapsed) / pace(actor);
   for (let i = 1; i < points.length && !reduced; i++) {
     const from = points[i - 1],
       to = points[i],

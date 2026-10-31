@@ -58,12 +58,30 @@ export function ChapterStageProps({ cue }: { cue: StoryStageCue }) {
               left: `${String(item.x)}%`,
               bottom: `${String(item.bottom)}%`,
               width: `${String(item.width ?? 10)}%`,
-              "--item-art": `url(/story-stage/prop-${item.art}.webp)`,
+              "--item-art": `url(${item.image ?? `/story-stage/prop-${item.art}.webp`})`,
+              imageRendering: item.image ? "auto" : undefined,
             } as CSSProperties
           }
         />
       ))}
+      {extras.map((extra) => (
+        <ExtraHand key={`hand:${extra.id}`} extra={extra} />
+      ))}
     </>
+  );
+}
+
+function ExtraHand({ extra }: { extra: StageExtra }) {
+  return (
+    <div
+      className="story-stage-extra"
+      data-npc-hand={extra.id}
+      hidden
+      aria-hidden="true"
+      style={{ pointerEvents: "none" }}
+    >
+      <span className="story-stage-extra-sprite" />
+    </div>
   );
 }
 
@@ -84,9 +102,14 @@ function Extra({ extra, hidden }: { extra: StageExtra; hidden: boolean }) {
         className="story-stage-extra-sprite"
         style={{
           backgroundImage: `url(/story-stage/${stageExtraAtlas(extra)}-poses.webp)`,
+          backgroundSize: `400% ${String(stageExtraRows(extra) * 100)}%`,
           backgroundPositionX: `${String(((stageExtraFrame(extra) % 4) / 3) * 100)}%`,
           backgroundPositionY: `${String((Math.floor(stageExtraFrame(extra) / 4) * 100) / Math.max(1, stageExtraRows(extra) - 1))}%`,
-          transform: extra.chair ? `scaleX(${extra.left ? "1" : "-1"})` : undefined,
+          transform: extra.chair
+            ? `scaleX(${extra.left ? "1" : "-1"})`
+            : extra.id === "merrill"
+              ? `scaleX(${extra.left ? "-1" : "1"})`
+              : undefined,
         }}
       />
       <span className="story-stage-name">

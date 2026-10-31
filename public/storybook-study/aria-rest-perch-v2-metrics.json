@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "aria-perch-v1",
+    "sourceFrame": 0,
+    "scale": 1.1044776119402986,
+    "left": 53,
+    "top": 28,
+    "width": 76,
+    "height": 148,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "aria-perch-v1",
+    "sourceFrame": 1,
+    "scale": 1.1044776119402986,
+    "left": 42,
+    "top": 37,
+    "width": 82,
+    "height": 139,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "aria-perch-v1",
+    "sourceFrame": 2,
+    "scale": 1.1044776119402986,
+    "left": 31,
+    "top": 52,
+    "width": 91,
+    "height": 124,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "aria-perch-v1",
+    "sourceFrame": 3,
+    "scale": 1.1044776119402986,
+    "left": 32,
+    "top": 50,
+    "width": 94,
+    "height": 126,
+    "baseline": 176
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original warm hand-painted 2D RPG game prop sprites, elevated 45 degree three-quarter camera, matching reference stone lantern but hand-painted clean soft outlines. Transparent background. FIVE versions of EXACTLY THE SAME complete waist-to-shoulder-high roadside stone oil lantern, arranged evenly in ONE horizontal row with large gaps, identical fixed camera, base shape, roof, proportions, physical scale and baseline in every version. A modest mossy grey stone square pedestal on two broad low stone steps, small square copper framed glass firebox and pitched stone roof. First: glass door CLOSED, panes black with soot, dim unlit, no visible separate oil dish. Second: same door swung OPEN toward viewer-left, sooty panes, firebox empty (oil dish removed). Third: door still OPEN, clear freshly wiped panes, empty firebox. Fourth: same OPEN door and clear glass, a small shallow bronze wick dish INSIDE, flame unlit. Fifth: clear glass door CLOSED, same little oil dish INSIDE with small warm yellow flame, restrained soft light confined to glass. NOT a magic tower, no floating crystals, no ground, no scenery, no people, no text, no shadows beyond base, no glow outside last lantern. Preserve top and feet with generous transparent margins. All five identical-sized whole lanterns, only door/soot/dish/flame changes. Reference is design/geometry only; make surfaces softly painted to match our original storybook RPG.",
+  "references": [
+    "public/story-stage/prop-stone-lantern-closed-sooty.webp"
+  ],
+  "source": "assets/source/storybook/roadside-lantern-v1.png"
+}

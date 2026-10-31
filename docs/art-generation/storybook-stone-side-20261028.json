@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "draft; only used by the 3-9 study",
+  "source": "assets/source/storybook/tower-stone-side-v1.png",
+  "output": "public/storybook-study/tower-stone-side-v1.webp",
+  "generated": "exec-7e0e53e9-5e64-4565-8e42-4cc6bd1bbf55.png",
+  "references": ["public/storybook-study/tower-stone-bottom-v1.webp", "public/storybook-study/tower-stone-v1.webp"],
+  "build": "node scripts/build-storybook-stone-turn.mjs",
+  "prompt": "Create ONE isolated game prop: the SAME heavy rectangular sand-grey paving block in the references, while it is being turned over its long edge. It is rotated halfway between reference 1 (three grooved underside) and reference 2 (plain upper face). Show the LONG THICK NARROW SIDE of this block facing the viewer, with the front face a long rectangular side wall with clear physical thickness: the underside and top surface are only barely visible behind it. Preserve the block's actual grey sandstone, subtle fine pale-purple veins, warm painterly RPG pixel art and slightly elevated oblique viewpoint. Keep the same width as the references, do not make it thin like paper or change its length. Genuine clean transparent background; no person, hands, ground, shadow, halo, text, extra props, or borders."
+}

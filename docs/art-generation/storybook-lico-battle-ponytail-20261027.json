@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Lico painted adventure battle hair only",
+  "prompt": "Precise object edit of image 1, a four-frame game sprite strip. Change ONLY back hair. Current broad rounded mass on the LEFT of every head looks like a bob: REMOVE at least TWO THIRDS of that hanging hair volume. Replace it with a SMALL NARROW tied ponytail: maximum tail width ONE QUARTER of face width, tail length about ear-to-chin distance, red tie clearly visible. A large open TRANSPARENT gap must separate the tail from the neck and shoulder. Back of skull swept close to head. Keep the red spider-lily ornament but it must not hide the narrow tied structure. Keep bangs, messy top flyaway and tiny wisps. Preserve all four faces, poses, flask/hand positions, body scale, outfit, sandals, painting style, sheet size and layout EXACTLY. Hair may change significantly; body may not. Transparent background. No broad rounded hanging hair puff behind ears, no bob, no twin tails. Image 2 is the neat narrow ponytail reference, not a pose reference.",
+  "reference": [
+    "assets/source/storybook/lico-battle-v1.png",
+    "assets/source/storybook/lico-conversation-ponytail-v1.png"
+  ],
+  "accepted": {
+    "generation": "exec-012d5aa3-126d-480a-9358-5289d39bb536",
+    "source": "assets/source/storybook/lico-battle-ponytail-v2.png",
+    "output": "public/storybook-study/lico-battle-v1.webp"
+  },
+  "rejected": {
+    "generation": "exec-92bf420c-db23-4380-b000-714ac39f1706",
+    "source": "assets/source/storybook/lico-battle-ponytail-rejected-v1.png",
+    "prompt": "Edit target image 1 only: four-frame Lico battle sprite strip. Image 2 is hairstyle reference only. Precise hair-only correction: remove the broad bob-like loose curtain behind both ears and the neck in ALL FOUR frames of image 1. Sweep back hair tightly into ONE narrow, short ponytail at the back, with a clearly visible tie. Show negative space between the ponytail and the collar/neck, like image 2. No second tail, no loose shoulder-length back hair. Keep irregular bangs and single top flyaway, round glasses, freckles, red flower ornament. Preserve exactly the four original faces/expressions, body proportions, poses, flask and hands, clothing, sandals, individual character scale and four horizontal separated cells from image 1. Do not copy image 2's body or poses. Maintain existing warm painted RPG sprite medium, full bodies with generous transparent margins, actual transparent background. No text, no shadows/background.",
+    "reason": "Back hair remained a broad rounded mass; requested a narrower tail."
+  },
+  "packing": "Existing shared body scale, four 256x192 cells, foot baseline176. Original sources preserved.",
+  "validation": [
+    "13 road-poses tests passed",
+    "Targeted builder lint passed",
+    "All four frames retain height128 and baseline176 with one shared scale",
+    "Real adventure review at PC1280x720 and browser mobile390x844: battle playback and silhouette checked; screenshots work/lico-hair-battle-{pc,mobile}.png"
+  ],
+  "limits": "Not a replacement of portrait expression atlases or all legacy adventure sprites."
+}

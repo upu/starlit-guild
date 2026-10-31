@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "source": "assets/source/storybook/golem-poses-v1.png",
+  "reference": "public/story-stage/prop-golem-poses.webp",
+  "output": "public/storybook-study/golem-poses-v1.webp",
+  "builder": "scripts/build-storybook-golem.mjs",
+  "prompt": "Use case: stylized-concept. Asset type: transparent 8-pose sprite atlas for a warm hand-painted 2D RPG. Reference image is identity and equipment reference only. Repaint this SAME friendly massive stone cargo golem using soft painted surfaces, warm cream stone, restrained brown contours, muted forest-green and golden yellow cloth, small orange pumpkin and bat decorations, moss on shoulders, wooden carrying frame and strapped barrel on its back. Keep the plain round pale stone face with two dark eye holes; no human face, no threatening glowing eyes. Camera consistently elevated 45 degrees looking down, three-quarter view facing LEFT. Clean readable broad forms at a small display size, less dense detail than reference, no pixel stair-steps or heavy black outlines. Produce a precise 4 columns x 2 rows atlas, transparent background, eight separate complete figures, generous transparent gutters, no text, no labels, no shadows or ground planes. Same body scale, stone head diameter, limb thickness, equipment and perspective in ALL cells. Row1 col1 idle with both broad palms held forward for asking; col2 walk left foot forward right arm forward; col3 walk passing pose right foot lifts; col4 walk right foot forward left arm forward. Row2 col1 walk passing pose left foot lifts; col2 low kneeling posture both knees bent, palms low; col3 polite bow from hips, head and torso lowered but both feet planted; col4 recoil leaning backward with hands defensively raised. Kneeling and bowing must naturally be shorter than idle, never enlarge them to fill their cells. Feet and fingertips entirely visible. No extra figures, no floor, no signpost."
+}

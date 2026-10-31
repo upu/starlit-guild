@@ -3,6 +3,24 @@ import assert from "node:assert/strict";
 import { storyStageCue as cue, sampleStageActor } from "../lib/story-stage.ts";
 import { stageItemVisible } from "../lib/story-stage-props.ts";
 import { journeyDuration } from "../lib/story-stage-travel.ts";
+import { storyArtAt } from "../lib/story-art.ts";
+import { actorPose } from "../lib/story-stage-pose.ts";
+import { stageWrist } from "../lib/story-stage-wrists.ts";
+
+test("office handoffs finish before advancing and the signature illustration stays in place", () => {
+  const id = "starlit-guild-founding-return";
+  for (const line of [16, 18, 21, 35, 42, 50, 64]) {
+    assert.equal(cue(id, line).finishBeforeAdvance, true, String(line));
+  }
+  const signing = cue(id, 64);
+  const leon = signing.actors.find((a) => a.id === "leon");
+  const previous = cue(id, 63).actors.find((a) => a.id === "leon");
+  assert.ok(signing.sequence.at(-1).after > journeyDuration(leon, previous) + 500);
+  assert.equal(storyArtAt(id, 66), undefined);
+  for (let line = 67; line <= 110; line++) {
+    assert.equal(storyArtAt(id, line).src, "/stories/guild-formation.webp");
+  }
+});
 
 test("the same office chair passes from Finn to Mira to Leon after it is vacated", () => {
   const id = "starlit-guild-founding-return";
@@ -96,6 +114,16 @@ test("registration is written first, passed through all five hands, then returne
   const owners = [];
   for (const step of stage.sequence) {
     const paper = step.items.find((p) => p.art === "paper");
+    if (paper?.actor) {
+      const holder = step.actors.find((a) => a.id === paper.actor);
+      assert.equal(paper.wrist, true);
+      for (const elapsed of [0, 130, 260, 390]) {
+        const pose = actorPose(holder, !holder.seated, elapsed, false);
+        const wrist = stageWrist(holder.id, pose.atlas, pose.frame);
+        assert.ok(wrist, `${holder.id}: paper loses hand during frame ${pose.frame}`);
+        assert.ok(stageItemVisible(paper, new Map([[holder.id, { ...holder, ...pose, wrist }]])));
+      }
+    }
     if (paper?.actor && paper.actor !== owner) {
       if (owner) {
         const from = step.actors.find((a) => a.id === owner);

@@ -41,33 +41,33 @@ export const mossCartItems = (dropped = false, bottom = 36): StageItem[] => [
 ];
 
 export const followMossCart = scene(
-  "brekka-alley",
-  [actor("aria", 0, { bottom: 14, left: false }), actor("leon", 14, { bottom: 12, left: false })],
+  "brekka-fork",
+  [actor("aria", 41, { bottom: 14, left: false }), actor("leon", 52, { bottom: 12, left: false })],
   [
     {
       at: 0,
-      extras: [mossCartDriver(61)],
+      extras: [mossCartDriver(89)],
       items: mossCartItems(),
       sequence: [
-        { after: 80, extras: [mossCartDriver(75)] },
-        { after: 400, actors: { aria: { x: 10 }, leon: { x: 24 } } },
+        { after: 80, extras: [mossCartDriver(91)] },
+        { after: 400, actors: { aria: { x: 43 }, leon: { x: 54 } } },
       ],
     },
     {
       at: 1,
-      extras: [mossCartDriver(80)],
-      actors: { aria: { x: 16, pose: "think" }, leon: { x: 30 } },
+      extras: [mossCartDriver(94)],
+      actors: { aria: { x: 45, pose: "think" }, leon: { x: 56 } },
     },
     {
       at: 2,
-      extras: [mossCartDriver(90)],
-      actors: { aria: { x: 23 }, leon: { x: 37, pose: "greet" } },
+      extras: [mossCartDriver(96)],
+      actors: { aria: { x: 47 }, leon: { x: 58, pose: "greet" } },
     },
     {
       at: 3,
       extras: [mossCartDriver(120)],
       items: mossCartItems(true),
-      actors: { aria: { x: 33, pose: "surprise" }, leon: { x: 47 } },
+      actors: { aria: { x: 50, pose: "surprise" }, leon: { x: 61 } },
     },
   ],
 );

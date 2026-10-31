@@ -1,0 +1,21 @@
+{
+  "date":"2026-10-27",
+  "tool":"image_gen built-in",
+  "scope":"1-7 old-waterway adventure, before outlet discovery and repair",
+  "reference":"assets/source/storybook/drain-workyard-blocked-v1.png",
+  "generated":"C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-b66c359f-c7b2-40f1-b262-a4104eeecfc3.png",
+  "source":"assets/source/storybook/drain-search-bank-v1.png",
+  "delivery":"public/storybook-study/drain-search-bank-v1.png",
+  "prompt":"Edit this exact game background as the SAME location BEFORE it is found and cleared. Preserve1536x1024 landscape framing, elevated oblique2D RPG camera, warm detailed painted style, exact tower wall top-right, arched outlet top-right with fallen log blocking it, rocky trickle descending right, main dirt clearing and upper-left path. No people, tools, carts or text. Remove square inspection hatch and replace with damp soil and ordinary flat stones. Add tangled grasses and fern fronds in front of lower outlet and blocking log; arch partly recognizable, no repaired apron. Sparse trickle and muddy bank. Three subtle damp mossy patches along accessible dry edge around(700,690),(880,620),(1050,510), natural low vegetation, no treasure piles or glowing rocks. Safe walking ground continuous at y600-850. Preserve location continuity and scale. No new river, buildings or grand entrance.",
+  "packing":"Original PNG copied unchanged to source and public;1536x1024. Reuses existing accepted Aria forage inspection frame1 and Leon route-notes/paper-walk atlases at shared body scale, no new character art.",
+  "implementation":"lib/road-waterway-search.ts, road-waterway.ts and existing renderer-owned RoadMotion. Three dry-bank stops. Aria inspects without pulling a plant, Leon reads/marks paper while stationary and uses four paper-carrying walk frames while moving. Combat interrupts inspection. No repair crew, cart, detached crop or hatch.",
+  "visualFix":"Second enemy was clipped at narrow-screen left edge; all search-only enemy feet moved within dry clearing.1-8/1-9 positions preserved.",
+  "evidence":[
+    "49 related tests pass; both widths cover all three stops, four map-carry walking frames, combat interruption, enemy crop margin, no repair props/NPCs and save purity",
+    "FinalPC1243x1244:360 screenshots over55seconds, initial task through arrival, work/waterway-search-final-pc.json",
+    "Final browser390x844:765 screenshots over55seconds, initial task through arrival, work/waterway-search-final-mobile.json",
+    "Both final filmstrips inspected. Earlier waterway-search-pc/mobile record contains enemy crop defect and is superseded. Initial mobile metadata recovered from file modification times after recording timeout; final records have direct elapsed capture times.",
+    "Typecheck, scoped ESLint and npx vinext build passed. No physical-phone or every-frame-video test."
+  ],
+  "rollout":"Painted default13/37 adventures; whole goal active with24 adventures and full conversation/other motion review still outstanding."
+}

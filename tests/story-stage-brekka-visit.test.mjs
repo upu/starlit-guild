@@ -14,7 +14,7 @@ const oldHashes = {
   mira: "2623399b3ee33e4a4fc061080ffd527b36c3c08d41fa91e25c292afe2ca46764",
   finn: "4294349baa060854fd90c0ddb55f4a633366833b669e3e09fa73935e31c9894b",
   lico: "92f8eacedc9e99be7613dc2db234e7c00200cc7bb2d6c69d5c832ce5b9144e62",
-  doctor: "129d43390eef631e263240d0515215e23cfba8c10e2ae4dcb83682ef698e8438",
+  doctor: "dddc06ff5089acf29bca16b4005ef8f8f215a173fd39ef7892404d208445cbf9",
 };
 const cue = (line) => storyStageCue("brekka-arrival-return", line);
 const moments = (c) => [c, ...(c.sequence ?? []).map((s) => ({ ...c, ...s }))];
@@ -29,6 +29,9 @@ test("visit atlas preserves all sixty hero cells and old doctor poses, with cons
       .ensureAlpha()
       .raw()
       .toBuffer();
+    // Appending a WebP row can change RGB under fully transparent pixels only.
+    if (id === "doctor")
+      for (let i = 0; i < raw.length; i += 4) if (!raw[i + 3]) raw.fill(0, i, i + 3);
     assert.equal(createHash("sha256").update(raw).digest("hex"), hash, id);
     if (!["mira", "doctor"].includes(id)) continue;
     const base = await readFrame(p, { left: 0, top: 0, width: 128, height: 128 });
@@ -45,7 +48,7 @@ test("visit atlas preserves all sixty hero cells and old doctor poses, with cons
       assert.ok(frame.box.left >= 2 && frame.box.left + frame.box.width <= 126);
     }
   }
-  assert.equal(stageExtraRows({ id: "doctor" }), 2);
+  assert.equal(stageExtraRows({ id: "doctor" }), 3);
 });
 
 test("doctor records only while writing; the seated patient points at the table", () => {

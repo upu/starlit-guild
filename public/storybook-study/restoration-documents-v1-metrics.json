@@ -1,0 +1,30 @@
+[
+  {
+    "name": "shipping-record",
+    "width": 240,
+    "height": 221,
+    "left": 8,
+    "top": 27
+  },
+  {
+    "name": "archive-records",
+    "width": 240,
+    "height": 209,
+    "left": 8,
+    "top": 39
+  },
+  {
+    "name": "groove-plan",
+    "width": 240,
+    "height": 169,
+    "left": 8,
+    "top": 79
+  },
+  {
+    "name": "tea-coaster",
+    "width": 240,
+    "height": 185,
+    "left": 8,
+    "top": 63
+  }
+]

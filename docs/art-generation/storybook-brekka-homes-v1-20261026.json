@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create one landscape 3:2 game background. Reference 1 is the exact courtyard geometry to preserve: two neighboring small stone-and-timber houses, left door around x30% with threshold y34%, right door around x80% threshold y39%, roof tiles, small windows, clear cobbled courtyard below them. Reference 2 defines approved warm hand-painted storybook 2D RPG illustration, smooth painterly texture, clean fine outlines, no pixel grid. Redraw the courtyard in this approved style with elevated 45-degree three-quarter looking-down camera; both doors are full visible human-scale wooden doors, left door open just enough to exit, right closed for knocking. Clear walking route left door to lower middle then right door, cobbles consistent size, buildings modest size in upper half, lower half uncluttered. Daylight. No characters, no furniture or bags or effects or UI or text. Preserve intimate neighboring homes, not a city plaza.",
+  "references": [
+    "public/story-stage/brekka-homes.webp",
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-homes-v1.png"
+}

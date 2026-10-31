@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "source": "assets/source/storybook/merchant-poses-v2.png",
+  "input": "assets/source/storybook/merchant-poses-v1.png",
+  "prompt": "Edit this original 2x2 four-pose merchant sprite sheet. The head is too large relative to the body. In EVERY one of the four poses reduce the WHOLE HEAD including hair, face, ears and moustache to about 75% of current width and height, centered naturally on the neck. Preserve the body, arms, hands, torso, apron, trousers, boots, pose, stance and foot baseline exactly. Make a natural slightly visible neck connection; do not just shrink the whole person. Keep warm friendly middle-aged identity, round cheeks, short tousled gray-brown hair, small moustache, brown apron and cream sleeves. Target about 3.3 heads tall, clearly more adult body proportions, still gently stylized and approachable, not realistic. Same head size in all four poses, including the pointing bend. Exact pose order neutral/explaining/down-pointing/waving. Same elevated three-quarter view, rendering and transparent background. No props, labels, shadows, floor, glow. Preserve generous space between sprites and full visible boots."
+}

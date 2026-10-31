@@ -6,9 +6,15 @@ import { damageEnemy } from "../lib/combat.ts";
 import { combination, configureTarget, schedule } from "../lib/game-run.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadY, roadX, roadHeroSize } from "../lib/road-layout.ts";
+import { seedlingCartWidth } from "../lib/road-cart-layout.ts";
 import { chapterRoadHit } from "../lib/chapter-road-presentation.ts";
 import { travellerLane } from "../lib/road-view.ts";
 import { roadHasEnemies } from "../lib/chapter-road.ts";
+import {
+  storybookWorkAppearance,
+  storybookCartOrigin,
+  STORYBOOK_SEEDLING_CART,
+} from "../lib/road-storybook-work.ts";
 import {
   movingWork,
   roadPuller,
@@ -30,6 +36,66 @@ function start(index, level) {
   );
 }
 const quest = (run) => allQuests.find((q) => q.id === run.quest);
+
+test("painted seedlings remain seedlings, with Finn and Aria touching the registered grips", () => {
+  let state = start(35, 40);
+  for (let step = 0; step < 2000; step++) {
+    const f = chapterRoadFrame({
+      squad: state.squads[0],
+      now: state.updatedAt,
+      ready: true,
+      paused: false,
+      storybookHeroes: true,
+    });
+    if (f.battle.gathering?.task === "carry" && f.look.workers.length === 2) break;
+    state = settle(state, state.updatedAt + 100);
+  }
+  const saved = JSON.stringify(state);
+  for (const [width, height] of [
+    [320, 214],
+    [390, 260],
+    [936, 624],
+  ]) {
+    const { battle, look } = chapterRoadFrame(
+      {
+        squad: state.squads[0],
+        now: state.updatedAt,
+        ready: true,
+        paused: false,
+        storybookHeroes: true,
+      },
+      false,
+      1400,
+      { width, height },
+    );
+    assert.deepEqual(look.frontCarriers, ["finn"]);
+    assert.deepEqual([...look.workers].sort(), ["aria", "finn"]);
+    assert.equal(storybookWorkAppearance(look).asset, STORYBOOK_SEEDLING_CART);
+    assert.equal(storybookCartOrigin(look), 0.91);
+    const cartX = roadX(battle.gathering.x + 65, battle.distance, width, battle.stage);
+    const cartY = roadY(0.82, height, width);
+    const cart = seedlingCartWidth({ width, height });
+    const figure = (roadHeroSize(width, height) * 0.9) / 144;
+    for (const [id, handX, handY, gripX, gripY] of [
+      ["finn", -47, -65, 0.4, 0.012],
+      ["aria", 47, -77, -0.47, -0.292],
+    ]) {
+      const hero = battle.heroes.find((h) => h.id === id);
+      assert.ok(
+        Math.abs(
+          roadX(hero.x, battle.distance, width, battle.stage) +
+            handX * figure -
+            cartX -
+            gripX * cart,
+        ) < 0.01,
+      );
+      assert.ok(
+        Math.abs(roadY(hero.lane, height, width) + handY * figure - cartY - gripY * cart) < 0.01,
+      );
+    }
+  }
+  assert.equal(JSON.stringify(state), saved);
+});
 
 test("legacy Merrill routes leave the cart formation during the ambush and resume afterward", () => {
   let state = start(34, 25);

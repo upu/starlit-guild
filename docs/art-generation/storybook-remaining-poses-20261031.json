@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-31",
+  "tool": "built-in image_gen",
+  "mira": {
+    "initialPrompt": "Create one production transparent sprite sheet for the SAME original character Mira from reference image 1 (standing art) and image 2 (seated art), for a warm hand-painted 2D Japanese RPG with a gently elevated three-quarter camera. References are character/style references, not images to alter. Preserve exactly her dusty lavender bob hair with small light flowers and red ribbon, gentle adult face, pale cream layered dress and small warm brown details, proportions and restrained watercolor-like shading, subtle clean brown outline. No redesign, no hat, no added cape, no furniture. Output a 3 columns by 2 rows sheet, six separate complete figures, each centered in an equal cell with generous fully transparent margins, no text or grid lines. All six portray the same-sized person: identical head size and torso/limb proportions; seated figures naturally shorter, NOT scaled to the standing height. Reading order: 0 standing relaxed neutral reference, full boots visible; 1 resting on a bed mattress invisible to us, seated with knees gathered under the skirt and torso slightly reclining, gently tired but awake, both hands resting in lap; 2 sitting at the edge of that invisible bed, torso upright and both lower legs/boots hanging down, one empty hand bracing gently beside her hip as if about to rise, no chair or bed drawn; 3 feet drawn back onto the invisible mattress, sitting with knees gathered, one hand holding a small breakfast spoon just above lap and the other palm supporting a small unseen breakfast dish (do not draw the dish); 4 asleep while resting upright/reclined, eyes closed and hands relaxed, knees gathered under skirt, no pillow or blanket; 5 standing again with one empty hand gently extended, a practical calm healer. The viewpoint, clothing, head/body ratio and painting style must match the references. No ground shadows, no background, no furniture, no cropping of hair or feet, no contact between figures, no loose detached specks. Transparent alpha background.",
+    "refinementPrompt": "Edit target image 1 (the six-pose Mira sheet). Reference image 2 is the AUTHORITATIVE original Mira standing proportions; reference 3 is her chair-seated proportions. Correct the anatomical scale of the sheet, retaining her face identity, hair, flowers/ribbon, original clothing, exact pose meanings and warm painterly RPG style. The first attempt has heads too large and the bed-edge seated figure is taller than the standing figure. Fix that. Every pose must have the SAME head size, about 15-18% smaller relative to the full standing body than target image 1. Standing body should be roughly 3.2 head-heights tall, with the torso and legs restored to the reference proportions. Bed-edge sitting MUST be about 80-85% of the standing height, using naturally bent knees and hanging lower legs, not long straight legs; DO NOT enlarge its head or whole body to fill the cell. Knees-gathered resting, breakfast and sleep figures should be about 65-75% of standing height. All poses depict the same physical person at one camera distance. Preserve six figures in a strictly separated equal 3-column, 2-row grid. Each figure stays entirely inside its cell with at least 30px clear gutter: 0 standing relaxed calibration, 1 seated knees gathered resting awake with hands in lap, 2 bed-edge sitting with empty bracing hand and lower legs hanging, 3 knees gathered with small breakfast spoon, 4 same low knees-gathered rest asleep with eyes closed, 5 standing with one empty offered palm. No bed, chair, stool, pillow, blanket, dish, background, ground shadow, text or grid lines. Genuine transparent alpha. Do not add new accessories, do not crop any hair or boots. Elevated three-quarter RPG camera as the authoritative references, not a front portrait.",
+    "initialSource": "assets/source/storybook/mira-bed-v1.png",
+    "source": "assets/source/storybook/mira-bed-v2.png",
+    "decision": "Use common standing calibration for resting, breakfast and sleep. Both generated edge-seated attempts are too tall; use the existing registered Mira seated frame for the bed edge.",
+    "references": [
+      "public/storybook-study/mira-conversation-v1.webp",
+      "public/storybook-study/mira-seat-v3.webp"
+    ]
+  },
+  "otherPrompts": [
+    {
+      "name": "ariaShoulder",
+      "prompt": "Generate a transparent production sprite strip, FOUR separate poses in one horizontal row, of EXACT Aria from the reference. The reference is authoritative character/style/proportion artwork, not a target image to redraw in place. Preserve her light blonde hair and side braid, small pale flower, green eyes, forest-green gold-trimmed cape, cream blouse, short dark outfit, brown boots, slim young-adult build, warm hand-painted 2D RPG rendering and elevated three-quarter camera facing RIGHT. Maintain the reference head-to-body ratio, do not make her head bigger or shorten her legs. SAME head size and physical scale across all four figures, all complete feet on one common baseline, large transparent gutters. 0 standing relaxed calibration, hands empty; 1 standing with the near hand raised to grip an invisible carrying strap at the front of her shoulder/collarbone, other hand relaxed near hip, natural weight balance; 2 same shoulder-strap hold, gentle confident smile and a small conversational head turn; 3 midway lifting an invisible bag toward her shoulder, near elbow bent, empty supporting palm near lower ribs, feet planted and hips unchanged. The bag is a separate game object: DO NOT draw any bag, parcel, strap, weapon or extra clothing. No environment, furniture, shadows, text, borders, labels or grid. True transparent background; preserve the exact outfit, face and body proportions of the reference. No cropping, no contact between figures.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/storybook-study/aria-conversation-v1.webp"
+      ]
+    },
+    {
+      "name": "leonPush",
+      "prompt": "Generate a transparent production sprite strip, FOUR separate poses in one horizontal row, of EXACT Leon from the reference. Authoritative character/style/proportion reference: same tousled brown hair, calm brown eyes, red cape, dark blue and cream tunic with brown leather belt, trousers and boots, slim young-adult build. Warm hand-painted compact 2D RPG art, elevated three-quarter camera facing RIGHT, matched to reference not extra cute. SAME head size and physical scale in every pose; don't enlarge bending figures. All hair, capes and boots fully inside each separate cell with generous alpha gutters. 0 ordinary standing relaxed full-body calibration; 1 bracing to push an unseen very large hand away to the RIGHT, knees bent a little, torso leans slightly back, both empty palms vertical facing right at his chest height and elbows bent; 2 continuing that same push, both palms extended to the RIGHT, elbows almost straight, feet stay planted in a stable wide stance, torso weight shifts forward naturally; 3 recovered standing, hands lowered, no props. This is a human resisting a large creature's hand, not pushing a wagon or carrying a box. Draw only Leon; no creature, hand, box, handles, sword, tools, ground shadows, environment, grid or text. Use consistent anatomy and a clear two-stage push action without changing head/body ratio. True transparent background.",
+      "refs": [
+        "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/storybook-study/leon-conversation-v1.webp"
+      ]
+    }
+  ],
+  "integration": {
+    "builder": "scripts/build-storybook-remaining-poses.mjs",
+    "cell": 192,
+    "baseline": 176,
+    "registration": "Each character uses one standing calibration. The bed-edge frame copies the registered seat pixels directly, with no alpha-composite rounding.",
+    "outputs": [
+      {
+        "image": "public/storybook-study/mira-bed-v2.webp",
+        "metrics": "public/storybook-study/mira-bed-v2-metrics.json",
+        "sha256": "da9a6a6652d219125be53d5c1673a950aed95f84a6c931631e6efa45d17bc8bc",
+        "frames": [
+          {
+            "source": "public/storybook-study/mira-conversation-v1.webp",
+            "sourceFrame": 0,
+            "height": 192,
+            "pixelExact": true
+          },
+          {
+            "source": "assets/source/storybook/mira-bed-v2.png",
+            "sourceFrame": 1,
+            "height": 95,
+            "pixelExact": false
+          },
+          {
+            "source": "public/storybook-study/mira-seat-v3.webp",
+            "sourceFrame": 1,
+            "height": 192,
+            "pixelExact": true
+          },
+          {
+            "source": "assets/source/storybook/mira-bed-v2.png",
+            "sourceFrame": 3,
+            "height": 100,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/mira-bed-v2.png",
+            "sourceFrame": 4,
+            "height": 100,
+            "pixelExact": false
+          }
+        ]
+      },
+      {
+        "image": "public/storybook-study/aria-shoulder-v1.webp",
+        "metrics": "public/storybook-study/aria-shoulder-v1-metrics.json",
+        "sha256": "7b00497c4c395fc89e8780c70de22910ca748c65e7cb793f3a0842ce8b87646c",
+        "frames": [
+          {
+            "source": "assets/source/storybook/aria-shoulder-v1.png",
+            "sourceFrame": 0,
+            "height": 134,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/aria-shoulder-v1.png",
+            "sourceFrame": 1,
+            "height": 134,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/aria-shoulder-v1.png",
+            "sourceFrame": 2,
+            "height": 134,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/aria-shoulder-v1.png",
+            "sourceFrame": 3,
+            "height": 134,
+            "pixelExact": false
+          }
+        ]
+      },
+      {
+        "image": "public/storybook-study/leon-push-v1.webp",
+        "metrics": "public/storybook-study/leon-push-v1-metrics.json",
+        "sha256": "fd9d389d2fca054281bc64c4f0ebb22d171a02f9bb59b1c89e35a1aebf4f2d6a",
+        "frames": [
+          {
+            "source": "assets/source/storybook/leon-push-v1.png",
+            "sourceFrame": 2,
+            "height": 144,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/leon-push-v1.png",
+            "sourceFrame": 0,
+            "height": 144,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/leon-push-v1.png",
+            "sourceFrame": 1,
+            "height": 144,
+            "pixelExact": false
+          },
+          {
+            "source": "assets/source/storybook/leon-push-v1.png",
+            "sourceFrame": 3,
+            "height": 144,
+            "pixelExact": false
+          }
+        ]
+      }
+    ]
+  }
+}

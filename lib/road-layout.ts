@@ -1,4 +1,5 @@
 import { RPG_CAMERA_SCALE } from "./rpg-camera.ts";
+import type { RoadLook } from "./road-look.ts";
 
 // Share the elevated ground plane between figures, effects and pointer hit testing.
 export const roadScale = (width: number, stage = "forest") =>
@@ -9,6 +10,33 @@ export const roadDepth = (width: number, height: number) =>
   Math.min(240, height * 0.65, width * 0.35) * RPG_CAMERA_SCALE;
 export const roadY = (lane: number, height: number, width: number) =>
   height * 0.62 + (lane - 0.68) * roadDepth(width, height);
+/** Keep portrait-site figures above the backdrop while sorting by their feet. */
+export function roadFigureDepth(
+  lane: number,
+  view: { width: number; height: number },
+  look?: RoadLook,
+) {
+  return elevatedGround(look)
+    ? 5 + (20 * roadY(lane, view.height, view.width)) / view.height
+    : 10 + lane * 10;
+}
+const elevatedSites = [
+  "lindeDelivery",
+  "lanternRoad",
+  "brekkaLedger",
+  "mossTrail",
+  "mossBeds",
+  "nightBridge",
+  "restoration",
+  "waterway",
+  "packing",
+  "signpost",
+  "defense",
+  "blockade",
+] as const;
+function elevatedGround(look?: RoadLook) {
+  return !!look && elevatedSites.some((key) => !!look[key]);
+}
 export const roadX = (x: number, camera: number, width: number, stage = "forest") =>
   width * (stage === "puppets" ? 0.2 : 0.35) + (x - camera) * roadScale(width, stage);
 

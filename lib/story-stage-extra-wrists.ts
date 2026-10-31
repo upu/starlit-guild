@@ -3,6 +3,7 @@ import { stageExtraFrame } from "./story-stage-figure.ts";
 
 // Centers of the visible near hand in each registered 128px cell.
 const hands: Partial<Record<StageExtra["id"], Partial<Record<number, [number, number]>>>> = {
+  merrill: { 0: [82, 81], 1: [82, 81], 2: [82, 81], 3: [82, 81], 8: [91, 71], 10: [84, 114] },
   cook: {
     4: [35, 84],
     5: [61, 83],
@@ -50,8 +51,12 @@ const hands: Partial<Record<StageExtra["id"], Partial<Record<number, [number, nu
   },
 };
 export function stageExtraWrist(extra: StageExtra, moving: boolean, elapsed: number) {
-  const point = hands[extra.id]?.[stageExtraFrame(extra, moving, elapsed)];
+  const frame = stageExtraFrame(extra, moving, elapsed);
+  const point = extra.wristPoints?.[frame] ?? hands[extra.id]?.[frame];
   if (!point) return undefined;
-  // Worker art faces left; normalize travel to the right-facing attachment convention.
-  return { x: extra.id === "worker" && moving ? 128 - point[0] : point[0], y: point[1] };
+  // These work poses face left; normalize travel to the right-facing attachment convention.
+  return {
+    x: ["worker", "stone-carrier"].includes(extra.id) && moving ? 128 - point[0] : point[0],
+    y: point[1],
+  };
 }

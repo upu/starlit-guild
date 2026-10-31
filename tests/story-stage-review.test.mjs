@@ -94,33 +94,43 @@ test("the key, shoulder bag and Merrill's pot appear with their narrated owners"
   assert.equal(bags[0].width, bags[1].width);
   assert.ok(actor("medicine-packing-return", 4, "aria").shoulder);
   const stage = cue("merrill-seedlings-return", 40),
-    pot = stage.items.find((p) => p.art === "pot");
+    pot = stage.items.find((p) => p.art === "merrill-pot");
+  assert.equal(pot.wrist, true);
   for (const x of [73, 81, 93, 110]) {
-    const at = stageItemTarget(pot, stage, new Map([["extra:merrill", { x, bottom: 36 }]]));
-    assert.equal(at.x - x, 4);
-    assert.equal(at.bottom, 44);
+    const at = stageItemTarget(
+      pot,
+      stage,
+      new Map([["extra:merrill", { x, bottom: 5, left: false, wrist: { x: 82, y: 81 } }]]),
+    );
+    assert.equal(at.x - x, (18 * 24) / 128);
+    assert.ok(at.bottom > 5 && at.bottom < 20);
   }
 });
 
 test("transplant transport completes pickup, carry, placement and return within the narration", () => {
   const stage = cue("moss-transplant-departure", 31),
     steps = stage.sequence;
-  assert.equal(stage.items.find((p) => p.art === "seedlings").actor, "aria");
+  assert.equal(stage.items.find((p) => p.id === "transplant-basket").actor, "lico");
+  assert.equal(steps[0].items.find((p) => p.id === "transplant-basket").actor, "aria");
   assert.ok(steps[0].actors.find((a) => a.id === "aria").carry);
-  const placed = steps[1].items.find((p) => p.art === "seedlings");
+  const placed = steps
+    .flatMap((s) => s.items)
+    .find((p) => p.id === "transplant-basket" && !p.actor);
   assert.equal(placed.actor, undefined);
-  assert.equal(placed.width, 10);
+  assert.equal(placed.width, stage.items.find((p) => p.id === "transplant-basket").width);
   assert.equal(steps.at(-1).actors.find((a) => a.id === "aria").carry, false);
   assert.deepEqual(cue("moss-transplant-departure", 32).items, steps.at(-1).items);
   assert.ok(
-    cue("moss-transplant-departure", 20).items.find((p) => p.art === "seedling-cart").tilt < 0,
+    cue("moss-transplant-departure", 20).items.find((p) => p.id === "transplant-cart").tilt < 0,
   );
   assert.ok(
-    cue("moss-transplant-departure", 25).sequence[0].actors.find((a) => a.id === "leon").sword,
+    cue("moss-transplant-departure", 25)
+      .sequence.at(-1)
+      .actors.find((a) => a.id === "leon").sword,
   );
   const restored = cue("moss-transplant-departure", 37)
     .sequence.at(-1)
-    .items.find((p) => p.art === "seedling-cart");
+    .items.find((p) => p.id === "transplant-cart");
   assert.equal(restored.tilt, 0);
   assert.equal(restored.actor, "finn");
 });

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original warm handpainted2D RPG Aria elf girl sprites on transparent background, elevated45degree camera as reference. THREE complete isolatedbody sprites evenly spaced in ONE horizontal row. Preserveexactheadsize hair lavenderlock daisy greencloak whiteblouse shortwhiteruffleskirt brownfingerlessgloves kneehighboots, physically SAME body scale all3, no resizingcrouchingposes. 0 neutral uprightstanding fullbody forscale calibration. 1 crouching with feetplanted and bentknees, leans forward viewerRIGHT, nearhand lowat shinheight holds short woodenhandle sickle, gently drawsblade toward tuftofgrass (NO grass drawn), otherhand bracesknee, headat about75percentstandingheight. 2 EXACT SAME crouchingbody, headsize, boots and footholds as1, nearforearm draws sickle slightly back towardher (8cmchange), clear butmodest cuttingmotion, cloak shiftsveryslightly, samefaceexpressionfocused. Onlyarm/sicklechanges between1/2, no big body bob, nofloatingfeet, nootherprops. Everyhair hand sickle andboot insideamplealpha margins; no floor shadows text labels or scenery.",
+  "references": [
+    "assets/source/storybook/aria-work-v1.png"
+  ],
+  "source": "assets/source/storybook/aria-weed-v1.png"
+}

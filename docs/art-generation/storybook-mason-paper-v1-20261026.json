@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent hand-painted warm2D RPG character sheet exactly8fullbodyposes4columns2rows of EXACT young brownponytailed male mason from references: ochre rolled-sleeve shirt, dark brown overalls/apron, worktrousers boots, practical friendlyexpression. Elevated45degree downward3quartercamera, fine warm lines, consistent adult chibi head/body scale and bootsamebaseline. AllfaceLEFT. Row1:0 neutral standing calibration;1 holds INVISIBLE sheet resting on one open palm atwaist/chestheight, otherhand writes with small visible charcoalpencil;2 samewritingtinyhandadjustment;3 extends one open palm towardLEFT chestheight to pass INVISIBLE sheet, farhandrelaxed. Row2:4 holds INVISIBLE paper in open palm and explains with otherhand;5 slight forwardbend reachesLEFT downward with bothhands to lay an INVISIBLE coveringcloth;6 receives INVISIBLE sheet with hand extendedLEFT;7 looksdown carefully at INVISIBLE sheet heldinfront ofchest. No actual paper, cloth, table, book or otherprops exceptcharcoalpencil inwritingposes. Complete boots, padding aroundeveryfigure, no touching,croppedhair,ground,shadows,text. Match exactsame physicalscale in all8poses.",
+  "references": [
+    "public/storybook-study/worker-poses-v1.webp",
+    "public/storybook-study/mason-motion-v1.webp"
+  ],
+  "source": "assets/source/storybook/mason-paper-v1.png"
+}

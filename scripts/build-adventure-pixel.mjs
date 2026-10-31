@@ -17,7 +17,13 @@ async function emit(name, buffer) {
   const file = new URL(name, output);
   if (check) {
     if (!(await readFile(file)).equals(buffer)) throw Error(`Stale adventure pixels: ${name}`);
-  } else await writeFile(file, buffer);
+  } else {
+    const existing = await readFile(file).catch((error) => {
+      if (error.code !== "ENOENT") throw error;
+      return null;
+    });
+    if (!existing?.equals(buffer)) await writeFile(file, buffer);
+  }
   manifest[name] = createHash("sha256").update(buffer).digest("hex");
 }
 

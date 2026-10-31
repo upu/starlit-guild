@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent RPG character pose atlas exactly EIGHT isolated full-body sprites in4columns TWO rows. Same Lico and elevated 3/4 hand-painted chibi style as reference1, identity as reference2: short robust young woman red-brown messy ponytail, red spider lily, freckles, low round glasses, crimson apron/charcoal black dress/ivory sleeves, dark sandals with toes. Exact SAME physical head/body/sandal scale and common ground baseline, no floor shadows. Base faces SCREEN RIGHT. Row1 col0 neutral STANDING empty hands calibration; col1 standing holds a SMALL CLOSED BROWN NOTEBOOK with both hands at waist, col2 same slight glance toward viewer, col3 same quiet eager crooked smile. Row2 FOUR consecutive WALKING poses holding that same small CLOSED bound notebook steadily at waist with both hands: left foot forward, passing knees, right foot forward, passing knees. Visible alternating sandals and bent knees, gentle arm stabilization, no gliding, no bigger heads in walking row. Do not add bags, stools, UI, text, grids or shadows. Fully visible hair and soles, generous transparent gutters.",
+  "references": [
+    "assets/source/storybook/lico-conversation-v2.png",
+    "docs/characters/lico-reference-sheet.webp"
+  ],
+  "source": "assets/source/storybook/lico-notebook-walk-v1.png"
+}

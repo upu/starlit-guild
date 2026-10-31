@@ -1,0 +1,13 @@
+{
+  "status": "prototype",
+  "tool": "image_gen",
+  "prompt": "Create a transparent-background game sprite sheet with EXACTLY FOUR separate full-body poses of the same young male traveller, one horizontal row. Reference image 1 is the character design and proportions reference (use its standing figure and bottom-right kneeling pose); reference image 2 shows the final warm hand-painted rendering style. Preserve his brown hair, modest elongated face, navy blue tunic, off-white sleeves, brown gloves and boots, short red shoulder cape and small gold star clasp. Same head size and same limb lengths in all four poses. Elevated three-quarter RPG view, facing screen right. Pose 1: neutral standing, used only as scale reference. Pose 2: kneeling on one knee, other boot planted, torso tilted slightly forward, both empty gloved hands reaching forward at low parcel height to check a label. Pose 3: exactly the same kneeling feet, head and torso as pose 2, only the hands change slightly as if straightening the label or tightening a cord. Pose 4: same kneeling base, one hand rests on raised knee and the other extends toward a parcel. The work poses must be naturally around 70-78 percent of the standing height, NOT enlarged to fill their cells. Keep all heads identical in physical scale. Hands empty, no parcel, label, rope, furniture, ground, shadow, text or decorations; props are rendered separately by the game. Four evenly spaced equal cells, all feet/knees share the same low baseline. Generous transparent padding around every figure. Clean warm brown contours, soft painted color areas, no pixel grid, no photorealism. Do not crop hair, cape, boots or fingers.",
+  "references": [
+    "assets/source/storybook/leon-poses-v1.png",
+    "public/storybook-study/leon-conversation-v1.webp"
+  ],
+  "source": "assets/source/storybook/leon-work-v1.png",
+  "output": "public/storybook-study/leon-work-v1.webp",
+  "registration": "Single scale from standing height 144; work heights 116; feet baseline 176 in 192px cells. Frames 1 and 2 are used for pack/unload in the adventure prototype only.",
+  "review": "Standing 144px and kneeling 116px at one scale. Connected frames 1 and 2 to Leon pack/unload in the adventure prototype. Inspected paused pose at PC 1243x1244 and mobile 390x844. Hands remain too far from parcel; Aria and props retain old art. Full-cycle contact and transition review pending. Not approved for all scenes."
+}

@@ -1,0 +1,12 @@
+.founding-return-review {
+  margin-top: 12px;
+}
+.founding-return-review > .phone-dialog:has(> .story-reader) {
+  position: relative;
+  inset: auto;
+  width: 100% !important;
+  height: min(80dvh, 850px);
+  max-height: none;
+  margin-top: 12px;
+  scroll-margin-bottom: 16px;
+}

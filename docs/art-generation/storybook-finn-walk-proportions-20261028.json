@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Bring Finn's ordinary and bandaged walking head proportions closer to his standing pose and the rest of the party.",
+  "generator": "image_gen.imagegen",
+  "build": "node scripts/build-storybook-finn-balanced.mjs walk-balanced-v3; node scripts/build-storybook-finn-balanced.mjs night-walk-balanced-v2",
+  "assets": [
+    {
+      "source": "assets/source/storybook/finn-walk-balanced-v3.png",
+      "output": "public/storybook-study/finn-walk-balanced-v3.webp",
+      "generated": "exec-f34af1e4-ca4a-4a00-9eb9-e74fc8562401.png",
+      "references": ["assets/source/storybook/finn-walk-balanced-v2.png", "assets/source/storybook/finn-conversation-balanced-v3.png"],
+      "prompt": "Edit the FIRST image, Finn's four-frame game walking sprite sheet. The SECOND image is the same character's correct standing proportions, head and appearance. In FIRST, his head and hair still look about 15% too large compared with his standing body: carefully redraw all four walking poses with a smaller head and hair, matching SECOND's head-to-body ratio and mature appearance at the same overall height. Keep his dark low-tied hair, tired drooping eyes, subtle stubble, olive charcoal long coat, cream shirt and boots. Maintain four alternating walking poses and feet, same left-to-right order, same 3/4 right-facing direction, preserve the lean and gait with consistently scaled body and head. One row of exactly four complete separate full-body characters, equal evenly spaced cells, feet aligned, generous transparent margins all around. Transparent background, no lettering, no props or shadows."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-walk-balanced-v2.png",
+      "output": "public/storybook-study/finn-night-walk-balanced-v2.webp",
+      "generated": "exec-2afb3536-df1a-469c-89b2-c6ef009e7525.png",
+      "references": ["assets/source/storybook/finn-night-walk-v1.png", "assets/source/storybook/finn-conversation-balanced-v3.png"],
+      "prompt": "Edit FIRST image, four frames of Finn walking after an injured hand was bandaged. SECOND image is correct standing proportions and appearance. Make his head INCLUDING hair smaller, matching SECOND when the bodies are same height; naturally lengthen body and legs. Keep exact gestures and alternating gait of all four frames in original order. Critically preserve the single white bandage on the same hand in every frame, no extra bandage. Keep Finn's mature face, stubble, dark low-tied hair, worn olive charcoal coat, cream shirt, trousers and boots. Four separate full-body figures in one row of four evenly spaced cells with transparent margins, no text, background, props or shadows."
+    }
+  ],
+  "registration": "Each strip uses one scale, a shared baseline at y=176, and a fixed head anchor across its four walking frames."
+}

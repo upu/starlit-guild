@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact original hand-painted RPG diningroom background. Preserve ALL geometry, scale, floorplanks, windows, shelves, jars, bench, door, edge tables, stools, plants, banner and crop EXACTLY. Same elevated45degree three-quarter camera. Change ONLY time from noon to EARLY EVENING: soft blue dusk visible through window, noon's strong bright window-shaped sunlight on floor fades away, interior remains warmly and clearly illuminated by the existing amber lanterns and candles. Not night-dark. Open central floor lower2/3 unchanged and empty for actors and game-added table. No people, new furniture, props, writing or layout changes.",
+  "references": [
+    "assets/source/storybook/linde-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/linde-dining-dusk-v1.png"
+}

@@ -1,0 +1,12 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Revise reference 1 Finn sprite sheet. Its proportions are WRONG for our game: he looks like a small realistic tall man. Make ALL FOUR figures strongly super-deformed compact RPG sprites, EXACTLY 3 heads tall from crown to sole, head including hair must occupy ONE THIRD of total standing height, body including legs only remaining TWO THIRDS. Reference 2 Leon sprite is style/proportion target. Much bigger head, shorter legs and torso, broader readable silhouette. This is structural redraw NOT scaling the existing whole image. Preserve Finn's adult late-forties facial character: drooping grey-violet eyes, subtle stubble and tan, loose low-tied dark brown hair, tired lopsided smile. Preserve charcoal/olive worn coat with simple antique gold trim, ochre lining, cream open shirt, brown trousers/boots. Adult face on stylized 3-head-tall body, not young boy. Four figures in ONE row: neutral listen, hand at chin think, open palm talk, sheepish grin hand behind head. Same head size, body dimensions and feet baseline in all four. Warm soft painted shading and thin clear brown outlines, simplify micro-detail. Elevated three-quarter view facing screen right, boots and top of hair visible, generous empty gutters, true transparent background, no floor shadows, no labels, no props. Reference1 identity and poses; Reference2 proportion and rendered style.",
+  "references": [
+    "assets/source/storybook/finn-conversation-v1.png",
+    "public/storybook-study/leon-poses-v1.webp"
+  ],
+  "source": "assets/source/storybook/finn-conversation-v2.png",
+  "output": "public/storybook-study/finn-conversation-v2.webp",
+  "reason": "v1 looked too realistic and thin in the actual stage. Redraw compact proportions; keep mature identity.",
+  "scope": "Indoor study standing conversation only; walk and seated actions pending."
+}

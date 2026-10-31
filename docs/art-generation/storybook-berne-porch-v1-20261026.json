@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "source": "assets/source/storybook/berne-porch-v1.png",
+  "prompt": "Use case: illustration-story. Asset type: opaque wide3:2 hand-painted RPG conversation background. Reference1 fixes the house layout; reference2 fixes approved warm painterly style, high camera and miniature architectural scale. Repaint the same stone-paved front yard of an ordinary timber plaster house. Elevated45-degree downward camera, three-quarter orthographic-like view, no sky or horizon. Roof and windows at top, house wall occupies upper30%, wooden closed door at x82% with threshold at y32%; keep small glowing pale blue stone on wall shelf at x39%, y21%, a modest everyday lamp rather than magical rune. Keep clear walkable paving across center and lower65% for separately rendered four travelers, medicine box and picnic cloth. No built-in bench, central furniture or people. Small wall vines and flowers only along edges. A standing actor is about15% image height, door about22%, paving stones3%, plant pots6%. Warm daylight, soft painted highlights, restrained warm outlines, broad readable shapes, consistent with reference2. No text, signs, diagrams, interface, borders or watermark. Preserve the small wall lamp's faint glow, no glowing random stones elsewhere.",
+  "references": [
+    "public/story-stage/berne-porch.webp",
+    "public/storybook-study/berne-paving-v1.png"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: illustration-story. Asset type: opaque wide3:2 hand-painted 2D RPG dialogue background. Reference1 is exact layout; reference2 the approved warm painterly medium and downward camera style. Repaint the same manor kitchen's outside service courtyard. Keep the house wall and tiled eaves across upper right, CLOSED plain wooden service door centered x70% with bottom threshold near y40%, small window to its left, modest firewood stack at far right. Low stone balustrade with flower pots along left side, hedges at edges, broad EMPTY pale flagstone courtyard across center and foreground for four separately rendered travelers. Camera elevated45degrees looking down, orthographic-like three-quarter view, no sky/horizon, no dramatic vanishing perspective. Modest neat working entrance of a wealthy country house, not a palace main gate. Warm afternoon sunlight, soft painted textures, restrained warm contours, sage ivy and white flowers. Door heightabout28% image, standing people about15% when added later, individual paving stones3-4%. Preserve walkable courtyard and entrance position; no characters, tables, portable luggage, sign text, labels, borders or watermark. No glowing objects.",
+  "references": [
+    "public/story-stage/manor-kitchen.webp",
+    "public/storybook-study/berne-porch-v2.png"
+  ],
+  "source": "assets/source/storybook/manor-kitchen-v1.png"
+}

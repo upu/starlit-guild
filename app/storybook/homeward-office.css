@@ -1,0 +1,112 @@
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/homeward-medicine-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="empty-bottles"] {
+  background-image: url("/storybook-study/homeward-bottles-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="folded-paper"] {
+  background-image: url("/storybook-study/homeward-receipts-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="teapot"] {
+  background-image: url("/storybook-study/teapot-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="teapot"][data-pouring="true"]::after {
+  left: 92%;
+  top: 57%;
+  height: 32%;
+  transform: rotate(-10deg);
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="empty-cup"] {
+  background-image: url("/storybook-study/empty-cup-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="teacup"] {
+  background-image: url("/storybook-study/patient-teacup-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="empty-cart"] {
+  background-image: url("/storybook-study/handcart-raised-v1.webp");
+  aspect-ratio: 512 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  .story-stage-item[data-art="trade-parcels"] {
+  background-image: url("/storybook-study/trade-parcels-open-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/homeward-worker-v1.webp") !important;
+  background-size: 400% 200% !important;
+  scale: -1 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite:is(
+    [data-frame="20"],
+    [data-frame="21"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-position-y: 0% !important;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-actor="mira"][data-held-art="medicine-closed"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/mira-handheld-v1.webp");
+  background-size: 400% 200%;
+  background-position: var(--return-mira-x, 0%) var(--return-mira-y, 0%) !important;
+  scale: 1 1;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-actor="mira"]
+  .story-stage-sprite:is([data-frame="8"], [data-frame="9"], [data-frame="22"], [data-frame="23"]) {
+  --return-mira-y: 100%;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-frame="9"] {
+  --return-mira-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-frame="22"] {
+  --return-mira-x: 66.666667%;
+}
+.storybook-reader-stage[data-story="medicine-road-home-return"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-frame="23"] {
+  --return-mira-x: 100%;
+}

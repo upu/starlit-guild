@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG sprite sheet8fullbodyposes4columns2rows. Exact Finn from reference: middleagedweatheredfriendlyrogue wavybrownponytail, stubble, frayedolivebrownlongcoatwhite shirt darktrousersboots. Elevated45degree3quarter camera, facesRIGHT everypose, sameanatomyheadscalethroughout. Row1:0neutraluprightstandingcalibration;1slightforwardlean withBOTHhands reachingRIGHT atlowerhip/thighheight, fingerscurled round INVISIBLE cart handles, kneesrelaxed;2walkRIGHT whileholding these invisiblehandles, nearlegforwardcontact;3passing nearfootunderhips farheelup. Row2:4oppositecontact NEARlegextendedBACKLEFT,FARlegforwardRIGHT;5oppositepassing nearkneeforwardheelup farfootbelowhips;6sameleanandgripbutweightback paused;7leanforwardwithfingersopeningonhandlerelease. Arms staystable low atthighlevelwhilewalking. No cart,props,text,ground,shadows. Fullheadsboots withlargegaps. Distinct oppositewalkingphases, coherentbodyproportions; leaning canreduceoverallheightnaturally but doNOTresizehead.",
+  "references": [
+    "assets/source/storybook/finn-chair-v2.png"
+  ],
+  "source": "assets/source/storybook/finn-push-v1.png"
+}

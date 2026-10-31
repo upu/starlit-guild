@@ -30,6 +30,7 @@ export type LaterStage = {
   beats: LaterBeat[];
   night?: boolean;
   exit?: ResidentId[];
+  exitExtras?: StageExtra[];
   exitSide?: "left" | "right";
   exitLanes?: Partial<Record<ResidentId, number>>;
   exitRoutes?: Partial<Record<ResidentId, Pick<StageActor, "x" | "bottom" | "via">>>;

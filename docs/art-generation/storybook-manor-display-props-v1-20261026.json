@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted 2D RPG prop sheet, exactly 4 columns x 2 rows with wide empty gutters. Elevated45degree three-quarter downward camera matching the final reference, warm contours and painted texture, not pixelart. Eight separate complete objects centered in equal cells, nothing touching. Row1: 1 small walnut wood and transparent glass display box entirely draped in plain ivory cloth; 2 SAME identical glass box closed with flat transparent glass lid, brass hinges at back and tiny brass keyhole center front; 3 SAME identical glass box with glass lid lifted at back, empty inside; 4 folded ivory covering cloth removed from that same box, no box. The three boxes have EXACT same wooden base size, identical position and scale, same front edge orientation; reference1/2 define the mechanism but repaint in the final reference style. Row2: 5 pale gray rectangular old masonry block top face with tiny restrained violet luminescence in mineral seams, no symbols; 6 SAME masonry block tilted to show underside with exactly three parallel recessed grooves, same size; 7 small plain white square cloth held hanging from one upper corner, no hand; 8 tiny simple old brass key without hands. Keep all objects separate on transparent background, no hands, characters, furniture, shadows on ground, text, labels, sparkles or magical runes. Stone is a modest building block, not a fantasy crystal.",
+  "references": [
+    "public/story-stage/prop-display-open.webp",
+    "public/story-stage/prop-display-covered.webp",
+    "public/story-stage/prop-tower-stone-bottom.webp",
+    "public/storybook-study/manor-kitchen-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-display-props-v1.png"
+}

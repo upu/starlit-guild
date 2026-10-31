@@ -8,6 +8,7 @@ import { StoryStageArrows } from "./story-stage-arrows";
 import { useMemo, type CSSProperties } from "react";
 import { stageCameraCue } from "@/lib/story-stage-camera";
 import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
+import type { CastFallback } from "@/lib/storybook/stage-images";
 
 function stageStyle(cue: StoryStageCue): CSSProperties {
   return {
@@ -29,11 +30,44 @@ const actorArt = (id: string): CSSProperties =>
     "--conversation-art": `url(/story-stage/${id}-poses.webp)`,
   }) as CSSProperties;
 
+function StageActorFigure({
+  actor,
+  cue,
+  speaker,
+  castFallback,
+}: {
+  actor: StoryStageCue["actors"][number];
+  cue: StoryStageCue;
+  speaker?: string;
+  castFallback?: CastFallback;
+}) {
+  return (
+    <div
+      className="story-stage-actor"
+      data-actor={actor.id}
+      data-fallback-standing={!!castFallback?.[actor.id]?.standing}
+      data-fallback-walking={!!castFallback?.[actor.id]?.walking}
+      data-speaking={speaker === actor.id}
+      data-departing={!!cue.cartX}
+      style={actorStyle(cue, actor)}
+    >
+      <span className="story-stage-shadow" />
+      <span className="story-stage-sprite" style={actorArt(actor.id)} />
+      {actor.id === "aria" && <span className="story-stage-carried-bundle" />}
+      <span className="story-stage-reaction" hidden />
+      <span className="story-stage-name">{actor.name ?? residentNames[actor.id]}</span>
+    </div>
+  );
+}
+
 type StoryStageProps = {
   cue: StoryStageCue;
   speaker?: string;
   onComplete?: () => void;
   hasten?: boolean;
+  /** Internal visual review: render a deterministic point in this cue without playing. */
+  previewTime?: number;
+  castFallback?: CastFallback;
 };
 
 export function StoryStage({
@@ -41,9 +75,11 @@ export function StoryStage({
   speaker,
   onComplete,
   hasten = false,
+  previewTime,
+  castFallback,
 }: StoryStageProps) {
   const cue = useMemo(() => stageCameraCue(authoredCue), [authoredCue]);
-  const stage = useStoryStageMotion(cue, onComplete, hasten);
+  const stage = useStoryStageMotion(cue, onComplete, hasten, previewTime);
   return (
     <div className="story-art-space story-stage-space">
       <div
@@ -52,6 +88,7 @@ export function StoryStage({
         role="img"
         aria-label={cue.description}
         data-setting={cue.background ?? "meeting-path"}
+        data-cart-art={cue.cartArt ?? "loaded-cart"}
         data-night={!!cue.night}
         style={stageStyle(cue)}
       >
@@ -69,20 +106,13 @@ export function StoryStage({
             <ChapterStageProps cue={cue} />
             <StoryStageArrows cue={cue} />
             {cue.actors.map((actor) => (
-              <div
+              <StageActorFigure
                 key={actor.id}
-                className="story-stage-actor"
-                data-actor={actor.id}
-                data-speaking={speaker === actor.id}
-                data-departing={!!cue.cartX}
-                style={actorStyle(cue, actor)}
-              >
-                <span className="story-stage-shadow" />
-                <span className="story-stage-sprite" style={actorArt(actor.id)} />
-                {actor.id === "aria" && <span className="story-stage-carried-bundle" />}
-                <span className="story-stage-reaction" hidden />
-                <span className="story-stage-name">{actor.name ?? residentNames[actor.id]}</span>
-              </div>
+                actor={actor}
+                cue={cue}
+                speaker={speaker}
+                castFallback={castFallback}
+              />
             ))}
             <div className="story-stage-luggage" aria-hidden="true">
               <span className="story-stage-bundle" />

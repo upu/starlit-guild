@@ -36,7 +36,7 @@ export const sectionsPart2: ChapterFourSection[] = [
         line("leon", "荷車を追って、苔を仕入れている場所を確かめてきます。", "serious"),
       ]),
       scene("4-4", "return", "持ち帰った道順", "ブレッカの裏通り", [
-        narration("空籠を積んだ荷車が、醸造所の裏から出る。アリアとレオンは距離を取って歩く。"),
+        narration("空籠を積んだ荷車を追って、アリアとレオンは裏通りを進む。"),
         line("aria", "車輪の泥にも苔がついてる。やっぱり、この荷車だね。", "smile"),
         line("leon", "分かれ道は右だな。", "serious"),
         line("aria", "うん、その先に……あ、苔が落ちた。", "surprised"),

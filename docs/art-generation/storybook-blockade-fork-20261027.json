@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Second chapter 2-7 sweet-blockade-return, fork pages17..31 (15 display pages). Existing geography, prose, stills and saves preserved.",
+  "generations": [
+    {
+      "generation": "exec-eba902cc-d1d2-4cbc-9c74-b03cc25ae4c6",
+      "source": "assets/source/storybook/masked-pumpety-v1.png",
+      "output": "public/storybook-study/masked-pumpety-v1.webp",
+      "prompt": "Create a warm hand-painted 2D RPG sprite atlas, transforming character in image1 from pixel art to the painting style of image2. Image1 is identity and exact pose order reference; image2 is style/scale medium only, NOT character identity. Small mischievous girl with a FULL orange pumpkin helmet covering head and face, dark carved eye and smiling mouth holes (no human face visible), green leaves and small stem, brown twin tails emerging from beneath helmet, black bodice, green sleeves and trim, yellow short skirt, dark boots, modest practical fantasy clothes. NO bare face. Elevated oblique RPG view about40degrees down. TWELVE separate full-body sprites in equal 4columns x3rows cells with generous transparent gutters. Row1: neutral standing, explaining with one palm, directing with puppet-control wooden cross held up, cheeky hand wave. Row2: FOUR walking contact/passing phases side-facing in same direction, visibly alternate left/right leading boot, coherent planted feet and body scale. Row3: shallow bow, deeper reluctant bow, neutral standing calibration, pointing down the road. Same pumpkin/head size and body proportions for all12, bows lower total height naturally, no scaling each pose independently. Preserve original compact childlike body relative to adult reference, not adult woman. Paint warm muted gouache with fine brown outlines, soft natural shading, readable silhouette at small size, NO pixel-art edges. Actual transparent background, no shadows, no scenery, no labels/text.",
+      "status": "adopted, shared painted masked character; face remains covered, 78px body scale in128 cells"
+    },
+    {
+      "generation": "exec-f0491218-cdcb-4bfb-8cbe-73aa43d9f67b",
+      "source": "assets/source/storybook/blockade-supplies-v1.png",
+      "prompt": "Paint a transparent prop sheet for a warm hand-painted 2D RPG. Four separate objects in equal 2x2 cells with broad transparent gutters. Same objects as supplied reference images, converted from pixel-art to delicate warm gouache with fine brown outlines, soft natural shading, elevated oblique45degree overhead view, no pixel edges. Top-left: small round clear glass jar of amber medicinal honey with cork and simple twine. Top-right: closed olive canvas medical satchel with brown leather strap, two small paper medicine packets tucked under flap, small discreet red cross paper tag. Bottom-left: SAME satchel at identical size and angle with flap open, empty interior visible, no contents. Bottom-right: compact stack of two brown paper trade parcels tied with twine, top parcel torn open with a few plain round biscuits visible. Bag remains ordinary travel equipment, not treasure chest. Match muted earthy palette and everyday scale. All complete isolated objects, no characters, no scenery, no shadows/background, no text/labels.",
+      "status": "adopted honey, closed/open satchel, opened trade parcels"
+    },
+    {
+      "generation": "exec-94d4cd51-5b3b-4047-bffa-c5792820d64f",
+      "source": "assets/source/storybook/worker-push-road-rejected-v1.png",
+      "prompt": "Create four-frame warm hand-painted RPG walking animation of the SAME brown-haired male worker in image1 (yellow rolled sleeves, brown leather apron, brown trousers and boots). Image2 is the handcart whose handles he will PUSH, but do NOT draw cart or any props. Worker must face RIGHT in all four frames and hold BOTH empty palms extended forward toward RIGHT at waist height, gripping imaginary horizontal handcart handles. Both hands remain fixed relative to his torso across frames, not swing while he walks. Elevated oblique40degree-down perspective matching image1. Exactly4 full-body separate sprites in one horizontal row, equal cells and broad transparent gutters. Frame1 LEFT boot clearly forward, RIGHT boot clearly behind; frame2 left planted, right passes directly under hips; frame3 RIGHT boot clearly forward, LEFT boot behind (OPPOSITE leading leg to frame1); frame4 right planted,left passes hips. Distinguish both trouser legs with overlap; do not merely duplicate the same stride. Flat grounded contact feet, consistent skull/head size, same standing calibration body scale and costume from image1. Natural small steady walking steps, no high marching knees. Warm painted gouache and brown outlines matching reference, no pixel-art edges. No cart, no floor, no ground shadows, no labels/text. Actual transparent background.",
+      "status": "rejected: opposite leading leg insufficient"
+    },
+    {
+      "generation": "exec-e385f275-c7ba-4527-bac4-3c9bbab452ac",
+      "source": "assets/source/storybook/worker-push-road-v2.png",
+      "output": "public/storybook-study/worker-push-road-v1.webp",
+      "prompt": "Edit this four-frame RPG worker push-walk sheet. Preserve ALL heads, faces, torsos, extended arms and empty gripping hands EXACTLY. Keep four equal horizontal cells, body scale, transparent background and painting style. Correct ONLY LEGS AND BOOTS to make a genuine alternating walking cycle. Frame1 leave intact: near-camera leg is extended forward toward right-bottom, other leg trails left. Frame2 passing pose: near-camera leg planted, far leg swings past it with lifted heel. Frame3 must be OPPOSITE of frame1: near-camera thigh bends BACKWARDS to LEFT and its boot is clearly at LEFT-BOTTOM (behind body), far leg crosses IN FRONT and reaches RIGHT, with far boot at RIGHT-UPPER (not right-bottom). Thus the nearest boot is on the LEFT in frame3, while nearest boot is on the RIGHT in frame1. Show clear thigh and knee connection back to the correct hip so legs do not detach. Frame4 opposite passing pose: far leg planted, near leg swings past underneath pelvis. Ordinary small grounded steps, no high knee lift, no skating, no standing with both feet together. Hands stay fixed in the same forward grip through all four frames.",
+      "status": "adopted after leg revision; one body scale, horizontal head anchor, sole120. Small vertical weight shift up to4px remains; hands can vary slightly vertically during the gait."
+    },
+    {
+      "generation": "exec-aacce0fb-fd87-4250-806a-0383a4199b07",
+      "source": "assets/source/storybook/handcart-raised-v1.png",
+      "output": "public/storybook-study/handcart-raised-v1.webp",
+      "prompt": "Precise edit of the supplied empty wooden handcart PNG for a warm painted RPG sprite. Preserve the cart bed, BOTH wheels, axle, wheel contact positions, wood/iron details, camera, scale, full canvas and actual transparent background EXACTLY. Change ONLY the two long shafts and the crossbar at their RIGHT ends: they are currently resting very low, almost wheel-bottom height. RAISE their free right ends by about55 pixels relative to this512x320 reference canvas, to a believable standing person's waist height, while keeping their attachment to the cart sides intact. The right-end crossbar should run diagonally between the two shafts, with room for two hands in the middle, and be at roughly y200–215 instead of y260–275. Shaft tips keep their original x positions. This is a handcart with its handles LIFTED for pushing. Do not lift wheels, do not tilt or move the whole bed, do not add person/hands/load. Natural perspective, thin wood handles, same warm painterly shading. No shadows/ground/scenery/text. Keep full512:320 canvas aspect ratio and transparent margins; all original wheel pixels stay at original places.",
+      "status": "adopted raised handles. Packed at512x320, wheel contact304. Whole cart remains on ground when ownership changes."
+    }
+  ],
+  "builders": [
+    "scripts/build-storybook-blockade.mjs",
+    "scripts/build-storybook-worker-push.mjs"
+  ],
+  "integration": [
+    "mountain-fork-empty uses the existing mountain-fork-v1 with one separate portable post",
+    "Post carrier and receiver share tilt-75; receiver retains grip through650ms planting, releases at4700ms",
+    "Cart and cargo retain ground height when attached to the worker; Mira waits outside its lane",
+    "Mira's shared carry frame16 previously had no art; mapped for all painted hold moods",
+    "Care uses Mira's already painted ground-rest atlas and registered wrist; Aria's bandage meets that wrist",
+    "Medicine box remains width8 but rests lower against Leon's waist, not across his face",
+    "Contents retain size when stowed in satchel; held satchel uses top-edge palm registration"
+  ],
+  "validation": {
+    "PC": "1243x1244, fork15 pages sequential; care and final carrying corrected and rechecked; final post received/planted rechecked after rotation change",
+    "mobile": "390x844 browser width, fork15 pages sequential; care and post rechecked after corrections; not a physical phone",
+    "evidence": [
+      "work/blockade-fork-{pc,mobile}-observations.json",
+      "work/blockade-fork-final-{pc,mobile}-page-18..31.png",
+      "work/blockade-post-final-v2-{pc,mobile}-*.png",
+      "work/blockade-care-v2-{pc,mobile}-*.png"
+    ],
+    "tests": "Final related24 tests plus targeted lint, typecheck and build logs in work/blockade-fork-final-*."
+  },
+  "remaining": [
+    "Full goal is incomplete: five conversation backgrounds64pages, adventure34of37,15worksite styles remain unconverted",
+    "First17 pages of2-7 were not replayed end-to-end in this change; worker writing still uses legacy art and Mira's held wrapping needs the same further refinement as the fork",
+    "Residual small vertical hand movement of the worker push gait and seated-to-standing transitions remain for final motion audit"
+  ]
+}

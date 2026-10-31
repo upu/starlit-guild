@@ -1,0 +1,12 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create four full-body sprites of MIRA from reference1 for our warm hand-painted RPG. Reference1 is identity and costume only, NOT realistic proportions. Reference2 Finn is strict compact sprite PROPORTION and rendering target. EXACTLY three heads tall: large head one third total height, short torso and legs remaining two thirds, elevated three-quarter camera facing screen RIGHT. Mira is a petite adult healer mid twenties, pale skin, light grey-lavender hair braided up with few loose locks, moon and small white flower hair ornament, heavy upper eyelids and soft grey-purple fatigue shadows UNDER eyes (not pink blush), gentle caring gaze. Light ivory and pale blue healer robe with simplified gold edge, modest opaque bodice, dark neck ribbon, dark waist medical pouch, sandals. No staff in these conversation poses, no bottles or objects. Four figures in ONE row, equally spaced, identical head size/body dimensions/feet baseline: 1 neutral listening arms relaxed; 2 quiet concern hand near chin; 3 softly explaining one palm open at waist level; 4 gentle small smile hands loosely together. Keep tired but kind adult personality, do not erase fatigue or make generic glamorous girl. Same face/costume across every frame. Simplify tiny trim to readable shapes, warm soft painted shading and thin warm outlines like reference2, not blocky pixel art or glossy 3D. True transparent background no floor/no shadows/no text/no labels/no borders. Entire hair, robe and sandals visible with large transparent gutters.",
+  "references": [
+    "docs/characters/mira-reference-sheet.webp",
+    "assets/source/storybook/finn-conversation-v2.png"
+  ],
+  "source": "assets/source/storybook/mira-conversation-v1.png",
+  "output": "public/storybook-study/mira-conversation-v1.webp",
+  "scale": "126px neutral height; Aria134/Leon144. Mira155cm per character document.",
+  "scope": "Indoor standing conversation only; walk/seated/special actions remain pending."
+}

@@ -1,0 +1,50 @@
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-merchant {
+  visibility: hidden;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"] {
+  z-index: 0 !important;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/merchant-poses-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite:is([data-frame="12"], [data-frame="13"], [data-frame="14"]) {
+  background-image: url("/storybook-study/merchant-placement-v2.webp") !important;
+  background-position: 33.333333% 0% !important;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-position-x: 100% !important;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="10"],
+    [data-frame="11"]
+  ) {
+  background-image: url("/storybook-study/merchant-walk-v2.webp") !important;
+  scale: -1 1;
+}

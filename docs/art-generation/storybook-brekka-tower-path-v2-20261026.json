@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact game background, preserving the camera, style, dimensions, LEFT watercourse, ALL central staircase steps and retaining walls beside the staircase, lower dirt path, upper left terrace and tower doorway. Correct only the TOP RIGHT cart road exit: currently the low stone boundary wall to the RIGHT of the tower door curves across the upper cart route and blocks it. REMOVE that obstructing upper-right wall segment and the plants at screen x84-100percent, y18-44percent. Fill it naturally with clear dirt/cobbled ROAD extending horizontally out of the RIGHT EDGE at y29-40percent. Make the upper terrace and the top of the existing right ramp JOIN this broad unblocked road. A handcart traveling left to right along y31percent must leave the image without passing through any wall. Keep the far rear boundary at the very top y0-12percent, tower/door intact, and keep the right-side ramp walls BELOW y46percent. No gate or arch or fence across the exit, no new building, no people, no carts, no UI, no path arrows or text. Do not modify the stair proportions or existing watercourse. Same warm hand-painted elevated 45degree RPG illustration.",
+  "references": [
+    "assets/source/storybook/brekka-tower-path-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-tower-path-v2.png"
+}

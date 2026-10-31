@@ -58,7 +58,7 @@ export const foundationItems = (packing = false, ready = false): StageItem[] => 
         held("medicine-closed", "mira", { x: 2.2, bottom: 22, width: 8 }),
       ]
     : inspectionLuggage()),
-  ground("tools", 29, 33, 5),
+  ground("tools", 8, 36, 5),
   held("map", "leon", { id: "district-plan", x: -2, bottom: 26, width: 6, stored: packing }),
   held("paper", "leon", { id: "shipping-copy", x: -5, bottom: 23, width: 4.5, stored: packing }),
 ];

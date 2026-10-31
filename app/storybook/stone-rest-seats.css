@@ -1,0 +1,71 @@
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--rest-aria-seat, 66.666667%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite:is([data-frame="25"], [data-frame="29"]) {
+  --rest-aria-seat: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]:is([data-seat-transition="lower"], [data-seat-transition="settle"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--rest-aria-transition, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-seat-transition="settle"]
+  .story-stage-sprite {
+  --rest-aria-transition: 66.666667%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="25"], [data-frame="29"]) {
+  background-image: url("/storybook-study/leon-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="matching-lantern-stone-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="29"] {
+  scale: -1 1;
+}

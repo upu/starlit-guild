@@ -1,0 +1,38 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "assets": [
+    {
+      "source": "assets/source/storybook/aria-pass-a-v1.png",
+      "prompt": "Create ONE full-body Aria sprite on transparent background. Image 1 is a STRICT SKELETON/LEG POSE reference only. Image 2 defines Aria identity, clothing, body proportions and image scale. Replace the man in image 1 with Aria, retain image 1's precise leg occlusion and foot positions relative to hips, but use Aria's head size/body lengths from image 2. Preserve her blonde/lavender hair, opposite white flower, elf ears green eyes, cream blouse and skirt, green-gold cape, brown corset/gloves/boots. Same calm expression, warm illustrated shading, elevated three-quarter view facing right. Entire figure, head and boots with ample transparent margin. No floor/shadow/text/props. Same 1024x1536 canvas and drawing scale as Aria reference. PASSING pose: near UNSTRAPPED leg is almost vertical, planted below left hip, with its thigh IN FRONT. Far STRAPPED leg swings a little forward to screen right with bent knee and boot just above ground. Near arm forward gently, far arm back. Narrow stride, knees passing, NOT a contact pose or high kick. Strap stays on the far lifted thigh.",
+      "review": "Not used: foreground-forward leg occlusion repeats; unsuitable as the requested opposite phase."
+    },
+    {
+      "source": "assets/source/storybook/aria-contact-b-v1.png",
+      "prompt": "Create ONE full-body Aria sprite on transparent background. Image 1 is a STRICT SKELETON/LEG POSE reference only. Image 2 defines Aria identity, clothing, body proportions and image scale. Replace the man in image 1 with Aria, retain image 1's precise leg occlusion and foot positions relative to hips, but use Aria's head size/body lengths from image 2. Preserve her blonde/lavender hair, opposite white flower, elf ears green eyes, cream blouse and skirt, green-gold cape, brown corset/gloves/boots. Same calm expression, warm illustrated shading, elevated three-quarter view facing right. Entire figure, head and boots with ample transparent margin. No floor/shadow/text/props. Same 1024x1536 canvas and drawing scale as Aria reference. OPPOSITE CONTACT pose: near UNSTRAPPED thigh from left hip angles backward LEFT and remains in front, leftmost rear boot touches toe. Far STRAPPED thigh from right hip reaches forward RIGHT to rightmost forward boot, heel just landing. Near arm forward, far arm back. Do not cross the near thigh forward: it trails backward. Strap visible on far forward thigh.",
+      "review": "Not used: foreground-forward leg occlusion repeats; unsuitable as the requested opposite phase."
+    },
+    {
+      "source": "assets/source/storybook/aria-pass-b-v1.png",
+      "prompt": "Create ONE full-body Aria sprite on transparent background. Image 1 is a STRICT SKELETON/LEG POSE reference only. Image 2 defines Aria identity, clothing, body proportions and image scale. Replace the man in image 1 with Aria, retain image 1's precise leg occlusion and foot positions relative to hips, but use Aria's head size/body lengths from image 2. Preserve her blonde/lavender hair, opposite white flower, elf ears green eyes, cream blouse and skirt, green-gold cape, brown corset/gloves/boots. Same calm expression, warm illustrated shading, elevated three-quarter view facing right. Entire figure, head and boots with ample transparent margin. No floor/shadow/text/props. Same 1024x1536 canvas and drawing scale as Aria reference. PASSING pose: far STRAPPED leg supports almost vertically under right hip, boot flat down. Near UNSTRAPPED leg crosses in front and swings slightly forward right, bent knee, its boot a little above ground beside support boot with sole horizontal. Near arm swings back and far arm forward. Both boots distinguishable, no high kick. Strap stays on far planted thigh, largely occluded.",
+      "review": "Passing silhouette retained; head proportion revised in v2."
+    }
+  ],
+  "refinements": [
+    {
+      "source": "assets/source/storybook/aria-contact-a-v3.png",
+      "prompt": "Proportion correction for a small game sprite. Edit ONLY image1; image2's first standing Aria is the proportion target. Preserve image1's exact leg/arm pose, which leg is in front, costume details, strap on far leg, identity, facial expression and direction. The current head is too small and boots too bulky compared to standing. Enlarge the ENTIRE head including hair, ears, face and flower by about 14 percent around the neck attachment; keep neck attachment fixed. Reduce the visual bulk of both boots about 10 percent, keeping soles and toe/heel contact positions the same and keeping legs connected. Keep torso length and hip position, do not make the body taller or resize whole figure. Maintain the warm illustrative texture. Single full body on true transparent background, same canvas1024x1536; no cropping, no shadows/props/text. This is anatomy consistency, not a new pose."
+    },
+    {
+      "source": "assets/source/storybook/aria-pass-b-v2.png",
+      "prompt": "Proportion correction for a small game sprite. Edit ONLY image1; image2's first standing Aria is the proportion target. Preserve image1's exact leg/arm pose, which leg is in front, costume details, strap on far leg, identity, facial expression and direction. The current head is too small and boots too bulky compared to standing. Enlarge the ENTIRE head including hair, ears, face and flower by about 14 percent around the neck attachment; keep neck attachment fixed. Reduce the visual bulk of both boots about 10 percent, keeping soles and toe/heel contact positions the same and keeping legs connected. Keep torso length and hip position, do not make the body taller or resize whole figure. Maintain the warm illustrative texture. Single full body on true transparent background, same canvas1024x1536; no cropping, no shadows/props/text. This is anatomy consistency, not a new pose."
+    }
+  ],
+  "selectedCycle": [
+    "aria-contact-a-v3.png",
+    "aria-poses-v1.webp frame 4",
+    "aria-poses-v1.webp frame 1",
+    "aria-pass-b-v2.png"
+  ],
+  "runtime": "Conversation prototype normal walking only. Carrying and adventure not connected. Head-band bounds are a registration proxy, not facial landmark measurements."
+}

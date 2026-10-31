@@ -1,7 +1,12 @@
 import type Phaser from "phaser";
 import type { AdventureBridge, AdventureRenderer, RuntimeState } from "./renderer-session";
 import { ChapterRoadPainter, chapterRoadAssets } from "./chapter-road-painter";
-import { bindAdventureResolution, syncAdventureResolution } from "./adventure-resolution";
+import {
+  bindAdventureResolution,
+  syncAdventureResolution,
+  renderAdventureSnapshot,
+  freezeAdventureScene,
+} from "./adventure-resolution";
 
 function sceneClass(
   engine: typeof Phaser,
@@ -34,6 +39,16 @@ function sceneClass(
     }
     stopMotion() {
       this.painter.stopMotion();
+    }
+    freeze() {
+      freezeAdventureScene(
+        this,
+        () => {
+          this.stopMotion();
+        },
+        () => this.painter.failed,
+        () => this.painter.assetsLoading,
+      );
     }
     update() {
       if (!runtime.created || runtime.disposed || runtime.paused || this.painter.failed) return;
@@ -87,7 +102,7 @@ export function createAdventureGame(
   let game: Phaser.Game;
   function syncPause() {
     if (runtime.disposed || !runtime.created) return;
-    if (runtime.paused) game.loop.sleep();
+    if (runtime.paused) scene.freeze();
     else game.loop.wake();
   }
   const Scene = sceneClass(engine, bridge, runtime, syncPause),
@@ -116,11 +131,12 @@ export function createAdventureGame(
       if (runtime.created) {
         syncAdventureResolution(scene);
         scene.stopMotion();
+        if (runtime.paused && !scene.painter.failed) renderAdventureSnapshot(scene);
       }
       if (runtime.created && !runtime.paused) game.scale.updateBounds();
     },
     setPaused(value) {
-      if (runtime.paused === value) return;
+      if (runtime.paused === value && !value) return;
       runtime.paused = value;
       syncPause();
     },

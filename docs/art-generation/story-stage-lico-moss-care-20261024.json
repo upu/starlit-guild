@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "assets": [{
+    "source": "assets/source/story-stage/lico-moss-care-v1.png",
+    "output": "public/story-stage/lico-poses.webp frames 84-87",
+    "reference": "work/lico-wiping-reference.png (existing registered frames 13 and 14)",
+    "sha256": "4894177d9c75d2329bda14bfba7212fb8d52761eaaf1e9ab0ad1d6f7a528304f",
+    "prompt": "Create a new transparent sprite pose sheet of EXACTLY the same red-haired female researcher Lico shown in the reference. Reference is identity/style/size guide, not an edit target. Preserve her red hair style, hair ornaments, green eyes, cream short coat over dark red dress, dark gloves/boots details, approachable slightly serious face and chibi head/body proportions. Detailed crisp fantasy RPG pixel art matching the reference, elevated three-quarter right-facing view. Layout exactly 2 columns by 2 rows of equal square cells, one complete character per cell, ample transparent gutters, true alpha background, no text/grid/numbers/shadows. Keep head size, clothing and identity identical across all four frames. Top-left and top-right: standing, gently wiping mud from the fingers of one hand with a small off-white cloth held by the other hand, hands at waist height; two subtle alternating wiping positions, not waving, clapping or holding a book. Cloth small, never obscures face. Bottom-left and bottom-right: kneeling/crouching with head still same size as standing, both bare fingertips just above ground and gently parting tiny imaginary moss leaves; hands close together in first frame and slightly separated in second. Do NOT draw plants, moss, a tray, soil or other props in the bottom cells; game supplies them. Kneeling body should be about two thirds standing height, feet/knees both fully visible. Natural modest working gestures, no dramatic expression change or deformation."
+  }]
+}

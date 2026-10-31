@@ -153,7 +153,7 @@ export function sampleStageActor(
   const travel = sampleJourney(actor, origin, elapsed, reduced);
   const { x, moving } = travel;
   const pose = actorPose(actor, moving, elapsed, reduced);
-  const wrist = stageWrist(actor.id, pose.atlas, pose.frame);
+  const wrist = registeredWrist(actor, pose);
   const reaction = reduced ? 1 : Math.min(1, Math.max(0, elapsed) / 520);
   return {
     x,
@@ -166,6 +166,15 @@ export function sampleStageActor(
     lift: reactionLift(actor.reaction, reaction),
     bubble: actor.reaction === "surprise" && (reduced || elapsed < 1600) ? "！" : "",
   };
+}
+
+function registeredWrist(actor: StageActor, pose: { atlas: StageSample["atlas"]; frame: number }) {
+  const points = pose.atlas === "shawl" ? actor.shawlWristPoints : actor.wristPoints;
+  const registered =
+    (pose.atlas === "shawl" || pose.atlas === "conversation") && points?.[pose.frame];
+  return registered
+    ? { x: registered[0], y: registered[1] }
+    : stageWrist(actor.id, pose.atlas, pose.frame);
 }
 
 function reactionLift(reaction: StageActor["reaction"], progress: number) {

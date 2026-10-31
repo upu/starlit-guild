@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-24",
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/office-table-v1.png",
+  "references": [
+    "public/story-stage/prop-dining-table.webp",
+    "public/storybook-study/packing-table-v1.webp"
+  ],
+  "prompt": "Edit image1, an existing low wooden office table sprite. Image2 supplies ONLY the warm honey-colored wood shading and soft illustrated outline style. Preserve image1 exact furniture silhouette, tabletop corners, short leg positions, perspective, proportions, footprint and empty tabletop. It must remain the same LOW table, not become a tall desk. Elevated three-quarter view. Replace hard pixel-step edges and dark saturated outlines with restrained warm brown lines, softly painted honey wood, a few broad grain marks; retain readable joins, modest metal fasteners and feet. No items, no characters, no backdrop, no ground shadow, no text. True transparent background. Full table with small transparent margin, wide 3:1 overall shape. Do not copy image2 geometry or height. Output only the single table.",
+  "output": "public/storybook-study/office-table-v1.webp",
+  "review": "Prototype indoor table connected with existing 3:1 display bounds. PC lines1,6,17 and mobile lines1-6 observed. Fine contact and all67 lines remain unverified."
+}

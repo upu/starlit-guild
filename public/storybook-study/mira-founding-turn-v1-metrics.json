@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/mira-founding-turn-v1.png",
+    "scale": 0.29691211401425177,
+    "left": 56,
+    "top": 51,
+    "width": 71,
+    "height": 125,
+    "baseline": 176,
+    "headX": 93.70230407796811
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/mira-founding-turn-v1.png",
+    "scale": 0.29691211401425177,
+    "left": 58,
+    "top": 50,
+    "width": 69,
+    "height": 126,
+    "baseline": 176,
+    "headX": 93.84071934829925
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/mira-founding-turn-v1.png",
+    "scale": 0.29691211401425177,
+    "left": 55,
+    "top": 50,
+    "width": 76,
+    "height": 126,
+    "baseline": 176,
+    "headX": 93.55566011954724
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/mira-founding-turn-v1.png",
+    "scale": 0.29691211401425177,
+    "left": 61,
+    "top": 50,
+    "width": 71,
+    "height": 126,
+    "baseline": 176,
+    "headX": 93.79087838616371
+  }
+]

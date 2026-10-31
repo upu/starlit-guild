@@ -1,0 +1,114 @@
+[
+  {
+    "name": "lunch-honey-cake-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 26,
+      "top": 117,
+      "width": 418,
+      "height": 337,
+      "area": 81475
+    },
+    "width": 240,
+    "height": 193,
+    "scale": 0.5741626794258373
+  },
+  {
+    "name": "lunch-honey-cake-bitten-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 463,
+      "top": 126,
+      "width": 406,
+      "height": 327,
+      "area": 78247
+    },
+    "width": 240,
+    "height": 193,
+    "scale": 0.5911330049261084
+  },
+  {
+    "name": "lunch-walnut-cake-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 883,
+      "top": 105,
+      "width": 423,
+      "height": 363,
+      "area": 92677
+    },
+    "width": 240,
+    "height": 206,
+    "scale": 0.5673758865248227
+  },
+  {
+    "name": "lunch-cake-parcel-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 1334,
+      "top": 90,
+      "width": 407,
+      "height": 354,
+      "area": 96129
+    },
+    "width": 240,
+    "height": 209,
+    "scale": 0.5896805896805897
+  },
+  {
+    "name": "lunch-bread-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 48,
+      "top": 503,
+      "width": 435,
+      "height": 314,
+      "area": 94896
+    },
+    "width": 240,
+    "height": 173,
+    "scale": 0.5517241379310345
+  },
+  {
+    "name": "lunch-twine-v1",
+    "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+    "bounds": {
+      "left": 529,
+      "top": 511,
+      "width": 334,
+      "height": 308,
+      "area": 26220
+    },
+    "width": 240,
+    "height": 221,
+    "scale": 0.718562874251497
+  },
+  {
+    "name": "berne-shipping-front-v1",
+    "source": "assets/source/storybook/berne-shipping-paper-v1.png",
+    "bounds": {
+      "left": 133,
+      "top": 69,
+      "width": 635,
+      "height": 765,
+      "area": 434010
+    },
+    "width": 193,
+    "height": 232,
+    "scale": 0.3032679738562091
+  },
+  {
+    "name": "berne-shipping-back-v1",
+    "source": "assets/source/storybook/berne-shipping-paper-v1.png",
+    "bounds": {
+      "left": 1025,
+      "top": 70,
+      "width": 631,
+      "height": 762,
+      "area": 435681
+    },
+    "width": 192,
+    "height": 232,
+    "scale": 0.30446194225721784
+  }
+]

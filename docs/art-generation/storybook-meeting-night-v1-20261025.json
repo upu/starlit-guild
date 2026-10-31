@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/meeting-night-v1.png",
+  "output": "public/storybook-study/meeting-night-v1.png",
+  "references": [
+    "public/story-stage/meeting-night.webp",
+    "public/storybook-study/meeting-path-v1.png"
+  ],
+  "prompt": "Edit first image, original moonlit forest Y-junction, into soft hand-painted 2D RPG style of second approved daytime forest reference. Preserve exact FIRST-image overhead camera, scale, path geometry: broad road entering lower center divides into upper-left and upper-right roads, island of low trees and rocks between forks, shrubs at edges. No horizon, strong elevated three-quarter view. Calm dark blue/sage palette with subtle moonlight; clear readable blue-grey paths, broad painted foliage clusters and soft colored outlines. Replace fine pixel stipple and glitter speckles with restrained brush texture. No glowing plants or lamps, no people, no cart/props, no text or UI. 3:2 landscape."
+}

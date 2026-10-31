@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3210412147505423,
+    "left": 57,
+    "top": 28,
+    "width": 73,
+    "height": 148,
+    "baseline": 176,
+    "headX": 93.83505418136627
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3210412147505423,
+    "left": 62,
+    "top": 69,
+    "width": 91,
+    "height": 107,
+    "baseline": 176,
+    "headX": 120.83471136111169
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3210412147505423,
+    "left": 53,
+    "top": 44,
+    "width": 82,
+    "height": 132,
+    "baseline": 176,
+    "headX": 101.35532671343094
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3210412147505423,
+    "left": 58,
+    "top": 22,
+    "width": 70,
+    "height": 154,
+    "baseline": 176,
+    "headX": 92.46862122990419
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3002028397565923,
+    "left": 52,
+    "top": 28,
+    "width": 88,
+    "height": 148,
+    "baseline": 176,
+    "headX": 94.2822730308917
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3002028397565923,
+    "left": 52,
+    "top": 28,
+    "width": 84,
+    "height": 148,
+    "baseline": 176,
+    "headX": 93.55998149499234
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3002028397565923,
+    "left": 50,
+    "top": 27,
+    "width": 87,
+    "height": 149,
+    "baseline": 176,
+    "headX": 93.85664559898568
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+    "scale": 0.3002028397565923,
+    "left": 57,
+    "top": 27,
+    "width": 82,
+    "height": 149,
+    "baseline": 176,
+    "headX": 94.02592789121707
+  }
+]

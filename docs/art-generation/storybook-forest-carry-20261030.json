@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen.imagegen",
+  "scope": "1-6 return forest specimen carry",
+  "accepted": [
+    {
+      "generated": "exec-38eb1950-1577-4bf8-b424-a5edc8d381e5.png",
+      "references": [
+        "assets/source/storybook/aria-paper-walk-v1.png",
+        "assets/source/storybook/aria-forest-sample-v1.png"
+      ],
+      "prompt": "Edit ONLY image 1, the four-frame walking strip of Aria. In each of its four frames, add a single SHORT wooden spatula held by its handle in Aria's gloved hands, with a very small dark green moss sample resting securely on its tip, matching the spoon and moss of image 2's kneeling poses. She walks carefully with the spatula approximately horizontal and just in front of her waist; preserve the existing hands, character, head size, eyes, flower, hair, elf ears, dark green cloak, clothing, body proportions, exact four gait poses, leg positions, boot baseline and cell positions. All four frames hold the same tiny sample on the same tool, no missing hands. No bowl, jar, additional items, light effects, background, ground, text or shadow. Warm hand-painted 2D RPG sprite art matching image 1; four columns, generous transparent gutters, full figures and spatula visible, true alpha.",
+      "source": "assets/source/storybook/aria-forest-carry-walk-v1.png",
+      "output": "public/storybook-study/aria-forest-carry-walk-v1.webp",
+      "sourceSha256": "0a386d6ea2b02206fb92e6e50e6111dbdd9eadaab3b4562714101de46995b5c6",
+      "outputSha256": "da5e4c3ffdd304213261360a2585d6c5cce7ded9dc502a9ac2614ca3209c6d31"
+    },
+    {
+      "generated": "exec-3c827416-959c-4da6-93cb-77f4ca5d398a.png",
+      "references": [
+        "assets/source/storybook/aria-forest-sample-v1.png"
+      ],
+      "prompt": "Edit the provided four-column Aria sprite sheet very precisely. Change ONLY frame 1, the standing neutral full-body figure: both gloved hands gently grip and support a small short wooden spatula horizontally at her waist, with a tiny dark green moss sample resting at its tip, identical to the spatula and moss in frames 3 and 4. Her body, face, hair, head size, flower, cloak, garments, planted boots, feet, viewpoint, scale, colors and warm hand-painted 2D RPG style remain unchanged. Keep frames 2, 3, 4 and their exact poses unchanged. No jar or bowl, no additional props or background or text. Transparent alpha with generous gutters, full characters and tool inside cells.",
+      "source": "assets/source/storybook/aria-forest-carry-stand-v1.png",
+      "output": "public/storybook-study/aria-forest-carry-stand-v1.webp",
+      "sourceSha256": "576572d53fb6599748ff6cb442822be014342b63afc9bfc7006d9c2482dc9c05",
+      "outputSha256": "69a733197b2da618c9ac27087ce2a0b29321113d1af96ee85c2978f2b93bd78d"
+    }
+  ],
+  "build": "node scripts/build-storybook-forest-carry.mjs"
+}

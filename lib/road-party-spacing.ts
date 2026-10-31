@@ -3,8 +3,39 @@ import type { Traveller } from "./road-view.ts";
 import { partyWaypoint } from "./road-party-path.ts";
 
 export type PartyPosition = { x: number; lane: number };
-export type PartyTarget = PartyPosition & { id: Traveller["id"]; facing: 1 | -1; fixed: boolean };
+export type PartyObstacle = PartyPosition & {
+  clearance?: PartyPosition;
+  ignore?: Traveller["id"][];
+};
+export type PartyTarget = PartyPosition & {
+  avoidInitial?: boolean;
+  minLane?: number;
+  maxLane?: number;
+  id: Traveller["id"];
+  facing: 1 | -1;
+  fixed: boolean;
+  anchored?: boolean;
+  cartGrip?: boolean;
+  avoidEscort?: boolean;
+  wideLane?: boolean;
+};
 type Clearance = PartyPosition;
+
+export function partyBlockers(
+  positions: Map<string, PartyPosition>,
+  target: PartyTarget,
+  gap: Clearance,
+  obstacles: PartyObstacle[],
+) {
+  return [
+    ...[...positions]
+      .filter(([id]) => id !== target.id)
+      .map(([, p]) =>
+        target.avoidEscort ? { ...p, clearance: { x: gap.x * 1.3, lane: gap.lane * 1.8 } } : p,
+      ),
+    ...obstacles.filter((obstacle) => !obstacle.ignore?.includes(target.id)),
+  ];
+}
 
 // Screen-normalized x matches RoadMotion's continuity cache. Include the HP bar
 // below the boots so a back-row bar cannot cover the next character's face.
@@ -26,14 +57,18 @@ export function partyFootClearance(width: number, height: number): Clearance {
   };
 }
 
-export function partyOverlap(a: PartyPosition, b: PartyPosition, gap: Clearance) {
+export function partyOverlap(a: PartyPosition, b: PartyObstacle, fallback: Clearance) {
+  const gap = b.clearance ?? fallback;
   return Math.abs(a.x - b.x) < gap.x - 0.001 && Math.abs(a.lane - b.lane) < gap.lane - 0.00001;
 }
 
 export function spacedPartyTargets(targets: PartyTarget[], gap: Clearance) {
   const priority = ["leon", "finn", "aria", "mira", "lico"];
   const ordered = targets.toSorted(
-    (a, b) => Number(b.fixed) - Number(a.fixed) || priority.indexOf(a.id) - priority.indexOf(b.id),
+    (a, b) =>
+      Number(!!b.anchored) - Number(!!a.anchored) ||
+      Number(b.fixed) - Number(a.fixed) ||
+      priority.indexOf(a.id) - priority.indexOf(b.id),
   );
   const placed: PartyTarget[] = [];
   for (const target of ordered) {
@@ -62,8 +97,15 @@ function freeTarget(
   );
 }
 
-function inRoad(p: PartyPosition, gap: Clearance) {
-  return p.x >= gap.x / 2 && p.x <= 560 - gap.x / 2 && p.lane >= 0.1 && p.lane <= 1.3;
+function inRoad(
+  p: PartyPosition & { wideLane?: boolean; minLane?: number; maxLane?: number },
+  gap: Clearance,
+) {
+  return (
+    p.x >= gap.x / 2 &&
+    p.x <= 560 - gap.x / 2 &&
+    (p.wideLane || (p.lane >= (p.minLane ?? 0.1) && p.lane <= (p.maxLane ?? 1.3)))
+  );
 }
 
 function targetCandidates(base: PartyTarget, count: number, gap: Clearance, placed: PartyTarget[]) {
@@ -85,7 +127,9 @@ function targetCandidates(base: PartyTarget, count: number, gap: Clearance, plac
         x: Math.max(gap.x / 2, Math.min(560 - gap.x / 2, x)),
         // Narrow viewports have fewer ground rows. Also try the road edges:
         // a full row step can overshoot a usable edge and falsely report no room.
-        lane: Math.max(0.1, Math.min(1.3, lane)),
+        lane: base.wideLane
+          ? lane
+          : Math.max(base.minLane ?? 0.1, Math.min(base.maxLane ?? 1.3, lane)),
       };
       const rowDistance = Math.abs(p.lane - base.lane) / gap.lane;
       const columnDistance = Math.abs(p.x - base.x) / gap.x;
@@ -95,12 +139,12 @@ function targetCandidates(base: PartyTarget, count: number, gap: Clearance, plac
   return candidates;
 }
 
-function overlapArea(p: PartyPosition, blockers: PartyPosition[], gap: Clearance) {
+function overlapArea(p: PartyPosition, blockers: PartyObstacle[], gap: Clearance) {
   return blockers.reduce(
     (sum, other) =>
       sum +
-      Math.max(0, 1 - Math.abs(p.x - other.x) / gap.x) *
-        Math.max(0, 1 - Math.abs(p.lane - other.lane) / gap.lane),
+      Math.max(0, 1 - Math.abs(p.x - other.x) / (other.clearance ?? gap).x) *
+        Math.max(0, 1 - Math.abs(p.lane - other.lane) / (other.clearance ?? gap).lane),
     0,
   );
 }
@@ -110,9 +154,10 @@ function overlapArea(p: PartyPosition, blockers: PartyPosition[], gap: Clearance
 function separateStep(
   origin: PartyPosition,
   wanted: PartyPosition,
-  blockers: PartyPosition[],
+  blockers: PartyObstacle[],
   gap: Clearance,
   dt: number,
+  target: PartyTarget,
 ) {
   const candidates = [wanted, origin];
   for (const sign of [-1, 1]) {
@@ -122,7 +167,13 @@ function separateStep(
   const clear = blockers.filter((b) => !partyOverlap(origin, b, gap));
   return (
     candidates
-      .filter((p) => inRoad(p, gap) && !clear.some((b) => partyOverlap(p, b, gap)))
+      .filter(
+        (p) =>
+          inRoad(
+            { ...p, wideLane: target.wideLane, minLane: target.minLane, maxLane: target.maxLane },
+            gap,
+          ) && !clear.some((b) => partyOverlap(p, b, gap)),
+      )
       .sort((a, b) => overlapArea(a, blockers, gap) - overlapArea(b, blockers, gap))[0] ?? origin
   );
 }
@@ -132,12 +183,12 @@ export function avoidPartyStep(
   origin: PartyPosition,
   wanted: PartyPosition,
   target: PartyTarget,
-  blockers: PartyPosition[],
+  blockers: PartyObstacle[],
   gap: Clearance,
   dt: number,
 ) {
   if (blockers.some((blocker) => partyOverlap(origin, blocker, gap)))
-    return separateStep(origin, wanted, blockers, gap, dt);
+    return separateStep(origin, wanted, blockers, gap, dt, target);
   const waypoint = partyWaypoint(origin, target, blockers, gap);
   const dx = waypoint.x - origin.x,
     dy = waypoint.lane - origin.lane;

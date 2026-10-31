@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-31",
+  "generator": "image_gen.imagegen",
+  "mode": "built-in; referenced_image_paths; transparent_background true for sprites and false for landscape",
+  "purpose": "1-9 daylight hatch opening, grip/weight transfer and separate solid cover that reveals rooted moss only when moved",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/drain-inspection-bare-v1.png",
+      "output": "public/storybook-study/drain-inspection-bare-v1.png",
+      "generated": "exec-d4809854-392b-4e3d-b48f-a047ba3680ac.png",
+      "references": [
+        "public/storybook-study/drain-inspection-open-v1.png"
+      ],
+      "prompt": "Edit the supplied OPEN inspection-hatch landscape for STARLIT-GUILD. Keep exactly the same 1536x1024 canvas, elevated warm painted RPG camera, tower stones, trees, cut logs, dry paving, flowing water and rectangular moss-filled inspection recess. Remove ONLY the loose leaning stone cover immediately to the LEFT of the small rectangular moss recess (around x=50.5%-57.5%, y=27%-38%). Reconstruct the previously hidden left frame edge and ground naturally. The rectangular opening must stay exactly where it is, its moss unchanged. No loose lid or replacement objects anywhere: the lid will be a separate animated sprite. Preserve all other pixels/composition as closely as possible. Do not close the hole, do not shift the masonry, do not add characters, tools, baskets, chalk marks, labels or new light sources. Normal daylight, no new glow outside the moss recess."
+    },
+    {
+      "source": "assets/source/storybook/inspection-stone-lid-v1.png",
+      "output": "public/storybook-study/inspection-stone-lid-v1.webp",
+      "generated": "exec-9a9d171c-768f-40b7-885e-4729d72f09ba.png",
+      "references": [
+        "public/storybook-study/drain-inspection-closed-v1.png"
+      ],
+      "prompt": "Create ONE isolated removable stone cover sprite for the small rectangular inspection recess in this reference RPG background. Reference role: the background supplies exact appearance, perspective, stone color, light and lid scale; do not reproduce the background. The target is ONLY the single solid square stone panel INSET inside the little rectangular stone frame to the left of the large arched drain (roughly x58%-64%, y27%-36% of reference), NOT its surrounding block frame or the whole hatch. A simple heavy weathered warm gray-beige stone slab, pale lichen flecks, subtle cracks, a narrow dark vertical finger-grip groove near its right edge. A solid opaque surface that can occlude the opening, no holes, no grass beyond its edge. Shallow 3/4 perspective matching the panel's front face, a slightly visible thin top and right stone edge, almost upright square silhouette, subtle bevelled corners. Same warm hand-painted small 2D RPG style. One large centered isolated object with generous genuine transparent alpha margins. No chalk mark (added separately), no other stones, wall, floor, shadow, pedestal, letters, border, hand or character."
+    },
+    {
+      "source": "assets/source/storybook/keeper-hatch-open-v1.png",
+      "output": "public/storybook-study/keeper-hatch-open-v1.webp",
+      "generated": "exec-e043a77c-b628-4fd1-bd1f-c2f23138dd92.png",
+      "references": [
+        "public/storybook-study/keeper-hatch-mark-v2.webp",
+        "public/storybook-study/keeper-basket-handoff-v1.webp"
+      ],
+      "prompt": "Create FOUR registered full-body empty-palm action poses of the SAME gray-haired moustached adult tower keeper in FIRST reference, using SECOND ONLY as the existing basket pickup gesture reference. Same blue-gray wrap vest/tunic, ivory rolled sleeves, brown belt/trousers/boots, adult head and stocky proportions. Four equal columns ONE row, genuine transparent alpha. Pose 0 upright neutral calibration, facing LEFT in 3/4 view. Pose 1 kneeling low with both EMPTY hands extended toward LEFT to grip the right edge of a heavy vertical stone lid at knee height; near hand at roughly 32% cell width, 76% cell height, farther hand a little above. Pose 2 half-rise, legs bent, torso leaning forward under weight, both hands LEFT at lower waist height supporting the SAME edge; fingers curled around a narrow vertical edge, no object. Pose 3 upright but modest forward lean, both hands still LEFT at waist height, left-facing side-step/carry stance for shifting heavy cover sideways. Both hands should remain grouped near left of chest/body, not widely apart. NO lid drawn: the slab is a separate sprite. Preserve the exact head size and overall adult body scale in ALL poses; kneeling must be visibly shorter, never enlarge its head. Standing height94 relative units; kneeling about70. Same complete boot baseline across four equal cells, generous transparent gutters with full hair/boots visible. No chalk, props, wall, floor, shadows, labels, red fringes or colored mattes."
+    },
+    {
+      "source": "assets/source/storybook/keeper-hatch-carry-walk-v2.png",
+      "output": "public/storybook-study/keeper-hatch-carry-walk-v2.webp",
+      "generated": "exec-2e56c9d0-4690-4845-b66b-1daaf409a396.png",
+      "references": [
+        "assets/source/storybook/keeper-hatch-carry-walk-v1.png"
+      ],
+      "prompt": "Edit this walking strip. Current frames 0,1,2 have nearly identical forward left boot and are unacceptable. Keep the SAME four heads, torsos, hands, blue-gray costume, scale and transparent cell layout. Redraw ONLY the leg/boot gait for a convincing FOUR-phase leftward walk. Frame0 keep the long stride. Frame1 PASSING POSE: feet close beneath pelvis, rear knee flexed forward, one boot heel high off floor. Frame2 OPPOSITE stride: the anatomical OTHER leg is forward on the left and the first forward leg is now back to the right, swap leg overlap at knees. Frame3 OTHER passing pose: feet close beneath pelvis, opposite lifted boot/knee compared to frame1. Frames1 and3 MUST have markedly NARROWER stance (under half width of frames0/2), with one foot airborne. Keep soles of the supporting boot on common baseline, hands fixed left at waist, body/head size identical. No new props, text, ground/shadows. Clean genuine transparent alpha. Four columns one row, fully visible hair and boots."
+    }
+  ],
+  "iterations": [
+    {
+      "source": "assets/source/storybook/keeper-hatch-carry-walk-v1.png",
+      "generated": "exec-c385adbd-4188-437e-b743-10df31afc140.png",
+      "references": [
+        "assets/source/storybook/keeper-hatch-open-v1.png"
+      ],
+      "prompt": "Edit the referenced FOUR-pose blue-gray tower keeper sheet into a FOUR-frame carrying WALK cycle, using its FINAL upright pose as the exact head/body/costume and hand-position model. This adult man is moving a heavy upright stone cover toward LEFT, but the stone cover is a separate sprite, so BOTH HANDS EMPTY, grouped together toward LEFT at waist height as in reference pose3. Preserve his gray hair, moustache, rolled ivory sleeves, blue-gray tunic, belt, brown trousers and boots. Same camera and head scale as reference standing frame0. ONE row of 4 equally spaced complete full-body figures. All four are almost same height and use genuinely different leg phases: left boot planted ahead/right heel lifted; passing feet with right knee forward; right boot planted ahead/left heel lifted; passing feet with left knee forward. Modest knees and braced weight, no running. Keep the supporting hands steady at SAME cell coordinates and torso orientation in all four, so a heavy slab does not bob or wobble. Common ground baseline and scale, boot soles fully visible. No slab, tools, chalk, scenery, shadows, text, matting or colors in transparent gutters. Genuine clean transparent alpha; four columns, one row.",
+      "reason": "first three leg phases too similar; v2 introduces visibly narrower passing stances"
+    }
+  ],
+  "builds": [
+    "node scripts/build-storybook-inspection-lid.mjs",
+    "node scripts/build-storybook-keeper-motions.mjs keeper-hatch-open-v1",
+    "node scripts/build-storybook-keeper-motions.mjs keeper-hatch-carry-walk-v2"
+  ],
+  "registration": "Background pixels preserved. Slab's original transparent bounds are cropped and registered to200x205 with nearest resize. Keeper poses share standing scale and120px baseline; low height63, half-rise81, standing93, gait93–94. No image anatomy was painted or stretched by code.",
+  "effects": "Two small chalk strokes are native CSS within the movable cover. Moss pulse is a separate radial CSS item introduced only after clearance. Stone art hidden RGB outside zero alpha was checked by flattening on gray; apparent matte in some raw previews is not visible in composited game."
+}

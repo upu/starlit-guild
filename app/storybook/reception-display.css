@@ -1,0 +1,166 @@
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/servant-display-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: var(--display-servant-x, 0%) 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  --display-servant-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art=""]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="14"]) {
+  background-image: url("/storybook-study/finn-push-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: var(--display-push-x, 33.333333%) var(--display-push-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="14"] {
+  --display-push-x: 33.333333333333336%;
+  --display-push-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]:is(
+    [data-held-art="cloth"],
+    [data-held-art="light-cloth"],
+    [data-held-art="cart-drape"]
+  )
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: var(--display-cloth-x, 33.333333%) var(--display-cloth-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="14"] {
+  --display-cloth-x: 33.333333333333336%;
+  --display-cloth-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="15"] {
+  --display-cloth-x: 66.66666666666667%;
+  --display-cloth-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="16"] {
+  --display-cloth-x: 100%;
+  --display-cloth-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="8"] {
+  --display-cloth-x: 66.66666666666667%;
+  --display-cloth-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="9"] {
+  --display-cloth-x: 100%;
+  --display-cloth-y: 0%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="22"] {
+  --display-cloth-x: 0%;
+  --display-cloth-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-frame="23"] {
+  --display-cloth-x: 33.333333333333336%;
+  --display-cloth-y: 100%;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-art="empty-cart"] {
+  background-image: url("/storybook-study/garden-handcart-v2.webp");
+  aspect-ratio: 512 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-art="garden-pot"] {
+  background-image: url("/storybook-study/garden-pot-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-art="wrapped-stone"] {
+  background-image: url("/storybook-study/covered-stone-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"] .story-stage-item[data-art="table"] {
+  background-image: url("/storybook-study/medicine-table-v1.webp");
+  aspect-ratio: 1.6;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-art="display-covered"] {
+  background-image: url("/storybook-study/display-covered-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-art="tower-stone"] {
+  background-image: url("/storybook-study/tower-stone-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"] .story-stage-item[data-art="key"] {
+  background-image: url("/storybook-study/case-key-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-item="return-marker"] {
+  background-image: url("/storybook-study/return-marker-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-item="spare-cloth"][data-art="cloth"] {
+  background-image: url("/storybook-study/spare-cloth-folded-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-item="spare-cloth"][data-art="light-cloth"] {
+  background-image: url("/storybook-study/spare-cloth-spread-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="garden-reception-return"]
+  .story-stage-item[data-item="spare-cloth"][data-art="cart-drape"] {
+  background-image: url("/storybook-study/spare-cloth-draped-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="garden-reception-return"][data-mode="outdoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}

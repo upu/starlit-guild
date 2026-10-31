@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "2-3 medicine-packing wrapping, labels, final bag closure and default rollout",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/packing-wrap-cycle-v1.png",
+      "generated": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-d56ea6ec-3164-4f7d-90fc-28d5f918705c.png",
+      "reference": "Existing accepted medicine packet, healing bottle and honey props",
+      "direction": "Four columns and two rows: upper amber medicine bottle, lower honey jar. Each row shows cloth spread around upright jar, half folded, cord-tied without label, cord-tied with label. Warm painted oblique RPG objects, same size and viewpoint, genuine transparency, no characters, text or cast shadows."
+    },
+    {
+      "source": "assets/source/storybook/packing-bag-close-v1.png",
+      "generated": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-0703a617-0c69-42ab-92ff-6c4b224cbdec.png",
+      "reference": "Existing accepted honey-bag-open and honey-bag props",
+      "direction": "Four horizontal states of the same olive canvas medical bag: open, half-lowered flap, flap down, strapped closed. Identical body size, planted bottom and oblique perspective. Transparent gutters, no people or text."
+    }
+  ],
+  "packing": "scripts/build-storybook-packing-finish.mjs uses one scale across all eight wrapping frames and one across four bag frames. Transparent 256x256 cells, baseline248. Wrap scale0.363636; bag scale0.4672897. Bag body width249-250. Open bag front lip is a crop of the same pixels, not repainted. Metrics: public/storybook-study/packing-finish-metrics.json.",
+  "runtime": "road-packing-finish.ts selects untagged and tagged wrapping stages. Same76-source-pixel canvas width through table, palms and stored positions; folding naturally narrows the contents. After fifth deposit only, carrier stays kneeling during600ms four-state bag closing. Stable stored points remain behind the lid; cold completed state restores closed bags. Elapsed times clamp to0 for display clock corrections. Game engine, prose and saves unchanged.",
+  "validation": [
+    "65 related tests passed, including374/936 widths, Lv18/40, five pairs before engine arrival, wrap and bag states, unique ownership, carry and turn frames, palm contacts, table/bag foot exclusion, persistent stored positions, cold states and default/OFF/custom selection",
+    "PC1243x1244:671 screenshots through79.987seconds; browser390x844:1160 through79.960seconds; work/packing-finish-{pc,mobile}.json",
+    "Both full-stage filmstrips and focused wrapping/closure excerpts visually inspected. Fresh mobile page last-batch restart reached arrival with both bags closed: work/packing-finish-cold-mobile-page.png",
+    "Typecheck, scoped ESLint and source build passed. Physical phone and every-frame video verification not performed."
+  ],
+  "rollout": "medicine-packing registered in lib/storybook/adventure.ts; preview-only background override removed. Defaults now14/37; whole goal remains active with23 adventures, full conversation audit, remaining enemy/effect/wheel work and GitHub delivery outstanding."
+}

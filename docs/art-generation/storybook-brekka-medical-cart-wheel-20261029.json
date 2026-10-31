@@ -1,0 +1,14 @@
+{
+  "purpose": "Separate the 4-3 visiting cart wheels while keeping the cargo, handles and original cart scale.",
+  "tool": "built-in image_gen",
+  "reference": "public/storybook-study/brekka-medical-cart-v1.webp",
+  "prompt": "Edit this exact transparent-background pixel-art game sprite. Remove BOTH wooden wagon wheels entirely, including the near large wheel and the partially hidden far wheel, so the separate spinning wheel sprites can be drawn behind the cart. Where a removed wheel was outside the cart body, leave fully transparent pixels. Carefully reconstruct the wood of the cart only where the removed near wheel hid the lower wooden side or axle. Keep all cargo, boxes, white cloth, satchel, small hanging bags, rope, cart bed, iron fittings and both long handles exactly as in the reference: do not add, remove, reposition, resize, crop, or change their shape or colors. Keep the exact same three-quarter isometric viewing angle, composition, canvas padding and pixel art style. No characters, no ground, no shadows outside the sprite, no text. Output one single wagon body on transparency.",
+  "generated": "exec-88776813-7be8-41a4-8db6-2a9bf68c1444.png",
+  "source": "assets/source/storybook/brekka-medical-cart-body-v1.png",
+  "sourceSha256": "c74c93a84519049aec284f24b52d2df841c49f66143f28dc00754add9d493cecd",
+  "build": "node scripts/build-storybook-brekka-medical-cart-body.mjs",
+  "output": "public/storybook-study/brekka-medical-cart-body-v1.webp",
+  "outputSha256": "cea946d426d3068cff443db5faf4f3b23f0db8a10db272dc0e304be9d4b77a92",
+  "reusedWheel": "public/storybook-study/brekka-cart-wheel-v1.webp",
+  "registration": "420 x 280 canvas, origin (210,268); near wheel centre (86,195), far wheel centre (194,197)."
+}

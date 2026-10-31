@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG prop sheet exactly4separateobjects in1horizontalrow, broad gutters, elevated45degree downward camera, fine restrained warm outlines soft paintedtexture. Object1: small rectangular masonry block same physical shape/size as reference3 entirely covered snugly by THICK dark gray-brown plain linen cloth, no light leaks; reference1 defines mechanism. Object2: small round clay-and-iron charcoal brazier with sturdy three short feet and iron kettle-support crossbars, low warm embers inside, reference2 identity; no kettle. Object3: neatly folded thick dark gray-brown linen cloth matchingcover1, no block. Object4: small folded cream paper medicine packet tied simply with fine brown string. Complete isolated objects on transparentbackground, no groundshadows, people, hands, labels, runes, text, light beams. Same painterlymedium for allfour.",
+  "references": [
+    "public/story-stage/prop-covered-stone.webp",
+    "public/story-stage/prop-brazier.webp",
+    "public/storybook-study/tower-stone-v1.webp"
+  ],
+  "source": "assets/source/storybook/stone-rest-props-v1.png"
+}

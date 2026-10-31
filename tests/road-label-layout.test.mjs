@@ -24,6 +24,35 @@ test("repeated enemies share a count, while a named opponent and different actio
   assert.equal(groupRoadLabels([enemy(1, "")]).length, 0);
 });
 
+test("numbered ordinary wolves share a nameplate without merging named enemies or warnings", () => {
+  const labels = groupRoadLabels([
+    enemy(1, "霧狼 A", "slime"),
+    enemy(2, "霧狼 B", "slime"),
+    enemy(3, "スライム A", "slime"),
+    enemy(4, "スライム B", "slime"),
+    enemy(5, "飛びかかる", "slime"),
+    enemy(6, "メリル A", "merrill"),
+  ]);
+  assert.deepEqual(
+    labels.map((label) => label.text),
+    ["霧狼 ×2", "スライム ×2", "飛びかかる", "メリル A"],
+  );
+  assert.equal(groupRoadLabels([enemy(1, "霧狼 B", "slime")])[0].text, "霧狼 B");
+});
+
+test("a tall enemy's name stays above its body when companions stand beside its feet", () => {
+  const body = { x: 173, y: 65, width: 112, height: 112 };
+  const hero = { x: 73, y: 122, width: 58, height: 58 };
+  const nearHero = { x: 140, y: 135, width: 58, height: 58 };
+  const [label] = groupRoadLabels([{ id: 2, kind: "golem", text: "運搬用ゴーレム", body }]);
+  const result = new RoadLabelLayout()
+    .place([{ ...label, width: 87, height: 19 }], [body, hero, nearHero], 374, 249)
+    .get(label.key);
+  assert.ok(result, "the name remains visible");
+  assert.ok(result.y + result.height <= body.y, "the label sits above the golem");
+  assert.ok(Math.abs(result.x + result.width / 2 - (body.x + body.width / 2)) < 1);
+});
+
 test("names stay inside the viewport and outside figures, HP bars, props and other names", () => {
   for (const [width, height] of [
     [320, 210],

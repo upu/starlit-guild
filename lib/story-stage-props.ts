@@ -9,9 +9,12 @@ export function stageActorDepth(
   at: StagePosition,
   cue: StoryStageCue,
   positions: Map<string, StagePosition>,
-) {
+): number {
   const base = Math.round(100 - (at.bottom ?? 14));
-  if (Math.abs(at.x - actor.x) + Math.abs((at.bottom ?? 14) - (actor.bottom ?? 14)) > 0.001)
+  if (
+    Math.abs(at.x - actor.x) + Math.abs((at.bottom ?? 14) - (actor.bottom ?? 14)) >
+    (actor.reachApproach ?? 0.001)
+  )
     return base;
   const support = actor.reachOver && cue.items?.find((item) => item.id === actor.reachOver);
   return support ? Math.max(base, stageItemDepth(support, cue, positions) + 1) : base;
@@ -82,11 +85,20 @@ function wristTarget(item: StageItem, cue: StoryStageCue, owner?: StagePosition)
         ? (item.width ?? 2) * 1.5
         : ((item.width ?? 2) / 1.3) * 0.75;
   return {
-    x: owner.x + (owner.wrist.x - 64) * pixel * (owner.left ? -1 : 1),
+    x:
+      owner.x +
+      ((owner.wrist.x - 64) * pixel + (item.wristOffset?.x ?? 0)) * wristDirection(item, owner),
     bottom:
       // The actor element ends at y=128; y=120 is the foot inside that element.
-      (owner.bottom ?? 14) + (128 - owner.wrist.y) * pixel * 1.5 - drop,
+      (owner.bottom ?? 14) +
+      (128 - owner.wrist.y) * pixel * 1.5 -
+      drop +
+      (item.wristOffset?.bottom ?? 0),
   };
+}
+
+function wristDirection(item: StageItem, owner: StagePosition) {
+  return owner.left && !item.wristUnmirrored ? -1 : 1;
 }
 
 function heldItemBottom(item: StageItem, cue: StoryStageCue, owner?: StagePosition) {
@@ -104,7 +116,10 @@ export function stageItemDepth(
 ) {
   if (item.carrier) {
     const parent = positions.get(`item:${item.carrier}`);
-    return (parent?.depth ?? Math.round(100 - (parent?.bottom ?? item.bottom))) + 1;
+    return (
+      (parent?.depth ?? Math.round(100 - (parent?.bottom ?? item.bottom))) +
+      (item.behindOwner ? -1 : 1)
+    );
   }
   const owner = item.actor
     ? (positions.get(item.actor) ?? cue.actors.find((a) => a.id === item.actor))
@@ -113,11 +128,24 @@ export function stageItemDepth(
       : undefined;
   if (item.art === "picnic-cloth") return 0;
   const { depth, supported } = supportDepth(item, cue);
-  return owner ? Math.max(ownerDepth(item, owner), supported ? depth : 0) : depth;
+  return owner ? Math.max(ownerDepth(item, owner, cue, positions), supported ? depth : 0) : depth;
 }
 
-function ownerDepth(item: StageItem, owner: StagePosition) {
-  return Math.round(100 - (owner.bottom ?? 14)) + (item.behindOwner ? -1 : 1);
+function ownerDepth(
+  item: StageItem,
+  owner: StagePosition,
+  cue: StoryStageCue,
+  positions: Map<string, StagePosition>,
+) {
+  const actor = cue.actors.find((a) => a.id === item.actor);
+  const surface = cue.items?.find((i) => i.id === actor?.reachOver);
+  // A hand raised over a ground surface carries its held object into that same layer.
+  // Owned supports keep their own ordering and cannot recurse through their holder.
+  const depth =
+    actor && surface && !surface.actor && !surface.extra
+      ? stageActorDepth(actor, owner, cue, positions)
+      : Math.round(100 - (owner.bottom ?? 14));
+  return depth + (item.behindOwner ? -1 : 1);
 }
 
 function supportDepth(item: StageItem, cue: StoryStageCue) {

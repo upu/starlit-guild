@@ -1,0 +1,100 @@
+/* Registered seat and paper share Finn's normal body scale. */
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="40"] {
+  background-image: url("/storybook-study/finn-paper-seat-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  scale: -1 1;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="41"] {
+  background-image: url("/storybook-study/finn-paper-seat-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  scale: -1 1;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="42"] {
+  background-image: url("/storybook-study/finn-paper-seat-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  scale: -1 1;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="43"] {
+  background-image: url("/storybook-study/finn-paper-seat-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  scale: -1 1;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="delivery-bag"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/basket-v1.webp");
+  aspect-ratio: 1.3;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="receipt-front"] {
+  background-image: url("/storybook-study/berne-shipping-front-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="receipt-back"] {
+  background-image: url("/storybook-study/berne-shipping-back-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="berne-road-return"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone"] {
+  background-image: url("/storybook-study/berne-rest-ledge-v1.webp");
+  aspect-ratio: 1.7;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="berne-road-return"] .story-stage-space {
+    transform: none !important;
+  }
+}
+
+.storybook-reader-stage[data-story="berne-road-return"] [data-actor="finn"] {
+  --stage-name-above: 24%;
+}

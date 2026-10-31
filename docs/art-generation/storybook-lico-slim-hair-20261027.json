@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Lico hair silhouette only",
+  "prompt": "Edit only the HAIR of this four-frame Lico game sprite strip. Preserve all bodies, faces, glasses, expressions, outfits, hands, poses, scale and exact 4-column layout. The brown rounded bob-shaped puff behind the LEFT side of each head is too large. REMOVE that puff entirely. Back hair must be combed flat against the skull and tied at the back into ONE slim short ponytail with a clearly visible red tie. Tail hangs behind the ear, width only 15 percent of head width. Expose the nape, ear outline and a generous transparent gap above the shoulder. Ponytail should read as tied hair rather than bob, bun or loose curtain. Retain messy front bangs, crown flyaway, round glasses, freckles and red spider lily ornament, but shrink the flower's leaf cluster if it hides the tied hair silhouette. Keep same warm hand-painted 2D RPG style. Genuine transparent background, no colored matte, no new props, no text. Do not change body proportions or sandals. Every full body stays inside its original cell with transparent gutters.",
+  "variantPrompt": "Precise HAIR-ONLY edit of image1 game sprite atlas. Image2 is ONLY reference for the slim tied ponytail silhouette, not pose or expression. Remove the broad bob-shaped hanging hair puff behind each ear in EVERY frame of image1. Comb the rear hair close to skull, expose nape and ear, add ONE slim short ponytail at the back with red tie, tail width about15% of head width. Clear transparent gap between tail and collar/shoulder. Keep bangs, crown flyaway, small red spider-lily ornament, glasses, freckles, all original faces, exact poses, hands, props, clothing, feet and consistent body scale. Do not copy body/pose from image2. Preserve exactly image1's4columns and original row count/order. Generous transparent cell gutters, no sprite touching, no text, no backgrounds or colored matte. Same warm hand-painted2D RPG style. Sitting and kneeling stay lower than standing with unchanged head size. Change only hair.",
+  "accepted": [
+    {
+      "name": "conversation-ponytail-v1",
+      "source": "assets/source/storybook/lico-conversation-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-009f680d-94e0-4b7e-bc24-df436aad77fc.png"
+    },
+    {
+      "name": "walk-ponytail-v1",
+      "source": "assets/source/storybook/lico-walk-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-2c195208-e913-40d7-a9b3-257221d7e595.png"
+    },
+    {
+      "name": "walk-ponytail-v2",
+      "source": "assets/source/storybook/lico-walk-ponytail-v2-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-88e9911a-da7f-4be6-9dd5-8f0581b759ff.png"
+    },
+    {
+      "name": "work-ponytail-v1",
+      "source": "assets/source/storybook/lico-work-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-99d5f264-5b03-4431-b188-ef851308fd3d.png"
+    },
+    {
+      "name": "battle-v1",
+      "source": "assets/source/storybook/lico-battle-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-0508b6bb-e515-4a03-9711-6481c5e5fcd7.png"
+    },
+    {
+      "name": "reaction-ponytail-v1",
+      "source": "assets/source/storybook/lico-reaction-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-3708f252-2c91-4ef9-bea7-fdf64fd03840.png"
+    },
+    {
+      "name": "notebook-walk-ponytail-v1",
+      "source": "assets/source/storybook/lico-notebook-walk-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-6cef34a0-44e7-48b2-8c71-a332699359bc.png"
+    },
+    {
+      "name": "moss-study-ponytail-v1",
+      "source": "assets/source/storybook/lico-moss-study-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-f60c9451-46a3-4d54-a681-07577877342c.png"
+    },
+    {
+      "name": "field-records-ponytail-v1",
+      "source": "assets/source/storybook/lico-field-records-ponytail-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-c92f84b4-b5b0-47d1-82e3-25dbe2cc5d04.png"
+    },
+    {
+      "name": "label-v1",
+      "source": "assets/source/storybook/lico-label-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-36f16c6c-d272-4033-a8e1-4e5290be8487.png"
+    },
+    {
+      "name": "earthwork-v1",
+      "source": "assets/source/storybook/lico-earthwork-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-b448da25-559c-4020-8191-0edbbc19d819.png"
+    },
+    {
+      "name": "transplant-care-v1",
+      "source": "assets/source/storybook/lico-transplant-care-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-7aea092d-496b-4331-bc33-e9d66d1afd96.png"
+    },
+    {
+      "name": "seedling-paper-v1",
+      "source": "assets/source/storybook/lico-seedling-paper-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-1b499d43-c53d-478f-8b7b-f3dade4afe1d.png"
+    },
+    {
+      "name": "seedling-shield-v1",
+      "source": "assets/source/storybook/lico-seedling-shield-v1-slim-v2.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-79d12c7e-84dd-444e-a0e7-8553d70c6328.png"
+    }
+  ],
+  "packing": "Run scripts/build-storybook-lico-slim-hair.mjs AFTER the older atlas builders. Existing texture names and layouts retained. One scale per atlas, foot baseline176.",
+  "validation": [
+    "14 atlases / 76 poses: common scale per atlas, transparent gutters and foot baseline176 verified",
+    "21 related road/stage/reaction tests passed",
+    "PC1243x1244 and browser mobile390x844: representative conversation, walk-to-notebook and low crouch playback checked",
+    "Sprites integrated using existing atlas URLs; legacy pixel adventure and portraits remain outside this painted sprite correction"
+  ]
+}

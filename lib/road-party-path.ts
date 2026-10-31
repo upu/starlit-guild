@@ -1,6 +1,6 @@
-import type { PartyPosition } from "./road-party-spacing.ts";
+import type { PartyPosition, PartyObstacle } from "./road-party-spacing.ts";
 
-type Point = PartyPosition;
+type Point = PartyPosition & { minLane?: number; maxLane?: number };
 const travelTime = (a: Point, b: Point) => Math.hypot((b.x - a.x) / 280, (b.lane - a.lane) / 0.9);
 
 function axisInterval(from: number, to: number, center: number, radius: number) {
@@ -10,25 +10,32 @@ function axisInterval(from: number, to: number, center: number, radius: number) 
   return [Math.min(...ends), Math.max(...ends)];
 }
 
-function crosses(a: Point, b: Point, obstacle: Point, gap: Point) {
+function crosses(a: Point, b: Point, obstacle: PartyObstacle, fallback: Point) {
+  const gap = obstacle.clearance ?? fallback;
   const x = axisInterval(a.x, b.x, obstacle.x, gap.x - 0.001);
   const y = axisInterval(a.lane, b.lane, obstacle.lane, gap.lane - 0.00001);
   return Math.max(0, x[0], y[0]) < Math.min(1, x[1], y[1]);
 }
 
-function routeCorners(blockers: Point[], gap: Point, target: Point) {
+function routeCorners(blockers: PartyObstacle[], gap: Point, target: Point) {
   return blockers
     .flatMap((b) =>
       [-1, 1].flatMap((x) => [
-        { x: b.x + x * (gap.x + 0.02), lane: target.lane },
-        { x: target.x, lane: b.lane + x * (gap.lane + 0.0002) },
+        { x: b.x + x * ((b.clearance ?? gap).x + 0.02), lane: target.lane },
+        { x: target.x, lane: b.lane + x * ((b.clearance ?? gap).lane + 0.0002) },
         ...[-1, 1].map((lane) => ({
-          x: b.x + x * (gap.x + 0.02),
-          lane: b.lane + lane * (gap.lane + 0.0002),
+          x: b.x + x * ((b.clearance ?? gap).x + 0.02),
+          lane: b.lane + lane * ((b.clearance ?? gap).lane + 0.0002),
         })),
       ]),
     )
-    .filter((p) => p.x >= gap.x / 2 && p.x <= 560 - gap.x / 2 && p.lane >= 0.1 && p.lane <= 1.3)
+    .filter(
+      (p) =>
+        p.x >= gap.x / 2 &&
+        p.x <= 560 - gap.x / 2 &&
+        p.lane >= (target.minLane ?? 0.1) &&
+        p.lane <= (target.maxLane ?? 1.3),
+    )
     .filter((p) => !blockers.some((b) => crosses(p, p, b, gap)));
 }
 
@@ -67,7 +74,12 @@ function routeCost(from: Point, to: Point, origin: Point, target: Point) {
 
 /** At most four moving obstacles. Route around their ground footprints, not just the
  * first contact edge, so a cart worker can escape a cluster after combat. */
-export function partyWaypoint(origin: Point, target: Point, blockers: Point[], gap: Point): Point {
+export function partyWaypoint(
+  origin: Point,
+  target: Point,
+  blockers: PartyObstacle[],
+  gap: Point,
+): Point {
   const blocked = (a: Point, b: Point) => blockers.some((p) => crosses(a, b, p, gap));
   if (!blocked(origin, target)) return target;
   const nodes = [origin, target, ...routeCorners(blockers, gap, target)];

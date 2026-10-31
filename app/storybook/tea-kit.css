@@ -1,0 +1,44 @@
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  .story-stage-item:is(
+    [data-art="medicine"],
+    [data-art="medicine-closed"],
+    [data-art="kettle"],
+    [data-art="teapot"],
+    [data-art="teapot-open"],
+    [data-art="empty-cup"]
+  ) {
+  background-image: var(--tea-kit-art);
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="medicine"] {
+  --tea-kit-art: url("/storybook-study/medicine-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="medicine-closed"] {
+  --tea-kit-art: url("/storybook-study/medicine-closed-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="kettle"] {
+  --tea-kit-art: url("/storybook-study/kettle-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="teapot"] {
+  --tea-kit-art: url("/storybook-study/teapot-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="teapot-open"] {
+  --tea-kit-art: url("/storybook-study/teapot-open-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="empty-cup"] {
+  --tea-kit-art: url("/storybook-study/empty-cup-v1.webp");
+}
+.storybook-reader-stage:is([data-art="mountain-road-v1"], [data-art="workshop-yard-v1"])
+  [data-art="kettle"][data-pouring="true"]::after {
+  left: 91%;
+  top: 59%;
+  height: 38%;
+  transform: rotate(-20deg);
+}

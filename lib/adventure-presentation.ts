@@ -20,6 +20,42 @@ export type AdventureInput = {
   ready: boolean;
   paused: boolean;
   restorationComplete?: boolean;
+  questComplete?: boolean;
+  /** Finish the town delivery drawing after the real run has completed. */
+  townFinalizing?: boolean;
+  /** Keep drawing the waterway cleanup after the saved run has ended. */
+  mossFinalizing?: boolean;
+  /** Finish the foundation investigation before opening its return conversation. */
+  foundationFinalizing?: boolean;
+  /** Keep the last forest gathering visible before its return conversation. */
+  forestFinalizing?: boolean;
+  /** Complete the visual search before the waterway return conversation. */
+  waterwaySearchFinalizing?: boolean;
+  /** Rendering-only background choice; never stored in a save. */
+  backgroundOverride?: string;
+  /** Rendering-only character art; false explicitly selects the legacy comparison. */
+  storybookHeroes?: boolean;
+  /** Currently displayed dialogue, used only for visual synchronization. */
+  restorationDialogue?: "pending" | "guide" | "root" | "plan" | "other";
+  /** The current moss-bed survey dialogue, for rendering only. */
+  mossBedsDialogue?: "water" | "label" | "around" | "other";
+  /** Visible 4-7 dialogue and its actual smoke target, for drawing only. */
+  recordsDialogue?: {
+    cue: "support" | "bottle" | "other";
+    patient?: import("./road-view.ts").TravellerId;
+  };
+  /** The retained 4-7 dialogue has finished; play the return transition. */
+  recordsClosing?: boolean;
+  /** Merrill's visible song line keeps her playing pose active, without changing combat. */
+  merrillSinging?: boolean;
+  /** Return from the seedling encounter without changing the completed save. */
+  seedlingsClosing?: boolean;
+  /** Leon has offered to move beside the wheel in the night-road dialogue. */
+  nightWheel?: boolean;
+  /** Leon's route-recording line is currently visible. */
+  mossTrailNote?: boolean;
+  /** Finish a preview-only transition immediately when the player skips it. */
+  skipVisual?: boolean;
 };
 export type AdventureIntent = "help" | "heal" | `heal:${string}`;
 type ActiveRun = NonNullable<Squad["run"]>;

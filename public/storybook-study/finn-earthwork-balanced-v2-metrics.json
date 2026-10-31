@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-earthwork-balanced-v2.png",
+    "scale": 0.2591943957968476,
+    "left": 56,
+    "top": 28,
+    "width": 71,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.46424241511247
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-earthwork-balanced-v2.png",
+    "scale": 0.2591943957968476,
+    "left": 49,
+    "top": 65,
+    "width": 87,
+    "height": 111,
+    "baseline": 176,
+    "headX": 106.71425054536515
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-earthwork-balanced-v2.png",
+    "scale": 0.2591943957968476,
+    "left": 48,
+    "top": 67,
+    "width": 93,
+    "height": 109,
+    "baseline": 176,
+    "headX": 105.97313224823867
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-earthwork-balanced-v2.png",
+    "scale": 0.2591943957968476,
+    "left": 50,
+    "top": 68,
+    "width": 89,
+    "height": 108,
+    "baseline": 176,
+    "headX": 105.86641151106534
+  }
+]

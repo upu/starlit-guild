@@ -1,0 +1,21 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "assets": [
+    {
+      "source": "assets/source/storybook/aria-walk-rejected-v1.png",
+      "prompt": "Use case: identity-preserve animation sprite sheet. Create FOUR full-body Aria walking sprites in a 2 by 2 grid on transparent background. Image 1 defines Aria's exact identity, clothing, head-to-body proportions and warm illustrated style. Image 2 defines ONLY the four distinct walking leg phases in reading order; do NOT draw Leon or use his clothes. Keep Aria's head size, torso length, leg length and elevated three-quarter view facing screen RIGHT identical across all four cells. Top left: near leg (unstrapped thigh) reaches forward to right, far leg (strapped thigh) trails left. Top right: near leg plants under hip, far strapped leg swings forward slightly, knees pass. Bottom left: OPPOSITE contact, far STRAPPED leg reaches forward to right, near unstrapped leg trails left. Bottom right: far strapped leg supports under hip, near unstrapped leg swings forward slightly. The thigh strap is a fixed anatomical marker and must stay on the same far leg; do not swap it to cheat. Modest grounded steps, not high knees or kicks. Opposite arm swing; relaxed neutral attentive expression, no mouth changes. Same head vertical level within tiny walking bob, same boot scale. Blonde bob, lavender lock opposite white flower, green eyes, elf ears, cream blouse, green gold cape, leather boots. Generous transparent gutters, no cropping, no shadows, no props, no floor, no text. Four different phases, not the same lead leg repeated.",
+      "review": "Rejected: repeated far-leg-forward silhouettes, no passing poses."
+    },
+    {
+      "source": "assets/source/storybook/aria-contact-a-v1.png",
+      "prompt": "Create ONE full-body Aria sprite on transparent background, using image 1 as a STRICT SKELETON/POSE reference and image 2 ONLY as Aria identity/clothing reference. Replace Leon in image1 with Aria, preserve the exact near-leg-forward crossing of thighs, near arm backward, far arm forward, right-facing elevated three-quarter view. Do not use any leg poses from image2. Foreground unstrapped thigh begins at the LEFT side of the pelvis and crosses IN FRONT across to the RIGHT forward knee and rightmost forward boot. Background strapped thigh begins at RIGHT side of pelvis and angles backward LEFT, mostly hidden by crossing foreground thigh; its boot is the LEFT rear boot. These two diagonals visibly cross in the upper thighs. Aria's loose cream blouse, layered cream short skirt, brown corset, green-gold short cape, bare thighs, leather calf boots, blonde bob, lavender forelock opposite white flower, elf ears and green eyes must match image2. Match image2's standing head-to-body ratio, NOT Leon's taller body. Gentle step with front heel down and rear toe down, no kick or high knee. Single sprite centered, entire head and both feet, ample transparent margins, no shadow/ground/text/props. Warm illustrated outlines/shading from references.",
+      "review": "Crossed foreground contact obtained, but thigh strap on wrong leg."
+    },
+    {
+      "source": "assets/source/storybook/aria-contact-a-v2.png",
+      "prompt": "Precise costume edit ONLY. Keep this Aria sprite's entire silhouette, crossing-leg walking pose, face, hair, clothing, cape, all limb positions, drawing size and canvas coordinates unchanged. Remove the brown strap and buckle from the large FRONT thigh crossing diagonally down-right. That front thigh should be bare. Put the narrow brown strap on the OTHER, REAR thigh that goes backward down-left; only a small visible segment immediately below the skirt at the top of that rear thigh, mostly occluded by the crossing front thigh. Do not swap, straighten, move or redraw the legs or boots. Preserve original warm style and transparent background. One full-body sprite, no other changes.",
+      "review": "Strap moved back to rear leg; pose retained. Not registered or integrated; remaining walking phases and reduced-size proportion check pending."
+    }
+  ]
+}

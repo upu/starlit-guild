@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent sprite sheet exactly FOUR separate hand-painted 2D RPG objects in ONE horizontal row, generous transparent gaps. Elevated 45-degree downward three-quarter camera, warm outlines and watercolor texture, same perspective as manor courtyard reference. Left to right: 1 wide battered blackened iron cooking pot OPEN, short side handle loops at left and right rim, round bowl and soot black bottom, clearly visible dark empty inside and elliptical rim; 2 matching detached round iron pot LID, viewed from above at same camera with small central raised knob, sized to fit the opening; 3 crumpled grey beige cleaning rag hanging from pinched top corner, complete cloth; 4 heavy brown canvas tool rucksack, plump and tied closed, shoulder straps and rolled cloth sticking out. No characters, ground, drop shadows, labels. Complete objects not clipped. Items for separate animated attachment, pot no lid, no magic.",
+  "references": [
+    "public/storybook-study/manor-kitchen-open-v1.png"
+  ],
+  "source": "assets/source/storybook/survey-props-v1.png"
+}

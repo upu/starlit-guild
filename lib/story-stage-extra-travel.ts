@@ -24,7 +24,9 @@ export function sampleExtraTravel(
     const from = points[i - 1],
       to = points[i],
       length = distance(from, to);
-    if (length > remaining) {
+    // Floating-point rounding at the exact end must not leave a walking frame
+    // selected after the actor has reached the destination.
+    if (length > remaining + 1e-6) {
       const t = remaining / length;
       return {
         x: from.x + (to.x - from.x) * t,

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Use reference as exact identity and costume. Original warm hand-painted 2D RPG NPC sprites on TRANSPARENT background, elevated45degree camera looking down, whole body visible with ample transparent margins. Twelve separated poses in 4columns x3rows equal cells, SAME head size, body build, clothes, boots, camera, proportions and scale all twelve. Brown tied ponytail worker man, yellow rolled-sleeve shirt, brown leather apron, brown trousers and boots. ALL BODY FACES VIEWER-LEFT in3/4, never turn right, except eyes may look down. Row1: 0 calm neutral standing emptyhands (scale reference);1 reaches left at upperwaist height with empty nearhand wiping forward;2 same wiping arm drawn slightly back at sameheight;3 both hands cupped at midwaist holding an imaginary small bottle (EMPTY hands, bottle is separate gameprop). Row2:4 leans slightly and tips EMPTY nearhand pouring an imaginary bottle LEFT at sameheight;5 holds small open leather notebook in farhand and writes with pencil nearhand;6 same notebook held out angled LEFT for somebody to read, smile, fingers visibly gripping notebook;7 repeats writing pose with pencil slightly moved. Row3:8 leftward WALK left foot forward/rightback,9 leftward passing pose left heelraised,10 rightfoot forward/leftback,11 other passingpose rightheelraised. Clear foot changes, same boot and head dimensions, no floating or dramatic bob. Notebook included only poses5/6/7. NO bottle or cloth (separate sprites), no scenery, groundshadow, labels, panels or text. All12 complete independent silhouettes, no overlap, sufficient gaps.",
+  "references": [
+    "assets/source/storybook/worker-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/porter-service-v1.png"
+}

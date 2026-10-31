@@ -2,6 +2,23 @@
   grid-template-rows: minmax(0, 1fr) clamp(190px, 28dvh, 250px);
   gap: 8px;
 }
+.story-reader-fading::after {
+  content: "";
+  position: fixed;
+  inset: -100vmax;
+  z-index: 100;
+  pointer-events: none;
+  background: #10221a;
+  animation: story-departure-fade 400ms ease-in both;
+}
+@keyframes story-departure-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .story-reader-compact > .story-art-space:not(.story-stage-space) {
   display: flex;
   align-items: flex-end;
@@ -12,6 +29,11 @@
   height: min(100cqh, 66.666667cqw);
   border-radius: 12px;
   overflow: hidden;
+}
+.story-reader-compact > .story-art-space.story-still-loading {
+  align-items: center;
+  justify-content: center;
+  color: #e4d6b0;
 }
 .story-stage-dialogue {
   position: relative;
@@ -46,7 +68,8 @@
 }
 .story-history-toggle {
   position: absolute;
-  left: 64px;
+  /* Leave room for three-digit page counts such as 68 / 111. */
+  left: 104px;
   bottom: 8px;
   min-height: 44px;
   padding: 4px 8px;
@@ -162,7 +185,7 @@
 }
 .story-stage-sprite[data-atlas="conversation"] {
   background-image: var(--conversation-art);
-  background-size: 400% 2000%;
+  background-size: 400% 2200%;
 }
 .story-stage-actor[data-departing="true"][data-actor="aria"] {
   bottom: 9%;

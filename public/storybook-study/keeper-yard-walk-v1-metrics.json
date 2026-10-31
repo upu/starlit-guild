@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/keeper-yard-walk-v1.png",
+    "scale": 0.2,
+    "left": 40,
+    "top": 27,
+    "width": 57,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/keeper-yard-walk-v1.png",
+    "scale": 0.2,
+    "left": 36,
+    "top": 27,
+    "width": 58,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 38
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/keeper-yard-walk-v1.png",
+    "scale": 0.2,
+    "left": 36,
+    "top": 27,
+    "width": 60,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/keeper-yard-walk-v1.png",
+    "scale": 0.2,
+    "left": 38,
+    "top": 27,
+    "width": 58,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 36
+  }
+]

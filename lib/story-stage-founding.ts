@@ -13,18 +13,34 @@ import {
 import { chair, diningItems } from "./story-stage-furniture.ts";
 import type { ResidentId } from "./home-actor.ts";
 import { registrationPaper } from "./story-stage-registration-paper.ts";
+import { foundingGift, foundingJar, storedFoundingGift } from "./story-stage-founding-gift.ts";
+import { foundingSample, licoSampleBag } from "./story-stage-founding-sample.ts";
+import { foundingBags, liftFoundingBag, foundingReturnCargo } from "./story-stage-founding-bag.ts";
+import { foundingRecords } from "./story-stage-founding-records.ts";
+import { foundingQuill } from "./story-stage-founding-quill.ts";
+import {
+  openFoundingNotes,
+  foldFoundingNotes,
+  retainFoundingNotes,
+  topSheet,
+} from "./story-stage-founding-notes.ts";
 const representativeChair = (id: ResidentId) => ({
   ...chair(actor(id, 67, { left: true }), 19),
   id: "representative-chair",
 });
-const registrationItems = (items: ReturnType<typeof table>[]) =>
-  diningItems(items).map((p) =>
-    p.art === "ledger" ? { ...p, art: "paper" as const, width: 7 } : p,
-  );
+const registrationItems = (items: ReturnType<typeof table>[]) => [
+  ...diningItems(items).map((p) =>
+    p.art === "ledger"
+      ? { ...p, art: "paper" as const, width: 7, pitch: p.support === "table" ? 55 : undefined }
+      : p,
+  ),
+  licoSampleBag(),
+];
 
 function registrationBeats(beats: LaterBeat[]): LaterBeat[] {
   return beats.map((beat) => ({
     ...beat,
+    finishBeforeAdvance: beat.finishBeforeAdvance ?? !!beat.sequence?.length,
     items: beat.items && registrationItems(beat.items),
     sequence: beat.sequence?.map((step) => ({
       ...step,
@@ -33,33 +49,60 @@ function registrationBeats(beats: LaterBeat[]): LaterBeat[] {
   }));
 }
 export const foundingStages: Record<string, LaterStage> = {
-  "starlit-guild-founding-departure": scene("tower-foot", quintet(), [
-    {
-      at: 0,
-      items: [ground("ledger", 27, 42, 9), ground("basket", 74)],
-      extras: [npc("keeper", undefined, 27)],
-    },
-    { at: 1, extras: [npc("keeper", undefined, 27, "explain", true)] },
-    { at: 8, actors: { lico: { inspect: true } } },
-    { at: 9, actors: { lico: { inspect: false } } },
-    { at: 18, actors: { lico: { carry: true } } },
-    {
-      at: 19,
-      actors: { lico: { carry: false, pose: "offer" } },
-      items: [held("sample-jar", "lico"), ground("basket", 74)],
-    },
-    { at: 24, actors: { lico: { reaction: "surprise" } } },
-    { at: 27, items: [held("sample-jar", "aria"), ground("basket", 74)] },
-    { at: 31, actors: { lico: { pose: "greet" } } },
-    {
-      at: 37,
-      background: "hill-path",
-      extras: [],
-      items: [held("sample-jar", "aria"), held("basket", "leon"), held("ledger", "finn")],
-    },
-    { at: 38, actors: { lico: { inspect: true } } },
-    { at: 40, actors: { aria: { inspect: true } } },
-  ]),
+  "starlit-guild-founding-departure": scene(
+    "tower-records",
+    quintet(),
+    foundingRecords(
+      foundingBags([
+        {
+          at: 0,
+          items: [ground("ledger", 27, 42, 9), ground("basket", 60, 40, 9)],
+          extras: [npc("keeper", undefined, 27)],
+        },
+        { at: 1, extras: [npc("keeper", undefined, 27, "explain", true)] },
+        {
+          at: 8,
+          finishBeforeAdvance: true,
+          actors: { lico: { bottom: 20, mossStudy: "spread", left: true } },
+          sequence: [{ after: 1800, actors: { lico: { bottom: 14, mossStudy: undefined } } }],
+        },
+        { at: 9, actors: { lico: { inspect: false } } },
+        liftFoundingBag,
+        {
+          at: 19,
+          actors: { lico: { carry: false, mossStudy: "reach", left: true } },
+          items: [foundingJar("lico"), ground("basket", 60, 40, 9)],
+        },
+        { at: 24, actors: { lico: { reaction: "surprise" } } },
+        foundingGift,
+        { at: 31, actors: { lico: { pose: "greet" } } },
+        {
+          at: 37,
+          background: "hill-path",
+          extras: [],
+          items: [...storedFoundingGift(), ...foundingReturnCargo()],
+        },
+        {
+          at: 38,
+          finishBeforeAdvance: true,
+          actors: { lico: { x: 91, bottom: -5, left: false, inspect: true } },
+        },
+        {
+          at: 40,
+          finishBeforeAdvance: true,
+          actors: {
+            aria: {
+              x: 94,
+              bottom: -21,
+              left: false,
+              inspect: true,
+              via: [{ x: 87, bottom: -30 }],
+            },
+          },
+        },
+      ]),
+    ),
+  ),
   "starlit-guild-founding-return": scene(
     "warehouse-office",
     quintet().map((a) =>
@@ -69,125 +112,124 @@ export const foundingStages: Record<string, LaterStage> = {
           ? { ...a, bottom: 0 }
           : a,
     ),
-    registrationBeats([
-      { at: 0, items: [table()], extras: [npc("keeper", "倉庫の大家", 26, "explain", true)] },
-      { at: 5, items: [table(), onTable("ledger")] },
-      { at: 8, actors: { aria: { pose: "think" } } },
-      {
-        at: 16,
-        actors: { aria: { x: 73, bottom: 0, lane: -15, carry: true, left: false } },
-        items: [table(), onTable("ledger"), held("sample-dish", "aria", { width: 7, bottom: 21 })],
-        sequence: [
+    registrationBeats(
+      foundingQuill(
+        retainFoundingNotes([
+          { at: 0, items: [table()], extras: [npc("keeper", "倉庫の大家", 26, "explain", true)] },
+          { at: 5, items: [table(), onTable("ledger")] },
+          { at: 8, actors: { aria: { pose: "think" } } },
+          ...foundingSample,
           {
-            after: 3100,
-            actors: { aria: { carry: false, pose: "offer" } },
-            items: [table(), onTable("ledger"), ground("sample-dish", 80, 5, 7)],
-          },
-        ],
-      },
-      {
-        at: 18,
-        actors: { lico: { x: 87, bottom: 4, left: true, inspect: true } },
-        sequence: [
-          {
-            after: 1100,
-            actors: { lico: { inspect: false, pose: "offer" } },
-            items: [
-              table(),
-              onTable("ledger"),
-              held("sample-dish", "lico", { width: 7, bottom: 21 }),
-            ],
-          },
-        ],
-      },
-      {
-        at: 21,
-        actors: { lico: { inspect: true, packing: true }, aria: { x: 19, bottom: 14, lane: -15 } },
-        sequence: [
-          {
-            after: 800,
-            actors: { lico: { x: 83, bottom: 14, inspect: false, packing: false } },
+            at: 22,
+            furniture: [representativeChair("finn")],
+            actors: {
+              // Leave a clear aisle between the clerk and the chair.
+              lico: { x: 78, bottom: -2, via: undefined },
+              finn: {
+                x: 67,
+                bottom: 14,
+                seated: true,
+                chair: true,
+                left: true,
+                via: [
+                  { x: 91, bottom: 55 },
+                  { x: 87, bottom: 55 },
+                  { x: 87, bottom: 14 },
+                ],
+              },
+            },
+            sequence: [{ after: 3100, actors: { finn: { via: undefined } } }],
+            extras: [npc("keeper", "倉庫の大家", 26), npc("merchant", "町の受付", 73)],
             items: [table(), onTable("ledger")],
           },
-        ],
-      },
-      {
-        at: 22,
-        extras: [npc("keeper", "倉庫の大家", 26), npc("merchant", "町の受付", 73)],
-        items: [table(), onTable("ledger")],
-      },
-      { at: 25, actors: { aria: { pose: "greet", reaction: "nod" } } },
-      registrationPaper,
-      {
-        at: 36,
-        items: [table(), onTable("ledger")],
-        extras: [npc("merchant", "町の受付", 73, "explain", true)],
-      },
-      {
-        at: 42,
-        actors: {
-          finn: {
-            pose: "tease",
-            seated: false,
-            x: 91,
-            bottom: 37,
-            via: [
-              { x: 75, bottom: 14 },
-              { x: 75, bottom: 55 },
-              { x: 91, bottom: 55 },
+          { at: 25, actors: { aria: { pose: "greet", reaction: "nod" } } },
+          registrationPaper,
+          {
+            at: 36,
+            items: [table(), onTable("ledger")],
+            extras: [
+              npc("keeper", "倉庫の大家", 26),
+              npc("merchant", "町の受付", 73, "explain", true),
             ],
           },
-        },
-        furniture: [representativeChair("mira")],
-        sequence: [
           {
-            after: 650,
-            actors: { mira: { x: 67, bottom: 14, left: true, seated: true, chair: true } },
-          },
-        ],
-      },
-      { at: 47, actors: { aria: { pose: "think" } } },
-      {
-        at: 50,
-        actors: { mira: { seated: false, x: 51, bottom: 0, via: [{ x: 67, bottom: 0 }] } },
-        furniture: [representativeChair("leon")],
-        sequence: [
-          {
-            after: 650,
-            actors: { leon: { x: 67, bottom: 14, left: true, seated: true, chair: true } },
-          },
-        ],
-      },
-      { at: 52, items: [table(), held("ledger", "leon")] },
-      { at: 56, actors: { aria: { pose: "greet", reaction: "nod" } } },
-      { at: 59, extras: [npc("merchant", "町の受付", 73, "explain", true)] },
-      { at: 60, items: [table(), onTable("ledger")] },
-      {
-        at: 64,
-        actors: {
-          leon: {
-            seated: false,
-            writing: true,
-            x: 31,
-            bottom: 18,
-            left: false,
-            via: [
-              { x: 67, bottom: 6 },
-              { x: 31, bottom: 6 },
+            at: 42,
+            actors: {
+              lico: { x: 78, bottom: -2, via: undefined },
+              finn: {
+                pose: "tease",
+                seated: false,
+                x: 91,
+                bottom: 37,
+                via: [
+                  { x: 87, bottom: 14 },
+                  { x: 87, bottom: 55 },
+                  { x: 91, bottom: 55 },
+                ],
+              },
+            },
+            furniture: [representativeChair("mira")],
+            sequence: [
+              {
+                after: 650,
+                actors: { mira: { x: 67, bottom: 14, left: true, seated: true, chair: true } },
+              },
             ],
           },
-          aria: { x: 17 },
-          mira: { x: 55 },
-          lico: { x: 83 },
-        },
-        items: [table(50)],
-      },
-      {
-        at: 65,
-        actors: { leon: { writing: false, pose: "offer" } },
-        items: [table(), held("ledger", "leon", { width: 7 })],
-      },
-    ]),
+          { at: 47, actors: { aria: { pose: "think" } } },
+          {
+            at: 50,
+            actors: { mira: { seated: false, x: 51, bottom: 0, via: [{ x: 67, bottom: 0 }] } },
+            furniture: [representativeChair("leon")],
+            sequence: [
+              {
+                after: 650,
+                actors: { leon: { x: 67, bottom: 14, left: true, seated: true, chair: true } },
+              },
+            ],
+          },
+          openFoundingNotes,
+          { at: 56, actors: { aria: { pose: "greet", reaction: "nod" } } },
+          {
+            at: 59,
+            extras: [
+              npc("keeper", "倉庫の大家", 26),
+              npc("merchant", "町の受付", 73, "explain", true),
+            ],
+          },
+          foldFoundingNotes,
+          {
+            at: 64,
+            finishBeforeAdvance: true,
+            actors: {
+              leon: {
+                seated: false,
+                writing: true,
+                x: 31,
+                bottom: 18,
+                left: false,
+                via: [
+                  // Walk in front of Mira before approaching the desk.
+                  { x: 67, bottom: -16 },
+                  { x: 31, bottom: -16 },
+                ],
+              },
+              aria: { x: 17 },
+              // A small step toward the desk clears her silhouette as Leon passes.
+              mira: { x: 55, bottom: 10, via: undefined },
+              lico: { x: 83 },
+            },
+            items: [table(50), topSheet(true)],
+            sequence: [{ after: 4000, actors: { leon: { via: undefined, writing: true } } }],
+          },
+          {
+            at: 65,
+            actors: { leon: { writing: false, pose: "offer" } },
+            items: [table(), held("ledger", "leon", { wrist: true })],
+          },
+        ]),
+      ),
+    ),
     { cell: 19, furniture: [representativeChair("finn")] },
   ),
 };

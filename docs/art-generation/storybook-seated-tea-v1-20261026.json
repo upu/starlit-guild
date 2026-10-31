@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create an original transparent RPG animation atlas: exactly TWELVE full-body characters arranged FOUR columns by THREE rows, wide equal gutters and no text/ground/props outside their held cups. Warm hand-painted 2D storybook RPG style, elevated45degree three-quarter camera. Each ROW is ONE exact original character from its matching reference. ROW1 Aria elf girl blonde braided hair green cloak white blouse tan bodice short skirt brown boots. ROW2 Leon young man tousled chestnut hair blue tunic red scarf/cape dark trousers brown boots. ROW3 Mira adult silver-lavender-haired woman long ornate ivory floral gown brown boots hairflower. All face screen RIGHT. Within each row keep exact SAME head/body/limb scale, no growing heads when sitting. FOUR columns in EACH row:0standing upright neutral CALIBRATION full body without cup;1seated on invisible chair, both hands holding a tiny plain ivory tea cup near lower chest;2same seated body and feet, lifting tiny cup to lips to sip with gentle natural bent elbow;3same seated body, cup lowered near lap, relaxed. NO visible chair or table, cup IS included in 1/2/3. Seated head naturally lower than standing because bent knees, seated feet and complete boots still at same floor baseline. Preserve original adult/youth body anatomy, not extra cute child proportions. All heads/feet complete, no cropping. No colored halo or shadow. Blank clean alpha.",
+  "references": [
+    "assets/source/storybook/aria-seat-v1.png",
+    "assets/source/storybook/leon-kettle-v1.png",
+    "assets/source/storybook/mira-check-v1.png"
+  ],
+  "source": "assets/source/storybook/seated-tea-v1.png"
+}

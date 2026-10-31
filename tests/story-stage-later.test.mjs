@@ -96,13 +96,16 @@ test("story objects transfer to the right person and distinguish the original an
     cue("matching-lantern-stone-return", 5).items.some((p) => p.art === "candidate-violet"),
   );
   assert.equal(
-    cue("starlit-guild-founding-departure", 19).items.find((p) => p.id === "sample-jar").actor,
+    cue("starlit-guild-founding-departure", 19).items.find((p) => p.id === "comparison-jar").actor,
     "lico",
   );
-  assert.equal(
-    cue("starlit-guild-founding-departure", 27).items.find((p) => p.id === "sample-jar").actor,
-    "aria",
+  const gift = cue("starlit-guild-founding-departure", 27);
+  assert.ok(
+    gift.sequence.some((s) => s.items.some((p) => p.id === "comparison-jar" && p.actor === "aria")),
   );
+  const stored = gift.sequence.at(-1).items.find((p) => p.id === "comparison-jar");
+  assert.equal(stored.stored, true);
+  assert.equal(gift.sequence.at(-1).items.find((p) => p.id === stored.carrier).actor, "aria");
   assert.equal(cue("moss-transplant-return", 0).background, "new-moss-beds");
   assert.equal(cue("moss-transplant-return", 9).background, "tower-foot");
   assert.equal(cue("moss-transplant-return", 15).background, "patient-room");

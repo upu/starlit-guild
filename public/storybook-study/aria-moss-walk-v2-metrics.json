@@ -1,0 +1,38 @@
+[
+  {
+    "frame": 0,
+    "width": 82,
+    "height": 134,
+    "left": 44,
+    "top": 42,
+    "scale": 0.25140712945590993,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "width": 78,
+    "height": 133,
+    "left": 52,
+    "top": 43,
+    "scale": 0.25140712945590993,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "width": 88,
+    "height": 133,
+    "left": 45,
+    "top": 43,
+    "scale": 0.25140712945590993,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "width": 75,
+    "height": 133,
+    "left": 51,
+    "top": 43,
+    "scale": 0.25140712945590993,
+    "baseline": 176
+  }
+]

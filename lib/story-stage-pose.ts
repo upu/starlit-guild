@@ -9,16 +9,48 @@ const mood = (actor: StageActor) =>
   actor.pose === "tease" ? 2 : actor.pose === "think" || actor.pose === "surprise" ? 1 : 0;
 
 export function actorPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  if (actor.shawl) return shawlPose(actor, moving, elapsed, reduced);
-  if (actor.carry || (actor.place && elapsed < boxTransferDuration && !reduced))
-    return carryingPose(actor, moving, elapsed, reduced);
+  const equipped = equippedPose(actor, moving, elapsed, reduced);
+  if (equipped) return equipped;
+  return (
+    travelPose(actor, moving, elapsed, reduced) ??
+    swordStrikePose(actor, elapsed, reduced) ??
+    mossStudyPose(actor, elapsed, reduced) ??
+    actionPose(actor, elapsed, reduced)
+  );
+}
+
+function travelPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (moving && actor.holdingWalk) return carryingPose(actor, true, elapsed, reduced);
+  if (carrying(actor, elapsed, reduced)) return carryingPose(actor, moving, elapsed, reduced);
   if (actor.bed) return stationaryPose(actor, elapsed, reduced);
   if (actor.seated && actor.scoot) return stationaryPose(actor, elapsed, reduced);
   if (moving && !actor.pull)
     return { atlas: "home" as const, frame: residentFrame("walk", elapsed, reduced) };
   if (actor.pull)
     return { atlas: "adventure" as const, frame: cycle(20, elapsed, 180, moving && !reduced) };
-  return mossStudyPose(actor, elapsed, reduced) ?? actionPose(actor, elapsed, reduced);
+  return null;
+}
+
+function carrying(actor: StageActor, elapsed: number, reduced: boolean) {
+  return actor.carry || (actor.place && elapsed < placementDuration(actor) && !reduced);
+}
+
+function equippedPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (actor.lanternHold) return lanternPose(actor, moving, elapsed, reduced);
+  return actor.shawl ? shawlPose(actor, moving, elapsed, reduced) : null;
+}
+
+function lanternPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  const standing =
+    actor.pose === "think" ? 1 : actor.pose === "offer" || actor.pose === "tease" ? 2 : 0;
+  return {
+    atlas: "conversation" as const,
+    frame: moving ? 4 + (reduced ? 0 : Math.floor(elapsed / 180) % 4) : standing,
+  };
+}
+
+function placementDuration(actor: StageActor) {
+  return boxTransferDuration + (actor.placeHoldMs ?? 0);
 }
 
 function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
@@ -43,6 +75,13 @@ function actionPose(actor: StageActor, elapsed: number, reduced: boolean) {
     stationaryPose(actor, elapsed, reduced)
   );
 }
+function swordStrikePose(actor: StageActor, elapsed: number, reduced: boolean) {
+  if (actor.sword !== "strike" || actor.id !== "leon") return null;
+  return {
+    atlas: "adventure" as const,
+    frame: reduced ? 13 : 10 + Math.min(3, Math.floor(elapsed / 150)),
+  };
+}
 function routeNotesPose(actor: StageActor, elapsed: number, reduced: boolean) {
   if (actor.id !== "leon" || !actor.routeNotes) return null;
   return {
@@ -65,7 +104,7 @@ function visitPose(actor: StageActor) {
   if (actor.id !== "mira" || !actor.visit) return null;
   return {
     atlas: "conversation" as const,
-    frame: actor.visit === "touch" ? 60 : 61,
+    frame: { touch: 60, slide: 61, bottle: 68 }[actor.visit],
     handDrop: 0,
     onChair: false,
   };
@@ -147,6 +186,15 @@ function bowPose(actor: StageActor) {
 }
 
 function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
+  if (actor.carryWalkFrames)
+    return {
+      atlas: "shawl" as const,
+      frame: moving
+        ? actor.carryWalkFrames[reduced ? 0 : Math.floor(elapsed / 180) % 4]
+        : actor.carry
+          ? 1 + mood(actor)
+          : 0,
+    };
   return {
     atlas: "shawl" as const,
     frame: moving ? cycle(2, elapsed, 180, !reduced) : Number(!!actor.carry),
@@ -154,7 +202,8 @@ function shawlPose(actor: StageActor, moving: boolean, elapsed: number, reduced:
 }
 
 function carryingPose(actor: StageActor, moving: boolean, elapsed: number, reduced: boolean) {
-  const walk = actor.id === "aria" || actor.id === "leon" ? [8, 9, 22, 23] : [8, 9];
+  const walk =
+    actor.carryWalkFrames ?? (actor.id === "aria" || actor.id === "leon" ? [8, 9, 22, 23] : [8, 9]);
   const frame = moving
     ? walk[reduced ? 0 : Math.floor(elapsed / 130) % walk.length]
     : actor.carry

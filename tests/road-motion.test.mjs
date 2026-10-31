@@ -5,6 +5,7 @@ import { chapterRoadFrame, chapterRoadHit } from "../lib/chapter-road-presentati
 import { roadX, roadY } from "../lib/road-layout.ts";
 import { act, settle, testState } from "../lib/game.ts";
 import { storyStages } from "../lib/prologue.ts";
+import { roadCartSlot } from "../lib/road-cart-layout.ts";
 
 function frame(time = 1000) {
   return {
@@ -23,6 +24,32 @@ function frame(time = 1000) {
 }
 const screenX = (battle, width = 390) =>
   roadX(battle.heroes[0].x, battle.distance, width, battle.stage);
+
+test("a downed actor keeps its world foot while the camera advances, then walks after recovery", () => {
+  for (const width of [374, 936]) {
+    const motion = new RoadMotion();
+    const first = motion.update(frame(1000), "resting", width).battle.heroes[0];
+    for (let time = 1050; time <= 2000; time += 50) {
+      const next = frame(time);
+      Object.assign(next.battle.heroes[0], { hp: 0, x: 300, lane: 1.1 });
+      next.battle.distance = 150;
+      const before = structuredClone(next),
+        drawn = motion.update(next, "resting", width).battle.heroes[0];
+      assert.ok(Math.abs(drawn.x - first.x) < 0.00001);
+      assert.equal(drawn.lane, first.lane);
+      assert.equal(drawn.walking, false);
+      assert.deepEqual(next, before);
+    }
+    let healed;
+    for (let time = 2050; time <= 3000; time += 50) {
+      const next = frame(time);
+      Object.assign(next.battle.heroes[0], { hp: 10, x: 300, lane: 1.1 });
+      next.battle.distance = 150;
+      healed = motion.update(next, "resting", width).battle.heroes[0];
+    }
+    assert.ok(healed.x > first.x + 10);
+  }
+});
 
 test("melee lunges keep bodies apart on either side without changing saved combat", () => {
   for (const width of [390, 1280])
@@ -176,10 +203,13 @@ test("carriers keep their pose for small cart lag, but walk until a distant grip
   initial.look.workers = ["leon"];
   initial.look.frontCarriers = ["leon"];
   initial.battle.gathering = { kind: "cargo", task: "carry", x: 100, remaining: 50, total: 100 };
+  const grip = roadCartSlot({ width: 390, height: 320 }, "forest", false, true);
+  initial.battle.heroes[0].x = 165 + grip.offset;
+  initial.battle.heroes[0].lane = grip.lane;
   motion.update(initial, "run", 390);
   const shifted = structuredClone(initial);
   shifted.battle.time = 1016;
-  shifted.battle.heroes[0].x = 90;
+  shifted.battle.heroes[0].x -= 10;
   shifted.battle.heroes[0].facing = -1;
   const drawn = motion.update(shifted, "run", 390);
   assert.ok(Math.abs(drawn.battle.heroes[0].x - shifted.battle.heroes[0].x) > 5);
@@ -195,6 +225,29 @@ test("carriers keep their pose for small cart lag, but walk until a distant grip
   shifted.battle.heroes[0].lane -= 0.4;
   shifted.battle.time += 16;
   assert.deepEqual(motion.update(shifted, "run", 390).look.workers, []);
+});
+
+test("paused carriers retain their grip when the viewport changes without advancing time", () => {
+  const motion = new RoadMotion();
+  for (const [width, height] of [
+    [390, 260],
+    [936, 624],
+    [390, 260],
+  ]) {
+    const next = frame(1000);
+    next.look.workers = ["leon"];
+    next.look.frontCarriers = ["leon"];
+    next.battle.gathering = { kind: "cargo", task: "carry", x: 100, remaining: 50, total: 100 };
+    const grip = roadCartSlot({ width, height }, "forest", false, true);
+    next.battle.heroes[0].x = 165 + grip.offset;
+    next.battle.heroes[0].lane = grip.lane;
+    const before = structuredClone(next);
+    const drawn = motion.update(next, "run", width, false, height);
+    assert.deepEqual(drawn.look.workers, ["leon"]);
+    assert.ok(Math.abs(drawn.battle.heroes[0].x - next.battle.heroes[0].x) < 1e-8);
+    assert.equal(drawn.battle.heroes[0].lane, grip.lane);
+    assert.deepEqual(next, before);
+  }
 });
 
 test("new runs reset continuity, pauses cannot produce a large catch-up step", () => {

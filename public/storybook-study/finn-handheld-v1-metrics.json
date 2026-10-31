@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 62,
+    "top": 28,
+    "width": 71,
+    "height": 148,
+    "baseline": 176,
+    "headX": 100.72197505983121
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 50,
+    "top": 76,
+    "width": 92,
+    "height": 100,
+    "baseline": 176,
+    "headX": 108.49032870414506
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 62,
+    "top": 45,
+    "width": 81,
+    "height": 131,
+    "baseline": 176,
+    "headX": 111.74702985562772
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 66,
+    "top": 28,
+    "width": 67,
+    "height": 148,
+    "baseline": 176,
+    "headX": 100.56230916002309
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 57,
+    "top": 28,
+    "width": 82,
+    "height": 148,
+    "baseline": 176,
+    "headX": 101.17792076711407
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 56,
+    "top": 29,
+    "width": 83,
+    "height": 147,
+    "baseline": 176,
+    "headX": 100.64877745738428
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 57,
+    "top": 27,
+    "width": 85,
+    "height": 149,
+    "baseline": 176,
+    "headX": 100.83569125811951
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-handheld-v1.png",
+    "scale": 0.34823529411764703,
+    "left": 61,
+    "top": 26,
+    "width": 77,
+    "height": 150,
+    "baseline": 176,
+    "headX": 100.5842771836549
+  }
+]

@@ -13,8 +13,13 @@ import {
   secondDayBackgrounds,
 } from "./story-stage-moss-trail-art.mjs";
 import sharp from "sharp";
+import { transplantBackground } from "./story-stage-transplant-art.mjs";
 import { mossBedPoses, mossBedProps } from "./story-stage-moss-beds-art.mjs";
 import { recordsPoses, recordsProps } from "./story-stage-records-art.mjs";
+import { seedlingsPoses, seedlingsProps } from "./story-stage-seedlings-art.mjs";
+import { paperPoses } from "./story-stage-paper-art.mjs";
+import { mossCarePoses } from "./story-stage-moss-care-art.mjs";
+import { doctorBagPoses } from "./story-stage-doctor-bag-art.mjs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { readFrame, packFrames, spriteBounds } from "./home-pixel-frames.mjs";
@@ -70,8 +75,12 @@ async function emit(name, source, image) {
   const trail = await mossTrailPoses(root, name, visit.raw, visit.image);
   const study = await mossBedPoses(root, name, trail.raw, trail.image);
   const records = await recordsPoses(root, name, study.raw, study.image);
-  source = records.raw;
-  image = records.image;
+  const seedlings = await seedlingsPoses(root, name, records.raw, records.image);
+  const paper = await paperPoses(root, name, seedlings.raw, seedlings.image);
+  const care = await mossCarePoses(root, name, paper.raw, paper.image);
+  const doctor = await doctorBagPoses(root, name, care.raw, care.image);
+  source = doctor.raw;
+  image = doctor.image;
   const path = new URL(`${name}.webp`, output);
   if (check) {
     if (!(await readFile(path)).equals(image)) throw Error(`Stale story stage art: ${name}`);
@@ -197,6 +206,8 @@ await mossTrailProps(root, emit);
 await secondDayBackgrounds(root, emit);
 await mossBedProps(root, emit);
 await recordsProps(root, emit);
+await seedlingsProps(root, emit);
+await transplantBackground(root, emit);
 const serialized = JSON.stringify(manifest, null, 2) + "\n";
 const manifestPath = new URL("manifest.json", output);
 if (check) {

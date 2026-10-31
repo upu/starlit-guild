@@ -68,7 +68,7 @@ test("Lico reaches the placed basket before picking it up without overlapping Ar
         previous.actors.find((a) => a.id === "lico"),
       ),
   );
-  const lifted = step.items.find((p) => p.id === "seedlings");
+  const lifted = step.items.find((p) => p.id === "transplant-basket");
   const owner = step.actors.find((a) => a.id === "lico");
   const at = stageItemTarget(
     lifted,
@@ -77,7 +77,7 @@ test("Lico reaches the placed basket before picking it up without overlapping Ar
   );
   assert.equal(
     at.x,
-    previous.items.find((p) => p.id === "seedlings").x,
+    previous.items.find((p) => p.id === "transplant-basket").x,
     "pickup lifts the existing basket vertically",
   );
 });

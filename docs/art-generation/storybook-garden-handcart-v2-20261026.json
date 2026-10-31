@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit only the handcart geometry: add ONE sturdy wooden crossbar joining the TWO far-right handle tips, a continuous rear push bar seen in the same 3quarter perspective. Both shafts connect to this bar. The bar extends diagonally between the two original tips, with TWO small grip wraps close to the CENTER of that crossbar (operator grips near center, not original shaft tips). Grip wraps separated by about 10 percent of entire cart width. Preserve empty cart body, spoked wheel, overall warm handpainted style, elevated angle, transparency and complete silhouette. No person, props, ground, shadow,text. Do not fill background. This is a garden trolley with a rear crossbar for two-handed pushing.",
+  "references": [
+    "assets/source/storybook/garden-handcart-v1.png"
+  ],
+  "source": "assets/source/storybook/garden-handcart-v2.png"
+}

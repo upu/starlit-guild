@@ -1,0 +1,542 @@
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="56"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="57"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="58"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="56"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="57"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="58"]) {
+  background-image: url("/storybook-study/brekka-pair-drinks-v2.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/brekka-adult-drinks-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="56"]) {
+  background-image: url("/storybook-study/brekka-adult-drinks-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="57"]) {
+  background-image: url("/storybook-study/brekka-adult-drinks-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="58"]) {
+  background-image: url("/storybook-study/brekka-adult-drinks-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/finn-drinks-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="56"]) {
+  background-image: url("/storybook-study/finn-drinks-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="57"]) {
+  background-image: url("/storybook-study/finn-drinks-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="58"]) {
+  background-image: url("/storybook-study/finn-drinks-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite[data-frame="12"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"]
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="16"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 33.33333333333333% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="17"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.66666666666666% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="18"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-table"] {
+  background-image: url("/storybook-study/linde-table-v1.webp");
+  aspect-ratio: 384 / 160;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ale-cup-empty"] {
+  background-image: url("/storybook-study/ale-cup-empty-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ale-cup-full"] {
+  background-image: url("/storybook-study/ale-cup-full-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="fruit-glass"] {
+  background-image: url("/storybook-study/fruit-glass-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="ale-jug"] {
+  background-image: url("/storybook-study/ale-jug-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="bread-roll"] {
+  background-image: url("/storybook-study/bread-roll-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="serving-tray"] {
+  background-image: url("/storybook-study/serving-tray-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="lunch-plate"] {
+  background-image: url("/storybook-study/lunch-plate-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-plate"] {
+  background-image: url("/storybook-study/cleared-plate-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/brekka-leon-drinks-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="56"]) {
+  background-image: url("/storybook-study/brekka-leon-drinks-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="57"]) {
+  background-image: url("/storybook-study/brekka-leon-drinks-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="58"]) {
+  background-image: url("/storybook-study/brekka-leon-drinks-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="16"] {
+  background-image: url("/storybook-study/brekka-worker-drinks-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.33333333333333% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="17"] {
+  background-image: url("/storybook-study/brekka-worker-drinks-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 66.66666666666666% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="18"] {
+  background-image: url("/storybook-study/brekka-worker-drinks-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 100% 0% !important;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-seat-transition="lower"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/leon-sit-down-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-seat-transition="lower"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/leon-sit-down-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"][data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/mira-sit-down-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"][data-seat-transition="lower"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/mira-sit-down-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-seat-transition="settle"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/finn-sit-down-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-seat-transition="lower"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/finn-sit-down-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="brekka-arrival-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="15"] {
+  background-image: url("/storybook-study/brekka-npc-drinks-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: 66.666667% 0% !important;
+  scale: -1 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="brekka-arrival-departure"][data-mode="indoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Trading route cart continuity and dusk ground",
+  "accepted": [
+    {
+      "name": "forest-dusk-lane-loop-v1",
+      "source": "assets/source/storybook/forest-dusk-lane-loop-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-6aa2f516-1b14-4bc4-8030-c62d0a54037c.png",
+      "prompt": "Precise lighting-only edit of original hand-painted2D RPG background image1. Preserve this exact elevated-oblique55degree camera, horizontal forest trading lane acrossmiddle70%, all tiny roots, stones, shrubs, leaf litter and path width. Change sunnyday to late-afternoon dusk as travellers return from town: low warm amber sunlight fromupperleft, long soft mauve shadows gently crossing ground, quiet muted greens and russet earth, still clearly readable before night. No sky or horizon. Do not addtower, house, moon, lantern, campfire, people, cargo, props, words, UI, horizon, diagonalpath, fork or pixel-artfilter. Opaque full1536x1024 landscape. Keep both left/right ground levels identical for horizontal repetition. Same warm painted texture and subdued brown outlines. All scenery placement and scale stay exactlyunchanged."
+    }
+  ],
+  "validation": [
+    "Both quests enabled by default,10/37 adventures; no missing registered assets",
+    "PC1243x1244 and browser mobile390x844 outward/return playback; final arrival retried for camera/facing, stopping and matching cart/body ratio",
+    "Final endpoint capture continues12seconds after arrival text; see docs/art/storybook-trade-adventure-review-20261027.md for recording gaps and superseded evidence",
+    "74 related regression tests passed; typecheck, scoped lint and final source build passed",
+    "Wheel rotation remains unimplemented; remaining27 adventures and whole-goal verification are pending"
+  ]
+}

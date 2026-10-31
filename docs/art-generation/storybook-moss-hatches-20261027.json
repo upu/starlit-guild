@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "1-9 removable inspection covers, keeper lifting and carrying, Aria walking with wooden spatula",
+  "direction": "Preserve accepted warm painted oblique waterway clearing, tower outlet and common human scale. Flush stone inspection mouths have separate thin lids. Keeper grips an edge, lifts, backs away and parks the lid on the dry apron; second mouth opens only after the first closes. Aria retains green eyes, plain opaque white pleated skirt, cloak and boots while walking with the same wooden spatula.",
+  "accepted": [
+    {"source":"assets/source/storybook/drain-inspection-bank-v1.png","generated":"exec-4ee8495d-fbd8-464b-8a8f-bb6be4e3fde1.png","purpose":"Remove baked lid and extend the existing dry stone apron"},
+    {"source":"assets/source/storybook/waterway-hatch-parts-v2.png","generated":"exec-15313746-1324-4b13-95d6-e51a951d83da.png","purpose":"Separate flush rim and thin lid"},
+    {"source":"assets/source/storybook/keeper-hatch-v1.png","generated":"exec-7a0b09fd-868b-41f3-8a4c-50d5ea0fa5ea.png","purpose":"Eight empty, crouching, rising and carrying poses"},
+    {"source":"assets/source/storybook/keeper-hatch-walk-v1.png","generated":"exec-d925b3b7-3430-4e10-960c-ecb74a2c7f07.png","purpose":"Four empty-handed walking poses"},
+    {"source":"assets/source/storybook/aria-moss-walk-v2.png","generated":"exec-82ab7d6a-6805-4bb5-a713-b8fb6d5abc87.png","purpose":"Four wooden-spatula walking poses"}
+  ],
+  "generatedDirectory": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/",
+  "rejected": [
+    {"source":"assets/source/storybook/waterway-hatch-parts-v1.png","reason":"Raised box and outside wall instead of a flush inspection mouth"},
+    {"source":"assets/source/storybook/aria-moss-walk-v1.png","reason":"Changed costume to lace bloomers and thigh straps"}
+  ],
+  "packing": "scripts/build-storybook-moss-hatches.mjs; lossless WebP, 256x192 cells, boots baseline176, one common scale per atlas referenced to134 standing height. Crouching remains99 and rising126. Transparent gutters verified.",
+  "runtime": "Renderer owns covers and baskets. Original engine progress, combat balance, prose and save data remain authoritative. Open mouths are foot obstacles, closed flush covers are walkable. Final lid is prepared during carrying-out but lowered only on the last instruction. Cold camp distinguishes unstarted from completed via read-only questComplete. Preview clock waits for renderer asset readiness.",
+  "evidence": [
+    "47 related tests passed, including374/936 widths, Lv18/40 progress, cover timing, hand contacts, cold camp, explicit OFF/custom backgrounds and save purity",
+    "work/moss-hatches-final-pc.json:460 screenshots over57.8seconds at1243x1244, initial footing through arrival",
+    "work/moss-hatches-final-mobile.json:718 screenshots over57.8seconds at390x844 browser viewport, initial footing through arrival",
+    "Both final filmstrips inspected: first opening, harvesting, first closure, second opening, two deliveries and final closure. Physical phone and every-frame video checks not performed."
+  ],
+  "rollout": "tower-moss-removal now uses the painted default;12of37 adventures. Whole goal remains active; mid-carry forced combat interruption still needs focused visual review."
+}

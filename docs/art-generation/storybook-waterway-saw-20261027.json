@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "generatedDirectory": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0",
+  "reference": "assets/source/storybook/waterway-worker-v1.png",
+  "assets": [
+    {
+      "source": "assets/source/storybook/waterway-worker-saw-lower-v1.png",
+      "generatedFile": "exec-4e0238e7-6043-4595-a65d-d9b0366a0472.png",
+      "direction": "Same workwoman, four-column continuation: stopped low cutting pose, lower the same saw to the ground, empty hands after release, stand and signal. Same head/body proportions and foot placement. No log or scenery, transparent gutters.",
+      "delivery": "public/storybook-study/waterway-worker-saw-lower-v1.webp"
+    },
+    {
+      "source": "assets/source/storybook/waterway-saw-v1.png",
+      "generatedFile": "exec-f49298fd-acf6-491a-8656-57d654e8b2f8.png",
+      "direction": "Standalone matching hand saw, brown D handle left, tapered grey blade right, lower-edge teeth, warm elevated RPG painting and transparent background.",
+      "delivery": "public/storybook-study/waterway-saw-v1.webp"
+    }
+  ],
+  "packing": "scripts/build-storybook-waterway-saw.mjs. Four256x192 cells, standing reference134px, one shared scale, boots baseline176. Exclude the blade from the boot-centre calculation when lowered. Ground saw stays a separate object after release.",
+  "integration": "lib/road-waterway-saw.ts reverses the sequence to pick up the resting saw before work, lowers and releases it before the signal, then leaves it at a fixed world point as the worker moves. Work foot calibrated to source1217,340 so the blade crosses the lower face of the trunk.",
+  "validation": "PC1243x1244 and browser phone390x844: complete runs recorded to arrival after contact correction. 83 related tests, typecheck, scoped lint and source build passed. Final evidence work/waterway-reviewed-{pc,mobile}.json and filmstrips; no physical phone claim."
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact original FOUR-pose full-body character strip. Preserve original Leon's face, head size, red cape, blue tunic, body anatomy, standing scale, seated scale and boot positions EXACTLY. No redesign or enlarged head. Keep FOUR columns ONE row. Column0 standing calibration remains identical. In columns1,2,3 keep the existing LOW seated pose and complete boot floor baseline; add a small ivory tea cup. Column1bothhands holding cup at lowerchest. Column2natural bent elbow lifts cup to lips to sip, SAME seated head height and body proportions as column1. Column3cup lowered near lap. Do NOT raise seated heads to standing head height. Keep original seated silhouette height, about88percentofstanding, sameheadsize. No chair, table, floor, shadows, letters or halo. Clean transparent background and generous cell gutters. Warm elevated45degree handpaintedRPGstyle unchanged.",
+  "references": [
+    "public/storybook-study/leon-seat-action-v2.webp"
+  ],
+  "source": "assets/source/storybook/leon-tea-v1.png"
+}

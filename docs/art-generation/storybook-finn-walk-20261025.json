@@ -1,0 +1,11 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Using this Finn sheet as strict identity AND proportion reference, create a FOUR-FRAME WALK CYCLE in one horizontal row on transparent background. Same compact 3-head-tall adult man, same large head size, short torso/legs, loose dark brown low ponytail, stubble, half-lidded grey violet eyes, tan, worn olive charcoal gold-trim coat, open cream shirt, brown trousers/boots. Warm hand-painted thin brown line style and elevated three-quarter camera facing screen RIGHT. Exactly four isolated full-body frames evenly spaced, loop order: A left foot forward heel planted/right leg back toe; B left planted under body supporting weight/right knee bent clearly lifted and passing; C right foot forward planted/left leg back toe; D right planted under body/left knee bent lifted passing. Feet really lift from ground, alternating arm swing, subtle coat motion, modest relaxed stride. Identical body and head dimensions all frames, common floor baseline, only 1-2 percent bounce, no forward body movement within cells, no turning. Keep coat open so both legs and separate boots are readable. This is walking, NOT four standing variations, NOT sliding both feet on floor, NOT running. No shadows/floor/text/borders/props/background. All hair and boots fully visible with transparent gutters.",
+  "references": [
+    "assets/source/storybook/finn-conversation-v2.png"
+  ],
+  "source": "assets/source/storybook/finn-walk-v1.png",
+  "output": "public/storybook-study/finn-walk-v1.webp",
+  "registration": "Common scale based on neutral standing head width; head center alignment, baseline 176 in 192px cells.",
+  "scope": "Indoor study walking only."
+}

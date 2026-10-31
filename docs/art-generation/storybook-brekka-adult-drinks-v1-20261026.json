@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original warm handpainted2D RPG sprites, transparent background, elevated45degree 3/4camera. Eight complete separated bodyposes4columns2rows. ExactMira andFinn identity andclothes fromreferences. Eachrow0standingcalibration 1seatedhold 2seatedsip 3seatedreach. ALLBODYfacesRIGHT. Firstrow MIRA grey-lilachair flowers goldcrescenthairornament whitegold offshoulderlongrobe browncorset strappedboots:0neutralstand;1 sittingonINVISIBLEchair feetplanted kneesbent handsatlowerchest gripping imaginarySMALL palmwideale cup;2 same seat bodyfootholds headscale, nearhand raisedto lips to sip tinycup(NOcupdrawn);3 same seat nearhandheldout palmup atwaist to lift a smallbreadroll(NO breaddrawn). Secondrow FINN adultman scruffybrownponytail goldhoopearring stubbledchin wornolivebrownlongcoat whiteopenneckshirt browntrousersboots:0neutralstand;1 sitslowonINVISIBLEchair samebodybuild asreference nearhandholds imaginarytinyale cup atlowerchest;2 same lowseat raisingnearhand to lips to sip;3 same lowseat nearhandreachesright atwaist to setcupdown. ALLcups bread chairs props are SEPARATE so drawEMPTYhands natural curvedfingers. Seatedbodyheight80to85percentstandingheight withEXACTsameheadsize andbootdimensions, do NOTstretchseatbodiesor scaleupfaces. Largealpha gaps andmargins noobjectspeopleinothercells nofloor/shadow/text. KeepMiraapproachable gentle notglamourportrait, Finn tiredcasual notyouthfulprince.",
+  "references": [
+    "assets/source/storybook/mira-seat-v3.png",
+    "assets/source/storybook/finn-seat-v2.png"
+  ],
+  "source": "assets/source/storybook/brekka-adult-drinks-v1.png"
+}

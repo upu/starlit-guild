@@ -1,0 +1,16 @@
+{
+  "tool": "built-in image_gen",
+  "draft": {
+    "prompt": "Create a four-frame walking cycle of exactly this middle-aged shopkeeper/clerk. Match supplied neutral first figure's small head-to-body ratio, height, friendly moustached face, short grey-brown hair, cream rolled sleeves, brown apron, trousers and boots. Warm restrained hand-painted RPG sprite style, elevated three-quarter view, facing right. Four equal-size full-body sprites in one horizontal row: left foot forward contact; passing with right foot lifting; right foot forward contact; passing with left foot lifting. Alternating opposing arm swings, apron subtly moves with legs. Constant head size and torso length, feet aligned to common ground baseline, no stretching or size differences. No props, papers, chair, ground, shadows or lettering. True transparent background, clear gaps and all hair/feet inside image.",
+    "source": "assets/source/storybook/merchant-walk-v1.png",
+    "rejection": "Head-matched height 83px versus standing 94px; body too short."
+  },
+  "refinement": {
+    "prompt": "Edit this four-frame walking strip. Preserve EVERY head (hair/face/ears/moustache) at exactly its current width and height. His walking body is too short compared with standing. In all four frames lengthen torso and legs so total head-to-sole height increases by 13%, exclusively below the chin; keep head dimensions unchanged. Give him the same 3.3-head-tall adult proportions as a standing middle-aged shopkeeper. Keep the four poses, alternating legs, cream sleeves, brown apron/trousers/boots, warm hand-painted style and right-facing elevated angle. Feet share one baseline, same consistent height in all frames. Four separated full sprites in one row on true transparent background, no shadow, floor, text or objects.",
+    "source": "assets/source/storybook/merchant-walk-v2.png"
+  },
+  "reference": "assets/source/storybook/merchant-poses-v2.png",
+  "output": "public/storybook-study/merchant-walk-v2.webp",
+  "registration": "128px cells, foot baseline 120px, shared scale from standing head width 31px. Walking frames 91px tall, standing 94px. Generated source faces left despite right-facing prompt; scoped CSS corrects walking direction.",
+  "scope": "Indoor study merchant conversation frames 0-3 and walking frames 8-11 only. Service and desk work retain original dedicated poses."
+}

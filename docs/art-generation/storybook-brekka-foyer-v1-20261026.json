@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "One complete 3:2 landscape 2D RPG background. Reference1 exact inn entrance hall layout to preserve: staircase along back left, counter below stairs left, window and short bench rear middle, heavy entrance door rear right, wooden floor. Reference2 approved warm hand-painted storybook elevated three-quarter 45degree camera style, delicate dark brown outlines and painted ochre wood, no pixel grid. Redraw reference1 with stronger looking-down camera and coherent human-scale room. Predawn blue sky through window and transom, soft dim amber lanterns inside, no bright sunshine on floor. Lower TWO THIRDS clear empty wooden floor for separately placed characters, bags and two chairs; do not paint center furniture. Both stair footing and door threshold visible. No people, text, UI or effects. Do not copy tower silhouette from reference2 window: window should show ordinary nearby roofs under pale cold dawn.",
+  "references": [
+    "public/story-stage/brekka-foyer.webp",
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-foyer-v1.png"
+}

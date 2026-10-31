@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game sprite atlas, FOUR full-body sprites evenly spaced in one horizontal row. Preserve reference woman's exact identity, lavender gray long hair with small white flowers, sleepy gentle violet eyes, elaborate cream and gold layered dress, dark ankle boots, same hand-painted chibi elevated three-quarter RPG style. All face SCREEN RIGHT, identical head/body/boot scale and same ground baseline. Pose0 neutral standing, empty hands relaxed. Pose1 standing close to a door that is NOT drawn, raises RIGHT/front knuckles forward at shoulder height to knock toward SCREEN RIGHT. Pose2 same body and raised arm, knuckles extend slightly farther right and up, subtle knocking motion only; keep body height identical. Pose3 arm lowers gently to chest after knocking. No door, bag, furniture, shadow, text, grids. Fully show hair and boots with transparent margins; do not create dangling paper or wrist accessories.",
+  "references": [
+    "assets/source/storybook/mira-check-v1.png"
+  ],
+  "source": "assets/source/storybook/mira-knock-v1.png"
+}

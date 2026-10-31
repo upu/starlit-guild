@@ -8,7 +8,12 @@ import {
 } from "@/lib/story-stage-props";
 import type { StageItem } from "@/lib/story-stage-cues";
 import { stageFigure } from "@/lib/story-stage-figure";
-import { orderStageItems, itemFacing } from "@/lib/story-stage-cargo";
+import {
+  orderStageItems,
+  itemFacing,
+  itemMotionSignature,
+  itemTransferWidth,
+} from "@/lib/story-stage-cargo";
 
 type ItemState = {
   position: BoxPosition;
@@ -16,6 +21,8 @@ type ItemState = {
   settled: boolean;
   tilt: number;
   turn: number;
+  pitch: number;
+  width: number;
 };
 export type ItemMotion = Map<string, ItemState>;
 export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemMotion) {
@@ -23,8 +30,7 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
     item,
     element: stage.querySelector<HTMLElement>(`[data-item="${item.id}"]`),
     origin: state.get(item.id),
-    // Angle changes do not release a grip; only a new owner or destination starts a transfer.
-    signature: `${item.actor ?? item.extra ?? item.carrier ?? "ground"}:${String(item.x)}:${String(item.bottom)}`,
+    signature: itemMotionSignature(item),
   }));
   for (const id of state.keys()) if (!items.some(({ item }) => item.id === id)) state.delete(id);
   stage.querySelectorAll<HTMLElement>("[data-item]").forEach((element) => {
@@ -33,12 +39,18 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
   return (positions: Map<string, StagePosition>, elapsed: number, reduced: boolean) => {
     for (const { item, element, origin, signature } of items) {
       const target = itemDestination(item, cue, positions, origin);
-      const transferring = origin && (origin.signature !== signature || !origin.settled);
+      const transferring = itemTransferring(origin, signature);
       const at = transferring
         ? transferBox(origin.position, target, elapsed, reduced, item.travelMs)
         : target;
       const t = reduced ? 1 : Math.min(1, elapsed / 650);
-      const { tilt, turn } = itemAngles(item, origin, t);
+      const { tilt, turn, pitch } = itemAngles(item, origin, t);
+      const width = itemTransferWidth(
+        item,
+        transferring ? origin.width : undefined,
+        elapsed,
+        reduced,
+      );
       const depth = stageItemDepth({ ...item, bottom: at.bottom }, cue, positions);
       positions.set(`item:${item.id}`, {
         ...at,
@@ -50,16 +62,29 @@ export function itemPainter(stage: HTMLElement, cue: StoryStageCue, state: ItemM
         signature,
         tilt,
         turn,
-        settled: Math.abs(at.x - target.x) + Math.abs(at.bottom - target.bottom) < 0.001,
+        pitch,
+        width,
+        settled: itemSettled(at, target, width, item),
       });
       if (element) {
         element.hidden = !stageItemVisible(item, positions);
-        paintItem(element, item, at, tilt, wristLift(item, positions), turn);
+        paintItem(element, item, at, tilt, wristLift(item, positions), turn, pitch, width);
         paintFigure(element, item, at, target, elapsed, reduced);
         element.style.zIndex = String(depth);
       }
     }
   };
+}
+
+function itemTransferring(origin: ItemState | undefined, signature: string): origin is ItemState {
+  return !!origin && (origin.signature !== signature || !origin.settled);
+}
+
+function itemSettled(at: BoxPosition, target: BoxPosition, width: number, item: StageItem) {
+  return (
+    Math.abs(at.x - target.x) + Math.abs(at.bottom - target.bottom) < 0.001 &&
+    Math.abs(width - (item.width ?? 10)) < 0.001
+  );
 }
 
 function itemDestination(
@@ -74,10 +99,12 @@ function itemDestination(
 
 function itemAngles(item: StageItem, origin: ItemState | undefined, t: number) {
   const fromTilt = origin?.tilt ?? 0,
-    fromTurn = origin?.turn ?? 0;
+    fromTurn = origin?.turn ?? 0,
+    fromPitch = origin?.pitch ?? 0;
   return {
     tilt: fromTilt + ((item.tilt ?? 0) - fromTilt) * t,
     turn: fromTurn + ((item.turn ?? 0) - fromTurn) * t,
+    pitch: fromPitch + ((item.pitch ?? 0) - fromPitch) * t,
   };
 }
 
@@ -95,6 +122,8 @@ function paintFigure(
 ) {
   const moving =
     !item.carrier && !reduced && Math.hypot(at.x - target.x, at.bottom - target.bottom) > 0.001;
+  if (item.art === "slime" && moving)
+    element.style.transform += ` translateY(${String(-Math.abs(Math.sin(elapsed / 120)) * 18)}%)`;
   const figure = stageFigure(item, moving, elapsed);
   element.dataset.figure = String(!!figure);
   if (!figure) {
@@ -111,6 +140,15 @@ function paintFigure(
     element.style.transform = `translateX(-50%) scaleX(${itemFacing(item, at, target, reduced) ? "-1" : "1"})`;
 }
 
+function paintItemImage(element: HTMLElement, item: StageItem) {
+  element.style.setProperty(
+    "--item-art",
+    `url(${item.image ?? `/story-stage/prop-${item.art}.webp`})`,
+  );
+  if (item.image) element.style.imageRendering = "auto";
+  else element.style.removeProperty("image-rendering");
+}
+
 function paintItem(
   element: HTMLElement,
   item: StageItem,
@@ -118,6 +156,8 @@ function paintItem(
   tilt: number,
   lift = 0,
   turn = 0,
+  pitch = 0,
+  width = item.width ?? 10,
 ) {
   if (item.art === "cart-wheel")
     element.style.setProperty(
@@ -126,9 +166,10 @@ function paintItem(
     );
   element.style.left = `${String(at.x)}%`;
   element.style.bottom = `${String(at.bottom)}%`;
-  element.style.width = `${String(item.width ?? 10)}%`;
-  element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})${turn ? ` rotateY(${String(turn)}deg)` : ""}`;
-  element.style.setProperty("--item-art", `url(/story-stage/prop-${item.art}.webp)`);
+  element.style.width = `${String(width)}%`;
+  element.style.transformOrigin = pitch ? "center bottom" : "";
+  element.style.transform = `translateX(-50%) translateY(${String(lift)}px) rotate(${String(tilt)}deg) scaleX(${item.left ? "-1" : "1"})${turn ? ` rotateY(${String(turn)}deg)` : ""}${pitch ? ` rotateX(${String(pitch)}deg)` : ""}`;
+  paintItemImage(element, item);
   element.dataset.art = item.art;
   element.dataset.shaded = String(!!item.shaded);
   element.dataset.dissipating = String(!!item.dissipating);

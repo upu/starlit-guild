@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "One complete landscape3:2 original 2D RPG background, exact garden geography from reference1 rendered in approved warm hand-painted elevated 45degree storybook style of reference2, smooth brush texture fine brown outlines, no pixel grid. A modest masonry tower rear door upper right, regular equal-width LOW moss nursery beds in stone borders along left edge and upper third and far right edge; thin water channels diverted alongside the beds, small wooden sluices, tiny wooden labels with abstract tally marks only. Broad CLEAR central dirt walkway. Keep central walkway from x32 to82 percent and y35 to100percent unobstructed for characters. Preserve a bed near upper middle x49-64percent y24-35percent that can be inspected from its front lip; no tall rock, no floating magical object. Green moss rooted directly in low soil bed, very faint scattered pale green lights IN the moss, no glitter beam, no huge mushrooms. Tower stone and garden doors human-scale relative to small RPG characters. Morning daylight. Do NOT paint central foreground fence rails, stools, chairs, bags, bread, notebooks or people: those are separate dynamic props. Upper-right approach remains connected to the open path by the tower from reference2. No readable text, UI, arrows, map lines or labels.",
+  "references": [
+    "public/story-stage/moss-beds.webp",
+    "assets/source/storybook/brekka-tower-path-v2.png"
+  ],
+  "source": "assets/source/storybook/moss-beds-v1.png"
+}

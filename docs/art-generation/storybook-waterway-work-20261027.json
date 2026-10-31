@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Restoration workyard adventure prototype; no default rollout yet",
+  "assets": [
+    {
+      "source": "assets/source/storybook/waterway-tool-cart-v1.png",
+      "reference": "public/storybook-study/loaded-cart-v1.webp",
+      "generatedFile": "exec-554ff1cb-8627-4cdf-8648-63d7483d73cb.png",
+      "direction": "Preserve wooden handcart, wheels, right-facing shafts and oblique camera; replace trading goods with low load of saw, rope, shallow baskets, mallet and repair stones. Transparent background, no people or text.",
+      "delivery": "public/storybook-study/waterway-tool-cart-v1.webp",
+      "packing": "Full canvas resized to420x280, no crop. Existing cart grip geometry is shared."
+    },
+    {
+      "source": "assets/source/storybook/waterway-worker-v1.png",
+      "reference": "public/storybook-study/worker-poses-v1.webp",
+      "generatedFile": "exec-a3dce54e-681e-4175-8d4f-b4ea9d0416ef.png",
+      "direction": "Same brown-haired worker with ochre shirt and brown overalls. Four cells: empty-handed stand, low crouched saw forward, same crouch saw back, raised open hand signal. No log baked in. Same head/body scale, full silhouettes and transparent gutters.",
+      "delivery": "public/storybook-study/waterway-worker-v1.webp",
+      "packing": "Four256x192cells, one common scale0.268. Standing134px, crouching105px. Soles baseline176, saw kept within its own cell."
+    },
+    {
+      "source": "assets/source/storybook/waterway-branches-v1.png",
+      "generatedFile": "exec-4c051aaf-2e5b-4226-84df-d986f632cc4a.png",
+      "direction": "Small hand-reachable loose pile of five short twigs and three small pebbles, ordinary dry drain debris, warm elevated oblique RPG painting, transparent background, no grass/moss/magic/large rocks.",
+      "delivery": "public/storybook-study/waterway-branches-v1.webp",
+      "packing": "Trimmed and packed to192px width."
+    }
+  ],
+  "generatedDirectory": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0",
+  "builder": "scripts/build-storybook-waterway-work.mjs",
+  "preview": "/sprite-lab/storybook/waterway/adventure",
+  "status": "1-8 prototype uses actual quest progression, persistent tool cart, worker, dry-side target coordinates, debris poses and drainage phase. Basket collection and repair-stone handoff remain incomplete; default coverage stays10/37."
+}

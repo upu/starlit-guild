@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/keeper-hatch-open-v1.png",
+    "scale": 0.1921487603305785,
+    "left": 41,
+    "top": 27,
+    "width": 47,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/keeper-hatch-open-v1.png",
+    "scale": 0.1921487603305785,
+    "left": 21,
+    "top": 57,
+    "width": 70,
+    "height": 63,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/keeper-hatch-open-v1.png",
+    "scale": 0.1921487603305785,
+    "left": 33,
+    "top": 39,
+    "width": 61,
+    "height": 81,
+    "baseline": 120,
+    "upperSilhouetteWidth": 41
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/keeper-hatch-open-v1.png",
+    "scale": 0.1921487603305785,
+    "left": 36,
+    "top": 27,
+    "width": 58,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  }
+]

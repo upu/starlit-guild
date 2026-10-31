@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Tower approach adventure and prepared night route",
+  "accepted": [
+    {
+      "name": "hill-lane-loop-v1",
+      "source": "assets/source/storybook/hill-lane-loop-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-65013a3e-4d0b-4aa6-8688-118bad3458ea.png",
+      "prompt": "Use case: stylized-concept. Create an original warm hand-painted 2D RPG ground background,1536x1024 landscape, matching image1 countryside's soft brushwork and earthy palette, with image2's elevated-oblique camera and small-ground-detail scale. Image1 is place/style reference, NOT composition to copy. Image2 is the exact gameplay layout reference. This is the path through farmland and a small broadleaf wood toward a hill outside Linde. Camera looks down about55degrees, no horizon or sky. Continuous walkable ochre earth lane crosses horizontally LEFT TO RIGHT across middle68% of entire image, same ground level at both edges. Upper20%: modest wood fence and vegetable/wheat field corner blends into broadleaf shrubs and tree roots; lower12%: scattered small grasses/leaves and tiny pebbles. Keep ALL tree trunks, fence, boulders and field outside central playable lane. Fine shallow damp patches near path edge, but a clear dry corridor through centre. Vegetation small and coherent with human feet, no gigantic leaves. Do NOT draw any tower or building, no people, characters, creatures, props, jars, UI, labels, pixel filter, black outlines. No diagonal path, no fork, no vanishing point, no cliff, no repeated obvious landmark. Both left/right borders must have matching foliage height and earth level for a continuous horizontal loop. Opaque full painted background. Quiet sunny late afternoon filtered through leaves, warm greens/gold."
+    },
+    {
+      "name": "hill-night-lane-loop-v1",
+      "source": "assets/source/storybook/hill-night-lane-loop-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-1b563bdb-e912-42a3-919b-6705ba49c38c.png",
+      "prompt": "Lighting-weather precise edit. Image1 is the exact ground layout to preserve: same horizontal ochre earth lane, fence, field, broadleaf tree roots, grasses, pebbles, elevated55degree camera and1536x1024 framing. Image2 is ONLY moonlit painting/color reference, not its diagonal road, tower or composition. Change image1 to gentle early-night lighting after sunset, muted deep blue-green trees, lavender-blue shaded earth, a quiet silvery moonlight wash. Keep readable middle68% playable path and small ground detail. No actual sky, moon, tower, windows, house, people, jar, lantern, UI or text. No painted pools of light: moving characters' carried lights will be rendered separately. Keep all physical objects exactly in place. Warm hand-painted2D RPG brushwork, original brown outlines softened by night. Full opaque background, no black crushed details, no pixel-art filter. Matching left/right ground levels for horizontal repetition."
+    },
+    {
+      "name": "hill-tower-landmark-v1",
+      "source": "assets/source/storybook/hill-tower-landmark-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-869f67b7-8e34-473b-995a-602a5c3f7b4e.png",
+      "prompt": "Transparent cutout game scenery for original warm hand-painted2D RPG. Reference image1 establishes the exact beige-grey round stone tower wall, ivy and arched brown wooden iron-strapped door identity; image2 establishes elevated-oblique55degree game camera and soft painting. Draw ONE isolated modest old cylindrical stone signal tower, complete from small flat crenellated top to stone footing with two shallow steps, no ground tile or surroundings. Door faces lower-left/front, large enough for a person: door height aboutone quarter of totaltowerheight, width aboutone quarter of towerdiameter. Tower totalheight about2timesitswidth, squat historic village watchtower with thin slit windows and slight ivy nearbase, no flags, no modern parts, no magical symbols. Muted sunlight, visible top stone rim and sill surfaces consistent55degree downwardcamera. Keep entire tower and steps fully inside generous transparent margins. Real alpha background. No sky, field, tree, people, flame or glow, castshadowblob, text, frame or pixel filter. Fine warm painted stone texture and brown soft outlines matching reference. Centered single object, not a sheet."
+    }
+  ],
+  "validation": [
+    "43 related tests passed: fixed arrival landmark, scale ratio, planted forage, scene paths and mirrored tile boundaries",
+    "PC1243x1244 full15-node route; browser mobile390x844 route plus targeted ending and forage playback",
+    "No console errors captured in mobile review",
+    "Night background is prepared only; handheld jar, shawl and lamp effects are still pending",
+    "Typecheck, scoped lint and production build passed; default coverage7/37 adventures, no missing registered assets"
+  ],
+  "notes": [
+    "Night background prepared; night handheld choreography is not yet enabled in the default game."
+  ]
+}

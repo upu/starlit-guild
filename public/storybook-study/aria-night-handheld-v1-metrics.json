@@ -1,0 +1,82 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/aria-night-hand-v2.png",
+    "scale": 0.27235772357723576,
+    "left": 58,
+    "top": 42,
+    "width": 71,
+    "height": 134,
+    "baseline": 176
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/aria-night-hand-v2.png",
+    "scale": 0.27235772357723576,
+    "left": 46,
+    "top": 84,
+    "width": 87,
+    "height": 92,
+    "baseline": 176
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/aria-night-hand-v2.png",
+    "scale": 0.27235772357723576,
+    "left": 58,
+    "top": 53,
+    "width": 80,
+    "height": 123,
+    "baseline": 176
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/aria-night-hand-v2.png",
+    "scale": 0.27235772357723576,
+    "left": 58,
+    "top": 41,
+    "width": 69,
+    "height": 135,
+    "baseline": 176
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/aria-night-walk-v2.png",
+    "scale": 0.3036827195467422,
+    "left": 34,
+    "top": 38,
+    "width": 89,
+    "height": 138,
+    "baseline": 176
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/aria-night-walk-v2.png",
+    "scale": 0.3036827195467422,
+    "left": 40,
+    "top": 44,
+    "width": 74,
+    "height": 132,
+    "baseline": 176
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/aria-night-walk-v2.png",
+    "scale": 0.3036827195467422,
+    "left": 41,
+    "top": 43,
+    "width": 81,
+    "height": 133,
+    "baseline": 176
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/aria-night-walk-v2.png",
+    "scale": 0.3036827195467422,
+    "left": 37,
+    "top": 43,
+    "width": 89,
+    "height": 133,
+    "baseline": 176
+  }
+]

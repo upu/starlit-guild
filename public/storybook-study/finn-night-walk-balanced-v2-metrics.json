@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-night-walk-balanced-v2.png",
+    "scale": 0.2564991334488735,
+    "left": 46,
+    "top": 28,
+    "width": 88,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.20258332215528
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-night-walk-balanced-v2.png",
+    "scale": 0.2564991334488735,
+    "left": 52,
+    "top": 29,
+    "width": 84,
+    "height": 147,
+    "baseline": 176,
+    "headX": 96.1700505174797
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-night-walk-balanced-v2.png",
+    "scale": 0.2564991334488735,
+    "left": 45,
+    "top": 28,
+    "width": 89,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.2395511788885
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-night-walk-balanced-v2.png",
+    "scale": 0.2564991334488735,
+    "left": 51,
+    "top": 29,
+    "width": 86,
+    "height": 147,
+    "baseline": 176,
+    "headX": 96.39530711737751
+  }
+]

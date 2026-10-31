@@ -1,0 +1,20 @@
+{
+  "tool": "image_gen",
+  "prompt": "Revise this transparent four-pose sprite strip for the same adult healer Mira. Keep the first standing figure absolutely unchanged as the size calibration. Keep identical head size, face, hairstyle, moon ornament, clothing design and warm hand-painted outline in all four cells. Correct the three seated figures so they clearly sit on a standard chair, not kneeling or crouching: hips and bent knees supported at chair-seat height, thighs nearly horizontal, lower legs drop vertically to the floor, visible sandals and ankles below the knees. Lift hips and knees a little and lengthen the visible shin area relative to current seated poses, while preserving anatomy and the head scale. Robe should drape off the edge of an invisible seat rather than form a triangular pile on the floor; retain costume length without hiding the shin silhouette completely. Seated total height approximately 87% of standing, with same foot baseline. Second cell calm hands on lap, third cell one open palm explaining, fourth cell gentle small smile hands on lap. Same right-facing three-quarter elevated camera. No chair or stool drawn, no ground shadows, no text or guides, four evenly spaced separate full-body sprites in one horizontal row, transparent background, generous gutters and nothing clipped.",
+  "references": [
+    "assets/source/storybook/mira-seat-v2.png"
+  ],
+  "source": "assets/source/storybook/mira-seat-v3.png",
+  "output": "public/storybook-study/mira-seat-v3.webp",
+  "registration": {
+    "cell": 192,
+    "feet": 176,
+    "standing": 126,
+    "seated": [
+      113,
+      113,
+      113
+    ]
+  },
+  "scope": "Indoor study only; redraw drape and lower legs for chair sitting."
+}

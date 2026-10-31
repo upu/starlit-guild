@@ -5,10 +5,10 @@ export async function registerHeroPose(
   frame,
   headWidth,
   standingHeight,
-  { cell = 128, foot = 120, headCenter = cell / 2 } = {},
+  { cell = 128, foot = 120, headCenter = cell / 2, headFraction = 0.25 } = {},
 ) {
   const crop = await sharp(frame.cell).extract(frame.box).png().toBuffer();
-  const head = await headBounds(crop, 0.25);
+  const head = await headBounds(crop, headFraction);
   const scale = headWidth / head.width;
   let width = Math.round(frame.box.width * scale);
   const height = standingHeight ?? Math.round(frame.box.height * scale);
@@ -16,14 +16,20 @@ export async function registerHeroPose(
   // crowns and soles when the requested standing height changes the aspect.
   let resized = await sharp(crop).resize(width, height, { fit: "fill" }).png().toBuffer();
   let bounds = await spriteBounds(resized);
-  let deliveredHead = await headBounds(await sharp(resized).extract(bounds).png().toBuffer(), 0.25);
+  let deliveredHead = await headBounds(
+    await sharp(resized).extract(bounds).png().toBuffer(),
+    headFraction,
+  );
   // Resampling and a changed standing aspect can change the measured hair edge.
   // Correct the delivered head width, rather than trusting the source rectangle.
   if (standingHeight && Math.abs(deliveredHead.width - headWidth) > 1) {
     width = Math.round((width * headWidth) / deliveredHead.width);
     resized = await sharp(crop).resize(width, height, { fit: "fill" }).png().toBuffer();
     bounds = await spriteBounds(resized);
-    deliveredHead = await headBounds(await sharp(resized).extract(bounds).png().toBuffer(), 0.25);
+    deliveredHead = await headBounds(
+      await sharp(resized).extract(bounds).png().toBuffer(),
+      headFraction,
+    );
   }
   const left = Math.round(headCenter - bounds.left - deliveredHead.left - deliveredHead.width / 2);
   const top = foot - bounds.top - bounds.height;

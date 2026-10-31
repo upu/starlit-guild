@@ -13,6 +13,11 @@ import { interludes } from "../lib/interludes.ts";
 import { chapterThreeSpeakers } from "../lib/chapter-three-dialogue.ts";
 import { chapterFourSpeakers } from "../lib/chapter-four-stories.ts";
 import { pumpetyBattleExchanges } from "../lib/pumpety-battle-banter.ts";
+import { chapterThreeBanter } from "../lib/chapter-three-banter.ts";
+import {
+  chapterFourBattleBanter,
+  licoRecordsPatientBanter,
+} from "../lib/chapter-four-battle-banter.ts";
 import { sourceForStageBanter, sourceForStory, validateStorySources } from "./script-sources.mjs";
 
 const outputDirectory = new URL("../docs/story/game-script/", import.meta.url);
@@ -124,6 +129,10 @@ function stageBanter(quest, document) {
     lines.push(`#### ${describeConditions(conditions)}`, "");
     for (const line of dialogue) lines.push(formatLine(line), "");
   }
+  if (quest === "keystone-night-road") {
+    const dialogue = chapterThreeBanter({ quest, node: 0, phase: "work", enemies: [{ hp: 1 }] });
+    lines.push("#### 魔物との戦闘中", "", ...dialogue.flatMap((line) => [formatLine(line), ""]));
+  }
   if (quest === "sweet-blockade") {
     lines.push(`戦闘中の編集元：${sourceLink(document, "lib/pumpety-battle-banter.ts")}`, "");
     for (const [key, dialogue] of Object.entries(pumpetyBattleExchanges)) {
@@ -135,6 +144,49 @@ function stageBanter(quest, document) {
       }[key];
       lines.push(`#### ${label}`, "", ...dialogue.flatMap((line) => [formatLine(line), ""]));
     }
+  }
+  if (quest === "lico-records") {
+    const run = {
+      quest,
+      node: 14,
+      nodes: 15,
+      phase: "work",
+      enemies: [{ hp: 1, trick: "lico", actions: 0 }],
+    };
+    const opening = chapterFourBattleBanter(run);
+    run.enemies[0].actions = 1;
+    const smoke = chapterFourBattleBanter(run);
+    lines.push(`戦闘中の編集元：${sourceLink(document, "lib/chapter-four-battle-banter.ts")}`, "");
+    for (const [label, dialogue] of [
+      ["仕掛けとの対峙", opening],
+      ["しびれ煙", smoke],
+      ["ミラが最初にしびれた場合", licoRecordsPatientBanter(smoke, "mira")],
+    ])
+      lines.push(`#### ${label}`, "", ...dialogue.flatMap((line) => [formatLine(line), ""]));
+  }
+  if (quest === "merrill-seedlings") {
+    const master = { hp: 1, trick: "merrill", actions: 0 };
+    const run = {
+      quest,
+      node: 0,
+      nodes: 1,
+      phase: "work",
+      enemies: [master, { hp: 1, trick: "mushroom" }],
+    };
+    const variants = [];
+    for (const [label, actions] of [
+      ["メリルとの対峙", 0],
+      ["コロタケの登場", 1],
+      ["メリルの演奏", 2],
+    ]) {
+      master.actions = actions;
+      variants.push([label, chapterFourBattleBanter(run)]);
+    }
+    master.hp = 0;
+    variants.push(["演奏が止まった後", chapterFourBattleBanter(run)]);
+    lines.push(`戦闘中の編集元：${sourceLink(document, "lib/chapter-four-battle-banter.ts")}`, "");
+    for (const [label, dialogue] of variants)
+      lines.push(`#### ${label}`, "", ...dialogue.flatMap((line) => [formatLine(line), ""]));
   }
   return lines;
 }

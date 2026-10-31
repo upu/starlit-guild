@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-24",
+  "status": "verified in chapter 4-8",
+  "method": "built-in image_gen",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/merrill-seedlings-v1.png",
+      "sha256": "08e1c15291687b15e189d30b48b271bd0096ff031ca5ccea9654fbc21ab1b392",
+      "status": "superseded; decorative music and taste marks removed in v2",
+      "references": [
+        "public/story-stage/merrill-poses.webp",
+        "docs/characters/merrill-reference-sheet.png"
+      ],
+      "prompt": "Create a transparent pixel-art RPG sprite sheet of Merrill using the two reference images. Reference 1 is the exact existing pixel style and chibi head/body proportions to match; reference 2 defines costume and LEFT arm gauntlet-harp anatomy only, do NOT use its realistic proportions. 4 columns by 2 rows, eight separate whole-body poses with generous clear gutters. All face screen RIGHT in 3/4 view. Identical head size and costume and standing height across all standing cells, feet baseline consistent within each row. Preserve green short hair, green eyes, living red pomegranate blossom, red ribbon, food-packed travel backpack, short brown outfit, boots. The LEFT forearm/hand back wears an integrated reddish gauntlet with strings on its dorsal outer face. Right arm bare. Never draw a separate harp. Poses row1: (1) leaning forward reaching low with bare right fingers to pick a tiny moss sprig (no basket drawn); (2) right fingertips at lips tasting tiny green fragment, pleased; (3) playing strings on LEFT forearm with RIGHT fingers, left forearm horizontal at chest, left foot planted, right toe lightly tapping; (4) second playing frame with right fingers moved and right toe lowered, same head and body position. Row2: (1) bare right hand held open forward receiving a small object, nothing painted in hand; (2) bare right hand placing a little green moss sprig into open small belt pouch, visible gauntlet on resting left arm; (3) crouched reaching down with right hand, left forearm steady in front to support a separately rendered pot, no pot drawn, crouch shorter body but identical head size; (4) standing carrying a small dark iron cooking pot with both hands at waist, pot open top, no contents. Clean crisp pixel clusters, consistent outlines, no smoothing, no labels, no scenery, no floor shadows. Transparent background. Eight poses, exactly four equally spaced cells in each of two rows."
+    },
+    {
+      "source": "assets/source/story-stage/merrill-seedlings-v2.png",
+      "sha256": "88d5b9e1c7c85a46fd09854ea3f1a835fe23d8befd10b0f1607d2391e1ee91a0",
+      "status": "adopted; registered scale and chapter 4-8 rendered verification passed",
+      "references": [
+        "assets/source/story-stage/merrill-seedlings-v1.png"
+      ],
+      "prompt": "Edit the provided 4 by 2 sprite sheet: remove ALL background pixels, all colored halos/glows, and the floating orange music notes / taste marks. Output genuine transparent alpha background (alpha zero) everywhere outside the eight figures. Preserve the eight figures exactly, all character pixels, poses, proportions, costumes, hands, moss, pot, and their positions; no recoloring or repainting characters. Do not retain any backdrop, cast shadows, ambient gradients, dark matte, checkerboard, or glow. Transparent clean cutout sheet only."
+    },
+    {
+      "source": "assets/source/story-stage/lico-paper-v1.png",
+      "sha256": "acc9da9fbc3e56a161124424550f30a3b31718e8a0ff9c9f3625daec3b0a1ca9",
+      "status": "superseded; strike motion unreadable at rendered size",
+      "references": [
+        "work/lico-study-review.png (existing Lico frames 68-75 enlarged for reference)"
+      ],
+      "prompt": "Create a transparent pixel-art sprite sheet, ONE ROW of FOUR full-body chibi Lico poses. Reference image is the existing character and pixel style to match exactly: sleepy red-haired young alchemist, round glasses, burgundy dress, white apron front, short dark cape, brown boots, small full-body proportions. ALL FOUR have EXACT same head width, total standing height, feet baseline, clothing, facing screen RIGHT. No scenery, no shadows, no effects, no decorative marks, no text. Transparent background with wide gutters. Each holds a SMALL brown field notebook in her LEFT hand at waist/chest height. Pose1: she has just written a note and is drawing one firm horizontal crossing-out stroke with the pen in her right hand across the page, pen hand near left edge. Pose2: same crossing-out motion endpoint, pen hand at right edge, notebook fixed. Pose3: notebook open in left hand, RIGHT hand pinches upper right corner of a page and pulls it partly free, page still attached near spine, clear tearing gesture. Pose4: same notebook and left hand position, RIGHT hand now holds the separate small torn sheet slightly to her right, visible gap between sheet and notebook. Only one small torn sheet. Simple clean pixel clusters, no smooth illustration, preserve glasses and messy top hair curl. Match the source's exact head/body ratio, never enlarge head in action frames."
+    },
+    {
+      "source": "assets/source/story-stage/merrill-pot-v1.png",
+      "sha256": "b33197c3b47178f828b23bc1b25d0acebbfcade33b22932fb794ebdad668d16f",
+      "status": "adopted; short handles verified while crouching and carrying",
+      "references": [
+        "assets/source/story-stage/merrill-seedlings-v2.png"
+      ],
+      "prompt": "Create a single transparent-background pixel-art inventory prop: the SMALL open dark iron cooking saucepan held by the green-haired girl in the LAST cell (bottom right) of the provided reference. Use that pot as exact shape/color/style reference, no character. Round dark gray-black iron pot, OPEN visible oval mouth and dark interior, short straight sides, rounded bottom, TWO low stubby side handles at rim height. Absolutely NO tall overhead bail handle, NO lid, NO fire, no steam, no food or mushroom inside, no shadows or backdrop. Slight overhead three-quarter RPG view matching reference, clean pixel clusters and dark outline. Isolated centered object with transparent empty margins."
+    },
+    {
+      "source": "assets/source/story-stage/lico-paper-v2.png",
+      "sha256": "982ffa0dfcc24ac3a0b6e5d4337dc8d4837439d33687b8b430379f1672642439",
+      "status": "adopted; strike and tearing poses verified in chapter 4-8",
+      "references": [
+        "assets/source/story-stage/lico-paper-v1.png"
+      ],
+      "prompt": "Edit ONLY the SECOND character cell of this four-cell transparent sprite sheet. Preserve cells 1,3,4 and all their pixels and positions unchanged. In cell2, preserve head, body, feet, notebook position and all scale exactly. Move her RIGHT pen-holding hand conspicuously to the far RIGHT edge of the same open notebook: extend the forearm toward screen right, the pen tip at far right page edge, so cell1 hand at left/start and cell2 hand at right/end read as a horizontal crossing-out stroke even when reduced to a 96px high sprite. Add a single dark horizontal struck-through line across the notebook page under the pen. Do NOT duplicate the first cell's hand position; there must be a clear visible arm/hand difference. Transparent background everywhere, no labels, no glows, no scenery, no new props."
+    }
+  ]
+}
+
+

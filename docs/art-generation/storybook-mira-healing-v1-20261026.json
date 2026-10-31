@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG 8-pose sprite sheet4columns2rows of EXACT Mira from reference. Preserve silver-lavender bob hair, tiny flower hair ornament, gentle sleepy/drooping eyes, elaborate white and pale blush healer robe, small brown boots, short slim adult build and fine warm outlines. Elevated45degree downward threequarter camera, all face RIGHT, consistent head and body scale, complete boots and gutters, no ground. Row1:0 standing neutral calibration;1 kneeling low on one knee reaching both hands to RIGHT to bandage an invisible person's hand at her face/upper-chest height;2 same kneeling treatment making a tiny adjustment of fingers;3 half rising from kneel, both hands press on own knees. Row2:4 just stood up, one hand on knee with slight tired lean, complete standing legs;5 standing tired gentle expression;6 standing both hands delicately holding an invisible broad wrapping cloth in front of waist;7 same holding pose with tiny hand adjustment. Kneeling silhouettes around75% standing height WITHOUT enlarging head or torso. No bandage or patient included in hands, no staff, table, chair, cloth or other held prop. Reference has repeated tiny figures; render detailed clean painted shapes with exact same identity. All8 figures independent, spaced far apart.",
+  "references": [
+    "public/storybook-study/mira-conversation-v1.webp"
+  ],
+  "source": "assets/source/storybook/mira-healing-v1.png"
+}
