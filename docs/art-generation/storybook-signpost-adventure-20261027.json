@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-27",
+  "tool": "No new generation; reuse accepted fork,portable sign,closed packing bags,medicine box and character atlases",
+  "scope": "2-5 fixed fork default rollout, continuous puppet acquisition and hero recovery",
+  "assets": [
+    "public/storybook-study/mountain-fork-v1.png",
+    "public/storybook-study/signpost-portable-v1.webp",
+    "public/storybook-study/packing-bag-close-3-v1.webp",
+    "public/storybook-study/homeward-medicine-v1.webp",
+    "public/storybook-study/leon-carry-v1.webp",
+    "public/storybook-study/leon-carry-walk-v1.webp",
+    "public/storybook-study/leon-work-v1.webp",
+    "public/storybook-study/leon-packing-turn-v1.webp",
+    "public/storybook-study/aria-forage-v1.webp",
+    "public/storybook-study/puppet-poses-v1.webp"
+  ],
+  "runtime": "Shared fixedRoadLayout projects backdrop,heroes,puppets and props. Renderer stage forest keeps one horizontal projection for fixed ground. projectFixedEffects reanchors combat effects after projection. RoadSignpostActions holds one portable sign and3stable luggage props, preserves skipped resolved battle stops and waits for handoff before next visual node. RoadSignpostCarry has fall/approach/grasp/rise/turn/carry/plant/done,measured palms and four distance-driven walk/turn frames. Prop origin(0.35,0.82) attaches rope grip while rotating; other props retain default bottom-center. Original gameplay/saves unchanged. RoadSignpostOwner starts with sign already carried, approaches and picks it on later cycles, reuses same actor scale/foot during actual ambush, drops at identical rope anchor and departs into branch. Square NPC pose registration and optional size/alpha reuse painted enemy crop; other workers retain default size and alpha. Default16/37; comparison OFF and custom backgrounds preserved.",
+  "validation": [
+    "39 related tests passed: both widths,all9visual points,3placements,unique sign/3stable parcels,4walk/turn frames,fixed-enemy impacts,save identity and existing waterway/packing/picnic/painted enemy regressions",
+    "Browser390x844 full route1086screenshots,first1.276,last102.377seconds; recording calls have gaps",
+    "Final carry checkpoint:PC1243x1244 101screenshots1.184-15.011seconds; browser390x844 196screenshots1.267-15.044seconds;focused filmstrips inspected",
+    "Typecheck,scoped ESLint and source build passed; PCfull-route,physical-phone and every-frame video verification not completed",
+    "Owner revision:51 related tests passed, including both widths, opening continuity, pickup image corners, live enemy handoff, four travel frames, drop pivot, departure and cold completed default; five-member revisit test also passes.",
+    "Owner revision PC1243x1244:666screenshots0.26-92.186seconds;mobile390x844:1100screenshots0-94.546seconds; both reach arrival, recording segments have gaps. Full-route filmstrips and dense pickup crop inspected.",
+    "Cold mobile opening supplement:323screenshots0-23.975seconds and initial carried-sign screenshot. No physical-phone or every-frame-video claim."
+  ],
+  "remaining": "21 adventures,full dialogue audit,wheels/enemy/effects and release remain for whole goal. One repeated-restart loading delay remained without console errors; same tab eventually reached arrival, new tab rendered normally. Investigate independently; do not label resolved."
+}

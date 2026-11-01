@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { rpgBackground } from "./rpg-backgrounds.mjs";
 import {
   digest,
   fileHash,
@@ -46,7 +47,11 @@ export async function optimizeScenery({
     if (!check) mkdirSync(outputDir, { recursive: true });
     for (const { name } of sources.sort((a, b) => a.name.localeCompare(b.name))) {
       const source = path.join(sourceDir, name),
-        sourceHash = fileHash(source),
+        originalHash = fileHash(source),
+        camera = await rpgBackground(base, "scenery", name.replace(".png", "")),
+        sourceHash = camera
+          ? digest(Buffer.concat([Buffer.from(originalHash), camera.raw]))
+          : originalHash,
         outputs = {};
       for (const variant of variants) {
         const target = path.join(outputDir, name.replace(".png", `-${variant}.webp`));
@@ -60,14 +65,16 @@ export async function optimizeScenery({
             throw Error(
               `生成画像が未更新です: ${name} (${variant})。npm run images:optimize を実行してください。`,
             );
-          await resizeToWebp(source, target, profiles[variant]);
+          await resizeToWebp(camera?.image ?? source, target, profiles[variant]);
           log(`生成: ${path.basename(target)}`);
         }
         outputs[variant] = { hash: fileHash(target), bytes: readFileSync(target).length };
       }
-      if (fileHash(source) !== sourceHash)
+      const currentCamera = await rpgBackground(base, "scenery", name.replace(".png", ""));
+      if (fileHash(source) !== originalHash || (camera && !camera.raw.equals(currentCamera?.raw)))
         throw Error("生成中に元画像が変更されました。再実行してください。");
       manifest.files[name] = {
+        ...(camera ? { cameraSource: camera.source } : {}),
         sourceHash,
         profileHash,
         sourceBytes: readFileSync(source).length,

@@ -1,0 +1,452 @@
+[
+  {
+    "art": "packing-cloth",
+    "source": "assets/source/storybook/common-packing-cloth-v1.png",
+    "reference": "public/story-stage/prop-packing-cloth.webp",
+    "output": "public/storybook-study/common-packing-cloth-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 108.5,
+      "width": 256,
+      "height": 62
+    },
+    "sourceBounds": {
+      "left": 14,
+      "top": 505,
+      "width": 1644,
+      "height": 377,
+      "area": 509004
+    },
+    "registered": {
+      "left": 0,
+      "top": 112,
+      "width": 256,
+      "height": 59
+    },
+    "sha256": "2ececc191d34a74f17d3e3025e0ce785bc756126bc2428b75a7e523785b51bba"
+  },
+  {
+    "art": "dragging-cloth",
+    "source": "assets/source/storybook/common-dragging-cloth-v1.png",
+    "reference": "public/story-stage/prop-dragging-cloth.webp",
+    "output": "public/storybook-study/common-dragging-cloth-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 41.5,
+      "width": 256,
+      "height": 129
+    },
+    "sourceBounds": {
+      "left": 7,
+      "top": 53,
+      "width": 1647,
+      "height": 844,
+      "area": 606196
+    },
+    "registered": {
+      "left": 2,
+      "top": 42,
+      "width": 252,
+      "height": 129
+    },
+    "sha256": "852279886d0f7c6136b74f5e9665bd929ef13775a5604a78eea99908c4c6d059"
+  },
+  {
+    "art": "delivery-bag",
+    "source": "public/storybook-study/honey-bag-v1.webp",
+    "reference": "public/story-stage/prop-delivery-bag.webp",
+    "output": "public/storybook-study/common-delivery-bag-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 11.79723502304148,
+      "top": 0,
+      "width": 232.40552995391704,
+      "height": 197
+    },
+    "sourceBounds": {
+      "left": 0,
+      "top": 0,
+      "width": 256,
+      "height": 200,
+      "area": 40249
+    },
+    "registered": {
+      "left": 12,
+      "top": 15,
+      "width": 232,
+      "height": 182
+    },
+    "sha256": "ee45a3b43ff95ec3c340588fde7ed29473b7b548e1178be5118ade1651e31780"
+  },
+  {
+    "art": "old-wrapper",
+    "source": "assets/source/storybook/common-old-wrapper-v1.png",
+    "reference": "public/story-stage/prop-old-wrapper.webp",
+    "output": "public/storybook-study/common-old-wrapper-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 29.5,
+      "top": 37.70703125,
+      "width": 197,
+      "height": 159.29296875
+    },
+    "sourceBounds": {
+      "left": 30,
+      "top": 206,
+      "width": 1195,
+      "height": 967,
+      "area": 605679
+    },
+    "registered": {
+      "left": 30,
+      "top": 38,
+      "width": 197,
+      "height": 159
+    },
+    "sha256": "fcd6c314a764dc7c87b31513d26537001f97740ab4cfd302084f8cd7fbbb00f9"
+  },
+  {
+    "art": "paper",
+    "source": "assets/source/storybook/common-paper-v1.png",
+    "reference": "public/story-stage/prop-paper.webp",
+    "output": "public/storybook-study/common-paper-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 21.603375527426167,
+      "top": 0,
+      "width": 212.79324894514767,
+      "height": 197
+    },
+    "sourceBounds": {
+      "left": 29,
+      "top": 26,
+      "width": 1264,
+      "height": 1150,
+      "area": 850075
+    },
+    "registered": {
+      "left": 22,
+      "top": 3,
+      "width": 213,
+      "height": 194
+    },
+    "sha256": "bd00f778bbc0ebd4337e908ed425c4b868e9cd1952e5ca19af58e4358694e503"
+  },
+  {
+    "art": "lap-napkin",
+    "source": "assets/source/storybook/common-lap-napkin-v1.png",
+    "reference": "public/story-stage/prop-lap-napkin.webp",
+    "output": "public/storybook-study/common-lap-napkin-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 29.5,
+      "top": 24.625,
+      "width": 197,
+      "height": 172.375
+    },
+    "sourceBounds": {
+      "left": 7,
+      "top": 136,
+      "width": 1241,
+      "height": 1073,
+      "area": 692817
+    },
+    "registered": {
+      "left": 30,
+      "top": 27,
+      "width": 197,
+      "height": 170
+    },
+    "sha256": "70fd3504c1082883ad88f33f146eb5d10a50faa47a558bfdcc6044a45b3086c8"
+  },
+  {
+    "art": "bread-half",
+    "source": "assets/source/storybook/common-bread-half-v1.png",
+    "reference": "public/story-stage/prop-bread-half.webp",
+    "output": "public/storybook-study/common-bread-half-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 29.5,
+      "top": 10.7734375,
+      "width": 197,
+      "height": 186.2265625
+    },
+    "sourceBounds": {
+      "left": 87,
+      "top": 161,
+      "width": 1103,
+      "height": 965,
+      "area": 730874
+    },
+    "registered": {
+      "left": 30,
+      "top": 25,
+      "width": 197,
+      "height": 172
+    },
+    "sha256": "1c97f88f8dd988dcffe9329bade307ebce58f30ce5b860ec40303cf29e6a51a3"
+  },
+  {
+    "art": "bread",
+    "source": "assets/source/storybook/common-wrapped-bread-v1.png",
+    "reference": "public/story-stage/prop-bread.webp",
+    "output": "public/storybook-study/common-wrapped-bread-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 1,
+      "width": 256,
+      "height": 195
+    },
+    "sourceBounds": {
+      "left": 7,
+      "top": 18,
+      "width": 1426,
+      "height": 1051,
+      "area": 936322
+    },
+    "registered": {
+      "left": 0,
+      "top": 7,
+      "width": 256,
+      "height": 189
+    },
+    "sha256": "2e54a68db4e4363bc80619cad7f0501826782674229c316699226153bcbe5955"
+  },
+  {
+    "art": "picnic-cloth",
+    "source": "public/storybook-study/walnut-cloth-v1.webp",
+    "reference": "public/story-stage/prop-picnic-cloth.webp",
+    "output": "public/storybook-study/common-picnic-cloth-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 77.83333333333334,
+      "width": 256,
+      "height": 41.33333333333333
+    },
+    "sourceBounds": {
+      "left": 0,
+      "top": 0,
+      "width": 480,
+      "height": 104,
+      "area": 42046
+    },
+    "registered": {
+      "left": 33,
+      "top": 78,
+      "width": 191,
+      "height": 41
+    },
+    "sha256": "a373c12ad760c27152b0327b14b4af9e150dcc589ec4fbc2cb715321e33813c6"
+  },
+  {
+    "art": "dish",
+    "source": "public/storybook-study/sample-bowl-v1.webp",
+    "reference": "public/story-stage/prop-dish.webp",
+    "output": "public/storybook-study/common-dish-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 28.5,
+      "width": 256,
+      "height": 140
+    },
+    "sourceBounds": {
+      "left": 0,
+      "top": 19,
+      "width": 256,
+      "height": 178,
+      "area": 35980
+    },
+    "registered": {
+      "left": 28,
+      "top": 29,
+      "width": 201,
+      "height": 140
+    },
+    "sha256": "46974067b977bc0e47303220f0e48e9686959e0ef317e2745bcdda0aa8a4e9e2"
+  },
+  {
+    "art": "moss",
+    "source": "public/storybook-study/moss-bowl-v1.webp",
+    "reference": "public/story-stage/prop-moss.webp",
+    "output": "public/storybook-study/common-moss-bowl-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 11.833333333333343,
+      "width": 256,
+      "height": 173.33333333333331
+    },
+    "sourceBounds": {
+      "left": 0,
+      "top": 18,
+      "width": 256,
+      "height": 179,
+      "area": 36168
+    },
+    "registered": {
+      "left": 4,
+      "top": 12,
+      "width": 248,
+      "height": 173
+    },
+    "sha256": "6fb3578ebdc218d24f092212c3a2861e521bdc0c0a95b456b43edce44cd90f1a"
+  },
+  {
+    "art": "stone",
+    "source": "assets/source/storybook/common-flat-stone-v1.png",
+    "reference": "public/story-stage/prop-stone.webp",
+    "output": "public/storybook-study/common-flat-stone-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 0,
+      "top": 27.16666666666667,
+      "width": 256,
+      "height": 142.66666666666666
+    },
+    "sourceBounds": {
+      "left": 56,
+      "top": 104,
+      "width": 1584,
+      "height": 772,
+      "area": 790129
+    },
+    "registered": {
+      "left": 0,
+      "top": 45,
+      "width": 256,
+      "height": 125
+    },
+    "sha256": "d9c1ea10a6748018b82bd43ef417f038f1ac70b7f7f64d1910d2134a6d6cc415"
+  },
+  {
+    "art": "quill",
+    "source": "assets/source/storybook/common-quill-v1.png",
+    "reference": "public/story-stage/prop-quill.webp",
+    "output": "public/storybook-study/common-quill-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 21.661538461538463,
+      "top": 0.038461538461532996,
+      "width": 210.70769230769233,
+      "height": 196.92307692307693
+    },
+    "sourceBounds": {
+      "left": 200,
+      "top": 36,
+      "width": 1202,
+      "height": 1038,
+      "area": 370960
+    },
+    "registered": {
+      "left": 22,
+      "top": 15,
+      "width": 211,
+      "height": 182
+    },
+    "sha256": "0ae197ddb18bd2957bf9617938b10adb2c5f1ae1669da5b5afe7346f0527cc7f"
+  },
+  {
+    "art": "spatula",
+    "source": "assets/source/storybook/common-spatula-v1.png",
+    "reference": "public/story-stage/prop-spatula.webp",
+    "output": "public/storybook-study/common-spatula-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 197
+    },
+    "referenceBox": {
+      "left": 36.19417475728156,
+      "top": 0,
+      "width": 183.61165048543688,
+      "height": 197
+    },
+    "sourceBounds": {
+      "left": 22,
+      "top": 21,
+      "width": 1179,
+      "height": 1258,
+      "area": 379417
+    },
+    "registered": {
+      "left": 36,
+      "top": 1,
+      "width": 184,
+      "height": 196
+    },
+    "sha256": "66b1b2e1a3c5f172b0da7135e704361026ba6d64b4ec5d5997b5686a9fae7d07"
+  },
+  {
+    "art": "travel-bundle",
+    "source": "assets/source/storybook/common-travel-bundle-v1.png",
+    "reference": "public/story-stage/travel-bundle.webp",
+    "output": "public/storybook-study/common-travel-bundle-v1.webp",
+    "canvas": {
+      "width": 256,
+      "height": 205
+    },
+    "referenceBox": {
+      "left": 48.756302521008394,
+      "top": 39.6218487394958,
+      "width": 156.76470588235296,
+      "height": 134.36974789915968
+    },
+    "sourceBounds": {
+      "left": 245,
+      "top": 148,
+      "width": 975,
+      "height": 831,
+      "area": 561078
+    },
+    "registered": {
+      "left": 49,
+      "top": 40,
+      "width": 157,
+      "height": 134
+    },
+    "sha256": "263058ffed636153a209a1f426b4f55094cb363ab65d9515e665bce314165a7d"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Four fullbody original warmhandpainted2D RPG worker sprites ontransparentbackground ONE ROW4 equalcells elevated45degree 3/4facingLEFT. Exactreferencebrownponytail yellowshirt leatherbrownapron trousersboots. Criticalcalibration firststandingheight500px head140px. Following3seatedposes MUSTHAVE EXACTSAME140px head andsamebootdimensions andbodybuild, seatedheight390px approximately78percentstandingheight. DO NOT enlarge seatedheadorfillcells. Commonfeetbaseline, visiblylowerheadsinseatedposes. 0neutralstandcalibration. 1 sitsLOW oninvisiblechair knees90degrees bootedfeetflat, nearhand EMPTYloosegrip atlowerchest forimaginarytinycup farhandflatknee. 2 exactsameseatedbodyheadfeet, nearhand EMPTYcurvedgrip atlipstosip. 3 samelowseat nearhandreachesLEFTatwaisttowardmeal, EMPTYhand. No cupsactualfoodchairtablegroundshadowtext. Completehairhandsfeet alpha margins. Samefaceandphysicalanatomy. Softwarmnaturalcolorsnotpixelart.",
+  "references": [
+    "assets/source/storybook/worker-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-worker-drinks-v1.png"
+}

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent sprite atlas exactly EIGHT full-body isolated sprites in 4 columns TWO rows. Reference1 identity brown-haired young adult cart driver in ochre short-sleeve shirt, brown work vest/trousers, belt and brown boots. Reference2 warm hand-painted chibi 2D RPG style with soft texture fine brown outlines, elevated three-quarter 45degree view, no pixel grid. Face SCREEN RIGHT in all sprites, exact same head size, body mass and boot size across row/poses, common sole baseline in each cell. Row1: col0 neutral standing calibration; col1 standing still holding an invisible handcart shaft BEHIND him toward SCREEN LEFT with rear arm extended behind at hip height, front hand relaxed; col2 same stance glancing back left with hand still reaching behind; col3 small open front hand gesture while rear hand holds invisible shaft. Row2 FOUR consecutive WALKING frames pulling invisible handcart behind to SCREEN LEFT, body leans slightly forward toward right, rear hand always at same behind-left hip position. Clear four-step leg cycle alternating feet and bent knees, not sliding: left forward, passing, right forward, passing. Do not draw cart, poles, luggage, shadows, text or grids. No extra arms or fingers. Fully show head/boots, padding all around.",
+  "references": [
+    "public/story-stage/worker-poses.webp",
+    "assets/source/storybook/keeper-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-cart-driver-v1.png"
+}

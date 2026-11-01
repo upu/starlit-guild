@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this eight-sprite sheet, preserve characteridentities, costume, bodyproportions, exactspritepositions, camera, headsize, feet and transparentbackground. CRITICALremove ALL ACTUAL CUPS, glasses or drinkobjects from everypose: hands must be EMPTY because cups are separategameprops. ARIA top row: in second seatedpose (column2) left/farhand rests FLAT onherknee, onlynear/right hand makes small loose gripatwaist for imaginaryglass. In third seatedpose(column3) FARHAND MUSTLIEFLAT ON KNEE, NO CUP inlap, only near/right hand raisedtolips togrip imaginaryglass. Toprowfourth toastpose: farhand flatonknee, nearhand extendedright EMPTY gentlegrip. Remove any circularcup-shaped object betweenfingers, maintainclearfingeranatomy. Leonbottomrow seatedposes likewiseEMPTYnearhand gentlegrip atwaist/lips/toast and farhand flatonknee. Standingposesunchanged. No propsorbackgroundadded. Eight separatedfullbody sprites samecelllayout andscale, do not resize or enlarge. Real alpha transparency.",
+  "references": [
+    "assets/source/storybook/brekka-pair-drinks-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-pair-drinks-v2.png"
+}

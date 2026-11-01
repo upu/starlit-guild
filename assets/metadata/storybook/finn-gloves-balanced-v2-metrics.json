@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 58,
+    "top": 28,
+    "width": 73,
+    "height": 148,
+    "baseline": 176,
+    "headX": 99.5596394667148
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 58,
+    "top": 29,
+    "width": 68,
+    "height": 147,
+    "baseline": 176,
+    "headX": 93.56932464941617
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 57,
+    "top": 30,
+    "width": 70,
+    "height": 146,
+    "baseline": 176,
+    "headX": 96.6182670855255
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 56,
+    "top": 29,
+    "width": 76,
+    "height": 147,
+    "baseline": 176,
+    "headX": 93.8561963328107
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 56,
+    "top": 30,
+    "width": 93,
+    "height": 146,
+    "baseline": 176,
+    "headX": 95.63418183247981
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 51,
+    "top": 29,
+    "width": 97,
+    "height": 147,
+    "baseline": 176,
+    "headX": 94.78220125012439
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 55,
+    "top": 29,
+    "width": 97,
+    "height": 147,
+    "baseline": 176,
+    "headX": 95.27562801176188
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+    "scale": 0.33867276887871856,
+    "left": 52,
+    "top": 31,
+    "width": 105,
+    "height": 145,
+    "baseline": 176,
+    "headX": 106.76432563894693
+  }
+]

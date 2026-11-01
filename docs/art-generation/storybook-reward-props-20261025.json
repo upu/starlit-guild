@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Transparent two-cell prop sheet for a warm hand-painted 2D RPG in the reference's soft painted style. Two equal square cells side by side, isolated props with generous transparent margins. LEFT: a small brown leather drawstring coin purse tied shut, no coins outside, softly worn leather, viewed from elevated 50-degree downward three-quarter camera. RIGHT: one small amber glass healing tincture bottle with cork stopper and plain cream paper label tied around neck, softly translucent brown liquid, same elevated camera. No text, no lettering, no symbols, no glow. Muted warm palette, delicate brown outlines, readable at tiny game scale. No pixel art, no floor, no characters, no background or shadow blob. Entire objects fully within their own cells.",
+  "source": "assets/source/storybook/reward-props-v1.png",
+  "outputs": [
+    "public/storybook-study/reward-pouch-v1.webp",
+    "public/storybook-study/healing-bottle-v1.webp"
+  ]
+}

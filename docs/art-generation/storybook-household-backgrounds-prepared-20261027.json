@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "accepted": [
+    {
+      "name": "settlement-house-v1",
+      "prompt": "Style-transfer edit of image1, preserving its mountain village cottage/courtyard setting and entrance on upper-left; image2 is ONLY the warm painted RPG medium reference, not a place to copy. Repaint as a cohesive warm hand-painted2D RPG background with fine brown linework, muted earth/leaf colors and soft gouache shading, no pixel grid. Elevated oblique camera about45degrees down, 3:2 landscape1536x1024. Modest plaster-and-timber house with red-brown tiles upper-left, wooden door centered near19%ofimagewidth, its bottom doorstep at40%ofimageheight; door itself roughly21%ofimageheight so small walking RPG people fit. A kitchen window beside door, herb garden behind low stone wall upper-right, simple uphill village lane visible far right. Broad walkable courtyard occupies lower55%ofimage: evenly scaled small dirt stones and short grass, paths from door to centre and lower edge. Keep foreground free of large obstacles where figures will walk. Gentle clear daylight, warm but not orange sunset, usable both arrival and next morning. No tower, no city skyline, no new landmark, no people, no cart, no medicine props, no text/UI.",
+      "source": "assets/source/storybook/settlement-house-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-a2abb174-65ad-4d50-9818-5fb47a198d86.png",
+      "status": "integrated in 2-8 and 2-9; reviewed with actors at PC1243x1244 and mobile-width390x844"
+    },
+    {
+      "name": "settlement-patient-room-v1",
+      "prompt": "Edit the room in image1 into a separate mountain-settlement family's patient room, keeping its warm painted2D RPG look, elevated45degree oblique view and3:2 landscape1536x1024 composition. Important: REMOVE the built-in bed, bedside stand, rug, trunk and all loose furniture from the RIGHT side; those will be separate animated stage objects. Leave clean continuous wooden floor there, with clear visible floorboard perspective. Back wall across upper quarter, plaster/timber walls, small modest hearth and kettle on the upper-LEFT, hanging pans and a bucket shelf at far left; plain kitchen doorway on left side. Back-right simple window sees only soft green mountain foothills and sky, NO TOWER or town skyline. No people. Broad uncluttered walkable floor lower65% with subtle plank grain (not giant boards); space for an independent bed near right-middle, a chair just left of it, and a small delivery table in foreground-centre. Natural daylight with small warm hearth glow, cozy lived-in home not clinic or noble room. Preserve restrained warm gouache and fine brown outlines, no pixel grid. No text, no UI, no new landmarks, no baked bed/chair/table on floor.",
+      "source": "assets/source/storybook/settlement-patient-room-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-307fb9ea-6952-410e-9588-3d21d104a1e7.png",
+      "status": "integrated in 2-8 and 2-9; reviewed with actors at PC1243x1244 and mobile-width390x844"
+    }
+  ],
+  "status": "Integrated; scene verification recorded in storybook-households-20261027.json"
+}

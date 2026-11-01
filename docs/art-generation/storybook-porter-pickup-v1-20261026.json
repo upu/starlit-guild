@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Four original warm handpainted 2D RPG NPC sprites on transparent background, 4 columns1row. Reference exact ponytailworker identity/costume and elevated45degree camera. SAME head size, boot dimensions, body scale allposes. Allface viewerLEFT. 0 neutral standing fullbody for scale, brownponytail yellowshirt brownapron trousersboots. 1 crouches naturally withkneesbent and one knee low, nearhand reaches toward bottle neck atfloorheight onhisLEFT, EMPTYhand no bottle drawn. Head lowers to about75percent standingheight, bootsplanted, exactsameanatomy. 2 halfway rising with kneesstillbent, nearhand grips an imaginary smallbottle byneck at lowwaistheight, EMPTYhand, totalheightabout85percentstandingheight. 3 fullstanding withnearhand grippingimaginarybottleneck at waistheight, EMPTYhand. No bottle included (separateprop), no shadowsgroundscenerytext orlabels. Wholebodyhairbootsvisible ampletransparentmargins, no enlargementofcrouchedposes. Eachsamephysicallysizedman.",
+  "references": [
+    "assets/source/storybook/worker-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/porter-pickup-v1.png"
+}

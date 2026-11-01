@@ -1,0 +1,390 @@
+/* Night scene: shared calibrated bodies, never fit low poses to standing height. */
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-push="extend"]
+  .story-stage-sprite {
+  background-image: url("/storybook-study/aria-push-v3.webp");
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"][data-push="extend"][data-moving="true"]
+  .story-stage-sprite {
+  animation: storybook-cart-stride 720ms steps(1, end) infinite;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="20"] {
+  background-image: url("/storybook-study/finn-pull-scene-balanced-v3.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0%;
+  top: 2.083333%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: auto;
+  animation: storybook-cart-stride 720ms steps(1, end) infinite;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="21"] {
+  background-image: url("/storybook-study/finn-pull-scene-balanced-v3.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0%;
+  top: 2.083333%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: auto;
+  animation: storybook-cart-stride 720ms steps(1, end) infinite;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="14"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="15"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="16"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  background-image: url("/storybook-study/finn-cloth-balanced-v2.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/finn-reaction-balanced-v2.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/mira-reaction-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="44"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="45"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="46"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="47"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="21"] {
+  background-image: url("/storybook-study/leon-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  width: 133.333333%;
+  left: 0;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="10"] {
+  background-image: url("/storybook-study/leon-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  width: 133.333333%;
+  left: 0;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="11"] {
+  background-image: url("/storybook-study/leon-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  width: 133.333333%;
+  left: 0;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="12"] {
+  background-image: url("/storybook-study/leon-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  width: 133.333333%;
+  left: 0;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="13"] {
+  background-image: url("/storybook-study/leon-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+  width: 133.333333%;
+  left: 0;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="14"] {
+  background-image: url("/storybook-study/lico-work-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="15"] {
+  background-image: url("/storybook-study/lico-work-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="16"] {
+  background-image: url("/storybook-study/lico-work-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="basket-cart"] {
+  background-image: url("/storybook-study/transplant-cart-v1.webp");
+  aspect-ratio: 512 / 288;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="rope-coil"] {
+  background-image: url("/storybook-study/snag-rope-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="lap-board"] {
+  background-image: url("/storybook-study/transplant-plank-v1.webp");
+  aspect-ratio: 4;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="picnic-cloth"] {
+  background-image: url("/storybook-study/spare-cloth-spread-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="packing-cloth"] {
+  background-image: url("/storybook-study/spare-cloth-folded-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="slime"] {
+  background-image: url("/storybook-study/slime-v1.webp");
+  aspect-ratio: 1.3;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-ground {
+  background-color: transparent;
+  background-blend-mode: normal;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="moss"] {
+  filter: drop-shadow(0 0 7px #c9ffacb0) drop-shadow(0 0 18px #bdff9b60);
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="moss"]::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #d6ffc130, #d6ffc100 70%);
+  animation: storybook-moss-breathe 4.8s ease-in-out infinite alternate;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-transplant-moss-light="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite::after {
+  content: "";
+  position: absolute;
+  left: 34%;
+  top: 29%;
+  width: 30%;
+  height: 24%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 80%, #d4ffae8c, #d4ffae32 38%, transparent 72%);
+  mix-blend-mode: screen;
+}
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]:not([data-moving="true"])
+  .story-stage-sprite[data-atlas="adventure"] {
+  animation: none;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-art="transplant-night-path-v1"] .story-stage-space {
+    transform: none;
+  }
+  .storybook-reader-stage[data-art="transplant-night-path-v1"] .story-stage-name {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-reader-stage[data-art="transplant-night-path-v1"]
+    .storybook-painted-stage[data-painted="true"]
+    [data-actor="aria"][data-push="extend"]
+    .story-stage-sprite,
+  .storybook-reader-stage[data-art="transplant-night-path-v1"]
+    .storybook-painted-stage[data-painted="true"]
+    [data-actor="finn"]
+    .story-stage-sprite {
+    animation: none !important;
+  }
+}

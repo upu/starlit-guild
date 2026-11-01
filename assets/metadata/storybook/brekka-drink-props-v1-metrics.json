@@ -1,0 +1,50 @@
+[
+  {
+    "name": "ale-cup-empty",
+    "width": 240,
+    "height": 169,
+    "left": 8,
+    "top": 79,
+    "scale": 0.6153846153846154
+  },
+  {
+    "name": "ale-cup-full",
+    "width": 242,
+    "height": 171,
+    "left": 7,
+    "top": 77,
+    "scale": 0.6153846153846154
+  },
+  {
+    "name": "fruit-glass",
+    "width": 159,
+    "height": 232,
+    "left": 49,
+    "top": 16,
+    "scale": 0.5714285714285714
+  },
+  {
+    "name": "ale-jug",
+    "width": 229,
+    "height": 232,
+    "left": 14,
+    "top": 16,
+    "scale": 0.48434237995824636
+  },
+  {
+    "name": "bread-roll",
+    "width": 240,
+    "height": 211,
+    "left": 8,
+    "top": 37,
+    "scale": 0.6818181818181818
+  },
+  {
+    "name": "serving-tray",
+    "width": 240,
+    "height": 147,
+    "left": 8,
+    "top": 101,
+    "scale": 0.38095238095238093
+  }
+]

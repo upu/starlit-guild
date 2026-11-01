@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create a four-pose service action sheet of this EXACT merchant/clerk, using the supplied first standing pose as strict identity, head/body ratio and clothing reference. Warm hand-painted 2D RPG, elevated three-quarter view facing screen LEFT. Four full body figures in one horizontal row, identical size, body thickness, head size and common boot baseline. Pose 1 relaxed standing neutral with arms down (scale reference). Pose 2 holds a tiny invisible pen between thumb and fingers of his extended near hand at waist height, elbow gently bent, hand forward to LEFT of torso. Pose 3 leans slightly forward and lowers the same near hand to just ABOVE KNEE height to carefully put the invisible pen onto an unseen tabletop; fingers open delicately downward, other hand remains beside hip. Pose 4 holds same near hand forward at shoulder height as showing a small item. Hands must be visible separated from apron. Keep boots planted, same leg length and head size; no crouching, no size change. Brown apron and trousers, cream rolled sleeves, grey-brown hair, moustache, friendly middle aged adult, modest 3.3-head proportions. No objects, no pen, no furniture, no scenery, no shadows, no text. Transparent background, generous clear gutters and full hair and boots.",
+  "reference": "assets/source/storybook/merchant-poses-v2.png",
+  "refinement": "Remove the entire brown background and all ground shadows from this four-character sprite sheet. Make background genuinely transparent alpha. Preserve the four characters exactly, their colors, poses, size, proportions, edges and arrangement. Do not change any character. No matte or checkerboard pixels.",
+  "source": "assets/source/storybook/merchant-service-v1.png",
+  "output": "public/storybook-study/merchant-service-v1.webp",
+  "registration": "One scale from standing reference height 94px. Heights 94/94/88/94px, baseline120 in128px cells; left facing. Frame2 bends slightly at waist, not rescaled. Uses carry/place/raise only.",
+  "scope": "Indoor study. Registered hand points and a clipped hand-over-table layer preserve the body behind the table."
+}

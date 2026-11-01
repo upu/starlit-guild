@@ -1,0 +1,20 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in transparent generation",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/parent-motion-v1.png",
+      "sha256": "6152cb46b26c1dd4db43a2dd63d885afb2fc4245f53fcfc47b8bbf31eb20a6e5",
+      "reference": "public/story-stage/parent-poses.webp",
+      "prompt": "Use case: identity-preserve. RPG pixel-art sprite sheet for the SAME village mother NPC as the reference. Preserve her brown hair in a low bun, blue long-sleeved ankle-length dress, white apron, brown shoes, gentle adult face, chibi head/body ratio and warm brown outlines. Exactly EIGHT full-body poses in a regular 4 column by 2 row grid, equal cells, transparent RGBA, generous gutters, no grid or labels. Row 1: standing hands clasped (idle), explaining with one palm up, gently pointing toward the left, greeting with right hand raised. Row 2: four consecutive WALKING frames facing RIGHT, gentle asymmetric gait because one ankle is sore: short cautious step with the right foot, transfer weight, slightly longer comfortable step with the left foot, feet recover. Distinct alternating visible shoe positions, not four copies. No cane, injury mark, bandage, extra props or floating shadow. Same body height, head size, baseline, proportions and outfit in all cells. Slightly overhead three-quarter RPG view matching the reference. Crisp pixel clusters, entire hair and feet visible. Movement restrained and natural, not hopping or dramatically bent.",
+      "output": "public/story-stage/parent-poses.webp"
+    },
+    {
+      "source": "assets/source/story-stage/water-bucket-v1.png",
+      "sha256": "2044dbe7b874c5271ca62b74fd7e61e7e764d85bf48bb9b96933f19e007969d9",
+      "prompt": "Use case: stylized-concept. One isolated SMALL WOODEN WATER BUCKET prop for a warm pixel-art fantasy RPG, transparent RGBA background. Elevated three-quarter camera looking down about 45 degrees; cylindrical pale oak staves, two dark iron hoops, oval open rim with a small amount of clean blue-gray water visible, one simple curved iron carrying handle raised over the rim. Domestic hand-sized pail, not a barrel, flowerpot or chest. Crisp chunky pixels, thin dark brown outline, restrained warm shading, readable reduced to 24 by 28 pixels. Entire handle and base inside frame, generous empty transparent margins. No hands, characters, floor, shadow, steam, haze, glow, text or surrounding props. One bucket only.",
+      "output": "public/story-stage/prop-water-bucket.webp"
+    }
+  ]
+}

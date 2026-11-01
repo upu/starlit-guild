@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Match Finn's night-road cart pushing to his adjusted walking and standing proportions while keeping the bandaged grip and alternating planted feet.",
+  "generator": "image_gen.imagegen",
+  "build": [
+    "node scripts/build-storybook-finn-balanced.mjs night-push-balanced-v4",
+    "node scripts/build-storybook-finn-night-push-balanced-v5.mjs"
+  ],
+  "assets": [
+    {
+      "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+      "generated": "exec-811c80ae-975c-4d5b-8230-e60e386d1fec.png",
+      "references": ["assets/source/storybook/finn-night-push-first-v1.png", "assets/source/storybook/finn-night-push-walk-v3.png", "assets/source/storybook/finn-night-walk-balanced-v2.png"],
+      "prompt": "Edit image 1, a 4-column 2-row character sprite sheet. Finn is pushing a cart; image 2 shows the actual required four pushing stride poses and image 3 is the desired corrected proportions and appearance. Redraw all 8 poses with his head and hair SMALLER to match image 3's head-to-body ratio at the same height; make torso and legs proportionally longer. Preserve Finn as a weary middle-aged man with dark loosely tied hair, stubble, cream shirt, worn olive coat, brown trousers and boots. Keep the single white bandage on the same hand in every pose. Column 1 top: idle; column 2 top: stationary push; columns 3 and 4 top and columns 1 and 2 bottom: the four distinct alternating strides shown in image 2. Columns 3 and 4 bottom: kneeling push and release as image 1. In every push pose keep BOTH hands closed together at the EXACT same position, ready to grip a separately rendered cart handle; do not draw a handle or cart. Feet must touch the same baseline with clear alternating planted feet during walking; the crouching poses stay low. Maintain 4 by 2 layout, each complete figure isolated in its own cell, uniform scale and generous transparent gutters. Transparent background, no shadows, no text or extra props.",
+      "decision": "Keep the stationary and crouching frames; reject the four generated strides because their planted feet do not alternate clearly."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-push-walk-balanced-v5.png",
+      "generated": "exec-6779c9ab-ed17-48f7-89fc-65d9d5128352.png",
+      "references": ["assets/source/storybook/finn-night-push-walk-v3.png", "assets/source/storybook/finn-night-push-balanced-v4.png"],
+      "prompt": "Edit FIRST image into four animation frames of Finn walking while pushing a cart with both fists held forward. SECOND image is the smaller-headed adult proportions and specific face, outfit and bandage reference. Make the head and hair match SECOND; preserve FIRST's unmistakably distinct four alternating walking steps. Crucial animation: image 1 frame 1 has both feet apart, frame 2 stands on the front boot with the rear boot CLEARLY raised above ground, frame 3 is a passing pose, frame 4 stands on the REAR boot while the front boot is CLEARLY lifted above ground. The planted foot must ALTERNATE front then rear and always touch the common baseline, so the character walks rather than slides. Both hands, one bandaged, remain together at exactly the same height and horizontal location in every frame, fists grasping an invisible cart handle. Keep his mature tired face and the exact dark tied hair, coat, clothing, feet, scale, angle and gesture; no cart. One row of four equally sized separate full-body figures, transparent background, no text, no shadows, generous empty gutters.",
+      "output": "public/storybook-study/finn-night-push-balanced-v5.webp"
+    }
+  ]
+}

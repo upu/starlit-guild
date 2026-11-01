@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game character pose atlas, exactly FOUR isolated full-body sprites in one horizontal row, separated. Keep reference identity and warm hand-painted chibi 2D RPG style: middle-aged gray-haired moustached man in navy vest over cream shirt, brown belt pouch, brown trousers and boots. All face SCREEN LEFT at elevated three-quarter RPG camera, exact same head size/boot size/body mass in every pose, common boot sole baseline. Pose0 neutral STANDING calibration, full straight legs. Pose1 sitting low on an INVISIBLE chair, relaxed listening, both boots on floor. Pose2 same low seated body speaking softly with one open palm. Pose3 same seated body pointing gently left/down toward nearby cup. Seated sprites must only reach 80-85 percent of standing height, knees visibly bent, short bent leg projection, do NOT enlarge seated head or torso. Do NOT draw chair, table, cup, props or shadows. Transparent background, generous head and sole margins. No grid, no text.",
+  "references": [
+    "assets/source/storybook/keeper-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/patient-visit-v1.png"
+}

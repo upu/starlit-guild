@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-27",
+  "tool": "No new image generation; reuse accepted painted assets",
+  "scope": "2-1 hilltop-picnic lunch transport between consecutive encounters and default rollout",
+  "assets": {
+    "background": "public/storybook-study/hill-lane-loop-v1.png",
+    "ariaLunchBag": "public/storybook-study/visiting-satchel-v1.webp",
+    "leonLunchParcel": "public/storybook-study/lunch-cake-parcel-v1.webp",
+    "ariaPoses": "Existing aria-night-handheld-v1 and aria-night-battle-v1 atlases",
+    "leonPoses": "Existing leon-carry-v1, leon-carry-walk-v1 and leon-work-v1 atlases"
+  },
+  "runtime": "road-picnic.ts measures live opponents against drawn feet with170-world-unit proximity. Remote next opponents allow retrieval; both heroes finish pickup before either moves on. Camera anchors to earliest returning item so mobile feet can reach it. Ground points remain fixed during a fight. Carrying palms match the accepted2-3 poses, distance-driven gait uses all four frames. Busy hands suppress outgoing arrow/slash/magic effects. Arrival preserves final feet and camera. Game progression, rewards, prose and saves unchanged.",
+  "validation": [
+    "27 related tests passed:374/936 widths,15 pickups each,ground/palm contacts,late-route lunch positions,all4 held walking frames,arrival stability beyond10seconds,save identity,default/OFF/custom precedence and homeward/night/packing regressions",
+    "PC1243x1244:508 screenshots,first1.275seconds,last70.790seconds; browser390x844:853,first1.253seconds,last75.193seconds",
+    "work/picnic-cycle-{pc,mobile}.json,filmstrips and final pages inspected. Recording calls have short gaps; not every-frame video or physical-phone verification",
+    "Typecheck,scoped ESLint and source build passed"
+  ],
+  "rollout": "hilltop-picnic registered in lib/storybook/adventure.ts; preview-only override removed;15/37 defaults. Whole goal remains active with22 adventures,full dialogue playback and remaining enemy/effect/wheel review and GitHub delivery."
+}

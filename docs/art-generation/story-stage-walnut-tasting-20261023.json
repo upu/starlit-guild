@@ -1,0 +1,24 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/roadside-bench-v1.png",
+      "prompt": "Use case: isolated production pixel-art furniture. ONE low rustic wooden BACKLESS BENCH for two small seated RPG characters. Straight front view with a view down onto the seat at about 35 degrees. CRITICAL geometry: the LONG FRONT EDGE OF THE SEAT IS PERFECTLY HORIZONTAL, the two feet stand on exactly the same horizontal baseline; NO diagonal/isometric left-high/right-low orientation. Both short ends recede upward equally; visible seat top is a symmetric trapezoid. Long dark honey-brown planks, two stout short trestle legs; wide low proportions, approximately 3 times wider than tall. Crisp pixel-art clusters, thin dark brown outline, warm afternoon highlight from upper left, no ground shadow. Transparent RGBA, generous gutters, no people, no cloth, no scenery, no text. Coherent style with a warm detailed Japanese fantasy RPG; readable at about 130x45 pixels.",
+      "sha256": "79c971d26c8fc39cd38463b787ee93e0c3816c0762e15c804993fc517e95e0da"
+    },
+    {
+      "source": "assets/source/story-stage/walnut-tasting-props-v1.png",
+      "reference": "public/story-stage/prop-walnut-cake.webp",
+      "prompt": "Use case: production pixel-art fantasy RPG prop sprite sheet. Reference is STYLE and walnut-cake identity only. Create a transparent RGBA square sheet, EXACTLY 3 columns x 3 rows, nine equal cells with large clear gutters, no text/grid/labels/shadows. All cakes are the SAME small round walnut tea cake with nuts inside and a few embedded on top, coherent high oblique 45-degree view and crisp warm brown pixel outlines. Top row: (1) pale golden lightly baked whole walnut cake; (2) medium golden-brown whole walnut cake; (3) darker brown whole walnut cake, still edible, not black. Middle row: (4) ONE HALF of pale cake with broken crumb and walnut interior facing camera; (5) ONE HALF of medium cake with crumb interior visible; (6) ONE HALF of dark cake with crumb interior and a dark edge at base. Bottom row: (7) the dark WHOLE cake turned upside down, flat bottom showing one small scorched dark-brown patch along one edge, rest medium-brown; (8) ONE small irregular walnut kernel piece, no shell; (9) one rustic LOW BACKLESS WOODEN BENCH for two small RPG characters, long horizontal seat, simple two stout legs, elevated frontal three-quarter view; no people, no food or cloth on bench. Individual item fully inside its cell; cake halves visibly half the whole cake volume, not full round cakes. No plates, baskets, background or haze. Readable at 15-25 pixels.",
+      "sha256": "4bc541e12e77fbf751ea8a83f49071858e28ffee262ee12aef6b5056a1aa92a0"
+    },
+    {
+      "source": "assets/source/story-stage/roadside-rest-v1.png",
+      "reference": "public/story-stage/hill-path.webp",
+      "prompt": "Use case: game environment variant. Reference is STYLE ONLY: match its warm crisp detailed pixel-art grain, rural fantasy trees and high oblique RPG camera looking down around 50 degrees. Landscape 3:2. A small grassy roadside rest clearing accessible from two nearby villages, no specific landmarks. The narrow dirt walking road enters upper right, curves behind the clearing, passes down the LEFT SIDE of the image and exits the LOWER LEFT edge. The central and right lower two thirds are an empty FLAT SHORT-GRASS rest area beside the road, clear for placing two small seated characters and a low bench. Short wildflowers around perimeter only, a few bushes and medium-sized trees at distant upper edge. No foreground huge building, no horizon, no people, no built-in bench, no rocks in the central/right play area, no picnic props, no lettering. Coherent afternoon sunlight, natural colors; keep objects scaled for small RPG adventurers. Road must not pass through the rest area.",
+      "sha256": "ceaefe0bea042573a0d90ad01c4bbbaa7aa914e9970e51dccf7b20316d9fbe21"
+    }
+  ]
+}

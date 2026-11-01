@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Edit this four-frame transparent merchant sprite sheet. Preserve frames 1 and 2 exactly. Preserve identity, hand-painted rendering, head size, outfit and feet registration. Correct frames 3 and 4 ONLY: merchant must bend deeply forward at hips, knees slightly bent, torso inclined about 45 degrees toward screen left. Both hands reach LOW, down just above his knees, around 80-85 percent of standing height measured down from hair top, to set down an invisible small parcel on a LOW table. Lower his head naturally by bending, never shrink head/body. Same two boots stay planted in precisely same positions as frame2. Frame3 both palms support underside of invisible parcel; frame4 same deep bent body with fingers released slightly outward. Arms must reach much lower than existing image. No actual box or table, no floor, no shadows, no connecting colored areas. Four separated figures in equal horizontal cells, true transparent RGBA.",
+  "source": "assets/source/storybook/merchant-placement-v2.png",
+  "output": "public/storybook-study/merchant-placement-v2.webp",
+  "registration": "node scripts/build-storybook-merchant.mjs placement merchant v2",
+  "review": "PC and mobile playback: bent placement reaches tabletop; hand region drawn ahead of table, feet remain registered. Intermediate posture interpolation remains discrete."
+}

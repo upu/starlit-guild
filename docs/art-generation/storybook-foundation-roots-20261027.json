@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen built-in",
+  "scope": "3-3 foundation investigation integrated as default",
+  "source": "assets/source/storybook/foundation-roots-v1.png",
+  "delivery": "public/storybook-study/foundation-roots-v1.webp",
+  "builder": "scripts/build-storybook-foundation-roots.mjs",
+  "reference": "public/storybook-study/berne-foundation-grass-v1.png",
+  "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-37559088-a301-402f-9c59-e83253444602.png",
+  "prompt": "Create ONE small isolated clump of thin dried roots and a few small green weeds on transparent background as a 2D hand-painted elevated-oblique Japanese RPG prop. Style and fine warm brown outlines must match the supplied tower stonework reference. The clump is modest, sparse, a few fine roots and 3 tiny leaves, roughly as wide as a character's two hands, seen 50 degrees from above. Roots lie flat and horizontal so they can sit beside old cobbles; no stone slab, no soil patch, no solid background, no shadow beneath, no hands, no people, no text, no grid. Center on a square transparent canvas with generous clear margins. No bright glowing color, no giant bush.",
+  "validation": [
+    "PC 1243x1244 and browser mobile 390x844 full default replay; 24 selected frames inspected at each size.",
+    "Five roots disappear in work order; 15 nodes, mason path, facing, collision clearance, data identity and reduced motion checked."
+  ],
+  "remaining": "Whole goal remains incomplete: 15 adventures, full story playback review, special effects, Lico low rest, small-scale clarity and broader loading performance."
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "oil-pan",
+    "width": 240,
+    "height": 138,
+    "left": 8,
+    "top": 110,
+    "scale": 0.5139186295503212
+  },
+  {
+    "name": "oil-bottle",
+    "width": 219,
+    "height": 232,
+    "left": 19,
+    "top": 16,
+    "scale": 0.5829145728643216
+  },
+  {
+    "name": "work-rucksack",
+    "width": 209,
+    "height": 232,
+    "left": 24,
+    "top": 16,
+    "scale": 0.4218181818181818
+  },
+  {
+    "name": "travel-map",
+    "width": 240,
+    "height": 192,
+    "left": 8,
+    "top": 56,
+    "scale": 0.3953871499176277
+  }
+]

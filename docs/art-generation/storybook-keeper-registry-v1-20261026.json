@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original same tower keeper as reference, warm hand painted 2D RPG transparent animation atlas 4 columns x2 rows, eight separate FULL BODY figures, no grid/text/shadows/ground. Keep grey hair moustache blue vest cream sleeves brown trousers boots, exact same head and body scale for every pose, elevated three quarter facing SCREEN RIGHT. Cell0 standing neutral calibration, empty hands. All cells1..7 SEATED on an INVISIBLE low wooden chair, knees bent, boots on ground, hip lowered clearly; same head size but seated total height at most 83 percent standing. Do NOT draw chair, desk or papers. Cell1 seated idle hands loosely in lap. Cell2 seated speaking with one empty palm gesturing forward chest height. Cell3 seated POINTING downward-forward index extended at imaginary paper on desktop, hand near waist in front. Cell4 seated reaching forward RIGHT with open empty hand at imaginary desk waist height, body leans slightly forward. Cell5 seated WRITING with quill in right hand on an invisible desktop at belly level, left hand rests on imagined paper; do not draw paper. Cell6 second writing phase wrist/quill slightly moved, head/body same. Cell7 seated calm looking down at invisible document, both empty palms loosely at waist. Wide clear padding between figures, keep every boot, alpha0 background. This is documentation discussion, no big happy waving, restrained earnest expressions.",
+  "references": [
+    "assets/source/storybook/keeper-restoration-v1.png"
+  ],
+  "source": "assets/source/storybook/keeper-registry-v1.png"
+}

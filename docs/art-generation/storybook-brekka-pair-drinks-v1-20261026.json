@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Original warmhandpainted2D RPG fullbodysprites on transparentbackground, elevated45degree camera EXACTsame identities clothes headsize boots anatomy as references. Eight separated poses4columns2rows, samebodyscale within eachrow, do NOT enlarge seatedposes tofillcell. Allbody facesRIGHT. Firstrow ARIA blonde elf withlavenderlock daisyleafclip greencloak whiteshirt ruffleskirt brownfingerlessglovesboots:0 fullneutralstandforcalibration;1 seatedon an INVISIBLE CHAIR kneesbent feetplanted, bothhands nearwaist gently gripping imaginarythin drinkingglass (NOglassdrawn);2 exactsame seat bodyheadfootholds, nearhand lifted to lips grippingimaginaryglass to sip;3 exactsame seat, nearhand reaches RIGHT at lowerchestheight to toast with somebody opposite, fingers gripimaginaryglass. Secondrow LEON brownhair redcape bluevest whitesleeves browngloves trousersboots, same fourposes0standing1seatedhold2seatedsip3seatedtoast. Seatedheight around80to85percent standingheight eachperson, same headscale, bentlegs, lowcenterofgravity, not standingbodies withbenttoes. Cups chairs tables are SEPARATE GAMEPROPS so do NOTdraw any cup chair table. Fingers naturalholdingcurve, notfists. Fullsilhouettes largealpha margins, no labels orscenery orshadows. Warmsoftoutlines, consistenthead/body ratio acrossallposes.",
+  "references": [
+    "assets/source/storybook/aria-seat-v1.png",
+    "assets/source/storybook/leon-seat-action-v2.png"
+  ],
+  "source": "assets/source/storybook/brekka-pair-drinks-v1.png"
+}

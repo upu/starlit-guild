@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-27",
+  "tool": "No new generation; reuse accepted workshop ground, furniture, honey, goods, bags, heroes and puppets",
+  "scope": "2-7 fixed workshop enabled by default; PC and browser phone-width playback reviewed",
+  "assets": [
+    "public/storybook-study/workshop-yard-v1.png",
+    "public/storybook-study/packing-table-v1.webp",
+    "public/storybook-study/honey-v1.webp",
+    "public/storybook-study/trade-parcels-open-v1.webp",
+    "public/storybook-study/packing-bag-close-3-v1.webp",
+    "public/storybook-study/homeward-medicine-v1.webp",
+    "public/storybook-study/puppet-poses-v1.webp",
+    "public/storybook-study/golem-poses-v1.webp",
+    "public/storybook-study/masked-pumpety-v1.webp"
+  ],
+  "runtime": "Shared fixedRoadLayout anchors workshop, actors, five props and combat effects. Road-blockade-path routes withdraw/enter/gather around bench footprints, staggers entries and leaves the stopped group for the return apology. Original engine scene clocks/rewards/saves unchanged. Ranged/support positions stay planted; Leon advances. Injury display precedes work/carry/battle overrides, uses existing low trio poses and full painted opacity. Measured puppet-string hand/shoulder contacts follow size and flips; square NPCs share enemy resampling. Labels avoid fixed props and NPC bounds. Downed feet retain world positions across camera motion; healed arrival movement uses walking poses.",
+  "validation": [
+    "94 related and fixed-scene tests passed after final arrival-walking correction. Typecheck, scoped lint and source build checked separately.",
+    "PC1243x1244:1306 whole-run screenshots across3 paused segments; final1533 screenshots across55s and50s segments reviewed through16 extracted scenes.",
+    "Browser390x844:2081 whole-run screenshots across3 paused segments; final2016 screenshots across55s and50s segments reviewed through16 extracted scenes. Physical phone and every-frame visual inspection not performed."
+  ],
+  "remaining": "Defaults18/37. Other19 adventures, full dialogue playback, wheels/effects, right-edge long enemy labels, Finn/Lico low injury art, loading-delay diagnosis and GitHub/preview delivery remain."
+}

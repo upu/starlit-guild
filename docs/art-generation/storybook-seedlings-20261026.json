@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "scope": "4-8 loading yard, Merrill poses and loading props; scene choreography remains in progress",
+  "background": {
+    "source": "assets/source/storybook/tower-loading-yard-v1.png",
+    "generation": "exec-6c708bab-7caa-4ebb-a22d-f1aada1435ae",
+    "reference": "assets/source/storybook/moss-beds-v1.png",
+    "promptSummary": "Same warm handpainted elevated oblique RPG world; 3:2 empty dirt loading yard behind tower, cropped tower base and service door upper-right, small moss bed and irrigation channel upper-left, low loading platform at upper edge, paths open below and right. No characters, props, text, UI or horizon."
+  },
+  "character": {
+    "source": "assets/source/storybook/merrill-seedlings-v2.png",
+    "generation": "exec-7f43f89b-a48a-4194-87d0-d68fa05edd70",
+    "references": ["assets/source/storybook/merrill-seedlings-v1.png", "docs/characters/merrill-reference-sheet.png", "assets/source/storybook/lico-conversation-ponytail-v1.png"],
+    "promptSummary": "Twelve equal cells, four columns by three rows with broad transparent gutters. Same Merrill, green bob, pomegranate flowers, red ribbon, sturdy healthy legs, travel outfit and huge food-filled pack. Left forearm/hand-back wooden gauntlet with strings; bare right hand. Right-facing elevated camera. Neutral, talk, point, wave, pluck, taste, two right-hand-on-left-forearm string playing beats, empty receive palm, stow slip, low empty-handed squat, empty hands cupped for separate pot. Same body/head scale. v2 re-layout separates touching rows.",
+    "output": "public/storybook-study/merrill-seedlings-v1.webp",
+    "calibration": "128px cells, sole baseline120, standing height84, single scale for all twelve poses; squat63px",
+    "initial": { "source": "assets/source/storybook/merrill-seedlings-v1.png", "generation": "exec-88f53e15-0024-47f4-a92d-e0cd5185c00f", "status": "not adopted: row2/3 fourth-column sprites touch" }
+  },
+  "walk": {
+    "source": "assets/source/storybook/merrill-seedlings-walk-v2.png",
+    "generation": "exec-38ef27c5-c023-45cc-aeb2-c2aabef1084e",
+    "reference": "assets/source/storybook/merrill-seedlings-walk-v1.png",
+    "promptSummary": "Keep exact Merrill identity, full boots and flowers, constant size, camera and backpack. Four distinct right-facing gait phases: left heel contact/right trailing, left planted/right passing lifted, right heel contact/left trailing, right planted/left passing lifted. Empty hands for separate pot. Transparent wide gutters; no duplicate frames, no text.",
+    "status": "provisional: contact/passing silhouettes improved but anatomical leading-leg alternation still weak; final walk audit required",
+    "initial": { "source": "assets/source/storybook/merrill-seedlings-walk-v1.png", "generation": "exec-212a6854-4d70-4ca8-8f25-30b223b02deb", "status": "not adopted: repeated leading leg" }
+  },
+  "props": {
+    "source": "assets/source/storybook/seedling-loading-props-v1.png",
+    "generation": "exec-e245fd16-f1f1-4689-89a9-31b641be0ceb",
+    "references": ["public/story-stage/prop-korotake.webp", "assets/source/storybook/tower-loading-yard-v1.png"],
+    "promptSummary": "Transparent 3x2 separated props in same elevated painted style: empty small brown travel cooking pot; same pot with four mushroom creatures; single friendly spotted brown/cream Korotake with arms and feet matching original identity; damp cream linen cloth; same low wicker basket covered by cloth; uncovered basket with rooted moss seedlings and three blank tags. Paired states same physical size, no hands or text.",
+    "packing": "scripts/build-storybook-seedlings.mjs; 256 square cells baseline248; common scale per paired pot/basket states; originals retained"
+  },
+  "geography": "Existing loading-place established in atlas, coordinate placement remains proposal. No new route or geographical fact added."
+}

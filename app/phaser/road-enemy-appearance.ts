@@ -4,8 +4,39 @@ import {
   adventureEnemyArt,
   adventureEnemyAsset,
   ordinaryEnemyArt,
+  storybookWolfAsset,
+  storybookSlimeAsset,
 } from "@/lib/adventure-enemy-art";
 import type Phaser from "phaser";
+export { enemyDisplayHeight } from "@/lib/road-enemy-layout";
+import { RPG_CAMERA_SCALE } from "@/lib/rpg-camera";
+import {
+  housecallsSceneLayout,
+  lindeDeliveryLayout,
+  nightBridgeLayout,
+} from "@/lib/road-housecalls-layout";
+import { enemyDisplayHeight as baseEnemyHeight } from "@/lib/road-enemy-layout";
+import { seedlingMerrillHeight, seedlingMushroomHeight } from "@/lib/road-seedling-battle";
+function fixedEnemyScale(look: RoadLook | undefined, width: number, height: number) {
+  if (look?.nightBridge)
+    return nightBridgeLayout({ width, height }, look.nightBridge.section).figureRatio;
+  if (look?.lindeDelivery)
+    return lindeDeliveryLayout({ width, height }, look.lindeDelivery.portrait).figureRatio;
+  return look?.mossBeds ? housecallsSceneLayout({ width, height }, look).figureRatio : 1;
+}
+export const sceneEnemyHeight = (
+  enemy: RoadEnemy,
+  width: number,
+  height: number,
+  look?: RoadLook,
+) =>
+  look?.mossBeds?.seedlings && enemy.kind === "merrill"
+    ? seedlingMerrillHeight({ width, height })
+    : look?.mossBeds?.seedlings && enemy.kind === "mushroom"
+      ? seedlingMushroomHeight({ width, height })
+      : look?.mossBeds?.records && enemy.kind === "lico"
+        ? housecallsSceneLayout({ width, height }, look).scale * 125
+        : baseEnemyHeight(enemy, width, height) * fixedEnemyScale(look, width, height);
 
 const puppetNames = {
   pumpety: "カボチャ頭の少女",
@@ -56,32 +87,14 @@ export function fitEnemy(
     const turn = ((time - (enemy.actionAt ?? time)) / 900) * Math.PI * 2;
     image.scaleX *= Math.max(0.15, Math.abs(Math.cos(turn)));
     if (Math.cos(turn) < 0) image.toggleFlipX();
-    image.x += Math.sin(turn) * 8;
-    image.y -= Math.abs(Math.sin(turn)) * 5;
+    image.x += Math.sin(turn) * 8 * RPG_CAMERA_SCALE;
+    image.y -= Math.abs(Math.sin(turn)) * 5 * RPG_CAMERA_SCALE;
   }
 }
 export function enemyFacesRight(enemy: RoadEnemy, heroX: number) {
+  if (enemy.facing !== undefined) return enemy.facing === 1;
   if (enemy.pose === "retreat" || enemy.pose === "drag") return true;
   return enemy.kind !== "slime" ? enemy.x < heroX : enemy.x > heroX;
-}
-const enemySize = (enemy: Pick<RoadEnemy, "kind" | "boss">) =>
-  ({
-    puppet: 0.45,
-    pumpety: 1,
-    golem: 1.65,
-    slime: enemy.boss ? 1.65 : 0.75,
-    lico: 1,
-    merrill: 1,
-    mushroom: 0.42,
-  })[enemy.kind];
-export function enemyDisplayHeight(
-  enemy: Pick<RoadEnemy, "kind" | "boss">,
-  width: number,
-  height: number,
-) {
-  if (enemy.kind === "lico" || enemy.kind === "merrill")
-    return Math.min(90, width * 0.18, height * 0.34) * 0.9;
-  return Math.min(115, width * 0.19, height * 0.32) * enemySize(enemy);
 }
 export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
   if (enemy.kind === "mushroom")
@@ -111,8 +124,10 @@ export function enemyAppearance(enemy: RoadEnemy, look?: RoadLook) {
       puppet: true,
       character: false,
     };
+  const species = ordinaryEnemyArt(look?.enemies[enemy.id]?.frame || "8");
+  const painted = { wolf: storybookWolfAsset, slime: storybookSlimeAsset }[species as string];
   return {
-    asset: adventureEnemyAsset(ordinaryEnemyArt(look?.enemies[enemy.id]?.frame || "8")),
+    asset: look?.storybookHeroes && painted ? painted : adventureEnemyAsset(species),
     frame: "__BASE",
     puppet: false,
     character: false,

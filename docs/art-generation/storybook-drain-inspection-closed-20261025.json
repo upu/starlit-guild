@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Edit only the small rectangular inspection hatch in the center-right stone foundation of this exact background. Make the CLOSED version: take the loose rectangular stone cover leaning immediately left of the little moss-filled hatch and fit it flush into that hatch, hiding the moss inside. Remove the loose leaning cover because it is now installed. Keep the same small stone frame, paving shelf, vegetation, lighting, camera, canvas size, large arched flowing water outlet, cut logs, and all other pixels/composition as close as possible. No characters or props added. The hatch cover is plain weathered gray-beige stone with a small simple dark finger pull, not a door or magical panel.",
+  "source": "assets/source/storybook/drain-inspection-closed-v1.png",
+  "output": "public/storybook-study/drain-inspection-closed-v1.png"
+}

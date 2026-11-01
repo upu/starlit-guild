@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "source": "assets/source/story-stage/quill-v1.png",
+  "sha256": "3a3eebc47e38991e65fe76e2c083923a18aebfa3a060b18397fa699d4251ebb4",
+  "output": "public/story-stage/prop-quill.webp",
+  "prompt": "One isolated small cream goose-feather writing quill with a dark brown shaft and tiny dark ink tip, lying diagonally from lower-left tip to upper-right feather. Fantasy RPG pixel-art prop, crisp dark outline and clear blocky pixels, simple slightly worn medieval stationery, readable when reduced to 16 pixels wide. No ink bottle, no ink splatter, no paper, no hand, no shadows, no text, no border. Object fills center with ample transparent margins. True alpha transparent background."
+}

@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-24",
+  "tool": "built-in image_gen",
+  "prompt": "Precise sprite pose edit, single Aria full-body figure. Image 1 is the edit target. Preserve its EXACT lower body skeleton and leg overlap: do not move hips, knees, boots or change which leg is in front. Preserve head-to-body proportions, all clothing, hair, face, cape, viewpoint and scale. Change ONLY BOTH ARMS to push an invisible cart: upper arms forward, elbows softly bent, forearms extending horizontally right at her waist, open gloved palms pointing right at the SAME height as her lower corset belt. Hands clearly ahead of torso. Don't raise hands to shoulder height. Do not draw the cart or handles. Same warm illustrated style. Single full-body on TRUE transparent background, no color streaks, no floor, no shadow, no gradient, no text. Generous padding with all hair and boots visible. This is an arm replacement, not a new walking pose. Preserve the original foot locations precisely.",
+  "reference": "Each frame extracted without modification from public/storybook-study/aria-walk-v1.webp.",
+  "sources": [
+    "assets/source/storybook/aria-push-0-v2.png",
+    "assets/source/storybook/aria-push-1-v2.png",
+    "assets/source/storybook/aria-push-2-v2.png",
+    "assets/source/storybook/aria-push-3-v2.png"
+  ],
+  "registration": "Match each generated source to the corresponding existing walk-phase height, retain aspect ratio, head horizontal alignment and foot baseline176. Runtime uses one common scale.",
+  "review": "Prototype push connected. PC transport and pause observed. Fine hand contact, per-frame face/cape-fastener consistency, foot slip and mobile transport pending; not final art."
+}

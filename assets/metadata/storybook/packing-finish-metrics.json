@@ -1,0 +1,110 @@
+[
+  {
+    "name": "packing-wrap-medicine-0-v1",
+    "width": 184,
+    "height": 129,
+    "left": 36,
+    "top": 119,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-medicine-1-v1",
+    "width": 154,
+    "height": 129,
+    "left": 51,
+    "top": 119,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-medicine-2-v1",
+    "width": 96,
+    "height": 106,
+    "left": 80,
+    "top": 142,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-medicine-3-v1",
+    "width": 98,
+    "height": 105,
+    "left": 79,
+    "top": 143,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-honey-0-v1",
+    "width": 192,
+    "height": 136,
+    "left": 32,
+    "top": 112,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-honey-1-v1",
+    "width": 146,
+    "height": 128,
+    "left": 55,
+    "top": 120,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-honey-2-v1",
+    "width": 107,
+    "height": 108,
+    "left": 75,
+    "top": 140,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-wrap-honey-3-v1",
+    "width": 115,
+    "height": 110,
+    "left": 71,
+    "top": 138,
+    "scale": 0.36363636363636365,
+    "baseline": 248
+  },
+  {
+    "name": "packing-bag-close-0-v1",
+    "width": 250,
+    "height": 238,
+    "left": 3,
+    "top": 10,
+    "scale": 0.4672897196261682,
+    "baseline": 248
+  },
+  {
+    "name": "packing-bag-close-1-v1",
+    "width": 249,
+    "height": 213,
+    "left": 4,
+    "top": 35,
+    "scale": 0.4672897196261682,
+    "baseline": 248
+  },
+  {
+    "name": "packing-bag-close-2-v1",
+    "width": 250,
+    "height": 189,
+    "left": 3,
+    "top": 59,
+    "scale": 0.4672897196261682,
+    "baseline": 248
+  },
+  {
+    "name": "packing-bag-close-3-v1",
+    "width": 250,
+    "height": 186,
+    "left": 3,
+    "top": 62,
+    "scale": 0.4672897196261682,
+    "baseline": 248
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-22",
+  "purpose": "冒険中の通行帯。会話背景・地理設定は維持。",
+  "images": [
+    {
+      "source": "assets/source/scenery/adventure-farm-road.png",
+      "reference": "public/scenery/tower-road-background.webp",
+      "prompt": "Edit the supplied pixel-art fantasy countryside background into an ADVENTURE gameplay variant for STARLIT-GUILD. Reference/edit target is the supplied tower-road image: preserve its warm daytime palette, crisp pixel clusters, elevated oblique RPG camera, medieval half-timbered farm buildings, golden wheat, fenced vegetable fields, green trees, and dirt road identity. Recompose the land so the WALKABLE DIRT ROAD is a broad, near-horizontal continuous band across the FULL image width from normalized y=0.42 through y=0.90; it must remain unblocked at both left and right edges. The road can curve gently toward the upper-right after this band. Place farm houses, crop fields, tall fences, stone walls and large trees ONLY above y=0.38, or in the very bottom 6 percent corners. Bottom foreground must mainly remain flat dirt with sparse small grass tufts, NOT foreground roof, wall, cliff or hedge. Camera looks downward at roughly 50 degrees, showing roofs and plentiful ground, no horizon or sky. Small architectural scale: a standing adult doorway opening at midground about 15 percent of total image height. Natural well-used wagon road with subtle wheel ruts and small pebbles, not an empty arena or huge courtyard. Do not add people, creatures, carts, text, labels, UI, separate panels or borders. One seamless finished landscape illustration, 1536x1024, opaque background. Keep stylistic pixel detail and local daylight geography from the reference; improve composition for a horizontal party traversal.",
+      "sha256": "d667b514e7677d94ba9316eb5264e51fe904bafeb7815688a008748ac2c6893e",
+      "outputs": [
+        "public/scenery/adventure-farm-road-background.webp",
+        "public/scenery/adventure-farm-road-thumbnail.webp"
+      ]
+    },
+    {
+      "source": "assets/source/scenery/adventure-berne.png",
+      "reference": "public/scenery/berne-background.webp",
+      "prompt": "Edit the supplied pixel-art Berne riverside town background into an ADVENTURE gameplay variant for STARLIT-GUILD. Reference/edit target is the supplied berne image. Preserve its warm daylight, blue river and three-arched stone bridge in the TOP portion, medieval stone and half-timber houses, lanterns, flowers, small stonework/warehouse feel, crisp pixel clusters and elevated oblique RPG camera. Recompose the foreground: replace ALL foreground roofs, chimneys, balustrades, fences and obstructing architecture with a broad uninterrupted cobbled riverside street/plaza. The full horizontal band normalized y=0.42 to y=0.92 across the ENTIRE width must be flat walkable cobblestone, open at left and right image edges. Houses, stacked masonry, crates and any river-edge railings stay ABOVE y=0.36 or outside this band. Keep a few small inconspicuous grass tufts near bottom corners, but no major obstacle below the open plaza. View downward at around 50 degrees, roofs visible at top edges, no sky. Reduce architectural scale relative to ground: midground human door opening height about 15 percent of total image height. The location still looks like the same Berne river town near a stoneworker storage area, no new towers or invented landmark. Do not add people, creatures, carts, text, labels, UI, split panels or borders. One seamless finished landscape,1536x1024,opaque background. Dense beautiful environmental pixel-art detail at upper and outer edges; clear quiet ground where actors walk.",
+      "sha256": "10e4915ed4be8bd6d4097b512af939d0f2a5bd2a4f7d25668146e29b7f0c133b",
+      "outputs": [
+        "public/scenery/adventure-berne-background.webp",
+        "public/scenery/adventure-berne-thumbnail.webp"
+      ]
+    }
+  ]
+}

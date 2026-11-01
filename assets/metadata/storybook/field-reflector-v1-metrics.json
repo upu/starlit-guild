@@ -1,0 +1,37 @@
+[
+  {
+    "name": "field-reflector-covered",
+    "scale": 0.48535564853556484,
+    "width": 204,
+    "height": 228,
+    "baseline": 248
+  },
+  {
+    "name": "field-reflector",
+    "scale": 0.48535564853556484,
+    "width": 194,
+    "height": 232,
+    "baseline": 248
+  },
+  {
+    "name": "field-reflector-down",
+    "scale": 0.48535564853556484,
+    "width": 203,
+    "height": 151,
+    "baseline": 248
+  },
+  {
+    "name": "field-cover-held",
+    "scale": 0.48535564853556484,
+    "width": 176,
+    "height": 220,
+    "baseline": 248
+  },
+  {
+    "name": "field-cover-flat",
+    "scale": 0.48535564853556484,
+    "width": 199,
+    "height": 121,
+    "baseline": 248
+  }
+]

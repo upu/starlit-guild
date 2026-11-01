@@ -1,0 +1,54 @@
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ) {
+  background-image: url("/storybook-study/lico-conversation-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-conversation-position) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: url("/storybook-study/lico-walk-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="69"],
+    [data-frame="70"],
+    [data-frame="73"]
+  ) {
+  background-image: url("/storybook-study/lico-work-ponytail-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="69"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="lico"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="70"] {
+  background-position-x: 100% !important;
+}

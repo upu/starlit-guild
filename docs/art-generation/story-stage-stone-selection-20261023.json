@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-5 carrier hand care, candidate stones and shuttered light-comparison room",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/mira-care-v1.png",
+      "prompt": "Use case: identity-preserve. Create exactly FOUR new full-body pixel-art animation poses of the SAME healer Mira in the reference atlas. 4 columns x 1 row on transparent background, equal cells with generous gutters. Preserve lavender-gray side braid, white-yellow flower on the left of her hair, gentle adult face, white and pale-gold healer tunic/cloak, brown boots, exact head shape and relative proportions; no redesign. All poses face screen RIGHT. Frame 1: kneeling on both bent legs, torso upright, BOTH arms extended to the right at her kneeling chest height, open hands gently supporting an INVISIBLE patient's hand. Frame 2: same kneeling base and head position, hands close together at the SAME contact point, making a small careful bandaging gesture with a tiny white bandage strip. Hand contact is to her right outside her torso, about half a head width beyond her face, NOT touching the floor. Frame 3: rising slowly into a half-crouch with BOTH hands resting on her OWN knees, a little tired. Frame 4: almost upright, one hand still on her knee, gentle tired expression. Her head width stays identical across all poses; kneeling must be physically much shorter than standing, never enlarge the kneeling figure. Do not draw a patient, chair, stone or other props. No speech bubbles, no labels, no floor or shadows. Detailed pixel-art texture and outlines matching the reference, actual transparent background.",
+      "reference": "public/story-stage/mira-poses.webp",
+      "referenceRevision": "e91e2651081c9a9defe68f52007e81a3f4559f71",
+      "sha256": "f2f0bd46b9b54dc8b96530e8105ba0954bbb5a8c112cd3ff5c61d9305e043b57"
+    },
+    {
+      "source": "assets/source/story-stage/stone-carrier-v1.png",
+      "prompt": "Use case: stylized-concept. Create a transparent pixel-art RPG NPC sprite atlas, exactly 4 columns x 2 rows, eight separate full-body drawings on an evenly spaced grid, ample transparent gutters. Reference image is STYLE AND PROPORTIONS ONLY: match its slightly overhead view, detailed pixel grain, dark warm outline, approachable proportions and boots. A new adult stone-yard carrier, visibly distinct from the reference worker: short gray-brown hair, faded blue headscarf, muted blue work tunic with rolled sleeves, brown trousers and work boots, no hat or apron. Same person/head size/stature in every frame. Face towards LEFT in a three-quarter side view in all eight cells. Top row is four consecutive walking frames: wide stride left leg forward, narrow passing stance feet together, wide stride right leg forward, second narrow passing stance. Both arms are bent forward at waist height ready to carry a small block; DO NOT DRAW the block, it will be a separate game prop. Bottom row from left: 1 standing still, one hand gently pressing the other sore wrist, concerned expression, no blood; 2 leaning forward slightly and extending the injured palm low toward screen LEFT so a crouching healer can inspect it, knees slightly bent but not kneeling; 3 EXACT same extended-hand stance with a small neat white bandage around that wrist, calm smile; 4 standing relaxed with a bandaged wrist, friendly slight smile. Maintain identical head width, body scale, floor line and clothing across all frames; do not enlarge injured hand. No text, no ground, no shadows, no props, no other characters. Transparent background.",
+      "reference": "public/story-stage/worker-poses.webp",
+      "referenceRevision": "e91e2651081c9a9defe68f52007e81a3f4559f71",
+      "sha256": "64028243bc96420e705deb097131e442a231ccf7f47a72e69d88119773f3db7d"
+    },
+    {
+      "source": "assets/source/story-stage/stone-candidates-v1.png",
+      "prompt": "Use case: stylized-concept. Make a transparent pixel-art RPG prop sheet with exactly 3 columns x 2 rows, six isolated props in evenly spaced cells. Use reference ONLY for small hand-sized stone material, slightly overhead oblique view, dark outlines and pixel grain. Top row: three separate candidate garden stones, each about the same palm-sized rectangular block dimensions as reference, but different irregular chipped outlines (not the reference's exact chip), plain old weathered masonry, NO engravings, NO grooves, NO crystals. Left cold blue-gray stone with a subtle blue-lit surface; middle dull gray-lavender stone with extremely faint violet light along its lower edges; right pale warm-gray stone, almost no visible light. DO NOT add large halos: the game handles emitted light. Bottom row: left one stone completely covered by thick charcoal-brown cloth, shape low and rectangular; middle a small empty square of off-white wrapping cloth laid open on the floor, corners slightly folded, no stone on it; right one similar hand-sized stone neatly wrapped in pale linen tied with a simple cord for transport. All props match physical scale, crisp detailed pixel art, transparent background, broad transparent gutters, no objects crossing the grid midpoint, no labels/text, no floor, no drop shadows.",
+      "reference": "public/story-stage/prop-tower-stone.webp",
+      "referenceRevision": "e91e2651081c9a9defe68f52007e81a3f4559f71",
+      "sha256": "b2b3a3b539fe38822a4d499c6ce4f49e6b02e87572c9be855e358511949cbeaf"
+    },
+    {
+      "source": "assets/source/story-stage/stone-storeroom-v1.png",
+      "prompt": "Use case: precise-object-edit. Edit this exact overhead RPG storeroom background. Keep the camera, all walls/door/shelves/barrels/crates and floor geometry unchanged. This is now a light-comparison room: completely cover the upper-right window with a thick dark brown curtain tied only at its top, no bright gap. Keep the wooden door shut. Remove the strong golden sunlight patches on the left-hand floor. Subdued neutral dusky ambient light still lets us see the room and floor clearly, no pitch black. No new lamp or light source, no characters, no furniture on the open floor, no stones or glowing objects, no text. Preserve original warm pixel-art material and scale. Same 3:2 landscape composition.",
+      "reference": "public/story-stage/storeroom.webp",
+      "referenceRevision": "e91e2651081c9a9defe68f52007e81a3f4559f71",
+      "sha256": "0ad9c3b6e7dd82ad673b9bb7fb506065f01b3c81037bc304c5d6a0dc2e88820a"
+    },
+    {
+      "source": "assets/source/story-stage/stone-storeroom-v2.png",
+      "prompt": "Use case: precise-object-edit. Preserve this exact RPG storeroom image everywhere except the upper-right wall directly above the tall barrel (roughly x76-87%, y4-25%). A window used to be there and is NOW BLOCKED BY CLOTH, not removed. Add a clearly visible rectangular thick dark indigo-gray FABRIC CURTAIN covering that small window area: attached to a short wooden rod, visible soft vertical textile folds, hem along the bottom, all edges lie flat and fully block daylight. It must look unmistakably like cloth against the brown timber wall, not wooden boards. No light patches on floor. Do not move any room geometry, camera, props, or lighting. No people or extra furniture; same pixel-art style.",
+      "reference": "assets/source/story-stage/stone-storeroom-v1.png",
+      "sha256": "00ffdedcab665451ed133d9b091eb61854fe4cf0e91dbcd80ca810a7a4b87a93"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-29",
+  "tool": "image_gen.imagegen",
+  "purpose": "Align Finn's Brekka drinking poses with his corrected standing and seated proportions",
+  "references": [
+    "assets/source/storybook/brekka-adult-drinks-v1.png",
+    "assets/source/storybook/finn-seat-balanced-v3.png",
+    "assets/source/storybook/finn-conversation-balanced-v3.png"
+  ],
+  "attempts": [
+    {
+      "generated": "exec-11d50c62-8e40-4d2d-98ce-dfb1ef7d08f4.png",
+      "decision": "rejected: seated head widths 58–59px compared with 47px in the reference",
+      "prompt": "Create a replacement Finn-only transparent sprite strip for the first image's BOTTOM ROW. Match the second image's Finn body and head proportions precisely: smaller adult head and longer torso and legs, identical worn olive-charcoal coat, dark brown low-tied hair, tan skin, tired drooping eyes and subtle stubble, soft painted RPG style. Output exactly ONE ROW of FOUR separate full-body poses, generous empty transparent gutters, all fully inside equal cells. Reproduce the first image's BOTTOM ROW poses in order: 1 standing neutral, 2 sitting both hands together at lap, 3 sitting one hand raised toward mouth, 4 sitting with one palm extended in conversation. Match the second reference's seated proportions, seated height, body, head scale, boots and seated-leg pose, but preserve the target gestures. Do not include a chair, cup, shadow, background, text, extra characters, or duplicate body parts. Genuine transparent background. Consistent character head width, consistent ground baseline. Finn is an approachable middle-aged man, not a pretty boy."
+    },
+    {
+      "generated": "exec-e000870d-23cb-462f-a455-60921a8829b0.png",
+      "source": "assets/source/storybook/finn-drinks-balanced-v2.png",
+      "output": "public/storybook-study/finn-drinks-balanced-v2.webp",
+      "decision": "accepted: seated head widths 44–46px; original Mira row remains in use",
+      "prompt": "Edit FIRST image, an RPG sprite strip. It is the exact four poses to preserve; SECOND is Finn's correct head-to-body proportion benchmark, THIRD is his standard standing appearance. In FIRST image the three SEATED heads are too large compared with SECOND. Redraw ALL heads including the entire hair silhouette of the seated poses 2–4 to only 80–83% of their present width AND height; lengthen neck/upper torso as necessary to match the smaller-headed seated Finn in SECOND. Also match head width to SECOND when boots are the same size. Keep full bodies and boots at same physical size, keep standing head same as THIRD. Preserve FOUR POSES AND ORDER exactly: standing relaxed; seated two hands together at lap with no cup; seated empty hand at mouth; seated empty hand extended palm up. Preserve feet and leg position, adult eyes, subtle stubble, dark low ponytail, olive worn coat, cream shirt, hair/face identity. 4 equal cells in one horizontal row with generous transparent gutters, no cropped body parts. No cup, props, chair, text, floor or shadow, genuine transparent alpha. Adult small-scale warm handpainted RPG game sprites, not superdeformed heads. Keep background transparent."
+    }
+  ],
+  "build": "node scripts/build-storybook-finn-balanced.mjs drinks-balanced-v2"
+}

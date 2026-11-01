@@ -1,0 +1,6 @@
+.storybook-reader-stage[data-art="transplant-night-path-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="cart-wheel"]::before {
+  background-image: url("/storybook-study/brekka-cart-wheel-v1.webp");
+  image-rendering: auto;
+}

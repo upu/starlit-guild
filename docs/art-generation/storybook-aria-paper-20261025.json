@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: identity-preserve. Make a transparent horizontal four-cell full-body sprite strip for the original character Aria. The supplied reference is exact identity, body proportions and warm hand-painted 2D RPG rendering. Preserve pale blond/pink bob with pale lavender streak, pointed ears, green eyes, white flower hairpin, green gold-edge cape, cream ruffled blouse/skirt, brown bodice, gloves, brown tall boots. Same elevated three-quarter view facing SCREEN RIGHT. All four figures have IDENTICAL head size, body height, anatomy, foot baseline and fixed standing legs. Frame0 neutral standing calibration matching reference first figure. Frame1 holds a SMALL thin cream sheet/clipboard in left hand in front of lower chest/waist, and writes with a small brown quill in right hand; gaze down gently. Frame2 same writing pose, same paper and stance, only writing wrist moves a tiny amount to complete a stroke. Frame3 empty-handed two palms facing up and supporting an imaginary thin sheet at waist height; NO paper or quill in this frame because a separate animated prop will be rendered there. All four keep torso upright; no crouching, sitting, lunging or inflated head. Gentle concentration. Clear margin above hair/below boots, complete body uncut. True transparent background, no floor, shadows, furniture, text, grids or frame labels. Match reference visual scale exactly, don't beautify or change design.",
+  "reference": "public/storybook-study/aria-conversation-v1.webp",
+  "source": "assets/source/storybook/aria-paper-v1.png",
+  "output": "public/storybook-study/aria-paper-v1.webp",
+  "build": "node scripts/build-storybook-work.mjs aria paper v1",
+  "registration": "one common scale, all four134px tall, foot176; writeA/B and emptyhand support",
+  "scope": "indoor study line36; stationary writing17/18 and hold14/15"
+}

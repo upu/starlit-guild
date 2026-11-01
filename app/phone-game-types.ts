@@ -34,6 +34,8 @@ export type SheetModel = {
   reading: Story | null;
   ready: boolean;
   pendingDeparture: Action | null;
+  /** Optional starting page for isolated sprite-lab reviews. */
+  reviewStartPage?: number;
   hero: (typeof heroes)[number];
   state: State;
   goal: ReturnType<typeof nextGoal>;

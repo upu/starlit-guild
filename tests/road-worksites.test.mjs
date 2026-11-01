@@ -27,7 +27,7 @@ test("every work point in all four chapters has an explicitly reviewed, availabl
     labels.add(label);
   }
   assert.equal(jobs.length, 402);
-  assert.equal(labels.size, 103);
+  assert.equal(labels.size, 107);
   assert.deepEqual(
     new Set(Object.keys(worksiteByLabel).filter((label) => label !== "苗の籠を運び出す")),
     labels,
@@ -59,7 +59,7 @@ test("survey, treatment, tracking, earthwork and small deliveries show their act
   }
 });
 
-test("moving work always pushes or pulls a cart, never a loose small object", () => {
+test("moving work retains cargo transport classification in the simulation", () => {
   for (const { q, run } of jobs) {
     if (!movingWork(q, run) || q.escortAsset) continue;
     const look = roadWorkLook(q, run);

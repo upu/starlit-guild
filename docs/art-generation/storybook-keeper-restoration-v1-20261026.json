@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly EIGHT complete full-body poses in FOUR columns TWO rows on clean transparent background, no text, props, shadows or ground. Extend this original tower keeper: gray side-parted hair, kind middle-aged face, short compact adult 3-head proportions, slate blue vest, cream rolled sleeves, brown belt trousers boots, warm painterly 2D RPG style elevated 45degree three-quarter camera. All face screen LEFT and keep SAME head and body scale with full feet and wide gutters. Row1:0standing upright neutral calibration armsrelaxed;1lowkneeling on one knee leaning forward tracing invisible stone on ground LEFT with fingers, body anatomically bends so head lower than standing;2standing reading invisible paper between hands at waist LEFT;3standing receiving invisible paper with both open palms extended LEFT at waist. Row2:4walking carrying noobject steadyhands atwaistLEFT leftlegforward;5same walk passingleg;6same walk rightlegforward;7same walk oppositepassingleg. Four distinct natural alternating foot phases, feet lift, no sliding. No paper or stone painted in sprite.",
+  "references": [
+    "assets/source/storybook/keeper-poses-v1.png"
+  ],
+  "source": "assets/source/storybook/keeper-restoration-v1.png"
+}

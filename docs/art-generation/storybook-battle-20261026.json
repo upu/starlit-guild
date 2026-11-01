@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Create a transparent 4-column by 3-row battle sprite sheet, exactly TWELVE separated full-body poses for a warm hand-painted 2D RPG. Match attached characters' physical head size, anatomy, clothes, hair, face and painterly texture precisely; no pixel art and no new chibi proportions. All face three-quarter RIGHT, camera elevated 40-degree downward. ROW1 Aria: blonde elf green cape white blouse/skirt brown boots; simple wooden bow and small quiver. Col1 relaxed battle-ready bow lowered, col2 draws arrow with bow aimed right, col3 releases arrow with drawing hand pulled back beside cheek (no airborne arrow/effect), col4 slight defensive recoil holding bow close. ROW2 Leon: brown hair red short cape navy travel tunic leather trousers/boots, simple steel sword. Col1 sword low ready, col2 sword lifted preparing swing, col3 forward controlled sword slash extending right, col4 slight defensive recoil sword held across chest. ROW3 Mira: lavender pinned hair floral ornament pale layered healer dress brown flats, slender wooden staff with small crescent moon top. Col1 staff held low ready, col2 staff raised a little and free hand near chest preparing spell, col3 free palm extended right while staff steady (no glow/effect), col4 slight defensive recoil staff held close. Keep each person's head EXACT SAME physical pixel size across all four poses and as standing reference. No pose-specific enlargement. Every foot fully inside each cell, same foot ground line. Weapons fully inside cells; ample horizontal margin, do not touch adjacent sprites. No background, no text, no grid, no floor, no shadow blobs. No enormous swords or bright magical halos. Transparent alpha gaps.",
+  "source": "assets/source/storybook/battle-trio-v1.png",
+  "outputs": [
+    "public/storybook-study/aria-battle-v1.webp",
+    "public/storybook-study/leon-battle-v1.webp",
+    "public/storybook-study/mira-battle-v1.webp"
+  ],
+  "registration": "256x192 cells, foot anchor (96,176), one scale per hero calibrated to standing height 134/144/126. Wide cells retain the entire sword."
+}

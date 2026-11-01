@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact transparent8pose4x2 sprite sheet. Preserve character, all upper bodies, exact scale, heads, hands, cell centers, ground baseline and six other poses. Change ONLY pose index3=TOP ROW RIGHTMOST, and pose index4=BOTTOM ROW LEFTMOST. These are the opposite contact and opposite passing of the LEFT-facing carrying walk. Top rightmost: the visible NEAR leg swings BACK toward image RIGHT, its boot planted to the RIGHT of hips; the FAR leg reaches LEFT, its boot planted LEFT of hips and is partially occluded by near leg. Thus the NEAR boot must appear at far RIGHT, unlike the top row second pose which shows near boot LEFT. Bottom leftmost passing: NEAR knee lifts forward/LEFT with heel off ground, far foot planted under hips, visibly different from top row third pose. Both palms and head stay exactly fixed from original. Keep blue headscarf and all8 characters in originalpositions with identicalstandingbody scale. No props, shadows, ground or text. Transparentbackground.",
+  "references": [
+    "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-09c5f2dd-03cb-4928-9796-5b0914b576e1.png"
+  ],
+  "source": "assets/source/storybook/stone-carrier-motion-v2.png"
+}

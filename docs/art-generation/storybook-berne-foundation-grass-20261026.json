@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "references": ["public/story-stage/berne-foundation-grass.webp", "public/storybook-study/berne-porch-v2.png"],
+  "prompt": "Use case: illustration-story. Asset type: opaque3:2 hand-painted 2D RPG dialogue background. Reference1 fixes the location and spatial layout; reference2 the warm painted style. Repaint the foot of this DIFFERENT stone tower at the edge of Berne, no other buildings or horizon. Elevated45degree downward camera, clear miniature ground plane. Tower curved cream-grey block wall across upper third/right, wooden arched door at x78% upper right with a few short steps ending at y47%, old path out of frame upper left behind trees. Preserve diagonal line of buried ancient masonry running from x31% y36% through x46% y63% to x64% y100%, mostly hidden under grass and packed soil; individual stones show intermittently, no hole yet. Leave broad EMPTY dirt foreground and center right for four travelers, two townspeople and a separately rendered survey table. No painted table, characters, tools or portable props. Door heightabout25% image, personabout15%, stones3%. Warm morning light, restrained brown contours, soft painted surfaces, sage green ivy and small wildflowers, broadly readable forms. No glowing effects, runes, magic symbols, mysterious gems, new roads, text, border or watermark. Keep clear dirt areas on both sides of the buried stone line.",
+  "source": "assets/source/storybook/berne-foundation-grass-v1.png",
+  "output": "public/storybook-study/berne-foundation-grass-v1.png"
+}

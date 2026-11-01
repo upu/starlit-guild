@@ -1,0 +1,20 @@
+{
+  "tool": "image_gen",
+  "attempts": [
+    {
+      "version": "v1",
+      "prompt": "Create a four-frame sit-down animation strip for this same adult healer Mira, matching supplied character exactly, warm hand-painted game art. Four isolated full-body figures in one horizontal row, elevated three-quarter facing right. Same head size and body anatomy, same scale and foot floor baseline across all cells. Frame1: upright standing calibration, same as reference first cell. Frame2: first phase of sitting onto an invisible chair behind her: feet remain planted, knees slightly bent, hips pushed backward and down slightly, torso leaning forward slightly, hands near knees. Frame3: deeper knee bend midway to sitting, hips lower and back, torso still slightly forward, lower legs remain vertical and feet planted. Frame4: finished chair-seated posture matching reference seated pose, thighs horizontal, lower legs vertical. Preserve grey-lavender braided updo, moon ornament, sleepy calm adult face, white blue gold robe and sandals. Crucial: head never grows as she bends; standing height126 units, intermediate approx121 then117, final113. No chair, furniture, paper, ground shadow, text, panel lines or background. Truly transparent background; generous gutters and fully visible hair and feet.",
+      "status": "Rejected: narrower head and final height102 vs seated113."
+    },
+    {
+      "version": "v2",
+      "prompt": "Use the attached strip as an exact visual calibration. Keep FIRST standing character IDENTICAL including its large rounded head width and body size. Keep FOURTH seated character IDENTICAL including its head and upright torso. Replace only second and third characters with in-between poses connecting first standing to fourth seated: second bends knees a little and lowers hips slightly; third bends knees slightly more, approaching the final chair seat. Head height stays between first and fourth heights; never crouch lower than final seated head. Do NOT make heads narrower, smaller, or more realistic. Do NOT change the four-cell relative scale. All four must have the same face/head dimensions, costume, adult sleepy expression and aligned sandal baseline. First height126 relative units, second122, third118, fourth113. Transparent background, four separated whole-body figures, NO chair, no floor, no objects, no text.",
+      "status": "Frames1/2 used as intermediate phases; standing126, intermediate120/111."
+    }
+  ],
+  "references": [
+    "public/storybook-study/mira-seat-v3.webp"
+  ],
+  "source": "assets/source/storybook/mira-sit-down-v2.png",
+  "output": "public/storybook-study/mira-sit-down-v2.webp"
+}

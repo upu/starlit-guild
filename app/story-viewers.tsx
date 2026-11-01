@@ -58,7 +58,14 @@ export function storyArtwork(
   viewArt: boolean,
   title: string,
   onOpen: () => void,
+  status: "loading" | "ready" | "failed" = "ready",
 ) {
+  if (art && status === "loading")
+    return (
+      <div className="story-art-space story-still-loading" role="status">
+        絵を準備しています…
+      </div>
+    );
   return (
     <div className="story-art-space">
       {art && (

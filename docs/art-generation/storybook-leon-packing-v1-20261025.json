@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/leon-packing-v1.png",
+  "output": "public/storybook-study/leon-packing-v1.webp",
+  "references": [
+    "public/storybook-study/leon-conversation-v1.webp"
+  ],
+  "prompt": "Create a transparent 4-frame single horizontal row character animation sheet for original Leon shown in reference. Warm hand-painted chibi RPG style exactly matching reference brown tousled hair, youthful face, blue tunic, brown trousers, gloves and boots, red short cape. All four equally spaced cells share identical body scale/head size, elevated 3/4 camera facing right. Cell1 neutral full standing size reference. Cell2 standing leaning slightly forward, both hands extended at waist level to check an imaginary loaded handcart's rope, gaze down at hands. Cell3 exactly same planted boots and body/head silhouette, hands move only a few centimeters to tug knot. Cell4 same posture, hands relaxed at rope. No cart, rope or props in image, no ground/shadow. Do not crouch or kneel: cart ropes at waist height. Same character anatomy in every cell, no head enlargement. Clear margins, complete hair and soles visible, transparent background, no labels, no grid. Wide 3:1 sheet."
+}

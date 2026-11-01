@@ -1,0 +1,181 @@
+{
+  "standingScale": 0.24705882352941178,
+  "frames": [
+    {
+      "frame": 0,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 62,
+      "height": 84,
+      "left": 27,
+      "top": 36,
+      "baseline": 120,
+      "headCenter": 58.90879615302212
+    },
+    {
+      "frame": 1,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 71,
+      "height": 85,
+      "left": 28,
+      "top": 35,
+      "baseline": 120,
+      "headCenter": 59.989988755742594
+    },
+    {
+      "frame": 2,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 66,
+      "height": 84,
+      "left": 29,
+      "top": 36,
+      "baseline": 120,
+      "headCenter": 60.394076464896386
+    },
+    {
+      "frame": 3,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 63,
+      "height": 84,
+      "left": 28,
+      "top": 36,
+      "baseline": 120,
+      "headCenter": 59.80502781864775
+    },
+    {
+      "frame": 4,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 72,
+      "height": 79,
+      "left": 32,
+      "top": 41,
+      "baseline": 120,
+      "headCenter": 66.74075154140976
+    },
+    {
+      "frame": 5,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 64,
+      "height": 82,
+      "left": 27,
+      "top": 38,
+      "baseline": 120,
+      "headCenter": 58.25213361268763
+    },
+    {
+      "frame": 6,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 71,
+      "height": 84,
+      "left": 17,
+      "top": 36,
+      "baseline": 120,
+      "headCenter": 49.30606412952521
+    },
+    {
+      "frame": 7,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 62,
+      "height": 80,
+      "left": 22,
+      "top": 40,
+      "baseline": 120,
+      "headCenter": 53.4066050134356
+    },
+    {
+      "frame": 8,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 69,
+      "height": 82,
+      "left": 28,
+      "top": 38,
+      "baseline": 120,
+      "headCenter": 59.26388608557407
+    },
+    {
+      "frame": 9,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 64,
+      "height": 81,
+      "left": 26,
+      "top": 39,
+      "baseline": 120,
+      "headCenter": 59.20475113122171
+    },
+    {
+      "frame": 10,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 63,
+      "height": 63,
+      "left": 28,
+      "top": 57,
+      "baseline": 120,
+      "headCenter": 62.16201452881963
+    },
+    {
+      "frame": 11,
+      "source": "merrill-seedlings-v2",
+      "scale": 0.24705882352941178,
+      "width": 55,
+      "height": 82,
+      "left": 29,
+      "top": 38,
+      "baseline": 120,
+      "headCenter": 59.30904464017249
+    },
+    {
+      "frame": 12,
+      "source": "merrill-seedlings-walk-v2",
+      "scale": 0.14,
+      "width": 67,
+      "height": 83,
+      "left": 26,
+      "top": 37,
+      "baseline": 120,
+      "headCenter": 58.96213919568779
+    },
+    {
+      "frame": 13,
+      "source": "merrill-seedlings-walk-v2",
+      "scale": 0.14,
+      "width": 62,
+      "height": 83,
+      "left": 26,
+      "top": 37,
+      "baseline": 120,
+      "headCenter": 58.65007594383435
+    },
+    {
+      "frame": 14,
+      "source": "merrill-seedlings-walk-v2",
+      "scale": 0.14,
+      "width": 65,
+      "height": 83,
+      "left": 26,
+      "top": 37,
+      "baseline": 120,
+      "headCenter": 59.22165558592717
+    },
+    {
+      "frame": 15,
+      "source": "merrill-seedlings-walk-v2",
+      "scale": 0.14,
+      "width": 61,
+      "height": 84,
+      "left": 26,
+      "top": 36,
+      "baseline": 120,
+      "headCenter": 58.53102145620823
+    }
+  ]
+}

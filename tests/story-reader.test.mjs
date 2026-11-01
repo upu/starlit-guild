@@ -11,7 +11,7 @@ import * as art from "../lib/story-art.ts";
 import * as originals from "../lib/original-characters.ts";
 import { loadStoryScenes } from "./helpers/story-scene-modules.mjs";
 
-function harness(name, initialProps) {
+function harness(name, initialProps, reducedMotion = false) {
   const slots = [],
     timers = new Map(),
     listeners = new Set();
@@ -39,6 +39,12 @@ function harness(name, initialProps) {
     useRef(initial) {
       const i = cursor++;
       return (slots[i] ??= { current: initial });
+    },
+    useMemo(create, deps) {
+      const i = cursor++;
+      if (!slots[i] || deps.some((value, index) => !Object.is(value, slots[i].deps[index])))
+        slots[i] = { deps, value: create() };
+      return slots[i].value;
     },
     useImperativeHandle(ref, create) {
       if (ref) ref.current = create();
@@ -81,7 +87,7 @@ function harness(name, initialProps) {
   };
   const exports = loadStoryScenes(modules, {
     document,
-    window: { getSelection: () => null },
+    window: { getSelection: () => null, matchMedia: () => ({ matches: reducedMotion }) },
     setTimeout: (fn) => {
       const id = ++serial;
       timers.set(id, fn);
@@ -140,6 +146,227 @@ function harness(name, initialProps) {
   };
 }
 
+function banterRows(h) {
+  return h
+    .find("banter-copy")
+    .props.children.flat()
+    .filter((row) => row?.props?.className === "banter-line");
+}
+
+test("a watched moss adventure uses its arrival only on the first page and keeps it stable across clock renders", () => {
+  const story = stories.stories.find((s) => s.id === "tower-moss-removal-return");
+  const props = {
+    story,
+    ready: true,
+    completedAdventure: "tower-moss-removal",
+    onRead: () => true,
+    onClose() {},
+  };
+  const h = harness("StoryReader", props);
+  const arrival = h.find("StoryStage").props.cue;
+  assert.equal(arrival.background, "tower-foot");
+  h.render({ ...props });
+  assert.equal(h.find("StoryStage").props.cue, arrival, "clock updates must not restart the walk");
+  h.find("story-conversation").props.onClick();
+  h.render();
+  assert.equal(h.find("StoryStage").props.hasten, true);
+  h.find("StoryStage").props.onComplete();
+  h.render();
+  assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[1]]);
+  assert.equal(h.find("StoryStage").props.cue.extras[0].pose, "explain");
+  const replay = harness("StoryReader", { ...props, completedAdventure: undefined });
+  assert.equal(replay.find("StoryStage").props.cue.background, "drain-cleared");
+});
+
+test("early and repeated taps finish a physical handoff before advancing exactly one line", () => {
+  const story = stories.stories.find((s) => s.id === "brekka-moss-beds-return");
+  const h = harness("StoryReader", { story, ready: true, onRead: () => true, onClose() {} });
+  for (let page = 0; page < 52; page++) {
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    const required = h.find("StoryStage").props.cue.finishBeforeAdvance;
+    h.find("story-conversation").props.onClick();
+    h.render();
+    if (!required) continue;
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    assert.equal(h.find("StoryStage").props.hasten, true);
+    for (let tap = 0; tap < 3; tap++) h.find("story-conversation").props.onClick();
+    h.render();
+    const complete = h.find("StoryStage").props.onComplete;
+    complete();
+    complete();
+    h.render();
+    assert.equal(h.find("StoryStage").props.hasten, false);
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page + 1]]);
+  }
+});
+
+test("the opening stage follows dialogue pages without completing or changing the story", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-departure");
+  let read = 0;
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => {
+      read++;
+      return true;
+    },
+    onClose: () => {},
+  });
+  for (let page = 0; page < story.lines.length; page++) {
+    assert.ok(h.find("StoryStage"));
+    assert.equal(h.find("StoryStage").props.speaker, story.lines[page].speaker);
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    assert.equal(h.find("StoryStage").props.onComplete, undefined);
+    assert.equal(read, 0);
+    h.find("story-conversation").props.onClick();
+    h.render();
+  }
+  assert.equal(read, 0, "the final tap starts departure before marking read");
+  h.find("story-conversation").props.onClick();
+  h.render();
+  h.find("StoryStage").props.onComplete();
+  assert.equal(read, 1);
+  h.find("story-conversation").props.onClick();
+  assert.equal(read, 1);
+});
+
+test("the static handover uses latest-line dialogue and history without a stage exit", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-return");
+  let read = 0;
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => {
+      read++;
+      return true;
+    },
+    onClose() {},
+  });
+  for (let page = 0; page < story.lines.length; page++) {
+    assert.equal(h.find("StoryStage"), undefined);
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    assert.equal(read, 0);
+    if (page === 3) {
+      h.click("会話履歴");
+      assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, 4));
+      h.find("story-conversation").props.onClick();
+      h.render();
+      h.click("会話に戻る");
+      assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[page]]);
+    }
+    h.find("story-conversation").props.onClick();
+    h.render();
+  }
+  assert.equal(read, 1);
+});
+
+test("both evening scenes wait for the exit animation after the last tap", () => {
+  for (const suffix of ["departure", "return"]) {
+    const story = stories.stories.find((st) => st.id === `${prologue.RETURN_QUEST}-${suffix}`);
+    let read = 0;
+    const h = harness("StoryReader", {
+      story,
+      ready: true,
+      onRead: () => {
+        read++;
+        return true;
+      },
+      onClose() {},
+    });
+    for (const [page, line] of story.lines.entries()) {
+      assert.deepEqual(h.find("StoryLines").props.lines, [line]);
+      const packing = story.id === "evening-trade-road-return" && page === 8;
+      if (!packing) assert.equal(h.find("StoryStage").props.onComplete, undefined);
+      h.find("story-conversation").props.onClick();
+      h.render();
+      if (packing) {
+        assert.deepEqual(h.find("StoryLines").props.lines, [line]);
+        h.find("StoryStage").props.onComplete();
+        h.render();
+      }
+    }
+    assert.equal(read, 0);
+    h.find("StoryStage").props.onComplete();
+    assert.equal(read, 1);
+  }
+});
+
+test("the founding departure waits for regrouping after the final line", () => {
+  const story = stories.stories.find((st) => st.id === "starlit-guild-founding-departure");
+  let read = 0;
+  const h = harness("StoryReader", {
+    story,
+    reviewStartPage: story.lines.length - 1,
+    departure: true,
+    ready: true,
+    onRead: () => {
+      read++;
+      return true;
+    },
+    onClose() {},
+  });
+  assert.deepEqual(h.find("StoryLines").props.lines, [story.lines.at(-1)]);
+  h.find("story-conversation").props.onClick();
+  h.render();
+  assert.equal(h.find("story-conversation").props["aria-label"], "出発中");
+  assert.equal(read, 0);
+  h.find("story-conversation").props.onClick();
+  h.find("StoryStage").props.onComplete();
+  h.render();
+  assert.equal(read, 0);
+  assert.equal(h.timerCount(), 1);
+  h.tick();
+  assert.equal(read, 1);
+});
+
+test("reduced motion completes the founding departure without a fade delay", () => {
+  const story = stories.stories.find((st) => st.id === "starlit-guild-founding-departure");
+  let read = 0;
+  const h = harness(
+    "StoryReader",
+    {
+      story,
+      reviewStartPage: story.lines.length - 1,
+      departure: true,
+      ready: true,
+      onRead: () => {
+        read++;
+        return true;
+      },
+      onClose() {},
+    },
+    true,
+  );
+  h.find("story-conversation").props.onClick();
+  h.render();
+  h.find("StoryStage").props.onComplete();
+  assert.equal(read, 1);
+  assert.equal(h.timerCount(), 0);
+});
+
+test("a rejected founding departure clears the fade and permits another try", () => {
+  const story = stories.stories.find((st) => st.id === "starlit-guild-founding-departure");
+  let attempts = 0;
+  const h = harness("StoryReader", {
+    story,
+    reviewStartPage: story.lines.length - 1,
+    departure: true,
+    ready: true,
+    onRead: () => ++attempts > 1,
+    onClose() {},
+  });
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    h.find("story-conversation").props.onClick();
+    h.render();
+    h.find("StoryStage").props.onComplete();
+    h.render();
+    h.tick();
+    assert.equal(attempts, attempt);
+    if (attempt === 1)
+      assert.equal(h.find("story-conversation").props["aria-label"], "冒険を始める");
+  }
+});
+
 test("automatic conversation completes after the final dwell, pauses, and reports read only once", () => {
   let read = 0;
   const props = {
@@ -188,7 +415,7 @@ test("story and banter portraits keep the expression of each individual line", (
   );
   const banter = harness("Banter", { lines });
   banter.tick();
-  const history = banter.find("banter-copy").props.children.flat().filter(Boolean);
+  const history = banterRows(banter);
   assert.deepEqual(
     Array.from(history, (row) => row.props.children[0].props.expression),
     ["surprised", "smile"],
@@ -197,14 +424,10 @@ test("story and banter portraits keep the expression of each individual line", (
   const next = [{ ...lines[1], expression: "worried" }];
   banter.render({ lines: next });
   banter.tick();
-  assert.equal(
-    banter.find("banter-copy").props.children.flat().filter(Boolean).at(-1).props.children[0].props
-      .expression,
-    "worried",
-  );
+  assert.equal(banterRows(banter).at(-1).props.children[0].props.expression, "worried");
 });
 
-test("story reader retains all revealed lines for scrolling, reveals art at its action, and only finishes on the final line", () => {
+test("chapter reader shows the current line, reveals art at its action, and only finishes on the final line", () => {
   const story = stories.stories.find((st) => st.id === "tower-road-return");
   let read = 0,
     closed = 0;
@@ -218,7 +441,7 @@ test("story reader retains all revealed lines for scrolling, reveals art at its 
     onClose: () => closed++,
   });
   for (let i = 0; i < story.lines.length; i++) {
-    assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, i + 1));
+    assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[i]]);
     assert.equal(h.find("ArtViewer").props.art, null);
     const hasFigure = !!h.find("figure");
     assert.equal(hasFigure, !!art.storyArtAt(story.id, i));
@@ -227,6 +450,12 @@ test("story reader retains all revealed lines for scrolling, reveals art at its 
     if (i + 1 < story.lines.length) {
       h.find("story-conversation").props.onClick();
       h.render();
+      if (i === 19) {
+        assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[i]]);
+        assert.equal(h.find("StoryStage").props.hasten, true);
+        h.find("StoryStage").props.onComplete();
+        h.render();
+      }
     }
   }
   assert.ok(!h.text().includes("前へ"));
@@ -254,7 +483,13 @@ test("dialogue taps advance while drags and scrolls do not; keyboard and final r
     onClose: () => closed++,
   };
   const h = harness("StoryReader", props),
-    viewport = { scrollTop: 0, scrollHeight: 300 };
+    viewport = {
+      scrollTop: 0,
+      scrollHeight: 300,
+      scrollTo({ top }) {
+        this.scrollTop = top;
+      },
+    };
   h.find("dialogue-page dialogue-history").props.ref.current = viewport;
   h.find("story-conversation").props.onPointerDown({ clientX: 30, clientY: 80 });
   h.find("story-conversation").props.onPointerMove({ clientX: 30, clientY: 40 });
@@ -269,7 +504,7 @@ test("dialogue taps advance while drags and scrolls do not; keyboard and final r
   h.find("story-conversation").props.onPointerDown({ clientX: 30, clientY: 80 });
   h.find("story-conversation").props.onClick();
   h.render();
-  assert.equal(h.find("StoryLines").props.lines.length, 2);
+  assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[1]]);
   for (let i = 2; i < story.lines.length; i++) {
     h.find("story-conversation").props.onKeyDown({
       key: "Enter",
@@ -283,7 +518,74 @@ test("dialogue taps advance while drags and scrolls do not; keyboard and final r
   assert.equal(closed, 0);
   h.render({ ...props, ready: true });
   h.find("story-conversation").props.onKeyDown({ key: " ", repeat: false, preventDefault() {} });
+  assert.equal(read, 0);
+  h.render();
+  h.find("StoryStage").props.onComplete();
   assert.equal(read, 1);
+  assert.equal(closed, 1);
+});
+
+test("staged dialogue puts the current line first and history never advances the story", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-departure");
+  const advanceRef = { current: null };
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => true,
+    onClose() {},
+    advanceRef,
+  });
+  advanceRef.current.advance();
+  h.render();
+  const viewport = {
+    scrollTop: 99,
+    scrollHeight: 500,
+    scrollTo({ top }) {
+      this.scrollTop = top;
+    },
+  };
+  h.find("dialogue-page dialogue-history").props.ref.current = viewport;
+  advanceRef.current.advance();
+  h.render();
+  assert.equal(viewport.scrollTop, 0);
+  assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[2]]);
+  h.click("会話履歴");
+  assert.deepEqual(h.find("StoryLines").props.lines, story.lines.slice(0, 3));
+  assert.equal(viewport.scrollTop, 500);
+  advanceRef.current.advance();
+  h.find("story-conversation").props.onClick();
+  h.render();
+  h.click("会話に戻る");
+  assert.deepEqual(h.find("StoryLines").props.lines, [story.lines[2]]);
+  assert.equal(viewport.scrollTop, 0);
+});
+
+test("a rejected staged departure can retry without marking or closing twice", () => {
+  const story = stories.stories.find((st) => st.id === "village-trade-departure");
+  let attempts = 0,
+    closed = 0;
+  const advanceRef = { current: null };
+  const h = harness("StoryReader", {
+    story,
+    ready: true,
+    onRead: () => ++attempts > 1,
+    onClose: () => closed++,
+    advanceRef,
+  });
+  for (let i = 0; i < story.lines.length; i++) {
+    advanceRef.current.advance();
+    h.render();
+  }
+  h.find("StoryStage").props.onComplete();
+  h.render();
+  assert.equal(attempts, 1);
+  assert.equal(closed, 0);
+  assert.equal(h.find("StoryStage").props.onComplete, undefined);
+  advanceRef.current.advance();
+  h.render();
+  h.find("StoryStage").props.onComplete();
+  h.find("StoryStage").props.onComplete();
+  assert.equal(attempts, 2);
   assert.equal(closed, 1);
 });
 
@@ -333,6 +635,39 @@ test("banter keeps a complete exchange while the route changes and pauses under 
   h.render({ ...props, lines: [{ speaker: "aria", text: "うん、一緒に行こう。" }] });
   h.tick();
   assert.equal(viewport.scrollTop, 1000, "following resumes from the bottom");
+});
+
+test("banter completion waits for retained exchanges and starts when a late callback is supplied", () => {
+  const opening = [{ speaker: "leon", text: "仕掛けを見る。" }];
+  const smoke = [
+    { speaker: "mira", text: "支えるわ。" },
+    { speaker: "finn", text: "栓を閉めよう。" },
+  ];
+  let completed = 0;
+  const finish = () => {
+    completed++;
+  };
+  const h = harness("Banter", { lines: opening, retain: true });
+  h.render({ lines: smoke, retain: true });
+  h.render({ lines: [], retain: true, onComplete: finish });
+  assert.equal(completed, 0);
+  h.tick();
+  assert.ok(h.text().includes(smoke[0].text));
+  assert.equal(completed, 0);
+  h.tick();
+  assert.ok(h.text().includes(smoke[1].text));
+  assert.equal(completed, 0);
+  h.tick();
+  assert.equal(completed, 1);
+  h.render({ lines: [], retain: true, onComplete: finish });
+  assert.equal(h.timerCount(), 0);
+
+  const late = harness("Banter", { lines: opening });
+  assert.equal(late.timerCount(), 0);
+  late.render({ lines: opening, onComplete: finish });
+  assert.equal(late.timerCount(), 1);
+  late.tick();
+  assert.equal(completed, 2);
 });
 
 test("memories interleave departure and ending by stage; album stays separate and returns to the handbook", () => {
@@ -461,7 +796,7 @@ test("each banter line keeps its own speaker portrait, including history and nar
   const h = harness("Banter", { lines });
   h.tick();
   h.tick();
-  const rows = h.find("banter-copy").props.children.flat().filter(Boolean);
+  const rows = banterRows(h);
   assert.equal(rows.length, 3);
   assert.equal(rows[0].props.children[0].props.index, 0);
   assert.equal(rows[1].props.children[0].props.index, 1);
@@ -525,7 +860,7 @@ test("banter compares speakers as well as text and bounds genuine new history", 
     h.tick();
     assert.equal(h.timerCount(), 0);
   }
-  const entries = h.find("banter-copy").props.children.flat().filter(Boolean);
+  const entries = banterRows(h);
   assert.equal(entries.length, 100);
   assert.ok(h.text().includes("発言-104"));
   assert.ok(!h.text().includes("発言-0"));
@@ -578,4 +913,33 @@ test("a stage departure opens on its number and name, and a tap or outside tap s
   assert.equal(tree.props.story, story);
   assert.equal(tree.props.stage, undefined);
   assert.equal(h.render({ ...props }).type, h.exports.StoryReader, "other stories skip the card");
+});
+test("finishing or inspecting a conversation keeps its motion cue until the next line", () => {
+  const story = stories.stories.find((s) => s.id === "moss-transplant-return");
+  const h = harness("StoryReader", { story, ready: true, onRead: () => true, onClose() {} });
+  const cue = h.find("StoryStage").props.cue;
+  h.find("StoryStage").props.onComplete();
+  h.render();
+  assert.equal(
+    h.find("StoryStage").props.cue,
+    cue,
+    "a completion render must not restart the sequence",
+  );
+  h.click("会話履歴");
+  assert.equal(h.find("StoryStage").props.cue, cue);
+  h.click("会話に戻る");
+  assert.equal(h.find("StoryStage").props.cue, cue);
+  h.find("story-conversation").props.onClick();
+  h.render();
+  assert.notEqual(h.find("StoryStage").props.cue, cue);
+  const pending = harness("StoryReader", { story, ready: true, onRead: () => true, onClose() {} });
+  const initial = pending.find("StoryStage").props.cue;
+  pending.find("story-conversation").props.onClick();
+  pending.render();
+  assert.equal(pending.find("StoryStage").props.hasten, true);
+  assert.equal(
+    pending.find("StoryStage").props.cue,
+    initial,
+    "speed changes retain the playing sequence",
+  );
 });

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit only time of day of the reference village road background. Preserve EXACT camera, every house, roof, fence, tree, rock, path width, geometry and composition. Original warm hand-painted2D RPG elevated45degree view. Change bright afternoon to calm late dusk, cool bluegrey ambient lighting with gentle remaining warm skyillumination, soft lowcontrast. No direct sunbeam or bright yellow sunspots. Darken enough for a small oil lantern later added as separate gameplay prop to be visible. NO characters, NO lanterns or new props, no added towers, text or UI. Keep road clear and readable, do not turn into pitchblack night. Full image opaque background.",
+  "references": [
+    "public/storybook-study/hill-path-v1.png"
+  ],
+  "source": "assets/source/storybook/hill-path-dusk-v1.png"
+}

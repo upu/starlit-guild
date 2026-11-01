@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: precise-object-edit. Edit this background. Change ONLY the tiny glowing object on the small wall shelf left of center (x37%,y18%). It must be a plain NATURAL SMOOTH OVAL STONE, low flattened grey-blue pebble resting directly on the shelf, with a soft faint pale blue glow. NO bottle, jar, glass, lid, handle, neck, metal setting or container. It is an everyday luminescent pebble purchased two years ago. Keep the complete house, shelf, windows, wooden door, roof, paving, plants, framing, color, sunlight, perspective and empty walkable floor IDENTICAL. No people or new objects. Wide3:2 opaque background.",
+  "source": "assets/source/storybook/berne-porch-v2.png",
+  "output": "public/storybook-study/berne-porch-v2.png",
+  "replaces": "The first porch draft rendered the shelf stone as a jar. The accepted revision restores a natural pebble."
+}

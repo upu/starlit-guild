@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "references": ["assets/source/storybook/berne-foundation-grass-v1.png"],
+  "prompt": "Use case: precise-object-edit. This is the EXACT SAME tower background a short time later after the masons cleared weeds from its buried foundation. Change ONLY the diagonal narrow line of stones across the ground. Remove grass and loose soil from the tops and joins of that line so clean fitted masonry is visible from x31%y36% through x46%y63% to x64%y100%. At x46%y63% create ONE EMPTY RECTANGULAR SOCKET where a SINGLE stone block is missing: about5% of image width and4% image height, shallow dusty brown recess with squared pale stone sides. Keep it part of the continuous line of masonry, no separate stone floating, no pedestal, no glowing crystal, no well, no deep cave. A few freshly pulled weeds can lie beside the strip, away from the empty walking areas. Keep the tower, door, steps, ivy, trees, light, viewpoint, paving alignment, empty foreground and ALL other geometry IDENTICAL. Opaque wide3:2 warm hand-painted RPG background, no people, tools, tables, text or labels.",
+  "source": "assets/source/storybook/berne-foundation-open-v1.png",
+  "output": "public/storybook-study/berne-foundation-open-v1.png"
+}

@@ -1,0 +1,145 @@
+{
+  "date": "2026-11-01",
+  "reason": "Remove superseded delivery outputs and explicitly rejected sources; move registration metadata outside public without changing current rendered images.",
+  "removed": [
+    {
+      "path": "public/storybook-study/brekka-tower-path-v1.png",
+      "bytes": 3701193,
+      "sha256": "8047f31c8a042c28d0c71bb584f9dbe01e85799d5fa3990a16208241ab880156",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/drain-cleared-dusk-v1.png",
+      "bytes": 4164047,
+      "sha256": "dcd5b114199c1266a3b828e999b7c78aeae70cbc97892235c5f64ebcfbfcdf72",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/drain-inspection-closed-v1.png",
+      "bytes": 3020983,
+      "sha256": "f6fab4c9bae232be3b75297210a5057a4d78500b6ab7542534f71ce894ebb489",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/drain-inspection-open-v1.png",
+      "bytes": 3259046,
+      "sha256": "d2eabf6306162a9023db9ae5e684f2c56758c59e44627eba76202890e8317ccb",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/warehouse-road-v1.png",
+      "bytes": 2973727,
+      "sha256": "1bf5ad4ee96ba998e53f60003f09118957698a73a2c56b5c82609fde2f23014d",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-walk-balanced-v2.webp",
+      "bytes": 77022,
+      "sha256": "6ed02009bca2e176b0f7b40e86ecda82100f4ea4b061c95577c6e52ac1cf26cf",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-walk-balanced-v2-metrics.json",
+      "bytes": 981,
+      "sha256": "e911123d696b9193aac4a6bd38e8d5494b85579b62802147449e3ad84e1e6560",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-pull-scene-balanced-v2.webp",
+      "bytes": 71236,
+      "sha256": "b050e57898e12b9ddb939d139e30300f5fdefb8bd33be35e30e5972183796dce",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-pull-scene-balanced-v2-metrics.json",
+      "bytes": 1010,
+      "sha256": "b07498fb4c85de4926257f3adc430dd6841d6e194aef189c3746bd84c5a24186",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-night-push-v1.webp",
+      "bytes": 142632,
+      "sha256": "3fec466959890c5afa540d65de6e25e45f79648ac7860cceb6b581364f8f1dfc",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/finn-night-push-v1-metrics.json",
+      "bytes": 1168,
+      "sha256": "f35911aa395648fb528e5a4f1db1663e341278d0b6e18a67add4f315fd85e40d",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/lico-walk-v4.webp",
+      "bytes": 66740,
+      "sha256": "c8342cf90632d8c29a79871cfcea18bb4695260620f442c343e9c244c09a9646",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/lico-conversation-v2.webp",
+      "bytes": 64212,
+      "sha256": "6798e5f12ff5288660f1a3f6489f0b310afbd9e45151f77182d02199690e2ccd",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "public/storybook-study/garden-handcart-v1.webp",
+      "bytes": 123180,
+      "sha256": "a9b49e07eb5208b273bc1075afef7beb09aa117537199d6e13deb8fb27c24396",
+      "reason": "Superseded delivery output; no runtime, generator input or test reference. Accepted sources and current replacements remain."
+    },
+    {
+      "path": "assets/source/storybook/aria-walk-rejected-v1.png",
+      "bytes": 1718997,
+      "sha256": "d6dde59453442a2d560c3491e4d8293f6845f9c46ced09a20bfab05ab31d4af5",
+      "reason": "Explicitly rejected, never integrated; no build/test input references. Prompt, decision and file hash retained."
+    },
+    {
+      "path": "assets/source/storybook/finn-opposite-contact-rejected-v1.png",
+      "bytes": 1492171,
+      "sha256": "cad8b7777f61479ea2799604fec0b0f6e2c0d76e739f47b39b95c0a0866f5982",
+      "reason": "Explicitly rejected, never integrated; no build/test input references. Prompt, decision and file hash retained."
+    },
+    {
+      "path": "assets/source/storybook/lico-battle-ponytail-rejected-v1.png",
+      "bytes": 1290310,
+      "sha256": "82d60e5041e58891705a5ae0f8a7e0306e85e918024d4590edcc08db9159054f",
+      "reason": "Explicitly rejected, never integrated; no build/test input references. Prompt, decision and file hash retained."
+    },
+    {
+      "path": "assets/source/storybook/lico-opposite-contact-rejected-v1.png",
+      "bytes": 913981,
+      "sha256": "dd089f3f6779b23e2420b7e31b3b25b78356781c4b2e59b739084878b7dd836b",
+      "reason": "Explicitly rejected, never integrated; no build/test input references. Prompt, decision and file hash retained."
+    },
+    {
+      "path": "assets/source/storybook/worker-push-road-rejected-v1.png",
+      "bytes": 808766,
+      "sha256": "3447a7c57b89d020dd6ca78da7bdf7d3f9b7a1c2a8788ce30ee0880c91032087",
+      "reason": "Explicitly rejected, never integrated; no build/test input references. Prompt, decision and file hash retained."
+    },
+    {
+      "path": "assets/source/storybook/carry-walk-pair-v1.png",
+      "bytes": 2495835,
+      "sha256": "53a65813806075d1beabbdb3ca372e328c7319a4e3e3a43e15e65e9b6b3a37af",
+      "reason": "Both pair sheets are explicitly rejected-for-integration; no generator/test inputs or accepted-source references use them."
+    },
+    {
+      "path": "assets/source/storybook/carry-walk-pair-v2.png",
+      "bytes": 2453217,
+      "sha256": "647e51e7f2c15f903619f92d95188e14453bbf159f9eb6cd5ad45de9aabf3ff6",
+      "reason": "Both pair sheets are explicitly rejected-for-integration; no generator/test inputs or accepted-source references use them."
+    }
+  ],
+  "metadata": {
+    "directory": "assets/metadata/storybook",
+    "files": 254,
+    "original_directory": "public/storybook-study",
+    "policy": "Registration measurements are generator/test data. Preserve contents; do not ship them as public game assets."
+  },
+  "preserved": [
+    "Accepted source art and reference ancestors",
+    "finn-night-push-balanced-v4.webp and its metrics: input to the current v5 builder",
+    "finn-conversation-v2.webp: regression reference",
+    "Final PC/mobile review records and current painted-stage captures",
+    "All D1/KV and player save state"
+  ]
+}

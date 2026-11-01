@@ -1,0 +1,86 @@
+.storybook-reader-stage[data-art="berne-porch-v2"] [data-actor="aria"] {
+  --ground-rest-art: url("/storybook-study/aria-ground-rest-v1.webp");
+  --stage-name-above: 10%;
+  --ground-label-top: 28%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"] [data-actor="leon"] {
+  --ground-rest-art: url("/storybook-study/leon-ground-rest-v1.webp");
+  --stage-name-above: 4%;
+  --ground-label-top: 24%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"] [data-actor="mira"] {
+  --ground-rest-art: url("/storybook-study/mira-ground-rest-v1.webp");
+  --stage-name-above: 14%;
+  --ground-label-top: 26%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"] [data-actor="finn"] {
+  --ground-rest-art: url("/storybook-study/finn-ground-rest-balanced-v2.webp");
+  --stage-name-above: 3%;
+  --ground-label-top: 19%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"]
+  .story-stage-actor:has(
+    .story-stage-sprite:is(
+      [data-frame="36"],
+      [data-frame="37"],
+      [data-frame="38"],
+      [data-frame="39"],
+      [data-frame="40"],
+      [data-frame="41"],
+      [data-frame="42"],
+      [data-frame="43"]
+    )
+  ) {
+  --stage-name-above: var(--ground-label-top);
+}
+.storybook-reader-stage[data-art="berne-porch-v2"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="36"],
+    [data-frame="37"],
+    [data-frame="38"],
+    [data-frame="39"],
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  background-image: var(--ground-rest-art);
+  background-size: 300% 100%;
+  background-position: 50% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="37"], [data-frame="41"]) {
+  background-position-x: 100% !important;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"]
+  .story-stage-sprite:is(
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/mira-perch-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-art="berne-porch-v2"] .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-mode="outdoor"][data-art="berne-porch-v2"] .story-stage-space {
+    transform: none;
+  }
+}

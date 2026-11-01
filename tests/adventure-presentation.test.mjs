@@ -68,11 +68,21 @@ test("renderer receives the latest state, resize and pause; cleanup blocks callb
     bridgeRef,
     destroyed = 0,
     actions = 0,
-    statuses = 0;
-  const calls = [];
+    statuses = 0,
+    visualCompletions = 0;
+  const calls = [],
+    pushFrames = [],
+    townActivities = [];
   const session = rendererSession(
     {},
-    { read: () => source, act: () => actions++, status: () => statuses++ },
+    {
+      read: () => source,
+      act: () => actions++,
+      status: () => statuses++,
+      visualComplete: () => visualCompletions++,
+      nightPushFrame: (frame) => pushFrames.push(frame),
+      townActivity: (activity) => townActivities.push(activity),
+    },
     async () => (_parent, bridge) => {
       bridgeRef = bridge;
       return {
@@ -103,15 +113,25 @@ test("renderer receives the latest state, resize and pause; cleanup blocks callb
   bridgeRef.act({ type: "assist" });
   assert.equal(actions, 1);
   bridgeRef.status("ready");
+  bridgeRef.visualComplete("berne-restoration");
+  bridgeRef.nightPushFrame(3);
+  bridgeRef.townActivity({ started: 1000, label: "商店へ荷物を運ぶ" });
   assert.equal(statuses, 1);
+  assert.equal(visualCompletions, 1);
   session.destroy();
   session.destroy();
   bridgeRef.act({ type: "assist" });
   bridgeRef.status("error");
+  bridgeRef.visualComplete("berne-restoration");
+  bridgeRef.nightPushFrame(4);
+  bridgeRef.townActivity({ started: 1000, label: null });
   session.resize(600, 500);
   assert.equal(destroyed, 1);
   assert.equal(actions, 1);
   assert.equal(statuses, 1);
+  assert.equal(visualCompletions, 1);
+  assert.deepEqual(pushFrames, [3]);
+  assert.deepEqual(townActivities, [{ started: 1000, label: "商店へ荷物を運ぶ" }]);
 });
 
 test("a failed renderer reports an error and a separate retry can start cleanly", async () => {

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exact transparent 4-column x 2-row 8-pose cook sprite sheet. Preserve every pose's position, complete boots, consistent head/body scale, costume and painting style. Change ONLY pose 6 (bottom row column 2) and pose 7 (bottom row column 3): this stocky middle-aged moustached cook reaches BOTH arms forward to the RIGHT at another adult's shoulder height. Pose 6 both hands open in preparation to grasp both shoulders, pose 7 both hands resting/gripping the two shoulders of an INVISIBLE person, never a fist/punch or collar grab. One near hand and the slightly farther hand should be visible, the farther hand just behind and a little higher, both in front of his body, palms cupped gently downward. Elbows bent naturally. Both arms are raised, neither arm hangs at his side. No target person or props. Keep feet and torso exactly grounded and same dimensions as before. Keep other six poses unchanged. Transparent background.",
+  "references": [
+    "assets/source/storybook/cook-motion-v1.png"
+  ],
+  "source": "assets/source/storybook/cook-motion-v2.png"
+}

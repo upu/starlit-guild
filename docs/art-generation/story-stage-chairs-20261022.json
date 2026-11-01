@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-22",
+  "tool": "image_gen built-in",
+  "transparent": true,
+  "purpose": "Empty-handed chair poses, retaining character identity and registered head/feet scale",
+  "assets": [
+    {
+      "id": "aria",
+      "source": "assets/source/story-stage/aria-chair-v1.png",
+      "reference": "public/home-pixel/aria-tea.webp",
+      "prompt": "Edit the reference sprite atlas for the Japanese pixel-art RPG STARLIT-GUILD. The input is Aria seated on a small wooden chair, a transparent 4-column by 2-row atlas with eight full-body frames. Produce a matching transparent 4x2 atlas, same character, clothing, hairstyle, cape, boots, chair, proportions, head width, view angle, cell positions and ample margins. ONLY change her hands: remove every teacup and saucer from every frame. In the top row she faces slightly right, in the bottom row slightly left, as the reference. First frame of each row: both empty hands resting on her lap, fingers relaxed. Second frame: empty hands slightly raised as if holding a sheet of paper (do NOT draw paper). Third frame: one open empty hand near chest as she speaks. Fourth frame: both empty hands resting on her lap, a tiny relaxed smile. Keep legs hanging down, feet in the same positions, visibly seated on the same chair. Do not turn into cross-legged floor sitting. Preserve Aria's face and exact small chibi pixel style; no redesign, no extra objects, no text, no shadows extending outside each cell, no background. All eight characters including heads and boot tips must be entirely inside their own equal cells. Image dimensions 1024x512, eight 256x256 cells.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-d8001e47-54ba-4451-94da-f2f5ca93a99a.png"
+    },
+    {
+      "id": "leon",
+      "source": "assets/source/story-stage/leon-chair-v1.png",
+      "reference": "public/home-pixel/leon-tea.webp",
+      "prompt": "Edit this transparent sprite atlas for the pixel-art RPG STARLIT-GUILD. Input is leon, seated on a small wooden chair, a 4-column by 2-row atlas. Make a matching transparent 4x2 atlas with eight full-body frames. Keep this exact character identity, face, hair, outfit, boots, wooden chair, pixel style and chibi head/body proportions. Top row faces slightly right, bottom row slightly left. Remove all cups and saucers. First cell of each row: EMPTY hands resting on lap, calm neutral expression. Second cell: EMPTY hands slightly forward as if holding a small paper (do not draw paper). Third cell: one EMPTY hand at chest and one open as they speak, friendly smile. Fourth cell: EMPTY hands resting on lap, thoughtful expression. Legs hang down naturally; same boots/feet as reference. Do not make cross-legged floor sitting. Eight equal cells with full heads, chairs, feet inside and transparent gutters, alpha background with NO decorative blocks or lines, no labels, no text. Preserve the character, do not redesign or make a different person. Output wide 2:1 atlas, 1024x512 preferred.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-91c5ebe9-ebf0-4b45-b710-e537929ccdd0.png"
+    },
+    {
+      "id": "mira",
+      "source": "assets/source/story-stage/mira-chair-v1.png",
+      "reference": "public/home-pixel/mira-tea.webp",
+      "prompt": "Edit this transparent sprite atlas for the pixel-art RPG STARLIT-GUILD. Input is mira, seated on a small wooden chair, a 4-column by 2-row atlas. Make a matching transparent 4x2 atlas with eight full-body frames. Keep this exact character identity, face, hair, outfit, boots, wooden chair, pixel style and chibi head/body proportions. Top row faces slightly right, bottom row slightly left. Remove all cups and saucers. First cell of each row: EMPTY hands resting on lap, calm neutral expression. Second cell: EMPTY hands slightly forward as if holding a small paper (do not draw paper). Third cell: one EMPTY hand at chest and one open as they speak, friendly smile. Fourth cell: EMPTY hands resting on lap, thoughtful expression. Legs hang down naturally; same boots/feet as reference. Do not make cross-legged floor sitting. Eight equal cells with full heads, chairs, feet inside and transparent gutters, alpha background with NO decorative blocks or lines, no labels, no text. Preserve the character, do not redesign or make a different person. Output wide 2:1 atlas, 1024x512 preferred.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-952e9f57-d0cb-44eb-8300-1b20521be7b0.png"
+    },
+    {
+      "id": "finn",
+      "source": "assets/source/story-stage/finn-chair-v1.png",
+      "reference": "public/home-pixel/finn-tea.webp",
+      "prompt": "Edit this transparent sprite atlas for the pixel-art RPG STARLIT-GUILD. Input is finn, seated on a small wooden chair, a 4-column by 2-row atlas. Make a matching transparent 4x2 atlas with eight full-body frames. Keep this exact character identity, face, hair, outfit, boots, wooden chair, pixel style and chibi head/body proportions. Top row faces slightly right, bottom row slightly left. Remove all cups and saucers. First cell of each row: EMPTY hands resting on lap, calm neutral expression. Second cell: EMPTY hands slightly forward as if holding a small paper (do not draw paper). Third cell: one EMPTY hand at chest and one open as they speak, friendly smile. Fourth cell: EMPTY hands resting on lap, thoughtful expression. Legs hang down naturally; same boots/feet as reference. Do not make cross-legged floor sitting. Eight equal cells with full heads, chairs, feet inside and transparent gutters, alpha background with NO decorative blocks or lines, no labels, no text. Preserve the character, do not redesign or make a different person. Output wide 2:1 atlas, 1024x512 preferred.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-0a3a02d4-c040-4701-9532-a633596b1bf0.png"
+    },
+    {
+      "id": "lico",
+      "source": "assets/source/story-stage/lico-chair-v1.png",
+      "reference": "public/home-pixel/lico-tea.webp",
+      "prompt": "Edit this transparent sprite atlas for the pixel-art RPG STARLIT-GUILD. Input is lico, seated on a small wooden chair, a 4-column by 2-row atlas. Make a matching transparent 4x2 atlas with eight full-body frames. Keep this exact character identity, face, hair, outfit, boots, wooden chair, pixel style and chibi head/body proportions. Top row faces slightly right, bottom row slightly left. Remove all cups and saucers. First cell of each row: EMPTY hands resting on lap, calm neutral expression. Second cell: EMPTY hands slightly forward as if holding a small paper (do not draw paper). Third cell: one EMPTY hand at chest and one open as they speak, friendly smile. Fourth cell: EMPTY hands resting on lap, thoughtful expression. Legs hang down naturally; same boots/feet as reference. Do not make cross-legged floor sitting. Eight equal cells with full heads, chairs, feet inside and transparent gutters, alpha background with NO decorative blocks or lines, no labels, no text. Preserve the character, do not redesign or make a different person. Output wide 2:1 atlas, 1024x512 preferred.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-ca2ddb24-329f-477b-a973-39e077b170cd.png"
+    },
+    {
+      "id": "chair",
+      "source": "assets/source/story-stage/chair-v1.png",
+      "reference": "assets/source/story-stage/aria-chair-v1.png",
+      "prompt": "Extract/reconstruct ONLY the simple small wooden chair from the first top-left sprite in this transparent RPG sprite atlas. Remove the character entirely and show the empty chair, including the green seat cushion, wooden backrest and all legs. Same slightly elevated three-quarter angle as the first top-left sprite, backrest on the left and seat facing to the right. Preserve warm brown wood, dark pixel-art outlines and same handcrafted Japanese RPG pixel-art style. Single whole empty chair centered with transparent margins on all sides, real alpha background. No person, no clothing, no table, no text, no decorative background, no cast shadow beyond the feet. Entire chair must fit within the image.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-eadad3ff-b13e-4483-9779-25649f29a382.png"
+    },
+    {
+      "id": "mira-bed",
+      "source": "assets/source/story-stage/mira-bed-v1.png",
+      "reference": "public/story-stage/mira-poses.webp",
+      "prompt": "Create an additional transparent sprite atlas of MIRA, the exact purple-haired healer in the reference, for STARLIT-GUILD. Reference is character identity and pixel style only. A clean 4-column ONE-row strip of four full-body chibi sprites. ALL FOUR face slightly LEFT, viewed from slightly above. Keep exact lavender hair, flower hair clip, warm cream/gold healer outfit, boots, face and head/body proportions. Cell 1: seated on an invisible bed mattress, feet tucked up together, hands relaxed on lap, gentle smile. Cell 2: seated upright on the edge of an invisible bed, both legs lowered and hanging down, hands beside hips, attempting to get up but NOT standing. Cell 3: seated on invisible mattress with legs tucked up, holds a small breakfast spoon near her mouth, gentle smile. Cell 4: lying comfortably asleep on her side, head at RIGHT, feet at LEFT, eyes closed, arms relaxed, dressed in same outfit. Draw ONLY the character and the small spoon in cell 3, NO bed, NO chair, NO pillow, NO blanket, NO floor, no text, no lines. Each full sprite isolated with ample transparent gutters in its own equal square cell. Preserve handcrafted Japanese RPG pixel art with clear dark outlines and soft earth colors. True transparent alpha background. All heads, hair and boot tips completely visible. Wide 4:1 strip, four equal cells, do not add rows or duplicate characters.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-e04e76de-8e3f-4125-bf71-bd66d1c5df31.png"
+    },
+    {
+      "id": "dining-table",
+      "source": "assets/source/story-stage/dining-table-v1.png",
+      "reference": "public/story-stage/prop-table.webp",
+      "prompt": "Create one empty wooden DINING TABLE prop for the Japanese pixel-art RPG STARLIT-GUILD, matching the reference's brown wood texture and dark pixel outlines. Reference is a tall square worktable; replace its shape with a wide low rectangular dining table for four small chibi people. Slightly elevated three-quarter RPG angle, see tabletop and two sides. Broad tabletop, short sturdy legs: the total visible bounding box should be about THREE times as wide as tall (3:1). The tabletop front edge is low enough for seated characters' hands; not a tall counter or bar. Front legs occupy only the bottom half of total image height. Long horizontal left-to-right table with perspective depth, warm amber wood, modest hand-crafted rural inn furniture. Empty tabletop, no food, no chairs, no people, no background, no text. Whole table including all legs entirely visible with transparent margins, true alpha background. Clear detailed pixel-art consistent with reference.",
+      "generated": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-08ef338a-5afc-464d-b054-ce9f0aa8a567.png"
+    }
+  ]
+}

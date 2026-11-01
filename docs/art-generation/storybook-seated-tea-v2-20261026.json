@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Correct this exact twelve-pose transparent atlas, keep FOUR columns THREE rows and identities/styles. This is a game sprite ANATOMY correction. Keep column0 standing characters EXACTLY as reference. Columns1,2,3 are SEATED ON A LOW INVISIBLE CHAIR and MUST BE MUCH LOWER than column0 WITHOUT scaling heads or bodies up/down. Each seated full silhouette total height must be approximately 75 to 80 percent of standing silhouette height in its row, while the HEAD keeps EXACT same pixel width/height as standing. Align standing and seated boot soles to SAME floor baseline within each row. Lower the seated hips by bending at hip and knee; upper thighs run HORIZONTALLY to right, short shins vertical, correct normal thigh/shin lengths, torso same length and head same size. Mira gown drapes across her horizontal thighs and the LOW seat and ends at her ankles; her seated head MUST sit distinctly lower than standing head, no tall upright gown column. Aria and Leon seated heads MUST also be visibly lower than standing, around one head height lower. Do NOT just shorten boots or enlarge seated heads. Keep col1cupheldchest, col2cuptolipssip, col3cuploweredlap in ALL three rows. Preserve adult proportions and stable hand/cup size. No chair/table/background/halo/shadow. Clean transparent alpha. Generous gaps and all heads and boots fully contained.",
+  "references": [
+    "assets/source/storybook/seated-tea-v1.png"
+  ],
+  "source": "assets/source/storybook/seated-tea-v2.png"
+}

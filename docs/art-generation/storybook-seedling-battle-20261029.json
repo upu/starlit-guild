@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-29",
+  "tool": "image_gen.imagegen",
+  "assets": [
+    {
+      "source": "assets/source/storybook/tower-loading-yard-portrait-v1.png",
+      "output": "public/storybook-study/tower-loading-yard-portrait-v1.png",
+      "generated": "exec-1c0c5988-6177-474d-8271-c473729931cf.png",
+      "references": ["public/storybook-study/tower-loading-yard-v1.png"],
+      "prompt": "Repaint the FIRST image as a tall portrait-format 2D RPG battle background for a smartphone. It is the SAME stone tower's rear seedling loading yard, with the same high three-quarter overhead camera, warm hand-painted pixel-art look and afternoon light. Match the scene closely: the tower round stone wall and wooden door remain at upper right, the wooden loading platform runs along the back wall, a stone-bordered canal and moss beds are visible at upper left, then expand the brown dirt yard down toward the viewer so it fills the portrait. The broad center and lower half are open level dirt for five small characters and four small mushrooms. Preserve the same apparent size of door, steps, stone blocks and platform relative to the path; coherent architectural perspective. No characters, enemies, signs, crates, movable props, text, borders or visible grid. Portrait orientation."
+    },
+    {
+      "source": "assets/source/storybook/merrill-battle-study-v1.png",
+      "output": "public/storybook-study/merrill-battle-v1.webp",
+      "generated": "exec-f43d22e6-60e4-4686-9438-c1774f9472ad.png",
+      "references": ["public/storybook-study/merrill-seedlings-v1.webp", "docs/characters/merrill-reference-sheet.png"],
+      "decision": "Use the existing neutral and gesture frames, and generated playing frames 3 and 4. The generated mushroom gesture is not used because it changes the hand holding the gauntlet.",
+      "build": "node scripts/build-storybook-merrill-battle.mjs",
+      "prompt": "Create a transparent four-frame horizontal sprite sheet for a warm painted pixel-art 2D RPG battle. FIRST image is the exact existing in-game Merrill sprite identity, body proportions, scale, style and camera; SECOND image is her canonical identity and the exact left-arm zither gauntlet. Keep Merrill's green short bob, natural red pomegranate flower and red ribbon, slightly sturdy legs, muted green and cream travelling clothes, large food-filled backpack and tiny pumpkin charm. The lyre is a wooden GAUNTLET covering ONLY her LEFT forearm and back of left hand, with strings on the outside; her RIGHT hand is bare. Camera is slightly overhead three-quarter view, full body visible in every frame, facing slightly LEFT to the party. Four equal evenly spaced cells, all at identical body/head scale and feet on common ground line: 1. neutral alert stance, arms natural; 2. takes one small round mushroom from the backpack with her bare right hand, with the mushroom touching the hand; 3. cheerfully sings while her bare RIGHT fingers touch and pluck the strings on the LEFT forearm gauntlet, feet grounded; 4. still plucking the left forearm gauntlet with her bare right hand while stepping lightly in a dance, no floating body. No detached harp or U-shaped instrument, no instrument on right arm, no duplicated hands, no extra people, no text or grid, no shadows or floor. Same warm painted RPG pixel artwork as FIRST, not modern vector or high-resolution glossy illustration. Transparent alpha background and ample empty gutters around each character."
+    },
+    {
+      "source": "assets/source/storybook/korotake-rest-v1.png",
+      "output": "public/storybook-study/korotake-rest-v1.webp",
+      "generated": "exec-30357603-c3d7-4297-937f-29490e5cfc79.png",
+      "references": ["public/storybook-study/loading-korotake-v1.webp"],
+      "build": "node scripts/build-storybook-korotake-rest.mjs",
+      "prompt": "Edit the provided single cute little RPG mushroom creature into one complete individual gently lying on its side, resting unconscious after a playful confrontation. Keep exactly the same creature identity: warm brown round cap with pale spots, cream mushroom body, simple dark eyes (closed softly), tiny rounded arms and boots, thick warm outline, soft hand-painted 2D RPG sprite style. Seen from the same slightly elevated 3/4 camera as the original. Natural compact horizontal sleeping pose on the ground, hat attached to head and body, one coherent body, no wounds, no violent details. One single figure centered within a square transparent canvas with generous empty margins. No floor, shadow, text, symbols, extra objects, duplicate limbs or other characters. Transparent alpha background. The pose should be readable when displayed very small as a game prop."
+    }
+  ]
+}

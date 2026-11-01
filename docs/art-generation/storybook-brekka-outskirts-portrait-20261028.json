@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial; battle transition pending review",
+  "reference": "public/storybook-study/founding-return-path-v1.png",
+  "generated": "exec-fd175255-e90f-424f-b0b7-3a190b302bd2.png",
+  "source": "assets/source/storybook/brekka-outskirts-portrait-v1.png",
+  "output": "public/storybook-study/brekka-outskirts-portrait-v1.png",
+  "prompt": "Use case: illustration-story. Create a portrait 2:3 gameplay background showing the SAME road at the edge of town as the reference, for a warm painted elevated three-quarter 2D RPG. Recompose the same sunny tan packed-earth lane, scattered small stones, low green grass, yellow and white flowers and leafy trees with gray rocks along its edges. Preserve the reference's overhead viewing angle, realistic small-RPG-character scale, warm colors and texture. A broad open walkable lane must fill the middle and lower two-thirds, wide enough for four heroes, a cart and small monsters. The road continues toward the upper part. No people, animals, creatures, carts, buildings, tower, sky, labels, text, interface or objects in the middle of the lane. Portrait 2:3 composition."
+}

@@ -3,8 +3,9 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { adventureHeroArt as art, adventureHeroIds } from "../lib/adventure-hero-art.ts";
 import { residentArt } from "../lib/home-actor.ts";
-import { rowCuts, spriteBounds } from "./home-pixel-frames.mjs";
+import { rowCuts, spriteBounds, headBounds } from "./home-pixel-frames.mjs";
 import { adventureRowFrames } from "./adventure-pixel-frames.mjs";
+import { adventureTravelFrames, walkingHeadWidth } from "./adventure-travel-frames.mjs";
 
 const root = new URL("../", import.meta.url);
 const source = new URL("assets/source/adventure-pixel/", root);
@@ -16,7 +17,13 @@ async function emit(name, buffer) {
   const file = new URL(name, output);
   if (check) {
     if (!(await readFile(file)).equals(buffer)) throw Error(`Stale adventure pixels: ${name}`);
-  } else await writeFile(file, buffer);
+  } else {
+    const existing = await readFile(file).catch((error) => {
+      if (error.code !== "ENOENT") throw error;
+      return null;
+    });
+    if (!existing?.equals(buffer)) await writeFile(file, buffer);
+  }
   manifest[name] = createHash("sha256").update(buffer).digest("hex");
 }
 
@@ -29,8 +36,14 @@ for (const id of adventureHeroIds) {
       cuts.slice(0, -1).map((top, row) => adventureRowFrames(sheet, top, cuts[row + 1])),
     )
   ).flat();
-  // One scale for the whole sheet; crouching and leaning retain head size.
-  const scale = art.height / frames[14].box.height;
+  const headWidth = await walkingHeadWidth(home);
+  const standing = await sharp(frames[14].cell).extract(frames[14].box).png().toBuffer();
+  // Match walking heads, retaining natural lower silhouettes for combat/packing.
+  const scale = headWidth / (await headBounds(standing, 0.25)).width;
+  const travel = await adventureTravelFrames(
+    await readFile(new URL(`${id}-travel-v2.png`, source)),
+    headWidth,
+  );
   const pixels = Buffer.alloc(art.cell * 4 * art.cell * 6 * 4);
   const anchors = [];
   async function add(index, buffer, left, top) {
@@ -48,7 +61,7 @@ for (const id of adventureHeroIds) {
         (row + 1) * meta.width * 4,
       );
   }
-  for (let index = 0; index <= 8; index++) {
+  for (let index = 0; index < 8; index++) {
     const native = await sharp(home)
       .extract({
         left: (index % 4) * residentArt.cell,
@@ -60,14 +73,23 @@ for (const id of adventureHeroIds) {
       .toBuffer();
     await add(index, native, (art.cell - residentArt.cell) / 2, art.foot - residentArt.foot);
   }
+  const idle = travel.get(8);
+  await add(8, idle.input, idle.left, idle.top);
+  anchors.push(idle.anchor);
   // Delivery slots: blink, attack x4, gather x2, hurt x2, push/pull/pack x2.
   for (const [index, sourceIndex] of [15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].entries()) {
+    const replacement = travel.get(index + 9);
+    if (replacement) {
+      await add(index + 9, replacement.input, replacement.left, replacement.top);
+      anchors.push(replacement.anchor);
+      continue;
+    }
     const f = frames[sourceIndex];
     const width = Math.round(f.box.width * scale),
       height = Math.round(f.box.height * scale);
     const image = await sharp(f.cell)
       .extract(f.box)
-      .resize(width, height, { kernel: "lanczos3" })
+      .resize(width, height, { kernel: "lanczos3", fit: "fill" })
       .png()
       .toBuffer();
     const feet = await spriteBounds(

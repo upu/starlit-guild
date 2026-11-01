@@ -1,0 +1,357 @@
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="24"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="25"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="26"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="27"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="28"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="29"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="30"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="31"] {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="25"] {
+  background-image: url("/storybook-study/leon-seat-action-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="29"] {
+  background-image: url("/storybook-study/leon-seat-action-v2.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="14"] {
+  background-image: url("/storybook-study/mira-check-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  scale: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="15"] {
+  background-image: url("/storybook-study/mira-check-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  scale: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="44"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  scale: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="45"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  scale: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="46"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  scale: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="12"] {
+  background-image: url("/storybook-study/merchant-service-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-image: url("/storybook-study/merchant-service-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-image: url("/storybook-study/merchant-service-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merchant"][data-moving="false"]
+  .story-stage-extra-sprite[data-frame="15"] {
+  background-image: url("/storybook-study/merchant-service-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="lunch-plate"] {
+  background-image: url("/storybook-study/lunch-plate-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-plate"] {
+  background-image: url("/storybook-study/cleared-plate-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="folded-paper"] {
+  background-image: url("/storybook-study/folded-request-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="sealed-letter"] {
+  background-image: url("/storybook-study/sealed-request-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="delivery-bag"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="trade-parcels"] {
+  background-image: url("/storybook-study/village-parcels-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage:is(
+      [data-story="linde-requests-departure"],
+      [data-story="linde-requests-return"]
+    )[data-mode="indoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}
+.storybook-reader-stage:is(
+    [data-story="linde-requests-departure"],
+    [data-story="linde-requests-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-table"] {
+  background-image: url("/storybook-study/linde-table-v1.webp");
+  aspect-ratio: 384 / 160;
+  image-rendering: auto;
+}

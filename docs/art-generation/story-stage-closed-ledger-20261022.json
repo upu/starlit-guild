@@ -1,0 +1,9 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-22",
+  "source": "assets/source/story-stage/closed-ledger-v1.png",
+  "reference": "public/story-stage/prop-ledger.webp",
+  "prompt": "Create one isolated small CLOSED field notebook as a transparent RPG pixel-art-style prop. Use the reference open ledger only for leather color, cream paper thickness, pixel texture and outline. The new book is firmly CLOSED: plain worn chestnut brown leather front cover visible, narrow cream page block at right, simple wrap strap with tiny brass clasp, no lettering, no symbols, NO feather or pen. Three-quarter slightly overhead RPG camera, long vertical notebook axis tilted 12 degrees clockwise. Compact practical palm-size notebook that a character can carry, not a giant tome. All edges inside image with generous alpha padding. Crisp dark outlines and discrete shaded pixels matching reference. True transparency; no hand, no ground shadow, no table, no scenery.",
+  "output": "public/story-stage/prop-closed-ledger.webp"
+}

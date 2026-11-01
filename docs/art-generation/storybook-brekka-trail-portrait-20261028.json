@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial for the first day's pursuit",
+  "references": [
+    "assets/source/storybook/brekka-ledger-portrait-v1.png",
+    "assets/source/storybook/brekka-alley-v1.png"
+  ],
+  "generated": "exec-9c5088bd-f5a5-4f08-935a-f36602a59578.png",
+  "source": "assets/source/storybook/brekka-trail-portrait-v1.png",
+  "output": "public/storybook-study/brekka-trail-portrait-v1.png",
+  "prompt": "Edit the FIRST image: the existing 1024x1536 vertical painted RPG background of the brewery courtyard, with warm early-morning light and an elevated 3/4 isometric view. The SECOND image shows the same location in horizontal composition and is reference for ONE existing landmark, a modest deep blue cloth hanging from a clothesline in the narrow passage at the upper right. Add just that blue cloth to the FIRST image near the right-side wooden gate and ivy-covered stone passage, visibly suspended naturally from a taut line between existing masonry or beams. It should read as cloth hanging vertically, not floating, and resemble the second reference in color, scale, shape, lighting and texture. Keep the entire existing composition intact: the brewing copper vat at upper left, tiled roof, round arched door, two barrels, flower basket, gate, paving, grass, low fence and completely clear walkable foreground. No people, carts, extra objects, lettering, UI or symbols. Maintain precisely the same viewpoint, dimensions, palette and 2D hand-painted pixel-art RPG style. Keep the spatial positions of all architectural features and the whole lower courtyard unchanged."
+}

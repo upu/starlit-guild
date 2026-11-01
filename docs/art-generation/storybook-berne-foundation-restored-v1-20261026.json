@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit the first image keeping EXACT ground plane layout and warm handpainted2D RPG style elevated45degree3quartercamera. This is SAME old roundstone tower and broad open earthen workyard. Keep the heavy wooden arched door topRIGHT, step heights, curvedwall, treeroad topLEFT, foliageedges and diagonal lowstone conduit line frommidLEFT towardbottomRIGHT. Fill the one rectangular missing block gap at center of that diagonal conduit with a MATCHING FLUSH weathered stone, completely restored no cavity. Change daytime to softly readable lateafternoon dusk. Add a SMALL narrow arched inset window in tower wall uppermiddle-left, like window in second reference; faint muted violet light from inside. A subtle almost imperceptible lavender glimmer continues along restored mortar seams towardthecorner, not neon and not a magic rock. No people, furniture, looseprops, fence,carts or lettering. Entirelower2/3 remainsopen levelsoil and flatconduit for actors, no horizon/sky. Use second image only for narrow window and dusk continuity, retain firstimage elevatedlayout.",
+  "references": [
+    "public/storybook-study/berne-foundation-open-v1.png",
+    "public/story-stage/berne-foundation-restored.webp"
+  ],
+  "source": "assets/source/storybook/berne-foundation-restored-v1.png"
+}

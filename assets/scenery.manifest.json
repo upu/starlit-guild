@@ -1,48 +1,81 @@
 {
   "version": 1,
   "files": {
+    "adventure-berne.png": {
+      "sourceHash": "10e4915ed4be8bd6d4097b512af939d0f2a5bd2a4f7d25668146e29b7f0c133b",
+      "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
+      "sourceBytes": 3384890,
+      "outputs": {
+        "thumbnail": {
+          "hash": "d561efb268c0508b467caf119c9444898c4316fcbbf38bb11e0eec23735bd588",
+          "bytes": 35108
+        },
+        "background": {
+          "hash": "78d84b02b03f48208baed84d958aa970de06a7f86f4bbd6b294f2ffceebad243",
+          "bytes": 437704
+        }
+      }
+    },
+    "adventure-farm-road.png": {
+      "sourceHash": "d667b514e7677d94ba9316eb5264e51fe904bafeb7815688a008748ac2c6893e",
+      "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
+      "sourceBytes": 3874329,
+      "outputs": {
+        "thumbnail": {
+          "hash": "06d97be5d06eba16278025226f72f6a60758b38df1baad56920babbdc96e7ef5",
+          "bytes": 46382
+        },
+        "background": {
+          "hash": "d087228246343e0c87f17eca7a84c72f396a7178604ee3a7fe4602f2dccd19c6",
+          "bytes": 658126
+        }
+      }
+    },
     "berne.png": {
-      "sourceHash": "1ca347478f233b26ba1c35762bb398be10d958cb7ca63215d78f54bb4e07b93f",
+      "cameraSource": "assets/source/rpg-camera/roads-v1.png",
+      "sourceHash": "8d4bb7965ff5431ec9c2e83879860eede34c3fa01f6d474ad0f2baa47d7f6c5d",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3005883,
       "outputs": {
         "thumbnail": {
-          "hash": "c4dbfb58fac8a3e69667c6bf24df8e1b75dc0467d9a5b1a99f3429b11af08342",
-          "bytes": 19966
+          "hash": "8da7fe510766eb6b59b08273e16edb5eeef9a3e7529e3f9948ba73faa8497cd6",
+          "bytes": 30856
         },
         "background": {
-          "hash": "096e97a9ece018dd6c2193b9a34a347e6f8a9fbbf0f08302fb906e787d25e954",
-          "bytes": 311950
+          "hash": "45d6b27e112043dde57a222a3f6231c06f803a2a84d414b551ff341f78573e03",
+          "bytes": 137772
         }
       }
     },
     "evening-trade-road.png": {
-      "sourceHash": "88a7f522efe901d1ddc102bfae91e1cf9f13df00e4acad7d487eb2080aad2387",
+      "cameraSource": "assets/source/rpg-camera/roads-v1.png",
+      "sourceHash": "ec52373678d62e4ceea5f16d206784f332f202e947e484fec13b4bb589efea7c",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2622016,
       "outputs": {
         "thumbnail": {
-          "hash": "dab98489b7fb48d860298e7f62931308dadf532cea87c3ecf1eb742b0885afb7",
-          "bytes": 15130
+          "hash": "5da2275975b5063cbd7bb69017190f12dceac01cba1df3cc775d356d8fd3a6dc",
+          "bytes": 35196
         },
         "background": {
-          "hash": "dfa5c988f55fd851026b44741ee869604e9424fefe5c271f7848d89ae95c581d",
-          "bytes": 253868
+          "hash": "5e8bf2eb48c706cf35714a3f1e5c4c8ce28a8735e7ff49a1fabe36861cb869ab",
+          "bytes": 150456
         }
       }
     },
     "forest-wetland.png": {
-      "sourceHash": "19e8fc2f1e10ba4aea4cf3feda9e356544c23915615edab7111c255efcd50019",
+      "cameraSource": "assets/source/rpg-camera/waterways-v1.png",
+      "sourceHash": "2e0eb28dd97a3294dd5b4590d1c09c00b93e9fe4e82e9c6add49e4fe8f705953",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3521923,
       "outputs": {
         "thumbnail": {
-          "hash": "92d00a3f411a3ff249ee631f77654a7057572ed18edcea0a62732dcba87d2ae7",
-          "bytes": 32122
+          "hash": "3ec89d49ddffc80c79b7dd714f91449ede08d8d40dc848a30189db5e371b0966",
+          "bytes": 35720
         },
         "background": {
-          "hash": "e131fdd6d14cbddc084fade1de2781b38e83b45776370c9664093239b393f372",
-          "bytes": 466080
+          "hash": "661a0d79e37456b18f9a9c74e982f486e357568cfc705816e98e9434f6ceb176",
+          "bytes": 160822
         }
       }
     },
@@ -62,107 +95,114 @@
       }
     },
     "moss-night-road.png": {
-      "sourceHash": "59c5834c052f677886a017b8eca35961bc397f51f918a30942fa5c3739c159ec",
+      "cameraSource": "assets/source/rpg-camera/routes-v2.png",
+      "sourceHash": "af2e2e1ed29816da7f17fd10d78f64f5baed1c8ac6350d3f7b789a812e3afabf",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2788095,
       "outputs": {
         "thumbnail": {
-          "hash": "303c59831ca10fd1dac8ced3e43a1caa7d145d3f084d36d8c64c0b9241c0f918",
-          "bytes": 17256
+          "hash": "fd149caf408c33b1e6c8cc80442dbca6d25c2383807aa83b552d4eb67a72043d",
+          "bytes": 32704
         },
         "background": {
-          "hash": "14444d21fe4abc0bd229638a84acca6c64deb6d77364ffcb34d042915f05f4e7",
-          "bytes": 264622
+          "hash": "80a999658bb6ba321100ae013f8cf721f627b65fa1bab603091855043010c37c",
+          "bytes": 147562
         }
       }
     },
     "mountain-road.png": {
-      "sourceHash": "b68e25fe65f87c2d91d6adebcead63d16a940e744b5b0aaeb399ecb56997a002",
+      "cameraSource": "assets/source/rpg-camera/streets-v1.png",
+      "sourceHash": "f6a6af75e341a67d091374171c42843ca968e762f8334a6713fcc252cd1278df",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3724081,
       "outputs": {
         "thumbnail": {
-          "hash": "4ff792758d61277454ad2a7fe2e2ca55f8929c642a5ee1f46306a6d34f57bb15",
-          "bytes": 30390
+          "hash": "a335d7f7ab29642ccbae0dd0bb30098892fb2a2e90795b0a5f529195dfe2f998",
+          "bytes": 38754
         },
         "background": {
-          "hash": "f3de6e944bbb879fef49f56d554b0c4e23e4a1ab36e50aa015add3f682f68774",
-          "bytes": 503852
+          "hash": "4460793ecbeae8b3397bda9ab2f1aa3fe5047c4e2f68b4f1b41a0e790c508998",
+          "bytes": 169160
         }
       }
     },
     "old-waterway.png": {
-      "sourceHash": "af0351ec6f54f9cd4cea7ab066591b3618be731162d732eae4cc5569a1e2ee95",
+      "cameraSource": "assets/source/rpg-camera/waterways-v1.png",
+      "sourceHash": "f8c26f21ce6ffd179876170d5c4c757dc7c3b00bc476d5459775f723adc14812",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3612560,
       "outputs": {
         "thumbnail": {
-          "hash": "471a9ad52f9838ef3b111de540c73041aca3ebaa648aef9071c3c6aa39e548f3",
-          "bytes": 34988
+          "hash": "2a01f5221ddbe5ef01236306186d6199b5dd953ad077cecf29eae7f0b1b1b051",
+          "bytes": 37890
         },
         "background": {
-          "hash": "8f9003382d3bc4b2a236e3bc8a159c500a6452278d91e64469b725fe1c59d196",
-          "bytes": 498472
+          "hash": "ecbb2bfc9a3696380d269e8935fb321e4ed94163a632a3e41fbf88fc4c221386",
+          "bytes": 165972
         }
       }
     },
     "riverside-manor.png": {
-      "sourceHash": "2088cec0dbd08ad9cbc7e9ac9f645128645ad13265d3d53153489f5852ff585a",
+      "cameraSource": "assets/source/rpg-camera/roads-v1.png",
+      "sourceHash": "1f7d0eeac756c090b3a496ad3c1fcaf844498ae7076accdaf07665064ee449fc",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3163261,
       "outputs": {
         "thumbnail": {
-          "hash": "b8f5336700997861a3a409dea76d80d0b5d499bd6fc486c77486b5dd51d6bfa5",
-          "bytes": 24064
+          "hash": "9b462481366b19ddbb5869437d44de6d722f3f10f12c71e20b8ca8e34fc05e7b",
+          "bytes": 35316
         },
         "background": {
-          "hash": "c1add2ce42f0c24d635a8fc7957f5887a5b1af0383449b37646356f69da624fc",
-          "bytes": 360430
+          "hash": "b582a2c0935c975cca307ff01c76a903524aa30fef2fca100f6c029cacc0956b",
+          "bytes": 153346
         }
       }
     },
     "tower-drainage-open.png": {
-      "sourceHash": "cc27eed54cae6620c1850cdb41c1cccb334e526c64cb36757a99db8fbe94bb3e",
+      "cameraSource": "assets/source/rpg-camera/waterways-v1.png",
+      "sourceHash": "f12acbdfc8f3d943acce87728718dc7ec8909bf5f020a83a2ae87f06494715d3",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 3345991,
       "outputs": {
         "thumbnail": {
-          "hash": "33732229ede9df93fd783568e825f6f08ed913f18e00f4655c1720d68d54a652",
-          "bytes": 30592
+          "hash": "9c181b6734808c043a42dac69c3ed4e7e0143103218e2491818db455834009c5",
+          "bytes": 36526
         },
         "background": {
-          "hash": "f9e007962a68cd1012d57edfae5bfd185308a2d9c143bfd85fbdebb4e99f477c",
-          "bytes": 429650
+          "hash": "87347b1b84c2a42b1c8d29851d9854e88813364846ededf6a1b8df2d6ba138ee",
+          "bytes": 162418
         }
       }
     },
     "tower-road.png": {
-      "sourceHash": "ed65e5e1c7c3c0c9fa583a9613bc932f031f8444dd4f45b30919c2508f17c8c2",
+      "cameraSource": "assets/source/rpg-camera/routes-v2.png",
+      "sourceHash": "737ab68cce9941690a8ceab18b1e788537a3b6226e27f055592304c5136207f0",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2976470,
       "outputs": {
         "thumbnail": {
-          "hash": "7d349d76619627b3f0dfe3e4433f4028e1b0a90409a17c7ea85c682bc0db93b5",
-          "bytes": 22820
+          "hash": "10d2a8696a3f29d3450d8aaad2c81c69c48fe61cc9a2e82140970cc209e6c35f",
+          "bytes": 46648
         },
         "background": {
-          "hash": "c5c00e0670eb00377e411550db5c3f478cc279225ffcd7acab771c47d010057f",
-          "bytes": 341824
+          "hash": "628e291647f5847b8d42ff9e50a2982e49056ead69a84ae30740b94070763ce0",
+          "bytes": 197960
         }
       }
     },
     "town-deliveries.png": {
-      "sourceHash": "84436a558ac0a3e5ad0cba1b84d77d364e3d55097e963a9cd7622cb19e362524",
+      "cameraSource": "assets/source/rpg-camera/roads-v1.png",
+      "sourceHash": "556da0767caae0655ae75d923d1fc1a051008d6caf8fc56547e395977335941c",
       "profileHash": "8aeedc06f0fce7688784de2eb6cf5a410e7f3d33f76964040f1a535ec6c6094e",
       "sourceBytes": 2970593,
       "outputs": {
         "thumbnail": {
-          "hash": "7e4371c8fc0a716be17165f8c1a46d54b135124e4c73556984365e204b4a44d9",
-          "bytes": 25282
+          "hash": "babf47d53d8bd7e8fb974d4d877cfbc4bc50fa1825538516ffe9adacd3eef2ba",
+          "bytes": 30770
         },
         "background": {
-          "hash": "c45ae6463cc009e0cc3309666e3c1d9a35b897bf1febfd6027bb29c3543a54bb",
-          "bytes": 338222
+          "hash": "87ab8b4375d887f0c77547dbb6af575f1e4755d855d991d96c484869e7cb7196",
+          "bytes": 133638
         }
       }
     }

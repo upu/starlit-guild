@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "status": "Integrated field apparatus into 4-7. Original Lico atlas superseded by ponytail correction; long held cloth superseded by folded-cover-v1. See storybook-records-field-props-20261026.json.",
+  "images": [
+    {
+      "source": "assets/source/storybook/lico-field-records-v1.png",
+      "generated": "exec-93ade199-a416-4696-b6e3-dcdaf49fe1fe",
+      "reference": "assets/source/storybook/lico-moss-study-v1.png",
+      "prompt": "Transparent 4 columns x2 rows Lico atlas, same head/body scale: standing calibration, low seated empty lap support, low seated point, low seated page turn, low seated hugging closed notebook, standing/stooping empty reach, standing imaginary cloth grip, low seated one arm hugging notebook and free hand offering tiny seedling. Warm painted elevated RPG style, matching apron/glasses/freckles/sandals, no furniture. Superseded by ponytail correction before integration."
+    },
+    {
+      "source": "assets/source/storybook/field-reflector-v1.png",
+      "generated": "exec-2cc497ed-c912-4f23-8c06-bb9fa2be6015",
+      "prompt": "Transparent five separate props in one row, warm painted elevated 3/4 RPG style. Same compact wooden apparatus with bronze hinged reflector panel, moss dish and glass cork jar: covered upright, uncovered upright faint reflected moss light, folded down and cork closed. Then separate removed olive cloth hanging from imaginary fingers and same cloth crumpled flat. Same physical scale across apparatus states, no characters, no rays, no smoke."
+    }
+  ]
+}

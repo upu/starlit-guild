@@ -204,6 +204,40 @@
   font-size: 12px;
   line-height: 1.65;
 }
+
+/* The Linde study uses both shopfronts for handoffs; keep the cut-in away from them. */
+.adventure-map[data-linde-study="true"] .finisher-banner {
+  top: 35%;
+  left: auto;
+  right: 2%;
+  width: min(250px, 30%);
+  padding: 5px 7px 7px;
+}
+.adventure-map[data-linde-study="true"] .finisher-portraits {
+  height: 44px;
+  margin-top: -10px;
+  margin-bottom: 4px;
+}
+.adventure-map[data-linde-study="true"] .finisher-portraits > div {
+  width: 52px;
+  height: 51px;
+}
+.adventure-map[data-linde-study="true"] .finisher-portraits .sprite {
+  width: 56px !important;
+  height: 56px !important;
+}
+.adventure-map[data-linde-study="true"] .finisher-lines {
+  font-size: 11px;
+  line-height: 1.4;
+}
+@media (max-width: 600px) {
+  .adventure-map[data-linde-study="true"] .finisher-banner {
+    top: 59%;
+    left: 7%;
+    right: 7%;
+    width: auto;
+  }
+}
 .detour-art {
   width: 76px;
   height: 76px;

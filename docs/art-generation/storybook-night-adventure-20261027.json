@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "1-5 carried moss jar, shawl and lantern",
+  "accepted": [
+    {
+      "name": "aria-night-battle-v1",
+      "source": "assets/source/storybook/aria-night-battle-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-1299bfed-ff94-490f-ab01-a9ac35f40664.png",
+      "prompt": "Precise CLOTHING ONLY edit of image1 FOUR-column ONE-row game sprite strip, unchanged original Aria battle poses. Image2 referenceONLY for the small plain ivory wool shawl around shoulders abovegreencloak. Add that same shawl toALL FOUR battleposes without changing faces, hands, bows, arrows, legs, pointedears, flower, head/body sizes, original exactfourcelllayout, warm handpainted2D RPG style. Shawl remains small fitted at shoulders and doesnot cover hands or bowstring, no huge cape or veil. Keep full bowtips, hair and boots inside eachcell, ample transparent gutters. Real alpha transparency, no scenery, text, actioneffects, shadows or coloredmatte."
+    },
+    {
+      "name": "night-lantern-v1",
+      "source": "assets/source/storybook/night-lantern-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-d2cf67ac-657d-456d-89f6-2643b1f0ee7f.png",
+      "prompt": "Create ONE isolated tiny travel lantern game prop on transparent background, in original warm hand-painted2D RPG style matching the brass lantern held by Leon in reference1 and soft brushwork reference2. No character, no hand. Brass frame with warm amber glass, small handle and a short brown leather fastening loop at very top so it hangs from a travel bag clasp. Seen from elevated threequarter angle55degrees, softly painted brown outlines, slightly worn practical brass. Light flame inside glass, no external glow/haze/shadow/blob, no background, no text. Entire handle, leather loop and base inside generous transparent margin. Centered single full prop, real alpha. Modest functional village lantern, not ornate magic lamp."
+    },
+    {
+      "name": "aria-night-hand-v2",
+      "source": "assets/source/storybook/aria-night-hand-v2.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-1b98b0cb-226b-4bff-89f4-6ba191c7f715.png",
+      "prompt": "Precise ARMS ONLY correction of image1 FOUR-column ONE-row Aria sprite strip. Preserve all faces, head/body proportions, hair, flower, ivory shoulder shawl, green cloak, exact legs/boots, pose heights and originalfourcelllayout. Her hands are held too high at chest; a jar placed above palms overlaps face. LOWER BOTH forearms and cupped palms to just BELOW NAVEL at lower abdomen/topofshorts, aboutONE PALM LENGTH DOWN, and extend hands slightly forward to theRIGHT so the supported invisible jar will sit beside her abdomen clear of face. Elbows relaxed down. Palms still underneath the invisible jar, horizontally level. In the deep kneel frame ifpresent, palmsremainjustabovetheground ahead of boot; in half-riseframe, palms halfway between ground and LOW abdomen. Walking allfourphases retain original leg geometry and alternatinglead, handsatconsistently LOW abdomen anchor. NO actualjar, no other prop. Do not alter body, face, knees or boots to lower arms. Same original warm hand-painted2D RPG style, exact stripspacing, ample transparent gutters, genuine alpha. No coloredmatte, text, effects, shadowblob or background."
+    },
+    {
+      "name": "aria-night-walk-v2",
+      "source": "assets/source/storybook/aria-night-walk-v2.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-f30c2f06-c1f0-4b3f-861a-076fa7b0e0fc.png",
+      "prompt": "Precise ARMS ONLY correction of image1 FOUR-column ONE-row Aria sprite strip. Preserve all faces, head/body proportions, hair, flower, ivory shoulder shawl, green cloak, exact legs/boots, pose heights and originalfourcelllayout. Her hands are held too high at chest; a jar placed above palms overlaps face. LOWER BOTH forearms and cupped palms to just BELOW NAVEL at lower abdomen/topofshorts, aboutONE PALM LENGTH DOWN, and extend hands slightly forward to theRIGHT so the supported invisible jar will sit beside her abdomen clear of face. Elbows relaxed down. Palms still underneath the invisible jar, horizontally level. In the deep kneel frame ifpresent, palmsremainjustabovetheground ahead of boot; in half-riseframe, palms halfway between ground and LOW abdomen. Walking allfourphases retain original leg geometry and alternatinglead, handsatconsistently LOW abdomen anchor. NO actualjar, no other prop. Do not alter body, face, knees or boots to lower arms. Same original warm hand-painted2D RPG style, exact stripspacing, ample transparent gutters, genuine alpha. No coloredmatte, text, effects, shadowblob or background."
+    }
+  ],
+  "validation": [
+    "62 motion, atlas, default-route and regression tests plus2 light projection tests passed",
+    "PC1243x1244 and browser mobile390x844 route playback reached arrival; fixed hands rechecked; no console errors",
+    "Contact shadow added for grounded jar and first PC battle replayed",
+    "Night light uses actual drawn jar point, ground pool projects at carrier feet or stationary jar bottom",
+    "Production build passed: work/night-build-final.log; default rollout8/37; all goal work remains active",
+    "Final shadow helper extraction: source build, typecheck and scoped lint passed; work/night-source-build-final.log"
+  ],
+  "superseded": [
+    {
+      "name": "aria-night-hand-v1",
+      "source": "assets/source/storybook/aria-night-hand-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-aff7b422-6d1b-4947-ab2d-198fdbd37302.png",
+      "prompt": "Create a FOUR-column ONE-row game sprite strip of original Aria. Image1 is exact character face/body identity, head size and warm hand-painted2D RPG style. Image2 is reference ONLY for the small plain ivory shoulder shawl over her green cloak, NOT its poses. Full bodies face screenRIGHT at same elevated camera. Four separate poses:0 standing with both palms forward at waist supporting an invisible small jar from underneath;1 low grounded kneel with BOTH palms extended ahead of front boot gently placing the invisible jar on ground;2 halfway standing up from same crouch, hands ahead halfway between ground and waist;3 standing inspecting invisible jar cradled at same waist. NO jar or any prop drawn, empty hands. Same physical head/boots/body scale all4, crouch visibly lower, no giant crouch head. Keep wool shawl present every pose, green cloak, flower, pointed ears, cream shorts, brown boots, glasses absent. Entire heads/ears/cloak/boots inside eachcell with ample transparent gutters. Real alpha, no ground, shadows, matte, text, action lines, grid."
+    },
+    {
+      "name": "aria-night-walk-v1",
+      "source": "assets/source/storybook/aria-night-walk-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-0d08aa1c-9c2a-4b58-8d9c-8998095123ef.png",
+      "prompt": "Precise ARMS and SHAWL ONLY edit of image1 FOUR-column ONE-row walking game sprite strip. Preserve EXACTLY image1's four leg/boot positions, stride order with left lead/right lead alternating, faces, physical body and head scale, green cloak, flower, ears, cream shorts, cell layout and warm painted2D RPG style. Image2 is ONLY reference for a plain ivory wool shawl wrapped at shoulders, not body or gait. Add that small shawl overgreencloak in everyframe. Change ONLY arms: both palms cupped close together ahead ofwaist to support an invisible smalljar fromunderneath; keep cupped palms visible at a steady anchor throughout gait, elbows bent comfortably. No actual jar, lantern, tool or prop. Do not copy image2's walking legs. Keep full head/boots within originalfourcells with clear gutters. Genuine transparent alpha, no matte, shadowblob, scenery, text or labels."
+    }
+  ],
+  "rejectionReason": "First carry hands were too high; jar overlapped lower face. Replaced with lower forearms and a smaller jar."
+}

@@ -1,0 +1,10 @@
+{
+  "tool": "image_gen",
+  "prompt": "Edit this four-cell transparent sprite strip. Preserve the standing calibration figure in cell 1 exactly. Preserve the head size, seated body, hips, boot placement, red cape and warm hand-painted style in cells 2-4. Only adjust the working arm: he is placing paper on a writing desk whose surface is at his lower chest, higher than his lap. In cell 2 hold the hand close to lower chest preparing to extend. In cell 3 extend arm forward almost horizontally, fingertips at lower-chest height (about 15% of his standing height higher than in the supplied image), gently pinching an unseen sheet at its edge. Cell 4 same arm height and reach but open relaxed fingers after releasing sheet. Do not raise his shoulder or change head/torso/leg scale. All full-body figures same foot baseline and same head scale, three-quarter facing right and mildly elevated camera. Draw no desk, chair, paper, object, ground shadow, letters or guide lines. Separate four evenly spaced full figures with transparent gutters and generous margins on transparent background.",
+  "references": [
+    "assets/source/storybook/leon-seat-action-v1.png"
+  ],
+  "source": "assets/source/storybook/leon-seat-action-v2.png",
+  "output": "public/storybook-study/leon-seat-action-v2.webp",
+  "scope": "Indoor paper reach/release; standing height144, seated128-130, common feet176."
+}

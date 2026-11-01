@@ -160,7 +160,7 @@ test("drawing is read-only, uses real individual HP and accurately targets taps 
   for (const hero of frame.battle.heroes) {
     const point = {
       x: chapterRoadX(hero.x, frame.battle.distance, 390),
-      y: roadY(travellerLane(hero.id), 300) - Math.min(108, 390 * 0.18, 300 * 0.34) * 0.45,
+      y: roadY(travellerLane(hero.id), 300, 390) - Math.min(108, 390 * 0.18, 300 * 0.34) * 0.45,
     };
     assert.equal(chapterRoadHit(input(s, 2350), point, 390, 300), `heal:${hero.id}`);
   }
@@ -263,19 +263,22 @@ test("moss-bed survey shows moss, the waterway, and measuring tools without harv
   assert.equal(inspected.size, 15);
 });
 
-test("the ground plane stays compact and the untiled background covers all viewport sizes", () => {
+test("the ground stays compact and portrait backgrounds keep the wider camera scale", () => {
   for (const [width, height] of [
     [1280, 900],
     [390, 630],
     [320, 250],
     [844, 240],
   ]) {
-    assert.ok(roadY(0.82, height) - roadY(0.54, height) <= 68);
+    assert.ok(roadY(0.82, height, width) - roadY(0.54, height, width) <= 68);
     for (const progress of [0, 0.4, 1]) {
       const box = roadBackdrop(width, height, 1536, 1024, progress);
-      assert.ok(box.x <= 0 && box.y <= 0);
+      assert.ok(box.x <= 0);
       assert.ok(box.x + box.width >= width - 0.01);
-      assert.ok(box.y + box.height >= height - 0.01);
+      const feet = roadY(0.82, height, width);
+      assert.ok(feet > box.y && feet < box.y + box.height);
+      if (height > width)
+        assert.ok(box.width < width * 1.5, "portrait does not zoom the buildings in");
     }
   }
 });

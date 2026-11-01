@@ -1,0 +1,26 @@
+[
+  {
+    "frame": 0,
+    "width": 192,
+    "height": 35,
+    "cell": 256
+  },
+  {
+    "frame": 1,
+    "width": 166,
+    "height": 131,
+    "cell": 256
+  },
+  {
+    "frame": 2,
+    "width": 116,
+    "height": 115,
+    "cell": 256
+  },
+  {
+    "frame": 3,
+    "width": 108,
+    "height": 108,
+    "cell": 256
+  }
+]

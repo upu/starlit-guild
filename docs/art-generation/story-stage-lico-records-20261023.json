@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-23",
+  "status": "adopted; verified in rendered 4-7 scenes",
+  "method": "built-in image_gen",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/records-npcs-v1.png",
+      "key": "recordsNpc",
+      "refs": [
+        "keeper-records-reference.png",
+        "merchant-records-reference.png"
+      ],
+      "prompt": "Production transparent RPG pixel-art sprite sheet, 4 columns by 2 rows, eight isolated full-body seated sprites in equal cells with wide transparent gutters. References identify two existing NPCs, preserve their faces/clothes, pixel grain and proportions. TOP ROW four poses of gray-haired older tower keeper with short gray beard, blue tunic, brown trousers and boots, seated in his simple wooden chair. BOTTOM ROW four poses of brown-haired mustached merchant, white rolled-sleeve shirt, brown apron, brown pants and boots, seated in the SAME chair design as his reference. All eight face SCREEN LEFT, three-quarter view. Include whole chair and both feet fully inside each cell, no table. Maintain each person's head width and seated crown-to-sole height across four poses. Top row: 1 leaning slightly forward extending open near hand left at tabletop height to arrange a document (document not drawn); 2 same posture with near hand holding short feather quill at tabletop height ready to write (no paper drawn); 3 same writing posture with quill tip shifted slightly left and down, distinct subtle second writing frame; 4 holding a closed brown ledger against chest with far arm, near hand offering toward screen left. Bottom row: 1 leaning forward and extending open near hand toward screen left at table height then stopping, no paper yet; 2 holding a small stack of cream folded order sheets in near hand at chest height and separating its first sheet with other hand, counting; 3 same stack slightly fanned, clearly next page counting, eyes on sheets; 4 tuck the folded stack into inside breast of apron/clothes, elbow bent close. Natural restrained expressions, no caricature hands, no floating papers, no extra objects, no table, no background or ground shadow, no captions or text. Crisp pixel silhouettes, keep all heads same scale and chair feet aligned.",
+      "sha256": "2da75a01a0471c1fa1801fef456dc5d6100a49a4ee37da39c34c548d2e5df2c7"
+    },
+    {
+      "source": "assets/source/story-stage/lico-records-v1.png",
+      "status": "superseded; ambiguous book count",
+      "key": "recordsLico",
+      "refs": [
+        "lico-records-reference.png",
+        "lico-glasses-reference.png"
+      ],
+      "prompt": "Transparent RPG pixel-art sprite sheet: FOUR separate full-body seated poses in ONE ROW FOUR equal COLUMNS, wide transparent gutters. Lico is the same short red-brown-haired female alchemist in the references. First reference gives her low wooden step-stool and seated height; second reference gives her round glasses, green eyes, messy low ponytail, red and charcoal apron dress, white sleeves, sandals, approachable odd sleepy expression. Preserve her exact identity and head scale, do not beautify. All four poses face SCREEN RIGHT in three-quarter view, seated low on the same small wooden step-stool, feet on ground. The heads stay exactly same width and body seated height in all four, considerably shorter than standing. First three: a modest flat thin dry wooden lap-board rests horizontally ACROSS BOTH KNEES, not standing vertically in front of her. TWO small open brown notebooks side-by-side on the lap-board, clearly supported by knees. 1 reading both books with hands holding edges, head tilted slightly down; 2 pointing with right index finger to a line in the right notebook while left hand holds left notebook edge; 3 turning one page in left notebook with left hand while right finger holds the edge of the other, a distinct small motion. Fourth: lap-board/books removed; left arm hugs one CLOSED brown notebook against chest, right forearm extended SCREEN RIGHT at lap height, open small palm ready to accept or pass a seedling but NO plant drawn. Maintain same glasses and facial scale and stool geometry, all hair, hands, sandal toes and stool legs fully visible with generous margins. No floor shadow, no table, no ground, no background, no text or labels, no other people. Clean pixel contours and restrained pixel shading matching references.",
+      "sha256": "a788d248ac7cdf946ecc142d554ec7321964faa9f770819a6c7b1f9d132df0bb"
+    },
+    {
+      "source": "assets/source/story-stage/lico-records-v2.png",
+      "reference": "assets/source/story-stage/lico-records-v1.png",
+      "prompt": "Edit this sprite sheet, keeping the exact four Lico characters, face/glasses, posture scale, pixel rendering, stool, sandals, cell spacing and transparency. In the FIRST THREE sprites ONLY, REMOVE the brown notebooks, ALL pages and the wooden lap-board entirely. Keep the hands in useful poses ready for a separate game-rendered lap-board: first sprite both hands relaxed hovering just over knees to hold opposite edges; second sprite near index finger pointing down just above lap; third sprite one hand raised a little as if turning a page and other hand resting near knee. Fill formerly obscured lap with the same red skirt naturally. No book, paper or board remains in the first three sprites; the game will render two separate books and a board later. FOURTH sprite remains exactly as it is, holding a closed notebook against chest and offering open palm. Do not change identity, proportions, pose direction, stool geometry or feet. Transparent background, no shadows, text or added objects.",
+      "sha256": "eb7c226f9eb183252e54c03ee30c4895af48294d63faa5a37992ad01995cfbc2"
+    },
+    {
+      "source": "assets/source/story-stage/reflector-cover-v1.png",
+      "reference": "public/story-stage/prop-reflector-covered.webp",
+      "prompt": "Create ONE small standalone RPG pixel-art prop, transparent background. Use the provided covered device only as color/style reference. Draw ONLY its olive-green fabric cover REMOVED from the device, loosely bunched into a compact hanging fold, gathered at a small point on the upper-right corner so a game character can grip it. The lower-left edge hangs down with the same short ragged/fringed hem as the reference. Dark olive cloth, muted yellow-green highlights, brown-black pixel outlines, crisp chunky pixel shading matching the reference. No device, frame, wooden box, bottle, moss, hands, person, ground or cast shadow. A single whole cloth fully visible with generous transparent margins. No checkerboard, no captions, no white fabric.",
+      "method": "built-in image_gen",
+      "sha256": "57f91bff19971f3d2508f888c3d7afb5ca1652aad1f24fb3d880f420cd4d6c35"
+    },
+    {
+      "source": "assets/source/story-stage/reflector-cover-flat-v1.png",
+      "reference": "assets/source/story-stage/reflector-cover-v1.png",
+      "prompt": "Use the provided olive-green cloth as exact material/color/pixel-style reference. Create one transparent RPG pixel-art prop of that SAME small cloth after it has been released onto a flat ground plane. It lies LOW and loosely rumpled, viewed obliquely from above at the same RPG isometric camera angle. Broad squat irregular oval silhouette with a few soft folded ridges, width approximately twice its screen height, short fringed edge visible. No corner raised or held, no hanging vertical folds, no pile taller than a few centimeters. Preserve dark olive green and muted yellow-green pixel highlights, brown-black outlines. No person, hand, device, ground texture, background, shadow, checkerboard or text. Entire single cloth centered with transparent margins.",
+      "method": "built-in image_gen",
+      "sha256": "24e0ac6c27b29dbe6d4f626d61ea2a04dc4923ff4b0e1b5354f6eba04115d15c"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "tool": "image_gen",
+  "prompt": "Edit this four-cell sprite strip of the same adult man Finn into a sit-down animation. Preserve the first standing figure as identical scale calibration. Same head size in every cell, mature tired face, brown low-tied hair, stubble, charcoal olive coat with subtle gold trim, cream shirt, brown trousers and boots; warm hand-painted small RPG sprite style. All face right in elevated three-quarter view. Cell1 standing unchanged. Cell2 knees lightly bent and hips slightly back and down, hands by thighs, starting to sit, height142 versus standing148. Cell3 deeper bend almost seated, height134. Cell4 seated matching reference second figure, height125. Boots remain on the same baseline, head does not shrink or grow, torso proportions remain the same. Do not turn him into a teenager. Four evenly spaced isolated full-body figures in one row on true transparent background. No chair, furniture, objects, text, floor or shadows.",
+  "references": [
+    "public/storybook-study/finn-seat-v2.webp"
+  ],
+  "source": "assets/source/storybook/finn-sit-down-v1.png",
+  "output": "public/storybook-study/finn-sit-down-v1.webp",
+  "scope": "Intermediate frames1/2 only; frame3 too low and unused.",
+  "registration": {
+    "standing": 148,
+    "lower": 134,
+    "settle": 122,
+    "feet": 176
+  }
+}

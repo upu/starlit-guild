@@ -1,0 +1,11 @@
+{
+  "purpose": "Separate the 1-8 tool cart wheels while preserving the registered handles and cargo.",
+  "tool": "built-in image_gen",
+  "reference": "public/storybook-study/waterway-tool-cart-v1.webp",
+  "source": "assets/source/storybook/waterway-tool-cart-body-v1.png",
+  "output": "public/storybook-study/waterway-tool-cart-body-v1.webp",
+  "wheel": "public/storybook-study/brekka-cart-wheel-v1.webp",
+  "build": "node scripts/build-storybook-waterway-cart-body.mjs",
+  "registration": "Generated body is resized to the existing 420x280 canvas. The original x=310..419 pixels are preserved exactly to keep both shafts and hand grips in place. Wheels are registered separately.",
+  "prompt": "Edit this EXACT existing transparent 2D RPG tool cart sprite. Output the same cart BODY with the same object positions and relative proportions, but REMOVE BOTH the large near wheel and partly hidden far wheel entirely, including rims, spokes and hubs, so separately animated wheels can be drawn over it. Preserve the exact sturdy wooden box, coiled rope on top and the rope at left, hand saw with its brown handle, two small brown baskets, two gray stones, wooden braces and the TWO long parallel shafts pointing RIGHT. Do not move, alter, omit or invent cargo, change the angle, crop the shafts, or change the cart's scale. Reconstruct only the parts of the frame hidden by the wheel. Match the exact warm hand-painted outlined RPG pixel style, same transparent 3:2 landscape canvas, same placement with ample space around the cart. No people, floor, shadows, words, text, wheels or extra objects. Actual alpha transparency."
+}

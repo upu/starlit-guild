@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "draft; available only in the 4-1 study",
+  "source": "assets/source/storybook/linde-delivery-square-v1.png",
+  "output": "public/storybook-study/linde-delivery-square-v1.png",
+  "generated": "exec-45e25279-a90e-4bec-984a-fc68bbc9ac28.png",
+  "references": ["public/storybook-study/warehouse-v1.png", "public/storybook-study/berne-calls-street-v1.png", "public/storybook-study/linde-dining-v1.png"],
+  "prompt": "Use case: illustration-story. Create a warm painted 2D RPG BACKGROUND for a letter-delivery scene in the existing town of Linde. Images 1 and 3 are Linde's existing warehouse exterior and dining room; use their timber, pale plaster, terracotta roofs, materials, light and elevated oblique game art as visual references. Image 2 is a separate town, only a reference for game scale and empty walkable stage, do NOT copy its layout or buildings. Show a modest Linde town street or small square with two different ordinary shops or houses, approachable entrances opening onto a continuous broad cobbled pedestrian area, at least one awning or market stall; warm daytime. Keep a generous empty foreground for four small full-body sprites who deliver letters and talk with residents. Camera is from high diagonally above, looking down at the cobbles and buildings, no horizon or sky. Maintain background building, door and ground tile scale comparable to reference images 1 and 2, with coherent warm colors, fine storybook pixel-inspired details. Natural asymmetry, avoid identical copy of any reference. No figures, no animals, no wagons or carts, no writing, no signage text, no UI, no frame. Wide landscape full bleed."
+}

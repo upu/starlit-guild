@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Same original merchant identity from reference: brown wavy hair small dark moustache brown apron cream shirt brown pants boots, warm hand painted 2D RPG NPC. Transparent atlas FOUR columns TWO rows, eight separate full body poses, no grid, text, scenery, ground or shadows. Exact same head/body scale across poses, camera elevated three quarter facing SCREEN LEFT (opposite keeper). Cell0 upright standing empty hands calibration. Cells1..7 sitting on an INVISIBLE low chair, hips lowered with bent knees, both soles on ground, total seated height NO MORE THAN83 percent of standing while head unchanged. No chair/table/papers except as specified. Cell1 seated idle arms near lap, displeased face. Cell2 seated explaining defensively one palm open forward LEFT. Cell3 seated pointing DOWN LEFT toward imaginary desktop at belly height, stern. Cell4 seated reaching hand forward LEFT at waist-level toward imaginary paper, fingers held just above it; NO paper. Cell5 seated counting small loose sheets in both hands, same little packet around waist height, thumb at sheet edge. Cell6 second counting phase with slightly shifted sheets. Cell7 seated tucking that small packet into chest of apron with one hand, other hand near body. Keep complete boots and clearance. Do not enlarge heads or stretch seated torsos. Background fully transparent alpha0.",
+  "references": [
+    "assets/source/storybook/merchant-poses-v2.png"
+  ],
+  "source": "assets/source/storybook/merchant-registry-v1.png"
+}

@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial for the first day's pursuit",
+  "references": [
+    "assets/source/storybook/brekka-fork-v1.png",
+    "assets/source/storybook/brekka-trail-portrait-v1.png"
+  ],
+  "generated": "exec-aac35fd0-ede5-48ae-8d2d-89fa6725bd6e.png",
+  "source": "assets/source/storybook/brekka-fork-portrait-v1.png",
+  "output": "public/storybook-study/brekka-fork-portrait-v1.png",
+  "prompt": "Use the FIRST reference as the exact location and architectural composition for a 2D story RPG background. Recompose it as a vertical 2:3 portrait view, as in the SECOND reference's portrait camera and small-person scale. This is the same sunlit village fork: retain the left-hand stone washing basin with little red-tiled canopy and barrels; the narrow side passage behind it and distinctive deep-blue cloth hanging on a line above it; the middle dirt path leading away, and the right-hand timber-and-stone house with red roof, wooden door and three barrels. The fork must read clearly as two connected directions across the ground, with no walls or steps blocking the traversable road. Keep a broad unobstructed warm dirt-and-cobblestone ground through the middle and lower part of the portrait for small moving RPG characters and a handcart. Consistent elevated 3/4 isometric camera, architectural scale, handcrafted warm painterly pixel-inspired look and soft morning light from the reference. No people, animals, carts, movable furniture, UI, text, signs, arrows or borders. No new landmarks or locations. Keep the cloth naturally suspended, not floating."
+}

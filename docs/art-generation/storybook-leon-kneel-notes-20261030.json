@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/leon-kneel-notes-v1.png",
+  "output": "public/storybook-study/leon-kneel-notes-v1.webp",
+  "references": ["public/storybook-study/leon-work-v1.webp", "public/storybook-study/leon-route-notes-v1.webp"],
+  "build": "node scripts/build-storybook-leon-kneel-notes.mjs",
+  "prompt": "Use case: stylized-concept. Transparent 2D RPG sprite atlas, FOUR separated full-body figures in one horizontal row, equal cells. Reference 1 controls exact Leon identity, clothing, head/body proportions, warm outlined painted pixel style, right-facing three-quarter view and crouch. Reference 2 controls his small route map. Frame 1: neutral upright calibration matching reference 1 first figure exactly. Frame 2: he bends his knees while taking the folded map into both hands. Frame 3: one-knee kneeling as in reference 1 second figure, looking down at the open map resting on his raised knee, left hand holds paper, right hand makes a small pencil mark. Frame 4: SAME kneeling body and paper position, right hand moved slightly farther along paper for a second small writing stroke. Brown hair, red short shoulder cape, blue tunic, white sleeves, gloves, dark trousers, brown boots; no redesign or additional straps. Keep physical head size and foot baseline consistent, kneeling head naturally lower than upright. Map is small enough not to cover his face, no large book. Feet and hair wholly inside each cell, generous transparent margins. Genuine transparent alpha, no ground, shadow, background, grid, numbers, writing labels, other people or lantern."
+}

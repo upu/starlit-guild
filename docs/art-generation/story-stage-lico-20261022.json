@@ -1,0 +1,69 @@
+{
+  "tool": "image_gen.imagegen",
+  "date": "2026-10-22",
+  "purpose": "4-7 seated NPCs, Lico stool, records, reflector and low smoke",
+  "assets": [
+    {
+      "key": "licoStool",
+      "prompt": "Edit the reference sprite atlas for the pixel-art RPG STARLIT-GUILD. Preserve this exact small young woman Lico: red-brown messy short ponytail, round low-sitting glasses, subtle freckles, sleepy green eyes, red and black practical dress/apron, cream sleeves, sandals, same body/head scale and warm chunky pixel outlines. Reference is 4 columns by 2 rows of chair poses. Produce the SAME 4x2 layout on real transparency, but replace the high backed chair with a LOW backless wooden STEP STOOL. She sits low with knees bent up slightly, both sandal soles touching floor, clearly a stool sitter rather than cross-legged on the floor. No chair back or armrests. Top row facing screen right, bottom row facing screen left. Four poses in each row: empty hands resting on knees; empty hands held forward to receive a small object; one empty hand raised gently while speaking; hands on lap with worried/thoughtful face. ALL frames same head size, same stool, same foot baseline and dimensions, enough margin to include all hair, feet and stool. Keep her distinct rough approachable face, do not beautify or redesign. No books, cups, props in hands, no background, no shadow, no text, no frame lines. Transparent 4 columns x 2 rows, horizontal 2:1 sheet.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-1906a2d5-d5c4-40ff-a7d0-1e8951a74c3c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/lico-stool-v1.png",
+      "outputs": [
+        "public/story-stage/lico-poses.webp"
+      ]
+    },
+    {
+      "key": "keeperChair",
+      "prompt": "Use the supplied transparent NPC sprite strip as identity/style reference. Create a matching four-column, one-row TRANSPARENT pixel-art sprite sheet of THIS SAME elderly gray-haired tower caretaker, thick gray eyebrows, small gray moustache, navy-blue medieval tunic and belt, brown boots. In ALL FOUR poses he is sitting on a plain medium-height wooden chair, facing gently toward screen RIGHT, both feet visible on the floor, back upright. Frame 1 hands resting on knees, neutral attentive. Frame 2 one open hand explaining. Frame 3 a hand pointing down toward a document just ahead (do not draw document). Frame 4 relaxed small smile and an empty open hand. Same head/face proportions as standing reference, do not enlarge head, same outline thickness and palette, full chair visible and ample transparent padding in every equal cell. No objects held, no table, no ground, no cast shadows, no text or grid. Four equal square cells in one row.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-ef14316e-ae55-4c77-8a23-72ade6099210.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/keeper-chair-v1.png",
+      "outputs": [
+        "public/story-stage/keeper-poses.webp"
+      ]
+    },
+    {
+      "key": "merchantChair",
+      "prompt": "Use the supplied transparent NPC sprite strip as identity/style reference. Create a matching four-column, one-row TRANSPARENT pixel-art sprite sheet of THIS SAME middle-aged merchant, wavy short dark brown hair, small brown moustache, cream shirt with rolled sleeves, dark brown vest/apron, brown trousers and boots. In ALL FOUR poses he is seated on a plain medium-height wooden chair, facing gently toward screen LEFT, both feet visible on the floor, upright body. Frame 1 hands resting on knees, neutral. Frame 2 one empty open hand explaining, mildly defensive expression. Frame 3 reaching one empty hand down and forward toward a paper on a table (do NOT draw paper or table). Frame 4 subdued attentive face, hands resting. Same head/face proportions and pixel outlines as supplied standing character, no redesign. Same chair, head size and floor baseline in every frame. Full hair, chair and boots contained in four equally sized square cells with generous transparent gutters. No ground, shadow, labels, text, grid, or extra people. Four cells in a single row.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-63f63c77-98cf-407a-938a-af4242cd9810.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/merchant-chair-v1.png",
+      "outputs": [
+        "public/story-stage/merchant-poses.webp"
+      ]
+    },
+    {
+      "key": "licoKit",
+      "prompt": "Asset: transparent pixel-art prop atlas for medieval overhead RPG STARLIT-GUILD. SIX independent props in a precise 3 columns x 2 rows grid, equal cells with generous alpha gutters, no borders or labels. Match the warm brown outlined chunky pixel look of the reference wooden label and shallow wooden tray. Camera 40 degrees looking down. TOP row left to right: (1) a LOW backless brown wooden step stool, broad rectangular flat seat on four short splayed legs, empty, no person, about shin-height; (2) a slim handheld wooden RECORD BOARD with two cream pages fixed on it, small ink rows and tally marks, NOT a bound book, seen lying at a shallow angle; (3) one loose rectangular cream paper with a few tiny horizontal ink marks, flat sheet with lightly curled corner, not an envelope. BOTTOM row left to right: (4) one folded small cream paper receipt, folded into thirds, a simple paper rectangle, no wax seal; (5) a plain flat wide rectangular wood board to rest books on a seated person's knees, no legs, no contents; (6) a small shallow oval wooden sample dish holding THREE separate thumb-sized moss specimens in a row, each with a tiny pale tag, a very faint green glint confined to moss, not a glowing aura. Do not add other objects. Each prop centered fully inside its cell, clear alpha gaps, no floor, shadows, scenery, characters, lettering except tiny unreadable ink marks. True transparency.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-0f31cc9b-871b-4b11-9412-30122d56b0e5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/lico-kit-v1.png",
+      "outputs": [
+        "public/story-stage/prop-step-stool.webp",
+        "public/story-stage/prop-record-board.webp",
+        "public/story-stage/prop-paper.webp",
+        "public/story-stage/prop-folded-paper.webp",
+        "public/story-stage/prop-lap-board.webp",
+        "public/story-stage/prop-sample-dish.webp"
+      ]
+    },
+    {
+      "key": "licoDevice",
+      "prompt": "Asset: three-state TRANSPARENT pixel-art prop sheet for a handmade botanical light apparatus in a medieval overhead RPG. THREE equal square cells in ONE horizontal row. Each shows the SAME compact low wooden box on short feet, a hinged polished brass rectangular reflecting plate above its left half, a small dish of pale-green luminous moss in the box below the plate, and a squat dark earthenware smoke vessel on the RIGHT with a large visible removable cork stopper and a short outlet. This is a simple home-made research tool, not industrial machinery, no gears, weapon, cannon or sci-fi tech. Scale and silhouette fit a knee-high device. Camera elevated three-quarter looking down 40 degrees; front of the panel faces slightly to screen LEFT so it reflects toward left. Warm brown/gray chunky pixel outlines matching the reference RPG moss garden. State 1 LEFT: the mirror and moss are covered by a plain dark olive cloth draped on the frame; clay vessel closed with stopper, inactive, NO glow. State 2 CENTER: cloth removed, plate tilted up reflecting a faint pale green light from moss below, clay vessel open with cork resting beside it; do NOT paint emitted smoke or light beams, those will be separate effects. State 3 RIGHT: same reflector plate folded face-DOWN flat onto box, brass back visible, moss covered, clay vessel plugged shut; no glow. Same box, vessel, dimensions, perspective and baseline in all three cells. No text, no scenery, no ground plane, no cast shadows, no people. Generous transparent margin around each full device and between cells.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-338cb72c-e1c2-4fe8-96c5-2ec23451f8dd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/lico-device-v1.png",
+      "outputs": [
+        "public/story-stage/prop-reflector-covered.webp",
+        "public/story-stage/prop-reflector.webp",
+        "public/story-stage/prop-reflector-down.webp"
+      ]
+    },
+    {
+      "key": "lowSmoke",
+      "prompt": "Asset: transparent 2D pixel-art visual-effect sprite for an overhead medieval RPG. One long LOW ribbon of WHITE smoke flowing sideways close along the ground, width about five times its height. Irregular staggered wisps with some transparent gaps; the RIGHT end is a small denser source, the LEFT end disperses into thinner scattered curls. Light gray and off-white chunky pixel clusters with dark desaturated gray outlines kept very faint, semi-transparent feathered pixels at outer edges. Restrained soft appearance but visible pixel steps, matching miniature RPG sprites. It must read as a small ankle-high drifting haze, not a tall cloud, explosion, steam column, glowing magic or tornado. Transparent outside smoke including all corners. No scenery, floor, pots, source object, people, text, border, colored glow. Center the complete low smoke ribbon on a wide canvas with ample alpha margin.",
+      "result": "Generated images are saved to C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0 as C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-31e0e2fd-2e11-4b8a-bd38-7c4ecdb800f4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "source": "assets/source/story-stage/low-smoke-v1.png",
+      "outputs": [
+        "public/story-stage/prop-low-smoke.webp"
+      ]
+    }
+  ],
+  "registration": "Hero sprites: 128px cell, walking head width, foot at 120px; Lico stool silhouette 80px, NPC chairs 88px. Existing hero visible pixels retained. Reflector states share 272x240 canvas and fixed base. Smoke is a separate translucent low strip."
+}

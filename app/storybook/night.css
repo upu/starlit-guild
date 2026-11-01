@@ -1,0 +1,127 @@
+.storybook-painted-stage[data-night-study="true"] .story-stage-ground {
+  /* Night lighting is painted into the scenery behind this transparent plane. */
+  background-color: transparent;
+  background-blend-mode: normal;
+}
+.storybook-painted-stage[data-night-study="true"] .story-stage-item[data-art="moss-jar"] {
+  background-image: url("/storybook-study/moss-jar-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-night-study="true"] .story-stage-item[data-art="moss-jar"]::after {
+  content: "";
+  position: absolute;
+  inset: 35% 12% 12%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #e5ffc04d, #c4e99e00 70%);
+  box-shadow: 0 0 12px #c4e99e35;
+  animation: storybook-moss-breathe 4.8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.storybook-painted-stage[data-night-study="true"] .story-stage-item[data-glow="dim"]::after {
+  opacity: 0.35;
+  animation: none;
+}
+@keyframes storybook-moss-breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+.storybook-painted-stage[data-night-study="true"] .story-stage-sprite[data-atlas="shawl"] {
+  background-image: url("/storybook-study/aria-shawl-v1.webp");
+  background-size: 400% 200%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-night-study="true"]
+  .story-stage-sprite[data-atlas="shawl"]:is(
+    [data-frame="4"],
+    [data-frame="5"],
+    [data-frame="6"],
+    [data-frame="7"]
+  ) {
+  background-position-y: 100% !important;
+}
+.storybook-painted-stage[data-night-study="true"] [data-actor="aria"] {
+  --night-walk-art: url("/storybook-study/aria-paper-walk-v1.webp");
+}
+.storybook-painted-stage[data-night-study="true"] [data-actor="leon"] {
+  --night-walk-art: url("/storybook-study/leon-paper-walk-v2.webp");
+}
+.storybook-painted-stage[data-night-study="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: var(--night-walk-art);
+  background-size: 400% 100%;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage:is(
+    [data-night-study="true"],
+    [data-forest-study="true"],
+    [data-carry-study="true"]
+  )
+  .story-stage-sprite[data-atlas="conversation"][data-frame="16"] {
+  background-image: var(--study-carry-art);
+  background-size: 400% 100%;
+  background-position: 66.666667% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-painted-stage[data-night-study="true"] .story-stage-item[data-art="moss-jar"]::after {
+    animation: none;
+  }
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-lantern-hold="true"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: var(--night-lantern-art) !important;
+  background-size: 400% 200% !important;
+  background-position: var(--lantern-column, 0%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="leon"] {
+  --night-lantern-art: url("/storybook-study/leon-lantern-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="aria"] {
+  --night-lantern-art: url("/storybook-study/aria-lantern-v1.webp");
+}
+.storybook-painted-stage
+  [data-lantern-hold="true"]
+  .story-stage-sprite:is([data-frame="1"], [data-frame="5"]) {
+  --lantern-column: 33.333333%;
+}
+.storybook-painted-stage
+  [data-lantern-hold="true"]
+  .story-stage-sprite:is([data-frame="2"], [data-frame="6"]) {
+  --lantern-column: 66.666667%;
+}
+.storybook-painted-stage
+  [data-lantern-hold="true"]
+  .story-stage-sprite:is([data-frame="3"], [data-frame="7"]) {
+  --lantern-column: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-lantern-hold="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="4"],
+    [data-frame="5"],
+    [data-frame="6"],
+    [data-frame="7"]
+  ) {
+  background-position-y: 100% !important;
+}

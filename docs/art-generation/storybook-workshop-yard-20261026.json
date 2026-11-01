@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Redraw FIRST reference old roadside workshop yard in SECOND reference's warm hand-painted 2D RPG style and elevated 50-degree downward three-quarter camera. Preserve exact functional layout: dirt mountain road runs from lower-left to upper-left along LEFT quarter, shrubs and evergreen forest border it; old timber workshop occupies UPPER RIGHT, broad open double wooden doors, visible earthen inside floor, modest old workbench at back right. Match the door threshold line and posts to FIRST reference, so animated characters can step between outside yard and workshop interior. Keep lower two-thirds open dirt yard, small scattered pebbles and sparse weeds, no giant foreground objects. Doors about 1.8 standing-person heights, table waist high, assuming eventual actors about 1/6 image height. Camera looks down on tops of doors, timber posts and ground, no horizon or sky. Soft afternoon light, cream and ochre warm palette, rounded stones, coherent perspective, no pixel texture. No people, no puppets, no sacks or medicine boxes, no loose furniture outside, no text or signs. Landscape 3:2.",
+  "source": "assets/source/storybook/workshop-yard-v1.png",
+  "outputs": [
+    "public/storybook-study/workshop-yard-v1.png"
+  ]
+}

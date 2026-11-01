@@ -1,0 +1,496 @@
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="4"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 33.33333333333333% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 66.66666666666666% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="8"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 33.33333333333333% 50% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="9"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 100% 50% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="10"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="11"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 33.33333333333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 66.66666666666666% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="15"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 0% 50% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="19"] {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 66.66666666666666% 50% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="52"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="53"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="54"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="55"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="44"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.33333333333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="45"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 66.66666666666666% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="oil-dish"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="14"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-held-art="oil-dish"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="15"] {
+  background-image: url("/storybook-study/lantern-heroes-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333% 100% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-closed-sooty"] {
+  background-image: url("/storybook-study/stone-lantern-closed-sooty-v1.webp");
+  aspect-ratio: 2 / 3;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-sooty"] {
+  background-image: url("/storybook-study/stone-lantern-sooty-v1.webp");
+  aspect-ratio: 2 / 3;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-empty"] {
+  background-image: url("/storybook-study/stone-lantern-empty-v1.webp");
+  aspect-ratio: 2 / 3;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-unlit"] {
+  background-image: url("/storybook-study/stone-lantern-unlit-v1.webp");
+  aspect-ratio: 2 / 3;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-closed-lit"] {
+  background-image: url("/storybook-study/stone-lantern-closed-lit-v1.webp");
+  aspect-ratio: 2 / 3;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="oil-dish"] {
+  background-image: url("/storybook-study/oil-pan-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="lamp-oil"] {
+  background-image: url("/storybook-study/oil-bottle-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="tool-rucksack"] {
+  background-image: url("/storybook-study/work-rucksack-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="map"] {
+  background-image: url("/storybook-study/travel-map-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="folded-paper"] {
+  background-image: url("/storybook-study/folded-request-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="cloth"] {
+  background-image: url("/storybook-study/cleaning-rag-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="roadside-grass"] {
+  background-image: url("/storybook-study/roadside-grass-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="roadside-stubble"] {
+  background-image: url("/storybook-study/roadside-stubble-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+  content: "";
+  position: absolute;
+  left: 38%;
+  top: 36%;
+  width: 32%;
+  height: 23%;
+  background: radial-gradient(ellipse, #ffd67d70, transparent 70%);
+  animation: storybook-lantern-flame 2.7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="10"] {
+  background-image: url("/storybook-study/porter-pickup-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.33333333333333% 0% !important;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="12"] {
+  background-image: url("/storybook-study/porter-pickup-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 66.66666666666666% 0% !important;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="11"] {
+  background-image: url("/storybook-study/porter-pickup-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 100% 0% !important;
+}
+.storybook-reader-stage:is(
+    [data-story="lantern-detour-departure"],
+    [data-story="lantern-detour-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-art="lamp-oil"][data-pouring="true"]::after {
+  background: linear-gradient(90deg, #e9ca8280, #bd8a4a99);
+}
+.storybook-reader-stage[data-story="lantern-detour-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="54"] {
+  background-image: url("/storybook-study/aria-weed-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.33333333333333% 0% !important;
+}
+.storybook-reader-stage[data-story="lantern-detour-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="55"] {
+  background-image: url("/storybook-study/aria-weed-v1.webp");
+  background-size: 400% 100%;
+  background-position: 66.66666666666666% 0% !important;
+}
+@keyframes storybook-lantern-flame {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0.95;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-reader-stage:is(
+      [data-story="lantern-detour-departure"],
+      [data-story="lantern-detour-return"]
+    )
+    .storybook-painted-stage[data-painted="true"]
+    .story-stage-item[data-art="stone-lantern-closed-lit"]::after {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage:is(
+      [data-story="lantern-detour-departure"],
+      [data-story="lantern-detour-return"]
+    )[data-mode="outdoor"]
+    .story-stage-space {
+    transform: none;
+  }
+}

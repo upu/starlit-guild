@@ -1,0 +1,21 @@
+.waterway-layout-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #18352d;
+}
+.waterway-layout-background,
+.waterway-layout-actor {
+  position: absolute;
+  background-repeat: no-repeat;
+}
+.waterway-layout-background {
+  background-size: 100% 100%;
+}
+.waterway-moss-prop {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}

@@ -1,0 +1,17 @@
+{
+  "tool": "built-in image_gen",
+  "status": "prototype-unapproved",
+  "assets": [
+    {
+      "source": "assets/source/storybook/leon-pass-b-v3.png",
+      "prompt": "Edit only the raised foreground lower leg and boot of this original Leon sprite. Keep the entire head, face, hair, torso, arms, cape, hip position, support leg and standing boot exactly as they are, at the identical size and canvas coordinates. This is a gentle walking passing pose, not a kick. Bend the raised knee so its shin hangs almost vertically rather than diagonally out to the right. Bring the floating boot closer to the supporting shin; place its sole nearly horizontal, toe pointing right, just 35 pixels above the ground baseline of the planted boot. Two boots remain distinguishable. Preserve the thigh crossing in front and the same warm illustrated line art, clothing and anatomy. One complete figure, transparent background, no glow, floor, shadow or text. Preserve generous canvas margin.",
+      "review": "Floating boot is closer to support leg, with sole nearly level."
+    },
+    {
+      "source": "assets/source/storybook/leon-pass-a-v1.png",
+      "prompt": "Create ONE walking passing sprite by editing this original Leon. Preserve identity, head size, head position, face, hair, tunic, short cape, shoulder guard and warm illustrated style, elevated three-quarter orientation facing screen right. Change the legs: FOREGROUND LEG starts at LEFT HIP and is the planted SUPPORT LEG, almost vertical, boot flat on ground underneath LEFT HIP. BACKGROUND LEG starts at RIGHT HIP and swings forward to SCREEN RIGHT with bent knee, its shin almost vertical and its boot floating just slightly above ground to RIGHT of support boot. Crucially, the FOREGROUND supporting thigh must remain IN FRONT and occlude the upper part of the swinging BACKGROUND thigh. No crossing foreground thigh across to right knee. The far swinging knee is visible just right of foreground leg. Both boots visible, toes pointing right; modest calm walking not a kick/high march. Foreground arm swings forward gently, bent elbow, glove near belt as in reference. Far arm back. One whole figure with generous transparent margins. Exact same anatomical scale. Transparent background no scenery, glow, shadow or text.",
+      "review": "Foreground leg supports while the background leg passes forward."
+    }
+  ],
+  "runtime": "Registered as leon-walk-v1.webp and connected to home-atlas movement in the storybook conversation prototype only. Production story/adventure and carrying walks are not connected."
+}

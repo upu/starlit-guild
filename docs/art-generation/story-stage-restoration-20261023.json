@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-23",
+  "tool": "image_gen.imagegen",
+  "purpose": "3-9 caretaker motion and portable worksite props",
+  "assets": [
+    {
+      "source": "assets/source/story-stage/keeper-restoration-v1.png",
+      "reference": "public/story-stage/keeper-poses.webp at 5277067",
+      "generated": "exec-b57fbde7-f456-49eb-acf6-d5c6c4746f76.png",
+      "prompt": "Create a transparent RGBA pixel-art sprite sheet for the SAME elderly tower caretaker as reference: gray wavy short hair, friendly lined face and mustache, navy blue vest over beige rolled sleeves, brown apron, brown trousers/boots. Preserve face/outfit/color and chunky RPG pixel style, about 2.6 heads tall. Sheet exactly 4 columns x 2 rows, eight separated full-body sprites each centered in its cell with generous transparent margin. No floor, shadows, props, chairs, labels or text. All face three-quarter toward screen LEFT, same head size and proportions. Row1: four successive WALK LEFT frames with alternating feet and modest arm swing, convincing full walking cycle, consistent body height. Row2: (1) crouching on one knee, right hand reaching diagonally down-left toward an imaginary small stone on ground, fingertips near ankle height; (2) same crouch/body/feet, right index finger extended slightly farther left/down touching imaginary groove; (3) standing, both hands gently holding an imaginary small document at chest level, no document drawn, reading downward; (4) standing neutral, hand opened at chest level to receive a small sheet, no sheet. Crouching head naturally lower than standing, NEVER enlarge the head of crouched figure. Every sprite fully inside its cell, no overlap. Match supplied reference precisely; reference chairs are NOT part of the character.",
+      "sha256": "01d82ef75a403af255db9fd1da6e5f01235c2a3a28aa0e44e968e799fe49a955"
+    },
+    {
+      "source": "assets/source/story-stage/restoration-props-v1.png",
+      "generated": "exec-4a88f360-3d53-4691-9fe2-9dd8cb45f222.png",
+      "prompt": "Transparent RGBA asset sheet for a rustic fantasy top-down 3/4 RPG in detailed pixel art, warm muted wood and stone palette, strong pixel edges, no text. Exactly TWO equal square cells side by side with large transparent gutters. LEFT: ONE small portable wooden worksite barrier, a simple low fence panel with two horizontal rails and two short upright posts, no sign, no base scenery, viewed from above about 45 degrees, suitable to carry by hand. Only the fence itself, no people, no attached feet. RIGHT: a modest thin clump of brown creeping roots with a few tiny dusty green leaves, growing flat through an imaginary stone joint diagonally from upper left to lower right, loose roots only, no rock, no soil block, no background. Both sprites completely separated and fully inside their cells; transparent background preserved. These will overlay existing pixel-art scenery.",
+      "sha256": "fe7c63a7d1b11edb85908f4e67e2b281044349a5151e9e34b835669d4f4763e8"
+    }
+  ]
+}

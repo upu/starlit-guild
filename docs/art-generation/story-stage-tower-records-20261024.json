@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "source": "assets/source/story-stage/tower-records-v1.png",
+  "sha256": "8252444653c4d432464253b4e249b6b25e6782d6e65eefa70a60bd5589527522",
+  "output": "public/story-stage/tower-records.webp",
+  "reference": "public/story-stage/tower-foot.webp",
+  "prompt": "Edit the referenced fantasy pixel-art RPG tower courtyard background for a later story scene. Preserve the exact elevated three-quarter camera, stone tower, right wooden door and steps, ground perspective, paths, foliage, lighting, color palette, pixel texture and 3:2 composition. Keep the entire lower two thirds unchanged in composition and object placement, since characters stand there. Add ONE small narrow arched window into the tower's stone wall in the upper-left portion of the tower (roughly x=43%, y=12% of the whole image), above the plants and to the left of the door. It should be an ordinary functional window, dark interior with a subtle muted violet light lingering inside, a faint violet tint only on its inner stone sill. The story is daytime and the tower's light has only partially recovered: no dramatic beam, no magic circle, no glowing ground, no crystals, no giant neon light. Integrate it naturally into the tower masonry; no other changes, people, furniture, signs or text. Opaque background."
+}

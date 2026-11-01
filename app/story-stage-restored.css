@@ -1,0 +1,49 @@
+/* These lights are anchored to the background, outside the scaled actor world. */
+.story-stage-restored-window,
+.story-stage-restored-stones {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: restoration-light-return 3s ease-out both;
+}
+.story-stage-restored-window {
+  left: 46.05%;
+  top: 4.3%;
+  width: 2.4%;
+  height: 10.8%;
+  border-radius: 50% 50% 3% 3% / 20% 20% 3% 3%;
+  background: linear-gradient(#b6a4e540, #c7b4f5a0 65%, #b9a6ed70);
+  box-shadow: 0 0 0.6cqw #bca4ee38;
+  animation-delay: 1.5s;
+}
+.story-stage-restored-stones {
+  inset: 0;
+  background: linear-gradient(135deg, #bca4ed15 30%, #c6b0fa48 65%, #c6b0fa28);
+  clip-path: polygon(
+    31.5% 34%,
+    33.5% 34%,
+    37% 43%,
+    42% 53%,
+    50% 69%,
+    63% 89%,
+    58% 93%,
+    46% 72%,
+    39% 56%,
+    34% 44%
+  );
+  animation-delay: 4s;
+}
+@keyframes restoration-light-return {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-stage-restored-window,
+  .story-stage-restored-stones {
+    animation: none;
+  }
+}

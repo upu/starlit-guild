@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-seat-balanced-v3.png",
+    "scale": 0.20933521923620935,
+    "left": 54,
+    "top": 28,
+    "width": 72,
+    "height": 148,
+    "baseline": 176,
+    "headX": 93.63897469675372
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-seat-balanced-v3.png",
+    "scale": 0.20933521923620935,
+    "left": 44,
+    "top": 58,
+    "width": 84,
+    "height": 118,
+    "baseline": 176,
+    "headX": 87.26149125451188
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-seat-balanced-v3.png",
+    "scale": 0.20933521923620935,
+    "left": 44,
+    "top": 59,
+    "width": 84,
+    "height": 117,
+    "baseline": 176,
+    "headX": 85.97746020931595
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-seat-balanced-v3.png",
+    "scale": 0.20933521923620935,
+    "left": 46,
+    "top": 59,
+    "width": 81,
+    "height": 117,
+    "baseline": 176,
+    "headX": 87.83010813061458
+  }
+]

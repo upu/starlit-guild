@@ -1,0 +1,4 @@
+.lantern-road-portrait .storybook-adventure {
+  width: min(100%, 390px);
+  aspect-ratio: 390 / 700;
+}

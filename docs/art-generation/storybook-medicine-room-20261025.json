@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Redraw FIRST reference as a warm hand-painted 2D RPG background in the soft brushwork, restrained brown outlines, warm timber and cream plaster palette of SECOND reference. FIRST is strict layout reference; SECOND is style only, do not copy its furniture arrangement. Elevated three-quarter downward camera, 3:2 canvas. Preserve FIRST's apothecary room geography: herb bottles and work cabinets along upper-left wall, hanging dried herbs and a small diamond-pane window along back wall; a SMALL single-person bed in upper-right with head/pillow against right wall, green blanket, foot pointing down-left; small bedside table to bed's left, low chest on bed's right. Preserve approximate furniture footprints: bed occupies x62%-84%, y11%-37%, bedside table around x59%,y23%. Keep the large center and lower two-thirds open wooden plank floor for movable game characters and furniture. Everything coherent in scale for characters roughly one-sixth of image height; bed long enough for one person, cabinets waist/chest height, no giant bottles or tiny bed. Cozy lived-in healer's workroom, naturally lit, quiet golden morning. Clear broad readable painted shapes at small resolution, not pixel art, no realistic grain. No people, labels, signage text, extra furniture in open floor, or decorative clutter. Preserve room corners and floor perspective.",
+  "references": [
+    "public/story-stage/medicine-room.webp",
+    "public/storybook-study/office-v1.png"
+  ],
+  "source": "assets/source/storybook/medicine-room-v1.png",
+  "output": "public/storybook-study/medicine-room-v1.png"
+}

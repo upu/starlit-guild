@@ -1,0 +1,13 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-22",
+  "source": "assets/source/story-stage/aria-writing-v1.png",
+  "references": [
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/public/story-stage/aria-poses.webp",
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/assets/source/story-stage/scene-actions-v3.png"
+  ],
+  "prompt": "Create ONE transparent-background sprite sheet with TWO equal cells, one row two columns, of ARIA writing with a small feather quill on a single small cream paper held in her other hand at waist height. Reference 1 is Aria's canonical game sprite atlas: preserve her exact short peach-blonde hair with lilac side strand, green eyes, white daisy hair clip, green gold-trimmed cape and bodice, short white skirt, brown gloves and boots. Reference 2 top row is Leon's two writing poses; copy that small paper and feather, arm gesture, standing waist-high writing placement, three-quarter facing RIGHT and overhead RPG viewing angle but NOT Leon's design. Use Aria only. Same adult chibi body proportions as Aria's standing/walking in reference 1: head width about 40% of total height, height about 2.6 heads. Do not enlarge head or shorten legs relative to her canonical standing sprites. Both full bodies exactly same size, head and boots aligned, centered in separate cells with ample transparent padding all around. Frame 1 nib at start of a short stroke; frame 2 nib shifted slightly on paper, writing arm small movement, eyes focused downward. Feet, head and torso remain fixed; no dramatic bob. Pixel-art-style crisp small-game sprite contours and discrete shading matching reference 1, no soft glow, no ground shadow, no scene, no desk, no text labels, no grids. True alpha transparency. Output horizontal sheet.",
+  "output": "public/story-stage/aria-poses.webp",
+  "registration": "Replace existing placeholder cells 17 and 18; preserve atlas 512x1408, walking head width, height 96px and foot baseline 120px."
+}

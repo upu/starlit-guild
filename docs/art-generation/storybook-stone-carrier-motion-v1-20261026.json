@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent hand-painted2D RPG character sprite sheet exactly8 poses4columns2rows. Use exact young male stone carrier from reference: blue tied headscarf, dark brown ponytail, blue rolled-sleeve work shirt, brown trousers, brown boots, practical friendly face. Repaint softly textured with fine warm outlines, elevated45degree downward threequarter camera. All face LEFT, complete full bodies equal head size, same proportions and scale, all feet same baseline with clear padding. Row1:0 standing with both palms forward/up at waist holding an INVISIBLE heavy block;1 carry-walk LEFT left-foot contact;2 carry-walk passing feet below hips;3 carry-walk opposite/right-foot contact. Row2:4 carry-walk opposite passing;5 tired, sore, holding the left hand protectively near waist with other hand;6 extends near forearm and open palm to LEFT at waist height for a healer, other hand relaxed;7 gently rests bandaged near hand across stomach, small white bandage visible. Walking poses all preserve both palms at same height ready for the separate block. No actual block, props, ground, shadows, text. No touching figures or cropped hair/boots. The 4 walk frames must show opposite feet at contacts and distinct passing poses.",
+  "references": [
+    "public/story-stage/stone-carrier-poses.webp"
+  ],
+  "source": "assets/source/storybook/stone-carrier-motion-v1.png"
+}

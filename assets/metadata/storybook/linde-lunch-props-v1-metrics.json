@@ -1,0 +1,30 @@
+[
+  {
+    "name": "lunch-plate",
+    "width": 240,
+    "height": 182,
+    "left": 8,
+    "top": 66
+  },
+  {
+    "name": "cleared-plate",
+    "width": 236,
+    "height": 182,
+    "left": 10,
+    "top": 66
+  },
+  {
+    "name": "folded-request",
+    "width": 240,
+    "height": 187,
+    "left": 8,
+    "top": 61
+  },
+  {
+    "name": "sealed-request",
+    "width": 240,
+    "height": 166,
+    "left": 8,
+    "top": 82
+  }
+]

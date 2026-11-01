@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game prop atlas with TWO isolated objects, large horizontal arrangement, no touching. Left object: old wooden two-wheel handcart in reference1's exact orientation, two shafts point SCREEN RIGHT, shallow brown wooden box bed carrying THREE obviously EMPTY woven wicker baskets. Elevated threequarter45degree RPG camera, warm hand-painted fine brown outline style of reference3, not pixel grid. IMPORTANT near/front wheel is REMOVED from cart body leaving small axle hub at lower LEFT side; the FAR rear wheel may be a dark unobtrusive partial disk. Do not paint spokes of near wheel into cart body: a separate rotating wheel will be overlaid. Right object: isolated fully circular wagon wheel as in reference2, front-on perfectly round eight wooden spokes with dark iron tire, axle hub at center, hand-painted same style. Wheel must be complete, not elliptical, no perspective so renderer can rotate it. Keep cart shafts parallel, grippable handles extend far right, baskets light empty with visible open interior. No person, moss, loads, shadow, text or grids. Transparent background generous margins.",
+  "references": [
+    "public/story-stage/prop-basket-cart.webp",
+    "public/story-stage/prop-cart-wheel.webp",
+    "assets/source/storybook/brekka-homes-v1.png"
+  ],
+  "source": "assets/source/storybook/brekka-basket-cart-v1.png"
+}

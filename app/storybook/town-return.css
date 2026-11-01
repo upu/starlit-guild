@@ -1,0 +1,12 @@
+.storybook-reader-stage[data-story="town-deliveries-return"]
+  .story-stage-item[data-item="empty-wrap"] {
+  background-image: url("/storybook-study/empty-delivery-wrap-v1.webp");
+  aspect-ratio: 256 / 170;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="town-deliveries-return"]
+  .story-stage-item[data-item="delivery-receipts"] {
+  background-image: url("/storybook-study/delivery-receipts-v1.webp");
+  aspect-ratio: 1.15;
+  image-rendering: auto;
+}

@@ -1,0 +1,41 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in transparent edit",
+  "date": "2026-10-22",
+  "images": [
+    {
+      "source": "assets/source/story-stage/golem-motion-v1.png",
+      "reference": "public/story-stage/prop-golem.webp",
+      "prompt": "Create a clean SIX-FRAME SPRITE SHEET on true TRANSPARENT background, exactly 3 columns x 2 rows of equal cells, row-major order. One complete isolated character per cell with generous clear alpha gutters; NO text, labels, grid, terrain, shadows, effects, tools outside the character, or repeated props. All six depict the EXACT SAME supplied character with identical design, materials, pixel grain, outline, head dimensions, torso and limb thickness. Use crisp discrete pixel-art clusters readable when reduced, not smooth illustration. Elevated oblique RPG view as reference, facing toward viewer-left. Keep identical zoom, anatomy scale and head width across cells; lower poses become shorter by bending joints, NEVER by shrinking the head or squashing the whole sprite. Align lowest weight-bearing foot/knee to the same cell baseline; all extremities entirely inside cells. 1536x1024 sheet. The character is the supplied massive stone pack-carrying puppet/golem, retain the round pale stone mask with two black holes, leafy crown, dark green and yellow cloth, pumpkin charms, timber backpack with barrel and lantern, huge open stone hands. Keep fingers and arms held forward in the same reaching direction as the reference; the legs visibly alternate during walking. Frames 1-4 are FOUR DISTINCT chronological heavy walking poses: (1) left foot forward right foot back, (2) weight over left foot with right heel lifting, (3) right foot forward left foot back, (4) weight over right foot with left heel lifting. Clear foot separation, not identical idle poses. Frame5: stopped with one knee fully on ground, other foot planted, body upright but physically lower, hands at rest; the head remains full size. Frame6: from that same kneeling stance, bends neck and upper torso forward into a visible apologetic bow, head lowered, same full size and same ground footprint. Do not add a weapon or angry face.",
+      "output": "public/story-stage/prop-golem-poses.webp",
+      "sourceSha256": "978cb42ea9bd224289b26de7d48fd7b082205a23844a1ff5c1e2289ed335cf5b",
+      "outputSha256": "4565db29e5c06ee4a0936bad1bf4a1f920fbb5abc062f95476b0fa2d1dea679f",
+      "referenceRevision": "0606a87fde990232430a7130b625f1dd6b6c3aa3",
+      "referenceSha256": "f5a793c3cd9584b590107868ec1e1018b3fed5e3bd5db9991ca5feba65a25eb3"
+    },
+    {
+      "source": "assets/source/story-stage/puppet-motion-v1.png",
+      "reference": "public/story-stage/prop-puppet.webp",
+      "prompt": "Create a clean SIX-FRAME SPRITE SHEET on true TRANSPARENT background, exactly 3 columns x 2 rows of equal cells, row-major order. One complete isolated character per cell with generous clear alpha gutters; NO text, labels, grid, terrain, shadows, effects, tools outside the character, or repeated props. All six depict the EXACT SAME supplied character with identical design, materials, pixel grain, outline, head dimensions, torso and limb thickness. Use crisp discrete pixel-art clusters readable when reduced, not smooth illustration. Elevated oblique RPG view as reference, facing toward viewer-left. Keep identical zoom, anatomy scale and head width across cells; lower poses become shorter by bending joints, NEVER by shrinking the head or squashing the whole sprite. Align lowest weight-bearing foot/knee to the same cell baseline; all extremities entirely inside cells. 1536x1024 sheet. The character is the supplied SMALL WOODEN MARIONETTE with huge green/yellow wizard hat, carved wooden face, exposed wooden jointed limbs, green coat, pumpkin and butterfly ornaments, leather boots, empty open hands. Preserve its friendly carved face and slim wooden proportions. Frames 1-4 are FOUR DISTINCT chronological walking poses: (1) left boot forward right boot back, (2) weight over left leg with right boot passing, (3) right boot forward left boot back, (4) weight over right leg with left boot passing. Make boots and wooden knees change clearly; hold arms loosely forward at the same scale. Frame5: one knee down, head and hat still full size, tired/slumped wooden puppet resting with hands low. Frame6: standing with both boots planted and bending waist/neck forward into a clear bow of apology, hat tip forward, head lowered. No magic, no staff, no strings outside the cell.",
+      "output": "public/story-stage/prop-puppet-poses.webp",
+      "sourceSha256": "46c79f9e536597b91bd1748d3fc5e7d19f5684e07d43a0792f728cc9446de9d4",
+      "outputSha256": "ecb2165d663922561d47900b51362374b09aa7c4e979083fd07a8dc6c2ff66f6",
+      "referenceRevision": "0606a87fde990232430a7130b625f1dd6b6c3aa3",
+      "referenceSha256": "2a1ab07028f5351c2d63400a04b66d302fcf88efbbfe1dc73aab182ffdc4b670"
+    },
+    {
+      "source": "assets/source/story-stage/masked-pumpety-motion-v1.png",
+      "reference": "public/story-stage/masked-pumpety-poses.webp",
+      "prompt": "Create a clean SIX-FRAME SPRITE SHEET on true TRANSPARENT background, exactly 3 columns x 2 rows of equal cells, row-major order. One complete isolated character per cell with generous clear alpha gutters; NO text, labels, grid, terrain, shadows, effects, tools outside the character, or repeated props. All six depict the EXACT SAME supplied character with identical design, materials, pixel grain, outline, head dimensions, torso and limb thickness. Use crisp discrete pixel-art clusters readable when reduced, not smooth illustration. Elevated oblique RPG view as reference, facing toward viewer-left. Keep identical zoom, anatomy scale and head width across cells; lower poses become shorter by bending joints, NEVER by shrinking the head or squashing the whole sprite. Align lowest weight-bearing foot/knee to the same cell baseline; all extremities entirely inside cells. 1536x1024 sheet. The character is the SAME SMALL GIRL from the supplied four pose reference: her ENTIRE FACE is hidden inside the solid carved pumpkin helmet, with DARK hollow openings (no human eyes, face or skin inside helmet); copper orange curled pigtails, green/yellow/black short costume, butterfly/pumpkin trims, small brown boots. Preserve existing helmet, head width, costume detail and short sprite proportions. She is carrying NO controller, strings, or weapon. Frames1-4 are FOUR DISTINCT chronological walking poses facing viewer-left: left foot extended / passing on left foot / right foot extended / passing on right foot. The pigtails and skirt move gently, feet differ visibly. Frame5 is a subtle reluctant bow: feet planted, pumpkin helmet tilts a little forward, shoulders lowered slightly. Frame6 is a deeper polite bow at the waist: pumpkin helmet lowered substantially, torso bent, boots planted, same head dimensions. No uncovered face, no hat replacing helmet, no redesign, no longer legs or tall adult proportions.",
+      "output": "public/story-stage/masked-pumpety-poses.webp",
+      "sourceSha256": "c6759deb01c5f2dfc1d913ea792de5f8f4982a47a959327d802b6e34dd396107",
+      "outputSha256": "d5c1adf4d69417c1ca78fef342ad0d46f2c3063dfc855c8f32029ba92a4f6570",
+      "referenceRevision": "0606a87fde990232430a7130b625f1dd6b6c3aa3",
+      "referenceSha256": "f75c70b3af16b539c5f906b93685a38f2e92513f32819508947e04b8f36d4aa6"
+    }
+  ],
+  "registration": {
+    "figures": "512px cells, foot y=480; original physical width retained by canvas padding compensation. Idle plus walk x4, low pose, bow. Golem low poses uniformly scaled by 0.875 to correct generated head enlargement.",
+    "masked": "128px cells, foot y=120; original poses 0-3 grounded, walking 4-7 registered to 96px stature, shallow/deep bows 8-9 retain lower stature. Actual generated sheet uses four upper cells and two lower cells."
+  }
+}

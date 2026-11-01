@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit this exactmanorgardenbackground toearlynightatstartoflanterndisplay. Preserveeverygeometricdetail andcamera: gateLEFT, signpoststem, pavingandhedges, upperstepsmanorwall, balustradeandemptychairsRIGHT. Samehandpaintedwarm2D RPG45degreeview. Replacebrightafternoonsun with softduskyblueambientlight, manorwindowsgentlylitwarmamber, readablewarmstonecourtyardwithoutblackshadows. A littleresidualgoldenlightacrossthepaving. Nopeople,table,props,lightingfixturesorobjectslayoutchanges. No magicalfloatingglows, no extra stone. No sky. Thisisexactlythesamelocationlaterintheevening, neverrescalebackground.",
+  "references": [
+    "public/storybook-study/manor-display-back-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-display-dusk-v1.png"
+}

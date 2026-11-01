@@ -1,0 +1,41 @@
+{
+  "width": 420,
+  "height": 280,
+  "referenceWheelBottom": 256,
+  "generatedWheelBottom": 252,
+  "shiftY": 4,
+  "poses": [
+    [
+      "merchant-turn-carry-v2",
+      0
+    ],
+    [
+      "merchant-placement-v2",
+      1
+    ],
+    [
+      "merchant-turn-carry-v2",
+      2
+    ],
+    [
+      "merchant-turn-carry-v2",
+      3
+    ],
+    [
+      "merchant-placement-v2",
+      2
+    ],
+    [
+      "merchant-placement-v2",
+      3
+    ],
+    [
+      "merchant-placement-v2",
+      0
+    ],
+    [
+      "merchant-placement-v2",
+      0
+    ]
+  ]
+}

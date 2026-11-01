@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen",
+  "scene": "interlude-promised-walnuts",
+  "geography": "Existing roadside rest accessible from two villages, before Chapter4. No new location, cardinal direction or travel time added. Atlas meeting-junction/village-trade relationships and chapter-four-script.md checked.",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/walnut-rest-v1.png",
+      "generation": "exec-94d9122d-dc6c-4053-9b2f-b804a82759f5",
+      "prompt": "Warm hand-painted 2D RPG scenery, elevated oblique camera looking down55degrees,1536x1024 landscape. Rest spot along the country paths accessible from two nearby villages. Follow image1 original layout of meadow beside curving dirt path, image2 for warm painted materials only; replace pixel rendering with clear hand-painted shapes. Small-scale grass, clover, shrubs and a few trees framing outside edges, sunlit quiet afternoon with soft dappled shade. Open level grassy clearing central60% for two12%-image-height people on a separate low bench and a picnic cloth on ground. No bench or furniture baked in. Two modest footpaths head out toward bottom-left and bottom-right and join a curving path across upper third; no horizon, skyline, tower, town, buildings, characters, signs, text or props. Ground detail and scale consistent with small RPG figures; avoid giant plants in central area.",
+      "output": "public/storybook-study/walnut-rest-v1.png"
+    },
+    {
+      "source": "assets/source/storybook/walnut-props-v1.png",
+      "generation": "exec-3d524aea-2ba4-469d-8f52-b49eca01c226",
+      "prompt": "Transparent sprite asset sheet for warm hand-painted elevated55degree 2D RPG, match supporting scenery materials. EXACT9 separate objects in3columns3rows, equal cells with generous transparent gutters, no objects touch. Row1: three single small round rustic walnut cookies, pale golden / medium toasted / darker brown one with dark edge. Row2: exactly half of each matching cookie, same relative cookie diameter, clear broken edge and walnut pieces. Row3: underside of darker cookie showing only ONE burnt edge, not entirely black; one tiny broken roasted walnut kernel; one low rustic wooden bench for2people, no backrest, narrow plank top seen from above and four short legs, warm aged wood, horizontal orientation and front/right faces visible. No plate, hands, scenery, text, cast shadow outside objects. Actual transparent background. Keep cookies like modest home-baked walnut cakes, not fancy decorated pastries. Match same handpainted outline weight.",
+      "use": "First8 cells only; embedded bench rejected as too tall. The3 cookie shades, halves, burnt underside and kernel remain separate transparent props."
+    },
+    {
+      "source": "assets/source/storybook/aria-snack-v2.png",
+      "generation": "exec-40bc2678-d215-423f-b438-a75153dc8c2d",
+      "output": "public/storybook-study/aria-snack-v1.webp",
+      "prompt": "Edit eight-pose sheet against accepted aria-perch-v1. Keep head dimensions, shoulder width and forearm thickness across standing/seated actions. Seated height78-82% of standing, low reach lower. Green irises and consistent fingerless brown gloves. Empty hands, no seat/props, true transparency."
+    },
+    {
+      "source": "assets/source/storybook/leon-snack-v2.png",
+      "generation": "exec-91dde6dc-d195-4284-a25d-03786e7f40fe",
+      "output": "public/storybook-study/leon-snack-v1.webp",
+      "prompt": "Same eight poses and scale correction against accepted leon-perch-v1. Same identity/outfit and brown eyes. Empty hands including drinking pose, no baked cookie or flask. True transparency."
+    },
+    {
+      "source": "assets/source/storybook/water-flask-v1.png",
+      "generation": "exec-72c388e5-6811-426b-84e3-938b41f318d7",
+      "prompt": "One small rustic medieval water flask, brown leather-covered squat body, narrow short drinking spout and cork tied by cord. Warm hand-painted elevated50degree RPG item, readable at24px. No potion, scenery or hand. Genuine transparent background."
+    },
+    {
+      "source": "assets/source/storybook/walnut-bench-v1.png",
+      "generation": "exec-a8663009-ff36-4660-b3d6-5a91d5f2bfe6",
+      "prompt": "One low rustic bench for two, elevated50degree handpainted RPG, narrow horizontal plank and four very short legs, silhouette4:1, knee height not table, no backrest, people, props or external shadow. Transparent cutout."
+    },
+    {
+      "source": "assets/source/storybook/walnut-cloth-v1.png",
+      "generation": "exec-d2ede6bf-7ac0-4fdc-8202-c69a022e70ea",
+      "prompt": "Empty cream linen cloth spread FLAT on ground-plane, elevated55degree, wide low trapezoid4:1, all corners coplanar, small creases and stitched edge. No hanging folds, lifted corners, food, hands, scene or shadow outside cloth. Genuine transparent background."
+    }
+  ],
+  "actorInitialPrompt": {
+    "aria": "Use case: identity-preserve. Aria, elf girl with pale blonde hair, green cape and brown boots, exact same identity and outfit and warm hand-painted body proportions as reference. Eight FULL BODY poses in4columns2rows equal separated cells. Camera elevated oblique50degrees, facing right in every pose. Cell0 standing calibration idle. Cells1-7 seated on an INVISIBLE narrow low bench, feet down, exactly same head size and limb thickness as standing, seated body naturally shorter. Cell1 relaxed seated hands on knees. Cell2 seated both empty open palms above lap supporting imaginary small cookie. Cell3 seated both hands close together breaking imaginary cookie at chest. Cell4 seated one EMPTY upward palm offered forward to partner. Cell5 seated small empty pinching hand at mouth eating bite, slight smile. Cell6 seated leaning down reaching one empty hand forward toward ground in front of boots, same head size and lower head height. Cell7 seated holding imaginary small water flask at mouth with empty hand, slightly tilting chin. No actual cookie, food, bench, bottle, scenery, floor, shadow or text: these are separately animated props. Keep fingers visible, generous gutters, do not overlap rows. True transparent background. Do not enlarge seated/low poses to fill their cells. All sandals/boots fully visible.",
+    "leon": "Use case: identity-preserve. Leon, brown-haired young man with red cape, blue tunic and brown boots, exact same identity and outfit and warm hand-painted body proportions as reference. Eight FULL BODY poses in4columns2rows equal separated cells. Camera elevated oblique50degrees, facing right in every pose. Cell0 standing calibration idle. Cells1-7 seated on an INVISIBLE narrow low bench, feet down, exactly same head size and limb thickness as standing, seated body naturally shorter. Cell1 relaxed seated hands on knees. Cell2 seated both empty open palms above lap supporting imaginary small cookie. Cell3 seated both hands close together breaking imaginary cookie at chest. Cell4 seated one EMPTY upward palm offered forward to partner. Cell5 seated small empty pinching hand at mouth eating bite, slight smile. Cell6 seated leaning down reaching one empty hand forward toward ground in front of boots, same head size and lower head height. Cell7 seated holding imaginary small water flask at mouth with empty hand, slightly tilting chin. No actual cookie, food, bench, bottle, scenery, floor, shadow or text: these are separately animated props. Keep fingers visible, generous gutters, do not overlap rows. True transparent background. Do not enlarge seated/low poses to fill their cells. All sandals/boots fully visible."
+  },
+  "iterations": [
+    {
+      "generation": "exec-58e62d57-1e19-4564-bf07-7ebd78a9e59d",
+      "reason": "Aria irises blue and inconsistent gloves; edited."
+    },
+    {
+      "generation": "exec-2ad32bc6-8966-4130-a77a-a9554c82e8e9",
+      "reason": "Leon last cell included a wafer in the empty-hand drinking pose; edited."
+    },
+    {
+      "generation": "exec-516b5577-91c5-4601-9fc8-896d12846ead",
+      "source": "assets/source/storybook/aria-snack-v1.png",
+      "reason": "Corrected green irises/gloves, but seated heads/body too large; v2 replaces."
+    },
+    {
+      "generation": "exec-e44953d4-d75c-4225-a5f4-752660844b56",
+      "source": "assets/source/storybook/leon-snack-v1.png",
+      "reason": "Removed wafer, but seated body/head still needed consistent calibration; v2 replaces."
+    }
+  ],
+  "packing": "scripts/build-storybook-walnuts.mjs. One common scale per8-pose atlas from standing calibration134pxAria/144pxLeon; all sole baselines176 in192px cells. Low poses remain shorter. Keep alpha. Props cropped from opaque components, losslessWebP, no per-frame stretching.",
+  "integration": "walnut-cue.ts registers handoff edges, kernel/flask pickup, floor plane and seated actions. Dedicated atlas has unmirrored poses; stage renderer applies actor facing instead of legacy authored mirrored perch cells. Exit paths split toward both existing village paths. No dialogue/save/still changes.",
+  "remaining": "All-chapter audit and unfinished adventure conversion remain open. This record alone does not prove motion QA."
+}

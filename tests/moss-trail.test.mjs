@@ -44,10 +44,16 @@ test("day one uses two adventurers through work, rest, resume and repeat; day tw
     let state = start(id);
     const absentXP = { mira: state.xp.mira, finn: state.xp.finn };
     const visits = new Map();
+    const initialHealth = structuredClone(state.squads[0].run.health);
     while (state.squads[0].run) {
       const squad = state.squads[0],
         run = squad.run;
       assert.deepEqual(squad.members, members);
+      // The pursuit is a quiet escort throughout: it must not introduce a
+      // fight, defeat, or recovery pause while following the cart.
+      assert.notEqual(run.phase, "rest");
+      assert.ok(!run.enemies?.some((enemy) => enemy.hp > 0));
+      assert.deepEqual(run.health, initialHealth);
       const frame = chapterRoadFrame({ squad, now: state.updatedAt, ready: true, paused: false });
       assert.deepEqual(
         frame.battle.heroes.map((h) => h.id),

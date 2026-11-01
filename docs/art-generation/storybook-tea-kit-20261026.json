@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompts": [
+    "Transparent SIX-cell prop sheet, 3 equal columns by 2 equal rows, warm soft hand-painted 2D RPG style matching SECOND reference. FIRST reference is only object identity for medicine chest. Elevated 45-degree downward three-quarter camera, all props fully visible, ample transparent margins, no floor. TOP LEFT: closed small square dark walnut medical chest with brass corner fittings and front latch. TOP MIDDLE: the EXACT SAME chest at EXACT SAME ground footprint, base width and viewing angle, lid open upward revealing small corked glass bottles, rolled bandages and herb pouch. Match box body edges and front latch exactly between closed/open states, only lid changes. TOP RIGHT: modest blackened iron travel kettle, rounded pot body and arched carrying handle on top, small short spout points RIGHT. BOTTOM LEFT: simple squat cream ceramic teapot, plain surface with tiny blue leaf motif, lid closed, spout points RIGHT, handle left. BOTTOM MIDDLE: EXACT SAME teapot same footprint and scale but lid removed, dark round opening visible on top, loose lid lies beside it at left. BOTTOM RIGHT: one small plain cream ceramic drinking cup, no saucer, handle right. No lettering, no extra objects, no characters, no background, no grid, no pixels, no cast-shadow blobs. Items must not touch neighboring cells. Six independent props.",
+    "Edit this existing six-cell prop sheet ONLY to remove ALL surrounding glow, colored haze, vignette, dark gradient and background pixels. Make every pixel outside the six objects fully transparent alpha 0, crisp clean silhouette edges. Preserve every object, color, shape, position, size and layout exactly. Keep medicine chest closed/open, kettle, teapot closed/open with lid, cup unchanged. Do not crop objects or add shadows. No opaque or semi-transparent rectangles. This must be a clean cutout sprite sheet, transparent gaps between objects and transparent outer border, no lighting halo whatsoever."
+  ],
+  "source": "assets/source/storybook/tea-kit-v1.png",
+  "outputs": [
+    "public/storybook-study/medicine-closed-v1.webp",
+    "public/storybook-study/medicine-v1.webp",
+    "public/storybook-study/kettle-v1.webp",
+    "public/storybook-study/teapot-v1.webp",
+    "public/storybook-study/teapot-open-v1.webp",
+    "public/storybook-study/empty-cup-v1.webp"
+  ],
+  "note": "Each prop is cropped by alpha component. Separate loose lid is omitted from the open teapot crop. Box footprint width and floor baseline are shared across open/closed states."
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 59,
+    "top": 28,
+    "width": 67,
+    "height": 148,
+    "baseline": 176,
+    "headX": 97.21176596575663
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 53,
+    "top": 31,
+    "width": 95,
+    "height": 145,
+    "baseline": 176,
+    "headX": 99.60667053807686
+  },
+  {
+    "frame": 2,
+    "scale": 0.2365415986949429,
+    "left": 49,
+    "top": 31,
+    "width": 98,
+    "height": 145,
+    "baseline": 176,
+    "headX": 99.45999574679936
+  },
+  {
+    "frame": 3,
+    "scale": 0.2365415986949429,
+    "left": 51,
+    "top": 31,
+    "width": 97,
+    "height": 145,
+    "baseline": 176,
+    "headX": 99.75415674256456
+  },
+  {
+    "frame": 4,
+    "scale": 0.2365415986949429,
+    "left": 57,
+    "top": 30,
+    "width": 90,
+    "height": 146,
+    "baseline": 176,
+    "headX": 99.70177873979773
+  },
+  {
+    "frame": 5,
+    "scale": 0.2365415986949429,
+    "left": 52,
+    "top": 31,
+    "width": 101,
+    "height": 145,
+    "baseline": 176,
+    "headX": 100.05522877026596
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 45,
+    "top": 64,
+    "width": 103,
+    "height": 112,
+    "baseline": 176,
+    "headX": 102.66035397585266
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-night-push-balanced-v4.png",
+    "scale": 0.37851662404092073,
+    "left": 41,
+    "top": 72,
+    "width": 115,
+    "height": 104,
+    "baseline": 176,
+    "headX": 104.0265491975913
+  }
+]

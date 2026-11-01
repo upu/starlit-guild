@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial; hand contact needs review",
+  "references": ["public/storybook-study/loaded-cart-v1.webp", "public/storybook-study/homeward-medicine-v1.webp"],
+  "generated": "exec-e0e6399f-dbc6-4c0d-aecd-401db186cd6b.png",
+  "source": "assets/source/storybook/brekka-medical-cart-v1.png",
+  "output": "public/storybook-study/brekka-medical-cart-v1.webp",
+  "build": "node scripts/build-storybook-brekka-medical-cart.mjs",
+  "prompt": "Use case: precise-object-edit. Asset: transparent hand-painted 2D RPG adventure handcart, viewed from elevated three-quarter angle, shown moving toward the right. Image 1 is the cart and exact scale/composition reference; image 2 is the medicine box identity reference. Edit the FIRST cart image: replace its trade cargo (vegetable basket, large rolled bedding and very tall sacks) with believable visiting-healer supplies: one securely strapped modest wooden medicine chest like image 2, two modest closed linen parcels and a small leather medical satchel. These contents sit down inside the cart and are firmly tied; do not expose medicines or invent medical symbols. Preserve the SAME wooden cart frame, wheel, two long handles, their direction and precise ends/ground relationship, and original screen footprint and visual scale; preserve warm brown painted RPG art and lighting, thin dark outlines, elevated camera. No people, no lettering, no background or ground shadow. Entire wheel, handles and cargo must be fully visible within a generous transparent margin; true transparent alpha. One isolated object only."
+}

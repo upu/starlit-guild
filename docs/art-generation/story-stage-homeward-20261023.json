@@ -1,0 +1,18 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in transparent generation",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/worker-hat-v1.png",
+      "sha256": "c1504d903b1ee987d34b3c1f74707e4dd7f935f1fe53c8cb3907a4d85dbdc428",
+      "reference": "public/story-stage/worker-poses.webp",
+      "prompt": "Use case: identity-preserve. Create ONE full-body pixel-art pose of the SAME adult delivery worker in the reference, facing LEFT in elevated three-quarter RPG view. Preserve tied-back brown hair, ochre shirt, brown work apron, trousers and boots, friendly face, identical chibi head/body proportions. He pauses beside his cart and politely raises a simple brown broad-brim felt travel hat in his right hand just beside and above his head as a greeting; head remains fully visible, left hand at waist. No cart or background. Entire boots and hat inside frame, generous transparent RGBA gutters, crisp pixel clusters and dark brown outlines. Do not make head larger, no text or haze. One pose only."
+    },
+    {
+      "source": "assets/source/story-stage/empty-bottles-v1.png",
+      "sha256": "2e6aa7c22bc095ddf45a2427973038efc17ec943a7f5a3d1441a793d57813eb5",
+      "prompt": "Use case: game prop asset. One isolated open dark-brown canvas shoulder bag containing THREE small EMPTY CLEAR GLASS MEDICINE BOTTLES, necks visibly protruding, no contents, no glow, no medical cross. Long soft strap folded neatly along side, small parchment receipt tucked at edge. Warm pixel-art fantasy RPG, elevated three-quarter view from above 45 degrees, crisp chunky pixels with dark brown outlines, muted colors, readable at 30px wide. One portable bag only, no people, no floor or shadow, no text, whole bag within generous transparent RGBA margins."
+    }
+  ]
+}

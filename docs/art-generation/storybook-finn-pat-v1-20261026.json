@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create an original transparent-background game character pose strip: exactly TWO full-body poses in ONE horizontal row, equal cells, no words, no props, no floor shadows. Use the provided original character sheet to preserve EXACT identity, adult masculine long tied-back brown hair, tired approachable expression, cream open collar, worn brown long coat and boots, hand-painted warm 2D RPG style with elevated three-quarter camera around45 degrees. SAME body/face orientation as reference: facing screen RIGHT. SAME head/body/boot proportions and body height in both, matching standing reference pose calibration. Critical anatomy: his injured NEAR hand is wrapped in thin ivory bandage, resting in FRONT of his torso toward screen RIGHT and accessible to a companion standing at screen RIGHT. His FREE FAR hand reaches BACKWARD to screen LEFT to gently pat a parcel beside him, while head and chest continue facing RIGHT. Pose1: unbandaged far arm extended BACK toward LEFT, elbow opened outward, hand above an invisible parcel near waist height. Pose2: same body and injured near hand position, free far arm angled lower LEFT, palm flat face-down touching invisible parcel at upper thigh height. Do NOT mirror the body. Do NOT move bandage to the free hand. Keep near bandaged hand in front to RIGHT in both poses. No parcel or other object in picture. Subtle natural sleeve shoulder twist for reaching backward. Full heads and feet with generous margins, stable feet positions. No pixelated filter.",
+  "references": [
+    "assets/source/storybook/finn-injury-v1.png"
+  ],
+  "source": "assets/source/storybook/finn-pat-v1.png"
+}

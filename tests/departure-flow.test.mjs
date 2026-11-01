@@ -13,6 +13,7 @@ import * as journey from "../lib/journey.ts";
 import * as equipment from "../lib/equipment.ts";
 import * as techniques from "../lib/techniques.ts";
 import { adventureFrame } from "../lib/adventure-presentation.ts";
+import * as restorationMode from "../app/phone-restoration-mode.ts";
 import { compileSourceModule, evaluateSourceModule } from "./helpers/source-module.mjs";
 
 const ui = (...names) => Object.fromEntries(names.map((name) => [name, name]));
@@ -102,6 +103,11 @@ function harness(initialState) {
     ),
     "@/components/ui/sonner": ui("Toaster"),
     "./equipment-panels": ui("CharacterPanel", "InventoryPanel"),
+    "./phone-companions-tab": ui("CompanionsTab"),
+    "./phone-adventure-tab": ui("AdventureTab"),
+    "./phone-return-dialog": ui("ReturnDialog"),
+    "./phone-restoration-mode": restorationMode,
+    "./use-restoration-handoff": { useRestorationHandoff: () => ({}) },
     "./shop-entry": ui("ShopEntry"),
     "./guild-panel": ui("GuildPanel"),
     "@/lib/guild-base": guildBase,

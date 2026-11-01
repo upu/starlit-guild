@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen built-in",
+  "scope": "2-8 courtyard enabled by default; PC and browser phone-width playback reviewed",
+  "prompt": "Create a warm hand-painted 2D RPG BACKGROUND for a medicine delivery visit to THREE modest cottages in a mountain settlement. Supporting style reference image is the provided existing settlement courtyard, retain the warm ochre dirt, natural stone, timber, red tile roofs, small herb plants and delicate brown outlines. NEW COMPOSITION: landscape1536x1024, strongly elevated oblique bird's-eye about50degrees DOWN, no horizon/sky. The THREE cottage front doors must all face the open central connected courtyard, with their DOOR THRESHOLDS at image coordinates approximately (650,430),(980,370),(1290,450). Each ordinary adult door about135pixels tall, house wall/roof coherent, houses NOT dollhouses. Cottage1 upper-left, cottage2 upper-center, cottage3 upper-right; no buildings across foreground. Keep all door approaches connected by open unblocked dirt paths; clear walking strip y480 to800 x500 to1370. At left edge small well with bucket near (430,600), outside main walking strip. Small plain wooden workbench at (1000,650), table top about190px wide x75px deep, viewed from above, empty. Foreground broad dirt path running left-right with subtle stones and short grass. Full complete buildings and visible thresholds, don't obscure doors with bushes. NO characters, furniture on routes, parcels, medicines, text, letters, glow, UI, shadows of absent characters. Gentle daytime, ordinary lived-in village, no grand tower or castle. This scene must support separately layered characters110-140pixels tall and small hand-carried items. Only background painting, not sprites or pixel mosaic.",
+  "reference": "public/storybook-study/settlement-house-v1.png",
+  "source": "assets/source/storybook/housecalls-courtyard-v1.png",
+  "delivery": "public/storybook-study/housecalls-courtyard-v1.png",
+  "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-4ab12fa7-ee9e-4bea-9dd3-072d8b973e66.png",
+  "registration": "1536x1024. Fit the entire connected courtyard. Figure size144*sourceScale; props/NPCs share sourceScale. Actual painted thresholds differ from requested coordinates, layout uses inspected result.",
+  "validation": [
+    "59 related/default rollout/motion/pose/filter/paused-loader/fixed-work-frame tests passed; final typecheck, scoped lint and source build passed.",
+    "PC1243x1244: final435 screenshots over55s and40s paused-between segments;16 extracted scenes inspected through arrival after per-pose hero resampling.",
+    "Browser390x844:900 screenshots over55s and40s paused-between segments;16 extracted scenes inspected through arrival before final hero resampling. A stopped opening eventually displayed without advancing. No physical phone or every-frame inspection claim.",
+    "Delivered parcels/water persist at three homes; collected bottles stay in one bag. Completed cold entry restores deliveries; bench footpaths and complete four-pose gait covered.",
+    "Final default browser390x844 on5174:2433 screenshots over55s and40s UI-paused segments,16 extracted scenes inspected. PC missing-frame/work-caption follow-up:377 screenshots over22s,16 scenes inspected. Old warning history ended12:23:19UTC; no new missing-frame warnings during final replay."
+  ],
+  "remaining": "Default19/37. Other18 adventures, all-dialogue playback, wheels/effects, small-scale outline readability, edge-label handling, Finn/Lico low resting poses, broader startup timing and GitHub/preview delivery remain.",
+  "development": "Vite watch ignores work/dist/.wrangler; work had87888files. Existing5173 retained. QA dev server5174 uses isolated work/housecalls-qa/vite-cache. Logical work names no longer become invalid Phaser image frames. Full startup latency remains subject to broader QA."
+}

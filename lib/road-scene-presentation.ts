@@ -19,6 +19,7 @@ export function presentRoadScene(
   const progress = reduced
     ? { withdraw: 0, enter: 1, escape: 0.22 }[scene.kind]
     : clamp((now - scene.at) / roadSceneDuration[scene.kind]);
+  battle.sceneProgress = progress;
   const travel = Math.max(
     worldWidth,
     battle.distance + worldWidth - Math.min(...battle.enemies.map((e) => e.x)),

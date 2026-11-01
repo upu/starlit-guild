@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Opaque wide3:2 hand-painted warm 2D RPG background, elevated45degree downward orthographic-like camera. Preserve exact stone mason yard layout of first reference, repaint in soft warm textured medium of second reference. Small tiled work shed at upper left with dark open storage doorway, orderly reclaimed gray stone blocks at back and edges, modest wooden material cart at upper right. Broad empty earth and rough paving across center/lower foreground so six separately rendered people and small candidate stones fit naturally. Small courtyard scale: individual paving stones3-4% width, shed doorway25% imageheight, people later15% height. Work tools only at shed wall; keep center free of loose furniture and stones. Afternoon neutral warm daylight. No sky, dramatic perspective, people, glowing objects, candidate stones, portable cloth, chairs, signs or text.",
+  "references": [
+    "public/story-stage/stone-yard.webp",
+    "public/storybook-study/manor-garden-v1.png"
+  ],
+  "source": "assets/source/storybook/stone-yard-v1.png"
+}

@@ -1,0 +1,44 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-22",
+  "purpose": "2-4休憩の薬箱開閉と茶器の準備。閉じた箱と個別の茶器を原本として保存。",
+  "images": [
+    {
+      "source": "assets/source/story-stage/medicine-closed-v1.png",
+      "references": [
+        "public/story-stage/prop-medicine.webp"
+      ],
+      "prompt": "Edit target: supplied transparent pixel-art wooden medicine chest. Create the SAME chest with its hinged lid CLOSED and the brass clasp fastened. Preserve exactly the chest identity: warm dark brown timber, dark edge trim, corner brass fittings, front brass clasp, elevated oblique RPG view seeing front and right side and top. Keep the footprint width and depth matching the supplied open chest; only fold the lid down, hiding the herbs, bottle and bandages. Do not enlarge the base or change the perspective. One isolated sprite on real transparent background, no ground, shadow halo, text, labels, grid, other items, glow or decorations. Crisp pixel clusters with thin dark edges consistent with the reference, detailed at small game size. Large clear source suitable for lossless downscaling.",
+      "sha256": "b886823b2f37ff256f9266d40e665b3a524e3ddd72eae9c2abd82472990e6b15",
+      "outputs": [
+        "public/story-stage/prop-medicine-closed.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/tea-preparation-v1.png",
+      "references": [
+        "public/story-stage/prop-tea.webp",
+        "public/story-stage/prop-teacup.webp"
+      ],
+      "prompt": "Create a cohesive THREE-COLUMN tea-preparation sprite sheet on a genuinely transparent background for the supplied STARLIT-GUILD pixel-art tea set. References: supplied teapot-with-three-cups and standalone cup. Preserve the SAME cream ceramic glaze, blue leaf sprig motifs, tan rim, pixel grain and thick dark pixel outlines, elevated oblique RPG camera looking down. Each column holds exactly ONE isolated object, centered with ample transparent padding, NO overlap. LEFT: the same cream round teapot ONLY, lid closed, spout pointing left and handle right; no cups underneath. CENTER: the identical teapot in exactly the same footprint, angle, dimensions and registration, lid removed so dry tea leaves are visible through its open top; no separate lid on the floor, no cups. RIGHT: one identical small cream ceramic cup with blue leaf motif, visibly EMPTY (clean cream inside and dark bottom shadow), no tea liquid. Render the cup at roughly 45 percent of teapot width, suitable as the same set. No tray, extra dishes, steam, water stream, ground, shadow background, typography, labels or grid lines. A clean horizontal row of three distinct sprites, each in its own equal-width cell. 1536px wide, transparent background. Sharp pixel-art clusters with consistent materials, not smooth vector or glossy 3D.",
+      "sha256": "9fe3b7c6d7eadc576fb9cacf7d1b37eeff6b1f4344133beeac063e97b2d6f3a3",
+      "outputs": [
+        "public/story-stage/prop-teapot.webp",
+        "public/story-stage/prop-teapot-open.webp",
+        "public/story-stage/prop-empty-cup.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/tea-rock-v1.png",
+      "references": [
+        "public/story-stage/prop-stone.webp"
+      ],
+      "prompt": "Edit the supplied transparent gray pixel-art flat stone into a SMALL THICK NATURAL RESTING ROCK with a flat top, to support a teapot in an elevated-oblique RPG campsite scene. Preserve the same warm-gray stone material, irregular polygonal edges, dark pixel outlines and crisp clustered pixel grain. It must be a squat boulder, not a thin paving slab: visible side faces are thick, total painted height about 75 percent of painted width, top surface visible from above about 45 degrees. A fairly level natural upper surface large enough to rest one pot, with gently irregular rim. Front face and right face clearly reach a broad ground-contact base. One isolated gray rock only, true transparent background, no pottery, grass, earth, objects, text or floating drop shadow. Do not add carvings, glow, faces, masonry seams or magical appearance. Natural roadside stone, grounded weight, not a cube. Match reference art style and perspective.",
+      "sha256": "1bb89448b0ee3e64a656147d7697d37b82dfd0a9923e2c220d52edfe1d310148",
+      "outputs": [
+        "public/story-stage/prop-tea-rock.webp"
+      ]
+    }
+  ],
+  "mode": "built-in edit with transparent background"
+}

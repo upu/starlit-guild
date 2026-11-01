@@ -1,0 +1,10 @@
+{
+  "status": "prototype-unapproved",
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/office-v1.png",
+  "inputs": [
+    "public/story-stage/warehouse-office.webp",
+    "assets/source/storybook/warehouse-v1.png"
+  ],
+  "prompt": "Use case: style-transfer. Asset: original STARLIT-GUILD interior dialogue background prototype. Input 1 is the room to redraw: a warehouse upstairs office with honey-brown timber beams, cream plaster, shelves of jars and bundles at left, window and writing desk at rear, railing around stairs at right, generous clear wooden floor in foreground. Preserve that place and room layout. Input 2 is the intended original outdoor style: match its clean warm painted forms, restrained large color areas, low texture density and softly colored contours. Redraw room in the same warm storybook 2D RPG language with elevated three-quarter overhead parallel perspective, no horizon. The room must fit small live characters rather than look like a giant room: background chair height roughly 20% image height, a live standing character will be 17% high. Keep lower 60% floor clear for live desk, chairs and up to seven animated figures; don't paint any foreground furniture or people there. Soft ambient daylight, pastel cream walls and muted teal-blue window light with honey-brown wood, simple broad plank shapes, softly colored outlines, 2-3 main tones per material, extremely restrained texture. Light large floor color shapes; reduce the dark mottled woodgrain and strong patterned sun shadows of input 1. Clear sprite-friendly silhouettes at small display. Warm and welcoming, gently illustrated, crisp but not harsh, not photorealistic, not a 3D render, no gritty pixel-noise filter. Keep background supporting the actors rather than competing with them. No text, no labels, no UI, no watermark. Landscape 3:2."
+}

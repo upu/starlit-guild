@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-29",
+  "tool": "built-in image_gen",
+  "purpose": "Four grounded recovery poses connecting a fallen basket to Finn's carrying pose.",
+  "source": "assets/source/storybook/finn-recover-offer-v1.png",
+  "output": "public/storybook-study/finn-recover-offer-v1.webp",
+  "build": "node scripts/build-storybook-finn-recover.mjs",
+  "references": [
+    "public/storybook-study/finn-handheld-balanced-v2.webp",
+    "public/storybook-study/finn-conversation-balanced-v3.webp"
+  ],
+  "generation": "exec-5cbae31b-9ef6-42e0-ad7d-4d2a7447d067.png",
+  "prompt": "EDIT target image 1 for STARLIT-GUILD, a gentle painted 2D RPG. Create a NEW one-row four-frame sprite strip of this exact same Finn, preserving his mature middle-aged body proportions and relatively small head seen in both references. Action: he picks up an invisible basket with BOTH hands together and rises. Frame 1 crouches low with both cupped empty hands at ground near boots; frame 2 rises slightly with both hands together, a little higher; frame 3 rises further with both hands together near lower waist; frame 4 stands with both hands cupped together in front of waist, matching image 1 first frame and walking poses. The SAME two hands stay close together and move gradually upwards in each successive pose. DO NOT draw a basket, letter or other prop. Maintain consistent head size, mature droopy eyes, faint stubble, dark brown loosely tied hair, worn olive-charcoal coat with muted ochre edging, cream shirt, trousers and boots. Keep common foot baseline, no moving sideways; standing height 148 pixels when registered into 192px cell, crouch visibly lower. Four distinct full body sprites in equal cells in one horizontal row, generous transparent gutters, no cropped hair, clothes or boots, no lettering, shadow, ground or background."
+}

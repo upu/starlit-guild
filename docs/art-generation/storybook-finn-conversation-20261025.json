@@ -1,0 +1,11 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Create a production transparent sprite atlas for Finn, the middle-aged man in reference 1. Reference 1 is identity/costume only. Reference 2 is the established warm hand-painted 2D RPG sprite rendering style, elevated three-quarter view and compact roughly three-head-tall proportions. Draw Finn, NOT Leon. Exactly FOUR full-body Finn figures in ONE horizontal row, equally spaced, same camera facing screen-right three-quarter, identical head size, body size, planted feet baseline and lighting. Poses left to right: 1 relaxed standing listening with arms down and faint lopsided smile; 2 thoughtful fingers at chin, half-lidded eyes; 3 conversational open palm extended at waist level, easygoing smile; 4 embarrassed grin one hand behind head. Preserve adult late-forties character, tanned skin, subtle stubble, tired drooping grey-violet eyes, wavy dark brown hair tied loosely low behind head, loose cheek locks. Worn charcoal olive long coat with restrained antique gold trim and ochre lining, open cream shirt, brown trousers, boots, small cheap ring. Slender build, very light luggage, NO backpack, no weapon, no props. Simplify ornamental details for small display. Soft painted shading, fine warm brown outlines, restrained warm palette, not blocky pixel art, not glossy 3D. The same man and proportions in every cell, no enlarged heads in emotive poses, no cropped hair/boots/coat. Genuine transparent background, no floor/shadow, no labels/text/borders. Wide landscape canvas. Every figure isolated with generous transparent gutters.",
+  "references": [
+    "docs/characters/finn-reference-sheet.webp",
+    "public/storybook-study/leon-poses-v1.webp"
+  ],
+  "source": "assets/source/storybook/finn-conversation-v1.png",
+  "output": "public/storybook-study/finn-conversation-v1.webp",
+  "scope": "Indoor study only; standing conversation poses. Walking and seated poses are not yet replaced."
+}

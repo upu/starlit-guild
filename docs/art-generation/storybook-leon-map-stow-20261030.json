@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-30",
+  "tool": "OpenAI built-in image_gen",
+  "source": "assets/source/storybook/leon-map-stow-v1.png",
+  "output": "public/storybook-study/leon-map-stow-v1.webp",
+  "references": [
+    "public/storybook-study/leon-route-notes-v1.webp",
+    "public/storybook-study/leon-conversation-v1.webp"
+  ],
+  "prompt": "Use case: stylized-concept. Asset type: transparent 2D RPG game sprite animation atlas. Create exactly FOUR full-body frames of the SAME Leon from reference 1, arranged in one horizontal row with four equal cells and generous transparent margins; each sprite completely separate with no overlaps, no grid or text. References: image 1 is the exact identity, costume, warm painted pixel style, three-quarter right-facing view, original body proportions and feet; image 2 is the empty-handed standing destination. Leon is a brown-haired young man with red scarf, blue tunic, white sleeves, dark brown trousers and brown boots. Draw a restrained, natural sequence of putting away the same small open route map from reference 1: frame 1 holds the open map with both hands at waist level exactly like reference 1's second character; frame 2 folds the open map inward with both hands; frame 3 holds the small folded paper at his belt, moving it toward a small existing belt pouch; frame 4 empty hands, standing relaxed like image 2. Map must be in his hands in frames 1 through 3, and disappear into his pouch only by frame 4. Keep his feet in exactly the same positions and baseline in all four, same head width, body height, clothing, hair and facing; arms and paper are the only substantial movement. No bag or table floating, no additional character, no background, no shadow, no words. Actual alpha transparency. Crisp consistent RPG sprite outlines, not painterly realism.",
+  "registration": "scripts/build-storybook-leon-map-stow.mjs",
+  "usage": "Frames 2 and 3 bridge the existing map-reading and empty-handed standing poses in old-waterway-return."
+}

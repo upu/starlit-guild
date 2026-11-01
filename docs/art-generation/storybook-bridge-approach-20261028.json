@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "connected to the 3-8 adventure; gait and hand-contact review continues",
+  "assets": [
+    {
+      "source": "assets/source/storybook/bridge-approach-night-v1.png",
+      "output": "public/storybook-study/bridge-approach-night-v1.png",
+      "generated": "exec-cf2aff67-ae72-4c17-b6b5-56b061176986.png",
+      "references": ["public/storybook-study/bridge-night-v1.png", "public/storybook-study/transplant-night-path-v1.png"],
+      "prompt": "Use case: illustration-story. Create a 1536x1024 landscape background for a warm hand-painted 2D RPG adventure at night. Reference image 1 is the game's destination bridge, reference image 2 its overhead painted ground style. The viewpoint is consistently an elevated oblique RPG camera, with broad ground plane covering the lower two thirds, not eye-level. Show a quiet gently sloping dirt and stone road along a dark leafy hillside, leading toward the SAME stone river bridge in the distance on the upper left: recognizable low masonry parapet and two modest warm lanterns, bridge partially visible in the far background, not huge or repeated. The road foreground must leave generous unobstructed flat navigable ground for four small sprites, a handcart and enemies, with subtle wheel ruts. Dark blue night and warm distant lamplight, painterly pixel-art-inspired fine outlines and natural earthy textures matching reference art; not an indoor scene or a flat tile pattern. No people, creatures, carts, text, numbers, interface, foreground objects, close towers, bright glowing effects, borders or watermark. Keep enough visual contrast for small characters without making the road black."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-push-walk-v3.png",
+      "output": "public/storybook-study/finn-night-push-v3.webp",
+      "generated": "exec-52a937ad-81c6-4e35-816b-75efdd740359.png",
+      "references": ["assets/source/storybook/finn-night-push-v1.png", "assets/source/storybook/leon-walk-v2.png", "assets/source/storybook/finn-injury-balanced-v2.png"],
+      "build": "node scripts/build-storybook-finn-night.mjs push-v2; node scripts/build-storybook-finn-night-push-v3.mjs",
+      "status": "draft: four distinct foot poses; need continuous in-game gait and hand-contact review",
+      "prompt": "Use case: precise-object-edit. Asset: animation sprite sheet, one horizontal row of exactly FOUR full-body figures, 4 equal cells, true transparent background. Draw the adult Finn character from IMAGE 1, wearing his worn olive-brown coat, cream shirt, dark trousers, brown boots and off-white bandage ONLY around his near/right hand. His tired mature face and body proportions match IMAGE 3. He faces RIGHT and is holding both arms forward at a FIXED height as if pushing a cart; there is no cart in the sprite. His upper body, head size, hands' position, and leaning angle must be identical in all four figures. Change ONLY the legs into four DIFFERENT consecutive walking moments, using IMAGE 2 as leg-pose guide but retaining Finn's own clothes and identity: (1) front boot touches down, back boot trails; (2) front boot bears weight, rear foot lifts behind with bent knee, like image 2 upper right; (3) boots pass together under hips; (4) back boot bears weight while the OTHER boot lifts FORWARD with bent knee, like image 2 lower right. Boot raised behind in 2 versus boot raised forward in 4 must be visibly distinct. Short slow steps, not a run, with one boot touching same ground baseline at all times. Stable positions, no jumping; each complete figure inside its own cell with wide transparent margins. No background, cart, ground, shadows, text, frames or extra objects."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-push-v1.png",
+      "output": "public/storybook-study/finn-night-push-v1.webp",
+      "derivedOutput": "public/storybook-study/finn-night-push-v2.webp",
+      "derivedBuild": "node scripts/build-storybook-finn-night.mjs push-v2 (normalize standing heights and align heads without redrawing)",
+      "generated": "exec-0e640823-beed-479e-91d2-1211e12c59bb.png",
+      "references": ["assets/source/storybook/finn-night-push-first-v1.png", "public/storybook-study/finn-conversation-balanced-v3.webp"],
+      "build": "node scripts/build-storybook-finn-night.mjs",
+      "issue": "Bottom-row walking phases repeat the same leading leg; do not treat them as a complete four-phase gait.",
+      "prompt": "Use case: precise-object-edit. Edit FIRST transparent 4-column 2-row sprite sheet of Finn. SECOND is his correctly proportioned full body and poses. Preserve Finn's face, head/body scale, tousled brown low tied hair, mature stubbled appearance, worn olive-brown coat, cream shirt, brown boots and off-white bandage wrapped ONLY around right hand. Top row must be identical to FIRST, preserving all 4 poses. Replace ONLY the bottom row with FOUR consecutive natural PUSH-WALK frames: all four are standing upright at the SAME height as top row pose 2, leaning forward slightly with both hands held at the SAME forward position and constant height to push a cart. Frame 5 right foot forward/left back; frame 6 right foot planted/left passing; frame 7 left foot forward/right back; frame 8 left foot planted/right passing. Clearly alternate stride, no crouching, squatting, reaching down, kneeling or big body-scale changes. Keep bandage on right palm in all eight poses, left hand bare. Frame cells equal and full bodies completely inside with ample transparent gutters, feet on consistent common baseline. Exactly 4x2 isolated full-body poses in same warm painted 2D RPG style; no cart, props, text, floor, shadow, marks or backgrounds. Genuine transparent alpha."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-walk-v1.png",
+      "output": "public/storybook-study/finn-night-walk-v1.webp",
+      "generated": "exec-0da7ca24-2203-4dee-be2d-e350428e8896.png",
+      "references": ["exec-b150b65e-4ca2-4ca3-943b-74c502111b87.png", "public/storybook-study/finn-injury-balanced-v2.webp"],
+      "build": "node scripts/build-storybook-finn-night.mjs walk",
+      "prompt": "Precise object edit to the FIRST transparent four-frame sprite strip. Change ONLY THE FOURTH SPRITE at far right: wrap an off-white fabric bandage around its outstretched right hand and palm (the fist near the right edge). The bandage must cover the palm visibly, leaving fingertips and thumb exposed, matching the bandage on the near hand of sprites 1 and 2 and SECOND reference. DO NOT change the fourth sprite's pose, hands' positions, size, face, hair, clothing or legs. Do not alter sprites 1, 2 or 3 at all. Same transparent background and texture, no text, shadows or new objects."
+    },
+    {
+      "source": "assets/source/storybook/finn-night-battle-v1.png",
+      "output": "public/storybook-study/finn-night-battle-v1.webp",
+      "generated": "exec-f43fec2a-d16c-4bd2-b579-90578e3dc7e3.png",
+      "references": ["public/storybook-study/finn-battle-balanced-v2.webp", "public/storybook-study/finn-injury-balanced-v2.webp"],
+      "build": "node scripts/build-storybook-finn-night.mjs",
+      "prompt": "Use case: precise-object-edit. FIRST image is the exact Finn RPG battle sprite sheet, SECOND depicts his right hand wrapped in pale cloth. Change ONLY Finn's right hand in FIRST: add the same small off-white bandage around the injured palm in each of the four poses, including where he holds the dagger. Do not bandage the other hand. Preserve the exact existing four poses, dagger placement, face and body proportions, hair, clothing, warm hand-painted style, all relative sizes and baseline. Precisely one row of four full-body figures, evenly spaced equal cells with transparent gutters and true transparent alpha. No extra characters, props, text, shadows, backgrounds, or cut off parts."
+    }
+  ]
+}

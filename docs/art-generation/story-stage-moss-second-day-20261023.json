@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-23",
+  "tool": "image_gen",
+  "purpose": "4-5 fork and stair shortcut behind the tower",
+  "assets": [
+    {
+      "key": "fork",
+      "source": "assets/source/story-stage/brekka-fork-v1.png",
+      "refs": [
+        "public/story-stage/brekka-alley.webp"
+      ],
+      "prompt": "Create an EMPTY RPG pixel-art background, same warm crisp pixel scale, outlines and high oblique top-down 55-degree camera as reference. Landscape 3:2. A SMALL TOWN COBBLESTONE FORK just past a brewery in Brekka. No horizon. Dirt/cobble lane from LOWER LEFT enters a generous central junction. Two visibly distinct branches: LEFT branch climbs toward UPPER LEFT past a timber wash-house with a stone washing trough; RIGHT branch is a wide open street going across center-right and OUT the RIGHT EDGE, toward the tower out of view. Modest timber/plaster houses frame upper edge, a few barrels, restrained greenery. A narrow side passage with a BLUE LAUNDRY CLOTH hangs at far LEFT edge, recalling the previous day's hiding place but not obstructing the main lane. Main junction and right branch must be spacious empty ground (center and lower half) for a handcart and four small RPG heroes to move. No people, carts, baskets, letters, arrows, UI or labels. The branch to follow is screen RIGHT. Do not put a large central tree or building in the movement area. Match reference building scale and camera exactly, not an eye-level scenic painting.",
+      "status": "adopted",
+      "sha256": "c607a2482b9775e41528b6560991c5b17e46709b2e991205b726ff6135075b1f"
+    },
+    {
+      "key": "towerpath",
+      "source": "assets/source/story-stage/brekka-tower-path-v1.png",
+      "refs": [
+        "public/story-stage/moss-beds.webp",
+        "public/story-stage/brekka-alley.webp"
+      ],
+      "prompt": "Create an EMPTY high-oblique top-down 55-degree RPG pixel-art scene, landscape3:2, matching reference1 warm stone tower/materials and reference2 crisp pixel grain. We are OUTSIDE THE REAR OF BREKKA'S TOWER, approaching its elevated garden terrace. A clear SMALL flight of broad weathered STONE STEPS is a SHORTCUT for people, and a separate wide shallow SLOPING CART ROAD curves around it. Very specific walkable layout: lower half is open dirt approach road; a narrow shallow WATER CHANNEL follows the left boundary of this dirt area, with muddy bank at middle-left. Stone steps run diagonally from LOWER-MIDDLE (about x45%,y68%) up to an OPEN UPPER-MIDDLE landing (x60%,y42%), about six low steps, no handrails. To the right of steps a broad cart ramp makes a longer curve from lower-right toward upper-right, remaining open to the right image edge, and joins terrace at x83%,y38%. In upper right is the base of the same round gray stone tower with modest wooden rear gate/entrance to the garden, and a low stone terrace wall along upper edge. The stairs and cart ramp must visibly reach the SAME higher terrace; enough space for four small heroes to stand on the upper-middle landing without blocking ramp. Show only a hint of green moss plots beyond the terrace at the top, NOT a full garden or rows through the foreground. No people, carts, baskets, loose items, text, glow, labels or arrows. Daylight. Consistent modest door/step scale for small RPG actors; no giant mysterious stone.",
+      "status": "superseded",
+      "sha256": "5340e2cc349ee91315d9a38266409a8c1ea14f36766c04a0da0ad188d1171fda"
+    },
+    {
+      "key": "towerpath_v2",
+      "source": "assets/source/story-stage/brekka-tower-path-v2.png",
+      "status": "adopted",
+      "refs": [
+        "assets/source/story-stage/brekka-tower-path-v1.png"
+      ],
+      "prompt": "Edit this exact RPG background while preserving the roads, water channel, six steps, terrace, viewpoint, lighting and pixel style. Correct ONLY the round tower base and its wooden doorway in the upper-right: the current doorway is miniature compared with the stairs and a human. Make the tower base wider and its doorway about TWICE the current door height and 1.7 times the current width. In a 1536x1024 image the entire wooden doorway including its arch should be roughly 210 pixels tall, with its threshold around y=260 and arch top near y=50. Keep it in the upper-right and leave the upper-middle landing clear. The door should fit a normal adult of roughly 165 pixels full-body height. Slightly extend the tower base/stone facade as needed to house the larger entrance. Do not enlarge the foreground steps, change the road layout, add people, props or text, or change camera.",
+      "sha256": "fdef96163707d789552b6309344a5b3bed495448fddff6078b3a049a495d1454"
+    }
+  ]
+}

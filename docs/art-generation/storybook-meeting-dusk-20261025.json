@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/meeting-dusk-v1.png",
+  "output": "public/storybook-study/meeting-dusk-v1.png",
+  "references": [
+    "public/storybook-study/meeting-path-v1.png"
+  ],
+  "prompt": "Edit this original painted forest fork RPG background into its late-afternoon return-trip version. Preserve exact composition, path geometry, tree trunks, rocks and flower positions, elevated overhead 3/4 camera and scale. Change only time-of-day lighting: warm amber sunlight from upper left, long soft diagonal branch shadows over ochre clearing, richer golden leaf highlights, muted cool olive shaded foliage, welcoming and calm. The two village paths still diverge upper left and upper right around central oak. Clear walkable foreground remains readable. Keep same soft colored contours and restrained broad brush textures, no noisy pixel speckle. No characters, props, carts, buildings, text or UI. Same 3:2 landscape."
+}

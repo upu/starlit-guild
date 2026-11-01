@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "Prepared picnic hill, Berne overlook and props; registration and motion review tracked below",
+  "accepted": [
+    {
+      "name": "picnic-hill-v1",
+      "references": [
+        "public/story-stage/picnic-hill.webp",
+        "public/storybook-study/walnut-rest-v1.png"
+      ],
+      "prompt": "Repaint image1 as a warm hand-painted2D RPG scene matching image2's muted gouache, fine brown outlines and soft natural shading. Preserve image1 setting: quiet grassy picnic hill, tree upper-left, small village roofs and modest farm garden barely visible across upper edge, no tower. Elevated45degree oblique view,3:2 landscape1536x1024. People will be small RPG sprites of12-15% image height. Broad flat walkable short-grass clearing central/lower65%, tiny stones/grass at that scale, gentle path along far-right edge leading uphill. Keep central area open for an independent picnic cloth and2people; no baked furniture, people, food, picnic cloth or large foreground obstacles. Soft midday daylight, warm leaf shade, restrained colors, no pixel grid, no text/UI.",
+      "source": "assets/source/storybook/picnic-hill-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-4846ec09-55dc-4399-8cfa-be521e580f8d.png"
+    },
+    {
+      "name": "berne-overlook-v1",
+      "references": [
+        "public/story-stage/berne-overlook.webp",
+        "public/storybook-study/walnut-rest-v1.png"
+      ],
+      "prompt": "Repaint image1 retaining this exact hillside rest clearing overlooking a compact stone town and its round slate-stone tower. Image2 only painted RPG style/color reference, not geography. Elevated45degree oblique view,3:2 landscape1536x1024. Town roofs and round tower distant across UPPER25-30% only, softened by distance; they must read as a town below the hill, not giant buildings on the character floor. Broad flat dirt/small-paving rest clearing lower65% for four SMALL walking RPG people about12-15%imageheight. Low shrubs and small broken retaining stones at clearing far rim, left path continues out; right foreground open for a separately drawn low stone sitting ledge. NO baked bench, seat, characters, bags, large foreground walls or furniture. Warm hand-painted gouache, fine brown outlines, muted earth and leaf greens, ordinary clear daylight, no pixel grid, no text/UI, no glowing mystery stone, no additional landmark.",
+      "source": "assets/source/storybook/berne-overlook-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-c14e366c-96ec-4810-b17b-dabd658ed270.png"
+    },
+    {
+      "name": "lunch-and-receipt-props-v1",
+      "references": [
+        "public/story-stage/prop-honey-cake.webp",
+        "public/story-stage/prop-receipt-front.webp",
+        "public/storybook-study/walnut-piece-v1.webp"
+      ],
+      "prompt": "Transparent game prop atlas EXACTLY8 separate objects in4columns2rows, generous gutters. Warm handpainted2D RPG elevated45degree view, fine brown outlines/no pixel grid. Image1 honey-cake shape reference; image2 receipt structure reference; image3 ONLY painted medium reference. Row1: col0 one small rectangular honey cake on tiny parchment base; col1 SAME cake with ONE clearly missing small bite at front corner, same scale; col2 one small walnut-topped square cake, visibly chopped nuts; col3 a small plain cream cloth parcel wrapped around a few cakes, tied with brown string. Row2: col0 small rustic bread loaf, col1 loose short length of twine with open loop/ends, col2 FRONT of a small folded shipping receipt with sparse unreadable brown inventory marks and torn binding threads on upper-left corner, col3 BACK of EXACT same receipt, same scale/corner/thread, faint reversed ruled lines but no inventory marks. Keep paper rectangular and subtle, no readable text, labels, hands, plates, shadows, background or decorative scenery. No glowing objects. True transparent alpha.",
+      "source": "assets/source/storybook/lunch-and-receipt-props-v1.png",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-b77824af-f7b3-466b-b539-bfc8e9bae86d.png"
+    },
+    {
+      "name": "overlook-props-v1",
+      "source": "assets/source/storybook/overlook-props-v1.png",
+      "prompt": "Transparent3-object game prop strip,3columns1row with generous empty gutters. Warm hand-painted2D RPG style, elevated45degree oblique view, fine brown outlines. Reference is ONLY the old receipt identity/composition; improve its narrative meaning. Object1: one small thin FOLDED SHIPPING DOCUMENT, a few unreadable brown inventory lines, at UPPER-LEFT CORNER a ragged torn binding hole and ONLY2or3 SHORT FRAYED thread ends, like a page torn from a stitched ledger. NO thick rope loop, hanging tag, knot, eyelet or decorative cord. Object2: reverse side of EXACT same paper and torn corner/thread, sparse faint reversed lines, SAME shape,size. Object3: short standalone LOW STONE RESTING LEDGE,3small weathered gray-brown blocks with flat smooth seat top and a shallow front face, overall width about3.2times height, no backrest/grass/plants/shadow/scenery. This is the edge a tired RPG man sits on, not a boulder or mysterious carved artifact. Complete objects inside cells. True transparent alpha, no text labels, no hands/characters, no background.",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-52de0761-6672-4930-8ce4-4d18d3d6678d.png",
+      "use": "Stone ledge only; paper variants rejected because they still resembled thick tags"
+    },
+    {
+      "name": "berne-shipping-paper-v1",
+      "source": "assets/source/storybook/berne-shipping-paper-v1.png",
+      "prompt": "Create two separate transparent game props side by side. These are FRONT and BACK of a SINGLE THIN HANDWRITTEN SHIPPING LEDGER PAGE, taken out of a stitched book. They are NOT luggage tags, not a bundle, not a scroll. Ordinary roughly A5 off-white sheet, nearly rectangular with very slightly creased corner, one fold crease across middle, drawn face-on with a slight elevated angle. At UPPER-LEFT EDGE two tiny stitching punctures, with TWO VERY FINE SHORT FRAYED THREAD ENDS (like sewing thread). Threads at most3%of page width, NEVER thick rope, NEVER a knot or loop. Front: six small dark brown handwritten inventory strokes in simple groups, no readable letters. Back: mostly plain paper, faint fold crease, same torn edge/punctures and tiny threads. Same outline and size on both sides. Paper edge is razor thin, NO stacked layers, tag holes or leather border. Warm handpainted2D RPG prop medium, restrained brown lines. Entire objects separated by wide transparent gutters. True transparent alpha. No text labels, hands, people, decorations, scenery or shadows.",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-795ac2ab-32e5-4846-ac1d-4b304e9f7e6c.png",
+      "use": "Accepted front and back of thin folded shipping document with frayed binding thread"
+    },
+    {
+      "name": "aria-lunch-v1",
+      "source": "assets/source/storybook/aria-lunch-v1.png",
+      "prompt": "Create8full-body warm painted RPG character poses in EXACT4columns2rows on transparent background. Image1 is the SAME character and body/face/outfit/style reference. Preserve physical head size, limb lengths, face, hair, clothes, boots. Elevated45degree camera. Canonical facing SCREEN RIGHT for ALL poses; sprites are later flipped for the opposite side. Row1 col0 STANDING neutral calibration, col1 seated on ground with folded legs/knees naturally in front and boots visible, relaxed hands lap; col2 same seated with near palm upward at lap ready to support small food NOT DRAWN; col3 same seated, one near arm extends naturally forward screen-right to offer food NOT DRAWN, hand reaches beyond front knee, no body lean into a neighboring person. Row2 col0 same seated brings empty near hand toward mouth to bite small food NOT DRAWN; col1 same seated LEANS FORWARD from hip and reaches one hand diagonally DOWN AND FORWARD to pick food off an unseen picnic cloth, fingertips about ONE FOOT-LENGTH beyond front toe, level with the floor in front, planted boots NEVER move; col2 same seated leans forward with BOTH hands close together at the same forward floor position to wrap a small parcel/tie a string NOT DRAWN, legs and planted boots unchanged; col3 same seated LEANS FORWARD and lowers one hand toward floor to put down a flask NOT DRAWN, hand extends beyond front knee to same floor reach, other hand supports knee. Important low reaching hands must be in front of boots on screen-right, not between knees or behind heels. No food, flask, string, cloth, floor or furniture in sprites. All sitting poses visibly LOWER than standing yet SAME head/body/boot scale; generous transparent gutters around every full silhouette. Fine brown outlines, soft natural shading, no pixel grid, no labels/text, no backgrounds/shadows. Keep character identity, not generic adorable redesign.",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-7412482d-be1c-46c3-88d2-39915c8ff1f9.png",
+      "use": "New seated reach and wrapping poses; one standing calibration per atlas"
+    },
+    {
+      "name": "leon-lunch-v1",
+      "source": "assets/source/storybook/leon-lunch-v1.png",
+      "prompt": "Create8full-body warm painted RPG character poses in EXACT4columns2rows on transparent background. Image1 is the SAME character and body/face/outfit/style reference. Preserve physical head size, limb lengths, face, hair, clothes, boots. Elevated45degree camera. Canonical facing SCREEN RIGHT for ALL poses; sprites are later flipped for the opposite side. Row1 col0 STANDING neutral calibration, col1 seated on ground with folded legs/knees naturally in front and boots visible, relaxed hands lap; col2 same seated with near palm upward at lap ready to support small food NOT DRAWN; col3 same seated, one near arm extends naturally forward screen-right to offer food NOT DRAWN, hand reaches beyond front knee, no body lean into a neighboring person. Row2 col0 same seated brings empty near hand toward mouth to bite small food NOT DRAWN; col1 same seated LEANS FORWARD from hip and reaches one hand diagonally DOWN AND FORWARD to pick food off an unseen picnic cloth, fingertips about ONE FOOT-LENGTH beyond front toe, level with the floor in front, planted boots NEVER move; col2 same seated leans forward with BOTH hands close together at the same forward floor position to wrap a small parcel/tie a string NOT DRAWN, legs and planted boots unchanged; col3 same seated LEANS FORWARD and lowers one hand toward floor to put down a flask NOT DRAWN, hand extends beyond front knee to same floor reach, other hand supports knee. Important low reaching hands must be in front of boots on screen-right, not between knees or behind heels. No food, flask, string, cloth, floor or furniture in sprites. All sitting poses visibly LOWER than standing yet SAME head/body/boot scale; generous transparent gutters around every full silhouette. Fine brown outlines, soft natural shading, no pixel grid, no labels/text, no backgrounds/shadows. Keep character identity, not generic adorable redesign.",
+      "generatedPath": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-b1f05ba6-548f-4342-85a6-534e028cd0a2.png",
+      "use": "New seated reach and wrapping poses; one standing calibration per atlas"
+    }
+  ],
+  "validation": [
+    "Lunch:32 sequential displays at PC1243x1244 and browser mobile390x844; handover,flask placement,eating and wrapping captured in real time. Final eating and final parcel changes rechecked at both widths.",
+    "Overlook:14 sequential displays at both widths; sitting and paper-pointing/turning captured. See work/overlook-ui-pages.json.",
+    "22 related tests passed; final typecheck, scoped lint and Vinext production build passed. See work/lunch-final-*.log.",
+    "Coverage registration audit:1402 painted displays,296 stills,no legacy scenes,no missing registered backgrounds; adventure remains3/37 and full-goal verification is incomplete."
+  ]
+}

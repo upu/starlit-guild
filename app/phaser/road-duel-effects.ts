@@ -1,6 +1,7 @@
 import type Phaser from "phaser";
 import type { RoadEffect } from "@/lib/road-view";
 import { adventureMushroomProjectile } from "@/lib/adventure-enemy-art";
+import { seedlingBattleAssets } from "@/lib/road-seedling-battle";
 export const duelEffect = (kind: RoadEffect["kind"]) =>
   ["mushroomThrow", "song", "paralyze"].includes(kind);
 export function paintDuelEffect(
@@ -14,12 +15,14 @@ export function paintDuelEffect(
   endX: number,
   endY: number,
   reduced: boolean,
+  storybook = false,
+  smallSongTarget = false,
 ) {
   if (!duelEffect(effect.kind)) return false;
   if (effect.kind === "mushroomThrow") {
     const p = Math.min(1, age / 800);
     sprite
-      .setTexture(adventureMushroomProjectile)
+      .setTexture(storybook ? seedlingBattleAssets.korotake : adventureMushroomProjectile)
       .setDisplaySize(36 * scale, 36 * scale)
       .setPosition(
         startX + (endX - startX) * p,
@@ -27,7 +30,7 @@ export function paintDuelEffect(
       )
       .setRotation(p * Math.PI * 2)
       .setAlpha(age < 800 ? 1 : 0);
-  } else paintAura(notes, sprite, effect, age, scale, endX, endY, reduced);
+  } else paintAura(notes, sprite, effect, age, scale, endX, endY, reduced, smallSongTarget);
   return true;
 }
 
@@ -40,14 +43,17 @@ function paintAura(
   x: number,
   y: number,
   reduced: boolean,
+  smallSongTarget: boolean,
 ) {
+  const auraScale = smallSongTarget ? scale * 0.48 : scale;
   sprite
     .setPosition(x, y)
-    .setDisplaySize(85 * scale, 85 * scale)
+    .setDisplaySize(85 * auraScale, 85 * auraScale)
     .setTint(effect.kind === "song" ? 0xa4ffb4 : 0xffe18a)
     .setAlpha(reduced ? 0.45 : Math.max(0, 0.7 * (1 - age / 1800)))
     .setRotation(reduced ? 0 : age / 700);
-  if (effect.kind === "song") paintSongNotes(notes, x, y, age, scale, reduced);
+  if (effect.kind === "song")
+    paintSongNotes(notes, x, y, age, auraScale, reduced, smallSongTarget ? 1 : 3);
 }
 
 function paintSongNotes(
@@ -57,11 +63,12 @@ function paintSongNotes(
   age: number,
   scale: number,
   reduced: boolean,
+  count: number,
 ) {
   const alpha = reduced ? 0.8 : Math.min(1, age / 160) * Math.min(1, (1800 - age) / 300);
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < count; i++) {
     const rise = reduced ? 0 : ((age / 1800 + i * 0.18) % 1) * 32;
-    const nx = x + (i - 1) * 22 * scale,
+    const nx = x + (i - (count - 1) / 2) * 22 * scale,
       ny = y - (25 + rise) * scale;
     g.fillStyle(i % 2 ? 0xffdb86 : 0xb8ffbf, alpha);
     g.lineStyle(Math.max(1.5, 2.5 * scale), i % 2 ? 0xffdb86 : 0xb8ffbf, alpha);

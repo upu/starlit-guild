@@ -83,7 +83,14 @@ test("four-person camp and each third-chapter route have distinct dialogue witho
   assert.equal(new Set(camp.map(JSON.stringify)).size, 8);
   assert.ok(camp.every((lines) => lines.some((line) => line.speaker === "finn")));
   for (const { quest } of chapterThreeStages) {
-    const lines = [0, 3, 6].map((node) => chapterThreeBanter({ quest, node, phase: "move" }));
+    const lines = [0, 3, 6].map((node) =>
+      chapterThreeBanter({
+        quest,
+        node,
+        phase: "move",
+        ...(quest === STONE_RETURN_QUEST && node === 0 ? { enemies: [{ hp: 1 }] } : {}),
+      }),
+    );
     assert.equal(new Set(lines.map(JSON.stringify)).size, 3, quest);
     if (![STONE_RETURN_QUEST, "berne-restoration"].includes(quest))
       assert.ok(!JSON.stringify(lines).includes("包帯"));

@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen",
+  "source": "assets/source/storybook/keeper-lantern-v1.png",
+  "output": "public/storybook-study/keeper-lantern-v1.webp",
+  "generated": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-eb9f88d5-c0de-4753-bd69-6105c3daf6cd.png",
+  "references": [
+    "public/storybook-study/keeper-hatch-v1.webp",
+    "public/storybook-study/keeper-hatch-walk-v1.webp",
+    "public/storybook-study/night-lantern-v1.webp"
+  ],
+  "prompt": "Use case: illustration-story. Asset type: game sprite atlas. Edit reference image 1, matching reference 2's character identity and established miniature warm hand-painted 2D RPG pixel style. Draw the same older tower keeper with grey hair, blue shirt, brown apron, boots, consistent adult head and body proportions. Create exactly four evenly separated full-body poses in one row on a genuinely transparent background: 1) kneeling, hand lowered to grasp an invisible lantern handle at ground level; 2) low rising slightly, same hand lifting an invisible lantern handle to knee level; 3) half rising, same hand lifting handle to waist; 4) standing, same hand holding handle at waist. All face left in identical 3/4 view; the hand in each pose is empty, visible, and ready to hold a small separate lantern as reference image 3. Do not draw the lantern itself. Keep the same foot ground baseline and same head size across all poses; the head rises gradually as he stands. Distinct incremental arm and leg transitions, no sudden changes, ample transparent gutters within each cell, no scenery, floor, text, shadows or extra objects.",
+  "packing": "scripts/build-storybook-keeper-lantern.mjs: one common scale based on 134px standing height, four 256x192 cells, foot baseline 176, lossless WebP. Hand positions are measured on the packed image."
+}

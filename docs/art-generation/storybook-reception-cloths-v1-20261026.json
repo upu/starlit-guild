@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm handpainted2D RPG prop sheet exactlyFOUR separateobjects inonehorizontalrowwidegutters,elevated45degree3quarterdowncamera. Lefttoright:1neatlyfolded smallivorylinencloth rectangularsoftstack, noobjectinside;2SAMEivorylinencloth partlyunfolded, looselyhangingfromtwouppercorners spreadhorizontally, cornersheldbyINVISIBLEhands,nobodies;3SAMEcloth fullyspread overanINVISIBLEsmallrectangularparcel onanINVISIBLEcartbed, modestrectangularflatupperbulge andfrontcurtainhangingtowardviewer, noactualparcelcart, totalclothsilhouettewidthroughly1.2timesheight, upperedgeperspectivealignedwithhandcartreference, notblanketgiantsheet;4smallplainbrownstring tied inloosebowwithtwodanglingtails aroundanINVISIBLEwoodpost, nopost. No people, floor, shadows,text. Softwarmfineoutlines, foldsandcottontexture, coherentcloth material.",
+  "references": [
+    "public/storybook-study/garden-handcart-v2.webp",
+    "public/storybook-study/light-cloth-v1.webp"
+  ],
+  "source": "assets/source/storybook/reception-cloths-v1.png"
+}

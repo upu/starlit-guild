@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 60,
+    "top": 28,
+    "width": 68,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.70979139859189
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 51,
+    "top": 29,
+    "width": 77,
+    "height": 147,
+    "baseline": 176,
+    "headX": 89.40611904898165
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 42,
+    "top": 27,
+    "width": 72,
+    "height": 149,
+    "baseline": 176,
+    "headX": 80.74109705447316
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 48,
+    "top": 27,
+    "width": 78,
+    "height": 149,
+    "baseline": 176,
+    "headX": 82.93495661960685
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 46,
+    "top": 28,
+    "width": 69,
+    "height": 148,
+    "baseline": 176,
+    "headX": 81.65376247922771
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 57,
+    "top": 44,
+    "width": 86,
+    "height": 132,
+    "baseline": 176,
+    "headX": 111.79901844176933
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 52,
+    "top": 65,
+    "width": 87,
+    "height": 111,
+    "baseline": 176,
+    "headX": 110.1498829566307
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+    "scale": 0.32456140350877194,
+    "left": 61,
+    "top": 28,
+    "width": 68,
+    "height": 148,
+    "baseline": 176,
+    "headX": 94.59654476537432
+  }
+]

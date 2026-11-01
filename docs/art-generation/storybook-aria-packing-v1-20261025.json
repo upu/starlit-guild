@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/aria-packing-v1.png",
+  "output": "public/storybook-study/aria-packing-v1.webp",
+  "references": [
+    "public/storybook-study/aria-conversation-v1.webp"
+  ],
+  "prompt": "Create a transparent 4-frame single horizontal row character animation sheet for original Aria shown in reference. Warm hand-painted chibi RPG art matching exactly reference face, pink-blonde hair, long elf ears, green cloak, white blouse, brown vest, cream shorts and brown boots, same head/body proportions. All four equally spaced cells same camera elevated 3/4, facing right. Cell1 neutral full standing as size reference. Cell2 kneeling on left knee, head slightly tilted down, hands forward and low tying an imaginary ground-level bundle cord. Cell3 same kneeling body/head position, fingers pull the cord ends 3cm apart. Cell4 same kneeling pose with hands resting. No bundle, no cord, no other object, no ground/shadow. One shared body scale across cells: kneeling top of head reaches about 70% of standing height; absolutely never enlarge kneeling figure or head. Feet/knees all on same baseline, full hair and boots visible, clear transparent margins. Four separate figures, no text, no grids. Wide 3:1 sheet."
+}

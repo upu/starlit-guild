@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly FOUR original game props in ONE horizontal row with generous gaps on clean transparent background. Warm handpainted2D RPG style elevated45degree3quarter view, softinkedges and gentlewarmmaterials, no ground/shadows/hands/text. LEFT toRIGHT:1small plain IVORY CERAMIC LUNCH PLATE with one brown breadroll and modest helping of vegetables and roastedpotatoes, NOT a giantfeast;2matching empty used ivoryceramic plate with few crumbs, same physicalsizeasfirst;3small cream request letter FOLDED IN HALF, visible crisp foldededge, faintunreadableabstractink only;4same-sized cream SEALED ENVELOPE with simple darkred wax seal, no readablemarks. Complete objects, no utensils outsideplate or extra props. Matching cup ceramic from supplied ref.",
+  "references": [
+    "public/storybook-study/empty-cup-v1.webp"
+  ],
+  "source": "assets/source/storybook/linde-lunch-props-v1.png"
+}

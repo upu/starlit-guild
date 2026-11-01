@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Four full-body LEON character sprites, transparent background, ONE ROW4 equalcells. Exactreference identity and costume brownhair bluevest white sleeves redcape gloves browntrousersboots, elevated45degree 3/4 facingRIGHT. CRITICAL physical calibration: standingpose first is about500px tall, headabout140px tall. Allthree seatedposes MUSTUSE EXACTSAME140px HEAD and samebootdimensions, overallheight about410px, roughly82percentstanding. DoNOTmakeheadsorbodieslarger tofillcells. Feet onSAMEbaseline. 0neutralstanding. 1 sitsLOW oninvisiblechair, hipsmuchlower, kneesbent90degrees and bootedfeetflat, nearhand EMPTY relaxedcurvedgrip justbeforelowerchest, farhand flatknee. 2 EXACTsame lowseatedbody, head andfeet unchanged, nearhand raisedtolips grippingimaginaryglass, EMPTYhand noactualglass. 3 same lowseatedbody, nearhand extendedRIGHT toastatlowerchest, EMPTYcurvedgrip, farhandflatknee. No furniturepropscupsgroundshadowtext. Allparts completeandgenerousalpha marginabove head andaroundboots. Naturalbentlegsanatomy, samecharacterbodybuildinall4poses. Softwarmhandpainted gameart. Seatedheads visiblylowerthan standinghead because hipssitlower, not because ofscaling.",
+  "references": [
+    "assets/source/storybook/leon-seat-action-v2.png"
+  ],
+  "source": "assets/source/storybook/brekka-leon-drinks-v1.png"
+}

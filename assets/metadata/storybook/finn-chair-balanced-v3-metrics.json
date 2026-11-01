@@ -1,0 +1,90 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 58,
+    "top": 28,
+    "width": 68,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.02167235912049
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 57,
+    "top": 28,
+    "width": 75,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.04415062398265
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 51,
+    "top": 26,
+    "width": 81,
+    "height": 150,
+    "baseline": 176,
+    "headX": 96.2274277244963
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 57,
+    "top": 28,
+    "width": 74,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.09405174090648
+  },
+  {
+    "frame": 4,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 40,
+    "top": 35,
+    "width": 99,
+    "height": 141,
+    "baseline": 176,
+    "headX": 95.51974121880761
+  },
+  {
+    "frame": 5,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 63,
+    "top": 38,
+    "width": 82,
+    "height": 138,
+    "baseline": 176,
+    "headX": 109.68885169772909
+  },
+  {
+    "frame": 6,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 49,
+    "top": 51,
+    "width": 87,
+    "height": 125,
+    "baseline": 176,
+    "headX": 102.29646718632135
+  },
+  {
+    "frame": 7,
+    "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+    "scale": 0.38144329896907214,
+    "left": 52,
+    "top": 64,
+    "width": 100,
+    "height": 112,
+    "baseline": 176,
+    "headX": 110.7795027044146
+  }
+]

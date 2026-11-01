@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "New animation spritesheet for original RPG character Lico, using attached image ONLY as identity/style reference. TRANSPARENT background, 4 columns x2 rows. Full body in every cell with generous padding. Delicate warm painted 2D elevated three quarter view, consistent proportions, red brown ponytail, spider lily, freckles and round low glasses, red apron black dress ivory sleeves black sandals. All figures face screen RIGHT and hold a small CLOSED brown notebook with both hands. Top row: first is upright standing calibration, other three same standing. Bottom row: four anatomically alternating steps. FIRST: right leg forward, left leg back. SECOND: right foot under hips, left knee raised forward. THIRD: LEFT leg forward, RIGHT leg back; near bare right shin must angle DOWN LEFT and far left shin DOWN RIGHT; far left sandal at screen right, near right sandal at screen left. Fourth: left foot under hips, right knee raised forward. The third pose must have the near shin slanting toward the BOTTOM LEFT instead of BOTTOM RIGHT. Notebook/head/torso scale match standing. Show actual left-right thigh crossing and reverse which foot is planted. No scenery, lettering, ground, shadows, halos, or tinted background. Anatomically correct ordinary slow walking, same head size and short stocky build in every frame.",
+  "references": [
+    "assets/source/storybook/lico-moss-study-v1.png"
+  ],
+  "source": "assets/source/storybook/lico-notebook-walk-v4.png",
+  "status": "review-only",
+  "note": "Alternating leg contact silhouettes still repeat."
+}

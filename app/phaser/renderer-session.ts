@@ -1,7 +1,10 @@
 import type { Action } from "@/lib/game";
 import type { AdventureInput } from "@/lib/adventure-presentation";
+import type { TownActivity } from "@/lib/road-town-activity";
+export type { TownActivity } from "@/lib/road-town-activity";
 
 export type RendererStatus = "loading" | "ready" | "error";
+export type LindeProgress = { node: number; complete: boolean; phase?: "move" | "work" };
 export type RuntimeState = {
   disposed: boolean;
   paused: boolean;
@@ -12,6 +15,10 @@ export type AdventureBridge = {
   read: () => AdventureInput;
   act: (action: Action) => void;
   status: (status: RendererStatus) => void;
+  visualComplete?: (quest: string) => void;
+  nightPushFrame?: (frame: number | null) => void;
+  lindeProgress?: (progress: LindeProgress) => void;
+  townActivity?: (activity: TownActivity) => void;
 };
 export type AdventureRenderer = {
   destroy: () => void;
@@ -19,6 +26,12 @@ export type AdventureRenderer = {
   setPaused: (paused: boolean) => void;
 };
 export type RendererFactory = (parent: HTMLElement, bridge: AdventureBridge) => AdventureRenderer;
+
+function guardedStatus(bridge: AdventureBridge, disposed: () => boolean) {
+  return (status: RendererStatus) => {
+    if (!disposed()) bridge.status(status);
+  };
+}
 
 // Cancels a pending dynamic import and disposes exactly the renderer it created.
 export function rendererSession(
@@ -35,9 +48,15 @@ export function rendererSession(
     act: (action) => {
       if (!disposed && !paused) bridge.act(action);
     },
-    status: (status) => {
-      if (!disposed) bridge.status(status);
+    status: guardedStatus(bridge, () => disposed),
+    visualComplete: (quest) => {
+      if (!disposed) bridge.visualComplete?.(quest);
     },
+    nightPushFrame: (frame) => {
+      if (!disposed) bridge.nightPushFrame?.(frame);
+    },
+    lindeProgress: (progress) => !disposed && bridge.lindeProgress?.(progress),
+    townActivity: (activity) => !disposed && bridge.townActivity?.(activity),
   };
   const started = load()
     .then((factory) => {

@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen.imagegen",
+  "scope": "2-7 return, Mira receives the recovered honey",
+  "reference": "assets/source/storybook/mira-handheld-v1.png",
+  "generated": "exec-83357898-e8c2-4fa5-acf7-67da5aeb9a20.png",
+  "source": "assets/source/storybook/mira-workshop-reach-v1.png",
+  "sourceSha256": "c1742d44c91138a3e9d64aab0f52d35dee1b9cd3c1616286ce5f7261fd7252b2",
+  "output": "public/storybook-study/mira-workshop-reach-v1.webp",
+  "outputSha256": "76f1ac90550ffd9de4f60bbc8beaac6d75de37499bc0491f3969a04b5ceb5ffd",
+  "build": "node scripts/build-storybook-mira-workshop-reach.mjs",
+  "prompt": "Edit this existing Mira sprite sheet as accurately as possible. Only change the arms and hands of the FIRST, upper-left standing figure: she extends both forearms forward to screen RIGHT, elbows gently extended, with two open palms UP at about waist height to receive a small cloth and jar from another person. Her fingertips extend clearly beyond her face to the right, approximately one head-width from her torso, while her upper arms stay attached naturally. Do not draw any cloth, jar or other prop: leave the palms empty. Keep the exact same full-body scale, planted feet, head size, face, sleepy grey eyes and gentle tired expression, lavender braided updo with white flower, ivory healer robe, costume details, warm hand-painted 2D RPG rendering, elevated three-quarter viewpoint, and original foot baseline. Keep ALL seven other figures exactly as they are. Keep eight separate full-body figures in two rows of four with generous transparent margins; no background, text, shadow or extra figures."
+}

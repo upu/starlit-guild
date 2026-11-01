@@ -1,0 +1,11 @@
+{
+  "prompt": "Create a transparent 4-column 1-row prop atlas, four separate isolated objects each centered in its own equal cell with generous empty margins. Warm hand-painted 2D RPG art matching supplied forest style, elevated three-quarter camera about 50 degrees above ground, clear soft outlines. Cell1: small shallow round oval wooden specimen bowl, empty, rim thin, visible interior, no handles. Cell2: exact same bowl containing a SMALL modest tuft of damp ordinary green moss, no glow, no giant fern. Cell3: a low irregular natural ordinary moss colony on a tiny bit of dark soil, small leaves, no large rock, no glow. Cell4: folded ivory wool shawl rectangular compact cloth bundle, softly creased, no decorative ornaments. No people, no background, no text, no cast shadows. Natural small research supplies, not treasure items.",
+  "source": "assets/source/storybook/forest-props-v1.png",
+  "outputs": [
+    "public/storybook-study/sample-bowl-v1.webp",
+    "public/storybook-study/moss-bowl-v1.webp",
+    "public/storybook-study/moss-colony-v1.webp",
+    "public/storybook-study/folded-shawl-v1.webp"
+  ],
+  "generated": "exec-76891497-2a62-4552-8364-d27090af8dcd.png"
+}

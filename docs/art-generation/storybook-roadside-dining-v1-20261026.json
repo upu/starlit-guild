@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen.imagegen",
+  "prompt": "Use case: illustration-story. Asset type: wide 3:2 hand-painted 2D RPG dialogue-stage background. Image 1 is the room layout reference, image 2 is the approved painting style and elevated camera reference. Repaint the roadside dining room from image 1 with warm softly painted surfaces, restrained brown contours, golden morning light, muted earthy wood, small simple readable details. Camera looking down at 45 degrees, orthographic-like three-quarter RPG view, no horizon or perspective vanishing point. Preserve back wall across the upper quarter, window upper center-left, closed wooden entrance at upper right around x78% y18%, bench against back wall. Small dining tables and stools may appear ONLY cropped along far left/right walls in upper half. Leave the whole center and lower two thirds as EMPTY walkable wooden plank floor for separately rendered actors and one central table. Coherent miniature room scale: a full standing actor will be about15% of image height; wall door about22% of image height, stools about5%, broad floor planks about2%. Don't paint any central table, central chair, people, food on the empty floor, text, labels, symbols, HUD, border. Friendly lived-in medieval roadside dining room, bottle shelf, modest hanging brass lamps, white cloth runners at the side tables. Actual nontransparent background.",
+  "references": [
+    "public/story-stage/dining-room.webp",
+    "public/storybook-study/medicine-room-v1.png"
+  ],
+  "source": "assets/source/storybook/roadside-dining-v1.png",
+  "output": "public/storybook-study/roadside-dining-v1.png"
+}

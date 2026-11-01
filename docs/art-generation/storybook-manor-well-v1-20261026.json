@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Warm hand-painted 2D RPG background, elevated45degree downward3quarter camera, no horizon. Preserve exact scene geography of first reference manor-well: circular low limestone well with timber spindle in upper LEFT at24percentx,16percenty; repeated clipped hedges in upper third and broad empty warm paved court lower two thirds; two routes loop around the central rectangular hedge and lead back to this same well; fork signpost x12y41 and subtle flattened grass and round pot impression near it. Matching manor ochre limestone wall on upper RIGHT with OPEN kitchen service door centeredx84,y15, floor threshold at y25, blue leaded windowsto right. Narrow garden path left exits image x0,y45, and a wide empty right work path x85,y40..85. Small bare twig sticks from hedge atx84,y74, where a loose rope can snag. Four smallfigures roughlyonefifthimageheightwillstandoncourt. No characters, furniture, cart, looseprops, towers,text. Match second reference warm fineoutlines, painted texture and stone size. 3:2 landscape.",
+  "references": [
+    "public/story-stage/manor-well.webp",
+    "public/storybook-study/manor-back-paths-v1.png"
+  ],
+  "source": "assets/source/storybook/manor-well-v1.png"
+}

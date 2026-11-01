@@ -1,0 +1,20 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in",
+  "date": "2026-10-22",
+  "source": "assets/source/story-stage/perch-poses-v1.png",
+  "references": [
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/assets/source/story-stage/aria-chair-v1.png",
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/assets/source/story-stage/leon-chair-v1.png",
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/assets/source/story-stage/mira-chair-v1.png",
+    "C:/Users/spitz/.codex/worktrees/b8ca/STARLIT-GUILD/assets/source/story-stage/finn-chair-v1.png"
+  ],
+  "prompt": "Create one production sprite sheet on true transparent background, exactly 4 columns x 4 rows (16 separate full-body sprites, equal cells, generous clear margins). References 1-4 are the canonical Aria, Leon, Mira and Finn, respectively; use each ONLY as character/style reference, not as edit target. Each row contains that character seated on the front edge of an INVISIBLE low ledge, hips elevated, knees bent, lower legs descending to feet planted on the floor. Do not draw ANY chair, stool, rock, ledge, furniture or ground shadow: those will be rendered separately. This is a low perched sitting pose, NOT cross-legged floor sitting, NOT kneeling, NOT standing. Row 1 Aria peach-blonde/lilac strand elf green cape daisy; row 2 Leon spiky brown hair red cape dark blue armor boots; row 3 Mira lavender hair moon/daisy ornament cream-gold coat and boots; row 4 Finn brown ponytail olive-brown long coat and brown boots. Preserve exact clothes and colors from reference sheets. All face three-quarter RIGHT at a slightly elevated RPG camera angle. Columns: 1 relaxed hands resting on knees; 2 gentle speaking with one palm offered forward at waist level; 3 warm smile / Finn amused small smirk with light gesture; 4 thoughtful with a hand near chin. Maintain same body, head size, foot baseline and hip position in every pose of a row. The low seated silhouette should be about 83% of standing height WITHOUT enlarged heads or compressed torsos; natural leg bends create the shorter silhouette. Exact canonical head proportions, not oversized cute heads. Pixel-art-style crisp discrete shading and dark outlines like references. Whole head, cloak and both boots inside every cell. No text, letters, grid lines, labels or scenery. Output a square transparent atlas.",
+  "outputs": [
+    "public/story-stage/aria-poses.webp",
+    "public/story-stage/leon-poses.webp",
+    "public/story-stage/mira-poses.webp",
+    "public/story-stage/finn-poses.webp"
+  ],
+  "registration": "Replace placeholder cells 36-43 of 512x1408 shared atlases. Register walking head width, 80px silhouette and 120px foot baseline. Columns 0-3 face right, mirrored copies 4-7 face left. Seat props are separate and persist when standing."
+}

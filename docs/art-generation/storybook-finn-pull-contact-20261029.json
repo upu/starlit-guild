@@ -1,0 +1,27 @@
+{
+  "purpose": "Keep Finn's hand on the same cart crossbar in 4-10 while his head and body remain aligned through walking and stopped poses.",
+  "tool": "built-in image_gen",
+  "walking": {
+    "reference": "public/storybook-study/finn-pull-balanced-v3.webp",
+    "prompt": "Edit this existing four-frame game sprite strip of Finn walking to the right while pulling a cart behind him. Each of the four equally spaced full-body poses is the SAME adult character and stays in the SAME left-to-right order. Critical: make the leftmost visible trailing hand, which holds the cart behind him, remain at exactly the same horizontal and vertical position in its cell in all four frames, approximately matching the trailing hand in frame 1. The sleeve, wrist and fingers must connect naturally to that fixed hand. Preserve each frame's existing different walking legs and boot positions, foot-ground baseline, head, body scale, face, tied-back long dark hair, long brown coat, white shirt, belt, bandaged leg, orientation, stance, character identity, frame spacing and painterly pixel-art rendering as closely as possible. No cart, no props, no floor, no shadows, no text, no border. Each whole character fully visible with transparent background, four separate equal sized frames, no overlap, no extra poses.",
+    "generated": "exec-d89998e2-6b59-4472-9587-45f623f365da.png",
+    "source": "assets/source/storybook/finn-pull-contact-v1.png",
+    "sourceSha256": "969fb32f0cbd32fd39c333f27068fb6b8c7deba665c79ab765de84f36435a6ad",
+    "output": "public/storybook-study/finn-pull-contact-v1.webp",
+    "outputSha256": "c149c484d281a659af34b027d0ebfa0919f99796903ee1ba68d6fc526aa34ec4",
+    "build": "node scripts/build-storybook-finn-pull-contact.mjs"
+  },
+  "stopped": {
+    "references": ["exec-3acf5165-abc4-46d1-b2d5-1bd594be1cea.png", "public/storybook-study/finn-pull-contact-v1.webp"],
+    "prompt": "Edit the FIRST standing Finn sprite. In the SECOND reference, Finn is holding a cart with his trailing hand much farther to the left of his face. Match that reach: extend the FIRST sprite's left forearm back toward the left by approximately one half of the width of his head, keeping the hand at the same height. The fist should be in the same position relative to Finn's head as in the SECOND walking sprite. Preserve his adult face, head size and placement, hair, coat, body height, stance, both boots flat on the ground and pixel-art character style exactly. Only move the trailing arm and fist. One isolated whole figure on a genuine transparent background, no cart, no text or added objects.",
+    "generated": "exec-e61f8be9-b974-494a-9a94-d6aafd013552.png",
+    "source": "assets/source/storybook/finn-pull-rest-v1.png",
+    "sourceSha256": "b80977e061712082fd336c7cbecbc0dd345c3da6c97e3dc2a498e2f9e47ebd31",
+    "output": "public/storybook-study/finn-pull-rest-v1.webp",
+    "outputSha256": "a2d551992cef0fd9dd066d2f8a6a47b9f0d11fcdaabe0592a609d57a249ceccd",
+    "build": "node scripts/build-storybook-finn-pull-rest.mjs",
+    "rejected": ["exec-cd2294f5-9188-46cc-b374-d06c5f3a8f89.png", "exec-3acf5165-abc4-46d1-b2d5-1bd594be1cea.png"],
+    "reason": "The trailing hand was too far from the cart crossbar after aligning the head."
+  },
+  "registration": "192px cells; head centre x103; foot baseline y176; trailing hand approximately (51,100). Crossbar target on both cart bodies is (450,258) in a 512 x 320 canvas."
+}

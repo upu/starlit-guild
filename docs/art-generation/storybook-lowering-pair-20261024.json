@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/lowering-pair-v1.png",
+  "prompt": "Make an 8-sprite lowering animation sheet from the attached original character reference: 4 columns x 2 rows, top Aria bottom Leon, transparent. All full bodies facing right in the SAME elevated three-quarter view, identical head/torso/leg proportions to reference. The same standing character lowers an INVISIBLE small crate from just below chin to a waist-height table on the right. NO actual crate/table/props drawn. Both palms face upward. Column1 hands just below chin, elbows bent; column2 hands at upper chest, forearms reach a little further right; column3 hands at lower chest, reaching further right; column4 arms extended right at waist height, torso slightly bent at hip. Four small EVEN steps of the same downward-right hand path. Feet stay planted in exactly the same positions, head size and limb lengths do not change. Heads gently watch the hands, same focused neutral expression. This is not walking, crouching or changing moods. Preserve reference soft warm shading, colored outlines, all costume details and identities. Aria green cape/cream blouse, blonde lavender lock opposite white flower, green eyes elf ears. Leon red cape blue tunic leather brown hair. Clear separate transparent gutters, no text shadows floor or grid.",
+  "status": "prototype-unapproved",
+  "scope": "Four progressive lowering poses; Aria connected to outdoor placement preview. Final palm contact remains under review; Leon not connected."
+}

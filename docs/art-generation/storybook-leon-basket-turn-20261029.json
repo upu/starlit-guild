@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-29",
+  "tool": "built-in image_gen",
+  "generatedFile": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-235b1d00-9f90-446e-ba6f-f0e9dd59d5c5.png",
+  "source": "assets/source/storybook/leon-basket-turn-v1.png",
+  "output": "public/storybook-study/leon-basket-turn-v1.webp",
+  "build": "node scripts/build-storybook-leon-basket-turn.mjs",
+  "references": ["public/storybook-study/leon-carry-v1.webp", "assets/source/storybook/leon-carry-walk-v1.png"],
+  "prompt": "Create one transparent sprite sheet for the exact same Leon character in the reference images, for a warm hand-painted isometric 2D RPG. Use reference 1 and 2 as the precise identity, proportions, hair, outfit, style, eye size, lighting and palette. This is a short turn while holding a basket drawn separately by the game engine. Produce exactly FOUR isolated full-body standing poses evenly spaced in ONE horizontal row, all with full hair, cape, legs, boots, and large transparent gutters. Same size head and body, same grounded feet and shoes baseline in all four, no drift or perspective resizing. Starting frame faces three-quarter screen LEFT with both empty gloved hands together extended to the left at waist level, frame 2 faces partly left/front with the joined hands slightly left of center, frame 3 faces nearly forward with joined hands at center, frame 4 faces three-quarter screen RIGHT with both joined empty gloved hands extended to the right at the same waist height. Each pair of hands is cupped together, palms up, in front of the abdomen, clearly visible and connected to each arm as if supporting the underside of one SMALL basket. No basket or other objects, no text, no borders, no shadow, no ground, no other characters. Every pose is one single character, exact same boots at same baseline, exact same head/body ratio as the references. Preserve Leon's brown tousled hair, red scarf and cape, blue tunic, white sleeves, brown gloves, belt, brown boots and mildly serious expression. Elevated three-quarter view with feet and hair seen from above, crisp thin warm outlines, no gloss.",
+  "selection": "The requested left-facing first pose was not generated; use frame 1 mirrored and unmirrored around the front-facing frame 2, retaining existing carry poses at the endpoints."
+}

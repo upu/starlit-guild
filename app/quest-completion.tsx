@@ -33,12 +33,14 @@ export function QuestCompletion({
   ready,
   onRead,
   onClose,
+  completedAdventure,
 }: {
   story: Story;
   questName: string;
   ready: boolean;
   onRead: () => boolean;
   onClose: () => void;
+  completedAdventure?: string;
 }) {
   const [reading, setReading] = useState(story.chapter === "interlude");
   const { readerRef, onPointerDownOutside } = useStoryAdvance();
@@ -70,6 +72,7 @@ export function QuestCompletion({
             onRead={onRead}
             onClose={onClose}
             advanceRef={readerRef}
+            completedAdventure={completedAdventure}
           />
         ) : (
           clearCard(questName, ready, () => {

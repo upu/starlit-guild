@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Connect the standing and seated Lico poses at the end of the moss-bed encounter.",
+  "generator": "image_gen.imagegen",
+  "source": "assets/source/storybook/lico-records-sit-transition-v1.png",
+  "output": "public/storybook-study/lico-records-sit-transition-v1.webp",
+  "generated": "exec-a66ce9f9-412d-46b6-b36c-40c48426e79d.png",
+  "references": ["public/storybook-study/lico-conversation-ponytail-v1.webp", "public/storybook-study/lico-field-records-ponytail-v1.webp"],
+  "prompt": "Create one transparent sprite sheet for STARLIT-GUILD, a warm painted pixel-art 2D RPG. The first reference is Lico's standing expressions; second is her seated field-records poses. Keep exactly the same youthful human alchemist, compact ponytail tied behind the head with tidy hair at the back, reddish brown hair, red flower ornament, dark red-black dress, white sleeves and brown boots, same head size and face. Camera is the same 3/4 slightly overhead angle, facing right. Four equal separate full-body frames in a single horizontal row, same common ground line and same character scale. Frame 1: standing calmly with empty hands, exactly the first standing reference; frame 2: knees bend a little as she begins to lower herself backward; frame 3: knees and hips bent halfway down toward a low wooden stool, empty hands held near body; frame 4: seated low with hands in lap, matching the second reference's seated pose. The stool itself must NOT be drawn; it is a separate object in the game. The head should move downward naturally and remain the same size throughout, boots fully visible, no deforming limb anatomy, no new accessories, no paper. Clear transparent alpha background, generous gutters around each silhouette and between frames, no text, no grid, no colored blocks, no ground shadows. Make all four sprites the same physical scale rather than resizing low poses to fill their frame.",
+  "registration": "node scripts/build-storybook-lico-records-sit.mjs; first standing height 128px, one scale for all four frames and foot baseline 176px. The transition uses frames 1 and 2, then the existing field-records seated pose."
+}

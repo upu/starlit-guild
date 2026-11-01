@@ -6,7 +6,12 @@ import {
   paralyzed,
   shiftConfrontationClocks,
 } from "../lib/chapter-four-battles.ts";
-import { chapterFourBattleBanter } from "../lib/chapter-four-battle-banter.ts";
+import {
+  chapterFourBattleBanter,
+  licoRecordsLineAvailable,
+  merrillBanterContext,
+  merrillSingingLine,
+} from "../lib/chapter-four-battle-banter.ts";
 import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { roadActorReady, advanceChapterRoad } from "../lib/chapter-road.ts";
 import { combination, event, configureTarget, schedule } from "../lib/game-run.ts";
@@ -14,7 +19,7 @@ import { questById } from "../lib/game-rules.ts";
 import { syncEnemyTotals } from "../lib/combat.ts";
 import { parseBundle } from "../lib/save-format.ts";
 import { portraitAtlases } from "../lib/portrait-expressions.ts";
-import { retainBanter, startBanter, nextBanter } from "../lib/banter-exchange.ts";
+import { hasNextBanter, retainBanter, startBanter, nextBanter } from "../lib/banter-exchange.ts";
 
 function roundtrip(state) {
   const id = "44444444-4444-4444-8444-444444444444";
@@ -199,6 +204,112 @@ test("Merrill's healing actually restores an injured mushroom during ordinary pl
     r?.events.some((e) => e.text.includes("メリルの歌") && e.amount > 0),
   );
   assert.ok(s.squads[0].run.enemies.some((e) => e.trick === "mushroom" && e.hp > 0));
+});
+
+test("Merrill's dialogue context follows the first summon and song without restarting for later songs", () => {
+  const state = start("merrill"),
+    run = state.squads[0].run,
+    master = run.enemies[0];
+  assert.equal(merrillBanterContext(run), "merrill-0");
+  confrontationTurn(run, master, state.updatedAt + 1000, noEmit);
+  assert.equal(merrillBanterContext(run), "merrill-1");
+  assert.equal(merrillSingingLine(chapterFourBattleBanter(run)[0]), false);
+  confrontationTurn(run, master, state.updatedAt + 4600, noEmit);
+  assert.equal(merrillBanterContext(run), "merrill-2");
+  assert.equal(merrillSingingLine(chapterFourBattleBanter(run)[0]), true);
+  confrontationTurn(run, master, state.updatedAt + 8200, noEmit);
+  assert.equal(merrillBanterContext(run), "merrill-2");
+  master.hp = 0;
+  assert.equal(merrillBanterContext(run), "merrill-stopped");
+  assert.equal(
+    chapterFourBattleBanter(run)[0].text,
+    "メリルは動きを止めた。コロタケたちは、まだ動いている。",
+  );
+  assert.equal(merrillSingingLine(chapterFourBattleBanter(run)[0]), false);
+  for (const enemy of run.enemies) enemy.hp = 0;
+  assert.equal(merrillBanterContext(run), undefined);
+});
+
+test("Merrill can be stopped after summoning without implying that she has sung", () => {
+  const state = start("merrill");
+  const run = state.squads[0].run;
+  const master = run.enemies[0];
+  confrontationTurn(run, master, state.updatedAt + 1000, noEmit);
+  master.hp = 0;
+  assert.equal(merrillBanterContext(run), "merrill-stopped");
+  assert.equal(
+    chapterFourBattleBanter(run)[0].text,
+    "メリルは動きを止めた。コロタケたちは、まだ動いている。",
+  );
+});
+
+test("Leon's opening warning does not assign work to an incapacitated Aria", () => {
+  const run = start("lico").squads[0].run;
+  const healthy = chapterFourBattleBanter(run);
+  run.health.aria.hp = 0;
+  const incapacitated = chapterFourBattleBanter(run);
+  const warning = incapacitated.find((line) => line.speaker === "leon");
+  assert.deepEqual(incapacitated, healthy, "a status change must not enqueue a duplicate exchange");
+  assert.doesNotMatch(warning.text, /アリア/);
+  assert.match(warning.text, /風下/);
+  assert.equal(warning.expression, "serious");
+  assert.ok(portraitAtlases.leon.expressions.includes(warning.expression));
+});
+
+test("retained Lico dialogue checks health when each line is displayed", () => {
+  const state = start("lico"),
+    run = state.squads[0].run,
+    master = run.enemies[0];
+  const opening = chapterFourBattleBanter(run);
+  confrontationTurn(run, master, state.updatedAt + 1000, noEmit);
+  const smoke = chapterFourBattleBanter(run);
+  let exchange = retainBanter(startBanter(opening), smoke);
+  run.health.aria.hp = 0;
+  run.health.finn.hp = 0;
+  const available = (line, history) =>
+    licoRecordsLineAvailable(line, run, history, "leon", state.updatedAt);
+  for (let i = 0; i < 10; i++) exchange = nextBanter(exchange, smoke, available);
+  assert.deepEqual(
+    exchange.history.map((line) => line.speaker),
+    ["lico", "leon", "lico", "mira"],
+  );
+  assert.equal(
+    exchange.history.some((line) => line.text.includes("比較用")),
+    false,
+  );
+  assert.equal(hasNextBanter(exchange, smoke), false);
+
+  const reply = smoke.at(-1),
+    question = smoke.find((line) => line.speaker === "finn");
+  assert.equal(licoRecordsLineAvailable(reply, run, []), false);
+  assert.equal(
+    licoRecordsLineAvailable(reply, run, [question]),
+    true,
+    "a reply remains coherent if the question was already shown before Finn fell",
+  );
+  assert.equal(
+    licoRecordsLineAvailable({ speaker: "finn", text: "別の場面" }, run, []),
+    true,
+    "unrelated story dialogue is outside this rule",
+  );
+});
+
+test("Mira offers support only when the matching movement can happen", () => {
+  const state = start("lico"),
+    run = state.squads[0].run;
+  confrontationTurn(run, run.enemies[0], state.updatedAt + 1000, noEmit);
+  const support = chapterFourBattleBanter(run).find((line) => line.speaker === "mira");
+  const mira = run.actors.find((actor) => actor.hero === "mira");
+  const available = (patient, now) => licoRecordsLineAvailable(support, run, [], patient, now);
+  assert.equal(available("aria", state.updatedAt), true);
+  assert.equal(available(undefined, state.updatedAt), false);
+  assert.equal(available("mira", state.updatedAt), false);
+  run.health.aria.hp = 0;
+  assert.equal(available("aria", state.updatedAt), false);
+  run.health.aria.hp = run.health.aria.maxHp;
+  mira.paralyzedUntil = state.updatedAt + 5000;
+  assert.equal(available("aria", state.updatedAt), false);
+  assert.equal(available("aria", state.updatedAt + 5000), true);
 });
 
 test("battle lines have real portraits and short-lived enemy exchanges are retained in order", () => {

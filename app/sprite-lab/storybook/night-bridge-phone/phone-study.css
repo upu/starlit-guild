@@ -1,0 +1,52 @@
+/* Keep the game at the same viewport size as the actual phone frame. */
+.night-phone-study > .phone-game {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+}
+.night-phone-study-controls {
+  position: fixed;
+  z-index: 21;
+  top: 4px;
+  left: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: calc(100% - 110px);
+}
+.night-phone-study-controls button {
+  min-height: 32px;
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.night-phone-study-controls span {
+  align-self: center;
+  padding: 4px;
+  color: #fff;
+  background: #132625df;
+  font-size: 11px;
+}
+.records-study-tools {
+  position: fixed;
+  z-index: 21;
+  top: 4px;
+  left: 4px;
+  max-width: calc(100% - 110px);
+}
+.records-study-tools summary,
+.records-study-tools > button {
+  width: fit-content;
+  padding: 4px 8px;
+  color: #fff;
+  background: #132625ed;
+  font-size: 11px;
+  cursor: pointer;
+}
+.records-study-tools .night-phone-study-controls {
+  position: static;
+  max-width: 100%;
+}
+.records-study-closeup .phaser-canvas canvas {
+  transform: scale(3);
+  transform-origin: 46% 56%;
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "loading-pot",
+    "width": 239,
+    "height": 175,
+    "scale": 0.49586776859504134,
+    "baseline": 248
+  },
+  {
+    "name": "loading-pot-full",
+    "width": 240,
+    "height": 175,
+    "scale": 0.49586776859504134,
+    "baseline": 248
+  },
+  {
+    "name": "loading-korotake",
+    "width": 221,
+    "height": 232,
+    "scale": 0.8498168498168498,
+    "baseline": 248
+  },
+  {
+    "name": "loading-cloth",
+    "width": 240,
+    "height": 183,
+    "scale": 0.4838709677419355,
+    "baseline": 248
+  },
+  {
+    "name": "loading-basket-covered",
+    "width": 240,
+    "height": 165,
+    "scale": 0.48,
+    "baseline": 248
+  },
+  {
+    "name": "loading-basket",
+    "width": 231,
+    "height": 155,
+    "scale": 0.48,
+    "baseline": 248
+  }
+]

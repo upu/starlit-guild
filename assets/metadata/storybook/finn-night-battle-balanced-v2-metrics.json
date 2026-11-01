@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-night-battle-balanced-v2.png",
+    "scale": 0.27106227106227104,
+    "left": 50,
+    "top": 28,
+    "width": 78,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.50603974323272
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-night-battle-balanced-v2.png",
+    "scale": 0.27106227106227104,
+    "left": 52,
+    "top": 28,
+    "width": 87,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.84263679392006
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-night-battle-balanced-v2.png",
+    "scale": 0.27106227106227104,
+    "left": 42,
+    "top": 28,
+    "width": 118,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.69073497546543
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-night-battle-balanced-v2.png",
+    "scale": 0.27106227106227104,
+    "left": 56,
+    "top": 28,
+    "width": 84,
+    "height": 148,
+    "baseline": 176,
+    "headX": 96.24627156240672
+  }
+]

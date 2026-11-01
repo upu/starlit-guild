@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/meeting-path-v1.png",
+  "output": "public/storybook-study/meeting-path-v1.png",
+  "references": [
+    "public/story-stage/meeting-path.webp",
+    "public/storybook-study/warehouse-v1.png"
+  ],
+  "prompt": "Edit target: first image, forest fork meeting place. Style reference: second image, painted warehouse. Redraw the first image as a warm hand-painted 2D RPG environment in the second image's style, preserving exact elevated three-quarter overhead composition and path geometry. Two paths branch to upper left and upper right around central broad oak base; broad empty ochre earth clearing across lower two-thirds for small animated characters and a loaded cart. Keep trees at margins and top, no horizon, no deep perspective. Soft colored outlines, broad deliberate painted leaf clusters, restrained texture, warm cream/ochre sunlight and muted sage foliage, 2-3 shading tones, replace noisy pixel stippling with clean painted forms. No characters, cart, loose props, text or UI. 3:2 landscape."
+}

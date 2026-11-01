@@ -1,0 +1,45 @@
+{
+  "sha256": "fd9d389d2fca054281bc64c4f0ebb22d171a02f9bb59b1c89e35a1aebf4f2d6a",
+  "frames": [
+    {
+      "source": "assets/source/storybook/leon-push-v1.png",
+      "sourceFrame": 2,
+      "scale": 0.2608695652173913,
+      "width": 72,
+      "height": 144,
+      "left": 55,
+      "top": 32,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/leon-push-v1.png",
+      "sourceFrame": 0,
+      "scale": 0.2608695652173913,
+      "width": 87,
+      "height": 144,
+      "left": 47,
+      "top": 32,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/leon-push-v1.png",
+      "sourceFrame": 1,
+      "scale": 0.2608695652173913,
+      "width": 112,
+      "height": 144,
+      "left": 46,
+      "top": 32,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/leon-push-v1.png",
+      "sourceFrame": 3,
+      "scale": 0.2608695652173913,
+      "width": 72,
+      "height": 144,
+      "left": 55,
+      "top": 32,
+      "baseline": 176
+    }
+  ]
+}

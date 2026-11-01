@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create an original warm hand painted 2D RPG background, 3:2 landscape, camera elevated diagonally DOWN roughly 50 degrees, medium broad room. First reference gives tower record hut narrative, second reference is the APPROVED game rendering style, gentle warm colors and visible brushwork. A humble tower keeper's record hut, pale aged stone and timber walls, modest shelves of ledgers at back and sides, rolled maintenance maps, a small back window with mild daylight, a plain closed side door at far right. Entire lower 70 percent is empty wooden plank FLOOR viewed from above, enough open walking space on all sides of a future movable table. Background wall-floor seam at roughly y25 percent, no perspective vanishing horizon far away. Do NOT draw any central table, chairs, people, papers on floor, reception counter, banner, signs, text, HUD, giant foreground props. Furnishing confined to upper/back and outer edges. Render door/bookshelves to match small RPG bodies, not towering detailed photoreal props. The independent table will later be placed centered x52,y52 with NPCs seated behind and visitors around lower floor. Leave the middle and lower floor unobstructed. No transparent background.",
+  "references": [
+    "public/story-stage/registry.webp",
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/tower-registry-v1.png"
+}

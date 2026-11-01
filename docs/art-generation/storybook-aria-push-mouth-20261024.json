@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-24",
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/aria-push-2-v3.png",
+  "reference": "assets/source/storybook/aria-push-2-v2.png",
+  "prompt": "Precise edit of this existing transparent sprite. Change ONLY the open smiling mouth to a small closed gentle smile. Keep face shape, eyes, head, hair, pose, hands, fingers, legs, feet, costume and all transparent margins exactly unchanged. No rescaling or recentering, same image dimensions. Do not redraw the body or change the walking phase. Preserve true transparent alpha. Only a tiny mouth correction to keep facial expression stable during a walking animation.",
+  "review": "Closed-mouth correction connected in aria-push-v3. PC frame comparison checked. Other costume/detail variation remains."
+}

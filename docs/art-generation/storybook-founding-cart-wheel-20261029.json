@@ -1,0 +1,14 @@
+{
+  "purpose": "Separate the single wheel of the 4-10 adventure cart while retaining the tray, grips and separately drawn cargo.",
+  "tool": "built-in image_gen",
+  "reference": "public/storybook-study/garden-handcart-v2.webp",
+  "prompt": "Edit the supplied transparent pixel-art sprite of the empty wooden garden handcart. It is a game sprite whose wheel must be animated as a separate layer. Remove the single large wooden wheel completely, including rim, spokes and hub. Reconstruct only the small parts of the wooden cart side and frame previously hidden by the wheel; everywhere outside the cart leave fully transparent. Keep exactly the original empty open rectangular wooden tray, its wood grain, corner posts, dark metal fittings, two curved shafts, crossbar handle, their positions and tips, perspective, palette, lighting, outlines and pixel-art style. Maintain the same canvas framing and exactly the same size and position of the tray and both shaft tips. Do not add cargo, a second wheel, shadows, ground, characters, scenery, or text. Transparent background.",
+  "generated": "exec-81552684-0957-4518-9cd3-07641252b58d.png",
+  "source": "assets/source/storybook/founding-cart-body-v1.png",
+  "sourceSha256": "0246044cda20306b7d74644b8e79566abdf1c2d7403e0204b582023cf3cd03ce",
+  "build": "node scripts/build-storybook-founding-cart-body.mjs",
+  "output": "public/storybook-study/founding-cart-body-v1.webp",
+  "outputSha256": "7ab708c2bb256e4a95a05fc701546f9870eb06c174f54d54c92f031703e0620e",
+  "reusedWheel": "public/storybook-study/brekka-cart-wheel-v1.webp",
+  "registration": "Source canvas 512 x 320. In the established 504 x 312 rendered coordinate system: origin (252,292), wheel centre (100,207), width 132 and height 152."
+}

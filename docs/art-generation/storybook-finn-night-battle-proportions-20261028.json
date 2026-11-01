@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Bring Finn's bandaged night battle poses closer to his standing and walking proportions.",
+  "generator": "image_gen.imagegen",
+  "build": "node scripts/build-storybook-finn-balanced.mjs night-battle-balanced-v2",
+  "source": "assets/source/storybook/finn-night-battle-balanced-v2.png",
+  "output": "public/storybook-study/finn-night-battle-balanced-v2.webp",
+  "generated": "exec-bf55aab8-e4e5-449e-9977-74f75cf63c8b.png",
+  "references": ["assets/source/storybook/finn-night-battle-v1.png", "assets/source/storybook/finn-conversation-balanced-v3.png", "assets/source/storybook/finn-battle-balanced-v2.png"],
+  "prompt": "Edit image 1, the four-frame battle sprite sheet of Finn after his hand was injured. Images 2 and 3 show the same adult character with correct head-to-body proportions. Make the head and hair smaller to match those references at the same body height, naturally lengthening the torso and legs. Preserve exactly the four poses in image 1 in the same order, including dagger held down, dagger raised ready, arm extended striking, dagger ready. Crucially, the RIGHT hand holding the dagger has a visible thin WHITE BANDAGE in all four frames; the other hand is bare. Keep the dagger blade direction and grip. Preserve his weary mature face and subtle stubble, dark low-tied hair, worn olive coat, cream shirt, trousers and boots. All figures same body scale and ground baseline, four equal columns, full body inside generous transparent gutters. Transparent background, no extra weapons, props, text or shadows."
+}

@@ -1,0 +1,59 @@
+.storybook-reader-stage[data-art="mountain-road-v1"] [data-actor="aria"] {
+  --study-perch-art: url("/storybook-study/aria-perch-v1.webp");
+}
+.storybook-reader-stage[data-art="mountain-road-v1"] [data-actor="leon"] {
+  --study-perch-art: url("/storybook-study/leon-perch-v1.webp");
+}
+.storybook-reader-stage[data-art="mountain-road-v1"] [data-actor="mira"] {
+  --study-perch-art: url("/storybook-study/mira-perch-v1.webp");
+}
+.storybook-reader-stage[data-art="mountain-road-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="36"],
+    [data-frame="37"],
+    [data-frame="38"],
+    [data-frame="39"],
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  background-image: var(--study-perch-art);
+  background-size: 400% 100%;
+  background-position: var(--study-perch-position, 66.666667%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-art="mountain-road-v1"]
+  .story-stage-sprite:is([data-frame="37"], [data-frame="41"]) {
+  --study-perch-position: 100%;
+}
+.storybook-reader-stage[data-art="mountain-road-v1"]
+  .story-stage-sprite:is(
+    [data-frame="40"],
+    [data-frame="41"],
+    [data-frame="42"],
+    [data-frame="43"]
+  ) {
+  scale: -1 1;
+}
+.storybook-reader-stage[data-art="mountain-road-v1"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: var(--study-perch-art);
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage[data-art="mountain-road-v1"] .story-stage-item[data-art="stone"] {
+  background-image: url("/storybook-study/seat-rock-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="mountain-road-v1"] .story-stage-item[data-art="tea-rock"] {
+  background-image: url("/storybook-study/tea-rock-v1.webp");
+  image-rendering: auto;
+}

@@ -20,6 +20,12 @@
 .phone-game .phone-adventure-running {
   --chat-rows: 5;
 }
+@media (min-width: 760px) {
+  /* The tower work and its participants occupy the lower part of this scene. */
+  .phone-game .phone-adventure[data-restoration-scene="true"] {
+    --chat-rows: 2;
+  }
+}
 .phone-game .phone-adventure > .journey-banter,
 .phone-game .phone-adventure > .journey-banter:focus,
 .phone-game .phone-adventure > .journey-banter:active,
@@ -46,6 +52,11 @@
   .phone-game .phone-adventure-running {
     --chat-rows: 3;
   }
+}
+/* Keep the people around the lower edge of the 4-7 garden visible. */
+.phone-game .phone-adventure[data-records-scene="true"],
+.phone-game .phone-adventure[data-seedling-battle="true"] {
+  --chat-rows: 2;
 }
 @media (max-height: 650px) {
   .phone-game .phone-adventure {

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Exactly FOUR separate original game props in ONE horizontal row on transparent background, generous gaps, no text or shadows, all in matching warm painterly2D RPG style elevated45degree3quarter camera. LEFT to RIGHT: 1 small portable WOODEN WORK BARRIER, horizontal brown crossrail and two short vertical legs, sturdy simple fence section a worker can carry by crossrail, seen topfront, no ground. 2 tangled pulled-out brown grass ROOTS and a few clinging dirt crumbs, small low irregular clump, no greenery or moss. 3 compact stone mason TOOL SET: short wooden handled mallet and two iron chisels together, no tool larger than forearm. 4 loose short ivory cleaning rag folded casually, no glow, no blood. Each object complete with clean cutout alpha, no people or hands, no background.",
+  "references": [
+    "public/storybook-study/garden-pot-v1.webp"
+  ],
+  "source": "assets/source/storybook/restoration-props-v1.png"
+}

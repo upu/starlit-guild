@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-25",
+  "source": "assets/source/storybook/village-lane-loop-v1.png",
+  "output": "public/storybook-study/village-lane-loop-v1.png",
+  "reference": "public/storybook-study/warehouse-road-v1.png",
+  "prompt": "Create an original seamless HORIZONTALLY repeating side-scrolling RPG environment tile, 3:2 landscape. Use the provided image ONLY as style/color/scale reference: warm hand-painted storybook medieval rural town, elevated three-quarter orthographic view from above, soft ochre sandstone paving, moss in joints, muted olive greenery, painterly outlined detail. This is a new adjacent village lane, NOT the warehouse image. No people, no vehicles, no text, no UI, no buildings, no horizon or sky. Upper 28 percent: low stone garden boundary and dense shrubs, consistent horizontal level across full width. Middle 60 percent: wide clear continuous flat pale ochre cobbled lane for tiny adventurers to walk horizontally left/right. Lower 12 percent: sparse tiny weeds and low verge, no tall foreground occlusion. Cobbles small, same size from left to right, approximately 40 stones across image width. Maintain consistent elevated camera angle, do NOT introduce central vanishing point or diagonal main path. CRITICAL: left and right edges must connect seamlessly with matching paving rows, shrub and wall bands, illumination and color; imagine this tile repeated end to end infinitely. Avoid distinctive isolated landmark repetition. Consistent warm diffuse daylight, no dark edge vignette. The playable foot zone around 65-80% image height must be entirely clear pavement. Full opaque image."
+}

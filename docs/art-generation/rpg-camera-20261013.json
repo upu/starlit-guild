@@ -1,0 +1,93 @@
+{
+  "tool": "built-in image_gen",
+  "purpose": "Elevated RPG camera for all chapter 1–4 dialogue backgrounds and adventure scenery; existing forest adventure already uses an elevated view.",
+  "referenceCommit": "bbd9c7ded5eb9ebd2eed50368387ae5ece805766",
+  "records": [
+    {
+      "file": "assets/source/rpg-camera/warehouse-v1.png",
+      "references": [
+        "public/story-stage/town-shop.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Single 3:2 landscape background. The reference is a warehouse opening. Show a modest open-front trading warehouse in the UPPER HALF, with visible tiled awning roof at top and stacked sacks/crates inside. Loading threshold crosses y=57-59%, between x22-70%. Cobblestone apron immediately outside fills lower half, for a separately composited small packing table at x47% y68% and a merchant behind it at x51% y60%. Table is one step from the warehouse threshold. Building scale: door opening heightabout30% ofcanvas. No table or cart drawn. Roof/wall left/top, narrow street at right running laterally, not receding to horizon. Camera looks DOWN onto threshold and ground. Render at1536x1024.",
+      "generatedFile": "exec-98a7ed38-fbf5-4a46-980f-927e9f646ca4.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/tower-v1.png",
+      "references": [
+        "public/story-stage/tower-base-moss.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Single1536x1024 3:2 landscape. View DOWN on the base of the same old ROUND stone tower, close enough to see its continuous foundation. Upper right is tower wall and wooden door, tops of entry steps visible, curved masonry meets the ground around x48%,y60% and x75%,y51%. Whole lower half is level clear dirt/cobblestone footpath. Crucial: SMALL ordinary moss patch grows FLAT in the mortar joint of lowest connected tower masonry around x48%,y60%; muted soft yellow-green with faintest light, no bright spot/crystal/orb/triangle/isolated rock. Kneeling sprite will have feet x44%,y66% and handx48%,y61%. It must touch the actual tower wall. No standalone moss stone/altar. Trees and descending hillside path only at far left; no horizon, no sky. This is camera change, same tower.",
+      "generatedFile": "exec-5b65a12e-f6a9-43c9-80b5-de91f8d3ae94.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/interiors-v1.png",
+      "references": [
+        "assets/source/story-stage/later-interiors-v1.png"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Create a production background ATLAS, exactly 2 columns by2rows equal panels without gutters or border, overall3:2 landscape ideally3072x2048. Each panel is3:2. SAME LOCATIONS IN SAME PANEL ORDER as reference. Top-left herbal medicine room (bottles and hanging herbs alongbackwall, bedtopupperright); top-right warm dining room (tables at upperedge/sides, centralfloorclear); bottom-left manor garden courtyard (terrace with flowerbeds and clippedhedges aroundedges, buildingcornerupperright); bottom-right carpenter workshop (tools, planks and workbench alongupperwall, doorway right). Raise camera to50degrees DOWN inALLfourpanels. Cutaway rooms withceilingsremoved so plankfloorfills65% ofeachpanel, furniture topsvisible, shortwalls upperedgeonly. Outdoorpanel NOsky horizon. All central/lower floors clear for animated sprites. Do not reuse frontal viewpoint.",
+      "generatedFile": "exec-8ab20f6b-31b6-4e02-a5d8-141cd84822c4.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/streets-v1.png",
+      "references": [
+        "assets/source/story-stage/later-streets-v1.png"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Create a production background ATLAS exactly2columns by2rows, equal panels, no gutters/borders/text, overall3:2 landscape ideally3072x2048. Eachpanel3:2. Keep reference panel order. Raise every camera to50degrees lookingDOWN, no horizon, visible roofs/furnituretops, orthographic RPG map feel; central lower60% clear walkableground. Top-left mountain trail with pines and stone retaining bank atupperleft; top-right Berne town cobbled street with half-timberstonehouses with visible terracottaroofs framingupperedges; bottom-left Brekka sidealley smallbrewery withcoppervat andbarrelsupperleft; bottom-right rural villager's cottage and herb garden upperleft/top. Scenes look down ontoground, not alongstreet. Fine warm pixelart.",
+      "generatedFile": "exec-82405b67-c3b2-4f92-8eab-75d27afdf39f.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/worksites-v1.png",
+      "references": [
+        "assets/source/story-stage/later-worksites-v1.png"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Create a production background ATLAS exactly2columns by2rows, equal panels, no gutters/borders/text, overall3:2 landscape ideally3072x2048. Eachpanel3:2. Keep reference panel order. Raise every camera to50degrees lookingDOWN, no horizon, visible roofs/furnituretops, orthographic RPG map feel; central lower60% clear walkableground. Top-left stonemason's yard, workshop and stacked masonry slabs alongupperedge; top-right dim wooden storeroom, shelves and sacks againstbackwall, cutaway room floorclear; bottom-left rows oflow moss-growing stonebeds surroundingclear aisle, smalltower baseupperright; bottom-right registry records room withbookshelves andcounteronlyalongtopwall, centralfloorexpansive. Cutaway roofs removed indoors. Outdoor no horizon.",
+      "generatedFile": "exec-033e3632-0107-4d79-93cc-60619ae3c3b8.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/locations-v1.png",
+      "references": [
+        "assets/source/story-stage/later-locations-v1.png"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Create a production background ATLAS exactly2columns by2rows, equal panels, no gutters/borders/text, overall3:2 landscape ideally3072x2048. Eachpanel3:2. Keep reference panel order. Raise every camera to50degrees lookingDOWN, no horizon, visible roofs/furnituretops, orthographic RPG map feel; central lower60% clear walkableground. Top-left night stonebridge/riverside paved landing, darkblue water upperedge, two warm lamps, moonlightbutNOsky; top-right warehouse office cutaway, woodenfloorclear withsmallwritingdeskatupperwall; bottom-left home sickroom cutaway, bedtop visibleupperright, fireplaceupperleft, floorclear; bottom-right newmossbeds inforestclearing, shallow irrigationchannelupperright, fenceandplantsupperedge, dirtfloorclear. Same locationidentity andtimeofday.",
+      "generatedFile": "exec-2a4b0475-ad42-4c97-ade9-9945ffacdb55.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/meeting-v1.png",
+      "references": [
+        "public/story-stage/meeting-path.webp",
+        "public/story-stage/town-exit.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Background ATLAS exactly2columns×2rows equal seamless-edge panels withoutgutters/borders. Eachpanel3:2, overall3:2 ideally3072x2048. Not onecontinuous image: fourdistinct scenes. ALLPANELS elevated50degree DOWN camera, roofs/treetops/floor visible, no horizon/sky. Lower60% clearwalkablearea, peoplewillbe small. Top-left: DAY woodland fork, bigoldtreeupperleft and two walkingpaths leadingupperleft/upperright aroundtreeisland, broad dirtjunction foreground. Top-right: exactlySAMEwoodlandfork geometry atSUNSET warmgoldenlongshadows. Bottom-left: exactlySAMEwoodlandfork geometry atNIGHT coolblue moonlight, nolights/moss onground. Bottom-right: edgeofsmalltown atSUNSET, modest half-timbercottagesupperleft, visibleterracottaroofs, shortfenceupperright besideoutgoingruraldirtroad, openlowerground. No carts/bags/people drawn.",
+      "generatedFile": "exec-c6d1b5f9-278d-43de-ac6e-3ff6c2a48b59.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/field-v1.png",
+      "references": [
+        "public/story-stage/hill-path.webp",
+        "public/story-stage/forest-floor.webp",
+        "public/story-stage/tower-base-moss.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Background ATLAS exactly2columns×2rows equal seamless-edge panels withoutgutters/borders. Eachpanel3:2, overall3:2 ideally3072x2048. Not onecontinuous image: fourdistinct scenes. ALLPANELS elevated50degree DOWN camera, roofs/treetops/floor visible, no horizon/sky. Lower60% clearwalkablearea, peoplewillbe small. Top-left: daytime grassyhill trail, shortwoodfencesatupperedges, smallroundstonetower visibleupperright on rise; groundviewdown with no distantpanoramahorizon. Top-right: SAMEhilltrailatnight blue moonlight and softwindowlightsontower. Bottom-left: shaded forestfloor clearing, treetrunks/rootsandfernsatupperedges, low naturalstoneledgeupperright, cleargroundcentre. Bottom-right: exteriorentranceofroundoldstonetower vieweddown; contiguouscurvedwallandentrydoorupperright, lowfoundationendsy50%, openstone/dirtforecourtbelow. No isolatedmossrock/noglowingtreasure.",
+      "generatedFile": "exec-91ddb1f3-796a-489a-ac18-d8f5eec393ba.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/waterways-v1.png",
+      "references": [
+        "public/story-stage/drain-blocked.webp",
+        "public/story-stage/drain-cleared.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. Background ATLAS exactly2columns×2rows equal seamless-edge panels withoutgutters/borders. Eachpanel3:2, overall3:2 ideally3072x2048. Not onecontinuous image: fourdistinct scenes. ALLPANELS elevated50degree DOWN camera, roofs/treetops/floor visible, no horizon/sky. Lower60% clearwalkablearea, peoplewillbe small. Top-left: towerdrainage culvert atupperright incontinuousoldstonemasonry, fallenwoodlog blockingarch, tricklewater; dirtworkareaacrossmiddle/lower60%. Top-right: EXACTSAMEculvert/environment/camera, nowlogremovedtosideupperleft, archopenandcleanwaterflow. Bottom-left: dampforestwetlandclearing, shallowstreamrunningalongupperedge, mossyrocks&fernsedges, broadfirmdirtwalkingbankacrosscentre/lowerpart. Bottom-right: oldstonewaterchannelrunningalongupperedgeofforestworksite, agingmasonry smallarchupperright, dirtpathforeground, ordinaryweeds. Keepwateroutof centralwalkingarea. ALL viewedDOWN at50degrees no skyline.",
+      "generatedFile": "exec-716afcce-c620-4e21-86ad-fdaa765374d7.png"
+    },
+    {
+      "file": "assets/source/rpg-camera/roads-v1.png",
+      "references": [
+        "public/scenery/town-deliveries-background.webp",
+        "public/scenery/riverside-manor-background.webp",
+        "public/scenery/berne-background.webp"
+      ],
+      "prompt": "Production background art for the existing Japanese fantasy pixel-art RPG STARLIT-GUILD. Repaint from an elevated 50-degree downward camera, classic 3/4 RPG map perspective, weak/orthographic perspective: clearly visible top surfaces and walkable ground, NO horizon or sky, NOT street-level perspective. Same warm handmade timber/stone materials, greenery, carefully clustered pixel-art shading and crisp edges as references. No people, creatures, captions, text, UI or separate foreground quest objects. Empty walkable staging region across x15-85%, y48-85% for small sprites (standing person height18% of a panel). Preserve each location's identity. CreateproductionbackgroundATLAS 2columns×2rows equalpanels, nogutters/borders/text, ideally3072x2048overall3:2. Eachpanel3:2. FOURadventurewalkinglocations: top-left Linde tradingstreet withwarehousewoodfronts and modestshopawningsupperedges, crate/sackstacksagainstwalls, clearcobblestoneroadrunsLEFTtoRIGHTacrossmiddle/lower60%; top-right eveningruraltraderoadwithfencesandnearbycottageedges, goldenlongshadows, clear dirtwalkinglaneLEFTtoRIGHT throughcentre; bottom-left riversidemanorgarden withstonehouseupperleft, clippedhedgesflowerbedsupperedge, stripofriverbeyondlowgardenwallattop, clearpavedterraceLEFTtoRIGHTmiddle/lower; bottom-right Berne riversidecobblestonequaywithstonebuildingsupperleftandright, lowparapetandnarrowvisiblebluewater/archedstonebridgealongtopedge, clear broadquayLEFTtoRIGHTmiddle/lower. CRITICAL elevated50degreeDOWN camera,noperspectivevanishingpoint, NO SKY ORHORIZON. Visible tops of roofs, awnings, walls, paving. Existingreferencesarelocation/materialreferenceONLY, change theirfrontalcamera. Handcraftedpixelartlikeothernewstorybackgrounds,notphotorealistic. Do not draw carts or characters; thesespritesrenderseparately.",
+      "generatedFile": "exec-487e6ddd-2692-4dc9-921f-b86ef83a746b.png"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-29",
+  "purpose": "Trial view of the warehouse at the end of the chapter 4 return journey, before the existing upstairs conversation.",
+  "generator": "image_gen.imagegen",
+  "generated": "exec-fa3ca12c-d70f-4b04-bb07-23c4fbc871d7.png",
+  "source": "assets/source/storybook/founding-linde-warehouse-v1.png",
+  "output": "public/storybook-study/founding-linde-warehouse-v1.png",
+  "sha256": "6e165826ba7a38994d132685888c33b8b1298f71d3966500c8acf17641e38e30",
+  "references": ["public/storybook-study/warehouse-road-v1.png", "public/storybook-study/founding-office-v2.png"],
+  "prompt": "Use case: illustration-story. Create one original landscape game background for STARLIT-GUILD, a warm hand-painted 2D RPG scene viewed obliquely downward at about 50 degrees. Image 1 is reference for painted style, line weight, cobblestones, vegetation and scale only; image 2 is the already established upper-floor room, reference for warm timber/plaster construction and windows. Depict the OUTSIDE of a DIFFERENT modest two-storey warehouse in the town of Linde, where a small group has just arrived. The warehouse has a clearly visible upper storey with two simple wooden windows, a large warehouse entrance below and ordinary adjoining storage doors; the stairs to the upper room are inside and not shown. It must feel like a practical working warehouse, not a giant guild hall, a house, a castle, or the exact warehouse in image 1. Warm late-afternoon daylight, earthy wood, cream plaster and restrained green plants. Composition 3:2 wide, building along upper half, open level cobbled space across central and lower half for five tiny player sprites and a handcart, clear ground at bottom, readable architecture, camera angle and object scale consistent with reference 1. Background only: absolutely no people, characters, carts, furniture, signs, lettering, symbols, UI or watermarks. No foreground objects obscuring the playable ground. No changes to established geography: do not add landmarks, towers, rivers or mountains.",
+  "integration": "Trial-only background, with a fade through darkness after the cart reaches the destination. Existing upstairs story remains unchanged."
+}

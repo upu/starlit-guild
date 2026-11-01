@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-30",
+  "tool": "OpenAI built-in image_gen",
+  "source": "assets/source/storybook/waterway-marker-v1.png",
+  "output": "public/storybook-study/waterway-marker-v1.webp",
+  "references": [
+    "public/storybook-study/waterway-repair-stone-v1.webp",
+    "public/storybook-study/leon-forage-v1.webp"
+  ],
+  "prompt": "Use case: stylized-concept. Asset type: one small loose ground marker for a warm hand-painted 2D RPG. A practical marker made from TWO small irregular gray river pebbles resting together with a narrow faded red cloth strip tucked between them, the short ends lying against the stones. This is an ordinary temporary marker that a person could put down with one hand on dry soil, not a construction block, signpost, flagpole, large boulder, glowing artifact or treasure. Three-quarter view from diagonally above, matching reference 1's natural stone texture and reference 2's warm outlined painted pixel-game style. One isolated object only, fitting inside a roughly square canvas with generous transparent margin; full contours, genuinely transparent alpha, no ground, no cast shadow, no text, no human or extra objects. Readable when displayed very small.",
+  "registration": "scripts/build-storybook-waterway-marker.mjs"
+}

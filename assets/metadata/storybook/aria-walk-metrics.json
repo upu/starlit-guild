@@ -1,0 +1,33 @@
+{
+  "referenceHeadWidth": 56,
+  "frames": [
+    {
+      "frame": 0,
+      "scale": 0.09564596716630978,
+      "height": 139,
+      "headWidth": 58.82226980728052,
+      "baseline": 176
+    },
+    {
+      "frame": 1,
+      "scale": 1,
+      "height": 133,
+      "headWidth": 58,
+      "baseline": 176
+    },
+    {
+      "frame": 2,
+      "scale": 1,
+      "height": 133,
+      "headWidth": 54,
+      "baseline": 176
+    },
+    {
+      "frame": 3,
+      "scale": 0.09564596716630978,
+      "height": 133,
+      "headWidth": 55.7615988579586,
+      "baseline": 176
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-30",
+  "generator": "image_gen.imagegen",
+  "mode": "built-in edit",
+  "registration": "node scripts/build-storybook-waterway-dusk.mjs",
+  "dimensions": [1536, 1024],
+  "sourceSha256": "018742de9aa49788e8f9a97d1818d52fdca3056c85fd6aa21081129f56bfd641",
+  "outputSha256": "dcd5b114199c1266a3b828e999b7c78aeae70cbc97892235c5f64ebcfbfcdf72",
+  "source": "assets/source/storybook/drain-cleared-dusk-v1.png",
+  "output": "public/storybook-study/drain-cleared-dusk-v1.png",
+  "references": [
+    "public/storybook-study/drain-cleared-v1.png"
+  ],
+  "generated": "exec-3f381078-22bc-4d50-ab42-75098b06142f.png",
+  "prompt": "Use case: lighting-weather and precise-object-edit. Edit target: the provided approved 3:2 RPG background of the cleared tower drain. Create one matching 1536x1024 background, the SAME location and the EXACT same elevated camera, scale, framing and layout. Preserve the arched drain at upper right, every tower stone and large rock, trees, cut log sections beside the upper-left path, the shallow water flowing toward the right edge, and the large open dry ground for small RPG characters. Change the time to early dusk: soft muted amber light from the upper left, cool blue-violet shade, low warm reflected highlights on the water, no hard bright noon light. Keep all terrain readable and moderately bright enough for dialogue; do not turn it into deep night. The tower remains unlit, no glowing windows, no lanterns. The existing damp moss should remain rooted in the tower masonry, not scattered objects: along the lower left foot of the arch, around x=67%-71%, y=31%-40% of the image, reveal several thin overlapping moss leaves following existing stone joints, attached tightly to the damp stone and partly tucked in its cracks. Small natural irregular leaves, dull green with only a very faint cool sheen; match the surrounding texture. Do not add a rock or mound or a separate island, pot, floating plant, collectible, spotlight or magical aura. Do not add people, tools, baskets, text, interface, signage or watermark. Preserve the warm hand-painted, delicately outlined original 2D RPG art with a slightly pixel-art feel, the existing fine detail and proportions. Only dusk lighting and the attached moss detail should change. No new architecture, new path, extra opening, or wider stream."
+}

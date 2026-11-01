@@ -1,0 +1,6 @@
+{
+  "prompt": "Redraw FIRST reference blocked drainage outlet as warm hand-painted 2D RPG scenery matching SECOND reference forest brushwork and soft outlines. Preserve identical geography and key object locations: stone tower foundation along upper-right, small low arched drain in upper-right, fallen log and soil partially clogging mouth, tiny stream exits toward right edge, mossy rocks beside opening, woodland path behind on left, walkable dirt foreground. Elevated three-quarter downward camera, no sky or horizon, top surfaces visible, scene for small characters about one sixth image height. 3:2 landscape. Maintain blocked state, do NOT clean or repair it. Moss is naturally on masonry joints, not separate magic rock. No characters, props, tools, text or UI. Warm filtered daytime light, shaded green foliage, readable earthy floor.",
+  "source": "assets/source/storybook/drain-blocked-v1.png",
+  "output": "public/storybook-study/drain-blocked-v1.png",
+  "generated": "exec-39565ea8-d967-476e-b4d1-6cb14790941c.png"
+}

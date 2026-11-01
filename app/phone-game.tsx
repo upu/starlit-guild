@@ -319,6 +319,20 @@ function usePhoneGameModel(game: Game): PhoneFrameModel {
   };
 }
 
-export function PhoneGame({ game }: { game: Game }) {
-  return <PhoneFrame model={usePhoneGameModel(game)} />;
+export function PhoneGame({
+  game,
+  restorationStudy = false,
+  reviewPaused = false,
+}: {
+  game: Game;
+  restorationStudy?: boolean;
+  reviewPaused?: boolean;
+}) {
+  return (
+    <PhoneFrame
+      model={usePhoneGameModel(game)}
+      restorationStudy={restorationStudy}
+      reviewPaused={reviewPaused}
+    />
+  );
 }

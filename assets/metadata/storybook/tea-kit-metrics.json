@@ -1,0 +1,32 @@
+{
+  "medicine-closed": {
+    "width": 220,
+    "height": 196,
+    "foot": 260
+  },
+  "medicine": {
+    "width": 220,
+    "height": 233,
+    "foot": 260
+  },
+  "kettle": {
+    "width": 240,
+    "height": 239,
+    "foot": 260
+  },
+  "teapot": {
+    "width": 240,
+    "height": 161,
+    "foot": 260
+  },
+  "teapot-open": {
+    "width": 240,
+    "height": 122,
+    "foot": 260
+  },
+  "empty-cup": {
+    "width": 240,
+    "height": 187,
+    "foot": 260
+  }
+}

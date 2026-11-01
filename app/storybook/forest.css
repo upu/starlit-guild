@@ -1,0 +1,89 @@
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-art="dish"] {
+  background-image: url("/storybook-study/sample-bowl-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-art="moss"] {
+  background-image: url("/storybook-study/moss-bowl-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-art="colony"] {
+  background-image: url("/storybook-study/moss-colony-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-art="cloth"] {
+  background-image: url("/storybook-study/folded-shawl-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-art="moss-jar"] {
+  background-image: url("/storybook-study/moss-jar-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-forest-study="true"] .story-stage-item[data-item="tower-jar"] {
+  background-image: url("/storybook-study/moss-jar-open-v1.webp");
+}
+.storybook-presentation[data-story="forest-wetland-return"]
+  .storybook-painted-stage[data-forest-study="true"]
+  [data-actor="aria"][data-moss-study]:not([data-moss-study=""])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/aria-forest-sample-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--forest-sample-frame) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-forest-study="true"] [data-actor="aria"][data-moss-study="reach"] {
+  --forest-sample-frame: 33.333333%;
+}
+.storybook-painted-stage[data-forest-study="true"] [data-actor="aria"][data-moss-study="show"] {
+  --forest-sample-frame: 66.666667%;
+}
+.storybook-painted-stage[data-forest-study="true"] [data-actor="aria"][data-moss-study="spread"] {
+  --forest-sample-frame: 100%;
+}
+.storybook-presentation[data-story="forest-wetland-return"]
+  .storybook-painted-stage[data-forest-study="true"]
+  [data-actor="aria"][data-moss-study="brace"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/aria-forest-carry-stand-v1.webp");
+  background-size: 100% 100%;
+  background-position: 0 0 !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation[data-story="forest-wetland-return"]
+  .storybook-painted-stage[data-forest-study="true"]
+  [data-actor="aria"][data-moss-study="brace"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/aria-forest-carry-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--forest-carry-frame, 0%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage
+  [data-actor="aria"][data-moss-study="brace"]
+  .story-stage-sprite[data-frame="9"] {
+  --forest-carry-frame: 33.333333%;
+}
+.storybook-painted-stage
+  [data-actor="aria"][data-moss-study="brace"]
+  .story-stage-sprite[data-frame="22"] {
+  --forest-carry-frame: 66.666667%;
+}
+.storybook-painted-stage
+  [data-actor="aria"][data-moss-study="brace"]
+  .story-stage-sprite[data-frame="23"] {
+  --forest-carry-frame: 100%;
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warmhandpainted2D RPGobjectsheetFOURseparatepropsONEhorizontalrowwidegutters elevated45degree3quarterdownview. Lefttoright:1smalloldironfastenerclaspwithonecornerfreshlybroken, tinysharpbrokenedge butnotweapon;2smallfoldedivorylinencloth withoneverymodestredbloodsmudge nearcorner, nocopiousblood;3thinwhiteivoryclothbandagewrappedascompactovalringaroundINVISIBLEpalmwrist, nohumanhandinside, fabriclayersclear;4empty mediumterracottaflowerpot matchinggardenpotreference, openrimanddarkemptyinside, noplantsoil. Completeobjectsnotclipped, finepaintedwarmoutlines, noperson,ground,shadows,text,extraneousitems.",
+  "references": [
+    "public/storybook-study/garden-pot-v1.webp"
+  ],
+  "source": "assets/source/storybook/night-hand-props-v1.png"
+}

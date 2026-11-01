@@ -1,0 +1,7 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Edit the first reference (four-frame walking sheet of original petite silver-lavender haired woman) to carry a light invisible sheet of paper. Preserve exact character identity, tired gentle face, floral hair ornaments, cream layered dress, brown boots, warm hand-painted elevated 3/4 view facing right, body and head size. Keep the original four leg phases, full feet, transparent margins. Change ONLY arm pose: one forearm extended toward screen right at waist height with open palm supporting invisible paper, other hand lightly steadying near edge. Same hands in all four frames, no paper or objects painted. Four distinct calm walking phases alternating support foot, slight passing foot lift, not running, no knee high steps. Reference2 provides identity/standing proportions. Do not change costume or make taller. Four equal horizontal cells, transparent background, no floor, text, shadows, borders.",
+  "source": "assets/source/storybook/mira-paper-walk-v1.png",
+  "output": "public/storybook-study/mira-paper-walk-v1.webp",
+  "review": "Single scale, 124-126px tall vs126px standing. Four frames apply only to paper-study scene via optional carryWalkFrames. Full circuit and floor-slip continuous verification pending."
+}

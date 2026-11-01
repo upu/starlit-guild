@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-28",
+  "purpose": "Finn body proportions aligned with Aria and Leon, while preserving pose semantics",
+  "generator": "image_gen.imagegen",
+  "build": "node scripts/build-storybook-finn-balanced.mjs",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/finn-conversation-balanced-v3.png",
+      "output": "public/storybook-study/finn-conversation-balanced-v3.webp",
+      "generated": "exec-854d5f01-cec4-4b2e-90cd-60abcff0f59d.png",
+      "prompt": "Edit FIRST image, the four-pose Finn game sprite sheet. FIRST is identity and exact four poses. SECOND is ONLY Leon's in-game body/head size benchmark; THIRD is Finn's adult face and costume identity reference. User says Finn's head is noticeably too large relative to Aria and Leon. Redraw all four Finn poses with the head INCLUDING hair significantly SMALLER (about 78–82 percent of its current width and height), while keeping each complete sprite's overall height, boot baseline and external cell layout unchanged. Lengthen shoulders, torso and legs to fill the released vertical space naturally; his head should occupy about 26–28% of standing height and be comparable to Leon's head width in SECOND when their full heights match. He is a slightly taller mature man, NOT a child, NOT a super-deformed giant-headed chibi. The result must still be a small warm hand-painted 2D RPG sprite with readable full body; do not turn it into photorealism. Preserve EXACTLY the four original gestures in order: relaxed hands, thoughtful chin, open palm speaking, hand behind head smiling. Preserve Finn's dark loosely tied hair, gray violet droopy eyes, faint stubble, tanned face, tired approachable lopsided smile, worn olive-charcoal long coat with understated ochre trim, cream open shirt, dark trousers and boots. Preserve character identity and ages from THIRD, not a handsome young boy. All four share EXACT same head size and body scale, feet on same ground baseline, consistent 3/4 facing right and readable hands. ONE row of 4 FULL BODY figures with exactly uniform cells, generous transparent gutters and empty margins around feet and hair. Genuine transparent alpha, no backdrop, floor, ground shadow, captions, lettering, props, frame lines, or cut-off body parts."
+    },
+    {
+      "source": "assets/source/storybook/finn-walk-balanced-v2.png",
+      "output": "public/storybook-study/finn-walk-balanced-v2.webp",
+      "generated": "exec-c35d8924-84b6-4f66-9919-60cb5b98c517.png",
+      "prompt": "Edit the FIRST reference sprite atlas of Finn for STARLIT-GUILD. The SECOND reference is the new correct Finn proportions and appearance, and the THIRD is his identity reference. Four columns and one row; preserve four distinct alternating foot positions in a believable walking cycle, including passing and planted feet. His head including hair must be smaller relative to torso and legs, matching the SECOND reference, and his adult body must feel similar in head-to-body proportions to the corrected standing character. Keep his specific adult face, drooping eyes, dark brown low-tied hair, weathered coat, colors and warm painted RPG style. Do not turn him into a young cute boy. Keep each pose's apparent body height and ground contact consistent with the original: crouching stays shorter. Keep all body parts and hair inside their own equal cells with generous empty gutters. No labels, shadows, scenery, props or background. Produce a clean transparent sprite sheet, precisely same row and column arrangement as first reference."
+    },
+    {
+      "source": "assets/source/storybook/finn-handheld-balanced-v2.png",
+      "output": "public/storybook-study/finn-handheld-balanced-v2.webp",
+      "generated": "exec-73cb6998-8673-4092-8bbf-ceacf6f71d71.png",
+      "prompt": "Edit the FIRST reference sprite atlas of Finn for STARLIT-GUILD. The SECOND reference is the new correct Finn proportions and appearance, and the THIRD is his identity reference. Four columns and two rows. Preserve each exact pose and ordering: standing with hands together, crouching with hands extended, rising, standing holding, and the four walking poses in the second row. Keep hands and their gestures in the same relative positions, with a natural alternating gait. His head including hair must be smaller relative to torso and legs, matching the SECOND reference, and his adult body must feel similar in head-to-body proportions to the corrected standing character. Keep his specific adult face, drooping eyes, dark brown low-tied hair, weathered coat, colors and warm painted RPG style. Do not turn him into a young cute boy. Keep each pose's apparent body height and ground contact consistent with the original: crouching stays shorter. Keep all body parts and hair inside their own equal cells with generous empty gutters. No labels, shadows, scenery, props or background. Produce a clean transparent sprite sheet, precisely same row and column arrangement as first reference."
+    },
+    {
+      "source": "assets/source/storybook/finn-battle-balanced-v2.png",
+      "output": "public/storybook-study/finn-battle-balanced-v2.webp",
+      "generated": "exec-10e728fb-56ce-4ec4-80c3-c7d0c6582e5b.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Keep exactly the four dagger poses, dagger hand and blade direction as shown. Keep four columns, one row. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, tired eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic; do not make him young or cute. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-pull-balanced-v3.png",
+      "output": "public/storybook-study/finn-pull-balanced-v3.webp",
+      "generated": "exec-6e5a7373-05a3-45fa-a9a7-dc4e40e5031b.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Keep the four forward leaning pulling gait poses, rear hand position and alternating foot positions. Keep four columns, one row. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, tired eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic; do not make him young or cute. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-earthwork-balanced-v2.png",
+      "output": "public/storybook-study/finn-earthwork-balanced-v2.webp",
+      "generated": "exec-70a45c63-e73f-4e26-9f3f-80ce2e088608.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Keep four poses exactly: standing, then three low kneeling trowel positions. Keep trowel and grip. Keep four columns, one row. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, tired eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic; do not make him young or cute. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-seat-balanced-v3.png",
+      "output": "public/storybook-study/finn-seat-balanced-v3.webp",
+      "generated": "exec-7ed16fc6-81cb-414f-a744-fd976dfcf2f2.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns and one row: standing followed by three distinct seated gestures; preserve sitting height and each gesture. Shrink his head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, stubble, drooping eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Seated and kneeling poses stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-sit-down-balanced-v2.png",
+      "output": "public/storybook-study/finn-sit-down-balanced-v2.webp",
+      "generated": "exec-dc24139c-bb3d-4db4-a7b4-a43fd5444aab.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns and one row: standing then three successive lowering-to-seated poses; keep their gradual decreasing height. Shrink his head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, stubble, drooping eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Seated and kneeling poses stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-paper-seat-balanced-v2.png",
+      "output": "public/storybook-study/finn-paper-seat-balanced-v2.webp",
+      "generated": "exec-48c85526-6360-4125-b2bf-51294d06d92d.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns and one row: standing followed by three seated poses with hands gesturing in exact directions. Shrink his head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, stubble, drooping eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Seated and kneeling poses stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-chair-balanced-v3.png",
+      "output": "public/storybook-study/finn-chair-balanced-v3.webp",
+      "generated": "exec-e9ef7284-69da-4880-9977-81abac8786ab.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns and two rows: preserve all eight poses and their order, standing, walking with hands forward and low crouches, keeping hand position. Shrink his head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve Finn's adult face, stubble, drooping eyes, dark brown low-tied hair, coat, clothes, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Seated and kneeling poses stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-tray-balanced-v2.png",
+      "output": "public/storybook-study/finn-tray-balanced-v2.webp",
+      "generated": "exec-4d0ab962-11b0-4673-b7d0-0e1539dd8e9e.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns, two rows: preserve all eight poses including the cupped hands, walking and crouching; hands must stay together to carry a separate item. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-door-balanced-v2.png",
+      "output": "public/storybook-study/finn-door-balanced-v2.webp",
+      "generated": "exec-089f7e84-9efd-4944-a4ca-1893254af37e.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns, one row; preserve neutral, fist up, fist extended to knock, startled expressions. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-cloth-balanced-v2.png",
+      "output": "public/storybook-study/finn-cloth-balanced-v2.webp",
+      "generated": "exec-894c445c-e546-4d91-831c-9f46b8fe02c2.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns, two rows; preserve all eight poses including forward hands and crouch. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-push-balanced-v2.png",
+      "output": "public/storybook-study/finn-push-balanced-v2.webp",
+      "generated": "exec-7906154c-636c-4820-8edc-12c900c0e34a.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns, two rows; preserve all eight poses including two hands forward, walking, crouching and reaching. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Kneeling stays low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-pull-scene-balanced-v2.png",
+      "output": "public/storybook-study/finn-pull-scene-balanced-v2.webp",
+      "generated": "exec-38c83ec8-f2eb-4db4-a10a-04862d4bdbb7.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns one row, preserve the four pulling stride poses, both hands and foot positions. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Sitting and kneeling stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-pat-balanced-v2.png",
+      "output": "public/storybook-study/finn-pat-balanced-v2.webp",
+      "generated": "exec-0e4da3ef-d477-4510-9718-b1fc7fed4a7f.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Two columns one row, preserve the two extended hand poses and the other hand bandage. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Sitting and kneeling stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-injury-balanced-v2.png",
+      "output": "public/storybook-study/finn-injury-balanced-v2.webp",
+      "generated": "exec-74fd67b6-9466-4773-9c22-80eb84d2a4ee.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Four columns two rows, preserve all eight poses and the bandage on the same hand and only where originally shown. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Sitting and kneeling stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-ground-rest-balanced-v2.png",
+      "output": "public/storybook-study/finn-ground-rest-balanced-v2.webp",
+      "generated": "exec-ceeb8888-e132-494e-82bb-b85676039a00.png",
+      "prompt": "Edit FIRST Finn sprite atlas. SECOND is the corrected proportional model, THIRD is his identity reference. Three columns one row, preserve the first standing and two sitting on ground poses, with their gestures. Shrink head including hair to match the SECOND reference, with proportionally longer adult torso and legs. Preserve adult face with stubble, drooping eyes, low-tied dark brown hair, coat, clothing, colors and painted RPG aesthetic. Keep posture, relative height, feet and hand placement of each original pose. Sitting and kneeling stay low. Transparent background, no new props, no text, no shadows, generous cell gutters, no cropping."
+    },
+    {
+      "source": "assets/source/storybook/finn-gloves-balanced-v2.png",
+      "output": "public/storybook-study/finn-gloves-balanced-v2.webp",
+      "generated": "exec-762fda0c-bc19-40f3-8331-de1e889c6f13.png",
+      "prompt": "Edit the FIRST Finn pose atlas. The SECOND is his correct proportions; THIRD is the character reference. Critically preserve glove continuity: the first pose has bare hands; the next two wear brown gloves; the fourth is removing a glove; ALL FOUR poses in the bottom row have completely bare skin hands, with NO GLOVES. Preserve the separate hand gestures exactly. Maintain exactly four columns, two rows. Smaller head matching SECOND, with longer adult body, natural stubble, drooping eyes, tied dark hair, weathered coat. Keep each pose's posture, expression, relative height, feet and hand location. Full figure, transparent background and empty gutters, no additional props or words."
+    },
+    {
+      "source": "assets/source/storybook/finn-reaction-balanced-v2.png",
+      "output": "public/storybook-study/finn-reaction-balanced-v2.webp",
+      "generated": "exec-b51cec70-8dc7-4ade-b3d4-3fa7edb49069.png",
+      "prompt": "Edit the FIRST Finn pose atlas. The SECOND is his correct proportions; THIRD is the character reference. First is neutral, second raises a hand, third is surprised with widened eyes and one hand against chest, fourth crouches and reaches to the ground. Preserve each expression and gesture. Maintain exactly four columns, one rows. Smaller head matching SECOND, with longer adult body, natural stubble, drooping eyes, tied dark hair, weathered coat. Keep each pose's posture, expression, relative height, feet and hand location. Full figure, transparent background and empty gutters, no additional props or words."
+    }
+  ]
+}

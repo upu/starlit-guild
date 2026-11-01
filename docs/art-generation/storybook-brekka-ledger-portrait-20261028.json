@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-28",
+  "generator": "image_gen.imagegen",
+  "status": "trial; portrait layout pending real-game integration",
+  "reference": "public/storybook-study/brekka-alley-v1.png",
+  "generated": "exec-9d264aad-3b8c-461e-a58a-cb00ba055519.png",
+  "source": "assets/source/storybook/brekka-ledger-portrait-v1.png",
+  "output": "public/storybook-study/brekka-ledger-portrait-v1.png",
+  "prompt": "Use case: illustration-story. Create a portrait-oriented gameplay background for the SAME brewery courtyard shown in the reference image, for a warm hand-painted elevated three-quarter 2D RPG. Recompose the SAME scene for a vertical viewport, not a different location: keep the copper brewing kettle tucked behind the low stone wall at upper left, timber and stone wall with the arched wooden brewery door and little stone steps near the upper center, barrels and flowering greenery toward upper right. Camera and architectural scale must match the reference. Below the building, leave a broad continuous level dirt and cobblestone yard filling the middle and lower two-thirds, suitable for a small character walking to a movable table. No furniture, books, carts, people, animals, text, sky, UI, borders or icons. Warm daylight, matching the reference's color palette, painterly pixel-inspired texture and overhead 3/4 RPG view. Portrait composition, 2:3 aspect ratio."
+}

@@ -1,0 +1,29 @@
+.storybook-reader-stage[data-story="tower-restoration-return"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="24"],
+    [data-frame="25"],
+    [data-frame="26"],
+    [data-frame="27"]
+  ) {
+  background-image: url("/storybook-study/keeper-hatch-mark-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="chalk-mark"] {
+  background: none;
+  filter: none;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="chalk-mark"]::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  top: 46%;
+  width: 86%;
+  height: 8%;
+  background: #dfd2ae;
+  clip-path: polygon(0 40%, 9% 0, 35% 13%, 62% 0, 100% 30%, 94% 80%, 57% 100%, 24% 85%, 0 100%);
+  opacity: 0.85;
+}

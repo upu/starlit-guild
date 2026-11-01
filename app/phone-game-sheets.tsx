@@ -96,6 +96,7 @@ function readingSheet(m: SheetModel, advanceRef: Ref<StoryAdvance>): SheetView |
           key={m.reading.id}
           story={m.reading}
           ready={m.ready}
+          reviewStartPage={m.reviewStartPage}
           onRead={m.finishStory}
           departure={!!m.pendingDeparture}
           stage={departureStage(m.pendingDeparture?.id)}

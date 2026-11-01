@@ -1,0 +1,9 @@
+{
+  "status": "integrating",
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/leon-reaction-v1.png",
+  "output": "public/storybook-study/leon-reaction-v1.webp",
+  "reference": "public/storybook-study/leon-conversation-v1.webp",
+  "build": "node scripts/build-storybook-work.mjs leon reaction",
+  "prompt": "Original game character Leon, use reference for exact face, brown hair, proportions, blue short tunic, leather belt, brown boots, red scarf and short red cape, warm hand-painted 2D game sprite rendering. Produce transparent PNG sprite strip with FOUR equal cells in ONE horizontal row. Same individual at EXACT same physical scale and head width across all four cells, fully visible hair to boot soles, large transparent gutters, no captions. Frame 1 neutral standing reference as first input pose. Frame 2 standing friendly greeting, right hand raised beside head with open palm, arm not above hair top, other hand lowered. Frame 3 standing mild surprised expression, eyebrows raised and mouth slightly open, one hand near chest. Frame 4 kneeling on one knee and leaning gently to inspect a small plant at ground level, empty hand reaching toward ground. NO plant or props in any cell. Feet at same horizontal baseline for standing poses, kneeling pose lower naturally rather than scaled up. Preserve head and body thickness. Elevated three-quarter slight overhead camera matching reference. All poses facing slightly toward viewer's right. Soft colored outlines, crisp painted shading, no pixel filtering, no photorealism, no grounded shadow, transparent background. One consistent character, no scene."
+}

@@ -1,4 +1,11 @@
 import type { RoadBattle } from "./road-view.ts";
+import type { RoadLook } from "./road-look.ts";
+
+export function faceWorkers(battle: RoadBattle, look: RoadLook, cargo: boolean, x: number) {
+  for (const hero of battle.heroes) {
+    if (look.workers.includes(hero.id)) hero.facing = cargo || hero.x < x + 65 ? 1 : -1;
+  }
+}
 
 // Display offsets only: leave saved movement, range and combat timing untouched.
 // Stagger faces horizontally as well as vertically; Lico stands in front of the cart.

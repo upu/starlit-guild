@@ -1,0 +1,52 @@
+{
+  "model": "image_gen",
+  "source": "assets/source/story-stage/dining-tea-v1.png",
+  "sha256": "2d4e233f1cd5b224f5b64d34f65bd6229d84559b0486da5ce2b8a695dccce48b",
+  "reference": "assets/source/story-stage/dining-tea-reference-v1.png",
+  "referenceCommit": "593ebce",
+  "referenceFrames": {
+    "aria": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "leon": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "mira": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "merchant": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "generated": "exec-42c69eb7-b129-4093-b2ed-b202a9417e54.png",
+  "prompt": "Create an original RPG pixel sprite sheet extending the TOP THREE character rows in the reference image. The reference is a contact sheet: row1 Aria blonde elf green cape/flower, row2 Leon brown-haired young man red scarf/cape dark navy vest boots, row3 Mira purple-haired woman white/gold dress green gem/flower; row4 merchant is NOT part of this output. Preserve their exact recognizable clothes, face, color, chair, 3/4 right-facing high-oblique RPG view, pixel grain, head/body scale and seated stature.\nOutput TRANSPARENT RGBA, grid TWO columns by THREE rows, SIX equal large isolated cells. Row1 Aria, row2 Leon, row3 Mira. Every cell has a complete seated character on the SAME plain wooden chair seen in their corresponding reference row, including full chair legs, boots/shoes, cape and hair with clear transparent margin. No floor, ground shadow, writing or cell borders.\nColumn1: seated relaxed, both hands gently holding a tiny cream ceramic tea cup near upper chest, attentive neutral smiling expression.\nColumn2: SAME chair, torso, head position, foot position, scale and facing; elbows bent so the same small teacup touches lips while taking a quiet sip, eyes soft or closed. No large gesture, no saucer, no teapot. Cup outside width about one third head width (a normal small teacup), not a mug covering the whole face.\nThese are six ANIMATION FRAMES. Lock each character's head size and head/feet positions between columns. Chair height and shape constant. Full body in every cell, no cropping. The characters are canonical adult fantasy adventurers in chibi pixel art. Transparent space between all cells.",
+  "processing": "Actual transparent row gutters at y=500/995; common 128px cells, original seated head width and 88px silhouette, feet y=120. Append frames48-51; preserve first48 RGBA cells byte for byte."
+}

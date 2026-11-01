@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-29",
+  "tool": "built-in image_gen",
+  "purpose": "Create a four-frame recipient walk with an empty fixed palm for separately rendered letters and baskets.",
+  "candidates": [
+    {
+      "file": "work/founding-recipient-candidates/carry-walk-v1.png",
+      "references": ["public/storybook-study/merchant-walk-v2.webp", "public/storybook-study/merchant-service-v1.webp"],
+      "prompt": "Edit the FIRST reference: four-frame walking sprite strip of this exact friendly middle-aged merchant for a warm hand-painted 2D RPG. SECOND reference is the same merchant's talking and hand-off pose. Preserve the first image's identity, grey-brown hair, mustache, tan skin, cream rolled sleeves, dark brown apron, trousers and boots, 3/4 elevated perspective, face toward screen LEFT, identical overall adult proportions, painted pixel art style and four full body poses. Modify the arm nearest the viewer so he can carry an object: bend forearm forward toward screen left at waist height, with an open, clearly visible palm facing upward. All four frames must keep that palm in EXACTLY the same position relative to his torso, so a separate item can be composited into the hand. The other arm rests naturally near his body. Do not draw any object, paper, basket, prop, lettering, ground, floor or shadow. Draw four distinct alternating walking steps, alternating extended and passing legs with natural small steps; same head size, torso height and scale in each frame. Four evenly spaced separated full-body sprites in a single horizontal row with generous clear transparent gutters and no cropping of hair or boots. True transparent alpha background.",
+      "result": "rejected: frames 1 and 3 repeat one contact, and frames 2 and 4 repeat one passing pose"
+    },
+    {
+      "file": "work/founding-recipient-candidates/carry-walk-v2.png",
+      "reference": "work/founding-recipient-candidates/carry-walk-v1.png",
+      "prompt": "Edit the first image, an existing four-frame transparent sprite sheet. The merchant is carrying an invisible item on his open upturned palm. Preserve all heads, faces, clothes, arms, palm positions, height, arrangement, colors and style exactly. Change ONLY the legs and boots to create a true walk cycle facing LEFT. The current problem is frames 1 and 3 repeat the same forward leg and frames 2 and 4 repeat the same passing step. Frame 1: near leg leads LEFT, far leg behind RIGHT. Frame 2: near leg passes underneath, far leg bears weight. Frame 3: FAR leg leads LEFT, NEAR leg behind RIGHT, a distinctly reversed stride. Frame 4: far leg passes underneath, near leg bears weight. The two legs must exchange which is leading: frame 3 visibly different from frame 1 and frame 4 visibly different from frame 2, even when reduced to a small game sprite. Keep knees and feet grounded realistically; no running, jumping, or floating. Consistent body height and ground line. Four separated full-body sprites in a single horizontal row, transparent background, no objects, text or ground shadow.",
+      "result": "rejected: the legs still do not exchange positions"
+    },
+    {
+      "file": "work/founding-recipient-candidates/opposite-step-v1.png",
+      "reference": "work/founding-recipient-candidates/carry-walk-v2.png",
+      "prompt": "Create ONE single game sprite of the exact shopkeeper in the reference, full body, facing left, on transparent background. This is the OPPOSITE CONTACT of the walking cycle. Keep his head, torso, upright upturned empty palm, cream shirt and brown apron matching the reference. His far leg is now the leg stepping forward to the LEFT, showing its dark boot and narrow trouser leg in front of the apron; his near leg is trailing well behind to the RIGHT, showing the back of its raised boot and heel. The near leg is visibly in front of the far leg where they cross at the thighs. The forward left-pointing foot and trailing raised right-side heel are clearly different legs and not a duplicate of the first or third sample figure. View is three-quarter, not profile. Adult short-haired mustachioed merchant with same proportions, constant palm position, warm painted RPG pixel style. Single figure, no objects, words, background, floor or shadow; all body parts clear of image edges.",
+      "result": "rejected: opposite leading leg is not visibly established"
+    },
+    {
+      "file": "work/founding-recipient-candidates/carry-walk-v3.png",
+      "references": ["work/founding-recipient-candidates/carry-walk-v1.png", "public/storybook-study/leon-walk-v1.webp"],
+      "prompt": "Create a four-frame game sprite walk cycle, single row, transparent background. CHARACTER AND HAND POSE: use FIRST reference, the exact middle-aged merchant: grey-brown hair, little mustache, cream rolled sleeves, brown apron and boots. Keep his same upright empty palm raised forward at waist height in all four poses, ready to hold an object rendered separately. His head/torso, hand location and warm 2D painted style remain the same across all frames. ANIMATION MOTION: use SECOND reference ONLY as the movement sequence, not the character or costume. Match the four distinct leg positions of its four images in their original order, but mirrored horizontally because the merchant faces toward LEFT. The second reference has clearly alternating feet, not repeated steps: contact with one leg forward, passing with lifted leg, opposite contact with the other leg forward, opposite passing. The leg which is closer to the viewer changes its location from front to back in the cycle, so these are four different steps. Match the SECOND image's modest stride and grounded feet, with the merchant's own brown boots and trousers. One complete figure per cell, four equally spaced full sprites, no cut-off parts or overlaps, one common ground baseline, same height and scale. Transparent background, no shadows, floor, objects, letters or other characters.",
+      "result": "rejected: the front leg and overall stride remain almost identical in all four frames"
+    },
+    {
+      "file": "work/founding-recipient-candidates/carry-walk-v4.png",
+      "references": ["public/storybook-study/leon-walk-v1.webp", "work/founding-recipient-candidates/carry-walk-v1.png"],
+      "prompt": "EDIT TARGET is image 1: four sequential FULL BODY walking sprites. Preserve the leg positions, leg crossings, relative foot angles, heel and sole locations, stride phases, and silhouettes from image 1 exactly in all four columns: do not redraw one identical pair of legs four times. Frame 1 is the near-leg step, frame 2 is the near-leg passing, frame 3 is the other leg step, frame 4 is the other leg passing. This animation's legs should visibly alternate as in image 1. Replace the PERSON in every frame with the character in image 2, a friendly middle-aged shopkeeper with short gray-brown hair, small mustache, cream rolled-sleeve shirt, long brown apron, brown trousers and boots. Preserve image 2's face, clothes, warm hand-painted RPG look and adult proportions. Have his arm near the viewer bent at waist height with an open palm forward, remaining in one consistent position in each frame as in image 2; his hand carries an invisible separately composited object. Keep orientation facing RIGHT like image 1. Four separate full-body sprites in one horizontal row, with common feet baseline, constant body scale and head width. True transparent background; no objects, ground, text, labels, borders or shadows.",
+      "result": "rejected: the front leg remains the same in both contact frames"
+    },
+    {
+      "file": "assets/source/storybook/merchant-turn-carry-v1.png",
+      "output": "public/storybook-study/merchant-turn-carry-v1.webp",
+      "build": "node scripts/build-storybook-merchant-turn.mjs",
+      "references": ["public/storybook-study/merchant-service-v1.webp"],
+      "prompt": "Create a transparent four-frame sprite sheet of the exact friendly middle-aged shopkeeper in the reference, for a warm 2D painted RPG. He has short grey-brown hair, mustache, cream rolled-up sleeves, brown apron, brown trousers and boots. Action: he has just received a small item and turns around before leaving. Four different consecutive FULL BODY standing views, one horizontal row: (1) angled left, one open hand reaching left at waist height as in second reference pose; (2) turning toward viewer, holding both empty palms cupped together closely at center of belly; (3) front 3/4 view, both empty palms cupped at center of belly; (4) angled right, both palms still cupped in front of belly and ready to walk right. Palms remain visible and are empty, as another item image will be placed there separately. Clearly show the orientation changing, without moving his feet on the ground. All four frames share same head/body proportions, pixel style, size and common foot baseline. Generous transparency around each figure, no cropped hair or boots; no objects, lettering, shadow or ground. Transparent alpha background.",
+      "result": "rejected: item moves too far between the first and second poses"
+    },
+    {
+      "file": "assets/source/storybook/merchant-turn-carry-v2.png",
+      "output": "public/storybook-study/merchant-turn-carry-v2.webp",
+      "build": "node scripts/build-storybook-merchant-turn.mjs v2",
+      "references": ["assets/source/storybook/merchant-turn-carry-v1.png"],
+      "prompt": "Edit this FOUR-FRAME sprite sheet for a 2D RPG. Keep the same character, colors, clothing, size, foot positions, layout, views, frames 1, 3 and 4 exactly. ONLY CHANGE FRAME 2: create a smooth intermediate hand position between frame 1 and frame 3. Frame 1 shows an open palm extended on the LEFT at waist level. Frame 3 has hands together at the center of the belly. In frame 2, the visible left hand should be HALFWAY between those positions: elbow bent, palm up and empty, just left of the apron edge, clearly not at the full center and not as far out as frame 1. The other hand can remain close to the belt. Thus the empty palm progresses left edge -> left apron edge -> center -> right side in four steps for a separately overlaid object. Do not add an object. Same four full-body sprites in one horizontal row with empty transparent gutters, identical heights and ground line, no text, no floor, no shadow.",
+      "result": "connected to the 4-10 preview: hands follow the item in four registered turn frames; transition and each contact are covered by tests"
+    },
+    {
+      "file": "assets/source/storybook/merchant-carry-walk-v1.png",
+      "output": "public/storybook-study/merchant-carry-walk-v1.webp",
+      "build": "node scripts/build-storybook-merchant-carry-walk.mjs",
+      "references": ["assets/source/storybook/finn-night-push-walk-v3.png", "assets/source/storybook/merchant-turn-carry-v2.png"],
+      "prompt": "Edit FIRST image, a four-frame walking sprite sheet. Preserve the FIRST IMAGE'S FOUR DIFFERENT LEG POSES and alternating planted boots EXACTLY. Frame 1 feet are apart, frame 2 rear boot is CLEARLY lifted while front boot is planted, frame 3 legs pass, frame 4 front boot is CLEARLY lifted while rear boot is planted. Do not repeat the same pose; the boot touching the baseline must alternate. Replace the person with the shopkeeper from the SECOND image's rightmost figure: middle-aged, short grey-brown hair, small moustache, cream rolled sleeves, brown apron, brown trousers and boots. Match his face, adult proportions, colors, and warm painted 2D RPG style. Use his rightmost figure's HANDS CUPPED TOGETHER at waist, holding an invisible small item throughout. His hand position must be exactly the same in all four frames, no item drawn. Face RIGHT. All four figures have same head size and height, with common ground contact. One horizontal row of four separated full-body sprites, true transparent background, no floor, no shadow, no text, no props, no cropped body parts.",
+      "result": "connected to the 4-10 preview: planted boots alternate, all four hand contacts and cell edges are tested; PC and 390px browser views were partially checked"
+    }
+  ],
+  "status": "The second turning strip and carrying walk are connected to the preview; the full journey and physical-device review remain. Rejected images live in ignored work/ for comparison."
+}

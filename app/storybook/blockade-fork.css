@@ -1,0 +1,297 @@
+.storybook-painted-stage[data-painted="true"]
+  [data-npc="masked-pumpety"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/masked-pumpety-v1.webp") !important;
+  background-size: 400% 300% !important;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] [data-npc="masked-pumpety"] .story-stage-name {
+  top: 24%;
+}
+/* The same porter walks in, consults his notebook, and writes in the workshop. */
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite:is(
+    [data-frame="4"],
+    [data-frame="5"],
+    [data-frame="6"],
+    [data-frame="7"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="19"]
+  ) {
+  background-image: url("/storybook-study/porter-service-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: var(--workshop-worker-x, 0%) var(--workshop-worker-y, 100%) !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --workshop-worker-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  --workshop-worker-x: 66.666667%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  --workshop-worker-x: 100%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="8"] {
+  --workshop-worker-x: 33.333333%;
+  --workshop-worker-y: 50%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="9"] {
+  --workshop-worker-x: 100%;
+  --workshop-worker-y: 50%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="19"] {
+  --workshop-worker-x: 66.666667%;
+  --workshop-worker-y: 50%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"] .story-stage-item[data-art="honey"] {
+  background-image: url("/storybook-study/honey-v1.webp");
+  aspect-ratio: 256 / 300;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  .story-stage-item[data-item="cloth"] {
+  background-image: url("/storybook-study/empty-delivery-wrap-v1.webp");
+  aspect-ratio: 256 / 170;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"][data-held-art="cloth"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="4"] {
+  background-image: url("/storybook-study/mira-handheld-v1.webp");
+  background-size: 400% 200%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/mira-handheld-v1.webp");
+  background-size: 400% 200%;
+  background-position: var(--workshop-mira-x, 0%) var(--workshop-mira-y, 0%) !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-actor="mira"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite:is([data-frame="8"], [data-frame="9"], [data-frame="22"], [data-frame="23"]) {
+  --workshop-mira-y: 100%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-actor="mira"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite[data-frame="9"] {
+  --workshop-mira-x: 33.333333%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-actor="mira"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite[data-frame="22"] {
+  --workshop-mira-x: 66.666667%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  [data-actor="mira"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite[data-frame="23"] {
+  --workshop-mira-x: 100%;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="workshop-yard-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"][data-moss-study="reach"]:is([data-held-art="honey"], [data-held-art="cloth"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="4"],
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/mira-workshop-reach-v1.webp");
+  background-size: 100% 100%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="honey-bag"] {
+  background-image: url("/storybook-study/honey-bag-v1.webp");
+  aspect-ratio: 256 / 204;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="honey-bag-open"] {
+  background-image: url("/storybook-study/honey-bag-open-v1.webp");
+  aspect-ratio: 256 / 235;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="trade-parcels-open"] {
+  background-image: url("/storybook-study/trade-parcels-open-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="packing-cloth"] {
+  background-image: url("/storybook-study/empty-delivery-wrap-v1.webp");
+  aspect-ratio: 256 / 170;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"] .story-stage-item[data-art="medicine"] {
+  background-image: url("/storybook-study/medicine-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"]
+  .story-stage-item[data-art="empty-cart"] {
+  background-image: url("/storybook-study/handcart-raised-v1.webp");
+  aspect-ratio: 512 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="4"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 0% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 33.333333333333336% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 66.66666666666667% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="10"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 66.66666666666667% 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="11"] {
+  background-image: url("/storybook-study/worker-road-v1.webp") !important;
+  background-size: 400% 300% !important;
+  background-position: 0% 50% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="20"] {
+  background-image: url("/storybook-study/worker-push-road-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="21"] {
+  background-image: url("/storybook-study/worker-push-road-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.333333333333336% 0% !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="22"] {
+  background-image: url("/storybook-study/worker-push-road-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 66.66666666666667% 0% !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="23"] {
+  background-image: url("/storybook-study/worker-push-road-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  scale: -1 1;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+    .story-stage-space {
+    transform: none;
+  }
+}
+
+/* Mira crouches to put the recovered honey into its bag. Keep the same
+   registered painted body and head scale used by her carrying poses. */
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/mira-handheld-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+
+.storybook-reader-stage[data-story="sweet-blockade-return"][data-art="mountain-fork-v1"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="10"],
+    [data-frame="11"],
+    [data-frame="12"]
+  ) {
+  background-image: url("/storybook-study/mira-ground-rest-v1.webp");
+  background-size: 300% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}

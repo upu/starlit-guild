@@ -1,0 +1,404 @@
+/* Prototype-only standing poses. Keep unsupported actions on their authored art. */
+.storybook-presentation:is(
+    [data-mode="indoor"],
+    [data-art="berne-paving-v1"],
+    [data-art="manor-garden-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="17"], [data-frame="18"]) {
+  background-image: url("/storybook-study/leon-paper-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation:is(
+    [data-mode="indoor"],
+    [data-art="berne-paving-v1"],
+    [data-art="manor-garden-v1"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/mira-paper-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  background-position-x: 33.333333% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  background-position-x: 100% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/leon-paper-walk-v2.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  background-position-x: 33.333333% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  background-position-x: 100% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  :is([data-actor="leon"], [data-actor="mira"], [data-actor="lico"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: var(--paper-hold-art);
+  background-size: 400% 100%;
+  background-position: var(--paper-hold-frame) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"] [data-actor="leon"] {
+  --paper-hold-art: url("/storybook-study/leon-carry-v1.webp");
+  --paper-hold-frame: 0%;
+}
+.storybook-painted-stage[data-paper-study="true"] [data-actor="lico"] {
+  --paper-hold-art: url("/storybook-study/lico-work-ponytail-v1.webp");
+  --paper-hold-frame: 33.333333%;
+}
+.storybook-painted-stage[data-paper-study="true"] [data-actor="mira"] {
+  --paper-hold-art: url("/storybook-study/mira-conversation-v1.webp");
+  --paper-hold-frame: 66.666667%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  /* Mira's offered palm was painted facing left, unlike the shared carry atlas. */
+  scale: -1 1;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="22"],
+    [data-frame="23"]
+  ) {
+  background-image: url("/storybook-study/aria-paper-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  background-position-x: 33.333333% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  background-position-x: 100% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"],
+    [data-frame="17"],
+    [data-frame="18"]
+  ) {
+  background-image: url("/storybook-study/aria-paper-v1.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="17"] {
+  background-position-x: 33.333333% !important;
+}
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="18"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="1"], [data-frame="2"]) {
+  background-image: url("/storybook-study/aria-reaction-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="2"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]:is([data-seat-transition="lower"], [data-seat-transition="settle"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame] {
+  background-image: url("/storybook-study/leon-sit-down-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-sit-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage [data-actor="leon"][data-seat-transition="settle"] {
+  --study-sit-position: 66.666667%;
+}
+.storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="home"] {
+  background-image: var(--study-walk-art);
+  background-size: 400% 100%;
+  /* The existing eight-frame clock repeats this four-frame walk twice. */
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation .storybook-painted-stage[data-painted="true"] [data-actor="aria"] {
+  --study-walk-art: url("/storybook-study/aria-walk-v1.webp");
+  --study-conversation-art: url("/storybook-study/aria-conversation-v1.webp");
+  --study-carry-art: url("/storybook-study/aria-carry-v1.webp");
+  --study-basic-art: url("/storybook-study/aria-poses-v1.webp");
+}
+.storybook-presentation .storybook-painted-stage[data-painted="true"] [data-actor="leon"] {
+  --study-walk-art: url("/storybook-study/leon-walk-v1.webp");
+  --study-conversation-art: url("/storybook-study/leon-conversation-v1.webp");
+  --study-carry-art: url("/storybook-study/leon-carry-v1.webp");
+  --study-basic-art: url("/storybook-study/leon-poses-v1.webp");
+}
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="0"],
+    [data-frame="3"],
+    [data-frame="4"],
+    [data-frame="5"]
+  ) {
+  background-image: var(--study-conversation-art);
+  background-size: 400% 100%;
+  background-position: var(--study-conversation-position) 0% !important;
+  image-rendering: auto;
+  /* Match the authored 120/128 foot baseline with the new 176/192 cells. */
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage .story-stage-sprite[data-frame="0"] {
+  --study-conversation-position: 0%;
+}
+
+/* Neutral chair poses use the same physical scale as the standing strip.
+   Authored left-facing chair frames are not flipped by the common renderer. */
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="24"], [data-frame="28"]) {
+  background-image: var(--study-basic-art);
+  background-size: 400% 200%;
+  background-position: 66.666667% 100% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="28"] {
+  scale: -1 1;
+}
+
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="24"],
+    [data-frame="26"],
+    [data-frame="27"],
+    [data-frame="28"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/leon-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-seat-position, 33.333333%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage
+  [data-actor="leon"]
+  .story-stage-sprite:is([data-frame="27"], [data-frame="31"]) {
+  --study-seat-position: 66.666667%;
+}
+.storybook-painted-stage
+  [data-actor="leon"]
+  .story-stage-sprite:is([data-frame="26"], [data-frame="30"]) {
+  --study-seat-position: 100%;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="30"], [data-frame="31"]) {
+  scale: -1 1;
+}
+.storybook-painted-stage .story-stage-sprite[data-frame="3"] {
+  --study-conversation-position: 33.333333%;
+}
+.storybook-painted-stage .story-stage-sprite[data-frame="4"] {
+  --study-conversation-position: 66.666667%;
+}
+.storybook-painted-stage .story-stage-sprite[data-frame="5"] {
+  --study-conversation-position: 100%;
+}
+
+/* Stationary holds and lowering. Moving holds retain their authored walk cycle. */
+.storybook-painted-stage[data-shared-pickup="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: var(--study-carry-art);
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-carry-study="true"]
+  :is([data-actor="aria"], [data-actor="leon"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: var(--study-carry-art);
+  background-size: 400% 100%;
+  background-position: var(--study-carry-position, 0%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-carry-study="true"] .story-stage-sprite[data-frame="8"] {
+  --study-carry-position: 100%;
+}
+.storybook-painted-stage[data-carry-raised="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: url("/storybook-study/aria-lowering-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--stage-place-position, 0%) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-carry-study="true"] .story-stage-sprite[data-frame="15"] {
+  --study-carry-position: 33.333333%;
+}
+.storybook-painted-stage[data-carry-raised="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="14"], [data-frame="15"]) {
+  background-image: url("/storybook-study/aria-raised-v1.webp");
+  --study-carry-position: 33.333333%;
+}
+.storybook-painted-stage[data-carry-raised="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-frame="15"] {
+  --study-carry-position: 66.666667%;
+}
+
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/aria-poses-v1.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-seated-paper="reach"],
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-seated-paper="release"] {
+  --study-seat-hand: 66.666667%;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"][data-seated-paper="release"] {
+  --study-seat-hand: 100%;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]:is([data-seated-paper="reach"], [data-seated-paper="release"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="29"] {
+  background-image: url("/storybook-study/leon-seat-action-v2.webp");
+  background-size: 400% 100%;
+  background-position: var(--study-seat-hand) 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+  scale: -1 1;
+}

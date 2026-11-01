@@ -1,0 +1,11 @@
+{
+  "kind": "precise-object-edit",
+  "model": "image_gen",
+  "source": "assets/source/story-stage/berne-foundation-restored-v1.png",
+  "sha256": "bb34d22f4ec675ad4530ae095f972f9944d53ca98811ad8a4a8da31d0e8f602a",
+  "reference": "public/story-stage/berne-foundation-open.webp",
+  "referenceCommit": "2484c5e",
+  "generated": "exec-fb2fad1b-2cd0-46af-ad8e-49db6e603084.png",
+  "prompt": "Edit this exact RPG pixel-art background, preserving the same architecture, 3:2 camera crop, high oblique overhead angle, ground layout, pixel grain, palette quality and every existing landmark placement. This is the SAME scene after repairs, at quiet early dusk. The rectangular empty stone socket near normalized x=.452 y=.633 is now filled flush with a matching gray sandstone block, aligned with the diagonal stone course; no floating stone or pedestal. Add one small narrow arched slit window to the cylindrical tower wall at normalized x=.49 y=.14, in place of a little ivy, preserving the tower wall structure. The window is DARK and unlit inside, around 35 pixels wide and 85 pixels high at 960x640; no glow anywhere yet. Dim the direct sunlight gently for dusk but retain readable warm gray stones and muted greenery, not deep night or blue monochrome. No characters, props, labels, effects, particles or additional buildings. Keep doorway, stairs and diagonal foundation stone course exactly in place. Only the empty socket repair, small dark window and evening lighting should change. Output a single 3:2 landscape background.",
+  "note": "Same tower and foundation, filled socket and small dark window at dusk. Runtime light is separate."
+}

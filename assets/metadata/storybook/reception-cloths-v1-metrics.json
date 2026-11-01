@@ -1,0 +1,30 @@
+[
+  {
+    "name": "spare-cloth-folded",
+    "width": 240,
+    "height": 159,
+    "left": 8,
+    "top": 89
+  },
+  {
+    "name": "spare-cloth-spread",
+    "width": 240,
+    "height": 199,
+    "left": 8,
+    "top": 49
+  },
+  {
+    "name": "spare-cloth-draped",
+    "width": 240,
+    "height": 167,
+    "left": 8,
+    "top": 81
+  },
+  {
+    "name": "return-marker",
+    "width": 240,
+    "height": 236,
+    "left": 8,
+    "top": 12
+  }
+]

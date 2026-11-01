@@ -1,0 +1,234 @@
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item:is(
+    [data-art="candidate-blue"],
+    [data-art="candidate-violet"],
+    [data-art="candidate-dull"]
+  ) {
+  background-image: url("/storybook-study/tower-stone-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="candidate-blue"] {
+  filter: sepia(0.35) saturate(1.8) hue-rotate(160deg) brightness(1.12)
+    drop-shadow(0 0 4px #9aceff90);
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="candidate-dull"] {
+  filter: grayscale(1) brightness(0.9);
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/medicine-closed-v1.webp");
+  aspect-ratio: 256 / 260;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="chair"] {
+  background-image: url("/storybook-study/chair-v1.webp");
+  aspect-ratio: 0.75;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="light-cloth"] {
+  background-image: url("/storybook-study/light-cloth-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .story-stage-item[data-art="stone-wrap"] {
+  background-image: url("/storybook-study/display-cloth-v1.webp");
+  aspect-ratio: 256 / 320;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/stone-carrier-motion-v2.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--carrier-x, 0%) var(--carrier-y, 0%) !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="4"] {
+  --carrier-x: 33.333333333333336%;
+  --carrier-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="5"] {
+  --carrier-x: 66.66666666666667%;
+  --carrier-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="6"] {
+  --carrier-x: 100%;
+  --carrier-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"]
+  .story-stage-extra-sprite[data-frame="7"] {
+  --carrier-x: 100%;
+  --carrier-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"][data-moving="true"]
+  .story-stage-extra-sprite[data-frame="0"] {
+  --carrier-x: 33.333333333333336%;
+  --carrier-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"][data-moving="true"]
+  .story-stage-extra-sprite[data-frame="1"] {
+  --carrier-x: 66.66666666666667%;
+  --carrier-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"][data-moving="true"]
+  .story-stage-extra-sprite[data-frame="2"] {
+  --carrier-x: 100%;
+  --carrier-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="stone-carrier"][data-moving="true"]
+  .story-stage-extra-sprite[data-frame="3"] {
+  --carrier-x: 0%;
+  --carrier-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="44"],
+    [data-frame="45"],
+    [data-frame="46"],
+    [data-frame="47"],
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: var(--healing-x, 33.333333%) var(--healing-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="45"] {
+  --healing-x: 66.66666666666667%;
+  --healing-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="46"] {
+  --healing-x: 100%;
+  --healing-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="47"] {
+  --healing-x: 0%;
+  --healing-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="14"] {
+  --healing-x: 66.66666666666667%;
+  --healing-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="15"] {
+  --healing-x: 100%;
+  --healing-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="16"] {
+  --healing-x: 66.66666666666667%;
+  --healing-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="chair"]
+  .story-stage-sprite[data-atlas="conversation"] {
+  background-image: url("/storybook-study/finn-chair-balanced-v3.webp");
+  background-size: 400% 200%;
+  background-position: var(--chair-x, 33.333333%) var(--chair-y, 0%) !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="chair"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  --chair-x: 66.66666666666667%;
+  --chair-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="chair"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="9"] {
+  --chair-x: 100%;
+  --chair-y: 0%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="chair"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="22"] {
+  --chair-x: 0%;
+  --chair-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"][data-held-art="chair"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="23"] {
+  --chair-x: 33.333333333333336%;
+  --chair-y: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/aria-packing-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-reader-stage:is([data-art="stone-yard-v1"], [data-art="stone-storeroom-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="finn"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-image: url("/storybook-study/finn-chair-balanced-v3.webp");
+  background-size: 400% 200%;
+  background-position: 100% 100% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-mode="outdoor"][data-art="stone-yard-v1"] .story-stage-space {
+    transform: none;
+  }
+}

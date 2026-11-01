@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-25",
+  "tool": "built-in image_gen",
+  "prompt": "Create a transparent two-cell prop sheet for a warm softly hand-painted 2D RPG, matching the brushwork and brown contours of THIRD reference. FIRST and SECOND are object identity only, not their pixel style. Two separate equal square cells side by side: LEFT: a practical hand saw with wooden grip, a neatly coiled hemp rope and a small wooden scoop, all lying FLAT on an invisible horizontal ground plane, viewed from an elevated 50-degree downward three-quarter camera. Do not stand tools upright; saw blade clearly foreshortened lying beside rope. RIGHT: an empty shallow oval wicker carrying basket, two small loop handles on rim, visible woven inside from same elevated camera. No tall arched handle. Do not add moss or flowers. Muted warm wood and straw colors, thin soft contours, small game sprite readable silhouettes. Fully transparent alpha outside objects, no floor, no cast-shadow blob, no labels, no borders, ample transparent margins. Each cell independent, objects do not touch other cell. No characters. Same art family as painted bowl reference.",
+  "source": "assets/source/storybook/waterway-props-v1.png",
+  "outputs": [
+    "public/storybook-study/tools-v1.webp",
+    "public/storybook-study/basket-v1.webp"
+  ]
+}

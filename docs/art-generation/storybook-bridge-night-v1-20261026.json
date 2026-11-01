@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Warmhandpainted2D RPGnightenvironment3:2landscape,elevated45degree3quarterdowncamera, no horizon. Preservefirstreferencebridge-nightlayout: broadflatweatheredstonebridgeapproach coverslower2/3; lowstoneparapetsacrossupperthirdwithtwo squatpostsatx23%and78%, eachholdingawarmamberlantern; visible darkblueriverbehindparapet uppermiddle, moonlightbrokenripples; treesshrubsrocksborderbothbanks. BridgeisrivercrossingnearBerneandmanor, nochangeofgeography. Matchsecondreferencepaintedtexture, warmfineoutlinesandstonescale. Fourcompactfigures1/5imageheightandonehandcartwillstandonbridgeforecourt. Clear emptywalkablelowercourt, readablebluishstoneunderwarmamberlanternlight, gentlecontrastinglights, notpitchblack. Nopeople,cart,furniture,looseprops,towers,text,arrows. Do notaddhorizonorfullsky.",
+  "references": [
+    "public/story-stage/bridge-night.webp",
+    "public/storybook-study/manor-display-back-v1.png"
+  ],
+  "source": "assets/source/storybook/bridge-night-v1.png"
+}

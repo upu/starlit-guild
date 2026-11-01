@@ -1,0 +1,10 @@
+{
+  "prompt": "Redraw the FIRST reference woodland floor as a warm hand-painted 2D RPG background, matching soft brush shapes and outlines of SECOND reference. 3:2 landscape, elevated three-quarter almost orthographic camera looking down, NO sky or horizon. Preserve location identity: moist shaded forest clearing, one narrow path continues upward into trees, large tree roots at upper-left and upper-center, low rock upper-right, ferns and moss on edges. Center and lower center stay clear walkable soil with tiny stones and leaf litter. More cool green shade than second reference with a few warm filtered sunlight patches. Small natural moss patches integrated into roots and damp soil, NO glowing magical rock, NO specimen dishes, NO characters, NO furniture or items, NO text. Ground details scaled for small sprites occupying about one sixth image height; visible tree crowns and root tops reinforce overhead camera. Avoid big foreground trunks obscuring playable middle. Background only.",
+  "source": "assets/source/storybook/forest-floor-v1.png",
+  "output": "public/storybook-study/forest-floor-v1.png",
+  "generated": "exec-bfb36b5c-85be-4970-aba7-c92ea6919fa8.png",
+  "references": [
+    "public/story-stage/forest-floor.webp",
+    "public/storybook-study/meeting-path-v1.png"
+  ]
+}

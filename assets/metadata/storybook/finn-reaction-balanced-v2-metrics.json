@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-reaction-balanced-v2.png",
+    "scale": 0.21605839416058395,
+    "left": 60,
+    "top": 28,
+    "width": 68,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.79121087105548
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-reaction-balanced-v2.png",
+    "scale": 0.21605839416058395,
+    "left": 61,
+    "top": 28,
+    "width": 65,
+    "height": 148,
+    "baseline": 176,
+    "headX": 94.76742433556593
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-reaction-balanced-v2.png",
+    "scale": 0.21605839416058395,
+    "left": 64,
+    "top": 28,
+    "width": 63,
+    "height": 148,
+    "baseline": 176,
+    "headX": 93.33379162750839
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-reaction-balanced-v2.png",
+    "scale": 0.21605839416058395,
+    "left": 64,
+    "top": 96,
+    "width": 87,
+    "height": 80,
+    "baseline": 176,
+    "headX": 116.78928919315271
+  }
+]

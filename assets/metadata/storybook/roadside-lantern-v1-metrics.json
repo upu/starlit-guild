@@ -1,0 +1,42 @@
+[
+  {
+    "name": "closed-sooty",
+    "width": 242,
+    "height": 360,
+    "left": 7,
+    "top": 16,
+    "scale": 0.650994575045208
+  },
+  {
+    "name": "sooty",
+    "width": 252,
+    "height": 360,
+    "left": 2,
+    "top": 16,
+    "scale": 0.650994575045208
+  },
+  {
+    "name": "empty",
+    "width": 251,
+    "height": 360,
+    "left": 3,
+    "top": 16,
+    "scale": 0.650994575045208
+  },
+  {
+    "name": "unlit",
+    "width": 252,
+    "height": 361,
+    "left": 2,
+    "top": 15,
+    "scale": 0.650994575045208
+  },
+  {
+    "name": "closed-lit",
+    "width": 243,
+    "height": 360,
+    "left": 7,
+    "top": 16,
+    "scale": 0.650994575045208
+  }
+]

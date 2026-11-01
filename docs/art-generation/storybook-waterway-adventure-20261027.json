@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "scope": "First tower back-slope drainage workyard: fixed elevated camera and reachable inspection opening",
+  "reference": "public/storybook-study/drain-blocked-v1.png",
+  "direction": "Warm hand-painted 2D RPG, 55-degree elevated oblique view, no horizon. Dry central work clearing, narrow channel at right, tower outlet above right, small flush inspection slab below right. No baked actors or tools. Foreground working rim remains reachable from dry ground.",
+  "states": [
+    {
+      "phase": "blocked",
+      "source": "assets/source/storybook/drain-workyard-blocked-v1.png",
+      "generatedFile": "exec-5e79b3ae-7abf-4200-adbc-aa9d72a9be63.png",
+      "change": "New workyard composition from original conversation drain reference. Lodged log remains in outlet."
+    },
+    {
+      "phase": "cleared",
+      "source": "assets/source/storybook/drain-workyard-cleared-v1.png",
+      "generatedFile": "exec-c5267653-6b63-454e-b410-17e135c1b6e0.png",
+      "change": "Local edit of blocked view: log cut sections on upper-left verge, outlet clear, water follows original right channel. Closed inspection slab retained."
+    },
+    {
+      "phase": "open",
+      "source": "assets/source/storybook/drain-workyard-open-v1.png",
+      "generatedFile": "exec-90e5ed1e-e69e-4558-aaa0-1abeabecf2e7.png",
+      "change": "Local edit of cleared view: shallow mossy inspection opening, lid laid immediately to right; same ground and camera."
+    }
+  ],
+  "generatedDirectory": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0",
+  "packing": "node scripts/build-storybook-waterway.mjs copies original PNG bytes to public/storybook-study without resizing.",
+  "status": "Layout study only. Not yet enabled as default adventure artwork; no whole-route motion verification claimed.",
+  "validation": "PC1243x1244 and browser phone390x844: fixed-foot standing/crouching and three background states reviewed. Initial independently scaled phone background rejected; final geometry shares body/background scale and crops around work bank. Physical phone not tested."
+}

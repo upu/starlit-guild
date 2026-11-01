@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-31",
+  "generator": "image_gen.imagegen",
+  "mode": "built-in edit; referenced_image_paths; genuine transparent alpha for keeper",
+  "purpose": "1-8 return: same closed inspection hatch as 1-9, dusk lighting, canonical keeper marks its stone lid",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/drain-inspection-dusk-v1.png",
+      "output": "public/storybook-study/drain-inspection-dusk-v1.png",
+      "generated": "exec-45f95136-9cae-4d6d-8b0e-ea1394a039d1.png",
+      "references": [
+        "public/storybook-study/drain-cleared-dusk-v1.png",
+        "public/storybook-study/drain-inspection-closed-v1.png"
+      ],
+      "prompt": "Use case: precise-object-edit. FIRST image is the EXACT edit target: the approved warm early-dusk cleared tower drain RPG background. SECOND image is a continuity guide only, showing the SAME drain the next morning with a closed stone inspection hatch and a small dry paving apron. Edit the FIRST image only: add that exact flush stone hatch at the same normalized location, dimensions and elevated perspective as the second image, immediately LEFT of the large arched water outlet. The squared stone frame and moss-stained closed lid should lie around x=56%-66%, y=25%-38%; the flat small paving apron lies below it at x=43%-75%, y=37%-53%. Use the second image only to match these architectural details and the dry access paving. Integrate both naturally into the existing stonework of the FIRST image, matching its cool violet shadows and subdued amber evening highlights. Keep thin, dull-green layers of moss rooted along the lid seams and stone joints, never a separate mound or collectible. Preserve all other aspects of the FIRST image: its dusk lighting and warm reflected water, exact 1536x1024 framing and elevated camera, unlit tower, arched drain and its opening, clean shallow water flow, left-side trees and cut log sections, surrounding rocks, plants and the large dry foreground clearing. Do NOT add any chalk mark yet; that is an animated action added by the game. No open hatch, loose lid, props, baskets, tools, people, lettering, glowing aura, labels, UI, ground symbols, extra windows or new pathways. This hatch was already there in the masonry; it should not look like a newly built monument. Retain the same fine hand-painted 2D RPG style with restrained outlines and a slightly pixel-art feel. Output one opaque 3:2 background.",
+      "build": "node scripts/build-storybook-waterway-dusk.mjs drain-inspection-dusk-v1"
+    },
+    {
+      "source": "assets/source/storybook/keeper-hatch-mark-v2.png",
+      "output": "public/storybook-study/keeper-hatch-mark-v2.webp",
+      "generated": "exec-a89e2cf2-f83d-4adb-9b04-7996069c2967.png",
+      "references": [
+        "assets/source/storybook/keeper-hatch-mark-v1.png"
+      ],
+      "prompt": "Edit this FOUR-pose keeper sprite strip. Preserve ALL exact four poses, order, adult head/body proportions, blue-gray clothing, gray hair, moustache, tiny white chalk in working hand, and full boots. Remove ALL stray bright red pixels, red fringes, red blocks, colored matte remnants and any stray artifacts. Clean transparent alpha around every character, including between arm and torso and between legs. Do not replace transparency with any colored background. Keep transparent padding between the four distinct full-body figures. Four poses: stand, kneel and touch chalk to low vertical surface to left, same kneel with hand a few pixels lower for a small stroke, stand with chalk lowered. No new wall, floor, shadow, props beyond chalk, labels or geometry. Output one transparent four-column one-row sprite sheet, generous gutters. Entire hair and boots visible.",
+      "build": "node scripts/build-storybook-keeper-motions.mjs keeper-hatch-mark-v2",
+      "registration": "All four figures share standing-scale 0.186 and foot baseline120. Standing source registration height93; kneeling68. No illustration painting or anatomy editing by code."
+    }
+  ],
+  "iterations": [
+    {
+      "source": "assets/source/storybook/keeper-hatch-mark-v1.png",
+      "generated": "exec-f96b0087-e7bc-4abf-b183-340475432ee6.png",
+      "references": [
+        "public/storybook-study/keeper-poses-v1.webp",
+        "public/storybook-study/keeper-basket-handoff-v1.webp"
+      ],
+      "prompt": "Use case: identity-preserve. Create one transparent four-pose horizontal 4x1 RPG character strip, using the provided keeper sprites as the exact identity, body-proportion, clothing, colors and rendering references. This is the same middle-aged gray-haired tower keeper with a friendly small moustache, blue-gray short-sleeved tunic over off-white sleeves, brown belt, dark trousers and brown boots. Keep his existing adult stylized proportions: same modest head width and limb scale, do not turn him into a big-headed chibi. Pose 1 is the exact upright idle calibration pose from reference image 1. Pose 2 kneels on one knee facing screen LEFT, torso leaning only slightly, near hand extending to the LEFT at shin-to-knee height to touch a vertical stone panel; hold a TINY off-white chalk stub between fingers. Pose 3 is the SAME kneeling stance, feet, head and torso as pose 2, hand making one short small chalk stroke to the left; only fingers and near forearm change by a few pixels. Pose 4 is upright after marking, relaxed hand with the tiny chalk stub lowered by his belt, facing left. Both kneeling poses must be naturally LOWER than standing, at the exact same scale, never enlarged to fill the cell. Four separate equally spaced equal-size cells in a single row, full visible hair and boots, generous transparent gutters, all feet registered to the same common ground baseline, same body scale for every pose. No wall, stone panel, drawn mark, letters, tools except the tiny chalk stub, baskets, floor, cast shadows, glow, background, checkerboard or labels. Warm original hand-painted RPG art, slightly pixel-like fine outlines; genuine alpha transparency. Keep the same blue-gray clothing through all four poses. The second reference shows approved lower-body work poses only to reinforce body scale and foot baseline, not the basket hand gesture.",
+      "reason": "Requested removal of colored fringe artifacts; v2 is used. Both generated originals retained."
+    }
+  ],
+  "chalk": "Code-native two small tapered CSS strokes, no raster asset, persist on the closed lid and move to the removed lid in the next daytime painted shot."
+}

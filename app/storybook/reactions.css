@@ -1,0 +1,24 @@
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="13"]
+  ) {
+  background-image: url("/storybook-study/leon-reaction-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+  top: 2.083333%;
+  height: 100%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="2"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"] {
+  background-position-x: 100% !important;
+}

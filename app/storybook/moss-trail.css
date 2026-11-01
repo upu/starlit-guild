@@ -1,0 +1,88 @@
+.storybook-reader-stage[data-story="glowing-moss-trail-departure"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="64"],
+    [data-frame="65"],
+    [data-frame="66"],
+    [data-frame="67"]
+  ) {
+  background-image: url("/storybook-study/mira-all-nighter-v1.webp");
+  background-size: 400% 100%;
+  background-position: var(--all-nighter-position, 33.333333%) 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="glowing-moss-trail-departure"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-frame="65"] {
+  --all-nighter-position: 66.666667%;
+}
+.storybook-reader-stage[data-story="glowing-moss-trail-departure"]
+  [data-actor="mira"]
+  .story-stage-sprite:is([data-frame="66"], [data-frame="67"]) {
+  --all-nighter-position: 100%;
+}
+.storybook-reader-stage[data-story="glowing-moss-trail-departure"]
+  .story-stage-item[data-art="medicine-closed"] {
+  background-image: url("/storybook-study/visiting-satchel-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story="glowing-moss-trail-departure"]
+  .story-stage-item[data-art="folded-paper"] {
+  background-image: url("/storybook-study/folded-request-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/brekka-cart-driver-v1.webp") !important;
+  background-size: 400% 200% !important;
+  background-position: var(--driver-position, 0%) 100% !important;
+  scale: -1 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="21"] {
+  --driver-position: 33.333333%;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="22"] {
+  --driver-position: 66.666667%;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  [data-npc="worker"]
+  .story-stage-extra-sprite[data-frame="23"] {
+  --driver-position: 100%;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  .story-stage-item[data-art="basket-cart"] {
+  background-image: url("/storybook-study/brekka-basket-cart-v1.webp");
+  aspect-ratio: 512 / 384;
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"]
+  .story-stage-item[data-art="cart-wheel"]::before {
+  background-image: url("/storybook-study/brekka-cart-wheel-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-story^="glowing-moss-trail-"] .story-stage-item[data-art="moss"] {
+  background-image: url("/storybook-study/wheel-moss-scrap-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage:is(
+      [data-story="glowing-moss-trail-departure"],
+      [data-story^="glowing-moss-trail-"]
+    )
+    .story-stage-space {
+    transform: none;
+  }
+}

@@ -1,0 +1,62 @@
+.storybook-reader-stage:is(
+    [data-story="tower-moss-removal-departure"],
+    [data-story="tower-moss-removal-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="keeper"], [data-npc-hand="keeper"])
+  .story-stage-extra-sprite:is(
+    [data-frame="28"],
+    [data-frame="29"],
+    [data-frame="30"],
+    [data-frame="31"]
+  ) {
+  background-image: url("/storybook-study/keeper-hatch-open-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story="tower-moss-removal-departure"],
+    [data-story="tower-moss-removal-return"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="32"],
+    [data-frame="33"],
+    [data-frame="34"],
+    [data-frame="35"]
+  ) {
+  background-image: url("/storybook-study/keeper-hatch-carry-walk-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="inspection-lid"] {
+  background-image: url("/storybook-study/inspection-stone-lid-v1.webp");
+  aspect-ratio: 200 / 205;
+  image-rendering: auto;
+  filter: none;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="inspection-lid"]::after {
+  content: "";
+  position: absolute;
+  left: 43%;
+  top: 55%;
+  width: 14%;
+  height: 14%;
+  background:
+    linear-gradient(48deg, transparent 43%, #dfd2aebf 45% 54%, transparent 56%),
+    linear-gradient(-48deg, transparent 43%, #dfd2aebf 45% 54%, transparent 56%);
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="inspection-glow"] {
+  background: radial-gradient(ellipse, #e0f6a52c, #d6ef9600 72%);
+  aspect-ratio: 1.3;
+  filter: none;
+  animation: storybook-moss-breathe 4.8s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .storybook-painted-stage[data-painted="true"] .story-stage-item[data-art="inspection-glow"] {
+    animation: none;
+  }
+}

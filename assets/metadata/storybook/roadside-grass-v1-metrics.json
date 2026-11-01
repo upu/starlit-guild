@@ -1,0 +1,18 @@
+[
+  {
+    "name": "roadside-grass",
+    "width": 240,
+    "height": 87,
+    "left": 8,
+    "top": 161,
+    "scale": 0.22662889518413598
+  },
+  {
+    "name": "roadside-stubble",
+    "width": 240,
+    "height": 64,
+    "left": 8,
+    "top": 184,
+    "scale": 0.23952095808383234
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "aria": [
+    {
+      "scale": 0.268,
+      "width": 70,
+      "height": 134,
+      "left": 62,
+      "top": 42,
+      "footAnchor": 100.74505928853755
+    },
+    {
+      "scale": 0.268,
+      "width": 73,
+      "height": 133,
+      "left": 61,
+      "top": 43,
+      "footAnchor": 100.74505928853755
+    },
+    {
+      "scale": 0.268,
+      "width": 83,
+      "height": 133,
+      "left": 63,
+      "top": 43,
+      "footAnchor": 100.74505928853755
+    },
+    {
+      "scale": 0.268,
+      "width": 93,
+      "height": 126,
+      "left": 55,
+      "top": 50,
+      "footAnchor": 100.74505928853755
+    }
+  ],
+  "leon": [
+    {
+      "scale": 0.291497975708502,
+      "width": 76,
+      "height": 144,
+      "left": 54,
+      "top": 32,
+      "footAnchor": 98.26728971962616
+    },
+    {
+      "scale": 0.291497975708502,
+      "width": 81,
+      "height": 144,
+      "left": 51,
+      "top": 32,
+      "footAnchor": 98.26728971962616
+    },
+    {
+      "scale": 0.291497975708502,
+      "width": 96,
+      "height": 144,
+      "left": 53,
+      "top": 32,
+      "footAnchor": 98.26728971962616
+    },
+    {
+      "scale": 0.291497975708502,
+      "width": 99,
+      "height": 140,
+      "left": 52,
+      "top": 36,
+      "footAnchor": 98.26728971962616
+    }
+  ]
+}

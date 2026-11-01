@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen built-in",
+  "scope": "3-3 departure and investigation background",
+  "editTarget": "public/storybook-study/berne-foundation-grass-v1.png",
+  "reference": "public/storybook-study/berne-foundation-open-v2.png",
+  "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-c8deaa95-7e40-4783-8711-dc59aac7e0dd.png",
+  "source": "assets/source/storybook/berne-foundation-grass-v2.png",
+  "output": "public/storybook-study/berne-foundation-grass-v2.png",
+  "sha256": "f8382b097c6df98d1a29c4eb7bbae56b2d1bf85c145bf394922850e1bfad1d64",
+  "prompt": "Use case: precise-object-edit. Asset: warm hand-painted pixel-art RPG background. Image 1 is the exact edit target, an overgrown tower courtyard before investigation. Image 2 is a reference for the SAME tower after cleaning. In image 1 add only the small dark blue narrow arched window visible in the tower wall of image 2, in precisely the same position, size and style as image 2 (near the top of the wall left of the large door). Preserve image 1's camera, dimensions, framing, tower door, all stones, roots, vegetation, rough overgrown diagonal stone path and lighting. Do not clean the path, do not reveal the hole, and do not add characters, text or other objects. The output is image 1 with the small window added, not a recreation of image 2.",
+  "notes": "The generated image preserves the scene's composition and overgrown stones but is not a pixel-exact local edit; texture and colors also vary across the image. Original v1 remains available. Source and delivery are identical 1536x1024 PNGs."
+}

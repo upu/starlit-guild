@@ -1,0 +1,28 @@
+{
+  "purpose": "Separate the wheels from the 1-1 and 1-2 adventure carts while preserving their registered grip positions and cargo.",
+  "tool": "built-in image_gen",
+  "prompt": "Edit this exact existing transparent RPG cart sprite. The output is a replacement cart BODY for a game with separately animated wheels. Remove BOTH the large front wheel and the partly hidden rear wheel entirely, including their rims, spokes and axle hubs. Reconstruct only the wooden box side and frame where the wheels overlapped it. Preserve the original cart, all stacked trade goods, bags, ropes, cloth, vegetables if present, woodwork, two shafts pointing right, their tips, perspective, scale, palette and pixel-art look as closely as possible; do not redesign or move the cargo or handles. Maintain the same 3:2 canvas framing with generous transparent margins and exactly the same cart size/position. No characters, text, floor, shadow, extra objects, border, or wheels. Transparent background.",
+  "build": "node scripts/build-storybook-trade-cart-body.mjs",
+  "assets": [
+    {
+      "reference": "public/storybook-study/loaded-cart-v1.webp",
+      "generated": "exec-f95f4e1d-6bf2-4b19-9f7e-0b2e63c2b521.png",
+      "source": "assets/source/storybook/loaded-cart-body-v2.png",
+      "sourceSha256": "1c749d3774576a7930650968f5b85df7878ecbf827dd3406b12a1d83353cc45f",
+      "output": "public/storybook-study/loaded-cart-body-v2.webp",
+      "outputSha256": "5f083dbb8e6ec381d91856a625c4200f4bee7ddc9c733308871979ab12481843"
+    },
+    {
+      "reference": "public/storybook-study/return-cart-v1.webp",
+      "generated": "exec-d99e1f5f-657c-4ec8-bc27-a76d0deaba14.png",
+      "source": "assets/source/storybook/return-cart-body-v2.png",
+      "sourceSha256": "117ab1d14fc731893a812ed7a1f93142397fbfa9931d63caaf48b42da5762b17",
+      "output": "public/storybook-study/return-cart-body-v2.webp",
+      "outputSha256": "22f8029a76fa539896adf22dcd20e4e85c2e0693f088a14c2ce5d207d5925a17"
+    }
+  ],
+  "reusedWheel": {
+    "path": "public/storybook-study/brekka-cart-wheel-v1.webp",
+    "sha256": "14e0e6c06eefe86846ee8503c51fd81beb6b278c3851e46232c3e67ffd6f32b7"
+  }
+}

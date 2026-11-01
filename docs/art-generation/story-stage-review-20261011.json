@@ -1,0 +1,58 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-11",
+  "references": [
+    "assets/source/story-stage/review-reference.png",
+    "public/story-stage/merrill-poses.webp"
+  ],
+  "selected": [
+    "rest-poses-v2.png",
+    "carry-reactions-v2.png",
+    "scene-actions-v3.png",
+    "merrill-walk-v1.png",
+    "delivery-bag-v1.png"
+  ],
+  "generations": [
+    {
+      "file": "rest-poses-v1.png",
+      "prompt": "Use case: illustration-story. Create a production transparent pixel-art game sprite sheet, exactly 4 columns by 5 rows, all cells equal and isolated, NO text, NO labels, NO grid. Reference image is a character contact sheet: use its five character rows as exact identity, outfit, colors, outline and pixel grain references. Row order: Aria blonde elf green cloak flower; Leon brown spiky hair red cape armor; Mira lavender hair white-gold healer; Finn brown hair rogue tan coat; Lico reddish hair green botanist dress. Each row has FOUR poses facing slightly RIGHT: (1) sitting low on the ground or low stool, calm neutral face, EMPTY hands on knees; (2) same seated body, tired thoughtful worried expression; (3) same seated body, cheerful smile speaking with one empty hand; (4) crouching to examine something at ground level, one EMPTY hand extended downward, NO sack or object. Preserve walking reference HEAD SIZE, don't inflate seated heads. Seated/crouch bodies only 65-75% standing height; heads same physical size as walking. No cups, bags, food, furniture, backgrounds or shadows. Character proportions 2.5-3 heads, crisp detailed original JRPG sprites. Whole body fully visible, wide clear transparent gutters. Actual transparent alpha."
+    },
+    {
+      "file": "carry-reactions-v1.png",
+      "prompt": "Use case: illustration-story. Transparent pixel-art game sprite sheet exactly 3 columns by 5 equal rows. Reference is the five character contact sheet; keep exact character identities, outfits, walking head proportions and pixel rendering. Row order Aria, Leon, Mira, Finn, Lico as reference. All facing slightly RIGHT, standing full body, both arms extended in front at waist height holding an INVISIBLE basket (do NOT draw any basket or item). Each row three poses: column1 neutral focused carrying; column2 concerned thoughtful carrying; column3 smiling talking carrying. Feet firmly at same baseline, head same size and center each column. No giant heads. Match walking reference stature. NO text labels grid props shadows background; transparent alpha."
+    },
+    {
+      "file": "scene-actions-v1.png",
+      "prompt": "Use case: illustration-story. Transparent pixel-art sprite sheet 2 columns by 3 equal rows. Image1 references identities Aria (first row) and Leon (second row). Image2 references Merrill green-haired impish girl with red-orange flower and BOTH distinctive large brown gauntlets and short dress. Preserve their exact designs and walking head proportions. Row1: LEON standing facing right slightly bending forward to write with a small quill, elbow forward at waist height. 2 animation frames, small hand movement; NO book or desk, those are separate game props. Row2: ARIA standing facing right with ONE hand holding a long shoulder-bag strap that runs diagonally across her chest toward her far hip; two frames small weight shift. Do NOT draw a bag: it will be a separate prop aligned at her hip. Row3: MERRILL walking right while both gauntleted hands carry an INVISIBLE large cooking pot at waist height. Two alternating leg strides (left then right); face cheerful mischievous, mouth closed; both gauntlets present. Do not draw pot. Full bodies, same scale each row's pair, crisp pixel art with dark outlines. No labels text grid background shadows; real transparent alpha."
+    },
+    {
+      "file": "scene-actions-v2.png",
+      "ref": "assets/source/story-stage/scene-actions-v1.png",
+      "prompt": "Edit this exact sprite sheet. Keep the 2-column 3-row layout and all character designs. REMOVE ALL background including the colored glows and dark field so every non-character pixel has fully transparent alpha. In BOTTOM RIGHT ONLY, change Merrill's leg stride to the OPPOSITE of bottom left: nearer leg behind bent at knee, farther leg extended FORWARD. Keep head, body, arms and both gauntlets the same across the two frames, no pot. Make Leo's quill point downward toward desk-height, not upward; hands at same height. All characters crisp pixel edges, no text, no effects. Genuine transparent background."
+    },
+    {
+      "file": "carry-reactions-v2.png",
+      "ref": "assets/source/story-stage/carry-reactions-v1.png",
+      "prompt": "Edit this exact sprite sheet only by removing the little yellow/orange marks beside the faces in the RIGHTMOST COLUMN. Preserve every character's design, pose, size, outfit and the exact 3-column by 5-row grid. Keep actual transparent background; no text no symbols no effects."
+    },
+    {
+      "file": "scene-actions-v3.png",
+      "ref": "assets/source/story-stage/scene-actions-v2.png",
+      "prompt": "Produce a NEW clean sprite sheet, not a reproduction of the background. Image 1 supplies the character designs only. Exactly two columns, three equal rows. Actual transparent empty space, alpha zero outside the solid character silhouettes; NO lighting, NO glow, NO haze, NO shadows, NO background color anywhere. Row 1 two Leon writing poses with quill pointing DOWN to an invisible desk. Row 2 two Aria poses holding a diagonal shoulder-bag strap, NO bag. Row 3 two Merrill walking poses, both arms fixed in front to hold an invisible pot, both gauntlets retained. Crucial: bottom-left near foot FORWARD; bottom-right near foot BACK, opposite leg forward, a visibly different alternating stride. Maintain same heads and body anchors. Sharp small sprite game pixel art. No labels. Reference character silhouettes only; do not preserve any surrounding color cloud."
+    },
+    {
+      "file": "merrill-walk-v1.png",
+      "ref": "public/story-stage/merrill-poses.webp",
+      "prompt": "Create a FOUR-FRAME WALK CYCLE sprite sheet of Merrill, character reference image supplied. Exactly 4 equal cells horizontally in one row, no other rows. Facing RIGHT in profile/three-quarter. Green hair red flower, green short dress, large brown gauntlets BOTH hands held forward to carry an invisible pot. Frame 1 LEFT boot planted far in front, right boot far behind. Frame 2 boots together passing below hips, right knee bent. Frame 3 RIGHT boot planted far in front, left boot far behind. Frame 4 boots together passing below hips, left knee bent. These MUST be visibly DIFFERENT leg silhouettes, not four copies. Head, torso, and hands stay in exactly the same position and SAME SIZE, only legs alternate. Chibi pixel art matching supplied sprite, head proportions unchanged. No pot, no text, no speed lines, no shadows, no glows; pure transparent alpha outside silhouettes."
+    },
+    {
+      "file": "delivery-bag-v1.png",
+      "prompt": "Use case: illustration-story. Game inventory prop, one stout olive-green canvas courier shoulder bag full of wrapped medicines, bulging but tightly closed, short visible brown leather side attachments, a small paper delivery tag. No long strap (character sprite provides strap). Three quarter side view, flat bottom, crisp detailed JRPG pixel art, dark brown outlines, warm muted palette. Only the bag centered with clear transparent margins. No bottles outside, no text, no background, no ground shadow. Genuine transparent alpha."
+    },
+    {
+      "file": "rest-poses-v2.png",
+      "ref": "assets/source/story-stage/rest-poses-v1.png",
+      "prompt": "Edit the seated poses in this exact 4-column 5-row sprite sheet. Keep every HEAD absolutely unchanged in physical size and shape, keep outfits and expressions. In columns 1, 2 and 3 ONLY, have each character SIT VERY LOW with their knees folded to the sides and boots tucked flat beneath them, like a compact cross-legged rest. Their head-to-ground height should be about 20 percent SHORTER than the current seated drawings, achieved ONLY by bending/tucking the legs and lowering the hips, NEVER by shrinking the head or squashing the whole sprite. Hands empty. Column 4 crouching can remain unchanged. Maintain equal grid cells and generous transparent gutters, preserve alpha transparency, no text grid background shadows cups sacks."
+    }
+  ]
+}

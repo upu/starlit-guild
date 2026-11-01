@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/keeper-hatch-mark-v1.png",
+    "scale": 0.2017353579175705,
+    "left": 40,
+    "top": 27,
+    "width": 48,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 35
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/keeper-hatch-mark-v1.png",
+    "scale": 0.2017353579175705,
+    "left": 18,
+    "top": 50,
+    "width": 74,
+    "height": 70,
+    "baseline": 120,
+    "upperSilhouetteWidth": 41
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/keeper-hatch-mark-v1.png",
+    "scale": 0.2017353579175705,
+    "left": 21,
+    "top": 50,
+    "width": 71,
+    "height": 70,
+    "baseline": 120,
+    "upperSilhouetteWidth": 41
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/keeper-hatch-mark-v1.png",
+    "scale": 0.2017353579175705,
+    "left": 40,
+    "top": 27,
+    "width": 48,
+    "height": 93,
+    "baseline": 120,
+    "upperSilhouetteWidth": 34
+  }
+]

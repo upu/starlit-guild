@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "scene": "moss-transplant-departure, indices 16-37 and exit",
+  "direction": "Warm hand-painted elevated oblique RPG, same cell19 body scale as loading yard. Preserve story and established route from tower to new moss beds; no new geography.",
+  "assets": [
+    {
+      "source": "assets/source/storybook/transplant-night-path-v1.png",
+      "generation": "exec-56cfa361-52b7-4c82-91c9-660d9d5a4ff9",
+      "reference": "public/storybook-study/tower-loading-yard-v1.png",
+      "prompt": "1536x1024 night rural dirt path viewed 50 degrees from above, no sky, tower, buildings, people, cart or cargo. Warm brown earth and readable blue-teal moonlight. Shallow filled ditch, soft mud around54%,55%, dry root clearing near33%,73%, spare-board dry patch75%,34%. Leave playable ground and foreground detour, small scale details matching12% image-height humans.",
+      "output": "public/storybook-study/transplant-night-path-v1.png"
+    },
+    {
+      "source": "assets/source/storybook/finn-pull-v1.png",
+      "generation": "exec-6beca657-b795-4796-be69-45eb65879fa1",
+      "references": ["public/storybook-study/finn-push-v1.webp", "public/storybook-study/leon-pull-v1.webp"],
+      "prompt": "Four transparent equal separated cells of Finn pulling an imaginary cart to right, rear hand behind hip and free forward hand, same body scale and baseline, cream rolled sleeve shirt brown waistcoat trousers boots tied-back brown hair. Four alternating touchdown/passing leg phases, no actual cart or props, warm hand-painted elevated RPG.",
+      "output": "public/storybook-study/finn-pull-v1.webp",
+      "limitation": "Pose direction and body scale integrated; gait needs final motion audit rather than assuming four cells prove a natural stride."
+    },
+    {
+      "source": "assets/source/storybook/transplant-plank-v1.png",
+      "generation": "exec-ca773f39-ee47-48d1-b942-2ce84f200956",
+      "prompt": "Single narrow weathered wood cart wheel plank, about5times longer than wide, viewed50degrees from above, nearly horizontal, thickness at near edge, subtle grain dark outline, warm hand-painted game prop. Transparent square with generous gutters, no table legs rope scenery labels or shadow floor.",
+      "output": "public/storybook-study/transplant-plank-v1.webp"
+    },
+    {
+      "source": "assets/source/storybook/slime-v1.png",
+      "generation": "exec-c974343c-f2a8-43b8-9660-0f726eeca263",
+      "prompt": "One small low glossy translucent blue slime, two simple dark eyes and alert mouth, elevated50degrees, warm hand-painted watercolor gouache and fine dark contour, readable40pixels, no pixel grid, complete isolated creature with true transparent background and no floor or separate shadow.",
+      "output": "public/storybook-study/slime-v1.webp"
+    }
+  ],
+  "packing": "scripts/build-storybook-transplant-night.mjs. Finn one common scale148px and sole176 in192 cells. Existing basket cart losslessly cropped from512x384 to512x288 to remove transparent floor padding. Existing painted cloth, healing and sword assets reused; original sources retained.",
+  "contacts": "lib/storybook/transplant-night-cue.ts registers shared basket handover, low placement and pickup. Three boards persist, cropped cart grip height and wheel board contact adjusted. Storybook exit uses the same adapter.",
+  "remaining": "Final continuous PC/mobile motion audit, alternating-leg quality, monster and wheel interaction polish, then broader goal requirements. Not evidence of whole-goal completion."
+}

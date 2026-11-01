@@ -1,0 +1,30 @@
+[
+  {
+    "name": "work-fence",
+    "width": 240,
+    "height": 190,
+    "left": 8,
+    "top": 58
+  },
+  {
+    "name": "joint-roots",
+    "width": 240,
+    "height": 202,
+    "left": 8,
+    "top": 46
+  },
+  {
+    "name": "mason-tools",
+    "width": 202,
+    "height": 236,
+    "left": 27,
+    "top": 12
+  },
+  {
+    "name": "cleaning-rag",
+    "width": 240,
+    "height": 185,
+    "left": 8,
+    "top": 63
+  }
+]

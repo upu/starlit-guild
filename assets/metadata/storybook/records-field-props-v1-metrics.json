@@ -1,0 +1,44 @@
+[
+  {
+    "name": "field-lap-board",
+    "scale": 0.47713717693836977,
+    "width": 240,
+    "height": 128,
+    "baseline": 248
+  },
+  {
+    "name": "field-open-ledger",
+    "scale": 0.5010438413361169,
+    "width": 240,
+    "height": 143,
+    "baseline": 248
+  },
+  {
+    "name": "field-closed-ledger",
+    "scale": 0.7412140575079872,
+    "width": 238,
+    "height": 232,
+    "baseline": 248
+  },
+  {
+    "name": "field-samples",
+    "scale": 0.502092050209205,
+    "width": 240,
+    "height": 150,
+    "baseline": 248
+  },
+  {
+    "name": "field-seedling",
+    "scale": 0.9392712550607287,
+    "width": 129,
+    "height": 232,
+    "baseline": 248
+  },
+  {
+    "name": "field-basket",
+    "scale": 0.5309734513274337,
+    "width": 240,
+    "height": 164,
+    "baseline": 248
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "frame": 0,
+    "source": "assets/source/storybook/finn-sit-down-balanced-v2.png",
+    "scale": 0.22981366459627328,
+    "left": 61,
+    "top": 28,
+    "width": 63,
+    "height": 148,
+    "baseline": 176,
+    "headX": 95.64463037026843
+  },
+  {
+    "frame": 1,
+    "source": "assets/source/storybook/finn-sit-down-balanced-v2.png",
+    "scale": 0.22981366459627328,
+    "left": 54,
+    "top": 48,
+    "width": 68,
+    "height": 128,
+    "baseline": 176,
+    "headX": 95.55017591500018
+  },
+  {
+    "frame": 2,
+    "source": "assets/source/storybook/finn-sit-down-balanced-v2.png",
+    "scale": 0.22981366459627328,
+    "left": 53,
+    "top": 66,
+    "width": 74,
+    "height": 110,
+    "baseline": 176,
+    "headX": 93.58314018203794
+  },
+  {
+    "frame": 3,
+    "source": "assets/source/storybook/finn-sit-down-balanced-v2.png",
+    "scale": 0.22981366459627328,
+    "left": 53,
+    "top": 76,
+    "width": 72,
+    "height": 100,
+    "baseline": 176,
+    "headX": 92.67362230669424
+  }
+]

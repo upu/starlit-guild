@@ -1,0 +1,66 @@
+[
+  {
+    "name": "display-covered",
+    "width": 240,
+    "height": 165,
+    "left": 8,
+    "top": 143,
+    "scale": 0.5346062052505967
+  },
+  {
+    "name": "display-closed",
+    "width": 224,
+    "height": 161,
+    "left": 16,
+    "top": 147,
+    "scale": 0.5346062052505967
+  },
+  {
+    "name": "display-open",
+    "width": 226,
+    "height": 244,
+    "left": 15,
+    "top": 64,
+    "scale": 0.5346062052505967
+  },
+  {
+    "name": "display-cloth",
+    "width": 224,
+    "height": 138,
+    "left": 16,
+    "top": 170,
+    "scale": 0.5989304812834224
+  },
+  {
+    "name": "tower-stone",
+    "width": 224,
+    "height": 162,
+    "left": 16,
+    "top": 146,
+    "scale": 0.56
+  },
+  {
+    "name": "tower-stone-bottom",
+    "width": 255,
+    "height": 175,
+    "left": 1,
+    "top": 133,
+    "scale": 0.56
+  },
+  {
+    "name": "light-cloth",
+    "width": 175,
+    "height": 280,
+    "left": 41,
+    "top": 28,
+    "scale": 0.7588075880758808
+  },
+  {
+    "name": "case-key",
+    "width": 224,
+    "height": 227,
+    "left": 16,
+    "top": 81,
+    "scale": 1.382716049382716
+  }
+]

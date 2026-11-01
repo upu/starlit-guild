@@ -1,0 +1,116 @@
+{
+  "purpose": "Chapters 2–4 authored dialogue stages; original story, geography and still reveals preserved",
+  "images": [
+    {
+      "source": "assets/source/story-stage/mira-poses-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create a game-ready pixel art conversation pose sprite sheet for Mira, adult woman healer, silver grey loose braided hair, white and gold travelling healer outfit, flower/crescent hair ornament, short skirt and sturdy brown boots. Gentle older-sister expression, curious and slightly impulsive, not a child. The provided home-pixel sheet is the strict character identity, pixel grain, outlines, palette, head-to-body proportion and costume reference. Preserve the reference chibi proportions exactly, same standing head size and stature in all frames, face towards viewer-right 3/4. NEW sheet exactly 4 columns x 2 rows, 8 equal cells with ample transparent gutters, every full-body sprite centered horizontally and feet on same baseline. Row-major poses: 0 relaxed idle arms lowered; 1 friendly raised-hand greeting; 2 surprised wide eyes hands near chest; 3 skeptical/thoughtful hand near chin; 4 explaining/offering open palms at waist; 5 amused mischievous grin conversational gesture; 6 walking right holding both empty hands forward at waist as if carrying a small parcel, left foot forward; 7 same carrying walk right foot forward. No held props in any frame. No text, no ground, no shadows, no frames or grid lines, no extra characters, transparent alpha background. Crisp charming low-resolution Japanese RPG pixel clusters and dark outlines matching reference. Entire sheet 1536x1024 if possible; uniform exact cell grid more important than output dimensions.",
+      "references": [
+        "public/home-pixel/mira.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/finn-poses-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create a game-ready pixel art conversation pose sprite sheet for Finn, clearly middle aged male shady broker, sun-tanned face, drooping eyes, stubble, messy shoulder-length brown hair, worn olive travelling coat, brown trousers and boots. Smirking slouching scruffy older man. Keep his unkempt age, do not beautify into a young boy. The provided home-pixel sheet is the strict character identity, pixel grain, outlines, palette, head-to-body proportion and costume reference. Preserve the reference chibi proportions exactly, same standing head size and stature in all frames, face towards viewer-right 3/4. NEW sheet exactly 4 columns x 2 rows, 8 equal cells with ample transparent gutters, every full-body sprite centered horizontally and feet on same baseline. Row-major poses: 0 relaxed idle arms lowered; 1 friendly raised-hand greeting; 2 surprised wide eyes hands near chest; 3 skeptical/thoughtful hand near chin; 4 explaining/offering open palms at waist; 5 amused mischievous grin conversational gesture; 6 walking right holding both empty hands forward at waist as if carrying a small parcel, left foot forward; 7 same carrying walk right foot forward. No held props in any frame. No text, no ground, no shadows, no frames or grid lines, no extra characters, transparent alpha background. Crisp charming low-resolution Japanese RPG pixel clusters and dark outlines matching reference. Entire sheet 1536x1024 if possible; uniform exact cell grid more important than output dimensions.",
+      "references": [
+        "public/home-pixel/finn.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/lico-poses-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create a game-ready pixel art conversation pose sprite sheet for Lico, short stocky young adult female eccentric alchemist, messy reddish brown ponytail, round glasses, green eyes and freckles, black/red utility apron outfit and strapped sandals. Sleepy blunt expression, excited only when investigating things. Preserve peculiar approachable face, not a conventional perfect beautiful girl. The provided home-pixel sheet is the strict character identity, pixel grain, outlines, palette, head-to-body proportion and costume reference. Preserve the reference chibi proportions exactly, same standing head size and stature in all frames, face towards viewer-right 3/4. NEW sheet exactly 4 columns x 2 rows, 8 equal cells with ample transparent gutters, every full-body sprite centered horizontally and feet on same baseline. Row-major poses: 0 relaxed idle arms lowered; 1 friendly raised-hand greeting; 2 surprised wide eyes hands near chest; 3 skeptical/thoughtful hand near chin; 4 explaining/offering open palms at waist; 5 amused mischievous grin conversational gesture; 6 walking right holding both empty hands forward at waist as if carrying a small parcel, left foot forward; 7 same carrying walk right foot forward. No held props in any frame. No text, no ground, no shadows, no frames or grid lines, no extra characters, transparent alpha background. Crisp charming low-resolution Japanese RPG pixel clusters and dark outlines matching reference. Entire sheet 1536x1024 if possible; uniform exact cell grid more important than output dimensions.",
+      "references": [
+        "public/home-pixel/lico.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-interiors-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Produce a seamless CONTACT SHEET of FOUR DIFFERENT background plates for a Japanese pixel art RPG. Strict 2 columns x 2 rows equal quadrants, no borders or margins. Sheet 1536x1024, each quadrant landscape3:2. Reference is STYLE and CAMERA/SCALE ONLY: crisp painted pixel clusters, earthy warm palette, dark fine outlines, close low 3/4 side view, NOT overhead, near objects appropriately sized for chibi characters. EACH quadrant leaves bottom55% clear playable level ground for foreground character sprites; major furniture and architecture only in back35% and far edges. No people, creatures, text, UI, foreground props, tables or large obstacles. Scenes in exact row-major order: TOP LEFT: small healer's workshop, shelves of herbs and medicine bottles, small bed along the back wall, window daylight, open wooden floor foreground. TOP RIGHT: cozy road inn dining room, wooden tables pushed to back and sides, benches, window daylight, open wooden floor foreground. BOTTOM LEFT: wealthy merchant manor garden, flower beds and ornamental balustrade in back, NO display objects or pedestal in foreground, wide open paving foreground. BOTTOM RIGHT: old disused timber workshop, open broad doorway, wooden rafters and disused tools at back, open dirt floor foreground. Keep strong distinctive setting but uncluttered readable pixel art matching reference.",
+      "references": [
+        "public/story-stage/town-shop.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-streets-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Produce a seamless CONTACT SHEET of FOUR DIFFERENT background plates for a Japanese pixel art RPG. Strict 2 columns x 2 rows equal quadrants, no borders or margins. Sheet 1536x1024, each quadrant landscape3:2. Reference is STYLE and CAMERA/SCALE ONLY: crisp painted pixel clusters, earthy warm palette, dark fine outlines, close low 3/4 side view, NOT overhead, near objects appropriately sized for chibi characters. EACH quadrant leaves bottom55% clear playable level ground for foreground character sprites; major furniture and architecture only in back35% and far edges. No people, creatures, text, UI, foreground props, tables or large obstacles. Scenes in exact row-major order: TOP LEFT: mountain road junction, rough hillside path and pine trees, two branching paths at back, NO signpost, wide flat trail foreground. TOP RIGHT: stone-paved Berne street, old European timber stone houses at back, some missing flagstones exposing soil at sides, wide flat pavement foreground. BOTTOM LEFT: Brekka brewing-town alley, brewery wall with a few barrels at far back, side passage, broad open paving foreground. BOTTOM RIGHT: mountain hamlet household doorstep with simple plaster cottages and herb garden in back, wide level dirt yard foreground. Keep strong distinctive setting but uncluttered readable pixel art matching reference.",
+      "references": [
+        "public/story-stage/town-shop.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-worksites-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Produce a seamless CONTACT SHEET of FOUR DIFFERENT background plates for a Japanese pixel art RPG. Strict 2 columns x 2 rows equal quadrants, no borders or margins. Sheet 1536x1024, each quadrant landscape3:2. Reference is STYLE and CAMERA/SCALE ONLY: crisp painted pixel clusters, earthy warm palette, dark fine outlines, close low 3/4 side view, NOT overhead, near objects appropriately sized for chibi characters. EACH quadrant leaves bottom55% clear playable level ground for foreground character sprites; major furniture and architecture only in back35% and far edges. No people, creatures, text, UI, foreground props, tables or large obstacles. Scenes in exact row-major order: TOP LEFT: stone mason's storage yard, modest stacks of old building stones at sides/back, tool shed, broad open stone floor foreground. TOP RIGHT: dark wooden manor storeroom with back shelves, dim daylight through shutter cracks, empty plank floor foreground, no glowing objects. BOTTOM LEFT: cultivated moss beds behind a distant small stone tower, parallel low shallow planting rectangles filled with green moss along sides and back, narrow irrigation channels, flat open soil work area foreground. BOTTOM RIGHT: small medieval town registry office, shelves of ledgers and writing desk at far back, daylight window, wide open wood floor foreground. Keep strong distinctive setting but uncluttered readable pixel art matching reference.",
+      "references": [
+        "public/story-stage/town-shop.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-props-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create a transparent-alpha game prop sprite atlas, exactly 4 columns x 3 rows,12 equal cells with generous blank gutters, no touching or overlap. Crisp detailed low resolution Japanese RPG pixel art, warm earthy palette, dark outlines, three-quarter side view matching our chibi characters. Each object standalone whole object centered, no background, no text or labels, no grid lines. Row-major exact objects: 0 a cloth parcel opened to reveal two walnut bread halves; 1 a ceramic teapot with three small cups; 2 compact wooden healer medicine case filled with bundled bottles; 3 bundle of silver green medicinal leaves; 4 single small round glass honey bottle with cork and golden contents; 5 simple wooden trail signpost with one arrow pointing right; 6 pale violet faintly glowing flat rectangular keystone slab hand-carry size; 7 similarly sized pale blue grey faintly glowing flat replacement stone slab (no runes); 8 thick open handwritten ledger with quill; 9 small low wooden crate with three glowing moss seedlings in pots; 10 squat old village stone lantern with glass/oil light chamber; 11 waist-high SMALL plain wooden worktable, empty top, correct side perspective for people standing next to it. All pixels sharp and clean.",
+      "references": []
+    },
+    {
+      "source": "assets/source/story-stage/masked-pumpety-poses-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create transparent-alpha pixel art RPG NPC conversation sprite sheet exactly2x2equal cells four FULL BODY poses: idle; grandly explaining with open hand; directing puppets with one hand; reluctantly bowing slightly. Use reference character identity exactly: SMALL girl entirely masked with large pumpkin head, DARK face holes never eyes or face visible, brown twin tails, green black yellow halloween dress, ankle boots. Keep same child-size chibi proportions/headscale eachcell. Avoid strings and extra puppets obscuring character. Everyfeet samebaseline, face viewer-left3/4. Crisp low-resolution pixel clusters and dark outlines. No labels/borders/background/shadows.",
+      "references": [
+        "assets/source/adventure-enemies/pumpety-v1.png"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/merrill-poses-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Create transparent-alpha pixel art RPG NPC conversation sprite sheet exactly2x2equal cells four FULL BODY poses: relaxed idle; delighted explaining a taste/open right hand; eagerly reaching with bare right hand; departing friendly wave. Use reference identity exactly: short girl dryad, thick sturdy legs, short green messy bob, living red pomegranate flower growing from head with leaves, separate red ribbon, cream blouse short moss green jacket dark shorts thick boots, huge food backpack mushrooms meat fruit, pumpkin charm. LEFT arm ONLY wears wooden lyre gauntlet along back of forearm and hand; RIGHT arm bare. No standalone harp. Keep same headscale andfeetbaseline allcells, viewer-right3/4, crisp low-resolution Japanese RPG pixel clusters and dark outlines, chibi matching other actors. No text borders background shadows.",
+      "references": [
+        "assets/source/adventure-enemies/merrill-standing-v1.png"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-hand-props-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Transparent-alpha pixel art game prop atlas, exactly 3 columns x 2 rows equal cells, ample clear gutters, whole standalone objects centered. Fine crisp Japanese fantasy RPG pixel clusters and earthy outlines, three-quarter SIDE perspective for chibi humans, no text/grid/background/shadows. Row-major: 0 small blackened iron cooking pot with lid and loop handle; 1 small old brass door key; 2 two tall glasses of pale amber fruit water (no fruit garnish); 3 two very SMALL earthenware ale cups filled amber (cups much smaller than drinking glasses); 4 small corked glass sample jar containing faintly green glowing moss (clearly green moss not honey); 5 low wooden two-wheel handcart loaded with TWO potted flowers and a compact cloth-covered flat rectangular parcel nestled between them, two handles, garden work handcart not wagon, no person. Each easily readable at 40pixels high, separated no overlap.",
+      "references": []
+    },
+    {
+      "source": "assets/source/story-stage/picnic-cloth-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Game prop sprite, transparent alpha background. A single plain cream linen picnic cloth SPREAD FLAT on the ground, viewed from a LOW three-quarter SIDE angle for chibi pixel-art RPG characters seated behind it. Extremely low profile: a wide horizontal soft trapezoid, width about4x its height, no stack, no rolled or folded pile. Modest woven rim and slightly wrinkled flat surface. No bread, objects, characters or background, no shadow outside cloth, no text. Crisp pixel clusters, earthy cream and beige palette with thin dark brown outlines. It will be placed at characters' feet and must never cover their torsos. Draw whole cloth with clear transparent margins on all sides.",
+      "references": []
+    },
+    {
+      "source": "assets/source/story-stage/later-locations-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Four background plates contact sheet for pixel art RPG, strict2x2 equal quadrants,1536x1024, eachscene3:2. Same detailed earthy pixel clusters, outlines and CLOSE LOW3/4 camera as reference. ALL leave lower55% flat clear floor/ground for sprites, no people text foreground props. Top left: nighttime stone bridge entrance crossing a river, parapet and water in backthird, dark violet twilight distant hills, wide open paving foreground. Top right: modest RENTED SECOND FLOOR OF A WAREHOUSE used as adventuring group's daytime office, rough timber wall and beams, shelves and simple cupboard to rear, unadorned small writing desk by window at back, no beds, wide empty wooden floor foreground. Bottom left: small modest patient's home bedroom, single low bed with a plain cream blanket and pillow against back wall at right, cooking hearth at backleft, empty foreground wooden floor. Bottom right: restored cultivation plot well AWAY FROM ANY TOWER, forest-edge work land, low green moss beds arranged to sides/back, simple irrigation draining toward vegetation, no tower or buildings, broad open earth path foreground.",
+      "references": [
+        "public/story-stage/town-shop.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-cart-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Transparent alpha sprite atlas3columns1row, equal cells clear gaps. Pixel art RPG low3/4side camera,dark outlines,handpaintedpixelclusters. Three wood handcart states of SAME CART facing right, two large wood wheels and2handles. First cart: carrying several EMPTY wicker baskets stacked inside, no people plants flowers bundles. Second cart: same cart filled with low potted moss seedlings and rolled wooden planks, moss glows faintlygreen, no flowers. Third cart: same cart completely EMPTY, no load. Realistic modest handcart to pull by one chibi adult, complete wholecart ineachcell atsameheight, no labels background grid or shadows.",
+      "references": []
+    },
+    {
+      "source": "assets/source/story-stage/lico-poses-v2.png",
+      "tool": "built-in image_gen",
+      "prompt": "EDIT the first attached 4x2 transparent sprite sheet, preserve its exact eight poses, costume, glasses, ponytail, palette and style. Correct Lico's proportions against the second home-walking reference: the current heads are about13% TOO LARGE relative to the full standing figure. Reduce EACH head and hair silhouette width and height by approximately12% while keeping full standing crown-to-sole stature, total figure height and foot baseline unchanged; redistribute that room to the torso/legs so character remains the same total height, not just a smaller sprite. Preserve short sturdy limbs and approachable sleepy odd face; do not prettify. All eight frames must have the same head size and costume. Carry-walk frames6 and7 must retain equal standing stature, just opposite foot forward. Eight equal cells 4columns2rows, no cropping, transparent alpha clean margins, no background or text.",
+      "references": [
+        "assets/source/story-stage/lico-poses-v1.png",
+        "public/home-pixel/lico.webp"
+      ]
+    },
+    {
+      "source": "assets/source/story-stage/later-townsfolk-v1.png",
+      "tool": "built-in image_gen",
+      "prompt": "Transparent alpha 2x2 sprite sheet of FOUR unnamed townsfolk for a Japanese chibi pixel-art RPG, equal square cells, full bodies, centered, clean generous transparent gutters, no labels or grid. Low-resolution pixel clusters fine dark outlines earthy palette, same scale as classic RPG resident sprites (big head around half body height). Top left: sturdy middle aged male cook, short dark hair and moustache, cream apron over brown shirt and pants, friendly stern expression, one open palm at waist, feet on baseline. Top right: older adult female village doctor, grey tied-back hair, modest green robe and white apron, medicine satchel, calm expression, one open hand, standing feet on baseline. Bottom left: adult mother in plain blue dress and cream apron, brown hair tied back, concerned but gentle, hands in front, standing feet on baseline. Bottom right: young boy PATIENT in loose plain cream pajamas, sitting on low stool feet down, tired but alert face, smaller than adults (total height70% of standing adults), no bed, no blanket covering head, no cup. No objects obscuring faces, no environment, no background.",
+      "references": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-24",
+  "status": "under-review",
+  "method": "built-in image_gen",
+  "assets": [{
+    "source": "assets/source/story-stage/rope-coil-v1.png",
+    "output": "public/story-stage/prop-rope-coil.webp",
+    "sha256": "f0225f6bf925f46f5b2ffb4d8c4cad0a6a23e415b47d1b9a80edb2d5aacaf473",
+    "prompt": "One isolated small coil of thick natural hemp rope, bundled for carrying, viewed from a 45-degree elevated oblique RPG camera. Detailed Japanese fantasy pixel-art inventory/stage prop, warm muted straw brown, crisp dark brown outlines and square pixel clusters matching classic pixel RPG tools. Oval flat coil, about five loops, tied with one simple binding across its center. Entire object visible, centered with transparent padding. True transparent alpha background. No loose long tail, hands, people, other tools, ground, shadow, text, frame or glow. Simple readable silhouette at 40 pixels wide. Not a hanging noose."
+  }]
+}

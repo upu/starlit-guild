@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Edit FIRST image preserving its EXACT daylight elevated45degree handpaintedRPG composition, door, towerwall, foliage, open workyard, diagonalstoneconduit and rectangular missingblock HOLE atcenter. Add ONLY one SMALL narrow arched inset window in towerwall to match the exact window position,size,and masonry detail from SECOND image at about44percent width and10percent height. This is same tower earlier that morning. The new window is UNLIT dark glass, no violetglow, all afternoonlighting from SECOND ignored. Keep FIRST image bright warm MORNING daylight and same existing missingstonehole. No new objects,people,props,furniture or text. Everything else unchanged, same view and image boundaries.",
+  "references": [
+    "public/storybook-study/berne-foundation-open-v1.png",
+    "public/storybook-study/berne-foundation-restored-v1.png"
+  ],
+  "source": "assets/source/storybook/berne-foundation-open-v2.png"
+}

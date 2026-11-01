@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Single original game prop on transparent background, no text or floor or hand. A soft IVORY LINEN CLOTH cover just lifted off a small rectangular display case: it hangs naturally by ONE pinched corner at its UPPER RIGHT, all other fabric sags DOWN and toward LEFT under gravity. No rigid rectangular object inside, no box, no tabletop. It is NOT folded into a stack and NOT stretched between two corners. One high pinched grip point at far upper right, loose asymmetric draping folds tapering down-left, one small gathered cloth tip at the exact highest point for attachment to an invisible hand. Full cloth inside image with generous margin. Warm painterly 2D RPG prop style, soft ink edges and restrained ivory and beige shading, elevated three-quarter view matching supplied hand-painted cloth reference. Clean alpha background.",
+  "references": [
+    "assets/source/storybook/reception-cloths-v1.png"
+  ],
+  "source": "assets/source/storybook/hanging-cover-v1.png"
+}

@@ -7,9 +7,65 @@ import ts from "typescript";
 const code = ts.transpileModule(readFileSync("app/phaser/adventure-resolution.ts", "utf8"), {
   compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText;
-const { bindAdventureResolution } = await import(
+const { bindAdventureResolution, freezeAdventureScene } = await import(
   `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
 );
+
+test("pausing commits the painted frame before sleeping without advancing simulation", () => {
+  const calls = [];
+  const scene = {
+    game: {
+      renderer: { preRender: () => calls.push("pre"), postRender: () => calls.push("post") },
+      scene: {
+        render: () => calls.push("render"),
+        update: () => assert.fail("simulation advanced"),
+      },
+      loop: { sleep: () => calls.push("sleep"), wake: () => assert.fail("loop restarted") },
+    },
+  };
+  freezeAdventureScene(
+    scene,
+    () => calls.push("paint"),
+    () => false,
+  );
+  assert.deepEqual(calls, ["paint", "pre", "render", "post", "sleep"]);
+  calls.length = 0;
+  freezeAdventureScene(
+    scene,
+    () => calls.push("paint"),
+    () => true,
+  );
+  assert.deepEqual(calls, ["paint", "sleep"]);
+});
+
+test("initially paused scenes finish late image queues before sleeping", () => {
+  const calls = [];
+  let loading = false;
+  const scene = {
+    game: {
+      renderer: { preRender() {}, postRender() {} },
+      scene: { render() {}, update: () => assert.fail("simulation advanced") },
+      loop: { sleep: () => calls.push("sleep"), wake: () => calls.push("wake") },
+    },
+  };
+  freezeAdventureScene(
+    scene,
+    () => {
+      loading = true;
+    },
+    () => false,
+    () => loading,
+  );
+  assert.deepEqual(calls, ["wake"]);
+  loading = false;
+  freezeAdventureScene(
+    scene,
+    () => {},
+    () => false,
+    () => loading,
+  );
+  assert.deepEqual(calls, ["wake", "sleep"]);
+});
 
 test("dense rendering preserves CSS layout and world positions across resize and cleans up", () => {
   const previous = globalThis.window;

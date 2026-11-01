@@ -1,0 +1,30 @@
+[
+  {
+    "name": "survey-pot",
+    "width": 240,
+    "height": 195,
+    "left": 8,
+    "top": 53
+  },
+  {
+    "name": "survey-lid",
+    "width": 240,
+    "height": 186,
+    "left": 8,
+    "top": 62
+  },
+  {
+    "name": "survey-rag",
+    "width": 118,
+    "height": 236,
+    "left": 69,
+    "top": 12
+  },
+  {
+    "name": "tool-rucksack",
+    "width": 193,
+    "height": 236,
+    "left": 32,
+    "top": 12
+  }
+]

@@ -1,0 +1,227 @@
+{
+  "date": "2026-10-31",
+  "tool": "built-in image_gen",
+  "use": "Game assets, shared painted props for Chapters 1–4",
+  "jobs": [
+    {
+      "name": "common-dragging-cloth-v1",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target: the cream rectangular packing cloth with its rightmost corner lifted while it is dragged across the ground. Image 2 is only the warm hand-painted RPG material/style reference. Redraw ONLY that same empty cream cloth in the warm painted style of image 2. Preserve the target's long horizontal full-body silhouette, broad flat left portion on the ground, right corner held up toward upper right, cream weave and restrained ochre stitched hem. Keep the same elevated three-quarter view, direction and amount of cloth; this must read as the SAME packing cloth with a corner pulled, not a folded handkerchief, hanging curtain or crumpled pile. Replace hard pixel stair-steps with delicate warm brown outlines and broad softly painted fold shading, readable as a small game prop, consistent with our approved storybook RPG assets. Keep the entire fabric and all corners inside the image with transparent gutters. No people, hands, ground, shadow, objects on the cloth, text, letters, labels, border or scenery. Genuine transparent alpha background. One cloth only, centered.",
+      "references": [
+        "public/story-stage/prop-dragging-cloth.webp",
+        "public/storybook-study/loading-cloth-v1.webp"
+      ],
+      "source": "assets/source/storybook/common-dragging-cloth-v1.png",
+      "generatedSource": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-8dfa0711-17ea-439f-ac3c-9d2e8c41a2ee.png"
+    },
+    {
+      "name": "common-old-wrapper-v1",
+      "references": [
+        "public/story-stage/prop-old-wrapper.webp",
+        "public/storybook-study/loading-cloth-v1.webp"
+      ],
+      "subject": "one small worn tan linen wrapping cloth, spread flat in a roughly diamond-shaped square, all four slightly frayed corners visible, gently stained with ordinary age and dust. Preserve its thin cloth form, size proportions, shallow creases, warm tan color and elevated view; it is the old cloth that once wrapped a stone, with nothing inside it. Do not fold it into a stack, do not add red/blood stains or ribbons.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the authoritative warm hand-painted RPG texture and rendering reference. Redraw the SAME target prop in that painted style, replacing coarse black pixel stair-steps with fine warm brown outlines and broad soft material shading. Subject: one small worn tan linen wrapping cloth, spread flat in a roughly diamond-shaped square, all four slightly frayed corners visible, gently stained with ordinary age and dust. Preserve its thin cloth form, size proportions, shallow creases, warm tan color and elevated view; it is the old cloth that once wrapped a stone, with nothing inside it. Do not fold it into a stack, do not add red/blood stains or ribbons. Keep the whole prop inside the image with generous fully transparent gutters on all sides. One isolated prop, no person, hands, scene, floor, cast shadow, labels, border or grid. Genuine transparent alpha background. Retain the target's identity and state; do not imitate a different object or state from the style reference.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-99bae521-609f-4f4a-a745-3377fe9037b3.png",
+      "source": "assets/source/storybook/common-old-wrapper-v1.png"
+    },
+    {
+      "name": "common-lap-napkin-v1",
+      "references": [
+        "public/story-stage/prop-lap-napkin.webp",
+        "public/storybook-study/loading-cloth-v1.webp"
+      ],
+      "subject": "one clean small cream linen napkin, spread as a flat diamond-shaped square with a few gentle diagonal creases and a simple narrow stitched hem. Preserve all four corners, the target's square silhouette and elevated angle. This rests across a seated person's knees, so it stays thin and almost flat; no crumpled heap, long hanging panel, tied package or folded stack.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the authoritative warm hand-painted RPG texture and rendering reference. Redraw the SAME target prop in that painted style, replacing coarse black pixel stair-steps with fine warm brown outlines and broad soft material shading. Subject: one clean small cream linen napkin, spread as a flat diamond-shaped square with a few gentle diagonal creases and a simple narrow stitched hem. Preserve all four corners, the target's square silhouette and elevated angle. This rests across a seated person's knees, so it stays thin and almost flat; no crumpled heap, long hanging panel, tied package or folded stack. Keep the whole prop inside the image with generous fully transparent gutters on all sides. One isolated prop, no person, hands, scene, floor, cast shadow, labels, border or grid. Genuine transparent alpha background. Retain the target's identity and state; do not imitate a different object or state from the style reference.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-4cd86840-5592-40d3-9b56-cdd74170c970.png",
+      "source": "assets/source/storybook/common-lap-napkin-v1.png"
+    },
+    {
+      "name": "common-paper-v1",
+      "references": [
+        "public/story-stage/prop-paper.webp",
+        "public/storybook-study/delivery-receipts-v1.webp"
+      ],
+      "subject": "one SINGLE cream parchment sheet with a few restrained abstract brown ink handwriting strokes. Preserve the target's gently angled quadrilateral outline, one slightly curled lower corner, and elevated three-quarter view. The reference stack is style only: exactly ONE sheet, no multiple sheets, book, envelope, seal or pen, no legible text or large title.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the authoritative warm hand-painted RPG texture and rendering reference. Redraw the SAME target prop in that painted style, replacing coarse black pixel stair-steps with fine warm brown outlines and broad soft material shading. Subject: one SINGLE cream parchment sheet with a few restrained abstract brown ink handwriting strokes. Preserve the target's gently angled quadrilateral outline, one slightly curled lower corner, and elevated three-quarter view. The reference stack is style only: exactly ONE sheet, no multiple sheets, book, envelope, seal or pen, no legible text or large title. Keep the whole prop inside the image with generous fully transparent gutters on all sides. One isolated prop, no person, hands, scene, floor, cast shadow, labels, border or grid. Genuine transparent alpha background. Retain the target's identity and state; do not imitate a different object or state from the style reference.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-0b94e157-cc52-4a56-b302-9ed70ca90c91.png",
+      "source": "assets/source/storybook/common-paper-v1.png"
+    },
+    {
+      "name": "common-bread-half-v1",
+      "references": [
+        "public/story-stage/prop-bread-half.webp",
+        "public/storybook-study/lunch-bread-v1.webp"
+      ],
+      "subject": "one half of a small rustic golden-brown bread roll, broken by hand, with a clearly exposed pale airy crumb surface and a rounded crust on the outer side. Keep the target's compact portion shape and elevated three-quarter view, but make it read as HALF a roll torn cleanly by hand, not a whole loaf and not a bitten crescent. No wrapper or plate. Same warm bread material as reference 2.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the target prop to redraw. Image 2 is only the authoritative warm painted RPG material/style reference. Replace coarse black pixel stair-steps with fine warm brown/gray outlines and soft painted shading, consistent with our storybook game. Subject: one half of a small rustic golden-brown bread roll, broken by hand, with a clearly exposed pale airy crumb surface and a rounded crust on the outer side. Keep the target's compact portion shape and elevated three-quarter view, but make it read as HALF a roll torn cleanly by hand, not a whole loaf and not a bitten crescent. No wrapper or plate. Same warm bread material as reference 2. One isolated complete prop centered with generous genuine transparent alpha gutters on all sides. No person, hands, floor, cast shadow, scene, text, labels, grid or added objects. Preserve the target's practical identity and state.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-7fa48e34-d3c1-4c7e-9e38-01073dc9cc99.png",
+      "source": "assets/source/storybook/common-bread-half-v1.png"
+    },
+    {
+      "name": "common-wrapped-bread-v1",
+      "references": [
+        "public/story-stage/prop-bread.webp",
+        "public/storybook-study/lunch-bread-v1.webp"
+      ],
+      "subject": "the SAME open cream linen bread wrapper with a restrained muted red border, containing TWO small rustic bread portions with warm golden-brown crust and exposed pale airy crumb. Preserve the target's compact bundle silhouette, open corners and elevated three-quarter view. The pieces should read as natural bread, with irregular crumb holes, never faces or cute characters. Do not replace the open bundle with one bare whole loaf or a closed sack. Keep all fabric corners and bread visible.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the target prop to redraw. Image 2 is only the authoritative warm painted RPG material/style reference. Replace coarse black pixel stair-steps with fine warm brown/gray outlines and soft painted shading, consistent with our storybook game. Subject: the SAME open cream linen bread wrapper with a restrained muted red border, containing TWO small rustic bread portions with warm golden-brown crust and exposed pale airy crumb. Preserve the target's compact bundle silhouette, open corners and elevated three-quarter view. The pieces should read as natural bread, with irregular crumb holes, never faces or cute characters. Do not replace the open bundle with one bare whole loaf or a closed sack. Keep all fabric corners and bread visible. One isolated complete prop centered with generous genuine transparent alpha gutters on all sides. No person, hands, floor, cast shadow, scene, text, labels, grid or added objects. Preserve the target's practical identity and state.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-908dc031-67ba-4ec7-9435-1e5dd72920ab.png",
+      "source": "assets/source/storybook/common-wrapped-bread-v1.png"
+    },
+    {
+      "name": "common-flat-stone-v1",
+      "references": [
+        "public/story-stage/prop-stone.webp",
+        "public/storybook-study/waterway-repair-stone-v1.webp"
+      ],
+      "subject": "one plain low THIN irregular roughly rectangular flat gray stone slab, viewed from elevated three-quarter above. Preserve the target's broad top and LOW narrow side edge: thickness no more than one eighth of its width. Match the style reference's warm hand-painted mineral texture and subtle chipped edges, NOT its thick cubic shape. No markings, runes, crystals, glow, moss, pedestal or magic. This is an ordinary small flat piece of local stone.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the target prop to redraw. Image 2 is only the authoritative warm painted RPG material/style reference. Replace coarse black pixel stair-steps with fine warm brown/gray outlines and soft painted shading, consistent with our storybook game. Subject: one plain low THIN irregular roughly rectangular flat gray stone slab, viewed from elevated three-quarter above. Preserve the target's broad top and LOW narrow side edge: thickness no more than one eighth of its width. Match the style reference's warm hand-painted mineral texture and subtle chipped edges, NOT its thick cubic shape. No markings, runes, crystals, glow, moss, pedestal or magic. This is an ordinary small flat piece of local stone. One isolated complete prop centered with generous genuine transparent alpha gutters on all sides. No person, hands, floor, cast shadow, scene, text, labels, grid or added objects. Preserve the target's practical identity and state.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-c86cf1f9-4218-4a24-8370-f20c16e4ebf3.png",
+      "source": "assets/source/storybook/common-flat-stone-v1.png"
+    },
+    {
+      "name": "common-spatula-v1",
+      "references": [
+        "public/story-stage/prop-spatula.webp",
+        "public/storybook-study/sample-bowl-v1.webp"
+      ],
+      "subject": "ONE small plain wooden scraping spatula, a short tapered handle with a tiny hanging hole and a broad flat rounded-rectangular scraping blade. Preserve the target's long diagonal orientation from lower-left blade to upper-right handle, its overall slender proportions and warm medium brown wood. It is a simple handheld tool used to gently loosen moss. No metal blade, shovel head, spoon bowl, decorations or hands. Subtle wood grain and soft warm brown edge lines match image 2.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the warm hand-painted RPG material and rendering reference. Redraw the SAME target prop with fine warm outlines and restrained painted shading rather than coarse pixel stair-steps. Subject: ONE small plain wooden scraping spatula, a short tapered handle with a tiny hanging hole and a broad flat rounded-rectangular scraping blade. Preserve the target's long diagonal orientation from lower-left blade to upper-right handle, its overall slender proportions and warm medium brown wood. It is a simple handheld tool used to gently loosen moss. No metal blade, shovel head, spoon bowl, decorations or hands. Subtle wood grain and soft warm brown edge lines match image 2. One complete isolated prop or specified single luggage cluster, centered with generous transparent margins. Genuine transparent alpha background, no floor, cast shadow, scenery, person, text, border or grid. Do not crop any tip, corner or rope.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-01287760-72e4-4d27-97b1-30756e253b83.png",
+      "source": "assets/source/storybook/common-spatula-v1.png"
+    },
+    {
+      "name": "common-quill-v1",
+      "references": [
+        "public/story-stage/prop-quill.webp",
+        "assets/source/storybook/common-paper-v1.png"
+      ],
+      "subject": "ONE slender ivory feather writing quill with a fine warm brown central shaft and a small dark ink nib at the lower-left tip. Preserve the target's diagonal lower-left nib to upper-right feather orientation, natural long feather silhouette and practical proportions. Use delicate warm outlines and softly painted feather barbs that stay legible at small game size, keeping the feather ivory rather than parchment brown. No paper underneath, inkwell, hand, labels, symbols or extra feather.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the warm hand-painted RPG material and rendering reference. Redraw the SAME target prop with fine warm outlines and restrained painted shading rather than coarse pixel stair-steps. Subject: ONE slender ivory feather writing quill with a fine warm brown central shaft and a small dark ink nib at the lower-left tip. Preserve the target's diagonal lower-left nib to upper-right feather orientation, natural long feather silhouette and practical proportions. Use delicate warm outlines and softly painted feather barbs that stay legible at small game size, keeping the feather ivory rather than parchment brown. No paper underneath, inkwell, hand, labels, symbols or extra feather. One complete isolated prop or specified single luggage cluster, centered with generous transparent margins. Genuine transparent alpha background, no floor, cast shadow, scenery, person, text, border or grid. Do not crop any tip, corner or rope.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-3919a2dd-039e-4544-9f11-2b4e0e518f68.png",
+      "source": "assets/source/storybook/common-quill-v1.png"
+    },
+    {
+      "name": "common-travel-bundle-v1",
+      "references": [
+        "public/story-stage/travel-bundle.webp",
+        "public/storybook-study/honey-bag-v1.webp"
+      ],
+      "subject": "The SAME single compact travel-luggage cluster from image 1: ONE soft bulging forest-green canvas drawstring sack tied at its gathered top with pale rope, and ONE smaller worn warm brown leather shoulder satchel leaning against its front-left side. Preserve the target's exact two-bag composition, green sack silhouette, visible tied mouth and leather buckle/pouch. Both bags are one grouped game prop; do not turn it into a medical case, backpack, crate, cart, pile of many suitcases or a hard rectangular box. No extra bottle, red cross, label, bedroll or straps sticking far outside the cluster. Elevated three-quarter top-down RPG view, matching image 2's soft material shading and fine warm outlines. Bags fully visible including the bottom and top ties.",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target. Image 2 is only the warm hand-painted RPG material and rendering reference. Redraw the SAME target prop with fine warm outlines and restrained painted shading rather than coarse pixel stair-steps. Subject: The SAME single compact travel-luggage cluster from image 1: ONE soft bulging forest-green canvas drawstring sack tied at its gathered top with pale rope, and ONE smaller worn warm brown leather shoulder satchel leaning against its front-left side. Preserve the target's exact two-bag composition, green sack silhouette, visible tied mouth and leather buckle/pouch. Both bags are one grouped game prop; do not turn it into a medical case, backpack, crate, cart, pile of many suitcases or a hard rectangular box. No extra bottle, red cross, label, bedroll or straps sticking far outside the cluster. Elevated three-quarter top-down RPG view, matching image 2's soft material shading and fine warm outlines. Bags fully visible including the bottom and top ties. One complete isolated prop or specified single luggage cluster, centered with generous transparent margins. Genuine transparent alpha background, no floor, cast shadow, scenery, person, text, border or grid. Do not crop any tip, corner or rope.",
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-302ad7bb-1432-4c14-842f-eb4aa7b03872.png",
+      "source": "assets/source/storybook/common-travel-bundle-v1.png"
+    },
+    {
+      "name": "common-packing-cloth-v1",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target: a cream rectangular packing cloth spread flat on the ground, seen obliquely from above. Image 2 shows THE SAME cloth with one corner raised, already approved in our warm painted RPG style. Redraw ONLY the flat state from image 1 with exactly the cream linen material and restrained ochre check-stitched narrow hem of image 2, so these are continuous states of one cloth. Preserve image 1's wide horizontal trapezoid, flat shallow floor perspective and all four corners; do not raise any corner or make a hanging panel, folded stack or crumpled pile. Fine warm brown outlines, broad softly painted creases, no coarse pixel stair-steps. One complete empty cloth centered with generous genuine transparent alpha gutters on all sides. No people, hands, floor, shadow, items, text, border or grid. Do not crop any hem.",
+      "references": [
+        "public/story-stage/prop-packing-cloth.webp",
+        "assets/source/storybook/common-dragging-cloth-v1.png"
+      ],
+      "generatedSource": "C:\\Users\\spitz\\.codex\\generated_images\\01a11eca-fd19-70d0-9636-50bc597e16a0\\exec-1ff4aedd-2206-42c5-ad4f-5beaaebe34eb.png",
+      "source": "assets/source/storybook/common-packing-cloth-v1.png"
+    }
+  ],
+  "reused": [
+    {
+      "art": "delivery-bag",
+      "image": "honey-bag-v1",
+      "reason": "Same green medical delivery satchel, flap, buckle and contents"
+    },
+    {
+      "art": "dish",
+      "image": "sample-bowl-v1",
+      "reason": "Same shallow empty wooden sample bowl"
+    },
+    {
+      "art": "moss",
+      "image": "moss-bowl-v1",
+      "reason": "Same wooden sample bowl with green moss"
+    },
+    {
+      "art": "picnic-cloth",
+      "image": "walnut-cloth-v1",
+      "reason": "Same cream cloth laid flat, authored width retained"
+    }
+  ],
+  "builder": "scripts/build-storybook-common-props.mjs",
+  "registration": "Preserve each authored visible footprint and bottom contact in the existing 1.3 item container (5/4 luggage). Fit without distortion; do not normalize objects to fill the image.",
+  "outputs": [
+    {
+      "art": "packing-cloth",
+      "output": "public/storybook-study/common-packing-cloth-v1.webp",
+      "sha256": "2ececc191d34a74f17d3e3025e0ce785bc756126bc2428b75a7e523785b51bba"
+    },
+    {
+      "art": "dragging-cloth",
+      "output": "public/storybook-study/common-dragging-cloth-v1.webp",
+      "sha256": "852279886d0f7c6136b74f5e9665bd929ef13775a5604a78eea99908c4c6d059"
+    },
+    {
+      "art": "delivery-bag",
+      "output": "public/storybook-study/common-delivery-bag-v1.webp",
+      "sha256": "ee45a3b43ff95ec3c340588fde7ed29473b7b548e1178be5118ade1651e31780"
+    },
+    {
+      "art": "old-wrapper",
+      "output": "public/storybook-study/common-old-wrapper-v1.webp",
+      "sha256": "fcd6c314a764dc7c87b31513d26537001f97740ab4cfd302084f8cd7fbbb00f9"
+    },
+    {
+      "art": "paper",
+      "output": "public/storybook-study/common-paper-v1.webp",
+      "sha256": "bd00f778bbc0ebd4337e908ed425c4b868e9cd1952e5ca19af58e4358694e503"
+    },
+    {
+      "art": "lap-napkin",
+      "output": "public/storybook-study/common-lap-napkin-v1.webp",
+      "sha256": "70fd3504c1082883ad88f33f146eb5d10a50faa47a558bfdcc6044a45b3086c8"
+    },
+    {
+      "art": "bread-half",
+      "output": "public/storybook-study/common-bread-half-v1.webp",
+      "sha256": "1c97f88f8dd988dcffe9329bade307ebce58f30ce5b860ec40303cf29e6a51a3"
+    },
+    {
+      "art": "bread",
+      "output": "public/storybook-study/common-wrapped-bread-v1.webp",
+      "sha256": "2e54a68db4e4363bc80619cad7f0501826782674229c316699226153bcbe5955"
+    },
+    {
+      "art": "picnic-cloth",
+      "output": "public/storybook-study/common-picnic-cloth-v1.webp",
+      "sha256": "a373c12ad760c27152b0327b14b4af9e150dcc589ec4fbc2cb715321e33813c6"
+    },
+    {
+      "art": "dish",
+      "output": "public/storybook-study/common-dish-v1.webp",
+      "sha256": "46974067b977bc0e47303220f0e48e9686959e0ef317e2745bcdda0aa8a4e9e2"
+    },
+    {
+      "art": "moss",
+      "output": "public/storybook-study/common-moss-bowl-v1.webp",
+      "sha256": "6fb3578ebdc218d24f092212c3a2861e521bdc0c0a95b456b43edce44cd90f1a"
+    },
+    {
+      "art": "stone",
+      "output": "public/storybook-study/common-flat-stone-v1.webp",
+      "sha256": "d9c1ea10a6748018b82bd43ef417f038f1ac70b7f7f64d1910d2134a6d6cc415"
+    },
+    {
+      "art": "quill",
+      "output": "public/storybook-study/common-quill-v1.webp",
+      "sha256": "0ae197ddb18bd2957bf9617938b10adb2c5f1ae1669da5b5afe7346f0527cc7f"
+    },
+    {
+      "art": "spatula",
+      "output": "public/storybook-study/common-spatula-v1.webp",
+      "sha256": "66b1b2e1a3c5f172b0da7135e704361026ba6d64b4ec5d5997b5686a9fae7d07"
+    },
+    {
+      "art": "travel-bundle",
+      "output": "public/storybook-study/common-travel-bundle-v1.webp",
+      "sha256": "263058ffed636153a209a1f426b4f55094cb363ab65d9515e665bce314165a7d"
+    }
+  ]
+}

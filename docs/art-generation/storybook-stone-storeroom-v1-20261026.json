@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Opaque wide3:2 warm hand-painted2D RPG interior background. Firstreference exact layout of the mason's dark storage shed: closed wooden door at upperleft, shelves along back with modest pottery, rolled cloth and crates, a small window at upperright fully covered by DARK thick cloth, shelves down rightedge, broad bare wooden floor across centerandlowerforeground. Repaint in secondreference soft painterly medium and elevated45degree downward orthographic-like camera, no vanishing horizon. Dim daytime interior, muted brown surfaces and subdued indirect light, clearly darker than outdoors because people compare faintly glowing stones here. Still readable floorboards, shadowdetails not pitchblack. Center and foreground remain EMPTY for four separately drawn people, table and chairs; door25% imageheight, peoplelater15%, floorboards narrow3%width. No people, furniture on openfloor, candidate/glowing stones, table, chairs, brazier, portable luggage, text or UI. Preserve same shed materials and modest worksite identity.",
+  "references": [
+    "public/story-stage/stone-storeroom.webp",
+    "public/storybook-study/stone-yard-v1.png"
+  ],
+  "source": "assets/source/storybook/stone-storeroom-v1.png"
+}

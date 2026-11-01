@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-30",
+  "tool": "image_gen.imagegen",
+  "purpose": "1-6 daytime Aria carries the existing moss jar without the night shawl",
+  "prompt": "Edit the provided four-frame Aria sprite strip for the daytime forest scene. Remove ONLY the small ivory shawl draped over her shoulders in all four frames, revealing her existing dark green cloak beneath it. Preserve the exact four poses, empty cupped hands at waist or ground, body proportions, facial features, flower, hair, ears, green cloak, clothes, boots, each frame's spacing, size and baseline. Preserve the four walking leg positions if present. Do not add a jar or any object. Warm hand-painted 2D RPG sprite art, true transparent background, no text, no grid, no ground or shadows. Keep the entire character and ample transparent gutters in every frame.",
+  "walkPrompt": "Edit the provided four-frame Aria walking sprite strip for the daytime forest scene. Remove ONLY the small ivory shawl draped over her shoulders in all four frames, revealing her existing dark green cloak beneath it. Preserve the exact four walking leg positions, empty cupped hands at waist, body proportions, facial features, flower, hair, ears, green cloak, clothes, boots, each frame's spacing, size and baseline. Do not add a jar or any object. Warm hand-painted 2D RPG sprite art, true transparent background, no text, no grid, no ground or shadows. Keep the entire character and ample transparent gutters in every frame.",
+  "sources": [
+    { "reference": "assets/source/storybook/aria-night-hand-v2.png", "generated": "exec-3635297e-e3b8-454f-9b6c-f6fe95156bb9.png", "accepted": "assets/source/storybook/aria-forest-hand-v1.png" },
+    { "reference": "assets/source/storybook/aria-night-walk-v2.png", "generated": "exec-40992c18-1714-4b9e-8d41-d14a8a48be6d.png", "accepted": "assets/source/storybook/aria-forest-walk-v1.png" }
+  ],
+  "build": "node scripts/build-storybook-forest-handheld.mjs",
+  "output": "public/storybook-study/aria-forest-handheld-v1.webp"
+}

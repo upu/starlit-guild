@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Create one game background, landscape 3:2. Reference 1 establishes exact small medieval patient's room layout: fireplace at rear left, window center rear, bed rear right and chest beside bed. Reference 2 establishes approved warm hand-painted storybook 2D RPG style, soft ochre wood and clean illustrative outlines, not pixel art. Redraw reference 1 in reference 2's style with a stronger elevated three-quarter 45-degree looking-down camera, visible floorboards and tops. Keep fireplace and bed in rear upper third; lower two thirds clear wooden floor for separately rendered characters and table. No central table, no chairs, no people, no UI, no text. Modest inhabited room, daylight and low warm hearth, not luxurious, no extra doors. Flat game backdrop, no vignette.",
+  "references": [
+    "public/story-stage/patient-room.webp",
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/patient-room-v1.png"
+}

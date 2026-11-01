@@ -1,0 +1,127 @@
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="merrill"]
+  .story-stage-extra-sprite {
+  background-image: url("/storybook-study/merrill-seedlings-v1.webp") !important;
+  background-size: 400% 400% !important;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  [data-npc="merrill"]
+  .story-stage-name {
+  top: 21%;
+  left: 75%;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item:is(
+    [data-art="basket"],
+    [data-art="packing-cloth"],
+    [data-art="merrill-pot"],
+    [data-art="merrill-pot-full"],
+    [data-art="korotake"],
+    [data-art="korotake-rest"]
+  ) {
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="basket"] {
+  background-image: url("/storybook-study/loading-basket-v1.webp");
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="seedlings"] {
+  background-image: url("/storybook-study/loading-basket-covered-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="packing-cloth"] {
+  background-image: url("/storybook-study/loading-cloth-v1.webp");
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="merrill-pot"] {
+  background-image: url("/storybook-study/loading-pot-v1.webp");
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="merrill-pot-full"] {
+  background-image: url("/storybook-study/loading-pot-full-v1.webp");
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="korotake"] {
+  background-image: url("/storybook-study/loading-korotake-v1.webp");
+}
+.storybook-reader-stage[data-story^="merrill-seedlings-"]
+  .story-stage-item[data-art="korotake-rest"] {
+  background-image: url("/storybook-study/korotake-rest-v1.webp");
+}
+.storybook-reader-stage[data-story="merrill-seedlings-return"]
+  [data-actor="finn"]
+  .story-stage-name {
+  top: 65% !important;
+  left: 80% !important;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="moss"] {
+  background-image: url("/storybook-study/field-seedling-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="paper"] {
+  background-image: url("/storybook-study/shipping-record-v1.webp");
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+@media (max-width: 600px) {
+  .storybook-reader-stage[data-art="tower-loading-yard-v1"] .story-stage-space {
+    transform: none;
+  }
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="reflector-down"] {
+  aspect-ratio: 1;
+  image-rendering: auto;
+}
+.storybook-reader-stage:is(
+    [data-story^="merrill-seedlings-"],
+    [data-story="moss-transplant-departure"]
+  )
+  .story-stage-item[data-art="reflector-down"] {
+  background-image: url("/storybook-study/field-reflector-down-v1.webp");
+}

@@ -1,0 +1,177 @@
+/* Defaults for authored actions; the later scene-specific registrations take priority. */
+.storybook-reader-stage:is(
+    [data-story="begging-golem-return"],
+    [data-story="mountain-entrance-departure"]
+  )
+  .storybook-painted-stage[data-carry-study="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="14"],
+    [data-frame="15"],
+    [data-frame="16"]
+  ) {
+  background-image: url("/storybook-study/mira-paper-walk-v1.webp");
+  background-size: 400% 100%;
+  background-position: 0% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="aria"] {
+  --shared-ground-art: url("/storybook-study/aria-ground-rest-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="leon"] {
+  --shared-ground-art: url("/storybook-study/leon-ground-rest-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="mira"] {
+  --shared-ground-art: url("/storybook-study/mira-ground-rest-v1.webp");
+}
+.storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="10"],
+    [data-frame="11"],
+    [data-frame="12"]
+  ) {
+  background-image: var(--shared-ground-art);
+  background-size: 300% 100%;
+  background-position: 50% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  :is([data-actor="aria"], [data-actor="leon"], [data-actor="mira"])
+  .story-stage-sprite[data-atlas="conversation"][data-frame="12"] {
+  background-position-x: 100% !important;
+}
+.storybook-painted-stage[data-carry-study="true"]
+  :is([data-actor="aria"], [data-actor="leon"])[data-moving="false"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: var(--study-carry-art);
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="26"], [data-frame="27"]) {
+  background-image: url("/storybook-study/aria-seat-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="26"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="27"], [data-frame="31"]) {
+  background-image: url("/storybook-study/mira-seat-v3.webp");
+  background-size: 400% 100%;
+  background-position: 100% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="31"] {
+  scale: -1 1;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="13"],
+.storybook-painted-stage[data-paper-study="true"]
+  [data-actor="mira"][data-moving="false"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="8"] {
+  background-image: url("/storybook-study/mira-healing-v1.webp");
+  background-size: 400% 200%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"]:is(
+    [data-frame="32"],
+    [data-frame="33"],
+    [data-frame="34"],
+    [data-frame="35"]
+  ) {
+  background-image: url("/storybook-study/mira-bed-v2.webp");
+  background-size: 500% 100%;
+  background-position: 25% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="33"] {
+  background-position-x: 50% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="34"] {
+  background-position-x: 75% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="mira"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="35"] {
+  background-position-x: 100% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="19"], [data-frame="20"]) {
+  background-image: url("/storybook-study/aria-shoulder-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="20"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"]:is([data-frame="44"], [data-frame="45"]) {
+  background-image: url("/storybook-study/leon-push-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="leon"]
+  .story-stage-sprite[data-atlas="conversation"][data-frame="45"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="adventure"]:is([data-frame="11"], [data-frame="13"]) {
+  background-image: url("/storybook-study/aria-battle-v1.webp");
+  background-size: 400% 100%;
+  background-position: 33.333333% 0% !important;
+  top: 2.083333%;
+  height: 100%;
+  width: 133.333333%;
+  left: 0;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-actor="aria"]
+  .story-stage-sprite[data-atlas="adventure"][data-frame="13"] {
+  background-position-x: 66.666667% !important;
+}

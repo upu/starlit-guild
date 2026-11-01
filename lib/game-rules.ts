@@ -122,7 +122,7 @@ export function encounter(q: Quest, node: number, nodes = questNodes(q.id)): Enc
 function gatherTargetName(q: Quest) {
   return q.gatherTarget || "月しずく草";
 }
-function enemyTargetName(q: Quest) {
+export function enemyTargetName(q: Quest) {
   if (q.enemyName) return q.enemyName;
   if (q.enemy === DRAGON_SPRITE) return "星喰い竜";
   if (q.enemy === MIST_WOLF_SPRITE) return "霧狼";

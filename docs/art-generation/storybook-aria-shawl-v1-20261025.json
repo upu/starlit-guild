@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "source": "assets/source/storybook/aria-shawl-v1.png",
+  "output": "public/storybook-study/aria-shawl-v1.webp",
+  "references": [
+    "public/storybook-study/aria-conversation-v1.webp",
+    "public/storybook-study/aria-carry-v1.webp"
+  ],
+  "prompt": "Create original Aria in eight equal cells arranged 4 columns x 2 rows, transparent sprite sheet. Use first image as exact character/style/proportion reference: pink-blonde hair and white daisy, long elf ears, green cloak, brown vest over white blouse, cream shorts, brown gloves and boots. Warm hand-painted chibi 2D RPG look. Add a small plain ivory wool shawl draped around shoulders above the green cloak, not a large cape or dress. All figures face right in elevated three-quarter view, SAME head size and physical body scale, full hair/boots with margins. Top row: 1 standing neutral with hands relaxed, 2 standing holding both palms cupped together forward at waist to support an imaginary small jar (NO jar drawn), 3 same holding pose with thoughtful expression, 4 same holding pose smiling. Bottom row FOUR walking gait phases with cupped hands held steady at same waist anchor: left foot forward/right back contact; passing right knee forward; right foot forward/left back contact; passing left knee forward. Feet visibly lift and alternate, head stays same size and height, no exaggerated bounce, no toe clipping, shawl hem follows body. No other object, shadow, floor, background, labels or grid. Wide landscape sheet."
+}

@@ -1,0 +1,57 @@
+{
+  "sha256": "da9a6a6652d219125be53d5c1673a950aed95f84a6c931631e6efa45d17bc8bc",
+  "frames": [
+    {
+      "source": "public/storybook-study/mira-conversation-v1.webp",
+      "sourceFrame": 0,
+      "scale": 1,
+      "width": 192,
+      "height": 192,
+      "left": 0,
+      "top": 0,
+      "baseline": 176,
+      "pixelExact": true
+    },
+    {
+      "source": "assets/source/storybook/mira-bed-v2.png",
+      "sourceFrame": 1,
+      "scale": 0.2964705882352941,
+      "width": 76,
+      "height": 95,
+      "left": 59,
+      "top": 81,
+      "baseline": 176
+    },
+    {
+      "source": "public/storybook-study/mira-seat-v3.webp",
+      "sourceFrame": 1,
+      "scale": 1,
+      "width": 192,
+      "height": 192,
+      "left": 0,
+      "top": 0,
+      "baseline": 176,
+      "pixelExact": true
+    },
+    {
+      "source": "assets/source/storybook/mira-bed-v2.png",
+      "sourceFrame": 3,
+      "scale": 0.2964705882352941,
+      "width": 79,
+      "height": 100,
+      "left": 57,
+      "top": 76,
+      "baseline": 176
+    },
+    {
+      "source": "assets/source/storybook/mira-bed-v2.png",
+      "sourceFrame": 4,
+      "scale": 0.2964705882352941,
+      "width": 79,
+      "height": 100,
+      "left": 56,
+      "top": 76,
+      "baseline": 176
+    }
+  ]
+}

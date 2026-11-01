@@ -1,0 +1,26 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in transparent generation",
+  "date": "2026-10-23",
+  "images": [
+    {
+      "source": "assets/source/story-stage/leon-push-v1.png",
+      "reference": "public/home-pixel/leon.webp",
+      "prompt": "Use case: identity-preserve. Production RPG pixel-art animation asset. Input is reference sheet of Leon: preserve EXACT short spiky brown hair, friendly youthful face, blue tunic, silver shoulder pieces, brown gloves/boots, red scarf trailing behind, the SAME head-to-body proportions and dark crisp pixel outlines. Create ONE transparent spritesheet consisting of exactly TWO full-body poses, equally spaced side by side in a single row, facing RIGHT, isolated with wide transparent margins, no text or grid. Pose 1: braces against an unseen heavy hand, feet planted apart, knees slightly bent, BOTH EMPTY gloved hands held ahead at chest height, elbows bent. Pose 2: pushes the unseen hand away, both hands extended forward, torso leaning forward slightly, same planted feet and identical head size. No sword in his hands, no target drawn, no extra objects, no effects, no floor or ground shadow. Slightly overhead three-quarter RPG view matching reference. Do not enlarge the head or lengthen limbs. Keep both hands clearly distinguishable and entire hair and boots in frame. Transparent RGBA background.",
+      "frames": [
+        44,
+        45
+      ],
+      "sha256": "886f5675f2426d8ad3d648f5219d8ebce19ef97c0ad6590f1294d7100e91ad39"
+    },
+    {
+      "source": "assets/source/story-stage/puppet-recoil-v1.png",
+      "reference": "public/story-stage/prop-puppet.webp",
+      "prompt": "Use case: identity-preserve. Production RPG pixel-art animation pose. Reference image is the EXACT wooden/straw puppet character to preserve, not a background. Create ONE full-body recoil pose of this same small wooden puppet: same green pointed floppy hat, gold stars, pumpkin trinkets, straw hair, carved smiling face, green cape, segmented wooden limbs, dark pixel outlines. Facing LEFT as in reference. Its FRONT arm which was reaching left is knocked UP and BACK at the elbow by an unseen arrow; front palm raised near shoulder level, torso leaning back slightly. Its other arm lowers. Feet planted, same head, hat and body dimensions, no stretching or enlargement, entire hat and feet visible. No arrow embedded, no projectile, no effects or extra objects. Transparent RGBA background, no shadows, no floor. Match reference's slightly overhead RPG view and pixel texture. This is nonviolent toy movement, no damage.",
+      "frames": [
+        7
+      ],
+      "sha256": "a52e635bb43b3a1c7c8f16a63fd043087367dd0bd579cdb29d2b5d1907b1da68"
+    }
+  ]
+}

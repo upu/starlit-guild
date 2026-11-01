@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-27",
+  "tool": "built-in image_gen",
+  "request": "Match adventure combat VFX to warm painted figures and scenery without covering whole characters.",
+  "prompt": "Four separate isolated VFX sprites for a warm hand-painted 2D storybook RPG, on genuinely transparent background. One horizontal row of four equal square cells, large transparent gutters, no sprites touching. Cell1: one slim wooden arrow flying horizontally RIGHT, muted brown shaft, tiny soft silver triangular tip, pale feather fletching, no oversized fire or glow. Arrow occupies middle 70% cell width, less than 12% cell height. Cell2: a SHORT soft warm ivory sword-swipe crescent, tapered brushstroke, modest thin gold outer glint, occupies about 55% cell, no full ring, no circular magic seal, no sword itself. Cell3: a SMALL cluster of pale pearl-white and softly lilac light motes, tiny star glints and subtle translucent glow, irregular airy shape at centre occupying 40% of cell, no orb, no ring, no symbols, no explosion. Cell4: a SMALL scatter of six warm ochre soil/leaf flecks with one soft pale sparkle, 40% of cell, no solid mound or tool. Painterly fine watercolor edges and warm lighting, clean readable silhouettes at tiny sizes. Keep alpha truly transparent between all brushstrokes and motes, no black/white solid background, no labels, no text, no people, no UI. Each effect must remain visually light and must not cover a whole character's body.",
+  "editPrompt": "Edit ONLY the third cell (magic) of this four-cell VFX strip. Replace the large lavender cloud with just five separate tiny pearl-white star glints and sparse pinprick motes arranged loosely in the same central area, each with only a very small soft white halo immediately around it. The centre and most of this cell must stay transparent: NO solid cloud, NO orb, NO coloured disc, NO continuous filled glow, NO circular outline or magic seal, NO purple wash behind them. White/ivory glints suitable for tinting different colours at runtime. Retain arrow cell1, sword swipe cell2, and soil/leaf flecks cell4 unchanged. Same four equal columns and generous transparent gutters. Warm hand-painted watercolor edge treatment, true alpha everywhere else, no text.",
+  "source": "assets/source/storybook/road-effects-v2.png",
+  "generated": "exec-865f61b1-fda3-4615-8cf4-7faf2cf36ae1",
+  "output": "public/storybook-study/road-effects-v1.webp",
+  "original": {
+    "source": "assets/source/storybook/road-effects-v1.png",
+    "generated": "exec-6c8729d2-74eb-44b1-a0a7-7010ff52b5d7",
+    "reason": "Magic cloud too continuous/opaque; revised to disconnected white glints with transparent centre."
+  },
+  "packing": "scripts/build-storybook-road-effects.mjs; crop each authored quarter before trim to preserve disconnected motes, normalize arrow/swipe/magic/flecks to192/166/116/108px longest side in separate256px cells. Preserve alpha and originals.",
+  "implementation": "lib/road-effect-layout.ts uses the common body scale, weapon/bottle emitters and the shared actual enemy height. Release150ms after preparation, travel200ms, fade out by550ms. Effect depth follows interpolated ground lane; swipe is mirrored when striking left. Existing game events, damage, saves and legacy comparison remain unchanged.",
+  "verification": "PC1243x1244 and mobile390x844 continuous battle frames in work/effects-pc-*.png and effects-mobile-*.png. Unit tests cover release/impact/contact, facing, target size, sparse alpha, Phaser frame registration and tint.",
+  "remaining": [
+    "Dedicated confrontation effects: singing, paralysis smoke, mushroom projectile and puppet command",
+    "Remaining adventure regions, worksite poses and enemies",
+    "Final gait review and all-chapter PC/mobile walkthrough"
+  ]
+}

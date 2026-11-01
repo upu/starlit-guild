@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-23",
+  "tool": "built-in image_gen",
+  "purpose": "3-8 catching a broken fitting, guarding and showing the injured palm",
+  "sources": [
+    {
+      "source": "assets/source/story-stage/finn-injured-hand-v1.png",
+      "references": [
+        "public/home-pixel/finn.webp",
+        "public/story-stage/finn-poses.webp"
+      ],
+      "generated": "exec-0dd84943-b71f-4d86-8980-6c0c2482fd41.png",
+      "prompt": "Create a transparent sprite strip for the EXACT same Finn character in the reference: middle-aged unshaven man, tousled long brown hair, tired half-lidded eyes, shabby long brown coat, cream open collar shirt, trousers and boots. Match existing chunky pixel clusters and dark outlines, elevated three-quarter RPG camera, small 3-head-tall body. FOUR separate complete full-body figures in ONE horizontal row, equal-size cells with generous transparent gutters, no text, no props, no background. Same head size in all four, identical clothes and feet baseline. All face three-quarter toward screen RIGHT. Pose 1: low kneeling crouch, right arm extended toward screen right, open right palm facing up near knee height, catching a small object BEFORE it hits the floor; no object drawn. Kneeling silhouette must be 70% standing height, NOT a resized or giant head. Pose 2: standing with injured RIGHT hand guarded against his chest, LEFT hand loosely supporting the wrist, trying to look nonchalant, tiny restrained wince. Pose 3: standing, quietly wiping his right palm against the front hem of his coat, looking slightly aside, no cloth held. Pose 4: standing extending the RIGHT forearm toward screen right at waist level, palm open upward for a healer to inspect; LEFT hand relaxed at left hip, faint wry smile. Bare hands, no gloves, no weapon, no gore, no blood needs to be drawn. Keep the original scruffy approachable older man, not a pretty young hero. At final display head should read around 45px wide on a 128px cell. No ground shadows outside feet.",
+      "sha256": "5636f4c7c5a0932b47f49fa0e863d57360d2b1733132f4af1328fa547b7e631e"
+    },
+    {
+      "source": "assets/source/story-stage/night-hand-props-v1.png",
+      "references": [
+        "public/story-stage/prop-cloth.webp"
+      ],
+      "generated": "exec-ec9f24cb-ae14-41bf-aab8-5cbb09614936.png",
+      "prompt": "Transparent sprite asset strip with TWO separate small objects in two equal cells, large clear transparent gutter. Same chunky dark-outlined pixel-art RPG style and warm cream palette as the attached folded cloth. Elevated 45-degree three-quarter view. LEFT cell: a small antique iron fastening CLIP broken at one end, a narrow bent flat iron strip with a jagged fractured tip, tarnished dark brown-gray metal with a restrained glint, no pedestal, no hand. This is a little cover fastening, not a weapon. RIGHT cell: a single compact thin folded cream linen cloth closely matching the reference, with only a small faint rusty red smear along ONE corner from a superficial palm nick. The cloth is NOT a stack of towels or large blanket. Subtle fabric folds, no large red pools, no drips, no gore. Two objects fully inside their cells, whole silhouettes, transparent background, no shadows outside objects, no text or labels. Each will be scaled separately in the game.",
+      "sha256": "bf000b1cc1e371d6e8e04db7f338ff25be026a3568438947cf2437ad717f51f3"
+    }
+  ]
+}

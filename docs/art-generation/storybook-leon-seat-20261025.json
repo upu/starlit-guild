@@ -1,0 +1,7 @@
+{
+  "prompt": "Transparent sprite strip, exactly four separated full-body Leon figures in ONE horizontal row. Reference image is identity, proportions and warm hand-painted matte 2D RPG style reference. Elevated three-quarter view facing screen right. Frame0 standing neutral calibration exactly same body proportions as reference standing. Frame1 sitting upright on imaginary chair with knees bent 90 degrees, boots grounded, hands resting on thighs, listening calmly. Frame2 SAME seated body and foot position, one gloved hand at chin, subtly furrowed thoughtful expression. Frame3 SAME seated position, relaxed small smile, hands on thighs. All four same physical scale, identical head size, clothing, red short cloak, blue tunic, leather gloves boots, star clasp brown hair. Seated height 80-85 percent standing; never enlarge sitting figures. NO chair drawn, no furniture, props, floor, shadows, text or guides. Transparent alpha. Generous gaps and margins, no cropped head or feet. Layout 3:1 landscape. Keep silhouette/scale consistent across all seated frames.",
+  "reference": "assets/source/storybook/leon-poses-v1.png",
+  "source": "assets/source/storybook/leon-seat-v1.png",
+  "output": "public/storybook-study/leon-seat-v1.webp",
+  "status": "prototype; seated listening/thinking/smile; greeting remains unconverted"
+}

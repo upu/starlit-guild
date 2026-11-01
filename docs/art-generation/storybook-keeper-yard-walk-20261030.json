@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-30",
+  "mode": "built-in image_gen",
+  "references": [
+    "public/storybook-study/keeper-poses-v1.webp",
+    "public/storybook-study/keeper-basket-handoff-v1.webp"
+  ],
+  "generated": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-19a06773-8bbd-4b22-a501-03fbbd579af8.png",
+  "source": "assets/source/storybook/keeper-yard-walk-v1.png",
+  "output": "public/storybook-study/keeper-yard-walk-v1.webp",
+  "build": "scripts/build-storybook-keeper-motions.mjs keeper-yard-walk-v1",
+  "prompt": "Create a transparent sprite strip with exactly FOUR full-body walking frames in one horizontal row, evenly spaced. Reference 1 is the canonical tower keeper character and Reference 2 is his matching empty-palm work pose strip. Preserve this exact older man's swept short gray-brown hair, kindly lined face, body mass and head width. Preserve the costume specifically: blue-gray sleeveless knee-length work tunic/vest with brown edging over cream/off-white rolled sleeves, brown waist belt and side pouch, brown trousers, dark brown work boots. Do not turn the vest or tunic brown. Warm hand-painted pixel-art 2D RPG, elevated three-quarter view, same pixel grain and outlines as both references. The body must have the same normal stature in every frame; do not enlarge the head or compress the torso.\nAll four frames walk toward screen-left, empty hands with relaxed arm swing. Frame order: left foot contacts ground, right leg passes under hips, right foot contacts ground, left leg passes under hips. Clear alternating knee and boot positions, a modest natural walking stride, no horizontal sliding pose, no running, no carrying anything. Keep the whole head and both soles with generous transparent padding. One consistent drawing scale and common horizontal baseline under the contacting boot; the passing boot may lift naturally a little. Exactly four isolated figures, no floor, shadows, labels, text, grid, props, basket or extra characters; true alpha transparency."
+}

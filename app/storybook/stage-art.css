@@ -1,0 +1,89 @@
+.storybook-painted-stage[data-painted="true"] .story-stage {
+  --stage-background: var(--study-background) !important;
+}
+.storybook-reader-stage[data-art="medicine-room-v1"] .story-stage-item[data-item="reward-pouch"] {
+  background-image: url("/storybook-study/reward-pouch-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="medicine-room-v1"] .story-stage-item[data-item="healing-bottle"] {
+  background-image: url("/storybook-study/healing-bottle-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage:is([data-art="medicine-room-v1"], [data-art="workshop-yard-v1"])
+  .story-stage-item[data-art="table"] {
+  background-image: url("/storybook-study/medicine-table-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="medicine-room-v1"] .story-stage-item[data-art="herbs"] {
+  background-image: url("/storybook-study/herbs-v1.webp");
+  image-rendering: auto;
+}
+.storybook-reader-stage[data-art="medicine-room-v1"] .story-stage-item[data-art="cloth"] {
+  background-image: url("/storybook-study/folded-shawl-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] [data-cart-art="loaded-cart"] .story-stage-cart {
+  background-image: url("/storybook-study/loaded-cart-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] [data-cart-art="return-cart"] .story-stage-cart {
+  background-image: url("/storybook-study/return-cart-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-table-art {
+  background-image: url("/storybook-study/packing-table-v1.webp");
+  image-rendering: auto;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="dining-table"] {
+  background-image: url("/storybook-study/office-table-v2.webp");
+  aspect-ratio: 384 / 167;
+  image-rendering: auto;
+}
+.storybook-presentation[data-mode="indoor"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-item[data-art="chair"] {
+  background-image: url("/storybook-study/chair-v1.webp");
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-merchant-sprite {
+  background-image: url("/storybook-study/merchant-poses-v2.webp");
+  background-size: 400% 100%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-delivery-box {
+  background-image: url("/storybook-study/delivery-box-v2.webp");
+  width: 7%;
+  image-rendering: auto;
+}
+.storybook-painted-stage[data-painted="true"] .story-stage-table-stock > span {
+  background-image: url("/storybook-study/covered-box-v1.webp");
+  image-rendering: auto;
+}
+.storybook-presentation[data-mode="outdoor"]
+  .storybook-painted-stage[data-painted="true"]
+  .story-stage-table-stock
+  > span:first-child {
+  /* Keep the nearest parcel within reach at the left edge of the table. */
+  transform: translateX(-110%);
+}
+.storybook-painted-stage .story-stage-vignette {
+  opacity: 0;
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="aria"] {
+  /* Painted strips have transparent space above the head inside their cells. */
+  --stage-name-above: 12%;
+}
+.storybook-painted-stage[data-painted="true"] [data-actor="mira"] {
+  --stage-name-above: 0%;
+}
+.storybook-painted-stage[data-painted="true"]
+  [data-setting="tower-base-moss"]
+  .story-stage-wall-moss-light {
+  /* Follow the moss in the lowest mortar seam, rather than the path below it. */
+  left: 46%;
+  top: 46.5%;
+  width: 7%;
+  height: 3.5%;
+}

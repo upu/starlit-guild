@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent game prop atlas EXACTLY SIX isolated objects in3columns TWO rows, warm hand-painted elevated 45degree RPG style matching reference wooden room, fine brown outlines, no pixel grid. Row1 left SMALL closed brown leather-bound field notebook with worn cover (no loose paper), middle same brown notebook OPEN with cream pages and abstract tiny tally strokes (no readable text), right untouched bread roll resting on unfolded off-white paper wrapper. Row2 left thin small wooden plant label on short stake with three tiny abstract tally notches, middle LOW plain rectangular wooden step-stool with four short legs, no backrest, right very small green forked moss sprig with two stems and no stone or mud. Each object separated in equal cell with transparent margin. NO people, bags, bottles, tables, floor shadows, text labels, grid lines or backgrounds. View tops clearly visible, objects physically coherent for a compact garden work area.",
+  "references": [
+    "assets/source/storybook/brekka-dining-v1.png"
+  ],
+  "source": "assets/source/storybook/moss-bed-props-v1.png"
+}

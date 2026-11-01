@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm hand-painted2D RPG character motion sheet8poses4columns2rows of EXACT Finn from reference: lanky scruffy brown wavy shoulderlength hair, half-lidded adult tired eyes, open cream shirt, weathered long brown coat, dark trousers, boots, rumpled approachable middleaged man. Preserve head/body proportions and fine warm outline/paint texture. Elevated45degree camera all facingRIGHT, all poses same fullbody scale and head size, clear padding. Row1:0 standing neutral calibration;1 standing both hands firmly gripping an INVISIBLE wooden chair by back rail, one hand chestheight and other a little lower/near waist, chair would be in front to RIGHT;2 walking carrying this invisible chair contact left foot forward;3 passing with feet under hips. Row2:4 carrying chair contact opposite/right foot forward;5 opposite passing;6 slight crouch lowering invisible chair to floor to RIGHT while hands stay near back rail;7 deeper crouch reaching to grasp invisible chair rail before lifting. Both arms maintain bent elbows, hands grip small rail rather than flat palms for tray. No actual chair, objects, shadows, ground or text. Complete boots, no touching or clipped figures. Four walk phases have distinct opposite contacts and passing legs.",
+  "references": [
+    "public/storybook-study/finn-tray-v1.webp"
+  ],
+  "source": "assets/source/storybook/finn-chair-v1.png"
+}

@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen",
+  "status": "First basket connected to actual quest playback in the dedicated study; default rollout remains disabled pending hatch and subsequent baskets.",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/aria-moss-cycle-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-4f82bd02-d08d-4fa4-ba8d-ff565dbd5931.png",
+      "direction": "Eight cells: standing, insert, scrape, lift, lower, tip into basket, return, stand. Same Aria, green eyes, wooden spatula, empty blades for independent moss ownership. Common scale and planted crouching feet."
+    },
+    {
+      "source": "assets/source/storybook/waterway-worker-basket-walk-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-62d72392-d9e7-436b-ba28-de84bc721949.png",
+      "direction": "Same worker as existing receiving atlas. Four leftward walking phases, cupped hands remain forward supporting an independent basket; visible knee and boot alternation, no baked props."
+    },
+    {
+      "source": "assets/source/storybook/waterway-moss-basket-v1.png",
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-6381429f-8338-47e2-805b-e9d9109608a3.png",
+      "direction": "Preserve original shallow wicker basket, add a thin contained layer of tiny moss leaves, clear handles, no hanging strands or stones."
+    }
+  ],
+  "rejected": [
+    {
+      "generatedPath": "C:/Users/spitz/.codex/generated_images/01a11eca-fd19-70d0-9636-50bc597e16a0/exec-f993751c-dbf5-45f7-be72-6905b485fc65.png",
+      "reason": "Aria's eyes became blue. Corrected to green before integration."
+    }
+  ],
+  "packing": "scripts/build-storybook-moss-cycle.mjs. Common134 standing reference, foot176, 256x192cells; boots exclude extended spatula. Lossless WebP and metrics accompany both atlases.",
+  "implementation": ["lib/road-moss-removal-actions.ts", "lib/road-moss-basket-pause.ts", "app/sprite-lab/storybook/waterway/moss/adventure/page.tsx"],
+  "remaining": ["Keeper and covers", "Second hatch", "Subsequent baskets and empty basket return", "Tool continuity during walking", "Complete quest playback and default rollout"]
+}

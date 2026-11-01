@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "images": [
+    {
+      "source": "assets/source/storybook/records-field-props-v1.png",
+      "generated": "exec-a191b030-12e8-4720-9e48-491d3f8b2eaa",
+      "prompt": "Transparent production prop sheet, warm hand-painted elevated 3/4 RPG style, exactly3 columns2 rows. Plain low flat wooden lap writing board with no legs/documents; small open brown field ledger with cream handwritten pages; same ledger closed; shallow terracotta dish with four tiny moss clumps and blank tags; one tiny moss seedling with small root plug; empty low wicker gathering basket with two short side handles. Complete separate objects, generous transparent margins, no people/scenery/readable lettering."
+    },
+    {
+      "source": "assets/source/storybook/field-cover-folded-v1.png",
+      "generated": "exec-c96fdaf1-566a-4062-8ed0-5a4aafa36923",
+      "references": ["assets/source/storybook/field-reflector-v1.png"],
+      "prompt": "One isolated corrected held folded olive cloth matching cover material, worn weave and warm outlines. Gather/fold the long cloth double over imaginary grip at upper center, short wide soft bundle about1.8times wider than tall, half hanging length, small pinched top and two short rounded lobes. No long curtains, hands, apparatus, characters, ground or extra variants. Fully transparent background, generous margins, elevated3/4 camera."
+    }
+  ],
+  "packing": "scripts/build-storybook-records-field.mjs",
+  "calibration": "Apparatus states and source cloth variants use one common scale and baseline248 in256px cells. Adopted folded cloth width199 matches the flat cloth width199, rather than scaling each state independently. Its132px transparent upper margin gives top-grip offset9.28125 at width12. Long hanging source cloth is retained but not used.",
+  "scope": "4-7 departure after the registry, and4-7 return only. Uses approved moss-beds-v1 background, Lico field-records ponytail atlas, Mira moss-care, Finn cloth empty-hand/carry cycle and keeper-restoration. Story text, portraits and existing stills are preserved."
+}

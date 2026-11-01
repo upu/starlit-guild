@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent warm handpainted2D RPG item sheet exactly3 separateprops inonehorizontalrow, generousgutters. Elevated45degree downward3quarter view matchingmanorkitchen. Left: a loosely hangingloopofbrown spare rope, upperendcaught around a tinyhorizontal invisiblebranch (branchnotincluded), twoends dangling, complete. Center: small dulliron rectangular bent fasteningclasp, no sharp weapon, complete metalhardware. Right: open folded cream parchment gardenroute map withlittleolivegreenhedgeblocks andbrownpaths, no readablewords or text. Objects separately isolated, no people,ground,shadows,extraneousprops. Finewarmoutlinespaintedtexture.",
+  "references": [
+    "public/storybook-study/manor-kitchen-open-v1.png"
+  ],
+  "source": "assets/source/storybook/well-props-v1.png"
+}

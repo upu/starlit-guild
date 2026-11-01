@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "scope": "moss-transplant-return (4-9 return), no dialogue/still/save changes",
+  "sources": [
+    {
+      "source": "assets/source/storybook/lico-transplant-care-v1.png",
+      "generation": "exec-79e9e108-6672-486b-8e13-0a57b009656b",
+      "sha256": "6179b0a64bccebcb8ba57b8bd49b1a0b5aa7c8287616f9e592c160cbe93687c8"
+    },
+    {
+      "source": "assets/source/storybook/lico-transplant-care-ponytail-v2.png",
+      "generation": "exec-789e1ea7-8137-436b-aecd-4863b5b9d5bd",
+      "sha256": "35bd06b52ca47245e9cf365cdcca350ecf6676c66558ca6c8c550d1a86f4497c"
+    },
+    {
+      "source": "assets/source/storybook/worker-transplant-v1.png",
+      "generation": "exec-2a5883cc-bdb4-40af-95a3-53a58397a64e",
+      "sha256": "bab3fb47ddd7f7a098e8d95aaeb9d16c2023182065b87a7a5cc844c4d1daa8fb"
+    },
+    {
+      "source": "assets/source/storybook/worker-transplant-v2.png",
+      "generation": "exec-4fc7c92f-63fb-4865-9e73-6c23eb39ceb6",
+      "sha256": "d0094138b55d50f23577817acd5f8ed3be687aea9343451c9a98fc6db6a70c26"
+    },
+    {
+      "source": "assets/source/storybook/doctor-bag-v1.png",
+      "generation": "exec-30a9b2e5-f4b0-48d0-ae5a-96e9f1a1ebf2",
+      "sha256": "a1c202dd8568be9c884759d1cc900c686c39479a8ceecf0ac3cc1f2cad23aadb"
+    },
+    {
+      "source": "assets/source/storybook/doctor-bag-v2.png",
+      "generation": "exec-7f69913e-724a-47ef-be32-b9585c67456e",
+      "sha256": "12a2529b6b8cf7b5acca446fc0dca8cc152705d84ada614197955add7150c873"
+    },
+    {
+      "source": "assets/source/storybook/new-moss-beds-v1.png",
+      "generation": "exec-4758e3ed-10be-4e4c-850a-601445652266",
+      "sha256": "78014a91c506142d09fb68b7a0faf57046b7fe8ebfca1b9bf7a6bac25a6c45ca"
+    },
+    {
+      "source": "assets/source/storybook/brekka-tower-drain-v1.png",
+      "generation": "exec-99c6b340-8985-4980-b8d3-1b99c0398ff3",
+      "sha256": "10489a1ca8ce2adfe7c0fa9720cb8e9a4a5175f14df018aed8454be78afd05d7"
+    }
+  ],
+  "references": [
+    "public/storybook-study/lico-moss-study-ponytail-v1.webp",
+    "public/storybook-study/worker-poses-v1.webp",
+    "public/storybook-study/doctor-visit-v1.webp",
+    "public/storybook-study/moss-beds-v1.png",
+    "public/storybook-study/tower-loading-yard-v1.png"
+  ],
+  "promptSummaries": {
+    "lico": "Eight complete poses in 4x2 transparent grid: neutral calibration, finger wiping pair, empty receiving palm, low leaf-spreading pair, low inspection, notebook. Hair-only v2 correction sweeps back hair into slim tied ponytail while preserving body and gestures.",
+    "worker": "Twelve complete poses in 4x3 transparent grid: neutral, talk, squat reach/lift, empty basket support/offer, wipe, low reach, four carrying walk phases. v2 attempts opposite leg correction only; walk still needs visual gait refinement.",
+    "doctor": "Four transparent phases: nod with bag on floor, squat to handle, lift, hold and talk. v2 keeps bag on screen left throughout without mirroring entire doctor.",
+    "newBeds": "Warm elevated oblique 3x2 clearing away from tower, low bed at upper left, shallow rill upper right, no buildings, clear work floor.",
+    "tower": "Same Brekka tower rear yard identity, accessible low mortar recess and restored drainage, broad apron, no bench or mysterious rock."
+  },
+  "selection": {
+    "lico-transplant-care-v1": "rejected for loose bob-like back hair",
+    "lico-transplant-care-ponytail-v2": "integrated wiping/receiving/squatting poses; neutral/notebook cells calibration/preparation",
+    "worker-transplant-v1": "superseded; repeated gait legs",
+    "worker-transplant-v2": "integrated contact poses and temporary walk; anatomical alternation remains weak",
+    "doctor-bag-v1": "rejected for bag changing sides",
+    "doctor-bag-v2": "integrated; same bag side through lift"
+  },
+  "packing": "scripts/build-storybook-transplant-return.mjs. Common Lico scale128/sole176; worker static84 and common walk-row84/sole120; doctor94/sole120, head alignment avoids detached bag shifting body. Originals retained.",
+  "outputs": [
+    "public/storybook-study/lico-transplant-care-v1.webp",
+    "public/storybook-study/worker-transplant-v1.webp",
+    "public/storybook-study/doctor-bag-v1.webp",
+    "public/storybook-study/new-moss-beds-v1.png",
+    "public/storybook-study/brekka-tower-drain-v1.png"
+  ],
+  "geography": "Existing atlas new-moss-beds and brekka-tower relationships checked. No new place/route/distance/direction established.",
+  "reusedAssets": [
+    "finn-reaction-v1: low squat cell3, common148px standing calibration",
+    "finn-cloth-v1: carry and walking poses, frame16 smiling carry explicitly registered",
+    "spare-cloth-folded-v1: flat dry cloth, avoids a hanging sheet on the ground"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "tool": "built-in image_gen",
+  "characterReference": "docs/characters/lico-reference-sheet.webp",
+  "styleReference": "assets/source/storybook/mira-conversation-v1.png",
+  "conversation": {
+    "prompt": "Create a four-pose sprite strip of Lico, an original young adult alchemist. First reference defines her exact identity, outfit and personality; second reference defines ONLY warm hand-painted RPG rendering and compact sprite proportions, do not copy its person or clothing. Elevated three-quarter view facing screen RIGHT. Small sturdy adult woman, about 3 heads tall, same head/body dimensions in all four poses. Messy muted reddish brown short ponytail, loose flyaways, small red spider-lily hair ornament; sleepy moss-green eyes behind perfectly round fine wire glasses slipped low on nose, visible freckles, ordinary approachable quirky face rather than polished princess beauty. Charcoal black practical coat and skirt, deep crimson worn work apron, cream blouse and hem accents, dark brown belt pouches with tiny botanical vials; simple dark strapped sandals with bare toes. Four full-body figures evenly spaced in ONE HORIZONTAL ROW: 1 neutral relaxed arms down, 2 thoughtful finger at chin, 3 explaining with open hand extended forward, 4 mildly crooked amused curious smile showing a little tooth, one hand at hip. Identical scale, planted feet baseline, no prop in hands, no carried basket/backpack, no shadows/floor/text. Fully transparent background. Thin warm brown lines, restrained painterly shading, readable simple silhouettes, generous clear gutters and all hair and toes fully in frame.",
+    "source": "assets/source/storybook/lico-conversation-v1.png",
+    "refinement": "Edit this four-pose character sheet only to give COMPLETE HAIR AND FEET generous TRANSPARENT MARGINS. The top hair flyaways are clipped by canvas: complete those thin looping flyaways naturally, keeping rest of hair/face/clothes/proportions/poses EXACTLY the same. Shrink all four whole figures uniformly by 12% within the same canvas, maintaining common baseline and equal spacing, so at least 40 transparent pixels surround topmost flyaway and every foot. Actual transparent background, no shadow, no color/pose/style changes.",
+    "acceptedSource": "assets/source/storybook/lico-conversation-v2.png",
+    "output": "public/storybook-study/lico-conversation-v2.webp",
+    "heights": [
+      128,
+      124,
+      124,
+      124
+    ]
+  },
+  "walk": {
+    "prompt": "Create a FOUR FRAME walk cycle of the exact same character as this sheet. Strictly preserve head width and height relative to body, body thickness and total height, clothing, round low glasses, freckles, sleepy green eyes, messy reddish brown ponytail and red flower, crimson apron with black coat/skirt, cream blouse and strapped sandals. Elevated three quarter view facing RIGHT, warm hand painted RPG. One horizontal row of four isolated full body sprites: left foot forward contact / left planted with right foot lifted passing / right foot forward contact / right planted with left foot lifted passing. Clear alternating bent knees and visible lifted sandals, no sliding shuffle. Same big head and short adult proportions, baseline constant with only subtle bounce. Modest opposite arm swings and restrained skirt motion. The skirt must not hide all feet; toes and separate sandals readable. Hands empty, no backpack, no basket, no shadows, no floor, no text. Actual transparent background, full head and feet with gutters.",
+    "v2Prompt": "Correct this walk cycle, preserving character identity, head sizes, style and transparent layout. Two essential corrections: (1) body below chin is too short: lengthen torso and legs below chin by 15%, keeping ALL four heads exactly same dimensions. Total hair-to-sole height should increase about 8% with heads unchanged. (2) Currently poses 1 and 3 repeat the same leg. Make a true alternating four-frame walk. Frame1 NEAR camera leg extended forward to screen right, FAR leg back to screen left. Frame2 NEAR leg planted under pelvis, FAR knee lifts and far foot passes forward. Frame3 FAR leg extended forward to screen right, NEAR leg back to screen left (opposite frame1). Frame4 FAR leg planted under pelvis, NEAR knee lifted with near foot passing forward (opposite frame2). Opposite arm swing. Clearly different near/far knees and sandals, with skirts lifted only naturally by walking to show lower legs. No running. Same stationary center in all cells, shared baseline, clear gaps, no text or shadows, actual alpha transparency.",
+    "v3Prompt": "Draw the same Lico from reference in FOUR walking poses, horizontal strip on transparent background. Match reference identity/clothes exactly. She has a large head but the FULL BODY below her CHIN must be 1.6 times the hair-top-to-chin head height. Do NOT shorten the torso or legs when walking. Overall about 2.6 heads tall including hair. Keep face width, messy red-brown tied hair, round glasses, freckles, red apron, black skirt/coat, cream sleeves, sandals. Elevated three-quarter facing RIGHT. Four phases with planted supports and lifted passing feet: near foot forward / far foot passing lifted while near supports / far foot forward and near foot behind / near foot passing lifted while far supports. Camera-near and camera-far legs must genuinely alternate the lead! Arms oppose legs. Head consistent and same baseline; passing pose should not shrink. Complete uncut hair and sandals, visible calves, transparent gaps, no props, no floor, no text, no shadow. Warm thin brown outlines, restrained painted shading. Avoid running/high kicks; modest walking stride.",
+    "v4Prompt": "Edit this four-pose character sheet only to give COMPLETE HAIR AND FEET generous TRANSPARENT MARGINS. The top hair flyaways are clipped by canvas: complete those thin looping flyaways naturally, keeping rest of hair/face/clothes/proportions/poses EXACTLY the same. Shrink all four whole figures uniformly by 12% within the same canvas, maintaining common baseline and equal spacing, so at least 40 transparent pixels surround topmost flyaway and every foot. Actual transparent background, no shadow, no color/pose/style changes.",
+    "sources": [
+      "assets/source/storybook/lico-walk-v1.png",
+      "assets/source/storybook/lico-walk-v2.png",
+      "assets/source/storybook/lico-walk-v3.png",
+      "assets/source/storybook/lico-walk-v4.png"
+    ],
+    "output": "public/storybook-study/lico-walk-v4.webp",
+    "registration": "Single scale based on conversation neutral head width67px. All walk heights125px. Foot baseline176 in192px cell.",
+    "remaining": "Near/far leg lead alternation remains weak; loop is provisional, not approved as final animation."
+  },
+  "scope": "Indoor study conversation frames0/3/4/5 and home walking. Research and carry dedicated poses still original."
+}

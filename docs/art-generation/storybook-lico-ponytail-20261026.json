@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "direction": "User correction: clearly tied short ponytail; reduce loose back hair, expose nape and shoulder space, retain rough bangs, freckles, glasses and red spider-lily.",
+  "references": [
+    "docs/characters/lico-reference-sheet.webp"
+  ],
+  "prompt": "Edit only hair silhouette, preserve face, expression, body scale, poses, hands, feet, outfit and included props. Sweep back hair into one visible red tie and one slender short ponytail. Remove broad loose bob/curtain behind ears and shoulders, expose nape. Preserve irregular bangs and few flyaways. Transparent background, separate equal cells. Low poses keep same head size and lower total height. Relayout moss-study and field-records with broad transparent gutters to prevent adjacent sprites touching.",
+  "accepted": [
+    {
+      "source": "assets/source/storybook/lico-conversation-ponytail-v1.png",
+      "generated": "exec-abd81102-a358-4170-92ac-0803568e2b53",
+      "reference": "assets/source/storybook/lico-conversation-v2.png",
+      "columns": 4,
+      "rows": 1,
+      "output": "public/storybook-study/lico-conversation-ponytail-v1.webp",
+      "status": "integrated"
+    },
+    {
+      "source": "assets/source/storybook/lico-work-ponytail-v1.png",
+      "generated": "exec-7cee909a-4f5f-450c-adf1-3a58a1cf65a5",
+      "reference": "assets/source/storybook/lico-work-v1.png",
+      "columns": 4,
+      "rows": 1,
+      "output": "public/storybook-study/lico-work-ponytail-v1.webp",
+      "status": "integrated"
+    },
+    {
+      "source": "assets/source/storybook/lico-walk-ponytail-v1.png",
+      "generated": "exec-a9754773-fb56-4dc5-a173-b0fbd3556546",
+      "reference": "assets/source/storybook/lico-walk-v4.png",
+      "columns": 4,
+      "rows": 1,
+      "output": "public/storybook-study/lico-walk-ponytail-v1.webp",
+      "status": "integrated"
+    },
+    {
+      "source": "assets/source/storybook/lico-moss-study-ponytail-v1.png",
+      "generated": "exec-eaeaad09-4cb7-41c4-94a9-8c794bdc3a24",
+      "reference": "assets/source/storybook/lico-moss-study-v1.png",
+      "columns": 4,
+      "rows": 3,
+      "output": "public/storybook-study/lico-moss-study-ponytail-v1.webp",
+      "status": "integrated"
+    },
+    {
+      "source": "assets/source/storybook/lico-notebook-walk-ponytail-v1.png",
+      "generated": "exec-7788a736-5e04-4bb8-9297-e9ae9b2f9422",
+      "reference": "assets/source/storybook/lico-notebook-walk-v2.png",
+      "columns": 4,
+      "rows": 2,
+      "output": "public/storybook-study/lico-notebook-walk-ponytail-v1.webp",
+      "status": "integrated"
+    },
+    {
+      "source": "assets/source/storybook/lico-field-records-ponytail-v1.png",
+      "generated": "exec-dac333a8-199d-4b3d-85e6-49761bf6d91d",
+      "reference": "assets/source/storybook/lico-field-records-v1.png",
+      "columns": 4,
+      "rows": 2,
+      "output": "public/storybook-study/lico-field-records-ponytail-v1.webp",
+      "status": "integrated into 4-7 field departure and return"
+    }
+  ],
+  "rejected": [
+    {
+      "generated": "exec-eed76701-c5e7-42a3-8c97-1916be10592f",
+      "reason": "Back hair still reads as loose bob."
+    },
+    {
+      "source": "assets/source/storybook/lico-moss-study-ponytail-tight-v1.png",
+      "generated": "exec-5d4f6170-f2d2-4114-9408-51e7d448b9a6",
+      "reason": "Adjacent rows touch; replaced with wider gutters."
+    },
+    {
+      "source": "assets/source/storybook/lico-field-records-ponytail-tight-v1.png",
+      "generated": "exec-6056f682-7283-4dae-9610-186bcd10381f",
+      "reason": "Adjacent rows touch; replaced with wider gutters."
+    }
+  ],
+  "packing": "scripts/build-storybook-lico-ponytail.mjs; one common scale per atlas based on standing calibration, not hair width. All sole baselines176; sprites192 square. Existing originals preserved."
+}

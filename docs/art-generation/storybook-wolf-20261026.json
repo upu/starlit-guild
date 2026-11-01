@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Redraw FIRST reference wolf in the warm soft hand-painted RPG style of SECOND reference. One small grey-and-cream forest wolf, full body, facing three-quarter RIGHT, amber eyes, alert pointed ears, cream muzzle/chest/paws, grey back, fluffy upcurved tail. Preserve first reference's friendly but wild wolf identity and proportions, no collar or clothes, no oversized fangs, no horror, no added magical effects. Elevated 45-degree downward camera with visible tops of back/head. Four paws planted naturally on the same horizontal ground plane, entire ears, paws and tail in frame, generous transparent margins. Fine soft brown outlines, painterly fur clusters, restrained details readable as a small game sprite, no pixel art. Fully transparent background, no ground, no floor shadow blob, no text, no vignette or halo.",
+  "source": "assets/source/storybook/wolf-v1.png",
+  "outputs": [
+    "public/storybook-study/wolf-v1.webp"
+  ],
+  "registration": "Existing adventure enemy cell1024, floor960 and visible height384, proportional resize."
+}

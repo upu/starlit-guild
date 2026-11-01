@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "built-in image_gen",
+  "prompt": "Edit this mountain-road background: remove ONLY the wooden signpost on the upper-left side of the trail, fill its place with the same natural dirt, low grass and small flowers. Preserve both branching trails, all trees, rocks, fence, camera, lighting, exact scale and composition. No people or props. Warm hand-painted RPG background, unchanged 3:2 landscape. The removed sign will be an independently animated object, so do not add any replacement signs anywhere.",
+  "source": "assets/source/storybook/mountain-fork-v1.png",
+  "outputs": [
+    "public/storybook-study/mountain-fork-v1.png"
+  ]
+}

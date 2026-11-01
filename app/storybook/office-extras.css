@@ -1,0 +1,66 @@
+/* Only replace matching poses: desk work retains its dedicated action atlas. */
+.storybook-presentation
+  .storybook-painted-stage[data-painted="true"]
+  [data-npc="keeper"]
+  .story-stage-extra-sprite:is(
+    [data-frame="0"],
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="3"]
+  ) {
+  background-image: url("/storybook-study/keeper-poses-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-presentation:is([data-mode="indoor"], [data-art="manor-garden-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite:is([data-frame="12"], [data-frame="13"], [data-frame="14"]) {
+  background-image: url("/storybook-study/merchant-service-v1.webp") !important;
+  background-size: 400% 100% !important;
+  background-position: 33.333333% 0% !important;
+  image-rendering: auto;
+}
+.storybook-presentation:is([data-mode="indoor"], [data-art="manor-garden-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite[data-frame="13"] {
+  background-position-x: 66.666667% !important;
+}
+.storybook-presentation:is([data-mode="indoor"], [data-art="manor-garden-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite[data-frame="14"] {
+  background-position-x: 100% !important;
+}
+.storybook-presentation:is([data-mode="indoor"], [data-art="manor-garden-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite:is(
+    [data-frame="0"],
+    [data-frame="1"],
+    [data-frame="2"],
+    [data-frame="3"]
+  ) {
+  background-image: url("/storybook-study/merchant-poses-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+}
+.storybook-presentation:is([data-mode="indoor"], [data-art="manor-garden-v1"])
+  .storybook-painted-stage[data-painted="true"]
+  :is([data-npc="merchant"], [data-npc-hand="merchant"])
+  .story-stage-extra-sprite:is(
+    [data-frame="8"],
+    [data-frame="9"],
+    [data-frame="10"],
+    [data-frame="11"]
+  ) {
+  background-image: url("/storybook-study/merchant-walk-v2.webp") !important;
+  background-size: 400% 100% !important;
+  background-position-y: 0% !important;
+  image-rendering: auto;
+  /* The painted source faces left; the original merchant walk faces right. */
+  scale: -1 1;
+}

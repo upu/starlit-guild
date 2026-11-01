@@ -1,0 +1,425 @@
+.storybook-study {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 12px;
+  color: #eee5ca;
+}
+.storybook-study h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.storybook-study > p {
+  margin: 6px 0;
+}
+.storybook-study label {
+  display: block;
+  margin: 8px 0;
+}
+.storybook-study > header p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+.storybook-study:is([data-mode="outdoor"], [data-mode="indoor"], [data-mode="adventure"]) {
+  display: grid;
+  grid-template-rows: auto auto minmax(300px, 1fr) auto;
+}
+.storybook-conversation {
+  min-height: 0;
+  container-type: inline-size;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+.storybook-preview {
+  min-height: 0;
+  align-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #a58d58;
+  border-radius: 12px;
+  background: #e3d7b2;
+}
+.storybook-stage-viewport {
+  flex: none;
+  height: min(66.666667cqw, max(200px, calc(100dvh - 370px)));
+  min-height: 0;
+  position: relative;
+  container-type: size;
+  background: #18352d;
+}
+.storybook-motion-review {
+  position: absolute;
+  z-index: 5;
+  top: 4px;
+  left: 4px;
+  padding: 4px 8px;
+  background: #18352de8;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.storybook-preview .story-stage-space {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100cqw, 150cqh);
+  height: min(100cqh, 66.666667cqw);
+  min-height: 0;
+  aspect-ratio: auto;
+}
+.storybook-preview .story-stage {
+  height: 100%;
+}
+.storybook-dialogue {
+  flex-shrink: 0;
+  background: #244a43;
+  padding: 12px 16px;
+  color: #fff3d9;
+}
+.storybook-dialogue p {
+  min-height: 3.2em;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+.storybook-dialogue > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.storybook-dialogue span {
+  margin-right: auto;
+}
+.storybook-dialogue button {
+  border: 1px solid #c3ac6f;
+  border-radius: 6px;
+  padding: 8px 12px;
+  min-height: 44px;
+}
+.storybook-dialogue button:disabled {
+  opacity: 0.45;
+}
+.storybook-adventure {
+  position: relative;
+  width: min(100%, calc(max(220px, 100dvh - 320px) * 1.5));
+  margin-inline: auto;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #a58d58;
+}
+@media (max-width: 600px) {
+  .sprite-lab-shell:has(.storybook-study) .sprite-lab-navigation {
+    display: none;
+  }
+  .sprite-lab-shell:has(.storybook-study) .sprite-lab-header {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  .sprite-lab-shell:has(.storybook-study) .sprite-lab-header > div {
+    gap: 12px;
+  }
+  .storybook-study {
+    padding: 6px 8px;
+  }
+  .storybook-study > header p {
+    font-size: 12px;
+  }
+  .storybook-dialogue {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .storybook-dialogue p {
+    min-height: 4.8em;
+  }
+  .storybook-preview {
+    align-self: center;
+  }
+  .storybook-stage-viewport {
+    flex: none;
+    height: min(40dvh, calc((100vw - 18px) * 2 / 3));
+  }
+  .storybook-study[data-mode="outdoor"] .storybook-stage-viewport {
+    overflow: hidden;
+  }
+  .storybook-study[data-mode="indoor"] .storybook-stage-viewport {
+    overflow: hidden;
+  }
+  .storybook-study[data-mode="indoor"] .storybook-preview .story-stage-space {
+    /* Frame the conversation as one space: furniture and background zoom with actors. */
+    transform: translateX(-50%) scale(1.25);
+    transform-origin: 55% 95%;
+  }
+  .storybook-study[data-mode="outdoor"] .storybook-preview .story-stage-space {
+    /* Move the whole outdoor view closer without changing relative prop sizes. */
+    transform: translateX(-50%) scale(1.3);
+    transform-origin: 50% 75%;
+  }
+}
+@media (min-width: 800px) {
+  .storybook-study:is([data-mode="outdoor"], [data-mode="indoor"], [data-mode="adventure"]) {
+    grid-template-columns: 180px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 16px;
+  }
+  .storybook-study:is([data-mode="outdoor"], [data-mode="indoor"], [data-mode="adventure"])
+    > header,
+  .storybook-study:is([data-mode="outdoor"], [data-mode="indoor"], [data-mode="adventure"])
+    > label {
+    grid-column: 1;
+  }
+  .storybook-study:is([data-mode="outdoor"], [data-mode="indoor"], [data-mode="adventure"]) > p {
+    grid-column: 1;
+    grid-row: 4;
+    font-size: 13px;
+  }
+  .storybook-conversation {
+    grid-column: 2;
+    grid-row: 1 / -1;
+  }
+  .storybook-study[data-mode="adventure"] > section {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-width: 0;
+  }
+}
+.storybook-adventure .phaser-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.night-push-frame {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 8px;
+  padding: 3px 6px;
+  color: #fff6dc;
+  background: #12241ed9;
+  font-size: 12px;
+  pointer-events: none;
+}
+.storybook-study-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+}
+.storybook-study-controls button {
+  padding: 8px 12px;
+  min-height: 44px;
+  border: 1px solid #c3ac6f;
+  border-radius: 6px;
+}
+.storybook-character-scene {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background-size: 100% 100%;
+  border: 1px solid #a58d58;
+  border-radius: 12px;
+  container-type: inline-size;
+}
+.storybook-character {
+  position: absolute;
+  bottom: 17%;
+  width: 23cqw;
+  height: 23cqw;
+}
+.storybook-character[data-character="aria"] {
+  left: 27%;
+}
+.storybook-character[data-character="leon"] {
+  left: 52%;
+}
+.storybook-character > span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: 400% 200%;
+}
+.storybook-seat-chair {
+  position: absolute;
+  left: 30%;
+  bottom: 8.333333%;
+  width: 36.5%;
+  height: 52.1%;
+  background: url("/storybook-study/chair-v1.webp") center / contain no-repeat;
+}
+.storybook-character > .storybook-standing-reference {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  pointer-events: none;
+}
+.storybook-contacts {
+  margin-top: 24px;
+}
+.storybook-contacts > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #dacaa4;
+  border-radius: 12px;
+  padding: 12px;
+  color: #3e301a;
+}
+.storybook-contacts figure {
+  margin: 0;
+  text-align: center;
+}
+.storybook-walk-review {
+  margin-top: 20px;
+}
+.storybook-walk-pair {
+  display: flex;
+  gap: 12px;
+}
+.storybook-walk-pair figure {
+  margin: 0;
+  flex: 0 1 192px;
+  min-width: 0;
+}
+.storybook-walk-standing {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("/storybook-study/leon-poses-v1.webp") 0 0 / 400% 200%;
+}
+.storybook-walk-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #dacaa4;
+  border-radius: 8px;
+}
+.storybook-walk-frame::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 91.666667%;
+  border-top: 1px solid #76694e;
+}
+.storybook-contacts .storybook-walk-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.storybook-contacts img {
+  display: block;
+  width: 192px;
+  height: 192px;
+}
+.storybook-travel-review {
+  margin-top: 24px;
+}
+.storybook-travel-ground {
+  position: relative;
+  width: min(100%, 64dvh);
+  margin-inline: auto;
+  aspect-ratio: 3 / 2;
+  container-type: inline-size;
+  background: url("/storybook-study/warehouse-v1.png") center / cover;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.storybook-travel-actor {
+  position: absolute;
+  bottom: 15%;
+  width: 23%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+}
+.storybook-contacts .storybook-travel-actor img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.storybook-travel-shadow {
+  position: absolute;
+  left: 35%;
+  bottom: 7%;
+  width: 30%;
+  height: 5%;
+  background: #51452c55;
+  border-radius: 50%;
+}
+.storybook-travel-review input[type="range"] {
+  display: block;
+  width: 100%;
+}
+.storybook-character b {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff6dc;
+  font-size: 13px;
+  text-shadow: 0 1px 3px #3e301a;
+  white-space: nowrap;
+}
+.storybook-character-scene[data-composed="true"] .storybook-character[data-character="aria"] {
+  left: 24%;
+  z-index: 3;
+}
+.storybook-character-scene[data-composed="true"] .storybook-character[data-character="leon"] {
+  left: 53%;
+  z-index: 3;
+}
+.storybook-staging-merchant {
+  position: absolute;
+  left: 38.5%;
+  bottom: 24%;
+  width: 23cqw;
+  height: 23cqw;
+  z-index: 1;
+}
+.storybook-staging-merchant > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("/storybook-study/merchant-poses-v2.webp") 0 0 / 400% 100% no-repeat;
+}
+.storybook-staging-table {
+  position: absolute;
+  left: 39%;
+  bottom: 17%;
+  width: 22%;
+  aspect-ratio: 1.91;
+  background: url("/storybook-study/packing-table-v1.webp") center / contain no-repeat;
+  z-index: 2;
+}
+.storybook-staging-stock {
+  position: absolute;
+  left: 45%;
+  bottom: 19%;
+  width: 10%;
+  height: 5%;
+  display: flex;
+  gap: 4%;
+  z-index: 2;
+}
+.storybook-staging-stock span {
+  flex: 1;
+  background: url("/storybook-study/covered-box-v1.webp") center bottom / contain no-repeat;
+}
+.storybook-staging-box {
+  position: absolute;
+  left: 46%;
+  bottom: 31%;
+  width: 6%;
+  aspect-ratio: 2.1;
+  background: url("/storybook-study/delivery-box-v2.webp") center bottom / contain no-repeat;
+  z-index: 4;
+}
+.storybook-staging-box[data-held="true"] {
+  left: 34.5%;
+  bottom: 33%;
+}

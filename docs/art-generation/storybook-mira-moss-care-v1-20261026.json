@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "tool": "image_gen",
+  "prompt": "Transparent RPG sprite atlas exactly EIGHT isolated full-body sprites in4columns TWO rows. Preserve reference Mira exact identity and warm hand-painted chibi elevated three-quarter style: lavender gray long hair with white flowers, sleepy gentle violet eyes, cream gold layered dress, dark ankle boots. All baseface SCREEN RIGHT, SAME head/body/boot size and common sole baseline. No bags, furniture, books or props drawn; hands EMPTY for separate attached bag. Row1 col0 neutral STANDING calibration; col1 standing, left lower hand curved in grip at upper-thigh/hip level as if holding small bag handle, free right hand relaxed; col2 same body, gripping fingers gradually opening/slipping slightly while free hand stays relaxed, tired expression; col3 same body and lower left gripping hand, free RIGHT hand extends gently FORWARD at chest height to support another person's upper arm, open supporting palm, do not draw other person. Row2 col0 same support pose with slightly firmer steady palm; col1 half lowering knees and hips toward invisible LOW stool, no furniture; col2 seated LOW on invisible stool, both boots on floor, EMPTY hands relaxed near lap, lower gripping hand near knee for bag; col3 same low seat, extends lower hand toward screen RIGHT to pass a separate bag, other hand rests lap. Seated head top only80percent of standing height, bent knees, no enlarged head or stretched legs. Whole hair and boots visible with transparent margins. No text, grids, floor shadows or backdrop.",
+  "references": [
+    "assets/source/storybook/mira-check-v1.png"
+  ],
+  "source": "assets/source/storybook/mira-moss-care-v1.png"
+}

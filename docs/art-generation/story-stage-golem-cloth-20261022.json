@@ -1,0 +1,37 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in transparent generation and edit",
+  "date": "2026-10-22",
+  "images": [
+    {
+      "source": "assets/source/story-stage/dragging-cloth-v1.png",
+      "references": [
+        "public/story-stage/prop-cloth.webp",
+        "public/story-stage/prop-picnic-cloth.webp"
+      ],
+      "prompt": "Create a transparent pixel-art RPG prop sheet, EXACTLY TWO cells side by side, same cream linen cloth in two states, elevated oblique top-down RPG angle matching the references' pixel clusters, dark brown outline and warm light. Each cell contains ONE isolated cloth, no character, hand, bottle, contents, ground, shadow outside cloth, text or grid. Left cell: small rectangular cream linen packing cloth spread loosely flat on the ground, shallow perspective, four corners visible, subtle folds and brown stitched border, NOT folded into a stack. Right cell: the SAME cloth with the LEFT two-thirds still spread FLAT on the ground at the same baseline, but its far RIGHT corner is pulled UP to waist height by an invisible small carrier just beyond the right edge, making a narrow taut triangular raised corner sloping down toward the cloth on the left. This is fabric being DRAGGED by its right corner, not a bag, tent, cape, tray or floating blanket. Leave an empty flat area on the left/center to hold a separately rendered jar. The raised corner reaches near the top-right of the cloth silhouette and is about half the cloth width above the ground. Preserve identical material, ground footprint width, pixel density and scale between cells; generous transparent gutter. 1536x1024 landscape canvas. True RGBA transparency.",
+      "sha256": "d6f62dbc7ecbbb8f11a7fe80a4989a071bd7a3b160ec1a9a41c7f00ffc4ec87e"
+    },
+    {
+      "source": "assets/source/story-stage/dragging-cloth-v2.png",
+      "reference": "assets/source/story-stage/dragging-cloth-v1.png",
+      "prompt": "Correct only the background/transparency of this two-cell sprite sheet. Keep both cream cloth drawings, their placement, folds, outline, baseline, stitch border and shapes EXACTLY unchanged. Remove ALL brown haze, blurred drop shadow, glow and tinted pixels outside the cloth silhouettes. Every pixel outside the sharply outlined fabric must be fully transparent alpha=0. Preserve antialiasing only immediately on the fabric edge. No solid black or white background. True RGBA PNG transparent canvas. Do not redesign or move either cloth.",
+      "outputs": [
+        "public/story-stage/prop-packing-cloth.webp",
+        "public/story-stage/prop-dragging-cloth.webp"
+      ],
+      "sha256": "5a969192a60ac3ff3050bc4ddd34abcf6a38c3ec1fb5a7e6572d38eedd6f7360"
+    },
+    {
+      "source": "assets/source/story-stage/wrist-bandage-v1.png",
+      "prompt": "A single isolated small WHITE MEDICAL BANDAGE WRAP for a pixel-art fantasy RPG character overlay, on fully transparent background. Only the bandage itself, NO hand, arm, skin, mannequin, bottle, cloth pile, background, text, glow or shadow. It is a short slightly oblique oval cuff of three overlapping narrow white gauze turns, seen from an elevated three-quarter view, intended to wrap around an unseen small forearm running diagonally from lower-left to upper-right. Compact flattened oval silhouette, wider than tall (about 2:1), soft cream-white fabric with two restrained pale gray fold lines and thin dark beige pixel outline. It must read as gauze wound tightly around a wrist, NOT a folded towel, ribbon bow, spool or rolled scroll. Crisp discrete pixel-art clusters readable as a tiny 16x8 pixel overlay, simple enough at that scale. Centered with broad transparent margins, transparent RGBA.",
+      "outputs": [
+        "public/story-stage/prop-wrist-bandage.webp"
+      ],
+      "sha256": "14b1255cc7b79ae71ab9522935a479f7c6ae6cd7dfed25e602f713b4a426562a"
+    }
+  ],
+  "registration": "Two equal cells. Alpha crops, equal 256px width, south-aligned 256x144 transparent canvases; cloth ground baseline is unchanged when lifting or lowering its corner. Original generation's brown outside RGB pixels already had alpha=0; actual transparency was verified.",
+  "referenceRevision": "b4c8a843b4f8ccaa701bf85de509add8fa19b523",
+  "wristRegistration": "Alpha-cropped, 128px wide lossless WebP. Overlay positions use the displayed atlas frame and full 128px cell bounds, including the 8px transparent sole padding."
+}
