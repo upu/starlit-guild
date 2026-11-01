@@ -5,7 +5,6 @@ import { spriteBounds } from "./storybook-sprite-bounds.mjs";
 // Keep one scale per sheet: crouching and seated poses must remain lower.
 const atlases = [
   ["conversation-balanced-v3", 1, 192],
-  ["walk-balanced-v2", 1, 192],
   ["walk-balanced-v3", 1, 192],
   ["night-walk-balanced-v2", 1, 192],
   ["night-push-balanced-v4", 2, 192],
@@ -23,7 +22,6 @@ const atlases = [
   ["door-balanced-v2", 1, 192],
   ["cloth-balanced-v2", 2, 192],
   ["push-balanced-v2", 2, 192],
-  ["pull-scene-balanced-v2", 1, 192],
   ["pull-scene-balanced-v3", 1, 192],
   ["pat-balanced-v2", 1, 192, 2],
   ["injury-balanced-v2", 2, 192],
@@ -112,7 +110,7 @@ for (const [name, rows, cell, columns = 4] of atlases) {
     .webp({ lossless: true })
     .toFile(`public/storybook-study/finn-${name}.webp`);
   await writeFile(
-    `public/storybook-study/finn-${name}-metrics.json`,
+    `assets/metadata/storybook/finn-${name}-metrics.json`,
     JSON.stringify(metrics, null, 2) + "\n",
   );
   console.log(

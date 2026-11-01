@@ -38,7 +38,10 @@ for (const [name, cell, sole, standing, rows] of [
     .composite(layers)
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${name}.webp`);
-  await writeFile(`public/storybook-study/${name}-metrics.json`, JSON.stringify(metrics, null, 2));
+  await writeFile(
+    `assets/metadata/storybook/${name}-metrics.json`,
+    JSON.stringify(metrics, null, 2),
+  );
 }
 const source = "assets/source/storybook/brekka-basket-cart-v1.png";
 const { data, info } = await sharp(source)
@@ -69,7 +72,7 @@ await sharp(source)
   .webp({ lossless: true })
   .toFile("public/storybook-study/brekka-cart-wheel-v1.webp");
 await writeFile(
-  "public/storybook-study/brekka-basket-cart-v1-metrics.json",
+  "assets/metadata/storybook/brekka-basket-cart-v1-metrics.json",
   JSON.stringify({ cart, wheel, scale, left: 11, top: 20 }, null, 2),
 );
 for (const name of ["brekka-foyer-v1", "brekka-alley-v1"])

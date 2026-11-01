@@ -51,7 +51,7 @@ for (const [name, width, height, groups] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${name}.webp`);
   await writeFile(
-    `public/storybook-study/${name}-metrics.json`,
+    `assets/metadata/storybook/${name}-metrics.json`,
     JSON.stringify(
       groups.flatMap((g) => g.metrics),
       null,

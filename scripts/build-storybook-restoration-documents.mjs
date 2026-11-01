@@ -29,6 +29,6 @@ for (const [index, part] of parts.entries()) {
   metrics.push({ name: names[index], width, height, left, top });
 }
 await writeFile(
-  "public/storybook-study/restoration-documents-v1-metrics.json",
+  "assets/metadata/storybook/restoration-documents-v1-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

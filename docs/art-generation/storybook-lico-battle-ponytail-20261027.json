@@ -25,5 +25,15 @@
     "All four frames retain height128 and baseline176 with one shared scale",
     "Real adventure review at PC1280x720 and browser mobile390x844: battle playback and silhouette checked; screenshots work/lico-hair-battle-{pc,mobile}.png"
   ],
-  "limits": "Not a replacement of portrait expression atlases or all legacy adventure sprites."
+  "limits": "Not a replacement of portrait expression atlases or all legacy adventure sprites.",
+  "rejectedSourceCleanup": {
+    "date": "2026-11-01",
+    "removed": [
+      {
+        "path": "assets/source/storybook/lico-battle-ponytail-rejected-v1.png",
+        "sha256": "82d60e5041e58891705a5ae0f8a7e0306e85e918024d4590edcc08db9159054f"
+      }
+    ],
+    "reason": "Rejected sources were not build/test inputs. Full generation prompts and decisions above are retained; exact files are recoverable from Git history."
+  }
 }

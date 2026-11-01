@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "./storybook-metadata.mjs";
 import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 import { readFrame } from "./home-pixel-frames.mjs";
@@ -113,7 +114,10 @@ async function strip(name, reference, standing, frames, cell, baseline, height) 
     .composite(layers)
     .webp({ lossless: true })
     .toFile(`${root}${name}.webp`);
-  await writeFile(`${root}${name}-metrics.json`, JSON.stringify(metrics, null, 2) + "\n");
+  await writeFile(
+    storybookMetricsPath(`${root}${name}.webp`),
+    JSON.stringify(metrics, null, 2) + "\n",
+  );
   console.log(
     name,
     metrics.map((m) => ({ frame: m.frame, height: m.height, left: m.left, top: m.top })),

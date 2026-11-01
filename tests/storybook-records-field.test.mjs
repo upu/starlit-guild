@@ -22,7 +22,7 @@ function same(a, b) {
 }
 test("seated field poses stay low at one body scale and apparatus states keep a common scale", async () => {
   const m = JSON.parse(
-    await readFile("public/storybook-study/lico-field-records-ponytail-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/lico-field-records-ponytail-v1-metrics.json", "utf8"),
   );
   assert.equal(m[0].height, 128);
   for (const [i, p] of m.entries()) {
@@ -32,7 +32,7 @@ test("seated field poses stay low at one body scale and apparatus states keep a 
     if ([1, 2, 3, 4, 7].includes(i)) assert.ok(p.height < 128 * 0.85);
   }
   const d = JSON.parse(
-    await readFile("public/storybook-study/field-reflector-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/field-reflector-v1-metrics.json", "utf8"),
   );
   assert.equal(new Set(d.map((p) => p.scale)).size, 1);
   assert.ok(d[2].height < d[1].height * 0.7);

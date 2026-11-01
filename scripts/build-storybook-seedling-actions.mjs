@@ -51,7 +51,7 @@ for (const [sourceName, rows, groups, targetHeight] of [
       .webp({ lossless: true })
       .toFile(`public/storybook-study/${name}.webp`);
     await writeFile(
-      `public/storybook-study/${name}-metrics.json`,
+      `assets/metadata/storybook/${name}-metrics.json`,
       JSON.stringify(metrics, null, 2),
     );
   }

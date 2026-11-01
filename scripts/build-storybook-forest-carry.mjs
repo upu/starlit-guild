@@ -42,7 +42,7 @@ for (const [name, count] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${name}.webp`);
   await writeFile(
-    `public/storybook-study/${name}-metrics.json`,
+    `assets/metadata/storybook/${name}-metrics.json`,
     JSON.stringify(metrics, null, 2) + "\n",
   );
 }

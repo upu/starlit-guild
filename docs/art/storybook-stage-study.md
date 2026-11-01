@@ -66,7 +66,7 @@
 
 移動見本：`walk-travel.tsx` と `use-walk-travel.ts` を追加。倉庫前の背景上を同じセル寸法で移動し、2880msの終点で立位へ戻る。再生・一時停止・180ms送り・任意時刻のスライダー・出発位置への復帰を備える。既存セーブや本編の演出は変更しない。PCで再生開始と終点の立位、2700msの途中姿勢を確認。390×844 CSS pxのiframeでも再生から終点への切り替えと、人物・背景・操作欄が見えることを確認。背景と人物を同一舞台内で縮小する。画像は `work/storybook-walk-travel-end.png`・`work/storybook-walk-travel-prestop.png`・`work/storybook-walk-travel-mobile.png`。足が接地中に滑らないことや、停止直前の足運びが自然なことをこの確認だけで保証するものではない。歩幅と移動速度の細かな合わせ込み、会話・冒険への接続は残る。
 
-踏み出しBの体格修正：原本 `leon-contact-b-v2.png` を制作し、同じ縮尺0.1・足元176pxで見本の比較／再生へ登録。高さは旧Bの134pxから142pxへ変わり、Aの143pxとの差が9pxから1pxに縮まった。登録値は `public/storybook-study/contact-metrics.json` へ記録する。立ち姿144pxを横へ並べ、PCと390×844 CSS pxのiframeで頭・胴体・足先の差を目視確認。スマホ幅でも2体を同じ比率で横並びに縮小する。確認画像は `work/storybook-walk-contact-b-fixed.png` と `work/storybook-contact-b-fixed-mobile.png`。通過姿勢は138/139pxで上下差が残り、移動との接地・立位への遷移はまだ未検証。本編への採用、全章への展開は行っていない。
+踏み出しBの体格修正：原本 `leon-contact-b-v2.png` を制作し、同じ縮尺0.1・足元176pxで見本の比較／再生へ登録。高さは旧Bの134pxから142pxへ変わり、Aの143pxとの差が9pxから1pxに縮まった。登録値は `assets/metadata/storybook/contact-metrics.json` へ記録する。立ち姿144pxを横へ並べ、PCと390×844 CSS pxのiframeで頭・胴体・足先の差を目視確認。スマホ幅でも2体を同じ比率で横並びに縮小する。確認画像は `work/storybook-walk-contact-b-fixed.png` と `work/storybook-contact-b-fixed-mobile.png`。通過姿勢は138/139pxで上下差が残り、移動との接地・立位への遷移はまだ未検証。本編への採用、全章への展開は行っていない。
 
 歩行の追確認：`leon-pass-b-v2.png` を追加し、踏み出しA/Bと同じ縮尺0.1・足元基準で比較欄へ登録した。手前の脚が前を横切り、右側の靴が浮く形へ改善。PCと390×844 CSS pxのiframeで3姿勢を確認し、頭・靴の欠けがないことを確認した。上げた靴の角度が強く、踏み出しBの頭の位置も低く見えるため、連続歩行への採用は未完了。対象lint・型検査は成功。確認画像はローカルの `work/storybook-passing-comparison.png` と `work/storybook-passing-mobile.png`。
 

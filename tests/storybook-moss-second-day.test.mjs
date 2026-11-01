@@ -29,7 +29,7 @@ test("the return begins with the four following the cart in two separate rows", 
 
 test("the route notebook retains Leon's standing scale in every reading and writing frame", async () => {
   const m = JSON.parse(
-    await readFile("public/storybook-study/leon-route-notes-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/leon-route-notes-metrics.json", "utf8"),
   );
   assert.equal(m[0].height, 144);
   for (const p of m) {

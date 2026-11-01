@@ -16,7 +16,7 @@
       "direction": "Four horizontal states of the same olive canvas medical bag: open, half-lowered flap, flap down, strapped closed. Identical body size, planted bottom and oblique perspective. Transparent gutters, no people or text."
     }
   ],
-  "packing": "scripts/build-storybook-packing-finish.mjs uses one scale across all eight wrapping frames and one across four bag frames. Transparent 256x256 cells, baseline248. Wrap scale0.363636; bag scale0.4672897. Bag body width249-250. Open bag front lip is a crop of the same pixels, not repainted. Metrics: public/storybook-study/packing-finish-metrics.json.",
+  "packing": "scripts/build-storybook-packing-finish.mjs uses one scale across all eight wrapping frames and one across four bag frames. Transparent 256x256 cells, baseline248. Wrap scale0.363636; bag scale0.4672897. Bag body width249-250. Open bag front lip is a crop of the same pixels, not repainted. Metrics: assets/metadata/storybook/packing-finish-metrics.json.",
   "runtime": "road-packing-finish.ts selects untagged and tagged wrapping stages. Same76-source-pixel canvas width through table, palms and stored positions; folding naturally narrows the contents. After fifth deposit only, carrier stays kneeling during600ms four-state bag closing. Stable stored points remain behind the lid; cold completed state restores closed bags. Elapsed times clamp to0 for display clock corrections. Game engine, prose and saves unchanged.",
   "validation": [
     "65 related tests passed, including374/936 widths, Lv18/40, five pairs before engine arrival, wrap and bag states, unique ownership, carry and turn frames, palm contacts, table/bag foot exclusion, persistent stored positions, cold states and default/OFF/custom selection",

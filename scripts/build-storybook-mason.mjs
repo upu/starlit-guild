@@ -45,6 +45,6 @@ await sharp({ create: { width: 512, height: 256, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/mason-motion-v1.webp");
 await writeFile(
-  "public/storybook-study/mason-motion-metrics.json",
+  "assets/metadata/storybook/mason-motion-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

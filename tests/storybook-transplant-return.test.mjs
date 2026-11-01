@@ -52,7 +52,7 @@ test("the cloth handoff joins two visible palms before Aria leaves", () => {
 });
 test("squatting care keeps the same head scale and complete foot margins", async () => {
   const m = JSON.parse(
-    await readFile("public/storybook-study/lico-transplant-care-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/lico-transplant-care-v1-metrics.json", "utf8"),
   );
   assert.equal(new Set(m.map((f) => f.scale)).size, 1);
   assert.equal(m[0].height, 128);
@@ -142,7 +142,9 @@ test("the morning visit replaces ale with tea and keeps the bag on the same side
   assert.ok(c.extras.find((e) => e.name === "患者").chair);
   assert.equal(c.items.filter((i) => i.art === "teacup").length, 1);
   assert.ok(!c.items.some((i) => i.art.includes("ale")));
-  const m = JSON.parse(await readFile("public/storybook-study/doctor-bag-v1-metrics.json", "utf8"));
+  const m = JSON.parse(
+    await readFile("assets/metadata/storybook/doctor-bag-v1-metrics.json", "utf8"),
+  );
   assert.equal(new Set(m.map((f) => f.scale)).size, 1);
   assert.equal(m[0].height, 94);
   assert.ok(m[1].height < m[0].height * 0.85);

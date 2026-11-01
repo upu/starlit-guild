@@ -38,7 +38,7 @@ await sharp({ create: { width: 768, height: 192, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/lico-label-v1.webp");
 await writeFile(
-  "public/storybook-study/lico-label-v1-metrics.json",
+  "assets/metadata/storybook/lico-label-v1-metrics.json",
   JSON.stringify(metrics, null, 2),
 );
 const bowl = "assets/source/storybook/founding-moss-bowl-v1.png";

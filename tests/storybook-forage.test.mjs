@@ -121,7 +121,7 @@ test("phone and desktop preserve the same plant-to-body ratio", () => {
 test("forage crouches retain one body scale and every full silhouette has transparent gutters", async () => {
   for (const id of ["aria", "leon"]) {
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${id}-forage-v1-metrics.json`),
+      await readFile(`assets/metadata/storybook/${id}-forage-v1-metrics.json`),
     );
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     assert.ok(metrics.every((m) => m.top + m.height === 176));

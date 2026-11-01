@@ -50,4 +50,4 @@ for (const [id, row, targetHeight] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${id}-perch-v1.webp`);
 }
-await writeFile("public/storybook-study/perch-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile("assets/metadata/storybook/perch-metrics.json", JSON.stringify(metrics, null, 2));

@@ -28,7 +28,9 @@ test("the servant and cloth movements retain their standing scale and padded boo
     ["finn-cloth-balanced-v2", 8, 176, 148],
     ["servant-display-v2", 4, 120, 94],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, count);
     assert.equal(poses[0].height, height);
     for (const pose of poses) {

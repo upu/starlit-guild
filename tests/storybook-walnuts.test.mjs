@@ -87,7 +87,7 @@ test("the two village routes separate after packing, while the basket stays with
 });
 test("seated poses share one calibration and remain shorter, with uncut boots", async () => {
   for (const id of ["aria", "leon"]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${id}-snack-v1-metrics.json`));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${id}-snack-v1-metrics.json`));
     assert.equal(m.length, 8);
     for (const p of m) {
       assert.equal(p.scale, m[0].scale);

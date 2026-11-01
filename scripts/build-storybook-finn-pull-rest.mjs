@@ -31,7 +31,7 @@ await sharp({ create: { width: 768, height: 192, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/finn-pull-rest-v1.webp");
 await writeFile(
-  "public/storybook-study/finn-pull-rest-v1-metrics.json",
+  "assets/metadata/storybook/finn-pull-rest-v1-metrics.json",
   JSON.stringify(
     {
       left,

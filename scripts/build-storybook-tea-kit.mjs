@@ -40,4 +40,4 @@ for (const [name, left, top, width, height] of cells) {
     .toFile(`public/storybook-study/${name}-v1.webp`);
   metrics[name] = { width: targetWidth, height: targetHeight, foot: canvasHeight };
 }
-await writeFile("public/storybook-study/tea-kit-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile("assets/metadata/storybook/tea-kit-metrics.json", JSON.stringify(metrics, null, 2));

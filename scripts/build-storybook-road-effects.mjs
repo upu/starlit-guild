@@ -32,6 +32,6 @@ await sharp({ create: { width: 1024, height: 256, channels: 4, background: "#000
   .webp({ lossless: true })
   .toFile("public/storybook-study/road-effects-v1.webp");
 await writeFile(
-  "public/storybook-study/road-effects-v1-metrics.json",
+  "assets/metadata/storybook/road-effects-v1-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

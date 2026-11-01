@@ -53,7 +53,7 @@ await sharp({ create: { width: 512, height: 128, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/merrill-battle-v1.webp");
 await writeFile(
-  "public/storybook-study/merrill-battle-v1-metrics.json",
+  "assets/metadata/storybook/merrill-battle-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 console.log(metrics);

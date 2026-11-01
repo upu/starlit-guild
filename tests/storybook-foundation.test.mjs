@@ -10,7 +10,7 @@ import sharp from "sharp";
 
 test("mason walking and inspection retain standing scale and the common ground contact", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/mason-motion-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/mason-motion-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 8);
   assert.equal(metrics[0].height, 94);

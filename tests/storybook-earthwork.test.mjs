@@ -17,7 +17,7 @@ import {
 test("all five earthwork atlases preserve one scale, lower crouches, grounded tools and gutters", async () => {
   for (const id of ["aria", "leon", "mira", "finn", "lico"]) {
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${id}-earthwork-v1-metrics.json`),
+      await readFile(`assets/metadata/storybook/${id}-earthwork-v1-metrics.json`),
     );
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     for (const m of metrics) {

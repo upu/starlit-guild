@@ -42,7 +42,10 @@ for (const [id, standing] of [
     .composite(layers)
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${name}.webp`);
-  await writeFile(`public/storybook-study/${name}-metrics.json`, JSON.stringify(metrics, null, 2));
+  await writeFile(
+    `assets/metadata/storybook/${name}-metrics.json`,
+    JSON.stringify(metrics, null, 2),
+  );
   console.log(
     name,
     metrics.map((m) => m.height),

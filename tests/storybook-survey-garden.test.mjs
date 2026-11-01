@@ -25,7 +25,9 @@ test("gardener and glove actions retain the standing body scale and padded boots
     ["gardener-survey-v1", 120, 94],
     ["finn-gloves-balanced-v2", 176, 148],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, 8);
     assert.equal(poses[0].height, height);
     for (const pose of poses) {

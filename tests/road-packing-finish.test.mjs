@@ -10,7 +10,7 @@ import { chapterRoadFrame } from "../lib/chapter-road-presentation.ts";
 import { RoadMotion } from "../lib/road-motion.ts";
 test("wrapping physically folds smaller while the bag body remains the same width", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/packing-finish-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/packing-finish-metrics.json", "utf8"),
   );
   const wrap = metrics.slice(0, 8),
     bags = metrics.slice(8);

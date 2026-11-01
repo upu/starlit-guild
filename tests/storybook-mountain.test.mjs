@@ -18,7 +18,7 @@ test("mountain medicine box stays clear of Leon's feet and keeps its size in tra
 test("perch strips retain one scale per person, a shared foot line, and a lower seated silhouette", async () => {
   const metrics = JSON.parse(
     await readFile(
-      new URL("../public/storybook-study/perch-metrics.json", import.meta.url),
+      new URL("../assets/metadata/storybook/perch-metrics.json", import.meta.url),
       "utf8",
     ),
   );
@@ -48,7 +48,7 @@ test("tea handoff and pouring retain grips and wait for the complete sequence", 
   assert.ok(cue.sequence.at(-1).after >= 5300);
   const metrics = JSON.parse(
     await readFile(
-      new URL("../public/storybook-study/tea-kit-metrics.json", import.meta.url),
+      new URL("../assets/metadata/storybook/tea-kit-metrics.json", import.meta.url),
       "utf8",
     ),
   );

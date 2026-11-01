@@ -17,5 +17,15 @@
       "prompt": "Precise costume edit ONLY. Keep this Aria sprite's entire silhouette, crossing-leg walking pose, face, hair, clothing, cape, all limb positions, drawing size and canvas coordinates unchanged. Remove the brown strap and buckle from the large FRONT thigh crossing diagonally down-right. That front thigh should be bare. Put the narrow brown strap on the OTHER, REAR thigh that goes backward down-left; only a small visible segment immediately below the skirt at the top of that rear thigh, mostly occluded by the crossing front thigh. Do not swap, straighten, move or redraw the legs or boots. Preserve original warm style and transparent background. One full-body sprite, no other changes.",
       "review": "Strap moved back to rear leg; pose retained. Not registered or integrated; remaining walking phases and reduced-size proportion check pending."
     }
-  ]
+  ],
+  "rejectedSourceCleanup": {
+    "date": "2026-11-01",
+    "removed": [
+      {
+        "path": "assets/source/storybook/aria-walk-rejected-v1.png",
+        "sha256": "d6dde59453442a2d560c3491e4d8293f6845f9c46ced09a20bfab05ab31d4af5"
+      }
+    ],
+    "reason": "Rejected sources were not build/test inputs. Full generation prompts and decisions above are retained; exact files are recoverable from Git history."
+  }
 }

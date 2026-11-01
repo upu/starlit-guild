@@ -11,7 +11,7 @@ const item = (c, id) => c.items.find((i) => i.id === id);
 const extra = (c, id) => c.extras.find((e) => e.id === id);
 test("restoration workers retain standing scale and the keeper kneels below standing height", async () => {
   for (const n of ["keeper-restoration-v1", "restoration-carrier-v1"]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${n}-metrics.json`, "utf8"));
+    const poses = JSON.parse(await readFile(`assets/metadata/storybook/${n}-metrics.json`, "utf8"));
     assert.equal(poses.length, 8);
     assert.equal(poses[0].height, 94);
     for (const p of poses) {
@@ -29,7 +29,7 @@ test("tea stays on a lower seated silhouette with the common standing scale and 
     ["mira", 126],
   ]) {
     const p = JSON.parse(
-      await readFile(`public/storybook-study/${who}-tea-v1-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${who}-tea-v1-metrics.json`, "utf8"),
     );
     assert.equal(p[0].height, height);
     for (const s of p.slice(1)) {

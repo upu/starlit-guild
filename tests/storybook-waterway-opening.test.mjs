@@ -138,7 +138,7 @@ test("the moving lid uses clean alpha and keeper bends/gait retain the standing 
     "the solid panel occludes over 98% of the moss",
   );
   for (const name of ["keeper-hatch-open-v1", "keeper-hatch-carry-walk-v2"]) {
-    const metrics = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`));
+    const metrics = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`));
     assert.ok(metrics.every((m) => m.scale === metrics[0].scale));
     for (let frame = 0; frame < 4; frame++) {
       const pose = await readFrame(`public/storybook-study/${name}.webp`, {
@@ -154,7 +154,7 @@ test("the moving lid uses clean alpha and keeper bends/gait retain the standing 
     }
   }
   const walks = JSON.parse(
-    await readFile("public/storybook-study/keeper-hatch-carry-walk-v2-metrics.json"),
+    await readFile("assets/metadata/storybook/keeper-hatch-carry-walk-v2-metrics.json"),
   );
   assert.ok(
     walks[0].width - walks[1].width > 20 && walks[2].width - walks[3].width > 20,

@@ -19,7 +19,7 @@ await sharp({ create: { width: 384, height: 160, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/linde-table-v1.webp");
 await writeFile(
-  "public/storybook-study/linde-table-v1-metrics.json",
+  "assets/metadata/storybook/linde-table-v1-metrics.json",
   JSON.stringify({ width, height, left, top, scale }, null, 2),
 );
 console.log({ width, height, left, top });

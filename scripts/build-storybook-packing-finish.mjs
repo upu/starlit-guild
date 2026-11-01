@@ -42,7 +42,7 @@ await sharp(open)
   .webp({ lossless: true })
   .toFile("public/storybook-study/packing-bag-lip-v2.webp");
 await writeFile(
-  "public/storybook-study/packing-finish-metrics.json",
+  "assets/metadata/storybook/packing-finish-metrics.json",
   JSON.stringify(records, null, 2) + "\n",
 );
 console.log(records);

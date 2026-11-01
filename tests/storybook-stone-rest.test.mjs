@@ -26,7 +26,9 @@ test("writing, kettle and chair actions retain their standing scale and complete
     ["leon-kettle-v1", 176, 8],
     ["aria-seat-v1", 176, 4],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, count);
     for (const pose of poses) {
       assert.equal(pose.scale, poses[0].scale);

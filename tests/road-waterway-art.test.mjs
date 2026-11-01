@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -16,7 +17,7 @@ test("worker keeps the saw during a combat pause and signals before drainage", (
 
 test("worker crouches retain standing scale, planted feet and full saw silhouettes", async () => {
   const file = "public/storybook-study/waterway-worker-v1.webp";
-  const metrics = JSON.parse(await readFile(file.replace(".webp", "-metrics.json"), "utf8"));
+  const metrics = JSON.parse(await readFile(storybookMetricsPath(file), "utf8"));
   assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
   assert.ok(metrics[1].height < metrics[0].height * 0.85);
   assert.ok(metrics[2].height < metrics[0].height * 0.85);

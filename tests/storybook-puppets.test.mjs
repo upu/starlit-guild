@@ -80,7 +80,9 @@ test("the fleeing puppet is visible with the candy until it clears the scene", (
 });
 
 test("puppet motions preserve one scale and the same boot baseline", async () => {
-  const metrics = JSON.parse(await readFile("public/storybook-study/puppet-metrics.json", "utf8"));
+  const metrics = JSON.parse(
+    await readFile("assets/metadata/storybook/puppet-metrics.json", "utf8"),
+  );
   assert.equal(metrics.length, 8);
   for (const pose of metrics) {
     assert.equal(pose.scale, metrics[0].scale);
@@ -91,7 +93,9 @@ test("puppet motions preserve one scale and the same boot baseline", async () =>
 });
 
 test("golem poses preserve scale and walking does not chase the alternating planted foot", async () => {
-  const metrics = JSON.parse(await readFile("public/storybook-study/golem-metrics.json", "utf8"));
+  const metrics = JSON.parse(
+    await readFile("assets/metadata/storybook/golem-metrics.json", "utf8"),
+  );
   assert.equal(metrics.length, 8);
   for (const pose of metrics) {
     assert.equal(pose.scale, metrics[0].scale);
@@ -229,7 +233,7 @@ test("the workshop carrier consults and writes on the same held record", async (
     }
   }
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/porter-service-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/porter-service-v1-metrics.json"),
   );
   for (const frame of [5, 6, 7]) {
     assert.equal(metrics[frame].top + metrics[frame].height, 120);

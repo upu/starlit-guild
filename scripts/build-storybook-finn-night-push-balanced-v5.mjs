@@ -7,7 +7,7 @@ import { spriteBounds } from "./storybook-sprite-bounds.mjs";
 const source = "assets/source/storybook/finn-night-push-walk-balanced-v5.png";
 const old = "public/storybook-study/finn-night-push-balanced-v4.webp";
 const oldMetrics = JSON.parse(
-  await readFile("public/storybook-study/finn-night-push-balanced-v4-metrics.json", "utf8"),
+  await readFile("assets/metadata/storybook/finn-night-push-balanced-v4-metrics.json", "utf8"),
 );
 const raw = await sharp(source).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 const parts = spriteBounds(raw.data, raw.info.width, raw.info.height, {
@@ -52,7 +52,7 @@ await sharp({ create: { width: 768, height: 384, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/finn-night-push-balanced-v5.webp");
 await writeFile(
-  "public/storybook-study/finn-night-push-balanced-v5-metrics.json",
+  "assets/metadata/storybook/finn-night-push-balanced-v5-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 console.log(metrics.slice(1, 6));

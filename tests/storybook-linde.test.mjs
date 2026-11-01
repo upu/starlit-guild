@@ -11,7 +11,7 @@ const item = (s, id) => s.items.find((i) => i.id === id);
 
 test("the used plate retains the lunch plate's physical size and every prop has sole padding", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/linde-lunch-props-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/linde-lunch-props-v1-metrics.json", "utf8"),
   );
   assert.ok(Math.abs(metrics[0].width - metrics[1].width) < 6);
   assert.equal(metrics[0].height, metrics[1].height);

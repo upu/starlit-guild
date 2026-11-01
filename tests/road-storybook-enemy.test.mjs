@@ -56,8 +56,8 @@ for (const kind of ["puppet", "golem", "pumpety"])
     const metrics = JSON.parse(
       await readFile(
         kind === "pumpety"
-          ? "public/storybook-study/masked-pumpety-v1-metrics.json"
-          : `public/storybook-study/${kind}-metrics.json`,
+          ? "assets/metadata/storybook/masked-pumpety-v1-metrics.json"
+          : `assets/metadata/storybook/${kind}-metrics.json`,
         "utf8",
       ),
     );

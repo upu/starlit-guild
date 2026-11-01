@@ -29,6 +29,6 @@ await sharp({ create: { width: 192, height: 192, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/mira-workshop-reach-v1.webp");
 await writeFile(
-  "public/storybook-study/mira-workshop-reach-v1-metrics.json",
+  "assets/metadata/storybook/mira-workshop-reach-v1-metrics.json",
   JSON.stringify({ left, top, width, height, scale, baseline: 176 }, null, 2) + "\n",
 );

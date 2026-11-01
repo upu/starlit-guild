@@ -6,7 +6,7 @@ import { stories } from "../lib/stories.ts";
 import { storyCastImages } from "../lib/storybook/stage-images.ts";
 
 const records = JSON.parse(
-  await readFile("public/storybook-study/common-props-v1-metrics.json", "utf8"),
+  await readFile("assets/metadata/storybook/common-props-v1-metrics.json", "utf8"),
 );
 async function visibleBounds(file) {
   const { data, info } = await sharp(file)

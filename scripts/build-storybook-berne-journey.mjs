@@ -66,7 +66,7 @@ await sharp({ create: { width: 768, height: 384, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/finn-handheld-v1.webp");
 await writeFile(
-  "public/storybook-study/finn-handheld-v1-metrics.json",
+  "assets/metadata/storybook/finn-handheld-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 
@@ -83,6 +83,6 @@ await sharp(gate)
   .webp({ lossless: true })
   .toFile("public/storybook-study/berne-gate-v1.webp");
 await writeFile(
-  "public/storybook-study/berne-gate-v1-metrics.json",
+  "assets/metadata/storybook/berne-gate-v1-metrics.json",
   JSON.stringify({ source: gate, bounds, width: 1024 }, null, 2) + "\n",
 );

@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { RoadMossHatches } from "../lib/road-moss-hatches.ts";
@@ -87,7 +88,7 @@ test("keeper and tool-walk atlases share body scale and keep hair, hands and boo
     "aria-moss-walk-v2",
   ]) {
     const file = `public/storybook-study/${name}.webp`;
-    const metrics = JSON.parse(await readFile(file.replace(".webp", "-metrics.json"), "utf8"));
+    const metrics = JSON.parse(await readFile(storybookMetricsPath(file), "utf8"));
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     assert.ok(metrics.every((m) => m.baseline === 176));
     if (name === "keeper-hatch-v1") {

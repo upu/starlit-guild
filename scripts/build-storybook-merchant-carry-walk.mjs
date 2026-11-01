@@ -56,6 +56,6 @@ await sharp({ create: { width: 512, height: 128, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/merchant-carry-walk-v1.webp");
 await writeFile(
-  "public/storybook-study/merchant-carry-walk-v1-metrics.json",
+  "assets/metadata/storybook/merchant-carry-walk-v1-metrics.json",
   JSON.stringify({ referenceHeadWidth: head.width, scale, frames: metrics }, null, 2),
 );

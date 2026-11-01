@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -25,7 +26,7 @@ test("moss scraping reaches the hatch without putting either actor inside its op
 
 test("scraping atlas keeps a common scale and feet while crouching lower than standing", async () => {
   const file = "public/storybook-study/aria-moss-scrape-v1.webp";
-  const metrics = JSON.parse(await readFile(file.replace(".webp", "-metrics.json"), "utf8"));
+  const metrics = JSON.parse(await readFile(storybookMetricsPath(file), "utf8"));
   assert.equal(metrics.length, 4);
   assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
   assert.ok(metrics.every((m) => m.baseline === 176));

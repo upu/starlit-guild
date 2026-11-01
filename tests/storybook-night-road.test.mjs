@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState } from "../lib/game.ts";
@@ -79,7 +80,7 @@ for (const [width, height] of [
 test("night clothes and action atlases preserve scale groups, feet and full silhouettes", async () => {
   for (const name of ["aria-night-handheld-v1", "aria-night-battle-v1"]) {
     const path = `public/storybook-study/${name}.webp`,
-      metrics = JSON.parse(await readFile(path.replace(".webp", "-metrics.json")));
+      metrics = JSON.parse(await readFile(storybookMetricsPath(path)));
     for (const source of new Set(metrics.map((m) => m.source)))
       assert.equal(new Set(metrics.filter((m) => m.source === source).map((m) => m.scale)).size, 1);
     assert.ok(metrics.every((m) => m.top + m.height === 176));

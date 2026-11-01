@@ -26,7 +26,7 @@ function handTarget(s, c, frame) {
 test("registry seats preserve calibrated bodies and complete boots", async () => {
   for (const who of ["keeper", "merchant"]) {
     const m = JSON.parse(
-      await readFile(`public/storybook-study/${who}-registry-v1-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${who}-registry-v1-metrics.json`, "utf8"),
     );
     assert.equal(m[0].height, 94);
     for (const [i, p] of m.entries()) {

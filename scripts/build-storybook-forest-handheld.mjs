@@ -47,7 +47,7 @@ await sharp({ create: { width: 768, height: 384, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/aria-forest-handheld-v1.webp");
 await writeFile(
-  "public/storybook-study/aria-forest-handheld-v1-metrics.json",
+  "assets/metadata/storybook/aria-forest-handheld-v1-metrics.json",
   JSON.stringify(
     groups.flatMap((group) => group.metrics),
     null,

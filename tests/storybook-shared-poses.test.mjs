@@ -46,7 +46,7 @@ test("new action strips keep crowns and feet within padded cells at the same phy
       assert.ok(b.bottom >= 171 && b.bottom <= 176, `${name} retains its registered foot line`);
     }
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
     );
     const generated = metrics.frames.filter((f) => !f.pixelExact);
     assert.equal(new Set(generated.map((f) => f.scale)).size, 1, `${name} uses one calibration`);

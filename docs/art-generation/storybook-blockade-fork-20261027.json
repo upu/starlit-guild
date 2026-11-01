@@ -65,5 +65,15 @@
     "Full goal is incomplete: five conversation backgrounds64pages, adventure34of37,15worksite styles remain unconverted",
     "First17 pages of2-7 were not replayed end-to-end in this change; worker writing still uses legacy art and Mira's held wrapping needs the same further refinement as the fork",
     "Residual small vertical hand movement of the worker push gait and seated-to-standing transitions remain for final motion audit"
-  ]
+  ],
+  "rejectedSourceCleanup": {
+    "date": "2026-11-01",
+    "removed": [
+      {
+        "path": "assets/source/storybook/worker-push-road-rejected-v1.png",
+        "sha256": "3447a7c57b89d020dd6ca78da7bdf7d3f9b7a1c2a8788ce30ee0880c91032087"
+      }
+    ],
+    "reason": "Rejected sources were not build/test inputs. Full generation prompts and decisions above are retained; exact files are recoverable from Git history."
+  }
 }

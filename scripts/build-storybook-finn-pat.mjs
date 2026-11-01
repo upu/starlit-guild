@@ -49,7 +49,7 @@ for (const spec of [{ name: "finn-pat-v1", cell: 192, sole: 176, standing: 148, 
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${spec.name}.webp`);
   await writeFile(
-    `public/storybook-study/${spec.name}-metrics.json`,
+    `assets/metadata/storybook/${spec.name}-metrics.json`,
     JSON.stringify(metrics, null, 2),
   );
 }

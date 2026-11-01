@@ -6,7 +6,7 @@ import { stageItemTarget } from "../lib/story-stage-props.ts";
 
 test("ground sitting keeps standing scale, lowers the silhouette, and preserves complete cells", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/ground-rest-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/ground-rest-metrics.json", "utf8"),
   );
   for (const poses of Object.values(metrics)) {
     assert.equal(poses.length, 3);
@@ -63,7 +63,7 @@ test("Finn receives bread on his left-facing palm and carries one stable tray", 
     if (tray.actor) assert.equal(tray.wrist, true);
   }
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-tray-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-tray-metrics.json", "utf8"),
   );
   for (const pose of metrics) {
     assert.equal(pose.scale, metrics[0].scale);

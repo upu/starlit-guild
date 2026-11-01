@@ -63,6 +63,6 @@ for (const sheet of sheets) {
   }
 }
 await writeFile(
-  "public/storybook-study/ground-rest-metrics.json",
+  "assets/metadata/storybook/ground-rest-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

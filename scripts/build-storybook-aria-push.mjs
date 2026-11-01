@@ -56,4 +56,7 @@ await sharp({ create: { width: 768, height: 192, channels: 4, background: "#0000
   .composite(layers)
   .webp({ lossless: true })
   .toFile("public/storybook-study/aria-push-v3.webp");
-await writeFile("public/storybook-study/aria-push-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile(
+  "assets/metadata/storybook/aria-push-metrics.json",
+  JSON.stringify(metrics, null, 2),
+);

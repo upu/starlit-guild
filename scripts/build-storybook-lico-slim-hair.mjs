@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "./storybook-metadata.mjs";
 import sharp from "sharp";
 import { readFile, writeFile } from "node:fs/promises";
 import { spriteBounds } from "./storybook-sprite-bounds.mjs";
@@ -60,10 +61,7 @@ for (const { name, source } of record.accepted) {
       .webp({ lossless: true })
       .toBuffer(),
   );
-  await writeFile(
-    output.replace(".webp", "-metrics.json"),
-    JSON.stringify(metrics, null, 2) + "\n",
-  );
+  await writeFile(storybookMetricsPath(output), JSON.stringify(metrics, null, 2) + "\n");
   console.log(
     name,
     metrics.map(({ height }) => height),

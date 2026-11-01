@@ -55,7 +55,9 @@ test("each hoe is handled then laid on its side at the low hand, without blockin
   );
 });
 test("the hoe retains its complete blade and centers its shaft for the grip pivot", async () => {
-  const m = JSON.parse(await readFile("public/storybook-study/farm-hoe-v1-metrics.json", "utf8"));
+  const m = JSON.parse(
+    await readFile("assets/metadata/storybook/farm-hoe-v1-metrics.json", "utf8"),
+  );
   assert.equal(m.shaftCenter, 160);
   assert.ok(m.left > 0 && m.left + m.width < 320 && m.top > 0);
   assert.equal(m.baseline, 624);
@@ -69,8 +71,9 @@ test("the hoe retains its complete blade and centers its shaft for the grip pivo
         assert.ok(data[(y * info.width + x) * 4 + 3] <= 16);
   const c = studyCue(id, 0, true),
     body =
-      ((JSON.parse(await readFile("public/storybook-study/leon-reaction-metrics.json", "utf8"))[0]
-        .height *
+      ((JSON.parse(
+        await readFile("assets/metadata/storybook/leon-reaction-metrics.json", "utf8"),
+      )[0].height *
         c.cell) /
         192) *
       1.5,

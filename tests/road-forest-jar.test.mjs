@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState } from "../lib/game.ts";
@@ -66,7 +67,7 @@ test("a new work point does not strand the jar while Aria returns for it", () =>
 
 test("forest jar poses keep a shared body scale and transparent cell edges", async () => {
   const path = "public/storybook-study/aria-forest-handheld-v1.webp";
-  const metrics = JSON.parse(await readFile(path.replace(".webp", "-metrics.json"), "utf8"));
+  const metrics = JSON.parse(await readFile(storybookMetricsPath(path), "utf8"));
   assert.equal(metrics.length, 8);
   assert.ok(metrics.every((m) => m.top + m.height === 176));
   assert.ok(metrics[1].height < metrics[0].height * 0.75);

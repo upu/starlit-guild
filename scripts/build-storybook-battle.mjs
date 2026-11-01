@@ -46,4 +46,4 @@ for (const [row, id, height] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${id}-battle-v1.webp`);
 }
-await writeFile("public/storybook-study/battle-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile("assets/metadata/storybook/battle-metrics.json", JSON.stringify(metrics, null, 2));

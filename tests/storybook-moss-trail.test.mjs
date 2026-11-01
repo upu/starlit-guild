@@ -30,7 +30,7 @@ test("tired and pulling poses keep their calibrated head/body scale and complete
     ["mira-all-nighter-v1", 126, 192, 176],
     ["brekka-cart-driver-v1", 94, 128, 120],
   ]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"));
     assert.equal(m[0].height, height);
     for (const p of m) {
       assert.equal(p.scale, m[0].scale);

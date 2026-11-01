@@ -37,4 +37,4 @@ for (const [id, height] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${id}-poses-v1.webp`);
 }
-await writeFile("public/storybook-study/pose-metrics.json", JSON.stringify(report, null, 2));
+await writeFile("assets/metadata/storybook/pose-metrics.json", JSON.stringify(report, null, 2));

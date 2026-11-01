@@ -1,9 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
-const name = process.argv[2] ?? "drain-cleared-dusk-v1";
-if (!["drain-cleared-dusk-v1", "drain-inspection-dusk-v1"].includes(name))
-  throw new Error(`Unknown dusk view: ${name}`);
+const name = process.argv[2] ?? "drain-inspection-dusk-v1";
+if (name !== "drain-inspection-dusk-v1") throw new Error(`Unknown dusk view: ${name}`);
 const source = `assets/source/storybook/${name}.png`;
 const output = `public/storybook-study/${name}.png`;
 const bytes = await readFile(source),

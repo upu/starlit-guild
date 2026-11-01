@@ -14,7 +14,7 @@ const worker = (s) => s.extras.find((e) => e.id === "worker");
 
 test("cleaning and opening the door preserve the lantern's physical dimensions", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/roadside-lantern-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/roadside-lantern-v1-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 5);
   for (const m of metrics) {
@@ -36,7 +36,7 @@ test("work and walking poses retain their standing calibration with clear knee-h
     ["porter-pickup-v1", 4, 120],
     ["aria-weed-v1", 3, 176],
   ]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"));
     assert.equal(m.length, count);
     for (let i = 0; i < m.length; i++) {
       assert.equal(m[i].scale, m[name === "lantern-heroes-v1" && i >= 4 ? 4 : 0].scale);

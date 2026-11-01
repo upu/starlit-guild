@@ -48,7 +48,9 @@ test("night hand and checking poses share a calibration scale and retain complet
     ["mira-check-v1", 4, 126],
     ["finn-pat-balanced-v2", 2, 148],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, count);
     assert.equal(poses[0].height, height);
     for (const p of poses) {

@@ -28,7 +28,7 @@ await sharp({ create: { width: 320, height: 640, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/farm-hoe-v1.webp");
 await writeFile(
-  "public/storybook-study/farm-hoe-v1-metrics.json",
+  "assets/metadata/storybook/farm-hoe-v1-metrics.json",
   JSON.stringify(
     {
       source,

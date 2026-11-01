@@ -62,7 +62,7 @@ test("the document stays at Finn's grip while Leon indicates its frayed binding 
 });
 test("new front/back document assets retain transparent padding and matching scale", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/lunch-overlook-prop-metrics.json"),
+    await readFile("assets/metadata/storybook/lunch-overlook-prop-metrics.json"),
   );
   const papers = metrics.filter((m) => m.name.startsWith("berne-shipping"));
   assert.equal(papers.length, 2);

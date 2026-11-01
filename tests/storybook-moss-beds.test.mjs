@@ -19,7 +19,7 @@ test("field study uses one standing calibration and lower crouching/rest poses w
     ["lico-notebook-walk-v2", 128],
     ["mira-moss-care-v1", 126],
   ]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"));
     assert.equal(m[0].height, height);
     for (const p of m) {
       assert.equal(p.scale, m[0].scale);

@@ -45,4 +45,4 @@ await sharp({ create: { width: 2048, height: 1024, channels: 4, background: "#00
   .composite(layers)
   .webp({ lossless: true })
   .toFile("public/storybook-study/golem-poses-v1.webp");
-await writeFile("public/storybook-study/golem-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile("assets/metadata/storybook/golem-metrics.json", JSON.stringify(metrics, null, 2));

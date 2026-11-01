@@ -214,7 +214,7 @@ test("reused work and perch strips retain common scale, complete hair/boots and 
     ["aria-rest-perch-v2", 176, 148],
     ["leon-rest-perch-v2", 176, 148],
   ]) {
-    const metrics = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`));
+    const metrics = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`));
     assert.ok(metrics.every((m) => m.scale === metrics[0].scale));
     const cell = baseline === 120 ? 128 : 192;
     for (const m of metrics) {

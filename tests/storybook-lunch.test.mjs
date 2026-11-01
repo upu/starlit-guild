@@ -64,7 +64,7 @@ test("own cake is picked up before biting and both cakes are eaten before wrappi
 test("lunch atlases retain standing calibration and common foot baseline across seated actions", async () => {
   for (const id of ["aria", "leon"]) {
     const poses = JSON.parse(
-      await readFile(`public/storybook-study/${id}-lunch-v1-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${id}-lunch-v1-metrics.json`, "utf8"),
     );
     assert.equal(poses.length, 8);
     assert.equal(new Set(poses.map((p) => p.scale)).size, 1);

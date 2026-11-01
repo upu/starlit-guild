@@ -12,7 +12,7 @@ const actor = (cue, name) => cue.actors.find((actor) => actor.id === name);
 const item = (cue, name) => cue.items.find((item) => item.id === name);
 test("pushing steps share their standing scale, complete boots and a natural lean", async () => {
   const poses = JSON.parse(
-    await readFile("public/storybook-study/finn-push-balanced-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-push-balanced-v2-metrics.json", "utf8"),
   );
   assert.equal(poses.length, 8);
   assert.equal(poses[0].height, 148);

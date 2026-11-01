@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { act, settle, testState } from "../lib/game.ts";
@@ -14,7 +15,7 @@ test("standing packing and merchant preserve scale, boot baseline and cell gutte
     "leon-packing-turn-v1",
   ]) {
     const file = `public/storybook-study/${name}.webp`,
-      metrics = JSON.parse(await readFile(file.replace(".webp", "-metrics.json"), "utf8"));
+      metrics = JSON.parse(await readFile(storybookMetricsPath(file), "utf8"));
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     assert.ok(metrics.every((m) => m.baseline === 176));
     assert.ok(metrics.every((m) => Math.abs(m.height - metrics[0].height) < 12));

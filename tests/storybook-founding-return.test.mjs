@@ -220,7 +220,7 @@ test("the signed sheet stays small and attached to Leon's hand until the still i
 });
 test("new research poses retain one body scale and uncut feet", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/lico-label-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/lico-label-v1-metrics.json", "utf8"),
   );
   assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
   assert.ok(

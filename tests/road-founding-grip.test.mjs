@@ -11,7 +11,7 @@ import { foundingCartBody } from "../lib/road-founding-wheel.ts";
 
 test("each pulling pose keeps its head, feet and hand registered to the same scale", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-pull-contact-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-pull-contact-v1-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 4);
   assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
@@ -39,7 +39,7 @@ test("each pulling pose keeps its head, feet and hand registered to the same sca
 
 test("the stopped pose plants both boots and keeps the same trailing hand", async () => {
   const metric = JSON.parse(
-    await readFile("public/storybook-study/finn-pull-rest-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-pull-rest-v1-metrics.json", "utf8"),
   );
   assert.equal(metric.height, 148);
   assert.equal(metric.baseline, 176);

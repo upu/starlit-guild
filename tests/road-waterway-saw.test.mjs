@@ -38,7 +38,7 @@ test("saw transfers to the ground only after release and stays there after the w
 
 test("saw lowering keeps the worker's head/body scale and complete blade inside each cell", async () => {
   const name = "public/storybook-study/waterway-worker-saw-lower-v1";
-  const metrics = JSON.parse(await readFile(`${name}-metrics.json`, "utf8"));
+  const metrics = JSON.parse(await readFile(storybookMetricsPath(`${name}.webp`), "utf8"));
   assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
   assert.equal(metrics[3].height, 134);
   assert.ok(metrics.slice(0, 3).every((m) => m.height < 134 * 0.85 && m.baseline === 176));
@@ -70,3 +70,4 @@ test("worker takes the resting saw before cutting without making a second ground
   assert.equal(cutting.worker, undefined);
   assert.equal(cutting.props.length, 0);
 });
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";

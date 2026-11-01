@@ -43,7 +43,7 @@ for (const [id, standing] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${id}-lunch-v1.webp`);
   await writeFile(
-    `public/storybook-study/${id}-lunch-v1-metrics.json`,
+    `assets/metadata/storybook/${id}-lunch-v1-metrics.json`,
     JSON.stringify(poses, null, 2),
   );
 }
@@ -97,6 +97,6 @@ await sharp(source)
 for (const name of ["picnic-hill-v1", "berne-overlook-v1"])
   await copyFile(`assets/source/storybook/${name}.png`, `public/storybook-study/${name}.png`);
 await writeFile(
-  "public/storybook-study/lunch-overlook-prop-metrics.json",
+  "assets/metadata/storybook/lunch-overlook-prop-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

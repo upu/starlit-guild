@@ -48,7 +48,7 @@ test("the existing seedling illustration takes over at line14 and remains throug
 });
 test("the visible paper actions retain body scale and store the received slip after the handoff", async () => {
   const m = JSON.parse(
-    await readFile("public/storybook-study/lico-seedling-paper-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/lico-seedling-paper-v1-metrics.json", "utf8"),
   );
   assert.equal(new Set(m.map((f) => f.scale)).size, 1);
   assert.ok(m.every((f) => Math.abs(f.height - 128) <= 1 && f.baseline === 176));
@@ -74,7 +74,7 @@ test("the visible paper actions retain body scale and store the received slip af
 });
 test("Merrill keeps one standing body scale and a lower squat with complete cell margins", async () => {
   const { frames } = JSON.parse(
-    await readFile("public/storybook-study/merrill-seedlings-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/merrill-seedlings-v1-metrics.json", "utf8"),
   );
   assert.equal(frames.length, 16);
   assert.equal(new Set(frames.slice(0, 12).map((f) => f.scale)).size, 1);
@@ -261,7 +261,7 @@ test("the four fallen mushrooms remain distinct and proportionate to Merrill", a
   for (let i = 1; i < mushrooms.length; i++)
     assert.ok(mushrooms[i].x - mushrooms[i - 1].x >= visibleWidth, "fallen figures do not overlap");
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/merrill-seedlings-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/merrill-seedlings-v1-metrics.json", "utf8"),
   );
   const figureHeight = (cue.cell * metrics.frames[0].height) / 128;
   const ratio = visibleWidth / figureHeight;

@@ -26,7 +26,7 @@ test("night lantern occupies one hand while the jar remains supported by the oth
 test("painted lantern poses retain the standing scale and foot baseline", async () => {
   for (const id of ["aria", "leon"]) {
     const frames = JSON.parse(
-      await readFile(`public/storybook-study/${id}-lantern-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${id}-lantern-metrics.json`, "utf8"),
     );
     assert.equal(frames.length, 8);
     for (const frame of frames) {

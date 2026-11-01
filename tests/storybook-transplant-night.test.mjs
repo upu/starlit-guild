@@ -245,7 +245,7 @@ test("the cart has a floor near the bottom of its image and Finn retains one bod
     for (let x = 0; x < info.width; x++) if (data[(y * info.width + x) * 4 + 3] > 128) bottom = y;
   assert.ok(info.height - bottom < 12);
   const frames = JSON.parse(
-    await readFile("public/storybook-study/finn-pull-scene-balanced-v3-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-pull-scene-balanced-v3-metrics.json", "utf8"),
   );
   assert.equal(new Set(frames.map((f) => f.scale)).size, 1);
   assert.ok(

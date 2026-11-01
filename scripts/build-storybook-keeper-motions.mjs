@@ -77,7 +77,7 @@ for (const metric of metrics) {
   metric.upperSilhouetteWidth = pose.head.width;
 }
 await writeFile(
-  `public/storybook-study/${name}-metrics.json`,
+  `assets/metadata/storybook/${name}-metrics.json`,
   JSON.stringify(metrics, null, 2) + "\n",
 );
 console.log({

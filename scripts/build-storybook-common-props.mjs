@@ -87,7 +87,7 @@ async function build([art, name, source]) {
 const metrics = [];
 for (const prop of props) metrics.push(await build(prop));
 await writeFile(
-  "public/storybook-study/common-props-v1-metrics.json",
+  "assets/metadata/storybook/common-props-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 const recordPath = "docs/art-generation/storybook-common-props-20261031.json";
@@ -100,6 +100,6 @@ await writeFile(recordPath, JSON.stringify(record, null, 2) + "\n");
 console.log(
   JSON.stringify({
     props: metrics.length,
-    output: "public/storybook-study/common-props-v1-metrics.json",
+    output: "assets/metadata/storybook/common-props-v1-metrics.json",
   }),
 );

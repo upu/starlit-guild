@@ -9,7 +9,9 @@ test("doorway actions retain actor scale and full feet across their atlases", as
     ["finn-door-balanced-v2", 192, 176, 4],
     ["cook-motion-v2", 128, 120, 8],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, count);
     for (const pose of poses) {
       assert.equal(pose.scale, poses[0].scale);

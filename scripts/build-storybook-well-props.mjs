@@ -27,7 +27,7 @@ for (const [i, part] of parts.entries()) {
   metrics.push({ name, width, height });
 }
 await writeFile(
-  "public/storybook-study/well-props-v1-metrics.json",
+  "assets/metadata/storybook/well-props-v1-metrics.json",
   JSON.stringify(metrics, null, 2),
 );
 const cart = await sharp("assets/source/storybook/garden-handcart-v2.png")

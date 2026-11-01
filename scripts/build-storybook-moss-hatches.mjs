@@ -42,7 +42,7 @@ await sharp({ create: { width: 1024, height: 384, channels: 4, background: "#000
   .webp({ lossless: true })
   .toFile("public/storybook-study/keeper-hatch-v1.webp");
 await writeFile(
-  "public/storybook-study/keeper-hatch-v1-metrics.json",
+  "assets/metadata/storybook/keeper-hatch-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 const parts = "assets/source/storybook/waterway-hatch-parts-v2.png";
@@ -102,7 +102,7 @@ for (const walkName of ["keeper-hatch-walk-v1", "aria-moss-walk-v2"]) {
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${walkName}.webp`);
   await writeFile(
-    `public/storybook-study/${walkName}-metrics.json`,
+    `assets/metadata/storybook/${walkName}-metrics.json`,
     JSON.stringify(walkMetrics, null, 2) + "\n",
   );
 }

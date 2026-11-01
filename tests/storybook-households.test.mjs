@@ -145,7 +145,7 @@ test("Mira holds the morning medicine with her registered palms through the lift
 
 test("the returning carrier uses one row of the two-row painted walking atlas", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/homeward-worker-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/homeward-worker-v1-metrics.json"),
   );
   const image = await sharp("public/storybook-study/homeward-worker-v1.webp").metadata();
   assert.equal(metrics.length, 8);
@@ -171,7 +171,7 @@ test("household people and bed keep one scale across poses with complete transpa
     ["homeward-worker-v1", 8, 128],
     ["household-child-bed-v1", 4, 512],
   ]) {
-    const metrics = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`));
+    const metrics = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`));
     assert.equal(metrics.length, count);
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     const { data, info } = await sharp(`public/storybook-study/${name}.webp`)

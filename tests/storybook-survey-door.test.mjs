@@ -9,7 +9,7 @@ import { stageExtraWrist } from "../lib/story-stage-extra-wrists.ts";
 const id = "manor-survey-departure";
 test("the cook's carrying steps and lid action retain full feet and a common standing scale", async () => {
   const poses = JSON.parse(
-    await readFile("public/storybook-study/cook-survey-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/cook-survey-v1-metrics.json", "utf8"),
   );
   assert.equal(poses.length, 8);
   assert.equal(poses[0].height, 94);

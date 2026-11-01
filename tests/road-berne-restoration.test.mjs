@@ -103,10 +103,10 @@ test("portrait restoration completes the root work and returns the stone to the 
 
 test("lifting frames keep the mason's scale and grow from a low crouch", async () => {
   const lift = JSON.parse(
-    await readFile("public/storybook-study/mason-lift-stone-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/mason-lift-stone-v1-metrics.json", "utf8"),
   );
   const carry = JSON.parse(
-    await readFile("public/storybook-study/mason-carry-stone-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/mason-carry-stone-v2-metrics.json", "utf8"),
   );
   assert.equal(lift.length, 4);
   assert.equal(new Set(lift.map((frame) => frame.scale)).size, 1);

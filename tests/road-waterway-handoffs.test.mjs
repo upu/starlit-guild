@@ -111,7 +111,7 @@ for (const width of [374, 936])
 test("new carrying and worker poses keep one body scale, lower knees and isolated cells", async () => {
   for (const name of ["leon-carry-walk-v1", "waterway-worker-handoff-v1"]) {
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
     );
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     assert.ok(metrics.every((m) => m.baseline === 176));

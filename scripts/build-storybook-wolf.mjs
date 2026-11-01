@@ -11,6 +11,6 @@ await sharp({ create: { width: 1024, height: 1024, channels: 4, background: "#00
   .webp({ lossless: true })
   .toFile("public/storybook-study/wolf-v1.webp");
 await writeFile(
-  "public/storybook-study/wolf-metrics.json",
+  "assets/metadata/storybook/wolf-metrics.json",
   JSON.stringify({ width, height, foot: 960, cell: 1024 }, null, 2),
 );

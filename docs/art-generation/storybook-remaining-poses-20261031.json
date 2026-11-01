@@ -36,7 +36,7 @@
     "outputs": [
       {
         "image": "public/storybook-study/mira-bed-v2.webp",
-        "metrics": "public/storybook-study/mira-bed-v2-metrics.json",
+        "metrics": "assets/metadata/storybook/mira-bed-v2-metrics.json",
         "sha256": "da9a6a6652d219125be53d5c1673a950aed95f84a6c931631e6efa45d17bc8bc",
         "frames": [
           {
@@ -73,7 +73,7 @@
       },
       {
         "image": "public/storybook-study/aria-shoulder-v1.webp",
-        "metrics": "public/storybook-study/aria-shoulder-v1-metrics.json",
+        "metrics": "assets/metadata/storybook/aria-shoulder-v1-metrics.json",
         "sha256": "7b00497c4c395fc89e8780c70de22910ca748c65e7cb793f3a0842ce8b87646c",
         "frames": [
           {
@@ -104,7 +104,7 @@
       },
       {
         "image": "public/storybook-study/leon-push-v1.webp",
-        "metrics": "public/storybook-study/leon-push-v1-metrics.json",
+        "metrics": "assets/metadata/storybook/leon-push-v1-metrics.json",
         "sha256": "fd9d389d2fca054281bc64c4f0ebb22d171a02f9bb59b1c89e35a1aebf4f2d6a",
         "frames": [
           {

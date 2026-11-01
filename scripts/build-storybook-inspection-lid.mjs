@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "./storybook-metadata.mjs";
 import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 import { spriteBounds } from "./storybook-sprite-bounds.mjs";
@@ -28,7 +29,7 @@ await sharp(`${root}${name}.png`)
   .webp({ lossless: true })
   .toFile(`${out}${name}.webp`);
 await writeFile(
-  `${out}${name}-metrics.json`,
+  storybookMetricsPath(`${out}${name}.webp`),
   JSON.stringify({ rect, width, height, aspectRatio: width / height }, null, 2) + "\n",
 );
 console.log({ rect, width, height });

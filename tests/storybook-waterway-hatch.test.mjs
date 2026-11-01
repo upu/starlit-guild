@@ -88,7 +88,9 @@ test("chalk appears only during strokes and remains through basket pickup and th
 
 test("the keeper's head, low height, transparent gutters and boot baseline stay consistent", async () => {
   const name = "keeper-hatch-mark-v2";
-  const metrics = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+  const metrics = JSON.parse(
+    await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+  );
   const source = await sharp(`assets/source/storybook/${name}.png`).metadata();
   assert.equal(source.hasAlpha, true);
   assert.ok(metrics.every((m) => m.scale === metrics[0].scale));

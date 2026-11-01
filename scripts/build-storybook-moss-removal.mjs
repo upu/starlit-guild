@@ -41,7 +41,7 @@ await sharp({ create: { width: 1024, height: 192, channels: 4, background: "#000
   .webp({ lossless: true })
   .toFile("public/storybook-study/aria-moss-scrape-v1.webp");
 await writeFile(
-  "public/storybook-study/aria-moss-scrape-v1-metrics.json",
+  "assets/metadata/storybook/aria-moss-scrape-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 await sharp("assets/source/storybook/waterway-hatch-moss-v1.png")

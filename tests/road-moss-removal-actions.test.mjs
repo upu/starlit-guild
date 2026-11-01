@@ -14,7 +14,7 @@ import sharp from "sharp";
 
 test("the turn atlas preserves Leon's scale, feet, and clear cell edges", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/leon-basket-turn-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/leon-basket-turn-v1-metrics.json", "utf8"),
   );
   assert.deepEqual(
     metrics.map((frame) => frame.height),

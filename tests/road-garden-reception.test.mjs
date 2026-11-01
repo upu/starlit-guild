@@ -13,7 +13,7 @@ import { readFile } from "node:fs/promises";
 
 test("cart strides use the four upright poses, not the crouching poses", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-push-balanced-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-push-balanced-v2-metrics.json", "utf8"),
   );
   for (const pose of metrics.slice(2, 6)) assert.ok(pose.height >= 140);
   assert.ok(metrics[6].height < 140 && metrics[7].height < 140);

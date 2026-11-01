@@ -14,7 +14,7 @@ import { stageCameraCue } from "../lib/story-stage-camera.ts";
 test("painted packing keeps kneeling bodies lower without rescaling heads or moving foot baselines", async () => {
   for (const id of ["aria", "leon"]) {
     const frames = JSON.parse(
-      await readFile(`public/storybook-study/${id}-packing-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${id}-packing-metrics.json`, "utf8"),
     );
     for (const frame of frames) {
       assert.equal(frame.scale, frames[0].scale);

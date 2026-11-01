@@ -66,6 +66,6 @@ await sharp({ create: { width: 512, height: 128, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile(`public/storybook-study/${name}.webp`);
 await writeFile(
-  `public/storybook-study/${kind !== "poses" || actor !== "merchant" ? name : "merchant"}-metrics.json`,
+  `assets/metadata/storybook/${kind !== "poses" || actor !== "merchant" ? name : "merchant"}-metrics.json`,
   JSON.stringify(metrics, null, 2),
 );

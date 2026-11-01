@@ -10,7 +10,7 @@ test("reaction poses share the standing body scale, while deep inspection remain
     ["finn-reaction-balanced-v2", 148],
   ]) {
     const frames = JSON.parse(
-      await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
     );
     assert.equal(frames.length, 4);
     assert.equal(new Set(frames.map((f) => f.scale)).size, 1);

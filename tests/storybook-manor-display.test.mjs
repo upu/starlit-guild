@@ -5,7 +5,7 @@ import { studyCue } from "../lib/storybook/carry-cue.ts";
 
 test("gardener actions retain standing scale, full boots and the common ground baseline", async () => {
   const poses = JSON.parse(
-    await readFile("public/storybook-study/gardener-motion-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/gardener-motion-metrics.json", "utf8"),
   );
   assert.equal(poses.length, 8);
   for (const pose of poses) {
@@ -18,7 +18,7 @@ test("gardener actions retain standing scale, full boots and the common ground b
 
 test("the three display states retain the same scale and base height", async () => {
   const props = JSON.parse(
-    await readFile("public/storybook-study/manor-display-props-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/manor-display-props-metrics.json", "utf8"),
   );
   for (const state of props.slice(0, 3)) {
     assert.equal(state.scale, props[1].scale);

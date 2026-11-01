@@ -92,7 +92,7 @@ test("Mira's packing crouch uses her painted carrying sheet at the same body sca
   const mira = step.actors.find((actor) => actor.id === "mira");
   assert.equal(sampleStageActor(mira, mira, 10000, true).frame, 13);
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/mira-handheld-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/mira-handheld-v1-metrics.json"),
   );
   assert.equal(metrics[1].scale, metrics[0].scale);
   assert.equal(metrics[1].baseline, metrics[0].baseline);
@@ -129,7 +129,7 @@ test("masked child and pushing worker retain one body scale, safe margins and gr
     ["masked-pumpety-v1", 12, 128, 78],
     ["worker-push-road-v1", 4, 128, 94],
   ]) {
-    const metrics = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`));
+    const metrics = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`));
     assert.equal(metrics.length, count);
     assert.equal(new Set(metrics.map((m) => m.scale)).size, 1);
     assert.equal(metrics[0].height, height);

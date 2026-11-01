@@ -45,6 +45,6 @@ await sharp({ create: { width: 512, height: 256, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/gardener-motion-v1.webp");
 await writeFile(
-  "public/storybook-study/gardener-motion-metrics.json",
+  "assets/metadata/storybook/gardener-motion-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

@@ -39,7 +39,7 @@ await sharp({ create: { width: 1024, height: 192, channels: 4, background: "#000
   .webp({ lossless: true })
   .toFile("public/storybook-study/waterway-worker-v1.webp");
 await writeFile(
-  "public/storybook-study/waterway-worker-v1-metrics.json",
+  "assets/metadata/storybook/waterway-worker-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );
 await sharp("assets/source/storybook/waterway-tool-cart-v1.png")

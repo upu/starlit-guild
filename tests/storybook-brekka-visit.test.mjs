@@ -26,7 +26,7 @@ test("visit atlases retain one body scale, full soles and a genuinely lower seat
     ["mira-knock-v1", 126, 192, 176],
     ["mira-bag-place-v1", 126, 192, 176],
   ]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"));
     assert.equal(m[0].height, height);
     for (const p of m) {
       assert.equal(p.scale, m[0].scale);
@@ -40,10 +40,10 @@ test("visit atlases retain one body scale, full soles and a genuinely lower seat
 });
 test("the seated patient's head stays consistent while his height remains below Mira's standing height", async () => {
   const patient = JSON.parse(
-    await readFile("public/storybook-study/patient-visit-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/patient-visit-v2-metrics.json", "utf8"),
   );
   const mira = JSON.parse(
-    await readFile("public/storybook-study/mira-check-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/mira-check-v1-metrics.json", "utf8"),
   );
   const { data, info } = await sharp("public/storybook-study/patient-visit-v2.webp")
     .ensureAlpha()

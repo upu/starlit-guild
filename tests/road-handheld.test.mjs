@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "../scripts/storybook-metadata.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { act, testState, settle } from "../lib/game.ts";
@@ -12,7 +13,7 @@ import { readFile } from "node:fs/promises";
 test("handheld atlases retain source-group body scale, lower kneeling height and clear gutters", async () => {
   for (const id of ["leon", "mira"]) {
     const path = `public/storybook-study/${id}-handheld-v1.webp`;
-    const metrics = JSON.parse(await readFile(path.replace(".webp", "-metrics.json"), "utf8"));
+    const metrics = JSON.parse(await readFile(storybookMetricsPath(path), "utf8"));
     assert.equal(metrics.length, 8);
     for (const source of new Set(metrics.map((m) => m.source)))
       assert.equal(new Set(metrics.filter((m) => m.source === source).map((m) => m.scale)).size, 1);

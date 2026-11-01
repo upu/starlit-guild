@@ -57,7 +57,7 @@ for (const [sourceName, columns, rows, names, shared] of [
     metrics.push({ name: names[i], scale, width, height, baseline: 248 });
   }
   await writeFile(
-    `public/storybook-study/${sourceName}-metrics.json`,
+    `assets/metadata/storybook/${sourceName}-metrics.json`,
     JSON.stringify(metrics, null, 2),
   );
   console.log(sourceName, metrics);
@@ -91,7 +91,7 @@ await sharp({ create: { width: 256, height: 256, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/field-cover-folded-v1.webp");
 await writeFile(
-  "public/storybook-study/field-cover-folded-v1-metrics.json",
+  "assets/metadata/storybook/field-cover-folded-v1-metrics.json",
   JSON.stringify(
     {
       width: foldedWidth,

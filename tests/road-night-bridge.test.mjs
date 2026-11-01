@@ -180,7 +180,7 @@ test("a delayed frame still changes the night-road scene under full black", () =
 
 test("bandaged walk keeps Finn's head aligned and the figure within each cell", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-night-walk-balanced-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-night-walk-balanced-v2-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 4);
   assert.ok(
@@ -205,7 +205,7 @@ test("bandaged walk keeps Finn's head aligned and the figure within each cell", 
 
 test("bandaged battle poses retain the standing height and head anchor", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-night-battle-balanced-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-night-battle-balanced-v2-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 4);
   assert.ok(metrics.every((m) => m.height === 148 && m.top + m.height === 176));
@@ -231,7 +231,7 @@ test("bandaged battle poses retain the standing height and head anchor", async (
 
 test("pushing frames retain the same standing height and aligned head", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-night-push-balanced-v5-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-night-push-balanced-v5-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 8);
   const poses = metrics.slice(1, 6);

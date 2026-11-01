@@ -91,7 +91,7 @@ async function saveStrip(name, frames) {
     .update(await readFile(output))
     .digest("hex");
   await writeFile(
-    `public/storybook-study/${name}-metrics.json`,
+    `assets/metadata/storybook/${name}-metrics.json`,
     JSON.stringify({ sha256, frames: frames.map((f) => f.metrics) }, null, 2) + "\n",
   );
   console.log(

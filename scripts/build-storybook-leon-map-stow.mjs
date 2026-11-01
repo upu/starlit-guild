@@ -44,6 +44,6 @@ await sharp({ create: { width: 768, height: 192, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/leon-map-stow-v1.webp");
 await writeFile(
-  "public/storybook-study/leon-map-stow-v1-metrics.json",
+  "assets/metadata/storybook/leon-map-stow-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );

@@ -35,7 +35,7 @@ for (const pose of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/leon-${pose}.webp`);
 }
-await writeFile("public/storybook-study/contact-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile("assets/metadata/storybook/contact-metrics.json", JSON.stringify(metrics, null, 2));
 
 // Reuse the registered cells unchanged: no per-frame resizing during travel.
 const walking = ["contact-a-v1", "pass-a-v1", "contact-b-v2", "pass-b-v3"];

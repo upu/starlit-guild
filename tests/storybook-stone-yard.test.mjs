@@ -15,7 +15,9 @@ test("yard action strips use a common scale and complete feet, with a genuinely 
     ["mira-healing-v1", 192, 176, 126],
     ["finn-chair-balanced-v3", 192, 176, 148],
   ]) {
-    const poses = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const poses = JSON.parse(
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
+    );
     assert.equal(poses.length, 8);
     assert.equal(poses[0].height, standing);
     for (const pose of poses) {

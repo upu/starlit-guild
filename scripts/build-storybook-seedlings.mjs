@@ -74,7 +74,7 @@ await sharp({ create: { width: 512, height: 512, channels: 4, background: "#0000
   .webp({ lossless: true })
   .toFile("public/storybook-study/merrill-seedlings-v1.webp");
 await writeFile(
-  "public/storybook-study/merrill-seedlings-v1-metrics.json",
+  "assets/metadata/storybook/merrill-seedlings-v1-metrics.json",
   JSON.stringify({ standingScale: scale, frames: metrics }, null, 2),
 );
 await copyFile(
@@ -119,6 +119,6 @@ for (const [i, p] of parts.entries()) {
   propMetrics.push({ name: names[i], width, height, scale: ratio, baseline: 248 });
 }
 await writeFile(
-  "public/storybook-study/seedling-loading-props-v1-metrics.json",
+  "assets/metadata/storybook/seedling-loading-props-v1-metrics.json",
   JSON.stringify(propMetrics, null, 2),
 );

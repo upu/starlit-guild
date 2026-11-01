@@ -82,7 +82,7 @@ for (const [name, rows, cell] of [
       `public/storybook-study/finn-night-${name === "push-v2" ? "push-v2" : `${name}-v1`}.webp`,
     );
   await writeFile(
-    `public/storybook-study/finn-night-${name === "push-v2" ? "push-v2" : `${name}-v1`}-metrics.json`,
+    `assets/metadata/storybook/finn-night-${name === "push-v2" ? "push-v2" : `${name}-v1`}-metrics.json`,
     JSON.stringify(metrics, null, 2) + "\n",
   );
   console.log(

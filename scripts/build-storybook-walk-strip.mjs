@@ -82,7 +82,7 @@ await sharp({ create: { width: cell * 4, height: cell, channels: 4, background: 
   .webp({ lossless: true })
   .toFile(`public/storybook-study/${id}-${kind}-${outputVersion}.webp`);
 await writeFile(
-  `public/storybook-study/${id}-${kind}-metrics.json`,
+  `assets/metadata/storybook/${id}-${kind}-metrics.json`,
   JSON.stringify({ referenceHeadWidth: head.width, frames: metrics }, null, 2),
 );
 console.log(metrics);

@@ -53,13 +53,13 @@ test("Finn's standing head no longer dwarfs Leon's at the same sprite height", a
 test("Finn's walking heads and baseline stay close to his standing proportions", async () => {
   for (const name of ["finn-walk-balanced-v3", "finn-night-walk-balanced-v2"]) {
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
     );
     const standingName = name.includes("night")
       ? "finn-injury-balanced-v2"
       : "finn-conversation-balanced-v3";
     const standing = JSON.parse(
-      await readFile(`public/storybook-study/${standingName}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${standingName}-metrics.json`, "utf8"),
     );
     const standingFrame = name.includes("night") ? 5 : 0;
     const { data, info } = await sharp(`public/storybook-study/${name}.webp`)
@@ -87,7 +87,7 @@ test("Finn's walking heads and baseline stay close to his standing proportions",
 
 test("Finn keeps body scale and head alignment across4 carrying strides, and crouches lower", async () => {
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/finn-handheld-balanced-v2-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/finn-handheld-balanced-v2-metrics.json", "utf8"),
   );
   assert.equal(metrics.length, 8);
   assert.equal(new Set(metrics.slice(0, 4).map((m) => m.scale)).size, 1);

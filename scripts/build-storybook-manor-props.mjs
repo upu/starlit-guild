@@ -46,6 +46,6 @@ for (const [index, part] of parts.entries()) {
   metrics.push({ name: names[index], width, height, left, top, scale });
 }
 await writeFile(
-  "public/storybook-study/manor-display-props-metrics.json",
+  "assets/metadata/storybook/manor-display-props-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

@@ -25,10 +25,10 @@ test("the recipient's carrying cycle alternates its planted foot without clipped
   assert.ok(feet[1][0] < feet[1][1] - 3, "the rear boot lifts while the front boot is planted");
   assert.ok(feet[3][1] < feet[3][0] - 3, "the front boot lifts while the rear boot is planted");
   const walk = JSON.parse(
-    await readFile("public/storybook-study/merchant-carry-walk-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/merchant-carry-walk-v1-metrics.json"),
   );
   const turn = JSON.parse(
-    await readFile("public/storybook-study/merchant-turn-carry-v2-metrics.json"),
+    await readFile("assets/metadata/storybook/merchant-turn-carry-v2-metrics.json"),
   );
   assert.ok(walk.frames.every((frame) => Math.abs(frame.height - turn[3].height) <= 8));
   assert.ok(walk.frames.every((frame) => Math.abs(frame.headWidth - walk.referenceHeadWidth) <= 1));

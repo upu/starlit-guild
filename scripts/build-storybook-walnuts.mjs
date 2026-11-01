@@ -47,7 +47,7 @@ for (const [id, standingHeight] of [
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${id}-snack-v1.webp`);
   await writeFile(
-    `public/storybook-study/${id}-snack-v1-metrics.json`,
+    `assets/metadata/storybook/${id}-snack-v1-metrics.json`,
     JSON.stringify(metrics, null, 2),
   );
   for (const [index, action] of actions.entries()) {

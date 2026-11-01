@@ -1,3 +1,4 @@
+import { storybookMetricsPath } from "./storybook-metadata.mjs";
 import sharp from "sharp";
 import { copyFile, writeFile } from "node:fs/promises";
 const root = "public/storybook-study/";
@@ -58,7 +59,7 @@ await sharp(pixels, { raw: { width: 512, height: 256, channels: 4 } })
   .webp({ lossless: true })
   .toFile(root + "merchant-repair-unload-v1.webp");
 await writeFile(
-  root + "waterway-empty-tool-cart-v1-metrics.json",
+  storybookMetricsPath(root + "waterway-empty-tool-cart-v1.webp"),
   JSON.stringify(
     {
       width: 420,

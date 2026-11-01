@@ -34,7 +34,7 @@ test("the tower specimen moves from its open jar to the bowl before the next lin
     jar = cue.items.find((i) => i.id === "tower-jar"),
     bowl = cue.items.find((i) => i.id === "sample");
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/aria-forest-sample-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/aria-forest-sample-v1-metrics.json"),
   );
   const cell = cue.cell ?? 24;
   const toolTip = (frame) =>
@@ -89,7 +89,7 @@ test("the forest sample travels from the colony to Leon's bowl without crossing 
   assert.equal(arrival.left, true);
   assert.ok(arrival.x > forest(moments[4]).x + forest(moments[4]).width / 2);
   const metrics = JSON.parse(
-    await readFile("public/storybook-study/aria-forest-carry-walk-v1-metrics.json"),
+    await readFile("assets/metadata/storybook/aria-forest-carry-walk-v1-metrics.json"),
   );
   assert.ok(metrics.every((m) => Math.abs(m.height - 134) <= 3 && m.top + m.height === 176));
   assert.ok(

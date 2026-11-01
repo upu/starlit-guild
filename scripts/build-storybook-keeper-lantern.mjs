@@ -40,6 +40,6 @@ await sharp({ create: { width: 1024, height: 192, channels: 4, background: "#000
   .webp({ lossless: true })
   .toFile("public/storybook-study/keeper-lantern-v1.webp");
 await writeFile(
-  "public/storybook-study/keeper-lantern-v1-metrics.json",
+  "assets/metadata/storybook/keeper-lantern-v1-metrics.json",
   JSON.stringify(metrics, null, 2) + "\n",
 );

@@ -48,4 +48,7 @@ await sharp({ create: { width: 768, height: 192, channels: 4, background: "#0000
   .composite(layers)
   .webp({ lossless: true })
   .toFile("public/storybook-study/leon-pull-v1.webp");
-await writeFile("public/storybook-study/leon-pull-metrics.json", JSON.stringify(metrics, null, 2));
+await writeFile(
+  "assets/metadata/storybook/leon-pull-metrics.json",
+  JSON.stringify(metrics, null, 2),
+);

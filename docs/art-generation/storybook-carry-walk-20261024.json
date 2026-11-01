@@ -10,5 +10,23 @@
   ],
   "status": "rejected-for-integration",
   "reason": "Repeated anatomical leg phases remain, especially Leon. Raised knees are too high for careful carrying. Do not use as the production walk cycle.",
-  "next": "Use individually validated opposite contact and passing poses as lower-body references; preserve upper-body carrying hands."
+  "next": "Use individually validated opposite contact and passing poses as lower-body references; preserve upper-body carrying hands.",
+  "rejectedSourceCleanup": {
+    "date": "2026-11-01",
+    "removed": [
+      {
+        "path": "assets/source/storybook/carry-walk-pair-v1.png",
+        "bytes": 2495835,
+        "sha256": "53a65813806075d1beabbdb3ca372e328c7319a4e3e3a43e15e65e9b6b3a37af",
+        "reason": "Both pair sheets are explicitly rejected-for-integration; no generator/test inputs or accepted-source references use them."
+      },
+      {
+        "path": "assets/source/storybook/carry-walk-pair-v2.png",
+        "bytes": 2453217,
+        "sha256": "647e51e7f2c15f903619f92d95188e14453bbf159f9eb6cd5ad45de9aabf3ff6",
+        "reason": "Both pair sheets are explicitly rejected-for-integration; no generator/test inputs or accepted-source references use them."
+      }
+    ],
+    "reason": "Both rejected trials removed; original prompt and rejection decision retained."
+  }
 }

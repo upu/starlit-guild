@@ -50,7 +50,10 @@ for (const [name, cell, sole, heights] of [
     .composite(layers)
     .webp({ lossless: true })
     .toFile(`public/storybook-study/${name}.webp`);
-  await writeFile(`public/storybook-study/${name}-metrics.json`, JSON.stringify(metrics, null, 2));
+  await writeFile(
+    `assets/metadata/storybook/${name}-metrics.json`,
+    JSON.stringify(metrics, null, 2),
+  );
 }
 const source = "assets/source/storybook/brekka-drink-props-v1.png";
 const { data, info } = await sharp(source)
@@ -85,6 +88,6 @@ for (const [i, p] of parts.entries()) {
   metrics.push({ name: names[i], width, height, left, top, scale });
 }
 await writeFile(
-  "public/storybook-study/brekka-drink-props-v1-metrics.json",
+  "assets/metadata/storybook/brekka-drink-props-v1-metrics.json",
   JSON.stringify(metrics, null, 2),
 );

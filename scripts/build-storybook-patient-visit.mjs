@@ -41,4 +41,4 @@ await sharp({ create: { width: cell * 4, height: cell, channels: 4, background: 
   .composite(layers)
   .webp({ lossless: true })
   .toFile(`public/storybook-study/${name}.webp`);
-await writeFile(`public/storybook-study/${name}-metrics.json`, JSON.stringify(metrics, null, 2));
+await writeFile(`assets/metadata/storybook/${name}-metrics.json`, JSON.stringify(metrics, null, 2));

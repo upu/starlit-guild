@@ -19,7 +19,7 @@ test("adopted drinking poses use a single body scale and keep seated feet padded
     ["finn-drinks-balanced-v2", 0, 4, 148, 176],
     ["brekka-worker-drinks-v1", 0, 4, 94, 120],
   ]) {
-    const m = JSON.parse(await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"));
+    const m = JSON.parse(await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"));
     assert.equal(m[start].height, standing);
     for (const p of m.slice(start + 1, end)) {
       assert.equal(p.scale, m[start].scale);
@@ -33,7 +33,7 @@ test("adopted drinking poses use a single body scale and keep seated feet padded
 test("Finn's seated drinking heads stay close to his normal seated poses", async () => {
   async function widths(name) {
     const metrics = JSON.parse(
-      await readFile(`public/storybook-study/${name}-metrics.json`, "utf8"),
+      await readFile(`assets/metadata/storybook/${name}-metrics.json`, "utf8"),
     );
     const { data, info } = await sharp(`public/storybook-study/${name}.webp`)
       .ensureAlpha()
@@ -59,7 +59,7 @@ test("Finn's seated drinking heads stay close to his normal seated poses", async
 
 test("empty and filled tiny ale cups remain the same physical cup", async () => {
   const m = JSON.parse(
-    await readFile("public/storybook-study/brekka-drink-props-v1-metrics.json", "utf8"),
+    await readFile("assets/metadata/storybook/brekka-drink-props-v1-metrics.json", "utf8"),
   );
   assert.equal(m[0].scale, m[1].scale);
   assert.ok(Math.abs(m[0].width - m[1].width) < 4);

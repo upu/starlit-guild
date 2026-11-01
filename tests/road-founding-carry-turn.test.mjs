@@ -80,13 +80,13 @@ test("turn frames keep both hands and the established Finn baseline", async () =
   const metrics = JSON.parse(
     await (
       await import("node:fs/promises")
-    ).readFile("public/storybook-study/finn-founding-turn-v1-metrics.json", "utf8"),
+    ).readFile("assets/metadata/storybook/finn-founding-turn-v1-metrics.json", "utf8"),
   );
   assert.ok(metrics.every((m) => m.baseline === 176 && Math.abs(m.height - 148) <= 1));
   const miraMetrics = JSON.parse(
     await (
       await import("node:fs/promises")
-    ).readFile("public/storybook-study/mira-founding-turn-v1-metrics.json", "utf8"),
+    ).readFile("assets/metadata/storybook/mira-founding-turn-v1-metrics.json", "utf8"),
   );
   assert.ok(miraMetrics.every((m) => m.baseline === 176 && Math.abs(m.height - 125) <= 1));
 });
