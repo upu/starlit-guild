@@ -4,7 +4,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
 export async function uploadMedia({ origin, manifest, publicDirectory, headers, fetcher = fetch }) {
-  const entries = Object.entries(manifest);
+  const seen = new Set();
+  const entries = Object.entries(manifest).filter(([, entry]) => {
+    if (seen.has(entry.key)) return false;
+    seen.add(entry.key);
+    return true;
+  });
   const report = { uploaded: 0, skipped: 0, bytes: 0 };
   let cursor = 0;
   async function transfer() {

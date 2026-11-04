@@ -156,7 +156,7 @@ test("uploader transfers missing bytes, verifies the result, and skips existing 
     await writeFile(path.join(root, "image.webp"), bytes);
     const args = {
       origin: "https://example.test",
-      manifest: { "/image.webp": entry },
+      manifest: { "/image.webp": entry, "/same-content.webp": entry },
       publicDirectory: root,
       headers: { Authorization: "Bearer test" },
       fetcher: async (url, options) => {
