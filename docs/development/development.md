@@ -127,6 +127,7 @@ Pull Requestと`main`へのpushでは、整形・lint・型・生成素材と台
 <!-- manual-test-inventory:start -->
 | テスト・対象 | 依存と準備 | PowerShellでの実行 | 結果の確認先 |
 | --- | --- | --- | --- |
+| `tests/media-storage.integration.mjs` R2素材の認証・ハッシュ照合・差分投入・GET/HEAD/Range・配備物除外 | `npm run build`。隔離したローカルR2を自動起動 | `node tests/media-storage.integration.mjs` | 標準出力。Sitesと既存セーブにはアクセスしない |
 | `tests/story-stage.browser.mjs` 1-1の会話演出・台詞同期・早送り・再読・画面幅・動きを減らす設定 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。隔離したブラウザーで新しい冒険を開始 | `node tests/story-stage.browser.mjs` | `work/story-stage-browser/` の画像・`results.json`。スマホ実機とは別 |
 | `tests/story-evening.browser.mjs` 1-1達成の静止画と表示統一、1-2〜1-3の出発・達成・最後のタップ・左右への別れ・取引先の人の台詞同期・小箱の縮尺と近くの台・箱の共同運搬・759pxの座り姿勢・動きを減らす設定 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。隔離したブラウザーと合成テスト記録を使用 | `node tests/story-evening.browser.mjs` | `work/story-evening-browser/` の画像・`results.json`。スマホ実機とは別 |
 | `tests/story-chapter.browser.mjs` 1-4〜1-9の12場面・全台詞の表情・NPC・手持ち道具・一枚絵への切替・最後のタップ・履歴・画面幅・動きを減らす設定 | Node版Playwright + Chromium。別ターミナルで `npm run dev`。隔離したブラウザーと合成テスト記録を使用 | `node tests/story-chapter.browser.mjs` | `work/story-chapter-browser/` の画像・`results.json`。スマホ実機とは別 |

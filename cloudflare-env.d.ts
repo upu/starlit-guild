@@ -4,5 +4,6 @@ declare namespace Cloudflare {
     BUCKET?: R2Bucket;
     ENABLE_TEST_TOOLS?: string;
     DISCORD_INVITE_URL?: string;
+    ASSET_UPLOAD_TOKEN?: string;
   }
 }

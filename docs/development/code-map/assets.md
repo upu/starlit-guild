@@ -1,5 +1,7 @@
 # 画像・動画・音の素材と生成物
 
+Sitesへの配信分離は [Sites付属R2への素材配信](../media-storage.md)。対象一覧・ハッシュ生成は `scripts/media-manifest.mjs`、ビルドからの除外は `build/media-assets.ts`、投入は `scripts/upload-site-media.mjs`。読み出し・認証付き投入の検証は `tests/media-storage.test.mjs` と `tests/media-storage.integration.mjs`。
+
 絵本調の寸法JSONは `assets/metadata/storybook/` に置き、`public/` へ配信しない。画像パスから寸法ファイルを求める場合は `scripts/storybook-metadata.mjs` の `storybookMetricsPath` を使う。試作出力の削除・残す合成元・履歴は [2026-11-01の整理](../../art/storybook-asset-cleanup-20261101.md)、再混入の検査は `tests/storybook-delivery-hygiene.test.mjs`。
 
 絵本調の共通小物15種類は `scripts/build-storybook-common-props.mjs` で登録する。原本・全プロンプト・再利用元・ハッシュは [制作記録](../../art-generation/storybook-common-props-20261031.json)。旧表示の可視範囲と底の接点に収める値は `assets/metadata/storybook/common-props-v1-metrics.json`、検査は `tests/storybook-common-props.test.mjs`。適用表は `lib/storybook/shared-prop-art.ts`、旅行荷物の描画は `app/storybook/common-props.css`。
