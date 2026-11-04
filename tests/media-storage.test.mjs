@@ -6,10 +6,22 @@ import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { createMediaManifest, mediaDirectories } from "../scripts/media-manifest.mjs";
-import { uploadMedia } from "../scripts/upload-site-media.mjs";
+import { PassThrough } from "node:stream";
+import { uploadMedia, readUploadCredentials } from "../scripts/upload-site-media.mjs";
 import { compileSourceModule, evaluateSourceModule } from "./helpers/source-module.mjs";
 
 const globals = { Response, Request, Headers, URL, TextEncoder };
+
+test("upload credentials accept a single line without EOF and malformed inputs never echo secrets", async () => {
+  const input = new PassThrough();
+  const read = readUploadCredentials(input);
+  input.write('{"uploadToken":"fixture-only"}\n');
+  assert.deepEqual(await read, { uploadToken: "fixture-only" });
+  const invalid = new PassThrough();
+  const rejected = readUploadCredentials(invalid);
+  invalid.write("fixture-secret-invalid-json\n");
+  await assert.rejects(rejected, { message: "Provide one valid credential JSON object on stdin" });
+});
 const responseModule = evaluateSourceModule(
   compileSourceModule("../lib/media-response.ts", import.meta.url),
   {},

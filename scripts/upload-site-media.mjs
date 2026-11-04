@@ -3,6 +3,37 @@ import { createHash } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
+export async function readUploadCredentials(input = process.stdin) {
+  const raw = await new Promise((resolve, reject) => {
+    let value = "";
+    const finish = (error) => {
+      input.removeListener("data", onData);
+      input.removeListener("end", onEnd);
+      if (input.isTTY) input.setRawMode(false);
+      input.pause();
+      if (error) reject(error);
+      else resolve(value.trim());
+    };
+    const onEnd = () => finish();
+    const onData = (chunk) => {
+      value += chunk;
+      if (value.length > 16384) finish(new Error("Credential input is too large"));
+      else if (/[\r\n]/.test(value)) finish();
+    };
+    if (input.isTTY) input.setRawMode(true);
+    input.setEncoding("utf8");
+    input.on("data", onData);
+    input.once("end", onEnd);
+    process.stderr.write("Ready for asset credentials JSON on stdin (input is hidden).\n");
+    input.resume();
+  });
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new Error("Provide one valid credential JSON object on stdin");
+  }
+}
+
 export async function uploadMedia({ origin, manifest, publicDirectory, headers, fetcher = fetch }) {
   const seen = new Set();
   const entries = Object.entries(manifest).filter(([, entry]) => {
@@ -75,9 +106,7 @@ async function main() {
     await readFile(path.join(root, ".sites-runtime/media-manifest.json"), "utf8"),
   );
   // Only credentials arrive on stdin, never CLI arguments, tracked files, or stdout.
-  let input = "";
-  for await (const chunk of process.stdin) input += chunk;
-  const { projectId, uploadToken, serviceToken } = JSON.parse(input);
+  const { projectId, uploadToken, serviceToken } = await readUploadCredentials();
   if (
     projectId !== targets[target].projectId ||
     typeof uploadToken !== "string" ||
